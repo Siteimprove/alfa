@@ -67,7 +67,8 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
           Question.Metadata,
           Element,
           Document,
-          Option.Maybe<Result<Diagnostic, Diagnostic>>
+          Option.Maybe<Result<Diagnostic, Diagnostic>>,
+          -1
         > {
           // Find the closest Element ancestor of the reference.
           const destination = reference
@@ -90,7 +91,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
             .filter(and(isElement, hasRole(device, "main")))
             .some((main) => isAtTheStart(main, device)(reference));
 
-          function isMain(isMain: boolean): Option<Result<Diagnostic>> {
+          function isMain(isMain: boolean): Option.Maybe<Result<Diagnostic>> {
             return expectation(
               isMain,
               () => Outcomes.FirstTabbableIsLinkToContent,
@@ -105,7 +106,8 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
           Question.Metadata,
           Element,
           Document,
-          Option.Maybe<Result<Diagnostic>>
+          Option.Maybe<Result<Diagnostic>>,
+          1
         > {
           const askReference = Question.of(
             "internal-reference",
@@ -136,7 +138,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
           const foo = askReference
             .answerIf(reference.isSome, reference)
             .map((ref) =>
-              expectation(
+              expectation<Question.Metadata, Element, Document, 0>(
                 // Oracle may still answer None to the question.
                 ref.isSome(),
                 () => isAtTheStartOfMain(ref.get()),
@@ -158,12 +160,21 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
           target
         );
 
-        const visible = (isVisible: boolean) =>
-          expectation(
+        function visible(
+          isVisible: boolean
+        ): Interview<
+          Question.Metadata,
+          Element,
+          Document,
+          Option.Maybe<Result<Diagnostic>>,
+          1
+        > {
+          return expectation<Question.Metadata, Element, Document, 1>(
             isVisible,
             isSkipLink,
             () => Outcomes.FirstTabbableIsNotVisible
           );
+        }
 
         return {
           1: expectation(

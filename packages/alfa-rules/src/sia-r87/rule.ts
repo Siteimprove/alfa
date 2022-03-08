@@ -97,14 +97,15 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
           Question.Metadata,
           Document,
           Document,
-          Option.Maybe<Result<Diagnostic, Diagnostic>>
+          Option.Maybe<Result<Diagnostic, Diagnostic>>,
+          0
         > {
-          return expectation(
+          return expectation<Question.Metadata, Document, Document, 0>(
             mains.some((main) => reference.some(isAtTheStart(main, device))),
             () => Outcomes.FirstTabbableIsLinkToContent,
             () =>
               askIsMain.map((isMain) =>
-                expectation(
+                expectation<Question.Metadata, Document, Document, -1>(
                   isMain,
                   () => Outcomes.FirstTabbableIsLinkToContent,
                   () => Outcomes.FirstTabbableIsNotLinkToContent
@@ -117,12 +118,13 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
           Question.Metadata,
           Document,
           Document,
-          Option.Maybe<Result<Diagnostic>>
+          Option.Maybe<Result<Diagnostic>>,
+          2
         > {
           return reference.isSome()
             ? isAtTheStartOfMain(reference)
             : askIsInteralLink.map((isInternalLink) =>
-                expectation(
+                expectation<Question.Metadata, Document, Document, 1>(
                   isInternalLink,
                   () => askReference.map(isAtTheStartOfMain),
                   () => Outcomes.FirstTabbableIsNotInternalLink
@@ -130,28 +132,34 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
               );
         }
 
+        function isVisibleFoo(): Interview<
+          Question.Metadata,
+          Document,
+          Document,
+          Option.Maybe<Result<Diagnostic>>,
+          3
+        > {
+          // No need to check if element is tabbable because this was
+          // already checked at the very start of expectation.
+          return askIsVisible
+            .answerIf(isVisible(device, Context.focus(element))(element), true)
+            .map((isVisible) =>
+              expectation<Question.Metadata, Document, Document, 2>(
+                isVisible,
+                isSkipLink,
+                () => Outcomes.FirstTabbableIsNotVisible
+              )
+            );
+        }
+
         return {
           1: expectation(
             isIgnored(device)(element),
             () => Outcomes.FirstTabbableIsIgnored,
             () =>
-              expectation(
+              expectation<Question.Metadata, Document, Document, 3>(
                 hasRole(device, (role) => role.is("link"))(element),
-                () =>
-                  // No need to check if element is tabbable because this was
-                  // already checked at the very start of expectation.
-                  askIsVisible
-                    .answerIf(
-                      isVisible(device, Context.focus(element))(element),
-                      true
-                    )
-                    .map((isVisible) =>
-                      expectation(
-                        isVisible,
-                        isSkipLink,
-                        () => Outcomes.FirstTabbableIsNotVisible
-                      )
-                    ),
+                isVisibleFoo,
                 () => Outcomes.FirstTabbableIsNotLink
               )
           ),
