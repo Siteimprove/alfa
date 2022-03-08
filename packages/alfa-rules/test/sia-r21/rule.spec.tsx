@@ -67,6 +67,15 @@ test("evaluates() fails an element with an invalid role and not included in the 
   ]);
 });
 
+test("evaluates() is inapplicable to a hidden element", async (t) => {
+  const button = (
+    <button hidden role="invalid">
+      Hello
+    </button>
+  );
+  const document = h.document([button]);
+  t.deepEqual(await evaluate(R21, { document }), [inapplicable(R21)]);
+});
 test("evaluate() is inapplicable when there is no role attribute", async (t) => {
   const document = h.document([<button />]);
 

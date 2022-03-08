@@ -34,5 +34,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/"
+  },
+  "packageDependencyGraph": {
+    "group": "Integrations with web frameworks"
   }
 }
