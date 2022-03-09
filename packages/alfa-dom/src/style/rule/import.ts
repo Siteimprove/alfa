@@ -1,5 +1,7 @@
 import { Option, None } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+import { Media } from "@siteimprove/alfa-media";
+import { Lexer } from "@siteimprove/alfa-css";
 
 import { Rule } from "../rule";
 import { Sheet } from "../sheet";
@@ -19,14 +21,22 @@ export class ImportRule extends ConditionRule {
 
   private readonly _href: string;
   private readonly _sheet: Sheet;
+  private readonly _queries: Media.List;
 
   private constructor(href: string, sheet: Sheet, condition: Option<string>) {
     super(condition.getOr("all"), []);
 
     this._href = href;
     this._sheet = sheet;
+    this._queries = condition
+      .flatMap((condition) => Media.parse(Lexer.lex(condition)).ok())
+      .map(([, queries]) => queries)
+      .getOr(Media.List.of([]));
   }
 
+  public get queries(): Media.List {
+    return this._queries;
+  }
   public get rules(): Iterable<Rule> {
     return this._sheet.rules;
   }
