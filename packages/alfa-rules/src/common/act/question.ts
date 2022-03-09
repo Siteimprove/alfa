@@ -242,16 +242,16 @@ export namespace Question {
     // R82 (experimental)
     "error-indicators": {
       type: "node[]",
-      message: `Where are the error indicators, if any, for the form field?`,
+      message: `Where are (all) the error indicators, if any, for the form field?`,
     },
     "error-indicator-describes-resolution": {
-      type: "boolean",
-      message: `Does the error indicator describe, in text, the cause of the error or how to resolve it?`,
+      type: "node",
+      message: `Which of these error indicators describes, in text, the cause of the error or how to resolve it?`,
     },
     "error-indicator-identifies-form-field": {
-      type: "boolean",
+      type: "node",
       message:
-        "Does the error indicator identify, in text, the form field it relates to?",
+        "Which of these error indicators identifies, in text, the form field it relates to?",
     },
     // ER87 (experimental)
     "internal-reference": {
