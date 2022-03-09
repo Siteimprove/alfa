@@ -1,4 +1,4 @@
-import { Interview, Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -91,37 +91,22 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
 
         const askIsVisible = Question.of("first-tabbable-is-visible", target);
 
-        function isAtTheStartOfMain(
-          reference: Option<Node>
-        ): Interview<
-          Question.Metadata,
-          Document,
-          Document,
-          Option.Maybe<Result<Diagnostic, Diagnostic>>,
-          0
-        > {
-          return expectation<Question.Metadata, Document, Document, 0>(
+        const isAtTheStartOfMain = (reference: Option<Node>) =>
+          expectation<Question.Metadata, Document, Document, 0>(
             mains.some((main) => reference.some(isAtTheStart(main, device))),
             () => Outcomes.FirstTabbableIsLinkToContent,
             () =>
               askIsMain.map((isMain) =>
-                expectation<Question.Metadata, Document, Document, -1>(
+                expectation(
                   isMain,
                   () => Outcomes.FirstTabbableIsLinkToContent,
                   () => Outcomes.FirstTabbableIsNotLinkToContent
                 )
               )
           );
-        }
 
-        function isSkipLink(): Interview<
-          Question.Metadata,
-          Document,
-          Document,
-          Option.Maybe<Result<Diagnostic>>,
-          2
-        > {
-          return reference.isSome()
+        const isSkipLink = () =>
+          reference.isSome()
             ? isAtTheStartOfMain(reference)
             : askIsInteralLink.map((isInternalLink) =>
                 expectation<Question.Metadata, Document, Document, 1>(
@@ -130,18 +115,11 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
                   () => Outcomes.FirstTabbableIsNotInternalLink
                 )
               );
-        }
 
-        function isVisibleFoo(): Interview<
-          Question.Metadata,
-          Document,
-          Document,
-          Option.Maybe<Result<Diagnostic>>,
-          3
-        > {
-          // No need to check if element is tabbable because this was
-          // already checked at the very start of expectation.
-          return askIsVisible
+        // No need to check if element is tabbable because this was
+        // already checked at the very start of expectation.
+        const isVisibleFoo = () =>
+          askIsVisible
             .answerIf(isVisible(device, Context.focus(element))(element), true)
             .map((isVisible) =>
               expectation<Question.Metadata, Document, Document, 2>(
@@ -150,7 +128,6 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
                 () => Outcomes.FirstTabbableIsNotVisible
               )
             );
-        }
 
         return {
           1: expectation(

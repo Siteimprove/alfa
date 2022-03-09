@@ -1,9 +1,9 @@
-import { Interview, Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
-import { None, Option } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
@@ -61,15 +61,8 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
 
         const element = firstTabbable.get();
 
-        function isAtTheStartOfMain(
-          reference: Node
-        ): Interview<
-          Question.Metadata,
-          Element,
-          Document,
-          Option.Maybe<Result<Diagnostic, Diagnostic>>,
-          -1
-        > {
+        // Is "reference" at the start of the main content?
+        const isAtTheStartOfMain = (reference: Node) => {
           // Find the closest Element ancestor of the reference.
           const destination = reference
             .inclusiveAncestors({ flattened: true, nested: true })
@@ -91,52 +84,47 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
             .filter(and(isElement, hasRole(device, "main")))
             .some((main) => isAtTheStart(main, device)(reference));
 
-          function isMain(isMain: boolean): Option.Maybe<Result<Diagnostic>> {
-            return expectation(
+          return askIsMain.answerIf(isAtStart, true).map((isMain: boolean) =>
+            expectation(
               isMain,
               () => Outcomes.FirstTabbableIsLinkToContent,
               () => Outcomes.FirstTabbableIsNotLinkToContent
-            );
-          }
+            )
+          );
+        };
 
-          return askIsMain.answerIf(isAtStart, true).map(isMain);
-        }
+        const askReference = Question.of("internal-reference", element, target);
 
-        function isSkipLink(): Interview<
-          Question.Metadata,
-          Element,
-          Document,
-          Option.Maybe<Result<Diagnostic>>,
-          1
-        > {
-          const askReference = Question.of(
-            "internal-reference",
-            element,
-            target
+        // The URL pointed by element.
+        const url = hasName("a", "area")(element)
+          ? element
+              .attribute("href")
+              .flatMap((attribute) =>
+                URL.parse(attribute.value, response.url).ok()
+              )
+          : None;
+
+        // The internal node (if any) this URL resolves to.
+        const reference = url
+          .filter(isInternalURL(response.url))
+          .flatMap((url) =>
+            url.fragment.flatMap((fragment) =>
+              element
+                .root()
+                .inclusiveDescendants()
+                .filter(isElement)
+                .find((element) => element.id.includes(fragment))
+            )
           );
 
-          const url = hasName("a", "area")(element)
-            ? element
-                .attribute("href")
-                .flatMap((attribute) =>
-                  URL.parse(attribute.value, response.url).ok()
-                )
-            : None;
-
-          const reference = url
-            .filter(isInternalURL(response.url))
-            .flatMap((url) =>
-              url.fragment.flatMap((fragment) =>
-                element
-                  .root()
-                  .inclusiveDescendants()
-                  .filter(isElement)
-                  .find((element) => element.id.includes(fragment))
-              )
-            );
-
-          const foo = askReference
-            .answerIf(reference.isSome, reference)
+        // Is the first tabbable a link to main content?
+        const isSkipLink = () =>
+          askReference
+            // If the reference was automatically found, send it.
+            //
+            // The question expects an Option<Node> answer, so we cannot
+            // just .answerIf(reference) as this would only send a Node.
+            .answerIf(reference.isSome(), reference)
             .map((ref) =>
               expectation<Question.Metadata, Element, Document, 0>(
                 // Oracle may still answer None to the question.
@@ -146,35 +134,11 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
               )
             );
 
-          return foo;
-
-          // return (
-          //   // If the reference was automatically found, send it.
-          //   foo
-          // );
-        }
-
         const askIsVisible = Question.of(
           "is-visible-when-focused",
           element,
           target
         );
-
-        function visible(
-          isVisible: boolean
-        ): Interview<
-          Question.Metadata,
-          Element,
-          Document,
-          Option.Maybe<Result<Diagnostic>>,
-          1
-        > {
-          return expectation<Question.Metadata, Element, Document, 1>(
-            isVisible,
-            isSkipLink,
-            () => Outcomes.FirstTabbableIsNotVisible
-          );
-        }
 
         return {
           1: expectation(
@@ -191,7 +155,13 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
                       isVisible(device, Context.focus(element))(element),
                       true
                     )
-                    .map(visible),
+                    .map((isVisible: boolean) =>
+                      expectation<Question.Metadata, Element, Document, 1>(
+                        isVisible,
+                        isSkipLink,
+                        () => Outcomes.FirstTabbableIsNotVisible
+                      )
+                    ),
                 () => Outcomes.FirstTabbableIsNotLink
               )
           ),
