@@ -53,6 +53,23 @@ test("evaluate() fails when same landmarks have same names but different content
   );
 });
 
+test("evaluate() fails when same sections have same names", async (t) => {
+  const section1 = <section aria-label="More information" />;
+  const section2 = <section aria-label="More information" />;
+
+  const document = h.document([section1, section2]);
+  const target = Group.of([section1, section2]);
+
+  t.deepEqual(
+    await evaluate(
+      R55,
+      { document },
+      oracle({ "is-content-equivalent": false })
+    ),
+    [failed(R55, target, { 1: Outcomes.DifferentResources("region") })]
+  );
+});
+
 test("evaluate() is inapplicable when same landmarks have different names", async (t) => {
   const author = <aside aria-label="About the author" id="author" />;
   const book = <aside aria-label="About the book" id="book" />;
@@ -67,6 +84,14 @@ test("evaluate() is inapplicable when landmarks have different roles", async (t)
   const nav = <nav aria-label="Site" />;
 
   const document = h.document([element, nav]);
+
+  t.deepEqual(await evaluate(R55, { document }), [inapplicable(R55)]);
+});
+
+test("evaluate() is inapplicable to section without accessible name and role", async (t) => {
+  const section = <section />;
+
+  const document = h.document([section]);
 
   t.deepEqual(await evaluate(R55, { document }), [inapplicable(R55)]);
 });

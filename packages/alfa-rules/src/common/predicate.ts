@@ -18,6 +18,7 @@ export * from "./predicate/has-interposed-descendant";
 export * from "./predicate/has-non-empty-accessible-name";
 export * from "./predicate/has-outline";
 export * from "./predicate/has-role";
+export * from "./predicate/has-incorrect-role-without-name";
 export * from "./predicate/has-text-content";
 export * from "./predicate/has-text-decoration";
 export * from "./predicate/has-unique-id";
