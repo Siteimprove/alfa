@@ -1,7 +1,7 @@
+import { Lexer } from "@siteimprove/alfa-css";
+import { Media } from "@siteimprove/alfa-media";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
-import { Media } from "@siteimprove/alfa-media";
-import { Lexer } from "@siteimprove/alfa-css";
 
 import { Rule } from "../rule";
 import { Sheet } from "../sheet";
