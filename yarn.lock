@@ -2426,7 +2426,7 @@ __metadata:
     axios: ^0.24.0
     execa: ^5.1.1
     minimist: ^1.2.5
-    package-dependency-graph: ^1.13.0
+    package-dependency-graph: ^1.14.2
     prettier: ^2.4.1
     typescript: ^4.5.2
   languageName: unknown
@@ -4174,23 +4174,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dagre-abstract-renderer@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "dagre-abstract-renderer@npm:1.13.0"
+"dagre-abstract-renderer@npm:^1.14.1":
+  version: 1.14.1
+  resolution: "dagre-abstract-renderer@npm:1.14.1"
   dependencies:
     dagre-cluster-fix: 0.9.3
     tslib: 1 || 2
-  checksum: 2c2e0c64f102dfb252e92eb97dcd274bd961390f9120fbea8146e6593545f5cbb48f7cb417c04dc142dba8184dcd24d22b57b1c44188038b833194647b38e636
+  checksum: bf5ecaf9b02ad6da3e152c9a0908ffe37e5676c44ded30132341cb35e518d3bbf739758bf726e4aeee6818584eb0d91300b8b4d70647314f2b031cdf6641e7d7
   languageName: node
   linkType: hard
 
-"dagre-canvas@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "dagre-canvas@npm:1.13.0"
+"dagre-canvas@npm:^1.14.1":
+  version: 1.14.1
+  resolution: "dagre-canvas@npm:1.14.1"
   dependencies:
-    dagre-abstract-renderer: ^1.13.0
+    dagre-abstract-renderer: ^1.14.1
     dagre-cluster-fix: 0.9.3
-  checksum: d7980e70ae31bd29c266013b9f79112a434179f7ac1008e1c82a5d687fe194def35efc4a328e2b582292a47ddb08b9d474cb9c2afffbc86aa39db1a4fd2948e1
+  checksum: b3648e2e882bb71939539a42062747b4e80ef06ea2501c699ebcffc9da28e06257141c26f321c4ce0ef1b0cd13180550b73c43b71a0a7fc64f85ab935ea2b336
   languageName: node
   linkType: hard
 
@@ -4204,13 +4204,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dagre-svg@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "dagre-svg@npm:1.13.0"
+"dagre-svg@npm:^1.14.1":
+  version: 1.14.1
+  resolution: "dagre-svg@npm:1.14.1"
   dependencies:
-    dagre-abstract-renderer: ^1.13.0
+    dagre-abstract-renderer: ^1.14.1
     dagre-cluster-fix: 0.9.3
-  checksum: d1ec2a55c2ac9d4bdc76fc8c4748ef4ffd1a039b05cbd48f9f8d875e536b7cfd0dbfb5c5adbfa538c80530d6364be7e55dfd127be254d225ad36caa43a06b933
+  checksum: 6def67f435f3cbb7050cc4fda62eec383653a9bf5549b70fd9c6da99a5600493e8ba01a704f2210af25f9ac36d83aade22baaf048c61a8a9d83c0078af1c84a2
   languageName: node
   linkType: hard
 
@@ -7671,40 +7671,40 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"package-dependency-collect@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "package-dependency-collect@npm:1.13.0"
+"package-dependency-collect@npm:^1.14.2":
+  version: 1.14.2
+  resolution: "package-dependency-collect@npm:1.14.2"
   dependencies:
     glob: 7
     tslib: 1 || 2
-  checksum: 48476e3035df710a94fcfb12734e8629a4d6aab008df90203be7a52fe0fb122ed53f8037f59aca35d76dc06ff20033c43f2b5527590875acec6004a7146fbd5b
+  checksum: 98e4902fada7b5cbf35b398c973f8ef118000945b768ad9f93aac8fbfbff2853209e066f2f095d683ac7af7e8a872e024410b446df15e2da22775b7acf660b14
   languageName: node
   linkType: hard
 
-"package-dependency-graph-core@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "package-dependency-graph-core@npm:1.13.0"
+"package-dependency-graph-core@npm:^1.14.2":
+  version: 1.14.2
+  resolution: "package-dependency-graph-core@npm:1.14.2"
   dependencies:
     dagre-cluster-fix: 0.9.3
-    package-dependency-collect: ^1.13.0
+    package-dependency-collect: ^1.14.2
     tslib: 1 || 2
-  checksum: 265d9fa1576ba7dfcb4c3737f56050a7e6942129f4fa91959cf4372e03a72027a8683ca47fa787992a10fd143560fa2ade49c63d083761eaa05bdc3659300773
+  checksum: 9bcbce13d3a5c0f442282f55b9b661eb7aa0a2736cc6d8b0e6b3c87dc5de228a07f001c1e6d0a892e44c0122271dc44b4e5b555924bd3429f70450df01f26415
   languageName: node
   linkType: hard
 
-"package-dependency-graph@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "package-dependency-graph@npm:1.13.0"
+"package-dependency-graph@npm:^1.14.2":
+  version: 1.14.2
+  resolution: "package-dependency-graph@npm:1.14.2"
   dependencies:
     canvas: 2
-    dagre-canvas: ^1.13.0
-    dagre-svg: ^1.13.0
+    dagre-canvas: ^1.14.1
+    dagre-svg: ^1.14.1
     graphviz-cli: 1
     minimist: 1
-    package-dependency-graph-core: ^1.13.0
+    package-dependency-graph-core: ^1.14.2
   bin:
     package-dependency-graph: bin/package-dependency-graph
-  checksum: 25b78faf2b224475664d428f0ae0834eb435bdc98fc5d369ab30c29f204f0948665b7cf0172b34ab603d9a7ad87160807169065bd51eb34a6fa2524257922bb4
+  checksum: fe57059649e5b7cb39f70c4da6239903ada3c19db742ae1ad2215160774bdb77a365c5b5c2ebcd241ad2ec462b697369e937290c0429f1b9ff7d1255361c7a8a
   languageName: node
   linkType: hard
 
