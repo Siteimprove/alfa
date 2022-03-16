@@ -84,7 +84,7 @@ export type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = Int
 export namespace Interview {
     // (undocumented)
     export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>): Future<Either<ANSWER, Diagnostic>>;
-    // (undocumented)
+    // @internal (undocumented)
     export type MaxDepth = 3;
 }
 

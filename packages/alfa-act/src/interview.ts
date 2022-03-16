@@ -52,6 +52,9 @@ export type Interview<
  * @public
  */
 export namespace Interview {
+  /**
+   * @internal
+   */
   export type MaxDepth = 3;
 
   //   To conduct an interview:

@@ -84,7 +84,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
             .filter(and(isElement, hasRole(device, "main")))
             .some((main) => isAtTheStart(main, device)(reference));
 
-          return askIsMain.answerIf(isAtStart, true).map((isMain: boolean) =>
+          return askIsMain.answerIf(isAtStart, true).map((isMain) =>
             expectation(
               isMain,
               () => Outcomes.FirstTabbableIsLinkToContent,
@@ -155,7 +155,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
                       isVisible(device, Context.focus(element))(element),
                       true
                     )
-                    .map((isVisible: boolean) =>
+                    .map((isVisible) =>
                       expectation<Question.Metadata, Element, Document, 1>(
                         isVisible,
                         isSkipLink,

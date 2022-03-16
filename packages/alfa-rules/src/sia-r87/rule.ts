@@ -134,7 +134,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
             isIgnored(device)(element),
             () => Outcomes.FirstTabbableIsIgnored,
             () =>
-              expectation<Question.Metadata, Document, Document, 3>(
+              expectation(
                 hasRole(device, (role) => role.is("link"))(element),
                 isVisibleFoo,
                 () => Outcomes.FirstTabbableIsNotLink
