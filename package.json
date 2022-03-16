@@ -32,6 +32,7 @@
     "minimist": "^1.2.5",
     "package-dependency-graph": "^1.14.2",
     "prettier": "^2.4.1",
+    "ts-node": "^10.7.0",
     "typescript": "^4.5.2"
   },
   "packageManager": "yarn@3.0.2"
