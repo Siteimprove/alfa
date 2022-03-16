@@ -137,7 +137,7 @@ const identifiesTarget = (
   indicators: Array<Node>,
   device: Device
 ) =>
-  Question.of("error-indicator-identifies-form-field", indicators, target).map(
+  Question.of("error-indicator-identifying-form-field", indicators, target).map(
     (indicator) =>
       expectation(
         indicator.isNone(),
@@ -156,7 +156,7 @@ const describesResolution = (
   indicators: Array<Node>,
   device: Device
 ) =>
-  Question.of("error-indicator-describes-resolution", indicators, target).map(
+  Question.of("error-indicator-describing-resolution", indicators, target).map(
     (indicator) =>
       expectation(
         indicator.isNone(),
