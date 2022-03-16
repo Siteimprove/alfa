@@ -392,6 +392,8 @@ export namespace Question {
         // (undocumented)
         boolean: boolean;
         // (undocumented)
+        deprecated: never;
+        // (undocumented)
         node: Option<Node>;
         // (undocumented)
         string: string;
@@ -510,14 +512,22 @@ export namespace Question {
         };
         readonly "error-indicators": {
             readonly type: "node[]";
-            readonly message: "Where are the error indicators, if any, for the form field?";
+            readonly message: "Where are (all) the error indicators, if any, for the form field?";
+        };
+        readonly "error-indicator-describing-resolution": {
+            readonly type: "node";
+            readonly message: "Which of these error indicators describes, in text, the cause of the error or how to resolve it?";
+        };
+        readonly "error-indicator-identifying-form-field": {
+            readonly type: "node";
+            readonly message: "Which of these error indicators identifies, in text, the form field it relates to?";
         };
         readonly "error-indicator-describes-resolution": {
-            readonly type: "boolean";
+            readonly type: "deprecated";
             readonly message: "Does the error indicator describe, in text, the cause of the error or how to resolve it?";
         };
         readonly "error-indicator-identifies-form-field": {
-            readonly type: "boolean";
+            readonly type: "deprecated";
             readonly message: "Does the error indicator identify, in text, the form field it relates to?";
         };
         readonly "internal-reference": {
