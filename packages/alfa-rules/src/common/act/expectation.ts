@@ -9,13 +9,13 @@ import { Trilean } from "@siteimprove/alfa-trilean";
 // there is a potentially infinite recursion in types.
 //
 // It's not clear exactly why that confuses TS… We may want to try later
-// if newer versions (>4.5.5) handles this better. In the meantime, we
+// if newer versions (>4.6.2) handle this better. In the meantime, we
 // keep the extra type parameter here.
 //
 // This unfortunately forces us to add a Question.Metadata parameter all over
 // the place in callers that need to specify the depth of an interview :-(
 
-type Expectation<Q, S, C, D extends number = 3> = Interview<
+type Expectation<Q, S, C, D extends number = Interview.MaxDepth> = Interview<
   Q,
   S,
   C,
@@ -37,7 +37,7 @@ export function expectation<Q, S, C, D extends number>(
   ifUnknown?: Thunk<Expectation<Q, S, C, D>>
 ): Expectation<Q, S, C, D>;
 
-export function expectation<Q, S, C, D extends number = 3>(
+export function expectation<Q, S, C, D extends number = Interview.MaxDepth>(
   test: Trilean,
   ifTrue: Thunk<Expectation<Q, S, C, D>>,
   ifFalse: Thunk<Expectation<Q, S, C, D>>,
