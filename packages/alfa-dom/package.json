@@ -26,6 +26,7 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
+    "@siteimprove/alfa-css": "workspace:^0.34.0",
     "@siteimprove/alfa-earl": "workspace:^0.34.0",
     "@siteimprove/alfa-equatable": "workspace:^0.34.0",
     "@siteimprove/alfa-iterable": "workspace:^0.34.0",
