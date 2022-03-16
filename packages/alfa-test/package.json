@@ -24,8 +24,5 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/"
-  },
-  "packageDependencyGraph": {
-    "group": "Data types"
   }
 }
