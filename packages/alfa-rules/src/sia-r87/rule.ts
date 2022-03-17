@@ -1,9 +1,9 @@
-import { Interview, Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
@@ -82,24 +82,15 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
           target
         );
 
-        const askIsInteralLink = Question.of(
+        const askIsInternalLink = Question.of(
           "first-tabbable-is-internal-link",
           target
         );
 
         const askReference = Question.of("first-tabbable-reference", target);
 
-        const askIsVisible = Question.of("first-tabbable-is-visible", target);
-
-        function isAtTheStartOfMain(
-          reference: Option<Node>
-        ): Interview<
-          Question.Metadata,
-          Document,
-          Document,
-          Option.Maybe<Result<Diagnostic, Diagnostic>>
-        > {
-          return expectation(
+        const isAtTheStartOfMain = (reference: Option<Node>) =>
+          expectation<Question.Metadata, Document, Document, 0>(
             mains.some((main) => reference.some(isAtTheStart(main, device))),
             () => Outcomes.FirstTabbableIsLinkToContent,
             () =>
@@ -111,24 +102,30 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
                 )
               )
           );
-        }
 
-        function isSkipLink(): Interview<
-          Question.Metadata,
-          Document,
-          Document,
-          Option.Maybe<Result<Diagnostic>>
-        > {
-          return reference.isSome()
+        const isSkipLink = () =>
+          reference.isSome()
             ? isAtTheStartOfMain(reference)
-            : askIsInteralLink.map((isInternalLink) =>
-                expectation(
+            : askIsInternalLink.map((isInternalLink) =>
+                expectation<Question.Metadata, Document, Document, 1>(
                   isInternalLink,
                   () => askReference.map(isAtTheStartOfMain),
                   () => Outcomes.FirstTabbableIsNotInternalLink
                 )
               );
-        }
+
+        // No need to check if element is tabbable because this was
+        // already checked at the very start of expectation.
+        const askIsVisible = () =>
+          Question.of("first-tabbable-is-visible", target)
+            .answerIf(isVisible(device, Context.focus(element))(element), true)
+            .map((isVisible) =>
+              expectation<Question.Metadata, Document, Document, 2>(
+                isVisible,
+                isSkipLink,
+                () => Outcomes.FirstTabbableIsNotVisible
+              )
+            );
 
         return {
           1: expectation(
@@ -137,21 +134,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
             () =>
               expectation(
                 hasRole(device, (role) => role.is("link"))(element),
-                () =>
-                  // No need to check if element is tabbable because this was
-                  // already checked at the very start of expectation.
-                  askIsVisible
-                    .answerIf(
-                      isVisible(device, Context.focus(element))(element),
-                      true
-                    )
-                    .map((isVisible) =>
-                      expectation(
-                        isVisible,
-                        isSkipLink,
-                        () => Outcomes.FirstTabbableIsNotVisible
-                      )
-                    ),
+                askIsVisible,
                 () => Outcomes.FirstTabbableIsNotLink
               )
           ),

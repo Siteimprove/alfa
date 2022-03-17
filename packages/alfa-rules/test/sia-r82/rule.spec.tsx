@@ -1,4 +1,5 @@
 import { h } from "@siteimprove/alfa-dom";
+import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
 import R82, { Outcomes } from "../../src/sia-r82/rule";
@@ -54,8 +55,8 @@ test(`evaluate() passes when a form field has an error indicator that identifies
       { document },
       oracle({
         "error-indicators": [perceivableError],
-        "error-indicator-identifies-form-field": true,
-        "error-indicator-describes-resolution": true,
+        "error-indicator-identifying-form-field": Option.of(perceivableError),
+        "error-indicator-describing-resolution": Option.of(perceivableError),
       })
     ),
     [
@@ -76,8 +77,8 @@ test(`evaluate() fails when a form field has an error indicator that does not
       { document },
       oracle({
         "error-indicators": [perceivableError],
-        "error-indicator-identifies-form-field": false,
-        "error-indicator-describes-resolution": false,
+        "error-indicator-identifying-form-field": None,
+        "error-indicator-describing-resolution": None,
       })
     ),
     [
@@ -98,8 +99,8 @@ test(`evaluate() fails when a form field has an error indicator that identifies
       { document },
       oracle({
         "error-indicators": [invisibleError],
-        "error-indicator-identifies-form-field": true,
-        "error-indicator-describes-resolution": true,
+        "error-indicator-identifying-form-field": Option.of(invisibleError),
+        "error-indicator-describing-resolution": Option.of(invisibleError),
       })
     ),
     [
@@ -120,8 +121,8 @@ test(`evaluate() fails when a form field has an error indicator that identifies
       { document },
       oracle({
         "error-indicators": [ignoredError],
-        "error-indicator-identifies-form-field": true,
-        "error-indicator-describes-resolution": true,
+        "error-indicator-identifying-form-field": Option.of(ignoredError),
+        "error-indicator-describing-resolution": Option.of(ignoredError),
       })
     ),
     [
