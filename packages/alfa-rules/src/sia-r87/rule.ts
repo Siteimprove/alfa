@@ -82,7 +82,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
           target
         );
 
-        const askIsInteralLink = Question.of(
+        const askIsInternalLink = Question.of(
           "first-tabbable-is-internal-link",
           target
         );
@@ -106,7 +106,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
         const isSkipLink = () =>
           reference.isSome()
             ? isAtTheStartOfMain(reference)
-            : askIsInteralLink.map((isInternalLink) =>
+            : askIsInternalLink.map((isInternalLink) =>
                 expectation<Question.Metadata, Document, Document, 1>(
                   isInternalLink,
                   () => askReference.map(isAtTheStartOfMain),
