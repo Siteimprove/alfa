@@ -2442,7 +2442,7 @@ __metadata:
     axios: ^0.24.0
     execa: ^5.1.1
     minimist: ^1.2.5
-    package-dependency-graph: ^1.14.2
+    package-dependency-graph: ^1.14.3
     prettier: ^2.4.1
     ts-node: ^10.7.0
     typescript: ^4.5.2
@@ -7770,30 +7770,31 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"package-dependency-graph-core@npm:^1.14.2":
-  version: 1.14.2
-  resolution: "package-dependency-graph-core@npm:1.14.2"
+"package-dependency-graph-core@npm:^1.14.3":
+  version: 1.14.3
+  resolution: "package-dependency-graph-core@npm:1.14.3"
   dependencies:
     dagre-cluster-fix: 0.9.3
     package-dependency-collect: ^1.14.2
     tslib: 1 || 2
-  checksum: 9bcbce13d3a5c0f442282f55b9b661eb7aa0a2736cc6d8b0e6b3c87dc5de228a07f001c1e6d0a892e44c0122271dc44b4e5b555924bd3429f70450df01f26415
+  checksum: f7951614164e6c50c707ee99f519d0df24c9789015686d3a3610137b18541b7373866ad3b14dae0815e2d080a92faabb14a6e5f00ede66f558eaeeeec7802f98
   languageName: node
   linkType: hard
 
-"package-dependency-graph@npm:^1.14.2":
-  version: 1.14.2
-  resolution: "package-dependency-graph@npm:1.14.2"
+"package-dependency-graph@npm:^1.14.3":
+  version: 1.14.3
+  resolution: "package-dependency-graph@npm:1.14.3"
   dependencies:
     canvas: 2
     dagre-canvas: ^1.14.1
     dagre-svg: ^1.14.1
     graphviz-cli: 1
     minimist: 1
-    package-dependency-graph-core: ^1.14.2
+    package-dependency-graph-core: ^1.14.3
+    ts-node: "*"
   bin:
     package-dependency-graph: bin/package-dependency-graph
-  checksum: fe57059649e5b7cb39f70c4da6239903ada3c19db742ae1ad2215160774bdb77a365c5b5c2ebcd241ad2ec462b697369e937290c0429f1b9ff7d1255361c7a8a
+  checksum: 80f0bba262b76ff5d336052e44915f44c0c8ec82e4bdd091070fe49aa8f358b5aae9b39dfa1b6f8b16a1225c1ad9637e6d3ca725fb02d0427f09177958aa8c3c
   languageName: node
   linkType: hard
 
@@ -9249,7 +9250,7 @@ resolve@~1.19.0:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.7.0":
+"ts-node@npm:*, ts-node@npm:^10.7.0":
   version: 10.7.0
   resolution: "ts-node@npm:10.7.0"
   dependencies:
