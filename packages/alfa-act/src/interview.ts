@@ -32,7 +32,7 @@ export type Interview<
   SUBJECT,
   CONTEXT,
   ANSWER,
-  D extends number = 3
+  D extends number = Interview.MaxDepth
 > =
   | ANSWER
   | {
@@ -52,6 +52,11 @@ export type Interview<
  * @public
  */
 export namespace Interview {
+  /**
+   * @internal
+   */
+  export type MaxDepth = 3;
+
   //   To conduct an interview:
   // * if it is an answer, just send it back;
   // * if it is a rhetorical question, fetch its answer and recursively conduct

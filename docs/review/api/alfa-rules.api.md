@@ -91,7 +91,7 @@ const _default_28: Rule.Atomic<Page, Element<string>, Question.Metadata, Element
 const _default_29: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_3: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string>>;
+const _default_3: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string> | Array_2<Node<string>>>;
 
 // @public (undocumented)
 const _default_30: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
@@ -514,15 +514,15 @@ export namespace Question {
         };
         readonly "error-indicators": {
             readonly type: "node[]";
-            readonly message: "Where are the error indicators, if any, for the form field?";
+            readonly message: "Where are (all) the error indicators, if any, for the form field?";
         };
-        readonly "error-indicator-describes-resolution": {
-            readonly type: "boolean";
-            readonly message: "Does the error indicator describe, in text, the cause of the error or how to resolve it?";
+        readonly "error-indicator-describing-resolution": {
+            readonly type: "node";
+            readonly message: "Which of these error indicators describes, in text, the cause of the error or how to resolve it?";
         };
-        readonly "error-indicator-identifies-form-field": {
-            readonly type: "boolean";
-            readonly message: "Does the error indicator identify, in text, the form field it relates to?";
+        readonly "error-indicator-identifying-form-field": {
+            readonly type: "node";
+            readonly message: "Which of these error indicators identifies, in text, the form field it relates to?";
         };
         readonly "internal-reference": {
             readonly type: "node";

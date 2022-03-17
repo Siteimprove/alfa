@@ -1,9 +1,9 @@
-import { Interview, Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
-import { None, Option } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
@@ -61,14 +61,8 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
 
         const element = firstTabbable.get();
 
-        function isAtTheStartOfMain(
-          reference: Node
-        ): Interview<
-          Question.Metadata,
-          Element,
-          Document,
-          Option.Maybe<Result<Diagnostic, Diagnostic>>
-        > {
+        // Is "reference" at the start of the main content?
+        const isAtTheStartOfMain = (reference: Node) => {
           // Find the closest Element ancestor of the reference.
           const destination = reference
             .inclusiveAncestors({ flattened: true, nested: true })
@@ -97,54 +91,48 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
               () => Outcomes.FirstTabbableIsNotLinkToContent
             )
           );
-        }
+        };
 
-        function isSkipLink(): Interview<
-          Question.Metadata,
-          Element,
-          Document,
-          Option.Maybe<Result<Diagnostic>>
-        > {
-          const askReference = Question.of(
-            "internal-reference",
-            element,
-            target
+        const askReference = Question.of("internal-reference", element, target);
+
+        // The URL pointed by element.
+        const url = hasName("a", "area")(element)
+          ? element
+              .attribute("href")
+              .flatMap((attribute) =>
+                URL.parse(attribute.value, response.url).ok()
+              )
+          : None;
+
+        // The internal node (if any) this URL resolves to.
+        const reference = url
+          .filter(isInternalURL(response.url))
+          .flatMap((url) =>
+            url.fragment.flatMap((fragment) =>
+              element
+                .root()
+                .inclusiveDescendants()
+                .filter(isElement)
+                .find((element) => element.id.includes(fragment))
+            )
           );
 
-          const url = hasName("a", "area")(element)
-            ? element
-                .attribute("href")
-                .flatMap((attribute) =>
-                  URL.parse(attribute.value, response.url).ok()
-                )
-            : None;
-
-          const reference = url
-            .filter(isInternalURL(response.url))
-            .flatMap((url) =>
-              url.fragment.flatMap((fragment) =>
-                element
-                  .root()
-                  .inclusiveDescendants()
-                  .filter(isElement)
-                  .find((element) => element.id.includes(fragment))
+        // Is the first tabbable a link to main content?
+        const isSkipLink = () =>
+          askReference
+            // If the reference was automatically found, send it.
+            //
+            // The question expects an Option<Node> answer, so we cannot
+            // just .answerIf(reference) as this would only send a Node.
+            .answerIf(reference.isSome(), reference)
+            .map((ref) =>
+              expectation<Question.Metadata, Element, Document, 0>(
+                // Oracle may still answer None to the question.
+                ref.isSome(),
+                () => isAtTheStartOfMain(ref.get()),
+                () => Outcomes.FirstTabbableIsNotInternalLink
               )
             );
-
-          return (
-            askReference
-              // If the reference was automatically found, send it.
-              .answerIf(reference.isSome(), reference)
-              .map((ref) =>
-                expectation(
-                  // Oracle may still answer None to the question.
-                  ref.isSome(),
-                  () => isAtTheStartOfMain(ref.get()),
-                  () => Outcomes.FirstTabbableIsNotInternalLink
-                )
-              )
-          );
-        }
 
         const askIsVisible = Question.of(
           "is-visible-when-focused",
@@ -168,7 +156,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
                       true
                     )
                     .map((isVisible) =>
-                      expectation(
+                      expectation<Question.Metadata, Element, Document, 1>(
                         isVisible,
                         isSkipLink,
                         () => Outcomes.FirstTabbableIsNotVisible
