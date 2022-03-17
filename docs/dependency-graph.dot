@@ -23,17 +23,23 @@ digraph {
 
   subgraph cluster_Data_types {
     _siteimprove_alfa_affine _siteimprove_alfa_cache _siteimprove_alfa_highlight _siteimprove_alfa_math _siteimprove_alfa_parser _siteimprove_alfa_test _siteimprove_alfa_time;
-    subgraph cluster_Serialization {
-      _siteimprove_alfa_earl _siteimprove_alfa_json _siteimprove_alfa_json_ld _siteimprove_alfa_sarif;
+    subgraph cluster_Alternatives {
+      _siteimprove_alfa_either _siteimprove_alfa_option _siteimprove_alfa_result _siteimprove_alfa_selective;
 
-      label = "Serialization";
+      label = "Alternatives";
       color = "#007f7f";
     }
   
-    subgraph cluster_Type_definitions {
-      _siteimprove_alfa_applicative _siteimprove_alfa_callback _siteimprove_alfa_clone _siteimprove_alfa_continuation _siteimprove_alfa_foldable _siteimprove_alfa_functor _siteimprove_alfa_generator _siteimprove_alfa_mapper _siteimprove_alfa_monad _siteimprove_alfa_reducer _siteimprove_alfa_thunk;
+    subgraph cluster_Collections {
+      _siteimprove_alfa_bits _siteimprove_alfa_branched _siteimprove_alfa_collection _siteimprove_alfa_list _siteimprove_alfa_map _siteimprove_alfa_record _siteimprove_alfa_sequence _siteimprove_alfa_set _siteimprove_alfa_slice _siteimprove_alfa_tuple;
+      subgraph cluster_Built_ins {
+        _siteimprove_alfa_array _siteimprove_alfa_iterable;
 
-      label = "Type definitions";
+        label = "Built ins";
+        color = "#00ff00";
+      }
+    
+      label = "Collections";
       color = "#007fff";
     }
   
@@ -41,35 +47,27 @@ digraph {
       _siteimprove_alfa_comparable _siteimprove_alfa_equatable;
 
       label = "Comparison";
-      color = "#00ff00";
-    }
-  
-    subgraph cluster_Logic {
-      _siteimprove_alfa_predicate _siteimprove_alfa_refinement _siteimprove_alfa_trilean;
-
-      label = "Logic";
       color = "#00ff7f";
     }
   
-    subgraph cluster_Hash_tables {
-      _siteimprove_alfa_encoding _siteimprove_alfa_fnv _siteimprove_alfa_hash;
+    subgraph cluster_Computations {
+      
+      subgraph cluster_Asynchronous {
+        _siteimprove_alfa_future _siteimprove_alfa_promise _siteimprove_alfa_thenable;
 
-      label = "Hash tables";
+        label = "Asynchronous";
+        color = "#7f0000";
+      }
+    
+      subgraph cluster_Synchronous {
+        _siteimprove_alfa_lazy _siteimprove_alfa_trampoline;
+
+        label = "Synchronous";
+        color = "#7f007f";
+      }
+    
+      label = "Computations";
       color = "#00ffff";
-    }
-  
-    subgraph cluster_Alternatives {
-      _siteimprove_alfa_either _siteimprove_alfa_option _siteimprove_alfa_result _siteimprove_alfa_selective;
-
-      label = "Alternatives";
-      color = "#7f0000";
-    }
-  
-    subgraph cluster_Performance_measurements {
-      _siteimprove_alfa_emitter _siteimprove_alfa_performance;
-
-      label = "Performance measurements";
-      color = "#7f007f";
     }
   
     subgraph cluster_Graphs {
@@ -79,37 +77,39 @@ digraph {
       color = "#7f00ff";
     }
   
-    subgraph cluster_Computations {
-      
-      subgraph cluster_Asynchronous {
-        _siteimprove_alfa_future _siteimprove_alfa_promise _siteimprove_alfa_thenable;
+    subgraph cluster_Hash_tables {
+      _siteimprove_alfa_encoding _siteimprove_alfa_fnv _siteimprove_alfa_hash;
 
-        label = "Asynchronous";
-        color = "#7f7f7f";
-      }
-    
-      subgraph cluster_Synchronous {
-        _siteimprove_alfa_lazy _siteimprove_alfa_trampoline;
-
-        label = "Synchronous";
-        color = "#7f7fff";
-      }
-    
-      label = "Computations";
+      label = "Hash tables";
       color = "#7f7f00";
     }
   
-    subgraph cluster_Collections {
-      _siteimprove_alfa_bits _siteimprove_alfa_branched _siteimprove_alfa_collection _siteimprove_alfa_list _siteimprove_alfa_map _siteimprove_alfa_record _siteimprove_alfa_sequence _siteimprove_alfa_set _siteimprove_alfa_slice _siteimprove_alfa_tuple;
-      subgraph cluster_Built_ins {
-        _siteimprove_alfa_array _siteimprove_alfa_iterable;
+    subgraph cluster_Logic {
+      _siteimprove_alfa_predicate _siteimprove_alfa_refinement _siteimprove_alfa_trilean;
 
-        label = "Built ins";
-        color = "#7fff7f";
-      }
-    
-      label = "Collections";
+      label = "Logic";
+      color = "#7f7f7f";
+    }
+  
+    subgraph cluster_Performance_measurements {
+      _siteimprove_alfa_emitter _siteimprove_alfa_performance;
+
+      label = "Performance measurements";
+      color = "#7f7fff";
+    }
+  
+    subgraph cluster_Serialization {
+      _siteimprove_alfa_earl _siteimprove_alfa_json _siteimprove_alfa_json_ld _siteimprove_alfa_sarif;
+
+      label = "Serialization";
       color = "#7fff00";
+    }
+  
+    subgraph cluster_Type_definitions {
+      _siteimprove_alfa_applicative _siteimprove_alfa_callback _siteimprove_alfa_clone _siteimprove_alfa_continuation _siteimprove_alfa_foldable _siteimprove_alfa_functor _siteimprove_alfa_generator _siteimprove_alfa_mapper _siteimprove_alfa_monad _siteimprove_alfa_reducer _siteimprove_alfa_thunk;
+
+      label = "Type definitions";
+      color = "#7fff7f";
     }
   
     label = "Data types";
@@ -185,10 +185,10 @@ digraph {
   }
 
   _siteimprove_alfa_act -> _siteimprove_alfa_applicative[color = "#007f00" ltail=cluster_Accessibility_Conformance_Testing lhead=cluster_Data_types]
-  _siteimprove_alfa_affine -> _siteimprove_alfa_equatable[color = "#00ff00" lhead=cluster_Comparison]
-  _siteimprove_alfa_affine -> _siteimprove_alfa_json[color = "#007f7f" lhead=cluster_Serialization]
+  _siteimprove_alfa_affine -> _siteimprove_alfa_equatable[color = "#00ff7f" lhead=cluster_Comparison]
+  _siteimprove_alfa_affine -> _siteimprove_alfa_json[color = "#7fff00" lhead=cluster_Serialization]
   _siteimprove_alfa_affine -> _siteimprove_alfa_math[color = "#007f7f"]
-  _siteimprove_alfa_affine -> _siteimprove_alfa_option[color = "#7f0000" lhead=cluster_Alternatives]
+  _siteimprove_alfa_affine -> _siteimprove_alfa_option[color = "#007f7f" lhead=cluster_Alternatives]
   _siteimprove_alfa_angular -> _siteimprove_alfa_device[color = "#ff7f7f" ltail=cluster_Integrations_with_frameworks lhead=cluster_Understanding_the_web]
   _siteimprove_alfa_angular -> _siteimprove_alfa_option[color = "#007f00" ltail=cluster_Integrations_with_frameworks lhead=cluster_Data_types]
   _siteimprove_alfa_applicative -> _siteimprove_alfa_functor[color = "#7f0000"]
@@ -198,20 +198,20 @@ digraph {
   _siteimprove_alfa_aria -> _siteimprove_alfa_device[color = "#00ff00"]
   _siteimprove_alfa_aria -> _siteimprove_alfa_dom[color = "#00007f" lhead=cluster_HTML]
   _siteimprove_alfa_aria -> _siteimprove_alfa_style[color = "#0000ff" lhead=cluster_CSS]
-  _siteimprove_alfa_array -> _siteimprove_alfa_callback[color = "#007fff" ltail=cluster_Collections lhead=cluster_Type_definitions]
-  _siteimprove_alfa_array -> _siteimprove_alfa_comparable[color = "#00ff00" ltail=cluster_Collections lhead=cluster_Comparison]
-  _siteimprove_alfa_array -> _siteimprove_alfa_hash[color = "#00ffff" ltail=cluster_Collections lhead=cluster_Hash_tables]
+  _siteimprove_alfa_array -> _siteimprove_alfa_callback[color = "#7fff7f" ltail=cluster_Collections lhead=cluster_Type_definitions]
+  _siteimprove_alfa_array -> _siteimprove_alfa_comparable[color = "#00ff7f" ltail=cluster_Collections lhead=cluster_Comparison]
+  _siteimprove_alfa_array -> _siteimprove_alfa_hash[color = "#7f7f00" ltail=cluster_Collections lhead=cluster_Hash_tables]
   _siteimprove_alfa_array -> _siteimprove_alfa_iterable[color = "#7f00ff"]
-  _siteimprove_alfa_array -> _siteimprove_alfa_json[color = "#007f7f" ltail=cluster_Collections lhead=cluster_Serialization]
-  _siteimprove_alfa_array -> _siteimprove_alfa_option[color = "#7f0000" ltail=cluster_Collections lhead=cluster_Alternatives]
-  _siteimprove_alfa_array -> _siteimprove_alfa_predicate[color = "#00ff7f" ltail=cluster_Collections lhead=cluster_Logic]
+  _siteimprove_alfa_array -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Collections lhead=cluster_Serialization]
+  _siteimprove_alfa_array -> _siteimprove_alfa_option[color = "#007f7f" ltail=cluster_Collections lhead=cluster_Alternatives]
+  _siteimprove_alfa_array -> _siteimprove_alfa_predicate[color = "#7f7f7f" ltail=cluster_Collections lhead=cluster_Logic]
   _siteimprove_alfa_assert -> _siteimprove_alfa_act[color = "#000000" ltail=cluster_Integrations_with_frameworks lhead=cluster_Accessibility_Conformance_Testing]
   _siteimprove_alfa_branched -> _siteimprove_alfa_collection[color = "#007fff"]
-  _siteimprove_alfa_branched -> _siteimprove_alfa_iterable[color = "#7fff7f" lhead=cluster_Built_ins]
+  _siteimprove_alfa_branched -> _siteimprove_alfa_iterable[color = "#00ff00" lhead=cluster_Built_ins]
   _siteimprove_alfa_branched -> _siteimprove_alfa_list[color = "#7f7f7f"]
-  _siteimprove_alfa_cache -> _siteimprove_alfa_iterable[color = "#7fff00" lhead=cluster_Collections]
-  _siteimprove_alfa_cache -> _siteimprove_alfa_mapper[color = "#007fff" lhead=cluster_Type_definitions]
-  _siteimprove_alfa_cache -> _siteimprove_alfa_option[color = "#7f0000" lhead=cluster_Alternatives]
+  _siteimprove_alfa_cache -> _siteimprove_alfa_iterable[color = "#007fff" lhead=cluster_Collections]
+  _siteimprove_alfa_cache -> _siteimprove_alfa_mapper[color = "#7fff7f" lhead=cluster_Type_definitions]
+  _siteimprove_alfa_cache -> _siteimprove_alfa_option[color = "#007f7f" lhead=cluster_Alternatives]
   _siteimprove_alfa_callback -> _siteimprove_alfa_mapper[color = "#7f7fff"]
   _siteimprove_alfa_cascade -> _siteimprove_alfa_css[color = "#000000" ltail=cluster_CSS lhead=cluster_CSS_syntax]
   _siteimprove_alfa_cascade -> _siteimprove_alfa_device[color = "#00ff00" ltail=cluster_CSS]
@@ -225,8 +225,8 @@ digraph {
   _siteimprove_alfa_cli -> _siteimprove_alfa_interviewer[color = "#ff0000"]
   _siteimprove_alfa_cli -> _siteimprove_alfa_rules[color = "#ff007f" ltail=cluster_Command_line]
   _siteimprove_alfa_cli -> _siteimprove_alfa_scraper[color = "#007f00" ltail=cluster_Command_line lhead=cluster_Web_crawler]
-  _siteimprove_alfa_collection -> _siteimprove_alfa_iterable[color = "#7fff7f" lhead=cluster_Built_ins]
-  _siteimprove_alfa_comparable -> _siteimprove_alfa_refinement[color = "#00ff7f" ltail=cluster_Comparison lhead=cluster_Logic]
+  _siteimprove_alfa_collection -> _siteimprove_alfa_iterable[color = "#00ff00" lhead=cluster_Built_ins]
+  _siteimprove_alfa_comparable -> _siteimprove_alfa_refinement[color = "#7f7f7f" ltail=cluster_Comparison lhead=cluster_Logic]
   _siteimprove_alfa_continuation -> _siteimprove_alfa_callback[color = "#ffff00"]
   _siteimprove_alfa_continuation -> _siteimprove_alfa_mapper[color = "#7f7fff"]
   _siteimprove_alfa_crawler -> _siteimprove_alfa_dom[color = "#ff7f7f" ltail=cluster_Web_crawler lhead=cluster_Understanding_the_web]
@@ -237,14 +237,14 @@ digraph {
   _siteimprove_alfa_cypress -> _siteimprove_alfa_assert[color = "#007f00"]
   _siteimprove_alfa_dom -> _siteimprove_alfa_css[color = "#000000" ltail=cluster_HTML lhead=cluster_CSS_syntax]
   _siteimprove_alfa_earl -> _siteimprove_alfa_json_ld[color = "#7f0000"]
-  _siteimprove_alfa_earl -> _siteimprove_alfa_option[color = "#7f0000" ltail=cluster_Serialization lhead=cluster_Alternatives]
-  _siteimprove_alfa_earl -> _siteimprove_alfa_refinement[color = "#00ff7f" ltail=cluster_Serialization lhead=cluster_Logic]
-  _siteimprove_alfa_either -> _siteimprove_alfa_applicative[color = "#007fff" ltail=cluster_Alternatives lhead=cluster_Type_definitions]
-  _siteimprove_alfa_either -> _siteimprove_alfa_equatable[color = "#00ff00" ltail=cluster_Alternatives lhead=cluster_Comparison]
-  _siteimprove_alfa_either -> _siteimprove_alfa_hash[color = "#00ffff" ltail=cluster_Alternatives lhead=cluster_Hash_tables]
-  _siteimprove_alfa_either -> _siteimprove_alfa_json[color = "#007f7f" ltail=cluster_Alternatives lhead=cluster_Serialization]
+  _siteimprove_alfa_earl -> _siteimprove_alfa_option[color = "#007f7f" ltail=cluster_Serialization lhead=cluster_Alternatives]
+  _siteimprove_alfa_earl -> _siteimprove_alfa_refinement[color = "#7f7f7f" ltail=cluster_Serialization lhead=cluster_Logic]
+  _siteimprove_alfa_either -> _siteimprove_alfa_applicative[color = "#7fff7f" ltail=cluster_Alternatives lhead=cluster_Type_definitions]
+  _siteimprove_alfa_either -> _siteimprove_alfa_equatable[color = "#00ff7f" ltail=cluster_Alternatives lhead=cluster_Comparison]
+  _siteimprove_alfa_either -> _siteimprove_alfa_hash[color = "#7f7f00" ltail=cluster_Alternatives lhead=cluster_Hash_tables]
+  _siteimprove_alfa_either -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Alternatives lhead=cluster_Serialization]
   _siteimprove_alfa_either -> _siteimprove_alfa_option[color = "#7fff7f"]
-  _siteimprove_alfa_emitter -> _siteimprove_alfa_callback[color = "#007fff" ltail=cluster_Performance_measurements lhead=cluster_Type_definitions]
+  _siteimprove_alfa_emitter -> _siteimprove_alfa_callback[color = "#7fff7f" ltail=cluster_Performance_measurements lhead=cluster_Type_definitions]
   _siteimprove_alfa_enzyme -> _siteimprove_alfa_react[color = "#7f7f7f"]
   _siteimprove_alfa_fnv -> _siteimprove_alfa_hash[color = "#7fff7f"]
   _siteimprove_alfa_foldable -> _siteimprove_alfa_reducer[color = "#0000ff"]
@@ -253,32 +253,32 @@ digraph {
   _siteimprove_alfa_formatter_json -> _siteimprove_alfa_formatter[color = "#7f7fff"]
   _siteimprove_alfa_formatter_sarif -> _siteimprove_alfa_formatter[color = "#7f7fff"]
   _siteimprove_alfa_functor -> _siteimprove_alfa_mapper[color = "#7f7fff"]
-  _siteimprove_alfa_future -> _siteimprove_alfa_applicative[color = "#007fff" ltail=cluster_Computations lhead=cluster_Type_definitions]
-  _siteimprove_alfa_future -> _siteimprove_alfa_array[color = "#7fff00" ltail=cluster_Computations lhead=cluster_Collections]
+  _siteimprove_alfa_future -> _siteimprove_alfa_applicative[color = "#7fff7f" ltail=cluster_Computations lhead=cluster_Type_definitions]
+  _siteimprove_alfa_future -> _siteimprove_alfa_array[color = "#007fff" ltail=cluster_Computations lhead=cluster_Collections]
   _siteimprove_alfa_future -> _siteimprove_alfa_thenable[color = "#7fff7f"]
   _siteimprove_alfa_generator -> _siteimprove_alfa_mapper[color = "#7f7fff"]
   _siteimprove_alfa_generator -> _siteimprove_alfa_reducer[color = "#0000ff"]
-  _siteimprove_alfa_graph -> _siteimprove_alfa_equatable[color = "#00ff00" ltail=cluster_Graphs lhead=cluster_Comparison]
-  _siteimprove_alfa_graph -> _siteimprove_alfa_hash[color = "#00ffff" ltail=cluster_Graphs lhead=cluster_Hash_tables]
-  _siteimprove_alfa_graph -> _siteimprove_alfa_iterable[color = "#7fff00" ltail=cluster_Graphs lhead=cluster_Collections]
-  _siteimprove_alfa_graph -> _siteimprove_alfa_json[color = "#007f7f" ltail=cluster_Graphs lhead=cluster_Serialization]
+  _siteimprove_alfa_graph -> _siteimprove_alfa_equatable[color = "#00ff7f" ltail=cluster_Graphs lhead=cluster_Comparison]
+  _siteimprove_alfa_graph -> _siteimprove_alfa_hash[color = "#7f7f00" ltail=cluster_Graphs lhead=cluster_Hash_tables]
+  _siteimprove_alfa_graph -> _siteimprove_alfa_iterable[color = "#007fff" ltail=cluster_Graphs lhead=cluster_Collections]
+  _siteimprove_alfa_graph -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Graphs lhead=cluster_Serialization]
   _siteimprove_alfa_hash -> _siteimprove_alfa_encoding[color = "#7f00ff"]
-  _siteimprove_alfa_hash -> _siteimprove_alfa_equatable[color = "#00ff00" ltail=cluster_Hash_tables lhead=cluster_Comparison]
-  _siteimprove_alfa_hash -> _siteimprove_alfa_json[color = "#007f7f" ltail=cluster_Hash_tables lhead=cluster_Serialization]
-  _siteimprove_alfa_hash -> _siteimprove_alfa_refinement[color = "#00ff7f" ltail=cluster_Hash_tables lhead=cluster_Logic]
+  _siteimprove_alfa_hash -> _siteimprove_alfa_equatable[color = "#00ff7f" ltail=cluster_Hash_tables lhead=cluster_Comparison]
+  _siteimprove_alfa_hash -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Hash_tables lhead=cluster_Serialization]
+  _siteimprove_alfa_hash -> _siteimprove_alfa_refinement[color = "#7f7f7f" ltail=cluster_Hash_tables lhead=cluster_Logic]
   _siteimprove_alfa_http -> _siteimprove_alfa_url[color = "#ff7f7f"]
   _siteimprove_alfa_jasmine -> _siteimprove_alfa_assert[color = "#007f00"]
   _siteimprove_alfa_jest -> _siteimprove_alfa_assert[color = "#007f00"]
   _siteimprove_alfa_json_ld -> _siteimprove_alfa_json[color = "#7f7f00"]
-  _siteimprove_alfa_lazy -> _siteimprove_alfa_equatable[color = "#00ff00" ltail=cluster_Computations lhead=cluster_Comparison]
-  _siteimprove_alfa_lazy -> _siteimprove_alfa_json[color = "#007f7f" ltail=cluster_Computations lhead=cluster_Serialization]
+  _siteimprove_alfa_lazy -> _siteimprove_alfa_equatable[color = "#00ff7f" ltail=cluster_Computations lhead=cluster_Comparison]
+  _siteimprove_alfa_lazy -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Computations lhead=cluster_Serialization]
   _siteimprove_alfa_lazy -> _siteimprove_alfa_trampoline[color = "#00ffff"]
-  _siteimprove_alfa_list -> _siteimprove_alfa_array[color = "#7fff7f" lhead=cluster_Built_ins]
+  _siteimprove_alfa_list -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
   _siteimprove_alfa_list -> _siteimprove_alfa_bits[color = "#007f7f"]
   _siteimprove_alfa_list -> _siteimprove_alfa_collection[color = "#007fff"]
   _siteimprove_alfa_list -> _siteimprove_alfa_map[color = "#ff007f"]
   _siteimprove_alfa_list -> _siteimprove_alfa_set[color = "#ff00ff"]
-  _siteimprove_alfa_map -> _siteimprove_alfa_array[color = "#7fff7f" lhead=cluster_Built_ins]
+  _siteimprove_alfa_map -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
   _siteimprove_alfa_map -> _siteimprove_alfa_bits[color = "#007f7f"]
   _siteimprove_alfa_map -> _siteimprove_alfa_collection[color = "#007fff"]
   _siteimprove_alfa_media -> _siteimprove_alfa_css[color = "#00ff7f"]
@@ -286,15 +286,15 @@ digraph {
   _siteimprove_alfa_monad -> _siteimprove_alfa_functor[color = "#7f0000"]
   _siteimprove_alfa_monad -> _siteimprove_alfa_mapper[color = "#7f7fff"]
   _siteimprove_alfa_network -> _siteimprove_alfa_graph[color = "#7fff00"]
-  _siteimprove_alfa_option -> _siteimprove_alfa_predicate[color = "#00ff7f" ltail=cluster_Alternatives lhead=cluster_Logic]
-  _siteimprove_alfa_parser -> _siteimprove_alfa_callback[color = "#007fff" lhead=cluster_Type_definitions]
-  _siteimprove_alfa_parser -> _siteimprove_alfa_option[color = "#7f0000" lhead=cluster_Alternatives]
-  _siteimprove_alfa_parser -> _siteimprove_alfa_predicate[color = "#00ff7f" lhead=cluster_Logic]
+  _siteimprove_alfa_option -> _siteimprove_alfa_predicate[color = "#7f7f7f" ltail=cluster_Alternatives lhead=cluster_Logic]
+  _siteimprove_alfa_parser -> _siteimprove_alfa_callback[color = "#7fff7f" lhead=cluster_Type_definitions]
+  _siteimprove_alfa_parser -> _siteimprove_alfa_option[color = "#007f7f" lhead=cluster_Alternatives]
+  _siteimprove_alfa_parser -> _siteimprove_alfa_predicate[color = "#7f7f7f" lhead=cluster_Logic]
   _siteimprove_alfa_performance -> _siteimprove_alfa_emitter[color = "#7f007f"]
-  _siteimprove_alfa_performance -> _siteimprove_alfa_json[color = "#007f7f" ltail=cluster_Performance_measurements lhead=cluster_Serialization]
-  _siteimprove_alfa_predicate -> _siteimprove_alfa_callback[color = "#007fff" ltail=cluster_Logic lhead=cluster_Type_definitions]
-  _siteimprove_alfa_predicate -> _siteimprove_alfa_equatable[color = "#00ff00" ltail=cluster_Logic lhead=cluster_Comparison]
-  _siteimprove_alfa_record -> _siteimprove_alfa_iterable[color = "#7fff7f" lhead=cluster_Built_ins]
+  _siteimprove_alfa_performance -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Performance_measurements lhead=cluster_Serialization]
+  _siteimprove_alfa_predicate -> _siteimprove_alfa_callback[color = "#7fff7f" ltail=cluster_Logic lhead=cluster_Type_definitions]
+  _siteimprove_alfa_predicate -> _siteimprove_alfa_equatable[color = "#00ff7f" ltail=cluster_Logic lhead=cluster_Comparison]
+  _siteimprove_alfa_record -> _siteimprove_alfa_iterable[color = "#00ff00" lhead=cluster_Built_ins]
   _siteimprove_alfa_record -> _siteimprove_alfa_list[color = "#7f7f7f"]
   _siteimprove_alfa_refinement -> _siteimprove_alfa_predicate[color = "#ff007f"]
   _siteimprove_alfa_result -> _siteimprove_alfa_option[color = "#7fff7f"]
@@ -303,25 +303,25 @@ digraph {
   _siteimprove_alfa_rules -> _siteimprove_alfa_aria[color = "#ff7f7f" lhead=cluster_Understanding_the_web]
   _siteimprove_alfa_scraper -> _siteimprove_alfa_puppeteer[color = "#ff0000" ltail=cluster_Web_crawler lhead=cluster_Integrations_with_frameworks]
   _siteimprove_alfa_selective -> _siteimprove_alfa_either[color = "#00ff7f"]
-  _siteimprove_alfa_sequence -> _siteimprove_alfa_array[color = "#7fff7f" lhead=cluster_Built_ins]
+  _siteimprove_alfa_sequence -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
   _siteimprove_alfa_sequence -> _siteimprove_alfa_collection[color = "#007fff"]
-  _siteimprove_alfa_sequence -> _siteimprove_alfa_lazy[color = "#7f7f00" ltail=cluster_Collections lhead=cluster_Computations]
+  _siteimprove_alfa_sequence -> _siteimprove_alfa_lazy[color = "#00ffff" ltail=cluster_Collections lhead=cluster_Computations]
   _siteimprove_alfa_sequence -> _siteimprove_alfa_map[color = "#ff007f"]
   _siteimprove_alfa_sequence -> _siteimprove_alfa_set[color = "#ff00ff"]
-  _siteimprove_alfa_set -> _siteimprove_alfa_array[color = "#7fff7f" lhead=cluster_Built_ins]
+  _siteimprove_alfa_set -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
   _siteimprove_alfa_set -> _siteimprove_alfa_collection[color = "#007fff"]
   _siteimprove_alfa_set -> _siteimprove_alfa_map[color = "#ff007f"]
-  _siteimprove_alfa_slice -> _siteimprove_alfa_array[color = "#7fff7f" lhead=cluster_Built_ins]
+  _siteimprove_alfa_slice -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
   _siteimprove_alfa_slice -> _siteimprove_alfa_collection[color = "#007fff"]
   _siteimprove_alfa_style -> _siteimprove_alfa_cascade[color = "#00ff00"]
   _siteimprove_alfa_style -> _siteimprove_alfa_selector[color = "#7f0000"]
   _siteimprove_alfa_table -> _siteimprove_alfa_dom[color = "#00ff7f"]
   _siteimprove_alfa_test -> _siteimprove_alfa_highlight[color = "#00007f"]
-  _siteimprove_alfa_thenable -> _siteimprove_alfa_refinement[color = "#00ff7f" ltail=cluster_Computations lhead=cluster_Logic]
+  _siteimprove_alfa_thenable -> _siteimprove_alfa_refinement[color = "#7f7f7f" ltail=cluster_Computations lhead=cluster_Logic]
   _siteimprove_alfa_thunk -> _siteimprove_alfa_mapper[color = "#7f7fff"]
   _siteimprove_alfa_thunk -> _siteimprove_alfa_reducer[color = "#0000ff"]
-  _siteimprove_alfa_trilean -> _siteimprove_alfa_iterable[color = "#7fff00" ltail=cluster_Logic lhead=cluster_Collections]
-  _siteimprove_alfa_tuple -> _siteimprove_alfa_array[color = "#7fff7f" lhead=cluster_Built_ins]
+  _siteimprove_alfa_trilean -> _siteimprove_alfa_iterable[color = "#007fff" ltail=cluster_Logic lhead=cluster_Collections]
+  _siteimprove_alfa_tuple -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
   _siteimprove_alfa_unexpected -> _siteimprove_alfa_assert[color = "#007f00"]
   _siteimprove_alfa_vue -> _siteimprove_alfa_cheerio[color = "#7f00ff"]
   _siteimprove_alfa_wcag -> _siteimprove_alfa_act[color = "#007f7f"]
