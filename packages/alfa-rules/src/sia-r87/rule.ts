@@ -118,7 +118,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
 
         // No need to check if element is tabbable because this was
         // already checked at the very start of expectation.
-        const isVisibleFoo = () =>
+        const isVisible = () =>
           askIsVisible
             .answerIf(isVisible(device, Context.focus(element))(element), true)
             .map((isVisible) =>
@@ -136,7 +136,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
             () =>
               expectation(
                 hasRole(device, (role) => role.is("link"))(element),
-                isVisibleFoo,
+                isVisible,
                 () => Outcomes.FirstTabbableIsNotLink
               )
           ),

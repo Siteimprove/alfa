@@ -14,7 +14,6 @@ export namespace Question {
    */
   interface Type {
     boolean: boolean;
-    deprecated: never;
     node: Option<Node>;
     "node[]": Iterable<Node>;
     "color[]": Iterable<RGB>;
@@ -253,15 +252,6 @@ export namespace Question {
       type: "node",
       message:
         "Which of these error indicators identifies, in text, the form field it relates to?",
-    },
-    "error-indicator-describes-resolution": {
-      type: "deprecated",
-      message: `Does the error indicator describe, in text, the cause of the error or how to resolve it?`,
-    },
-    "error-indicator-identifies-form-field": {
-      type: "deprecated",
-      message:
-        "Does the error indicator identify, in text, the form field it relates to?",
     },
     // ER87 (experimental)
     "internal-reference": {

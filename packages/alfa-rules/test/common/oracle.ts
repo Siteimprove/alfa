@@ -42,9 +42,6 @@ export function oracle<I, T, S>(
       case "boolean":
         return wrapper(question, answers[question.uri]!);
 
-      case "deprecated":
-        return Future.now(None);
-
       case "node":
         return wrapper(question, answers[question.uri]!);
 
