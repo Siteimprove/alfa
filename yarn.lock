@@ -9958,20 +9958,10 @@ typescript@~4.5.2:
   languageName: node
   linkType: hard
 
-"z-schema@npm:~3.18.3":
-  version: 3.18.4
-  resolution: "z-schema@npm:3.18.4"
-  dependencies:
-    commander: ^2.7.1
-    lodash.get: ^4.0.0
-    lodash.isequal: ^4.0.0
-    validator: ^8.0.0
-  dependenciesMeta:
-    commander:
-      optional: true
-  bin:
-    z-schema: ./bin/z-schema
-  checksum: 837f0a4794eacd589c0aca313f19caf8bed075ad77cd2af29e051d08e71131b375af5ff8d7f1c2cc3a7a916c4e4cc8ab6c30bf5c9882b9f7728515b2d2542c23
+"yn@npm:3.1.1":
+  version: 3.1.1
+  resolution: "yn@npm:3.1.1"
+  checksum: 2c487b0e149e746ef48cda9f8bad10fc83693cd69d7f9dcd8be4214e985de33a29c9e24f3c0d6bcf2288427040a8947406ab27f7af67ee9456e6b84854f02dd6
   languageName: node
   linkType: hard
 
