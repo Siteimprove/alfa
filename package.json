@@ -16,7 +16,7 @@
     "test": "node scripts/test.js --pretty",
     "watch": "node scripts/watch.js --pretty",
     "document": "node scripts/document.js --pretty",
-    "dependency-graph": "package-dependency-graph --exclude-node_modules --graphviz --dot docs/dependency-graph.dot --png docs/dependency-graph.png"
+    "dependency-graph": "package-dependency-graph --config config/package-dependency-graph.ts --exclude-node_modules --graphviz --dot docs/dependency-graph.dot --png docs/dependency-graph.png"
   },
   "workspaces": [
     "packages/*"
