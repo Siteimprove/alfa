@@ -89,8 +89,6 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
 
         const askReference = Question.of("first-tabbable-reference", target);
 
-        const askIsVisible = Question.of("first-tabbable-is-visible", target);
-
         const isAtTheStartOfMain = (reference: Option<Node>) =>
           expectation<Question.Metadata, Document, Document, 0>(
             mains.some((main) => reference.some(isAtTheStart(main, device))),
@@ -118,8 +116,8 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
 
         // No need to check if element is tabbable because this was
         // already checked at the very start of expectation.
-        const isVisible = () =>
-          askIsVisible
+        const askIsVisible = () =>
+          Question.of("first-tabbable-is-visible", target)
             .answerIf(isVisible(device, Context.focus(element))(element), true)
             .map((isVisible) =>
               expectation<Question.Metadata, Document, Document, 2>(
@@ -136,7 +134,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
             () =>
               expectation(
                 hasRole(device, (role) => role.is("link"))(element),
-                isVisible,
+                askIsVisible,
                 () => Outcomes.FirstTabbableIsNotLink
               )
           ),
