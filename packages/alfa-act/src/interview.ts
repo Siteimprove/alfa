@@ -82,8 +82,11 @@ export namespace Interview {
         answer = Future.now(Option.of(interview.answer()));
       } else {
         answer = oracle(rule, interview).map((option) =>
-          // need to bind due to eta-contraction losing `this`.
-          option.map(interview.answer.bind(interview))
+          option
+            // If oracle has no answer, use fallback
+            .or(interview.fallback)
+            // Need to bind due to eta-contraction losing `this`.
+            .map(interview.answer.bind(interview))
         );
       }
 
