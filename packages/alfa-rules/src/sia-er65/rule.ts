@@ -105,9 +105,7 @@ export namespace Outcomes {
   );
 
   export const HasGoodClass = Ok.of(
-    Diagnostic.of(
-      "The element has a class guaranteed to have a visible focus indicator"
-    )
+    Diagnostic.of("The element has a class ensuring a visible focus indicator")
   );
 }
 
