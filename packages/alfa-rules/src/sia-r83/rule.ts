@@ -347,6 +347,9 @@ function isWrappingFlexContainer(device: Device): Predicate<Element> {
   };
 }
 
+/**
+ * @internal
+ */
 export class ClippingAncestors extends Diagnostic {
   public static of(
     message: string,
@@ -399,10 +402,27 @@ export class ClippingAncestors extends Diagnostic {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace ClippingAncestors {
   export interface JSON extends Diagnostic.JSON {
     horizontal: Option.JSON<Element>;
     vertical: Option.JSON<Element>;
+  }
+
+  export function isClippingAncestors(
+    value: Diagnostic
+  ): value is ClippingAncestors;
+
+  export function isClippingAncestors(
+    value: unknown
+  ): value is ClippingAncestors;
+
+  export function isClippingAncestors(
+    value: unknown
+  ): value is ClippingAncestors {
+    return value instanceof ClippingAncestors;
   }
 }
 
