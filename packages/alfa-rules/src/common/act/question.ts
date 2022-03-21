@@ -52,7 +52,7 @@ export namespace Question {
     uri: U,
     subject: S,
     message?: string,
-    diagnostic?: Diagnostic
+    options?: act.Question.Options<Type[Data[U]["type"]]>
   ): act.Question<
     Data[U]["type"],
     S,
@@ -67,7 +67,7 @@ export namespace Question {
     subject: S,
     context: C,
     message?: string,
-    diagnostic?: Diagnostic
+    options?: act.Question.Options<Type[Data[U]["type"]]>
   ): act.Question<
     Data[U]["type"],
     S,
@@ -81,8 +81,8 @@ export namespace Question {
     uri: U,
     subject: S,
     contextOrMessage?: S | string,
-    messageOrDiagnostic?: string | Diagnostic,
-    diagnostic?: Diagnostic
+    messageOrOptions?: string | act.Question.Options<Type[Data[U]["type"]]>,
+    options: act.Question.Options<Type[Data[U]["type"]]> = {}
   ): act.Question<
     Data[U]["type"],
     S,
@@ -100,13 +100,15 @@ export namespace Question {
       // more likely to be text nodes that the actual text in it.
       typeof contextOrMessage === "string"
     ) {
+      // We have message + options
       message = contextOrMessage ?? Data[uri].message;
       // Type is ensured by overloads
-      diagnostic = messageOrDiagnostic as Diagnostic;
+      options = messageOrOptions as act.Question.Options<Type[Data[U]["type"]]>;
     } else {
+      // We have context + message + options
       context = contextOrMessage ?? subject;
       // Type is ensured by overloads
-      message = (messageOrDiagnostic as string) ?? Data[uri].message;
+      message = (messageOrOptions as string) ?? Data[uri].message;
     }
 
     return act.Question.of(
@@ -115,7 +117,7 @@ export namespace Question {
       message,
       subject,
       context,
-      diagnostic
+      options
     );
   }
 
