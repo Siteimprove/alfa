@@ -357,8 +357,8 @@ export namespace Outcome {
 }
 
 // @public
-export class Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<TYPE, SUBJECT, CONTEXT, URI>> {
-    protected constructor(type: TYPE, uri: URI, message: string, diagnostic: Diagnostic, subject: SUBJECT, context: CONTEXT, quester: Mapper<ANSWER, T>);
+export class Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string> implements Functor<T>, Applicative<T>, Monad<T>, Serializable<Question.JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>> {
+    protected constructor(type: TYPE, uri: URI, message: string, diagnostic: Diagnostic, fallback: Option<ANSWER>, subject: SUBJECT, context: CONTEXT, quester: Mapper<ANSWER, T>);
     // (undocumented)
     answer(answer: ANSWER): T;
     // (undocumented)
@@ -382,6 +382,10 @@ export class Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends st
     // (undocumented)
     protected readonly _diagnostic: Diagnostic;
     // (undocumented)
+    get fallback(): Option<ANSWER>;
+    // (undocumented)
+    protected readonly _fallback: Option<ANSWER>;
+    // (undocumented)
     flatMap<U>(mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
     // (undocumented)
     flatten<TYPE, SUBJECT, CONTEXT, ANSWER, T>(this: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>;
@@ -394,7 +398,7 @@ export class Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends st
     // (undocumented)
     protected readonly _message: string;
     // (undocumented)
-    static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(type: TYPE, uri: URI, message: string, subject: SUBJECT, context: CONTEXT, diagnostic?: Diagnostic): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI>;
+    static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(type: TYPE, uri: URI, message: string, subject: SUBJECT, context: CONTEXT, options?: Question.Options<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI>;
     // (undocumented)
     protected readonly _quester: Mapper<ANSWER, T>;
     // (undocumented)
@@ -402,7 +406,7 @@ export class Question<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends st
     // (undocumented)
     protected readonly _subject: SUBJECT;
     // (undocumented)
-    toJSON(): Question.JSON<TYPE, SUBJECT, CONTEXT, URI>;
+    toJSON(): Question.JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
     // (undocumented)
     get type(): TYPE;
     // (undocumented)
@@ -418,13 +422,15 @@ export namespace Question {
     // (undocumented)
     export function isQuestion<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string>(value: unknown): value is Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
     // (undocumented)
-    export interface JSON<TYPE, SUBJECT, CONTEXT, URI extends string = string> {
+    export interface JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
         context: Serializable.ToJSON<CONTEXT>;
         // (undocumented)
         diagnostic: Diagnostic.JSON;
+        // (undocumented)
+        fallback: Option.JSON<ANSWER>;
         // (undocumented)
         message: string;
         // (undocumented)
@@ -433,6 +439,13 @@ export namespace Question {
         type: Serializable.ToJSON<TYPE>;
         // (undocumented)
         uri: URI;
+    }
+    // (undocumented)
+    export interface Options<A> {
+        // (undocumented)
+        readonly diagnostic?: Diagnostic;
+        // (undocumented)
+        readonly fallback?: Option<A>;
     }
     // @internal
     export class Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string> extends Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
