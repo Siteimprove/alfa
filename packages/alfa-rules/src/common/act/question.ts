@@ -18,6 +18,7 @@ export namespace Question {
     "node[]": Iterable<Node>;
     "color[]": Iterable<RGB>;
     string: string;
+    "string[]": Iterable<string>;
   }
 
   /**
@@ -211,6 +212,10 @@ export namespace Question {
       message: `Do these [role] landmarks have the same or equivalent content?`,
     },
     // R65
+    "visible-focus-classes": {
+      type: "string[]",
+      message: `Which classes have a visible focus indicator?`,
+    },
     "has-focus-indicator": {
       type: "boolean",
       message: `Does the element have a visible focus indicator?`,
