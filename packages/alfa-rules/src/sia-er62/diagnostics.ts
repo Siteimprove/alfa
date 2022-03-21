@@ -131,7 +131,7 @@ export namespace ElementDistinguishable {
     [key: string]: json.JSON;
     distinguishingProperties: Array<DistinguishingProperty>;
     style: Map.JSON<Name, string>;
-    pairings: Array<Contrast.Pairing.JSON>;
+    pairings: Array<Contrast.Pairing.JSON<["container", "link"]>>;
   }
 
   export function from(
