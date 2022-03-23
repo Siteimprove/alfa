@@ -143,6 +143,13 @@ export namespace RuleTree {
       return this._parent;
     }
 
+    public *ancestors(): Iterable<Node> {
+      for (const parent of this._parent) {
+        yield parent;
+        yield* parent.ancestors();
+      }
+    }
+
     public static add(
       rule: Rule,
       selector: Selector,
