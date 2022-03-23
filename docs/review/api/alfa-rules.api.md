@@ -461,14 +461,16 @@ export namespace Question {
         [K in Uri]: [Data[K]["type"], Type[Data[K]["type"]]];
     };
     // (undocumented)
-    export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string, diagnostic?: Diagnostic_2): act.Question<Data[U]["type"], S, S, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string, options?: act.Question.Options<Type[Data[U]["type"]]>): act.Question<Data[U]["type"], S, S, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
     // (undocumented)
-    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string, diagnostic?: Diagnostic_2): act.Question<Data[U]["type"], S, C, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string, options?: act.Question.Options<Type[Data[U]["type"]]>): act.Question<Data[U]["type"], S, C, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
     export interface Type {
         // (undocumented)
         "color[]": Iterable<RGB>;
         // (undocumented)
         "node[]": Iterable<Node>;
+        // (undocumented)
+        "string[]": Iterable<string>;
         // (undocumented)
         boolean: boolean;
         // (undocumented)
@@ -559,6 +561,10 @@ export namespace Question {
         readonly "is-content-equivalent": {
             readonly type: "boolean";
             readonly message: "Do these [role] landmarks have the same or equivalent content?";
+        };
+        readonly "visible-focus-classes": {
+            readonly type: "string[]";
+            readonly message: "Which classes have a visible focus indicator?";
         };
         readonly "has-focus-indicator": {
             readonly type: "boolean";
