@@ -340,6 +340,7 @@ export namespace Diagnostic {
     const // Warning: (ae-forgotten-export) The symbol "ColorError" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
+    isColorError: typeof ColorError.isColorError, // (undocumented)
     isColorErrorInterposedDescendants: typeof ColorError.HasInterposedDescendants.isInterposedDescendants, // (undocumented)
     isColorErrorUnresolvableGradientStop: typeof ColorError.HasUnresolvableGradientStop.isUnresolvableGradientStop, // (undocumented)
     isColorErrorWithProperty: typeof ColorError.WithProperty.isWithProperty;
