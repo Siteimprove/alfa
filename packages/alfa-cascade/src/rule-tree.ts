@@ -150,6 +150,11 @@ export namespace RuleTree {
       }
     }
 
+    public *inclusiveAncestors(): Iterable<Node> {
+      yield this;
+      yield* this.ancestors();
+    }
+
     public static add(
       rule: Rule,
       selector: Selector,
