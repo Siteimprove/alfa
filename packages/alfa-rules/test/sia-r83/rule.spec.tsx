@@ -285,7 +285,7 @@ test(`evaluate() passes a relatively positioned node with a handling static pare
   ]);
 });
 
-test(`evaluates() checking wrapping of text nodes individually`, async (t) => {
+test(`evaluates() checks wrapping of text nodes individually`, async (t) => {
   const target1 = h.text("I have non-wrapped text and I clip");
   const target2 = h.text("I do not clip because I wrap");
 
@@ -378,6 +378,57 @@ test(`evaluate() passes text in <option> within a <select> with a \`multiple\` a
     passed(R83, target1, { 1: Outcomes.WrapsText }),
     passed(R83, target2, { 1: Outcomes.WrapsText }),
     passed(R83, target3, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test(`evaluate() passes a text node with fixed height set by a font-relative
+      height media query`, async (t) => {
+  const target = h.text("Hello World");
+
+  const document = h.document(
+    [
+      <body>
+        <div>{target}</div>
+      </body>,
+    ],
+    [
+      h.sheet([
+        h.rule.media("(min-height: 10em)", [
+          h.rule.style("div", { height: "10px", overflow: "hidden" }),
+        ]),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
+test(`evaluate() passes a text node with horizontal wrapping set by a font-relative
+      width media query`, async (t) => {
+  const target = h.text("Hello World");
+
+  const document = h.document(
+    [
+      <body>
+        <div>{target}</div>
+      </body>,
+    ],
+    [
+      h.sheet([
+        h.rule.media("(min-width: 10em)", [
+          h.rule.style("div", {
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }),
+        ]),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
   ]);
 });
 
@@ -561,6 +612,51 @@ test(`evaluate() fails a relatively positioned node clipped by a static parent`,
 
   t.deepEqual(await evaluate(R83, { document }), [
     failed(R83, target, { 1: Outcomes.ClipsText(None, Option.of(clipping)) }),
+  ]);
+});
+
+test(`evaluate() fails a text node with fixed height set by a font-relative
+      width media query`, async (t) => {
+  const target = h.text("Hello World");
+  const clipper = <div>{target}</div>;
+
+  const document = h.document(
+    [<body>{clipper}</body>],
+    [
+      h.sheet([
+        h.rule.media("(min-width: 10em)", [
+          h.rule.style("div", { height: "10px", overflow: "hidden" }),
+        ]),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    failed(R83, target, { 1: Outcomes.ClipsText(None, Option.of(clipper)) }),
+  ]);
+});
+
+test(`evaluate() fails a text node with horizontal wrapping set by a font-relative
+      height media query`, async (t) => {
+  const target = h.text("Hello World");
+  const clipper = <div>{target}</div>;
+
+  const document = h.document(
+    [<body>{clipper}</body>],
+    [
+      h.sheet([
+        h.rule.media("(min-height: 10em)", [
+          h.rule.style("div", {
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+          }),
+        ]),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    failed(R83, target, { 1: Outcomes.ClipsText(Option.of(clipper), None) }),
   ]);
 });
 
