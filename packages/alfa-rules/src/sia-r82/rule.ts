@@ -1,8 +1,9 @@
-import { Rule, Interview, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Result, Ok, Err } from "@siteimprove/alfa-result";
+import { Ok, Err } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -24,7 +25,12 @@ const { and, test } = Predicate;
  * this needs changes in the Page Report to be able to highlight an element
  * different from the test target.
  */
-export default Rule.Atomic.of<Page, Element, Question.Metadata, Node>({
+export default Rule.Atomic.of<
+  Page,
+  Element,
+  Question.Metadata,
+  Node | Array<Node>
+>({
   uri: "https://alfa.siteimprove.com/rules/sia-r82",
   requirements: [Criterion.of("3.3.1")],
   tags: [Scope.Component, Stability.Experimental],
@@ -57,35 +63,23 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata, Node>({
 
       expectations(target) {
         const indicators = Question.of("error-indicators", target).map(
-          (indicators) => [...indicators]
+          Array.from
         );
 
         return {
           1: indicators.map((indicators) =>
-            expectation(
+            expectation<Question.Metadata, Array<Node>, Element, 0>(
               indicators.length === 0,
               () => Outcomes.HasNoErrorIndicator,
-              () =>
-                identifiesTarget(
-                  target,
-                  indicators,
-                  Outcomes.NoErrorIndicatorIdentifiesTarget,
-                  device
-                )
+              () => identifiesTarget(target, indicators, device)
             )
           ),
 
           2: indicators.map((indicators) =>
-            expectation(
+            expectation<Question.Metadata, Array<Node>, Element, 0>(
               indicators.length === 0,
               () => Outcomes.HasNoErrorIndicator,
-              () =>
-                describesResolution(
-                  target,
-                  indicators,
-                  Outcomes.NoErrorIndicatorDescribesResolution,
-                  device
-                )
+              () => describesResolution(target, indicators, device)
             )
           ),
         };
@@ -138,60 +132,40 @@ export namespace Outcomes {
   );
 }
 
-function identifiesTarget(
+const identifiesTarget = (
   target: Element,
   indicators: Array<Node>,
-  error: Err<Diagnostic>,
   device: Device
-): Interview<Question.Metadata, Node, Element, Result<Diagnostic>> {
-  const indicator = indicators[0];
+) =>
+  Question.of("error-indicator-identifying-form-field", indicators, target).map(
+    (indicator) =>
+      expectation(
+        indicator.isNone(),
+        () => Outcomes.NoErrorIndicatorIdentifiesTarget,
+        () =>
+          expectation(
+            test(isPerceivable(device), indicator.get()),
+            () => Outcomes.ErrorIndicatorIdentifiesTarget,
+            () => Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable
+          )
+      )
+  );
 
-  if (indicator === undefined) {
-    return error;
-  }
-
-  return Question.of(
-    "error-indicator-identifies-form-field",
-    indicator,
-    target
-  ).map((isIdentified) => {
-    if (isIdentified) {
-      if (test(isPerceivable(device), indicator)) {
-        return Outcomes.ErrorIndicatorIdentifiesTarget;
-      } else {
-        error = Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable;
-      }
-    }
-
-    return identifiesTarget(target, indicators.slice(1), error, device);
-  });
-}
-
-function describesResolution(
+const describesResolution = (
   target: Element,
   indicators: Array<Node>,
-  error: Err<Diagnostic>,
   device: Device
-): Interview<Question.Metadata, Node, Element, Result<Diagnostic>> {
-  const indicator = indicators[0];
-
-  if (indicator === undefined) {
-    return error;
-  }
-
-  return Question.of(
-    "error-indicator-describes-resolution",
-    indicator,
-    target
-  ).map((isDescribed) => {
-    if (isDescribed) {
-      if (test(isPerceivable(device), indicator)) {
-        return Outcomes.ErrorIndicatorDescribesResolution;
-      } else {
-        error = Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable;
-      }
-    }
-
-    return describesResolution(target, indicators.slice(1), error, device);
-  });
-}
+) =>
+  Question.of("error-indicator-describing-resolution", indicators, target).map(
+    (indicator) =>
+      expectation(
+        indicator.isNone(),
+        () => Outcomes.NoErrorIndicatorDescribesResolution,
+        () =>
+          expectation(
+            test(isPerceivable(device), indicator.get()),
+            () => Outcomes.ErrorIndicatorDescribesResolution,
+            () => Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable
+          )
+      )
+  );

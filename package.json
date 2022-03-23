@@ -22,8 +22,8 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.15.1",
-    "@microsoft/api-extractor": "^7.18.0",
+    "@microsoft/api-documenter": "^7.15.4",
+    "@microsoft/api-extractor": "^7.19.5",
     "@types/async": "^3.2.5",
     "@types/node": "^14.14.31",
     "async": "^3.2.1",
@@ -32,7 +32,7 @@
     "minimist": "^1.2.5",
     "package-dependency-graph": "^1.13.0",
     "prettier": "^2.4.1",
-    "typescript": "^4.5.2"
+    "typescript": "^4.6.2"
   },
   "packageManager": "yarn@3.0.2"
 }

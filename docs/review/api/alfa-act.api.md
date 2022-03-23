@@ -76,7 +76,7 @@ export namespace Diagnostic {
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
 //
 // @public
-export type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = 3> = ANSWER | {
+export type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = Interview.MaxDepth> = ANSWER | {
     [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, CONTEXT, QUESTION[URI] extends [any, infer A] ? A : never, D extends -1 ? ANSWER : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>, URI extends string ? URI : never>;
 }[keyof QUESTION];
 
@@ -84,6 +84,8 @@ export type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = 3> 
 export namespace Interview {
     // (undocumented)
     export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>): Future<Either<ANSWER, Diagnostic>>;
+    // @internal (undocumented)
+    export type MaxDepth = 3;
 }
 
 // @public
