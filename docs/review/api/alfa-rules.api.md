@@ -5,22 +5,47 @@
 ```ts
 
 import * as act from '@siteimprove/alfa-act';
+import * as aria from '@siteimprove/alfa-aria';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Attribute } from '@siteimprove/alfa-dom';
-import { Diagnostic } from '@siteimprove/alfa-act';
+import { Comparable } from '@siteimprove/alfa-comparable';
+import { Comparison } from '@siteimprove/alfa-comparable';
+import { Computed } from '@siteimprove/alfa-style/src/property/background-color';
+import { Computed as Computed_2 } from '@siteimprove/alfa-style/src/property/background-size';
+import { Computed as Computed_3 } from '@siteimprove/alfa-style/src/property/background-image';
+import { Computed as Computed_4 } from '@siteimprove/alfa-style/src/property/color';
+import { Computed as Computed_5 } from '@siteimprove/alfa-style/src/property/text-shadow';
+import { Context } from '@siteimprove/alfa-selector';
+import { Current } from '@siteimprove/alfa-css';
+import { Device } from '@siteimprove/alfa-device';
+import { Diagnostic as Diagnostic_2 } from '@siteimprove/alfa-act';
 import { Document } from '@siteimprove/alfa-dom';
 import * as earl from '@siteimprove/alfa-earl';
 import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
+import { Hash } from '@siteimprove/alfa-hash';
+import { Hashable } from '@siteimprove/alfa-hash';
+import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
+import { Language } from '@siteimprove/alfa-iana';
+import { List } from '@siteimprove/alfa-list';
+import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Node } from '@siteimprove/alfa-dom';
 import { Option } from '@siteimprove/alfa-option';
 import { Page } from '@siteimprove/alfa-web';
+import { Percentage } from '@siteimprove/alfa-css';
+import { Property } from '@siteimprove/alfa-style';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
+import { Result } from '@siteimprove/alfa-result';
 import { RGB } from '@siteimprove/alfa-css';
+import { Role } from '@siteimprove/alfa-aria';
 import { Rule } from '@siteimprove/alfa-act';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
+import { Serializable } from '@siteimprove/alfa-json';
+import { Specified } from '@siteimprove/alfa-style/src/property/position';
+import { Style } from '@siteimprove/alfa-style';
+import { System } from '@siteimprove/alfa-css';
 import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
@@ -306,6 +331,57 @@ const _default_93: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 // @public (undocumented)
 const _default_94: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
+// @public (undocumented)
+export namespace Diagnostic {
+    const // Warning: (ae-forgotten-export) The symbol "ClippingAncestors" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isClippingAncestors: typeof ClippingAncestors.isClippingAncestors;
+    const // Warning: (ae-forgotten-export) The symbol "ColorError" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isColorError: typeof ColorError.isColorError, // (undocumented)
+    isColorErrorInterposedDescendants: typeof ColorError.HasInterposedDescendants.isInterposedDescendants, // (undocumented)
+    isColorErrorUnresolvableGradientStop: typeof ColorError.HasUnresolvableGradientStop.isUnresolvableGradientStop, // (undocumented)
+    isColorErrorWithProperty: typeof ColorError.WithProperty.isWithProperty;
+    const // Warning: (ae-forgotten-export) The symbol "Contrast" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isContrast: typeof Contrast.isContrast;
+    const // Warning: (ae-forgotten-export) The symbol "DeprecatedElements" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isDeprecatedElements: typeof DeprecatedElements.isDeprecatedElements;
+    const // Warning: (ae-forgotten-export) The symbol "DistinguishingStyles" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isDistinguishingStyles: typeof DistinguishingStyles.isDistinguishingStyles;
+    const // Warning: (ae-forgotten-export) The symbol "DistinguishingStyles" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isDistinguishingStylesExperimental: typeof DistinguishingStyles_2.isDistinguishingStyles;
+    const // Warning: (ae-forgotten-export) The symbol "LabelAndName" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isLabelAndName: typeof LabelAndName.isLabelAndName;
+    const // Warning: (ae-forgotten-export) The symbol "Languages" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isLanguages: typeof Languages.isLanguages;
+    const // Warning: (ae-forgotten-export) The symbol "RoleAndRequiredAttributes" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isRoleAndRequiredAttributes: typeof RoleAndRequiredAttributes.isRoleAndRequiredAttributes;
+    const // Warning: (ae-forgotten-export) The symbol "SameNames" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isSameNames: typeof SameNames.isSameNames;
+    const // Warning: (ae-forgotten-export) The symbol "WithRole" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isWithRole: typeof WithRole.isWithRole;
+}
+
 declare namespace experimentalRules {
     export {
         _default as ER62,
@@ -385,9 +461,9 @@ export namespace Question {
         [K in Uri]: [Data[K]["type"], Type[Data[K]["type"]]];
     };
     // (undocumented)
-    export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string, diagnostic?: Diagnostic): act.Question<Data[U]["type"], S, S, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string, diagnostic?: Diagnostic_2): act.Question<Data[U]["type"], S, S, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
     // (undocumented)
-    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string, diagnostic?: Diagnostic): act.Question<Data[U]["type"], S, C, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string, diagnostic?: Diagnostic_2): act.Question<Data[U]["type"], S, C, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
     export interface Type {
         // (undocumented)
         "color[]": Iterable<RGB>;

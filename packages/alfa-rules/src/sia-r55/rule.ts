@@ -105,7 +105,10 @@ export namespace Outcomes {
     );
 }
 
-class WithRole extends Diagnostic {
+/**
+ * @internal
+ */
+export class WithRole extends Diagnostic {
   public static of(message: string, role: Role.Name = "none"): WithRole {
     return new WithRole(message, role);
   }
@@ -141,10 +144,17 @@ class WithRole extends Diagnostic {
   }
 }
 
-namespace WithRole {
+/**
+ * @internal
+ */
+export namespace WithRole {
   export interface JSON extends Diagnostic.JSON {
     role: string;
   }
+
+  export function isWithRole(value: Diagnostic): value is WithRole;
+
+  export function isWithRole(value: unknown): value is WithRole;
 
   export function isWithRole(value: unknown): value is WithRole {
     return value instanceof WithRole;

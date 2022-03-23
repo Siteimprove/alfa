@@ -423,6 +423,9 @@ interface ErrorName {
   background: "text-shadow";
 }
 
+/**
+ * @internal
+ */
 export abstract class ColorError<
   T extends keyof ErrorName = keyof ErrorName,
   K extends ErrorName[T] = ErrorName[T]
@@ -474,6 +477,9 @@ export abstract class ColorError<
   }
 }
 
+/**
+ * @internal
+ */
 export namespace ColorError {
   export interface JSON<
     T extends keyof ErrorName = keyof ErrorName,
@@ -484,10 +490,28 @@ export namespace ColorError {
     kind: K;
   }
 
+  export function isColorError<
+    T extends keyof ErrorName = keyof ErrorName,
+    K extends ErrorName[T] = ErrorName[T]
+  >(value: Diagnostic): value is ColorError<T, K>;
+
+  export function isColorError<
+    T extends keyof ErrorName = keyof ErrorName,
+    K extends ErrorName[T] = ErrorName[T]
+  >(value: unknown): value is ColorError<T, K>;
+
+  export function isColorError<
+    T extends keyof ErrorName = keyof ErrorName,
+    K extends ErrorName[T] = ErrorName[T]
+  >(value: unknown): value is ColorError<T, K> {
+    return value instanceof ColorError;
+  }
+
   /**
+   * @internal
    * Most color error are just about one CSS property.
    */
-  class WithProperty<
+  export class WithProperty<
     T extends keyof ErrorName,
     K extends ErrorName[T],
     N extends
@@ -599,7 +623,10 @@ export namespace ColorError {
     }
   }
 
-  namespace WithProperty {
+  /**
+   * @internal
+   */
+  export namespace WithProperty {
     export interface JSON<
       T extends keyof ErrorName,
       K extends ErrorName[T],
@@ -634,7 +661,47 @@ export namespace ColorError {
       return (element, value) =>
         WithProperty.of(message, { type, kind, element, property, value });
     }
+
+    export function isWithProperty<
+      T extends keyof ErrorName,
+      K extends ErrorName[T],
+      N extends
+        | "background-color"
+        | "background-image"
+        | "background-size"
+        | "color"
+        | "position"
+        | "text-shadow"
+    >(value: Diagnostic): value is WithProperty<T, K, N>;
+
+    export function isWithProperty<
+      T extends keyof ErrorName,
+      K extends ErrorName[T],
+      N extends
+        | "background-color"
+        | "background-image"
+        | "background-size"
+        | "color"
+        | "position"
+        | "text-shadow"
+    >(value: unknown): value is WithProperty<T, K, N>;
+
+    export function isWithProperty<
+      T extends keyof ErrorName,
+      K extends ErrorName[T],
+      N extends
+        | "background-color"
+        | "background-image"
+        | "background-size"
+        | "color"
+        | "position"
+        | "text-shadow"
+    >(value: unknown): value is WithProperty<T, K, N> {
+      return value instanceof WithProperty;
+    }
   }
+
+  export const { isWithProperty } = WithProperty;
 
   export const unresolvableBackgroundColor = WithProperty.from(
     "layer",
@@ -679,9 +746,10 @@ export namespace ColorError {
   );
 
   /**
+   * @internal
    * We want both the value of background-image and the unresolvable stop
    */
-  class HasUnresolvableGradientStop extends WithProperty<
+  export class HasUnresolvableGradientStop extends WithProperty<
     "layer",
     "unresolvable-gradient",
     "background-image"
@@ -736,7 +804,10 @@ export namespace ColorError {
     }
   }
 
-  namespace HasUnresolvableGradientStop {
+  /**
+   * @internal
+   */
+  export namespace HasUnresolvableGradientStop {
     export interface JSON
       extends WithProperty.JSON<
         "layer",
@@ -745,15 +816,32 @@ export namespace ColorError {
       > {
       color: Serializable.ToJSON<Color | Current | System>;
     }
+
+    export function isUnresolvableGradientStop(
+      value: Diagnostic
+    ): value is HasUnresolvableGradientStop;
+
+    export function isUnresolvableGradientStop(
+      value: unknown
+    ): value is HasUnresolvableGradientStop;
+
+    export function isUnresolvableGradientStop(
+      value: unknown
+    ): value is HasUnresolvableGradientStop {
+      return value instanceof HasUnresolvableGradientStop;
+    }
   }
 
-  export const { create: unresolvableGradientStop } =
-    HasUnresolvableGradientStop;
+  export const {
+    create: unresolvableGradientStop,
+    isUnresolvableGradientStop,
+  } = HasUnresolvableGradientStop;
 
   /**
+   * @internal
    * This one does not depend on a CSS property, but on some other elements
    */
-  class HasInterposedDescendants extends ColorError<
+  export class HasInterposedDescendants extends ColorError<
     "layer",
     "interposed-descendant"
   > {
@@ -814,7 +902,10 @@ export namespace ColorError {
     }
   }
 
-  namespace HasInterposedDescendants {
+  /**
+   * @internal
+   */
+  export namespace HasInterposedDescendants {
     export interface JSON
       extends ColorError.JSON<"layer", "interposed-descendant"> {
       positionedDescendants: Sequence.JSON<Element>;
@@ -830,7 +921,22 @@ export namespace ColorError {
         positionedDescendants
       );
     }
+
+    export function isInterposedDescendants(
+      value: Diagnostic
+    ): value is HasInterposedDescendants;
+
+    export function isInterposedDescendants(
+      value: unknown
+    ): value is HasInterposedDescendants;
+
+    export function isInterposedDescendants(
+      value: unknown
+    ): value is HasInterposedDescendants {
+      return value instanceof HasInterposedDescendants;
+    }
   }
 
-  export const { from: interposedDescendants } = HasInterposedDescendants;
+  export const { from: interposedDescendants, isInterposedDescendants } =
+    HasInterposedDescendants;
 }

@@ -11,8 +11,8 @@ type Name = ["container", "link"] | ["foreground", "background"];
 type FirstColor<N extends Name> = N[0];
 type SecondColor<N extends Name> = N[1];
 
-export class Contrast<N extends Name> extends Diagnostic {
-  public static of<N extends Name>(
+export class Contrast<N extends Name = Name> extends Diagnostic {
+  public static of<N extends Name = Name>(
     message: string,
     threshold: number = 4.5,
     pairings: Iterable<Contrast.Pairing<N>> = []
@@ -42,6 +42,10 @@ export class Contrast<N extends Name> extends Diagnostic {
     return this._pairings;
   }
 
+  public equals(value: Contrast): boolean;
+
+  public equals(value: unknown): value is this;
+
   public equals(value: unknown): value is this {
     return (
       super.equals(value) &&
@@ -52,7 +56,7 @@ export class Contrast<N extends Name> extends Diagnostic {
     );
   }
 
-  public toJSON(): Contrast.JSON {
+  public toJSON(): Contrast.JSON<N> {
     return {
       ...super.toJSON(),
       threshold: this._threshold,
@@ -62,20 +66,31 @@ export class Contrast<N extends Name> extends Diagnostic {
 }
 
 export namespace Contrast {
-  export interface JSON extends Diagnostic.JSON {
+  export interface JSON<N extends Name> extends Diagnostic.JSON {
     threshold: number;
-    pairings: Array<Pairing.JSON>;
+    pairings: Array<Pairing.JSON<N>>;
   }
 
-  export function isContrast(value: unknown): value is Contrast<Name> {
+  export function isContrast<N extends Name>(
+    value: Diagnostic
+  ): value is Contrast<N>;
+
+  export function isContrast<N extends Name>(
+    value: unknown
+  ): value is Contrast<N>;
+
+  export function isContrast<N extends Name>(
+    value: unknown
+  ): value is Contrast<N> {
     return value instanceof Contrast;
   }
-  export class Pairing<N extends Name>
+
+  export class Pairing<N extends Name = Name>
     implements Equatable, Serializable, Hashable, Comparable<Pairing<N>>
   {
-    public static of<N extends Name>(
-      color1: [N[0], RGB],
-      color2: [N[1], RGB],
+    public static of<N extends Name = Name>(
+      color1: [FirstColor<N>, RGB],
+      color2: [SecondColor<N>, RGB],
       contrast: number
     ): Pairing<N> {
       return new Pairing(Color.of(...color1), Color.of(...color2), contrast);
@@ -135,7 +150,7 @@ export namespace Contrast {
       return Comparison.Equal;
     }
 
-    public toJSON(): Pairing.JSON {
+    public toJSON(): Pairing.JSON<N> {
       return {
         color1: this._color1.toJSON(),
         color2: this._color2.toJSON(),
@@ -145,13 +160,14 @@ export namespace Contrast {
   }
 
   export namespace Pairing {
-    export interface JSON {
+    export interface JSON<N extends Name> {
       [key: string]: json.JSON;
-      color1: Color.JSON;
-      color2: Color.JSON;
+      color1: Color.JSON<FirstColor<N>>;
+      color2: Color.JSON<SecondColor<N>>;
       contrast: number;
     }
   }
+
   class Color<N extends FirstColor<Name> | SecondColor<Name>>
     implements Equatable, Serializable, Hashable
   {
@@ -190,17 +206,18 @@ export namespace Contrast {
       );
     }
 
-    public toJSON(): Color.JSON {
+    public toJSON(): Color.JSON<N> {
       return {
         name: this._name,
         value: this._value.toJSON(),
       };
     }
   }
+
   namespace Color {
-    export interface JSON {
+    export interface JSON<N extends FirstColor<Name> | SecondColor<Name>> {
       [key: string]: json.JSON;
-      name: json.JSON;
+      name: N;
       value: RGB.JSON;
     }
   }

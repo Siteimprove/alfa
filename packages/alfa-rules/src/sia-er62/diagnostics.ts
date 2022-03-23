@@ -18,8 +18,14 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 import { Serialise } from "./serialise";
 
 type Name = Property.Name | Property.Shorthand.Name;
+/**
+ * @internal
+ */
 export type DistinguishingProperty = Name | "contrast";
 
+/**
+ * @internal
+ */
 export class ElementDistinguishable
   implements Equatable, Hashable, Serializable
 {
@@ -131,7 +137,7 @@ export namespace ElementDistinguishable {
     [key: string]: json.JSON;
     distinguishingProperties: Array<DistinguishingProperty>;
     style: Map.JSON<Name, string>;
-    pairings: Array<Contrast.Pairing.JSON>;
+    pairings: Array<Contrast.Pairing.JSON<["container", "link"]>>;
   }
 
   export function from(
@@ -173,6 +179,9 @@ export namespace ElementDistinguishable {
   }
 }
 
+/**
+ * @internal
+ */
 export class DistinguishingStyles extends Diagnostic {
   public static of(
     message: string,
@@ -239,12 +248,23 @@ export class DistinguishingStyles extends Diagnostic {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace DistinguishingStyles {
   export interface JSON extends Diagnostic.JSON {
     defaultStyle: Sequence.JSON<Result<ElementDistinguishable>>;
     hoverStyle: Sequence.JSON<Result<ElementDistinguishable>>;
     focusStyle: Sequence.JSON<Result<ElementDistinguishable>>;
   }
+
+  export function isDistinguishingStyles(
+    value: Diagnostic
+  ): value is DistinguishingStyles;
+
+  export function isDistinguishingStyles(
+    value: unknown
+  ): value is DistinguishingStyles;
 
   export function isDistinguishingStyles(
     value: unknown
