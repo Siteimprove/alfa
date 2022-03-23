@@ -490,6 +490,14 @@ export namespace ColorError {
     kind: K;
   }
 
+  export function isColorError(value: Diagnostic): value is ColorError;
+
+  export function isColorError(value: unknown): value is ColorError;
+
+  export function isColorError(value: unknown): value is ColorError {
+    return value instanceof ColorError;
+  }
+
   /**
    * @internal
    * Most color error are just about one CSS property.

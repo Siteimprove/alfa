@@ -19,6 +19,7 @@ export namespace Diagnostic {
   export const { isClippingAncestors } = ClippingAncestors;
 
   export const {
+    isColorError,
     isInterposedDescendants: isColorErrorInterposedDescendants,
     isUnresolvableGradientStop: isColorErrorUnresolvableGradientStop,
     isWithProperty: isColorErrorWithProperty,
