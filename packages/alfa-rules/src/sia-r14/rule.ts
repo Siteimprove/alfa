@@ -178,7 +178,10 @@ export namespace Outcomes {
     );
 }
 
-class LabelAndName extends Diagnostic {
+/**
+ * @internal
+ */
+export class LabelAndName extends Diagnostic {
   public static of(
     message: string,
     textContent: string = "",
@@ -226,9 +229,20 @@ class LabelAndName extends Diagnostic {
   }
 }
 
-namespace LabelAndName {
+/**
+ * @internal
+ */
+export namespace LabelAndName {
   export interface JSON extends Diagnostic.JSON {
     textContent: string;
     name: string;
+  }
+
+  export function isLabelAndName(value: Diagnostic): value is LabelAndName;
+
+  export function isLabelAndName(value: unknown): value is LabelAndName;
+
+  export function isLabelAndName(value: unknown): value is LabelAndName {
+    return value instanceof LabelAndName;
   }
 }

@@ -86,7 +86,10 @@ export namespace Outcomes {
     Err.of(SameNames.of(`Some \`${role}\` have the same name.`, role, errors));
 }
 
-class SameNames extends Diagnostic implements Iterable<List<Element>> {
+/**
+ * @internal
+ */
+export class SameNames extends Diagnostic implements Iterable<List<Element>> {
   public static of(
     message: string,
     role: Role.Name = "none",
@@ -138,11 +141,18 @@ class SameNames extends Diagnostic implements Iterable<List<Element>> {
   }
 }
 
-namespace SameNames {
+/**
+ * @internal
+ */
+export namespace SameNames {
   export interface JSON extends Diagnostic.JSON {
     role: string;
     errors: Array<List.JSON<Element>>;
   }
+
+  export function isSameNames(value: Diagnostic): value is SameNames;
+
+  export function isSameNames(value: unknown): value is SameNames;
 
   export function isSameNames(value: unknown): value is SameNames {
     return value instanceof SameNames;

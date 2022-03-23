@@ -99,6 +99,9 @@ function hasRequiredValues(
     : Err.of(RoleAndRequiredAttributes.of("", roleName, required, missing));
 }
 
+/**
+ * @internal
+ */
 export class RoleAndRequiredAttributes extends Diagnostic {
   public static of(
     message: string,
@@ -177,13 +180,30 @@ export class RoleAndRequiredAttributes extends Diagnostic {
   }
 }
 
-namespace RoleAndRequiredAttributes {
+/**
+ * @internal
+ */
+export namespace RoleAndRequiredAttributes {
   export interface JSON extends Diagnostic.JSON {
     role: string;
     attributes: {
       required: Array<aria.Attribute.Name>;
       missing: Array<aria.Attribute.Name>;
     };
+  }
+
+  export function isRoleAndRequiredAttributes(
+    value: Diagnostic
+  ): value is RoleAndRequiredAttributes;
+
+  export function isRoleAndRequiredAttributes(
+    value: unknown
+  ): value is RoleAndRequiredAttributes;
+
+  export function isRoleAndRequiredAttributes(
+    value: unknown
+  ): value is RoleAndRequiredAttributes {
+    return value instanceof RoleAndRequiredAttributes;
   }
 }
 

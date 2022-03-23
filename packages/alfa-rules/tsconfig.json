@@ -6,6 +6,7 @@
     "jsxImportSource": "@siteimprove/alfa-dom"
   },
   "files": [
+    "src/common/act/diagnostic.ts",
     "src/common/act/expectation.ts",
     "src/common/act/group.ts",
     "src/common/act/is-passed.ts",

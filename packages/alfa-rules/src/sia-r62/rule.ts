@@ -472,6 +472,9 @@ export namespace ComputedStyles {
   }
 }
 
+/**
+ * @internal
+ */
 export class DistinguishingStyles extends Diagnostic {
   public static of(
     message: string,
@@ -538,12 +541,23 @@ export class DistinguishingStyles extends Diagnostic {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace DistinguishingStyles {
   export interface JSON extends Diagnostic.JSON {
     defaultStyle: Sequence.JSON<Result<ComputedStyles>>;
     hoverStyle: Sequence.JSON<Result<ComputedStyles>>;
     focusStyle: Sequence.JSON<Result<ComputedStyles>>;
   }
+
+  export function isDistinguishingStyles(
+    value: Diagnostic
+  ): value is DistinguishingStyles;
+
+  export function isDistinguishingStyles(
+    value: unknown
+  ): value is DistinguishingStyles;
 
   export function isDistinguishingStyles(
     value: unknown
