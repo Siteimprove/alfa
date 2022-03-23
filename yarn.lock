@@ -430,6 +430,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cspotcode/source-map-consumer@npm:0.8.0":
+  version: 0.8.0
+  resolution: "@cspotcode/source-map-consumer@npm:0.8.0"
+  checksum: c0c16ca3d2f58898f1bd74c4f41a189dbcc202e642e60e489cbcc2e52419c4e89bdead02c886a12fb13ea37798ede9e562b2321df997ebc210ae9bd881561b4e
+  languageName: node
+  linkType: hard
+
+"@cspotcode/source-map-support@npm:0.7.0":
+  version: 0.7.0
+  resolution: "@cspotcode/source-map-support@npm:0.7.0"
+  dependencies:
+    "@cspotcode/source-map-consumer": 0.8.0
+  checksum: 9faddda7757cd778b5fd6812137b2cc265810043680d6399acc20441668fafcdc874053be9dccd0d9110087287bfad27eb3bf342f72bceca9aa9059f5d0c4be8
+  languageName: node
+  linkType: hard
+
 "@cypress/request@npm:^2.88.6":
   version: 2.88.6
   resolution: "@cypress/request@npm:2.88.6"
@@ -2386,7 +2402,7 @@ __metadata:
     axios: ^0.24.0
     execa: ^5.1.1
     minimist: ^1.2.5
-    package-dependency-graph: ^1.13.0
+    package-dependency-graph: ^1.14.3
     prettier: ^2.4.1
     typescript: ^4.6.2
   languageName: unknown
@@ -2405,6 +2421,34 @@ __metadata:
   version: 1.1.2
   resolution: "@tootallnate/once@npm:1.1.2"
   checksum: e1fb1bbbc12089a0cb9433dc290f97bddd062deadb6178ce9bcb93bb7c1aecde5e60184bc7065aec42fe1663622a213493c48bbd4972d931aae48315f18e1be9
+  languageName: node
+  linkType: hard
+
+"@tsconfig/node10@npm:^1.0.7":
+  version: 1.0.8
+  resolution: "@tsconfig/node10@npm:1.0.8"
+  checksum: b8d5fffbc6b17ef64ef74f7fdbccee02a809a063ade785c3648dae59406bc207f70ea2c4296f92749b33019fa36a5ae716e42e49cc7f1bbf0fd147be0d6b970a
+  languageName: node
+  linkType: hard
+
+"@tsconfig/node12@npm:^1.0.7":
+  version: 1.0.9
+  resolution: "@tsconfig/node12@npm:1.0.9"
+  checksum: a01b2400ab3582b86b589c6d31dcd0c0656f333adecde85d6d7d4086adb059808b82692380bb169546d189bf771ae21d02544a75b57bd6da4a5dd95f8567bec9
+  languageName: node
+  linkType: hard
+
+"@tsconfig/node14@npm:^1.0.0":
+  version: 1.0.1
+  resolution: "@tsconfig/node14@npm:1.0.1"
+  checksum: 976345e896c0f059867f94f8d0f6ddb8b1844fb62bf36b727de8a9a68f024857e5db97ed51d3325e23e0616a5e48c034ff51a8d595b3fe7e955f3587540489be
+  languageName: node
+  linkType: hard
+
+"@tsconfig/node16@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@tsconfig/node16@npm:1.0.2"
+  checksum: ca94d3639714672bbfd55f03521d3f56bb6a25479bd425da81faf21f13e1e9d15f40f97377dedbbf477a5841c5b0c8f4cd1b391f33553d750b9202c54c2c07aa
   languageName: node
   linkType: hard
 
@@ -2850,6 +2894,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"acorn-walk@npm:^8.1.1":
+  version: 8.2.0
+  resolution: "acorn-walk@npm:8.2.0"
+  checksum: 1715e76c01dd7b2d4ca472f9c58968516a4899378a63ad5b6c2d668bba8da21a71976c14ec5f5b75f887b6317c4ae0b897ab141c831d741dc76024d8745f1ad1
+  languageName: node
+  linkType: hard
+
 "acorn@npm:^7.1.1":
   version: 7.4.1
   resolution: "acorn@npm:7.4.1"
@@ -2859,12 +2910,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.2.4":
-  version: 8.3.0
-  resolution: "acorn@npm:8.3.0"
+"acorn@npm:^8.2.4, acorn@npm:^8.4.1":
+  version: 8.7.0
+  resolution: "acorn@npm:8.7.0"
   bin:
     acorn: bin/acorn
-  checksum: 9217542382451ea95902c650e0d03c661abaf39c41f3c797347b61f2950b0f03c5f77ef93b9f702dc8112907cf40812e3cb5f1e62b3054f017ebeb07ed267587
+  checksum: e0f79409d68923fbf1aa6d4166f3eedc47955320d25c89a20cc822e6ba7c48c5963d5bc657bc242d68f7a4ac9faf96eef033e8f73656da6c640d4219935fdfd0
   languageName: node
   linkType: hard
 
@@ -3076,6 +3127,13 @@ __metadata:
     delegates: ^1.0.0
     readable-stream: ^2.0.6
   checksum: 9a746b1dbce4122f44002b0c39fbba5b2c6f52c00e88b6ccba6fc68652323f8a1355a20e8ab94846995626d8de3bf67669a3b4a037dff0885db14607168f2b15
+  languageName: node
+  linkType: hard
+
+"arg@npm:^4.1.0":
+  version: 4.1.3
+  resolution: "arg@npm:4.1.3"
+  checksum: 544af8dd3f60546d3e4aff084d451b96961d2267d668670199692f8d054f0415d86fc5497d0e641e91546f0aa920e7c29e5250e99fc89f5552a34b5d93b77f43
   languageName: node
   linkType: hard
 
@@ -4001,6 +4059,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"create-require@npm:^1.1.0":
+  version: 1.1.1
+  resolution: "create-require@npm:1.1.1"
+  checksum: a9a1503d4390d8b59ad86f4607de7870b39cad43d929813599a23714831e81c520bddf61bcdd1f8e30f05fd3a2b71ae8538e946eb2786dc65c2bbc520f692eff
+  languageName: node
+  linkType: hard
+
 "cross-spawn@npm:^7.0.0, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
@@ -4127,23 +4192,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dagre-abstract-renderer@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "dagre-abstract-renderer@npm:1.13.0"
+"dagre-abstract-renderer@npm:^1.14.1":
+  version: 1.14.1
+  resolution: "dagre-abstract-renderer@npm:1.14.1"
   dependencies:
     dagre-cluster-fix: 0.9.3
     tslib: 1 || 2
-  checksum: 2c2e0c64f102dfb252e92eb97dcd274bd961390f9120fbea8146e6593545f5cbb48f7cb417c04dc142dba8184dcd24d22b57b1c44188038b833194647b38e636
+  checksum: bf5ecaf9b02ad6da3e152c9a0908ffe37e5676c44ded30132341cb35e518d3bbf739758bf726e4aeee6818584eb0d91300b8b4d70647314f2b031cdf6641e7d7
   languageName: node
   linkType: hard
 
-"dagre-canvas@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "dagre-canvas@npm:1.13.0"
+"dagre-canvas@npm:^1.14.1":
+  version: 1.14.1
+  resolution: "dagre-canvas@npm:1.14.1"
   dependencies:
-    dagre-abstract-renderer: ^1.13.0
+    dagre-abstract-renderer: ^1.14.1
     dagre-cluster-fix: 0.9.3
-  checksum: d7980e70ae31bd29c266013b9f79112a434179f7ac1008e1c82a5d687fe194def35efc4a328e2b582292a47ddb08b9d474cb9c2afffbc86aa39db1a4fd2948e1
+  checksum: b3648e2e882bb71939539a42062747b4e80ef06ea2501c699ebcffc9da28e06257141c26f321c4ce0ef1b0cd13180550b73c43b71a0a7fc64f85ab935ea2b336
   languageName: node
   linkType: hard
 
@@ -4157,13 +4222,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dagre-svg@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "dagre-svg@npm:1.13.0"
+"dagre-svg@npm:^1.14.1":
+  version: 1.14.1
+  resolution: "dagre-svg@npm:1.14.1"
   dependencies:
-    dagre-abstract-renderer: ^1.13.0
+    dagre-abstract-renderer: ^1.14.1
     dagre-cluster-fix: 0.9.3
-  checksum: d1ec2a55c2ac9d4bdc76fc8c4748ef4ffd1a039b05cbd48f9f8d875e536b7cfd0dbfb5c5adbfa538c80530d6364be7e55dfd127be254d225ad36caa43a06b933
+  checksum: 6def67f435f3cbb7050cc4fda62eec383653a9bf5549b70fd9c6da99a5600493e8ba01a704f2210af25f9ac36d83aade22baaf048c61a8a9d83c0078af1c84a2
   languageName: node
   linkType: hard
 
@@ -4420,6 +4485,13 @@ __metadata:
   version: 27.0.6
   resolution: "diff-sequences@npm:27.0.6"
   checksum: f35ad024d426cd1026d6c98a1f604c41966a0e89712b05a38812fc11e645ff0e915ec17bc8f4b6910fed6df0b309b255aa6c7c77728be452c6dbbfa30aa2067b
+  languageName: node
+  linkType: hard
+
+"diff@npm:^4.0.1":
+  version: 4.0.2
+  resolution: "diff@npm:4.0.2"
+  checksum: f2c09b0ce4e6b301c221addd83bf3f454c0bc00caa3dd837cf6c127d6edf7223aa2bbe3b688feea110b7f262adbfc845b757c44c8a9f8c0c5b15d8fa9ce9d20d
   languageName: node
   linkType: hard
 
@@ -7041,6 +7113,13 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
+"make-error@npm:^1.1.1":
+  version: 1.3.6
+  resolution: "make-error@npm:1.3.6"
+  checksum: b86e5e0e25f7f777b77fabd8e2cbf15737972869d852a22b7e73c17623928fccb826d8e46b9951501d3f20e51ad74ba8c59ed584f610526a48f8ccf88aaec402
+  languageName: node
+  linkType: hard
+
 "make-fetch-happen@npm:^8.0.14":
   version: 8.0.14
   resolution: "make-fetch-happen@npm:8.0.14"
@@ -7624,40 +7703,41 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"package-dependency-collect@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "package-dependency-collect@npm:1.13.0"
+"package-dependency-collect@npm:^1.14.2":
+  version: 1.14.2
+  resolution: "package-dependency-collect@npm:1.14.2"
   dependencies:
     glob: 7
     tslib: 1 || 2
-  checksum: 48476e3035df710a94fcfb12734e8629a4d6aab008df90203be7a52fe0fb122ed53f8037f59aca35d76dc06ff20033c43f2b5527590875acec6004a7146fbd5b
+  checksum: 98e4902fada7b5cbf35b398c973f8ef118000945b768ad9f93aac8fbfbff2853209e066f2f095d683ac7af7e8a872e024410b446df15e2da22775b7acf660b14
   languageName: node
   linkType: hard
 
-"package-dependency-graph-core@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "package-dependency-graph-core@npm:1.13.0"
+"package-dependency-graph-core@npm:^1.14.3":
+  version: 1.14.3
+  resolution: "package-dependency-graph-core@npm:1.14.3"
   dependencies:
     dagre-cluster-fix: 0.9.3
-    package-dependency-collect: ^1.13.0
+    package-dependency-collect: ^1.14.2
     tslib: 1 || 2
-  checksum: 265d9fa1576ba7dfcb4c3737f56050a7e6942129f4fa91959cf4372e03a72027a8683ca47fa787992a10fd143560fa2ade49c63d083761eaa05bdc3659300773
+  checksum: f7951614164e6c50c707ee99f519d0df24c9789015686d3a3610137b18541b7373866ad3b14dae0815e2d080a92faabb14a6e5f00ede66f558eaeeeec7802f98
   languageName: node
   linkType: hard
 
-"package-dependency-graph@npm:^1.13.0":
-  version: 1.13.0
-  resolution: "package-dependency-graph@npm:1.13.0"
+"package-dependency-graph@npm:^1.14.3":
+  version: 1.14.3
+  resolution: "package-dependency-graph@npm:1.14.3"
   dependencies:
     canvas: 2
-    dagre-canvas: ^1.13.0
-    dagre-svg: ^1.13.0
+    dagre-canvas: ^1.14.1
+    dagre-svg: ^1.14.1
     graphviz-cli: 1
     minimist: 1
-    package-dependency-graph-core: ^1.13.0
+    package-dependency-graph-core: ^1.14.3
+    ts-node: "*"
   bin:
     package-dependency-graph: bin/package-dependency-graph
-  checksum: 25b78faf2b224475664d428f0ae0834eb435bdc98fc5d369ab30c29f204f0948665b7cf0172b34ab603d9a7ad87160807169065bd51eb34a6fa2524257922bb4
+  checksum: 80f0bba262b76ff5d336052e44915f44c0c8ec82e4bdd091070fe49aa8f358b5aae9b39dfa1b6f8b16a1225c1ad9637e6d3ca725fb02d0427f09177958aa8c3c
   languageName: node
   linkType: hard
 
@@ -9113,6 +9193,44 @@ resolve@~1.19.0:
   languageName: node
   linkType: hard
 
+"ts-node@npm:*":
+  version: 10.7.0
+  resolution: "ts-node@npm:10.7.0"
+  dependencies:
+    "@cspotcode/source-map-support": 0.7.0
+    "@tsconfig/node10": ^1.0.7
+    "@tsconfig/node12": ^1.0.7
+    "@tsconfig/node14": ^1.0.0
+    "@tsconfig/node16": ^1.0.2
+    acorn: ^8.4.1
+    acorn-walk: ^8.1.1
+    arg: ^4.1.0
+    create-require: ^1.1.0
+    diff: ^4.0.1
+    make-error: ^1.1.1
+    v8-compile-cache-lib: ^3.0.0
+    yn: 3.1.1
+  peerDependencies:
+    "@swc/core": ">=1.2.50"
+    "@swc/wasm": ">=1.2.50"
+    "@types/node": "*"
+    typescript: ">=2.7"
+  peerDependenciesMeta:
+    "@swc/core":
+      optional: true
+    "@swc/wasm":
+      optional: true
+  bin:
+    ts-node: dist/bin.js
+    ts-node-cwd: dist/bin-cwd.js
+    ts-node-esm: dist/bin-esm.js
+    ts-node-script: dist/bin-script.js
+    ts-node-transpile-only: dist/bin-transpile.js
+    ts-script: dist/bin-script-deprecated.js
+  checksum: 2a379e43f7478d0b79e1e63af91fe222d83857727957df4bd3bdf3c0a884de5097b12feb9bbf530074526b8874c0338b0e6328cf334f3a5e2c49c71e837273f7
+  languageName: node
+  linkType: hard
+
 "tslib@npm:1 || 2, tslib@npm:^2.0.0, tslib@npm:^2.2.0":
   version: 2.3.1
   resolution: "tslib@npm:2.3.1"
@@ -9368,6 +9486,13 @@ typescript@~4.5.2:
   bin:
     uuid: dist/bin/uuid
   checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
+  languageName: node
+  linkType: hard
+
+"v8-compile-cache-lib@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "v8-compile-cache-lib@npm:3.0.0"
+  checksum: 674e312bbca796584b61dc915f33c7e7dc4e06d196e0048cb772c8964493a1ec723f1dd014d9419fd55c24a6eae148f60769da23f622e05cd13268063fa1ed6b
   languageName: node
   linkType: hard
 
@@ -9830,6 +9955,13 @@ typescript@~4.5.2:
   dependencies:
     buffer-crc32: ~0.2.3
   checksum: daec5154b5485d8621bfea359e905ddca0b2f068430a4aa0a802bf5d67391157a383e0c2767acccbf5964264851da643bc740155a9458e2d8dce55b94c1cc2ed
+  languageName: node
+  linkType: hard
+
+"yn@npm:3.1.1":
+  version: 3.1.1
+  resolution: "yn@npm:3.1.1"
+  checksum: 2c487b0e149e746ef48cda9f8bad10fc83693cd69d7f9dcd8be4214e985de33a29c9e24f3c0d6bcf2288427040a8947406ab27f7af67ee9456e6b84854f02dd6
   languageName: node
   linkType: hard
 
