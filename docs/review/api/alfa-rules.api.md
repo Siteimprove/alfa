@@ -458,12 +458,12 @@ export namespace Question {
         readonly message: string;
     }>;
     export type Metadata = {
-        [K in Uri]: [Data[K]["type"], Type[Data[K]["type"]]];
+        [U in Uri]: [TypeName<U>, Typeof<U>];
     };
     // (undocumented)
-    export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string, options?: act.Question.Options<Type[Data[U]["type"]]>): act.Question<Data[U]["type"], S, S, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string, options?: act.Question.Options<Typeof<U>>): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U>;
     // (undocumented)
-    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string, options?: act.Question.Options<Type[Data[U]["type"]]>): act.Question<Data[U]["type"], S, C, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string, options?: act.Question.Options<Typeof<U>>): act.Question<TypeName<U>, S, C, Typeof<U>, Typeof<U>, U>;
     export interface Type {
         // (undocumented)
         "color[]": Iterable<RGB>;
@@ -478,6 +478,10 @@ export namespace Question {
         // (undocumented)
         string: string;
     }
+    // (undocumented)
+    export type TypeName<U extends Uri> = Data[U]["type"];
+    // (undocumented)
+    export type Typeof<U extends Uri> = Type[TypeName<U>];
     // (undocumented)
     export type Uri = keyof typeof Data;
     const // (undocumented)

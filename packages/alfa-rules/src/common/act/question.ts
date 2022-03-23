@@ -21,13 +21,16 @@ export namespace Question {
     "string[]": Iterable<string>;
   }
 
+  type TypeName<U extends Uri> = Data[U]["type"];
+  type Typeof<U extends Uri> = Type[TypeName<U>];
+
   /**
    * @public
    * Maps the `uri` parameter of questions to their `type` parameter and the
    * expected type of answers.
    */
   export type Metadata = {
-    [K in Uri]: [Data[K]["type"], Type[Data[K]["type"]]];
+    [U in Uri]: [TypeName<U>, Typeof<U>];
   };
 
   // Since Data is declared `as const`, `typeof Data` is a readonly type with the
@@ -53,45 +56,24 @@ export namespace Question {
     uri: U,
     subject: S,
     message?: string,
-    options?: act.Question.Options<Type[Data[U]["type"]]>
-  ): act.Question<
-    Data[U]["type"],
-    S,
-    S,
-    Type[Data[U]["type"]],
-    Type[Data[U]["type"]],
-    U
-  >;
+    options?: act.Question.Options<Typeof<U>>
+  ): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U>;
 
   export function of<S, C, U extends Uri = Uri>(
     uri: U,
     subject: S,
     context: C,
     message?: string,
-    options?: act.Question.Options<Type[Data[U]["type"]]>
-  ): act.Question<
-    Data[U]["type"],
-    S,
-    C,
-    Type[Data[U]["type"]],
-    Type[Data[U]["type"]],
-    U
-  >;
+    options?: act.Question.Options<Typeof<U>>
+  ): act.Question<TypeName<U>, S, C, Typeof<U>, Typeof<U>, U>;
 
   export function of<S, U extends Uri = Uri>(
     uri: U,
     subject: S,
     contextOrMessage?: S | string,
-    messageOrOptions?: string | act.Question.Options<Type[Data[U]["type"]]>,
-    options: act.Question.Options<Type[Data[U]["type"]]> = {}
-  ): act.Question<
-    Data[U]["type"],
-    S,
-    S,
-    Type[Data[U]["type"]],
-    Type[Data[U]["type"]],
-    U
-  > {
+    messageOrOptions?: string | act.Question.Options<Typeof<U>>,
+    options: act.Question.Options<Typeof<U>> = {}
+  ): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U> {
     let context: S = subject;
     let message: string;
 
@@ -104,7 +86,7 @@ export namespace Question {
       // We have message + options
       message = contextOrMessage ?? Data[uri].message;
       // Type is ensured by overloads
-      options = messageOrOptions as act.Question.Options<Type[Data[U]["type"]]>;
+      options = messageOrOptions as act.Question.Options<Typeof<U>>;
     } else {
       // We have context + message + options
       context = contextOrMessage ?? subject;
