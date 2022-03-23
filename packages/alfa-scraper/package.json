@@ -40,8 +40,5 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/"
-  },
-  "packageDependencyGraph": {
-    "group": "Web crawler"
   }
 }
