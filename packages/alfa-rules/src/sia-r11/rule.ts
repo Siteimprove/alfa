@@ -35,7 +35,7 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               hasNamespace(Namespace.HTML),
-              hasRole(device, "link"),
+              hasRole(device, (role) => role.is("link")),
               not(isIgnored(device))
             )
           );
