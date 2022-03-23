@@ -40,7 +40,7 @@ test(`evaluate() fails a link with no name`, async (t) => {
   ]);
 });
 
-test(`evaluate() fails a `doc-biblioref` with no accessible name`, async (t) => {
+test(`evaluate() fails a "doc-biblioref" with no accessible name`, async (t) => {
   const target = (
     <span role="doc-biblioref">
       <img src="Foo.jpg" alt="" />
