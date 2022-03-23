@@ -490,11 +490,20 @@ export namespace ColorError {
     kind: K;
   }
 
-  export function isColorError(value: Diagnostic): value is ColorError;
+  export function isColorError<
+    T extends keyof ErrorName = keyof ErrorName,
+    K extends ErrorName[T] = ErrorName[T]
+  >(value: Diagnostic): value is ColorError<T, K>;
 
-  export function isColorError(value: unknown): value is ColorError;
+  export function isColorError<
+    T extends keyof ErrorName = keyof ErrorName,
+    K extends ErrorName[T] = ErrorName[T]
+  >(value: unknown): value is ColorError<T, K>;
 
-  export function isColorError(value: unknown): value is ColorError {
+  export function isColorError<
+    T extends keyof ErrorName = keyof ErrorName,
+    K extends ErrorName[T] = ErrorName[T]
+  >(value: unknown): value is ColorError<T, K> {
     return value instanceof ColorError;
   }
 
