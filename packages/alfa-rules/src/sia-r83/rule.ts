@@ -150,13 +150,8 @@ function verticalClippingAncestor(
         return None;
       }
 
-      if (
-        test(
-          usesMediaRule((rule) => isFontRelative(isHeight, rule), device),
-          element
-        )
-      ) {
-        // The element uses a (font relative) media rule and we can't guess what
+      if (test(usesMediaRule(isFontRelative(isHeight), device), element)) {
+        // The element uses a (font relative) media rule, and we can't guess what
         // the page would like upon resizing and triggering a different media
         // query, so we just accept it as good enough
         return None;
@@ -193,6 +188,13 @@ function horizontallyClipper(
   return (element) => {
     if (hasFontRelativeValue(device, "width")(element)) {
       // The element grows with its text.
+      return None;
+    }
+
+    if (test(usesMediaRule(isFontRelative(isWidth), device), element)) {
+      // The element uses a (font relative) media rule, and we can't guess what
+      // the page would like upon resizing and triggering a different media
+      // query, so we just accept it as good enough
       return None;
     }
 
@@ -240,13 +242,8 @@ function horizontallyClippingAncestor(
           return None;
         }
 
-        if (
-          test(
-            usesMediaRule((rule) => isFontRelative(isWidth, rule), device),
-            element
-          )
-        ) {
-          // The element uses a (font relative) media rule and we can't guess what
+        if (test(usesMediaRule(isFontRelative(isWidth), device), element)) {
+          // The element uses a (font relative) media rule, and we can't guess what
           // the page would like upon resizing and triggering a different media
           // query, so we just accept it as good enough
           return None;
@@ -395,8 +392,8 @@ function* getUsedMediaRules(
   }
 
   for (const node of Cascade.of(root, device).get(element, context)) {
-    yield* Iterable.flatMap(node.ancestors(), (node) =>
-      Iterable.filter(node.rule.ancestors(), MediaRule.isMediaRule)
+    yield* Iterable.flatMap(node.inclusiveAncestors(), (node) =>
+      Iterable.filter(node.rule.inclusiveAncestors(), MediaRule.isMediaRule)
     );
   }
 }
@@ -411,32 +408,33 @@ function usesMediaRule(
 }
 
 function isFontRelative<F extends Media.Feature>(
-  refinement: Refinement<Media.Feature, F>,
-  rule: MediaRule
-): boolean {
-  return Iterable.some(rule.queries.queries, (query) =>
-    query.condition.some((condition) => {
-      const features = isFeature(condition) ? [condition] : [...condition];
+  refinement: Refinement<Media.Feature, F>
+): Predicate<MediaRule> {
+  return (rule) => {
+    return Iterable.some(rule.queries.queries, (query) =>
+      query.condition.some((condition) => {
+        const features = isFeature(condition) ? [condition] : [...condition];
 
-      return features.some((feature) => {
-        if (refinement(feature)) {
-          return feature.value.some((value) => {
-            if (Range.isRange(value)) {
-              return value.minimum.some(
-                (min) =>
-                  Length.isLength(min.value) && min.value.isFontRelative()
-              );
-            }
-            if (Discrete.isDiscrete<Length>(value)) {
-              return value.value.isFontRelative();
-            }
-            return false;
-          });
-        }
-        return false;
-      });
-    })
-  );
+        return features.some((feature) => {
+          if (refinement(feature)) {
+            return feature.value.some((value) => {
+              if (Range.isRange(value)) {
+                return value.minimum.some(
+                  (min) =>
+                    Length.isLength(min.value) && min.value.isFontRelative()
+                );
+              }
+              if (Discrete.isDiscrete<Length>(value)) {
+                return value.value.isFontRelative();
+              }
+              return false;
+            });
+          }
+          return false;
+        });
+      })
+    );
+  };
 }
 
 export class ClippingAncestors extends Diagnostic {
