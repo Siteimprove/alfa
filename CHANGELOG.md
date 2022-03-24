@@ -19,6 +19,26 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.35.0](../../compare/v0.34.0...v0.35.0) (2022-03-24)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Export type predicates for diagnostics ([#1106](../../issues/1106), [#1107](../../issues/1107), [#1114](../../pull/1114))
+
+### Changed
+
+- [@siteimprove/alfa-act](packages/alfa-act), [@siteimprove/alfa-rules](packages/alfa-rules): Flatten R82 to bound the interview's depth and add depth type parameter to expectation helper to allow type hints from callers ([#1073](../../pull/1073))
+- [@siteimprove/alfa-cascade](packages/alfa-cascade), [@siteimprove/alfa-dom](packages/alfa-dom), [@siteimprove/alfa-rules](packages/alfa-rules): Pre-parse media and import rules when building style tree ([#1071](../../issues/1071), [#1110](../../pull/1110))
+- [@siteimprove/alfa-rules](packages/alfa-rules): Remove the `hidden` attribute condition from `isProgrammaticallyHidden` ([#1091](../../issues/1091), [#1097](../../pull/1097))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R82: `error-indicator-describing-resolution` and `error-indicator-identifying-form-field` are now `node` types ([#1073](../../pull/1073))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Remove `aria-*` attributes that are no longer global in ARIA 1.2 ([#947](../../issues/947), [#1102](../../pull/1102))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R18 now accepts attributes allowed by ARIA in HTML ([#856](../../issues/856), [#1087](../../pull/1087))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R55 and SIA-R56 now ignore `form` and `section` with no name ([#1079](../../issues/1079), [#1108](../../pull/1108))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R11 now applies to role inheriting from `link` ([#1103](../../issues/1103), [#1109](../../pull/1109))
+
 ## [0.34.0](../../compare/v0.33.0...v0.34.0) (2022-03-04)
 
 ### Breaking
