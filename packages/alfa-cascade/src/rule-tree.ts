@@ -89,6 +89,9 @@ export class RuleTree implements Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace RuleTree {
   export type JSON = Array<Node.JSON>;
 

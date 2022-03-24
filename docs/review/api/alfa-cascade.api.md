@@ -21,7 +21,6 @@ import { Sheet } from '@siteimprove/alfa-dom';
 // @public (undocumented)
 export class Cascade implements Serializable {
     // Warning: (ae-forgotten-export) The symbol "AncestorFilter" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "RuleTree" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     get(element: Element, context?: Context, filter?: Option<AncestorFilter>): Option<RuleTree.Node>;
@@ -50,6 +49,64 @@ export namespace Cascade {
     }
 }
 
+// @public
+export class RuleTree implements Serializable {
+    // (undocumented)
+    add(rules: Iterable_2<{
+        rule: Rule;
+        selector: Selector;
+        declarations: Iterable_2<Declaration>;
+    }>): Option<RuleTree.Node>;
+    // (undocumented)
+    static empty(): RuleTree;
+    // (undocumented)
+    toJSON(): RuleTree.JSON;
+}
+
+// @public (undocumented)
+export namespace RuleTree {
+    // (undocumented)
+    export type JSON = Array<Node.JSON>;
+    // (undocumented)
+    export class Node implements Serializable {
+        // (undocumented)
+        static add(rule: Rule, selector: Selector, declarations: Iterable_2<Declaration>, children: Array<Node>, parent: Option<Node>): Node;
+        // (undocumented)
+        ancestors(): Iterable_2<Node>;
+        // (undocumented)
+        get children(): Array<Node>;
+        // (undocumented)
+        get declarations(): Iterable_2<Declaration>;
+        // (undocumented)
+        inclusiveAncestors(): Iterable_2<Node>;
+        // (undocumented)
+        static of(rule: Rule, selector: Selector, declarations: Iterable_2<Declaration>, children: Array<Node>, parent: Option<Node>): Node;
+        // (undocumented)
+        get parent(): Option<Node>;
+        // (undocumented)
+        get rule(): Rule;
+        // (undocumented)
+        get selector(): Selector;
+        // (undocumented)
+        toJSON(): Node.JSON;
+    }
+    // (undocumented)
+    export namespace Node {
+        // (undocumented)
+        export interface JSON {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            children: Array<Node.JSON>;
+            // (undocumented)
+            declarations: Array<Declaration.JSON>;
+            // (undocumented)
+            rule: Rule.JSON;
+            // (undocumented)
+            selector: Selector.JSON;
+        }
+    }
+}
 
 // (No @packageDocumentation comment for this package)
 
