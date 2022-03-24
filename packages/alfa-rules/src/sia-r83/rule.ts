@@ -35,7 +35,7 @@ import { getPositioningParent } from "../common/dom/get-positioning-parent";
 
 import { Scope } from "../tags";
 
-const { isFeature, isHeight, isWidth } = Media.Feature;
+const { isHeight, isWidth } = Media.Feature;
 const { Discrete, Range } = Media.Value;
 
 const { or, not, equals } = Predicate;
@@ -150,7 +150,7 @@ function verticalClippingAncestor(
         return None;
       }
 
-      if (test(usesMediaRule(isFontRelative(isHeight), device), element)) {
+      if (test(usesFontRelativeMediaRule(device, isHeight), element)) {
         // The element uses a (font relative) media rule, and we can't guess what
         // the page would like upon resizing and triggering a different media
         // query, so we just accept it as good enough
@@ -191,7 +191,7 @@ function horizontallyClipper(
       return None;
     }
 
-    if (test(usesMediaRule(isFontRelative(isWidth), device), element)) {
+    if (test(usesFontRelativeMediaRule(device, isWidth), element)) {
       // The element uses a (font relative) media rule, and we can't guess what
       // the page would like upon resizing and triggering a different media
       // query, so we just accept it as good enough
@@ -242,7 +242,7 @@ function horizontallyClippingAncestor(
           return None;
         }
 
-        if (test(usesMediaRule(isFontRelative(isWidth), device), element)) {
+        if (test(usesFontRelativeMediaRule(device, isWidth), element)) {
           // The element uses a (font relative) media rule, and we can't guess what
           // the page would like upon resizing and triggering a different media
           // query, so we just accept it as good enough
@@ -379,7 +379,17 @@ function isWrappingFlexContainer(device: Device): Predicate<Element> {
     return false;
   };
 }
-
+/*
+ * We accept any property depending on a media query as handling the overflow,
+ * not just the concerned properties (height, width, …) This is because the mere
+ * presence of a media query suggests that there is an opposing one and we do
+ * not know whether it changes the concerned properties or not. This only risks
+ * creating false negatives.
+ *
+ * We only look at discrete media queries and minimum bound of ranges. Maximum
+ * bounds will not trigger when text size increase, so they cannot control
+ * overflow.
+ */
 function* getUsedMediaRules(
   element: Element,
   device: Device,
@@ -392,7 +402,10 @@ function* getUsedMediaRules(
   }
 
   for (const node of Cascade.of(root, device).get(element, context)) {
+    // Get all nodes (style rules) in the RuleTree that affect the element:
+    // the current rule and its ancestor.
     yield* Iterable.flatMap(node.inclusiveAncestors(), (node) =>
+      // For each of these rules, get all ancestor media rules in the CSS tree.
       Iterable.filter(node.rule.inclusiveAncestors(), MediaRule.isMediaRule)
     );
   }
@@ -407,34 +420,40 @@ function usesMediaRule(
     Iterable.some(getUsedMediaRules(element, device, context), predicate);
 }
 
-function isFontRelative<F extends Media.Feature>(
+/**
+ * Checks whether at least one feature in one of the queries of the media rule
+ * is a font-relative one. Only checks feature matching the refinement.
+ */
+function isFontRelativeMediaRule<F extends Media.Feature>(
   refinement: Refinement<Media.Feature, F>
 ): Predicate<MediaRule> {
-  return (rule) => {
-    return Iterable.some(rule.queries.queries, (query) =>
-      query.condition.some((condition) => {
-        const features = isFeature(condition) ? [condition] : [...condition];
-
-        return features.some((feature) => {
-          if (refinement(feature)) {
-            return feature.value.some((value) => {
-              if (Range.isRange(value)) {
-                return value.minimum.some(
-                  (min) =>
-                    Length.isLength(min.value) && min.value.isFontRelative()
-                );
-              }
-              if (Discrete.isDiscrete<Length>(value)) {
-                return value.value.isFontRelative();
-              }
-              return false;
-            });
-          }
-          return false;
-        });
-      })
+  return (rule) =>
+    Iterable.some(rule.queries.queries, (query) =>
+      query.condition.some((condition) =>
+        Iterable.some(
+          condition,
+          (feature) =>
+            refinement(feature) &&
+            feature.value.some((value) =>
+              Range.isRange(value)
+                ? value.minimum.some(
+                    (min) =>
+                      Length.isLength(min.value) && min.value.isFontRelative()
+                  )
+                : Discrete.isDiscrete<Length>(value) &&
+                  value.value.isFontRelative()
+            )
+        )
+      )
     );
-  };
+}
+
+function usesFontRelativeMediaRule<F extends Media.Feature>(
+  device: Device,
+  refinement: Refinement<Media.Feature, F>,
+  context: Context = Context.empty()
+): Predicate<Element> {
+  return usesMediaRule(isFontRelativeMediaRule(refinement), device, context);
 }
 
 export class ClippingAncestors extends Diagnostic {
