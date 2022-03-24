@@ -3,7 +3,7 @@ import { Functor } from "@siteimprove/alfa-functor";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Result } from "@siteimprove/alfa-result";
@@ -40,7 +40,7 @@ export class Question<
     Functor<T>,
     Applicative<T>,
     Monad<T>,
-    Serializable<Question.JSON<TYPE, SUBJECT, CONTEXT, URI>>
+    Serializable<Question.JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>>
 {
   public static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(
     type: TYPE,
@@ -48,13 +48,16 @@ export class Question<
     message: string,
     subject: SUBJECT,
     context: CONTEXT,
-    diagnostic: Diagnostic = Diagnostic.empty
+    options: Question.Options<ANSWER> = {}
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI> {
+    const { fallback = None, diagnostic = Diagnostic.empty } = options;
+
     return new Question(
       type,
       uri,
       message,
       diagnostic,
+      fallback,
       subject,
       context,
       (answer) => answer
@@ -65,6 +68,7 @@ export class Question<
   protected readonly _uri: URI;
   protected readonly _message: string;
   protected readonly _diagnostic: Diagnostic;
+  protected readonly _fallback: Option<ANSWER>;
   protected readonly _subject: SUBJECT;
   protected readonly _context: CONTEXT;
   protected readonly _quester: Mapper<ANSWER, T>;
@@ -74,6 +78,7 @@ export class Question<
     uri: URI,
     message: string,
     diagnostic: Diagnostic,
+    fallback: Option<ANSWER>,
     subject: SUBJECT,
     context: CONTEXT,
     quester: Mapper<ANSWER, T>
@@ -82,6 +87,7 @@ export class Question<
     this._uri = uri;
     this._message = message;
     this._diagnostic = diagnostic;
+    this._fallback = fallback;
     this._subject = subject;
     this._context = context;
     this._quester = quester;
@@ -101,6 +107,10 @@ export class Question<
 
   public get diagnostic(): Diagnostic {
     return this._diagnostic;
+  }
+
+  public get fallback(): Option<ANSWER> {
+    return this._fallback;
   }
 
   public get subject(): SUBJECT {
@@ -210,6 +220,7 @@ export class Question<
           this._uri,
           this._message,
           diagnostic,
+          this._fallback,
           this._subject,
           this._context,
           this._quester
@@ -224,6 +235,7 @@ export class Question<
       this._uri,
       this._message,
       this._diagnostic,
+      this._fallback,
       this._subject,
       this._context,
       (answer) => mapper(this._quester(answer))
@@ -244,6 +256,7 @@ export class Question<
       this._uri,
       this._message,
       this._diagnostic,
+      this._fallback,
       this._subject,
       this._context,
       (answer) => mapper(this._quester(answer))._quester(answer)
@@ -264,18 +277,20 @@ export class Question<
       this._uri,
       this._message,
       this._diagnostic,
+      this._fallback,
       this._subject,
       this._context,
       (answer) => this._quester(answer)._quester(answer)
     );
   }
 
-  public toJSON(): Question.JSON<TYPE, SUBJECT, CONTEXT, URI> {
+  public toJSON(): Question.JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI> {
     return {
       type: Serializable.toJSON(this._type),
       uri: this._uri,
       message: this._message,
       diagnostic: this._diagnostic.toJSON(),
+      fallback: this._fallback.toJSON(),
       subject: Serializable.toJSON(this._subject),
       context: Serializable.toJSON(this._context),
     };
@@ -286,12 +301,19 @@ export class Question<
  * @public
  */
 export namespace Question {
-  export interface JSON<TYPE, SUBJECT, CONTEXT, URI extends string = string> {
+  export interface JSON<
+    TYPE,
+    SUBJECT,
+    CONTEXT,
+    ANSWER,
+    URI extends string = string
+  > {
     [key: string]: json.JSON;
     type: Serializable.ToJSON<TYPE>;
     uri: URI;
     message: string;
     diagnostic: Diagnostic.JSON;
+    fallback: Option.JSON<ANSWER>;
     subject: Serializable.ToJSON<SUBJECT>;
     context: Serializable.ToJSON<CONTEXT>;
   }
@@ -335,7 +357,16 @@ export namespace Question {
       context: CONTEXT,
       answer: T
     ) {
-      super(type, uri, message, diagnostic, subject, context, () => answer);
+      super(
+        type,
+        uri,
+        message,
+        diagnostic,
+        None,
+        subject,
+        context,
+        () => answer
+      );
       this._answer = answer;
     }
 
@@ -361,5 +392,10 @@ export namespace Question {
         mapper(this._answer)
       );
     }
+  }
+
+  export interface Options<A> {
+    readonly fallback?: Option<A>;
+    readonly diagnostic?: Diagnostic;
   }
 }

@@ -458,17 +458,19 @@ export namespace Question {
         readonly message: string;
     }>;
     export type Metadata = {
-        [K in Uri]: [Data[K]["type"], Type[Data[K]["type"]]];
+        [U in Uri]: [TypeName<U>, Typeof<U>];
     };
     // (undocumented)
-    export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string, diagnostic?: Diagnostic_2): act.Question<Data[U]["type"], S, S, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string, options?: act.Question.Options<Typeof<U>>): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U>;
     // (undocumented)
-    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string, diagnostic?: Diagnostic_2): act.Question<Data[U]["type"], S, C, Type[Data[U]["type"]], Type[Data[U]["type"]], U>;
+    export function of<S, C, U extends Uri = Uri>(uri: U, subject: S, context: C, message?: string, options?: act.Question.Options<Typeof<U>>): act.Question<TypeName<U>, S, C, Typeof<U>, Typeof<U>, U>;
     export interface Type {
         // (undocumented)
         "color[]": Iterable<RGB>;
         // (undocumented)
         "node[]": Iterable<Node>;
+        // (undocumented)
+        "string[]": Iterable<string>;
         // (undocumented)
         boolean: boolean;
         // (undocumented)
@@ -476,6 +478,10 @@ export namespace Question {
         // (undocumented)
         string: string;
     }
+    // (undocumented)
+    export type TypeName<U extends Uri> = Data[U]["type"];
+    // (undocumented)
+    export type Typeof<U extends Uri> = Type[TypeName<U>];
     // (undocumented)
     export type Uri = keyof typeof Data;
     const // (undocumented)
@@ -559,6 +565,10 @@ export namespace Question {
         readonly "is-content-equivalent": {
             readonly type: "boolean";
             readonly message: "Do these [role] landmarks have the same or equivalent content?";
+        };
+        readonly "visible-focus-classes": {
+            readonly type: "string[]";
+            readonly message: "Which classes have a visible focus indicator?";
         };
         readonly "has-focus-indicator": {
             readonly type: "boolean";

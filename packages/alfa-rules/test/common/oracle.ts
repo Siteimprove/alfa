@@ -53,6 +53,9 @@ export function oracle<I, T, S>(
 
       case "string":
         return wrapper(question, answers[question.uri]!);
+
+      case "string[]":
+        return wrapper(question, answers[question.uri]!);
     }
   };
 }

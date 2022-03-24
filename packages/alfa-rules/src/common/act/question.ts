@@ -1,4 +1,3 @@
-import { Diagnostic } from "@siteimprove/alfa-act";
 import { RGB } from "@siteimprove/alfa-css";
 import { Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
@@ -18,7 +17,11 @@ export namespace Question {
     "node[]": Iterable<Node>;
     "color[]": Iterable<RGB>;
     string: string;
+    "string[]": Iterable<string>;
   }
+
+  type TypeName<U extends Uri> = Data[U]["type"];
+  type Typeof<U extends Uri> = Type[TypeName<U>];
 
   /**
    * @public
@@ -26,7 +29,7 @@ export namespace Question {
    * expected type of answers.
    */
   export type Metadata = {
-    [K in Uri]: [Data[K]["type"], Type[Data[K]["type"]]];
+    [U in Uri]: [TypeName<U>, Typeof<U>];
   };
 
   // Since Data is declared `as const`, `typeof Data` is a readonly type with the
@@ -52,45 +55,24 @@ export namespace Question {
     uri: U,
     subject: S,
     message?: string,
-    diagnostic?: Diagnostic
-  ): act.Question<
-    Data[U]["type"],
-    S,
-    S,
-    Type[Data[U]["type"]],
-    Type[Data[U]["type"]],
-    U
-  >;
+    options?: act.Question.Options<Typeof<U>>
+  ): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U>;
 
   export function of<S, C, U extends Uri = Uri>(
     uri: U,
     subject: S,
     context: C,
     message?: string,
-    diagnostic?: Diagnostic
-  ): act.Question<
-    Data[U]["type"],
-    S,
-    C,
-    Type[Data[U]["type"]],
-    Type[Data[U]["type"]],
-    U
-  >;
+    options?: act.Question.Options<Typeof<U>>
+  ): act.Question<TypeName<U>, S, C, Typeof<U>, Typeof<U>, U>;
 
   export function of<S, U extends Uri = Uri>(
     uri: U,
     subject: S,
     contextOrMessage?: S | string,
-    messageOrDiagnostic?: string | Diagnostic,
-    diagnostic?: Diagnostic
-  ): act.Question<
-    Data[U]["type"],
-    S,
-    S,
-    Type[Data[U]["type"]],
-    Type[Data[U]["type"]],
-    U
-  > {
+    messageOrOptions?: string | act.Question.Options<Typeof<U>>,
+    options: act.Question.Options<Typeof<U>> = {}
+  ): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U> {
     let context: S = subject;
     let message: string;
 
@@ -100,13 +82,15 @@ export namespace Question {
       // more likely to be text nodes that the actual text in it.
       typeof contextOrMessage === "string"
     ) {
+      // We have message + options
       message = contextOrMessage ?? Data[uri].message;
       // Type is ensured by overloads
-      diagnostic = messageOrDiagnostic as Diagnostic;
+      options = messageOrOptions as act.Question.Options<Typeof<U>>;
     } else {
+      // We have context + message + options
       context = contextOrMessage ?? subject;
       // Type is ensured by overloads
-      message = (messageOrDiagnostic as string) ?? Data[uri].message;
+      message = (messageOrOptions as string) ?? Data[uri].message;
     }
 
     return act.Question.of(
@@ -115,7 +99,7 @@ export namespace Question {
       message,
       subject,
       context,
-      diagnostic
+      options
     );
   }
 
@@ -209,6 +193,10 @@ export namespace Question {
       message: `Do these [role] landmarks have the same or equivalent content?`,
     },
     // R65
+    "visible-focus-classes": {
+      type: "string[]",
+      message: `Which classes have a visible focus indicator?`,
+    },
     "has-focus-indicator": {
       type: "boolean",
       message: `Does the element have a visible focus indicator?`,
