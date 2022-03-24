@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Cascade } from "@siteimprove/alfa-cascade";
+import { Cascade, RuleTree } from "@siteimprove/alfa-cascade";
 import { Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
@@ -10,6 +10,7 @@ import {
   MediaRule,
   Namespace,
   Node,
+  Rule as CSSRule,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Media } from "@siteimprove/alfa-media";
@@ -390,25 +391,48 @@ function isWrappingFlexContainer(device: Device): Predicate<Element> {
  * bounds will not trigger when text size increase, so they cannot control
  * overflow.
  */
-function* getUsedMediaRules(
+const mediaRulesCache = Cache.empty<CSSRule, Sequence<MediaRule>>();
+
+function ancestorMediaRules(rule: CSSRule): Sequence<MediaRule> {
+  return mediaRulesCache.get(rule, () => {
+    const mediaRules = rule.parent
+      .map((parent) => ancestorMediaRules(parent))
+      .getOrElse<Sequence<MediaRule>>(Sequence.empty);
+
+    return MediaRule.isMediaRule(rule) ? mediaRules.prepend(rule) : mediaRules;
+  });
+}
+
+const ruleTreeCache = Cache.empty<RuleTree.Node, Sequence<RuleTree.Node>>();
+
+function ancestorsInRuleTree(rule: RuleTree.Node): Sequence<RuleTree.Node> {
+  return ruleTreeCache.get(rule, () =>
+    rule.parent
+      .map((parent) => ancestorsInRuleTree(parent))
+      .getOrElse<Sequence<RuleTree.Node>>(Sequence.empty)
+      .prepend(rule)
+  );
+}
+
+function getUsedMediaRules(
   element: Element,
   device: Device,
   context: Context = Context.empty()
-): Iterable<MediaRule> {
+): Sequence<MediaRule> {
   const root = element.root();
 
   if (!Document.isDocument(root)) {
-    return;
+    return Sequence.empty();
   }
 
-  for (const node of Cascade.of(root, device).get(element, context)) {
-    // Get all nodes (style rules) in the RuleTree that affect the element:
-    // the current rule and its ancestor.
-    yield* Iterable.flatMap(node.inclusiveAncestors(), (node) =>
-      // For each of these rules, get all ancestor media rules in the CSS tree.
-      Iterable.filter(node.rule.inclusiveAncestors(), MediaRule.isMediaRule)
-    );
-  }
+  return Cascade.of(root, device)
+    .get(element, context)
+    .map((node) =>
+      // Get all nodes (style rules) in the RuleTree that affect the element;
+      // for each of these rules, get all ancestor media rules in the CSS tree.
+      ancestorsInRuleTree(node).flatMap((node) => ancestorMediaRules(node.rule))
+    )
+    .getOrElse(Sequence.empty);
 }
 
 function usesMediaRule(
@@ -417,7 +441,7 @@ function usesMediaRule(
   context: Context = Context.empty()
 ): Predicate<Element> {
   return (element) =>
-    Iterable.some(getUsedMediaRules(element, device, context), predicate);
+    getUsedMediaRules(element, device, context).some(predicate);
 }
 
 /**
