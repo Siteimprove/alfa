@@ -432,6 +432,33 @@ test(`evaluate() passes a text node with horizontal wrapping set by a font-relat
   ]);
 });
 
+test(`evaluate() passes a text node with fixed height and antoher property
+      set by a font-relative height media query`, async (t) => {
+  const target = h.text("Hello World");
+
+  const document = h.document(
+    [
+      <body>
+        <div>
+          <span>{target}</span>
+        </div>
+      </body>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", { height: "10px", overflow: "hidden" }),
+        h.rule.media("(min-height: 10em)", [
+          h.rule.style("span", { color: "red" }),
+        ]),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R83, { document }), [
+    passed(R83, target, { 1: Outcomes.WrapsText }),
+  ]);
+});
+
 test(`evaluate() fails a text node that clips overflow by not wrapping text
       using the \`white-space\` property`, async (t) => {
   const target = h.text("Hello world");
