@@ -133,7 +133,7 @@ digraph {
     }
   
     subgraph cluster_Browser_automations {
-      _siteimprove_alfa_playwright _siteimprove_alfa_protractor _siteimprove_alfa_puppeteer _siteimprove_alfa_webdriver;
+      _siteimprove_alfa_playwright _siteimprove_alfa_puppeteer _siteimprove_alfa_webdriver;
 
       label = "Browser automations";
       color = "#ff7f00";
@@ -420,13 +420,12 @@ digraph {
   _siteimprove_alfa_network[label = "@siteimprove/alfa-network", color = "#ffff00"]
   _siteimprove_alfa_playwright[label = "@siteimprove/alfa-playwright", color = "#000000"]
   _siteimprove_alfa_promise[label = "@siteimprove/alfa-promise", color = "#00007f"]
-  _siteimprove_alfa_protractor[label = "@siteimprove/alfa-protractor", color = "#0000ff"]
-  _siteimprove_alfa_puppeteer[label = "@siteimprove/alfa-puppeteer", color = "#007f00"]
-  _siteimprove_alfa_wcag[label = "@siteimprove/alfa-wcag", color = "#007f7f"]
-  _siteimprove_alfa_selective[label = "@siteimprove/alfa-selective", color = "#007fff"]
-  _siteimprove_alfa_test[label = "@siteimprove/alfa-test", color = "#00ff00"]
-  _siteimprove_alfa_tuple[label = "@siteimprove/alfa-tuple", color = "#00ff7f"]
-  _siteimprove_alfa_unexpected[label = "@siteimprove/alfa-unexpected", color = "#00ffff"]
-  _siteimprove_alfa_vue[label = "@siteimprove/alfa-vue", color = "#7f0000"]
-  _siteimprove_alfa_webdriver[label = "@siteimprove/alfa-webdriver", color = "#7f007f"]
+  _siteimprove_alfa_puppeteer[label = "@siteimprove/alfa-puppeteer", color = "#0000ff"]
+  _siteimprove_alfa_wcag[label = "@siteimprove/alfa-wcag", color = "#007f00"]
+  _siteimprove_alfa_selective[label = "@siteimprove/alfa-selective", color = "#007f7f"]
+  _siteimprove_alfa_test[label = "@siteimprove/alfa-test", color = "#007fff"]
+  _siteimprove_alfa_tuple[label = "@siteimprove/alfa-tuple", color = "#00ff00"]
+  _siteimprove_alfa_unexpected[label = "@siteimprove/alfa-unexpected", color = "#00ff7f"]
+  _siteimprove_alfa_vue[label = "@siteimprove/alfa-vue", color = "#00ffff"]
+  _siteimprove_alfa_webdriver[label = "@siteimprove/alfa-webdriver", color = "#7f0000"]
 }

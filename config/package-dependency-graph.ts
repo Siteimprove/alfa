@@ -175,7 +175,6 @@ export default {
           name: "Browser automations",
           children: [
             "@siteimprove/alfa-playwright",
-            "@siteimprove/alfa-protractor",
             "@siteimprove/alfa-puppeteer",
             "@siteimprove/alfa-webdriver",
           ],
