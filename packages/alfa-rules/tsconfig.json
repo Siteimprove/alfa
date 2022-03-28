@@ -6,6 +6,7 @@
     "jsxImportSource": "@siteimprove/alfa-dom"
   },
   "files": [
+    "src/common/act/diagnostic.ts",
     "src/common/act/expectation.ts",
     "src/common/act/group.ts",
     "src/common/act/is-passed.ts",
@@ -50,7 +51,7 @@
     "src/common/predicate/has-outline.ts",
     "src/common/predicate/has-positioning-parent.ts",
     "src/common/predicate/has-role.ts",
-    "src/common/predicate/has-incorrect-role-without-name.ts",    
+    "src/common/predicate/has-incorrect-role-without-name.ts",
     "src/common/predicate/has-text-content.ts",
     "src/common/predicate/has-text-decoration.ts",
     "src/common/predicate/has-unique-id.ts",
@@ -88,6 +89,7 @@
     "src/sia-er62/rule.ts",
     "src/sia-er62/diagnostics.ts",
     "src/sia-er62/serialise.ts",
+    "src/sia-er65/rule.ts",
     "src/sia-er87/rule.ts",
     "src/sia-r1/rule.ts",
     "src/sia-r10/rule.ts",
@@ -201,6 +203,7 @@
     "test/sia-er62/rule.expectation.textdecoration.spec.tsx",
     "test/sia-er62/serialise.spec.ts",
     "test/sia-er62/common.ts",
+    "test/sia-er65/rule.spec.tsx",
     "test/sia-er87/rule.spec.tsx",
     "test/sia-r1/rule.spec.tsx",
     "test/sia-r2/rule.spec.tsx",

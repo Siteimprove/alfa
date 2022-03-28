@@ -106,7 +106,10 @@ export namespace Outcomes {
     );
 }
 
-class Languages extends Diagnostic {
+/**
+ * @internal
+ */
+export class Languages extends Diagnostic {
   public static of(
     message: string,
     programmatic: Language = Language.of(Language.Primary.of("en")),
@@ -158,11 +161,18 @@ class Languages extends Diagnostic {
   }
 }
 
-namespace Languages {
+/**
+ * @internal
+ */
+export namespace Languages {
   export interface JSON extends Diagnostic.JSON {
     programmatic: Language.JSON;
     natural: Option.JSON<Language>;
   }
+
+  export function isLanguages(value: Diagnostic): value is Languages;
+
+  export function isLanguages(value: unknown): value is Languages;
 
   export function isLanguages(value: unknown): value is Languages {
     return value instanceof Languages;

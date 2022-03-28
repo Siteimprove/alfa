@@ -71,7 +71,6 @@
     { "path": "alfa-playwright" },
     { "path": "alfa-predicate" },
     { "path": "alfa-promise" },
-    { "path": "alfa-protractor" },
     { "path": "alfa-puppeteer" },
     { "path": "alfa-react" },
     { "path": "alfa-record" },

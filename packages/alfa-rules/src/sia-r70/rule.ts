@@ -84,7 +84,13 @@ export namespace Outcomes {
     );
 }
 
-class DeprecatedElements extends Diagnostic implements Iterable<Element> {
+/**
+ * @internal
+ */
+export class DeprecatedElements
+  extends Diagnostic
+  implements Iterable<Element>
+{
   public static of(
     message: string,
     errors: Iterable<Element> = []
@@ -127,10 +133,21 @@ class DeprecatedElements extends Diagnostic implements Iterable<Element> {
   }
 }
 
-namespace DeprecatedElements {
+/**
+ * @internal
+ */
+export namespace DeprecatedElements {
   export interface JSON extends Diagnostic.JSON {
     errors: Array<string>;
   }
+
+  export function isDeprecatedElements(
+    value: Diagnostic
+  ): value is DeprecatedElements;
+
+  export function isDeprecatedElements(
+    value: unknown
+  ): value is DeprecatedElements;
 
   export function isDeprecatedElements(
     value: unknown

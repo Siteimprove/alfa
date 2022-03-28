@@ -78,5 +78,6 @@ export const Flattened: Flattened.Flattened = Sequence.from(
 
 export default Flattened;
 
+export * from "./common/act/diagnostic";
 export * from "./common/act/group";
 export * from "./common/act/question";
