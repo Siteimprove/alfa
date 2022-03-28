@@ -2,7 +2,7 @@ import { Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
-import { lowestCommonAncestor } from "./lowest-common-ancestor";
+// import { lowestCommonAncestor } from "./lowest-common-ancestor";
 
 const { equals, or } = Predicate;
 
@@ -66,7 +66,7 @@ function getNodesInclusivelyBetween(node1: Node, node2: Node): Sequence<Node> {
   const isFrontier = or(equals(node1), equals(node2));
 
   // Get descendants of the LCA, and skip everything before and after both nodes.
-  return lowestCommonAncestor(node1, node2, treeOptions)
+  return Node.lowestCommonAncestor(node1, node2, treeOptions)
     .map((context) =>
       context
         .inclusiveDescendants(treeOptions)

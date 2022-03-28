@@ -21,6 +21,8 @@ import {
   Slot,
 } from ".";
 
+import * as traversal from "./node/traversal";
+
 const { equals } = Predicate;
 
 /**
@@ -572,4 +574,6 @@ export namespace Node {
         throw new Error(`Unexpected node of type: ${json.type}`);
     }
   }
+
+  export const { lowestCommonAncestor } = traversal;
 }

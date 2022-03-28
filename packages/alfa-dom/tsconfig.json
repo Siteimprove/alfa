@@ -39,6 +39,8 @@
     "src/node/slot.ts",
     "src/node/slotable.ts",
     "src/node/text.ts",
+    "src/node/traversal/lowest-common-ancestor.ts",
+    "src/node/traversal.ts",
     "src/node/type.ts",
     "src/style/block.ts",
     "src/style/declaration.ts",
@@ -58,7 +60,8 @@
     "test/h.spec.ts",
     "test/node.spec.tsx",
     "test/node/attribute.spec.ts",
-    "test/node/element.spec.tsx"
+    "test/node/element.spec.tsx",
+    "test/node/traversal/lowest-common-ancestor.spec.tsx"
   ],
   "references": [
     {
