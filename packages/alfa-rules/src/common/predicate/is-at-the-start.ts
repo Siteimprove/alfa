@@ -2,7 +2,6 @@ import { Node } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { getNodesBetween } from "../dom/get-nodes-between";
 import { isContent } from "./is-content";
 import { isPerceivable } from "./is-perceivable";
 
@@ -38,7 +37,7 @@ export function isAtTheStart(
   device: Device = Device.standard()
 ): Predicate<Node> {
   return (node1) =>
-    !getNodesBetween(node1, node2, {
+    !Node.getNodesBetween(node1, node2, {
       includeFirst: true,
       includeSecond: false,
     }).some(

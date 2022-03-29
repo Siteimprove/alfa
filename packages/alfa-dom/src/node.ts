@@ -575,5 +575,5 @@ export namespace Node {
     }
   }
 
-  export const { lowestCommonAncestor } = traversal;
+  export const { getNodesBetween, lowestCommonAncestor } = traversal;
 }

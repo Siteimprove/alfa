@@ -1,7 +1,7 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import { h } from "../../../src/h";
+import { h } from "../../../src";
 import { lowestCommonAncestor } from "../../../src/node/traversal/lowest-common-ancestor";
 
 test("lowestCommonAncestor() returns the parent of two siblings", (t) => {
