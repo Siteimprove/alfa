@@ -6,8 +6,6 @@ import { lowestCommonAncestor } from "./lowest-common-ancestor";
 
 const { equals, or } = Predicate;
 
-const treeOptions = { flattened: true, nested: true };
-
 /**
  * Get content between two nodes. The relative order of the nodes is unknown.
  * Options let it choose whether the first or second node (in tree order)
@@ -24,9 +22,10 @@ const treeOptions = { flattened: true, nested: true };
 export function getNodesBetween(
   node1: Node,
   node2: Node,
-  includeOptions: Options = { includeFirst: false, includeSecond: false }
+  includeOptions: Options = { includeFirst: false, includeSecond: false },
+  treeOptions: Node.Traversal = { flattened: true, nested: true }
 ): Sequence<Node> {
-  let between = getNodesInclusivelyBetween(node1, node2);
+  let between = getNodesInclusivelyBetween(node1, node2, treeOptions);
 
   // If somehow there is nothing between them, escape now
   if (between.isEmpty()) {
@@ -62,7 +61,11 @@ export function getNodesBetween(
 /**
  * Get all nodes between node1 and node2, included.
  */
-function getNodesInclusivelyBetween(node1: Node, node2: Node): Sequence<Node> {
+function getNodesInclusivelyBetween(
+  node1: Node,
+  node2: Node,
+  treeOptions: Node.Traversal
+): Sequence<Node> {
   const isFrontier = or(equals(node1), equals(node2));
 
   // Get descendants of the LCA, and skip everything before and after both nodes.
