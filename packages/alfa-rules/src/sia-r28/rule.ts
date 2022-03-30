@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -7,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasAccessibleName, isIgnored } from "../common/predicate";
+import { isIgnored } from "../common/predicate";
 
 import { Scope } from "../tags";
 
@@ -43,7 +44,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             test(
               // Rejecting default name
-              hasAccessibleName(device, (name) => name.source.length !== 0),
+              DOM.hasAccessibleName(device, (name) => name.source.length !== 0),
               target
             ),
             () => Outcomes.HasAccessibleName,

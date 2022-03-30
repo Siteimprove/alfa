@@ -9,15 +9,11 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { normalize } from "../common/normalize";
 
-import {
-  hasAttribute,
-  hasRole,
-  isPerceivable,
-  isTabbable,
-} from "../common/predicate";
+import { hasRole, isPerceivable, isTabbable } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isElement, hasInputType, hasName, hasNamespace } = Element;
+const { hasAttribute, hasInputType, hasName, hasNamespace, isElement } =
+  Element;
 const { and, or, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({

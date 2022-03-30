@@ -8,6 +8,8 @@
   "files": [
     "src/attribute.ts",
     "src/attribute/data.ts",
+    "src/dom/dom.ts",
+    "src/dom/predicate/has-accessible-name.ts",
     "src/feature.ts",
     "src/index.ts",
     "src/name.ts",

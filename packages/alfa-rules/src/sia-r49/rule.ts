@@ -12,14 +12,13 @@ import { Question } from "../common/act/question";
 
 import {
   hasNonEmptyAccessibleName,
-  hasAttribute,
   hasChild,
   isPerceivable,
 } from "../common/predicate";
 
 import { Scope } from "../tags";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { or, nor, equals } = Predicate;
 const { and } = Refinement;
 

@@ -28,8 +28,6 @@
     "src/common/outcome/text-spacing.ts",
     "src/common/outcome/refresh-delay.ts",
     "src/common/predicate.ts",
-    "src/common/predicate/has-accessible-name.ts",
-    "src/common/predicate/has-attribute.ts",
     "src/common/predicate/has-border.ts",
     "src/common/predicate/has-box-shadow.ts",
     "src/common/predicate/has-cascaded-style.ts",

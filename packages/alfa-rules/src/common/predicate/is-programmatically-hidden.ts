@@ -5,9 +5,9 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { hasAttribute, hasComputedStyle } from "../predicate";
+import { hasComputedStyle } from "../predicate";
 
-const { isElement } = Element;
+const { hasAttribute, isElement } = Element;
 const { or, test, equals } = Predicate;
 const { and } = Refinement;
 

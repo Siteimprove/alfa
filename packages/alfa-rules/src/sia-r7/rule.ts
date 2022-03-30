@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import {
   Attribute,
   Element,
@@ -18,16 +19,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasAttribute,
-  isIgnored,
-  isWhitespace,
-  isVisible,
-  hasAccessibleName,
-} from "../common/predicate";
+import { isIgnored, isWhitespace, isVisible } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { isEmpty } = Iterable;
 const { not, or } = Predicate;
 const { and, test } = Refinement;
@@ -58,7 +53,7 @@ export default Rule.Atomic.of<Page, Attribute>({
 
             const isElementWithAccessibleName = and(
               isElement,
-              hasAccessibleName(
+              DOM.hasAccessibleName(
                 device,
                 (accessibleName) => !isWhitespace(accessibleName.value)
               )

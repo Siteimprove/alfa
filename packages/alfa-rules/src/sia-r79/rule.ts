@@ -7,11 +7,11 @@ import { Ok, Err } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
-import { isRendered, isVisible, hasAttribute } from "../common/predicate";
+import { isRendered, isVisible } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { equals } = Predicate;
-const { hasName, isElement } = Element;
+const { hasAttribute, hasName, isElement } = Element;
 const { isText } = Text;
 const { and } = Refinement;
 

@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Document } from "@siteimprove/alfa-dom";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -11,7 +11,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { hasAttribute, hasChild, isDocumentElement } from "../common/predicate";
+import { hasChild, isDocumentElement } from "../common/predicate";
 
 import { Scope, Stability } from "../tags";
 
@@ -36,7 +36,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
           hasChild(
             and(
               isDocumentElement,
-              hasAttribute("lang", (lang) =>
+              Element.hasAttribute("lang", (lang) =>
                 Language.parse(lang)
                   .tee((lang) => {
                     programmaticLanguage = lang;

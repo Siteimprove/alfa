@@ -8,16 +8,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasAttribute,
-  hasInclusiveDescendant,
-  isTabbable,
-} from "../common/predicate";
+import { hasInclusiveDescendant, isTabbable } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { not, equals } = Predicate;
 const { and } = Refinement;
-const { isElement } = Element;
+const { hasAttribute, isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r17",

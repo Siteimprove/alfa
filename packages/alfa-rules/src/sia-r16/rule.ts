@@ -12,15 +12,11 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
-import {
-  hasAttribute,
-  hasRole,
-  isFocusable,
-  isIgnored,
-} from "../common/predicate";
+import { hasRole, isFocusable, isIgnored } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isElement, hasInputType, hasName, hasNamespace } = Element;
+const { hasAttribute, hasInputType, hasName, hasNamespace, isElement } =
+  Element;
 const { isEmpty } = Iterable;
 const { and, not, property, test } = Predicate;
 

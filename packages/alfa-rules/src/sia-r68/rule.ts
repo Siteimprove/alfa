@@ -12,10 +12,10 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasAttribute, hasRole, isIgnored } from "../common/predicate";
+import { hasRole, isIgnored } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isElement, hasNamespace } = Element;
+const { hasAttribute, hasNamespace, isElement } = Element;
 const { and, equals, not } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({

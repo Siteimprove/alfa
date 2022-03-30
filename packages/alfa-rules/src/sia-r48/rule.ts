@@ -10,11 +10,11 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { hasAttribute, hasChild } from "../common/predicate";
+import { hasChild } from "../common/predicate";
 
 import { Scope } from "../tags";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { or, nor } = Predicate;
 const { and } = Refinement;
 

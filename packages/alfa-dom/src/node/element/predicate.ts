@@ -1,3 +1,4 @@
+export * from "./predicate/has-attribute";
 export * from "./predicate/has-id";
 export * from "./predicate/has-input-type";
 export * from "./predicate/has-name";

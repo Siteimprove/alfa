@@ -12,16 +12,11 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasRole,
-  isIgnored,
-  hasDisplaySize,
-  hasAttribute,
-} from "../common/predicate";
+import { hasRole, isIgnored, hasDisplaySize } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { test, property, and, not } = Predicate;
-const { isElement, hasInputType } = Element;
+const { test, property } = Predicate;
+const { hasInputType, isElement } = Element;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r18",
@@ -86,8 +81,8 @@ function ariaHtmlAllowed(target: Attribute): boolean {
       case "select":
         return (
           (hasDisplaySize((size: Number) => size !== 1)(element) &&
-            (Role.of("combobox").isAttributeSupported(attributeName)) ||
-          Role.of("menu").isAttributeSupported(attributeName))
+            Role.of("combobox").isAttributeSupported(attributeName)) ||
+          Role.of("menu").isAttributeSupported(attributeName)
         );
 
       case "video":

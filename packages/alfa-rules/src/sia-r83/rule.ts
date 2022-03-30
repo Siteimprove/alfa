@@ -15,7 +15,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import {
-  hasAttribute,
   hasCascadedStyle,
   hasDisplaySize,
   isVisible,
@@ -26,7 +25,7 @@ import { Scope } from "../tags";
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const { isElement, hasName, hasNamespace } = Element;
+const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text>({

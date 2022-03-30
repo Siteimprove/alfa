@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -11,8 +12,6 @@ import { expectation } from "../common/act/expectation";
 import { normalize } from "../common/normalize";
 
 import {
-  hasAccessibleName,
-  hasAttribute,
   hasDescendant,
   isPerceivable,
   hasRole,
@@ -22,7 +21,7 @@ import {
 } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isElement, hasNamespace, hasName } = Element;
+const { hasAttribute, hasNamespace, hasName, isElement } = Element;
 const { isText } = Text;
 const { and, test, not } = Predicate;
 
@@ -69,7 +68,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         let name = "";
         const accessibleNameIncludesTextContent = test(
-          hasAccessibleName(device, (accessibleName) => {
+          DOM.hasAccessibleName(device, (accessibleName) => {
             name = removePunctuationAndNormalise(accessibleName.value);
             return name.includes(textContent);
           }),

@@ -1,6 +1,5 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
-import { hasAttribute } from "./has-attribute";
 import { hasValue } from "./has-value";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
@@ -12,7 +11,7 @@ const { and } = Refinement;
  */
 export const isSemanticallyDisabled: Predicate<Element> = or(
   Element.isDisabled,
-  hasAttribute(
+  Element.hasAttribute(
     and(Attribute.hasName("aria-disabled"), hasValue(equals("true")))
   )
 );

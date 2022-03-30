@@ -8,11 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasAttribute,
-  isDocumentElement,
-  isWhitespace,
-} from "../common/predicate";
+import { isDocumentElement, isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { isEmpty } = Iterable;
@@ -31,7 +27,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasAttribute("lang", nor(isEmpty, isWhitespace))(target),
+            Element.hasAttribute("lang", nor(isEmpty, isWhitespace))(target),
             () => Outcomes.HasLanguage,
             () => Outcomes.HasNoLanguage
           ),
