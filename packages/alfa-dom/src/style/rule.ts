@@ -52,6 +52,11 @@ export abstract class Rule implements Equatable, Serializable {
     }
   }
 
+  public *inclusiveAncestors(): Iterable<Rule> {
+    yield this;
+    yield* this.ancestors();
+  }
+
   public equals(value: unknown): value is this {
     return value === this;
   }

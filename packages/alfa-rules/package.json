@@ -24,6 +24,7 @@
     "@siteimprove/alfa-array": "workspace:^0.35.0",
     "@siteimprove/alfa-branched": "workspace:^0.35.0",
     "@siteimprove/alfa-cache": "workspace:^0.35.0",
+    "@siteimprove/alfa-cascade": "workspace:^0.35.0",
     "@siteimprove/alfa-compatibility": "workspace:^0.35.0",
     "@siteimprove/alfa-css": "workspace:^0.35.0",
     "@siteimprove/alfa-device": "workspace:^0.35.0",

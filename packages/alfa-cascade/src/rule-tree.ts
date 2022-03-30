@@ -89,6 +89,9 @@ export class RuleTree implements Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace RuleTree {
   export type JSON = Array<Node.JSON>;
 
@@ -141,6 +144,18 @@ export namespace RuleTree {
 
     public get parent(): Option<Node> {
       return this._parent;
+    }
+
+    public *ancestors(): Iterable<Node> {
+      for (const parent of this._parent) {
+        yield parent;
+        yield* parent.ancestors();
+      }
+    }
+
+    public *inclusiveAncestors(): Iterable<Node> {
+      yield this;
+      yield* this.ancestors();
     }
 
     public static add(
