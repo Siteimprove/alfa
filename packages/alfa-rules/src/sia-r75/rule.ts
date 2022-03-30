@@ -7,16 +7,13 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasTextContent,
-  isVisible,
-  hasCascadedStyle,
-} from "../common/predicate";
+import { hasTextContent, isVisible } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { isElement, hasNamespace, hasName } = Element;
 const { isText } = Text;
 const { and, or, not } = Predicate;
+const { hasCascadedStyle } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r75",

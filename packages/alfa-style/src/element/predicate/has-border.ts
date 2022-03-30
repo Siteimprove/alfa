@@ -3,7 +3,8 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
+
+import { Style } from "../../style";
 
 const sides = ["top", "right", "bottom", "left"] as const;
 

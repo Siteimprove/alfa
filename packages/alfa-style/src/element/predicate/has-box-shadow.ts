@@ -4,7 +4,8 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
+
+import { Style } from "../../style";
 
 /**
  * Known assumptions:
@@ -23,8 +24,9 @@ export function hasBoxShadow(
   context?: Context
 ): Predicate<Element> {
   return (element) => {
-    const shadow = Style.from(element, device, context).computed("box-shadow")
-      .value;
+    const shadow = Style.from(element, device, context).computed(
+      "box-shadow"
+    ).value;
 
     return !Keyword.isKeyword(shadow) && Iterable.some(shadow, isVisibleShadow);
   };

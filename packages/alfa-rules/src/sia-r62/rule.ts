@@ -22,13 +22,11 @@ import * as json from "@siteimprove/alfa-json";
 
 import { expectation } from "../common/act/expectation";
 import {
-  hasBorder,
   hasComputedStyle,
   hasOutline,
   hasRole,
   hasTextDecoration,
   isVisible,
-  hasBoxShadow,
   isWhitespace,
 } from "../common/predicate";
 import { Scope } from "../tags";
@@ -39,6 +37,7 @@ const { isElement } = Element;
 const { isText } = Text;
 const { or, not, test } = Predicate;
 const { and } = Refinement;
+const { hasBorder, hasBoxShadow } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",

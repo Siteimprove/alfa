@@ -1,9 +1,10 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
-import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Style } from "@siteimprove/alfa-style/src/style";
+import { Criterion } from "@siteimprove/alfa-wcag";
+import { Page } from "@siteimprove/alfa-web";
 
 import { TextSpacing } from "../common/outcome/text-spacing";
 
@@ -14,7 +15,6 @@ import {
   isVisible,
   isWhitespace,
   isImportant,
-  hasCascadedValueDeclaredInInlineStyleOf,
   isWideEnough,
 } from "../common/predicate";
 import { Scope } from "../tags";
@@ -85,7 +85,7 @@ export default Rule.Atomic.of<Page, Element>({
                               wordSpacing.value >= 0.16 * fontSize.value
                           ),
                           not(
-                            hasCascadedValueDeclaredInInlineStyleOf(
+                            Style.hasCascadedValueDeclaredInInlineStyleOf(
                               target,
                               device,
                               property

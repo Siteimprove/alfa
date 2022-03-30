@@ -25,8 +25,6 @@ import { contrast } from "../common/expectation/contrast";
 
 import { getForeground } from "../common/dom/get-colors";
 import {
-  hasBorder,
-  hasBoxShadow,
   hasComputedStyle,
   hasOutline,
   hasRole,
@@ -47,6 +45,7 @@ const { isElement } = Element;
 const { isText } = Text;
 const { or, not, test, tee } = Predicate;
 const { and } = Refinement;
+const { hasBorder, hasBoxShadow } = Style;
 
 let distinguishingProperties: Map<
   Context,

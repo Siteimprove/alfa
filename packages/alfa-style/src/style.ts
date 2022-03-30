@@ -14,6 +14,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
+import * as element from "./element/element";
+
 import { Property } from "./property";
 import { Value } from "./value";
 
@@ -329,6 +331,13 @@ export namespace Style {
   export type Initial<N extends Name> = Property.Value.Initial<N>;
 
   export type Inherited<N extends Name> = Property.Value.Inherited<N>;
+
+  export const {
+    hasBorder,
+    hasBoxShadow,
+    hasCascadedStyle,
+    hasCascadedValueDeclaredInInlineStyleOf,
+  } = element;
 }
 
 function shouldOverride(

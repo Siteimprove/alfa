@@ -1,7 +1,8 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Property } from "@siteimprove/alfa-style";
+
+import { Property } from "../../property";
 
 import { hasCascadedStyle } from "./has-cascaded-style";
 
