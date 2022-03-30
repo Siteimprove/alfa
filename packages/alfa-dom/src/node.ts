@@ -22,6 +22,7 @@ import {
 } from ".";
 
 import * as traversal from "./node/traversal";
+import * as predicate from "./node/predicate";
 
 const { equals } = Predicate;
 
@@ -576,4 +577,11 @@ export namespace Node {
   }
 
   export const { getNodesBetween, lowestCommonAncestor } = traversal;
+
+  export const {
+    hasChild,
+    hasDescendant,
+    hasInclusiveDescendant,
+    hasTextContent,
+  } = predicate;
 }

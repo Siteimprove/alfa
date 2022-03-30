@@ -1,12 +1,12 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasChild, hasRole, isDocumentElement } from "../common/predicate";
+import { hasRole, isDocumentElement } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
@@ -18,7 +18,9 @@ export default Rule.Atomic.of<Page, Document>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return test(hasChild(isDocumentElement), document) ? [document] : [];
+        return test(Node.hasChild(isDocumentElement), document)
+          ? [document]
+          : [];
       },
 
       expectations(target) {

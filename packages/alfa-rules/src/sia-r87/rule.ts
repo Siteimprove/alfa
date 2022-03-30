@@ -12,7 +12,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import {
-  hasChild,
   hasRole,
   isAtTheStart,
   isDocumentElement,
@@ -36,7 +35,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
     return {
       applicability() {
         return fold(
-          hasChild(isDocumentElement),
+          Node.hasChild(isDocumentElement),
           () => [document],
           () => [],
           document

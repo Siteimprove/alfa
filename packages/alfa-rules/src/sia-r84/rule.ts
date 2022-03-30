@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -10,11 +10,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasInclusiveDescendant,
-  isVisible,
-  isTabbable,
-} from "../common/predicate";
+import { isVisible, isTabbable } from "../common/predicate";
 
 import { Scope } from "../tags";
 
@@ -49,7 +45,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasInclusiveDescendant(and(isElement, isTabbable(device)), {
+            Node.hasInclusiveDescendant(and(isElement, isTabbable(device)), {
               flattened: true,
             })(target),
             () => Outcomes.IsReachable,

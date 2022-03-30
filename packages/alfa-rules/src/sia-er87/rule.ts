@@ -13,7 +13,6 @@ import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
 import {
-  hasChild,
   hasRole,
   isAtTheStart,
   isDocumentElement,
@@ -45,7 +44,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
     return {
       applicability() {
         return fold(
-          hasChild(isDocumentElement),
+          Node.hasChild(isDocumentElement),
           () => [document],
           () => [],
           document

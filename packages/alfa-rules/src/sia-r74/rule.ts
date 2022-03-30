@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Unit } from "@siteimprove/alfa-css";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -9,7 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasRole, hasTextContent, isVisible } from "../common/predicate";
+import { hasRole, isVisible } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { isElement } = Element;
@@ -44,7 +44,7 @@ export default Rule.Atomic.of<Page, Element>({
                         return true;
                     }
                   }),
-              hasTextContent(),
+              Node.hasTextContent(),
               isVisible(device)
             )
           );

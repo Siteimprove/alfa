@@ -1,5 +1,6 @@
-import { Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+
+import { Node } from "../../node";
 
 export function hasInclusiveDescendant(
   predicate: Predicate<Node>,

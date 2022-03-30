@@ -12,7 +12,6 @@ import { expectation } from "../common/act/expectation";
 import { normalize } from "../common/normalize";
 
 import {
-  hasDescendant,
   isPerceivable,
   hasRole,
   isFocusable,
@@ -48,7 +47,7 @@ export default Rule.Atomic.of<Page, Element>({
                 device,
                 (role) => role.isWidget() && role.isNamedBy("contents")
               ),
-              hasDescendant(and(Text.isText, isPerceivable(device)), {
+              Node.hasDescendant(and(Text.isText, isPerceivable(device)), {
                 flattened: true,
               })
             )

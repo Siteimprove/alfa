@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasInclusiveDescendant, isTabbable } from "../common/predicate";
+import { isTabbable } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { not, equals } = Predicate;
@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             not(
-              hasInclusiveDescendant(and(isElement, isTabbable(device)), {
+              Node.hasInclusiveDescendant(and(isElement, isTabbable(device)), {
                 flattened: true,
               })
             )(target),

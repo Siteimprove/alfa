@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -7,7 +7,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasRole, hasDescendant, isTabbable } from "../common/predicate";
+import { hasRole, isTabbable } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
@@ -35,7 +35,7 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             not(
-              hasDescendant(and(isElement, isTabbable(device)), {
+              Node.hasDescendant(and(isElement, isTabbable(device)), {
                 flattened: true,
               })
             )(target),
