@@ -6,9 +6,9 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
+import { Style } from "@siteimprove/alfa-style/src/style";
 
 import {
-  hasComputedStyle,
   isClipped,
   isOffscreen,
   isPositioned,
@@ -17,9 +17,10 @@ import {
   isTransparent,
 } from "../predicate";
 
+const { hasName, isElement } = Element;
 const { nor, not, or, test } = Predicate;
 const { and } = Refinement;
-const { hasName, isElement } = Element;
+const { hasComputedStyle } = Style;
 const { isText } = Text;
 
 /**

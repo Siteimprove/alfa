@@ -1,6 +1,7 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Property } from "@siteimprove/alfa-style";
+
+import { Property } from "../../property";
 
 export function hasInlineStyleProperty(
   name: Property.Name

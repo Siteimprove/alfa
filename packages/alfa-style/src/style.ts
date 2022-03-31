@@ -337,6 +337,10 @@ export namespace Style {
     hasBoxShadow,
     hasCascadedStyle,
     hasCascadedValueDeclaredInInlineStyleOf,
+    hasComputedStyle,
+    hasInlineStyleProperty,
+    hasOutline,
+    hasTextDecoration,
   } = element;
 }
 

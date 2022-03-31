@@ -21,14 +21,7 @@ import { Page } from "@siteimprove/alfa-web";
 import * as json from "@siteimprove/alfa-json";
 
 import { expectation } from "../common/act/expectation";
-import {
-  hasComputedStyle,
-  hasOutline,
-  hasRole,
-  hasTextDecoration,
-  isVisible,
-  isWhitespace,
-} from "../common/predicate";
+import { hasRole, isVisible, isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
 import { Serialise } from "./serialise";
@@ -37,7 +30,13 @@ const { isElement } = Element;
 const { isText } = Text;
 const { or, not, test } = Predicate;
 const { and } = Refinement;
-const { hasBorder, hasBoxShadow } = Style;
+const {
+  hasBorder,
+  hasBoxShadow,
+  hasComputedStyle,
+  hasOutline,
+  hasTextDecoration,
+} = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",

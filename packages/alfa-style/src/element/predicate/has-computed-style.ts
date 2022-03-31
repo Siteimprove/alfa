@@ -3,7 +3,9 @@ import { Declaration, Element, Text } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
-import { Property, Style } from "@siteimprove/alfa-style";
+
+import { Property } from "../../property";
+import { Style } from "../../style";
 
 const { isElement } = Element;
 

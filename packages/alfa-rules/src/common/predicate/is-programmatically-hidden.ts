@@ -4,12 +4,12 @@ import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
-
-import { hasComputedStyle } from "../predicate";
+import { Style } from "@siteimprove/alfa-style/src/style";
 
 const { hasAttribute, isElement } = Element;
 const { or, test, equals } = Predicate;
 const { and } = Refinement;
+const { hasComputedStyle } = Style;
 
 export function isProgrammaticallyHidden(
   device: Device,

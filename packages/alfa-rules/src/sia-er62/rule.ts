@@ -24,14 +24,7 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 import { contrast } from "../common/expectation/contrast";
 
 import { getForeground } from "../common/dom/get-colors";
-import {
-  hasComputedStyle,
-  hasOutline,
-  hasRole,
-  hasTextDecoration,
-  isVisible,
-  isWhitespace,
-} from "../common/predicate";
+import { hasRole, isVisible, isWhitespace } from "../common/predicate";
 
 import { Scope, Stability, Version } from "../tags";
 
@@ -45,7 +38,13 @@ const { isElement } = Element;
 const { isText } = Text;
 const { or, not, test, tee } = Predicate;
 const { and } = Refinement;
-const { hasBorder, hasBoxShadow } = Style;
+const {
+  hasBorder,
+  hasBoxShadow,
+  hasComputedStyle,
+  hasOutline,
+  hasTextDecoration,
+} = Style;
 
 let distinguishingProperties: Map<
   Context,

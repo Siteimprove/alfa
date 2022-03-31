@@ -1,11 +1,12 @@
-import { Color } from "@siteimprove/alfa-css";
+import { Color, Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
 
-export function hasTextDecoration(
+import { Style } from "../../style";
+
+export function hasOutline(
   device: Device,
   context?: Context
 ): Predicate<Element> {
@@ -13,10 +14,11 @@ export function hasTextDecoration(
     const style = Style.from(element, device, context);
 
     return (
-      style.computed("text-decoration-color").none(Color.isTransparent) &&
+      style.computed("outline-width").none(Length.isZero) &&
+      style.computed("outline-style").none((style) => style.value === "none") &&
       style
-        .computed("text-decoration-line")
-        .none((line) => line.type === "keyword")
+        .computed("outline-color")
+        .none((color) => color.type === "color" && Color.isTransparent(color))
     );
   };
 }

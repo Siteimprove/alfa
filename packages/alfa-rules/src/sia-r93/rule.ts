@@ -11,7 +11,6 @@ import { TextSpacing } from "../common/outcome/text-spacing";
 import { expectation } from "../common/act/expectation";
 
 import {
-  hasInlineStyleProperty,
   isVisible,
   isWhitespace,
   isImportant,
@@ -22,6 +21,7 @@ import { Scope } from "../tags";
 const { not, or, test } = Predicate;
 const { and } = Refinement;
 const { isElement, hasNamespace } = Element;
+const { hasInlineStyleProperty } = Style;
 const { isText } = Text;
 
 const property = "line-height";
