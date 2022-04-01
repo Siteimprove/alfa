@@ -590,11 +590,11 @@ export namespace Rule {
 
     export function start<I, T, Q, S>(
       rule: Rule<I, T, Q, S>
-    ): Event<I, T, Q, S, "start", "rule">;
+    ): Event<I, T, Q, S, "start", "total">;
 
     export function start<I, T, Q, S>(
       rule: Rule<I, T, Q, S>,
-      name: string = "rule"
+      name: string = "total"
     ): Event<I, T, Q, S, "start"> {
       return Event.of("start", rule, name);
     }
@@ -606,11 +606,11 @@ export namespace Rule {
 
     export function end<I, T, Q, S>(
       rule: Rule<I, T, Q, S>
-    ): Event<I, T, Q, S, "end", "rule">;
+    ): Event<I, T, Q, S, "end", "total">;
 
     export function end<I, T, Q, S>(
       rule: Rule<I, T, Q, S>,
-      name: string = "rule"
+      name: string = "total"
     ): Event<I, T, Q, S, "end"> {
       return Event.of("end", rule, name);
     }
