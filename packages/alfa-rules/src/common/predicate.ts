@@ -1,7 +1,6 @@
 export * from "./predicate/has-display-size";
 export * from "./predicate/has-explicit-role";
 export * from "./predicate/has-heading-level";
-export * from "./predicate/has-id";
 export * from "./predicate/has-implicit-role";
 export * from "./predicate/has-interposed-descendant";
 export * from "./predicate/has-non-empty-accessible-name";

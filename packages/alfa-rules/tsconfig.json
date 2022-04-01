@@ -31,7 +31,6 @@
     "src/common/predicate/has-display-size.ts",
     "src/common/predicate/has-explicit-role.ts",
     "src/common/predicate/has-heading-level.ts",
-    "src/common/predicate/has-id.ts",
     "src/common/predicate/has-implicit-role.ts",
     "src/common/predicate/has-interposed-descendant.ts",
     "src/common/predicate/has-non-empty-accessible-name.ts",

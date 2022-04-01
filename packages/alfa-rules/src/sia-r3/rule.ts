@@ -8,12 +8,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasId, hasUniqueId } from "../common/predicate";
+import { hasUniqueId } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { isEmpty } = Iterable;
 const { not } = Predicate;
-const { isElement } = Element;
+const { hasId, isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r3",
