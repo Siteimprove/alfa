@@ -3,6 +3,9 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Element } from "../../element";
 
+/**
+ * @public
+ */
 export function hasDisplaySize(
   valueOrPredicate: number | Predicate<number>
 ): Predicate<Element> {

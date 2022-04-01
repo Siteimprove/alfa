@@ -6,6 +6,9 @@ import { Property } from "../../property";
 
 import { hasCascadedStyle } from "./has-cascaded-style";
 
+/**
+ * @public
+ */
 export function hasCascadedValueDeclaredInInlineStyleOf(
   context: Element,
   device: Device,

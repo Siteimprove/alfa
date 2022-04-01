@@ -6,6 +6,9 @@ import { Node } from "../../node";
 const { isEmpty } = Iterable;
 const { not } = Predicate;
 
+/**
+ * @public
+ */
 export function hasTextContent(
   predicate: Predicate<string> = not(isEmpty),
   options: Node.Traversal = {}

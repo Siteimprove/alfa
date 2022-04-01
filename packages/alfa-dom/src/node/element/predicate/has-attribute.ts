@@ -5,10 +5,16 @@ import { Element } from "../../element";
 
 const { property } = Predicate;
 
+/**
+ * @public
+ */
 export function hasAttribute(
   predicate: Predicate<Attribute>
 ): Predicate<Element>;
 
+/**
+ * @public
+ */
 export function hasAttribute(
   name: string,
   value?: Predicate<string>

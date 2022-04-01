@@ -8,6 +8,9 @@ import { Style } from "../../style";
 
 const sides = ["top", "right", "bottom", "left"] as const;
 
+/**
+ * @public
+ */
 export function hasBorder(
   device: Device,
   context?: Context

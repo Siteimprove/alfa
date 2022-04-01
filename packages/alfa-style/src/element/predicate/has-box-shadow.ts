@@ -8,6 +8,8 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "../../style";
 
 /**
+ * @public
+ *
  * Known assumptions:
  * * Without being transparent, a shadow could have the same color of the background, and thus not be visible.
  *   This is even more difficult to detect since the shadow is rendered above the ancestors, not the element;

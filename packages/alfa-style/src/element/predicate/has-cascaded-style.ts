@@ -9,6 +9,9 @@ import { Style } from "../../style";
 
 const { isElement } = Element;
 
+/**
+ * @public
+ */
 export function hasCascadedStyle<N extends Property.Name>(
   name: N,
   predicate: Predicate<Style.Cascaded<N>, [source: Option<Declaration>]>,

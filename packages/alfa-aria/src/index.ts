@@ -21,6 +21,8 @@ export * from "./node/text";
 
 /**
  * Helpers and Predicates for accessibility aspects of DOM objects
+ *
+ * @public
  */
 export namespace DOM {
   export const { hasAccessibleName } = dom;

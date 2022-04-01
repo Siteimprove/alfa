@@ -3,6 +3,9 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { Property } from "../../property";
 
+/**
+ * @public
+ */
 export function hasInlineStyleProperty(
   name: Property.Name
 ): Predicate<Element> {

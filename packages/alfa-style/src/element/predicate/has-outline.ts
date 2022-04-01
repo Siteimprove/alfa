@@ -6,6 +6,9 @@ import { Context } from "@siteimprove/alfa-selector";
 
 import { Style } from "../../style";
 
+/**
+ * @public
+ */
 export function hasOutline(
   device: Device,
   context?: Context

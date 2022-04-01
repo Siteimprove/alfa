@@ -6,6 +6,9 @@ import { Context } from "@siteimprove/alfa-selector";
 
 import { Style } from "../../style";
 
+/**
+ * @public
+ */
 export function hasTextDecoration(
   device: Device,
   context?: Context

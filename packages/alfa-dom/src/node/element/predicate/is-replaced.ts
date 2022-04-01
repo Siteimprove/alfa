@@ -2,6 +2,8 @@ import { hasName } from "./has-name";
 
 /**
  * {@link https://html.spec.whatwg.org/#replaced-elements}
+ *
+ * @public
  */
 export const isReplaced = hasName(
   "audio",

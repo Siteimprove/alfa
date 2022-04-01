@@ -11,6 +11,9 @@ const { and } = Predicate;
 
 const uniques = Cache.empty<Node, Set<string>>();
 
+/**
+ * @public
+ */
 export function hasUniqueId(): Predicate<Element> {
   return and(hasId(), (element) =>
     uniques
