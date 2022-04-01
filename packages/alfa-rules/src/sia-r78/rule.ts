@@ -11,13 +11,12 @@ import { expectation } from "../common/act/expectation";
 import {
   hasHeadingLevel,
   hasRole,
-  isContent,
   isIgnored,
   isPerceivable,
 } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasNamespace, isElement } = Element;
+const { hasNamespace, isContent, isElement } = Element;
 const { not } = Predicate;
 const { and } = Refinement;
 

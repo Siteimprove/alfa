@@ -399,16 +399,20 @@ export namespace Element {
 
   export const {
     hasAttribute,
+    hasDisplaySize,
     hasId,
     hasInputType,
     hasName,
     hasNamespace,
     hasTabIndex,
+    hasUniqueId,
     isBrowsingContextContainer,
+    isContent,
     isDisabled,
     isDraggable,
     isEditingHost,
     isSuggestedFocusable,
+    isReplaced,
   } = predicate;
 }
 

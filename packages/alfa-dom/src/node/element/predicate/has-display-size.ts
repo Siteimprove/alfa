@@ -1,6 +1,7 @@
-import { Element} from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+
+import { Element } from "../../element";
 
 export function hasDisplaySize(
   valueOrPredicate: number | Predicate<number>

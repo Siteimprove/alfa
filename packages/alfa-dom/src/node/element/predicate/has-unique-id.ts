@@ -1,7 +1,9 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Element, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
+
+import { Element } from "../../element";
+import { Node } from "../../../node";
 
 import { hasId } from "./has-id";
 

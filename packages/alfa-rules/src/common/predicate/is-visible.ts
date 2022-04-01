@@ -13,11 +13,10 @@ import {
   isOffscreen,
   isPositioned,
   isRendered,
-  isReplaced,
   isTransparent,
 } from "../predicate";
 
-const { hasName, isElement } = Element;
+const { hasName, isElement, isReplaced } = Element;
 const { nor, not, or, test } = Predicate;
 const { and } = Refinement;
 const { hasComputedStyle } = Style;

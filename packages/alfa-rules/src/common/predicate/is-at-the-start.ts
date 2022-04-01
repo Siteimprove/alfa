@@ -2,7 +2,7 @@ import { Node } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { isContent } from "./is-content";
+import { isContent } from "../../../../alfa-dom/src/node/element/predicate/is-content";
 import { isPerceivable } from "./is-perceivable";
 
 const { and } = Predicate;

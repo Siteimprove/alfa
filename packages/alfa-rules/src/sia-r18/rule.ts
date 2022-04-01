@@ -12,11 +12,11 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasRole, isIgnored, hasDisplaySize } from "../common/predicate";
+import { hasRole, isIgnored } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { test, property } = Predicate;
-const { hasInputType, isElement } = Element;
+const { hasDisplaySize, hasInputType, isElement } = Element;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r18",

@@ -1,6 +1,9 @@
-import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+
+import { Element } from "../../element";
+import { Node } from "../../../node";
+
 import { isReplaced } from "./is-replaced";
 
 const { or } = Predicate;
