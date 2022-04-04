@@ -344,27 +344,11 @@ export namespace Style {
     hasBoxShadow,
     hasCascadedStyle,
     hasCascadedValueDeclaredInInlineStyleOf,
-    // hasComputedStyle,
+    hasComputedStyle,
     hasInlineStyleProperty,
     hasOutline,
     hasTextDecoration,
   } = element;
-
-  export function hasComputedStyle<N extends Property.Name>(
-    name: N,
-    predicate: Predicate<Style.Computed<N>, [source: Option<Declaration>]>,
-    device: Device,
-    context?: Context
-  ): Predicate<Element | Text> {
-    return function hasComputedStyle(node): boolean {
-      return Element.isElement(node)
-        ? Style.from(node, device, context).computed(name).some(predicate)
-        : node
-            .parent({ flattened: true })
-            .filter(Element.isElement)
-            .some(hasComputedStyle);
-    };
-  }
 }
 
 function shouldOverride(
