@@ -1,7 +1,6 @@
 export * from "./predicate/has-interposed-descendant";
 export * from "./predicate/has-non-empty-accessible-name";
 export * from "./predicate/has-role";
-export * from "./predicate/has-value";
 export * from "./predicate/is-at-the-start";
 export * from "./predicate/is-clipped";
 export * from "./predicate/is-defined";
