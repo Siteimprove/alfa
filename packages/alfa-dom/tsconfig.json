@@ -77,6 +77,12 @@
   ],
   "references": [
     {
+      "path": "../alfa-cache"
+    },
+    {
+      "path": "../alfa-css"
+    },
+    {
       "path": "../alfa-earl"
     },
     {
