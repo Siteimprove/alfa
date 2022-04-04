@@ -17,7 +17,7 @@ import { isTransparent } from "./is-transparent";
 const { hasName, isElement, isReplaced } = Element;
 const { nor, not, or, test } = Predicate;
 const { and } = Refinement;
-const { hasComputedStyle, hasOutline } = Style;
+const { hasComputedStyle } = Style;
 const { isText } = Text;
 
 /**
@@ -33,12 +33,6 @@ const cache = Cache.empty<
 >();
 
 function isInvisible(device: Device, context?: Context): Predicate<Node> {
-  const foo = Style;
-  const bar = foo.hasComputedStyle;
-  const baz = foo.hasOutline;
-  const toto = baz(device, context);
-  const titi = bar("font-size", () => true, device, context);
-
   return (node) =>
     cache
       .get(device, Cache.empty)
