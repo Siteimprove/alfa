@@ -7,6 +7,8 @@ import { None, Option } from "@siteimprove/alfa-option";
  * * go down the chain, from root to nodes, as long as it is the same node
  *
  * Complexity: linear in the depth of the nodes.
+ *
+ * @public
  */
 export function lowestCommonAncestor(
   node1: Node,

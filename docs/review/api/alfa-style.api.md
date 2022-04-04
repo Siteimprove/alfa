@@ -33,8 +33,41 @@ import { RGB } from '@siteimprove/alfa-css';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
 import { System } from '@siteimprove/alfa-css';
+import { Text } from '@siteimprove/alfa-dom';
 import { Token } from '@siteimprove/alfa-css';
 import { URL } from '@siteimprove/alfa-css';
+
+// @public (undocumented)
+function hasBorder(device: Device, context?: Context): Predicate<Element>;
+
+// @public
+function hasBoxShadow(device: Device, context?: Context): Predicate<Element>;
+
+// Warning: (ae-incompatible-release-tags) The symbol "hasCascadedStyle" is marked as @public, but its signature references "Property" which is marked as @internal
+//
+// @public (undocumented)
+function hasCascadedStyle<N extends Property.Name>(name: N, predicate: Predicate<Style.Cascaded<N>, [source: Option<Declaration>]>, device: Device, context?: Context): Predicate<Element | Text>;
+
+// Warning: (ae-incompatible-release-tags) The symbol "hasCascadedValueDeclaredInInlineStyleOf" is marked as @public, but its signature references "Property" which is marked as @internal
+//
+// @public (undocumented)
+function hasCascadedValueDeclaredInInlineStyleOf(context: Element, device: Device, name: Property.Name): Predicate<Element>;
+
+// Warning: (ae-incompatible-release-tags) The symbol "hasComputedStyle" is marked as @public, but its signature references "Property" which is marked as @internal
+//
+// @public (undocumented)
+function hasComputedStyle<N extends Property.Name>(name: N, predicate: Predicate<Style.Computed<N>, [source: Option<Declaration>]>, device: Device, context?: Context): Predicate<Element | Text>;
+
+// Warning: (ae-incompatible-release-tags) The symbol "hasInlineStyleProperty" is marked as @public, but its signature references "Property" which is marked as @internal
+//
+// @public (undocumented)
+function hasInlineStyleProperty(name: Property.Name): Predicate<Element>;
+
+// @public (undocumented)
+function hasOutline(device: Device, context?: Context): Predicate<Element>;
+
+// @public (undocumented)
+function hasTextDecoration(device: Device, context?: Context): Predicate<Element>;
 
 // Warning: (ae-internal-missing-underscore) The name "Longhands" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -197,6 +230,10 @@ export namespace Style {
     export type Declared<N extends Name> = Property.Value.Declared<N>;
     // (undocumented)
     export function from(element: Element, device: Device, context?: Context): Style;
+    // Warning: (ae-incompatible-release-tags) The symbol "hasComputedStyle" is marked as @public, but its signature references "Property" which is marked as @internal
+    //
+    // (undocumented)
+    export function hasComputedStyle<N extends Property.Name>(name: N, predicate: Predicate<Style.Computed<N>, [source: Option<Declaration>]>, device: Device, context?: Context): Predicate<Element | Text>;
     // Warning: (ae-incompatible-release-tags) The symbol "Inherited" is marked as @public, but its signature references "Property" which is marked as @internal
     //
     // (undocumented)
@@ -216,6 +253,16 @@ export namespace Style {
         // (undocumented)
         variables: Array<[string, Value.JSON]>;
     }
+    const // Warning: (ae-forgotten-export) The symbol "element" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    hasBorder: typeof element.hasBorder, // (undocumented)
+    hasBoxShadow: typeof element.hasBoxShadow, // (undocumented)
+    hasCascadedStyle: typeof element.hasCascadedStyle, // (undocumented)
+    hasCascadedValueDeclaredInInlineStyleOf: typeof element.hasCascadedValueDeclaredInInlineStyleOf, // (undocumented)
+    hasInlineStyleProperty: typeof element.hasInlineStyleProperty, // (undocumented)
+    hasOutline: typeof element.hasOutline, // (undocumented)
+    hasTextDecoration: typeof element.hasTextDecoration;
     // Warning: (ae-incompatible-release-tags) The symbol "Specified" is marked as @public, but its signature references "Property" which is marked as @internal
     //
     // (undocumented)

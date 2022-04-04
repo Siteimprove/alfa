@@ -18,6 +18,8 @@ const { equals, or } = Predicate;
  * at least one is excluded (i.e. considers that [X,X[ and ]X,X] are empty).
  *
  * Complexity: the size of the subtree anchored at the lowest common ancestor.
+ *
+ * @public
  */
 export function getNodesBetween(
   node1: Node,
