@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -7,14 +8,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasHeadingLevel,
-  hasRole,
-  isDocumentElement,
-  isIgnored,
-} from "../common/predicate";
+import { hasRole, isDocumentElement, isIgnored } from "../common/predicate";
 import { Scope } from "../tags";
 
+const { hasHeadingLevel } = DOM;
 const { isElement } = Element;
 const { equals, not } = Predicate;
 const { and } = Refinement;

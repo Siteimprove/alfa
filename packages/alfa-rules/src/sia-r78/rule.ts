@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Node as ariaNode } from "@siteimprove/alfa-aria";
+import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -8,14 +8,10 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasHeadingLevel,
-  hasRole,
-  isIgnored,
-  isPerceivable,
-} from "../common/predicate";
+import { hasRole, isIgnored, isPerceivable } from "../common/predicate";
 import { Scope } from "../tags";
 
+const { hasHeadingLevel } = DOM;
 const { hasNamespace, isContent, isElement } = Element;
 const { not } = Predicate;
 const { and } = Refinement;

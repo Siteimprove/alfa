@@ -6,20 +6,18 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style/src/style";
+import { Style } from "@siteimprove/alfa-style";
 
-import {
-  isClipped,
-  isOffscreen,
-  isPositioned,
-  isRendered,
-  isTransparent,
-} from "../predicate";
+import { isClipped } from "./is-clipped";
+import { isOffscreen } from "./is-offscreen";
+import { isPositioned } from "./is-positioned";
+import { isRendered } from "./is-rendered";
+import { isTransparent } from "./is-transparent";
 
 const { hasName, isElement, isReplaced } = Element;
 const { nor, not, or, test } = Predicate;
 const { and } = Refinement;
-const { hasComputedStyle } = Style;
+const { hasComputedStyle, hasOutline } = Style;
 const { isText } = Text;
 
 /**
@@ -35,6 +33,12 @@ const cache = Cache.empty<
 >();
 
 function isInvisible(device: Device, context?: Context): Predicate<Node> {
+  const foo = Style;
+  const bar = foo.hasComputedStyle;
+  const baz = foo.hasOutline;
+  const toto = baz(device, context);
+  const titi = bar("font-size", () => true, device, context);
+
   return (node) =>
     cache
       .get(device, Cache.empty)

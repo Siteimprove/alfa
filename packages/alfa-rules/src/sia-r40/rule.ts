@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -8,16 +8,15 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import {
-  hasIncorrectRoleWithoutName,
   hasNonEmptyAccessibleName,
   hasRole,
   isIgnored,
 } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { and, not } = Predicate;
-const { hasName } = Role;
+const { hasIncorrectRoleWithoutName } = DOM;
 const { isElement } = Element;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r40",

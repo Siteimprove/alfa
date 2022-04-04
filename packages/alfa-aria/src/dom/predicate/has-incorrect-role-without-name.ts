@@ -1,13 +1,16 @@
-import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { hasExplicitRole } from "../predicate";
+import { hasExplicitRole } from "./has-explicit-role";
+import { hasAccessibleName } from "./has-accessible-name";
 
 const { hasName } = Element;
 const { and, not } = Predicate;
 
+/**
+ * @public
+ */
 export function hasIncorrectRoleWithoutName(
   device: Device
 ): Predicate<Element> {
@@ -19,6 +22,6 @@ export function hasIncorrectRoleWithoutName(
   return and(
     hasName("form", "section"),
     not(hasExplicitRole()),
-    not(DOM.hasAccessibleName(device))
+    not(hasAccessibleName(device))
   );
 }

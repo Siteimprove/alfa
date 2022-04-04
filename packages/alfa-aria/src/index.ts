@@ -25,5 +25,11 @@ export * from "./node/text";
  * @public
  */
 export namespace DOM {
-  export const { hasAccessibleName } = dom;
+  export const {
+    hasAccessibleName,
+    hasExplicitRole,
+    hasHeadingLevel,
+    hasImplicitRole,
+    hasIncorrectRoleWithoutName,
+  } = dom;
 }

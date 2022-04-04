@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Node, Role } from "@siteimprove/alfa-aria";
+import { DOM, Node, Role } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -12,16 +12,13 @@ import { expectation } from "../common/act/expectation";
 import { Group } from "../common/act/group";
 
 import { normalize } from "../common/normalize";
-import {
-  hasRole,
-  isIgnored,
-  hasIncorrectRoleWithoutName,
-} from "../common/predicate";
+import { hasRole, isIgnored } from "../common/predicate";
 
 import { Scope } from "../tags";
 
-const { and, equals, not } = Predicate;
+const { hasIncorrectRoleWithoutName } = DOM;
 const { hasNamespace } = Element;
+const { and, equals, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>>({
   uri: "https://alfa.siteimprove.com/rules/sia-r56",

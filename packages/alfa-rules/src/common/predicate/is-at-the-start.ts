@@ -1,10 +1,10 @@
-import { Node } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { isContent } from "../../../../alfa-dom/src/node/element/predicate/is-content";
 import { isPerceivable } from "./is-perceivable";
 
+const { isContent } = Element;
 const { and } = Predicate;
 
 /**
