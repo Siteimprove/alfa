@@ -2,11 +2,18 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
 import { Lexer, Keyword, Component, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  Declaration,
+  Document,
+  Shadow,
+  Text,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
@@ -337,11 +344,27 @@ export namespace Style {
     hasBoxShadow,
     hasCascadedStyle,
     hasCascadedValueDeclaredInInlineStyleOf,
-    hasComputedStyle,
+    // hasComputedStyle,
     hasInlineStyleProperty,
     hasOutline,
     hasTextDecoration,
   } = element;
+
+  export function hasComputedStyle<N extends Property.Name>(
+    name: N,
+    predicate: Predicate<Style.Computed<N>, [source: Option<Declaration>]>,
+    device: Device,
+    context?: Context
+  ): Predicate<Element | Text> {
+    return function hasComputedStyle(node): boolean {
+      return Element.isElement(node)
+        ? Style.from(node, device, context).computed(name).some(predicate)
+        : node
+            .parent({ flattened: true })
+            .filter(Element.isElement)
+            .some(hasComputedStyle);
+    };
+  }
 }
 
 function shouldOverride(
