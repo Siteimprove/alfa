@@ -1303,6 +1303,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-dom@workspace:packages/alfa-dom"
   dependencies:
+    "@siteimprove/alfa-cache": "workspace:^0.36.0"
     "@siteimprove/alfa-css": "workspace:^0.36.0"
     "@siteimprove/alfa-earl": "workspace:^0.36.0"
     "@siteimprove/alfa-equatable": "workspace:^0.36.0"
