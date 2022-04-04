@@ -111,6 +111,26 @@ export namespace Media {
     // (undocumented)
     export namespace Feature {
         // (undocumented)
+        export class Height extends Feature<Length> {
+            // (undocumented)
+            static boolean(): Height;
+            // (undocumented)
+            matches(device: Device): boolean;
+            // (undocumented)
+            get name(): "height";
+            // (undocumented)
+            static of(value: Value<Length>): Height;
+        }
+        // (undocumented)
+        export namespace Height {
+            // (undocumented)
+            export function isHeight(value: Feature): value is Height;
+            // (undocumented)
+            export function isHeight(value: unknown): value is Height;
+            // (undocumented)
+            export function tryFrom(value: Option<Value>): Result<Height, string>;
+        }
+        // (undocumented)
         export function isFeature(value: unknown): value is Feature;
         // (undocumented)
         export interface JSON {
@@ -123,8 +143,33 @@ export namespace Media {
             // (undocumented)
             value: Value.JSON | null;
         }
+        const // (undocumented)
+        isWidth: typeof Width.isWidth;
         // (undocumented)
         export function tryFrom(value: Option<Value<any>>, name: string): Result<Feature, string>;
+        // (undocumented)
+        export class Width extends Feature<Length> {
+            // (undocumented)
+            static boolean(): Width;
+            // (undocumented)
+            matches(device: Device): boolean;
+            // (undocumented)
+            get name(): "width";
+            // (undocumented)
+            static of(value: Value<Length>): Width;
+        }
+        const // (undocumented)
+        isHeight: typeof Height.isHeight;
+        // (undocumented)
+        export namespace Width {
+            // (undocumented)
+            export function isWidth(value: Feature): value is Width;
+            // (undocumented)
+            export function isWidth(value: unknown): value is Width;
+            // (undocumented)
+            export function tryFrom(value: Option<Value>): Result<Width, string>;
+        }
+            {};
     }
     // (undocumented)
     export class List implements Matchable, Iterable_2<Query>, Equatable, Serializable<List.JSON> {

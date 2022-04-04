@@ -900,6 +900,8 @@ export abstract class Rule implements Equatable, Serializable {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
+    inclusiveAncestors(): Iterable<Rule>;
+    // (undocumented)
     get owner(): Option<Sheet>;
     // (undocumented)
     protected _owner: Option<Sheet>;

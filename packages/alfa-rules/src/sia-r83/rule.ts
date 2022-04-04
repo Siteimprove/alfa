@@ -1,12 +1,24 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
+import { Cascade, RuleTree } from "@siteimprove/alfa-cascade";
+import { Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
+import {
+  Document,
+  Element,
+  Text,
+  MediaRule,
+  Namespace,
+  Node,
+  Rule as CSSRule,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -18,6 +30,9 @@ import { isVisible } from "../common/predicate";
 import { getPositioningParent } from "../common/dom/get-positioning-parent";
 
 import { Scope } from "../tags";
+
+const { isHeight, isWidth } = Media.Feature;
+const { Discrete, Range } = Media.Value;
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
@@ -133,6 +148,13 @@ function verticalClippingAncestor(
         return None;
       }
 
+      if (test(usesFontRelativeMediaRule(device, isHeight), element)) {
+        // The element uses a (font relative) media rule, and we can't guess what
+        // the page would like upon resizing and triggering a different media
+        // query, so we just accept it as good enough
+        return None;
+      }
+
       if (
         hasFixedHeight(device)(element) &&
         overflow(element, device, "y") === Overflow.Clip
@@ -164,6 +186,13 @@ function horizontallyClipper(
   return (element) => {
     if (hasFontRelativeValue(device, "width")(element)) {
       // The element grows with its text.
+      return None;
+    }
+
+    if (test(usesFontRelativeMediaRule(device, isWidth), element)) {
+      // The element uses a (font relative) media rule, and we can't guess what
+      // the page would like upon resizing and triggering a different media
+      // query, so we just accept it as good enough
       return None;
     }
 
@@ -208,6 +237,13 @@ function horizontallyClippingAncestor(
           // assume this denotes a small component inside a large container
           // with enough room for the component to grow to 200% or more
           // before being clipped.
+          return None;
+        }
+
+        if (test(usesFontRelativeMediaRule(device, isWidth), element)) {
+          // The element uses a (font relative) media rule, and we can't guess what
+          // the page would like upon resizing and triggering a different media
+          // query, so we just accept it as good enough
           return None;
         }
 
@@ -302,8 +338,6 @@ function hasFixedHeight(device: Device): Predicate<Element> {
   );
 }
 
-//isClipped-doesn't-consider-offset-parents
-
 function hasFontRelativeValue(
   device: Device,
   property: "height" | "width"
@@ -342,6 +376,105 @@ function isWrappingFlexContainer(device: Device): Predicate<Element> {
 
     return false;
   };
+}
+/*
+ * We accept any property depending on a media query as handling the overflow,
+ * not just the concerned properties (height, width, …) This is because the mere
+ * presence of a media query suggests that there is an opposing one and we do
+ * not know whether it changes the concerned properties or not. This only risks
+ * creating false negatives.
+ *
+ * We only look at discrete media queries and minimum bound of ranges. Maximum
+ * bounds will not trigger when text size increase, so they cannot control
+ * overflow.
+ */
+const mediaRulesCache = Cache.empty<CSSRule, Sequence<MediaRule>>();
+
+function ancestorMediaRules(rule: CSSRule): Sequence<MediaRule> {
+  return mediaRulesCache.get(rule, () => {
+    const mediaRules = rule.parent
+      .map((parent) => ancestorMediaRules(parent))
+      .getOrElse<Sequence<MediaRule>>(Sequence.empty);
+
+    return MediaRule.isMediaRule(rule) ? mediaRules.prepend(rule) : mediaRules;
+  });
+}
+
+const ruleTreeCache = Cache.empty<RuleTree.Node, Sequence<RuleTree.Node>>();
+
+function ancestorsInRuleTree(rule: RuleTree.Node): Sequence<RuleTree.Node> {
+  return ruleTreeCache.get(rule, () =>
+    rule.parent
+      .map((parent) => ancestorsInRuleTree(parent))
+      .getOrElse<Sequence<RuleTree.Node>>(Sequence.empty)
+      .prepend(rule)
+  );
+}
+
+function getUsedMediaRules(
+  element: Element,
+  device: Device,
+  context: Context = Context.empty()
+): Sequence<MediaRule> {
+  const root = element.root();
+
+  if (!Document.isDocument(root)) {
+    return Sequence.empty();
+  }
+
+  return Cascade.of(root, device)
+    .get(element, context)
+    .map((node) =>
+      // Get all nodes (style rules) in the RuleTree that affect the element;
+      // for each of these rules, get all ancestor media rules in the CSS tree.
+      ancestorsInRuleTree(node).flatMap((node) => ancestorMediaRules(node.rule))
+    )
+    .getOrElse(Sequence.empty);
+}
+
+function usesMediaRule(
+  predicate: Predicate<MediaRule> = () => true,
+  device: Device,
+  context: Context = Context.empty()
+): Predicate<Element> {
+  return (element) =>
+    getUsedMediaRules(element, device, context).some(predicate);
+}
+
+/**
+ * Checks whether at least one feature in one of the queries of the media rule
+ * is a font-relative one. Only checks feature matching the refinement.
+ */
+function isFontRelativeMediaRule<F extends Media.Feature>(
+  refinement: Refinement<Media.Feature, F>
+): Predicate<MediaRule> {
+  return (rule) =>
+    Iterable.some(rule.queries.queries, (query) =>
+      query.condition.some((condition) =>
+        Iterable.some(
+          condition,
+          (feature) =>
+            refinement(feature) &&
+            feature.value.some((value) =>
+              Range.isRange(value)
+                ? value.minimum.some(
+                    (min) =>
+                      Length.isLength(min.value) && min.value.isFontRelative()
+                  )
+                : Discrete.isDiscrete<Length>(value) &&
+                  value.value.isFontRelative()
+            )
+        )
+      )
+    );
+}
+
+function usesFontRelativeMediaRule<F extends Media.Feature>(
+  device: Device,
+  refinement: Refinement<Media.Feature, F>,
+  context: Context = Context.empty()
+): Predicate<Element> {
+  return usesMediaRule(isFontRelativeMediaRule(refinement), device, context);
 }
 
 /**

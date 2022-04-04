@@ -19,6 +19,23 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.36.0](../../compare/v0.35.0...v0.36.0) (2022-04-01)
+
+### Breaking
+
+- [@siteimprove/alfa-act](packages/alfa-act), [@siteimprove/alfa-rules](packages/alfa-rules): Diagnostics in `Question` is now optional ([#1035](../../issues/1035), [#1115](../../pull/1115))
+- [@siteimprove/alfa-act](packages/alfa-act): Rename `Rule.Event`'s `start` and `end` functions' name parameter to `total` from `rule` ([#1124](../../pull/1124))
+- [@siteimprove/alfa-protractor](packages/alfa-protractor): Remove `alfa-protractor` package ([#1058](../../issues/1058), [#1117](../../pull/1117))
+
+### Added
+
+- [@siteimprove/alfa-act](packages/alfa-act), [@siteimprove/alfa-rules](packages/alfa-rules): An optional fallback answer to `Question` is added ([#1035](../../issues/1035), [#1115](../../pull/1115))
+- [@siteimprove/alfa-rules](packages/alfa-rules): Experimental version of SIA-R65 called SIA-ER65 is added ([#1035](../../issues/1035), [#1115](../../pull/1115))
+
+### Changed
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade), [@siteimprove/alfa-dom](packages/alfa-dom), [@siteimprove/alfa-media](packages/alfa-media), [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R83 now accepts font relative media queries as handling overflow ([#941](../../issues/941), [#1116](../../pull/1116))
+
 ## [0.35.0](../../compare/v0.34.0...v0.35.0) (2022-03-24)
 
 ### Added

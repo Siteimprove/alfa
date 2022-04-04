@@ -657,7 +657,7 @@ export namespace Rule {
         // (undocumented)
         export function end<I, T, Q, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "end", N>;
         // (undocumented)
-        export function end<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "rule">;
+        export function end<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "total">;
         // (undocumented)
         export function endApplicability<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "applicability">;
         // (undocumented)
@@ -678,7 +678,7 @@ export namespace Rule {
         // (undocumented)
         export function start<I, T, Q, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "start", N>;
         // (undocumented)
-        export function start<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "rule">;
+        export function start<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "total">;
         // (undocumented)
         export function startApplicability<I, T, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "applicability">;
         // (undocumented)

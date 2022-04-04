@@ -281,7 +281,17 @@ export namespace Media {
           })
           .getOrElse(() => Ok.of(Width.boolean()));
       }
+
+      export function isWidth(value: Feature): value is Width;
+
+      export function isWidth(value: unknown): value is Width;
+
+      export function isWidth(value: unknown): value is Width {
+        return value instanceof Width;
+      }
     }
+
+    export const { isWidth } = Width;
 
     /**
      * {@link https://drafts.csswg.org/mediaqueries/#height}
@@ -315,7 +325,7 @@ export namespace Media {
           : value.every((value) => value.matches(Length.of(0, "px")));
       }
     }
-    
+
     namespace Height {
       export function tryFrom(value: Option<Value>): Result<Height, string> {
         return value
@@ -331,7 +341,17 @@ export namespace Media {
           })
           .getOrElse(() => Ok.of(Height.boolean()));
       }
+
+      export function isHeight(value: Feature): value is Height;
+
+      export function isHeight(value: unknown): value is Height;
+
+      export function isHeight(value: unknown): value is Height {
+        return value instanceof Height;
+      }
     }
+
+    export const { isHeight } = Height;
 
     /**
      * {@link https://drafts.csswg.org/mediaqueries/#orientation}
