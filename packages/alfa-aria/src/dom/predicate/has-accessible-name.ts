@@ -6,6 +6,7 @@ import { Name } from "../../name";
 import { Node } from "../../node";
 
 import { hasName } from "../../node/predicate/has-name";
+import { hasValue } from "../../name/predicate/has-value";
 
 const { test } = Predicate;
 
@@ -33,7 +34,7 @@ export function hasAccessibleName<T extends Element | Text>(
 ): Predicate<T> {
   const predicate =
     typeof nameOrPredicate === "string"
-      ? Name.hasValue(nameOrPredicate, ...names)
+      ? hasValue(nameOrPredicate, ...names)
       : nameOrPredicate;
 
   return (node) => test(hasName(predicate), Node.from(node, device));

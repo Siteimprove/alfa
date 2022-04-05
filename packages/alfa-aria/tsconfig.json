@@ -32,6 +32,7 @@
     "src/role/data.ts",
     "src/role/predicate.ts",
     "src/role/predicate/has-name.ts",
+    "test/dom/predicate/has-accessible-name.spec.tsx",
     "test/name.spec.tsx",
     "test/node.spec.tsx"
   ],
