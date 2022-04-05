@@ -33,7 +33,6 @@
     "src/common/predicate/is-at-the-start.ts",
     "src/common/predicate/is-clipped.ts",
     "src/common/predicate/is-document-element.ts",
-    "src/common/predicate/is-fallback.ts",
     "src/common/predicate/is-focusable.ts",
     "src/common/predicate/is-important.ts",
     "src/common/predicate/is-inert.ts",

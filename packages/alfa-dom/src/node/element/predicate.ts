@@ -11,5 +11,6 @@ export * from "./predicate/is-content";
 export * from "./predicate/is-disabled";
 export * from "./predicate/is-draggable";
 export * from "./predicate/is-editing-host";
+export * from "./predicate/is-fallback";
 export * from "./predicate/is-suggested-focusable";
 export * from "./predicate/is-replaced";

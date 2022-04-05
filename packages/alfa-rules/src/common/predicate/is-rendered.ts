@@ -5,7 +5,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
-import { isFallback } from "./is-fallback";
+const { isFallback } = Element;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 

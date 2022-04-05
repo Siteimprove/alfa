@@ -411,6 +411,7 @@ export namespace Element {
     isDisabled,
     isDraggable,
     isEditingHost,
+    isFallback,
     isSuggestedFocusable,
     isReplaced,
   } = predicate;
