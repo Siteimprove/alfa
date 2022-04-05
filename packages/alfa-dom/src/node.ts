@@ -583,5 +583,6 @@ export namespace Node {
     hasDescendant,
     hasInclusiveDescendant,
     hasTextContent,
+    isRoot,
   } = predicate;
 }

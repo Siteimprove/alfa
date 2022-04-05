@@ -45,6 +45,7 @@
     "src/node/predicate/has-descendant.ts",
     "src/node/predicate/has-inclusive-descendant.ts",
     "src/node/predicate/has-text-content.ts",
+    "src/node/predicate/is-root.ts",
     "src/node/shadow.ts",
     "src/node/slot.ts",
     "src/node/slotable.ts",

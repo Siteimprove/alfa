@@ -43,7 +43,6 @@
     "src/common/predicate/is-perceivable.ts",
     "src/common/predicate/is-positioned.ts",
     "src/common/predicate/is-rendered.ts",
-    "src/common/predicate/is-root.ts",
     "src/common/predicate/is-tabbable.ts",
     "src/common/predicate/is-transparent.ts",
     "src/common/predicate/is-visible.ts",

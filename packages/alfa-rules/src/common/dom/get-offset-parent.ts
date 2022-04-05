@@ -1,5 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -8,8 +8,8 @@ const { hasName, isElement } = Element;
 
 import { isPositioned } from "../predicate/is-positioned";
 import { isRendered } from "../predicate/is-rendered";
-import { isRoot } from "../predicate/is-root";
 
+const { isRoot } = Node;
 const isBody = hasName("body");
 const isTabular = hasName("td", "th", "table");
 
