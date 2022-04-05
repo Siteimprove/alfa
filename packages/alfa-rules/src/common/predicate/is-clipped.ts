@@ -5,6 +5,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
+
 import { hasPositioningParent } from "./has-positioning-parent";
 
 const { abs } = Math;

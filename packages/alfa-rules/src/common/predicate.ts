@@ -1,7 +1,6 @@
 export * from "./predicate/has-interposed-descendant";
 export * from "./predicate/is-at-the-start";
 export * from "./predicate/is-clipped";
-export * from "./predicate/is-defined";
 export * from "./predicate/is-document-element";
 export * from "./predicate/is-focusable";
 export * from "./predicate/is-important";
