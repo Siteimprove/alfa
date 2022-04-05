@@ -8,10 +8,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isIgnored } from "../common/predicate";
-
 import { Scope } from "../tags";
 
+const { isIgnored } = DOM;
 const { isElement, hasInputType, hasNamespace } = Element;
 const { and, not, test } = Predicate;
 

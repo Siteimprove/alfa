@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
+import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
@@ -12,9 +12,10 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
-import { hasRole, isFocusable, isIgnored } from "../common/predicate";
+import { isFocusable } from "../common/predicate";
 import { Scope } from "../tags";
 
+const { hasRole, isIgnored } = DOM;
 const { hasAttribute, hasInputType, hasName, hasNamespace, isElement } =
   Element;
 const { isEmpty } = Iterable;

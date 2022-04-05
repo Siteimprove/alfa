@@ -1,9 +1,12 @@
-import { Role } from "@siteimprove/alfa-aria";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+import { Role } from "../../role";
+
 /**
  * Check if an element is marked as decorative.
+ *
+ * @public
  */
 export const isMarkedDecorative: Predicate<Element> = (element) => {
   const role = element.attribute("role").flatMap((attribute) =>

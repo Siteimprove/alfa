@@ -10,10 +10,9 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Map } from "@siteimprove/alfa-map";
 
 import { expectation } from "../common/act/expectation";
-import { hasRole, isIgnored } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasNonEmptyAccessibleName } = DOM;
+const { hasNonEmptyAccessibleName, hasRole, isIgnored } = DOM;
 const { isElement, hasNamespace } = Element;
 const { not } = Predicate;
 const { and } = Refinement;

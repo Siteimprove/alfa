@@ -1,16 +1,16 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
+import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-import { isIgnored } from "../common/predicate";
 import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
-const { and, not } = Predicate;
+const { isIgnored } = DOM;
 const { isElement } = Element;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r54",

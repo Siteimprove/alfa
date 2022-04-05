@@ -19,9 +19,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isIgnored, isWhitespace, isVisible } from "../common/predicate";
+import { isWhitespace, isVisible } from "../common/predicate";
 import { Scope } from "../tags";
 
+const { isIgnored } = DOM;
 const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { isEmpty } = Iterable;
 const { not, or } = Predicate;

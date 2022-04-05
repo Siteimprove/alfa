@@ -10,12 +10,12 @@ import { expectation } from "../common/act/expectation";
 import { Group } from "../common/act/group";
 import { Question } from "../common/act/question";
 
-import { isIgnored, referenceSameResource } from "../common/predicate";
+import { referenceSameResource } from "../common/predicate";
 import { Scope } from "../tags";
 
 import { normalize } from "../common/normalize";
 
-const { hasNonEmptyAccessibleName } = DOM;
+const { hasNonEmptyAccessibleName, isIgnored } = DOM;
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
 

@@ -11,6 +11,14 @@ const { or, test, equals } = Predicate;
 const { and } = Refinement;
 const { hasComputedStyle } = Style;
 
+/**
+ * Check if an element is programatically hidden.
+ *
+ * While this only uses Style properties, this is thematically related to
+ * accessibility and aria-* attributes and therefore lives in alfa-aria.
+ *
+ * @public
+ */
 export function isProgrammaticallyHidden(
   device: Device,
   context: Context = Context.empty()

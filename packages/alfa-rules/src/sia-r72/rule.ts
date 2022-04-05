@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -7,9 +8,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasRole, isVisible } from "../common/predicate";
+import { isVisible } from "../common/predicate";
 import { Scope } from "../tags";
 
+const { hasRole } = DOM;
 const { isElement } = Element;
 const { and } = Predicate;
 

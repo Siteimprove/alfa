@@ -1,4 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -11,12 +12,7 @@ import { Question } from "../common/act/question";
 
 import { getBackground, getForeground } from "../common/dom/get-colors";
 
-import {
-  hasRole,
-  isPerceivable,
-  isLargeText,
-  isSemanticallyDisabled,
-} from "../common/predicate";
+import { isPerceivable, isLargeText } from "../common/predicate";
 
 import { Contrast as Diagnostic } from "../common/diagnostic/contrast";
 import { contrast } from "../common/expectation/contrast";
@@ -24,11 +20,12 @@ import { Contrast as Outcomes } from "../common/outcome/contrast";
 
 import { Scope } from "../tags";
 
+const { hasRole, isSemanticallyDisabled } = DOM;
+const { isElement } = Element;
 const { flatMap, map } = Iterable;
+const { max } = Math;
 const { or, not } = Predicate;
 const { and, test } = Refinement;
-const { max } = Math;
-const { isElement } = Element;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text, Question.Metadata>({

@@ -12,11 +12,10 @@ import { expectation } from "../common/act/expectation";
 import { Group } from "../common/act/group";
 
 import { normalize } from "../common/normalize";
-import { hasRole, isIgnored } from "../common/predicate";
 
 import { Scope } from "../tags";
 
-const { hasIncorrectRoleWithoutName } = DOM;
+const { hasIncorrectRoleWithoutName, hasRole, isIgnored } = DOM;
 const { hasNamespace } = Element;
 const { and, equals, not } = Predicate;
 

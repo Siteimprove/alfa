@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
+import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -12,9 +12,9 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasRole, isIgnored } from "../common/predicate";
 import { Scope } from "../tags";
 
+const { hasRole, isIgnored } = DOM;
 const { hasAttribute, hasNamespace, isElement } = Element;
 const { and, equals, not } = Refinement;
 

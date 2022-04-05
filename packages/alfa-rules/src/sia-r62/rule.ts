@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
@@ -21,13 +22,13 @@ import { Page } from "@siteimprove/alfa-web";
 import * as json from "@siteimprove/alfa-json";
 
 import { expectation } from "../common/act/expectation";
-import { hasRole, isVisible, isWhitespace } from "../common/predicate";
+import { isVisible, isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
 import { Serialise } from "./serialise";
 
+const { hasRole } = DOM;
 const { isElement } = Element;
-const { isText } = Text;
 const { or, not, test } = Predicate;
 const { and } = Refinement;
 const {
@@ -37,6 +38,7 @@ const {
   hasOutline,
   hasTextDecoration,
 } = Style;
+const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",

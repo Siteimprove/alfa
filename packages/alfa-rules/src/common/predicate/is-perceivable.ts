@@ -1,10 +1,11 @@
+import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { isIgnored } from "./is-ignored";
 import { isVisible } from "./is-visible";
 
+const { isIgnored } = DOM;
 const { and, not } = Predicate;
 
 /**

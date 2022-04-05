@@ -13,13 +13,13 @@ import { normalize } from "../common/normalize";
 
 import {
   isPerceivable,
-  hasRole,
   isFocusable,
   isRendered,
   isWhitespace,
 } from "../common/predicate";
 import { Scope } from "../tags";
 
+const { hasRole } = DOM;
 const { hasAttribute, hasNamespace, hasName, isElement } = Element;
 const { isText } = Text;
 const { and, test, not } = Predicate;

@@ -14,13 +14,13 @@ import { expectation } from "../common/act/expectation";
 import { Group } from "../common/act/group";
 import { Question } from "../common/act/question";
 
-import { hasRole, isIgnored, referenceSameResource } from "../common/predicate";
+import { referenceSameResource } from "../common/predicate";
 
 import { normalize } from "../common/normalize";
 
 import { Scope } from "../tags";
 
-const { hasNonEmptyAccessibleName } = DOM;
+const { hasNonEmptyAccessibleName, hasRole, isIgnored } = DOM;
 const { isElement, hasName, hasNamespace, hasId } = Element;
 const { and, not, equals } = Predicate;
 

@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
+import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -12,11 +12,11 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasRole, isIgnored } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { test, property } = Predicate;
+const { hasRole, isIgnored } = DOM;
 const { hasDisplaySize, hasInputType, isElement } = Element;
+const { test, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r18",

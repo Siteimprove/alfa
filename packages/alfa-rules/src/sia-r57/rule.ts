@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
+import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Text, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
@@ -8,18 +8,14 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasRole,
-  isIgnored,
-  isTabbable,
-  isWhitespace,
-} from "../common/predicate";
+import { isTabbable, isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
+const { hasRole, isIgnored } = DOM;
+const { isElement } = Element;
 const { isEmpty } = Iterable;
 const { and, not, nor, property } = Predicate;
 const { isText } = Text;
-const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r57",

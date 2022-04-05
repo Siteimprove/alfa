@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -13,16 +14,15 @@ import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
 import {
-  hasRole,
   isAtTheStart,
   isDocumentElement,
   isTabbable,
-  isIgnored,
   isVisible,
 } from "../common/predicate";
 
 import { Scope, Stability, Version } from "../tags";
 
+const { hasRole, isIgnored } = DOM;
 const { hasName, isElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
