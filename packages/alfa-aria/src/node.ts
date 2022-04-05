@@ -570,5 +570,5 @@ export namespace Node {
     });
   }
 
-  export const { hasName, hasRole } = predicate;
+  export const { hasName } = predicate;
 }
