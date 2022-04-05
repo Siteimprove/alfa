@@ -3,3 +3,4 @@ export * from "./predicate/has-explicit-role";
 export * from "./predicate/has-heading-level";
 export * from "./predicate/has-implicit-role";
 export * from "./predicate/has-incorrect-role-without-name";
+export * from "./predicate/has-non-empty-accessible-name";

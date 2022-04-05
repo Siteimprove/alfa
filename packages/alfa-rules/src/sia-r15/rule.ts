@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
+import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -10,15 +10,12 @@ import { expectation } from "../common/act/expectation";
 import { Group } from "../common/act/group";
 import { Question } from "../common/act/question";
 
-import {
-  hasNonEmptyAccessibleName,
-  isIgnored,
-  referenceSameResource,
-} from "../common/predicate";
+import { isIgnored, referenceSameResource } from "../common/predicate";
 import { Scope } from "../tags";
 
 import { normalize } from "../common/normalize";
 
+const { hasNonEmptyAccessibleName } = DOM;
 const { isElement, hasName, hasNamespace } = Element;
 const { and, not } = Predicate;
 

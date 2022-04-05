@@ -8,10 +8,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasNonEmptyAccessibleName, isIgnored } from "../common/predicate";
+import { isIgnored } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasExplicitRole } = DOM;
+const { hasExplicitRole, hasNonEmptyAccessibleName } = DOM;
 const { isElement, hasNamespace } = Element;
 const { and, not } = Predicate;
 

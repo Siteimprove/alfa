@@ -31,5 +31,6 @@ export namespace DOM {
     hasHeadingLevel,
     hasImplicitRole,
     hasIncorrectRoleWithoutName,
+    hasNonEmptyAccessibleName,
   } = dom;
 }
