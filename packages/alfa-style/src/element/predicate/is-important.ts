@@ -1,10 +1,14 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Property, Style } from "@siteimprove/alfa-style";
 
-const { hasComputedStyle } = Style;
+import { Property } from "../../property";
 
+import { hasComputedStyle } from "./has-computed-style";
+
+/**
+ * @public
+ */
 export function isImportant(
   device: Device,
   property: Property.Name

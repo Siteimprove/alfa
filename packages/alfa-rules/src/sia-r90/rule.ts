@@ -3,17 +3,18 @@ import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isTabbable } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
 const { isElement, hasNamespace } = Element;
 const { and, not } = Refinement;
+const { isTabbable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r90",

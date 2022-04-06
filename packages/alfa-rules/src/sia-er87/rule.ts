@@ -6,6 +6,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Style } from "@siteimprove/alfa-style";
 import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -13,7 +14,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { isAtTheStart, isTabbable, isVisible } from "../common/predicate";
+import { isAtTheStart, isVisible } from "../common/predicate";
 
 import { Scope, Stability, Version } from "../tags";
 
@@ -21,6 +22,7 @@ const { hasRole, isIgnored } = DOM;
 const { hasName, isDocumentElement, isElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
+const { isTabbable } = Style;
 
 /**
  * This version of R87 ask questions whose subject is not the target of the rule.

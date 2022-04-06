@@ -2,7 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Style } from "@siteimprove/alfa-style/src/style";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -10,18 +10,13 @@ import { TextSpacing } from "../common/outcome/text-spacing";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  isVisible,
-  isWhitespace,
-  isImportant,
-  isWideEnough,
-} from "../common/predicate";
+import { isVisible, isWhitespace, isWideEnough } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { and } = Refinement;
 const { isElement, hasNamespace } = Element;
 const { not, or, test } = Predicate;
-const { hasInlineStyleProperty } = Style;
+const { hasInlineStyleProperty, isImportant } = Style;
 const { isText } = Text;
 
 const property = "word-spacing";

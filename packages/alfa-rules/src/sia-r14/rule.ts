@@ -11,14 +11,14 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { normalize } from "../common/normalize";
 
-import { isPerceivable, isFocusable, isWhitespace } from "../common/predicate";
+import { isPerceivable, isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
 const { hasAttribute, hasNamespace, hasName, isElement } = Element;
 const { isText } = Text;
 const { and, test, not } = Predicate;
-const { isRendered } = Style;
+const { isFocusable, isRendered } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r14",
@@ -51,7 +51,7 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        // Removes all punctiation (underscore, hypen, brackets, quotation marks, etc)
+        // Removes all punctuation (underscore, hyphen, brackets, quotation marks, etc)
         // and normalise
         function removePunctuationAndNormalise(input: string): string {
           return normalize(input.replace(/\p{P}/gu, ""));

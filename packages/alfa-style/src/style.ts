@@ -342,10 +342,14 @@ export namespace Style {
     hasCascadedValueDeclaredInInlineStyleOf,
     hasComputedStyle,
     hasInlineStyleProperty,
+    hasPositioningParent,
     hasOutline,
     hasTextDecoration,
+    isFocusable,
+    isImportant,
     isInert,
     isPositioned,
+    isTabbable,
   } = element;
 
   export const { isOffscreen, isRendered, isTransparent } = node;

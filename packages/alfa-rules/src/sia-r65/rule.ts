@@ -11,15 +11,14 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isTabbable } from "../common/predicate";
-
 import { Question } from "../common/act/question";
 import { Scope } from "../tags";
 
 const { isElement } = Element;
 const { isKeyword } = Keyword;
 const { or, test, xor } = Predicate;
-const { hasBorder, hasBoxShadow, hasOutline, hasTextDecoration } = Style;
+const { hasBorder, hasBoxShadow, hasOutline, hasTextDecoration, isTabbable } =
+  Style;
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r65",

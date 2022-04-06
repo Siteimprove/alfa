@@ -6,13 +6,13 @@ import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err, Result } from "@siteimprove/alfa-result";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
-import { isFocusable } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { hasRole, isIgnored } = DOM;
@@ -20,6 +20,7 @@ const { hasAttribute, hasInputType, hasName, hasNamespace, isElement } =
   Element;
 const { isEmpty } = Iterable;
 const { and, not, property, test } = Predicate;
+const { isFocusable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r16",

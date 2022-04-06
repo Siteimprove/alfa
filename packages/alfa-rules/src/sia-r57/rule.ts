@@ -4,17 +4,19 @@ import { Text, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isTabbable, isWhitespace } from "../common/predicate";
+import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { hasRole, isIgnored } = DOM;
 const { isElement } = Element;
 const { isEmpty } = Iterable;
 const { and, not, nor, property } = Predicate;
+const { isTabbable } = Style;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Text>({

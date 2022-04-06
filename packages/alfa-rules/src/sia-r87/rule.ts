@@ -6,13 +6,14 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Style } from "@siteimprove/alfa-style";
 import { URL } from "@siteimprove/alfa-url";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isAtTheStart, isTabbable, isVisible } from "../common/predicate";
+import { isAtTheStart, isVisible } from "../common/predicate";
 
 import { Question } from "../common/act/question";
 import { Scope } from "../tags";
@@ -21,6 +22,7 @@ const { hasRole, isIgnored } = DOM;
 const { hasName, isDocumentElement, isElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
+const { isTabbable } = Style;
 
 export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87",
