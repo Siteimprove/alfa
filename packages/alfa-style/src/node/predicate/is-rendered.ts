@@ -3,7 +3,8 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Comment, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
+
+import { Style } from "../../style";
 
 const { isFallback } = Element;
 
@@ -11,6 +12,8 @@ const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 /**
  * {@link https://html.spec.whatwg.org/#being-rendered}
+ *
+ * @public
  */
 export function isRendered(
   device: Device,

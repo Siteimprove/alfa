@@ -3,13 +3,17 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
+
+import { Style } from "../../style";
 
 const { abs } = Math;
 const { isElement } = Element;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
+/**
+ * @public
+ */
 export function isOffscreen(
   device: Device,
   context: Context = Context.empty()

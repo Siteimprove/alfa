@@ -3,13 +3,15 @@ import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Style } from "@siteimprove/alfa-style";
 
-import { isPerceivable, isRendered } from "../predicate";
+import { isPerceivable } from "../predicate";
 
 import { Question } from "../act/question";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;
+const { isRendered } = Style;
 
 export function audio(
   document: Document,

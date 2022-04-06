@@ -4,12 +4,10 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
 
-import { isRendered } from "../predicate/is-rendered";
-
 const { hasName, isElement } = Element;
 const { isRoot } = Node;
 const { and, or, not, test } = Predicate;
-const { isPositioned } = Style;
+const { isPositioned, isRendered } = Style;
 
 const isBody = hasName("body");
 const isTabular = hasName("td", "th", "table");

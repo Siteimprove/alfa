@@ -4,14 +4,15 @@ import { Document, Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
-import { isRendered } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { hasName, hasNamespace, isDocumentElement, isElement } = Element;
 const { and, test } = Predicate;
+const { isRendered } = Style;
 
 const isDeprecated = hasName(
   "acronym",

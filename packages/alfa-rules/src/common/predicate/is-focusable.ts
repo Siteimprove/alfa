@@ -1,8 +1,9 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Style } from "@siteimprove/alfa-style";
 
-import { isRendered } from "./is-rendered";
+const { isRendered } = Style;
 
 const { hasTabIndex, isDisabled } = Element;
 const { and, not } = Predicate;

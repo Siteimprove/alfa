@@ -11,18 +11,14 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { normalize } from "../common/normalize";
 
-import {
-  isPerceivable,
-  isFocusable,
-  isRendered,
-  isWhitespace,
-} from "../common/predicate";
+import { isPerceivable, isFocusable, isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
 const { hasAttribute, hasNamespace, hasName, isElement } = Element;
 const { isText } = Text;
 const { and, test, not } = Predicate;
+const { isRendered } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r14",

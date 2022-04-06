@@ -4,13 +4,17 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
+
+import { Style } from "../../style";
 
 const { isElement } = Element;
 const { isText } = Text;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
+/**
+ * @public
+ */
 export function isTransparent(
   device: Device,
   context: Context = Context.empty()

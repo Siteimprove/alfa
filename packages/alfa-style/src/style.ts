@@ -15,6 +15,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import * as json from "@siteimprove/alfa-json";
 
 import * as element from "./element/element";
+import * as node from "./node/node";
 
 import { Property } from "./property";
 import { Value } from "./value";
@@ -344,6 +345,8 @@ export namespace Style {
     isInert,
     isPositioned,
   } = element;
+
+  export const { isOffscreen, isRendered, isTransparent } = node;
 }
 
 function shouldOverride(

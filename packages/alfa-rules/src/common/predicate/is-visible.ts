@@ -9,14 +9,17 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
 import { isClipped } from "./is-clipped";
-import { isOffscreen } from "./is-offscreen";
-import { isRendered } from "./is-rendered";
-import { isTransparent } from "./is-transparent";
 
 const { hasName, isElement, isReplaced } = Element;
 const { nor, not, or, test } = Predicate;
 const { and } = Refinement;
-const { hasComputedStyle, isPositioned } = Style;
+const {
+  hasComputedStyle,
+  isPositioned,
+  isOffscreen,
+  isRendered,
+  isTransparent,
+} = Style;
 const { isText } = Text;
 
 /**
