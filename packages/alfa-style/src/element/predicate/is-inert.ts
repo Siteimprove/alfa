@@ -1,10 +1,13 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Style } from "@siteimprove/alfa-style";
+
+import { Style } from "../../style";
 
 /**
  * {@link https://html.spec.whatwg.org/#inert}
+ *
+ * @public
  */
 export function isInert(device: Device): Predicate<Element> {
   return (element) => {

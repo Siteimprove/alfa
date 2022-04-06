@@ -1,12 +1,13 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Style } from "@siteimprove/alfa-style";
 
-import { isInert } from "./is-inert";
 import { isRendered } from "./is-rendered";
 
 const { hasName, hasNamespace, hasTabIndex, isDisabled } = Element;
 const { and, not } = Predicate;
+const { isInert } = Style;
 
 /**
  * {@link https://html.spec.whatwg.org/#sequential-focus-navigation}

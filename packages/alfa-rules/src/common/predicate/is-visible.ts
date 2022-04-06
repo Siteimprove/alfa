@@ -10,14 +10,13 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { isClipped } from "./is-clipped";
 import { isOffscreen } from "./is-offscreen";
-import { isPositioned } from "./is-positioned";
 import { isRendered } from "./is-rendered";
 import { isTransparent } from "./is-transparent";
 
 const { hasName, isElement, isReplaced } = Element;
 const { nor, not, or, test } = Predicate;
 const { and } = Refinement;
-const { hasComputedStyle } = Style;
+const { hasComputedStyle, isPositioned } = Style;
 const { isText } = Text;
 
 /**

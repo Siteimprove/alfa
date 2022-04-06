@@ -6,3 +6,5 @@ export * from "./predicate/has-computed-style";
 export * from "./predicate/has-inline-style-property";
 export * from "./predicate/has-outline";
 export * from "./predicate/has-text-decoration";
+export * from "./predicate/is-inert";
+export * from "./predicate/is-positioned";
