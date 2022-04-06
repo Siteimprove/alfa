@@ -1,5 +1,4 @@
 export * from "./predicate/is-clipped";
-export * from "./predicate/is-keyboard-actionable";
 export * from "./predicate/is-perceivable";
 export * from "./predicate/is-visible";
 
