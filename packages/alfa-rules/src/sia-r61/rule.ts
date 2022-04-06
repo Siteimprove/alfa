@@ -8,11 +8,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isDocumentElement } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { hasHeadingLevel, hasRole, isIgnored } = DOM;
-const { isElement } = Element;
+const { isDocumentElement, isElement } = Element;
 const { equals, not } = Predicate;
 const { and } = Refinement;
 

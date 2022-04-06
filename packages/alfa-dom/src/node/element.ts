@@ -409,6 +409,7 @@ export namespace Element {
     isBrowsingContextContainer,
     isContent,
     isDisabled,
+    isDocumentElement,
     isDraggable,
     isEditingHost,
     isFallback,

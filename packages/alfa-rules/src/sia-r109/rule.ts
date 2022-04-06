@@ -11,10 +11,9 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { isDocumentElement } from "../common/predicate";
-
 import { Scope, Stability } from "../tags";
 
+const { isDocumentElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
 

@@ -7,10 +7,10 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
-import { isRendered, isDocumentElement } from "../common/predicate";
+import { isRendered } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { hasName, hasNamespace, isDocumentElement, isElement } = Element;
 const { and, test } = Predicate;
 
 const isDeprecated = hasName(

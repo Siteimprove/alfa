@@ -9,10 +9,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isDocumentElement } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasAttribute } = Element;
+const { hasAttribute, isDocumentElement } = Element;
 const { isEmpty } = Iterable;
 const { and, not } = Predicate;
 

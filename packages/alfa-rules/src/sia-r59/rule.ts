@@ -7,11 +7,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isDocumentElement } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
-const { isElement, hasNamespace } = Element;
+const { hasNamespace, isDocumentElement, isElement } = Element;
 const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({

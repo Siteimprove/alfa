@@ -35,6 +35,7 @@
     "src/node/element/predicate/is-browsing-context-container.ts",
     "src/node/element/predicate/is-content.ts",
     "src/node/element/predicate/is-disabled.ts",
+    "src/node/element/predicate/is-document-element.ts",
     "src/node/element/predicate/is-draggable.ts",
     "src/node/element/predicate/is-editing-host.ts",
     "src/node/element/predicate/is-fallback.ts",

@@ -13,17 +13,12 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import {
-  isAtTheStart,
-  isDocumentElement,
-  isTabbable,
-  isVisible,
-} from "../common/predicate";
+import { isAtTheStart, isTabbable, isVisible } from "../common/predicate";
 
 import { Scope, Stability, Version } from "../tags";
 
 const { hasRole, isIgnored } = DOM;
-const { hasName, isElement } = Element;
+const { hasName, isDocumentElement, isElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
 
