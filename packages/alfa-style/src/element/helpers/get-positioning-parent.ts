@@ -1,13 +1,15 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
-import { Style } from "@siteimprove/alfa-style";
 
 import { getOffsetParent } from "./get-offset-parent";
+import { isPositioned } from "../predicate/is-positioned";
 
 const { isElement } = Element;
-const { isPositioned } = Style;
 
+/**
+ * @public
+ */
 export function getPositioningParent(
   element: Element,
   device: Device

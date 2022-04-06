@@ -16,8 +16,6 @@
     "src/common/diagnostic/contrast.ts",
     "src/common/dom/get-colors.ts",
     "src/common/dom/get-interposed-descendant.ts",
-    "src/common/dom/get-offset-parent.ts",
-    "src/common/dom/get-positioning-parent.ts",
     "src/common/expectation/contrast.ts",
     "src/common/expectation/get-refresh-time.ts",
     "src/common/expectation/media-text-alternative.ts",

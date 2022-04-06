@@ -1,8 +1,9 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Style } from "@siteimprove/alfa-style";
 
-import { getPositioningParent } from "../dom/get-positioning-parent";
+const { getPositioningParent } = Style;
 
 export function hasPositioningParent(
   device: Device,

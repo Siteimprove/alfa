@@ -7,6 +7,8 @@
   },
   "files": [
     "src/element/element.ts",
+    "src/element/helpers/get-offset-parent.ts",
+    "src/element/helpers/get-positioning-parent.ts",
     "src/element/predicate/has-border.ts",
     "src/element/predicate/has-box-shadow.ts",
     "src/element/predicate/has-cascaded-style.ts",

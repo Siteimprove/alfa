@@ -27,7 +27,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import { isVisible } from "../common/predicate";
-import { getPositioningParent } from "../common/dom/get-positioning-parent";
+import { getPositioningParent } from "../../../alfa-style/src/element/helpers/get-positioning-parent";
 
 import { Scope } from "../tags";
 

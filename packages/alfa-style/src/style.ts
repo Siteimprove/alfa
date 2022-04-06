@@ -334,6 +334,8 @@ export namespace Style {
   export type Inherited<N extends Name> = Property.Value.Inherited<N>;
 
   export const {
+    getOffsetParent,
+    getPositioningParent,
     hasBorder,
     hasBoxShadow,
     hasCascadedStyle,

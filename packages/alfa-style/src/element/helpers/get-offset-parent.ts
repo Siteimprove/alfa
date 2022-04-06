@@ -2,18 +2,21 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Style } from "@siteimprove/alfa-style";
+
+import { isPositioned } from "../predicate/is-positioned";
+import { isRendered } from "../../node/predicate/is-rendered";
 
 const { hasName, isElement } = Element;
 const { isRoot } = Node;
 const { and, or, not, test } = Predicate;
-const { isPositioned, isRendered } = Style;
 
 const isBody = hasName("body");
 const isTabular = hasName("td", "th", "table");
 
 /**
  * {@link https://www.w3.org/TR/cssom-view-1/#dom-htmlelement-offsetparent}
+ *
+ * @public
  */
 export function getOffsetParent(
   element: Element,
