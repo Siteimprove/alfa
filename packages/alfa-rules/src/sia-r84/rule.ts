@@ -10,14 +10,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isVisible } from "../common/predicate";
-
 import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { not } = Predicate;
 const { and } = Refinement;
-const { isTabbable } = Style;
+const { isTabbable, isVisible } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r84",

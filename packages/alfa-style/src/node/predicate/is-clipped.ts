@@ -4,19 +4,21 @@ import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
+
+import { Style } from "../../style";
+import { hasPositioningParent } from "../../element/predicate/has-positioning-parent";
 
 const { abs } = Math;
-
 const { isElement } = Element;
 const { not, or, test } = Predicate;
 const { and } = Refinement;
-const { hasPositioningParent } = Style;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 /**
  * Checks if a node (or one of its ancestor) is fully clipped
+ *
+ * @internal
  */
 export function isClipped(
   device: Device,

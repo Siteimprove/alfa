@@ -14,12 +14,13 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isWhitespace, isVisible } from "../common/predicate";
+import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { isIgnored } = DOM;
@@ -27,6 +28,7 @@ const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { isEmpty } = Iterable;
 const { not, or } = Predicate;
 const { and, test } = Refinement;
+const { isVisible } = Style;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Attribute>({

@@ -1,6 +1,4 @@
-export * from "./predicate/is-clipped";
 export * from "./predicate/is-perceivable";
-export * from "./predicate/is-visible";
 
 export * from "./predicate/has-interposed-descendant";
 export * from "./predicate/is-large-text";

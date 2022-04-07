@@ -352,7 +352,7 @@ export namespace Style {
     isTabbable,
   } = element;
 
-  export const { isOffscreen, isRendered, isTransparent } = node;
+  export const { isRendered, isVisible } = node;
 }
 
 function shouldOverride(

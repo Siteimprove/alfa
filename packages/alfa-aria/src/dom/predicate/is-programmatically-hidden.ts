@@ -4,7 +4,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style/src/style";
+import { Style } from "@siteimprove/alfa-style";
 
 const { hasAttribute, isElement } = Element;
 const { or, test, equals } = Predicate;
@@ -12,7 +12,7 @@ const { and } = Refinement;
 const { hasComputedStyle } = Style;
 
 /**
- * Check if an element is programatically hidden.
+ * Check if an element is programmatically hidden.
  *
  * While this only uses Style properties, this is thematically related to
  * accessibility and aria-* attributes and therefore lives in alfa-aria.

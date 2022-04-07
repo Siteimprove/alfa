@@ -25,7 +25,7 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 import { contrast } from "../common/expectation/contrast";
 
 import { getForeground } from "../common/dom/get-colors";
-import { isVisible, isWhitespace } from "../common/predicate";
+import { isWhitespace } from "../common/predicate";
 
 import { Scope, Stability, Version } from "../tags";
 
@@ -45,6 +45,7 @@ const {
   hasComputedStyle,
   hasOutline,
   hasTextDecoration,
+  isVisible,
 } = Style;
 const { isText } = Text;
 

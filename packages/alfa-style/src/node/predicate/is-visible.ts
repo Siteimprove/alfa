@@ -6,24 +6,24 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
+
+import { hasComputedStyle } from "../../element/predicate/has-computed-style";
+import { isPositioned } from "../../element/predicate/is-positioned";
 
 import { isClipped } from "./is-clipped";
+import { isOffscreen } from "./is-offscreen";
+import { isRendered } from "./is-rendered";
+import { isTransparent } from "./is-transparent";
 
 const { hasName, isElement, isReplaced } = Element;
 const { nor, not, or, test } = Predicate;
 const { and } = Refinement;
-const {
-  hasComputedStyle,
-  isPositioned,
-  isOffscreen,
-  isRendered,
-  isTransparent,
-} = Style;
 const { isText } = Text;
 
 /**
  * Checks if a node is visible
+ *
+ * @public
  */
 export function isVisible(device: Device, context?: Context): Predicate<Node> {
   return not(isInvisible(device, context));

@@ -14,7 +14,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { isAtTheStart, isVisible } from "../common/predicate";
+import { isAtTheStart } from "../common/predicate";
 
 import { Scope, Stability, Version } from "../tags";
 
@@ -22,7 +22,7 @@ const { hasRole, isIgnored } = DOM;
 const { hasName, isDocumentElement, isElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
-const { isTabbable } = Style;
+const { isTabbable, isVisible } = Style;
 
 /**
  * This version of R87 ask questions whose subject is not the target of the rule.

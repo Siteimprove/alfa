@@ -12,7 +12,7 @@ const { isElement } = Element;
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 /**
- * @public
+ * @internal
  */
 export function isOffscreen(
   device: Device,

@@ -10,12 +10,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
-import { isVisible } from "../common/predicate";
-
 const { equals } = Predicate;
 const { hasAttribute, hasName, isElement } = Element;
 const { and } = Refinement;
-const { isRendered } = Style;
+const { isRendered, isVisible } = Style;
 const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Element>({

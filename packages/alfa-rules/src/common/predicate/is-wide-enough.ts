@@ -1,7 +1,7 @@
 import { Device } from "@siteimprove/alfa-device";
-import { Property, Style } from "@siteimprove/alfa-style";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Element } from "@siteimprove/alfa-dom";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Property, Style } from "@siteimprove/alfa-style";
 
 const { hasComputedStyle } = Style;
 

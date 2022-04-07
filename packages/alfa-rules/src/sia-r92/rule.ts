@@ -10,13 +10,13 @@ import { TextSpacing } from "../common/outcome/text-spacing";
 
 import { expectation } from "../common/act/expectation";
 
-import { isVisible, isWhitespace, isWideEnough } from "../common/predicate";
+import { isWhitespace, isWideEnough } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { and } = Refinement;
 const { isElement, hasNamespace } = Element;
 const { not, or, test } = Predicate;
-const { hasInlineStyleProperty, isImportant } = Style;
+const { hasInlineStyleProperty, isImportant, isVisible } = Style;
 const { isText } = Text;
 
 const property = "word-spacing";

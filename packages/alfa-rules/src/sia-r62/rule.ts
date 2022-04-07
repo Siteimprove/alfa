@@ -22,7 +22,7 @@ import { Page } from "@siteimprove/alfa-web";
 import * as json from "@siteimprove/alfa-json";
 
 import { expectation } from "../common/act/expectation";
-import { isVisible, isWhitespace } from "../common/predicate";
+import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
 import { Serialise } from "./serialise";
@@ -37,6 +37,7 @@ const {
   hasComputedStyle,
   hasOutline,
   hasTextDecoration,
+  isVisible,
 } = Style;
 const { isText } = Text;
 

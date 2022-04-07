@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import * as predicate from "../../../src/common/predicate/is-visible";
+import * as predicate from "../../../src/node/predicate/is-visible";
 
 const isVisible = predicate.isVisible(Device.standard());
 
