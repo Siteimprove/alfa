@@ -7,5 +7,6 @@ export * from "./predicate/has-non-empty-accessible-name";
 export * from "./predicate/has-role";
 export * from "./predicate/is-ignored";
 export * from "./predicate/is-marked-decorative";
+export * from "./predicate/is-perceivable";
 export * from "./predicate/is-programmatically-hidden";
 export * from "./predicate/is-semantically-disabled";

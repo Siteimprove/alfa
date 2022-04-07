@@ -10,10 +10,9 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { normalize } from "../common/normalize";
 
-import { isPerceivable } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasRole } = DOM;
+const { hasRole, isPerceivable } = DOM;
 const { hasAttribute, hasInputType, hasName, hasNamespace, isElement } =
   Element;
 const { and, or, not } = Predicate;

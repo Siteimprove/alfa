@@ -11,11 +11,9 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { isPerceivable } from "../common/predicate";
-
 import { Scope, Stability } from "../tags";
 
-const { hasRole } = DOM;
+const { hasRole, isPerceivable } = DOM;
 const { isElement, hasNamespace } = Element;
 const { and, test } = Predicate;
 

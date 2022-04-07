@@ -18,6 +18,7 @@
     "src/dom/predicate/has-role.ts",
     "src/dom/predicate/is-ignored.ts",
     "src/dom/predicate/is-marked-decorative.ts",
+    "src/dom/predicate/is-perceivable.ts",
     "src/dom/predicate/is-programmatically-hidden.ts",
     "src/dom/predicate/is-semantically-disabled.ts",
     "src/feature.ts",

@@ -11,10 +11,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { normalize } from "../common/normalize";
 
-import { isPerceivable, isWhitespace } from "../common/predicate";
+import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasRole } = DOM;
+const { hasRole, isPerceivable } = DOM;
 const { hasAttribute, hasNamespace, hasName, isElement } = Element;
 const { isText } = Text;
 const { and, test, not } = Predicate;

@@ -8,10 +8,9 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
-import { isPerceivable } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasHeadingLevel, hasRole, isIgnored } = DOM;
+const { hasHeadingLevel, hasRole, isIgnored, isPerceivable } = DOM;
 const { hasNamespace, isContent, isElement } = Element;
 const { not } = Predicate;
 const { and } = Refinement;

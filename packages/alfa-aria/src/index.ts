@@ -35,6 +35,7 @@ export namespace DOM {
     hasRole,
     isIgnored,
     isMarkedDecorative,
+    isPerceivable,
     isProgrammaticallyHidden,
     isSemanticallyDisabled,
   } = dom;

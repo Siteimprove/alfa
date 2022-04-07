@@ -1,14 +1,14 @@
 import { Interview } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
 
-import { isPerceivable } from "../predicate";
-
 import { Question } from "../act/question";
 
+const { isPerceivable } = DOM;
 const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;
 const { isRendered } = Style;

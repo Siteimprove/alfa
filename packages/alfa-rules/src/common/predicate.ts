@@ -1,5 +1,3 @@
-export * from "./predicate/is-perceivable";
-
 export * from "./predicate/has-interposed-descendant";
 export * from "./predicate/is-large-text";
 export * from "./predicate/is-at-the-start";

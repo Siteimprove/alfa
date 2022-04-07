@@ -8,10 +8,9 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
-import { isPerceivable } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasRole, isIgnored } = DOM;
+const { hasRole, isIgnored, isPerceivable } = DOM;
 const { isElement, hasName, hasNamespace } = Element;
 const { not } = Predicate;
 const { and, test } = Refinement;

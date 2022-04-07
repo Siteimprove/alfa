@@ -9,7 +9,7 @@ import * as act from "@siteimprove/alfa-act";
 import { expectation } from "../act/expectation";
 import { Question } from "../act/question";
 
-import { isPerceivable } from "../predicate/is-perceivable";
+import { isPerceivable } from "../../../../alfa-aria/src/dom/predicate/is-perceivable";
 
 function mediaTextAlternative(
   alt: act.Question<

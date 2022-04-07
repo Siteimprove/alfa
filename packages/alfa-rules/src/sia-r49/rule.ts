@@ -11,11 +11,9 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { isPerceivable } from "../common/predicate";
-
 import { Scope } from "../tags";
 
-const { hasNonEmptyAccessibleName } = DOM;
+const { hasNonEmptyAccessibleName, isPerceivable } = DOM;
 const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { or, nor, equals } = Predicate;
 const { and } = Refinement;
