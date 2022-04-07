@@ -680,9 +680,6 @@ export namespace KeyframesRule {
     }
 }
 
-// @public
-function lowestCommonAncestor(node1: Node, node2: Node, options?: Node.Traversal): Option<Node>;
-
 // @public (undocumented)
 export class MediaRule extends ConditionRule {
     // (undocumented)
@@ -908,8 +905,7 @@ export namespace Node {
     const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    getNodesBetween: typeof traversal.getNodesBetween, // (undocumented)
-    lowestCommonAncestor: typeof traversal.lowestCommonAncestor;
+    getNodesBetween: typeof traversal.getNodesBetween;
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
