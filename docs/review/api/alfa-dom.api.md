@@ -330,8 +330,10 @@ export namespace Element {
     isBrowsingContextContainer: typeof predicate_2.isBrowsingContextContainer, // (undocumented)
     isContent: typeof predicate_2.isContent, // (undocumented)
     isDisabled: typeof predicate_2.isDisabled, // (undocumented)
+    isDocumentElement: typeof predicate_2.isDocumentElement, // (undocumented)
     isDraggable: typeof predicate_2.isDraggable, // (undocumented)
     isEditingHost: typeof predicate_2.isEditingHost, // (undocumented)
+    isFallback: typeof predicate_2.isFallback, // (undocumented)
     isSuggestedFocusable: typeof predicate_2.isSuggestedFocusable, // (undocumented)
     isReplaced: Refinement<Element<string>, Element<"object" | "input" | "iframe" | "audio" | "canvas" | "embed" | "img" | "video">, []>;
 }
@@ -571,13 +573,22 @@ function isContent(options?: Node.Traversal): Predicate<Node>;
 function isDisabled(element: Element): boolean;
 
 // @public (undocumented)
+function isDocumentElement(value: unknown): value is Element<"html">;
+
+// @public (undocumented)
 function isDraggable(element: Element): boolean;
 
 // @public (undocumented)
 function isEditingHost(element: Element): boolean;
 
+// @public
+function isFallback(node: Node): boolean;
+
 // @public (undocumented)
 const isReplaced: Refinement<Element<string>, Element<"object" | "input" | "iframe" | "audio" | "canvas" | "embed" | "img" | "video">, []>;
+
+// @public (undocumented)
+function isRoot(options?: Node.Traversal): Predicate<Node>;
 
 // @public (undocumented)
 function isSuggestedFocusable(element: Element): boolean;
@@ -905,7 +916,8 @@ export namespace Node {
     hasChild: typeof predicate_3.hasChild, // (undocumented)
     hasDescendant: typeof predicate_3.hasDescendant, // (undocumented)
     hasInclusiveDescendant: typeof predicate_3.hasInclusiveDescendant, // (undocumented)
-    hasTextContent: typeof predicate_3.hasTextContent;
+    hasTextContent: typeof predicate_3.hasTextContent, // (undocumented)
+    isRoot: typeof predicate_3.isRoot;
 }
 
 // @public (undocumented)

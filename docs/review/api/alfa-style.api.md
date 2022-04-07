@@ -23,6 +23,7 @@ import { Length } from '@siteimprove/alfa-css';
 import { Linear } from '@siteimprove/alfa-css';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
+import { Node } from '@siteimprove/alfa-dom';
 import { Option } from '@siteimprove/alfa-option';
 import * as parser from '@siteimprove/alfa-parser';
 import { Percentage } from '@siteimprove/alfa-css';
@@ -36,6 +37,12 @@ import { System } from '@siteimprove/alfa-css';
 import { Text } from '@siteimprove/alfa-dom';
 import { Token } from '@siteimprove/alfa-css';
 import { URL } from '@siteimprove/alfa-css';
+
+// @public (undocumented)
+function getOffsetParent(element: Element, device: Device): Option<Element>;
+
+// @public (undocumented)
+function getPositioningParent(element: Element, device: Device): Option<Element>;
 
 // @public (undocumented)
 function hasBorder(device: Device, context?: Context): Predicate<Element>;
@@ -67,7 +74,33 @@ function hasInlineStyleProperty(name: Property.Name): Predicate<Element>;
 function hasOutline(device: Device, context?: Context): Predicate<Element>;
 
 // @public (undocumented)
+function hasPositioningParent(device: Device, predicate: Predicate<Element>): Predicate<Element>;
+
+// @public (undocumented)
 function hasTextDecoration(device: Device, context?: Context): Predicate<Element>;
+
+// @public (undocumented)
+function isFocusable(device: Device): Predicate<Element>;
+
+// Warning: (ae-incompatible-release-tags) The symbol "isImportant" is marked as @public, but its signature references "Property" which is marked as @internal
+//
+// @public (undocumented)
+function isImportant(device: Device, property: Property.Name): Predicate<Element>;
+
+// @public (undocumented)
+function isInert(device: Device): Predicate<Element>;
+
+// @public (undocumented)
+function isPositioned(device: Device, ...positions: Array<string>): Predicate<Element>;
+
+// @public (undocumented)
+function isRendered(device: Device, context?: Context): Predicate<Node>;
+
+// @public (undocumented)
+function isTabbable(device: Device): Predicate<Element>;
+
+// @public
+function isVisible(device: Device, context?: Context): Predicate<Node>;
 
 // Warning: (ae-internal-missing-underscore) The name "Longhands" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -230,10 +263,6 @@ export namespace Style {
     export type Declared<N extends Name> = Property.Value.Declared<N>;
     // (undocumented)
     export function from(element: Element, device: Device, context?: Context): Style;
-    // Warning: (ae-incompatible-release-tags) The symbol "hasComputedStyle" is marked as @public, but its signature references "Property" which is marked as @internal
-    //
-    // (undocumented)
-    export function hasComputedStyle<N extends Property.Name>(name: N, predicate: Predicate<Style.Computed<N>, [source: Option<Declaration>]>, device: Device, context?: Context): Predicate<Element | Text>;
     // Warning: (ae-incompatible-release-tags) The symbol "Inherited" is marked as @public, but its signature references "Property" which is marked as @internal
     //
     // (undocumented)
@@ -253,20 +282,34 @@ export namespace Style {
         // (undocumented)
         variables: Array<[string, Value.JSON]>;
     }
-    const // Warning: (ae-forgotten-export) The symbol "element" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    hasBorder: typeof element.hasBorder, // (undocumented)
-    hasBoxShadow: typeof element.hasBoxShadow, // (undocumented)
-    hasCascadedStyle: typeof element.hasCascadedStyle, // (undocumented)
-    hasCascadedValueDeclaredInInlineStyleOf: typeof element.hasCascadedValueDeclaredInInlineStyleOf, // (undocumented)
-    hasInlineStyleProperty: typeof element.hasInlineStyleProperty, // (undocumented)
-    hasOutline: typeof element.hasOutline, // (undocumented)
-    hasTextDecoration: typeof element.hasTextDecoration;
     // Warning: (ae-incompatible-release-tags) The symbol "Specified" is marked as @public, but its signature references "Property" which is marked as @internal
     //
     // (undocumented)
     export type Specified<N extends Name> = Property.Value.Specified<N>;
+    const // Warning: (ae-forgotten-export) The symbol "element" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    getOffsetParent: typeof element.getOffsetParent, // (undocumented)
+    getPositioningParent: typeof element.getPositioningParent, // (undocumented)
+    hasBorder: typeof element.hasBorder, // (undocumented)
+    hasBoxShadow: typeof element.hasBoxShadow, // (undocumented)
+    hasCascadedStyle: typeof element.hasCascadedStyle, // (undocumented)
+    hasCascadedValueDeclaredInInlineStyleOf: typeof element.hasCascadedValueDeclaredInInlineStyleOf, // (undocumented)
+    hasComputedStyle: typeof element.hasComputedStyle, // (undocumented)
+    hasInlineStyleProperty: typeof element.hasInlineStyleProperty, // (undocumented)
+    hasPositioningParent: typeof element.hasPositioningParent, // (undocumented)
+    hasOutline: typeof element.hasOutline, // (undocumented)
+    hasTextDecoration: typeof element.hasTextDecoration, // (undocumented)
+    isFocusable: typeof element.isFocusable, // (undocumented)
+    isImportant: typeof element.isImportant, // (undocumented)
+    isInert: typeof element.isInert, // (undocumented)
+    isPositioned: typeof element.isPositioned, // (undocumented)
+    isTabbable: typeof element.isTabbable;
+    const // Warning: (ae-forgotten-export) The symbol "node" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isRendered: typeof node.isRendered, // (undocumented)
+    isVisible: typeof node.isVisible;
 }
 
 // @public (undocumented)

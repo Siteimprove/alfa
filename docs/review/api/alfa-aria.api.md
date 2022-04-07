@@ -6,6 +6,7 @@
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Attribute as Attribute_2 } from '@siteimprove/alfa-dom';
+import { Context } from '@siteimprove/alfa-selector';
 import { Device } from '@siteimprove/alfa-device';
 import * as dom_2 from '@siteimprove/alfa-dom';
 import { Element as Element_2 } from '@siteimprove/alfa-dom';
@@ -16,6 +17,7 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Namespace } from '@siteimprove/alfa-dom';
+import { Node as Node_2 } from '@siteimprove/alfa-dom';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
@@ -106,7 +108,14 @@ export namespace DOM {
     hasExplicitRole: typeof dom.hasExplicitRole, // (undocumented)
     hasHeadingLevel: typeof dom.hasHeadingLevel, // (undocumented)
     hasImplicitRole: typeof dom.hasImplicitRole, // (undocumented)
-    hasIncorrectRoleWithoutName: typeof dom.hasIncorrectRoleWithoutName;
+    hasIncorrectRoleWithoutName: typeof dom.hasIncorrectRoleWithoutName, // (undocumented)
+    hasNonEmptyAccessibleName: typeof dom.hasNonEmptyAccessibleName, // (undocumented)
+    hasRole: typeof dom.hasRole, // (undocumented)
+    isIgnored: typeof dom.isIgnored, // (undocumented)
+    isMarkedDecorative: Predicate<Element_2<string>, []>, // (undocumented)
+    isPerceivable: typeof dom.isPerceivable, // (undocumented)
+    isProgrammaticallyHidden: typeof dom.isProgrammaticallyHidden, // (undocumented)
+    isSemanticallyDisabled: Predicate<Element_2<string>, []>;
 }
 
 // @public (undocumented)
@@ -218,10 +227,13 @@ function hasName_2(predicate?: Predicate<Name>): Predicate<Node>;
 function hasName_2(name: string, ...rest: Array<string>): Predicate<Node>;
 
 // @public (undocumented)
-function hasRole(predicate?: Predicate<Role>): Predicate<Node>;
+function hasNonEmptyAccessibleName<T extends Element_2 | Text_2>(device: Device): Predicate<T>;
 
 // @public (undocumented)
-function hasRole<N extends Role.Name>(name: N, ...rest: Array<N>): Predicate<Node>;
+function hasRole(device: Device, predicate?: Predicate<Role>): Predicate<Element_2>;
+
+// @public (undocumented)
+function hasRole<N extends Role.Name>(device: Device, name: N, ...rest: Array<N>): Predicate<Element_2>;
 
 // @public (undocumented)
 function hasValue(predicate: Predicate<string>): Predicate<Name>;
@@ -251,6 +263,21 @@ export namespace Inert {
         type: "inert";
     }
 }
+
+// @public
+function isIgnored<T extends Node_2>(device: Device): Predicate<T>;
+
+// @public
+const isMarkedDecorative: Predicate<Element_2>;
+
+// @public
+function isPerceivable<T extends Node_2>(device: Device): Predicate<T>;
+
+// @public
+function isProgrammaticallyHidden(device: Device, context?: Context): Predicate<Element_2>;
+
+// @public
+const isSemanticallyDisabled: Predicate<Element_2>;
 
 // @public (undocumented)
 export class Name implements Equatable, Serializable<Name.JSON> {
@@ -572,8 +599,7 @@ export namespace Node {
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    hasName: typeof predicate_3.hasName, // (undocumented)
-    hasRole: typeof predicate_3.hasRole;
+    hasName: typeof predicate_3.hasName;
 }
 
 // @public (undocumented)
