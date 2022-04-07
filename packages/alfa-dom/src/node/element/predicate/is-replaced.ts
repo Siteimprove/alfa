@@ -5,13 +5,6 @@ import { hasName } from "./has-name";
  *
  * @public
  */
-export const isReplaced = hasName(
-  "audio",
-  "canvas",
-  "embed",
-  "iframe",
-  "img",
-  "input",
-  "object",
-  "video"
-);
+export const isReplaced = hasName<
+  "audio" | "canvas" | "embed" | "iframe" | "img" | "input" | "object" | "video"
+>("audio", "canvas", "embed", "iframe", "img", "input", "object", "video");

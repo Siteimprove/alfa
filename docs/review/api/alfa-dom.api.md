@@ -335,7 +335,7 @@ export namespace Element {
     isEditingHost: typeof predicate_2.isEditingHost, // (undocumented)
     isFallback: typeof predicate_2.isFallback, // (undocumented)
     isSuggestedFocusable: typeof predicate_2.isSuggestedFocusable, // (undocumented)
-    isReplaced: Refinement<Element<string>, Element<"object" | "embed" | "img" | "input" | "audio" | "canvas" | "iframe" | "video">, []>;
+    isReplaced: Refinement<Element<string>, Element<"object" | "audio" | "canvas" | "embed" | "iframe" | "img" | "input" | "video">, []>;
 }
 
 // @public (undocumented)
@@ -585,7 +585,7 @@ function isEditingHost(element: Element): boolean;
 function isFallback(node: Node): boolean;
 
 // @public (undocumented)
-const isReplaced: Refinement<Element<string>, Element<"object" | "embed" | "img" | "input" | "audio" | "canvas" | "iframe" | "video">, []>;
+const isReplaced: Refinement<Element<string>, Element<"object" | "audio" | "canvas" | "embed" | "iframe" | "img" | "input" | "video">, []>;
 
 // @public (undocumented)
 function isRoot(options?: Node.Traversal): Predicate<Node>;
