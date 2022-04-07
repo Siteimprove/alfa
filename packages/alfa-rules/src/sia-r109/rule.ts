@@ -13,7 +13,7 @@ import { Question } from "../common/act/question";
 
 import { Scope, Stability } from "../tags";
 
-const { isDocumentElement } = Element;
+const { hasAttribute, isDocumentElement } = Element;
 const { fold } = Predicate;
 const { and } = Refinement;
 
@@ -35,7 +35,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
           Node.hasChild(
             and(
               isDocumentElement,
-              Element.hasAttribute("lang", (lang) =>
+              hasAttribute("lang", (lang) =>
                 Language.parse(lang)
                   .tee((lang) => {
                     programmaticLanguage = lang;

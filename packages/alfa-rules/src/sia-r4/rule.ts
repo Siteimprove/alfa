@@ -11,7 +11,7 @@ import { expectation } from "../common/act/expectation";
 import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isDocumentElement } = Element;
+const { hasAttribute, isDocumentElement } = Element;
 const { isEmpty } = Iterable;
 const { nor } = Predicate;
 
@@ -28,7 +28,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            Element.hasAttribute("lang", nor(isEmpty, isWhitespace))(target),
+            hasAttribute("lang", nor(isEmpty, isWhitespace))(target),
             () => Outcomes.HasLanguage,
             () => Outcomes.HasNoLanguage
           ),

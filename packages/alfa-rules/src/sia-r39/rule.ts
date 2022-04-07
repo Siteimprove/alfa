@@ -11,7 +11,7 @@ import { Question } from "../common/act/question";
 
 import { Scope } from "../tags";
 
-const { isIgnored } = DOM;
+const { hasAccessibleName, isIgnored } = DOM;
 const { isElement, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not, test } = Predicate;
 
@@ -36,7 +36,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
               not(isIgnored(device)),
               (element) =>
                 test(
-                  DOM.hasAccessibleName(device, (accessibleName) =>
+                  hasAccessibleName(device, (accessibleName) =>
                     element
                       .attribute("src")
                       .map((attr) => getFilename(attr.value))

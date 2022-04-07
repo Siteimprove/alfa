@@ -33,9 +33,7 @@ export function audio(
               isPlaying
                 ? Option.of(element)
                 : Question.of("play-button", element).map((playButton) =>
-                    playButton.some(
-                      and(Element.isElement, isPerceivable(device))
-                    )
+                    playButton.some(and(isElement, isPerceivable(device)))
                       ? Option.of(element)
                       : None
                   )

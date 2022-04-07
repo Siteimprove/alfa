@@ -12,7 +12,7 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { isElement, hasNamespace } = Element;
+const { hasNamespace, isBrowsingContextContainer, isElement } = Element;
 const { not } = Predicate;
 const { and } = Refinement;
 const { isTabbable, isVisible } = Style;
@@ -36,7 +36,7 @@ export default Rule.Atomic.of<Page, Element>({
               hasNamespace(Namespace.HTML),
               isVisible(device),
               isPossiblyScrollable(device),
-              not(Element.isBrowsingContextContainer)
+              not(isBrowsingContextContainer)
             )
           );
       },

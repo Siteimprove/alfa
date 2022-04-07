@@ -14,9 +14,10 @@ import { normalize } from "../common/normalize";
 import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasRole, isPerceivable } = DOM;
+const { hasAccessibleName, hasRole, isPerceivable } = DOM;
 const { hasAttribute, hasNamespace, hasName, isElement } = Element;
 const { isText } = Text;
+const { hasDescendant } = Node;
 const { and, test, not } = Predicate;
 const { isFocusable, isRendered } = Style;
 
@@ -43,7 +44,7 @@ export default Rule.Atomic.of<Page, Element>({
                 device,
                 (role) => role.isWidget() && role.isNamedBy("contents")
               ),
-              Node.hasDescendant(and(Text.isText, isPerceivable(device)), {
+              hasDescendant(and(Text.isText, isPerceivable(device)), {
                 flattened: true,
               })
             )
@@ -63,7 +64,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         let name = "";
         const accessibleNameIncludesTextContent = test(
-          DOM.hasAccessibleName(device, (accessibleName) => {
+          hasAccessibleName(device, (accessibleName) => {
             name = removePunctuationAndNormalise(accessibleName.value);
             return name.includes(textContent);
           }),

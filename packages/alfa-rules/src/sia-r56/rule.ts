@@ -16,7 +16,7 @@ import { normalize } from "../common/normalize";
 import { Scope } from "../tags";
 
 const { hasIncorrectRoleWithoutName, hasRole, isIgnored } = DOM;
-const { hasNamespace } = Element;
+const { hasNamespace, isElement } = Element;
 const { and, equals, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>>({
@@ -28,7 +28,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
         return (
           document
             .descendants({ flattened: true, nested: true })
-            .filter(Element.isElement)
+            .filter(isElement)
             .filter(
               and(
                 hasNamespace(equals(Namespace.HTML)),

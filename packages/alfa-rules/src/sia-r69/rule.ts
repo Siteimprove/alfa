@@ -21,7 +21,7 @@ import { Contrast as Outcomes } from "../common/outcome/contrast";
 import { Scope } from "../tags";
 
 const { hasRole, isPerceivable, isSemanticallyDisabled } = DOM;
-const { isElement } = Element;
+const { hasNamespace, isElement } = Element;
 const { flatMap, map } = Iterable;
 const { max } = Math;
 const { or, not } = Predicate;
@@ -43,7 +43,7 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
               and(
                 isElement,
                 or(
-                  not(Element.hasNamespace(Namespace.HTML)),
+                  not(hasNamespace(Namespace.HTML)),
                   hasRole(device, (role) => role.isWidget()),
                   and(hasRole(device, "group"), isSemanticallyDisabled)
                 )

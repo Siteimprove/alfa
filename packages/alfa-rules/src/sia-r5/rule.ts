@@ -12,7 +12,7 @@ import { expectation } from "../common/act/expectation";
 import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isDocumentElement } = Element;
+const { hasAttribute, isDocumentElement } = Element;
 const { isEmpty } = Iterable;
 const { nor } = Predicate;
 
@@ -26,7 +26,7 @@ export default Rule.Atomic.of<Page, Attribute>({
         return document
           .children()
           .filter(isDocumentElement)
-          .filter(Element.hasAttribute("lang", nor(isEmpty, isWhitespace)))
+          .filter(hasAttribute("lang", nor(isEmpty, isWhitespace)))
           .map((element) => element.attribute("lang").get());
       },
 

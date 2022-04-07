@@ -145,7 +145,7 @@ function hasOrientationCondition(
 }
 
 function getRotation(element: Element, device: Device): Option<number> {
-  const parent = element.parent({ flattened: true }).filter(Element.isElement);
+  const parent = element.parent({ flattened: true }).filter(isElement);
 
   const rotation = parent.isNone()
     ? Option.of(0)

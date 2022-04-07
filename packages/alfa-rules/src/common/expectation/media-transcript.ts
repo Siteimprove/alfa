@@ -12,6 +12,7 @@ import { Question } from "../act/question";
 
 import { isPerceivable } from "../../../../alfa-aria/src/dom/predicate/is-perceivable";
 
+const { isElement } = Element;
 const { and } = Predicate;
 
 function mediaTranscript(
@@ -44,7 +45,7 @@ function mediaTranscript(
 
           if (
             transcriptLink
-              .filter(and(Element.isElement, isPerceivable(device)))
+              .filter(and(isElement, isPerceivable(device)))
               .isNone()
           ) {
             return Option.of(Outcomes.HasNonPerceivableLink(kind));
@@ -55,7 +56,7 @@ function mediaTranscript(
       }
 
       return expectation(
-        transcript.some(and(Element.isElement, isPerceivable(device))),
+        transcript.some(and(isElement, isPerceivable(device))),
         () => Outcomes.HasPerceivableTranscript(kind),
         () => Outcomes.HasNonPerceivableTranscript(kind)
       );

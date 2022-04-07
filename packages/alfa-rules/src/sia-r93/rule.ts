@@ -16,7 +16,12 @@ import { Scope } from "../tags";
 const { not, or, test } = Predicate;
 const { and } = Refinement;
 const { isElement, hasNamespace } = Element;
-const { hasInlineStyleProperty, isImportant, isVisible } = Style;
+const {
+  hasCascadedValueDeclaredInInlineStyleOf,
+  hasInlineStyleProperty,
+  isImportant,
+  isVisible,
+} = Style;
 const { isText } = Text;
 
 const property = "line-height";
@@ -92,7 +97,7 @@ export default Rule.Atomic.of<Page, Element>({
                             }
                           ),
                           not(
-                            Style.hasCascadedValueDeclaredInInlineStyleOf(
+                            hasCascadedValueDeclaredInInlineStyleOf(
                               target,
                               device,
                               property

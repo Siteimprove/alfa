@@ -10,7 +10,7 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { isIgnored } = DOM;
+const { hasAccessibleName, isIgnored } = DOM;
 const { isElement, hasInputType, hasNamespace } = Element;
 const { and, not, test } = Predicate;
 
@@ -43,7 +43,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             test(
               // Rejecting default name
-              DOM.hasAccessibleName(device, (name) => name.source.length !== 0),
+              hasAccessibleName(device, (name) => name.source.length !== 0),
               target
             ),
             () => Outcomes.HasAccessibleName,

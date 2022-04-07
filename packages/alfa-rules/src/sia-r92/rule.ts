@@ -16,7 +16,12 @@ import { Scope } from "../tags";
 const { and } = Refinement;
 const { isElement, hasNamespace } = Element;
 const { not, or, test } = Predicate;
-const { hasInlineStyleProperty, isImportant, isVisible } = Style;
+const {
+  hasCascadedValueDeclaredInInlineStyleOf,
+  hasInlineStyleProperty,
+  isImportant,
+  isVisible,
+} = Style;
 const { isText } = Text;
 
 const property = "word-spacing";
@@ -80,7 +85,7 @@ export default Rule.Atomic.of<Page, Element>({
                               wordSpacing.value >= 0.16 * fontSize.value
                           ),
                           not(
-                            Style.hasCascadedValueDeclaredInInlineStyleOf(
+                            hasCascadedValueDeclaredInInlineStyleOf(
                               target,
                               device,
                               property

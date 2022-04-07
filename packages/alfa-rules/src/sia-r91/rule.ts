@@ -14,7 +14,12 @@ import { Scope } from "../tags";
 const { isElement, hasNamespace } = Element;
 const { not, or, test } = Predicate;
 const { and } = Refinement;
-const { hasInlineStyleProperty, isImportant, isVisible } = Style;
+const {
+  hasCascadedValueDeclaredInInlineStyleOf,
+  hasInlineStyleProperty,
+  isImportant,
+  isVisible,
+} = Style;
 const { isText } = Text;
 
 const property = "letter-spacing";
@@ -78,7 +83,7 @@ export default Rule.Atomic.of<Page, Element>({
                               letterSpacing.value >= 0.12 * fontSize.value
                           ),
                           not(
-                            Style.hasCascadedValueDeclaredInInlineStyleOf(
+                            hasCascadedValueDeclaredInInlineStyleOf(
                               target,
                               device,
                               property
