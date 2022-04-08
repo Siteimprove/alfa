@@ -3,12 +3,14 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Element, Text } from "@siteimprove/alfa-dom";
 import { Style } from "@siteimprove/alfa-style";
 
+const { isElement } = Element;
+
 /**
  * {@link https://w3c.github.io/wcag/guidelines/#dfn-large-scale}
  */
 export function isLargeText(device: Device): Predicate<Text> {
   return (text) => {
-    const parent = text.parent({ flattened: true }).filter(Element.isElement);
+    const parent = text.parent({ flattened: true }).filter(isElement);
 
     if (parent.isNone()) {
       return false;

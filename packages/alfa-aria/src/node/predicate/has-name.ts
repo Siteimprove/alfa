@@ -17,13 +17,10 @@ export function hasName(
   nameOrPredicate: Predicate<Name> | string = () => true,
   ...names: Array<string>
 ): Predicate<Node> {
-  let predicate: Predicate<Name>;
-
-  if (typeof nameOrPredicate === "function") {
-    predicate = nameOrPredicate;
-  } else {
-    predicate = Name.hasValue(nameOrPredicate, ...names);
-  }
+  const predicate =
+    typeof nameOrPredicate === "function"
+      ? nameOrPredicate
+      : Name.hasValue(nameOrPredicate, ...names);
 
   return (node) => node.name.some(predicate);
 }

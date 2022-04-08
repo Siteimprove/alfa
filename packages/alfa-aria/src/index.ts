@@ -5,6 +5,8 @@
  * @packageDocumentation
  */
 
+import * as dom from "./dom/dom";
+
 export * from "./attribute";
 export * from "./feature";
 export * from "./name";
@@ -16,3 +18,25 @@ export * from "./node/container";
 export * from "./node/element";
 export * from "./node/inert";
 export * from "./node/text";
+
+/**
+ * Helpers and Predicates for accessibility aspects of DOM objects
+ *
+ * @public
+ */
+export namespace DOM {
+  export const {
+    hasAccessibleName,
+    hasExplicitRole,
+    hasHeadingLevel,
+    hasImplicitRole,
+    hasIncorrectRoleWithoutName,
+    hasNonEmptyAccessibleName,
+    hasRole,
+    isIgnored,
+    isMarkedDecorative,
+    isPerceivable,
+    isProgrammaticallyHidden,
+    isSemanticallyDisabled,
+  } = dom;
+}

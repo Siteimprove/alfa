@@ -22,8 +22,8 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.15.4",
-    "@microsoft/api-extractor": "^7.19.5",
+    "@microsoft/api-documenter": "^7.17.2",
+    "@microsoft/api-extractor": "^7.20.1",
     "@types/async": "^3.2.5",
     "@types/node": "^14.14.31",
     "async": "^3.2.1",

@@ -4,16 +4,17 @@ import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
+import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
-import { isRendered, isVisible, hasAttribute } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { equals } = Predicate;
-const { hasName, isElement } = Element;
-const { isText } = Text;
+const { hasAttribute, hasName, isElement } = Element;
 const { and } = Refinement;
+const { isRendered, isVisible } = Style;
+const { isText } = Text;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r79",

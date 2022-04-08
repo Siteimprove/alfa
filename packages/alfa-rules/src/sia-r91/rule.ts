@@ -1,25 +1,25 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
-import { Criterion } from "@siteimprove/alfa-wcag";
-import { Page } from "@siteimprove/alfa-web";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Style } from "@siteimprove/alfa-style";
+import { Criterion } from "@siteimprove/alfa-wcag";
+import { Page } from "@siteimprove/alfa-web";
 
 import { TextSpacing } from "../common/outcome/text-spacing";
 import { expectation } from "../common/act/expectation";
-import {
-  hasInlineStyleProperty,
-  isVisible,
-  isWhitespace,
-  isImportant,
-  hasCascadedValueDeclaredInInlineStyleOf,
-  isWideEnough,
-} from "../common/predicate";
+import { isWhitespace, isWideEnough } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { not, or, test } = Predicate;
 const { and } = Refinement;
+const {
+  hasCascadedValueDeclaredInInlineStyleOf,
+  hasInlineStyleProperty,
+  isImportant,
+  isVisible,
+} = Style;
 const { isText } = Text;
 
 const property = "letter-spacing";

@@ -2,16 +2,17 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { isVisible, isTabbable } from "../common/predicate";
 import { Scope } from "../tags";
 
 const { isElement, hasName, hasNamespace, hasTabIndex } = Element;
 const { and } = Predicate;
+const { isTabbable, isVisible } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r95",

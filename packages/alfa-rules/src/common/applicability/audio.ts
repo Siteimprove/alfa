@@ -1,15 +1,17 @@
 import { Interview } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-
-import { isPerceivable, isRendered } from "../predicate";
+import { Style } from "@siteimprove/alfa-style";
 
 import { Question } from "../act/question";
 
+const { isPerceivable } = DOM;
 const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;
+const { isRendered } = Style;
 
 export function audio(
   document: Document,
@@ -31,9 +33,7 @@ export function audio(
               isPlaying
                 ? Option.of(element)
                 : Question.of("play-button", element).map((playButton) =>
-                    playButton.some(
-                      and(Element.isElement, isPerceivable(device))
-                    )
+                    playButton.some(and(isElement, isPerceivable(device)))
                       ? Option.of(element)
                       : None
                   )

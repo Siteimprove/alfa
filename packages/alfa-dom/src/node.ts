@@ -21,6 +21,9 @@ import {
   Slot,
 } from ".";
 
+import * as traversal from "./node/traversal";
+import * as predicate from "./node/predicate";
+
 const { equals } = Predicate;
 
 /**
@@ -572,4 +575,14 @@ export namespace Node {
         throw new Error(`Unexpected node of type: ${json.type}`);
     }
   }
+
+  export const { getNodesBetween } = traversal;
+
+  export const {
+    hasChild,
+    hasDescendant,
+    hasInclusiveDescendant,
+    hasTextContent,
+    isRoot,
+  } = predicate;
 }

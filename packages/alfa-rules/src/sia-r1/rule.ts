@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
@@ -7,14 +7,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasChild,
-  hasTextContent,
-  isDocumentElement,
-} from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { hasName, hasNamespace, isDocumentElement, isElement } = Element;
+const { hasChild, hasTextContent } = Node;
 const { and, fold } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({

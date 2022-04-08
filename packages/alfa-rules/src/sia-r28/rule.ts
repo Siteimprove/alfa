@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -7,10 +8,9 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasAccessibleName, isIgnored } from "../common/predicate";
-
 import { Scope } from "../tags";
 
+const { hasAccessibleName, isIgnored } = DOM;
 const { isElement, hasInputType, hasNamespace } = Element;
 const { and, not, test } = Predicate;
 

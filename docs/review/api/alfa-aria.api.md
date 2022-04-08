@@ -6,8 +6,9 @@
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Attribute as Attribute_2 } from '@siteimprove/alfa-dom';
+import { Context } from '@siteimprove/alfa-selector';
 import { Device } from '@siteimprove/alfa-device';
-import * as dom from '@siteimprove/alfa-dom';
+import * as dom_2 from '@siteimprove/alfa-dom';
 import { Element as Element_2 } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Hash } from '@siteimprove/alfa-hash';
@@ -16,6 +17,7 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Namespace } from '@siteimprove/alfa-dom';
+import { Node as Node_2 } from '@siteimprove/alfa-dom';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
@@ -81,7 +83,7 @@ export class Container extends Node {
     // (undocumented)
     isIgnored(): boolean;
     // (undocumented)
-    static of(owner: dom.Node, children?: Iterable<Node>): Container;
+    static of(owner: dom_2.Node, children?: Iterable<Node>): Container;
     // (undocumented)
     toJSON(): Container.JSON;
     // (undocumented)
@@ -95,6 +97,25 @@ export namespace Container {
         // (undocumented)
         type: "container";
     }
+}
+
+// @public
+export namespace DOM {
+    const // Warning: (ae-forgotten-export) The symbol "dom" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    hasAccessibleName: typeof dom.hasAccessibleName, // (undocumented)
+    hasExplicitRole: typeof dom.hasExplicitRole, // (undocumented)
+    hasHeadingLevel: typeof dom.hasHeadingLevel, // (undocumented)
+    hasImplicitRole: typeof dom.hasImplicitRole, // (undocumented)
+    hasIncorrectRoleWithoutName: typeof dom.hasIncorrectRoleWithoutName, // (undocumented)
+    hasNonEmptyAccessibleName: typeof dom.hasNonEmptyAccessibleName, // (undocumented)
+    hasRole: typeof dom.hasRole, // (undocumented)
+    isIgnored: typeof dom.isIgnored, // (undocumented)
+    isMarkedDecorative: Predicate<Element_2<string>, []>, // (undocumented)
+    isPerceivable: typeof dom.isPerceivable, // (undocumented)
+    isProgrammaticallyHidden: typeof dom.isProgrammaticallyHidden, // (undocumented)
+    isSemanticallyDisabled: Predicate<Element_2<string>, []>;
 }
 
 // @public (undocumented)
@@ -114,7 +135,7 @@ export class Element extends Node {
     // (undocumented)
     get name(): Option<Name>;
     // (undocumented)
-    static of(owner: dom.Node, role?: Option<Role>, name?: Option<Name>, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>): Element;
+    static of(owner: dom_2.Node, role?: Option<Role>, name?: Option<Name>, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>): Element;
     // (undocumented)
     get role(): Option<Role>;
     // (undocumented)
@@ -167,6 +188,30 @@ export namespace Feature {
 }
 
 // @public (undocumented)
+function hasAccessibleName<T extends Element_2 | Text_2>(device: Device, predicate?: Predicate<Name>): Predicate<T>;
+
+// @public (undocumented)
+function hasAccessibleName<T extends Element_2 | Text_2>(device: Device, name: string, ...rest: Array<string>): Predicate<T>;
+
+// @public (undocumented)
+function hasExplicitRole(predicate?: Predicate<Role>): Predicate<Element_2>;
+
+// @public (undocumented)
+function hasExplicitRole<N extends Role.Name>(name: N, ...rest: Array<N>): Predicate<Element_2>;
+
+// @public (undocumented)
+function hasHeadingLevel(device: Device, predicate?: Predicate<number>): Predicate<Element_2>;
+
+// @public (undocumented)
+function hasImplicitRole(predicate?: Predicate<Role>): Predicate<Element_2>;
+
+// @public (undocumented)
+function hasImplicitRole<N extends Role.Name>(name: N, ...rest: Array<N>): Predicate<Element_2>;
+
+// @public (undocumented)
+function hasIncorrectRoleWithoutName(device: Device): Predicate<Element_2>;
+
+// @public (undocumented)
 function hasName<N extends Role.Name>(refinement: Refinement<Role.Name, N>): Refinement<Role, Role<N>>;
 
 // @public (undocumented)
@@ -182,10 +227,13 @@ function hasName_2(predicate?: Predicate<Name>): Predicate<Node>;
 function hasName_2(name: string, ...rest: Array<string>): Predicate<Node>;
 
 // @public (undocumented)
-function hasRole(predicate?: Predicate<Role>): Predicate<Node>;
+function hasNonEmptyAccessibleName<T extends Element_2 | Text_2>(device: Device): Predicate<T>;
 
 // @public (undocumented)
-function hasRole<N extends Role.Name>(name: N, ...rest: Array<N>): Predicate<Node>;
+function hasRole(device: Device, predicate?: Predicate<Role>): Predicate<Element_2>;
+
+// @public (undocumented)
+function hasRole<N extends Role.Name>(device: Device, name: N, ...rest: Array<N>): Predicate<Element_2>;
 
 // @public (undocumented)
 function hasValue(predicate: Predicate<string>): Predicate<Name>;
@@ -200,7 +248,7 @@ export class Inert extends Node {
     // (undocumented)
     isIgnored(): boolean;
     // (undocumented)
-    static of(owner: dom.Node): Inert;
+    static of(owner: dom_2.Node): Inert;
     // (undocumented)
     toJSON(): Inert.JSON;
     // (undocumented)
@@ -215,6 +263,21 @@ export namespace Inert {
         type: "inert";
     }
 }
+
+// @public
+function isIgnored<T extends Node_2>(device: Device): Predicate<T>;
+
+// @public
+const isMarkedDecorative: Predicate<Element_2>;
+
+// @public
+function isPerceivable<T extends Node_2>(device: Device): Predicate<T>;
+
+// @public
+function isProgrammaticallyHidden(device: Device, context?: Context): Predicate<Element_2>;
+
+// @public
+const isSemanticallyDisabled: Predicate<Element_2>;
 
 // @public (undocumented)
 export class Name implements Equatable, Serializable<Name.JSON> {
@@ -462,12 +525,12 @@ export namespace Name {
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    hasValue: typeof predicate_2.hasValue;
+    hasValue: typeof predicate.hasValue;
 }
 
 // @public (undocumented)
 export abstract class Node implements Serializable<Node.JSON> {
-    protected constructor(owner: dom.Node, children: Array<Node>);
+    protected constructor(owner: dom_2.Node, children: Array<Node>);
     // (undocumented)
     ancestors(options?: Node.Traversal): Sequence<Node>;
     // @internal (undocumented)
@@ -499,9 +562,9 @@ export abstract class Node implements Serializable<Node.JSON> {
     // (undocumented)
     get name(): Option<Name>;
     // (undocumented)
-    get node(): dom.Node;
+    get node(): dom_2.Node;
     // (undocumented)
-    protected readonly _node: dom.Node;
+    protected readonly _node: dom_2.Node;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -517,7 +580,7 @@ export abstract class Node implements Serializable<Node.JSON> {
 // @public (undocumented)
 export namespace Node {
     // (undocumented)
-    export function from(node: dom.Node, device: Device): Node;
+    export function from(node: dom_2.Node, device: Device): Node;
     // (undocumented)
     export interface JSON {
         // (undocumented)
@@ -536,8 +599,7 @@ export namespace Node {
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    hasName: typeof predicate_3.hasName, // (undocumented)
-    hasRole: typeof predicate_3.hasRole;
+    hasName: typeof predicate_3.hasName;
 }
 
 // @public (undocumented)
@@ -611,7 +673,7 @@ export namespace Role {
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    hasName: typeof predicate.hasName;
+    hasName: typeof predicate_2.hasName;
 }
 
 // @public (undocumented)
@@ -623,7 +685,7 @@ export class Text extends Node {
     // (undocumented)
     get name(): Option<Name>;
     // (undocumented)
-    static of(owner: dom.Node, name: Option<Name>): Text;
+    static of(owner: dom_2.Node, name: Option<Name>): Text;
     // (undocumented)
     toJSON(): Text.JSON;
     // (undocumented)

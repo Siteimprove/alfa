@@ -8,13 +8,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasAttribute,
-  isDocumentElement,
-  isWhitespace,
-} from "../common/predicate";
+import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
+const { hasAttribute, isDocumentElement } = Element;
 const { isEmpty } = Iterable;
 const { nor } = Predicate;
 

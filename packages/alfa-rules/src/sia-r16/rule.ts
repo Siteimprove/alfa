@@ -1,28 +1,26 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
+import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err, Result } from "@siteimprove/alfa-result";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
-import {
-  hasAttribute,
-  hasRole,
-  isFocusable,
-  isIgnored,
-} from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isElement, hasInputType, hasName, hasNamespace } = Element;
+const { hasRole, isIgnored } = DOM;
+const { hasAttribute, hasInputType, hasName, hasNamespace, isElement } =
+  Element;
 const { isEmpty } = Iterable;
 const { and, not, property, test } = Predicate;
+const { isFocusable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r16",

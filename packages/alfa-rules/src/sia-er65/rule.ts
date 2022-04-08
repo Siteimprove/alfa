@@ -13,20 +13,14 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasBorder,
-  hasBoxShadow,
-  hasOutline,
-  hasTextDecoration,
-  isTabbable,
-} from "../common/predicate";
-
 import { Question } from "../common/act/question";
 import { Scope, Stability, Version } from "../tags";
 
 const { isElement } = Element;
 const { isKeyword } = Keyword;
 const { or, test, xor } = Predicate;
+const { hasBorder, hasBoxShadow, hasOutline, hasTextDecoration, isTabbable } =
+  Style;
 
 /**
  * This version of R65 uses a question with subject different from context

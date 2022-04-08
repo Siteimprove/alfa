@@ -3,13 +3,13 @@ import { Device } from "@siteimprove/alfa-device";
 import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-
-import { isVisible } from "../predicate/is-visible";
+import { Style } from "@siteimprove/alfa-style";
 
 import { Question } from "../act/question";
 
 const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;
+const { isVisible } = Style;
 
 export function video(
   document: Document,

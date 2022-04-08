@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Node } from "@siteimprove/alfa-aria";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
+import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -8,17 +8,10 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
-import { getNodesBetween } from "../common/dom/get-nodes-between";
-import {
-  hasHeadingLevel,
-  hasRole,
-  isContent,
-  isIgnored,
-  isPerceivable,
-} from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasNamespace, isElement } = Element;
+const { hasHeadingLevel, hasRole, isIgnored, isPerceivable } = DOM;
+const { hasNamespace, isContent, isElement } = Element;
 const { not } = Predicate;
 const { and } = Refinement;
 
@@ -47,7 +40,8 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const currentLevel = Node.from(target, device)
+        const currentLevel = ariaNode
+          .from(target, device)
           .attribute("aria-level")
           .map((level) => Number(level.value))
           .getOr(0);
@@ -74,7 +68,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            getNodesBetween(target, next, {
+            Node.getNodesBetween(target, next, {
               includeFirst: false,
               // If this is the last heading (of this level or less), then the
               // last node of the document is acceptable content; otherwise, the

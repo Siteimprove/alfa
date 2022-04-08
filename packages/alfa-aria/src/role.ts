@@ -24,7 +24,8 @@ const roles = new Map<string, Role>();
  * @public
  */
 export class Role<N extends Role.Name = Role.Name>
-  implements Equatable, Hashable, Serializable {
+  implements Equatable, Hashable, Serializable
+{
   public static of<N extends Role.Name>(name: N): Role<N> {
     let role = roles.get(name);
 

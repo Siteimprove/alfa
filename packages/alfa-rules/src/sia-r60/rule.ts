@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -9,13 +10,9 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Map } from "@siteimprove/alfa-map";
 
 import { expectation } from "../common/act/expectation";
-import {
-  hasNonEmptyAccessibleName,
-  hasRole,
-  isIgnored,
-} from "../common/predicate";
 import { Scope } from "../tags";
 
+const { hasNonEmptyAccessibleName, hasRole, isIgnored } = DOM;
 const { isElement, hasNamespace } = Element;
 const { not } = Predicate;
 const { and } = Refinement;

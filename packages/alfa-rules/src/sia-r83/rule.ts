@@ -26,14 +26,6 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasAttribute,
-  hasCascadedStyle,
-  hasDisplaySize,
-  isVisible,
-} from "../common/predicate";
-import { getPositioningParent } from "../common/dom/get-positioning-parent";
-
 import { Scope } from "../tags";
 
 const { isHeight, isWidth } = Media.Feature;
@@ -41,8 +33,10 @@ const { Discrete, Range } = Media.Value;
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const { isElement, hasName, hasNamespace } = Element;
+const { hasAttribute, hasDisplaySize, hasName, hasNamespace, isElement } =
+  Element;
 const { isText } = Text;
+const { getPositioningParent, hasCascadedStyle, isVisible } = Style;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",

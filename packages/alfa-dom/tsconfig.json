@@ -24,21 +24,37 @@
     "src/node/document.ts",
     "src/node/element.ts",
     "src/node/element/predicate.ts",
+    "src/node/element/predicate/has-attribute.ts",
+    "src/node/element/predicate/has-display-size.ts",
     "src/node/element/predicate/has-id.ts",
     "src/node/element/predicate/has-input-type.ts",
     "src/node/element/predicate/has-name.ts",
     "src/node/element/predicate/has-namespace.ts",
     "src/node/element/predicate/has-tab-index.ts",
+    "src/node/element/predicate/has-unique-id.ts",
     "src/node/element/predicate/is-browsing-context-container.ts",
+    "src/node/element/predicate/is-content.ts",
     "src/node/element/predicate/is-disabled.ts",
+    "src/node/element/predicate/is-document-element.ts",
     "src/node/element/predicate/is-draggable.ts",
     "src/node/element/predicate/is-editing-host.ts",
+    "src/node/element/predicate/is-fallback.ts",
+    "src/node/element/predicate/is-replaced.ts",
     "src/node/element/predicate/is-suggested-focusable.ts",
     "src/node/fragment.ts",
+    "src/node/predicate.ts",
+    "src/node/predicate/has-child.ts",
+    "src/node/predicate/has-descendant.ts",
+    "src/node/predicate/has-inclusive-descendant.ts",
+    "src/node/predicate/has-text-content.ts",
+    "src/node/predicate/is-root.ts",
     "src/node/shadow.ts",
     "src/node/slot.ts",
     "src/node/slotable.ts",
     "src/node/text.ts",
+    "src/node/traversal/get-nodes-between.ts",
+    "src/node/traversal/lowest-common-ancestor.ts",
+    "src/node/traversal.ts",
     "src/node/type.ts",
     "src/style/block.ts",
     "src/style/declaration.ts",
@@ -58,9 +74,17 @@
     "test/h.spec.ts",
     "test/node.spec.tsx",
     "test/node/attribute.spec.ts",
-    "test/node/element.spec.tsx"
+    "test/node/element.spec.tsx",
+    "test/node/traversal/get-nodes-between.spec.tsx",
+    "test/node/traversal/lowest-common-ancestor.spec.tsx"
   ],
   "references": [
+    {
+      "path": "../alfa-cache"
+    },
+    {
+      "path": "../alfa-css"
+    },
     {
       "path": "../alfa-earl"
     },

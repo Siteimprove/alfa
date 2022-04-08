@@ -6,13 +6,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasAttribute } from "../common/predicate";
 import { Scope } from "../tags";
 
 import { getRefreshTime } from "../common/expectation/get-refresh-time";
 import { RefreshDelay as Outcomes } from "../common/outcome/refresh-delay";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({

@@ -4,14 +4,11 @@ import { Element, Node } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Style } from "@siteimprove/alfa-style";
 
-import { getOffsetParent } from "./get-offset-parent";
-
-import { isPositioned } from "../predicate/is-positioned";
-import { isVisible } from "../predicate/is-visible";
-
-const { and } = Refinement;
 const { isElement } = Element;
+const { and } = Refinement;
+const { getOffsetParent, isPositioned, isVisible } = Style;
 
 // For each device and document's root, we store a map from the offset parents
 // to its interposed descendants.

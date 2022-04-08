@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -10,11 +10,9 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { hasAttribute, hasChild } from "../common/predicate";
-
 import { Scope } from "../tags";
 
-const { isElement, hasName, hasNamespace } = Element;
+const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { or, nor } = Predicate;
 const { and } = Refinement;
 
@@ -36,7 +34,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
               nor(hasAttribute("paused"), hasAttribute("muted")),
               or(
                 hasAttribute("src"),
-                hasChild(and(isElement, hasName("source")))
+                Node.hasChild(and(isElement, hasName("source")))
               )
             )
           )

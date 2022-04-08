@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -7,16 +7,12 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import {
-  hasTextContent,
-  isVisible,
-  hasCascadedStyle,
-} from "../common/predicate";
 import { Scope } from "../tags";
 
 const { isElement, hasNamespace, hasName } = Element;
 const { isText } = Text;
 const { and, or, not } = Predicate;
+const { hasCascadedStyle, isVisible } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r75",
@@ -34,7 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               hasNamespace(Namespace.HTML),
               not(hasName("sup", "sub")),
-              hasTextContent(),
+              Node.hasTextContent(),
               isVisible(device),
               hasCascadedStyle(
                 `font-size`,

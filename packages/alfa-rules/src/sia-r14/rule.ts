@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -10,21 +11,15 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { normalize } from "../common/normalize";
 
-import {
-  hasAccessibleName,
-  hasAttribute,
-  hasDescendant,
-  isPerceivable,
-  hasRole,
-  isFocusable,
-  isRendered,
-  isWhitespace,
-} from "../common/predicate";
+import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isElement, hasNamespace, hasName } = Element;
+const { hasAccessibleName, hasRole, isPerceivable } = DOM;
+const { hasAttribute, hasNamespace, hasName, isElement } = Element;
 const { isText } = Text;
+const { hasDescendant } = Node;
 const { and, test, not } = Predicate;
+const { isFocusable, isRendered } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r14",
@@ -57,7 +52,7 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        // Removes all punctiation (underscore, hypen, brackets, quotation marks, etc)
+        // Removes all punctuation (underscore, hyphen, brackets, quotation marks, etc)
         // and normalise
         function removePunctuationAndNormalise(input: string): string {
           return normalize(input.replace(/\p{P}/gu, ""));

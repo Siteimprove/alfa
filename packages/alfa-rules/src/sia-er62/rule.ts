@@ -1,4 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Color } from "@siteimprove/alfa-css";
@@ -24,16 +25,7 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 import { contrast } from "../common/expectation/contrast";
 
 import { getForeground } from "../common/dom/get-colors";
-import {
-  hasBorder,
-  hasBoxShadow,
-  hasComputedStyle,
-  hasOutline,
-  hasRole,
-  hasTextDecoration,
-  isVisible,
-  isWhitespace,
-} from "../common/predicate";
+import { isWhitespace } from "../common/predicate";
 
 import { Scope, Stability, Version } from "../tags";
 
@@ -43,10 +35,19 @@ import {
   DistinguishingProperty,
 } from "./diagnostics";
 
+const { hasRole } = DOM;
 const { isElement } = Element;
-const { isText } = Text;
 const { or, not, test, tee } = Predicate;
 const { and } = Refinement;
+const {
+  hasBorder,
+  hasBoxShadow,
+  hasComputedStyle,
+  hasOutline,
+  hasTextDecoration,
+  isVisible,
+} = Style;
+const { isText } = Text;
 
 let distinguishingProperties: Map<
   Context,

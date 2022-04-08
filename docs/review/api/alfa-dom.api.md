@@ -319,16 +319,23 @@ export namespace Element {
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
+    hasAttribute: typeof predicate_2.hasAttribute, // (undocumented)
+    hasDisplaySize: typeof predicate_2.hasDisplaySize, // (undocumented)
     hasId: typeof predicate_2.hasId, // (undocumented)
     hasInputType: typeof predicate_2.hasInputType, // (undocumented)
     hasName: typeof predicate_2.hasName, // (undocumented)
     hasNamespace: typeof predicate_2.hasNamespace, // (undocumented)
     hasTabIndex: typeof predicate_2.hasTabIndex, // (undocumented)
+    hasUniqueId: typeof predicate_2.hasUniqueId, // (undocumented)
     isBrowsingContextContainer: typeof predicate_2.isBrowsingContextContainer, // (undocumented)
+    isContent: typeof predicate_2.isContent, // (undocumented)
     isDisabled: typeof predicate_2.isDisabled, // (undocumented)
+    isDocumentElement: typeof predicate_2.isDocumentElement, // (undocumented)
     isDraggable: typeof predicate_2.isDraggable, // (undocumented)
     isEditingHost: typeof predicate_2.isEditingHost, // (undocumented)
-    isSuggestedFocusable: typeof predicate_2.isSuggestedFocusable;
+    isFallback: typeof predicate_2.isFallback, // (undocumented)
+    isSuggestedFocusable: typeof predicate_2.isSuggestedFocusable, // (undocumented)
+    isReplaced: typeof predicate_2.isReplaced;
 }
 
 // @public (undocumented)
@@ -388,6 +395,11 @@ export namespace Fragment {
         children: Array<Node.JSON>;
     }
 }
+
+// Warning: (ae-forgotten-export) The symbol "Options" needs to be exported by the entry point index.d.ts
+//
+// @public
+function getNodesBetween(node1: Node, node2: Node, includeOptions?: Options, treeOptions?: Node.Traversal): Sequence<Node>;
 
 // @public (undocumented)
 export abstract class GroupingRule extends Rule {
@@ -460,10 +472,28 @@ export namespace h {
 }
 
 // @public (undocumented)
-function hasId(predicate: Predicate<string>): Predicate<Element>;
+function hasAttribute(predicate: Predicate<Attribute>): Predicate<Element>;
+
+// @public (undocumented)
+function hasAttribute(name: string, value?: Predicate<string>): Predicate<Element>;
+
+// @public (undocumented)
+function hasChild(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
+
+// @public (undocumented)
+function hasDescendant(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
+
+// @public (undocumented)
+function hasDisplaySize(valueOrPredicate: number | Predicate<number>): Predicate<Element>;
+
+// @public (undocumented)
+function hasId(predicate?: Predicate<string>): Predicate<Element>;
 
 // @public (undocumented)
 function hasId(id: string, ...rest: Array<string>): Predicate<Element>;
+
+// @public (undocumented)
+function hasInclusiveDescendant(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
 
 // Warning: (ae-forgotten-export) The symbol "InputType" needs to be exported by the entry point index.d.ts
 //
@@ -493,6 +523,12 @@ function hasNamespace(namespace: Namespace, ...rest: Array<Namespace>): Predicat
 
 // @public (undocumented)
 function hasTabIndex(predicate?: Predicate<number>): Predicate<Element>;
+
+// @public (undocumented)
+function hasTextContent(predicate?: Predicate<string>, options?: Node.Traversal): Predicate<Node>;
+
+// @public (undocumented)
+function hasUniqueId(): Predicate<Element>;
 
 // @public (undocumented)
 export class ImportRule extends ConditionRule {
@@ -530,14 +566,29 @@ export namespace ImportRule {
 // @public (undocumented)
 function isBrowsingContextContainer(element: Element): boolean;
 
+// @public
+function isContent(options?: Node.Traversal): Predicate<Node>;
+
 // @public (undocumented)
 function isDisabled(element: Element): boolean;
+
+// @public (undocumented)
+function isDocumentElement(value: unknown): value is Element<"html">;
 
 // @public (undocumented)
 function isDraggable(element: Element): boolean;
 
 // @public (undocumented)
 function isEditingHost(element: Element): boolean;
+
+// @public
+function isFallback(node: Node): boolean;
+
+// @public (undocumented)
+function isReplaced(element: Element): element is Element<"audio" | "canvas" | "embed" | "iframe" | "img" | "input" | "object" | "video">;
+
+// @public (undocumented)
+function isRoot(options?: Node.Traversal): Predicate<Node>;
 
 // @public (undocumented)
 function isSuggestedFocusable(element: Element): boolean;
@@ -851,6 +902,18 @@ export namespace Node {
         readonly flattened?: boolean;
         readonly nested?: boolean;
     }
+    const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    getNodesBetween: typeof traversal.getNodesBetween;
+    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    hasChild: typeof predicate_3.hasChild, // (undocumented)
+    hasDescendant: typeof predicate_3.hasDescendant, // (undocumented)
+    hasInclusiveDescendant: typeof predicate_3.hasInclusiveDescendant, // (undocumented)
+    hasTextContent: typeof predicate_3.hasTextContent, // (undocumented)
+    isRoot: typeof predicate_3.isRoot;
 }
 
 // @public (undocumented)

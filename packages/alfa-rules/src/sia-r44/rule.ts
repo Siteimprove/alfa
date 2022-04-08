@@ -15,13 +15,13 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasComputedStyle, isVisible } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { abs, acos, PI } = Math;
-const { some } = Iterable;
-const { or } = Predicate;
 const { isElement } = Element;
+const { some } = Iterable;
+const { abs, acos, PI } = Math;
+const { or } = Predicate;
+const { hasComputedStyle, isVisible } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r44",
@@ -145,7 +145,7 @@ function hasOrientationCondition(
 }
 
 function getRotation(element: Element, device: Device): Option<number> {
-  const parent = element.parent({ flattened: true }).filter(Element.isElement);
+  const parent = element.parent({ flattened: true }).filter(isElement);
 
   const rotation = parent.isNone()
     ? Option.of(0)

@@ -1,9 +1,9 @@
 import { Device } from "@siteimprove/alfa-device";
-import { Property, Style } from "@siteimprove/alfa-style";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Element } from "@siteimprove/alfa-dom";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Property, Style } from "@siteimprove/alfa-style";
 
-import { hasComputedStyle } from "./has-computed-style";
+const { hasComputedStyle } = Style;
 
 export function isWideEnough<N extends Property.Name>(
   device: Device,

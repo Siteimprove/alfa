@@ -1,4 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -8,10 +9,10 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { hasAttribute, hasRole, isPerceivable } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { isElement, hasId, hasName, hasNamespace } = Element;
+const { hasRole, isPerceivable } = DOM;
+const { hasAttribute, hasId, hasName, hasNamespace, isElement } = Element;
 const { and, equals, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
