@@ -745,11 +745,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-documenter@npm:^7.15.4":
-  version: 7.15.4
-  resolution: "@microsoft/api-documenter@npm:7.15.4"
+"@microsoft/api-documenter@npm:^7.17.2":
+  version: 7.17.2
+  resolution: "@microsoft/api-documenter@npm:7.17.2"
   dependencies:
-    "@microsoft/api-extractor-model": 7.15.4
+    "@microsoft/api-extractor-model": 7.16.0
     "@microsoft/tsdoc": 0.13.2
     "@rushstack/node-core-library": 3.45.1
     "@rushstack/ts-command-line": 4.10.7
@@ -758,26 +758,26 @@ __metadata:
     resolve: ~1.17.0
   bin:
     api-documenter: bin/api-documenter
-  checksum: e023a32bb5d445315a021713bf43afd8fab2dba68bd4315e655aec5a64f69ce1784b07facbf3db051723bdb86f13f7f73a0109165ed8eff2c10176fcd83469c2
+  checksum: 44a041cec14a71a5563bfdeba715f199dd2079c3598b9f27752ccba69b978861cbfc0f48d476d4aeb37f8576b00e3bea096bdc6571122dcbb19a145613030c22
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor-model@npm:7.15.4":
-  version: 7.15.4
-  resolution: "@microsoft/api-extractor-model@npm:7.15.4"
+"@microsoft/api-extractor-model@npm:7.16.0":
+  version: 7.16.0
+  resolution: "@microsoft/api-extractor-model@npm:7.16.0"
   dependencies:
     "@microsoft/tsdoc": 0.13.2
     "@microsoft/tsdoc-config": ~0.15.2
     "@rushstack/node-core-library": 3.45.1
-  checksum: 9e4cce0d2575da97413c7df8a26da39ed1d73e654035f811cbc001d231650647dd0692881f46cdfd3a08b53c89589960464347050953a8dfe8f4172367104273
+  checksum: ba1bf057f5eed213aea45887a93c0cdabd0d7c9da2644aeb7460748fa33a01f04b91507923e7ea511452a7dfb849498089a2c3a844986ffc4c2abf8ab6d831a6
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor@npm:^7.19.5":
-  version: 7.19.5
-  resolution: "@microsoft/api-extractor@npm:7.19.5"
+"@microsoft/api-extractor@npm:^7.20.1":
+  version: 7.20.1
+  resolution: "@microsoft/api-extractor@npm:7.20.1"
   dependencies:
-    "@microsoft/api-extractor-model": 7.15.4
+    "@microsoft/api-extractor-model": 7.16.0
     "@microsoft/tsdoc": 0.13.2
     "@microsoft/tsdoc-config": ~0.15.2
     "@rushstack/node-core-library": 3.45.1
@@ -791,7 +791,7 @@ __metadata:
     typescript: ~4.5.2
   bin:
     api-extractor: bin/api-extractor
-  checksum: 96fa1cff560f3e8c86db89389eb7a966657164b29532d0d8973ad5313dd375d1271b1eacec66e6a449b761e79df874be96cf7dd508dc19a5a3bd30c31e5f68aa
+  checksum: c9fb01e3803b35f8ca2471fe67015bb74d4a997f4409737f5b3fc52ea633d8379689e4685f6502d81245649e5531cadd9bb37c50cc71068488ff0e67dea4af67
   languageName: node
   linkType: hard
 
@@ -2383,8 +2383,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
-    "@microsoft/api-documenter": ^7.15.4
-    "@microsoft/api-extractor": ^7.19.5
+    "@microsoft/api-documenter": ^7.17.2
+    "@microsoft/api-extractor": ^7.20.1
     "@types/async": ^3.2.5
     "@types/node": ^14.14.31
     async: ^3.2.1
