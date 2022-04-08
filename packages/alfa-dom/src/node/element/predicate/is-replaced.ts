@@ -7,7 +7,7 @@ const { test } = Refinement;
 
 // For some reason, type inference by "yarn document" seems to depend on
 // machine (?) and returns the list of elements' names in different orders.
-// This notably breaks the CI if "yarn document" their builds a different type
+// This notably breaks the CI if "yarn document" there builds a different type
 // than on local machine. Using a function with explicit type seems to stabilize
 // things.
 
