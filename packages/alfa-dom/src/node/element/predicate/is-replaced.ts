@@ -1,3 +1,5 @@
+import { Refinement } from "@siteimprove/alfa-refinement/src/refinement";
+import { Element } from "../../element";
 import { hasName } from "./has-name";
 
 /**
@@ -5,6 +7,25 @@ import { hasName } from "./has-name";
  *
  * @public
  */
-export const isReplaced = hasName<
-  "audio" | "canvas" | "embed" | "iframe" | "img" | "input" | "object" | "video"
->("audio", "canvas", "embed", "iframe", "img", "input", "object", "video");
+export const isReplaced: Refinement<
+  Element,
+  Element<
+    | "audio"
+    | "canvas"
+    | "embed"
+    | "iframe"
+    | "img"
+    | "input"
+    | "object"
+    | "video"
+  >
+> = hasName(
+  "audio",
+  "canvas",
+  "embed",
+  "iframe",
+  "img",
+  "input",
+  "object",
+  "video"
+);

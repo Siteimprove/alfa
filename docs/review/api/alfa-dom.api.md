@@ -12,6 +12,7 @@ import { Media } from '@siteimprove/alfa-media';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
+import { Refinement as Refinement_2 } from '@siteimprove/alfa-refinement/src/refinement';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
@@ -585,7 +586,7 @@ function isEditingHost(element: Element): boolean;
 function isFallback(node: Node): boolean;
 
 // @public (undocumented)
-const isReplaced: Refinement<Element<string>, Element<"object" | "audio" | "canvas" | "embed" | "iframe" | "img" | "input" | "video">, []>;
+const isReplaced: Refinement_2<Element, Element<"audio" | "canvas" | "embed" | "iframe" | "img" | "input" | "object" | "video">>;
 
 // @public (undocumented)
 function isRoot(options?: Node.Traversal): Predicate<Node>;
