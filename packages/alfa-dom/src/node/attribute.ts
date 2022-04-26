@@ -93,7 +93,7 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     }
   }
 
-  public path(options?: Node.Traversal): string {
+  public internalPath(options?: Node.Traversal): string {
     let path = this.owner.map((owner) => owner.path(options)).getOr("/");
 
     path += path === "/" ? "" : "/";

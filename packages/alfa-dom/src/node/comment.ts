@@ -26,7 +26,7 @@ export class Comment extends Node<"comment"> {
     return this._data;
   }
 
-  public path(options?: Node.Traversal): string {
+  public internalPath(options?: Node.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
       .getOr("/");

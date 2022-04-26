@@ -41,7 +41,7 @@ export class Document extends Node<"document"> {
     return options.nested === true ? this.frame : super.parent(options);
   }
 
-  public path(options?: Node.Traversal): string {
+  public internalPath(options?: Node.Traversal): string {
     if (options?.nested) {
       return this._frame
         .map((frame) => frame.path(options) + "/document-node()")
