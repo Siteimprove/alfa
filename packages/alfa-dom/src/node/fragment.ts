@@ -18,7 +18,7 @@ export class Fragment extends Node<"fragment"> {
     super(children, "fragment");
   }
 
-  public internalPath(): string {
+  _internalPath(): string {
     return "/";
   }
 
