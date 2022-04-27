@@ -403,7 +403,7 @@ export abstract class Node<T extends string = string>
    * Get an XPath that uniquely identifies the node across descendants of its
    * root.
    */
-//to be moved
+
    traversalPath(options?: Node.Traversal): number {
     let traversalPath = 0;
     if (options?.composed === true) {
