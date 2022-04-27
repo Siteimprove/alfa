@@ -28,6 +28,8 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     // (undocumented)
     enumerate<T extends string>(valid: T, ...rest: Array<T>): Option<T>;
     // (undocumented)
+    _internalPath(options?: Node.Traversal): string;
+    // (undocumented)
     isBoolean(): boolean;
     // (undocumented)
     get name(): N | Lowercase<N>;
@@ -37,8 +39,6 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string): Attribute<N>;
     // (undocumented)
     get owner(): Option<Element>;
-    // (undocumented)
-    path(options?: Node.Traversal): string;
     // (undocumented)
     get prefix(): Option<string>;
     // (undocumented)
@@ -115,9 +115,9 @@ export class Comment extends Node<"comment"> {
     // (undocumented)
     static empty(): Comment;
     // (undocumented)
-    static of(data: string): Comment;
+    _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    path(options?: Node.Traversal): string;
+    static of(data: string): Comment;
     // (undocumented)
     toJSON(): Comment.JSON;
     // (undocumented)
@@ -211,11 +211,11 @@ export class Document extends Node<"document"> {
     // (undocumented)
     get frame(): Option<Element>;
     // (undocumented)
+    _internalPath(options?: Node.Traversal): string;
+    // (undocumented)
     static of(children: Iterable<Node>, style?: Iterable<Sheet>): Document;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    path(options?: Node.Traversal): string;
     // (undocumented)
     get style(): Iterable<Sheet>;
     // (undocumented)
@@ -264,6 +264,8 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get id(): Option<string>;
     // (undocumented)
+    _internalPath(options?: Node.Traversal): string;
+    // (undocumented)
     isVoid(): boolean;
     // (undocumented)
     get name(): N;
@@ -273,8 +275,6 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>): Element<N>;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    path(options?: Node.Traversal): string;
     // (undocumented)
     get prefix(): Option<string>;
     // (undocumented)
@@ -374,9 +374,9 @@ export class Fragment extends Node<"fragment"> {
     // (undocumented)
     static empty(): Fragment;
     // (undocumented)
-    static of(children: Iterable<Node>): Fragment;
+    _internalPath(): string;
     // (undocumented)
-    path(): string;
+    static of(children: Iterable<Node>): Fragment;
     // (undocumented)
     toJSON(): Fragment.JSON;
     // (undocumented)
@@ -798,6 +798,8 @@ export abstract class Node<T extends string = string> implements Iterable<Node>,
     // (undocumented)
     index(options?: Node.Traversal): number;
     // (undocumented)
+    _internalPath(options?: Node.Traversal): string;
+    // (undocumented)
     isAncestorOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
     isChildOf(node: Node, options?: Node.Traversal): boolean;
@@ -823,6 +825,7 @@ export abstract class Node<T extends string = string> implements Iterable<Node>,
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
     protected _parent: Option<Node>;
+    // (undocumented)
     path(options?: Node.Traversal): string;
     // (undocumented)
     preceding(options?: Node.Traversal): Sequence<Node>;
@@ -841,6 +844,7 @@ export abstract class Node<T extends string = string> implements Iterable<Node>,
     toJSON(): Node.JSON<T>;
     // (undocumented)
     toSARIF(): sarif.Location;
+    traversalPath(options?: Node.Traversal): number;
     // (undocumented)
     get type(): T;
     // (undocumented)
