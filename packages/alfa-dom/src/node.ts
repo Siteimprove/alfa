@@ -399,29 +399,13 @@ export abstract class Node<T extends string = string>
       });
   }
 
+  private _path: Array<string> = [];
+
   /**
-   * Get an XPath that uniquely identifies the node across descendants of its
-   * root.
+   * @internal
    */
 
-   traversalPath(options?: Node.Traversal): number {
-    let traversalPath = 0;
-    if (options?.composed === true) {
-      traversalPath += 4;
-    }
-
-    if (options?.flattened === true) {
-      traversalPath += 2;
-    }
-
-    if (options?.nested === true) {
-      traversalPath += 1;
-    }
-
-    return traversalPath;
-  }
-
-  _internalPath(options?: Node.Traversal): string {
+  protected _internalPath(options?: Node.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
       .getOr("/");
@@ -432,10 +416,13 @@ export abstract class Node<T extends string = string>
 
     return path;
   }
-  private _path: Array<string> = [];
 
+  /**
+   * Get an XPath that uniquely identifies the node across descendants of its
+   * root.
+   */
   public path(options?: Node.Traversal): string {
-    const currentTraversal = this.traversalPath(options);
+    const currentTraversal = Node.traversalPath(options);
     if (this._path[currentTraversal] !== undefined) {
       return this._path[currentTraversal];
     } else {
@@ -553,6 +540,23 @@ export namespace Node {
      * {@link https://html.spec.whatwg.org/#nested-browsing-context}
      */
     readonly nested?: boolean;
+  }
+
+  export function traversalPath(options?: Node.Traversal): number {
+    let traversalPath = 0;
+    if (options?.composed === true) {
+      traversalPath += 4;
+    }
+
+    if (options?.flattened === true) {
+      traversalPath += 2;
+    }
+
+    if (options?.nested === true) {
+      traversalPath += 1;
+    }
+
+    return traversalPath;
   }
 
   export function from(json: Element.JSON): Element;
