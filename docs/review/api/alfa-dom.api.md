@@ -797,8 +797,8 @@ export abstract class Node<T extends string = string> implements Iterable<Node>,
     inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
     index(options?: Node.Traversal): number;
-    // (undocumented)
-    _internalPath(options?: Node.Traversal): string;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     isAncestorOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
@@ -825,7 +825,6 @@ export abstract class Node<T extends string = string> implements Iterable<Node>,
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
     protected _parent: Option<Node>;
-    // (undocumented)
     path(options?: Node.Traversal): string;
     // (undocumented)
     preceding(options?: Node.Traversal): Sequence<Node>;
@@ -844,7 +843,6 @@ export abstract class Node<T extends string = string> implements Iterable<Node>,
     toJSON(): Node.JSON<T>;
     // (undocumented)
     toSARIF(): sarif.Location;
-    traversalPath(options?: Node.Traversal): number;
     // (undocumented)
     get type(): T;
     // (undocumented)
@@ -906,6 +904,8 @@ export namespace Node {
         readonly flattened?: boolean;
         readonly nested?: boolean;
     }
+    // (undocumented)
+    export function traversalPath(options?: Node.Traversal): number;
     const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
