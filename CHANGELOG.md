@@ -19,6 +19,14 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.37.0](../../compare/v0.36.0...v0.37.0) (2022-04-28)
+
+### Breaking
+- [@siteimprove/alfa-aria](packages/alfa-aria), [@siteimprove/alfa-dom](packages/alfa-dom), [@siteimprove/alfa-rules](packages/alfa-rules), [@siteimprove/alfa-style](packages/alfa-style): Moves helpers and predicates from `alfa-rules` to `alfa-dom`, `alfa-style`, and `alfa-aria` ([#1121](../../pull/1121))
+
+### Changed
+- [@siteimprove/alfa-dom](packages/alfa-dom): DOM nodes' `.path` attribute is now cached for perfomance improvements ([#1132](../../pull/1132))  
+
 ## [0.36.0](../../compare/v0.35.0...v0.36.0) (2022-04-01)
 
 ### Breaking
