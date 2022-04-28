@@ -404,7 +404,6 @@ export abstract class Node<T extends string = string>
   /**
    * @internal
    */
-
   protected _internalPath(options?: Node.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
