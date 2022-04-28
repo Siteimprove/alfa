@@ -259,7 +259,10 @@ export class Element<N extends string = string>
     return Slot.findSlotables(this);
   }
 
-  public path(options?: Node.Traversal): string {
+/**
+  * @internal
+  **/
+  protected _internalPath(options?: Node.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
       .getOr("/");
