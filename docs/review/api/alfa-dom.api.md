@@ -27,8 +27,8 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     enumerate(): Option<string>;
     // (undocumented)
     enumerate<T extends string>(valid: T, ...rest: Array<T>): Option<T>;
-    // (undocumented)
-    _internalPath(options?: Node.Traversal): string;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     isBoolean(): boolean;
     // (undocumented)
@@ -114,8 +114,8 @@ export class Comment extends Node<"comment"> {
     get data(): string;
     // (undocumented)
     static empty(): Comment;
-    // (undocumented)
-    _internalPath(options?: Node.Traversal): string;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     static of(data: string): Comment;
     // (undocumented)
@@ -210,8 +210,8 @@ export class Document extends Node<"document"> {
     static empty(): Document;
     // (undocumented)
     get frame(): Option<Element>;
-    // (undocumented)
-    _internalPath(options?: Node.Traversal): string;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     static of(children: Iterable<Node>, style?: Iterable<Sheet>): Document;
     // (undocumented)
@@ -263,8 +263,8 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     get content(): Option<Document>;
     // (undocumented)
     get id(): Option<string>;
-    // (undocumented)
-    _internalPath(options?: Node.Traversal): string;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     isVoid(): boolean;
     // (undocumented)
@@ -373,8 +373,8 @@ export class Fragment extends Node<"fragment"> {
     _attachParent(): boolean;
     // (undocumented)
     static empty(): Fragment;
-    // (undocumented)
-    _internalPath(): string;
+    // @internal (undocumented)
+    protected _internalPath(): string;
     // (undocumented)
     static of(children: Iterable<Node>): Fragment;
     // (undocumented)
@@ -904,7 +904,7 @@ export namespace Node {
         readonly flattened?: boolean;
         readonly nested?: boolean;
     }
-    // (undocumented)
+    // @internal (undocumented)
     export function traversalPath(options?: Node.Traversal): number;
     const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
     //
@@ -1023,14 +1023,14 @@ export class Shadow extends Node<"shadow"> {
     static empty(): Shadow;
     // (undocumented)
     get host(): Option<Element>;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     get mode(): Shadow.Mode;
     // (undocumented)
     static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode): Shadow;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    path(options?: Node.Traversal): string;
     // (undocumented)
     get style(): Iterable<Sheet>;
     // (undocumented)
