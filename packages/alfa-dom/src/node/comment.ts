@@ -26,7 +26,10 @@ export class Comment extends Node<"comment"> {
     return this._data;
   }
 
-  _internalPath(options?: Node.Traversal): string {
+/**
+  * @internal
+  **/
+  protected _internalPath(options?: Node.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
       .getOr("/");
