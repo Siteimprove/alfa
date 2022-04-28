@@ -541,6 +541,9 @@ export namespace Node {
     readonly nested?: boolean;
   }
 
+  /**
+  * @internal
+  **/
   export function traversalPath(options?: Node.Traversal): number {
     let traversalPath = 0;
     if (options?.composed === true) {
