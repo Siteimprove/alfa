@@ -1202,12 +1202,12 @@ export class Text extends Node<"text"> implements Slotable {
     get data(): string;
     // (undocumented)
     static empty(): Text;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     static of(data: string): Text;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    path(options?: Node.Traversal): string;
     // (undocumented)
     toJSON(): Text.JSON;
     // (undocumented)
