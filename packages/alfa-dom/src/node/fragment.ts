@@ -18,7 +18,10 @@ export class Fragment extends Node<"fragment"> {
     super(children, "fragment");
   }
 
-  public path(): string {
+/**
+  * @internal
+  **/
+  protected _internalPath(): string {
     return "/";
   }
 

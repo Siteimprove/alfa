@@ -56,7 +56,10 @@ export class Shadow extends Node<"shadow"> {
     return None;
   }
 
-  public path(options?: Node.Traversal): string {
+  /**
+   * @internal
+   **/
+  protected _internalPath(options?: Node.Traversal): string {
     if (options?.composed) {
       return (
         this._host.map((host) => host.path(options)).getOr("") +

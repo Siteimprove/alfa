@@ -27,6 +27,8 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     enumerate(): Option<string>;
     // (undocumented)
     enumerate<T extends string>(valid: T, ...rest: Array<T>): Option<T>;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     isBoolean(): boolean;
     // (undocumented)
@@ -37,8 +39,6 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string): Attribute<N>;
     // (undocumented)
     get owner(): Option<Element>;
-    // (undocumented)
-    path(options?: Node.Traversal): string;
     // (undocumented)
     get prefix(): Option<string>;
     // (undocumented)
@@ -114,10 +114,10 @@ export class Comment extends Node<"comment"> {
     get data(): string;
     // (undocumented)
     static empty(): Comment;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     static of(data: string): Comment;
-    // (undocumented)
-    path(options?: Node.Traversal): string;
     // (undocumented)
     toJSON(): Comment.JSON;
     // (undocumented)
@@ -210,12 +210,12 @@ export class Document extends Node<"document"> {
     static empty(): Document;
     // (undocumented)
     get frame(): Option<Element>;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     static of(children: Iterable<Node>, style?: Iterable<Sheet>): Document;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    path(options?: Node.Traversal): string;
     // (undocumented)
     get style(): Iterable<Sheet>;
     // (undocumented)
@@ -263,6 +263,8 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     get content(): Option<Document>;
     // (undocumented)
     get id(): Option<string>;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     isVoid(): boolean;
     // (undocumented)
@@ -273,8 +275,6 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>): Element<N>;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    path(options?: Node.Traversal): string;
     // (undocumented)
     get prefix(): Option<string>;
     // (undocumented)
@@ -373,10 +373,10 @@ export class Fragment extends Node<"fragment"> {
     _attachParent(): boolean;
     // (undocumented)
     static empty(): Fragment;
+    // @internal (undocumented)
+    protected _internalPath(): string;
     // (undocumented)
     static of(children: Iterable<Node>): Fragment;
-    // (undocumented)
-    path(): string;
     // (undocumented)
     toJSON(): Fragment.JSON;
     // (undocumented)
@@ -797,6 +797,8 @@ export abstract class Node<T extends string = string> implements Iterable<Node>,
     inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
     index(options?: Node.Traversal): number;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     isAncestorOf(node: Node, options?: Node.Traversal): boolean;
     // (undocumented)
@@ -902,6 +904,8 @@ export namespace Node {
         readonly flattened?: boolean;
         readonly nested?: boolean;
     }
+    // @internal (undocumented)
+    export function traversalPath(options?: Node.Traversal): number;
     const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
@@ -1019,14 +1023,14 @@ export class Shadow extends Node<"shadow"> {
     static empty(): Shadow;
     // (undocumented)
     get host(): Option<Element>;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     get mode(): Shadow.Mode;
     // (undocumented)
     static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode): Shadow;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    path(options?: Node.Traversal): string;
     // (undocumented)
     get style(): Iterable<Sheet>;
     // (undocumented)
@@ -1198,12 +1202,12 @@ export class Text extends Node<"text"> implements Slotable {
     get data(): string;
     // (undocumented)
     static empty(): Text;
+    // @internal (undocumented)
+    protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     static of(data: string): Text;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    path(options?: Node.Traversal): string;
     // (undocumented)
     toJSON(): Text.JSON;
     // (undocumented)
