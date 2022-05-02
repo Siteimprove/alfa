@@ -118,6 +118,37 @@ test(`evaluate() fails an <a> element that has no distinguishing features and is
   ]);
 });
 
+test(`evaluate() fails an <a> element that has no distinguishing features and is
+ part of a paragraph with a background image`, async (t) => {
+  const target = <a href="#">Link</a>;
+
+  const document = h.document(
+    [<p>Hello {target}</p>],
+    [
+      h.sheet([
+        h.rule.style("p", {
+          backgroundImage:
+            "linear-gradient(to right, #F9F9F1 50%, #0000D1 50%)",
+        }),
+
+        h.rule.style("a", {
+          textDecoration: "none",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(ER62, { document }), [
+    failed(ER62, target, {
+      1: Outcomes.IsNotDistinguishable(
+        [noStyle],
+        [addCursor(noStyle)],
+        [addOutline(noStyle)]
+      ),
+    }),
+  ]);
+});
+
 test(`evaluate() fails an <a> element that has no distinguishing features and
  has a background color equal to that of the paragraph`, async (t) => {
   const target = <a href="#">Link</a>;
@@ -153,11 +184,11 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   ]);
 });
 
-// /******************************************************************
-//  *
-//  * Box-shadow as Distinguishing Feature
-//  *
-//  ******************************************************************/
+/******************************************************************
+ *
+ * Box-shadow as Distinguishing Feature
+ *
+ ******************************************************************/
 
 test(`evaluate() passes an applicable <a> element that removes the default text
  decoration and instead applies a box shadow`, async (t) => {
@@ -217,11 +248,11 @@ test(`evaluate() fails an applicable <a> element that removes the default text
   ]);
 });
 
-// /******************************************************************
-//  *
-//  * Border as Distinguishing Feature
-//  *
-//  ******************************************************************/
+/******************************************************************
+ *
+ * Border as Distinguishing Feature
+ *
+ ******************************************************************/
 
 test(`evaluate() passes an applicable <a> element that removes the default text
  decoration and instead applies a bottom border`, async (t) => {
@@ -331,11 +362,11 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
   ]);
 });
 
-// /******************************************************************
-//  *
-//  * Font as Distinguishing Feature
-//  *
-//  ******************************************************************/
+/******************************************************************
+ *
+ * Font as Distinguishing Feature
+ *
+ ******************************************************************/
 test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
   const target = <a href="#">Link</a>;
 
@@ -408,11 +439,11 @@ test(`evaluate() passes a link with different font-family than surrounding text`
   ]);
 });
 
-// /******************************************************************
-//  *
-//  * Outline as Distinguishing Feature
-//  *
-//  ******************************************************************/
+/******************************************************************
+ *
+ * Outline as Distinguishing Feature
+ *
+ ******************************************************************/
 test(`evaluate() passes an applicable <a> element that removes the default text
  decoration and instead applies an outline`, async (t) => {
   const target = <a href="#">Link</a>;
@@ -545,7 +576,7 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
  *
  ******************************************************************/
 
-test(`evaluate() passes an <a> element with a <p> parent element when 
+test(`evaluate() passes an <a> element with a <p> parent element when
       background, box-shadow and text-decoration are distinguishing features`, async (t) => {
   const target = <a href="#">Link</a>;
 

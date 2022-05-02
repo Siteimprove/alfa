@@ -2,7 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Color } from "@siteimprove/alfa-css";
+import { Color, Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -522,9 +522,18 @@ namespace Distinguishable {
       // Any difference in `background-image` is considered enough. If different
       // `background-image` ultimately yield the same background (e.g. the same
       // image at two different URLs), this creates false negatives.
+      // When there is no `background-image` set on the link, we consider it to be the same as the container's
       hasComputedStyle(
         "background-image",
-        not((image) => image.equals(imageReference)),
+        not((image) => {
+          let hasNoBackgroundImage: boolean = false;
+          for (const value of image.values) {
+            if (Keyword.isKeyword(value) && value.equals(Keyword.of("none"))) {
+              hasNoBackgroundImage = true;
+            }
+          }
+          return hasNoBackgroundImage || image.equals(imageReference);
+        }),
         device,
         context
       )
