@@ -16,6 +16,7 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
+import { Computed as BackgroundImage } from "@siteimprove/alfa-style/src/property/background-image";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -506,6 +507,13 @@ namespace Distinguishable {
       "background-image"
     ).value;
 
+    function hasNoBackgroundImage(image: BackgroundImage): boolean {
+      return (
+        Keyword.isKeyword(image.values[0]) &&
+        image.values[0].equals(Keyword.of("none"))
+      );
+    }
+
     return or(
       hasComputedStyle(
         "background-color",
@@ -525,15 +533,9 @@ namespace Distinguishable {
       // When there is no `background-image` set on the link, we consider it to be the same as the container's
       hasComputedStyle(
         "background-image",
-        not((image) => {
-          let hasNoBackgroundImage: boolean = false;
-          for (const value of image.values) {
-            if (Keyword.isKeyword(value) && value.equals(Keyword.of("none"))) {
-              hasNoBackgroundImage = true;
-            }
-          }
-          return hasNoBackgroundImage || image.equals(imageReference);
-        }),
+        not(
+          (image) => hasNoBackgroundImage(image) || image.equals(imageReference)
+        ),
         device,
         context
       )
