@@ -218,7 +218,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
           outline: "none",
         }),
 
-        h.rule.style("a:focus:focus-visible", {
+        h.rule.style("a:focus-visible", {
           outline: "1px solid blue",
         }),
       ]),
@@ -244,7 +244,7 @@ test(`evaluate() fails an <a> element that removes the default focus outline
     [target, <button />],
     [
       h.sheet([
-        h.rule.style("a:focus:focus-visible", {
+        h.rule.style("a:focus-visible", {
           outline: "none",
         }),
       ]),
