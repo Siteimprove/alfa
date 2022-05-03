@@ -16,7 +16,6 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
-import { Computed as BackgroundImage } from "@siteimprove/alfa-style/src/property/background-image";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -507,39 +506,35 @@ namespace Distinguishable {
       "background-image"
     ).value;
 
-    function hasNoBackgroundImage(image: BackgroundImage): boolean {
-      return (
-        Keyword.isKeyword(image.values[0]) &&
-        image.values[0].equals(Keyword.of("none"))
-      );
-    }
+    return (link: Element) => {
+      const color = Style.from(link, device, context).computed(
+        "background-color"
+      ).value;
 
-    return or(
-      hasComputedStyle(
-        "background-color",
-        not(
-          // If the background is fully transparent, we assume it will end up
-          // being the same as the container. Intermediate backgrounds may change
-          // that, but these would need to be set on ancestor of the link and of
-          // no non-link text, so will be caught in one of the other comparisons.
-          (color) => Color.isTransparent(color) || color.equals(colorReference)
-        ),
-        device,
-        context
-      ),
+      const image = Style.from(link, device, context).computed(
+        "background-image"
+      ).value;
+
+      // If the background is fully transparent or there is no `background-image` set on the link,
+      // we assume it will end up being the same as the container. Intermediate backgrounds may change
+      // that, but these would need to be set on ancestor of the link and of
+      // no non-link text, so will be caught in one of the other comparisons.
+      const hasBackground = !(
+        Keyword.isKeyword(image.values[0]) &&
+        image.values[0].equals(Keyword.of("none")) &&
+        Color.isTransparent(color)
+      );
+
       // Any difference in `background-image` is considered enough. If different
       // `background-image` ultimately yield the same background (e.g. the same
       // image at two different URLs), this creates false negatives.
       // When there is no `background-image` set on the link, we consider it to be the same as the container's
-      hasComputedStyle(
-        "background-image",
-        not(
-          (image) => hasNoBackgroundImage(image) || image.equals(imageReference)
-        ),
-        device,
-        context
-      )
-    );
+      const hasDifferentBackgroundFromContainer = !(
+        color.equals(colorReference) && image.equals(imageReference)
+      );
+
+      return hasDifferentBackgroundFromContainer && hasBackground;
+    };
   }
 
   export function getPairwiseContrast(
