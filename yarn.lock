@@ -2290,7 +2290,7 @@ __metadata:
     "@siteimprove/alfa-mapper": "workspace:^0.38.0"
     "@siteimprove/alfa-test": "workspace:^0.38.0"
     "@siteimprove/alfa-web": "workspace:^0.38.0"
-    unexpected: ^12.0.3
+    unexpected: ^13.0.0
   languageName: unknown
   linkType: soft
 
@@ -2396,7 +2396,7 @@ __metadata:
     async: ^3.2.1
     axios: ^0.27.2
     execa: ^5.1.1
-    minimist: ^1.2.5
+    minimist: ^1.2.6
     package-dependency-graph: ^1.14.3
     prettier: ^2.4.1
     typescript: ^4.6.2
@@ -6966,14 +6966,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"minimist@npm:1, minimist@npm:^1.1.0, minimist@npm:^1.2.5":
-  version: 1.2.5
-  resolution: "minimist@npm:1.2.5"
-  checksum: 86706ce5b36c16bfc35c5fe3dbb01d5acdc9a22f2b6cc810b6680656a1d2c0e44a0159c9a3ba51fb072bb5c203e49e10b51dcd0eec39c481f4c42086719bae52
-  languageName: node
-  linkType: hard
-
-"minimist@npm:^1.2.6":
+"minimist@npm:1, minimist@npm:^1.1.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6":
   version: 1.2.6
   resolution: "minimist@npm:1.2.6"
   checksum: d15428cd1e11eb14e1233bcfb88ae07ed7a147de251441d61158619dfb32c4d7e9061d09cab4825fdee18ecd6fce323228c8c47b5ba7cd20af378ca4048fb3fb
@@ -8921,9 +8914,9 @@ typescript@~4.5.2:
   languageName: node
   linkType: hard
 
-"unexpected@npm:^12.0.3":
-  version: 12.0.3
-  resolution: "unexpected@npm:12.0.3"
+"unexpected@npm:^13.0.0":
+  version: 13.0.0
+  resolution: "unexpected@npm:13.0.0"
   dependencies:
     array-changes: 3.0.1
     array-changes-async: 3.0.1
@@ -8933,7 +8926,7 @@ typescript@~4.5.2:
     magicpen: ^6.2.4
     ukkonen: ^1.4.0
     unexpected-bluebird: 2.9.34-longstack2
-  checksum: 2fc70f998dfd8c788414bea094b6e9778d78d862b986717968ca686d24d1b04ef7e1662066c0d202eecbf6c97f9aa1dab4e510e9503611d33160ba25686fa1d7
+  checksum: cb7202ced5e58345a88f5cb0fc5dca64a42da4b048aab9f0ddf29603e7180e144b6e66f15a911cc7bd583b5ce0cb31b88bd42de8f5a32f655041c893489958db
   languageName: node
   linkType: hard
 
