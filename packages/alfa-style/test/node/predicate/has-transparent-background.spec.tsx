@@ -1,9 +1,9 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 
-import { hasTransparentBackground } from "../../../src/common/predicate/has-transparent-background";
+import { hasTransparentBackground } from "../../../src/element/predicate/has-transparent-background";
 
 const device = Device.standard();
 

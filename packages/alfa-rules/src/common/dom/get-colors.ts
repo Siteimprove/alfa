@@ -13,6 +13,8 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 import { getInterposedDescendant } from "./get-interposed-descendant";
+import { hasTransparentBackground } from "../../../../alfa-style/src/element/predicate/has-transparent-background";
+import { hasInterposedDescendant } from "../predicate";
 
 const { isElement } = Element;
 const { isPositioned } = Style;
@@ -228,9 +230,16 @@ function getLayers(
       }
 
       const interposedDescendants = getInterposedDescendant(device, element);
+
+      // const interposedDescendantsTransparents = interposedDescendants.filter(
+      //   hasTransparentBackground(device)
+      // );
       if (!interposedDescendants.isEmpty()) {
         return Err.of(
-          ColorError.interposedDescendants(element, interposedDescendants)
+          ColorError.interposedDescendants(
+            element,
+            interposedDescendants
+          )
         );
       }
 
@@ -293,6 +302,7 @@ export function getForeground(
       }
 
       const interposedDescendants = getInterposedDescendant(device, element);
+
       if (!interposedDescendants.isEmpty()) {
         return Err.of(
           ColorError.interposedDescendants(element, interposedDescendants)

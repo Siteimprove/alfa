@@ -3,11 +3,11 @@ import { Color, Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "@siteimprove/alfa-style";
+import { Style } from "../../style";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
 const { isReplaced, isElement } = Element;
-const { hasComputedStyle } = Style;
+
 
 const { or, test } = Predicate;
 
@@ -26,13 +26,13 @@ export function hasTransparentBackground(
           test(
             or(
               isReplaced,
-              hasComputedStyle(
+              Style.hasComputedStyle(
                 "background-color",
                 (color) => !Color.isTransparent(color),
                 device,
                 context
               ),
-              hasComputedStyle(
+              Style.hasComputedStyle(
                 "background-image",
                 (image) =>
                   !(
