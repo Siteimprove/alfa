@@ -7,7 +7,7 @@ import { hasTransparentBackground } from "../../../src/common/predicate/has-tran
 
 const device = Device.standard();
 
-test("hasTransparentBackground() fails on image is not transparent", (t) => {
+test("hasTransparentBackground() fails on image which is not transparent", (t) => {
   const target = <img src="foo.jpg" />;
 
   h.document([target]);
@@ -16,7 +16,7 @@ test("hasTransparentBackground() fails on image is not transparent", (t) => {
 });
 
 test("<div> has a color background", (t) => {
-  const target = <div style={{ backgroundColor: "white" }}> Hello</div>;
+  const target = <div style={{ backgroundColor: "red" }}> Hello</div>;
 
   h.document([target]);
 
@@ -54,7 +54,6 @@ test("<div> background is not transparent when one child background isn't", (t) 
   t.deepEqual(hasTransparentBackground(device)(target), false);
 });
 
-//CHECK: needs to return true, no false
 test("<div> background is transparent when all children backgrounds are transparent", (t) => {
   const target = (
     <div>
@@ -66,7 +65,7 @@ test("<div> background is transparent when all children backgrounds are transpar
 
   h.document([target]);
 
-  t.deepEqual(hasTransparentBackground(device)(target), false);
+  t.deepEqual(hasTransparentBackground(device)(target), true);
 });
 
 test("<div> background is transparent", (t) => {
@@ -74,5 +73,5 @@ test("<div> background is transparent", (t) => {
 
   h.document([target]);
 
-  t.deepEqual(hasTransparentBackground(device)(target), false);
+  t.deepEqual(hasTransparentBackground(device)(target), true);
 });

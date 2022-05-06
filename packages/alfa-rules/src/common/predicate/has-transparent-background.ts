@@ -1,4 +1,5 @@
-import { Color } from "@siteimprove/alfa-css";
+/// <reference lib="dom" />
+import { Color, Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Context } from "@siteimprove/alfa-selector";
@@ -8,24 +9,38 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 const { isReplaced, isElement } = Element;
 const { hasComputedStyle } = Style;
 
+const { or, tee, test } = Predicate;
+
 export function hasTransparentBackground(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Element> {
   return (element) => {
     if (
-      isReplaced ||
-      hasComputedStyle(
-        "background-color",
-        (color) => !Color.isTransparent(color),
-        device,
-        context
-      ) ||
-      hasComputedStyle(
-        "background-image",
-        (image) => image.values.length !== 0,
-        device,
-        context
+      test(
+        or(
+          isReplaced,
+          hasComputedStyle(
+            "background-color",
+            (color) => !Color.isTransparent(color),
+            device,
+            context
+          ),
+          tee(
+            hasComputedStyle(
+              "background-image",
+              (image) =>
+                !(
+                  Keyword.isKeyword(image.values[0]) &&
+                  image.values[0].equals(Keyword.of("none"))
+                ),
+              device,
+              context
+            ),
+            (elt, res) => console.log(res)
+          )
+        ),
+        element
       )
     ) {
       return false;
