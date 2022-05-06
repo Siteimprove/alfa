@@ -1,4 +1,4 @@
-/// <reference lib="dom" />
+import { Cache } from "@siteimprove/alfa-cache";
 import { Color, Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
@@ -9,49 +9,52 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 const { isReplaced, isElement } = Element;
 const { hasComputedStyle } = Style;
 
-const { or, tee, test } = Predicate;
+const { or, test } = Predicate;
+
+const cache = Cache.empty<Device, Cache<Context, Cache<Element, boolean>>>();
 
 export function hasTransparentBackground(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Element> {
-  return (element) => {
-    if (
-      test(
-        or(
-          isReplaced,
-          hasComputedStyle(
-            "background-color",
-            (color) => !Color.isTransparent(color),
-            device,
-            context
-          ),
-          tee(
-            hasComputedStyle(
-              "background-image",
-              (image) =>
-                !(
-                  Keyword.isKeyword(image.values[0]) &&
-                  image.values[0].equals(Keyword.of("none"))
-                ),
-              device,
-              context
+  return (element) =>
+    cache
+      .get(device, Cache.empty)
+      .get(context, Cache.empty)
+      .get(element, () => {
+        if (
+          test(
+            or(
+              isReplaced,
+              hasComputedStyle(
+                "background-color",
+                (color) => !Color.isTransparent(color),
+                device,
+                context
+              ),
+              hasComputedStyle(
+                "background-image",
+                (image) =>
+                  !(
+                    Keyword.isKeyword(image.values[0]) &&
+                    image.values[0].equals(Keyword.of("none"))
+                  ),
+                device,
+                context
+              )
             ),
-            (elt, res) => console.log(res)
+            element
           )
-        ),
-        element
-      )
-    ) {
-      return false;
-    }
+        ) {
+          return false;
+        }
 
-    return element
-      .children({
-        nested: true,
-        flattened: true,
-      })
-      .filter(isElement)
-      .every(hasTransparentBackground(device, context));
-  };
+        return element
+          .children({
+            nested: true,
+            flattened: true,
+          })
+          .filter(isElement)
+          .every(hasTransparentBackground(device, context));
+      });
 }
