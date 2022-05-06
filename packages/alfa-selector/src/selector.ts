@@ -62,7 +62,8 @@ export namespace Selector {
     implements
       Iterable<Simple | Compound | Complex | Relative>,
       Equatable,
-      Serializable {
+      Serializable
+  {
     public abstract get type(): T;
 
     /**
@@ -1301,7 +1302,7 @@ export namespace Selector {
   }
 
   /**
-   * {@link https://drafts.csswg.org/selectors/#focus-visible-pseudo}
+   * {@link https://drafts.csswg.org/selectors/#the-focus-visible-pseudo}
    */
   export class FocusVisible extends Pseudo.Class<"focus-visible"> {
     public static of(): FocusVisible {
@@ -1312,11 +1313,18 @@ export namespace Selector {
       super("focus-visible");
     }
 
-    public matches(): boolean {
+    public matches(
+      element: Element,
+      context: Context = Context.empty()
+    ): boolean {
+      // :focus-visible matches elements that are focused and where UA decides
+      // focus should be shown. That is notably text fields and keyboard-focused
+      // elements (some UA don't show focus indicator on mouse-focused elements)
       // For the purposes of accessibility testing, we currently assume that
-      // focus related styling can safely be "hidden" behind the :focus-visible
-      // pseudo-class and it will therefore always match.
-      return true;
+      // we always want to look at a mode where the focus is visible. This is
+      // notably due to the fact that it is a UA decision, and therefore not
+      // a problem for the authors to fix if done incorrectly.
+      return context.isFocused(element);
     }
   }
 

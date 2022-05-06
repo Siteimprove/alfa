@@ -119,7 +119,7 @@ export namespace Selector {
         get type(): "attribute";
         // (undocumented)
         get value(): Option<string>;
-        }
+    }
     // (undocumented)
     export namespace Attribute {
         // (undocumented)
@@ -343,7 +343,7 @@ export namespace Selector {
     // (undocumented)
     export class FocusVisible extends Pseudo.Class<"focus-visible"> {
         // (undocumented)
-        matches(): boolean;
+        matches(element: Element, context?: Context): boolean;
         // (undocumented)
         static of(): FocusVisible;
     }
@@ -928,9 +928,8 @@ export namespace Selector {
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Simple | Compound | Complex | List<Simple | Compound | Complex>, string, []>;
-    {};
+        {};
 }
-
 
 // (No @packageDocumentation comment for this package)
 
