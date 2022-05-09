@@ -13,6 +13,10 @@ const { or, test } = Predicate;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Element, boolean>>>();
 
+/**
+ * @public
+ */
+
 export function hasTransparentBackground(
   device: Device,
   context: Context = Context.empty()
