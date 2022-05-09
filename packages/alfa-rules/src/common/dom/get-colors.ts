@@ -14,7 +14,6 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { getInterposedDescendant } from "./get-interposed-descendant";
 import { hasTransparentBackground } from "../../../../alfa-style/src/element/predicate/has-transparent-background";
-import { hasInterposedDescendant } from "../predicate";
 
 const { isElement } = Element;
 const { isPositioned } = Style;
@@ -229,20 +228,19 @@ function getLayers(
         );
       }
 
-      const interposedDescendants = getInterposedDescendant(device, element);
+      const interposedDescendantsTransparents = getInterposedDescendant(
+        device,
+        element
+      ).reject(hasTransparentBackground(device));
 
-      // const interposedDescendantsTransparents = interposedDescendants.filter(
-      //   hasTransparentBackground(device)
-      // );
-      if (!interposedDescendants.isEmpty()) {
+      if (!interposedDescendantsTransparents.isEmpty()) {
         return Err.of(
           ColorError.interposedDescendants(
             element,
-            interposedDescendants
+            interposedDescendantsTransparents
           )
         );
       }
-
       // If the background layer does not have a lower layer that is fully opaque,
       // we need to also locate the background layers sitting behind the current
       // layer.
@@ -301,11 +299,17 @@ export function getForeground(
         return Result.of<Foreground, ColorError>([color.get()]);
       }
 
-      const interposedDescendants = getInterposedDescendant(device, element);
+      const interposedDescendantsTransparents = getInterposedDescendant(
+        device,
+        element
+      ).reject(hasTransparentBackground(device));
 
-      if (!interposedDescendants.isEmpty()) {
+      if (!interposedDescendantsTransparents.isEmpty()) {
         return Err.of(
-          ColorError.interposedDescendants(element, interposedDescendants)
+          ColorError.interposedDescendants(
+            element,
+            interposedDescendantsTransparents
+          )
         );
       }
 
@@ -386,10 +390,17 @@ export function getBackground(
         return Err.of(ColorError.textShadow(element, textShadow));
       }
 
-      const interposedDescendants = getInterposedDescendant(device, element);
-      if (!interposedDescendants.isEmpty()) {
+      const interposedDescendantsTransparents = getInterposedDescendant(
+        device,
+        element
+      ).reject(hasTransparentBackground(device));
+
+      if (!interposedDescendantsTransparents.isEmpty()) {
         return Err.of(
-          ColorError.interposedDescendants(element, interposedDescendants)
+          ColorError.interposedDescendants(
+            element,
+            interposedDescendantsTransparents
+          )
         );
       }
 

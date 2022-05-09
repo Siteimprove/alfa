@@ -535,7 +535,7 @@ test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
 
 test(`evaluate() cannot tell when encountering an interposed parent before
       encountering an opaque background`, async (t) => {
-  {
+  
     const target = h.text("Hello World");
     const interposed = (
       <span
@@ -562,14 +562,15 @@ test(`evaluate() cannot tell when encountering an interposed parent before
     t.deepEqual(await evaluate(R69, { document }), [
       cantTell(R69, target, diagnostic),
     ]);
-  }
-  {
+  })
+
+test(`evaluate() ignores transparent interposed element before
+      encountering an opaque background`, async (t) => {
     const target = h.text("Hello World");
     const interposed = (
       <span
         style={{
           position: "absolute",
-          backgroundColor: "#000",
           width: "100%",
           height: "100%",
         }}
@@ -588,13 +589,14 @@ test(`evaluate() cannot tell when encountering an interposed parent before
     );
     const document = h.document([<body>{div}</body>]);
 
-    const diagnostic = ColorError.interposedDescendants(div, [interposed]);
-
     t.deepEqual(await evaluate(R69, { document }), [
-      cantTell(R69, target, diagnostic),
+      passed(R69, target, {
+        1: Outcomes.HasSufficientContrast(21, 4.5, [Diagnostic.Pairing.of(["foreground", rgb(0,0,0)], ["background", rgb(1,1,1)], 21)])
+      }),
     ]);
   }
-});
+);
+
 
 test(`evaluate() cannot tell when encountering an absolutely positioned parent
       before encountering an opaque background`, async (t) => {

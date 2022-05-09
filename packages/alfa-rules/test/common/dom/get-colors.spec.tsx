@@ -603,3 +603,40 @@ test("getBackgroundColor() gives up in case of interposed elements", (t) => {
     positionedDescendants: [interposed.toJSON()],
   });
 });
+
+test("getForeground() handles interposed elements background correctly", (t) => {
+  const target = <span>Hello</span>;
+  const interposed = <div></div>;
+  const wrapper = (
+    <p>
+      {interposed}
+      {target}
+    </p>
+  );
+
+  h.document(
+    [wrapper],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          backgroundColor: "black",
+          position: "absolute",
+          top: "1px",
+          bottom: "1px",
+          left: "1px",
+          right: "1px",
+        }),
+        h.rule.style("p", { position: "relative" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(getForeground(target, device).get()[0].toJSON(), {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 0 },
+    green: { type: "percentage", value: 0 },
+    blue: { type: "percentage", value: 0 },
+    alpha: { type: "percentage", value: 1 },
+  });
+});
