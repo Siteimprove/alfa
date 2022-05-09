@@ -80,6 +80,9 @@ function hasPositioningParent(device: Device, predicate: Predicate<Element>): Pr
 function hasTextDecoration(device: Device, context?: Context): Predicate<Element>;
 
 // @public (undocumented)
+function hasTransparentBackground(device: Device, context?: Context): Predicate<Element>;
+
+// @public (undocumented)
 function isFocusable(device: Device): Predicate<Element>;
 
 // Warning: (ae-incompatible-release-tags) The symbol "isImportant" is marked as @public, but its signature references "Property" which is marked as @internal
@@ -300,6 +303,7 @@ export namespace Style {
     hasPositioningParent: typeof element.hasPositioningParent, // (undocumented)
     hasOutline: typeof element.hasOutline, // (undocumented)
     hasTextDecoration: typeof element.hasTextDecoration, // (undocumented)
+    hasTransparentBackground: typeof element.hasTransparentBackground, // (undocumented)
     isFocusable: typeof element.isFocusable, // (undocumented)
     isImportant: typeof element.isImportant, // (undocumented)
     isInert: typeof element.isInert, // (undocumented)
