@@ -13,6 +13,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 import { getInterposedDescendant } from "./get-interposed-descendant";
+import { isVisibleShadow } from "../../../../alfa-style/src/element/predicate/is-visible-shadow";
 
 const { isElement } = Element;
 const { isPositioned } = Style;
@@ -371,8 +372,8 @@ export function getBackground(
     .get(device, Cache.empty)
     .get(context, Cache.empty)
     .get(element, () => {
-      // If the element has a text-shadow, we don't try to guess how it looks.
-      if (textShadow.type !== "keyword") {
+      // We ignore invisible text-shadow
+      if (textShadow.type !== "keyword" && isVisibleShadow(textShadow)) {
         return Err.of(ColorError.textShadow(element, textShadow));
       }
 

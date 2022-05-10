@@ -1,4 +1,4 @@
-import { Color, Keyword, Shadow } from "@siteimprove/alfa-css";
+import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -6,6 +6,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 
 import { Style } from "../../style";
+
+import { isVisibleShadow } from "./is-visible-shadow";
 
 /**
  * @public
@@ -32,23 +34,4 @@ export function hasBoxShadow(
 
     return !Keyword.isKeyword(shadow) && Iterable.some(shadow, isVisibleShadow);
   };
-}
-
-function isVisibleShadow(shadow: Shadow): boolean {
-  // If the shadow color is transparent, it is not visible.
-  if (Color.isTransparent(shadow.color)) {
-    return false;
-  }
-
-  // If the shadow has no horizontal or vertical offset, no blur and no spread, it is not visible
-  if (
-    shadow.vertical.value === 0 &&
-    shadow.horizontal.value === 0 &&
-    shadow.blur.value === 0 &&
-    shadow.spread.value === 0
-  ) {
-    return false;
-  }
-
-  return true;
 }
