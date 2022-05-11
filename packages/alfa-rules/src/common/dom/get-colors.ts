@@ -13,10 +13,9 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 import { getInterposedDescendant } from "./get-interposed-descendant";
-import { isVisibleShadow } from "../../../../alfa-style/src/element/predicate/is-visible-shadow";
 
 const { isElement } = Element;
-const { isPositioned } = Style;
+const { isPositioned, isVisibleShadow } = Style;
 
 type Color = RGB<Percentage, Percentage>;
 
