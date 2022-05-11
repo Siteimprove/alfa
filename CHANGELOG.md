@@ -19,6 +19,14 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.38.0](../../compare/v0.37.0...v0.38.0) (2022-05-04)
+
+### Fixed
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): `:focus-visible` selector now correctly matches only focused elements. ([#1135](../../pull/1135))
+  
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-ER62 now does not consider fully transparent background (no image, no color) on a link as a distinguishing factor. ([#1131](../../issues/1131), [#1134](../../pull/1134))
+
 ## [0.37.0](../../compare/v0.36.0...v0.37.0) (2022-04-28)
 
 ### Breaking
