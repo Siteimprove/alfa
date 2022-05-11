@@ -79,7 +79,7 @@ function hasPositioningParent(device: Device, predicate: Predicate<Element>): Pr
 // @public (undocumented)
 function hasTextDecoration(device: Device, context?: Context): Predicate<Element>;
 
-// @public (undocumented)
+// @public
 function hasTransparentBackground(device: Device, context?: Context): Predicate<Element>;
 
 // @public (undocumented)

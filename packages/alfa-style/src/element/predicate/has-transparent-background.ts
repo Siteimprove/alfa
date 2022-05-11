@@ -3,17 +3,19 @@ import { Color, Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Context } from "@siteimprove/alfa-selector";
-import { Style } from "../../style";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-const { isReplaced, isElement } = Element;
+import { Style } from "../../style";
 
+const { isReplaced, isElement } = Element;
 
 const { or, test } = Predicate;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Element, boolean>>>();
 
 /**
+ * Checks if an element has transparent background.
+ * The element may be not fully transparent (e.g., have text) while still having transparent background.
  * @public
  */
 
@@ -29,13 +31,16 @@ export function hasTransparentBackground(
         if (
           test(
             or(
+              // Replaced elements are assumed to be replaced by non-transparent content.
               isReplaced,
+              // Elements with non-transparent background are not transparent.
               Style.hasComputedStyle(
                 "background-color",
                 (color) => !Color.isTransparent(color),
                 device,
                 context
               ),
+              // Elements with a background image are not transparent.
               Style.hasComputedStyle(
                 "background-image",
                 (image) =>
@@ -52,7 +57,7 @@ export function hasTransparentBackground(
         ) {
           return false;
         }
-
+        // The element itself has transparent background, but it may have non-transparent content.
         return element
           .children({
             nested: true,

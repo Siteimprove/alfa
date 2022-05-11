@@ -7,7 +7,7 @@ import { hasTransparentBackground } from "../../../src/element/predicate/has-tra
 
 const device = Device.standard();
 
-test("hasTransparentBackground() fails on image which is not transparent", (t) => {
+test("hasTransparentBackground() returns false on replaced elements", (t) => {
   const target = <img src="foo.jpg" />;
 
   h.document([target]);
@@ -15,7 +15,7 @@ test("hasTransparentBackground() fails on image which is not transparent", (t) =
   t.deepEqual(hasTransparentBackground(device)(target), false);
 });
 
-test("<div> has a color background", (t) => {
+test("hasTransparentBackground() returns false on element with a background color", (t) => {
   const target = <div style={{ backgroundColor: "red" }}> Hello</div>;
 
   h.document([target]);
@@ -23,7 +23,7 @@ test("<div> has a color background", (t) => {
   t.deepEqual(hasTransparentBackground(device)(target), false);
 });
 
-test("<div> has an image background", (t) => {
+test("hasTransparentBackground() returns false on an element with a background image", (t) => {
   const target = (
     <div
       style={{
@@ -40,7 +40,7 @@ test("<div> has an image background", (t) => {
   t.deepEqual(hasTransparentBackground(device)(target), false);
 });
 
-test("<div> background is not transparent when one child background isn't", (t) => {
+test("hasTransparentBackground() returns false on an element with non-transparent child", (t) => {
   const target = (
     <div>
       <span> First </span>
@@ -54,7 +54,7 @@ test("<div> background is not transparent when one child background isn't", (t) 
   t.deepEqual(hasTransparentBackground(device)(target), false);
 });
 
-test("<div> background is transparent when all children backgrounds are transparent", (t) => {
+test("hasTransparentBackground() returns true on an element whose children all have transparent background", (t) => {
   const target = (
     <div>
       <span> First </span>
@@ -68,7 +68,7 @@ test("<div> background is transparent when all children backgrounds are transpar
   t.deepEqual(hasTransparentBackground(device)(target), true);
 });
 
-test("<div> background is transparent", (t) => {
+test("hasTransparentBackground() returns true on elements without background color nor image", (t) => {
   const target = <div> Hello</div>;
 
   h.document([target]);

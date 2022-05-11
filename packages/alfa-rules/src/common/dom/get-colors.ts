@@ -13,10 +13,9 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
 import { getInterposedDescendant } from "./get-interposed-descendant";
-import { hasTransparentBackground } from "../../../../alfa-style/src/element/predicate/has-transparent-background";
 
 const { isElement } = Element;
-const { isPositioned } = Style;
+const { isPositioned, hasTransparentBackground } = Style;
 
 type Color = RGB<Percentage, Percentage>;
 
@@ -228,17 +227,14 @@ function getLayers(
         );
       }
 
-      const interposedDescendantsTransparents = getInterposedDescendant(
+      const interposedDescendants = getInterposedDescendant(
         device,
         element
       ).reject(hasTransparentBackground(device));
 
-      if (!interposedDescendantsTransparents.isEmpty()) {
+      if (!interposedDescendants.isEmpty()) {
         return Err.of(
-          ColorError.interposedDescendants(
-            element,
-            interposedDescendantsTransparents
-          )
+          ColorError.interposedDescendants(element, interposedDescendants)
         );
       }
       // If the background layer does not have a lower layer that is fully opaque,
@@ -299,17 +295,14 @@ export function getForeground(
         return Result.of<Foreground, ColorError>([color.get()]);
       }
 
-      const interposedDescendantsTransparents = getInterposedDescendant(
+      const interposedDescendants = getInterposedDescendant(
         device,
         element
       ).reject(hasTransparentBackground(device));
 
-      if (!interposedDescendantsTransparents.isEmpty()) {
+      if (!interposedDescendants.isEmpty()) {
         return Err.of(
-          ColorError.interposedDescendants(
-            element,
-            interposedDescendantsTransparents
-          )
+          ColorError.interposedDescendants(element, interposedDescendants)
         );
       }
 
@@ -390,17 +383,14 @@ export function getBackground(
         return Err.of(ColorError.textShadow(element, textShadow));
       }
 
-      const interposedDescendantsTransparents = getInterposedDescendant(
+      const interposedDescendants = getInterposedDescendant(
         device,
         element
       ).reject(hasTransparentBackground(device));
 
-      if (!interposedDescendantsTransparents.isEmpty()) {
+      if (!interposedDescendants.isEmpty()) {
         return Err.of(
-          ColorError.interposedDescendants(
-            element,
-            interposedDescendantsTransparents
-          )
+          ColorError.interposedDescendants(element, interposedDescendants)
         );
       }
 
