@@ -371,7 +371,7 @@ export function getBackground(
     .get(device, Cache.empty)
     .get(context, Cache.empty)
     .get(element, () => {
-      // We ignore invisible text-shadow
+      // If the element has a visible text-shadow, we don't try to guess how it looks.
       if (textShadow.type !== "keyword" && isVisibleShadow(textShadow)) {
         return Err.of(ColorError.textShadow(element, textShadow));
       }
