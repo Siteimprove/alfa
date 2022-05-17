@@ -21,7 +21,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Contrast } from "../../src/common/diagnostic/contrast";
+import { Contrast } from "../common/diagnostic/contrast";
 import { contrast } from "../common/expectation/contrast";
 
 import { getForeground } from "../common/dom/get-colors";
@@ -92,13 +92,11 @@ export default Rule.Atomic.of<Page, Element>({
         function gather(
           node: Node,
           container: Option<Element>,
-          link: Option<Element>
+          link: Option<Element>,
+          indent = 0
         ): void {
           const isLink = hasRole(device, (role) => role.is("link"));
-          const isParagraph = and(
-            hasRole(device, "paragraph"),
-            hasNonLinkText(device)
-          );
+          const isParagraph = hasRole(device, "paragraph");
 
           if (isElement(node)) {
             if (container.isSome() && isLink(node)) {
@@ -110,11 +108,18 @@ export default Rule.Atomic.of<Page, Element>({
             // Otherwise, if the element is a paragraph element with non-link text
             // content then start collecting applicable elements.
             if (isParagraph(node)) {
-              container = Option.of(node);
+              if (test(hasNonLinkText(device), node)) {
+                // Start gathering links inside a paragraph with non-link text.
+                container = Option.of(node);
+              } else {
+                // Stop gathering inside a paragraph without non-link text.
+                container = None;
+              }
             }
           } else {
             const isTextNode = test(and(isText, isVisible(device)), node);
             const parent = node.parent().filter(isElement);
+
             if (isTextNode && container.isSome() && parent.isSome()) {
               // For each link, store the parent of the text nodes it contains
               if (link.isSome()) {
@@ -145,7 +150,7 @@ export default Rule.Atomic.of<Page, Element>({
           });
 
           for (const child of children) {
-            gather(child, container, link);
+            gather(child, container, link, indent + 2);
           }
         }
 
@@ -172,7 +177,9 @@ export default Rule.Atomic.of<Page, Element>({
           for (const [link, linkTexts] of linkText) {
             const nonLinkTexts = nonLinkText
               .get(containers.get(link).get())
-              .get();
+              // At this point, we should always have something, still
+              // safeguarding against any weird case.
+              .getOr(Set.empty<Element>());
 
             if (
               linkTexts.some((linkElement) =>
@@ -389,10 +396,17 @@ function hasNonLinkText(device: Device): Predicate<Element> {
       }
 
       // Otherwise, go down.
-      return children
-        .filter(isElement)
-        .reject(hasRole(device, (role) => role.is("link")))
-        .some(hasNonLinkText);
+      return (
+        children
+          .filter(isElement)
+          .reject(hasRole(device, (role) => role.is("link")))
+          // We've found nested paragraphs. While this is not really allowed by
+          // HTML specs, it does happen…
+          // In such a case, the inner paragraph would itself be a potential container
+          // and any text in it should be registered with it, not with the outer one
+          .reject(hasRole(device, "paragraph"))
+          .some(hasNonLinkText)
+      );
     });
   };
 }
