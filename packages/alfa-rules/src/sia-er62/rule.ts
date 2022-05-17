@@ -92,8 +92,7 @@ export default Rule.Atomic.of<Page, Element>({
         function gather(
           node: Node,
           container: Option<Element>,
-          link: Option<Element>,
-          indent = 0
+          link: Option<Element>
         ): void {
           const isLink = hasRole(device, (role) => role.is("link"));
           const isParagraph = hasRole(device, "paragraph");
@@ -150,7 +149,7 @@ export default Rule.Atomic.of<Page, Element>({
           });
 
           for (const child of children) {
-            gather(child, container, link, indent + 2);
+            gather(child, container, link);
           }
         }
 
