@@ -82,7 +82,8 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         // Contains links (key) and the parents of the textnodes the links contain (value)
         let linkText: Map<Element, Set<Element>> = Map.empty();
-        // Contains containers (key) and the parents of the text nodes (non included in links) the containers have (value)
+        // Contains containers (key) and the parents of the text nodes
+        // (not included in links) the containers have (value)
         let nonLinkText: Map<Element, Set<Element>> = Map.empty();
 
         gather(document, None, None);
@@ -93,13 +94,13 @@ export default Rule.Atomic.of<Page, Element>({
           container: Option<Element>,
           link: Option<Element>
         ): void {
-          if (isElement(node)) {
-            const isLink = hasRole(device, (role) => role.is("link"));
-            const isParagraph = and(
-              hasRole(device, "paragraph"),
-              hasNonLinkText(device)
-            );
+          const isLink = hasRole(device, (role) => role.is("link"));
+          const isParagraph = and(
+            hasRole(device, "paragraph"),
+            hasNonLinkText(device)
+          );
 
+          if (isElement(node)) {
             if (container.isSome() && isLink(node)) {
               // For each link, store its containing paragraph
               containers = containers.set(node, container.get());
@@ -111,30 +112,30 @@ export default Rule.Atomic.of<Page, Element>({
             if (isParagraph(node)) {
               container = Option.of(node);
             }
-          }
-
-          const isTextNode = test(and(isText, isVisible(device)), node);
-          const parent = node.parent().filter(isElement);
-          if (isTextNode && container.isSome() && parent.isSome()) {
-            // For each link, store the parent of the text nodes it contains
-            if (link.isSome()) {
-              linkText = linkText.set(
-                link.get(),
-                linkText
-                  .get(link.get())
-                  .getOr(Set.empty<Element>())
-                  .add(parent.get())
-              );
-            }
-            // For each container, store the parent of the text nodes it contains
-            else {
-              nonLinkText = nonLinkText.set(
-                container.get(),
-                nonLinkText
-                  .get(container.get())
-                  .getOr(Set.empty<Element>())
-                  .add(parent.get())
-              );
+          } else {
+            const isTextNode = test(and(isText, isVisible(device)), node);
+            const parent = node.parent().filter(isElement);
+            if (isTextNode && container.isSome() && parent.isSome()) {
+              // For each link, store the parent of the text nodes it contains
+              if (link.isSome()) {
+                linkText = linkText.set(
+                  link.get(),
+                  linkText
+                    .get(link.get())
+                    .getOr(Set.empty<Element>())
+                    .add(parent.get())
+                );
+              }
+              // For each container, store the parent of the text nodes it contains
+              else {
+                nonLinkText = nonLinkText.set(
+                  container.get(),
+                  nonLinkText
+                    .get(container.get())
+                    .getOr(Set.empty<Element>())
+                    .add(parent.get())
+                );
+              }
             }
           }
 
