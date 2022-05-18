@@ -19,6 +19,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.38.1](../../compare/v0.38.0...v0.38.1) (2022-05-18)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-ER62 now correctly handle rare cases of nested paragraph with no non-link content inside. ([#1147](../../pull/1147))
+
 ## [0.38.0](../../compare/v0.37.0...v0.38.0) (2022-05-04)
 
 ### Fixed
