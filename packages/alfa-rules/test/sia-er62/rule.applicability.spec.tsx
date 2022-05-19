@@ -475,3 +475,36 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 
   t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
 });
+
+test(`evaluates() is inapplicable when the only non-link text is in a nested paragraph`, async (t) => {
+  // While nested <p> are not allowed in HTML, they do appear on some live sites.
+  // And of course, roles can be overwritten.
+  // In a case like that, the link should not be applicable because the non-link
+  // text is in another paragraph
+  const document = h.document([
+    <div role="paragraph">
+      <a href="#">World</a>
+      <div role="paragraph">Hello</div>
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+});
+
+test(`evaluates() is inapplicable when there is no non-link text in a nested paragraph`, async (t) => {
+  // While nested <p> are not allowed in HTML, they do appear on some live sites.
+  // And of course, roles can be overwritten.
+  // In a case like that, the link should not be applicable because its closest
+  // <p> ancestor has no non-link text to compare to.
+  const document = h.document([
+    <div role="paragraph">
+      Lorem ipsum
+      <div role="paragraph">Hello</div>
+      <div role="paragraph">
+        <a href="#">World</a>
+      </div>
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+});
