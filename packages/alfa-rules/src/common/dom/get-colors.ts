@@ -15,7 +15,7 @@ import { Style } from "@siteimprove/alfa-style";
 import { getInterposedDescendant } from "./get-interposed-descendant";
 
 const { isElement } = Element;
-const { isPositioned } = Style;
+const { isPositioned, isVisibleShadow } = Style;
 
 type Color = RGB<Percentage, Percentage>;
 
@@ -371,8 +371,8 @@ export function getBackground(
     .get(device, Cache.empty)
     .get(context, Cache.empty)
     .get(element, () => {
-      // If the element has a text-shadow, we don't try to guess how it looks.
-      if (textShadow.type !== "keyword") {
+      // If the element has a visible text-shadow, we don't try to guess how it looks.
+      if (textShadow.type !== "keyword" && isVisibleShadow(textShadow)) {
         return Err.of(ColorError.textShadow(element, textShadow));
       }
 

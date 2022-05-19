@@ -14,3 +14,4 @@ export * from "./predicate/is-important";
 export * from "./predicate/is-inert";
 export * from "./predicate/is-positioned";
 export * from "./predicate/is-tabbable";
+export * from "./predicate/is-visible-shadow";
