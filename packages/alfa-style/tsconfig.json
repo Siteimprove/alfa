@@ -24,6 +24,7 @@
     "src/element/predicate/is-inert.ts",
     "src/element/predicate/is-positioned.ts",
     "src/element/predicate/is-tabbable.ts",
+    "src/element/predicate/is-visible-shadow.ts",
     "src/index.ts",
     "src/node/node.ts",
     "src/node/predicate/is-clipped.ts",

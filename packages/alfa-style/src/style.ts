@@ -351,6 +351,7 @@ export namespace Style {
     isInert,
     isPositioned,
     isTabbable,
+    isVisibleShadow,
   } = element;
 
   export const { isRendered, isVisible } = node;

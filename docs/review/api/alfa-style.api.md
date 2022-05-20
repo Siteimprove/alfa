@@ -32,6 +32,7 @@ import { Predicate } from '@siteimprove/alfa-predicate';
 import { Radial } from '@siteimprove/alfa-css';
 import { RGB } from '@siteimprove/alfa-css';
 import { Serializable } from '@siteimprove/alfa-json';
+import { Shadow } from '@siteimprove/alfa-css';
 import { Slice } from '@siteimprove/alfa-slice';
 import { System } from '@siteimprove/alfa-css';
 import { Text } from '@siteimprove/alfa-dom';
@@ -104,6 +105,9 @@ function isTabbable(device: Device): Predicate<Element>;
 
 // @public
 function isVisible(device: Device, context?: Context): Predicate<Node>;
+
+// @public (undocumented)
+function isVisibleShadow(shadow: Shadow): boolean;
 
 // Warning: (ae-internal-missing-underscore) The name "Longhands" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -308,7 +312,8 @@ export namespace Style {
     isImportant: typeof element.isImportant, // (undocumented)
     isInert: typeof element.isInert, // (undocumented)
     isPositioned: typeof element.isPositioned, // (undocumented)
-    isTabbable: typeof element.isTabbable;
+    isTabbable: typeof element.isTabbable, // (undocumented)
+    isVisibleShadow: typeof element.isVisibleShadow;
     const // Warning: (ae-forgotten-export) The symbol "node" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)

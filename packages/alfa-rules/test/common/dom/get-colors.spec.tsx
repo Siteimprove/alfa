@@ -462,6 +462,42 @@ test("getBackgroundColor() gives up in case of text shadow", (t) => {
   });
 });
 
+test("getBackgroundColor() ignores \`text-shadow: 0px 0px 0px;\`", (t) => {
+  const target = <div>Hello</div>;
+
+  h.document(
+    [target],
+    [h.sheet([h.rule.style("div", { textShadow: "0px 0px 0px" })])]
+  );
+
+  t.deepEqual(getBackground(target, device).get()[0].toJSON(), {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 1 },
+    green: { type: "percentage", value: 1 },
+    blue: { type: "percentage", value: 1 },
+    alpha: { type: "percentage", value: 1 },
+  });
+});
+
+test("getBackgroundColor() ignores transparent text-shadow", (t) => {
+  const target = <div>Hello</div>;
+
+  h.document(
+    [target],
+    [h.sheet([h.rule.style("div", { textShadow: "1px 2px 3px transparent" })])]
+  );
+
+  t.deepEqual(getBackground(target, device).get()[0].toJSON(), {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 1 },
+    green: { type: "percentage", value: 1 },
+    blue: { type: "percentage", value: 1 },
+    alpha: { type: "percentage", value: 1 },
+  });
+});
+
 test("getBackgroundColor() cannot handle positioned elements", (t) => {
   const target = <span>Hello</span>;
   const wrapper = (
