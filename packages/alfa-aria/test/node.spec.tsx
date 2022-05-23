@@ -320,6 +320,77 @@ test(`.from() correctly handles circular aria-owns references between ancestors
   });
 });
 
+test(`.from() does not expose elements that are not rendered due to a DOM
+      ancestor, but referred to by aria-owns`, (t) => {
+  const target = <div id="target">Lorem ipsum…</div>;
+  const owner = <div aria-owns="target">Hello World</div>;
+
+  <div>
+    <div style={{ display: "none" }}>{target}</div>
+    {owner}
+  </div>;
+
+  t.deepEqual(Node.from(owner, device).toJSON(), {
+    type: "element",
+    node: "/div[1]/div[2]",
+    attributes: [{ name: "aria-owns", value: "target" }],
+    children: [
+      {
+        type: "text",
+        node: "/div[1]/div[2]/text()[1]",
+        name: "Hello World",
+        children: [],
+      },
+      {
+        type: "inert",
+        node: "/div[1]/div[1]/div[1]",
+        children: [],
+      },
+    ],
+    role: null,
+    name: null,
+  });
+});
+
+test(`.from() exposes elements that are aria-hidden due to a DOM
+      ancestor, but referred to by aria-owns`, (t) => {
+  const target = <div id="target">Lorem ipsum…</div>;
+  const owner = <div aria-owns="target">Hello World</div>;
+
+  <div>
+    <div aria-hidden="true">{target}</div>
+    {owner}
+  </div>;
+
+  t.deepEqual(Node.from(owner, device).toJSON(), {
+    type: "element",
+    node: "/div[1]/div[2]",
+    attributes: [{ name: "aria-owns", value: "target" }],
+    children: [
+      {
+        type: "text",
+        node: "/div[1]/div[2]/text()[1]",
+        name: "Hello World",
+        children: [],
+      },
+      {
+        type: "container",
+        node: "/div[1]/div[1]/div[1]",
+        children: [
+          {
+            type: "text",
+            node: "/div[1]/div[1]/div[1]/text()[1]",
+            name: "Lorem ipsum…",
+            children: [],
+          },
+        ],
+      },
+    ],
+    role: null,
+    name: null,
+  });
+});
+
 test(".from() exposes elements if they have a role", (t) => {
   const foo = <button />;
 
@@ -404,6 +475,29 @@ test(`.from() does not expose text nodes of a parent element with
       {
         type: "inert",
         node: "/div[1]/text()[1]",
+        children: [],
+      },
+    ],
+  });
+});
+
+test(`.from() does not expose fallback DOM nodes for legacy browsers`, (t) => {
+  const iframe = (
+    <iframe>
+      <div>Legacy content</div>
+    </iframe>
+  );
+
+  t.deepEqual(Node.from(iframe, device).toJSON(), {
+    type: "element",
+    node: "/iframe[1]",
+    role: null,
+    name: null,
+    attributes: [],
+    children: [
+      {
+        type: "inert",
+        node: "/iframe[1]/div[1]",
         children: [],
       },
     ],
