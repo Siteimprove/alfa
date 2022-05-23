@@ -413,6 +413,7 @@ export namespace Node {
         // different from the DOM tree, but being rendered is a property of the
         // DOM, we may "jump" onto a node which is not rendered due to some DOM
         // ancestor (so, unknowingly of the current accessibility tree traversal).
+        // Therefore, we cannot just look at some property of the current node.
         //
         // Since `isRendered` is cached, and evaluating it is needed for almost
         // all nodes in the DOM, this is inexpensive.
