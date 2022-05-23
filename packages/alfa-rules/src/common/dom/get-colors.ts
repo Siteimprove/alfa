@@ -15,7 +15,8 @@ import { Style } from "@siteimprove/alfa-style";
 import { getInterposedDescendant } from "./get-interposed-descendant";
 
 const { isElement } = Element;
-const { isPositioned, isVisibleShadow } = Style;
+
+const { hasTransparentBackground, isPositioned, isVisibleShadow } = Style;
 
 type Color = RGB<Percentage, Percentage>;
 
@@ -227,13 +228,16 @@ function getLayers(
         );
       }
 
-      const interposedDescendants = getInterposedDescendant(device, element);
+      const interposedDescendants = getInterposedDescendant(
+        device,
+        element
+      ).reject(hasTransparentBackground(device));
+
       if (!interposedDescendants.isEmpty()) {
         return Err.of(
           ColorError.interposedDescendants(element, interposedDescendants)
         );
       }
-
       // If the background layer does not have a lower layer that is fully opaque,
       // we need to also locate the background layers sitting behind the current
       // layer.
@@ -292,7 +296,11 @@ export function getForeground(
         return Result.of<Foreground, ColorError>([color.get()]);
       }
 
-      const interposedDescendants = getInterposedDescendant(device, element);
+      const interposedDescendants = getInterposedDescendant(
+        device,
+        element
+      ).reject(hasTransparentBackground(device));
+
       if (!interposedDescendants.isEmpty()) {
         return Err.of(
           ColorError.interposedDescendants(element, interposedDescendants)
@@ -376,7 +384,11 @@ export function getBackground(
         return Err.of(ColorError.textShadow(element, textShadow));
       }
 
-      const interposedDescendants = getInterposedDescendant(device, element);
+      const interposedDescendants = getInterposedDescendant(
+        device,
+        element
+      ).reject(hasTransparentBackground(device));
+
       if (!interposedDescendants.isEmpty()) {
         return Err.of(
           ColorError.interposedDescendants(element, interposedDescendants)

@@ -345,6 +345,7 @@ export namespace Style {
     hasPositioningParent,
     hasOutline,
     hasTextDecoration,
+    hasTransparentBackground,
     isFocusable,
     isImportant,
     isInert,

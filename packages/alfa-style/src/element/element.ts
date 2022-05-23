@@ -9,6 +9,7 @@ export * from "./predicate/has-inline-style-property";
 export * from "./predicate/has-outline";
 export * from "./predicate/has-positioning-parent";
 export * from "./predicate/has-text-decoration";
+export * from "./predicate/has-transparent-background";
 export * from "./predicate/is-focusable";
 export * from "./predicate/is-important";
 export * from "./predicate/is-inert";

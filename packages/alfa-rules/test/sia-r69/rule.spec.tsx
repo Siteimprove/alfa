@@ -535,65 +535,70 @@ test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
 
 test(`evaluate() cannot tell when encountering an interposed parent before
       encountering an opaque background`, async (t) => {
-  {
-    const target = h.text("Hello World");
-    const interposed = (
-      <span
-        style={{
-          position: "absolute",
-          backgroundColor: "#000",
-          width: "100%",
-          height: "100%",
-        }}
-      />
-    );
+  const target = h.text("Hello World");
+  const interposed = (
+    <span
+      style={{
+        position: "absolute",
+        backgroundColor: "#000",
+        width: "100%",
+        height: "100%",
+      }}
+    />
+  );
 
-    const body = (
-      <body>
-        {interposed}
-        {target}
-      </body>
-    );
+  const body = (
+    <body>
+      {interposed}
+      {target}
+    </body>
+  );
 
-    const document = h.document([body]);
+  const document = h.document([body]);
 
-    const diagnostic = ColorError.interposedDescendants(body, [interposed]);
+  const diagnostic = ColorError.interposedDescendants(body, [interposed]);
 
-    t.deepEqual(await evaluate(R69, { document }), [
-      cantTell(R69, target, diagnostic),
-    ]);
-  }
-  {
-    const target = h.text("Hello World");
-    const interposed = (
-      <span
-        style={{
-          position: "absolute",
-          backgroundColor: "#000",
-          width: "100%",
-          height: "100%",
-        }}
-      />
-    );
-    const div = (
-      <div
-        style={{
-          position: "relative",
-          backgroundColor: "#fff",
-        }}
-      >
-        {interposed}
-        {target}
-      </div>
-    );
-    const document = h.document([<body>{div}</body>]);
+  t.deepEqual(await evaluate(R69, { document }), [
+    cantTell(R69, target, diagnostic),
+  ]);
+});
 
-    const diagnostic = ColorError.interposedDescendants(div, [interposed]);
+test(`evaluate() ignores transparent interposed element before
+      encountering an opaque background`, async (t) => {
+  const target = h.text("Hello World");
+  const interposed = (
+    <span
+      style={{
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+      }}
+    />
+  );
+  const div = (
+    <div
+      style={{
+        position: "relative",
+        backgroundColor: "#fff",
+      }}
+    >
+      {interposed}
+      {target}
+    </div>
+  );
+  const document = h.document([<body>{div}</body>]);
 
-    t.deepEqual(await evaluate(R69, { document }), [
-      cantTell(R69, target, diagnostic),
-    ]);
-  }
+  t.deepEqual(await evaluate(R69, { document }), [
+    passed(R69, target, {
+      1: Outcomes.HasSufficientContrast(21, 4.5, [
+        Diagnostic.Pairing.of(
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(1, 1, 1)],
+          21
+        ),
+      ]),
+    }),
+  ]);
 });
 
 test(`evaluate() cannot tell when encountering an absolutely positioned parent
