@@ -11,7 +11,7 @@ const { isFallback } = Element;
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 /**
- * {@link https://html.spec.whatwg.org/#being-rendered}
+ * {@link https://html.spec.whatwg.org/multipage/#being-rendered}
  *
  * @public
  */
@@ -24,10 +24,13 @@ export function isRendered(
       .get(device, Cache.empty)
       .get(context, Cache.empty)
       .get(node, () => {
+        // Nodes that are fallback content for legacy browsers are not
+        // being rendered (on modern browsers).
         if (isFallback(node)) {
           return false;
         }
 
+        // Elements with `display: none` are not being rendered
         if (
           Element.isElement(node) &&
           Style.from(node, device, context)
@@ -37,6 +40,7 @@ export function isRendered(
           return false;
         }
 
+        // Comments are never being rendered
         if (Comment.isComment(node)) {
           return false;
         }
