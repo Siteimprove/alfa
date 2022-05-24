@@ -23,7 +23,8 @@ import { Container, Element, Inert, Text } from ".";
 
 import * as predicate from "./node/predicate";
 
-const { equals } = Predicate;
+const { equals, not, test } = Predicate;
+const { isRendered } = Style;
 
 /**
  * {@link https://w3c.github.io/aria/#accessibility_tree}
@@ -384,6 +385,10 @@ export namespace Node {
         // by means of `aria-hidden=true` are never exposed in the
         // accessibility tree, nor are their descendants.
         //
+        // Since `aria-hidden` affects descendants in the accessibility tree,
+        // not in the DOM, and since we build the accessibility tree top-down,
+        // we never need to look at more than the current node.
+        //
         // This behaviour is unfortunately not consistent across browsers,
         // which we may or may not want to deal with. For now, we pretend that
         // all browsers act consistently.
@@ -401,59 +406,51 @@ export namespace Node {
 
         const style = Style.from(node, device);
 
-        // Elements that are not rendered at all by means of `display: none`
-        // are never exposed in the accessibility tree, nor are their
-        // descendants.
+        // Elements that are not rendered at all by means are never exposed in
+        // the accessibility tree, nor are their descendants.
         //
-        // As we're building the accessibility tree top-down, we only need to
-        // check the element itself for `display: none` and can safely
-        // disregard its ancestors as they will already have been checked.
-        if (
-          style
-            .computed("display")
-            .some(({ values: [outside] }) => outside.value === "none")
-        ) {
+        // Since `aria-owns` can create an accessibility tree that is fairly
+        // different from the DOM tree, but being rendered is a property of the
+        // DOM, we may "jump" onto a node which is not rendered due to some DOM
+        // ancestor (so, unknowingly of the current accessibility tree traversal).
+        // Therefore, we cannot just look at some property of the current node.
+        //
+        // Since `isRendered` is cached, and evaluating it is needed for almost
+        // all nodes in the DOM, this is inexpensive.
+        if (test(not(isRendered(device)), node)) {
           return Inert.of(node);
         }
 
         let children: (state: State) => Iterable<Node>;
 
-        // Children of <iframe> elements act as fallback content in legacy user
-        // agents and should therefore never be included in the accessibility
-        // tree.
-        if (node.name === "iframe") {
-          children = () => [];
-        }
+        // Get the children explicitly owned by the element. Children can be
+        // explicitly owned using the `aria-owns` attribute.
+        const explicit = owned
+          .get(node)
+          .getOrElse(() => Sequence.empty<dom.Node>());
 
-        // Otherwise, recursively build accessible nodes for the children of the
-        // element.
-        else {
-          // Get the children explicitly owned by the element. Children can be
-          // explicitly owned using the `aria-owns` attribute.
-          const explicit = owned
-            .get(node)
-            .getOrElse(() => Sequence.empty<dom.Node>());
+        // Get the children implicitly owned by the element. These are the
+        // children in the flat tree that are neither claimed already nor
+        // explicitly owned by the element.
+        const implicit = node
+          .children({
+            flattened: true,
+          })
+          .reject((child) => claimed.has(child) || explicit.includes(child));
 
-          // Get the children implicitly owned by the element. These are the
-          // children in the flat tree that are neither claimed already nor
-          // explicitly owned by the element.
-          const implicit = node
-            .children({
-              flattened: true,
-            })
-            .reject((child) => claimed.has(child) || explicit.includes(child));
-
-          // The children implicitly owned by the element come first, then the
-          // children explicitly owned by the element.
-          children = (state) =>
-            implicit
-              .concat(explicit)
-              .map((child) => fromNode(child, device, claimed, owned, state));
-        }
+        // The children implicitly owned by the element come first, then the
+        // children explicitly owned by the element.
+        children = (state) =>
+          implicit
+            .concat(explicit)
+            .map((child) => fromNode(child, device, claimed, owned, state));
 
         // Elements that are not visible by means of `visibility: hidden` or
         // `visibility: collapse`, are exposed in the accessibility tree as
         // containers as they may contain visible descendants.
+        //
+        // Since `visibility` is inherited, this correctly affects DOM descendants
+        // even if `aria-owns` is used to rewrite the tree.
         if (style.computed("visibility").value.value !== "visible") {
           return Container.of(node, children(state.visible(false)));
         }
