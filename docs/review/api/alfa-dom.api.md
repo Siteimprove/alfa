@@ -797,7 +797,7 @@ export abstract class Node<T extends string = string> implements Iterable<Node>,
     inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
     index(options?: Node.Traversal): number;
-    // @internal (undocumented)
+    // @internal
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
     isAncestorOf(node: Node, options?: Node.Traversal): boolean;
@@ -825,7 +825,7 @@ export abstract class Node<T extends string = string> implements Iterable<Node>,
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
     protected _parent: Option<Node>;
-    path(options?: Node.Traversal): string;
+    path(options?: Node.Traversal, useCache?: boolean): string;
     // (undocumented)
     preceding(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)

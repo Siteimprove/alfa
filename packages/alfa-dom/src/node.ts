@@ -51,6 +51,9 @@ export abstract class Node<T extends string = string>
    * to a parent node. When this happens, a node becomes frozen. Nodes can also
    * become frozen before being assigned a parent by using the `Node#freeze()`
    * method.
+   *
+   * Our API only allow to add children to a node a build time. Therefore, this
+   * means that trees are downward frozen and, effectively, downward immutable.
    */
   protected _frozen: boolean = false;
 
@@ -238,17 +241,59 @@ export abstract class Node<T extends string = string>
   }
 
   /**
+   * Store the preceding siblings of a node.
+   * The path depends on the traversal options, therefore this is stored as
+   * an array for each combination of options.
+   *
+   * @internal
+   */
+  private _preceding: Array<Sequence<Node>> = [];
+
+  /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-preceding}
    */
   public preceding(options: Node.Traversal = {}): Sequence<Node> {
-    return this.inclusiveSiblings(options).takeUntil(equals(this)).reverse();
+    // Due to the call to `reverse()`, this is not lazy and is costly at
+    // build time. Therefore, caching is beneficial.
+    // Since nodes with siblings are necessarily frozen, caching is also
+    // risk-free.
+    const currentTraversal = Node.traversalPath(options);
+
+    if (this._preceding[currentTraversal] === undefined) {
+      this._preceding[currentTraversal] = this.inclusiveSiblings(options)
+        .takeUntil(equals(this))
+        .reverse();
+    }
+
+    return this._preceding[currentTraversal];
   }
+
+  /**
+   * Store the following siblings of a node.
+   * The path depends on the traversal options, therefore this is stored as
+   * an array for each combination of options.
+   *
+   * @internal
+   */
+  private _following: Array<Sequence<Node>> = [];
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-following}
    */
   public following(options: Node.Traversal = {}): Sequence<Node> {
-    return this.inclusiveSiblings(options).skipUntil(equals(this)).rest();
+    // Due to the call to `skipUntil()`, this is not lazy and is costly at
+    // build time. Therefore, caching is beneficial.
+    // Since nodes with siblings are necessarily frozen, caching is also
+    // risk-free.
+    const currentTraversal = Node.traversalPath(options);
+
+    if (this._following[currentTraversal] === undefined) {
+      this._following[currentTraversal] = this.inclusiveSiblings(options)
+        .skipUntil(equals(this))
+        .rest();
+    }
+
+    return this._following[currentTraversal];
   }
 
   /**
@@ -399,9 +444,19 @@ export abstract class Node<T extends string = string>
       });
   }
 
-  private _path: Array<string> = [];
+  /**
+   * Store the path of the node across descendant of its root.
+   * The path depends on the traversal options, therefore this is stored as
+   * an array for each combination of options.
+   *
+   * @internal
+   */
+  private _paths: Array<string> = [];
 
   /**
+   * Compute an XPath that uniquely identifies the node across descendants of its
+   * root.
+   *
    * @internal
    */
   protected _internalPath(options?: Node.Traversal): string {
@@ -419,14 +474,24 @@ export abstract class Node<T extends string = string>
   /**
    * Get an XPath that uniquely identifies the node across descendants of its
    * root.
+   *
+   * Paths are cached to avoid re-traversing the tree every time. However,
+   * since (unfrozen) sub-trees can be attached as child of other node, the
+   * caching is not entirely safe.
+   * We assume that paths will mostly be needed in "final" structure, hence
+   * fully frozen trees. Additionally, a flag can be passed to ignore the
+   * cache and re-compute a new value if caller knows that the path may have
+   * changed due to attaching an ancestor.
+   *
+   * @public
    */
-  public path(options?: Node.Traversal): string {
+  public path(options?: Node.Traversal, useCache: boolean = true): string {
     const currentTraversal = Node.traversalPath(options);
-    if (this._path[currentTraversal] !== undefined) {
-      return this._path[currentTraversal];
+    if (useCache && this._paths[currentTraversal] !== undefined) {
+      return this._paths[currentTraversal];
     } else {
       const path = this._internalPath(options);
-      this._path[currentTraversal] = path;
+      this._paths[currentTraversal] = path;
       return path;
     }
   }
@@ -542,8 +607,8 @@ export namespace Node {
   }
 
   /**
-  * @internal
-  **/
+   * @internal
+   **/
   export function traversalPath(options?: Node.Traversal): number {
     let traversalPath = 0;
     if (options?.composed === true) {
