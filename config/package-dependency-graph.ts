@@ -55,6 +55,7 @@ export default {
             "@siteimprove/alfa-sequence",
             "@siteimprove/alfa-set",
             "@siteimprove/alfa-slice",
+            "@siteimprove/alfa-tree",
             "@siteimprove/alfa-tuple",
           ],
         },
