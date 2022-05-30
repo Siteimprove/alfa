@@ -20,17 +20,23 @@ export class Flags<F extends number = number>
     return (this._value & flag) === flag;
   }
 
+  public isSet = this.has;
+
   public add(...flags: Array<F>): this {
     return new (<typeof Flags>this.constructor)(
       this._value | Flags._reduce(...flags)
     ) as this;
   }
 
+  public set = this.add;
+
   public remove(...flags: Array<F>): this {
     return new (<typeof Flags>this.constructor)(
       this._value & ~Flags._reduce(...flags)
     ) as this;
   }
+
+  public unset = this.remove;
 
   protected static _reduce(...flags: Array<number>): number {
     return Array.reduce(flags, (prev: number, cur) => prev | cur, 0);
