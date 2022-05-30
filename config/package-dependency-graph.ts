@@ -49,6 +49,7 @@ export default {
             "@siteimprove/alfa-bits",
             "@siteimprove/alfa-branched",
             "@siteimprove/alfa-collection",
+            "@siteimprove/alfa-flags",
             "@siteimprove/alfa-list",
             "@siteimprove/alfa-map",
             "@siteimprove/alfa-record",

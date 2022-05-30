@@ -1398,6 +1398,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@siteimprove/alfa-flags@workspace:^0.38.1, @siteimprove/alfa-flags@workspace:packages/alfa-flags":
+  version: 0.0.0-use.local
+  resolution: "@siteimprove/alfa-flags@workspace:packages/alfa-flags"
+  dependencies:
+    "@siteimprove/alfa-array": "workspace:^0.38.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.38.1"
+    "@siteimprove/alfa-json": "workspace:^0.38.1"
+    "@siteimprove/alfa-test": "workspace:^0.38.1"
+  languageName: unknown
+  linkType: soft
+
 "@siteimprove/alfa-fnv@workspace:^0.38.1, @siteimprove/alfa-fnv@workspace:packages/alfa-fnv":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-fnv@workspace:packages/alfa-fnv"
@@ -2257,10 +2268,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-tree@workspace:packages/alfa-tree"
   dependencies:
-    "@siteimprove/alfa-collection": "workspace:^0.38.1"
+    "@siteimprove/alfa-array": "workspace:^0.38.1"
     "@siteimprove/alfa-earl": "workspace:^0.38.1"
     "@siteimprove/alfa-equatable": "workspace:^0.38.1"
+    "@siteimprove/alfa-flags": "workspace:^0.38.1"
     "@siteimprove/alfa-json": "workspace:^0.38.1"
+    "@siteimprove/alfa-option": "workspace:^0.38.1"
     "@siteimprove/alfa-sarif": "workspace:^0.38.1"
     "@siteimprove/alfa-test": "workspace:^0.38.1"
   languageName: unknown

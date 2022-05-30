@@ -4,7 +4,7 @@
   "files": ["src/index.ts", "src/tree.ts"],
   "references": [
     {
-      "path": "../alfa-collection"
+      "path": "../alfa-array"
     },
     {
       "path": "../alfa-earl"
@@ -13,7 +13,13 @@
       "path": "../alfa-equatable"
     },
     {
+      "path": "../alfa-flags"
+    },
+    {
       "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-option"
     },
     {
       "path": "../alfa-sarif"

@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json.schemastore.org/package",
+  "name": "@siteimprove/alfa-flags",
+  "homepage": "https://alfa.siteimprove.com",
+  "version": "0.38.1",
+  "license": "MIT",
+  "description": "Functionality for manipulating set of boolean flags",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/siteimprove/alfa.git",
+    "directory": "packages/alfa-flags"
+  },
+  "bugs": "https://github.com/siteimprove/alfa/issues",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": [
+    "src/**/*.js",
+    "src/**/*.d.ts"
+  ],
+  "dependencies": {
+    "@siteimprove/alfa-array": "workspace:^0.38.1",
+    "@siteimprove/alfa-equatable": "workspace:^0.38.1",
+    "@siteimprove/alfa-json": "workspace:^0.38.1"
+  },
+  "devDependencies": {
+    "@siteimprove/alfa-test": "workspace:^0.38.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://npm.pkg.github.com/"
+  }
+}
