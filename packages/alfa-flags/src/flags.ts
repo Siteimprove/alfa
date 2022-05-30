@@ -24,6 +24,11 @@ type allFlags = 0 | 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256;
 export class Flags<F extends allFlags = allFlags>
   implements Equatable, json.Serializable<Flags.JSON>
 {
+  /**
+   * Empty set of flags.
+   */
+  public static empty = new Flags(0);
+
   protected _value: number;
 
   protected constructor(value: number) {
@@ -32,8 +37,6 @@ export class Flags<F extends allFlags = allFlags>
 
   /**
    * A compact representation of the set of flags as a number
-   *
-   * @public
    */
   public get value(): number {
     return this._value;
@@ -41,8 +44,6 @@ export class Flags<F extends allFlags = allFlags>
 
   /**
    * Test whether a given flag is present (or set) in the set of flags
-   *
-   * @public
    */
   public has(flag: F): boolean {
     return (this._value & flag) === flag;
@@ -50,15 +51,11 @@ export class Flags<F extends allFlags = allFlags>
 
   /**
    * Test whether a given flag is present (or set) in the set of flags
-   *
-   * @public
    */
   public isSet = this.has;
 
   /**
    * Adds a list of flags to the set, and return a new one.
-   *
-   * @public
    */
   public add(...flags: Array<F>): this {
     return new (<typeof Flags>this.constructor)(
@@ -68,15 +65,11 @@ export class Flags<F extends allFlags = allFlags>
 
   /**
    * Adds a list of flags to the set (aka sets the flags), and return a new one.
-   *
-   * @public
    */
   public set = this.add;
 
   /**
    * Removes a list of flags from the set, and return a new one.
-   *
-   * @public
    */
   public remove(...flags: Array<F>): this {
     return new (<typeof Flags>this.constructor)(
@@ -86,16 +79,12 @@ export class Flags<F extends allFlags = allFlags>
 
   /**
    * Removes a list of flags to the set (aka unsets the flags), and return a new one.
-   *
-   * @public
    */
   public unset = this.remove;
 
   /**
    * Reduces a list of flags into a single number representing all of them
    * (with only the corresponding bits set to 1).
-   *
-   * @internal
    */
   protected static _reduce(...flags: Array<number>): number {
     return Array.reduce(flags, (prev: number, cur) => prev | cur, 0);
@@ -112,13 +101,7 @@ export class Flags<F extends allFlags = allFlags>
   }
 }
 
-/**
- * @public
- */
 export namespace Flags {
-  /**
-   * @public
-   */
   export interface JSON {
     [key: string]: boolean;
   }

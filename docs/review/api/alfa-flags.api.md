@@ -14,13 +14,13 @@ import * as json from '@siteimprove/alfa-json';
 export class Flags<F extends allFlags = allFlags> implements Equatable, json.Serializable<Flags.JSON> {
     protected constructor(value: number);
     add(...flags: Array_2<F>): this;
+    static empty: Flags<allFlags>;
     // (undocumented)
     equals(value: Flags): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     has(flag: F): boolean;
     isSet: (flag: F) => boolean;
-    // @internal
     protected static _reduce(...flags: Array_2<number>): number;
     remove(...flags: Array_2<F>): this;
     set: (...flags: Array_2<F>) => this;
