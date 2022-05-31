@@ -6,6 +6,7 @@
 
 import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
+import { Flags } from '@siteimprove/alfa-flags';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Media } from '@siteimprove/alfa-media';
@@ -16,6 +17,7 @@ import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Trampoline } from '@siteimprove/alfa-trampoline';
+import * as tree from '@siteimprove/alfa-tree';
 
 // @public (undocumented)
 export class Attribute<N extends string = string> extends Node<"attribute"> {
@@ -233,8 +235,6 @@ export namespace Document {
     // (undocumented)
     export interface JSON extends Node.JSON<"document"> {
         // (undocumented)
-        children: Array<Node.JSON>;
-        // (undocumented)
         style: Array<Sheet.JSON>;
     }
 }
@@ -301,8 +301,6 @@ export namespace Element {
     export interface JSON<N extends string = string> extends Node.JSON<"element"> {
         // (undocumented)
         attributes: Array<Attribute.JSON>;
-        // (undocumented)
-        children: Array<Node.JSON>;
         // (undocumented)
         content: Document.JSON | null;
         // (undocumented)
@@ -378,8 +376,6 @@ export class Fragment extends Node<"fragment"> {
     // (undocumented)
     static of(children: Iterable<Node>): Fragment;
     // (undocumented)
-    toJSON(): Fragment.JSON;
-    // (undocumented)
     toString(): string;
 }
 
@@ -391,8 +387,6 @@ export namespace Fragment {
     export function isFragment(value: unknown): value is Fragment;
     // (undocumented)
     export interface JSON extends Node.JSON<"fragment"> {
-        // (undocumented)
-        children: Array<Node.JSON>;
     }
 }
 
@@ -759,94 +753,22 @@ export namespace NamespaceRule {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> implements Iterable<Node>, Equatable, json.Serializable<Node.JSON>, earl.Serializable<Node.EARL>, sarif.Serializable<sarif.Location> {
-    // (undocumented)
-    [Symbol.iterator](): Iterator<Node>;
+export abstract class Node<T extends string = string> extends tree.Node<Node, Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
     protected constructor(children: Array<Node>, type: T);
-    // (undocumented)
-    ancestors(options?: Node.Traversal): Sequence<Node>;
-    // @internal (undocumented)
-    _attachParent(parent: Node): boolean;
-    // (undocumented)
-    children(options?: Node.Traversal): Sequence<Node>;
-    // (undocumented)
-    protected readonly _children: Array<Node>;
-    // (undocumented)
-    closest<T extends Node>(refinement: Refinement<Node, T>, options?: Node.Traversal): Option<T>;
-    // (undocumented)
-    closest(predicate: Predicate<Node>, options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    descendants(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
     equals(value: Node): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
-    // (undocumented)
-    first(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    following(options?: Node.Traversal): Sequence<Node>;
-    freeze(): this;
-    // (undocumented)
-    get frozen(): boolean;
-    protected _frozen: boolean;
-    // (undocumented)
-    inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
-    // (undocumented)
-    inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
-    // (undocumented)
-    inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
-    // (undocumented)
-    index(options?: Node.Traversal): number;
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
-    // (undocumented)
-    isAncestorOf(node: Node, options?: Node.Traversal): boolean;
-    // (undocumented)
-    isChildOf(node: Node, options?: Node.Traversal): boolean;
-    // (undocumented)
-    isDescendantOf(node: Node, options?: Node.Traversal): boolean;
-    // (undocumented)
-    isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;
-    // (undocumented)
-    isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
-    // (undocumented)
-    isInclusiveSiblingOf(node: Node, options?: Node.Traversal): boolean;
-    // (undocumented)
-    isParentOf(node: Node, options?: Node.Traversal): boolean;
-    // (undocumented)
-    isRootOf(node: Node, options?: Node.Traversal): boolean;
-    // (undocumented)
-    isSiblingOf(node: Node, options?: Node.Traversal): boolean;
-    // (undocumented)
-    last(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    next(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    parent(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    protected _parent: Option<Node>;
     path(options?: Node.Traversal): string;
-    // (undocumented)
-    preceding(options?: Node.Traversal): Sequence<Node>;
-    // (undocumented)
-    previous(options?: Node.Traversal): Option<Node>;
-    // (undocumented)
-    root(options?: Node.Traversal): Node;
-    // (undocumented)
-    siblings(options?: Node.Traversal): Sequence<Node>;
     tabOrder(): Sequence<Element>;
     // (undocumented)
     textContent(options?: Node.Traversal): string;
     // (undocumented)
     toEARL(): Node.EARL;
     // (undocumented)
-    toJSON(): Node.JSON<T>;
-    // (undocumented)
     toSARIF(): sarif.Location;
-    // (undocumented)
-    get type(): T;
-    // (undocumented)
-    protected readonly _type: T;
 }
 
 // @public (undocumented)
@@ -879,6 +801,9 @@ export namespace Node {
     export function from(json: Text.JSON): Text;
     // (undocumented)
     export function from(json: Comment.JSON): Comment;
+    const flatTree: Traversal;
+    const fullTree: Traversal;
+    const composedNested: Traversal;
     // (undocumented)
     export function from(json: Document.JSON): Document;
     // (undocumented)
@@ -892,20 +817,25 @@ export namespace Node {
     // (undocumented)
     export function isNode(value: unknown): value is Node;
     // (undocumented)
-    export interface JSON<T extends string = string> {
-        // (undocumented)
-        [key: string]: json.JSON | undefined;
-        // (undocumented)
-        type: T;
+    export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
     }
     // (undocumented)
-    export interface Traversal {
-        readonly composed?: boolean;
-        readonly flattened?: boolean;
-        readonly nested?: boolean;
+    export class Traversal extends Flags<Traversal.Flag> {
+        // (undocumented)
+        static of(...flags: Array<Traversal.Flag>): Traversal;
     }
-    // @internal (undocumented)
-    export function traversalPath(options?: Node.Traversal): number;
+    // (undocumented)
+    export namespace Traversal {
+        // (undocumented)
+        export type Flag = 0 | 1 | 2 | 4;
+        const // (undocumented)
+        none: Flag;
+        const composed: Flag;
+        const flattened: Flag;
+        const nested: Flag;
+        const // (undocumented)
+        empty: Traversal;
+    }
     const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
@@ -1047,8 +977,6 @@ export namespace Shadow {
     export function isShadow(value: unknown): value is Shadow;
     // (undocumented)
     export interface JSON extends Node.JSON {
-        // (undocumented)
-        children: Array<Node.JSON>;
         // (undocumented)
         mode: string;
         // (undocumented)

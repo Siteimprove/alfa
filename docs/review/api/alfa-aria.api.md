@@ -11,6 +11,7 @@ import { Device } from '@siteimprove/alfa-device';
 import * as dom_2 from '@siteimprove/alfa-dom';
 import { Element as Element_2 } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
+import { Flags } from '@siteimprove/alfa-flags';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
@@ -25,6 +26,7 @@ import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Text as Text_2 } from '@siteimprove/alfa-dom';
 import { Thunk } from '@siteimprove/alfa-thunk';
+import * as tree from '@siteimprove/alfa-tree';
 
 // @public (undocumented)
 export class Attribute<N extends Attribute.Name = Attribute.Name> implements Equatable, Serializable {
@@ -77,7 +79,7 @@ export namespace Attribute {
 }
 
 // @public (undocumented)
-export class Container extends Node {
+export class Container extends Node<"container"> {
     // (undocumented)
     clone(parent?: Option<Node>): Container;
     // (undocumented)
@@ -85,18 +87,7 @@ export class Container extends Node {
     // (undocumented)
     static of(owner: dom_2.Node, children?: Iterable<Node>): Container;
     // (undocumented)
-    toJSON(): Container.JSON;
-    // (undocumented)
     toString(): string;
-}
-
-// @public (undocumented)
-export namespace Container {
-    // (undocumented)
-    export interface JSON extends Node.JSON {
-        // (undocumented)
-        type: "container";
-    }
 }
 
 // @public
@@ -119,7 +110,7 @@ export namespace DOM {
 }
 
 // @public (undocumented)
-export class Element extends Node {
+export class Element extends Node<"element"> {
     // (undocumented)
     attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
     // (undocumented)
@@ -147,15 +138,13 @@ export class Element extends Node {
 // @public (undocumented)
 export namespace Element {
     // (undocumented)
-    export interface JSON extends Node.JSON {
+    export interface JSON extends Node.JSON<"element"> {
         // (undocumented)
         attributes: Array<Attribute.JSON>;
         // (undocumented)
         name: string | null;
         // (undocumented)
         role: string | null;
-        // (undocumented)
-        type: "element";
     }
 }
 
@@ -242,7 +231,7 @@ function hasValue(predicate: Predicate<string>): Predicate<Name>;
 function hasValue(value: string, ...rest: Array<string>): Predicate<Name>;
 
 // @public (undocumented)
-export class Inert extends Node {
+export class Inert extends Node<"inert"> {
     // (undocumented)
     clone(): Inert;
     // (undocumented)
@@ -250,18 +239,9 @@ export class Inert extends Node {
     // (undocumented)
     static of(owner: dom_2.Node): Inert;
     // (undocumented)
-    toJSON(): Inert.JSON;
+    toJSON(): Node.JSON<"inert">;
     // (undocumented)
     toString(): string;
-}
-
-// @public (undocumented)
-export namespace Inert {
-    // (undocumented)
-    export interface JSON extends Node.JSON {
-        // (undocumented)
-        type: "inert";
-    }
 }
 
 // @public
@@ -529,12 +509,8 @@ export namespace Name {
 }
 
 // @public (undocumented)
-export abstract class Node implements Serializable<Node.JSON> {
-    protected constructor(owner: dom_2.Node, children: Array<Node>);
-    // (undocumented)
-    ancestors(options?: Node.Traversal): Sequence<Node>;
-    // @internal (undocumented)
-    _attachParent(parent: Node): boolean;
+export abstract class Node<T extends string = string> extends tree.Node<Node, Node.Traversal.Flag, T> implements Serializable<Node.JSON<T>> {
+    protected constructor(owner: dom_2.Node, children: Array<Node>, type: T);
     // (undocumented)
     attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
     // (undocumented)
@@ -544,19 +520,8 @@ export abstract class Node implements Serializable<Node.JSON> {
     // (undocumented)
     children(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
-    protected readonly _children: Array<Node>;
-    // (undocumented)
     abstract clone(parent?: Option<Node>): Node;
-    // (undocumented)
-    descendants(options?: Node.Traversal): Sequence<Node>;
-    freeze(): this;
-    // (undocumented)
-    get frozen(): boolean;
     protected _frozen: boolean;
-    // (undocumented)
-    inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
-    // (undocumented)
-    inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
     abstract isIgnored(): boolean;
     // (undocumented)
@@ -568,13 +533,9 @@ export abstract class Node implements Serializable<Node.JSON> {
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
-    protected _parent: Option<Node>;
-    // (undocumented)
     get role(): Option<Role>;
     // (undocumented)
-    root(options?: Node.Traversal): Node;
-    // (undocumented)
-    abstract toJSON(): Node.JSON;
+    toJSON(): Node.JSON<T>;
 }
 
 // @public (undocumented)
@@ -582,19 +543,25 @@ export namespace Node {
     // (undocumented)
     export function from(node: dom_2.Node, device: Device): Node;
     // (undocumented)
-    export interface JSON {
-        // (undocumented)
-        [key: string]: json.JSON;
-        // (undocumented)
-        children: Array<JSON>;
+    export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
         // (undocumented)
         node: string;
-        // (undocumented)
-        type: string;
     }
     // (undocumented)
-    export interface Traversal {
-        readonly ignored?: boolean;
+    export class Traversal extends Flags<Traversal.Flag> {
+        // (undocumented)
+        static of(...flags: Array<Traversal.Flag>): Traversal;
+    }
+    const includeIgnored: Traversal;
+    // (undocumented)
+    export namespace Traversal {
+        // (undocumented)
+        export type Flag = 0 | 1;
+        const // (undocumented)
+        none: Flag;
+        const ignored: Flag;
+        const // (undocumented)
+        empty: Traversal;
     }
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
@@ -677,7 +644,7 @@ export namespace Role {
 }
 
 // @public (undocumented)
-export class Text extends Node {
+export class Text extends Node<"text"> {
     // (undocumented)
     clone(): Text;
     // (undocumented)
@@ -695,11 +662,9 @@ export class Text extends Node {
 // @public (undocumented)
 export namespace Text {
     // (undocumented)
-    export interface JSON extends Node.JSON {
+    export interface JSON extends Node.JSON<"text"> {
         // (undocumented)
         name: string | null;
-        // (undocumented)
-        type: "text";
     }
 }
 

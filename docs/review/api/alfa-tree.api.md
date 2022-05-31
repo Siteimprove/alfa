@@ -4,99 +4,89 @@
 
 ```ts
 
-import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Flags } from '@siteimprove/alfa-flags';
 import * as json from '@siteimprove/alfa-json';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
-import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 
 // @public
-export abstract class Node<F extends Flags, T extends string = string> implements Iterable<Node<F>>, Equatable, earl.Serializable<Node.EARL>, json.Serializable<Node.JSON<T>>, sarif.Serializable<sarif.Location> {
+export abstract class Node<N extends Node<N, F>, F extends Flags.allFlags, T extends string = string> implements Iterable<Node<N, F>>, Equatable, json.Serializable<Node.JSON<T>> {
     // (undocumented)
-    [Symbol.iterator](): Iterator<Node<F>>;
-    protected constructor(children: Array<Node<F>>, type: T, defaultFlags: F);
+    [Symbol.iterator](): Iterator<N>;
+    protected constructor(children: Array<N>, type: T);
     // (undocumented)
-    ancestors(options?: F): Sequence<Node<F>>;
+    ancestors(options?: Flags<F>): Sequence<N>;
     // @internal (undocumented)
-    _attachParent(parent: Node<F>): boolean;
+    _attachParent(parent: N): boolean;
     // (undocumented)
-    children(options?: F): Sequence<Node<F>>;
+    children(options?: Flags<F>): Sequence<N>;
     // (undocumented)
-    protected readonly _children: Array<Node<F>>;
+    protected readonly _children: Array<N>;
     // (undocumented)
-    closest<T extends Node<F>>(refinement: Refinement<Node<F>, T>, options?: F): Option<T>;
+    closest<T extends N | this>(refinement: Refinement<N | this, T>, options?: Flags<F>): Option<T>;
     // (undocumented)
-    closest(predicate: Predicate<Node<F>>, options?: F): Option<Node<F>>;
+    closest(predicate: Predicate<N | this>, options?: Flags<F>): Option<N | this>;
     // (undocumented)
-    protected readonly _defaultFlags: F;
+    descendants(options?: Flags<F>): Sequence<N>;
     // (undocumented)
-    descendants(options?: F): Sequence<Node<F>>;
-    // (undocumented)
-    equals(value: Node<F>): boolean;
+    equals(value: Node<N, F>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    first(options?: F): Option<Node<F>>;
+    first(options?: Flags<F>): Option<N>;
     // (undocumented)
-    following(options?: F): Sequence<Node<F>>;
+    following(options?: Flags<F>): Sequence<N>;
     freeze(): this;
     // (undocumented)
     get frozen(): boolean;
     protected _frozen: boolean;
     // (undocumented)
-    inclusiveAncestors(options?: F): Sequence<Node<F>>;
+    inclusiveAncestors(options?: Flags<F>): Sequence<N | this>;
     // (undocumented)
-    inclusiveDescendants(options?: F): Sequence<Node<F>>;
+    inclusiveDescendants(options?: Flags<F>): Sequence<N | this>;
     // (undocumented)
-    inclusiveSiblings(options?: F): Sequence<Node<F>>;
+    inclusiveSiblings(options?: Flags<F>): Sequence<N | this>;
     // (undocumented)
-    index(options?: F): number;
+    index(options?: Flags<F>): number;
     // (undocumented)
-    isAncestorOf(node: Node<F>, options?: F): boolean;
+    isAncestorOf(node: Node<Node<N, F>, F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isChildOf(node: Node<F>, options?: F): boolean;
+    isChildOf(node: Node<Node<N, F>, F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isDescendantOf(node: Node<F>, options?: F): boolean;
+    isDescendantOf(node: Node<Node<N, F>, F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isInclusiveAncestorOf(node: Node<F>, options?: F): boolean;
+    isInclusiveAncestorOf(node: Node<N, F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isInclusiveDescendantsOf(node: Node<F>, options?: F): boolean;
+    isInclusiveDescendantsOf(node: Node<N, F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isInclusiveSiblingOf(node: Node<F>, options?: F): boolean;
+    isInclusiveSiblingOf(node: Node<N, F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isParentOf(node: Node<F>, options?: F): boolean;
+    isParentOf(node: Node<Node<N, F>, F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isRootOf(node: Node<F>, options?: F): boolean;
+    isRootOf(node: Node<N, F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isSiblingOf(node: Node<F>, options?: F): boolean;
+    isSiblingOf(node: Node<Node<N, F>, F>, options?: Flags<F>): boolean;
     // (undocumented)
-    last(options?: F): Option<Node<F>>;
+    last(options?: Flags<F>): Option<N>;
     // (undocumented)
-    next(options?: F): Option<Node<F>>;
+    next(options?: Flags<F>): Option<N>;
     // (undocumented)
-    parent(options?: F): Option<Node<F>>;
+    parent(options?: Flags<F>): Option<N>;
     // (undocumented)
-    protected _parent: Option<Node<F>>;
+    protected _parent: Option<N>;
     // (undocumented)
-    path(): string;
+    preceding(options?: Flags<F>): Sequence<N>;
     // (undocumented)
-    preceding(options?: F): Sequence<Node<F>>;
+    previous(options?: Flags<F>): Option<N>;
     // (undocumented)
-    previous(options?: F): Option<Node<F>>;
+    root(options?: Flags<F>): N | this;
     // (undocumented)
-    root(options?: F): Node<F>;
-    // (undocumented)
-    siblings(options?: F): Sequence<Node<F>>;
-    // (undocumented)
-    toEARL(): Node.EARL;
+    siblings(options?: Flags<F>): Sequence<N>;
     // (undocumented)
     toJSON(): Node.JSON<T>;
-    // (undocumented)
-    toSARIF(): sarif.Location;
     // (undocumented)
     get type(): T;
     // (undocumented)
@@ -106,31 +96,11 @@ export abstract class Node<F extends Flags, T extends string = string> implement
 // @public (undocumented)
 export namespace Node {
     // (undocumented)
-    export interface EARL extends earl.EARL {
-        // (undocumented)
-        "@context": {
-            ptr: "http://www.w3.org/2009/pointers#";
-        };
-        // (undocumented)
-        "@type": [
-        "ptr:Pointer",
-        "ptr:SinglePointer",
-        "ptr:ExpressionPointer",
-        "ptr:XPathPointer"
-        ];
-        // (undocumented)
-        "ptr:expression": string;
-        // (undocumented)
-        "ptr:reference"?: {
-            "@id": string;
-        };
-    }
-    // (undocumented)
-    export function isNode<F extends Flags>(value: unknown): value is Node<F>;
-    // (undocumented)
     export interface JSON<T extends string = string> {
         // (undocumented)
         [key: string]: json.JSON | undefined;
+        // (undocumented)
+        children?: Array<JSON>;
         // (undocumented)
         type: T;
     }

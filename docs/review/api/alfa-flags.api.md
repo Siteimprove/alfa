@@ -8,13 +8,10 @@ import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import * as json from '@siteimprove/alfa-json';
 
-// Warning: (ae-forgotten-export) The symbol "allFlags" needs to be exported by the entry point index.d.ts
-//
 // @public
-export class Flags<F extends allFlags = allFlags> implements Equatable, json.Serializable<Flags.JSON> {
+export class Flags<F extends Flags.allFlags = Flags.allFlags> implements Equatable, json.Serializable<Flags.JSON> {
     protected constructor(value: number);
     add(...flags: Array_2<F>): this;
-    static empty: Flags<allFlags>;
     // (undocumented)
     equals(value: Flags): boolean;
     // (undocumented)
@@ -34,6 +31,8 @@ export class Flags<F extends allFlags = allFlags> implements Equatable, json.Ser
 
 // @public (undocumented)
 export namespace Flags {
+    // @internal
+    export type allFlags = 0 | 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256;
     // (undocumented)
     export interface JSON {
         // (undocumented)
