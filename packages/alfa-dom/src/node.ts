@@ -221,10 +221,6 @@ export namespace Node {
     public static of(...flags: Array<Traversal.Flag>): Traversal {
       return new Traversal(Flags._reduce(...flags));
     }
-
-    private constructor(flags: number) {
-      super(flags);
-    }
   }
 
   export namespace Traversal {

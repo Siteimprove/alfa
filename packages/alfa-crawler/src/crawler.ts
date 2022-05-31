@@ -96,9 +96,7 @@ export namespace Crawler {
 }
 
 function* urls(page: Page): Iterable<URL> {
-  for (const node of page.document.descendants(
-    Node.Traversal.of(Node.Traversal.composed, Node.Traversal.nested)
-  )) {
+  for (const node of page.document.descendants(Node.composedNested)) {
     if (isElement(node) && node.name === "a") {
       yield* node
         .attribute("href")

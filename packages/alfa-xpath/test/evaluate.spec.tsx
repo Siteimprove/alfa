@@ -38,14 +38,5 @@ test("evaluate() should respect traversal options", (t) => {
     5
   );
 
-  t.equal(
-    [
-      ...evaluate(
-        div,
-        "//button",
-        Node.Traversal.of(Node.Traversal.nested, Node.Traversal.composed)
-      ),
-    ].length,
-    6
-  );
+  t.equal([...evaluate(div, "//button", Node.composedNested)].length, 6);
 });
