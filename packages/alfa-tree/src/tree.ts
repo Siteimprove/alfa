@@ -94,18 +94,24 @@ export abstract class Node<
     return node.parent(options).includes(this);
   }
 
+  private _lastKnownRoot: Array<N | this> = [];
+
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-root}
    */
-  // Since root is looking upward, it may change between calls, so it is not
-  // easy to cache. We could cache the last known root (of a frozen node) and
-  // keep going up from there (updating the last known root).
+  // Since root is looking upward, it may change between calls.
+  // So we cache the last known root, try again from here and update the result
+  // if necessary. Once the tree is fully frozen, this only cost an extra look
+  // through this.parent which is not expensive.
   public root(options?: Flags<F>): N | this {
-    for (const parent of this.parent(options)) {
-      return parent.root(options);
+    let lastKnownRoot = this._lastKnownRoot[options?.value ?? 0] ?? this;
+
+    for (const parent of lastKnownRoot.parent(options)) {
+      lastKnownRoot = parent.root(options);
     }
 
-    return this;
+    this._lastKnownRoot[options?.value ?? 0] = lastKnownRoot;
+    return lastKnownRoot;
   }
 
   /**
@@ -241,46 +247,65 @@ export abstract class Node<
     return node.inclusiveSiblings(options).includes(this);
   }
 
+  private _preceding: Array<Sequence<N>> = [];
+
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-preceding}
    */
-  // need caching
+  // Due to reversing, this is not lazy and is costly at build time.
+  // This only looks in frozen parts of the tree.
   public preceding(options?: Flags<F>): Sequence<N> {
-    return (
-      this.inclusiveSiblings(options)
+    if (this._preceding[options?.value ?? 0] === undefined) {
+      this._preceding[options?.value ?? 0] = this.inclusiveSiblings(options)
         .takeUntil(equals(this))
-        // There is only one inclusive sibling whose type is Node<N, F> and we
-        // stop just before, so the result has type N
-        .reverse() as Sequence<N>
-    );
+        // There is only one inclusive sibling whose type is Node<N, F> (this)
+        // and we stop just before, so the result has type N
+        .reverse() as Sequence<N>;
+    }
+
+    return this._preceding[options?.value ?? 0];
   }
+
+  private _following: Array<Sequence<N>> = [];
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-following}
    */
-  // need caching
+  // Due to skipUntil, this is not fully lazy and is costly at build time.
+  // This only looks in frozen parts of the tree.
   public following(options?: Flags<F>): Sequence<N> {
-    return (
-      this.inclusiveSiblings(options)
+    if (this._following[options?.value ?? 0] === undefined) {
+      this._following[options?.value ?? 0] = this.inclusiveSiblings(options)
         .skipUntil(equals(this))
-        // There is only one inclusive sibling whose type is Node<N, F> and we
-        // start just after, so the result has type N
-        .rest() as Sequence<N>
-    );
+        // There is only one inclusive sibling whose type is Node<N, F> (this)
+        // and we start just after, so the result has type N
+        .rest() as Sequence<N>;
+    }
+
+    return this._following[options?.value ?? 0];
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-first-child}
    */
+  // Sequence.first) is fast and doesn't need caching
   public first(options?: Flags<F>): Option<N> {
     return this.children(options).first();
   }
 
+  private _last: Array<Option<N>> = [];
+
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-last-child}
    */
+  // Due to last, this is not lazy and is costly at build time.
+  // This only looks in frozen parts of the tree.
   public last(options?: Flags<F>): Option<N> {
-    return this.children(options).last();
+    if (this._last[options?.value ?? 0] === undefined) {
+      this._last[options?.value ?? 0] = this.children(options).last();
+    }
+
+    return this._last[options?.value ?? 0];
   }
 
   /**

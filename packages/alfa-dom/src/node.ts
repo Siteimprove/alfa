@@ -124,7 +124,6 @@ export abstract class Node<T extends string = string>
       });
   }
 
-  // need handling of attaching parent + move to tree?
   private _path: Array<string> = [];
 
   /**
@@ -146,14 +145,20 @@ export abstract class Node<T extends string = string>
    * Get an XPath that uniquely identifies the node across descendants of its
    * root.
    */
+  // path may change if the subtree is attached to a parent, so we shouldn't
+  // cache it.
+  // However, path is a fairly "final" serialisation operation that makes
+  // little sense in the context of an incomplete tree.
+  // For the sake of simplicity, and until we encounter errors due to this,
+  // we accept the risk of caching the value assuming that it will only be
+  // computed on fully frozen trees.
   public path(options: Node.Traversal = Node.Traversal.empty): string {
-    const currentTraversal = options.value;
-    if (this._path[currentTraversal] !== undefined) {
-      return this._path[currentTraversal];
+    if (this._path[options.value] !== undefined) {
+      return this._path[options.value];
     } else {
-      const path = this._internalPath(options);
-      this._path[currentTraversal] = path;
-      return path;
+      this._path[options.value] = this._internalPath(options);
+
+      return this._internalPath(options);
     }
   }
 
