@@ -7,13 +7,13 @@ import { Node } from "../node";
 /**
  * @public
  */
-export class Container extends Node {
+export class Container extends Node<"container"> {
   public static of(owner: dom.Node, children: Iterable<Node> = []): Container {
     return new Container(owner, Array.from(children));
   }
 
   private constructor(owner: dom.Node, children: Array<Node>) {
-    super(owner, children);
+    super(owner, children, "container");
   }
 
   public clone(parent: Option<Node> = None): Container {
@@ -29,8 +29,7 @@ export class Container extends Node {
 
   public toJSON(): Container.JSON {
     return {
-      type: "container",
-      node: this._node.path(),
+      ...super.toJSON(),
       children: this._children.map((child) => child.toJSON()),
     };
   }
@@ -47,9 +46,7 @@ export class Container extends Node {
  * @public
  */
 export namespace Container {
-  export interface JSON extends Node.JSON {
-    type: "container";
-  }
+  export interface JSON extends Node.JSON<"container"> {}
 }
 
 function indent(input: string): string {

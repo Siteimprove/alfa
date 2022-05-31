@@ -972,11 +972,11 @@ __metadata:
     "@siteimprove/alfa-device": "workspace:^0.38.1"
     "@siteimprove/alfa-dom": "workspace:^0.38.1"
     "@siteimprove/alfa-equatable": "workspace:^0.38.1"
+    "@siteimprove/alfa-flags": "workspace:^0.38.1"
     "@siteimprove/alfa-graph": "workspace:^0.38.1"
     "@siteimprove/alfa-hash": "workspace:^0.38.1"
     "@siteimprove/alfa-iterable": "workspace:^0.38.1"
     "@siteimprove/alfa-json": "workspace:^0.38.1"
-    "@siteimprove/alfa-lazy": "workspace:^0.38.1"
     "@siteimprove/alfa-map": "workspace:^0.38.1"
     "@siteimprove/alfa-mapper": "workspace:^0.38.1"
     "@siteimprove/alfa-option": "workspace:^0.38.1"
@@ -988,6 +988,7 @@ __metadata:
     "@siteimprove/alfa-table": "workspace:^0.38.1"
     "@siteimprove/alfa-test": "workspace:^0.38.1"
     "@siteimprove/alfa-thunk": "workspace:^0.38.1"
+    "@siteimprove/alfa-tree": "workspace:^0.38.1"
   languageName: unknown
   linkType: soft
 

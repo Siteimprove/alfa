@@ -167,7 +167,7 @@ export abstract class Node<T extends string = string>
 
   public toJSON(): Node.JSON<T> {
     return {
-      type: this._type,
+      ...super.toJSON(),
     };
   }
 
@@ -201,10 +201,7 @@ export abstract class Node<T extends string = string>
  * @public
  */
 export namespace Node {
-  export interface JSON<T extends string = string> {
-    [key: string]: json.JSON | undefined;
-    type: T;
-  }
+  export interface JSON<T extends string = string> extends tree.Node.JSON<T> {}
 
   export interface EARL extends earl.EARL {
     "@context": {
@@ -234,8 +231,6 @@ export namespace Node {
     private constructor(flags: number) {
       super(flags);
     }
-
-    public static empty = new Traversal(0);
   }
 
   export namespace Traversal {
@@ -262,6 +257,8 @@ export namespace Node {
      * {@link https://html.spec.whatwg.org/#nested-browsing-context}
      */
     export const nested = (1 << 2) as Flag;
+
+    export const empty = Traversal.of(none);
   }
 
   /**

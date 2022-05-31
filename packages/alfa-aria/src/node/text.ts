@@ -8,7 +8,7 @@ import { Node } from "../node";
 /**
  * @public
  */
-export class Text extends Node {
+export class Text extends Node<"text"> {
   public static of(owner: dom.Node, name: Option<Name>): Text {
     return new Text(owner, name);
   }
@@ -16,7 +16,7 @@ export class Text extends Node {
   private readonly _name: Option<Name>;
 
   private constructor(owner: dom.Node, name: Option<Name>) {
-    super(owner, []);
+    super(owner, [], "text");
 
     this._name = name;
   }
@@ -35,8 +35,7 @@ export class Text extends Node {
 
   public toJSON(): Text.JSON {
     return {
-      type: "text",
-      node: this._node.path(),
+      ...super.toJSON(),
       name: this._name.map((name) => name.value).getOr(null),
       children: this._children.map((child) => child.toJSON()),
     };
@@ -51,8 +50,7 @@ export class Text extends Node {
  * @public
  */
 export namespace Text {
-  export interface JSON extends Node.JSON {
-    type: "text";
+  export interface JSON extends Node.JSON<"text"> {
     name: string | null;
   }
 }
