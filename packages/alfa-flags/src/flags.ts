@@ -86,6 +86,9 @@ export class Flags<F extends Flags.allFlags = Flags.allFlags>
   }
 }
 
+/**
+ * @public
+ */
 export namespace Flags {
   export interface JSON {
     [key: string]: boolean;

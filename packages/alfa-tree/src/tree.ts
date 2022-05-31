@@ -389,6 +389,9 @@ export abstract class Node<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Node {
   export interface JSON<T extends string = string> {
     [key: string]: json.JSON | undefined;
