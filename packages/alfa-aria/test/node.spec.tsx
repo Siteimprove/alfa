@@ -20,7 +20,6 @@ test(`.from() constructs an accessible node from an element`, (t) => {
         type: "text",
         node: "/button[1]/text()[1]",
         name: "Hello world",
-        children: [],
       },
     ],
   });
@@ -339,12 +338,10 @@ test(`.from() does not expose elements that are not rendered due to a DOM
         type: "text",
         node: "/div[1]/div[2]/text()[1]",
         name: "Hello World",
-        children: [],
       },
       {
         type: "inert",
         node: "/div[1]/div[1]/div[1]",
-        children: [],
       },
     ],
     role: null,
@@ -371,7 +368,6 @@ test(`.from() exposes elements that are aria-hidden due to a DOM
         type: "text",
         node: "/div[1]/div[2]/text()[1]",
         name: "Hello World",
-        children: [],
       },
       {
         type: "container",
@@ -381,7 +377,6 @@ test(`.from() exposes elements that are aria-hidden due to a DOM
             type: "text",
             node: "/div[1]/div[1]/div[1]/text()[1]",
             name: "Lorem ipsum…",
-            children: [],
           },
         ],
       },
@@ -458,7 +453,6 @@ test(`.from() does not expose elements that have no role, ARIA attributes, nor
         type: "text",
         node: "/div[1]/text()[1]",
         name: "Hello world",
-        children: [],
       },
     ],
   });
@@ -475,7 +469,6 @@ test(`.from() does not expose text nodes of a parent element with
       {
         type: "inert",
         node: "/div[1]/text()[1]",
-        children: [],
       },
     ],
   });
@@ -498,7 +491,6 @@ test(`.from() does not expose fallback DOM nodes for legacy browsers`, (t) => {
       {
         type: "inert",
         node: "/iframe[1]/div[1]",
-        children: [],
       },
     ],
   });
@@ -661,7 +653,6 @@ test(`.from() behaves when encountering an element with global properties where
             type: "text",
             node: "/div[1]/label[1]/text()[1]",
             name: "Foo ",
-            children: [],
           },
           {
             type: "element",
