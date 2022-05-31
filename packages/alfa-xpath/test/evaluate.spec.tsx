@@ -1,4 +1,4 @@
-import { h } from "@siteimprove/alfa-dom/h";
+import { h, Node } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { evaluate } from "../src/evaluate";
@@ -27,29 +27,24 @@ test("evaluate() should respect traversal options", (t) => {
   t.equal([...evaluate(div, "//button")].length, 3);
 
   t.equal(
-    [
-      ...evaluate(div, "//button", {
-        nested: true,
-      }),
-    ].length,
+    [...evaluate(div, "//button", Node.Traversal.of(Node.Traversal.nested))]
+      .length,
     4
   );
 
   t.equal(
-    [
-      ...evaluate(div, "//button", {
-        composed: true,
-      }),
-    ].length,
+    [...evaluate(div, "//button", Node.Traversal.of(Node.Traversal.composed))]
+      .length,
     5
   );
 
   t.equal(
     [
-      ...evaluate(div, "//button", {
-        nested: true,
-        composed: true,
-      }),
+      ...evaluate(
+        div,
+        "//button",
+        Node.Traversal.of(Node.Traversal.nested, Node.Traversal.composed)
+      ),
     ].length,
     6
   );

@@ -40,11 +40,7 @@ export function isOffscreen(
           }
         }
 
-        return node
-          .parent({
-            flattened: true,
-          })
-          .some(isOffscreen);
+        return node.parent(Node.flatTree).some(isOffscreen);
       });
   };
 }

@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { DOM, Role } from "@siteimprove/alfa-aria";
-import { Attribute, Element } from "@siteimprove/alfa-dom";
+import { Attribute, Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -28,7 +28,7 @@ export default Rule.Atomic.of<Page, Attribute>({
     return {
       applicability() {
         return document
-          .descendants({ flattened: true, nested: true })
+          .descendants(Node.fullTree)
           .filter(isElement)
           .reject(isIgnored(device))
           .flatMap((element) =>

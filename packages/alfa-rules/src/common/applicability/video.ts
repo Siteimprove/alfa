@@ -1,6 +1,6 @@
 import { Interview } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
@@ -19,7 +19,7 @@ export function video(
   const { audio, track } = options;
 
   return document
-    .descendants({ flattened: true, nested: true })
+    .descendants(Node.fullTree)
     .filter(isElement)
     .filter(
       and(

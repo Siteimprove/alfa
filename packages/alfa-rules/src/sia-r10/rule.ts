@@ -7,6 +7,8 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
+import * as dom from "@siteimprove/alfa-dom";
+
 import { expectation } from "../common/act/expectation";
 import { normalize } from "../common/normalize";
 
@@ -26,7 +28,7 @@ export default Rule.Atomic.of<Page, Attribute>({
     return {
       applicability() {
         return document
-          .descendants({ flattened: true, nested: true })
+          .descendants(dom.Node.fullTree)
           .filter(isElement)
           .filter(
             and(

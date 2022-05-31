@@ -25,10 +25,7 @@ export function getNodesBetween(
   node1: Node,
   node2: Node,
   includeOptions: Options = { includeFirst: false, includeSecond: false },
-  treeOptions: Node.Traversal = Node.Traversal.of(
-    Node.Traversal.flattened,
-    Node.Traversal.nested
-  )
+  treeOptions: Node.Traversal = Node.fullTree
 ): Sequence<Node> {
   let between = getNodesInclusivelyBetween(node1, node2, treeOptions);
 

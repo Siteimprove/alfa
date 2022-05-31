@@ -2,7 +2,13 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
 import { Lexer, Keyword, Component, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Declaration, Document, Shadow } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  Declaration,
+  Document,
+  Shadow,
+  Node,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
@@ -314,7 +320,7 @@ export namespace Style {
           declarations,
           device,
           element
-            .parent({ flattened: true })
+            .parent(Node.flatTree)
             .filter(Element.isElement)
             .map((parent) => from(parent, device, context))
         );

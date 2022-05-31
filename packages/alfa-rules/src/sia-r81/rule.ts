@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
     return {
       applicability() {
         return document
-          .descendants({ flattened: true, nested: true })
+          .descendants(dom.Node.fullTree)
           .filter(isElement)
           .filter(
             and(
@@ -115,7 +115,7 @@ export namespace Outcomes {
 function linkContext(element: Element, device: Device): Set<dom.Node> {
   let context = Set.empty<dom.Node>();
 
-  const ancestors = element.ancestors({ flattened: true }).filter(isElement);
+  const ancestors = element.ancestors(dom.Node.flatTree).filter(isElement);
 
   for (const listitem of ancestors.filter(hasRole(device, "listitem"))) {
     context = context.add(listitem);

@@ -27,17 +27,13 @@ export function getInterposedDescendant(
   device: Device,
   element: Element
 ): Sequence<Element> {
-  const root = element.root({
-    flattened: true,
-  });
+  const root = element.root(Node.flatTree);
 
   return cache
     .get(device, Cache.empty)
     .get(root, () =>
       root
-        .inclusiveDescendants({
-          flattened: true,
-        })
+        .inclusiveDescendants(Node.flatTree)
         // Find all absolutely positioned elements.
         .filter(
           and(

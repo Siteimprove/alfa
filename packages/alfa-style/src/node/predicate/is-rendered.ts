@@ -45,12 +45,7 @@ export function isRendered(
           return false;
         }
 
-        return node
-          .parent({
-            flattened: true,
-            nested: true,
-          })
-          .every(isRendered);
+        return node.parent(Node.fullTree).every(isRendered);
       });
   };
 }

@@ -28,8 +28,14 @@ const { equals } = Refinement;
  * @public
  */
 export abstract class Node<
+  // The type of nodes allowed in the tree. Nodes must all be subtype of it.
+  // Subtyping allow mixed trees (e.g. Document, Element and Attributes).
+  // The typing is a bit wonky here since we actually also want `this` to
+  // extend `N`, but there is no clean way to express it :-/
   N extends Node<N, F>,
+  // The list of flags allowed to control tree traversal.
   F extends Flags.allFlags,
+  // The type
   T extends string = string
 > implements Iterable<Node<N, F>>, Equatable, json.Serializable<Node.JSON<T>>
 {
@@ -91,7 +97,7 @@ export abstract class Node<
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-root}
    */
-  // Since root is looking upward, it may changes between calls, so it is not
+  // Since root is looking upward, it may change between calls, so it is not
   // easy to cache. We could cache the last known root (of a frozen node) and
   // keep going up from there (updating the last known root).
   public root(options?: Flags<F>): N | this {

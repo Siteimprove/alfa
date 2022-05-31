@@ -1,4 +1,4 @@
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Frontier } from "@siteimprove/alfa-frontier";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Result } from "@siteimprove/alfa-result";
@@ -96,10 +96,9 @@ export namespace Crawler {
 }
 
 function* urls(page: Page): Iterable<URL> {
-  for (const node of page.document.descendants({
-    composed: true,
-    nested: true,
-  })) {
+  for (const node of page.document.descendants(
+    Node.Traversal.of(Node.Traversal.composed, Node.Traversal.nested)
+  )) {
     if (isElement(node) && node.name === "a") {
       yield* node
         .attribute("href")

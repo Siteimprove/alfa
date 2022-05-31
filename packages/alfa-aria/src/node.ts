@@ -232,7 +232,7 @@ export namespace Node {
       return _cache.get(node).get();
     }
 
-    const root = node.root({ flattened: true });
+    const root = node.root(dom.Node.flatTree);
 
     // If the cache already holds an entry for the root of the specified node,
     // then the tree that the node participates in has already been built, but
@@ -433,9 +433,7 @@ export namespace Node {
         // children in the flat tree that are neither claimed already nor
         // explicitly owned by the element.
         const implicit = node
-          .children({
-            flattened: true,
-          })
+          .children(dom.Node.flatTree)
           .reject((child) => claimed.has(child) || explicit.includes(child));
 
         // The children implicitly owned by the element come first, then the
@@ -558,9 +556,7 @@ export namespace Node {
       return Container.of(
         node,
         node
-          .children({
-            flattened: true,
-          })
+          .children(dom.Node.flatTree)
           .reject((child) => claimed.has(child))
           .map((child) => fromNode(child, device, claimed, owned, state))
       );

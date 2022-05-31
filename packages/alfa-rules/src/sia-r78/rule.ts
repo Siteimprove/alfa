@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         headings = document
-          .descendants({ flattened: true, nested: true })
+          .descendants(Node.fullTree)
           .filter(
             and(
               isElement,
@@ -59,7 +59,7 @@ export default Rule.Atomic.of<Page, Element>({
 
             return (
               document
-                .descendants({ flattened: true, nested: true })
+                .descendants(Node.fullTree)
                 .last()
                 // The document contains at least the target.
                 .get()
@@ -74,12 +74,7 @@ export default Rule.Atomic.of<Page, Element>({
               // last node of the document is acceptable content; otherwise, the
               // next heading (of this level or less) is not acceptable content.
               includeSecond: end,
-            }).some(
-              and(
-                isPerceivable(device),
-                isContent({ flattened: true, nested: true })
-              )
-            ),
+            }).some(and(isPerceivable(device), isContent(Node.fullTree))),
             () => Outcomes.hasContent,
             () => Outcomes.hasNoContent
           ),

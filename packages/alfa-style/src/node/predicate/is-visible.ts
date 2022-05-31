@@ -80,10 +80,7 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
                 // otherwise, the element is invisible iff all its children are.
                 (element) =>
                   element
-                    .children({
-                      nested: true,
-                      flattened: true,
-                    })
+                    .children(Node.fullTree)
                     .every(isInvisible(device, context))
               )
             )

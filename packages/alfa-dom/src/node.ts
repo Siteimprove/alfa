@@ -267,6 +267,28 @@ export namespace Node {
     export const nested = (1 << 2) as Flag;
   }
 
+  /**
+   * Traversal options to traverse the flat tree.
+   *
+   * {@link https://drafts.csswg.org/css-scoping-1/#flattening}
+   */
+  export const flatTree = Traversal.of(Traversal.flattened);
+
+  /**
+   * Traversal options to traverse all relevant nodes (flat tree and inside
+   * nested browsing container), a very frequent use case.
+   */
+  export const fullTree = Traversal.of(Traversal.flattened, Traversal.nested);
+
+  /**
+   * Traversal options to traverse in shadow-including tree order and inside
+   * nested browsing context container, a common use case.
+   */
+  export const composedNested = Traversal.of(
+    Traversal.composed,
+    Traversal.nested
+  );
+
   export function from(json: Element.JSON): Element;
 
   export function from(json: Attribute.JSON): Attribute;

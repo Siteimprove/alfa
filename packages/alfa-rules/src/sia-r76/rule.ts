@@ -42,10 +42,7 @@ export default Rule.Atomic.of<Page, Element>({
             }
           }
 
-          for (const child of node.children({
-            flattened: true,
-            nested: true,
-          })) {
+          for (const child of node.children(Node.fullTree)) {
             yield* visit(child, collect);
           }
         }

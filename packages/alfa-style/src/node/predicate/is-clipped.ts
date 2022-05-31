@@ -44,12 +44,7 @@ export function isClipped(
             ),
             // Or (it's not an element) and its parent is clipped
             and(not(isElement), (node: Node) =>
-              node
-                .parent({
-                  flattened: true,
-                  nested: true,
-                })
-                .some(isClipped(device, context))
+              node.parent(Node.fullTree).some(isClipped(device, context))
             )
           ),
           node

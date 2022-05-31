@@ -24,10 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return document
 
-          .descendants({
-            flattened: true,
-            nested: true,
-          })
+          .descendants(Node.fullTree)
           .filter(isElement)
           .filter(and(hasName("pre"), isRendered(device)));
       },
@@ -40,10 +37,7 @@ export default Rule.Atomic.of<Page, Element>({
             () =>
               expectation(
                 target
-                  .inclusiveAncestors({
-                    flattened: true,
-                    nested: true,
-                  })
+                  .inclusiveAncestors(Node.fullTree)
                   .filter(isElement)
                   .some(hasAttribute("aria-hidden", equals("true"))),
                 () => Outcomes.IsHidden,
@@ -76,21 +70,13 @@ function hasOnlyAllowedText(device: Device): Predicate<Node> {
     }
 
     // Otherwise, recursively check that the children only have allowed text.
-    return node
-      .children({
-        flattened: true,
-        nested: true,
-      })
-      .every(hasOnlyAllowedText);
+    return node.children(Node.fullTree).every(hasOnlyAllowedText);
   };
 }
 
 function hasFigureAncestor(target: Element): boolean {
   return target
-    .ancestors({
-      flattened: true,
-      nested: true,
-    })
+    .ancestors(Node.fullTree)
     .filter(isElement)
     .some(hasName("figure"));
 }
