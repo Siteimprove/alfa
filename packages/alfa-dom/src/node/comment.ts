@@ -26,9 +26,9 @@ export class Comment extends Node<"comment"> {
     return this._data;
   }
 
-/**
-  * @internal
-  **/
+  /**
+   * @internal
+   **/
   protected _internalPath(options?: Node.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
@@ -45,10 +45,13 @@ export class Comment extends Node<"comment"> {
   }
 
   public toJSON(): Comment.JSON {
-    return {
+    const result = {
       ...super.toJSON(),
       data: this._data,
     };
+    delete result.children;
+
+    return result;
   }
 
   public toString(): string {

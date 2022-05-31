@@ -291,7 +291,6 @@ export class Element<N extends string = string>
         attribute.toJSON()
       ),
       style: this._style.map((style) => style.toJSON()).getOr(null),
-      children: this._children.map((child) => child.toJSON()),
       shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
       content: this._content.map((content) => content.toJSON()).getOr(null),
     };
@@ -361,7 +360,6 @@ export namespace Element {
     name: N;
     attributes: Array<Attribute.JSON>;
     style: Block.JSON | null;
-    children: Array<Node.JSON>;
     shadow: Shadow.JSON | null;
     content: Document.JSON | null;
   }
@@ -376,30 +374,32 @@ export namespace Element {
   export function fromElement<N extends string = string>(
     json: JSON<N>
   ): Trampoline<Element<N>> {
-    return Trampoline.traverse(json.children, Node.fromNode).map((children) => {
-      const element = Element.of(
-        Option.from(json.namespace as Namespace | null),
-        Option.from(json.prefix),
-        json.name,
-        json.attributes.map((attribute) =>
-          Attribute.fromAttribute(attribute).run()
-        ),
-        children,
-        json.style?.length === 0
-          ? None
-          : Option.from(json.style).map(Block.from)
-      );
+    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
+      (children) => {
+        const element = Element.of(
+          Option.from(json.namespace as Namespace | null),
+          Option.from(json.prefix),
+          json.name,
+          json.attributes.map((attribute) =>
+            Attribute.fromAttribute(attribute).run()
+          ),
+          children,
+          json.style?.length === 0
+            ? None
+            : Option.from(json.style).map(Block.from)
+        );
 
-      if (json.shadow !== null) {
-        element._attachShadow(Shadow.fromShadow(json.shadow).run());
+        if (json.shadow !== null) {
+          element._attachShadow(Shadow.fromShadow(json.shadow).run());
+        }
+
+        if (json.content !== null) {
+          element._attachContent(Document.fromDocument(json.content).run());
+        }
+
+        return element;
       }
-
-      if (json.content !== null) {
-        element._attachContent(Document.fromDocument(json.content).run());
-      }
-
-      return element;
-    });
+    );
   }
 
   export const {

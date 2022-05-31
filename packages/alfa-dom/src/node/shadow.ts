@@ -79,7 +79,6 @@ export class Shadow extends Node<"shadow"> {
   public toJSON(): Shadow.JSON {
     return {
       ...super.toJSON(),
-      children: this._children.map((child) => child.toJSON()),
       mode: this._mode,
       style: this._style.map((sheet) => sheet.toJSON()),
     };
@@ -128,7 +127,6 @@ export namespace Shadow {
 
   export interface JSON extends Node.JSON {
     type: "shadow";
-    children: Array<Node.JSON>;
     mode: string;
     style: Array<Sheet.JSON>;
   }
@@ -141,8 +139,9 @@ export namespace Shadow {
    * @internal
    */
   export function fromShadow(json: JSON): Trampoline<Shadow> {
-    return Trampoline.traverse(json.children, Node.fromNode).map((children) =>
-      Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode)
+    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
+      (children) =>
+        Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode)
     );
   }
 }

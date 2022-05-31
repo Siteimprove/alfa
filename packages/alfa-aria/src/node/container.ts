@@ -27,26 +27,12 @@ export class Container extends Node<"container"> {
     return true;
   }
 
-  public toJSON(): Container.JSON {
-    return {
-      ...super.toJSON(),
-      children: this._children.map((child) => child.toJSON()),
-    };
-  }
-
   public toString(): string {
     return [
       "container",
       ...this._children.map((child) => indent(child.toString())),
     ].join("\n");
   }
-}
-
-/**
- * @public
- */
-export namespace Container {
-  export interface JSON extends Node.JSON<"container"> {}
 }
 
 function indent(input: string): string {

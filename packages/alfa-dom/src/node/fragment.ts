@@ -18,18 +18,11 @@ export class Fragment extends Node<"fragment"> {
     super(children, "fragment");
   }
 
-/**
-  * @internal
-  **/
+  /**
+   * @internal
+   **/
   protected _internalPath(): string {
     return "/";
-  }
-
-  public toJSON(): Fragment.JSON {
-    return {
-      ...super.toJSON(),
-      children: this._children.map((child) => child.toJSON()),
-    };
   }
 
   public toString(): string {
@@ -52,9 +45,7 @@ export class Fragment extends Node<"fragment"> {
  * @public
  */
 export namespace Fragment {
-  export interface JSON extends Node.JSON<"fragment"> {
-    children: Array<Node.JSON>;
-  }
+  export interface JSON extends Node.JSON<"fragment"> {}
 
   export function isFragment(value: unknown): value is Fragment {
     return value instanceof Fragment;
@@ -64,8 +55,8 @@ export namespace Fragment {
    * @internal
    */
   export function fromFragment(json: JSON): Trampoline<Fragment> {
-    return Trampoline.traverse(json.children, Node.fromNode).map((children) =>
-      Fragment.of(children)
+    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
+      (children) => Fragment.of(children)
     );
   }
 }

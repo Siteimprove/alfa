@@ -34,11 +34,13 @@ export class Text extends Node<"text"> {
   }
 
   public toJSON(): Text.JSON {
-    return {
+    const result = {
       ...super.toJSON(),
       name: this._name.map((name) => name.value).getOr(null),
-      children: this._children.map((child) => child.toJSON()),
     };
+    delete result.children;
+
+    return result;
   }
 
   public toString(): string {

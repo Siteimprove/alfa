@@ -345,6 +345,7 @@ export abstract class Node<
   public toJSON(): Node.JSON<T> {
     return {
       type: this._type,
+      children: this._children.map((child) => child.toJSON()),
     };
   }
 
@@ -367,5 +368,6 @@ export namespace Node {
   export interface JSON<T extends string = string> {
     [key: string]: json.JSON | undefined;
     type: T;
+    children?: Array<JSON>;
   }
 }

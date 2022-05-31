@@ -61,7 +61,6 @@ export class Document extends Node<"document"> {
   public toJSON(): Document.JSON {
     return {
       ...super.toJSON(),
-      children: this._children.map((child) => child.toJSON()),
       style: this._style.map((sheet) => sheet.toJSON()),
     };
   }
@@ -101,7 +100,6 @@ export class Document extends Node<"document"> {
  */
 export namespace Document {
   export interface JSON extends Node.JSON<"document"> {
-    children: Array<Node.JSON>;
     style: Array<Sheet.JSON>;
   }
 
@@ -113,8 +111,8 @@ export namespace Document {
    * @internal
    */
   export function fromDocument(json: JSON): Trampoline<Document> {
-    return Trampoline.traverse(json.children, Node.fromNode).map((children) =>
-      Document.of(children, json.style.map(Sheet.from))
+    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
+      (children) => Document.of(children, json.style.map(Sheet.from))
     );
   }
 }

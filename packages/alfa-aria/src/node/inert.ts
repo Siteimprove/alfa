@@ -22,21 +22,14 @@ export class Inert extends Node<"inert"> {
     return true;
   }
 
-  public toJSON(): Inert.JSON {
-    return {
-      ...super.toJSON(),
-      children: this._children.map((child) => child.toJSON()),
-    };
-  }
-
   public toString(): string {
     return "ignored";
   }
-}
 
-/**
- * @public
- */
-export namespace Inert {
-  export interface JSON extends Node.JSON<"inert"> {}
+  public toJSON(): Node.JSON<"inert"> {
+    const result = super.toJSON();
+    delete result.children;
+
+    return result;
+  }
 }

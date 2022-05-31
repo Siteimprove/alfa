@@ -72,10 +72,13 @@ export class Text extends Node<"text"> implements Slotable {
   }
 
   public toJSON(): Text.JSON {
-    return {
+    const result = {
       ...super.toJSON(),
       data: this.data,
     };
+    delete result.children;
+
+    return result;
   }
 
   public toString(): string {

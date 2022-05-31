@@ -131,7 +131,6 @@ export abstract class Node<T extends string = string>
  */
 export namespace Node {
   export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
-    [key: string]: json.JSON;
     node: string;
   }
 

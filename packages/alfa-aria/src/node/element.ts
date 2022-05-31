@@ -101,7 +101,6 @@ export class Element extends Node<"element"> {
       role: this._role.map((role) => role.name).getOr(null),
       name: this._name.map((name) => name.value).getOr(null),
       attributes: this._attributes.map((attribute) => attribute.toJSON()),
-      children: this._children.map((child) => child.toJSON()),
     };
   }
 
