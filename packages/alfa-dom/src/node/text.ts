@@ -31,8 +31,8 @@ export class Text extends Node<"text"> implements Slotable {
     return this._data;
   }
 
-  public parent(options: Node.Traversal = {}): Option<Node> {
-    if (options.flattened === true) {
+  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    if (options.isSet(Node.Traversal.flattened)) {
       return this._parent.flatMap((parent) => {
         if (Shadow.isShadow(parent)) {
           return parent.host;
@@ -52,7 +52,7 @@ export class Text extends Node<"text"> implements Slotable {
   public assignedSlot(): Option<Slot> {
     return Slotable.findSlot(this);
   }
-  
+
   /**
    * @internal
    **/

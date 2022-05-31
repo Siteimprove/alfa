@@ -37,15 +37,19 @@ export class Document extends Node<"document"> {
     return this._frame;
   }
 
-  public parent(options: Node.Traversal = {}): Option<Node> {
-    return options.nested === true ? this.frame : super.parent(options);
+  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    return options.isSet(Node.Traversal.nested)
+      ? this.frame
+      : super.parent(options);
   }
 
-/**
-  * @internal
-  **/
-  protected _internalPath(options?: Node.Traversal): string {
-    if (options?.nested) {
+  /**
+   * @internal
+   **/
+  protected _internalPath(
+    options: Node.Traversal = Node.Traversal.empty
+  ): string {
+    if (options.isSet(Node.Traversal.nested)) {
       return this._frame
         .map((frame) => frame.path(options) + "/document-node()")
         .getOr("/");

@@ -19,12 +19,10 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-array": "workspace:^0.38.1",
-    "@siteimprove/alfa-earl": "workspace:^0.38.1",
     "@siteimprove/alfa-equatable": "workspace:^0.38.1",
     "@siteimprove/alfa-flags": "workspace:^0.38.1",
     "@siteimprove/alfa-json": "workspace:^0.38.1",
-    "@siteimprove/alfa-option": "workspace:^0.38.1",
-    "@siteimprove/alfa-sarif": "workspace:^0.38.1"
+    "@siteimprove/alfa-option": "workspace:^0.38.1"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.38.1"

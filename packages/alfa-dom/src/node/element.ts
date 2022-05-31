@@ -129,8 +129,8 @@ export class Element<N extends string = string>
     return Sequence.from(this._classes);
   }
 
-  public parent(options: Node.Traversal = {}): Option<Node> {
-    if (options.flattened === true) {
+  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    if (options.isSet(Node.Traversal.flattened)) {
       return this._parent.flatMap((parent) => {
         if (Shadow.isShadow(parent)) {
           return parent.host;
@@ -147,10 +147,12 @@ export class Element<N extends string = string>
     return this._parent;
   }
 
-  public children(options: Node.Traversal = {}): Sequence<Node> {
+  public children(
+    options: Node.Traversal = Node.Traversal.empty
+  ): Sequence<Node> {
     const children: Array<Node> = [];
 
-    if (options.flattened === true) {
+    if (options.isSet(Node.Traversal.flattened)) {
       if (this._shadow.isSome()) {
         return this._shadow.get().children(options);
       }
@@ -167,14 +169,14 @@ export class Element<N extends string = string>
         }
       }
     } else {
-      if (options.composed === true && this._shadow.isSome()) {
+      if (options.isSet(Node.Traversal.composed) && this._shadow.isSome()) {
         children.push(this._shadow.get());
       }
 
       children.push(...this._children);
     }
 
-    if (options.nested === true && this._content.isSome()) {
+    if (options.isSet(Node.Traversal.nested) && this._content.isSome()) {
       children.push(this._content.get());
     }
 
@@ -259,9 +261,9 @@ export class Element<N extends string = string>
     return Slot.findSlotables(this);
   }
 
-/**
-  * @internal
-  **/
+  /**
+   * @internal
+   **/
   protected _internalPath(options?: Node.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))

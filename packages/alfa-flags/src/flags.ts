@@ -4,16 +4,6 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import * as json from "@siteimprove/alfa-json";
 
 /**
- * Individual flags are numbers with at most one bit set to 1, i.e. powers of
- * two.
- * Since we do not currently need more than 8 flags, we can safely restrict this
- * union.
- *
- * @internal
- */
-type allFlags = 0 | 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256;
-
-/**
  * Class for modelling set of boolean flags.
  * Flags are stored as bits in a single number. Due to Javascript limitation
  * on bitwise operations, this means that a maximum of 32 flags can be handled.
@@ -21,14 +11,9 @@ type allFlags = 0 | 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256;
  *
  * @public
  */
-export class Flags<F extends allFlags = allFlags>
+export class Flags<F extends Flags.allFlags = Flags.allFlags>
   implements Equatable, json.Serializable<Flags.JSON>
 {
-  /**
-   * Empty set of flags.
-   */
-  public static empty = new Flags(0);
-
   protected _value: number;
 
   protected constructor(value: number) {
@@ -105,4 +90,14 @@ export namespace Flags {
   export interface JSON {
     [key: string]: boolean;
   }
+
+  /**
+   * Individual flags are numbers with at most one bit set to 1, i.e. powers of
+   * two.
+   * Since we do not currently need more than 8 flags, we can safely restrict this
+   * union.
+   *
+   * @internal
+   */
+  export type allFlags = 0 | 1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256;
 }

@@ -7,9 +7,6 @@
       "path": "../alfa-array"
     },
     {
-      "path": "../alfa-earl"
-    },
-    {
       "path": "../alfa-equatable"
     },
     {
@@ -23,9 +20,6 @@
     },
     {
       "path": "../alfa-sarif"
-    },
-    {
-      "path": "../alfa-test"
     }
   ]
 }
