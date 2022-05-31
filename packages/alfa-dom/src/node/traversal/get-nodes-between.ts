@@ -4,7 +4,6 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 
 import { lowestCommonAncestor } from "./lowest-common-ancestor";
 
-const { Traversal } = Node;
 const { equals, or } = Predicate;
 
 /**
@@ -26,9 +25,9 @@ export function getNodesBetween(
   node1: Node,
   node2: Node,
   includeOptions: Options = { includeFirst: false, includeSecond: false },
-  treeOptions: Node.Traversal = Traversal.of(
-    Traversal.flattened,
-    Traversal.nested
+  treeOptions: Node.Traversal = Node.Traversal.of(
+    Node.Traversal.flattened,
+    Node.Traversal.nested
   )
 ): Sequence<Node> {
   let between = getNodesInclusivelyBetween(node1, node2, treeOptions);
