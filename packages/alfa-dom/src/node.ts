@@ -1,4 +1,3 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
 import { Flags } from "@siteimprove/alfa-flags";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -30,10 +29,8 @@ import * as predicate from "./node/predicate";
 export abstract class Node<T extends string = string>
   extends tree.Node<Node, Node.Traversal.Flag, T>
   implements
-    Iterable<Node>,
-    Equatable,
-    json.Serializable<Node.JSON>,
     earl.Serializable<Node.EARL>,
+    json.Serializable<Node.JSON<T>>,
     sarif.Serializable<sarif.Location>
 {
   protected constructor(children: Array<Node>, type: T) {

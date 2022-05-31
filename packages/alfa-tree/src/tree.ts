@@ -44,7 +44,7 @@ export abstract class Node<
   protected readonly _type: T;
 
   /**
-   * Whether or not the node is frozen.
+   * Whether the node is frozen.
    *
    * @remarks
    * As nodes are initialized without a parent and possibly attached to a parent
