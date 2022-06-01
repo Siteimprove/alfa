@@ -19,6 +19,18 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.39.0](../../compare/v0.38.1...v0.39.0) (2022-06-01)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now ignore interposed descendants with a fully transparent background. ([#1118](../../issues/1118), [#1130](../../pull/1130))
+
+### Fixed
+
+- [@siteimprove/packages/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now ignore `box-shadow` that are obviously invisible (transparent color; or no offset, spread, nor blur). ([#1120](../../issues/1120), [#1141](../../pull/1141))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): DOM nodes that are not rendered but referenced by `aria-owns` from another node are now correctly removed from the accessibility tree. ([#1111](../../issues/1111), [#1151](../../pull/1151))
+
 ## [0.38.1](../../compare/v0.38.0...v0.38.1) (2022-05-18)
 
 ### Fixed
