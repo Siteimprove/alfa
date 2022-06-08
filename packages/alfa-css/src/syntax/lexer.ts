@@ -267,49 +267,29 @@ const consumeEscapedCodePoint: Parser.Infallible<
 /**
  * {@link https://drafts.csswg.org/css-syntax/#consume-a-number}
  */
-const consumeNumber: Parser.Infallible<
-  [Array<number>, number],
-  Token.Number
-> = ([input, i]) => {
-  const number: Array<number> = [];
+const consumeNumber: Parser.Infallible<[Array<number>, number], Token.Number> =
+  ([input, i]) => {
+    const number: Array<number> = [];
 
-  let code = input[i];
+    let code = input[i];
 
-  let isSigned = false;
-  let isInteger = true;
+    let isSigned = false;
+    let isInteger = true;
 
-  if (code === 0x2b || code === 0x2d) {
-    number.push(code);
-    code = input[++i];
-    isSigned = true;
-  }
-
-  while (isDigit(code)) {
-    number.push(code);
-    code = input[++i];
-  }
-
-  if (code === 0x2e && isDigit(input[i + 1])) {
-    number.push(0x2e, input[i + 1]);
-    code = input[(i += 2)];
-    isInteger = false;
+    if (code === 0x2b || code === 0x2d) {
+      number.push(code);
+      code = input[++i];
+      isSigned = true;
+    }
 
     while (isDigit(code)) {
       number.push(code);
       code = input[++i];
     }
-  }
 
-  if (code === 0x45 || code === 0x65) {
-    let offset = 1;
-
-    if (input[i + 1] === 0x2b || input[i + 1] === 0x2d) {
-      offset = 2;
-    }
-
-    if (isDigit(input[i + offset])) {
-      number.push(...input.slice(i, i + offset + 1));
-      code = input[(i += offset + 1)];
+    if (code === 0x2e && isDigit(input[i + 1])) {
+      number.push(0x2e, input[i + 1]);
+      code = input[(i += 2)];
       isInteger = false;
 
       while (isDigit(code)) {
@@ -317,10 +297,28 @@ const consumeNumber: Parser.Infallible<
         code = input[++i];
       }
     }
-  }
 
-  return [[input, i], Token.number(convert(number), isInteger, isSigned)];
-};
+    if (code === 0x45 || code === 0x65) {
+      let offset = 1;
+
+      if (input[i + 1] === 0x2b || input[i + 1] === 0x2d) {
+        offset = 2;
+      }
+
+      if (isDigit(input[i + offset])) {
+        number.push(...input.slice(i, i + offset + 1));
+        code = input[(i += offset + 1)];
+        isInteger = false;
+
+        while (isDigit(code)) {
+          number.push(code);
+          code = input[++i];
+        }
+      }
+    }
+
+    return [[input, i], Token.number(convert(number), isInteger, isSigned)];
+  };
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#consume-a-numeric-token}
@@ -396,27 +394,25 @@ const consumeIdentifierLike: Parser.Infallible<
 /**
  * {@link https://drafts.csswg.org/css-syntax/#consume-a-string-token}
  */
-const consumeString: Parser.Infallible<
-  [Array<number>, number],
-  Token.String
-> = ([input, i]) => {
-  const end = input[i++];
+const consumeString: Parser.Infallible<[Array<number>, number], Token.String> =
+  ([input, i]) => {
+    const end = input[i++];
 
-  let string = "";
-  let code: number;
+    let string = "";
+    let code: number;
 
-  while (i < input.length) {
-    code = input[i++];
+    while (i < input.length) {
+      code = input[i++];
 
-    if (isNewline(code) || code === end) {
-      break;
+      if (isNewline(code) || code === end) {
+        break;
+      }
+
+      string += fromCharCode(code);
     }
 
-    string += fromCharCode(code);
-  }
-
-  return [[input, i], Token.string(string)];
-};
+    return [[input, i], Token.string(string)];
+  };
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#consume-a-url-token}
@@ -482,188 +478,184 @@ const consumeURL: Parser.Infallible<
 /**
  * {@link https://drafts.csswg.org/css-syntax/#consume-remnants-of-bad-url}
  */
-const consumeBadURL: Parser.Infallible<
-  [Array<number>, number],
-  Token.BadURL
-> = ([input, i]) => {
-  let code: number;
+const consumeBadURL: Parser.Infallible<[Array<number>, number], Token.BadURL> =
+  ([input, i]) => {
+    let code: number;
 
-  while (i < input.length) {
-    if (startsValidEscape([input, i])) {
-      [[input, i]] = consumeEscapedCodePoint([input, i]);
-    } else {
-      code = input[i++];
+    while (i < input.length) {
+      if (startsValidEscape([input, i])) {
+        [[input, i]] = consumeEscapedCodePoint([input, i]);
+      } else {
+        code = input[i++];
 
-      if (code === 0x29) {
-        break;
+        if (code === 0x29) {
+          break;
+        }
       }
     }
-  }
 
-  return [[input, i], Token.badURL()];
-};
+    return [[input, i], Token.badURL()];
+  };
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#consume-a-token}
  */
-const consumeToken: Parser.Infallible<
-  [Array<number>, number],
-  Token | null
-> = ([input, i]) => {
-  // https://drafts.csswg.org/css-syntax/#consume-comments
-  while (i < input.length) {
-    if (input[i] === 0x2f && input[i + 1] === 0x2a) {
-      i += 2;
+const consumeToken: Parser.Infallible<[Array<number>, number], Token | null> =
+  ([input, i]) => {
+    // https://drafts.csswg.org/css-syntax/#consume-comments
+    while (i < input.length) {
+      if (input[i] === 0x2f && input[i + 1] === 0x2a) {
+        i += 2;
 
-      while (i < input.length) {
-        if (input[i] === 0x2a && input[i + 1] === 0x2f) {
-          i += 2;
-          break;
+        while (i < input.length) {
+          if (input[i] === 0x2a && input[i + 1] === 0x2f) {
+            i += 2;
+            break;
+          }
+
+          i++;
         }
+      } else {
+        break;
+      }
+    }
 
+    if (i >= input.length) {
+      return [[input, i], null];
+    }
+
+    const code = input[i];
+
+    if (isWhitespace(code)) {
+      i++;
+
+      while (isWhitespace(input[i])) {
         i++;
       }
-    } else {
-      break;
-    }
-  }
 
-  if (i >= input.length) {
-    return [[input, i], null];
-  }
-
-  const code = input[i];
-
-  if (isWhitespace(code)) {
-    i++;
-
-    while (isWhitespace(input[i])) {
-      i++;
+      return [[input, i], Token.whitespace()];
     }
 
-    return [[input, i], Token.whitespace()];
-  }
+    if (isNameStart(code)) {
+      return consumeIdentifierLike([input, i]);
+    }
 
-  if (isNameStart(code)) {
-    return consumeIdentifierLike([input, i]);
-  }
+    if (isDigit(code)) {
+      return consumeNumeric([input, i]);
+    }
 
-  if (isDigit(code)) {
-    return consumeNumeric([input, i]);
-  }
+    switch (code) {
+      case 0x22:
+        return consumeString([input, i]);
 
-  switch (code) {
-    case 0x22:
-      return consumeString([input, i]);
+      case 0x23:
+        i++;
 
-    case 0x23:
-      i++;
+        if (isName(input[i]) || startsValidEscape([input, i])) {
+          const isIdentifier = startsIdentifier([input, i]);
 
-      if (isName(input[i]) || startsValidEscape([input, i])) {
-        const isIdentifier = startsIdentifier([input, i]);
+          let name: string;
 
-        let name: string;
+          [[input, i], name] = consumeName([input, i]);
 
-        [[input, i], name] = consumeName([input, i]);
+          return [[input, i], Token.hash(name, isIdentifier)];
+        }
 
-        return [[input, i], Token.hash(name, isIdentifier)];
-      }
+        return [[input, i + 1], Token.delim(code)];
 
-      return [[input, i + 1], Token.delim(code)];
+      case 0x27:
+        return consumeString([input, i]);
 
-    case 0x27:
-      return consumeString([input, i]);
+      case 0x28:
+        return [[input, i + 1], Token.openParenthesis()];
 
-    case 0x28:
-      return [[input, i + 1], Token.openParenthesis()];
+      case 0x29:
+        return [[input, i + 1], Token.closeParenthesis()];
 
-    case 0x29:
-      return [[input, i + 1], Token.closeParenthesis()];
+      case 0x2b:
+        if (startsNumber([input, i])) {
+          return consumeNumeric([input, i]);
+        }
 
-    case 0x2b:
-      if (startsNumber([input, i])) {
-        return consumeNumeric([input, i]);
-      }
+        return [[input, i + 1], Token.delim(code)];
 
-      return [[input, i + 1], Token.delim(code)];
+      case 0x2c:
+        return [[input, i + 1], Token.comma()];
 
-    case 0x2c:
-      return [[input, i + 1], Token.comma()];
+      case 0x2d:
+        if (startsNumber([input, i])) {
+          return consumeNumeric([input, i]);
+        }
 
-    case 0x2d:
-      if (startsNumber([input, i])) {
-        return consumeNumeric([input, i]);
-      }
+        if (input[i + 1] === 0x2d && input[i + 2] === 0x3e) {
+          return [[input, i + 3], Token.closeComment()];
+        }
 
-      if (input[i + 1] === 0x2d && input[i + 2] === 0x3e) {
-        return [[input, i + 3], Token.closeComment()];
-      }
+        if (startsIdentifier([input, i])) {
+          return consumeIdentifierLike([input, i]);
+        }
 
-      if (startsIdentifier([input, i])) {
-        return consumeIdentifierLike([input, i]);
-      }
+        return [[input, i + 1], Token.delim(code)];
 
-      return [[input, i + 1], Token.delim(code)];
+      case 0x2e:
+        if (startsNumber([input, i])) {
+          return consumeNumeric([input, i]);
+        }
 
-    case 0x2e:
-      if (startsNumber([input, i])) {
-        return consumeNumeric([input, i]);
-      }
+        return [[input, i + 1], Token.delim(code)];
 
-      return [[input, i + 1], Token.delim(code)];
+      case 0x3a:
+        return [[input, i + 1], Token.colon()];
 
-    case 0x3a:
-      return [[input, i + 1], Token.colon()];
+      case 0x3b:
+        return [[input, i + 1], Token.semicolon()];
 
-    case 0x3b:
-      return [[input, i + 1], Token.semicolon()];
+      case 0x3c:
+        if (
+          input[i + 1] === 0x21 &&
+          input[i + 2] === 0x2d &&
+          input[i + 3] === 0x2d
+        ) {
+          return [[input, i + 4], Token.openComment()];
+        }
 
-    case 0x3c:
-      if (
-        input[i + 1] === 0x21 &&
-        input[i + 2] === 0x2d &&
-        input[i + 3] === 0x2d
-      ) {
-        return [[input, i + 4], Token.openComment()];
-      }
+        return [[input, i + 1], Token.delim(code)];
 
-      return [[input, i + 1], Token.delim(code)];
+      case 0x40:
+        i++;
 
-    case 0x40:
-      i++;
+        if (startsIdentifier([input, i])) {
+          let name: string;
 
-      if (startsIdentifier([input, i])) {
-        let name: string;
+          [[input, i], name] = consumeName([input, i]);
 
-        [[input, i], name] = consumeName([input, i]);
+          return [[input, i], Token.atKeyword(name)];
+        }
 
-        return [[input, i], Token.atKeyword(name)];
-      }
+        return [[input, i], Token.delim(code)];
 
-      return [[input, i], Token.delim(code)];
+      case 0x5b:
+        return [[input, i + 1], Token.openSquareBracket()];
 
-    case 0x5b:
-      return [[input, i + 1], Token.openSquareBracket()];
+      case 0x5c:
+        if (startsValidEscape([input, i])) {
+          return consumeIdentifierLike([input, i]);
+        }
 
-    case 0x5c:
-      if (startsValidEscape([input, i])) {
-        return consumeIdentifierLike([input, i]);
-      }
+        return [[input, i + 1], Token.delim(code)];
 
-      return [[input, i + 1], Token.delim(code)];
+      case 0x5d:
+        return [[input, i + 1], Token.closeSquareBracket()];
 
-    case 0x5d:
-      return [[input, i + 1], Token.closeSquareBracket()];
+      case 0x7b:
+        return [[input, i + 1], Token.openCurlyBracket()];
 
-    case 0x7b:
-      return [[input, i + 1], Token.openCurlyBracket()];
+      case 0x7d:
+        return [[input, i + 1], Token.closeCurlyBracket()];
+    }
 
-    case 0x7d:
-      return [[input, i + 1], Token.closeCurlyBracket()];
-  }
-
-  return [[input, i + 1], Token.delim(code)];
-};
+    return [[input, i + 1], Token.delim(code)];
+  };
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#convert-a-string-to-a-number}
