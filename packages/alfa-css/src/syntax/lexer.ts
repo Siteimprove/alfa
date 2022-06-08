@@ -561,7 +561,7 @@ const consumeToken: Parser.Infallible<[Array<number>, number], Token | null> =
           return [[input, i], Token.hash(name, isIdentifier)];
         }
 
-        return [[input, i + 1], Token.delim(code)];
+        return [[input, i], Token.delim(code)];
 
       case 0x27:
         return consumeString([input, i]);
