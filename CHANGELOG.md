@@ -19,6 +19,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.39.1](../../compare/v0.39.0...v0.39.1) (2022-06-09)
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css): Fixed a bug in the lexer that sometimes caused Alfa to drop the character following a `#`. ([#1156](../../pull/1156))
+
 ## [0.39.0](../../compare/v0.38.1...v0.39.0) (2022-06-01)
 
 ### Added
