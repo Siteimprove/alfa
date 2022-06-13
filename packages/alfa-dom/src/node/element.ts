@@ -130,8 +130,10 @@ export class Element<N extends string = string>
   }
 
   public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    const parent = this._parent as Option<Node>;
+
     if (options.isSet(Node.Traversal.flattened)) {
-      return this._parent.flatMap((parent) => {
+      return parent.flatMap((parent) => {
         if (Shadow.isShadow(parent)) {
           return parent.host;
         }
@@ -144,12 +146,13 @@ export class Element<N extends string = string>
       });
     }
 
-    return this._parent;
+    return parent;
   }
 
   public children(
     options: Node.Traversal = Node.Traversal.empty
   ): Sequence<Node> {
+    const treeChildren = this._children as Array<Node>;
     const children: Array<Node> = [];
 
     if (options.isSet(Node.Traversal.flattened)) {
@@ -161,7 +164,7 @@ export class Element<N extends string = string>
         return Sequence.from(this.assignedNodes());
       }
 
-      for (const child of this._children) {
+      for (const child of treeChildren) {
         if (Slot.isSlot(child)) {
           children.push(...child.children(options));
         } else {
@@ -173,7 +176,7 @@ export class Element<N extends string = string>
         children.push(this._shadow.get());
       }
 
-      children.push(...this._children);
+      children.push(...treeChildren);
     }
 
     if (options.isSet(Node.Traversal.nested) && this._content.isSome()) {

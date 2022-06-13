@@ -1,5 +1,8 @@
 import { Flags } from "@siteimprove/alfa-flags";
 import { Lazy } from "@siteimprove/alfa-lazy";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -27,7 +30,7 @@ import * as predicate from "./node/predicate";
  * @public
  */
 export abstract class Node<T extends string = string>
-  extends tree.Node<Node, Node.Traversal.Flag, T>
+  extends tree.Node<Node.Traversal.Flag, T>
   implements
     earl.Serializable<Node.EARL>,
     json.Serializable<tree.Node.JSON<T>>,
@@ -194,6 +197,44 @@ export abstract class Node<T extends string = string>
       ],
     };
   }
+}
+
+/**
+ * @public
+ */
+export interface Node {
+  // Overriding type of tree traversal function; due to constructor signature
+  // we cannot mix in other kind of nodes.
+  parent(options?: Node.Traversal): Option<Node>;
+  isParentOf(node: Node, options?: Node.Traversal): boolean;
+  root(options?: Node.Traversal): Node;
+  isRootOf(node: Node, options?: Node.Traversal): boolean;
+  children(options?: Node.Traversal): Sequence<Node>;
+  isChildOf(node: Node, options?: Node.Traversal): boolean;
+  descendants(options?: Node.Traversal): Sequence<Node>;
+  isDescendantOf(node: Node, options?: Node.Traversal): boolean;
+  inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
+  isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
+  ancestors(options?: Node.Traversal): Sequence<Node>;
+  isAncestorOf(node: Node, options?: Node.Traversal): boolean;
+  inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
+  isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;
+  siblings(options?: Node.Traversal): Sequence<Node>;
+  isSiblingOf(node: Node, options?: Node.Traversal): boolean;
+  inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
+  isInclusiveSiblingOf(node: Node, options?: Node.Traversal): boolean;
+  preceding(options?: Node.Traversal): Sequence<Node>;
+  following(options?: Node.Traversal): Sequence<Node>;
+  first(options?: Node.Traversal): Option<Node>;
+  last(options?: Node.Traversal): Option<Node>;
+  previous(options?: Node.Traversal): Option<Node>;
+  next(options?: Node.Traversal): Option<Node>;
+  index(options?: Node.Traversal): number;
+  closest<T extends Node>(
+    refinement: Refinement<Node, T>,
+    options?: Node.Traversal
+  ): Option<T>;
+  closest(predicate: Predicate<Node>, options?: Node.Traversal): Option<Node>;
 }
 
 /**
