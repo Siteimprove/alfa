@@ -87,7 +87,7 @@ export class Element extends Node<"element"> {
       this._role,
       this._name,
       this._attributes,
-      this._children.map((child) => child.clone())
+      (this._children as Array<Node>).map((child) => child.clone())
     );
   }
 

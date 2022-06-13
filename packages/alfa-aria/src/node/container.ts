@@ -19,7 +19,7 @@ export class Container extends Node<"container"> {
   public clone(parent: Option<Node> = None): Container {
     return new Container(
       this._node,
-      this._children.map((child) => child.clone())
+      (this._children as Array<Node>).map((child) => child.clone())
     );
   }
 
