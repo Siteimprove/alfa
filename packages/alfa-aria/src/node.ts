@@ -38,19 +38,6 @@ export abstract class Node<T extends string = string>
 {
   protected readonly _node: dom.Node;
 
-  /**
-   * Whether or not the node is frozen.
-   *
-   * @remarks
-   * As nodes are initialized without a parent and possibly attached to a parent
-   * after construction, this makes hierarchies of nodes mutable. That is, a
-   * node without a parent node may be assigned one by being passed as a child
-   * to a parent node. When this happens, a node becomes frozen. Nodes can also
-   * become frozen before being assigned a parent by using the `Node#freeze()`
-   * method.
-   */
-  protected _frozen: boolean = false;
-
   protected constructor(owner: dom.Node, children: Array<Node>, type: T) {
     super(children, type);
     this._node = owner;
