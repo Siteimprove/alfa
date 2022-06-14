@@ -1,6 +1,6 @@
 import { Flags } from "@siteimprove/alfa-flags";
 import { Lazy } from "@siteimprove/alfa-lazy";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";

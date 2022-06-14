@@ -12,7 +12,6 @@ import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
 import * as dom from "@siteimprove/alfa-dom";
-import * as json from "@siteimprove/alfa-json";
 import * as tree from "@siteimprove/alfa-tree";
 
 import { Attribute } from "./attribute";
