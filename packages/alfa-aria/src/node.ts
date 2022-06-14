@@ -130,7 +130,7 @@ export abstract class Node<T extends string = string>
  * @public
  */
 export interface Node {
-  // Overriding type of tree traversal function; due to constructor signature
+  // Overriding type of tree traversal functions; due to constructor signature
   // we cannot mix in other kind of nodes.
   isParentOf(node: Node, options?: Node.Traversal): boolean;
   root(options?: Node.Traversal): Node;
