@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Element } from "@siteimprove/alfa-dom";
@@ -15,6 +15,8 @@ import { expectation } from "../common/act/expectation";
 
 import { Question } from "../common/act/question";
 import { Scope, Stability, Version } from "../tags";
+
+import { ExtendedDiagnostic, Detection } from "./diagnostics";
 
 const { isElement } = Element;
 const { isKeyword } = Keyword;
@@ -59,6 +61,9 @@ export default Rule.Atomic.of<
         );
 
         const askFocusIndicator = Question.of("has-focus-indicator", target);
+        const detection: Detection = hasFocusIndicator(device)(target)
+          ? "auto"
+          : "manual";
 
         return {
           1: askGoodClasses
@@ -77,8 +82,8 @@ export default Rule.Atomic.of<
                     .map((hasFocusIndicator) =>
                       expectation(
                         hasFocusIndicator,
-                        () => Outcomes.HasFocusIndicator,
-                        () => Outcomes.HasNoFocusIndicator
+                        () => Outcomes.HasFocusIndicator(detection),
+                        () => Outcomes.HasNoFocusIndicator(detection)
                       )
                     )
               )
@@ -90,16 +95,30 @@ export default Rule.Atomic.of<
 });
 
 export namespace Outcomes {
-  export const HasFocusIndicator = Ok.of(
-    Diagnostic.of(`The element has a visible focus indicator`)
-  );
+  export const HasFocusIndicator = (detection: Detection) =>
+    Ok.of(
+      ExtendedDiagnostic.of(
+        `The element has a visible focus indicator`,
+        "focus-indicator",
+        detection
+      )
+    );
 
-  export const HasNoFocusIndicator = Err.of(
-    Diagnostic.of(`The element does not have a visible focus indicator`)
-  );
+  export const HasNoFocusIndicator = (detection: Detection) =>
+    Err.of(
+      ExtendedDiagnostic.of(
+        `The element does not have a visible focus indicator`,
+        "focus-indicator",
+        detection
+      )
+    );
 
   export const HasGoodClass = Ok.of(
-    Diagnostic.of("The element has a class ensuring a visible focus indicator")
+    ExtendedDiagnostic.of(
+      "The element has a class ensuring a visible focus indicator",
+      "class",
+      "auto"
+    )
   );
 }
 

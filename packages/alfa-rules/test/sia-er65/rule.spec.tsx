@@ -14,10 +14,10 @@ test(`evaluate() passes an <a> element that uses the default focus outline`, asy
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
   ]);
 });
@@ -38,10 +38,10 @@ test(`evaluate() passes an <a> element that uses a non-default focus outline`, a
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
   ]);
 });
@@ -71,10 +71,10 @@ test(`evaluate() fails an <a> element that removes the default focus outline and
     ),
     [
       failed(R65, target, {
-        1: Outcomes.HasNoFocusIndicator,
+        1: Outcomes.HasNoFocusIndicator("manual"),
       }),
       passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator,
+        1: Outcomes.HasFocusIndicator("auto"),
       }),
     ]
   );
@@ -105,10 +105,10 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     ),
     [
       passed(R65, target, {
-        1: Outcomes.HasFocusIndicator,
+        1: Outcomes.HasFocusIndicator("manual"),
       }),
       passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator,
+        1: Outcomes.HasFocusIndicator("auto"),
       }),
     ]
   );
@@ -136,10 +136,10 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
   ]);
 });
@@ -165,10 +165,10 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
   ]);
 });
@@ -198,10 +198,10 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
   ]);
 });
@@ -227,10 +227,10 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
   ]);
 });
@@ -261,10 +261,10 @@ test(`evaluate() fails an <a> element that removes the default focus outline
     ),
     [
       failed(R65, target, {
-        1: Outcomes.HasNoFocusIndicator,
+        1: Outcomes.HasNoFocusIndicator("manual"),
       }),
       passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator,
+        1: Outcomes.HasFocusIndicator("auto"),
       }),
     ]
   );
@@ -294,10 +294,10 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
   ]);
 });
@@ -326,10 +326,10 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
   ]);
 });
@@ -356,10 +356,10 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
   ]);
 });
@@ -382,10 +382,10 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
   ]);
 });
@@ -411,10 +411,10 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator,
+      1: Outcomes.HasFocusIndicator("auto"),
     }),
   ]);
 });
@@ -445,7 +445,7 @@ test(`evaluate() passes an <a> element that has a class determined to have some 
         1: Outcomes.HasGoodClass,
       }),
       passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator,
+        1: Outcomes.HasFocusIndicator("auto"),
       }),
     ]
   );
@@ -474,10 +474,10 @@ test(`evaluate() passes an <a> element that does not have a class determined to 
     ),
     [
       passed(R65, target, {
-        1: Outcomes.HasFocusIndicator,
+        1: Outcomes.HasFocusIndicator("auto"),
       }),
       passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator,
+        1: Outcomes.HasFocusIndicator("auto"),
       }),
     ]
   );
@@ -516,10 +516,10 @@ test(`evaluate() falis an <a> element that does not have a class determined to h
     ),
     [
       failed(R65, target, {
-        1: Outcomes.HasNoFocusIndicator,
+        1: Outcomes.HasNoFocusIndicator("manual"),
       }),
       passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator,
+        1: Outcomes.HasFocusIndicator("auto"),
       }),
     ]
   );
