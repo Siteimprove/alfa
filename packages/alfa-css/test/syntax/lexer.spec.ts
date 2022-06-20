@@ -623,6 +623,19 @@ test(".lex() lexes a hash delimiter", (t) => {
   ]);
 });
 
+test(".lex() lexes two hash delimiters", (t) => {
+  lex(t, "##", [
+    {
+      type: "delim",
+      value: 0x23,
+    },
+    {
+      type: "delim",
+      value: 0x23,
+    },
+  ]);
+});
+
 test(".lex() lexes an important declaration", (t) => {
   lex(t, "display: none !important", [
     {
