@@ -1,7 +1,6 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 
-type Reason = "focus-indicator" | "class";
-export type Detection = "auto" | "manual";
+export type Reason = "auto-detected" | "user-answered" | "good-class";
 
 /**
  * @internal
@@ -9,19 +8,16 @@ export type Detection = "auto" | "manual";
 export class ExtendedDiagnostic extends Diagnostic {
   public static of(
     message: string,
-    reason: Reason = "class",
-    detection: Detection = "auto"
+    reason: Reason = "good-class"
   ): ExtendedDiagnostic {
-    return new ExtendedDiagnostic(message, reason, detection);
+    return new ExtendedDiagnostic(message, reason);
   }
 
   private readonly _reason: Reason;
-  private readonly _detection: Detection;
 
-  private constructor(message: string, reason: Reason, detection: Detection) {
+  private constructor(message: string, reason: Reason) {
     super(message);
     this._reason = reason;
-    this._detection = detection;
   }
 
   public equals(value: ExtendedDiagnostic): boolean;
@@ -30,9 +26,7 @@ export class ExtendedDiagnostic extends Diagnostic {
 
   public equals(value: unknown): boolean {
     return (
-      value instanceof ExtendedDiagnostic &&
-      value._reason === this._reason &&
-      value._detection === this._detection
+      value instanceof ExtendedDiagnostic && value._reason === this._reason
     );
   }
 
@@ -40,7 +34,6 @@ export class ExtendedDiagnostic extends Diagnostic {
     return {
       ...super.toJSON(),
       reason: this._reason,
-      detection: this._detection,
     };
   }
 }
