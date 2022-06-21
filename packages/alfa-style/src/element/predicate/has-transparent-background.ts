@@ -1,7 +1,7 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Color, Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Context } from "@siteimprove/alfa-selector";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
@@ -59,10 +59,7 @@ export function hasTransparentBackground(
         }
         // The element itself has transparent background, but it may have non-transparent content.
         return element
-          .children({
-            nested: true,
-            flattened: true,
-          })
+          .children(Node.fullTree)
           .filter(isElement)
           .every(hasTransparentBackground(device, context));
       });

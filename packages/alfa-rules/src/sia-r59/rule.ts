@@ -26,7 +26,7 @@ export default Rule.Atomic.of<Page, Document>({
 
       expectations(target) {
         const hasHeadings = target
-          .descendants({ flattened: true })
+          .descendants(Node.flatTree)
           .filter(isElement)
           .some(and(hasNamespace(Namespace.HTML), hasRole(device, "heading")));
 

@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -22,7 +22,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants({ nested: true, flattened: true })
+          .descendants(Node.fullTree)
           .filter(isElement)
           .filter(
             and(
@@ -38,7 +38,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             target.content.every((contentDocument) =>
               contentDocument
-                .descendants({ flattened: true })
+                .descendants(Node.flatTree)
                 .filter(isElement)
                 .filter(and(isVisible(device), isTabbable(device)))
                 .isEmpty()

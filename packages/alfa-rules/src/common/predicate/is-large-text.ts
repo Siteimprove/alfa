@@ -1,6 +1,6 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Element, Text } from "@siteimprove/alfa-dom";
+import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Style } from "@siteimprove/alfa-style";
 
 const { isElement } = Element;
@@ -10,7 +10,7 @@ const { isElement } = Element;
  */
 export function isLargeText(device: Device): Predicate<Text> {
   return (text) => {
-    const parent = text.parent({ flattened: true }).filter(isElement);
+    const parent = text.parent(Node.flatTree).filter(isElement);
 
     if (parent.isNone()) {
       return false;

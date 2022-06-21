@@ -20,7 +20,7 @@ export default Rule.Atomic.of<Page, Document>({
   tags: [Scope.Page],
   evaluate({ device, document }) {
     const firstHeading = document
-      .descendants({ flattened: true })
+      .descendants(Node.flatTree)
       .filter(and(isElement, not(isIgnored(device))))
       .find(hasRole(device, "heading"));
 

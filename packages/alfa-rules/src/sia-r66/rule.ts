@@ -58,9 +58,7 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
             yield node;
           }
 
-          const children = node.children({ flattened: true, nested: true });
-
-          for (const child of children) {
+          for (const child of node.children(Node.fullTree)) {
             yield* visit(child);
           }
         }
@@ -102,7 +100,7 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
           })
         );
 
-        const parent = target.parent({ flattened: true }).get() as Element;
+        const parent = target.parent(Node.flatTree).get() as Element;
 
         return {
           1: result

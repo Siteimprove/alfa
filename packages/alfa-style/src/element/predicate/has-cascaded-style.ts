@@ -1,5 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
-import { Declaration, Element, Text } from "@siteimprove/alfa-dom";
+import { Declaration, Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
@@ -23,9 +23,6 @@ export function hasCascadedStyle<N extends Property.Name>(
       ? Style.from(node, device, context)
           .cascaded(name)
           .some((value) => value.some(predicate))
-      : node
-          .parent({ flattened: true })
-          .filter(isElement)
-          .some(hasCascadedStyle);
+      : node.parent(Node.flatTree).filter(isElement).some(hasCascadedStyle);
   };
 }

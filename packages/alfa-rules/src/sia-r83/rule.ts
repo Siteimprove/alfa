@@ -46,7 +46,9 @@ export default Rule.Atomic.of<Page, Text>({
     return {
       applicability() {
         return document
-          .inclusiveDescendants({ composed: true, flattened: true })
+          .inclusiveDescendants(
+            Node.Traversal.of(Node.Traversal.composed, Node.Traversal.flattened)
+          )
           .find(and(isElement, hasName("body")))
           .map((body) => body.children())
           .getOr(Sequence.empty())
@@ -85,18 +87,14 @@ export default Rule.Atomic.of<Page, Text>({
           }
 
           // Recursively visit subtree.
-          const children = node.children({ flattened: true, nested: true });
-
-          for (const child of children) {
+          for (const child of node.children(Node.fullTree)) {
             yield* visit(child, collect);
           }
         }
       },
 
       expectations(target) {
-        const parent = target
-          .parent({ flattened: true, nested: true })
-          .filter(isElement);
+        const parent = target.parent(Node.fullTree).filter(isElement);
 
         const horizontallyClippedBy = parent.flatMap(
           horizontallyClipper(device)

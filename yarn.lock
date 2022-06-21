@@ -972,11 +972,11 @@ __metadata:
     "@siteimprove/alfa-device": "workspace:^0.39.1"
     "@siteimprove/alfa-dom": "workspace:^0.39.1"
     "@siteimprove/alfa-equatable": "workspace:^0.39.1"
+    "@siteimprove/alfa-flags": "workspace:^0.39.1"
     "@siteimprove/alfa-graph": "workspace:^0.39.1"
     "@siteimprove/alfa-hash": "workspace:^0.39.1"
     "@siteimprove/alfa-iterable": "workspace:^0.39.1"
     "@siteimprove/alfa-json": "workspace:^0.39.1"
-    "@siteimprove/alfa-lazy": "workspace:^0.39.1"
     "@siteimprove/alfa-map": "workspace:^0.39.1"
     "@siteimprove/alfa-mapper": "workspace:^0.39.1"
     "@siteimprove/alfa-option": "workspace:^0.39.1"
@@ -988,6 +988,7 @@ __metadata:
     "@siteimprove/alfa-table": "workspace:^0.39.1"
     "@siteimprove/alfa-test": "workspace:^0.39.1"
     "@siteimprove/alfa-thunk": "workspace:^0.39.1"
+    "@siteimprove/alfa-tree": "workspace:^0.39.1"
   languageName: unknown
   linkType: soft
 
@@ -1313,6 +1314,7 @@ __metadata:
     "@siteimprove/alfa-css": "workspace:^0.39.1"
     "@siteimprove/alfa-earl": "workspace:^0.39.1"
     "@siteimprove/alfa-equatable": "workspace:^0.39.1"
+    "@siteimprove/alfa-flags": "workspace:^0.39.1"
     "@siteimprove/alfa-iterable": "workspace:^0.39.1"
     "@siteimprove/alfa-json": "workspace:^0.39.1"
     "@siteimprove/alfa-lazy": "workspace:^0.39.1"
@@ -1325,6 +1327,7 @@ __metadata:
     "@siteimprove/alfa-sequence": "workspace:^0.39.1"
     "@siteimprove/alfa-test": "workspace:^0.39.1"
     "@siteimprove/alfa-trampoline": "workspace:^0.39.1"
+    "@siteimprove/alfa-tree": "workspace:^0.39.1"
   languageName: unknown
   linkType: soft
 
@@ -1394,6 +1397,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-equatable@workspace:packages/alfa-equatable"
   dependencies:
+    "@siteimprove/alfa-test": "workspace:^0.39.1"
+  languageName: unknown
+  linkType: soft
+
+"@siteimprove/alfa-flags@workspace:^0.39.1, @siteimprove/alfa-flags@workspace:packages/alfa-flags":
+  version: 0.0.0-use.local
+  resolution: "@siteimprove/alfa-flags@workspace:packages/alfa-flags"
+  dependencies:
+    "@siteimprove/alfa-array": "workspace:^0.39.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.39.1"
+    "@siteimprove/alfa-json": "workspace:^0.39.1"
     "@siteimprove/alfa-test": "workspace:^0.39.1"
   languageName: unknown
   linkType: soft
@@ -2253,6 +2267,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@siteimprove/alfa-tree@workspace:^0.39.1, @siteimprove/alfa-tree@workspace:packages/alfa-tree":
+  version: 0.0.0-use.local
+  resolution: "@siteimprove/alfa-tree@workspace:packages/alfa-tree"
+  dependencies:
+    "@siteimprove/alfa-array": "workspace:^0.39.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.39.1"
+    "@siteimprove/alfa-flags": "workspace:^0.39.1"
+    "@siteimprove/alfa-json": "workspace:^0.39.1"
+    "@siteimprove/alfa-option": "workspace:^0.39.1"
+    "@siteimprove/alfa-test": "workspace:^0.39.1"
+  languageName: unknown
+  linkType: soft
+
 "@siteimprove/alfa-trilean@workspace:^0.39.1, @siteimprove/alfa-trilean@workspace:packages/alfa-trilean":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-trilean@workspace:packages/alfa-trilean"
@@ -2400,7 +2427,7 @@ __metadata:
     minimist: ^1.2.6
     package-dependency-graph: ^1.14.3
     prettier: ^2.4.1
-    typescript: ^4.6.2
+    typescript: ^4.7.3
   languageName: unknown
   linkType: soft
 
@@ -8853,23 +8880,23 @@ resolve@~1.19.0:
   languageName: node
   linkType: hard
 
-typescript@^4.6.2:
-  version: 4.6.2
-  resolution: "typescript@npm:4.6.2"
+typescript@^4.7.3:
+  version: 4.7.4
+  resolution: "typescript@npm:4.7.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 8a44ed7e6f6c4cb1ebe8cf236ecda2fb119d84dcf0fbd77e707b2dfea1bbcfc4e366493a143513ce7f57203c75da9d4e20af6fe46de89749366351046be7577c
+  checksum: 5750181b1cd7e6482c4195825547e70f944114fb47e58e4aa7553e62f11b3f3173766aef9c281783edfd881f7b8299cf35e3ca8caebe73d8464528c907a164df
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.6.2#~builtin<compat/typescript>":
-  version: 4.6.2
-  resolution: "typescript@patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=32657b"
+"typescript@patch:typescript@^4.7.3#~builtin<compat/typescript>":
+  version: 4.7.4
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=32657b"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 4b15830bdbd391a66f9f3bcc2dc81fdcaa8143adbf3f9e47dc67ab2d971646a1caf19b89c677afea066e22d3d111f3c1b7b137e3d9a7e8663a6bf9497d428041
+  checksum: 0b078b97f27848c2d10fc0777b7cb4cb85374426620edac25b2fe62459a4344569655e7f1a989d0ce9d5618cdeb958451eb2ee9436e78f7af86a99e800df967b
   languageName: node
   linkType: hard
 

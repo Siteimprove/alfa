@@ -31,9 +31,11 @@ export class Text extends Node<"text"> implements Slotable {
     return this._data;
   }
 
-  public parent(options: Node.Traversal = {}): Option<Node> {
-    if (options.flattened === true) {
-      return this._parent.flatMap((parent) => {
+  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    const parent = this._parent as Option<Node>;
+
+    if (options.isSet(Node.Traversal.flattened)) {
+      return parent.flatMap((parent) => {
         if (Shadow.isShadow(parent)) {
           return parent.host;
         }
@@ -46,13 +48,13 @@ export class Text extends Node<"text"> implements Slotable {
       });
     }
 
-    return this._parent;
+    return parent;
   }
 
   public assignedSlot(): Option<Slot> {
     return Slotable.findSlot(this);
   }
-  
+
   /**
    * @internal
    **/
@@ -72,10 +74,13 @@ export class Text extends Node<"text"> implements Slotable {
   }
 
   public toJSON(): Text.JSON {
-    return {
+    const result = {
       ...super.toJSON(),
       data: this.data,
     };
+    delete result.children;
+
+    return result;
   }
 
   public toString(): string {

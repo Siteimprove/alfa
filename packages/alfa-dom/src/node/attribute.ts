@@ -93,9 +93,9 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     }
   }
 
-/**
-  * @internal
-  **/
+  /**
+   * @internal
+   **/
   protected _internalPath(options?: Node.Traversal): string {
     let path = this.owner.map((owner) => owner.path(options)).getOr("/");
 
@@ -133,13 +133,16 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
   }
 
   public toJSON(): Attribute.JSON<N> {
-    return {
+    let result = {
       ...super.toJSON(),
       namespace: this._namespace.getOr(null),
       prefix: this._prefix.getOr(null),
       name: this._name,
       value: this._value,
     };
+    delete result.children;
+
+    return result;
   }
 
   public toString(): string {

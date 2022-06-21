@@ -48,12 +48,15 @@ export class Type<N extends string = string> extends Node<"type"> {
   }
 
   public toJSON(): Type.JSON<N> {
-    return {
+    const result = {
       ...super.toJSON(),
       name: this._name,
       publicId: this._publicId.getOr(null),
       systemId: this._systemId.getOr(null),
     };
+    delete result.children;
+
+    return result;
   }
 
   public toString(): string {

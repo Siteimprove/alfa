@@ -856,7 +856,7 @@ function isRendered(node: Node, device: Device): boolean {
   }
 
   return node
-    .parent({ flattened: true })
+    .parent(Node.flatTree)
     .every((parent) => isRendered(parent, device));
 }
 

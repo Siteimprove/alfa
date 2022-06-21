@@ -48,8 +48,8 @@ export class Shadow extends Node<"shadow"> {
     return this._style;
   }
 
-  public parent(options: Node.Traversal = {}): Option<Node> {
-    if (options.composed === true) {
+  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    if (options.isSet(Node.Traversal.composed)) {
       return this._host;
     }
 
@@ -59,15 +59,17 @@ export class Shadow extends Node<"shadow"> {
   /**
    * @internal
    **/
-  protected _internalPath(options?: Node.Traversal): string {
-    if (options?.composed) {
+  protected _internalPath(
+    options: Node.Traversal = Node.Traversal.empty
+  ): string {
+    if (options.isSet(Node.Traversal.composed)) {
       return (
         this._host.map((host) => host.path(options)).getOr("") +
         "/shadow-root()"
       );
     }
 
-    if (options?.flattened) {
+    if (options.isSet(Node.Traversal.flattened)) {
       return this._host.map((host) => host.path(options)).getOr("/");
     }
 
@@ -77,7 +79,6 @@ export class Shadow extends Node<"shadow"> {
   public toJSON(): Shadow.JSON {
     return {
       ...super.toJSON(),
-      children: this._children.map((child) => child.toJSON()),
       mode: this._mode,
       style: this._style.map((sheet) => sheet.toJSON()),
     };
@@ -126,7 +127,6 @@ export namespace Shadow {
 
   export interface JSON extends Node.JSON {
     type: "shadow";
-    children: Array<Node.JSON>;
     mode: string;
     style: Array<Sheet.JSON>;
   }
@@ -139,8 +139,9 @@ export namespace Shadow {
    * @internal
    */
   export function fromShadow(json: JSON): Trampoline<Shadow> {
-    return Trampoline.traverse(json.children, Node.fromNode).map((children) =>
-      Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode)
+    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
+      (children) =>
+        Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode)
     );
   }
 }
