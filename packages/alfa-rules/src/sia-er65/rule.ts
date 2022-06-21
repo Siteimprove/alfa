@@ -61,9 +61,10 @@ export default Rule.Atomic.of<
         );
 
         const askFocusIndicator = Question.of("has-focus-indicator", target);
-        const reason: Reason = hasFocusIndicator(device)(target)
-          ? "auto-detected"
-          : "user-answered";
+        const hasIndicator = hasFocusIndicator(device)(target);
+        const reason: Reason = hasIndicator
+          ? Reason.AutoDetected
+          : Reason.UserAnswered;
 
         return {
           1: askGoodClasses
@@ -78,7 +79,7 @@ export default Rule.Atomic.of<
                 () => Outcomes.HasGoodClass,
                 () =>
                   askFocusIndicator
-                    .answerIf(hasFocusIndicator(device)(target), true)
+                    .answerIf(hasIndicator, true)
                     .map((hasFocusIndicator) =>
                       expectation(
                         hasFocusIndicator,
@@ -111,7 +112,7 @@ export namespace Outcomes {
   export const HasGoodClass = Ok.of(
     ExtendedDiagnostic.of(
       "The element has a class ensuring a visible focus indicator",
-      "good-class"
+      Reason.GoodClass
     )
   );
 }

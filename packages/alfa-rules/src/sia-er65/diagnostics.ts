@@ -1,16 +1,21 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 
-export type Reason = "auto-detected" | "user-answered" | "good-class";
+export enum Reason {
+  AutoDetected = "auto-detected",
+  UserAnswered = "user-answered",
+  GoodClass = "good-class",
+}
 
 /**
  * @internal
  */
 export class ExtendedDiagnostic extends Diagnostic {
-  public static of(
-    message: string,
-    reason: Reason = "good-class"
-  ): ExtendedDiagnostic {
-    return new ExtendedDiagnostic(message, reason);
+  public static of(message: string): Diagnostic;
+  public static of(message: string, reason: Reason): ExtendedDiagnostic;
+  public static of(message: string, reason?: Reason): Diagnostic {
+    return reason
+      ? new ExtendedDiagnostic(message, reason)
+      : Diagnostic.of(message);
   }
 
   private readonly _reason: Reason;
@@ -42,7 +47,9 @@ export class ExtendedDiagnostic extends Diagnostic {
  * @internal
  */
 export namespace ExtendedDiagnostic {
-  export interface JSON extends Diagnostic.JSON {}
+  export interface JSON extends Diagnostic.JSON {
+    reason: string;
+  }
 
   export function isExtendedDiagnostic(
     value: Diagnostic
