@@ -13,78 +13,78 @@ import { Refinement } from '@siteimprove/alfa-refinement';
 import { Sequence } from '@siteimprove/alfa-sequence';
 
 // @public
-export abstract class Node<N extends Node<N, F>, F extends Flags.allFlags, T extends string = string> implements Iterable<Node<N, F>>, Equatable, json.Serializable<Node.JSON<T>> {
+export abstract class Node<F extends Flags.allFlags, T extends string = string> implements Iterable<Node<F>>, Equatable, json.Serializable<Node.JSON<T>> {
     // (undocumented)
-    [Symbol.iterator](): Iterator<N>;
-    protected constructor(children: Array<N>, type: T);
+    [Symbol.iterator](): Iterator<Node<F>>;
+    protected constructor(children: Array<Node<F>>, type: T);
     // (undocumented)
-    ancestors(options?: Flags<F>): Sequence<N>;
+    ancestors(options?: Flags<F>): Sequence<Node<F>>;
     // @internal (undocumented)
-    _attachParent(parent: N): boolean;
+    _attachParent(parent: Node<F>): boolean;
     // (undocumented)
-    children(options?: Flags<F>): Sequence<N>;
+    children(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)
-    protected readonly _children: Array<N>;
+    protected readonly _children: Array<Node<F>>;
     // (undocumented)
-    closest<T extends N | this>(refinement: Refinement<N | this, T>, options?: Flags<F>): Option<T>;
+    closest<T extends Node<F>>(refinement: Refinement<Node<F>, T>, options?: Flags<F>): Option<T>;
     // (undocumented)
-    closest(predicate: Predicate<N | this>, options?: Flags<F>): Option<N | this>;
+    closest(predicate: Predicate<Node<F>>, options?: Flags<F>): Option<Node<F>>;
     // (undocumented)
-    descendants(options?: Flags<F>): Sequence<N>;
+    descendants(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)
-    equals(value: Node<N, F>): boolean;
+    equals(value: Node<F>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    first(options?: Flags<F>): Option<N>;
+    first(options?: Flags<F>): Option<Node<F>>;
     // (undocumented)
-    following(options?: Flags<F>): Sequence<N>;
+    following(options?: Flags<F>): Sequence<Node<F>>;
     freeze(): this;
     // (undocumented)
     get frozen(): boolean;
     protected _frozen: boolean;
     // (undocumented)
-    inclusiveAncestors(options?: Flags<F>): Sequence<N | this>;
+    inclusiveAncestors(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)
-    inclusiveDescendants(options?: Flags<F>): Sequence<N | this>;
+    inclusiveDescendants(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)
-    inclusiveSiblings(options?: Flags<F>): Sequence<N | this>;
+    inclusiveSiblings(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)
     index(options?: Flags<F>): number;
     // (undocumented)
-    isAncestorOf(node: Node<Node<N, F>, F>, options?: Flags<F>): boolean;
+    isAncestorOf(node: Node<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isChildOf(node: Node<Node<N, F>, F>, options?: Flags<F>): boolean;
+    isChildOf(node: Node<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isDescendantOf(node: Node<Node<N, F>, F>, options?: Flags<F>): boolean;
+    isDescendantOf(node: Node<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isInclusiveAncestorOf(node: Node<N, F>, options?: Flags<F>): boolean;
+    isInclusiveAncestorOf(node: Node<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isInclusiveDescendantsOf(node: Node<N, F>, options?: Flags<F>): boolean;
+    isInclusiveDescendantsOf(node: Node<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isInclusiveSiblingOf(node: Node<N, F>, options?: Flags<F>): boolean;
+    isInclusiveSiblingOf(node: Node<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isParentOf(node: Node<Node<N, F>, F>, options?: Flags<F>): boolean;
+    isParentOf(node: Node<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isRootOf(node: Node<N, F>, options?: Flags<F>): boolean;
+    isRootOf(node: Node<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    isSiblingOf(node: Node<Node<N, F>, F>, options?: Flags<F>): boolean;
+    isSiblingOf(node: Node<F>, options?: Flags<F>): boolean;
     // (undocumented)
-    last(options?: Flags<F>): Option<N>;
+    last(options?: Flags<F>): Option<Node<F>>;
     // (undocumented)
-    next(options?: Flags<F>): Option<N>;
+    next(options?: Flags<F>): Option<Node<F>>;
     // (undocumented)
-    parent(options?: Flags<F>): Option<N>;
+    parent(options?: Flags<F>): Option<Node<F>>;
     // (undocumented)
-    protected _parent: Option<N>;
+    protected _parent: Option<Node<F>>;
     // (undocumented)
-    preceding(options?: Flags<F>): Sequence<N>;
+    preceding(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)
-    previous(options?: Flags<F>): Option<N>;
+    previous(options?: Flags<F>): Option<Node<F>>;
     // (undocumented)
-    root(options?: Flags<F>): N | this;
+    root(options?: Flags<F>): Node<F>;
     // (undocumented)
-    siblings(options?: Flags<F>): Sequence<N>;
+    siblings(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)
     toJSON(): Node.JSON<T>;
     // (undocumented)

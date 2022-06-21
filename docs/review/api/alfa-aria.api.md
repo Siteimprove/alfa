@@ -509,7 +509,7 @@ export namespace Name {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> extends tree.Node<Node, Node.Traversal.Flag, T> implements Serializable<Node.JSON<T>> {
+export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements Serializable<Node.JSON<T>> {
     protected constructor(owner: dom_2.Node, children: Array<Node>, type: T);
     // (undocumented)
     attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
@@ -521,7 +521,6 @@ export abstract class Node<T extends string = string> extends tree.Node<Node, No
     children(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
     abstract clone(parent?: Option<Node>): Node;
-    protected _frozen: boolean;
     // (undocumented)
     abstract isIgnored(): boolean;
     // (undocumented)
@@ -536,6 +535,60 @@ export abstract class Node<T extends string = string> extends tree.Node<Node, No
     get role(): Option<Role>;
     // (undocumented)
     toJSON(): Node.JSON<T>;
+}
+
+// @public (undocumented)
+export interface Node {
+    // (undocumented)
+    ancestors(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    closest<T extends Node>(refinement: Refinement<Node, T>, options?: Node.Traversal): Option<T>;
+    // (undocumented)
+    closest(predicate: Predicate<Node>, options?: Node.Traversal): Option<Node>;
+    // (undocumented)
+    descendants(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    first(options?: Node.Traversal): Option<Node>;
+    // (undocumented)
+    following(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    index(options?: Node.Traversal): number;
+    // (undocumented)
+    isAncestorOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isChildOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isDescendantOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isInclusiveSiblingOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isParentOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isRootOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isSiblingOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    last(options?: Node.Traversal): Option<Node>;
+    // (undocumented)
+    next(options?: Node.Traversal): Option<Node>;
+    // (undocumented)
+    preceding(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    previous(options?: Node.Traversal): Option<Node>;
+    // (undocumented)
+    root(options?: Node.Traversal): Node;
+    // (undocumented)
+    siblings(options?: Node.Traversal): Sequence<Node>;
 }
 
 // @public (undocumented)

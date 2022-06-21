@@ -620,7 +620,7 @@ namespace Function_2 {
     const // (undocumented)
     consume: Parser<Slice<Token>, Function_2>;
     const // (undocumented)
-    parse: <T>(name?: string | undefined, body?: Parser<Slice<Token>, T, string, []> | undefined) => Parser<Slice<Token>, readonly [Function_2, T], string, []>;
+    parse: <T>(name?: string, body?: Parser<Slice<Token>, T, string, []> | undefined) => Parser<Slice<Token>, readonly [Function_2, T], string, []>;
 }
 export { Function_2 as Function }
 

@@ -753,7 +753,7 @@ export namespace NamespaceRule {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> extends tree.Node<Node, Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
+export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
     protected constructor(children: Array<Node>, type: T);
     // (undocumented)
     equals(value: Node): boolean;
@@ -769,6 +769,64 @@ export abstract class Node<T extends string = string> extends tree.Node<Node, No
     toEARL(): Node.EARL;
     // (undocumented)
     toSARIF(): sarif.Location;
+}
+
+// @public (undocumented)
+export interface Node {
+    // (undocumented)
+    ancestors(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    children(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    closest<T extends Node>(refinement: Refinement<Node, T>, options?: Node.Traversal): Option<T>;
+    // (undocumented)
+    closest(predicate: Predicate<Node>, options?: Node.Traversal): Option<Node>;
+    // (undocumented)
+    descendants(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    first(options?: Node.Traversal): Option<Node>;
+    // (undocumented)
+    following(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    index(options?: Node.Traversal): number;
+    // (undocumented)
+    isAncestorOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isChildOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isDescendantOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isInclusiveSiblingOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isParentOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isRootOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    isSiblingOf(node: Node, options?: Node.Traversal): boolean;
+    // (undocumented)
+    last(options?: Node.Traversal): Option<Node>;
+    // (undocumented)
+    next(options?: Node.Traversal): Option<Node>;
+    // (undocumented)
+    parent(options?: Node.Traversal): Option<Node>;
+    // (undocumented)
+    preceding(options?: Node.Traversal): Sequence<Node>;
+    // (undocumented)
+    previous(options?: Node.Traversal): Option<Node>;
+    // (undocumented)
+    root(options?: Node.Traversal): Node;
+    // (undocumented)
+    siblings(options?: Node.Traversal): Sequence<Node>;
 }
 
 // @public (undocumented)
