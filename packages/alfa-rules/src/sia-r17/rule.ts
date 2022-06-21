@@ -18,7 +18,7 @@ const { isTabbable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r17",
-  requirements: [Criterion.of("1.3.1"), Criterion.of("4.1.2")],
+  requirements: [Criterion.of("4.1.2")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
