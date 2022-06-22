@@ -31,7 +31,6 @@
     "async": "^3.2.1",
     "axios": "^0.27.2",
     "execa": "^5.1.1",
-    "jsonld": "^5.2.0",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.3",
     "prettier": "^2.4.1",
