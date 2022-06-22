@@ -1,8 +1,8 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
+import { Flags } from "@siteimprove/alfa-flags";
 import { Graph } from "@siteimprove/alfa-graph";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Lazy } from "@siteimprove/alfa-lazy";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -12,7 +12,7 @@ import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
 import * as dom from "@siteimprove/alfa-dom";
-import * as json from "@siteimprove/alfa-json";
+import * as tree from "@siteimprove/alfa-tree";
 
 import { Attribute } from "./attribute";
 import { Name } from "./name";
@@ -31,29 +31,15 @@ const { isRendered } = Style;
  *
  * @public
  */
-export abstract class Node implements Serializable<Node.JSON> {
+export abstract class Node<T extends string = string>
+  extends tree.Node<Node.Traversal.Flag, T>
+  implements Serializable<Node.JSON<T>>
+{
   protected readonly _node: dom.Node;
-  protected readonly _children: Array<Node>;
-  protected _parent: Option<Node> = None;
 
-  /**
-   * Whether or not the node is frozen.
-   *
-   * @remarks
-   * As nodes are initialized without a parent and possibly attached to a parent
-   * after construction, this makes hierarchies of nodes mutable. That is, a
-   * node without a parent node may be assigned one by being passed as a child
-   * to a parent node. When this happens, a node becomes frozen. Nodes can also
-   * become frozen before being assigned a parent by using the `Node#freeze()`
-   * method.
-   */
-  protected _frozen: boolean = false;
-
-  protected constructor(owner: dom.Node, children: Array<Node>) {
+  protected constructor(owner: dom.Node, children: Array<Node>, type: T) {
+    super(children, type);
     this._node = owner;
-    this._children = children
-      .map((child) => (child._frozen ? child.clone() : child))
-      .filter((child) => child._attachParent(this));
   }
 
   public get node(): dom.Node {
@@ -66,19 +52,6 @@ export abstract class Node implements Serializable<Node.JSON> {
 
   public get role(): Option<Role> {
     return None;
-  }
-
-  public get frozen(): boolean {
-    return this._frozen;
-  }
-
-  /**
-   * Freeze the node. This prevents further expansion of the node hierarchy,
-   * meaning that the node can no longer be passed as a child to a parent node.
-   */
-  public freeze(): this {
-    this._frozen = true;
-    return this;
   }
 
   public attribute<N extends Attribute.Name>(
@@ -98,10 +71,10 @@ export abstract class Node implements Serializable<Node.JSON> {
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-parent}
    */
-  public parent(options: Node.Traversal = {}): Option<Node> {
-    const parent = this._parent;
+  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    const parent = this._parent as Option<Node>;
 
-    if (options.ignored === true) {
+    if (options.has(Node.Traversal.ignored)) {
       return parent;
     }
 
@@ -111,23 +84,14 @@ export abstract class Node implements Serializable<Node.JSON> {
   }
 
   /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-root}
-   */
-  public root(options: Node.Traversal = {}): Node {
-    for (const parent of this.parent(options)) {
-      return parent.root(options);
-    }
-
-    return this;
-  }
-
-  /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-child}
    */
-  public children(options: Node.Traversal = {}): Sequence<Node> {
-    const children = Sequence.from(this._children);
+  public children(
+    options: Node.Traversal = Node.Traversal.empty
+  ): Sequence<Node> {
+    const children = Sequence.from(this._children) as Sequence<Node>;
 
-    if (options.ignored === true) {
+    if (options.has(Node.Traversal.ignored)) {
       return children;
     }
 
@@ -136,90 +100,85 @@ export abstract class Node implements Serializable<Node.JSON> {
     );
   }
 
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
-   */
-  public descendants(options: Node.Traversal = {}): Sequence<Node> {
-    return this.children(options).flatMap((child) =>
-      Sequence.of(
-        child,
-        Lazy.of(() => child.descendants(options))
-      )
-    );
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant}
-   */
-  public inclusiveDescendants(options: Node.Traversal = {}): Sequence<Node> {
-    return Sequence.of(
-      this,
-      Lazy.of(() => this.descendants(options))
-    );
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-ancestor}
-   */
-  public ancestors(options: Node.Traversal = {}): Sequence<Node> {
-    return this.parent(options)
-      .map((parent) =>
-        Sequence.of(
-          parent,
-          Lazy.of(() => parent.ancestors(options))
-        )
-      )
-      .getOrElse(() => Sequence.empty());
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor}
-   */
-  public inclusiveAncestors(options: Node.Traversal = {}): Sequence<Node> {
-    return Sequence.of(
-      this,
-      Lazy.of(() => this.ancestors(options))
-    );
-  }
-
   public abstract clone(parent?: Option<Node>): Node;
 
   public abstract isIgnored(): boolean;
 
-  public abstract toJSON(): Node.JSON;
-
-  /**
-   * @internal
-   */
-  public _attachParent(parent: Node): boolean {
-    if (this._frozen || this._parent.isSome()) {
-      return false;
-    }
-
-    this._parent = Option.of(parent);
-    this._frozen = true;
-
-    return true;
+  public toJSON(): Node.JSON<T> {
+    return {
+      ...super.toJSON(),
+      node: this._node.path(),
+    };
   }
 }
 
 /**
  * @public
  */
+export interface Node {
+  // Overriding type of tree traversal functions; due to constructor signature
+  // we cannot mix in other kind of nodes.
+  isParentOf(node: Node, options?: Node.Traversal): boolean;
+  root(options?: Node.Traversal): Node;
+  isRootOf(node: Node, options?: Node.Traversal): boolean;
+  isChildOf(node: Node, options?: Node.Traversal): boolean;
+  descendants(options?: Node.Traversal): Sequence<Node>;
+  isDescendantOf(node: Node, options?: Node.Traversal): boolean;
+  inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
+  isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
+  ancestors(options?: Node.Traversal): Sequence<Node>;
+  isAncestorOf(node: Node, options?: Node.Traversal): boolean;
+  inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
+  isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;
+  siblings(options?: Node.Traversal): Sequence<Node>;
+  isSiblingOf(node: Node, options?: Node.Traversal): boolean;
+  inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
+  isInclusiveSiblingOf(node: Node, options?: Node.Traversal): boolean;
+  preceding(options?: Node.Traversal): Sequence<Node>;
+  following(options?: Node.Traversal): Sequence<Node>;
+  first(options?: Node.Traversal): Option<Node>;
+  last(options?: Node.Traversal): Option<Node>;
+  previous(options?: Node.Traversal): Option<Node>;
+  next(options?: Node.Traversal): Option<Node>;
+  index(options?: Node.Traversal): number;
+  closest<T extends Node>(
+    refinement: Refinement<Node, T>,
+    options?: Node.Traversal
+  ): Option<T>;
+  closest(predicate: Predicate<Node>, options?: Node.Traversal): Option<Node>;
+}
+
+/**
+ * @public
+ */
 export namespace Node {
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: string;
+  export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
     node: string;
-    children: Array<JSON>;
   }
 
-  export interface Traversal {
-    /**
-     * When `true`, traverse both exposed and ignored nodes.
-     */
-    readonly ignored?: boolean;
+  export class Traversal extends Flags<Traversal.Flag> {
+    public static of(...flags: Array<Traversal.Flag>): Traversal {
+      return new Traversal(Flags._reduce(...flags));
+    }
   }
+
+  export namespace Traversal {
+    export type Flag = 0 | 1;
+
+    export const none = 0 as Flag;
+
+    /**
+     * When set, traverse both exposed and ignored nodes.
+     */
+    export const ignored = (1 << 0) as Flag;
+
+    export const empty = Traversal.of(none);
+  }
+
+  /**
+   * Traversal options to include ignored nodes in the traversal.
+   */
+  export const includeIgnored = Traversal.of(Traversal.ignored);
 
   const cache = Cache.empty<Device, Cache<dom.Node, Node>>();
 
@@ -232,7 +191,7 @@ export namespace Node {
       return _cache.get(node).get();
     }
 
-    const root = node.root({ flattened: true });
+    const root = node.root(dom.Node.flatTree);
 
     // If the cache already holds an entry for the root of the specified node,
     // then the tree that the node participates in has already been built, but
@@ -433,9 +392,7 @@ export namespace Node {
         // children in the flat tree that are neither claimed already nor
         // explicitly owned by the element.
         const implicit = node
-          .children({
-            flattened: true,
-          })
+          .children(dom.Node.flatTree)
           .reject((child) => claimed.has(child) || explicit.includes(child));
 
         // The children implicitly owned by the element come first, then the
@@ -558,9 +515,7 @@ export namespace Node {
       return Container.of(
         node,
         node
-          .children({
-            flattened: true,
-          })
+          .children(dom.Node.flatTree)
           .reject((child) => claimed.has(child))
           .map((child) => fromNode(child, device, claimed, owned, state))
       );

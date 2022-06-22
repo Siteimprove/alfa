@@ -67,15 +67,13 @@ export default Rule.Atomic.of<Page, Attribute>({
             }
           }
 
-          const children = node.children({ flattened: true });
-
-          for (const child of children) {
+          for (const child of node.children(Node.flatTree)) {
             yield* visit(child, lang);
           }
         }
 
         return document
-          .descendants({ composed: true, nested: true })
+          .descendants(Node.fullTree)
           .filter(isElement)
           .filter(and(hasNamespace(Namespace.HTML), hasName("body")))
           .flatMap((element) => Sequence.from(visit(element, None)))

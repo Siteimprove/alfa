@@ -2,7 +2,7 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
-import { Declaration, Element, MediaRule } from "@siteimprove/alfa-dom";
+import { Declaration, Element, MediaRule, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
 import { Media } from "@siteimprove/alfa-media";
@@ -58,7 +58,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants({ flattened: true, nested: true })
+          .descendants(Node.fullTree)
           .filter(isElement)
           .filter(isVisible(device))
           .filter(
@@ -145,7 +145,7 @@ function hasOrientationCondition(
 }
 
 function getRotation(element: Element, device: Device): Option<number> {
-  const parent = element.parent({ flattened: true }).filter(isElement);
+  const parent = element.parent(Node.flatTree).filter(isElement);
 
   const rotation = parent.isNone()
     ? Option.of(0)

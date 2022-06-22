@@ -70,7 +70,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
 
         // there can be more than one element with a role of main, going to any of these is OK.
         const mains = document
-          .inclusiveDescendants({ flattened: true })
+          .inclusiveDescendants(Node.flatTree)
           .filter(and(isElement, hasRole(device, "main")));
 
         const askIsMain = Question.of(

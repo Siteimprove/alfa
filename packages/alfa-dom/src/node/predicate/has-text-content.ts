@@ -11,7 +11,7 @@ const { not } = Predicate;
  */
 export function hasTextContent(
   predicate: Predicate<string> = not(isEmpty),
-  options: Node.Traversal = {}
+  options: Node.Traversal = Node.Traversal.empty
 ): Predicate<Node> {
   return (node) => predicate(node.textContent(options));
 }

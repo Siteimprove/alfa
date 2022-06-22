@@ -29,7 +29,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants({ flattened: true, nested: true })
+          .descendants(Node.fullTree)
           .filter(isElement)
           .filter(
             and(
@@ -44,9 +44,10 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            Node.hasInclusiveDescendant(and(isElement, isTabbable(device)), {
-              flattened: true,
-            })(target),
+            Node.hasInclusiveDescendant(
+              and(isElement, isTabbable(device)),
+              Node.flatTree
+            )(target),
             () => Outcomes.IsReachable,
             () => Outcomes.IsNotReachable
           ),

@@ -120,9 +120,7 @@ function* visit(node: Node, device: Device): Iterable<Element> {
     yield node;
   }
 
-  const children = node.children({ flattened: true, nested: true });
-
-  for (const child of children) {
+  for (const child of node.children(Node.fullTree)) {
     yield* visit(child, device);
   }
 }

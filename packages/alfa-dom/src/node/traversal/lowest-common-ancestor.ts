@@ -13,7 +13,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 export function lowestCommonAncestor(
   node1: Node,
   node2: Node,
-  options: Node.Traversal = {}
+  options: Node.Traversal = Node.Traversal.empty
 ): Option<Node> {
   return node1
     .inclusiveAncestors(options)

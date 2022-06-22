@@ -1,5 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
-import { Declaration, Element, Text } from "@siteimprove/alfa-dom";
+import { Declaration, Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
@@ -21,9 +21,6 @@ export function hasComputedStyle<N extends Property.Name>(
   return function hasComputedStyle(node): boolean {
     return isElement(node)
       ? Style.from(node, device, context).computed(name).some(predicate)
-      : node
-          .parent({ flattened: true })
-          .filter(isElement)
-          .some(hasComputedStyle);
+      : node.parent(Node.flatTree).filter(isElement).some(hasComputedStyle);
   };
 }

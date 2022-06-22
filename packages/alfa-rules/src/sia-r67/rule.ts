@@ -6,6 +6,8 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
+import * as dom from "@siteimprove/alfa-dom";
+
 import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
@@ -21,7 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants({ flattened: true, nested: true })
+          .descendants(dom.Node.fullTree)
           .filter(isElement)
           .filter(
             and(

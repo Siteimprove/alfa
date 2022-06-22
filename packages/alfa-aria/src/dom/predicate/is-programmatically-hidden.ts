@@ -63,10 +63,7 @@ function hasHiddenAncestors(
             // Or its parent is programmatically hidden
             (node: Node) =>
               node
-                .parent({
-                  flattened: true,
-                  nested: true,
-                })
+                .parent(Node.fullTree)
                 .some(hasHiddenAncestors(device, context))
           ),
           node

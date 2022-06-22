@@ -65,6 +65,9 @@
       "path": "../alfa-equatable"
     },
     {
+      "path": "../alfa-flags"
+    },
+    {
       "path": "../alfa-graph"
     },
     {
@@ -75,9 +78,6 @@
     },
     {
       "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-lazy"
     },
     {
       "path": "../alfa-map"
@@ -111,6 +111,9 @@
     },
     {
       "path": "../alfa-thunk"
+    },
+    {
+      "path": "../alfa-tree"
     }
   ]
 }

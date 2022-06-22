@@ -61,7 +61,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
         const isAtTheStartOfMain = (reference: Node) => {
           // Find the closest Element ancestor of the reference.
           const destination = reference
-            .inclusiveAncestors({ flattened: true, nested: true })
+            .inclusiveAncestors(Node.fullTree)
             .find(isElement);
 
           if (destination.isNone()) {
@@ -76,7 +76,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
 
           // there can be more than one element with a role of main, going to any of these is OK.
           const isAtStart = document
-            .inclusiveDescendants({ flattened: true })
+            .inclusiveDescendants(Node.flatTree)
             .filter(and(isElement, hasRole(device, "main")))
             .some((main) => isAtTheStart(main, device)(reference));
 

@@ -6,6 +6,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
+import * as dom from "@siteimprove/alfa-dom";
+
 import { expectation } from "../common/act/expectation";
 import { Group } from "../common/act/group";
 import { Question } from "../common/act/question";
@@ -26,7 +28,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
       applicability() {
         return (
           document
-            .descendants({ flattened: true, nested: true })
+            .descendants(dom.Node.fullTree)
             .filter(isElement)
             .filter(
               and(

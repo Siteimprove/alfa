@@ -49,12 +49,7 @@ export default Rule.Atomic.of<Page, Element>({
             }
           }
           // If the group has children, then iterate on all children of the group
-          const children = node.children({
-            flattened: true,
-            nested: true,
-          });
-
-          for (const child of children) {
+          for (const child of node.children(Node.fullTree)) {
             visit(child, group);
           }
         }

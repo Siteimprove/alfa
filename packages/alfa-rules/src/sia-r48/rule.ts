@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
     return {
       applicability() {
         return document
-          .descendants({ composed: true, nested: true })
+          .descendants(Node.composedNested)
           .filter(isElement)
           .filter(
             and(

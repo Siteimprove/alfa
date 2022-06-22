@@ -3,7 +3,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
@@ -245,11 +245,7 @@ function getLayers(
       // Only use the background layers from the parent if there is one. If there
       // isn't, this means we're at the root. In that case, we simply return the
       // layers we've found so far.
-      for (const parent of element
-        .parent({
-          flattened: true,
-        })
-        .filter(isElement)) {
+      for (const parent of element.parent(Node.flatTree).filter(isElement)) {
         // The opacity override only applies to the last layer, so it is not
         // used in the recursive calls
         return getLayers(parent, device, context).map((parentLayers) =>
@@ -321,11 +317,7 @@ export function getForeground(
           )
       );
 
-      for (const parent of element
-        .parent({
-          flattened: true,
-        })
-        .filter(isElement)) {
+      for (const parent of element.parent(Node.flatTree).filter(isElement)) {
         // Next, we handle the opacity of the element.
         // For this, we need the background colors of the parent (assuming that DOM
         // reflects layout).

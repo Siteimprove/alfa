@@ -129,9 +129,11 @@ export class Element<N extends string = string>
     return Sequence.from(this._classes);
   }
 
-  public parent(options: Node.Traversal = {}): Option<Node> {
-    if (options.flattened === true) {
-      return this._parent.flatMap((parent) => {
+  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    const parent = this._parent as Option<Node>;
+
+    if (options.isSet(Node.Traversal.flattened)) {
+      return parent.flatMap((parent) => {
         if (Shadow.isShadow(parent)) {
           return parent.host;
         }
@@ -144,13 +146,16 @@ export class Element<N extends string = string>
       });
     }
 
-    return this._parent;
+    return parent;
   }
 
-  public children(options: Node.Traversal = {}): Sequence<Node> {
+  public children(
+    options: Node.Traversal = Node.Traversal.empty
+  ): Sequence<Node> {
+    const treeChildren = this._children as Array<Node>;
     const children: Array<Node> = [];
 
-    if (options.flattened === true) {
+    if (options.isSet(Node.Traversal.flattened)) {
       if (this._shadow.isSome()) {
         return this._shadow.get().children(options);
       }
@@ -159,7 +164,7 @@ export class Element<N extends string = string>
         return Sequence.from(this.assignedNodes());
       }
 
-      for (const child of this._children) {
+      for (const child of treeChildren) {
         if (Slot.isSlot(child)) {
           children.push(...child.children(options));
         } else {
@@ -167,14 +172,14 @@ export class Element<N extends string = string>
         }
       }
     } else {
-      if (options.composed === true && this._shadow.isSome()) {
+      if (options.isSet(Node.Traversal.composed) && this._shadow.isSome()) {
         children.push(this._shadow.get());
       }
 
-      children.push(...this._children);
+      children.push(...treeChildren);
     }
 
-    if (options.nested === true && this._content.isSome()) {
+    if (options.isSet(Node.Traversal.nested) && this._content.isSome()) {
       children.push(this._content.get());
     }
 
@@ -259,9 +264,9 @@ export class Element<N extends string = string>
     return Slot.findSlotables(this);
   }
 
-/**
-  * @internal
-  **/
+  /**
+   * @internal
+   **/
   protected _internalPath(options?: Node.Traversal): string {
     let path = this.parent(options)
       .map((parent) => parent.path(options))
@@ -289,7 +294,6 @@ export class Element<N extends string = string>
         attribute.toJSON()
       ),
       style: this._style.map((style) => style.toJSON()).getOr(null),
-      children: this._children.map((child) => child.toJSON()),
       shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
       content: this._content.map((content) => content.toJSON()).getOr(null),
     };
@@ -359,7 +363,6 @@ export namespace Element {
     name: N;
     attributes: Array<Attribute.JSON>;
     style: Block.JSON | null;
-    children: Array<Node.JSON>;
     shadow: Shadow.JSON | null;
     content: Document.JSON | null;
   }
@@ -374,30 +377,32 @@ export namespace Element {
   export function fromElement<N extends string = string>(
     json: JSON<N>
   ): Trampoline<Element<N>> {
-    return Trampoline.traverse(json.children, Node.fromNode).map((children) => {
-      const element = Element.of(
-        Option.from(json.namespace as Namespace | null),
-        Option.from(json.prefix),
-        json.name,
-        json.attributes.map((attribute) =>
-          Attribute.fromAttribute(attribute).run()
-        ),
-        children,
-        json.style?.length === 0
-          ? None
-          : Option.from(json.style).map(Block.from)
-      );
+    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
+      (children) => {
+        const element = Element.of(
+          Option.from(json.namespace as Namespace | null),
+          Option.from(json.prefix),
+          json.name,
+          json.attributes.map((attribute) =>
+            Attribute.fromAttribute(attribute).run()
+          ),
+          children,
+          json.style?.length === 0
+            ? None
+            : Option.from(json.style).map(Block.from)
+        );
 
-      if (json.shadow !== null) {
-        element._attachShadow(Shadow.fromShadow(json.shadow).run());
+        if (json.shadow !== null) {
+          element._attachShadow(Shadow.fromShadow(json.shadow).run());
+        }
+
+        if (json.content !== null) {
+          element._attachContent(Document.fromDocument(json.content).run());
+        }
+
+        return element;
       }
-
-      if (json.content !== null) {
-        element._attachContent(Document.fromDocument(json.content).run());
-      }
-
-      return element;
-    });
+    );
   }
 
   export const {

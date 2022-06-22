@@ -37,15 +37,19 @@ export class Document extends Node<"document"> {
     return this._frame;
   }
 
-  public parent(options: Node.Traversal = {}): Option<Node> {
-    return options.nested === true ? this.frame : super.parent(options);
+  public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
+    return options.isSet(Node.Traversal.nested)
+      ? this.frame
+      : super.parent(options);
   }
 
-/**
-  * @internal
-  **/
-  protected _internalPath(options?: Node.Traversal): string {
-    if (options?.nested) {
+  /**
+   * @internal
+   **/
+  protected _internalPath(
+    options: Node.Traversal = Node.Traversal.empty
+  ): string {
+    if (options.isSet(Node.Traversal.nested)) {
       return this._frame
         .map((frame) => frame.path(options) + "/document-node()")
         .getOr("/");
@@ -57,7 +61,6 @@ export class Document extends Node<"document"> {
   public toJSON(): Document.JSON {
     return {
       ...super.toJSON(),
-      children: this._children.map((child) => child.toJSON()),
       style: this._style.map((sheet) => sheet.toJSON()),
     };
   }
@@ -97,7 +100,6 @@ export class Document extends Node<"document"> {
  */
 export namespace Document {
   export interface JSON extends Node.JSON<"document"> {
-    children: Array<Node.JSON>;
     style: Array<Sheet.JSON>;
   }
 
@@ -109,8 +111,8 @@ export namespace Document {
    * @internal
    */
   export function fromDocument(json: JSON): Trampoline<Document> {
-    return Trampoline.traverse(json.children, Node.fromNode).map((children) =>
-      Document.of(children, json.style.map(Sheet.from))
+    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
+      (children) => Document.of(children, json.style.map(Sheet.from))
     );
   }
 }

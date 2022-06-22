@@ -21,10 +21,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants({
-            flattened: true,
-            nested: true,
-          })
+          .descendants(Node.fullTree)
           .filter(isElement)
           .filter(
             and(
@@ -52,10 +49,7 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         const texts = target
-          .descendants({
-            flattened: true,
-            nested: true,
-          })
+          .descendants(Node.fullTree)
           .filter(isText)
           .reject((text) => text.data.trim() === "")
           .collect((text) => text.parent().filter(isElement))

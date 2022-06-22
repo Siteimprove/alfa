@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Style } from "@siteimprove/alfa-style";
@@ -34,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants({ nested: true, flattened: true })
+          .descendants(Node.fullTree)
           .filter(
             and(
               isElement,
@@ -68,13 +68,13 @@ export default Rule.Atomic.of<Page, Element>({
                 // descendants). So that we can hopefully afford to pay the
                 // price each time.
                 target
-                  .inclusiveDescendants({ flattened: true })
+                  .inclusiveDescendants(Node.flatTree)
                   .filter(
                     and(isText, (text) => test(not(isWhitespace), text.data))
                   )
                   .every((text) =>
                     text
-                      .parent({ flattened: true })
+                      .parent(Node.flatTree)
                       .filter(isElement)
                       .some(
                         or(

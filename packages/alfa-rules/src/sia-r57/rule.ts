@@ -7,6 +7,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
+import * as dom from "@siteimprove/alfa-dom";
+
 import { expectation } from "../common/act/expectation";
 
 import { isWhitespace } from "../common/predicate";
@@ -30,10 +32,7 @@ export default Rule.Atomic.of<Page, Text>({
 
     return {
       *applicability() {
-        const descendants = document.descendants({
-          flattened: true,
-          nested: true,
-        });
+        const descendants = document.descendants(dom.Node.fullTree);
 
         if (
           descendants
@@ -63,9 +62,7 @@ export default Rule.Atomic.of<Page, Text>({
             () =>
               expectation(
                 firstTabbable.some((element) =>
-                  element.isParentOf(target, {
-                    flattened: true,
-                  })
+                  element.isParentOf(target, dom.Node.flatTree)
                 ),
                 () => Outcomes.IsIncludedInFirstFocusableElement,
                 () => Outcomes.IsNotIncludedInLandmark
