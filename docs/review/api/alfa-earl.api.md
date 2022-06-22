@@ -16,7 +16,7 @@ export interface EARL extends Document {
         cnt?: "http://www.w3.org/2011/content#";
         dct?: "http://purl.org/dc/terms/";
         doap?: "http://usefulinc.com/ns/doap#";
-        foaf?: "http://xmlns.com/foaf/spec/#";
+        foaf?: "http://xmlns.com/foaf/0.1/";
         http?: "http://www.w3.org/2011/http#";
         ptr?: "http://www.w3.org/2009/pointers#";
     };
@@ -37,7 +37,6 @@ export namespace Serializable {
     // (undocumented)
     export function toEARL(value: unknown): Option<EARL>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

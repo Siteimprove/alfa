@@ -9,7 +9,7 @@ import { Result } from '@siteimprove/alfa-result';
 import { Rule } from '@siteimprove/alfa-act';
 
 // @public (undocumented)
-export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (input: I, rules: Iterable<Rule<I, T, Q, S>>, outcomes: Iterable<Outcome<I, T, Q, S>>) => string;
+export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (input: I, rules: Iterable<Rule<I, T, Q, S>>, outcomes: Iterable<Outcome<I, T, Q, S>>) => Promise<string>;
 
 // @public (undocumented)
 export namespace Formatter {
