@@ -16,7 +16,7 @@ export default function <I, T, Q, S>(): Formatter<I, T, Q, S> {
       "@context": {
         earl: "http://www.w3.org/ns/earl#",
         doap: "http://usefulinc.com/ns/doap#",
-        foaf: "http://xmlns.com/foaf/spec/#",
+        foaf: "http://xmlns.com/foaf/0.1/",
       },
       "@id": "https://alfa.siteimprove.com/",
       "@type": ["earl:Assertor", "earl:Software", "doap:Project"],
