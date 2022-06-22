@@ -26,14 +26,7 @@ export function getOffsetParent(
 
   if (
     test(
-      or(
-        not(isRendered(device)),
-        isRoot({
-          flattened: true,
-        }),
-        isBody,
-        isFixed
-      ),
+      or(not(isRendered(device)), isRoot(Node.flatTree), isBody, isFixed),
       element
     )
   ) {
@@ -43,9 +36,7 @@ export function getOffsetParent(
   const isStatic = isPositioned(device, "static");
 
   return element
-    .ancestors({
-      flattened: true,
-    })
+    .ancestors(Node.flatTree)
     .filter(isElement)
     .find(or(not(isStatic), isBody, and(isStatic, isTabular)));
 }

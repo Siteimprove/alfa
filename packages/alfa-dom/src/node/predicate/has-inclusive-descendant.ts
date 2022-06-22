@@ -7,7 +7,7 @@ import { Node } from "../../node";
  */
 export function hasInclusiveDescendant(
   predicate: Predicate<Node>,
-  options: Node.Traversal = {}
+  options: Node.Traversal = Node.Traversal.empty
 ): Predicate<Node> {
   return (node) => node.inclusiveDescendants(options).some(predicate);
 }

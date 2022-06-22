@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Attribute, Element } from "@siteimprove/alfa-dom";
+import { Attribute, Element, Node } from "@siteimprove/alfa-dom";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
@@ -18,7 +18,7 @@ export default Rule.Atomic.of<Page, Attribute>({
     return {
       applicability() {
         return document
-          .descendants({ composed: true, nested: true })
+          .descendants(Node.composedNested)
           .filter(isElement)
           .flatMap((element) =>
             Sequence.from(element.attributes).filter((attribute) =>

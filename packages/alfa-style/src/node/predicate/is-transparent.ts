@@ -33,7 +33,7 @@ export function isTransparent(
           return true;
         }
 
-        for (const parent of node.parent({ flattened: true })) {
+        for (const parent of node.parent(Node.flatTree)) {
           if (
             isText(node) &&
             isElement(parent) &&

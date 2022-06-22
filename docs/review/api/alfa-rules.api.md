@@ -49,7 +49,7 @@ import { System } from '@siteimprove/alfa-css';
 import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
-// @public (undocumented)
+// @public
 const _default: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
 // @public (undocumented)
@@ -82,7 +82,7 @@ const _default_18: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 // @public (undocumented)
 const _default_19: Rule.Atomic<Page, Group<Element<string>>, Question.Metadata, Group<Element<string>>>;
 
-// @public (undocumented)
+// @public
 const _default_2: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
@@ -115,7 +115,7 @@ const _default_28: Rule.Atomic<Page, Element<string>, Question.Metadata, Element
 // @public (undocumented)
 const _default_29: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
-// @public (undocumented)
+// @public
 const _default_3: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string> | Array_2<Node<string>>>;
 
 // @public (undocumented)
@@ -148,7 +148,7 @@ const _default_38: Rule.Atomic<Page, Element<string>, Question.Metadata, Element
 // @public (undocumented)
 const _default_39: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
 
-// @public (undocumented)
+// @public
 const _default_4: Rule.Atomic<Page, Document, Question.Metadata, Document>;
 
 // @public (undocumented)

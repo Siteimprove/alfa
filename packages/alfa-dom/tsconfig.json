@@ -92,6 +92,9 @@
       "path": "../alfa-equatable"
     },
     {
+      "path": "../alfa-flags"
+    },
+    {
       "path": "../alfa-iterable"
     },
     {
@@ -126,6 +129,9 @@
     },
     {
       "path": "../alfa-trampoline"
+    },
+    {
+      "path": "../alfa-tree"
     }
   ]
 }

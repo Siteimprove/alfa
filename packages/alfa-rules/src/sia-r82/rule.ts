@@ -38,7 +38,7 @@ export default Rule.Atomic.of<
     return {
       applicability() {
         return document
-          .descendants({ flattened: true, nested: true })
+          .descendants(Node.fullTree)
           .filter(isElement)
           .filter(
             and(

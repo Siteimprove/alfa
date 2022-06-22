@@ -13,7 +13,7 @@ import { Role } from "../role";
 /**
  * @public
  */
-export class Element extends Node {
+export class Element extends Node<"element"> {
   public static of(
     owner: dom.Node,
     role: Option<Role> = None,
@@ -41,7 +41,7 @@ export class Element extends Node {
     attributes: Array<Attribute>,
     children: Array<Node>
   ) {
-    super(owner, children);
+    super(owner, children, "element");
 
     this._role = role;
     this._name = name;
@@ -87,7 +87,7 @@ export class Element extends Node {
       this._role,
       this._name,
       this._attributes,
-      this._children.map((child) => child.clone())
+      (this._children as Array<Node>).map((child) => child.clone())
     );
   }
 
@@ -97,12 +97,10 @@ export class Element extends Node {
 
   public toJSON(): Element.JSON {
     return {
-      type: "element",
-      node: this._node.path(),
+      ...super.toJSON(),
       role: this._role.map((role) => role.name).getOr(null),
       name: this._name.map((name) => name.value).getOr(null),
       attributes: this._attributes.map((attribute) => attribute.toJSON()),
-      children: this._children.map((child) => child.toJSON()),
     };
   }
 
@@ -121,8 +119,7 @@ export class Element extends Node {
  * @public
  */
 export namespace Element {
-  export interface JSON extends Node.JSON {
-    type: "element";
+  export interface JSON extends Node.JSON<"element"> {
     role: string | null;
     name: string | null;
     attributes: Array<Attribute.JSON>;

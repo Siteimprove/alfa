@@ -7,19 +7,19 @@ import { Node } from "../node";
 /**
  * @public
  */
-export class Container extends Node {
+export class Container extends Node<"container"> {
   public static of(owner: dom.Node, children: Iterable<Node> = []): Container {
     return new Container(owner, Array.from(children));
   }
 
   private constructor(owner: dom.Node, children: Array<Node>) {
-    super(owner, children);
+    super(owner, children, "container");
   }
 
   public clone(parent: Option<Node> = None): Container {
     return new Container(
       this._node,
-      this._children.map((child) => child.clone())
+      (this._children as Array<Node>).map((child) => child.clone())
     );
   }
 
@@ -27,28 +27,11 @@ export class Container extends Node {
     return true;
   }
 
-  public toJSON(): Container.JSON {
-    return {
-      type: "container",
-      node: this._node.path(),
-      children: this._children.map((child) => child.toJSON()),
-    };
-  }
-
   public toString(): string {
     return [
       "container",
       ...this._children.map((child) => indent(child.toString())),
     ].join("\n");
-  }
-}
-
-/**
- * @public
- */
-export namespace Container {
-  export interface JSON extends Node.JSON {
-    type: "container";
   }
 }
 

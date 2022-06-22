@@ -1,5 +1,5 @@
 import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
 
 import { getOffsetParent } from "./get-offset-parent";
@@ -15,7 +15,7 @@ export function getPositioningParent(
   device: Device
 ): Option<Element> {
   if (isPositioned(device, "relative", "static", "sticky")(element)) {
-    return element.parent({ flattened: true }).filter(isElement);
+    return element.parent(Node.flatTree).filter(isElement);
   } else {
     return getOffsetParent(element, device);
   }

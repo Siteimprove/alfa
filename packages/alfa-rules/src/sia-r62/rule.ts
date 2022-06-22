@@ -67,7 +67,7 @@ export default Rule.Atomic.of<Page, Element>({
               if (
                 container.isSome() &&
                 node
-                  .descendants({ flattened: true })
+                  .descendants(Node.flatTree)
                   .some(and(isText, isVisible(device)))
               ) {
                 containers = containers.set(node, container.get());
@@ -87,12 +87,7 @@ export default Rule.Atomic.of<Page, Element>({
             }
           }
 
-          const children = node.children({
-            flattened: true,
-            nested: true,
-          });
-
-          for (const child of children) {
+          for (const child of node.children(Node.fullTree)) {
             yield* visit(child, container);
           }
         }
@@ -102,26 +97,17 @@ export default Rule.Atomic.of<Page, Element>({
         const nonLinkElements = containers
           .get(target)
           .get()
-          .inclusiveDescendants({
-            flattened: true,
-            nested: true,
-          })
+          .inclusiveDescendants(Node.fullTree)
           .filter(and(isElement, hasNonLinkText(device)));
 
         const linkElements = target
           // All descendants of the link.
-          .inclusiveDescendants({
-            flattened: true,
-            nested: true,
-          })
+          .inclusiveDescendants(Node.fullTree)
           .filter(isElement)
           // Plus those ancestors who don't include non-link text.
           .concat(
             target
-              .ancestors({
-                flattened: true,
-                nested: true,
-              })
+              .ancestors(Node.fullTree)
               .takeWhile(and(isElement, not(hasNonLinkText(device))))
           );
 
@@ -222,23 +208,17 @@ function hasNonLinkText(device: Device): Predicate<Element> {
     return hasNonLinkTextCache.get(element, () => {
       //  If we are already below a link, escape.
       if (
-        element
-          .inclusiveAncestors({
-            flattened: true,
-          })
-          .some(
-            and(
-              isElement,
-              hasRole(device, (role) => role.is("link"))
-            )
+        element.inclusiveAncestors(Node.flatTree).some(
+          and(
+            isElement,
+            hasRole(device, (role) => role.is("link"))
           )
+        )
       ) {
         return false;
       }
 
-      const children = element.children({
-        flattened: true,
-      });
+      const children = element.children(Node.flatTree);
 
       // If we've found text with more than whitespaces, we're done.
       if (

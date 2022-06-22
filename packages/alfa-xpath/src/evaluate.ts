@@ -25,7 +25,7 @@ import { Parser } from "./syntax/parser";
 export function* evaluate(
   scope: Node,
   expression: string | Expression | Builder,
-  options: evaluate.Options = {}
+  options: evaluate.Options = Node.Traversal.empty
 ): Iterable<Node> {
   if (typeof expression === "string") {
     const parsed = Parser.parse(expression);

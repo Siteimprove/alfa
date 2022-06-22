@@ -1,6 +1,6 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
+import { Flags } from "@siteimprove/alfa-flags";
 import { Lazy } from "@siteimprove/alfa-lazy";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -9,6 +9,8 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
+
+import * as tree from "@siteimprove/alfa-tree";
 
 import {
   Attribute,
@@ -24,298 +26,24 @@ import {
 import * as traversal from "./node/traversal";
 import * as predicate from "./node/predicate";
 
-const { equals } = Predicate;
-
 /**
  * @public
  */
 export abstract class Node<T extends string = string>
+  extends tree.Node<Node.Traversal.Flag, T>
   implements
-    Iterable<Node>,
-    Equatable,
-    json.Serializable<Node.JSON>,
     earl.Serializable<Node.EARL>,
+    json.Serializable<tree.Node.JSON<T>>,
     sarif.Serializable<sarif.Location>
 {
-  protected readonly _children: Array<Node>;
-  protected _parent: Option<Node> = None;
-  protected readonly _type: T;
-
-  /**
-   * Whether or not the node is frozen.
-   *
-   * @remarks
-   * As nodes are initialized without a parent and possibly attached to a parent
-   * after construction, this makes hierarchies of nodes mutable. That is, a
-   * node without a parent node may be assigned one by being passed as a child
-   * to a parent node. When this happens, a node becomes frozen. Nodes can also
-   * become frozen before being assigned a parent by using the `Node#freeze()`
-   * method.
-   */
-  protected _frozen: boolean = false;
-
   protected constructor(children: Array<Node>, type: T) {
-    this._children = children.filter((child) => child._attachParent(this));
-    this._type = type;
-  }
-
-  public get type(): T {
-    return this._type;
-  }
-
-  public get frozen(): boolean {
-    return this._frozen;
-  }
-
-  /**
-   * Freeze the node. This prevents further expansion of the node hierarchy,
-   * meaning that the node can no longer be passed as a child to a parent node.
-   */
-  public freeze(): this {
-    this._frozen = this._frozen || true;
-    return this;
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-parent}
-   */
-  public parent(options: Node.Traversal = {}): Option<Node> {
-    return this._parent;
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-parent}
-   */
-  public isParentOf(node: Node, options: Node.Traversal = {}): boolean {
-    return node.parent(options).includes(this);
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-root}
-   */
-  public root(options: Node.Traversal = {}): Node {
-    for (const parent of this.parent(options)) {
-      return parent.root(options);
-    }
-
-    return this;
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-root}
-   */
-  public isRootOf(node: Node, options: Node.Traversal = {}): boolean {
-    return node.root(options) === this;
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-child}
-   */
-  public children(options: Node.Traversal = {}): Sequence<Node> {
-    return Sequence.from(this._children);
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-child}
-   */
-  public isChildOf(node: Node, options: Node.Traversal = {}): boolean {
-    return node.children(options).includes(this);
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
-   */
-  public descendants(options: Node.Traversal = {}): Sequence<Node> {
-    return this.children(options).flatMap((child) =>
-      Sequence.of(
-        child,
-        Lazy.of(() => child.descendants(options))
-      )
-    );
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
-   */
-  public isDescendantOf(node: Node, options: Node.Traversal = {}): boolean {
-    return node.descendants(options).includes(this);
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant}
-   */
-  public inclusiveDescendants(options: Node.Traversal = {}): Sequence<Node> {
-    return Sequence.of(
-      this,
-      Lazy.of(() => this.descendants(options))
-    );
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-descendant}
-   */
-  public isInclusiveDescendantsOf(
-    node: Node,
-    options: Node.Traversal = {}
-  ): boolean {
-    return node.inclusiveDescendants(options).includes(this);
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-ancestor}
-   */
-  public ancestors(options: Node.Traversal = {}): Sequence<Node> {
-    for (const parent of this.parent(options)) {
-      return Sequence.of(
-        parent,
-        Lazy.of(() => parent.ancestors(options))
-      );
-    }
-
-    return Sequence.empty();
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-ancestor}
-   */
-  public isAncestorOf(node: Node, options: Node.Traversal = {}): boolean {
-    return node.ancestors(options).includes(this);
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor}
-   */
-  public inclusiveAncestors(options: Node.Traversal = {}): Sequence<Node> {
-    return Sequence.of(
-      this,
-      Lazy.of(() => this.ancestors(options))
-    );
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor}
-   */
-  public isInclusiveAncestorOf(
-    node: Node,
-    options: Node.Traversal = {}
-  ): boolean {
-    return node.inclusiveAncestors(options).includes(this);
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-sibling}
-   */
-  public siblings(options: Node.Traversal = {}): Sequence<Node> {
-    return this.inclusiveSiblings(options).reject(equals(this));
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-sibling}
-   */
-  public isSiblingOf(node: Node, options: Node.Traversal = {}): boolean {
-    return node.siblings(options).includes(this);
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-sibling}
-   */
-  public inclusiveSiblings(options: Node.Traversal = {}): Sequence<Node> {
-    for (const parent of this.parent(options)) {
-      return parent.children(options);
-    }
-
-    return Sequence.empty();
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-inclusive-sibling}
-   */
-  public isInclusiveSiblingOf(
-    node: Node,
-    options: Node.Traversal = {}
-  ): boolean {
-    return node.inclusiveSiblings(options).includes(this);
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-preceding}
-   */
-  public preceding(options: Node.Traversal = {}): Sequence<Node> {
-    return this.inclusiveSiblings(options).takeUntil(equals(this)).reverse();
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-following}
-   */
-  public following(options: Node.Traversal = {}): Sequence<Node> {
-    return this.inclusiveSiblings(options).skipUntil(equals(this)).rest();
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-first-child}
-   */
-  public first(options: Node.Traversal = {}): Option<Node> {
-    return this.children(options).first();
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-last-child}
-   */
-  public last(options: Node.Traversal = {}): Option<Node> {
-    return this.children(options).last();
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-previous-sibling}
-   */
-  public previous(options: Node.Traversal = {}): Option<Node> {
-    return this.preceding(options).first();
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-next-sibling}
-   */
-  public next(options: Node.Traversal = {}): Option<Node> {
-    return this.following(options).first();
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-index}
-   */
-  public index(options: Node.Traversal = {}): number {
-    return this.preceding(options).size;
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#dom-element-closest}
-   */
-  public closest<T extends Node>(
-    refinement: Refinement<Node, T>,
-    options?: Node.Traversal
-  ): Option<T>;
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#dom-element-closest}
-   */
-  public closest(
-    predicate: Predicate<Node>,
-    options?: Node.Traversal
-  ): Option<Node>;
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#dom-element-closest}
-   */
-  public closest(
-    predicate: Predicate<Node>,
-    options: Node.Traversal = {}
-  ): Option<Node> {
-    return this.inclusiveAncestors(options).find(predicate);
+    super(children, type);
   }
 
   /**
    * {@link https://dom.spec.whatwg.org/#concept-descendant-text-content}
    */
-  public textContent(options: Node.Traversal = {}): string {
+  public textContent(options: Node.Traversal = Node.Traversal.empty): string {
     return this.descendants(options).filter(Text.isText).join("");
   }
 
@@ -420,19 +148,21 @@ export abstract class Node<T extends string = string>
    * Get an XPath that uniquely identifies the node across descendants of its
    * root.
    */
-  public path(options?: Node.Traversal): string {
-    const currentTraversal = Node.traversalPath(options);
-    if (this._path[currentTraversal] !== undefined) {
-      return this._path[currentTraversal];
+  // path may change if the subtree is attached to a parent, so we shouldn't
+  // cache it.
+  // However, path is a fairly "final" serialisation operation that makes
+  // little sense in the context of an incomplete tree.
+  // For the sake of simplicity, and until we encounter errors due to this,
+  // we accept the risk of caching the value assuming that it will only be
+  // computed on fully frozen trees.
+  public path(options: Node.Traversal = Node.Traversal.empty): string {
+    if (this._path[options.value] !== undefined) {
+      return this._path[options.value];
     } else {
-      const path = this._internalPath(options);
-      this._path[currentTraversal] = path;
-      return path;
-    }
-  }
+      this._path[options.value] = this._internalPath(options);
 
-  public *[Symbol.iterator](): Iterator<Node> {
-    yield* this.descendants();
+      return this._internalPath(options);
+    }
   }
 
   public equals(value: Node): boolean;
@@ -441,12 +171,6 @@ export abstract class Node<T extends string = string>
 
   public equals(value: unknown): boolean {
     return value === this;
-  }
-
-  public toJSON(): Node.JSON<T> {
-    return {
-      type: this._type,
-    };
   }
 
   public toEARL(): Node.EARL {
@@ -473,30 +197,51 @@ export abstract class Node<T extends string = string>
       ],
     };
   }
+}
 
-  /**
-   * @internal
-   */
-  public _attachParent(parent: Node): boolean {
-    if (this._frozen || this._parent.isSome()) {
-      return false;
-    }
-
-    this._parent = Option.of(parent);
-    this._frozen = true;
-
-    return true;
-  }
+/**
+ * @public
+ */
+export interface Node {
+  // Overriding type of tree traversal functions; due to constructor signature
+  // we cannot mix in other kind of nodes.
+  parent(options?: Node.Traversal): Option<Node>;
+  isParentOf(node: Node, options?: Node.Traversal): boolean;
+  root(options?: Node.Traversal): Node;
+  isRootOf(node: Node, options?: Node.Traversal): boolean;
+  children(options?: Node.Traversal): Sequence<Node>;
+  isChildOf(node: Node, options?: Node.Traversal): boolean;
+  descendants(options?: Node.Traversal): Sequence<Node>;
+  isDescendantOf(node: Node, options?: Node.Traversal): boolean;
+  inclusiveDescendants(options?: Node.Traversal): Sequence<Node>;
+  isInclusiveDescendantsOf(node: Node, options?: Node.Traversal): boolean;
+  ancestors(options?: Node.Traversal): Sequence<Node>;
+  isAncestorOf(node: Node, options?: Node.Traversal): boolean;
+  inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
+  isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;
+  siblings(options?: Node.Traversal): Sequence<Node>;
+  isSiblingOf(node: Node, options?: Node.Traversal): boolean;
+  inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
+  isInclusiveSiblingOf(node: Node, options?: Node.Traversal): boolean;
+  preceding(options?: Node.Traversal): Sequence<Node>;
+  following(options?: Node.Traversal): Sequence<Node>;
+  first(options?: Node.Traversal): Option<Node>;
+  last(options?: Node.Traversal): Option<Node>;
+  previous(options?: Node.Traversal): Option<Node>;
+  next(options?: Node.Traversal): Option<Node>;
+  index(options?: Node.Traversal): number;
+  closest<T extends Node>(
+    refinement: Refinement<Node, T>,
+    options?: Node.Traversal
+  ): Option<T>;
+  closest(predicate: Predicate<Node>, options?: Node.Traversal): Option<Node>;
 }
 
 /**
  * @public
  */
 export namespace Node {
-  export interface JSON<T extends string = string> {
-    [key: string]: json.JSON | undefined;
-    type: T;
-  }
+  export interface JSON<T extends string = string> extends tree.Node.JSON<T> {}
 
   export interface EARL extends earl.EARL {
     "@context": {
@@ -518,48 +263,61 @@ export namespace Node {
     return value instanceof Node;
   }
 
-  export interface Traversal {
+  export class Traversal extends Flags<Traversal.Flag> {
+    public static of(...flags: Array<Traversal.Flag>): Traversal {
+      return new Traversal(Flags._reduce(...flags));
+    }
+  }
+
+  export namespace Traversal {
+    export type Flag = 0 | 1 | 2 | 4;
+
+    export const none = 0 as Flag;
     /**
-     * When `true`, traverse the node in shadow-including tree order.
+     * When set, traverse the node in shadow-including tree order.
      *
      * {@link https://dom.spec.whatwg.org/#concept-shadow-including-tree-order}
      */
-    readonly composed?: boolean;
+    export const composed = (1 << 0) as Flag;
 
     /**
-     * When `true`, traverse the flattened element tree rooted at the node.
+     * When set, traverse the flattened element tree rooted at the node.
      *
      * {@link https://drafts.csswg.org/css-scoping/#flat-tree}
      */
-    readonly flattened?: boolean;
+    export const flattened = (1 << 1) as Flag;
 
     /**
-     * When `true`, traverse all nested browsing contexts encountered.
+     * When set, traverse all nested browsing contexts encountered.
      *
      * {@link https://html.spec.whatwg.org/#nested-browsing-context}
      */
-    readonly nested?: boolean;
+    export const nested = (1 << 2) as Flag;
+
+    export const empty = Traversal.of(none);
   }
 
   /**
-  * @internal
-  **/
-  export function traversalPath(options?: Node.Traversal): number {
-    let traversalPath = 0;
-    if (options?.composed === true) {
-      traversalPath += 4;
-    }
+   * Traversal options to traverse the flat tree.
+   *
+   * {@link https://drafts.csswg.org/css-scoping-1/#flattening}
+   */
+  export const flatTree = Traversal.of(Traversal.flattened);
 
-    if (options?.flattened === true) {
-      traversalPath += 2;
-    }
+  /**
+   * Traversal options to traverse all relevant nodes (flat tree and inside
+   * nested browsing container), a very frequent use case.
+   */
+  export const fullTree = Traversal.of(Traversal.flattened, Traversal.nested);
 
-    if (options?.nested === true) {
-      traversalPath += 1;
-    }
-
-    return traversalPath;
-  }
+  /**
+   * Traversal options to traverse in shadow-including tree order and inside
+   * nested browsing context container, a common use case.
+   */
+  export const composedNested = Traversal.of(
+    Traversal.composed,
+    Traversal.nested
+  );
 
   export function from(json: Element.JSON): Element;
 

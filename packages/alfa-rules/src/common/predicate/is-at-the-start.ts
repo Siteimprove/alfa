@@ -40,7 +40,5 @@ export function isAtTheStart(
     !Node.getNodesBetween(node1, node2, {
       includeFirst: true,
       includeSecond: false,
-    }).some(
-      and(isPerceivable(device), isContent({ flattened: true, nested: true }))
-    );
+    }).some(and(isPerceivable(device), isContent(Node.fullTree)));
 }

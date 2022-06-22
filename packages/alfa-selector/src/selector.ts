@@ -1,6 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Token, Function, Nth } from "@siteimprove/alfa-css";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -1295,7 +1295,7 @@ export namespace Selector {
       context: Context = Context.empty()
     ): boolean {
       return element
-        .inclusiveDescendants({ flattened: true })
+        .inclusiveDescendants(Node.flatTree)
         .filter(isElement)
         .some((element) => context.isFocused(element));
     }

@@ -1,7 +1,7 @@
 import { Interview } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Document, Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
@@ -19,7 +19,7 @@ export function audio(
   options: audio.Options = {}
 ): Iterable<Interview<Question.Metadata, Element, Element, Option<Element>>> {
   return document
-    .descendants({ flattened: true, nested: true })
+    .descendants(Node.fullTree)
     .filter(isElement)
     .filter(
       // Non-rendered <audio> are not playing

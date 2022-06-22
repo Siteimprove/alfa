@@ -1,7 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element } from "@siteimprove/alfa-dom";
+import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -108,14 +108,8 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
     const withFocus = Context.focus(element);
 
     return element
-      .inclusiveDescendants({
-        flattened: true,
-      })
-      .concat(
-        element.ancestors({
-          flattened: true,
-        })
-      )
+      .inclusiveDescendants(Node.flatTree)
+      .concat(element.ancestors(Node.flatTree))
       .filter(isElement)
       .some(
         or(

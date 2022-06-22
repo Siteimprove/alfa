@@ -18,12 +18,12 @@ const { isTabbable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r90",
-  requirements: [Criterion.of("1.3.1"), Criterion.of("4.1.2")],
+  requirements: [Criterion.of("4.1.2")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document.descendants({ nested: true, flattened: true }).filter(
+        return document.descendants(Node.fullTree).filter(
           and(
             isElement,
             and(
@@ -38,9 +38,10 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             not(
-              Node.hasDescendant(and(isElement, isTabbable(device)), {
-                flattened: true,
-              })
+              Node.hasDescendant(
+                and(isElement, isTabbable(device)),
+                Node.flatTree
+              )
             )(target),
             () => Outcomes.HasNoTabbableDescendants,
             () => Outcomes.HasTabbableDescendants

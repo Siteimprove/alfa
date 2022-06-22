@@ -1,8 +1,8 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { DOM, Node } from "@siteimprove/alfa-aria";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err, Result } from "@siteimprove/alfa-result";
@@ -30,7 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants({ composed: true, nested: true })
+          .descendants(Node.composedNested)
           .filter(isElement)
           .filter(
             and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole(device))
@@ -59,7 +59,7 @@ function hasRequiredValues(
 ): Result<RoleAndRequiredAttributes> {
   let result = true;
 
-  const node = Node.from(element, device);
+  const node = aria.Node.from(element, device);
 
   let roleName: string = "";
   let required: Array<aria.Attribute.Name> = [];

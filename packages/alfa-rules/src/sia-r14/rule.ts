@@ -29,7 +29,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants({ flattened: true, nested: true })
+          .descendants(Node.fullTree)
           .filter(isElement)
           .filter(
             and(
@@ -44,9 +44,10 @@ export default Rule.Atomic.of<Page, Element>({
                 device,
                 (role) => role.isWidget() && role.isNamedBy("contents")
               ),
-              hasDescendant(and(Text.isText, isPerceivable(device)), {
-                flattened: true,
-              })
+              hasDescendant(
+                and(Text.isText, isPerceivable(device)),
+                Node.flatTree
+              )
             )
           );
       },
@@ -137,11 +138,9 @@ function getPerceivableInnerTextFromElement(
 }
 
 function childrenPerceivableText(node: Node, device: Device): string {
-  const children = node.children({ flattened: true });
-
   let result = "";
 
-  for (const child of children) {
+  for (const child of node.children(Node.flatTree)) {
     if (isText(child)) {
       result = result + getPerceivableInnerTextFromTextNode(child, device);
     } else if (isElement(child)) {

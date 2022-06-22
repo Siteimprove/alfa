@@ -58,7 +58,7 @@ export default Rule.Atomic.of<Page, Document>({
 
       expectations(target) {
         const deprecatedElements = target
-          .descendants({ flattened: true, nested: true })
+          .descendants(Node.fullTree)
           .filter(isElement)
           .filter(
             and(hasNamespace(Namespace.HTML), isDeprecated, isRendered(device))
