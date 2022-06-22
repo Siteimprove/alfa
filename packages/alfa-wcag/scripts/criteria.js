@@ -5,7 +5,7 @@ const puppeteer = require("puppeteer");
 
 const specifications = [
   ["2.0", "https://www.w3.org/TR/WCAG20/"],
-  ["2.1", "https://www.w3.org/TR/WCAG/"],
+  ["2.1", "https://www.w3.org/TR/WCAG2/"],
   ["2.2", "https://www.w3.org/TR/WCAG22/"],
 ];
 
