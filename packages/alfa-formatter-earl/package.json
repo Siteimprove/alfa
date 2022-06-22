@@ -19,7 +19,8 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-earl": "workspace:^0.39.1",
-    "@siteimprove/alfa-formatter": "workspace:^0.39.1"
+    "@siteimprove/alfa-formatter": "workspace:^0.39.1",
+    "jsonld": "^6.0.0"
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.39.1"
