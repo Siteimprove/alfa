@@ -8,7 +8,7 @@ export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (
   input: I,
   rules: Iterable<Rule<I, T, Q, S>>,
   outcomes: Iterable<Outcome<I, T, Q, S>>
-) => string;
+) => Promise<string>;
 
 /**
  * @public

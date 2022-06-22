@@ -108,7 +108,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
     });
   }
 
-  const output = formatter.get()(page, rules, outcomes);
+  const output = await formatter.get()(page, rules, outcomes);
 
   if (flags.output.isNone()) {
     return Result.of(output);
