@@ -1,5 +1,12 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
+import {
+  Declaration,
+  Element,
+  Namespace,
+  Node,
+  Text,
+} from "@siteimprove/alfa-dom";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -11,7 +18,7 @@ import { Scope } from "../tags";
 
 const { isElement, hasNamespace, hasName } = Element;
 const { isText } = Text;
-const { and, or, not } = Predicate;
+const { and, or, not, tee } = Predicate;
 const { hasCascadedStyle, hasComputedStyle, hasSpecifiedStyle, isVisible } =
   Style;
 
@@ -49,6 +56,8 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
+        let declaration: Option<Declaration> = None;
+
         const texts = target
           .descendants(Node.fullTree)
           .filter(isText)
@@ -69,7 +78,12 @@ export default Rule.Atomic.of<Page, Element>({
               ),
               hasComputedStyle(
                 "font-size",
-                (fontSize) => fontSize.value >= 9,
+                tee(
+                  (fontSize, _) => fontSize.value >= 9,
+                  (_, __, source) => {
+                    declaration = source;
+                  }
+                ),
                 device
               )
             )
@@ -78,8 +92,8 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             texts,
-            () => Outcomes.IsSufficient,
-            () => Outcomes.IsInsufficient
+            () => Outcomes.IsSufficient(declaration),
+            () => Outcomes.IsInsufficient(declaration)
           ),
         };
       },
@@ -88,11 +102,71 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const IsSufficient = Ok.of(
-    Diagnostic.of(`The font size is greater than 9 pixels`)
-  );
+  export const IsSufficient = (declaration: Option<Declaration>) =>
+    Ok.of(
+      WithDeclaration.of(`The font size is greater than 9 pixels`, declaration)
+    );
 
-  export const IsInsufficient = Err.of(
-    Diagnostic.of(`The font size is smaller than 9 pixels`)
-  );
+  export const IsInsufficient = (declaration: Option<Declaration>) =>
+    Err.of(
+      WithDeclaration.of(`The font size is smaller than 9 pixels`, declaration)
+    );
+}
+
+/**
+ * @internal
+ */
+export class WithDeclaration extends Diagnostic {
+  public static of(message: string, declaration: Option<Declaration> = None) {
+    return new WithDeclaration(message, declaration);
+  }
+
+  private readonly _declaration: Option<Declaration>;
+
+  constructor(message: string, declaration: Option<Declaration>) {
+    super(message);
+    this._declaration = declaration;
+  }
+
+  public get declaration(): Option<Declaration> {
+    return this._declaration;
+  }
+
+  equals(value: WithDeclaration): boolean;
+
+  equals(value: unknown): value is this;
+
+  equals(value: unknown): boolean {
+    return (
+      value instanceof WithDeclaration &&
+      value._message === this.message &&
+      value._declaration === this._declaration
+    );
+  }
+
+  toJSON(): WithDeclaration.JSON {
+    return {
+      ...super.toJSON(),
+      declaration: this._declaration.toJSON(),
+    };
+  }
+}
+
+/**
+ * @internal
+ */
+export namespace WithDeclaration {
+  export interface JSON extends Diagnostic.JSON {
+    declaration: Option.JSON<Declaration>;
+  }
+
+  export function isWithDeclaration(
+    value: Diagnostic
+  ): value is WithDeclaration;
+
+  export function isWithDeclaration(value: unknown): value is WithDeclaration;
+
+  export function isWithDeclaration(value: unknown): value is WithDeclaration {
+    return value instanceof WithDeclaration;
+  }
 }
