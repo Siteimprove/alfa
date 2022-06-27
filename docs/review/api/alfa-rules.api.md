@@ -17,6 +17,7 @@ import { Computed as Computed_4 } from '@siteimprove/alfa-style/src/property/col
 import { Computed as Computed_5 } from '@siteimprove/alfa-style/src/property/text-shadow';
 import { Context } from '@siteimprove/alfa-selector';
 import { Current } from '@siteimprove/alfa-css';
+import { Declaration } from '@siteimprove/alfa-dom';
 import { Device } from '@siteimprove/alfa-device';
 import { Diagnostic as Diagnostic_2 } from '@siteimprove/alfa-act';
 import { Document } from '@siteimprove/alfa-dom';
@@ -376,6 +377,10 @@ export namespace Diagnostic {
     //
     // (undocumented)
     isSameNames: typeof SameNames.isSameNames;
+    const // Warning: (ae-forgotten-export) The symbol "WithDeclaration" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isWithDeclaration: typeof WithDeclaration.isWithDeclaration;
     const // Warning: (ae-forgotten-export) The symbol "WithRole" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
