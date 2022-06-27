@@ -12,7 +12,8 @@ import { Scope } from "../tags";
 const { isElement, hasNamespace, hasName } = Element;
 const { isText } = Text;
 const { and, or, not } = Predicate;
-const { hasCascadedStyle, isVisible } = Style;
+const { hasCascadedStyle, hasComputedStyle, hasSpecifiedStyle, isVisible } =
+  Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r75",
@@ -55,13 +56,22 @@ export default Rule.Atomic.of<Page, Element>({
           .collect((text) => text.parent().filter(isElement))
           .every(
             or(
-              (parent) =>
-                Style.from(parent, device).specified("font-size").source !==
-                // Applicability guarantees there is a cascaded value
-                Style.from(target, device).cascaded("font-size").get().source,
-              (parent) =>
-                Style.from(parent, device).computed("font-size").value.value >=
-                9
+              hasSpecifiedStyle(
+                "font-size",
+                (_, source) =>
+                  // We do need to compare with physical identity, not structural
+                  // identity (.equals) to differentiate, e.g., two
+                  // "font-size: 100%" declarations
+                  source !==
+                  // Applicability guarantees there is a cascaded value
+                  Style.from(target, device).cascaded("font-size").get().source,
+                device
+              ),
+              hasComputedStyle(
+                "font-size",
+                (fontSize) => fontSize.value >= 9,
+                device
+              )
             )
           );
 
