@@ -1,5 +1,5 @@
 import { Declaration, h, Node } from "@siteimprove/alfa-dom";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
 import R75, { Outcomes } from "../../src/sia-r75/rule";
