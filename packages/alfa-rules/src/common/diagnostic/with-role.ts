@@ -1,7 +1,7 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
-import { jsx } from "@siteimprove/alfa-dom";
+import { Element } from "@siteimprove/alfa-dom";
 
 /**
  * @internal
@@ -52,8 +52,6 @@ export class WithRole extends Diagnostic {
  * @internal
  */
 export namespace WithRole {
-  import Element = jsx.JSX.Element;
-
   export interface JSON extends Diagnostic.JSON {
     role: string;
   }

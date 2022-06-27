@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { DOM, Node as ariaNode, Role } from "@siteimprove/alfa-aria";
+import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
