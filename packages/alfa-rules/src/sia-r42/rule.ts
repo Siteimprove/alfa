@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { DOM, Role } from "@siteimprove/alfa-aria";
+import { DOM, Node as ariaNode, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -10,6 +10,7 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
+import { WithRole } from "../common/diagnostic/with-role";
 
 import { Scope } from "../tags";
 
@@ -40,8 +41,20 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             hasRequiredParent(device)(target),
-            () => Outcomes.IsOwnedByContextRole,
-            () => Outcomes.IsNotOwnedByContextRole
+            () =>
+              Outcomes.IsOwnedByContextRole(
+                ariaNode
+                  .from(target, device)
+                  .role.map((role) => role.name)
+                  .getOr("none")
+              ),
+            () =>
+              Outcomes.IsNotOwnedByContextRole(
+                ariaNode
+                  .from(target, device)
+                  .role.map((role) => role.name)
+                  .getOr("none")
+              )
           ),
         };
       },
@@ -50,17 +63,21 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const IsOwnedByContextRole = Ok.of(
-    Diagnostic.of(
-      `The element is owned by an element of its required context role`
-    )
-  );
+  export const IsOwnedByContextRole = (role: Role.Name) =>
+    Ok.of(
+      WithRole.of(
+        `The element is owned by an element of its required context role`,
+        role
+      )
+    );
 
-  export const IsNotOwnedByContextRole = Err.of(
-    Diagnostic.of(
-      `The element is not owned by an element of its required context role`
-    )
-  );
+  export const IsNotOwnedByContextRole = (role: Role.Name) =>
+    Err.of(
+      WithRole.of(
+        `The element is not owned by an element of its required context role`,
+        role
+      )
+    );
 }
 
 function hasRequiredParent(device: Device): Predicate<Element> {
