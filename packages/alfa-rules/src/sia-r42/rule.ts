@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
@@ -43,17 +43,11 @@ export default Rule.Atomic.of<Page, Element>({
             hasRequiredParent(device)(target),
             () =>
               Outcomes.IsOwnedByContextRole(
-                ariaNode
-                  .from(target, device)
-                  .role.map((role) => role.name)
-                  .getOr("none")
+                WithRole.getRoleName(target, device)
               ),
             () =>
               Outcomes.IsNotOwnedByContextRole(
-                ariaNode
-                  .from(target, device)
-                  .role.map((role) => role.name)
-                  .getOr("none")
+                WithRole.getRoleName(target, device)
               )
           ),
         };

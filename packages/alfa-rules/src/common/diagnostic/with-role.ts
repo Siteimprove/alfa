@@ -1,5 +1,7 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Role } from "@siteimprove/alfa-aria";
+import { Node, Role } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
+import { jsx } from "@siteimprove/alfa-dom";
 
 /**
  * @internal
@@ -50,6 +52,8 @@ export class WithRole extends Diagnostic {
  * @internal
  */
 export namespace WithRole {
+  import Element = jsx.JSX.Element;
+
   export interface JSON extends Diagnostic.JSON {
     role: string;
   }
@@ -60,5 +64,11 @@ export namespace WithRole {
 
   export function isWithRole(value: unknown): value is WithRole {
     return value instanceof WithRole;
+  }
+
+  export function getRoleName(element: Element, device: Device): Role.Name {
+    return Node.from(element, device)
+      .role.map((role) => role.name)
+      .getOr("generic");
   }
 }
