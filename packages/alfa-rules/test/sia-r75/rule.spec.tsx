@@ -60,7 +60,7 @@ test(`evaluate() fails an element with an accumulated font size smaller than 9
   ]);
 });
 
-test(`evaluate() passes an element with too small a font size when the font size
+test(`evaluate() passes an element with a too small font size when the font size
       does not affect descendant text`, async (t) => {
   const declaration1 = fontSize("16px");
   const target1 = makeTarget("p", ["Hello World"], declaration1);
