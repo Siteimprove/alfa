@@ -18,7 +18,7 @@ import { Scope } from "../tags";
 
 const { isElement, hasNamespace, hasName } = Element;
 const { isText } = Text;
-const { and, or, not, tee } = Predicate;
+const { and, or, not } = Predicate;
 const { hasCascadedStyle, hasComputedStyle, hasSpecifiedStyle, isVisible } =
   Style;
 
@@ -56,7 +56,10 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        let declaration: Option<Declaration> = None;
+        // Applicability guarantees there is a cascaded value
+        const declaration = Style.from(target, device)
+          .cascaded("font-size")
+          .get().source;
 
         const texts = target
           .descendants(Node.fullTree)
@@ -71,19 +74,12 @@ export default Rule.Atomic.of<Page, Element>({
                   // We do need to compare with physical identity, not structural
                   // identity (.equals) to differentiate, e.g., two
                   // "font-size: 100%" declarations
-                  source !==
-                  // Applicability guarantees there is a cascaded value
-                  Style.from(target, device).cascaded("font-size").get().source,
+                  source !== declaration,
                 device
               ),
               hasComputedStyle(
                 "font-size",
-                tee(
-                  (fontSize, _) => fontSize.value >= 9,
-                  (_, __, source) => {
-                    declaration = source;
-                  }
-                ),
+                (fontSize, _) => fontSize.value >= 9,
                 device
               )
             )
