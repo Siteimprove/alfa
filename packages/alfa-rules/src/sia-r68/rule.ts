@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
@@ -11,6 +11,7 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
+import { WithRole } from "../common/diagnostic/with-role";
 
 import { Scope } from "../tags";
 
@@ -32,8 +33,14 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             hasRequiredChildren(device)(target),
-            () => Outcomes.HasCorrectOwnedElements,
-            () => Outcomes.HasIncorrectOwnedElements
+            () =>
+              Outcomes.HasCorrectOwnedElements(
+                WithRole.getRoleName(target, device)
+              ),
+            () =>
+              Outcomes.HasIncorrectOwnedElements(
+                WithRole.getRoleName(target, device)
+              )
           ),
         };
       },
@@ -42,15 +49,21 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasCorrectOwnedElements = Ok.of(
-    Diagnostic.of(`The element owns elements as required by its semantic role`)
-  );
+  export const HasCorrectOwnedElements = (role: Role.Name) =>
+    Ok.of(
+      WithRole.of(
+        `The element owns elements as required by its semantic role`,
+        role
+      )
+    );
 
-  export const HasIncorrectOwnedElements = Err.of(
-    Diagnostic.of(
-      `The element owns no elements as required by its semantic role`
-    )
-  );
+  export const HasIncorrectOwnedElements = (role: Role.Name) =>
+    Err.of(
+      WithRole.of(
+        `The element owns no elements as required by its semantic role`,
+        role
+      )
+    );
 }
 
 function hasRequiredChildren(device: Device): Predicate<Element> {
