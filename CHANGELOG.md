@@ -19,6 +19,23 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.40.0](../../compare/v0.39.1...v0.40.0) (2022-06-22)
+
+### Breaking
+
+- [@siteimprove/alfa-aria](packages/alfa-aria), [@siteimprove/alfa-dom](packages/alfa-dom): ARIA trees and DOM trees are now built on top of the abstract tree representation; their traversal options are now sets of flags as defined in `alfa-flags`. ([#1153](../../pull/1153))
+
+### Added
+
+- [@siteimprove/alfa-flags](packages/alfa-flags): A new package has been added to represent sets of boolean flags. ([#1153](../../pull/1153))
+
+- [@siteimprove/alfa-tree](packages/alfa-tree): A new package has been added to abstract trees and tree traversal operations. ([#1153](../../pull/1153))
+
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Mapping of some rules to WCAG have been adapted to the latest ACT-R changes. ([#1155](../../issues/1155), [#1163](../../pull/1163))
+
 ## [0.39.1](../../compare/v0.39.0...v0.39.1) (2022-06-09)
 
 ### Fixed
