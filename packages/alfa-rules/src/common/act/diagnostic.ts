@@ -2,7 +2,6 @@ import { DistinguishingStyles as DistinguishingStylesExperimental } from "../../
 import { Languages } from "../../sia-r109/rule";
 import { LabelAndName } from "../../sia-r14/rule";
 import { RoleAndRequiredAttributes } from "../../sia-r16/rule";
-import { WithRole } from "../../sia-r55/rule";
 import { SameNames } from "../../sia-r56/rule";
 import { DistinguishingStyles } from "../../sia-r62/rule";
 import { DeprecatedElements } from "../../sia-r70/rule";
@@ -11,6 +10,9 @@ import { ClippingAncestors } from "../../sia-r83/rule";
 // R66, R69
 import { Contrast } from "../diagnostic/contrast";
 import { ColorError } from "../dom/get-colors";
+
+// R42, R55, R68
+import { WithRole } from "../diagnostic/with-role";
 
 /**
  * @public
