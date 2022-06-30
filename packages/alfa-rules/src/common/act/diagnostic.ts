@@ -5,6 +5,7 @@ import { RoleAndRequiredAttributes } from "../../sia-r16/rule";
 import { SameNames } from "../../sia-r56/rule";
 import { DistinguishingStyles } from "../../sia-r62/rule";
 import { DeprecatedElements } from "../../sia-r70/rule";
+import { WithDeclaration } from "../../sia-r75/rule";
 import { ClippingAncestors } from "../../sia-r83/rule";
 
 // R66, R69
@@ -43,6 +44,8 @@ export namespace Diagnostic {
   export const { isRoleAndRequiredAttributes } = RoleAndRequiredAttributes;
 
   export const { isSameNames } = SameNames;
+
+  export const { isWithDeclaration } = WithDeclaration;
 
   export const { isWithRole } = WithRole;
 }
