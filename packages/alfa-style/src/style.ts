@@ -350,6 +350,7 @@ export namespace Style {
     hasInlineStyleProperty,
     hasPositioningParent,
     hasOutline,
+    hasSpecifiedStyle,
     hasTextDecoration,
     hasTransparentBackground,
     isFocusable,

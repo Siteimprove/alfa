@@ -77,6 +77,11 @@ function hasOutline(device: Device, context?: Context): Predicate<Element>;
 // @public (undocumented)
 function hasPositioningParent(device: Device, predicate: Predicate<Element>): Predicate<Element>;
 
+// Warning: (ae-incompatible-release-tags) The symbol "hasSpecifiedStyle" is marked as @public, but its signature references "Property" which is marked as @internal
+//
+// @public (undocumented)
+function hasSpecifiedStyle<N extends Property.Name>(name: N, predicate: Predicate<Style.Specified<N>, [source: Option<Declaration>]>, device: Device, context?: Context): Predicate<Element | Text>;
+
 // @public (undocumented)
 function hasTextDecoration(device: Device, context?: Context): Predicate<Element>;
 
@@ -306,6 +311,7 @@ export namespace Style {
     hasInlineStyleProperty: typeof element.hasInlineStyleProperty, // (undocumented)
     hasPositioningParent: typeof element.hasPositioningParent, // (undocumented)
     hasOutline: typeof element.hasOutline, // (undocumented)
+    hasSpecifiedStyle: typeof element.hasSpecifiedStyle, // (undocumented)
     hasTextDecoration: typeof element.hasTextDecoration, // (undocumented)
     hasTransparentBackground: typeof element.hasTransparentBackground, // (undocumented)
     isFocusable: typeof element.isFocusable, // (undocumented)
