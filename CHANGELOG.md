@@ -19,6 +19,22 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.41.0](../../compare/v0.40.0...v0.41.0) (2022-06-30)
+
+### Breaking
+
+- [@siteimprove/alfa-formatter](packages/alfa-formatter), [@siteimprove/alfa-formatter-earl](packages/alfa-formatter-earl), [@siteimprove/alfa-formatter-json](packages/alfa-formatter-json), [@siteimprove/alfa-formatter-sarif](packages/alfa-formatter-sarif): Formatters are now asynchronous.([#1167](../../pull/1167))
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R42 and SIA-R68 now export the role of the target in their diagnostic. ([#1171](../../pull/1171))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R75 now exports the declaration with the offending style in its diagnostic. ([#1172](../../pull/1172))
+
+### Changed
+
+- [@siteimprove/alfa-formatter-earl](packages/alfa-formatter-earl): EARL output is now using compact JSON-LD (sharing a single `@context` at top level). ([#1150](../../issues/1150), [#1167](../../pull/1167))
+
 ## [0.40.0](../../compare/v0.39.1...v0.40.0) (2022-06-22)
 
 ### Breaking
