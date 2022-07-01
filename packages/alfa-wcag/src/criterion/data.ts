@@ -24,7 +24,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#non-text-content",
+          uri: "https://www.w3.org/TR/WCAG2/#non-text-content",
           level: "A",
         },
       ],
@@ -50,7 +50,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#audio-only-and-video-only-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG2/#audio-only-and-video-only-prerecorded",
           level: "A",
         },
       ],
@@ -76,7 +76,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#captions-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG2/#captions-prerecorded",
           level: "A",
         },
       ],
@@ -102,7 +102,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#audio-description-or-media-alternative-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG2/#audio-description-or-media-alternative-prerecorded",
           level: "A",
         },
       ],
@@ -128,7 +128,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#captions-live",
+          uri: "https://www.w3.org/TR/WCAG2/#captions-live",
           level: "AA",
         },
       ],
@@ -154,7 +154,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#audio-description-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG2/#audio-description-prerecorded",
           level: "AA",
         },
       ],
@@ -180,7 +180,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#sign-language-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG2/#sign-language-prerecorded",
           level: "AAA",
         },
       ],
@@ -206,7 +206,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#extended-audio-description-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG2/#extended-audio-description-prerecorded",
           level: "AAA",
         },
       ],
@@ -232,7 +232,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#media-alternative-prerecorded",
+          uri: "https://www.w3.org/TR/WCAG2/#media-alternative-prerecorded",
           level: "AAA",
         },
       ],
@@ -258,7 +258,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#audio-only-live",
+          uri: "https://www.w3.org/TR/WCAG2/#audio-only-live",
           level: "AAA",
         },
       ],
@@ -284,7 +284,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#info-and-relationships",
+          uri: "https://www.w3.org/TR/WCAG2/#info-and-relationships",
           level: "A",
         },
       ],
@@ -310,7 +310,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#meaningful-sequence",
+          uri: "https://www.w3.org/TR/WCAG2/#meaningful-sequence",
           level: "A",
         },
       ],
@@ -336,7 +336,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#sensory-characteristics",
+          uri: "https://www.w3.org/TR/WCAG2/#sensory-characteristics",
           level: "A",
         },
       ],
@@ -362,7 +362,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#use-of-color",
+          uri: "https://www.w3.org/TR/WCAG2/#use-of-color",
           level: "A",
         },
       ],
@@ -388,7 +388,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#audio-control",
+          uri: "https://www.w3.org/TR/WCAG2/#audio-control",
           level: "A",
         },
       ],
@@ -414,7 +414,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#contrast-minimum",
+          uri: "https://www.w3.org/TR/WCAG2/#contrast-minimum",
           level: "AA",
         },
       ],
@@ -440,7 +440,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#resize-text",
+          uri: "https://www.w3.org/TR/WCAG2/#resize-text",
           level: "AA",
         },
       ],
@@ -466,7 +466,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#images-of-text",
+          uri: "https://www.w3.org/TR/WCAG2/#images-of-text",
           level: "AA",
         },
       ],
@@ -492,7 +492,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#contrast-enhanced",
+          uri: "https://www.w3.org/TR/WCAG2/#contrast-enhanced",
           level: "AAA",
         },
       ],
@@ -518,7 +518,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#low-or-no-background-audio",
+          uri: "https://www.w3.org/TR/WCAG2/#low-or-no-background-audio",
           level: "AAA",
         },
       ],
@@ -544,7 +544,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#visual-presentation",
+          uri: "https://www.w3.org/TR/WCAG2/#visual-presentation",
           level: "AAA",
         },
       ],
@@ -570,7 +570,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#images-of-text-no-exception",
+          uri: "https://www.w3.org/TR/WCAG2/#images-of-text-no-exception",
           level: "AAA",
         },
       ],
@@ -596,7 +596,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#keyboard",
+          uri: "https://www.w3.org/TR/WCAG2/#keyboard",
           level: "A",
         },
       ],
@@ -622,7 +622,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#no-keyboard-trap",
+          uri: "https://www.w3.org/TR/WCAG2/#no-keyboard-trap",
           level: "A",
         },
       ],
@@ -648,7 +648,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#keyboard-no-exception",
+          uri: "https://www.w3.org/TR/WCAG2/#keyboard-no-exception",
           level: "AAA",
         },
       ],
@@ -674,7 +674,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#timing-adjustable",
+          uri: "https://www.w3.org/TR/WCAG2/#timing-adjustable",
           level: "A",
         },
       ],
@@ -700,7 +700,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#pause-stop-hide",
+          uri: "https://www.w3.org/TR/WCAG2/#pause-stop-hide",
           level: "A",
         },
       ],
@@ -726,7 +726,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#no-timing",
+          uri: "https://www.w3.org/TR/WCAG2/#no-timing",
           level: "AAA",
         },
       ],
@@ -752,7 +752,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#interruptions",
+          uri: "https://www.w3.org/TR/WCAG2/#interruptions",
           level: "AAA",
         },
       ],
@@ -778,7 +778,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#re-authenticating",
+          uri: "https://www.w3.org/TR/WCAG2/#re-authenticating",
           level: "AAA",
         },
       ],
@@ -804,7 +804,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#three-flashes-or-below-threshold",
+          uri: "https://www.w3.org/TR/WCAG2/#three-flashes-or-below-threshold",
           level: "A",
         },
       ],
@@ -830,7 +830,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#three-flashes",
+          uri: "https://www.w3.org/TR/WCAG2/#three-flashes",
           level: "AAA",
         },
       ],
@@ -856,7 +856,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#bypass-blocks",
+          uri: "https://www.w3.org/TR/WCAG2/#bypass-blocks",
           level: "A",
         },
       ],
@@ -882,7 +882,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#page-titled",
+          uri: "https://www.w3.org/TR/WCAG2/#page-titled",
           level: "A",
         },
       ],
@@ -908,7 +908,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#focus-order",
+          uri: "https://www.w3.org/TR/WCAG2/#focus-order",
           level: "A",
         },
       ],
@@ -934,7 +934,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#link-purpose-in-context",
+          uri: "https://www.w3.org/TR/WCAG2/#link-purpose-in-context",
           level: "A",
         },
       ],
@@ -960,7 +960,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#multiple-ways",
+          uri: "https://www.w3.org/TR/WCAG2/#multiple-ways",
           level: "AA",
         },
       ],
@@ -986,7 +986,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#headings-and-labels",
+          uri: "https://www.w3.org/TR/WCAG2/#headings-and-labels",
           level: "AA",
         },
       ],
@@ -1012,7 +1012,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#focus-visible",
+          uri: "https://www.w3.org/TR/WCAG2/#focus-visible",
           level: "AA",
         },
       ],
@@ -1038,7 +1038,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#location",
+          uri: "https://www.w3.org/TR/WCAG2/#location",
           level: "AAA",
         },
       ],
@@ -1064,7 +1064,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#link-purpose-link-only",
+          uri: "https://www.w3.org/TR/WCAG2/#link-purpose-link-only",
           level: "AAA",
         },
       ],
@@ -1090,7 +1090,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#section-headings",
+          uri: "https://www.w3.org/TR/WCAG2/#section-headings",
           level: "AAA",
         },
       ],
@@ -1116,7 +1116,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#language-of-page",
+          uri: "https://www.w3.org/TR/WCAG2/#language-of-page",
           level: "A",
         },
       ],
@@ -1142,7 +1142,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#language-of-parts",
+          uri: "https://www.w3.org/TR/WCAG2/#language-of-parts",
           level: "AA",
         },
       ],
@@ -1168,7 +1168,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#unusual-words",
+          uri: "https://www.w3.org/TR/WCAG2/#unusual-words",
           level: "AAA",
         },
       ],
@@ -1194,7 +1194,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#abbreviations",
+          uri: "https://www.w3.org/TR/WCAG2/#abbreviations",
           level: "AAA",
         },
       ],
@@ -1220,7 +1220,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#reading-level",
+          uri: "https://www.w3.org/TR/WCAG2/#reading-level",
           level: "AAA",
         },
       ],
@@ -1246,7 +1246,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#pronunciation",
+          uri: "https://www.w3.org/TR/WCAG2/#pronunciation",
           level: "AAA",
         },
       ],
@@ -1272,7 +1272,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#on-focus",
+          uri: "https://www.w3.org/TR/WCAG2/#on-focus",
           level: "A",
         },
       ],
@@ -1298,7 +1298,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#on-input",
+          uri: "https://www.w3.org/TR/WCAG2/#on-input",
           level: "A",
         },
       ],
@@ -1324,7 +1324,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#consistent-navigation",
+          uri: "https://www.w3.org/TR/WCAG2/#consistent-navigation",
           level: "AA",
         },
       ],
@@ -1350,7 +1350,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#consistent-identification",
+          uri: "https://www.w3.org/TR/WCAG2/#consistent-identification",
           level: "AA",
         },
       ],
@@ -1376,7 +1376,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#change-on-request",
+          uri: "https://www.w3.org/TR/WCAG2/#change-on-request",
           level: "AAA",
         },
       ],
@@ -1402,7 +1402,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#error-identification",
+          uri: "https://www.w3.org/TR/WCAG2/#error-identification",
           level: "A",
         },
       ],
@@ -1428,7 +1428,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#labels-or-instructions",
+          uri: "https://www.w3.org/TR/WCAG2/#labels-or-instructions",
           level: "A",
         },
       ],
@@ -1454,7 +1454,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#error-suggestion",
+          uri: "https://www.w3.org/TR/WCAG2/#error-suggestion",
           level: "AA",
         },
       ],
@@ -1480,7 +1480,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#error-prevention-legal-financial-data",
+          uri: "https://www.w3.org/TR/WCAG2/#error-prevention-legal-financial-data",
           level: "AA",
         },
       ],
@@ -1506,7 +1506,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#help",
+          uri: "https://www.w3.org/TR/WCAG2/#help",
           level: "AAA",
         },
       ],
@@ -1532,7 +1532,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#error-prevention-all",
+          uri: "https://www.w3.org/TR/WCAG2/#error-prevention-all",
           level: "AAA",
         },
       ],
@@ -1558,7 +1558,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#parsing",
+          uri: "https://www.w3.org/TR/WCAG2/#parsing",
           level: "A",
         },
       ],
@@ -1584,7 +1584,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#name-role-value",
+          uri: "https://www.w3.org/TR/WCAG2/#name-role-value",
           level: "A",
         },
       ],
@@ -1603,7 +1603,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#orientation",
+          uri: "https://www.w3.org/TR/WCAG2/#orientation",
           level: "AA",
         },
       ],
@@ -1622,7 +1622,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#identify-input-purpose",
+          uri: "https://www.w3.org/TR/WCAG2/#identify-input-purpose",
           level: "AA",
         },
       ],
@@ -1641,7 +1641,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#identify-purpose",
+          uri: "https://www.w3.org/TR/WCAG2/#identify-purpose",
           level: "AAA",
         },
       ],
@@ -1660,7 +1660,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#reflow",
+          uri: "https://www.w3.org/TR/WCAG2/#reflow",
           level: "AA",
         },
       ],
@@ -1679,7 +1679,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#non-text-contrast",
+          uri: "https://www.w3.org/TR/WCAG2/#non-text-contrast",
           level: "AA",
         },
       ],
@@ -1698,7 +1698,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#text-spacing",
+          uri: "https://www.w3.org/TR/WCAG2/#text-spacing",
           level: "AA",
         },
       ],
@@ -1717,7 +1717,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#content-on-hover-or-focus",
+          uri: "https://www.w3.org/TR/WCAG2/#content-on-hover-or-focus",
           level: "AA",
         },
       ],
@@ -1736,7 +1736,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#character-key-shortcuts",
+          uri: "https://www.w3.org/TR/WCAG2/#character-key-shortcuts",
           level: "A",
         },
       ],
@@ -1755,7 +1755,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#timeouts",
+          uri: "https://www.w3.org/TR/WCAG2/#timeouts",
           level: "AAA",
         },
       ],
@@ -1774,7 +1774,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#animation-from-interactions",
+          uri: "https://www.w3.org/TR/WCAG2/#animation-from-interactions",
           level: "AAA",
         },
       ],
@@ -1793,7 +1793,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#pointer-gestures",
+          uri: "https://www.w3.org/TR/WCAG2/#pointer-gestures",
           level: "A",
         },
       ],
@@ -1812,7 +1812,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#pointer-cancellation",
+          uri: "https://www.w3.org/TR/WCAG2/#pointer-cancellation",
           level: "A",
         },
       ],
@@ -1831,7 +1831,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#label-in-name",
+          uri: "https://www.w3.org/TR/WCAG2/#label-in-name",
           level: "A",
         },
       ],
@@ -1850,7 +1850,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#motion-actuation",
+          uri: "https://www.w3.org/TR/WCAG2/#motion-actuation",
           level: "A",
         },
       ],
@@ -1869,7 +1869,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#target-size",
+          uri: "https://www.w3.org/TR/WCAG2/#target-size",
           level: "AAA",
         },
       ],
@@ -1888,7 +1888,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#concurrent-input-mechanisms",
+          uri: "https://www.w3.org/TR/WCAG2/#concurrent-input-mechanisms",
           level: "AAA",
         },
       ],
@@ -1907,7 +1907,7 @@ export const Criteria = {
       [
         "2.1",
         {
-          uri: "https://www.w3.org/TR/WCAG/#status-messages",
+          uri: "https://www.w3.org/TR/WCAG2/#status-messages",
           level: "AA",
         },
       ],

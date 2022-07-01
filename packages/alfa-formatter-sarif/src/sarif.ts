@@ -9,7 +9,7 @@ const { stringify } = JSON;
  * @public
  */
 export default function <I, T, Q, S>(): Formatter<I, T, Q, S> {
-  return function SARIF(input, rules, outcomes) {
+  return async function SARIF(input, rules, outcomes) {
     const log: Log = {
       $schema: "https://json.schemastore.org/sarif-2.1.0.json",
       version: "2.1.0",

@@ -350,8 +350,12 @@ export const Techniques = {
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/css/C40",
   },
   C41: {
-    title: "Creating a focus indicator within the component",
+    title: "Creating a strong focus indicator within the component",
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/css/C41",
+  },
+  C42: {
+    title: "Using min-height and min-width to ensure sufficient target spacing",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/css/C42",
   },
   F1: {
     title:
@@ -794,6 +798,11 @@ export const Techniques = {
     title:
       "Failure of Success Criterion 1.3.5 due to incorrect autocomplete attribute values",
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/failures/F107",
+  },
+  F108: {
+    title:
+      "Failure of Success Criterion 2.5.X Dragging due to not providing a single pointer",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/failures/F108",
   },
   G1: {
     title:
@@ -1422,7 +1431,7 @@ export const Techniques = {
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G194",
   },
   G195: {
-    title: "Using an author-supplied, highly visible focus indicator",
+    title: "Using an author-supplied, visible focus indicator",
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G195",
   },
   G196: {
@@ -1523,6 +1532,31 @@ export const Techniques = {
     title:
       "Providing a mechanism to allow users to remap or turn off character key shortcuts",
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G217",
+  },
+  G218: {
+    title: "Email link authentication",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G218",
+  },
+  G219: {
+    title:
+      "Ensuring that a single pointer alternative is available for dragging movements that",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G219",
+  },
+  G220: {
+    title: "Provide a contact-us link in a consistent location",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G220",
+  },
+  G221: {
+    title: "Provide data from a previous step in a process",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G221",
+  },
+  G222: {
+    title: "Provide persistently visible controls",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G222",
+  },
+  G223: {
+    title: "Using an author-supplied, highly visible focus indicator",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/general/G223",
   },
   H2: {
     title: "Combining adjacent image and text links for the same resource",
@@ -1784,6 +1818,10 @@ export const Techniques = {
   H98: {
     title: "Using HTML 5.2 autocomplete attributes",
     uri: "https://www.w3.org/WAI/WCAG21/Techniques/html/H98",
+  },
+  H99: {
+    title: "Provide a page-selection mechanism",
+    uri: "https://www.w3.org/WAI/WCAG21/Techniques/html/H99",
   },
   PDF1: {
     title:
