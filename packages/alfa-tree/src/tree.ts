@@ -402,21 +402,30 @@ export namespace Node {
   /**
    * @internal
    */
-  export abstract class Id<P extends string = string, N extends string = string>
-    implements Equatable, Hashable, json.Serializable<Id.JSON<P, N>>
+  export abstract class Id<
+    K extends Id.Kind,
+    T extends string = string,
+    N extends string = string
+  > implements Equatable, Hashable, json.Serializable<Id.JSON<T, N>>
   {
-    protected readonly _prefix: P;
+    protected readonly _kind: K;
+    protected readonly _type: T;
     protected readonly _namespace: N;
     protected readonly _id: number;
 
-    protected constructor(prefix: P, namespace: N, id: number) {
-      this._prefix = prefix;
+    protected constructor(kind: K, type: T, namespace: N, id: number) {
+      this._kind = kind;
+      this._type = type;
       this._namespace = namespace;
       this._id = id;
     }
 
-    public get prefix(): P {
-      return this._prefix;
+    public get kind(): K {
+      return this._kind;
+    }
+
+    public get type(): T {
+      return this._type;
     }
 
     public get namespace(): N {
@@ -427,31 +436,34 @@ export namespace Node {
       return this._id;
     }
 
-    public equals(value: Id): value is this;
+    public equals(value: Id<Id.Kind>): value is this;
 
     public equals(value: unknown): boolean;
 
     public equals(value: unknown): boolean {
       return (
         value instanceof Id &&
-        value._prefix === this._prefix &&
+        value._kind === this._kind &&
+        value._type === this._type &&
         value._namespace === this._namespace &&
         value._id === this._id
       );
     }
 
     public hash(hash: Hash) {
-      hash.writeString(this._prefix);
+      hash.writeString(this._type);
       hash.writeString(this._namespace);
       hash.writeNumber(this._id);
     }
 
     public toString(): string {
-      return `${this._prefix}:${this._namespace}:${this._id}`;
+      return `${this._kind}:${this._type}:${this._namespace}:${this._id}`;
     }
 
-    public toJSON(): Id.JSON<P, N> {
-      return { prefix: this._prefix, namespace: this._namespace, id: this._id };
+    public toJSON(): Id.JSON<T, N> {
+      // Node ID are *always* serialised as user ID.
+      // This avoids collision with freshly generated system ID when deserialising.
+      return { type: this._type, namespace: this._namespace, id: this._id };
     }
   }
 
@@ -459,13 +471,19 @@ export namespace Node {
    * @internal
    */
   export namespace Id {
+    export enum Kind {
+      System = "alfa",
+      User = "user",
+    }
+
+    // Kind is never serialised, Node id are *always* serialised as user ID.
     export interface JSON<
-      P extends string = string,
+      T extends string = string,
       N extends string = string
     > {
       [key: string]: json.JSON;
 
-      prefix: P;
+      type: T;
       namespace: N;
       id: number;
     }
@@ -473,27 +491,51 @@ export namespace Node {
     /**
      * @public
      */
-    export class User<N extends string = string> extends Id<"user", N> {
-      public static of(id: number): User<"">;
+    export class User<
+      T extends string = string,
+      N extends string = string
+    > extends Id<Kind.User, T, N> {
+      public static of(id: number): User<"", "">;
 
-      public static of<N extends string = string>(
+      public static of<T extends string = string>(
+        type: T,
+        id: number
+      ): User<T, "">;
+
+      public static of<T extends string = string, N extends string = string>(
+        type: T,
         namespace: N,
         id: number
-      ): User<N>;
+      ): User<T, N>;
 
-      public static of<N extends string = string>(
-        idOrNamespace: number | N,
+      public static of<T extends string = string, N extends string = string>(
+        typeOrId: T | number,
+        namespaceOrId?: N | number,
         id?: number
-      ) {
-        if (typeof idOrNamespace === "number") {
-          return new User("", idOrNamespace);
-        } else {
-          return new User(idOrNamespace, id!);
+      ): User {
+        if (id !== undefined) {
+          // We have all three parameters
+          return new User(typeOrId as T, namespaceOrId as N, id);
         }
+
+        if (namespaceOrId !== undefined) {
+          // We have two parameters: type and id.
+          return new User(typeOrId as T, "", namespaceOrId as number);
+        }
+
+        // We only have one parameter: id
+        return new User("", "", typeOrId as number);
       }
 
-      protected constructor(namespace: N, id: number) {
-        super("user", namespace, id);
+      protected constructor(type: T, namespace: N, id: number) {
+        super(Kind.User, type, namespace, id);
+      }
+
+      public static fromId<
+        T extends string = string,
+        N extends string = string
+      >(json: Id.JSON<T, N>): User<T, N> {
+        return new User(json.type, json.namespace, json.id);
       }
     }
 
@@ -501,7 +543,7 @@ export namespace Node {
      * @public
      */
     export namespace User {
-      export function isUser(value: Id): value is User;
+      export function isUser(value: Id<Kind>): value is User;
 
       export function isUser(value: unknown): value is User;
 
@@ -515,9 +557,12 @@ export namespace Node {
     /**
      * @internal
      */
-    export abstract class System<N extends string = string> extends Id<"alfa"> {
-      protected constructor(namespace: N, id: number) {
-        super("alfa", namespace, id);
+    export abstract class System<
+      T extends string = string,
+      N extends string = string
+    > extends Id<Kind.System, `alfa-${T}`, N> {
+      protected constructor(type: T, namespace: N, id: number) {
+        super(Kind.System, `alfa-${type}`, namespace, id);
       }
     }
 
@@ -525,7 +570,7 @@ export namespace Node {
      * @internal
      */
     export namespace System {
-      export function isSystem(value: Id): value is System;
+      export function isSystem(value: Id<Kind>): value is System;
 
       export function isSystem(value: unknown): value is System;
 
