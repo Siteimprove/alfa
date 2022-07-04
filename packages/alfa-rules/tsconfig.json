@@ -14,6 +14,7 @@
     "src/common/applicability/audio.ts",
     "src/common/applicability/video.ts",
     "src/common/diagnostic/contrast.ts",
+    "src/common/diagnostic/with-role.ts",
     "src/common/dom/get-colors.ts",
     "src/common/dom/get-interposed-descendant.ts",
     "src/common/expectation/contrast.ts",
