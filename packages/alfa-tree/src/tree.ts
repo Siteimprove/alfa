@@ -1,5 +1,6 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Flags } from "@siteimprove/alfa-flags";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -30,13 +31,16 @@ const { equals } = Refinement;
 export abstract class Node<
   // The list of flags allowed to control tree traversal.
   F extends Flags.allFlags,
-  // The type
-  T extends string = string
+  // The type of nodes
+  T extends string = string,
+  // Allowed namespace for system ids
+  N extends string = string
 > implements Iterable<Node<F>>, Equatable, json.Serializable<Node.JSON<T>>
 {
   protected readonly _children: Array<Node<F>>;
   protected _parent: Option<Node<F>> = None;
   protected readonly _type: T;
+  private readonly _nodeId: Node.Id.System<N> | Node.Id.User;
 
   /**
    * Whether the node is frozen.
@@ -51,15 +55,24 @@ export abstract class Node<
    */
   protected _frozen: boolean = false;
 
-  protected constructor(children: Array<Node<F>>, type: T) {
+  protected constructor(
+    children: Array<Node<F>>,
+    type: T,
+    nodeId: Node.Id.System<N> | Node.Id.User
+  ) {
     this._children = (children as Array<Node<F>>).filter((child) =>
       child._attachParent(this)
     ) as Array<Node<F>>;
     this._type = type;
+    this._nodeId = nodeId;
   }
 
   public get type(): T {
     return this._type;
+  }
+
+  public get nodeId(): Node.Id.System<N> | Node.Id.User {
+    return this._nodeId;
   }
 
   public get frozen(): boolean {
@@ -356,6 +369,7 @@ export abstract class Node<
     return {
       type: this._type,
       children: this._children.map((child) => child.toJSON()),
+      nodeId: this._nodeId.toJSON(),
     };
   }
 
@@ -382,5 +396,144 @@ export namespace Node {
     [key: string]: json.JSON | undefined;
     type: T;
     children?: Array<JSON>;
+    nodeId?: Id.JSON;
+  }
+
+  /**
+   * @internal
+   */
+  export abstract class Id<P extends string = string, N extends string = string>
+    implements Equatable, Hashable, json.Serializable<Id.JSON<P, N>>
+  {
+    protected readonly _prefix: P;
+    protected readonly _namespace: N;
+    protected readonly _id: number;
+
+    protected constructor(prefix: P, namespace: N, id: number) {
+      this._prefix = prefix;
+      this._namespace = namespace;
+      this._id = id;
+    }
+
+    public get prefix(): P {
+      return this._prefix;
+    }
+
+    public get namespace(): N {
+      return this._namespace;
+    }
+
+    public get id(): number {
+      return this._id;
+    }
+
+    public equals(value: Id): value is this;
+
+    public equals(value: unknown): boolean;
+
+    public equals(value: unknown): boolean {
+      return (
+        value instanceof Id &&
+        value._prefix === this._prefix &&
+        value._namespace === this._namespace &&
+        value._id === this._id
+      );
+    }
+
+    public hash(hash: Hash) {
+      hash.writeString(this._prefix);
+      hash.writeString(this._namespace);
+      hash.writeNumber(this._id);
+    }
+
+    public toString(): string {
+      return `${this._prefix}:${this._namespace}:${this._id}`;
+    }
+
+    public toJSON(): Id.JSON<P, N> {
+      return { prefix: this._prefix, namespace: this._namespace, id: this._id };
+    }
+  }
+
+  /**
+   * @internal
+   */
+  export namespace Id {
+    export interface JSON<
+      P extends string = string,
+      N extends string = string
+    > {
+      [key: string]: json.JSON;
+
+      prefix: P;
+      namespace: N;
+      id: number;
+    }
+
+    /**
+     * @public
+     */
+    export class User<N extends string = string> extends Id<"user", N> {
+      public static of(id: number): User<"">;
+
+      public static of<N extends string = string>(
+        namespace: N,
+        id: number
+      ): User<N>;
+
+      public static of<N extends string = string>(
+        idOrNamespace: number | N,
+        id?: number
+      ) {
+        if (typeof idOrNamespace === "number") {
+          return new User("", idOrNamespace);
+        } else {
+          return new User(idOrNamespace, id!);
+        }
+      }
+
+      protected constructor(namespace: N, id: number) {
+        super("user", namespace, id);
+      }
+    }
+
+    /**
+     * @public
+     */
+    export namespace User {
+      export function isUser(value: Id): value is User;
+
+      export function isUser(value: unknown): value is User;
+
+      export function isUser(value: unknown): value is User {
+        return value instanceof User;
+      }
+    }
+
+    export const { of: user, isUser } = User;
+
+    /**
+     * @internal
+     */
+    export abstract class System<N extends string = string> extends Id<"alfa"> {
+      protected constructor(namespace: N, id: number) {
+        super("alfa", namespace, id);
+      }
+    }
+
+    /**
+     * @internal
+     */
+    export namespace System {
+      export function isSystem(value: Id): value is System;
+
+      export function isSystem(value: unknown): value is System;
+
+      export function isSystem(value: unknown): value is System {
+        return value instanceof System;
+      }
+    }
+
+    export const { isSystem } = System;
   }
 }

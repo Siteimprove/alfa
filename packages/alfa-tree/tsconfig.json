@@ -13,6 +13,9 @@
       "path": "../alfa-flags"
     },
     {
+      "path": "../alfa-hash"
+    },
+    {
       "path": "../alfa-json"
     },
     {
