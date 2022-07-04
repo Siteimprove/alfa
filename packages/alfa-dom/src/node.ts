@@ -30,14 +30,18 @@ import * as predicate from "./node/predicate";
  * @public
  */
 export abstract class Node<T extends string = string>
-  extends tree.Node<Node.Traversal.Flag, T>
+  extends tree.Node<Node.Traversal.Flag, T, "dom">
   implements
     earl.Serializable<Node.EARL>,
     json.Serializable<tree.Node.JSON<T>>,
     sarif.Serializable<sarif.Location>
 {
-  protected constructor(children: Array<Node>, type: T) {
-    super(children, type);
+  protected constructor(
+    children: Array<Node>,
+    type: T,
+    nodeId: Node.Id | tree.Node.Id.User
+  ) {
+    super(children, type, nodeId);
   }
 
   /**
@@ -379,4 +383,44 @@ export namespace Node {
     hasTextContent,
     isRoot,
   } = predicate;
+
+  /**
+   * @internal
+   */
+  export class Id extends tree.Node.Id.System<"dom"> {
+    public static create(): Id {
+      this._lastUsedId += 1;
+      return new Id(this._lastUsedId);
+    }
+
+    private static _lastUsedId = -1;
+
+    protected constructor(id: number);
+
+    protected constructor(prefix: string, namespace: string, id: number);
+
+    protected constructor(
+      prefixOrId: string | number,
+      namespace?: string,
+      id?: number
+    ) {
+      // prefix and namespace are hardcoded for system IDs and only kept in
+      // the signature for compatibility with parent class, needed for correct
+      // inheritance of Node…
+      super("dom", typeof prefixOrId === "number" ? prefixOrId : id!);
+    }
+  }
+
+  /**
+   * @internal
+   */
+  export namespace Id {
+    export function isId(value: tree.Node.Id.System): value is Id;
+
+    export function isId(value: unknown): value is Id;
+
+    export function isId(value: unknown): value is Id {
+      return value instanceof Id;
+    }
+  }
 }

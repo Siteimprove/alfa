@@ -3,6 +3,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+import { Node as treeNode } from "@siteimprove/alfa-tree";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -21,9 +22,16 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: N,
-    value: string
+    value: string,
+    nodeId?: treeNode.Id.User
   ): Attribute<N> {
-    return new Attribute(namespace, prefix, name, value);
+    return new Attribute(
+      namespace,
+      prefix,
+      name,
+      value,
+      nodeId ?? Node.Id.create()
+    );
   }
 
   private readonly _namespace: Option<Namespace>;
@@ -36,9 +44,10 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     namespace: Option<Namespace>,
     prefix: Option<string>,
     name: N,
-    value: string
+    value: string,
+    nodeId: Node.Id | treeNode.Id.User
   ) {
-    super([], "attribute");
+    super([], "attribute", nodeId);
 
     this._namespace = namespace;
     this._prefix = prefix;

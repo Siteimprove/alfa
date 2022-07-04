@@ -1,5 +1,6 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+import { Node as treeNode } from "@siteimprove/alfa-tree";
 
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
@@ -11,20 +12,29 @@ import { Element } from "./element";
 export class Document extends Node<"document"> {
   public static of(
     children: Iterable<Node>,
-    style: Iterable<Sheet> = []
+    style: Iterable<Sheet> = [],
+    nodeId?: treeNode.Id.User
   ): Document {
-    return new Document(Array.from(children), style);
+    return new Document(
+      Array.from(children),
+      style,
+      nodeId ?? Node.Id.create()
+    );
   }
 
   public static empty(): Document {
-    return new Document([], []);
+    return new Document([], [], Node.Id.create());
   }
 
   private readonly _style: Array<Sheet>;
   private _frame: Option<Element> = None;
 
-  private constructor(children: Array<Node>, style: Iterable<Sheet>) {
-    super(children, "document");
+  private constructor(
+    children: Array<Node>,
+    style: Iterable<Sheet>,
+    nodeId: Node.Id | treeNode.Id.User
+  ) {
+    super(children, "document", nodeId);
 
     this._style = Array.from(style);
   }

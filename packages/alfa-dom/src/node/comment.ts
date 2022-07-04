@@ -1,4 +1,5 @@
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+import { Node as treeNode } from "@siteimprove/alfa-tree";
 
 import { Node } from "../node";
 
@@ -6,18 +7,18 @@ import { Node } from "../node";
  * @public
  */
 export class Comment extends Node<"comment"> {
-  public static of(data: string): Comment {
-    return new Comment(data);
+  public static of(data: string, nodeId?: treeNode.Id.User): Comment {
+    return new Comment(data, nodeId ?? Node.Id.create());
   }
 
   public static empty(): Comment {
-    return new Comment("");
+    return new Comment("", Node.Id.create());
   }
 
   private readonly _data: string;
 
-  private constructor(data: string) {
-    super([], "comment");
+  private constructor(data: string, nodeId: Node.Id | treeNode.Id.User) {
+    super([], "comment", nodeId);
 
     this._data = data;
   }

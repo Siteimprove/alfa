@@ -3,6 +3,7 @@ import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+import { Node as treeNode } from "@siteimprove/alfa-tree";
 
 import { Namespace } from "../namespace";
 import { Node } from "../node";
@@ -31,7 +32,8 @@ export class Element<N extends string = string>
     name: N,
     attributes: Iterable<Attribute> = [],
     children: Iterable<Node> = [],
-    style: Option<Block> = None
+    style: Option<Block> = None,
+    nodeId?: treeNode.Id.User
   ): Element<N> {
     return new Element(
       namespace,
@@ -39,7 +41,8 @@ export class Element<N extends string = string>
       name,
       Array.from(attributes),
       Array.from(children),
-      style
+      style,
+      nodeId ?? Node.Id.create()
     );
   }
 
@@ -59,9 +62,10 @@ export class Element<N extends string = string>
     name: N,
     attributes: Array<Attribute>,
     children: Array<Node>,
-    style: Option<Block>
+    style: Option<Block>,
+    nodeId: Node.Id | treeNode.Id.User
   ) {
-    super(children, "element");
+    super(children, "element", nodeId);
 
     this._namespace = namespace;
     this._prefix = prefix;

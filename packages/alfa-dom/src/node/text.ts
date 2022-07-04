@@ -1,5 +1,6 @@
 import { Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+import { Node as treeNode } from "@siteimprove/alfa-tree";
 
 import { Node } from "../node";
 import { Element } from "./element";
@@ -11,18 +12,18 @@ import { Slotable } from "./slotable";
  * @public
  */
 export class Text extends Node<"text"> implements Slotable {
-  public static of(data: string): Text {
-    return new Text(data);
+  public static of(data: string, nodeId?: treeNode.Id.User): Text {
+    return new Text(data, nodeId ?? Node.Id.create());
   }
 
   public static empty(): Text {
-    return new Text("");
+    return new Text("", Node.Id.create());
   }
 
   private readonly _data: string;
 
-  private constructor(data: string) {
-    super([], "text");
+  private constructor(data: string, nodeId: Node.Id | treeNode.Id.User) {
+    super([], "text", nodeId);
 
     this._data = data;
   }

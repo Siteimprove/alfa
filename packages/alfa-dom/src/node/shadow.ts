@@ -1,5 +1,6 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+import { Node as treeNode } from "@siteimprove/alfa-tree";
 
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
@@ -12,13 +13,19 @@ export class Shadow extends Node<"shadow"> {
   public static of(
     children: Iterable<Node>,
     style: Iterable<Sheet> = [],
-    mode: Shadow.Mode = Shadow.Mode.Open
+    mode: Shadow.Mode = Shadow.Mode.Open,
+    nodeId?: treeNode.Id.User
   ): Shadow {
-    return new Shadow(Array.from(children), Array.from(style), mode);
+    return new Shadow(
+      Array.from(children),
+      Array.from(style),
+      mode,
+      nodeId ?? Node.Id.create()
+    );
   }
 
   public static empty(): Shadow {
-    return new Shadow([], [], Shadow.Mode.Open);
+    return new Shadow([], [], Shadow.Mode.Open, Node.Id.create());
   }
 
   private readonly _mode: Shadow.Mode;
@@ -28,9 +35,10 @@ export class Shadow extends Node<"shadow"> {
   private constructor(
     children: Array<Node>,
     style: Array<Sheet>,
-    mode: Shadow.Mode
+    mode: Shadow.Mode,
+    nodeId: Node.Id | treeNode.Id.User
   ) {
-    super(children, "shadow");
+    super(children, "shadow", nodeId);
 
     this._mode = mode;
     this._style = style;

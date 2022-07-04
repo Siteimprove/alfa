@@ -1,4 +1,5 @@
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+import { Node as treeNode } from "@siteimprove/alfa-tree";
 
 import { Node } from "../node";
 
@@ -6,16 +7,22 @@ import { Node } from "../node";
  * @public
  */
 export class Fragment extends Node<"fragment"> {
-  public static of(children: Iterable<Node>): Fragment {
-    return new Fragment(Array.from(children));
+  public static of(
+    children: Iterable<Node>,
+    nodeId?: treeNode.Id.User
+  ): Fragment {
+    return new Fragment(Array.from(children), nodeId ?? Node.Id.create());
   }
 
   public static empty(): Fragment {
-    return new Fragment([]);
+    return new Fragment([], Node.Id.create());
   }
 
-  private constructor(children: Array<Node>) {
-    super(children, "fragment");
+  private constructor(
+    children: Array<Node>,
+    nodeId: Node.Id | treeNode.Id.User
+  ) {
+    super(children, "fragment", nodeId);
   }
 
   /**

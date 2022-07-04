@@ -1,5 +1,6 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
+import { Node as treeNode } from "@siteimprove/alfa-tree";
 
 import { Node } from "../node";
 
@@ -10,13 +11,14 @@ export class Type<N extends string = string> extends Node<"type"> {
   public static of<N extends string = string>(
     name: N,
     publicId: Option<string> = None,
-    systemId: Option<string> = None
+    systemId: Option<string> = None,
+    nodeId?: treeNode.Id.User
   ): Type<N> {
-    return new Type(name, publicId, systemId);
+    return new Type(name, publicId, systemId, nodeId ?? Node.Id.create());
   }
 
   public static empty(): Type {
-    return new Type("html", None, None);
+    return new Type("html", None, None, Node.Id.create());
   }
 
   private readonly _name: N;
@@ -26,9 +28,10 @@ export class Type<N extends string = string> extends Node<"type"> {
   private constructor(
     name: N,
     publicId: Option<string>,
-    systemId: Option<string>
+    systemId: Option<string>,
+    nodeId: Node.Id | treeNode.Id.User
   ) {
-    super([], "type");
+    super([], "type", nodeId);
 
     this._name = name;
     this._publicId = publicId;
