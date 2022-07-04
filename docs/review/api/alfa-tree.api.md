@@ -6,6 +6,8 @@
 
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Flags } from '@siteimprove/alfa-flags';
+import { Hash } from '@siteimprove/alfa-hash';
+import { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
@@ -13,10 +15,10 @@ import { Refinement } from '@siteimprove/alfa-refinement';
 import { Sequence } from '@siteimprove/alfa-sequence';
 
 // @public
-export abstract class Node<F extends Flags.allFlags, T extends string = string> implements Iterable<Node<F>>, Equatable, json.Serializable<Node.JSON<T>> {
+export abstract class Node<F extends Flags.allFlags, T extends string = string, N extends string = string> implements Iterable<Node<F>>, Equatable, json.Serializable<Node.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Node<F>>;
-    protected constructor(children: Array<Node<F>>, type: T);
+    protected constructor(children: Array<Node<F>>, type: T, nodeId: Node.Id.System<N> | Node.Id.User);
     // (undocumented)
     ancestors(options?: Flags<F>): Sequence<Node<F>>;
     // @internal (undocumented)
@@ -74,6 +76,8 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string> 
     // (undocumented)
     next(options?: Flags<F>): Option<Node<F>>;
     // (undocumented)
+    get nodeId(): Node.Id.System<N> | Node.Id.User;
+    // (undocumented)
     parent(options?: Flags<F>): Option<Node<F>>;
     // (undocumented)
     protected _parent: Option<Node<F>>;
@@ -95,12 +99,106 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string> 
 
 // @public (undocumented)
 export namespace Node {
+    // @internal (undocumented)
+    export abstract class Id<K extends Id.Kind, T extends string = string, N extends string = string> implements Equatable, Hashable, json.Serializable<Id.JSON<T, N>> {
+        protected constructor(kind: K, type: T, namespace: N, id: number);
+        // (undocumented)
+        equals(value: Id<Id.Kind>): value is this;
+        // (undocumented)
+        equals(value: unknown): boolean;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // (undocumented)
+        get id(): number;
+        // (undocumented)
+        protected readonly _id: number;
+        // (undocumented)
+        get kind(): K;
+        // (undocumented)
+        protected readonly _kind: K;
+        // (undocumented)
+        get namespace(): N;
+        // (undocumented)
+        protected readonly _namespace: N;
+        // (undocumented)
+        toJSON(): Id.JSON<T, N>;
+        // (undocumented)
+        toString(): string;
+        // (undocumented)
+        get type(): T;
+        // (undocumented)
+        protected readonly _type: T;
+    }
+    // @internal (undocumented)
+    export namespace Id {
+        // (undocumented)
+        export interface JSON<T extends string = string, N extends string = string> {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            id: number;
+            // (undocumented)
+            namespace: N;
+            // (undocumented)
+            type: T;
+        }
+        // (undocumented)
+        export enum Kind {
+            // (undocumented)
+            System = "alfa",
+            // (undocumented)
+            User = "user"
+        }
+        // (undocumented)
+        export abstract class System<T extends string = string, N extends string = string> extends Id<Kind.System, `alfa-${T}`, N> {
+            protected constructor(type: T, namespace: N, id: number);
+        }
+        // (undocumented)
+        export namespace System {
+            // (undocumented)
+            export function isSystem(value: Id<Kind>): value is System;
+            // (undocumented)
+            export function isSystem(value: unknown): value is System;
+        }
+        const // (undocumented)
+        user: typeof User.of, // (undocumented)
+        isUser: typeof User.isUser;
+        // Warning: (ae-incompatible-release-tags) The symbol "User" is marked as @public, but its signature references "Kind" which is marked as @internal
+        //
+        // @public (undocumented)
+        export class User<T extends string = string, N extends string = string> extends Id<Kind.User, T, N> {
+            protected constructor(type: T, namespace: N, id: number);
+            // (undocumented)
+            static fromId<T extends string = string, N extends string = string>(json: Id.JSON<T, N>): User<T, N>;
+            // (undocumented)
+            static of(id: number): User<"", "">;
+            // (undocumented)
+            static of<T extends string = string>(type: T, id: number): User<T, "">;
+            // (undocumented)
+            static of<T extends string = string, N extends string = string>(type: T, namespace: N, id: number): User<T, N>;
+        }
+        // @public (undocumented)
+        export namespace User {
+            // Warning: (ae-incompatible-release-tags) The symbol "isUser" is marked as @public, but its signature references "Kind" which is marked as @internal
+            //
+            // (undocumented)
+            export function isUser(value: Id<Kind>): value is User;
+            // (undocumented)
+            export function isUser(value: unknown): value is User;
+        }
+        const // (undocumented)
+        isSystem: typeof System.isSystem;
+    }
     // (undocumented)
     export interface JSON<T extends string = string> {
         // (undocumented)
         [key: string]: json.JSON | undefined;
         // (undocumented)
         children?: Array<JSON>;
+        // Warning: (ae-incompatible-release-tags) The symbol "nodeId" is marked as @public, but its signature references "Id" which is marked as @internal
+        //
+        // (undocumented)
+        nodeId?: Id.JSON;
         // (undocumented)
         type: T;
     }
