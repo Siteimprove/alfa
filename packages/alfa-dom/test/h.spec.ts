@@ -4,6 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 import { h } from "../src/h";
 
 import { Namespace } from "../src/namespace";
+import { Node } from "../src/node";
 
 import { Document } from "../src/node/document";
 import { Element } from "../src/node/element";

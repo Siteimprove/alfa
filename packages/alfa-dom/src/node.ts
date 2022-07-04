@@ -387,27 +387,40 @@ export namespace Node {
   /**
    * @internal
    */
-  export class Id extends tree.Node.Id.System<"dom"> {
-    public static create(): Id {
+  export class Id<N extends string = string> extends tree.Node.Id.System<
+    "dom",
+    N
+  > {
+    /**
+     * Create a new Node id by incrementing counter.
+     */
+    public static create(): Id<"">;
+
+    public static create<N extends string = string>(namespace: N): Id<N>;
+
+    public static create<N extends string = string>(namespace?: N): Id<N | ""> {
       this._lastUsedId += 1;
-      return new Id(this._lastUsedId);
+      return new Id(namespace ?? "", this._lastUsedId);
     }
 
     private static _lastUsedId = -1;
 
-    protected constructor(id: number);
+    protected constructor(namespace: N, id: number);
 
-    protected constructor(prefix: string, namespace: string, id: number);
+    protected constructor(type: "dom", namespace: N, id: number);
 
     protected constructor(
-      prefixOrId: string | number,
-      namespace?: string,
+      namespaceOrType: "dom" | N,
+      idOrNamespace: N | number,
       id?: number
     ) {
-      // prefix and namespace are hardcoded for system IDs and only kept in
-      // the signature for compatibility with parent class, needed for correct
-      // inheritance of Node…
-      super("dom", typeof prefixOrId === "number" ? prefixOrId : id!);
+      // Type is hardcoded for system IDs and only kept in the signature for
+      // compatibility with parent class, needed for correct inheritance of Node…
+      super(
+        "dom",
+        id === undefined ? (namespaceOrType as N) : (idOrNamespace as N),
+        id ?? (idOrNamespace as number)
+      );
     }
   }
 

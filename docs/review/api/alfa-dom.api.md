@@ -10,6 +10,7 @@ import { Flags } from '@siteimprove/alfa-flags';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Media } from '@siteimprove/alfa-media';
+import { Node as Node_2 } from '@siteimprove/alfa-tree';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
@@ -38,7 +39,7 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string): Attribute<N>;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string, nodeId?: Node_2.Id.User): Attribute<N>;
     // (undocumented)
     get owner(): Option<Element>;
     // (undocumented)
@@ -119,7 +120,7 @@ export class Comment extends Node<"comment"> {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(data: string): Comment;
+    static of(data: string, nodeId?: Node_2.Id.User): Comment;
     // (undocumented)
     toJSON(): Comment.JSON;
     // (undocumented)
@@ -215,7 +216,7 @@ export class Document extends Node<"document"> {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(children: Iterable<Node>, style?: Iterable<Sheet>): Document;
+    static of(children: Iterable<Node>, style?: Iterable<Sheet>, nodeId?: Node_2.Id.User): Document;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -272,7 +273,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>): Element<N>;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, nodeId?: Node_2.Id.User): Element<N>;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -374,7 +375,7 @@ export class Fragment extends Node<"fragment"> {
     // @internal (undocumented)
     protected _internalPath(): string;
     // (undocumented)
-    static of(children: Iterable<Node>): Fragment;
+    static of(children: Iterable<Node>, nodeId?: Node_2.Id.User): Fragment;
     // (undocumented)
     toString(): string;
 }
@@ -753,8 +754,8 @@ export namespace NamespaceRule {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
-    protected constructor(children: Array<Node>, type: T);
+export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T, "dom"> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
+    protected constructor(children: Array<Node>, type: T, nodeId: Node.Id | tree.Node.Id.User);
     // (undocumented)
     equals(value: Node): boolean;
     // (undocumented)
@@ -872,11 +873,38 @@ export namespace Node {
     export function from(json: JSON): Node;
     // @internal (undocumented)
     export function fromNode(json: JSON): Trampoline<Node>;
+    // @internal (undocumented)
+    export class Id<N extends string = string> extends tree.Node.Id.System<"dom", N> {
+        protected constructor(namespace: N, id: number);
+        protected constructor(type: "dom", namespace: N, id: number);
+        static create(): Id<"">;
+        // (undocumented)
+        static create<N extends string = string>(namespace: N): Id<N>;
+    }
+    // @internal (undocumented)
+    export namespace Id {
+        // (undocumented)
+        export function isId(value: tree.Node.Id.System): value is Id;
+        // (undocumented)
+        export function isId(value: unknown): value is Id;
+    }
     // (undocumented)
     export function isNode(value: unknown): value is Node;
     // (undocumented)
     export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
     }
+    const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    getNodesBetween: typeof traversal.getNodesBetween;
+    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    hasChild: typeof predicate_3.hasChild, // (undocumented)
+    hasDescendant: typeof predicate_3.hasDescendant, // (undocumented)
+    hasInclusiveDescendant: typeof predicate_3.hasInclusiveDescendant, // (undocumented)
+    hasTextContent: typeof predicate_3.hasTextContent, // (undocumented)
+    isRoot: typeof predicate_3.isRoot;
     // (undocumented)
     export class Traversal extends Flags<Traversal.Flag> {
         // (undocumented)
@@ -894,18 +922,6 @@ export namespace Node {
         const // (undocumented)
         empty: Traversal;
     }
-    const // Warning: (ae-forgotten-export) The symbol "traversal" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    getNodesBetween: typeof traversal.getNodesBetween;
-    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    hasChild: typeof predicate_3.hasChild, // (undocumented)
-    hasDescendant: typeof predicate_3.hasDescendant, // (undocumented)
-    hasInclusiveDescendant: typeof predicate_3.hasInclusiveDescendant, // (undocumented)
-    hasTextContent: typeof predicate_3.hasTextContent, // (undocumented)
-    isRoot: typeof predicate_3.isRoot;
 }
 
 // @public (undocumented)
@@ -1016,7 +1032,7 @@ export class Shadow extends Node<"shadow"> {
     // (undocumented)
     get mode(): Shadow.Mode;
     // (undocumented)
-    static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode): Shadow;
+    static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode, nodeId?: Node_2.Id.User): Shadow;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -1191,7 +1207,7 @@ export class Text extends Node<"text"> implements Slotable {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(data: string): Text;
+    static of(data: string, nodeId?: Node_2.Id.User): Text;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -1220,7 +1236,7 @@ export class Type<N extends string = string> extends Node<"type"> {
     // (undocumented)
     get name(): N;
     // (undocumented)
-    static of<N extends string = string>(name: N, publicId?: Option<string>, systemId?: Option<string>): Type<N>;
+    static of<N extends string = string>(name: N, publicId?: Option<string>, systemId?: Option<string>, nodeId?: Node_2.Id.User): Type<N>;
     // (undocumented)
     get publicId(): Option<string>;
     // (undocumented)
