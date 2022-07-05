@@ -39,7 +39,7 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string, nodeId?: Node_2.Id.User): Attribute<N>;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string, nodeId?: Node_2.Id.User | string): Attribute<N>;
     // (undocumented)
     get owner(): Option<Element>;
     // (undocumented)
@@ -120,7 +120,7 @@ export class Comment extends Node<"comment"> {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(data: string, nodeId?: Node_2.Id.User): Comment;
+    static of(data: string, nodeId?: Node_2.Id.User | string): Comment;
     // (undocumented)
     toJSON(): Comment.JSON;
     // (undocumented)
@@ -216,7 +216,7 @@ export class Document extends Node<"document"> {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(children: Iterable<Node>, style?: Iterable<Sheet>, nodeId?: Node_2.Id.User): Document;
+    static of(children: Iterable<Node>, style?: Iterable<Sheet>, nodeId?: Node_2.Id.User | string): Document;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -262,8 +262,6 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     get classes(): Sequence<string>;
     // (undocumented)
     get content(): Option<Document>;
-    // @internal
-    static _createUnsafe<N extends string = string>(nodeId: number, namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>): Element<N>;
     // (undocumented)
     get id(): Option<string>;
     // @internal (undocumented)
@@ -275,7 +273,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, nodeId?: Node_2.Id.User): Element<N>;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, nodeId?: Node_2.Id.User | string): Element<N>;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -377,7 +375,7 @@ export class Fragment extends Node<"fragment"> {
     // @internal (undocumented)
     protected _internalPath(): string;
     // (undocumented)
-    static of(children: Iterable<Node>, nodeId?: Node_2.Id.User): Fragment;
+    static of(children: Iterable<Node>, nodeId?: Node_2.Id.User | string): Fragment;
     // (undocumented)
     toString(): string;
 }
@@ -756,7 +754,7 @@ export namespace NamespaceRule {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T, "dom"> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
+export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T, "dom"> implements earl.Serializable<Node.EARL>, json.Serializable<Node.JSON<T>>, sarif.Serializable<sarif.Location> {
     protected constructor(children: Array<Node>, type: T, nodeId: Node.Id | tree.Node.Id.User);
     // (undocumented)
     equals(value: Node): boolean;
@@ -882,7 +880,6 @@ export namespace Node {
         static create(): Id<"">;
         // (undocumented)
         static create<N extends string = string>(namespace: N): Id<N>;
-        static _createUnsafe(id: number): Id<"">;
     }
     // @internal (undocumented)
     export namespace Id {
@@ -890,6 +887,8 @@ export namespace Node {
         export function isId(value: tree.Node.Id.System): value is Id;
         // (undocumented)
         export function isId(value: unknown): value is Id;
+        // (undocumented)
+        export function makeId<T extends string = string, N extends string = string>(value?: N | tree.Node.Id.User<T, N>): Id<""> | Id<N> | tree.Node.Id.User<T, N>;
     }
     // (undocumented)
     export function isNode(value: unknown): value is Node;
@@ -1035,7 +1034,7 @@ export class Shadow extends Node<"shadow"> {
     // (undocumented)
     get mode(): Shadow.Mode;
     // (undocumented)
-    static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode, nodeId?: Node_2.Id.User): Shadow;
+    static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode, nodeId?: Node_2.Id.User | string): Shadow;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -1210,7 +1209,7 @@ export class Text extends Node<"text"> implements Slotable {
     // @internal (undocumented)
     protected _internalPath(options?: Node.Traversal): string;
     // (undocumented)
-    static of(data: string, nodeId?: Node_2.Id.User): Text;
+    static of(data: string, nodeId?: Node_2.Id.User | string): Text;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -1239,7 +1238,7 @@ export class Type<N extends string = string> extends Node<"type"> {
     // (undocumented)
     get name(): N;
     // (undocumented)
-    static of<N extends string = string>(name: N, publicId?: Option<string>, systemId?: Option<string>, nodeId?: Node_2.Id.User): Type<N>;
+    static of<N extends string = string>(name: N, publicId?: Option<string>, systemId?: Option<string>, nodeId?: Node_2.Id.User | string): Type<N>;
     // (undocumented)
     get publicId(): Option<string>;
     // (undocumented)
