@@ -19,6 +19,7 @@ import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Namespace } from '@siteimprove/alfa-dom';
 import { Node as Node_2 } from '@siteimprove/alfa-dom';
+import { Node as Node_3 } from '@siteimprove/alfa-tree';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
@@ -81,11 +82,9 @@ export namespace Attribute {
 // @public (undocumented)
 export class Container extends Node<"container"> {
     // (undocumented)
-    clone(parent?: Option<Node>): Container;
-    // (undocumented)
     isIgnored(): boolean;
     // (undocumented)
-    static of(owner: dom_2.Node, children?: Iterable<Node>): Container;
+    static of(owner: dom_2.Node, children?: Iterable<Node>, nodeID?: Node_3.Id.User): Container;
     // (undocumented)
     toString(): string;
 }
@@ -120,13 +119,11 @@ export class Element extends Node<"element"> {
     // (undocumented)
     get attributes(): ReadonlyArray<Attribute>;
     // (undocumented)
-    clone(): Element;
-    // (undocumented)
     isIgnored(): boolean;
     // (undocumented)
     get name(): Option<Name>;
     // (undocumented)
-    static of(owner: dom_2.Node, role?: Option<Role>, name?: Option<Name>, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>): Element;
+    static of(owner: dom_2.Node, role?: Option<Role>, name?: Option<Name>, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, nodeId?: Node_3.Id.User): Element;
     // (undocumented)
     get role(): Option<Role>;
     // (undocumented)
@@ -233,11 +230,9 @@ function hasValue(value: string, ...rest: Array<string>): Predicate<Name>;
 // @public (undocumented)
 export class Inert extends Node<"inert"> {
     // (undocumented)
-    clone(): Inert;
-    // (undocumented)
     isIgnored(): boolean;
     // (undocumented)
-    static of(owner: dom_2.Node): Inert;
+    static of(owner: dom_2.Node, nodeId?: Node_3.Id.User): Inert;
     // (undocumented)
     toJSON(): Node.JSON<"inert">;
     // (undocumented)
@@ -509,8 +504,8 @@ export namespace Name {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements Serializable<Node.JSON<T>> {
-    protected constructor(owner: dom_2.Node, children: Array<Node>, type: T);
+export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T, "aria"> implements Serializable<Node.JSON<T>> {
+    protected constructor(owner: dom_2.Node, children: Array<Node>, type: T, nodeId: Node.Id | tree.Node.Id.User);
     // (undocumented)
     attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
     // (undocumented)
@@ -519,8 +514,6 @@ export abstract class Node<T extends string = string> extends tree.Node<Node.Tra
     attribute<N extends Attribute.Name>(name: N): Option<Attribute<N>>;
     // (undocumented)
     children(options?: Node.Traversal): Sequence<Node>;
-    // (undocumented)
-    abstract clone(parent?: Option<Node>): Node;
     // (undocumented)
     abstract isIgnored(): boolean;
     // (undocumented)
@@ -595,17 +588,36 @@ export interface Node {
 export namespace Node {
     // (undocumented)
     export function from(node: dom_2.Node, device: Device): Node;
+    // @internal (undocumented)
+    export class Id<N extends string = string> extends tree.Node.Id.System<"aria", N> {
+        protected constructor(namespace: N, id: number);
+        protected constructor(type: "aria", namespace: N, id: number);
+        static create(): Id<"">;
+        // (undocumented)
+        static create<N extends string = string>(namespace: N): Id<N>;
+    }
+    // @internal (undocumented)
+    export namespace Id {
+        // (undocumented)
+        export function isId(value: tree.Node.Id.System): value is Id;
+        // (undocumented)
+        export function isId(value: unknown): value is Id;
+    }
+    const includeIgnored: Traversal;
     // (undocumented)
     export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
         // (undocumented)
         node: string;
     }
+    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    hasName: typeof predicate_3.hasName;
     // (undocumented)
     export class Traversal extends Flags<Traversal.Flag> {
         // (undocumented)
         static of(...flags: Array<Traversal.Flag>): Traversal;
     }
-    const includeIgnored: Traversal;
     // (undocumented)
     export namespace Traversal {
         // (undocumented)
@@ -616,10 +628,6 @@ export namespace Node {
         const // (undocumented)
         empty: Traversal;
     }
-    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    hasName: typeof predicate_3.hasName;
 }
 
 // @public (undocumented)
@@ -699,13 +707,11 @@ export namespace Role {
 // @public (undocumented)
 export class Text extends Node<"text"> {
     // (undocumented)
-    clone(): Text;
-    // (undocumented)
     isIgnored(): boolean;
     // (undocumented)
     get name(): Option<Name>;
     // (undocumented)
-    static of(owner: dom_2.Node, name: Option<Name>): Text;
+    static of(owner: dom_2.Node, name: Option<Name>, nodeId?: Node_3.Id.User): Text;
     // (undocumented)
     toJSON(): Text.JSON;
     // (undocumented)
