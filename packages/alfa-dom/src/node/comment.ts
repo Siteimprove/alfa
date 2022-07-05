@@ -7,8 +7,8 @@ import { Node } from "../node";
  * @public
  */
 export class Comment extends Node<"comment"> {
-  public static of(data: string, nodeId?: treeNode.Id.User): Comment {
-    return new Comment(data, nodeId ?? Node.Id.create());
+  public static of(data: string, nodeId?: treeNode.Id.User | string): Comment {
+    return new Comment(data, Node.Id.makeId(nodeId));
   }
 
   public static empty(): Comment {

@@ -1,5 +1,6 @@
+import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
-import { test } from "@siteimprove/alfa-test";
+import { Assertions, test } from "@siteimprove/alfa-test";
 
 import { h } from "../src/h";
 
@@ -10,17 +11,39 @@ import { Document } from "../src/node/document";
 import { Element } from "../src/node/element";
 import { Type } from "../src/node/type";
 
+/**
+ * Turns a Node into JSON and recursively removes the NodeId that are
+ * irrelevant for these tests.
+ */
+function removeId<N extends Node = Node>(node: N): Serializable.ToJSON<N> {
+  function removeId(json: Node.JSON): Node.JSON {
+    return {
+      ...json,
+      children:
+        json.children !== undefined ? json.children.map(removeId) : undefined,
+      nodeId: undefined,
+    };
+  }
+
+  return removeId(node.toJSON()) as Serializable.ToJSON<N>;
+}
+
 test("h() constructs an element", (t) => {
-  t.deepEqual(h("div"), Element.of(Option.of(Namespace.HTML), None, "div"));
+  t.deepEqual(
+    removeId(h("div")),
+    removeId(Element.of(Option.of(Namespace.HTML), None, "div"))
+  );
 });
 
 test("h.document() constructs a document", (t) => {
   t.deepEqual(
-    h.document([h.type("html"), h("html")]),
-    Document.of([
-      Type.of("html"),
-      Element.of(Option.of(Namespace.HTML), None, "html"),
-    ])
+    removeId(h.document([h.type("html"), h("html")])),
+    removeId(
+      Document.of([
+        Type.of("html"),
+        Element.of(Option.of(Namespace.HTML), None, "html"),
+      ])
+    )
   );
 });
 
@@ -34,7 +57,7 @@ test("h() puts the first document child in a content document", (t) => {
     [h.element("dummy"), document1, h.element("dummy"), document2]
   );
 
-  t.deepEqual(iframe.content.get(), document1);
+  t.deepEqual(removeId(iframe.content.get()), removeId(document1));
 });
 
 test("h() puts the first shadow child in a shadow tree", (t) => {
@@ -47,17 +70,17 @@ test("h() puts the first shadow child in a shadow tree", (t) => {
     [h.element("dummy"), shadow1, h.element("dummy"), shadow2]
   );
 
-  t.deepEqual(iframe.shadow.get(), shadow1);
+  t.deepEqual(removeId(iframe.shadow.get()), removeId(shadow1));
 });
 
 test("h() put elements in the correct namespace", (t) => {
   t.deepEqual(
-    h("circle"),
-    Element.of(Option.of(Namespace.SVG), None, "circle")
+    removeId(h("circle")),
+    removeId(Element.of(Option.of(Namespace.SVG), None, "circle"))
   );
 
   t.deepEqual(
-    h("mfrac"),
-    Element.of(Option.of(Namespace.MathML), None, "mfrac")
+    removeId(h("mfrac")),
+    removeId(Element.of(Option.of(Namespace.MathML), None, "mfrac"))
   );
 });

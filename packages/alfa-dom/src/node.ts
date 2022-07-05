@@ -33,7 +33,7 @@ export abstract class Node<T extends string = string>
   extends tree.Node<Node.Traversal.Flag, T, "dom">
   implements
     earl.Serializable<Node.EARL>,
-    json.Serializable<tree.Node.JSON<T>>,
+    json.Serializable<Node.JSON<T>>,
     sarif.Serializable<sarif.Location>
 {
   protected constructor(
@@ -434,6 +434,25 @@ export namespace Node {
 
     export function isId(value: unknown): value is Id {
       return value instanceof Id;
+    }
+    /**
+     * @internal
+     */
+    export function makeId<
+      T extends string = string,
+      N extends string = string
+    >(
+      value?: N | tree.Node.Id.User<T, N>
+    ): Id<""> | Id<N> | tree.Node.Id.User<T, N> {
+      if (tree.Node.Id.isUser(value)) {
+        return value;
+      }
+
+      if (value === undefined) {
+        return Id.create();
+      }
+
+      return Id.create(value);
     }
   }
 }

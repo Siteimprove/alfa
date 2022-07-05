@@ -33,7 +33,7 @@ export class Element<N extends string = string>
     attributes: Iterable<Attribute> = [],
     children: Iterable<Node> = [],
     style: Option<Block> = None,
-    nodeId?: treeNode.Id.User
+    nodeId?: treeNode.Id.User | string
   ): Element<N> {
     return new Element(
       namespace,
@@ -42,7 +42,7 @@ export class Element<N extends string = string>
       Array.from(attributes),
       Array.from(children),
       style,
-      nodeId ?? Node.Id.create()
+      Node.Id.makeId(nodeId)
     );
   }
 

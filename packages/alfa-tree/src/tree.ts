@@ -396,6 +396,8 @@ export namespace Node {
     [key: string]: json.JSON | undefined;
     type: T;
     children?: Array<JSON>;
+    // We need nodeId to be optional since this type is used as input for
+    // deserialising functions where nodeId may be absent (for system ids).
     nodeId?: Id.JSON;
   }
 

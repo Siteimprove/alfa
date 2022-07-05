@@ -9,9 +9,9 @@ import { Node } from "../node";
 export class Fragment extends Node<"fragment"> {
   public static of(
     children: Iterable<Node>,
-    nodeId?: treeNode.Id.User
+    nodeId?: treeNode.Id.User | string
   ): Fragment {
-    return new Fragment(Array.from(children), nodeId ?? Node.Id.create());
+    return new Fragment(Array.from(children), Node.Id.makeId(nodeId));
   }
 
   public static empty(): Fragment {

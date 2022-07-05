@@ -262,6 +262,8 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     get classes(): Sequence<string>;
     // (undocumented)
     get content(): Option<Document>;
+    // @internal
+    static _createUnsafe<N extends string = string>(nodeId: number, namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>): Element<N>;
     // (undocumented)
     get id(): Option<string>;
     // @internal (undocumented)
@@ -880,6 +882,7 @@ export namespace Node {
         static create(): Id<"">;
         // (undocumented)
         static create<N extends string = string>(namespace: N): Id<N>;
+        static _createUnsafe(id: number): Id<"">;
     }
     // @internal (undocumented)
     export namespace Id {

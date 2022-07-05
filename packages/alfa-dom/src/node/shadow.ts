@@ -14,13 +14,13 @@ export class Shadow extends Node<"shadow"> {
     children: Iterable<Node>,
     style: Iterable<Sheet> = [],
     mode: Shadow.Mode = Shadow.Mode.Open,
-    nodeId?: treeNode.Id.User
+    nodeId?: treeNode.Id.User | string
   ): Shadow {
     return new Shadow(
       Array.from(children),
       Array.from(style),
       mode,
-      nodeId ?? Node.Id.create()
+      Node.Id.makeId(nodeId)
     );
   }
 

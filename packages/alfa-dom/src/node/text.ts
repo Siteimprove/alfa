@@ -12,8 +12,8 @@ import { Slotable } from "./slotable";
  * @public
  */
 export class Text extends Node<"text"> implements Slotable {
-  public static of(data: string, nodeId?: treeNode.Id.User): Text {
-    return new Text(data, nodeId ?? Node.Id.create());
+  public static of(data: string, nodeId?: treeNode.Id.User | string): Text {
+    return new Text(data, Node.Id.makeId(nodeId));
   }
 
   public static empty(): Text {

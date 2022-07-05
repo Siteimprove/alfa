@@ -12,9 +12,9 @@ export class Type<N extends string = string> extends Node<"type"> {
     name: N,
     publicId: Option<string> = None,
     systemId: Option<string> = None,
-    nodeId?: treeNode.Id.User
+    nodeId?: treeNode.Id.User | string
   ): Type<N> {
-    return new Type(name, publicId, systemId, nodeId ?? Node.Id.create());
+    return new Type(name, publicId, systemId, Node.Id.makeId(nodeId));
   }
 
   public static empty(): Type {

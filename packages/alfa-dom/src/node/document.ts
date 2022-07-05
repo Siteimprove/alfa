@@ -13,13 +13,9 @@ export class Document extends Node<"document"> {
   public static of(
     children: Iterable<Node>,
     style: Iterable<Sheet> = [],
-    nodeId?: treeNode.Id.User
+    nodeId?: treeNode.Id.User | string
   ): Document {
-    return new Document(
-      Array.from(children),
-      style,
-      nodeId ?? Node.Id.create()
-    );
+    return new Document(Array.from(children), style, Node.Id.makeId(nodeId));
   }
 
   public static empty(): Document {

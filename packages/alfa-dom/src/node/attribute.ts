@@ -23,14 +23,14 @@ export class Attribute<N extends string = string> extends Node<"attribute"> {
     prefix: Option<string>,
     name: N,
     value: string,
-    nodeId?: treeNode.Id.User
+    nodeId?: treeNode.Id.User | string
   ): Attribute<N> {
     return new Attribute(
       namespace,
       prefix,
       name,
       value,
-      nodeId ?? Node.Id.create()
+      Node.Id.makeId(nodeId)
     );
   }
 
