@@ -15,10 +15,6 @@ export class Inert extends Node<"inert"> {
     super(owner, [], "inert", nodeId);
   }
 
-  // public clone(): Inert {
-  //   return new Inert(this._node);
-  // }
-
   public isIgnored(): boolean {
     return true;
   }

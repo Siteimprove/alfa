@@ -85,16 +85,6 @@ export class Element extends Node<"element"> {
     );
   }
 
-  // public clone(): Element {
-  //   return new Element(
-  //     this._node,
-  //     this._role,
-  //     this._name,
-  //     this._attributes,
-  //     (this._children as Array<Node>).map((child) => child.clone())
-  //   );
-  // }
-
   public isIgnored(): boolean {
     return false;
   }

@@ -38,10 +38,6 @@ export class Text extends Node<"text"> {
     return this._name;
   }
 
-  // public clone(): Text {
-  //   return new Text(this._node, this._name);
-  // }
-
   public isIgnored(): boolean {
     return false;
   }

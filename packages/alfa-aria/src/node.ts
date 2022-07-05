@@ -105,8 +105,6 @@ export abstract class Node<T extends string = string>
     );
   }
 
-  // public abstract clone(parent?: Option<Node>): Node;
-
   public abstract isIgnored(): boolean;
 
   public toJSON(): Node.JSON<T> {

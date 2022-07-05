@@ -1,4 +1,3 @@
-import { None, Option } from "@siteimprove/alfa-option";
 import { Node as treeNode } from "@siteimprove/alfa-tree";
 
 import * as dom from "@siteimprove/alfa-dom";
@@ -28,13 +27,6 @@ export class Container extends Node<"container"> {
   ) {
     super(owner, children, "container", nodeId);
   }
-
-  // public clone(parent: Option<Node> = None): Container {
-  //   return new Container(
-  //     this._node,
-  //     (this._children as Array<Node>).map((child) => child.clone())
-  //   );
-  // }
 
   public isIgnored(): boolean {
     return true;
