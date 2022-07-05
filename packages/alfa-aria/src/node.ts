@@ -32,13 +32,18 @@ const { isRendered } = Style;
  * @public
  */
 export abstract class Node<T extends string = string>
-  extends tree.Node<Node.Traversal.Flag, T>
+  extends tree.Node<Node.Traversal.Flag, T, "aria">
   implements Serializable<Node.JSON<T>>
 {
   protected readonly _node: dom.Node;
 
-  protected constructor(owner: dom.Node, children: Array<Node>, type: T) {
-    super(children, type);
+  protected constructor(
+    owner: dom.Node,
+    children: Array<Node>,
+    type: T,
+    nodeId: Node.Id | tree.Node.Id.User
+  ) {
+    super(children, type, nodeId);
     this._node = owner;
   }
 
@@ -100,7 +105,7 @@ export abstract class Node<T extends string = string>
     );
   }
 
-  public abstract clone(parent?: Option<Node>): Node;
+  // public abstract clone(parent?: Option<Node>): Node;
 
   public abstract isIgnored(): boolean;
 
@@ -523,4 +528,57 @@ export namespace Node {
   }
 
   export const { hasName } = predicate;
+
+  /**
+   * @internal
+   */
+  export class Id<N extends string = string> extends tree.Node.Id.System<
+    "aria",
+    N
+  > {
+    /**
+     * Create a new Node id by incrementing counter.
+     */
+    public static create(): Id<"">;
+
+    public static create<N extends string = string>(namespace: N): Id<N>;
+
+    public static create<N extends string = string>(namespace?: N): Id<N | ""> {
+      this._lastUsedId += 1;
+      return new Id(namespace ?? "", this._lastUsedId);
+    }
+
+    private static _lastUsedId = -1;
+
+    protected constructor(namespace: N, id: number);
+
+    protected constructor(type: "aria", namespace: N, id: number);
+
+    protected constructor(
+      namespaceOrType: "aria" | N,
+      idOrNamespace: N | number,
+      id?: number
+    ) {
+      // Type is hardcoded for system IDs and only kept in the signature for
+      // compatibility with parent class, needed for correct inheritance of Node…
+      super(
+        "aria",
+        id === undefined ? (namespaceOrType as N) : (idOrNamespace as N),
+        id ?? (idOrNamespace as number)
+      );
+    }
+  }
+
+  /**
+   * @internal
+   */
+  export namespace Id {
+    export function isId(value: tree.Node.Id.System): value is Id;
+
+    export function isId(value: unknown): value is Id;
+
+    export function isId(value: unknown): value is Id {
+      return value instanceof Id;
+    }
+  }
 }

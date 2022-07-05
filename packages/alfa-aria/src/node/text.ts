@@ -1,4 +1,5 @@
 import { Option } from "@siteimprove/alfa-option";
+import { Node as treeNode } from "@siteimprove/alfa-tree";
 
 import * as dom from "@siteimprove/alfa-dom";
 
@@ -9,14 +10,26 @@ import { Node } from "../node";
  * @public
  */
 export class Text extends Node<"text"> {
-  public static of(owner: dom.Node, name: Option<Name>): Text {
-    return new Text(owner, name);
+  public static of(
+    owner: dom.Node,
+    name: Option<Name>,
+    nodeId?: treeNode.Id.User
+  ): Text {
+    return new Text(
+      owner,
+      name,
+      nodeId ?? Node.Id.create(owner.nodeId.namespace)
+    );
   }
 
   private readonly _name: Option<Name>;
 
-  private constructor(owner: dom.Node, name: Option<Name>) {
-    super(owner, [], "text");
+  private constructor(
+    owner: dom.Node,
+    name: Option<Name>,
+    nodeId: Node.Id | treeNode.Id.User
+  ) {
+    super(owner, [], "text", nodeId);
 
     this._name = name;
   }
@@ -25,9 +38,9 @@ export class Text extends Node<"text"> {
     return this._name;
   }
 
-  public clone(): Text {
-    return new Text(this._node, this._name);
-  }
+  // public clone(): Text {
+  //   return new Text(this._node, this._name);
+  // }
 
   public isIgnored(): boolean {
     return false;

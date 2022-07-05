@@ -2,6 +2,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Node as treeNode } from "@siteimprove/alfa-tree";
 
 import * as dom from "@siteimprove/alfa-dom";
 
@@ -19,14 +20,16 @@ export class Element extends Node<"element"> {
     role: Option<Role> = None,
     name: Option<Name> = None,
     attributes: Iterable<Attribute> = [],
-    children: Iterable<Node> = []
+    children: Iterable<Node> = [],
+    nodeId?: treeNode.Id.User
   ): Element {
     return new Element(
       owner,
       role,
       name,
       Array.from(attributes),
-      Array.from(children)
+      Array.from(children),
+      nodeId ?? Node.Id.create(owner.nodeId.namespace)
     );
   }
 
@@ -39,9 +42,10 @@ export class Element extends Node<"element"> {
     role: Option<Role>,
     name: Option<Name>,
     attributes: Array<Attribute>,
-    children: Array<Node>
+    children: Array<Node>,
+    nodeId: Node.Id | treeNode.Id.User
   ) {
-    super(owner, children, "element");
+    super(owner, children, "element", nodeId);
 
     this._role = role;
     this._name = name;
@@ -81,15 +85,15 @@ export class Element extends Node<"element"> {
     );
   }
 
-  public clone(): Element {
-    return new Element(
-      this._node,
-      this._role,
-      this._name,
-      this._attributes,
-      (this._children as Array<Node>).map((child) => child.clone())
-    );
-  }
+  // public clone(): Element {
+  //   return new Element(
+  //     this._node,
+  //     this._role,
+  //     this._name,
+  //     this._attributes,
+  //     (this._children as Array<Node>).map((child) => child.clone())
+  //   );
+  // }
 
   public isIgnored(): boolean {
     return false;

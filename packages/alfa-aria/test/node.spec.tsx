@@ -1,3 +1,4 @@
+import { Serializable } from "@siteimprove/alfa-json";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
@@ -6,10 +7,28 @@ import { Node } from "../src";
 
 const device = Device.standard();
 
+/**
+ * Turns a Node into JSON and recursively removes the NodeId that are
+ * irrelevant for these tests.
+ */
+function removeId<N extends Node = Node>(node: N): Serializable.ToJSON<N> {
+  function removeId(json: Node.JSON): Node.JSON {
+    delete json.nodeId;
+
+    if (json.children !== undefined) {
+      json.children = (json.children as Array<Node.JSON>).map(removeId);
+    }
+
+    return json;
+  }
+
+  return removeId(node.toJSON()) as Serializable.ToJSON<N>;
+}
+
 test(`.from() constructs an accessible node from an element`, (t) => {
   const element = <button>Hello world</button>;
 
-  t.deepEqual(Node.from(element, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(element, device)), {
     type: "element",
     node: "/button[1]",
     role: "button",
@@ -43,7 +62,7 @@ test(`.from() gives precedence to aria-owns references`, (t) => {
     {footer}
   </div>;
 
-  t.deepEqual(Node.from(header, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(header, device)), {
     type: "element",
     node: "/div[1]/header[1]",
     role: "banner",
@@ -79,7 +98,7 @@ test(`.from() gives precedence to aria-owns references`, (t) => {
     ],
   });
 
-  t.deepEqual(Node.from(footer, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(footer, device)), {
     type: "element",
     node: "/div[1]/footer[1]",
     role: "contentinfo",
@@ -107,7 +126,7 @@ test(`.from() correctly handles conflicting aria-owns claims`, (t) => {
     {footer}
   </div>;
 
-  t.deepEqual(Node.from(header, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(header, device)), {
     type: "element",
     node: "/div[1]/header[1]",
     role: "banner",
@@ -143,7 +162,7 @@ test(`.from() correctly handles conflicting aria-owns claims`, (t) => {
     ],
   });
 
-  t.deepEqual(Node.from(footer, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(footer, device)), {
     type: "element",
     node: "/div[1]/footer[1]",
     role: "contentinfo",
@@ -170,7 +189,7 @@ test(`.from() correctly handles reordered aria-owns references`, (t) => {
     <input id="bar" />
   </div>;
 
-  t.deepEqual(Node.from(header, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(header, device)), {
     type: "element",
     node: "/div[1]/header[1]",
     role: "banner",
@@ -210,7 +229,7 @@ test(`.from() correctly handles reordered aria-owns references`, (t) => {
 test(`.from() correctly handles self-referential aria-owns references`, (t) => {
   const div = <div id="foo" aria-owns="foo" />;
 
-  t.deepEqual(Node.from(div, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(div, device)), {
     type: "element",
     node: "/div[1]",
     role: null,
@@ -235,7 +254,7 @@ test(`.from() correctly handles circular aria-owns references between siblings`,
     {bar}
   </div>;
 
-  t.deepEqual(Node.from(foo, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(foo, device)), {
     type: "element",
     node: "/div[1]/div[1]",
     role: null,
@@ -263,7 +282,7 @@ test(`.from() correctly handles circular aria-owns references between siblings`,
     ],
   });
 
-  t.deepEqual(Node.from(bar, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(bar, device)), {
     type: "element",
     node: "/div[1]/div[2]",
     role: null,
@@ -284,7 +303,7 @@ test(`.from() correctly handles circular aria-owns references between ancestors
 
   const bar = <div id="bar">{foo}</div>;
 
-  t.deepEqual(Node.from(foo, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(foo, device)), {
     type: "element",
     node: "/div[1]/div[1]",
     role: null,
@@ -298,7 +317,7 @@ test(`.from() correctly handles circular aria-owns references between ancestors
     children: [],
   });
 
-  t.deepEqual(Node.from(bar, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(bar, device)), {
     type: "container",
     node: "/div[1]",
     children: [
@@ -329,7 +348,7 @@ test(`.from() does not expose elements that are not rendered due to a DOM
     {owner}
   </div>;
 
-  t.deepEqual(Node.from(owner, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(owner, device)), {
     type: "element",
     node: "/div[1]/div[2]",
     attributes: [{ name: "aria-owns", value: "target" }],
@@ -359,7 +378,7 @@ test(`.from() exposes elements that are aria-hidden due to a DOM
     {owner}
   </div>;
 
-  t.deepEqual(Node.from(owner, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(owner, device)), {
     type: "element",
     node: "/div[1]/div[2]",
     attributes: [{ name: "aria-owns", value: "target" }],
@@ -389,7 +408,7 @@ test(`.from() exposes elements that are aria-hidden due to a DOM
 test(".from() exposes elements if they have a role", (t) => {
   const foo = <button />;
 
-  t.deepEqual(Node.from(foo, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(foo, device)), {
     type: "element",
     node: "/button[1]",
     role: "button",
@@ -402,7 +421,7 @@ test(".from() exposes elements if they have a role", (t) => {
 test(".from() exposes elements if they have ARIA attributes", (t) => {
   const foo = <div aria-label="foo" />;
 
-  t.deepEqual(Node.from(foo, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(foo, device)), {
     type: "element",
     node: "/div[1]",
     role: null,
@@ -420,7 +439,7 @@ test(".from() exposes elements if they have ARIA attributes", (t) => {
 test(".from() exposes elements if they have a tabindex", (t) => {
   const foo = <div tabindex={0} />;
 
-  t.deepEqual(Node.from(foo, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(foo, device)), {
     type: "element",
     node: "/div[1]",
     role: null,
@@ -431,7 +450,7 @@ test(".from() exposes elements if they have a tabindex", (t) => {
 
   const iframe = <iframe />; // Focusable by default, and no role
 
-  t.deepEqual(Node.from(iframe, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(iframe, device)), {
     type: "element",
     node: "/iframe[1]",
     role: null,
@@ -445,7 +464,7 @@ test(`.from() does not expose elements that have no role, ARIA attributes, nor
       tabindex`, (t) => {
   const foo = <div>Hello world</div>;
 
-  t.deepEqual(Node.from(foo, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(foo, device)), {
     type: "container",
     node: "/div[1]",
     children: [
@@ -462,7 +481,7 @@ test(`.from() does not expose text nodes of a parent element with
       \`visibility: hidden\``, (t) => {
   const foo = <div style={{ visibility: "hidden" }}>Hello world</div>;
 
-  t.deepEqual(Node.from(foo, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(foo, device)), {
     type: "container",
     node: "/div[1]",
     children: [
@@ -481,7 +500,7 @@ test(`.from() does not expose fallback DOM nodes for legacy browsers`, (t) => {
     </iframe>
   );
 
-  t.deepEqual(Node.from(iframe, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(iframe, device)), {
     type: "element",
     node: "/iframe[1]",
     role: null,
@@ -504,7 +523,7 @@ test(`.from() exposes implicitly required children of a presentational element
     </ul>
   );
 
-  t.deepEqual(Node.from(ul, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(ul, device)), {
     type: "container",
     node: "/ul[1]",
     children: [
@@ -525,7 +544,7 @@ test(`.from() doesn't inherit presentational roles into explicitly required
     </ul>
   );
 
-  t.deepEqual(Node.from(ul, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(ul, device)), {
     type: "container",
     node: "/ul[1]",
     children: [
@@ -558,7 +577,7 @@ test(`.from() doesn't inherit presentational roles into children of implicitly
     </ul>
   );
 
-  t.deepEqual(Node.from(ul, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(ul, device)), {
     type: "container",
     node: "/ul[1]",
     children: [
@@ -588,7 +607,7 @@ test(`.from() doesn't expose children of elements with roles that designate
     </button>
   );
 
-  t.deepEqual(Node.from(button, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(button, device)), {
     type: "element",
     node: "/button[1]",
     role: "button",
@@ -633,7 +652,7 @@ test(`.from() behaves when encountering an element with global properties where
     </div>
   );
 
-  t.deepEqual(Node.from(div, device).toJSON(), {
+  t.deepEqual(removeId(Node.from(div, device)), {
     type: "element",
     node: "/div[1]",
     role: null,
