@@ -435,6 +435,7 @@ export namespace Node {
     export function isId(value: unknown): value is Id {
       return value instanceof Id;
     }
+
     /**
      * @internal
      */

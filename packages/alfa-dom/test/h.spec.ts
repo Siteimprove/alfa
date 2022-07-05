@@ -17,12 +17,13 @@ import { Type } from "../src/node/type";
  */
 function removeId<N extends Node = Node>(node: N): Serializable.ToJSON<N> {
   function removeId(json: Node.JSON): Node.JSON {
-    return {
-      ...json,
-      children:
-        json.children !== undefined ? json.children.map(removeId) : undefined,
-      nodeId: undefined,
-    };
+    delete json.nodeId;
+
+    if (json.children !== undefined) {
+      json.children = (json.children as Array<Node.JSON>).map(removeId);
+    }
+
+    return json;
   }
 
   return removeId(node.toJSON()) as Serializable.ToJSON<N>;
