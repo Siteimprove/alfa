@@ -76,3 +76,27 @@ test("Element.of() accepts a user nodeId", (t) => {
     id: 42,
   });
 });
+
+test("Element.of() generates a system nodeId if none is provided", (t) => {
+  const element = Element.of(Option.of(Namespace.HTML), None, "div");
+
+  t.deepEqual(element.nodeId.kind, treeNode.Id.Kind.System);
+  t.deepEqual(element.nodeId.type, "alfa-dom");
+  t.deepEqual(element.nodeId.namespace, "");
+});
+
+test("Element.of() generates a system nodeId with namespace", (t) => {
+  const element = Element.of(
+    Option.of(Namespace.HTML),
+    None,
+    "div",
+    [],
+    [],
+    None,
+    "foo"
+  );
+
+  t.deepEqual(element.nodeId.kind, treeNode.Id.Kind.System);
+  t.deepEqual(element.nodeId.type, "alfa-dom");
+  t.deepEqual(element.nodeId.namespace, "foo");
+});
