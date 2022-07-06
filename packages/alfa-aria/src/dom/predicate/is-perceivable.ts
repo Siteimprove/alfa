@@ -9,15 +9,17 @@ const { and } = Predicate;
 const { isVisible } = Style;
 
 /**
- * Check if a node is perceivable.
+ * Check if a node is perceivable for all users.
  *
  * @remarks
- * A node is considered perceivable if it's visible and has inclusive
+ * A node is considered perceivable for all if it's visible and has inclusive
  * descendants that are not ignored in the accessibility tree.
  *
  * @public
  */
-export function isPerceivable<T extends Node>(device: Device): Predicate<T> {
+export function isPerceivableForAll<T extends Node>(
+  device: Device
+): Predicate<T> {
   return and(isVisible(device), (node) =>
     node.inclusiveDescendants().some(isIncludedInTheAccessibilityTree(device))
   );

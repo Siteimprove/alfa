@@ -13,7 +13,7 @@ import { Question } from "../common/act/question";
 
 import { Scope } from "../tags";
 
-const { hasNonEmptyAccessibleName, isPerceivable } = DOM;
+const { hasNonEmptyAccessibleName, isPerceivableForAll } = DOM;
 const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { or, nor, equals } = Predicate;
 const { and } = Refinement;
@@ -80,7 +80,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
                       and(
                         isElement,
                         and(
-                          isPerceivable(device),
+                          isPerceivableForAll(device),
 
                           // The mechanism is either the applicable <video> or
                           // <audio> element itself, in which case we assume the

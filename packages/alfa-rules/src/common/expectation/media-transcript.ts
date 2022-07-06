@@ -10,7 +10,7 @@ import * as act from "@siteimprove/alfa-act";
 import { expectation } from "../act/expectation";
 import { Question } from "../act/question";
 
-import { isPerceivable } from "../../../../alfa-aria/src/dom/predicate/is-perceivable";
+import { isPerceivableForAll } from "../../../../alfa-aria/src/dom/predicate/is-perceivable";
 
 const { isElement } = Element;
 const { and } = Predicate;
@@ -45,7 +45,7 @@ function mediaTranscript(
 
           if (
             transcriptLink
-              .filter(and(isElement, isPerceivable(device)))
+              .filter(and(isElement, isPerceivableForAll(device)))
               .isNone()
           ) {
             return Option.of(Outcomes.HasNonPerceivableLink(kind));
@@ -56,7 +56,7 @@ function mediaTranscript(
       }
 
       return expectation(
-        transcript.some(and(isElement, isPerceivable(device))),
+        transcript.some(and(isElement, isPerceivableForAll(device))),
         () => Outcomes.HasPerceivableTranscript(kind),
         () => Outcomes.HasNonPerceivableTranscript(kind)
       );

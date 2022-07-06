@@ -14,7 +14,7 @@ import { normalize } from "../common/normalize";
 
 import { Scope } from "../tags";
 
-const { hasRole, isPerceivable } = DOM;
+const { hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasInputType, hasName, hasNamespace, isElement } =
   Element;
 const { and, or, not } = Predicate;
@@ -46,7 +46,7 @@ export default Rule.Atomic.of<Page, Attribute>({
                 isTabbable(device),
                 hasRole(device, (role) => role.isWidget())
               ),
-              isPerceivable(device),
+              isPerceivableForAll(device),
               (element) =>
                 Node.from(element, device)
                   .attribute("aria-disabled")

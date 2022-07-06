@@ -36,7 +36,7 @@ export namespace DOM {
     isIgnored,
     isIncludedInTheAccessibilityTree,
     isMarkedDecorative,
-    isPerceivable,
+    isPerceivableForAll,
     isProgrammaticallyHidden,
     isSemanticallyDisabled,
   } = dom;

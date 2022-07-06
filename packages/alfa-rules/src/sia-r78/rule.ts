@@ -13,7 +13,7 @@ const {
   hasHeadingLevel,
   hasRole,
   isIncludedInTheAccessibilityTree,
-  isPerceivable,
+  isPerceivableForAll,
 } = DOM;
 const { hasNamespace, isContent, isElement } = Element;
 const { and } = Refinement;
@@ -77,7 +77,7 @@ export default Rule.Atomic.of<Page, Element>({
               // last node of the document is acceptable content; otherwise, the
               // next heading (of this level or less) is not acceptable content.
               includeSecond: end,
-            }).some(and(isPerceivable(device), isContent(Node.fullTree))),
+            }).some(and(isPerceivableForAll(device), isContent(Node.fullTree))),
             () => Outcomes.hasContent,
             () => Outcomes.hasNoContent
           ),

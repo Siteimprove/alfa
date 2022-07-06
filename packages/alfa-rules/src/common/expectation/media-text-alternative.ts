@@ -9,7 +9,7 @@ import * as act from "@siteimprove/alfa-act";
 import { expectation } from "../act/expectation";
 import { Question } from "../act/question";
 
-import { isPerceivable } from "../../../../alfa-aria/src/dom/predicate/is-perceivable";
+import { isPerceivableForAll } from "../../../../alfa-aria/src/dom/predicate/is-perceivable";
 
 function mediaTextAlternative(
   alt: act.Question<
@@ -37,7 +37,7 @@ function mediaTextAlternative(
         alt.isSome(),
         () =>
           expectation(
-            alt.some(isPerceivable(device)),
+            alt.some(isPerceivableForAll(device)),
             () => Outcomes.HasPerceivableAlternative(kind),
             () => Outcomes.HasNonPerceivableAlternative(kind)
           ),
@@ -49,7 +49,7 @@ function mediaTextAlternative(
         label.isSome(),
         () =>
           expectation(
-            label.some(isPerceivable(device)),
+            label.some(isPerceivableForAll(device)),
             () => Outcomes.HasPerceivableLabel(kind),
             () => Outcomes.HasNonPerceivableLabel(kind)
           ),

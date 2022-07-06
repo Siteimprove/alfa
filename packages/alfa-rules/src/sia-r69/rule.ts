@@ -20,7 +20,7 @@ import { Contrast as Outcomes } from "../common/outcome/contrast";
 
 import { Scope } from "../tags";
 
-const { hasRole, isPerceivable, isSemanticallyDisabled } = DOM;
+const { hasRole, isPerceivableForAll, isSemanticallyDisabled } = DOM;
 const { hasNamespace, isElement } = Element;
 const { flatMap, map } = Iterable;
 const { max } = Math;
@@ -54,7 +54,7 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
             return;
           }
 
-          if (test(and(isText, isPerceivable(device)), node)) {
+          if (test(and(isText, isPerceivableForAll(device)), node)) {
             yield node;
           }
 

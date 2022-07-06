@@ -9,7 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
-const { hasRole, isIncludedInTheAccessibilityTree, isPerceivable } = DOM;
+const { hasRole, isIncludedInTheAccessibilityTree, isPerceivableForAll } = DOM;
 const { isElement, hasName, hasNamespace } = Element;
 const { and, test } = Refinement;
 
@@ -34,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
 
             if (
               collect &&
-              test(and(hasName("th"), isPerceivable(device)), node)
+              test(and(hasName("th"), isPerceivableForAll(device)), node)
             ) {
               yield node;
             }

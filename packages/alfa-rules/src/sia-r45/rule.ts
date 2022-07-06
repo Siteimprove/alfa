@@ -11,7 +11,7 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasRole, isPerceivable } = DOM;
+const { hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasId, hasName, hasNamespace, isElement } = Element;
 const { and, equals, not } = Predicate;
 
@@ -27,7 +27,7 @@ export default Rule.Atomic.of<Page, Attribute>({
         and(
           hasNamespace(Namespace.HTML),
           hasName("table"),
-          isPerceivable(device),
+          isPerceivableForAll(device),
           hasRole(
             device,
             not((role) => role.isPresentational())

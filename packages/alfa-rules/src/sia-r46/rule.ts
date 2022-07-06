@@ -12,7 +12,7 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasRole, isIncludedInTheAccessibilityTree, isPerceivable } = DOM;
+const { hasRole, isIncludedInTheAccessibilityTree, isPerceivableForAll } = DOM;
 const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;
 
@@ -47,7 +47,7 @@ export default Rule.Atomic.of<Page, Element>({
                 hasNamespace(Namespace.HTML),
                 hasName("th"),
                 hasRole(device, "rowheader", "columnheader"),
-                isPerceivable(device)
+                isPerceivableForAll(device)
               )
             );
 
