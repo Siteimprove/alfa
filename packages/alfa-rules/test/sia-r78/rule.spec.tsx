@@ -90,7 +90,7 @@ test("evaluates() passes headings with only non-visible content", async (t) => {
 
 test("evaluates() fails a heading with only structure before the next heading", async (t) => {
   const part1 = <h1>Hello</h1>;
-  const part2 = <h2>Site navigation</h2>;
+  const part2 = <h1>Site navigation</h1>;
 
   const document = h.document([
     part1,

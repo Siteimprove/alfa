@@ -10,7 +10,7 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasHeadingLevel, hasRole, isIgnored, isPerceivable } = DOM;
+const { hasHeadingLevel, hasRole, isIgnored } = DOM;
 const { hasNamespace, isContent, isElement } = Element;
 const { not } = Predicate;
 const { and } = Refinement;
@@ -74,7 +74,7 @@ export default Rule.Atomic.of<Page, Element>({
               // last node of the document is acceptable content; otherwise, the
               // next heading (of this level or less) is not acceptable content.
               includeSecond: end,
-            }).some(not(isIgnored(device))),
+            }).some(and(not(isIgnored(device)), isContent(Node.fullTree))),
             () => Outcomes.hasContent,
             () => Outcomes.hasNoContent
           ),
