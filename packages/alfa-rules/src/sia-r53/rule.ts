@@ -9,9 +9,9 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasHeadingLevel, hasRole, isIgnored } = DOM;
+const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { isElement } = Element;
-const { equals } = Predicate;
+const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r53",
@@ -20,8 +20,12 @@ export default Rule.Atomic.of<Page, Element>({
     const headings = document
       .descendants(Node.flatTree)
       .filter(isElement)
-      .filter(hasRole(device, "heading"))
-      .reject(isIgnored(device));
+      .filter(
+        and(
+          hasRole(device, "heading"),
+          isIncludedInTheAccessibilityTree(device)
+        )
+      );
 
     return {
       applicability() {

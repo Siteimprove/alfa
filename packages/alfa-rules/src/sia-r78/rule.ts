@@ -1,7 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -10,9 +9,13 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasHeadingLevel, hasRole, isIgnored, isPerceivable } = DOM;
+const {
+  hasHeadingLevel,
+  hasRole,
+  isIncludedInTheAccessibilityTree,
+  isPerceivable,
+} = DOM;
 const { hasNamespace, isContent, isElement } = Element;
-const { not } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -30,7 +33,7 @@ export default Rule.Atomic.of<Page, Element>({
               isElement,
               and(
                 hasNamespace(Namespace.HTML),
-                not(isIgnored(device)),
+                isIncludedInTheAccessibilityTree(device),
                 hasRole(device, "heading")
               )
             )

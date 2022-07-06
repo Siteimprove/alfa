@@ -14,7 +14,7 @@ import { expectation } from "../common/act/expectation";
 import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasRole, isIgnored } = DOM;
+const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { isElement } = Element;
 const { isEmpty } = Iterable;
 const { and, not, nor, property } = Predicate;
@@ -44,7 +44,7 @@ export default Rule.Atomic.of<Page, Text>({
             .filter(
               and(
                 property("data", nor(isEmpty, isWhitespace)),
-                not(isIgnored(device))
+                isIncludedInTheAccessibilityTree(device)
               )
             );
         }

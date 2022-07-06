@@ -14,9 +14,9 @@ import { WithRole } from "../common/diagnostic/with-role";
 
 import { Scope } from "../tags";
 
-const { hasRole, isIgnored } = DOM;
+const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { isElement, hasNamespace } = Element;
-const { and, not } = Predicate;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r42",
@@ -31,7 +31,7 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
-              not(isIgnored(device)),
+              isIncludedInTheAccessibilityTree(device),
               hasRole(device, (role) => role.hasRequiredParent())
             )
           );

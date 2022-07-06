@@ -23,7 +23,7 @@ import { expectation } from "../common/act/expectation";
 import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasAccessibleName, isIgnored } = DOM;
+const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { isEmpty } = Iterable;
 const { not, or } = Predicate;
@@ -49,7 +49,7 @@ export default Rule.Atomic.of<Page, Attribute>({
             const isVisibleText = and(
               isText,
               and(
-                or(isVisible(device), not(isIgnored(device))),
+                or(isVisible(device), isIncludedInTheAccessibilityTree(device)),
                 (text: Text) => !isWhitespace(text.data)
               )
             );
