@@ -3,9 +3,9 @@ import { Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
 
-import { isIgnored } from "./is-included-accessibility-tree";
+import { isIncludedInTheAccessibilityTree } from "./is-included-accessibility-tree";
 
-const { and, not } = Predicate;
+const { and } = Predicate;
 const { isVisible } = Style;
 
 /**
@@ -19,6 +19,6 @@ const { isVisible } = Style;
  */
 export function isPerceivable<T extends Node>(device: Device): Predicate<T> {
   return and(isVisible(device), (node) =>
-    node.inclusiveDescendants().some(not(isIgnored(device)))
+    node.inclusiveDescendants().some(isIncludedInTheAccessibilityTree(device))
   );
 }
