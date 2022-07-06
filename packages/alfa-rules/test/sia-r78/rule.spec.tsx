@@ -94,7 +94,7 @@ test("evaluates() fails a heading with only structure before the next heading", 
 
   const document = h.document([
     part1,
-    <nav>
+    <nav aria-label="site">
       {part2}
       <a href="#">Foo</a>
     </nav>,
