@@ -1,10 +1,12 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
+import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -13,6 +15,7 @@ import { expectation } from "../common/act/expectation";
 
 import { Question } from "../common/act/question";
 import { Scope } from "../tags";
+import { ExtendedDiagnostic, Matches } from "./diagnostics";
 
 const { isElement } = Element;
 const { isKeyword } = Keyword;
@@ -25,10 +28,48 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   requirements: [Criterion.of("2.4.7")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
+    const tabbables = document.tabOrder().filter(isTabbable(device));
+    const targetClassnames = tabbables.flatMap((tabbable) => tabbable.classes);
+    let diagnostic = Map.empty<string, Matches>();
+    let nonTargetClassnames = Sequence.empty<string>();
+    for (const nonTarget of document.descendants()) {
+      if (Element.isElement(nonTarget)) {
+        nonTargetClassnames = nonTargetClassnames.concat(nonTarget.classes);
+      }
+    }
+
+    function setMatches(
+      classname: string,
+      isTarget: boolean
+    ): Map<string, Matches> {
+      const matches: Matches = diagnostic
+        .get(classname)
+        .getOr({ matchingTargets: 0, matchingNonTargets: 0 });
+
+      const matchingTargets = isTarget
+        ? matches.matchingTargets + 1
+        : matches.matchingTargets;
+
+      const matchingNonTargets = isTarget
+        ? matches.matchingNonTargets
+        : matches.matchingNonTargets + 1;
+
+      return diagnostic.set(classname, {
+        matchingTargets,
+        matchingNonTargets,
+      });
+    }
+
+    for (const targetClassname of targetClassnames) {
+      diagnostic = setMatches(targetClassname, true);
+    }
+
+    for (const nonTargetClassname of nonTargetClassnames) {
+      diagnostic = setMatches(nonTargetClassname, false);
+    }
+
     return {
       applicability() {
-        const tabbables = document.tabOrder().filter(isTabbable(device));
-
         // Peak the first two tabbable elements to avoid forcing the whole
         // sequence. If the size of the resulting sequence is less than 2 then
         // fewer than 2 tabbable elements exist.
@@ -48,8 +89,8 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
             .map((hasFocusIndicator) =>
               expectation(
                 hasFocusIndicator,
-                () => Outcomes.HasFocusIndicator,
-                () => Outcomes.HasNoFocusIndicator
+                () => Outcomes.HasFocusIndicator(diagnostic),
+                () => Outcomes.HasNoFocusIndicator(diagnostic)
               )
             ),
         };
@@ -59,13 +100,21 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
 });
 
 export namespace Outcomes {
-  export const HasFocusIndicator = Ok.of(
-    Diagnostic.of(`The element has a visible focus indicator`)
-  );
+  export const HasFocusIndicator = (diagnostic: Map<string, Matches>) =>
+    Ok.of(
+      ExtendedDiagnostic.of(
+        `The element has a visible focus indicator`,
+        diagnostic
+      )
+    );
 
-  export const HasNoFocusIndicator = Err.of(
-    Diagnostic.of(`The element does not have a visible focus indicator`)
-  );
+  export const HasNoFocusIndicator = (diagnostic: Map<string, Matches>) =>
+    Err.of(
+      ExtendedDiagnostic.of(
+        `The element does not have a visible focus indicator`,
+        diagnostic
+      )
+    );
 }
 
 function hasFocusIndicator(device: Device): Predicate<Element> {

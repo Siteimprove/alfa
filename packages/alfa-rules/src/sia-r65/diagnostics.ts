@@ -1,28 +1,27 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
+import { Map } from "@siteimprove/alfa-map";
 
-export enum Reason {
-  AutoDetected = "auto-detected",
-  UserAnswered = "user-answered",
-  GoodClass = "good-class",
-}
+export type Matches = {
+  matchingTargets: number;
+  matchingNonTargets: number;
+};
 
 /**
  * @internal
  */
 export class ExtendedDiagnostic extends Diagnostic {
-  public static of(message: string): Diagnostic;
-  public static of(message: string, reason: Reason): ExtendedDiagnostic;
-  public static of(message: string, reason?: Reason): Diagnostic {
-    return reason
-      ? new ExtendedDiagnostic(message, reason)
-      : Diagnostic.of(message);
+  public static of(
+    message: string,
+    matches: Map<string, Matches> = Map.empty()
+  ): Diagnostic {
+    return new ExtendedDiagnostic(message, matches);
   }
 
-  private readonly _reason: Reason;
+  private readonly _matches: Map<string, Matches>;
 
-  private constructor(message: string, reason: Reason) {
+  private constructor(message: string, matches: Map<string, Matches>) {
     super(message);
-    this._reason = reason;
+    this._matches = matches;
   }
 
   public equals(value: ExtendedDiagnostic): boolean;
@@ -31,14 +30,15 @@ export class ExtendedDiagnostic extends Diagnostic {
 
   public equals(value: unknown): boolean {
     return (
-      value instanceof ExtendedDiagnostic && value._reason === this._reason
+      value instanceof ExtendedDiagnostic &&
+      value._matches.equals(this._matches)
     );
   }
 
   public toJSON(): ExtendedDiagnostic.JSON {
     return {
       ...super.toJSON(),
-      reason: this._reason,
+      matches: this._matches.toJSON(),
     };
   }
 }
@@ -48,7 +48,7 @@ export class ExtendedDiagnostic extends Diagnostic {
  */
 export namespace ExtendedDiagnostic {
   export interface JSON extends Diagnostic.JSON {
-    reason: string;
+    matches: Map.JSON<string, Matches>;
   }
 
   export function isExtendedDiagnostic(
