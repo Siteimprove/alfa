@@ -34,6 +34,7 @@ export namespace DOM {
     hasNonEmptyAccessibleName,
     hasRole,
     isIgnored,
+    isIncludedInTheAccessibilityTree,
     isMarkedDecorative,
     isPerceivable,
     isProgrammaticallyHidden,
