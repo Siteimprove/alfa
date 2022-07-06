@@ -12,7 +12,7 @@ import { Scope } from "../tags";
 
 const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { isElement, hasInputType, hasNamespace } = Element;
-const { and, not, test } = Predicate;
+const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r28",

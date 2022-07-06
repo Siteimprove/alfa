@@ -17,7 +17,7 @@ import { Scope } from "../tags";
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { isElement } = Element;
 const { isEmpty } = Iterable;
-const { and, not, nor, property } = Predicate;
+const { and, nor, property } = Predicate;
 const { isTabbable } = Style;
 const { isText } = Text;
 
