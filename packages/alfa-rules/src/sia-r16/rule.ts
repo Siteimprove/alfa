@@ -15,11 +15,11 @@ import * as aria from "@siteimprove/alfa-aria";
 import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
-const { hasRole, isIgnored } = DOM;
+const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasAttribute, hasInputType, hasName, hasNamespace, isElement } =
   Element;
 const { isEmpty } = Iterable;
-const { and, not, property, test } = Predicate;
+const { and, property, test } = Predicate;
 const { isFocusable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -35,7 +35,7 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole(device))
           )
-          .filter(not(isIgnored(device)));
+          .filter(isIncludedInTheAccessibilityTree(device));
       },
 
       expectations(target) {

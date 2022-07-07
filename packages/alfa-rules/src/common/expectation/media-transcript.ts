@@ -1,4 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
+import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
@@ -10,8 +11,7 @@ import * as act from "@siteimprove/alfa-act";
 import { expectation } from "../act/expectation";
 import { Question } from "../act/question";
 
-import { isPerceivable } from "../../../../alfa-aria/src/dom/predicate/is-perceivable";
-
+const { isPerceivableForAll } = DOM;
 const { isElement } = Element;
 const { and } = Predicate;
 
@@ -45,7 +45,7 @@ function mediaTranscript(
 
           if (
             transcriptLink
-              .filter(and(isElement, isPerceivable(device)))
+              .filter(and(isElement, isPerceivableForAll(device)))
               .isNone()
           ) {
             return Option.of(Outcomes.HasNonPerceivableLink(kind));
@@ -56,7 +56,7 @@ function mediaTranscript(
       }
 
       return expectation(
-        transcript.some(and(isElement, isPerceivable(device))),
+        transcript.some(and(isElement, isPerceivableForAll(device))),
         () => Outcomes.HasPerceivableTranscript(kind),
         () => Outcomes.HasNonPerceivableTranscript(kind)
       );

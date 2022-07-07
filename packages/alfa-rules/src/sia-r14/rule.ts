@@ -14,7 +14,7 @@ import { normalize } from "../common/normalize";
 import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasAccessibleName, hasRole, isPerceivable } = DOM;
+const { hasAccessibleName, hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasNamespace, hasName, isElement } = Element;
 const { isText } = Text;
 const { hasDescendant } = Node;
@@ -45,7 +45,7 @@ export default Rule.Atomic.of<Page, Element>({
                 (role) => role.isWidget() && role.isNamedBy("contents")
               ),
               hasDescendant(
-                and(Text.isText, isPerceivable(device)),
+                and(Text.isText, isPerceivableForAll(device)),
                 Node.flatTree
               )
             )
@@ -91,12 +91,12 @@ function getPerceivableInnerTextFromTextNode(
   text: Text,
   device: Device
 ): string {
-  if (isPerceivable(device)(text)) {
+  if (isPerceivableForAll(device)(text)) {
     return text.data;
   }
 
   if (
-    and(not(isPerceivable(device)), isRendered(device))(text) &&
+    and(not(isPerceivableForAll(device)), isRendered(device))(text) &&
     isWhitespace(text.data)
   ) {
     return " ";

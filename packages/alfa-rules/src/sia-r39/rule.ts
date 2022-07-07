@@ -11,9 +11,9 @@ import { Question } from "../common/act/question";
 
 import { Scope } from "../tags";
 
-const { hasAccessibleName, isIgnored } = DOM;
+const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { isElement, hasInputType, hasName, hasNamespace } = Element;
-const { and, or, not, test } = Predicate;
+const { and, or, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r39",
@@ -33,7 +33,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
             and(
               hasNamespace(Namespace.HTML),
               or(hasName("img"), and(hasName("input"), hasInputType("image"))),
-              not(isIgnored(device)),
+              isIncludedInTheAccessibilityTree(device),
               (element) =>
                 test(
                   hasAccessibleName(device, (accessibleName) =>

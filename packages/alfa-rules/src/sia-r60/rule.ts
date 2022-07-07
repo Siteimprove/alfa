@@ -12,9 +12,9 @@ import { Map } from "@siteimprove/alfa-map";
 import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
-const { hasNonEmptyAccessibleName, hasRole, isIgnored } = DOM;
+const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
+  DOM;
 const { isElement, hasNamespace } = Element;
-const { not } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -31,7 +31,10 @@ export default Rule.Atomic.of<Page, Element>({
             // If the group is an input field, then its value has a +1
             if (
               group.isSome() &&
-              and(not(isIgnored(device)), isFormInput(device))(node)
+              and(
+                isIncludedInTheAccessibilityTree(device),
+                isFormInput(device)
+              )(node)
             ) {
               groups = groups.set(
                 group.get(),
