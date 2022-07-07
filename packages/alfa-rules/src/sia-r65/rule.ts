@@ -4,9 +4,9 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -15,11 +15,12 @@ import { expectation } from "../common/act/expectation";
 
 import { Question } from "../common/act/question";
 import { Scope } from "../tags";
-import { ExtendedDiagnostic, Matches } from "./diagnostics";
+import { MatchingClasses } from "./diagnostics";
 
 const { isElement } = Element;
 const { isKeyword } = Keyword;
-const { or, test, xor } = Predicate;
+const { or, test, xor, not } = Predicate;
+const { and } = Refinement;
 const { hasBorder, hasBoxShadow, hasOutline, hasTextDecoration, isTabbable } =
   Style;
 
@@ -28,50 +29,24 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   requirements: [Criterion.of("2.4.7")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
-    let diagnostic = Map.empty<string, Matches>();
-
     const tabbables = document.tabOrder().filter(isTabbable(device));
-    const nonTargets = document
+
+    const matchingTargets = tabbables
+      .flatMap((tabbable) => tabbable.classes)
+      .groupBy((c) => c)
+      .map((list) => list.size);
+
+    const matchingNonTargets = document
       .descendants()
-      .filter((node) => isElement(node) && !tabbables.includes(node));
-    const targetClassnames = tabbables.flatMap((tabbable) => tabbable.classes);
-
-    let nonTargetClassnames = Sequence.empty<string>();
-    for (const nonTarget of nonTargets) {
-      if (isElement(nonTarget)) {
-        nonTargetClassnames = nonTargetClassnames.concat(nonTarget.classes);
-      }
-    }
-
-    function setMatches(
-      classname: string,
-      isTarget: boolean
-    ): Map<string, Matches> {
-      const matches: Matches = diagnostic
-        .get(classname)
-        .getOr({ matchingTargets: 0, matchingNonTargets: 0 });
-
-      const matchingTargets = isTarget
-        ? matches.matchingTargets + 1
-        : matches.matchingTargets;
-
-      const matchingNonTargets = isTarget
-        ? matches.matchingNonTargets
-        : matches.matchingNonTargets + 1;
-
-      return diagnostic.set(classname, {
-        matchingTargets,
-        matchingNonTargets,
-      });
-    }
-
-    for (const targetClassname of targetClassnames) {
-      diagnostic = setMatches(targetClassname, true);
-    }
-
-    for (const nonTargetClassname of nonTargetClassnames) {
-      diagnostic = setMatches(nonTargetClassname, false);
-    }
+      .filter(
+        and(
+          isElement,
+          not((element) => tabbables.includes(element))
+        )
+      )
+      .flatMap((nonTarget) => nonTarget.classes)
+      .groupBy((c) => c)
+      .map((list) => list.size);
 
     return {
       applicability() {
@@ -94,8 +69,16 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
             .map((hasFocusIndicator) =>
               expectation(
                 hasFocusIndicator,
-                () => Outcomes.HasFocusIndicator(diagnostic),
-                () => Outcomes.HasNoFocusIndicator(diagnostic)
+                () =>
+                  Outcomes.HasFocusIndicator(
+                    matchingTargets,
+                    matchingNonTargets
+                  ),
+                () =>
+                  Outcomes.HasNoFocusIndicator(
+                    matchingTargets,
+                    matchingNonTargets
+                  )
               )
             ),
         };
@@ -105,19 +88,27 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
 });
 
 export namespace Outcomes {
-  export const HasFocusIndicator = (diagnostic: Map<string, Matches>) =>
+  export const HasFocusIndicator = (
+    matchingTargets: Map<string, number>,
+    matchingNonTargets: Map<string, number>
+  ) =>
     Ok.of(
-      ExtendedDiagnostic.of(
+      MatchingClasses.of(
         `The element has a visible focus indicator`,
-        diagnostic
+        matchingTargets,
+        matchingNonTargets
       )
     );
 
-  export const HasNoFocusIndicator = (diagnostic: Map<string, Matches>) =>
+  export const HasNoFocusIndicator = (
+    matchingTargets: Map<string, number>,
+    matchingNonTargets: Map<string, number>
+  ) =>
     Err.of(
-      ExtendedDiagnostic.of(
+      MatchingClasses.of(
         `The element does not have a visible focus indicator`,
-        diagnostic
+        matchingTargets,
+        matchingNonTargets
       )
     );
 }

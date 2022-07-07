@@ -7,9 +7,9 @@ import { evaluate } from "../common/evaluate";
 import { passed, failed } from "../common/outcome";
 import { oracle } from "../common/oracle";
 import { Map } from "@siteimprove/alfa-map";
-import { Matches } from "../../src/sia-r65/diagnostics";
 
-const emptyDiagnostics = Map.empty<string, Matches>();
+const emptyMatchingTargets = Map.empty<string, number>();
+const emptyMatchingNonTargets = Map.empty<string, number>();
 
 test(`evaluate() passes an <a> element that uses the default focus outline`, async (t) => {
   const target = <a href="#">Link</a>;
@@ -18,10 +18,16 @@ test(`evaluate() passes an <a> element that uses the default focus outline`, asy
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
   ]);
 });
@@ -42,10 +48,16 @@ test(`evaluate() passes an <a> element that uses a non-default focus outline`, a
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
   ]);
 });
@@ -75,10 +87,16 @@ test(`evaluate() fails an <a> element that removes the default focus outline and
     ),
     [
       failed(R65, target, {
-        1: Outcomes.HasNoFocusIndicator(emptyDiagnostics),
+        1: Outcomes.HasNoFocusIndicator(
+          emptyMatchingTargets,
+          emptyMatchingNonTargets
+        ),
       }),
       passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+        1: Outcomes.HasFocusIndicator(
+          emptyMatchingTargets,
+          emptyMatchingNonTargets
+        ),
       }),
     ]
   );
@@ -109,10 +127,16 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     ),
     [
       passed(R65, target, {
-        1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+        1: Outcomes.HasFocusIndicator(
+          emptyMatchingTargets,
+          emptyMatchingNonTargets
+        ),
       }),
       passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+        1: Outcomes.HasFocusIndicator(
+          emptyMatchingTargets,
+          emptyMatchingNonTargets
+        ),
       }),
     ]
   );
@@ -140,10 +164,16 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
   ]);
 });
@@ -169,10 +199,16 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
   ]);
 });
@@ -202,10 +238,16 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
   ]);
 });
@@ -231,10 +273,16 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
   ]);
 });
@@ -265,10 +313,16 @@ test(`evaluate() fails an <a> element that removes the default focus outline
     ),
     [
       failed(R65, target, {
-        1: Outcomes.HasNoFocusIndicator(emptyDiagnostics),
+        1: Outcomes.HasNoFocusIndicator(
+          emptyMatchingTargets,
+          emptyMatchingNonTargets
+        ),
       }),
       passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+        1: Outcomes.HasFocusIndicator(
+          emptyMatchingTargets,
+          emptyMatchingNonTargets
+        ),
       }),
     ]
   );
@@ -298,10 +352,16 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
   ]);
 });
@@ -330,10 +390,16 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
   ]);
 });
@@ -360,10 +426,16 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
   ]);
 });
@@ -386,10 +458,16 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
   ]);
 });
@@ -415,10 +493,16 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
     passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(emptyDiagnostics),
+      1: Outcomes.HasFocusIndicator(
+        emptyMatchingTargets,
+        emptyMatchingNonTargets
+      ),
     }),
   ]);
 });
@@ -438,19 +522,26 @@ test(`evaluate() passes an <a> and <button> element which have some focus indica
     </div>,
   ]);
 
-  const diagnostics = Map.of(
-    ["useless", { matchingTargets: 1, matchingNonTargets: 0 }],
-    ["good-focus", { matchingTargets: 2, matchingNonTargets: 1 }],
-    ["btn", { matchingTargets: 1, matchingNonTargets: 0 }],
-    ["irrelevant", { matchingTargets: 1, matchingNonTargets: 1 }]
+  const matchingTargets = Map.of(
+    ["useless", 1],
+    ["good-focus", 2],
+    ["btn", 1],
+    ["irrelevant", 1]
+  );
+
+  const matchingNonTargets = Map.of(
+    ["useless", 0],
+    ["good-focus", 2],
+    ["btn", 1],
+    ["irrelevant", 1]
   );
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(diagnostics),
+      1: Outcomes.HasFocusIndicator(matchingTargets, matchingNonTargets),
     }),
     passed(R65, <button class="btn good-focus" />, {
-      1: Outcomes.HasFocusIndicator(diagnostics),
+      1: Outcomes.HasFocusIndicator(matchingTargets, matchingNonTargets),
     }),
   ]);
 });
