@@ -444,12 +444,7 @@ test(`evaluate() passes an <a> and <button> element which have some focus indica
     ["irrelevant", 1]
   );
 
-  const matchingNonTargets = Map.of(
-    ["useless", 0],
-    ["good-focus", 2],
-    ["btn", 1],
-    ["irrelevant", 1]
-  );
+  const matchingNonTargets = Map.of(["good-focus", 1], ["irrelevant", 1]);
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
