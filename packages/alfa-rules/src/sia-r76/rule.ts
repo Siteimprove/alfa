@@ -1,7 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -10,9 +9,8 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
-const { hasRole, isIgnored, isPerceivable } = DOM;
+const { hasRole, isIncludedInTheAccessibilityTree, isPerceivableForAll } = DOM;
 const { isElement, hasName, hasNamespace } = Element;
-const { not } = Predicate;
 const { and, test } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -31,12 +29,12 @@ export default Rule.Atomic.of<Page, Element>({
           if (test(and(isElement, hasNamespace(Namespace.HTML)), node)) {
             if (test(hasName("table"), node)) {
               // only collect cells of accessible tables
-              collect = test(not(isIgnored(device)), node);
+              collect = test(isIncludedInTheAccessibilityTree(device), node);
             }
 
             if (
               collect &&
-              test(and(hasName("th"), isPerceivable(device)), node)
+              test(and(hasName("th"), isPerceivableForAll(device)), node)
             ) {
               yield node;
             }

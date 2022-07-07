@@ -10,9 +10,9 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasHeadingLevel, hasRole, isIgnored } = DOM;
+const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { isDocumentElement, isElement } = Element;
-const { equals, not } = Predicate;
+const { equals } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document>({
@@ -21,7 +21,7 @@ export default Rule.Atomic.of<Page, Document>({
   evaluate({ device, document }) {
     const firstHeading = document
       .descendants(Node.flatTree)
-      .filter(and(isElement, not(isIgnored(device))))
+      .filter(and(isElement, isIncludedInTheAccessibilityTree(device)))
       .find(hasRole(device, "heading"));
 
     return {

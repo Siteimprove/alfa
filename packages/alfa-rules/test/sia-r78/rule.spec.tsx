@@ -69,6 +69,43 @@ test(`evaluate() fails headings with no content`, async (t) => {
   ]);
 });
 
+test("evaluates() passes headings with only non-visible content", async (t) => {
+  const part1 = <h1>Lorem</h1>;
+  const part2 = <h1>Ipsum</h1>;
+
+  const document = h.document([
+    part1,
+    <div style={{ height: "0px", width: "0px", overflow: "hidden" }}>
+      Hello
+    </div>,
+    part2,
+    <div>world</div>,
+  ]);
+
+  t.deepEqual(await evaluate(R78, { document }), [
+    passed(R78, part1, { 1: Outcomes.hasContent }),
+    passed(R78, part2, { 1: Outcomes.hasContent }),
+  ]);
+});
+
+test("evaluates() fails a heading with only structure before the next heading", async (t) => {
+  const part1 = <h1>Hello</h1>;
+  const part2 = <h1>Site navigation</h1>;
+
+  const document = h.document([
+    part1,
+    <nav aria-label="site">
+      {part2}
+      <a href="#">Foo</a>
+    </nav>,
+  ]);
+
+  t.deepEqual(await evaluate(R78, { document }), [
+    failed(R78, part1, { 1: Outcomes.hasNoContent }),
+    passed(R78, part2, { 1: Outcomes.hasContent }),
+  ]);
+});
+
 test(`evaluate() is inapplicable when there is no headings`, async (t) => {
   const document = h.document([<div></div>]);
 

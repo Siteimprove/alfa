@@ -10,7 +10,8 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasNonEmptyAccessibleName, hasRole, isIgnored } = DOM;
+const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
+  DOM;
 const { isElement, hasInputType, hasNamespace } = Element;
 const { and, not } = Predicate;
 
@@ -29,7 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
               not(hasInputType("image")),
               hasNamespace(Namespace.HTML),
               hasRole(device, "button"),
-              not(isIgnored(device))
+              isIncludedInTheAccessibilityTree(device)
             )
           );
       },

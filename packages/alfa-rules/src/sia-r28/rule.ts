@@ -10,9 +10,9 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasAccessibleName, isIgnored } = DOM;
+const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { isElement, hasInputType, hasNamespace } = Element;
-const { and, not, test } = Predicate;
+const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r28",
@@ -33,7 +33,7 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               hasNamespace(Namespace.HTML),
               hasInputType("image"),
-              not(isIgnored(device))
+              isIncludedInTheAccessibilityTree(device)
             )
           );
       },

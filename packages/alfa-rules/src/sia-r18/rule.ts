@@ -14,7 +14,7 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasRole, isIgnored } = DOM;
+const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasDisplaySize, hasInputType, isElement } = Element;
 const { test, property } = Predicate;
 
@@ -30,7 +30,7 @@ export default Rule.Atomic.of<Page, Attribute>({
         return document
           .descendants(Node.fullTree)
           .filter(isElement)
-          .reject(isIgnored(device))
+          .filter(isIncludedInTheAccessibilityTree(device))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
               property("name", aria.Attribute.isName)

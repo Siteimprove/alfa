@@ -17,9 +17,13 @@ import { normalize } from "../common/normalize";
 
 import { Scope } from "../tags";
 
-const { hasIncorrectRoleWithoutName, hasRole, isIgnored } = DOM;
+const {
+  hasIncorrectRoleWithoutName,
+  hasRole,
+  isIncludedInTheAccessibilityTree,
+} = DOM;
 const { hasNamespace, isElement } = Element;
-const { and, equals, not } = Predicate;
+const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>>({
   uri: "https://alfa.siteimprove.com/rules/sia-r56",
@@ -34,7 +38,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
             .filter(
               and(
                 hasNamespace(equals(Namespace.HTML)),
-                not(isIgnored(device)),
+                isIncludedInTheAccessibilityTree(device),
                 hasRole(device, (role) => role.is("landmark"))
               )
             )

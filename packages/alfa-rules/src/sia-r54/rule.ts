@@ -10,9 +10,9 @@ import * as dom from "@siteimprove/alfa-dom";
 import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
-const { isIgnored } = DOM;
+const { isIncludedInTheAccessibilityTree } = DOM;
 const { isElement } = Element;
-const { and, not } = Predicate;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r54",
@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants(dom.Node.fullTree)
           .filter(isElement)
           .filter(
-            and(not(isIgnored(device)), (element) =>
+            and(isIncludedInTheAccessibilityTree(device), (element) =>
               Node.from(element, device)
                 .attribute("aria-live")
                 .some((attribute) => attribute.value === "assertive")
