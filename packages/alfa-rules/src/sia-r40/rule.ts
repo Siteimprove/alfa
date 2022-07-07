@@ -13,10 +13,10 @@ const {
   hasIncorrectRoleWithoutName,
   hasNonEmptyAccessibleName,
   hasRole,
-  isIgnored,
+  isIncludedInTheAccessibilityTree,
 } = DOM;
 const { isElement } = Element;
-const { and, not } = Predicate;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r40",
@@ -31,7 +31,7 @@ export default Rule.Atomic.of<Page, Element>({
             .filter(
               and(
                 hasRole(device, (role) => role.is("region")),
-                not(isIgnored(device))
+                isIncludedInTheAccessibilityTree(device)
               )
             )
             // circumventing https://github.com/Siteimprove/alfa/issues/298

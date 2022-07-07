@@ -17,9 +17,9 @@ import { Scope } from "../tags";
 
 import { normalize } from "../common/normalize";
 
-const { hasNonEmptyAccessibleName, isIgnored } = DOM;
+const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { isElement, hasName, hasNamespace } = Element;
-const { and, not } = Predicate;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r15",
@@ -35,7 +35,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             and(
               hasName("iframe"),
               hasNamespace(Namespace.HTML),
-              not(isIgnored(device)),
+              isIncludedInTheAccessibilityTree(device),
               hasNonEmptyAccessibleName(device)
             )
           )

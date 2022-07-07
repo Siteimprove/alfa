@@ -8,7 +8,7 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { isIgnored, isMarkedDecorative } = DOM;
+const { isIncludedInTheAccessibilityTree, isMarkedDecorative } = DOM;
 const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -26,9 +26,9 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            isIgnored(device)(target),
-            () => Outcomes.IsNotExposed,
-            () => Outcomes.IsExposed
+            isIncludedInTheAccessibilityTree(device)(target),
+            () => Outcomes.IsExposed,
+            () => Outcomes.IsNotExposed
           ),
         };
       },

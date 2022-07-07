@@ -15,9 +15,9 @@ import { WithRole } from "../common/diagnostic/with-role";
 
 import { Scope } from "../tags";
 
-const { hasRole, isIgnored } = DOM;
+const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasAttribute, hasNamespace, isElement } = Element;
-const { and, equals, not } = Refinement;
+const { and, equals } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r68",
@@ -111,8 +111,8 @@ function isRequiredChild(
 /**
  * Collect all descendants of the given node where the descendant:
  *
- * - is a non-ignored HTML or SVG element with a role requiring specific
- *   children; and
+ * - is a HTML or SVG element, included in the accessibility tree, with a role
+ *   requiring specific children; and
  * - does not have an `aria-busy` ancestor.
  */
 function* visit(node: Node, device: Device): Iterable<Element> {
@@ -125,7 +125,7 @@ function* visit(node: Node, device: Device): Iterable<Element> {
       isElement,
       and(
         hasNamespace(Namespace.HTML, Namespace.SVG),
-        not(isIgnored(device)),
+        isIncludedInTheAccessibilityTree(device),
         hasRole(device, (role) => role.hasRequiredChildren())
       )
     )(node)

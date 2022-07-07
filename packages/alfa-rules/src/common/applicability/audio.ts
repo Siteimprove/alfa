@@ -8,7 +8,7 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { Question } from "../act/question";
 
-const { isPerceivable } = DOM;
+const { isPerceivableForAll } = DOM;
 const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;
 const { isRendered } = Style;
@@ -33,7 +33,7 @@ export function audio(
               isPlaying
                 ? Option.of(element)
                 : Question.of("play-button", element).map((playButton) =>
-                    playButton.some(and(isElement, isPerceivable(device)))
+                    playButton.some(and(isElement, isPerceivableForAll(device)))
                       ? Option.of(element)
                       : None
                   )
