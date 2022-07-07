@@ -60,4 +60,10 @@ export namespace Stability {
    * reasonably stable; their changes are tracked by normal semver numbering.
    */
   export const Stable = Stability.of("stable");
+
+  /**
+   * For deprecated rules. These rules are deprecated and will be removed
+   * permanently after some grace period.
+   */
+  export const Deprecated = Stability.of("deprecated");
 }
