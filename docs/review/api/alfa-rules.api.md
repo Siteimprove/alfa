@@ -361,6 +361,10 @@ export namespace Diagnostic {
     //
     // (undocumented)
     isDistinguishingStylesExperimental: typeof DistinguishingStyles_2.isDistinguishingStyles;
+    const // Warning: (ae-forgotten-export) The symbol "MatchingClasses" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isMatchingClasses: typeof MatchingClasses.isMatchingClasses;
     const // Warning: (ae-forgotten-export) The symbol "LabelAndName" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
