@@ -47,7 +47,7 @@ export class MatchingClasses extends Diagnostic {
     return {
       ...super.toJSON(),
       matchingTargets: this._matchingTargets.toJSON(),
-      nonMatchingTargets: this._matchingTargets.toJSON(),
+      matchingNonTargets: this._matchingNonTargets.toJSON(),
     };
   }
 }
@@ -58,7 +58,7 @@ export class MatchingClasses extends Diagnostic {
 export namespace MatchingClasses {
   export interface JSON extends Diagnostic.JSON {
     matchingTargets: Map.JSON<string, number>;
-    nonMatchingTargets: Map.JSON<string, number>;
+    matchingNonTargets: Map.JSON<string, number>;
   }
 
   export function isMatchingClasses(
