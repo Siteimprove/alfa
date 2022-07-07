@@ -28,12 +28,17 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   requirements: [Criterion.of("2.4.7")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
-    const tabbables = document.tabOrder().filter(isTabbable(device));
-    const targetClassnames = tabbables.flatMap((tabbable) => tabbable.classes);
     let diagnostic = Map.empty<string, Matches>();
+
+    const tabbables = document.tabOrder().filter(isTabbable(device));
+    const nonTargets = document
+      .descendants()
+      .filter((node) => isElement(node) && !tabbables.includes(node));
+    const targetClassnames = tabbables.flatMap((tabbable) => tabbable.classes);
+
     let nonTargetClassnames = Sequence.empty<string>();
-    for (const nonTarget of document.descendants()) {
-      if (Element.isElement(nonTarget)) {
+    for (const nonTarget of nonTargets) {
+      if (isElement(nonTarget)) {
         nonTargetClassnames = nonTargetClassnames.concat(nonTarget.classes);
       }
     }
