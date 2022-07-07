@@ -1,9 +1,9 @@
+import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { isPerceivable } from "../../../../alfa-aria/src/dom/predicate/is-perceivable";
-
+const { isPerceivableForAll } = DOM;
 const { isContent } = Element;
 const { and } = Predicate;
 
@@ -40,5 +40,5 @@ export function isAtTheStart(
     !Node.getNodesBetween(node1, node2, {
       includeFirst: true,
       includeSecond: false,
-    }).some(and(isPerceivable(device), isContent(Node.fullTree)));
+    }).some(and(isPerceivableForAll(device), isContent(Node.fullTree)));
 }

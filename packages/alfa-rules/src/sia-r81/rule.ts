@@ -20,9 +20,10 @@ import { normalize } from "../common/normalize";
 
 import { Scope } from "../tags";
 
-const { hasNonEmptyAccessibleName, hasRole, isIgnored } = DOM;
+const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
+  DOM;
 const { isElement, hasName, hasNamespace, hasId } = Element;
-const { and, not, equals } = Predicate;
+const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r81",
@@ -38,7 +39,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
               hasRole(device, (role) => role.is("link")),
-              not(isIgnored(device)),
+              isIncludedInTheAccessibilityTree(device),
               hasNonEmptyAccessibleName(device)
             )
           )

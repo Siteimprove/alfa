@@ -103,8 +103,9 @@ export namespace DOM {
     hasNonEmptyAccessibleName: typeof dom.hasNonEmptyAccessibleName, // (undocumented)
     hasRole: typeof dom.hasRole, // (undocumented)
     isIgnored: typeof dom.isIgnored, // (undocumented)
+    isIncludedInTheAccessibilityTree: typeof dom.isIncludedInTheAccessibilityTree, // (undocumented)
     isMarkedDecorative: Predicate<Element_2<string>, []>, // (undocumented)
-    isPerceivable: typeof dom.isPerceivable, // (undocumented)
+    isPerceivableForAll: typeof dom.isPerceivableForAll, // (undocumented)
     isProgrammaticallyHidden: typeof dom.isProgrammaticallyHidden, // (undocumented)
     isSemanticallyDisabled: Predicate<Element_2<string>, []>;
 }
@@ -248,10 +249,13 @@ export class Inert extends Node<"inert"> {
 function isIgnored<T extends Node_2>(device: Device): Predicate<T>;
 
 // @public
+function isIncludedInTheAccessibilityTree<T extends Node_2>(device: Device): Predicate<T>;
+
+// @public
 const isMarkedDecorative: Predicate<Element_2>;
 
 // @public
-function isPerceivable<T extends Node_2>(device: Device): Predicate<T>;
+function isPerceivableForAll<T extends Node_2>(device: Device): Predicate<T>;
 
 // @public
 function isProgrammaticallyHidden(device: Device, context?: Context): Predicate<Element_2>;

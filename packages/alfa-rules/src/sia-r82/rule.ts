@@ -13,7 +13,7 @@ import { Question } from "../common/act/question";
 
 import { Scope, Stability } from "../tags";
 
-const { hasRole, isPerceivable } = DOM;
+const { hasRole, isPerceivableForAll } = DOM;
 const { isElement, hasNamespace } = Element;
 const { and, test } = Predicate;
 
@@ -144,7 +144,7 @@ const identifiesTarget = (
         () => Outcomes.NoErrorIndicatorIdentifiesTarget,
         () =>
           expectation(
-            test(isPerceivable(device), indicator.get()),
+            test(isPerceivableForAll(device), indicator.get()),
             () => Outcomes.ErrorIndicatorIdentifiesTarget,
             () => Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable
           )
@@ -163,7 +163,7 @@ const describesResolution = (
         () => Outcomes.NoErrorIndicatorDescribesResolution,
         () =>
           expectation(
-            test(isPerceivable(device), indicator.get()),
+            test(isPerceivableForAll(device), indicator.get()),
             () => Outcomes.ErrorIndicatorDescribesResolution,
             () => Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable
           )
