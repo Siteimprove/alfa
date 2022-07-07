@@ -367,7 +367,7 @@ export namespace Diagnostic {
     const // Warning: (ae-forgotten-export) The symbol "DistinguishingStyles" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isDistinguishingStylesExperimental: typeof DistinguishingStyles_2.isDistinguishingStyles;
+    isDistinguishingStylesDeprecated: typeof DistinguishingStyles_2.isDistinguishingStyles;
     const // Warning: (ae-forgotten-export) The symbol "LabelAndName" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)

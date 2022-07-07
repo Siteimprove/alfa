@@ -34,7 +34,7 @@ export namespace Diagnostic {
 
   export const { isDistinguishingStyles } = DistinguishingStyles;
 
-  export const { isDistinguishingStyles: isDistinguishingStylesExperimental } =
+  export const { isDistinguishingStyles: isDistinguishingStylesDeprecated } =
     DeprecatedDistinguishingStyles;
 
   export const { isLabelAndName } = LabelAndName;
