@@ -27,7 +27,7 @@ import { contrast } from "../common/expectation/contrast";
 import { getForeground } from "../common/dom/get-colors";
 import { isWhitespace } from "../common/predicate";
 
-import { Scope, Stability, Version } from "../tags";
+import { Scope, Version } from "../tags";
 
 import {
   DistinguishingStyles,
