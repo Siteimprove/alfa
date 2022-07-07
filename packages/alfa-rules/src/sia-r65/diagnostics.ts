@@ -23,6 +23,14 @@ export class MatchingClasses extends Diagnostic {
     this._matchingNonTargets = matchingNonTargets;
   }
 
+  public get matchingTargets(): Map<string, number> {
+    return this._matchingTargets;
+  }
+
+  public get matchingNonTargets(): Map<string, number> {
+    return this._matchingNonTargets;
+  }
+
   public equals(value: MatchingClasses): boolean;
 
   public equals(value: unknown): value is this;
@@ -39,6 +47,7 @@ export class MatchingClasses extends Diagnostic {
     return {
       ...super.toJSON(),
       matchingTargets: this._matchingTargets.toJSON(),
+      nonMatchingTargets: this._matchingTargets.toJSON(),
     };
   }
 }
@@ -49,6 +58,7 @@ export class MatchingClasses extends Diagnostic {
 export namespace MatchingClasses {
   export interface JSON extends Diagnostic.JSON {
     matchingTargets: Map.JSON<string, number>;
+    nonMatchingTargets: Map.JSON<string, number>;
   }
 
   export function isMatchingClasses(
