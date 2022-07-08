@@ -280,7 +280,7 @@ export namespace SelectorMap {
       }
 
       if (sheet.condition.isSome()) {
-        const query = Media.parse(Lexer.lex(sheet.condition.get()));
+        const query = Media.parseMediaCondition(sheet.condition.get());
 
         if (query.every(([, query]) => !query.matches(device))) {
           continue;
