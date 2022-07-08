@@ -3,6 +3,7 @@ import { Languages } from "../../sia-r109/rule";
 import { LabelAndName } from "../../sia-r14/rule";
 import { RoleAndRequiredAttributes } from "../../sia-r16/rule";
 import { SameNames } from "../../sia-r56/rule";
+import { MatchingClasses } from "../../sia-r65/diagnostics";
 import { DistinguishingStyles as DeprecatedDistinguishingStyles } from "../../sia-dr62/rule";
 import { DeprecatedElements } from "../../sia-r70/rule";
 import { WithDeclaration } from "../../sia-r75/rule";
@@ -36,6 +37,8 @@ export namespace Diagnostic {
 
   export const { isDistinguishingStyles: isDistinguishingStylesDeprecated } =
     DeprecatedDistinguishingStyles;
+
+  export const { isMatchingClasses } = MatchingClasses;
 
   export const { isLabelAndName } = LabelAndName;
 
