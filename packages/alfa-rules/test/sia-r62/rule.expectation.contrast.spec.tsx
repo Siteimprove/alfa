@@ -2,7 +2,7 @@ import { Percentage, RGB } from "@siteimprove/alfa-css";
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import ER62, { Outcomes } from "../../src/sia-er62/rule";
+import R62, { Outcomes } from "../../src/sia-r62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
 import { Defaults, makePairing } from "./common";
@@ -79,8 +79,8 @@ test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 
       .withDistinguishingProperties(["contrast"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable([style], [style], [style]),
     }),
   ]);
@@ -151,8 +151,8 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
       .withDistinguishingProperties(["contrast"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable([style], [style], [style]),
     }),
   ]);
@@ -198,8 +198,8 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
       .withDistinguishingProperties(["contrast"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable([style], [style], [style]),
     }),
   ]);
@@ -241,8 +241,8 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
       .withPairings(contrastPairings)
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
     }),
   ]);
@@ -287,8 +287,8 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
       .withPairings(contrastPairings)
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
     }),
   ]);

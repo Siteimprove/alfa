@@ -7,6 +7,9 @@ export * from "./tags";
 import * as experimentalRules from "./experimental";
 export { experimentalRules };
 
+import * as deprecatedRules from "./deprecated";
+export { deprecatedRules };
+
 import * as rules from "./rules";
 
 /**

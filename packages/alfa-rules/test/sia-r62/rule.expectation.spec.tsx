@@ -1,8 +1,8 @@
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
-import ER62, { Outcomes } from "../../src/sia-er62/rule";
+import { ElementDistinguishable } from "../../src/sia-r62/diagnostics";
+import R62, { Outcomes } from "../../src/sia-r62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
 import { Defaults, addCursor, addOutline } from "./common";
@@ -44,8 +44,8 @@ test(`evaluates() passes on link with a different background-image than text`, a
       .withDistinguishingProperties(["background"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
@@ -77,8 +77,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       .withDistinguishingProperties(["background"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
@@ -107,8 +107,8 @@ test(`evaluate() fails an <a> element that has no distinguishing features and is
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable(
         [noStyle],
         [addCursor(noStyle)],
@@ -138,8 +138,8 @@ test(`evaluate() fails an <a> element that has no distinguishing features and is
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable(
         [noStyle],
         [addCursor(noStyle)],
@@ -173,8 +173,8 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     noDistinguishingProperties.withStyle(["background", "rgb(100% 0% 0%)"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable(
         [style],
         [addCursor(style)],
@@ -213,8 +213,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       .withDistinguishingProperties(["box-shadow"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable([style], [addCursor(style)], [style]),
     }),
   ]);
@@ -237,8 +237,8 @@ test(`evaluate() fails an applicable <a> element that removes the default text
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable(
         [noStyle],
         [addCursor(noStyle)],
@@ -281,8 +281,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
       .withDistinguishingProperties(["border"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
@@ -316,8 +316,8 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     )
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable(
         [style],
         [addCursor(style)],
@@ -351,8 +351,8 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     )
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable(
         [style],
         [addCursor(style)],
@@ -392,8 +392,8 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
       .withDistinguishingProperties(["font"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
@@ -428,8 +428,8 @@ test(`evaluate() passes a link with different font-family than surrounding text`
       .withDistinguishingProperties(["font"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
@@ -473,8 +473,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     )
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable([style], [addCursor(style)], [style]),
     }),
   ]);
@@ -497,8 +497,8 @@ test(`evaluate() fails an <a> element that removes the default text decoration
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable([defaultStyle], [hoverStyle], [noStyle]),
     }),
   ]);
@@ -522,8 +522,8 @@ test(`evaluate() fails an <a> element that removes the default text decoration
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable([defaultStyle], [noStyle], [noStyle]),
     }),
   ]);
@@ -559,8 +559,8 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
       .withDistinguishingProperties(["vertical-align"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style, noStyle],
         [addCursor(style), addCursor(noStyle)],
@@ -607,8 +607,8 @@ test(`evaluate() passes an <a> element with a <p> parent element when
       ])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
