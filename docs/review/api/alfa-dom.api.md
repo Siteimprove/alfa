@@ -9,7 +9,6 @@ import { Equatable } from '@siteimprove/alfa-equatable';
 import { Flags } from '@siteimprove/alfa-flags';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
-import { Media } from '@siteimprove/alfa-media';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
@@ -531,8 +530,6 @@ export class ImportRule extends ConditionRule {
     // (undocumented)
     static of(href: string, sheet: Sheet, condition?: Option<string>): ImportRule;
     // (undocumented)
-    get queries(): Media.List;
-    // (undocumented)
     get rules(): Iterable<Rule>;
     // (undocumented)
     get sheet(): Sheet;
@@ -678,8 +675,6 @@ export namespace KeyframesRule {
 export class MediaRule extends ConditionRule {
     // (undocumented)
     static of(condition: string, rules: Iterable_2<Rule>): MediaRule;
-    // (undocumented)
-    get queries(): Media.List;
     // (undocumented)
     toJSON(): MediaRule.JSON;
     // (undocumented)

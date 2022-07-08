@@ -83,9 +83,6 @@
       "path": "../alfa-cache"
     },
     {
-      "path": "../alfa-css"
-    },
-    {
       "path": "../alfa-earl"
     },
     {
@@ -102,9 +99,6 @@
     },
     {
       "path": "../alfa-lazy"
-    },
-    {
-      "path": "../alfa-media"
     },
     {
       "path": "../alfa-mapper"

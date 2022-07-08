@@ -1,7 +1,4 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Media } from "@siteimprove/alfa-media";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Parser } from "@siteimprove/alfa-parser";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
@@ -19,23 +16,6 @@ export class MediaRule extends ConditionRule {
 
   private constructor(condition: string, rules: Array<Rule>) {
     super(condition, rules);
-  }
-
-  private _queries: Option<Media.List> = None;
-
-  public parse<I>(
-    lexer: (input: string) => I,
-    parser: Parser<I, Media.List, string>
-  ): Media.List {
-    if (this._queries.isNone()) {
-      this._queries = Option.of(
-        parser(lexer(this._condition))
-          .map(([, queries]) => queries)
-          .getOr(Media.List.of([]))
-      );
-    }
-
-    return this._queries.get();
   }
 
   public toJSON(): MediaRule.JSON {

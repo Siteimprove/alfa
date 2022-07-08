@@ -444,23 +444,26 @@ function isFontRelativeMediaRule<F extends Media.Feature>(
   refinement: Refinement<Media.Feature, F>
 ): Predicate<MediaRule> {
   return (rule) =>
-    Iterable.some(rule.parse(Lexer.lex, Media.parse).queries, (query) =>
-      query.condition.some((condition) =>
-        Iterable.some(
-          condition,
-          (feature) =>
-            refinement(feature) &&
-            feature.value.some((value) =>
-              Range.isRange(value)
-                ? value.minimum.some(
-                    (min) =>
-                      Length.isLength(min.value) && min.value.isFontRelative()
-                  )
-                : Discrete.isDiscrete<Length>(value) &&
-                  value.value.isFontRelative()
-            )
+    Iterable.some(
+      Media.parseMediaCondition(rule.condition).getOr(Media.List.of([]))
+        .queries,
+      (query) =>
+        query.condition.some((condition) =>
+          Iterable.some(
+            condition,
+            (feature) =>
+              refinement(feature) &&
+              feature.value.some((value) =>
+                Range.isRange(value)
+                  ? value.minimum.some(
+                      (min) =>
+                        Length.isLength(min.value) && min.value.isFontRelative()
+                    )
+                  : Discrete.isDiscrete<Length>(value) &&
+                    value.value.isFontRelative()
+              )
+          )
         )
-      )
     );
 }
 

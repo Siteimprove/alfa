@@ -287,6 +287,8 @@ export namespace Media {
     not: typeof Not.of, // (undocumented)
     isNot: typeof Not.isNot;
     // (undocumented)
+    export function parseMediaCondition(condition: string): Option<List>;
+    // (undocumented)
     export class Query implements Matchable {
         // (undocumented)
         get condition(): Option<Feature | Condition>;
@@ -305,6 +307,8 @@ export namespace Media {
         // (undocumented)
         get type(): Option<Type>;
     }
+    const // (undocumented)
+    isCondition: typeof Condition.isCondition;
     // (undocumented)
     export namespace Query {
         // (undocumented)
@@ -321,8 +325,6 @@ export namespace Media {
             type: Type.JSON | null;
         }
     }
-    const // (undocumented)
-    isCondition: typeof Condition.isCondition;
     // (undocumented)
     export class Type implements Matchable, Equatable, Serializable<Type.JSON> {
         // (undocumented)
@@ -338,6 +340,9 @@ export namespace Media {
         // (undocumented)
         toString(): string;
     }
+    const // (undocumented)
+    query: typeof Query.of, // (undocumented)
+    isQuery: typeof Query.isQuery;
     // (undocumented)
     export namespace Type {
         // (undocumented)
@@ -350,9 +355,6 @@ export namespace Media {
             name: string;
         }
     }
-    const // (undocumented)
-    query: typeof Query.of, // (undocumented)
-    isQuery: typeof Query.isQuery;
     // (undocumented)
     export interface Value<T = unknown> extends Functor<T>, Serializable<Value.JSON> {
         // (undocumented)
@@ -364,6 +366,11 @@ export namespace Media {
         // (undocumented)
         toJSON(): Value.JSON;
     }
+    const // (undocumented)
+    list: typeof List.of, // (undocumented)
+    isList: typeof List.isList;
+    const // (undocumented)
+    parse: Parser<Slice<Token>, List, string, []>;
     // (undocumented)
     export namespace Value {
         // (undocumented)
@@ -479,11 +486,6 @@ export namespace Media {
         const // (undocumented)
         bound: typeof Bound.of;
     }
-    const // (undocumented)
-    list: typeof List.of, // (undocumented)
-    isList: typeof List.isList;
-    const // (undocumented)
-    parse: Parser<Slice<Token>, List, string, []>;
         {};
 }
 

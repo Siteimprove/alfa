@@ -195,10 +195,6 @@ export default {
           ],
         },
         {
-          name: "CSS syntax",
-          children: ["@siteimprove/alfa-css", "@siteimprove/alfa-media"],
-        },
-        {
           name: "HTML",
           children: ["@siteimprove/alfa-dom", "@siteimprove/alfa-table"],
         },
@@ -208,6 +204,8 @@ export default {
             "@siteimprove/alfa-cascade",
             "@siteimprove/alfa-selector",
             "@siteimprove/alfa-style",
+            "@siteimprove/alfa-css",
+            "@siteimprove/alfa-media",
           ],
         },
         "@siteimprove/alfa-aria",

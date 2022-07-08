@@ -119,8 +119,10 @@ function isOrientationConditional(declaration: Declaration): boolean {
     declaration.ancestors(),
     (rule) =>
       MediaRule.isMediaRule(rule) &&
-      some(rule.parse(Lexer.lex, Media.parse).queries, (query) =>
-        query.condition.some(hasOrientationCondition)
+      some(
+        Media.parseMediaCondition(rule.condition).getOr(Media.List.of([]))
+          .queries,
+        (query) => query.condition.some(hasOrientationCondition)
       )
   );
 }

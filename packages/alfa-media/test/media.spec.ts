@@ -1,12 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer } from "@siteimprove/alfa-css";
 import { Device, Viewport, Display } from "@siteimprove/alfa-device";
 
 import { Media } from "../src";
 
 function parse(input: string) {
-  return Media.parse(Lexer.lex(input)).map(([, query]) => query);
+  return Media.parseMediaCondition(input);
 }
 
 test(".parse() parses a simple query for an orientation feature", (t) => {
@@ -28,7 +27,6 @@ test(".parse() parses a simple query for an orientation feature", (t) => {
     },
   ]);
 });
-
 
 test(".parse() parses a simple query for a length feature", (t) => {
   t.deepEqual(parse("(min-width: 0)").get().toJSON(), [

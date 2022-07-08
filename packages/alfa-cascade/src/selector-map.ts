@@ -236,7 +236,11 @@ export namespace SelectorMap {
       // For media rules, we recurse into the child rules if and only if the
       // media condition matches the device.
       else if (MediaRule.isMediaRule(rule)) {
-        if (!rule.parse(Lexer.lex, Media.parse).matches(device)) {
+        if (
+          !Media.parseMediaCondition(rule.condition)
+            .getOr(Media.List.of([]))
+            .matches(device)
+        ) {
           return;
         }
 
@@ -248,7 +252,11 @@ export namespace SelectorMap {
       // For import rules, we recurse into the imported style sheet if and only
       // if the import condition matches the device.
       else if (ImportRule.isImportRule(rule)) {
-        if (!rule.queries.matches(device)) {
+        if (
+          !Media.parseMediaCondition(rule.condition)
+            .getOr(Media.List.of([]))
+            .matches(device)
+        ) {
           return;
         }
 

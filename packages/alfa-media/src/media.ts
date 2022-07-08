@@ -6,12 +6,14 @@ import {
   Percentage,
   Token,
   Component,
+  Lexer,
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -1523,5 +1525,23 @@ export namespace Media {
       )
   );
 
-  export const parse = parseList;
+  let parseMap = Map.empty<string, Option<List>>();
+
+  export function parseMediaCondition(condition: string): Option<List> {
+    let result = parseMap.get(condition);
+
+    if (result.isSome()) {
+      return result.get();
+    }
+
+    result = Option.of(
+      parseList(Lexer.lex(condition))
+        .map(([, queries]) => queries)
+        .ok()
+    );
+
+    parseMap.set(condition, result.get());
+
+    return result.get();
+  }
 }
