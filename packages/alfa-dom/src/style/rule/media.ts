@@ -1,6 +1,9 @@
-import { Lexer } from "@siteimprove/alfa-css";
+import { Lexer, Token } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Media } from "@siteimprove/alfa-media";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Rule } from "../rule";
@@ -16,18 +19,21 @@ export class MediaRule extends ConditionRule {
     return new MediaRule(condition, Array.from(rules));
   }
 
-  private readonly _queries: Media.List;
-
   private constructor(condition: string, rules: Array<Rule>) {
     super(condition, rules);
-
-    this._queries = Media.parse(Lexer.lex(condition))
-      .map(([, queries]) => queries)
-      .getOr(Media.List.of([]));
   }
 
-  public get queries(): Media.List {
-    return this._queries;
+  private _queries: Option<Media.List> = None;
+
+  public parse(/*parser: Parser<Slice<Token>, Media.List>*/): Media.List {
+    if (this._queries.isNone()) {
+      this._queries = Option.of(
+        Media.parse(Lexer.lex(this._condition))
+          .map(([, queries]) => queries)
+          .getOr(Media.List.of([]))
+      );
+    }
+    return this._queries.get();
   }
 
   public toJSON(): MediaRule.JSON {

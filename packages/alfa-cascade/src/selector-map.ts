@@ -236,7 +236,7 @@ export namespace SelectorMap {
       // For media rules, we recurse into the child rules if and only if the
       // media condition matches the device.
       else if (MediaRule.isMediaRule(rule)) {
-        if (!rule.queries.matches(device)) {
+        if (!rule.parse().matches(device)) {
           return;
         }
 

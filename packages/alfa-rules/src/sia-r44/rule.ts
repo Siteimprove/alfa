@@ -119,7 +119,7 @@ function isOrientationConditional(declaration: Declaration): boolean {
     declaration.ancestors(),
     (rule) =>
       MediaRule.isMediaRule(rule) &&
-      some(rule.queries.queries, (query) =>
+      some(rule.parse().queries, (query) =>
         query.condition.some(hasOrientationCondition)
       )
   );
