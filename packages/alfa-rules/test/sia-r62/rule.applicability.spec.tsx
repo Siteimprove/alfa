@@ -2,7 +2,7 @@ import { Percentage, RGB } from "@siteimprove/alfa-css";
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import ER62, { Outcomes } from "../../src/sia-er62/rule";
+import R62, { Outcomes } from "../../src/sia-r62/rule";
 import { evaluate } from "../common/evaluate";
 import { inapplicable, passed } from "../common/outcome";
 import { Defaults, addCursor, addOutline, makePairing } from "./common";
@@ -24,8 +24,8 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element with 
 
   const document = h.document([<p>Hello {target}</p>]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
     }),
   ]);
@@ -41,8 +41,8 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element with 
     </p>,
   ]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
     }),
   ]);
@@ -58,8 +58,8 @@ test(`evaluate() is applicable to an <a> element with a <div role="paragraph"> p
     </div>,
   ]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
     }),
   ]);
@@ -96,8 +96,8 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
     ])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
@@ -136,8 +136,8 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
     }),
   ]);
@@ -174,8 +174,8 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
       .withStyle(["color", "rgb(0% 0% 0%)"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle, spanStyle],
         [hoverStyle, spanStyle],
@@ -224,8 +224,8 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
     .withPairings([makePairing(defaultLinkColor, defaultTextColor, 2.23)])
     .withStyle(["color", "rgb(0% 0% 0%)"]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style, Err.of(spanStyle)],
         [addCursor(Ok.of(spanStyle)), addCursor(style)],
@@ -262,8 +262,8 @@ test(`evaluate() is applicable to an <a> element when there is a <p> parent elem
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target2, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target2, {
       1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
     }),
   ]);
@@ -291,11 +291,11 @@ test(`evaluate() is applicable to several <a> elements when there is a <p> paren
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target1, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target1, {
       1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
     }),
-    passed(ER62, target2, {
+    passed(R62, target2, {
       1: Outcomes.IsDistinguishable([defaultStyle], [hoverStyle], [focusStyle]),
     }),
   ]);
@@ -368,8 +368,8 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
       .withDistinguishingProperties(["background", "text-decoration"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
@@ -388,7 +388,7 @@ test(`evaluate() is inapplicable to an <a> element with no visible text content`
 
   const document = h.document([<p>Hello {target}</p>]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
 
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
@@ -397,7 +397,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 
   const document = h.document([<p>{target}</p>]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
 
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
@@ -410,7 +410,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
     </p>,
   ]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
 
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
@@ -423,7 +423,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
     </p>,
   ]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
 
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
@@ -432,7 +432,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 
   const document = h.document([<p> {target}</p>]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
 
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
@@ -450,7 +450,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
 
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
@@ -473,7 +473,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
 
 test(`evaluates() is inapplicable when the only non-link text is in a nested paragraph`, async (t) => {
@@ -488,7 +488,7 @@ test(`evaluates() is inapplicable when the only non-link text is in a nested par
     </div>,
   ]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });
 
 test(`evaluates() is inapplicable when there is no non-link text in a nested paragraph`, async (t) => {
@@ -506,5 +506,5 @@ test(`evaluates() is inapplicable when there is no non-link text in a nested par
     </div>,
   ]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [inapplicable(ER62)]);
+  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
 });

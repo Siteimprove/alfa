@@ -51,7 +51,7 @@ import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
 // @public
-const _default: Rule.Atomic<Page, Element<string>, never, Element<string>>;
+const _default: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
 const _default_10: Rule.Atomic<Page, Element<string>, never, Element<string>>;
@@ -84,7 +84,7 @@ const _default_18: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 const _default_19: Rule.Atomic<Page, Group<Element<string>>, Question.Metadata, Group<Element<string>>>;
 
 // @public
-const _default_2: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>;
+const _default_2: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string> | Array_2<Node<string>>>;
 
 // @public (undocumented)
 const _default_20: Rule.Atomic<Page, Element<string>, never, Element<string>>;
@@ -117,7 +117,7 @@ const _default_28: Rule.Atomic<Page, Element<string>, Question.Metadata, Element
 const _default_29: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public
-const _default_3: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string> | Array_2<Node<string>>>;
+const _default_3: Rule.Atomic<Page, Document, Question.Metadata, Document>;
 
 // @public (undocumented)
 const _default_30: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
@@ -149,8 +149,8 @@ const _default_38: Rule.Atomic<Page, Element<string>, Question.Metadata, Element
 // @public (undocumented)
 const _default_39: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
 
-// @public
-const _default_4: Rule.Atomic<Page, Document, Question.Metadata, Document>;
+// @public (undocumented)
+const _default_4: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
 // @public (undocumented)
 const _default_40: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
@@ -227,7 +227,7 @@ const _default_61: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 // @public (undocumented)
 const _default_62: Rule.Atomic<Page, Document, never, Document>;
 
-// @public (undocumented)
+// @public
 const _default_63: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
 // @public (undocumented)
@@ -332,6 +332,13 @@ const _default_93: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 // @public (undocumented)
 const _default_94: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
+declare namespace deprecatedRules {
+    export {
+        _default_4 as DR62
+    }
+}
+export { deprecatedRules }
+
 // @public (undocumented)
 export namespace Diagnostic {
     const // Warning: (ae-forgotten-export) The symbol "ClippingAncestors" needs to be exported by the entry point index.d.ts
@@ -360,7 +367,7 @@ export namespace Diagnostic {
     const // Warning: (ae-forgotten-export) The symbol "DistinguishingStyles" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isDistinguishingStylesExperimental: typeof DistinguishingStyles_2.isDistinguishingStyles;
+    isDistinguishingStylesDeprecated: typeof DistinguishingStyles_2.isDistinguishingStyles;
     const // Warning: (ae-forgotten-export) The symbol "LabelAndName" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
@@ -389,10 +396,9 @@ export namespace Diagnostic {
 
 declare namespace experimentalRules {
     export {
-        _default as ER62,
-        _default_2 as ER87,
-        _default_3 as R82,
-        _default_4 as R109
+        _default as ER87,
+        _default_2 as R82,
+        _default_3 as R109
     }
 }
 export { experimentalRules }
@@ -693,6 +699,7 @@ export namespace Stability {
     }
     const Experimental: Stability<"experimental">;
     const Stable: Stability<"stable">;
+    const Deprecated: Stability<"deprecated">;
 }
 
 // @public (undocumented)

@@ -1,12 +1,12 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
+import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Color } from "@siteimprove/alfa-css";
+import { Color, Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -15,21 +15,29 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
-import { Property, Style } from "@siteimprove/alfa-style";
+import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import * as json from "@siteimprove/alfa-json";
-
 import { expectation } from "../common/act/expectation";
-import { isWhitespace } from "../common/predicate";
-import { Scope } from "../tags";
 
-import { Serialise } from "./serialise";
+import { Contrast } from "../common/diagnostic/contrast";
+import { contrast } from "../common/expectation/contrast";
+
+import { getForeground } from "../common/dom/get-colors";
+import { isWhitespace } from "../common/predicate";
+
+import { Scope, Version } from "../tags";
+
+import {
+  DistinguishingStyles,
+  ElementDistinguishable,
+  DistinguishingProperty,
+} from "./diagnostics";
 
 const { hasRole } = DOM;
 const { isElement } = Element;
-const { or, not, test } = Predicate;
+const { or, not, test, tee } = Predicate;
 const { and } = Refinement;
 const {
   hasBorder,
@@ -41,54 +49,141 @@ const {
 } = Style;
 const { isText } = Text;
 
+let distinguishingProperties: Map<
+  Context,
+  Map<Element, List<DistinguishingProperty>>
+> = Map.empty();
+
+/**
+ * This version of R62 accepts differences in `font-family`, differences
+ * in `cursor` (in the `hover` state), and 3:1 or more contrast with surrounding
+ * text.
+ *
+ * These cannot be easily displayed in the current Page report:
+ * * `cursor` only shows on hovering, we could have a `a:link` and `a:hover`
+ *   states that look similar, but the first one is bad and the second good,
+ *   resulting in confusing info;
+ * * contrast with surrounding text is not shown as only link text is shown in
+ *   the decorator. Additionally, we could have similar looking states but with
+ *   different colors, one being good and the other bad, with little way to
+ *   understand the difference.
+ * * `font-family` may depend on a font that for some reason can't be loaded,
+ *   so the difference wouldn't be visible.
+ */
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",
   requirements: [Criterion.of("1.4.1")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Version.of(2)],
   evaluate({ device, document }) {
+    // Contains links (key) and their containing paragraph (value)
     let containers: Map<Element, Element> = Map.empty();
 
     return {
       applicability() {
-        return visit(document, None);
+        // Contains links (key) and the parents of the textnodes the links contain (value)
+        let linkText: Map<Element, Set<Element>> = Map.empty();
+        // Contains containers (key) and the parents of the text nodes
+        // (not included in links) the containers have (value)
+        let nonLinkText: Map<Element, Set<Element>> = Map.empty();
 
-        function* visit(
+        gather(document, None, None);
+        return getApplicableLinks();
+
+        function gather(
           node: Node,
-          container: Option<Element>
-        ): Iterable<Element> {
+          container: Option<Element>,
+          link: Option<Element>
+        ): void {
+          const isLink = hasRole(device, (role) => role.is("link"));
+          const isParagraph = hasRole(device, "paragraph");
+
           if (isElement(node)) {
-            // If the element is a semantic link, it might be applicable.
-            if (
-              test(
-                hasRole(device, (role) => role.is("link")),
-                node
-              )
-            ) {
-              if (
-                container.isSome() &&
-                node
-                  .descendants(Node.flatTree)
-                  .some(and(isText, isVisible(device)))
-              ) {
-                containers = containers.set(node, container.get());
-                return yield node;
-              }
+            if (container.isSome() && isLink(node)) {
+              // For each link, store its containing paragraph
+              containers = containers.set(node, container.get());
+              link = Option.of(node);
             }
 
-            // Otherwise, if the element is a <p> element with non-link text
+            // Otherwise, if the element is a paragraph element with non-link text
             // content then start collecting applicable elements.
-            else if (
-              test(
-                and(hasRole(device, "paragraph"), hasNonLinkText(device)),
-                node
-              )
-            ) {
-              container = Option.of(node);
+            if (isParagraph(node)) {
+              if (test(hasNonLinkText(device), node)) {
+                // Start gathering links inside a paragraph with non-link text.
+                container = Option.of(node);
+              } else {
+                // Stop gathering inside a paragraph without non-link text.
+                container = None;
+              }
+            }
+          } else {
+            const isTextNode = test(and(isText, isVisible(device)), node);
+            const parent = node.parent().filter(isElement);
+
+            if (isTextNode && container.isSome() && parent.isSome()) {
+              // For each link, store the parent of the text nodes it contains
+              if (link.isSome()) {
+                linkText = linkText.set(
+                  link.get(),
+                  linkText
+                    .get(link.get())
+                    .getOr(Set.empty<Element>())
+                    .add(parent.get())
+                );
+              }
+              // For each container, store the parent of the text nodes it contains
+              else {
+                nonLinkText = nonLinkText.set(
+                  container.get(),
+                  nonLinkText
+                    .get(container.get())
+                    .getOr(Set.empty<Element>())
+                    .add(parent.get())
+                );
+              }
             }
           }
 
           for (const child of node.children(Node.fullTree)) {
-            yield* visit(child, container);
+            gather(child, container, link);
+          }
+        }
+
+        function* getApplicableLinks(): Iterable<Element> {
+          // Check if foreground is the same with the parent <p> element
+          const hasDifferentForeground = (
+            link: Element,
+            container: Element
+          ): boolean =>
+            getForeground(link, device).none(
+              (linkColors) =>
+                // If the link has a foreground with the alpha channel less than 1 and background gradient color
+                // then the rule is applicable as we can't tell for sure if it ever has the same foreground with a link
+                // that might have the same foreground and gradient background, but with different gradient type or spread
+                linkColors.length === 1 &&
+                getForeground(container, device).some(
+                  (containerColors) =>
+                    // Similalry to the link, we assume the rule is applicable if the container has more than one foreground color
+                    containerColors.length === 1 &&
+                    linkColors[0].equals(containerColors[0])
+                )
+            );
+
+          for (const [link, linkTexts] of linkText) {
+            const nonLinkTexts = nonLinkText
+              .get(containers.get(link).get())
+              // At this point, we should always have something, still
+              // safeguarding against any weird case.
+              .getOr(Set.empty<Element>());
+
+            if (
+              linkTexts.some((linkElement) =>
+                nonLinkTexts.some((nonLinkElement) =>
+                  hasDifferentForeground(linkElement, nonLinkElement)
+                )
+              )
+            ) {
+              yield link;
+            }
           }
         }
       },
@@ -111,19 +206,66 @@ export default Rule.Atomic.of<Page, Element>({
               .takeWhile(and(isElement, not(hasNonLinkText(device))))
           );
 
-        const hasDistinguishingStyle = (context?: Context) =>
+        const hasDistinguishingStyle = (context: Context = Context.empty()) =>
           Set.from(
-            linkElements.map((link) =>
+            linkElements.map((link) => {
               // If the link element is distinguishable from at least one
               // non-link element, this is good enough.
               // Note that ACT rules draft requires the link-element to be
               // distinguishable from *all* non-link elements in order to be good.
-              nonLinkElements.some((container) =>
-                isDistinguishable(container, device, context)(link)
-              )
-                ? Ok.of(ComputedStyles.from(link, device, context))
-                : Err.of(ComputedStyles.from(link, device, context))
-            )
+              const hasDistinguishableStyle = nonLinkElements.some(
+                (container) =>
+                  Distinguishable.isDistinguishable(
+                    container,
+                    target,
+                    device,
+                    context
+                  )
+                    .map((isDistinguishable) => isDistinguishable(link))
+                    .some((distinguishable) => distinguishable)
+              );
+
+              const distinguishableContrast = Set.from(
+                nonLinkElements.flatMap((container) =>
+                  Sequence.from(
+                    Distinguishable.getPairwiseContrast(
+                      container,
+                      link,
+                      device,
+                      context
+                    )
+                  )
+                )
+              );
+
+              const properties: List<DistinguishingProperty> =
+                distinguishingProperties
+                  .get(context)
+                  .flatMap((elementMap) => elementMap.get(link))
+                  .getOrElse(() => List.empty());
+
+              return hasDistinguishableStyle
+                ? Ok.of(
+                    ElementDistinguishable.from(
+                      link,
+                      device,
+                      target,
+                      context,
+                      properties,
+                      distinguishableContrast
+                    )
+                  )
+                : Err.of(
+                    ElementDistinguishable.from(
+                      link,
+                      device,
+                      target,
+                      context,
+                      properties,
+                      distinguishableContrast
+                    )
+                  );
+            })
           )
             .toArray()
             // sort the Ok before the Err, relative order doesn't matter.
@@ -173,9 +315,9 @@ export namespace Outcomes {
   // This would requires changing the expectation since it does not refine
   // and is thus probably not worth the effort.
   export const IsDistinguishable = (
-    defaultStyles: Iterable<Result<ComputedStyles>>,
-    hoverStyles: Iterable<Result<ComputedStyles>>,
-    focusStyles: Iterable<Result<ComputedStyles>>
+    defaultStyles: Iterable<Result<ElementDistinguishable>>,
+    hoverStyles: Iterable<Result<ElementDistinguishable>>,
+    focusStyles: Iterable<Result<ElementDistinguishable>>
   ) =>
     Ok.of(
       DistinguishingStyles.of(
@@ -187,9 +329,9 @@ export namespace Outcomes {
     );
 
   export const IsNotDistinguishable = (
-    defaultStyles: Iterable<Result<ComputedStyles>>,
-    hoverStyles: Iterable<Result<ComputedStyles>>,
-    focusStyles: Iterable<Result<ComputedStyles>>
+    defaultStyles: Iterable<Result<ElementDistinguishable>>,
+    hoverStyles: Iterable<Result<ElementDistinguishable>>,
+    focusStyles: Iterable<Result<ElementDistinguishable>>
   ) =>
     Err.of(
       DistinguishingStyles.of(
@@ -233,316 +375,286 @@ function hasNonLinkText(device: Device): Predicate<Element> {
       }
 
       // Otherwise, go down.
-      return children
-        .filter(isElement)
-        .reject(hasRole(device, (role) => role.is("link")))
-        .some(hasNonLinkText);
+      return (
+        children
+          .filter(isElement)
+          .reject(hasRole(device, (role) => role.is("link")))
+          // We've found nested paragraphs. While this is not really allowed by
+          // HTML specs, it does happen…
+          // In such a case, the inner paragraph would itself be a potential container
+          // and any text in it should be registered with it, not with the outer one
+          .reject(hasRole(device, "paragraph"))
+          .some(hasNonLinkText)
+      );
     });
   };
 }
 
-function isDistinguishable(
-  container: Element,
-  device: Device,
-  context: Context = Context.empty()
-): Predicate<Element> {
-  return or(
-    // Things like text decoration and backgrounds risk blending with the
-    // container element. We therefore need to check if these can be distinguished
-    // from what the container element might itself set.
-    hasDistinguishableTextDecoration(container, device, context),
-    hasDistinguishableBackground(container, device, context),
-
-    hasDistinguishableFontWeight(container, device, context),
-    hasDistinguishableVerticalAlign(container, device, context),
-    // We consider the mere presence of borders or outlines on the element as
-    // distinguishable features. There's of course a risk of these blending with
-    // other features of the container element, such as its background, but this
-    // should hopefully not happen (too often) in practice. When it does, we
-    // risk false negatives.
-    hasOutline(device, context),
-    hasBorder(device, context),
-    hasBoxShadow(device, context) //Checks for color != transparent and spread => 0
-  );
-}
-
-function hasDistinguishableTextDecoration(
-  container: Element,
-  device: Device,
-  context?: Context
-): Predicate<Element> {
-  return (element) =>
-    test(not(hasTextDecoration(device, context)), container) &&
-    test(hasTextDecoration(device, context), element);
-}
-
-/**
- * Check if an element has a distinguishable background from the given container
- * element.
- *
- * @remarks
- * This predicate currently only considers `background-color` and
- * `background-image` as a possibly distinguishable background. Other
- * `background-*` properties should ideally also be considered.
- *
- * Additionally, this predicate do not handle transparency in the topmost layer.
- * The exact same (partly transparent) `background-color` or `background-image`
- * could be on top of a different (opaque) background and thus creates a
- * difference. However, in these cases the (lower layer) distinguishing
- * background would be on an ancestor of the link but of no non-link text (in
- * order to be distinguishing), so should be found when looking at the ancestors
- * of the link.
- *
- * Lastly, this does not account for absolutely positioned backgrounds from
- * random nodes in the DOM. Using these to push an image below links in
- * paragraph sounds so crazy (from a sheer code maintenance point of view) that
- * this hopefully won't be a problem.
- */
-function hasDistinguishableBackground(
-  container: Element,
-  device: Device,
-  context?: Context
-): Predicate<Element> {
-  const colorReference = Style.from(container, device, context).computed(
-    "background-color"
-  ).value;
-
-  const imageReference = Style.from(container, device, context).computed(
-    "background-image"
-  ).value;
-
-  return or(
-    hasComputedStyle(
-      "background-color",
-      not(
-        // If the background is fully transparent, we assume it will end up
-        // being the same as the container. Intermediate backgrounds may change
-        // that, but these would need to be set on ancestor of the link and of
-        // no non-link text, so will be caught in one of the other comparisons.
-        (color) => Color.isTransparent(color) || color.equals(colorReference)
-      ),
-      device,
-      context
-    ),
-    // Any difference in `background-image` is considered enough. If different
-    // `background-image` ultimately yield the same background (e.g. the same
-    // image at two different URLs), this creates false negatives.
-    hasComputedStyle(
-      "background-image",
-      not((image) => image.equals(imageReference)),
-      device,
-      context
-    )
-  );
-}
-
-/**
- * Check if an element has a different font weight than its container.
- *
- * This is brittle and imperfect but removes a strong pain point until we find
- * a better solution.
- */
-function hasDistinguishableFontWeight(
-  container: Element,
-  device: Device,
-  context?: Context
-): Predicate<Element> {
-  const reference = Style.from(container, device, context).computed(
-    "font-weight"
-  ).value;
-
-  return hasComputedStyle(
-    "font-weight",
-    not((weight) => weight.equals(reference)),
-    device,
-    context
-  );
-}
-
-function hasDistinguishableVerticalAlign(
-  container: Element,
-  device: Device,
-  context?: Context
-): Predicate<Element> {
-  const reference = Style.from(container, device, context).computed(
-    "vertical-align"
-  ).value;
-
-  return hasComputedStyle(
-    "vertical-align",
-    not((alignment) => alignment.equals(reference)),
-    device,
-    context
-  );
-}
-
-type Name = Property.Name | Property.Shorthand.Name;
-
-export class ComputedStyles implements Equatable, Hashable, Serializable {
-  public static of(
-    style: Iterable<readonly [Name, string]> = []
-  ): ComputedStyles {
-    return new ComputedStyles(Map.from(style));
-  }
-
-  private readonly _style: Map<Name, string>;
-
-  private constructor(style: Map<Name, string>) {
-    this._style = style;
-  }
-
-  public get style(): Map<Name, string> {
-    return this._style;
-  }
-
-  public equals(value: ComputedStyles): boolean;
-
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): boolean {
-    return value instanceof ComputedStyles && value._style.equals(this._style);
-  }
-
-  public hash(hash: Hash): void {
-    this._style.hash(hash);
-  }
-
-  public toJSON(): ComputedStyles.JSON {
-    return {
-      style: this._style.toJSON(),
-    };
-  }
-}
-
-export namespace ComputedStyles {
-  export interface JSON {
-    [key: string]: json.JSON;
-    style: Map.JSON<Name, string>;
-  }
-
-  export function isComputedStyles(value: unknown): value is ComputedStyles {
-    return value instanceof ComputedStyles;
-  }
-
-  export function from(
-    element: Element,
+namespace Distinguishable {
+  export function isDistinguishable(
+    container: Element,
+    target: Element,
     device: Device,
     context: Context = Context.empty()
-  ): ComputedStyles {
-    const style = Style.from(element, device, context);
-
-    const border = (["color", "style", "width"] as const).map((property) =>
-      Serialise.borderShorthand(style, property)
-    );
-
-    return ComputedStyles.of(
+  ): Array<Predicate<Element>> {
+    let predicates: Array<
+      readonly [DistinguishingProperty, Predicate<Element>]
+    > = [
+      // Things like text decoration and backgrounds risk blending with the
+      // container element. We therefore need to check if these can be distinguished
+      // from what the container element might itself set.
+      ["background", hasDistinguishableBackground(container, device, context)],
+      ["contrast", hasDistinguishableContrast(container, device, context)],
+      ["font", hasDistinguishableFont(container, device, context)],
       [
-        ...border,
-        ["color", Serialise.getLonghand(style, "color")] as const,
-        ["font-weight", Serialise.getLonghand(style, "font-weight")] as const,
-        [
-          "vertical-align",
-          Serialise.getLonghand(style, "vertical-align"),
-        ] as const,
-        ["background", Serialise.background(style)] as const,
-        ["outline", Serialise.outline(style)] as const,
-        ["text-decoration", Serialise.textDecoration(style)] as const,
-        ["box-shadow", Serialise.boxShadow(style)] as const,
-      ].filter(([_, value]) => value !== "")
-    );
-  }
-}
+        "text-decoration",
+        hasDistinguishableTextDecoration(container, device, context),
+      ],
+      [
+        "vertical-align",
+        hasDistinguishableVerticalAlign(container, device, context),
+      ],
+      // We consider the mere presence of borders, box-shadows or outlines on the element as
+      // distinguishable features. There's of course a risk of these blending with
+      // other features of the container element, such as its background, but this
+      // should hopefully not happen (too often) in practice. When it does, we
+      // risk false negatives.
+      ["border", hasBorder(device, context)],
+      [
+        "box-shadow",
+        hasBoxShadow(device, context), //Checks for color != transparent and spread => 0
+      ],
+      ["outline", hasOutline(device, context)],
+    ];
 
-/**
- * @internal
- */
-export class DistinguishingStyles extends Diagnostic {
-  public static of(
-    message: string,
-    defaultStyles: Iterable<Result<ComputedStyles>> = Sequence.empty(),
-    hoverStyles: Iterable<Result<ComputedStyles>> = Sequence.empty(),
-    focusStyles: Iterable<Result<ComputedStyles>> = Sequence.empty()
-  ): DistinguishingStyles {
-    return new DistinguishingStyles(
-      message,
-      Sequence.from(defaultStyles),
-      Sequence.from(hoverStyles),
-      Sequence.from(focusStyles)
-    );
-  }
+    if (context.isHovered(target)) {
+      predicates = [
+        ...predicates,
+        ["cursor", hasDistinguishableCursor(container, device, context)],
+      ];
+    }
 
-  private readonly _defaultStyles: Sequence<Result<ComputedStyles>>;
-  private readonly _hoverStyles: Sequence<Result<ComputedStyles>>;
-  private readonly _focusStyles: Sequence<Result<ComputedStyles>>;
+    return predicates.map(([name, predicate]) =>
+      tee(predicate, (link, result) => {
+        if (result) {
+          let linkToProperties = distinguishingProperties
+            .get(context)
+            .getOr(Map.empty<Element, List<DistinguishingProperty>>());
 
-  private constructor(
-    message: string,
-    defaultStyles: Sequence<Result<ComputedStyles>>,
-    hoverStyles: Sequence<Result<ComputedStyles>>,
-    focusStyles: Sequence<Result<ComputedStyles>>
-  ) {
-    super(message);
-    this._defaultStyles = defaultStyles;
-    this._hoverStyles = hoverStyles;
-    this._focusStyles = focusStyles;
-  }
+          const properties = linkToProperties
+            .get(link)
+            .getOr(List.empty<DistinguishingProperty>())
+            .append(name);
 
-  public get defaultStyles(): Iterable<Result<ComputedStyles>> {
-    return this._defaultStyles;
-  }
-
-  public get hoverStyles(): Iterable<Result<ComputedStyles>> {
-    return this._hoverStyles;
-  }
-
-  public get focusStyles(): Iterable<Result<ComputedStyles>> {
-    return this._focusStyles;
-  }
-
-  public equals(value: DistinguishingStyles): boolean;
-
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): boolean {
-    return (
-      value instanceof DistinguishingStyles &&
-      value._defaultStyles.equals(this._defaultStyles) &&
-      value._hoverStyles.equals(this._hoverStyles) &&
-      value._focusStyles.equals(this._focusStyles)
+          distinguishingProperties = distinguishingProperties.set(
+            context,
+            linkToProperties.set(link, properties)
+          );
+        }
+      })
     );
   }
 
-  public toJSON(): DistinguishingStyles.JSON {
-    return {
-      ...super.toJSON(),
-      defaultStyle: this._defaultStyles.toJSON(),
-      hoverStyle: this._hoverStyles.toJSON(),
-      focusStyle: this._focusStyles.toJSON(),
+  function hasDistinguishableTextDecoration(
+    container: Element,
+    device: Device,
+    context?: Context
+  ): Predicate<Element> {
+    return (element) =>
+      test(not(hasTextDecoration(device, context)), container) &&
+      test(hasTextDecoration(device, context), element);
+  }
+
+  /**
+   * Check if an element has a distinguishable background from the given container
+   * element.
+   *
+   * @remarks
+   * This predicate currently only considers `background-color` and
+   * `background-image` as a possibly distinguishable background. Other
+   * `background-*` properties should ideally also be considered.
+   *
+   * Additionally, this predicate do not handle transparency in the topmost layer.
+   * The exact same (partly transparent) `background-color` or `background-image`
+   * could be on top of a different (opaque) background and thus creates a
+   * difference. However, in these cases the (lower layer) distinguishing
+   * background would be on an ancestor of the link but of no non-link text (in
+   * order to be distinguishing), so should be found when looking at the ancestors
+   * of the link.
+   *
+   * Lastly, this does not account for absolutely positioned backgrounds from
+   * random nodes in the DOM. Using these to push an image below links in
+   * paragraph sounds so crazy (from a sheer code maintenance point of view) that
+   * this hopefully won't be a problem.
+   */
+  function hasDistinguishableBackground(
+    container: Element,
+    device: Device,
+    context?: Context
+  ): Predicate<Element> {
+    const colorReference = Style.from(container, device, context).computed(
+      "background-color"
+    ).value;
+
+    const imageReference = Style.from(container, device, context).computed(
+      "background-image"
+    ).value;
+
+    return (link: Element) => {
+      const color = Style.from(link, device, context).computed(
+        "background-color"
+      ).value;
+
+      const image = Style.from(link, device, context).computed(
+        "background-image"
+      ).value;
+
+      // If the background is fully transparent or there is no `background-image` set on the link,
+      // we assume it will end up being the same as the container. Intermediate backgrounds may change
+      // that, but these would need to be set on ancestor of the link and of
+      // no non-link text, so will be caught in one of the other comparisons.
+      const hasBackground = !(
+        Keyword.isKeyword(image.values[0]) &&
+        image.values[0].equals(Keyword.of("none")) &&
+        Color.isTransparent(color)
+      );
+
+      // Any difference in `background-image` is considered enough. If different
+      // `background-image` ultimately yield the same background (e.g. the same
+      // image at two different URLs), this creates false negatives.
+      // When there is no `background-image` set on the link, we consider it to be the same as the container's
+      const hasDifferentBackgroundFromContainer = !(
+        color.equals(colorReference) && image.equals(imageReference)
+      );
+
+      return hasDifferentBackgroundFromContainer && hasBackground;
     };
   }
-}
 
-/**
- * @internal
- */
-export namespace DistinguishingStyles {
-  export interface JSON extends Diagnostic.JSON {
-    defaultStyle: Sequence.JSON<Result<ComputedStyles>>;
-    hoverStyle: Sequence.JSON<Result<ComputedStyles>>;
-    focusStyle: Sequence.JSON<Result<ComputedStyles>>;
+  export function getPairwiseContrast(
+    container: Element,
+    link: Element,
+    device: Device,
+    context: Context = Context.empty()
+  ): ReadonlyArray<Contrast.Pairing<["container", "link"]>> {
+    return getForeground(container, device, context)
+      .map((containerColors) => [
+        ...Array.flatMap(containerColors, (containerColor) =>
+          getForeground(link, device, context)
+            .map((linkColors) =>
+              Array.map(linkColors, (linkColor) =>
+                Contrast.Pairing.of<["container", "link"]>(
+                  ["container", containerColor],
+                  ["link", linkColor],
+                  contrast(containerColor, linkColor)
+                )
+              )
+            )
+            .getOr([])
+        ),
+      ])
+      .getOr([]);
   }
 
-  export function isDistinguishingStyles(
-    value: Diagnostic
-  ): value is DistinguishingStyles;
+  function hasDistinguishableContrast(
+    container: Element,
+    device: Device,
+    context: Context = Context.empty()
+  ): Predicate<Element> {
+    return (link) => {
+      for (const contrastPairing of getPairwiseContrast(
+        container,
+        link,
+        device,
+        context
+      )) {
+        // If at least one of the contrast values are bigger than the threshold, the link is marked distinguisable
+        if (contrastPairing.contrast >= 3) {
+          return true;
+        }
+      }
+      return false;
+    };
+  }
 
-  export function isDistinguishingStyles(
-    value: unknown
-  ): value is DistinguishingStyles;
+  /**
+   * Check if an element has a different font weight or family than its container.
+   *
+   * This is brittle and imperfect but removes a strong pain point until we find
+   * a better solution.
+   */
 
-  export function isDistinguishingStyles(
-    value: unknown
-  ): value is DistinguishingStyles {
-    return value instanceof DistinguishingStyles;
+  function hasDistinguishableFont(
+    container: Element,
+    device: Device,
+    context?: Context
+  ): Predicate<Element> {
+    const style = Style.from(container, device, context);
+
+    const referenceWeight = style.computed("font-weight").value;
+    const referenceFamily = Option.from(
+      style.computed("font-family").value.values[0]
+    );
+
+    return or(
+      hasComputedStyle(
+        "font-weight",
+        not((weight) => weight.equals(referenceWeight)),
+        device,
+        context
+      ),
+      hasComputedStyle(
+        "font-family",
+        not((family) => Option.from(family.values[0]).equals(referenceFamily)),
+        device,
+        context
+      )
+    );
+  }
+
+  function hasDistinguishableVerticalAlign(
+    container: Element,
+    device: Device,
+    context?: Context
+  ): Predicate<Element> {
+    const reference = Style.from(container, device, context).computed(
+      "vertical-align"
+    ).value;
+
+    return hasComputedStyle(
+      "vertical-align",
+      not((alignment) => alignment.equals(reference)),
+      device,
+      context
+    );
+  }
+
+  function hasDistinguishableCursor(
+    container: Element,
+    device: Device,
+    context?: Context
+  ): Predicate<Element> {
+    // Checking if there is a custom cursor, otherwise grabbing the built-in
+    function getFirstCursor(style: Style.Computed<"cursor">) {
+      return style.values[0].values.length !== 0
+        ? style.values[0].values[0]
+        : style.values[1];
+    }
+    const containerCursorStyle = Style.from(
+      container,
+      device,
+      context
+    ).computed("cursor").value;
+
+    // We assume that the first custom cursor, if any, will never fail to load
+    // and thus don't try to default further.
+    const reference = getFirstCursor(containerCursorStyle);
+
+    return hasComputedStyle(
+      "cursor",
+      not((cursor) => getFirstCursor(cursor).equals(reference)),
+      device,
+      context
+    );
   }
 }

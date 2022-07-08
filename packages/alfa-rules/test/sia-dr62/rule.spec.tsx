@@ -3,7 +3,7 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Property } from "@siteimprove/alfa-style";
 import { test } from "@siteimprove/alfa-test";
 
-import R62, { ComputedStyles, Outcomes } from "../../src/sia-r62/rule";
+import DR62, { ComputedStyles, Outcomes } from "../../src/sia-dr62/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
@@ -51,8 +51,8 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
 
   const document = h.document([<p>Hello {target}</p>]);
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle],
         [defaultStyle],
@@ -72,8 +72,8 @@ test(`evaluate() passes an <a> element with a <p> parent element with non-link
     </p>,
   ]);
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle],
         [defaultStyle],
@@ -99,8 +99,8 @@ test(`evaluate() fails an <a> element that removes the default text decoration
     ]
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
     }),
   ]);
@@ -121,8 +121,8 @@ test(`evaluate() fails an <a> element that removes the default text decoration
     ]
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable([defaultStyle], [noStyle], [focusStyle]),
     }),
   ]);
@@ -145,8 +145,8 @@ test(`evaluate() fails an <a> element that removes the default text decoration
     ]
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable(
         [defaultStyle],
         [defaultStyle],
@@ -173,8 +173,8 @@ test(`evaluate() fails an <a> element that removes the default text decoration
     ]
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable([defaultStyle], [noStyle], [noStyle]),
     }),
   ]);
@@ -200,8 +200,8 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
     ]
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable([noStyle], [defaultStyle], [noStyle]),
     }),
   ]);
@@ -227,8 +227,8 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
     ]
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [defaultStyle]),
     }),
   ]);
@@ -254,8 +254,8 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
     ]
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable(
         [noStyle],
         [defaultStyle],
@@ -289,8 +289,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable([style], [style], [style]),
     }),
   ]);
@@ -322,8 +322,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
         [style],
@@ -369,8 +369,8 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable(
         [style],
         [style],
@@ -416,8 +416,8 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable(
         [style],
         [style],
@@ -462,8 +462,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
         [style],
@@ -501,8 +501,8 @@ test(`evaluate() fails an <a> element that has no distinguishing features but is
     ]
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable(
         [noStyle],
         [noStyle],
@@ -549,8 +549,8 @@ test(`evaluate() fails an <a> element that has no distinguishing features and
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable(
         [style],
         [style],
@@ -578,7 +578,7 @@ test(`evaluate() is inapplicable to an <a> element with no visible text content`
 
   const document = h.document([<p>Hello {target}</p>]);
 
-  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
+  t.deepEqual(await evaluate(DR62, { document }), [inapplicable(DR62)]);
 });
 
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
@@ -587,7 +587,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 
   const document = h.document([<p>{target}</p>]);
 
-  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
+  t.deepEqual(await evaluate(DR62, { document }), [inapplicable(DR62)]);
 });
 
 test(`evaluate() is inapplicable to an <a> element with a <p> parent element
@@ -600,7 +600,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
     </p>,
   ]);
 
-  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
+  t.deepEqual(await evaluate(DR62, { document }), [inapplicable(DR62)]);
 });
 
 test(`evaluate() passes an <a> element with a <div role="paragraph"> parent element
@@ -613,8 +613,8 @@ test(`evaluate() passes an <a> element with a <div role="paragraph"> parent elem
     </div>,
   ]);
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle],
         [defaultStyle],
@@ -634,7 +634,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
     </p>,
   ]);
 
-  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
+  t.deepEqual(await evaluate(DR62, { document }), [inapplicable(DR62)]);
 });
 
 test(`evaluate() passes a link whose bolder than surrounding text`, async (t) => {
@@ -665,8 +665,8 @@ test(`evaluate() passes a link whose bolder than surrounding text`, async (t) =>
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable(
         [style],
         [style],
@@ -696,8 +696,8 @@ test(`evaluates() doesn't break when link text is nested`, async (t) => {
 
   const document = h.document([<p>Hello {target}</p>]);
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle, noStyle],
         [defaultStyle, noStyle],
@@ -741,8 +741,8 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable(
         [style, noStyle],
         [style, noStyle],
@@ -793,8 +793,8 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable(
         [linkStyle, spanStyle],
         [linkStyle, spanStyle],
@@ -815,8 +815,8 @@ test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
 
   const document = h.document([<p>Hello {target}</p>]);
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle, noStyle],
         [defaultStyle, noStyle],
@@ -853,8 +853,8 @@ test(`evaluates() passes on link with a different background-image than text`, a
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable([style], [style], [style]),
     }),
   ]);
@@ -886,8 +886,8 @@ test(`evaluate() passes an <a> element in superscript`, async (t) => {
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable(
         [style, noStyle],
         [style, noStyle],
@@ -923,8 +923,8 @@ test(`evaluate() passes an applicable <a> element that removes the default text
     ])
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    passed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    passed(DR62, target, {
       1: Outcomes.IsDistinguishable([style], [style], [style]),
     }),
   ]);
@@ -947,8 +947,8 @@ test(`evaluate() fails an applicable <a> element that removes the default text
     ]
   );
 
-  t.deepEqual(await evaluate(R62, { document }), [
-    failed(R62, target, {
+  t.deepEqual(await evaluate(DR62, { document }), [
+    failed(DR62, target, {
       1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
     }),
   ]);
@@ -960,5 +960,5 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
 
   const document = h.document([<p> {target}</p>]);
 
-  t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
+  t.deepEqual(await evaluate(DR62, { document }), [inapplicable(DR62)]);
 });

@@ -98,34 +98,6 @@ export namespace Serialise {
     return serializedShadows.join(", ");
   }
 
-  export function font(style: Style): string {
-    const optional = (["style", "weight"] as const)
-      .map((property) => getLonghand(style, `font-${property}`))
-      .join(" ");
-
-    const size = style.computed("font-size");
-    const family = style.computed("font-family");
-
-    if (optional !== " ") {
-      // Optional properties were changed, need to output the mandatory ones.
-      return normalize(`${optional} ${size} ${family}`);
-    }
-
-    if (
-      size.value.equals(Property.get("font-size").initial.value) &&
-      family.value.values[0].equals(
-        Property.get("font-family").initial.values[0]
-      )
-    ) {
-      // Both mandatory properties are set to their initial values.
-      // Since optional properties also are, we can skip `font` altogether.
-      return "";
-    }
-
-    // Optional properties were not changed but some mandatory ones were.
-    return normalize(`${size} ${family}`);
-  }
-
   // Only background-color and background-image are used for deciding if the
   // link is distinguishable, but all longhands are needed for rendering it
   // with the correct style.
