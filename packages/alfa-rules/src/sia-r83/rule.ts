@@ -1,7 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade, RuleTree } from "@siteimprove/alfa-cascade";
-import { Length } from "@siteimprove/alfa-css";
+import { Length, Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -444,7 +444,7 @@ function isFontRelativeMediaRule<F extends Media.Feature>(
   refinement: Refinement<Media.Feature, F>
 ): Predicate<MediaRule> {
   return (rule) =>
-    Iterable.some(rule.parse().queries, (query) =>
+    Iterable.some(rule.parse(Lexer.lex, Media.parse).queries, (query) =>
       query.condition.some((condition) =>
         Iterable.some(
           condition,
