@@ -1,8 +1,10 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
+import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
@@ -13,10 +15,12 @@ import { expectation } from "../common/act/expectation";
 
 import { Question } from "../common/act/question";
 import { Scope } from "../tags";
+import { MatchingClasses } from "./diagnostics";
 
 const { isElement } = Element;
 const { isKeyword } = Keyword;
-const { or, test, xor } = Predicate;
+const { or, test, xor, not } = Predicate;
+const { and } = Refinement;
 const { hasBorder, hasBoxShadow, hasOutline, hasTextDecoration, isTabbable } =
   Style;
 
@@ -25,10 +29,27 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   requirements: [Criterion.of("2.4.7")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
+    const tabbables = document.tabOrder().filter(isTabbable(device));
+
+    const matchingTargets = tabbables
+      .flatMap((tabbable) => tabbable.classes)
+      .groupBy((c) => c)
+      .map((list) => list.size);
+
+    const matchingNonTargets = document
+      .descendants()
+      .filter(
+        and(
+          isElement,
+          not((element) => tabbables.includes(element))
+        )
+      )
+      .flatMap((nonTarget) => nonTarget.classes)
+      .groupBy((c) => c)
+      .map((list) => list.size);
+
     return {
       applicability() {
-        const tabbables = document.tabOrder().filter(isTabbable(device));
-
         // Peak the first two tabbable elements to avoid forcing the whole
         // sequence. If the size of the resulting sequence is less than 2 then
         // fewer than 2 tabbable elements exist.
@@ -48,8 +69,16 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
             .map((hasFocusIndicator) =>
               expectation(
                 hasFocusIndicator,
-                () => Outcomes.HasFocusIndicator,
-                () => Outcomes.HasNoFocusIndicator
+                () =>
+                  Outcomes.HasFocusIndicator(
+                    matchingTargets,
+                    matchingNonTargets
+                  ),
+                () =>
+                  Outcomes.HasNoFocusIndicator(
+                    matchingTargets,
+                    matchingNonTargets
+                  )
               )
             ),
         };
@@ -59,13 +88,29 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
 });
 
 export namespace Outcomes {
-  export const HasFocusIndicator = Ok.of(
-    Diagnostic.of(`The element has a visible focus indicator`)
-  );
+  export const HasFocusIndicator = (
+    matchingTargets: Map<string, number>,
+    matchingNonTargets: Map<string, number>
+  ) =>
+    Ok.of(
+      MatchingClasses.of(
+        `The element has a visible focus indicator`,
+        matchingTargets,
+        matchingNonTargets
+      )
+    );
 
-  export const HasNoFocusIndicator = Err.of(
-    Diagnostic.of(`The element does not have a visible focus indicator`)
-  );
+  export const HasNoFocusIndicator = (
+    matchingTargets: Map<string, number>,
+    matchingNonTargets: Map<string, number>
+  ) =>
+    Err.of(
+      MatchingClasses.of(
+        `The element does not have a visible focus indicator`,
+        matchingTargets,
+        matchingNonTargets
+      )
+    );
 }
 
 function hasFocusIndicator(device: Device): Predicate<Element> {
