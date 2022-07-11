@@ -1,3 +1,4 @@
+import { Lexer } from "@siteimprove/alfa-css";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device, Viewport, Display } from "@siteimprove/alfa-device";
@@ -5,7 +6,7 @@ import { Device, Viewport, Display } from "@siteimprove/alfa-device";
 import { Media } from "../src";
 
 function parse(input: string) {
-  return Media.parse(input);
+  return Media.parseList(Lexer.lex(input)).map(([_, queries]) => queries);
 }
 
 test(".parse() parses a simple query for an orientation feature", (t) => {

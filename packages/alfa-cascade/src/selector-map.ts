@@ -1,3 +1,4 @@
+import { Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Declaration,
@@ -236,7 +237,9 @@ export namespace SelectorMap {
       // media condition matches the device.
       else if (MediaRule.isMediaRule(rule)) {
         if (
-          !Media.parse(rule.condition).getOr(Media.List.of([])).matches(device)
+          !Media.parseMediaConditionRule(rule)
+            .getOr(Media.List.of([]))
+            .matches(device)
         ) {
           return;
         }
@@ -250,7 +253,9 @@ export namespace SelectorMap {
       // if the import condition matches the device.
       else if (ImportRule.isImportRule(rule)) {
         if (
-          !Media.parse(rule.condition).getOr(Media.List.of([])).matches(device)
+          !Media.parseMediaConditionRule(rule)
+            .getOr(Media.List.of([]))
+            .matches(device)
         ) {
           return;
         }
@@ -275,9 +280,9 @@ export namespace SelectorMap {
       }
 
       if (sheet.condition.isSome()) {
-        const query = Media.parse(sheet.condition.get());
+        const query = Media.parseList(Lexer.lex(sheet.condition.get()));
 
-        if (query.every((query) => !query.matches(device))) {
+        if (query.every(([, query]) => !query.matches(device))) {
           continue;
         }
       }

@@ -9,11 +9,11 @@ import {
   Lexer,
 } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
+import { ImportRule, MediaRule } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -1500,8 +1500,10 @@ export namespace Media {
 
   /**
    * {@link https://drafts.csswg.org/mediaqueries/#typedef-media-query-list}
+   *
+   * @internal
    */
-  const parseList = map(
+  export const parseList = map(
     separatedList(
       map(
         takeUntil(
@@ -1526,25 +1528,14 @@ export namespace Media {
   );
 
   /**
-   * Store the lexed and parsed media conditions
-   *
-   * @private
+   * Parse the condition in an import rule or media rule and returns the list
+   * of queries (wrapped in a Result).
    */
-  let parseMap = Map.empty<string, Result<List, string>>();
-
-  /**
-   * Lex and parse a string as a media condition.
-   * The results are cached to avoid reparsing the same condition.
-   */
-  export function parse(condition: string): Result<List, string> {
-    return parseMap.get(condition).getOrElse(() => {
-      const list = parseList(Lexer.lex(condition)).map(
-        ([, queries]) => queries
-      );
-
-      parseMap.set(condition, list);
-
-      return list;
-    });
+  export function parseMediaConditionRule(
+    rule: ImportRule | MediaRule
+  ): Result<List, string> {
+    return rule.value((condition) =>
+      parseList(Lexer.lex(condition)).map(([, queries]) => queries)
+    );
   }
 }

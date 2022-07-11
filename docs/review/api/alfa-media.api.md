@@ -7,15 +7,20 @@
 import { Device } from '@siteimprove/alfa-device';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
+import { ImportRule } from '@siteimprove/alfa-dom';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Length } from '@siteimprove/alfa-css';
 import { Mapper } from '@siteimprove/alfa-mapper';
+import { MediaRule } from '@siteimprove/alfa-dom';
 import { Option } from '@siteimprove/alfa-option';
+import { Parser } from '@siteimprove/alfa-parser';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
+import { Slice } from '@siteimprove/alfa-slice';
+import { Token } from '@siteimprove/alfa-css';
 
 // @public (undocumented)
 export namespace Media {
@@ -283,7 +288,7 @@ export namespace Media {
     const // (undocumented)
     not: typeof Not.of, // (undocumented)
     isNot: typeof Not.isNot;
-    export function parse(condition: string): Result<List, string>;
+    export function parseMediaConditionRule(rule: ImportRule | MediaRule): Result<List, string>;
     // (undocumented)
     export class Query implements Matchable {
         // (undocumented)
@@ -365,6 +370,8 @@ export namespace Media {
     const // (undocumented)
     list: typeof List.of, // (undocumented)
     isList: typeof List.isList;
+    const // @internal (undocumented)
+    parseList: Parser<Slice<Token>, List, string, []>;
     // (undocumented)
     export namespace Value {
         // (undocumented)
