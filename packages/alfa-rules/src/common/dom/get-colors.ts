@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
@@ -12,7 +11,6 @@ import { Result, Err } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
-import { Computed } from "@siteimprove/alfa-style/src/property/color";
 
 import { getInterposedDescendant } from "./get-interposed-descendant";
 
@@ -280,7 +278,7 @@ export function getForeground(
       let foregroundColor = style.computed("color").value;
       let parent = element.parent().filter(isElement);
 
-      const isCurrentColor = (color: Computed) =>
+      const isCurrentColor = (color: Style.Computed<"color">) =>
         color.type === "keyword" && color.value === "currentcolor";
 
       while (parent.isSome() && isCurrentColor(foregroundColor)) {
