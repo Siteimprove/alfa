@@ -655,7 +655,7 @@ export namespace Selector {
         // (undocumented)
         static of(): OnlyOfType;
     }
-    export function parseCSSSelector(selector: string): Result<Simple | Compound | Complex | List<Simple | Compound | Complex>, string>;
+    export function parse(selector: string): Result<Simple | Compound | Complex | List<Simple | Compound | Complex>, string>;
     // (undocumented)
     export class Part extends Pseudo.Element<"part"> {
         // (undocumented)

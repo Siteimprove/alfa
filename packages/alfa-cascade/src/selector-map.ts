@@ -1,4 +1,3 @@
-import { Lexer } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Declaration,
@@ -220,7 +219,7 @@ export namespace SelectorMap {
           return;
         }
 
-        for (const selector of Selector.parseCSSSelector(rule.selector)) {
+        for (const selector of Selector.parse(rule.selector)) {
           const origin = rule.owner.includes(UserAgent)
             ? Origin.UserAgent
             : Origin.Author;

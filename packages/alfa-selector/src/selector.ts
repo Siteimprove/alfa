@@ -2652,8 +2652,6 @@ export namespace Selector {
     end((token) => `Unexpected token ${token}`)
   );
 
-  // export const parse = parseSelector;
-
   /**
    * Store the lexed and parsed selectors and selector lists.
    *
@@ -2671,7 +2669,7 @@ export namespace Selector {
    * Lex and parse a string as a CSS selector or CSS selectors list.
    * The results are cached to avoid reparsing the same string.
    */
-  export function parseCSSSelector(
+  export function parse(
     selector: string
   ): Result<
     Simple | Compound | Complex | List<Simple | Compound | Complex>,
