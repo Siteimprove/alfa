@@ -1,7 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade, RuleTree } from "@siteimprove/alfa-cascade";
-import { Length, Lexer } from "@siteimprove/alfa-css";
+import { Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
@@ -444,10 +444,8 @@ function isFontRelativeMediaRule<F extends Media.Feature>(
   refinement: Refinement<Media.Feature, F>
 ): Predicate<MediaRule> {
   return (rule) =>
-    Iterable.some(
-      Media.parseMediaCondition(rule.condition).getOr(Media.List.of([]))
-        .queries,
-      (query) =>
+    Media.parseMediaCondition(rule.condition).some((list) =>
+      Iterable.some(list.queries, (query) =>
         query.condition.some((condition) =>
           Iterable.some(
             condition,
@@ -464,6 +462,7 @@ function isFontRelativeMediaRule<F extends Media.Feature>(
               )
           )
         )
+      )
     );
 }
 

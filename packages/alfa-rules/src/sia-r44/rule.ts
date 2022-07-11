@@ -1,6 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
-import { Keyword, Lexer } from "@siteimprove/alfa-css";
+import { Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
 import { Declaration, Element, MediaRule, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -8,6 +8,7 @@ import { Real } from "@siteimprove/alfa-math";
 import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -21,6 +22,7 @@ const { isElement } = Element;
 const { some } = Iterable;
 const { abs, acos, PI } = Math;
 const { or } = Predicate;
+const { and } = Refinement;
 const { hasComputedStyle, isVisible } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -117,13 +119,13 @@ function hasConditionalRotation(device: Device): Predicate<Element> {
 function isOrientationConditional(declaration: Declaration): boolean {
   return some(
     declaration.ancestors(),
-    (rule) =>
-      MediaRule.isMediaRule(rule) &&
-      some(
-        Media.parseMediaCondition(rule.condition).getOr(Media.List.of([]))
-          .queries,
-        (query) => query.condition.some(hasOrientationCondition)
+    and(MediaRule.isMediaRule, (rule) =>
+      Media.parseMediaCondition(rule.condition).some((list) =>
+        some(list.queries, (query) =>
+          query.condition.some(hasOrientationCondition)
+        )
       )
+    )
   );
 }
 
