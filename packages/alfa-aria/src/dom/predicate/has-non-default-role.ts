@@ -5,6 +5,9 @@ import { hasImplicitRole } from "./has-implicit-role";
 
 const { not, test } = Predicate;
 
+/**
+ * @public
+ */
 export function hasNonDefaultRole(element: Element): boolean {
   return test(
     hasExplicitRole((explicit) =>
