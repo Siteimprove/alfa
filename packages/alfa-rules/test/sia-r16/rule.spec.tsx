@@ -24,34 +24,6 @@ test(`evaluate() passes a <div> element with a role of checkbox and an
   ]);
 });
 
-test(`evaluate() passes an <input> element with a type of checkbox`, async (t) => {
-  const target = <input type="checkbox" />;
-
-  const document = h.document([target]);
-
-  t.deepEqual(await evaluate(R16, { document }), [
-    passed(R16, target, {
-      1: Outcomes.HasAllStates(
-        RoleAndRequiredAttributes.of("", "checkbox", ["aria-checked"], [])
-      ),
-    }),
-  ]);
-});
-
-test(`evaluate() passes an <hr> element`, async (t) => {
-  const target = <hr />;
-
-  const document = h.document([target]);
-
-  t.deepEqual(await evaluate(R16, { document }), [
-    passed(R16, target, {
-      1: Outcomes.HasAllStates(
-        RoleAndRequiredAttributes.of("", "separator", [], [])
-      ),
-    }),
-  ]);
-});
-
 test(`evaluate() passes a non-focusable <div> element with a role of separator`, async (t) => {
   const target = <div role="separator" />;
 
@@ -127,24 +99,4 @@ test("evaluate() is inapplicable to elements that are not exposed", async (t) =>
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R16, { document }), [inapplicable(R16)]);
-});
-
-test(`evaluate() passes a native \`<input type="text" list="foo">\` combobox`, async (t) => {
-  const target = <input type="text" list="foo" />;
-  const datalist = (
-    <datalist id="foo">
-      <option value="foo">foo</option>
-      <option value="bar">bar</option>
-    </datalist>
-  );
-
-  const document = h.document([target, datalist]);
-
-  t.deepEqual(await evaluate(R16, { document }), [
-    passed(R16, target, {
-      1: Outcomes.HasAllStates(
-        RoleAndRequiredAttributes.of("", "combobox", ["aria-expanded"], [])
-      ),
-    }),
-  ]);
 });

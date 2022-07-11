@@ -15,7 +15,7 @@ import * as aria from "@siteimprove/alfa-aria";
 import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
-const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
+const { hasNonDefaultRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasAttribute, hasInputType, hasName, hasNamespace, isElement } =
   Element;
 const { isEmpty } = Iterable;
@@ -33,7 +33,7 @@ export default Rule.Atomic.of<Page, Element>({
           .descendants(Node.composedNested)
           .filter(isElement)
           .filter(
-            and(hasNamespace(Namespace.HTML, Namespace.SVG), hasRole(device))
+            and(hasNamespace(Namespace.HTML, Namespace.SVG), hasNonDefaultRole)
           )
           .filter(isIncludedInTheAccessibilityTree(device));
       },
