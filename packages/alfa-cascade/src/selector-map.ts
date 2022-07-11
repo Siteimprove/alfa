@@ -277,7 +277,7 @@ export namespace SelectorMap {
       if (sheet.condition.isSome()) {
         const query = Media.parse(sheet.condition.get());
 
-        if (query.every(([, query]) => !query.matches(device))) {
+        if (query.every((query) => !query.matches(device))) {
           continue;
         }
       }
