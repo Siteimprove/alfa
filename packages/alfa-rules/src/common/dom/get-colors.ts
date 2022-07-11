@@ -274,7 +274,19 @@ export function getForeground(
     .get(context, Cache.empty)
     .get(element, () => {
       const style = Style.from(element, device, context);
-      const foregroundColor = style.computed("color").value;
+
+      let foregroundColor = style.computed("color").value;
+      let parent = element.parent().filter(isElement);
+
+      const isCurrentColor = (color: Style.Computed<"color">) =>
+        color.type === "keyword" && color.value === "currentcolor";
+
+      while (parent.isSome() && isCurrentColor(foregroundColor)) {
+        foregroundColor = Style.from(parent.get(), device, context).computed(
+          "color"
+        ).value;
+        parent = parent.get().parent().filter(isElement);
+      }
 
       const color = Color.resolve(foregroundColor, style);
 

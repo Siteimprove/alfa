@@ -289,6 +289,107 @@ test("getForeground() handles a mix of opacity and transparency and a linear gra
   });
 });
 
+test("getForeground() resolves `currentcolor` when color is set on parent", (t) => {
+  const target = <div>Content</div>;
+
+  h.document(
+    [
+      <html>
+        <div class="blue">
+          <div>
+            <div>
+              <div>
+                <div>
+                  <div>
+                    <div>
+                      <div>{target}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </html>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          color: "currentcolor",
+        }),
+        h.rule.style(".blue", {
+          color: "blue",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(getForeground(target, device).get()[0].toJSON(), {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 0 },
+    green: { type: "percentage", value: 0 },
+    blue: { type: "percentage", value: 1 },
+    alpha: { type: "percentage", value: 1 },
+  });
+});
+
+test("getForeground() resolves `currentcolor` when color is set to initial on parent", (t) => {
+  const target = <p>Content</p>;
+
+  h.document(
+    [<html>{target}</html>],
+    [
+      h.sheet([
+        h.rule.style("p", {
+          color: "currentcolor",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(getForeground(target, device).get()[0].toJSON(), {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 0 },
+    green: { type: "percentage", value: 0 },
+    blue: { type: "percentage", value: 0 },
+    alpha: { type: "percentage", value: 1 },
+  });
+});
+
+test("getForeground() resolves `currentcolor` when color is set with opacity on the parent", (t) => {
+  const target = <span>Hello</span>;
+
+  h.document(
+    [
+      <html>
+        <div>{target}</div>
+      </html>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", {
+          color: "currentcolor",
+        }),
+        h.rule.style("div", {
+          color: "blue",
+          opacity: "0.5",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(getForeground(target, device).get()[0].toJSON(), {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 0.5 },
+    green: { type: "percentage", value: 0.5 },
+    blue: { type: "percentage", value: 1 },
+    alpha: { type: "percentage", value: 1 },
+  });
+});
+
 test("getColor() can't resolve most system colors", (t) => {
   const target = <span>Hello</span>;
   const wrapper = <div>{target}</div>;
@@ -462,7 +563,7 @@ test("getBackgroundColor() gives up in case of text shadow", (t) => {
   });
 });
 
-test("getBackgroundColor() ignores \`text-shadow: 0px 0px 0px;\`", (t) => {
+test("getBackgroundColor() ignores `text-shadow: 0px 0px 0px;`", (t) => {
   const target = <div>Hello</div>;
 
   h.document(
