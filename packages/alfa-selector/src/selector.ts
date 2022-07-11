@@ -1,9 +1,10 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Token, Function, Nth } from "@siteimprove/alfa-css";
+import { Token, Function, Nth, Lexer } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -2651,5 +2652,39 @@ export namespace Selector {
     end((token) => `Unexpected token ${token}`)
   );
 
-  export const parse = parseSelector;
+  // export const parse = parseSelector;
+
+  /**
+   * Store the lexed and parsed selectors and selector lists.
+   *
+   * @private
+   */
+  let parseMap = Map.empty<
+    string,
+    Result<
+      Simple | Compound | Complex | List<Simple | Compound | Complex>,
+      string
+    >
+  >();
+
+  /**
+   * Lex and parse a string as a CSS selector or CSS selectors list.
+   * The results are cached to avoid reparsing the same string.
+   */
+  export function parseCSSSelector(
+    selector: string
+  ): Result<
+    Simple | Compound | Complex | List<Simple | Compound | Complex>,
+    string
+  > {
+    return parseMap.get(selector).getOrElse(() => {
+      const css = parseSelector(Lexer.lex(selector)).map(
+        ([, selector]) => selector
+      );
+
+      parseMap.set(selector, css);
+
+      return css;
+    });
+  }
 }

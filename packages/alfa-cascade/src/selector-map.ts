@@ -220,7 +220,7 @@ export namespace SelectorMap {
           return;
         }
 
-        for (const [, selector] of Selector.parse(Lexer.lex(rule.selector))) {
+        for (const selector of Selector.parseCSSSelector(rule.selector)) {
           const origin = rule.owner.includes(UserAgent)
             ? Origin.UserAgent
             : Origin.Author;
@@ -237,9 +237,7 @@ export namespace SelectorMap {
       // media condition matches the device.
       else if (MediaRule.isMediaRule(rule)) {
         if (
-          !Media.parseMediaCondition(rule.condition)
-            .getOr(Media.List.of([]))
-            .matches(device)
+          !Media.parse(rule.condition).getOr(Media.List.of([])).matches(device)
         ) {
           return;
         }
@@ -253,9 +251,7 @@ export namespace SelectorMap {
       // if the import condition matches the device.
       else if (ImportRule.isImportRule(rule)) {
         if (
-          !Media.parseMediaCondition(rule.condition)
-            .getOr(Media.List.of([]))
-            .matches(device)
+          !Media.parse(rule.condition).getOr(Media.List.of([])).matches(device)
         ) {
           return;
         }
@@ -280,7 +276,7 @@ export namespace SelectorMap {
       }
 
       if (sheet.condition.isSome()) {
-        const query = Media.parseMediaCondition(sheet.condition.get());
+        const query = Media.parse(sheet.condition.get());
 
         if (query.every(([, query]) => !query.matches(device))) {
           continue;

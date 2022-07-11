@@ -12,9 +12,8 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Nth } from '@siteimprove/alfa-css';
 import { Option } from '@siteimprove/alfa-option';
-import { Parser } from '@siteimprove/alfa-parser';
+import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
-import { Slice } from '@siteimprove/alfa-slice';
 import { Token } from '@siteimprove/alfa-css';
 
 // @public (undocumented)
@@ -656,6 +655,7 @@ export namespace Selector {
         // (undocumented)
         static of(): OnlyOfType;
     }
+    export function parseCSSSelector(selector: string): Result<Simple | Compound | Complex | List<Simple | Compound | Complex>, string>;
     // (undocumented)
     export class Part extends Pseudo.Element<"part"> {
         // (undocumented)
@@ -926,8 +926,6 @@ export namespace Selector {
         // (undocumented)
         static of(): Visited;
     }
-    const // (undocumented)
-    parse: Parser<Slice<Token>, Simple | Compound | Complex | List<Simple | Compound | Complex>, string, []>;
         {};
 }
 
