@@ -1536,7 +1536,7 @@ export namespace Media {
    * Lex and parse a string as a media condition.
    * The results are cached to avoid reparsing the same condition.
    */
-  export function parseMediaCondition(condition: string): Result<List, string> {
+  export function parse(condition: string): Result<List, string> {
     return parseMap.get(condition).getOrElse(() => {
       const list = parseList(Lexer.lex(condition)).map(
         ([, queries]) => queries

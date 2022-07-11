@@ -5,7 +5,7 @@ import { Device, Viewport, Display } from "@siteimprove/alfa-device";
 import { Media } from "../src";
 
 function parse(input: string) {
-  return Media.parseMediaCondition(input);
+  return Media.parse(input);
 }
 
 test(".parse() parses a simple query for an orientation feature", (t) => {

@@ -444,7 +444,7 @@ function isFontRelativeMediaRule<F extends Media.Feature>(
   refinement: Refinement<Media.Feature, F>
 ): Predicate<MediaRule> {
   return (rule) =>
-    Media.parseMediaCondition(rule.condition).some((list) =>
+    Media.parse(rule.condition).some((list) =>
       Iterable.some(list.queries, (query) =>
         query.condition.some((condition) =>
           Iterable.some(

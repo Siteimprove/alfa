@@ -283,7 +283,7 @@ export namespace Media {
     const // (undocumented)
     not: typeof Not.of, // (undocumented)
     isNot: typeof Not.isNot;
-    export function parseMediaCondition(condition: string): Result<List, string>;
+    export function parse(condition: string): Result<List, string>;
     // (undocumented)
     export class Query implements Matchable {
         // (undocumented)
