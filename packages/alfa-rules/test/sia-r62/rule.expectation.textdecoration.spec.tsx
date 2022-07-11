@@ -1,8 +1,8 @@
 import { h } from "@siteimprove/alfa-dom";
 import { Ok } from "@siteimprove/alfa-result";
 import { test } from "@siteimprove/alfa-test";
-import { ElementDistinguishable } from "../../src/sia-er62/diagnostics";
-import ER62, { Outcomes } from "../../src/sia-er62/rule";
+import { ElementDistinguishable } from "../../src/sia-r62/diagnostics";
+import R62, { Outcomes } from "../../src/sia-r62/rule";
 import { evaluate } from "../common/evaluate";
 import { failed, passed } from "../common/outcome";
 import { Defaults, addCursor, makePairing } from "./common";
@@ -49,8 +49,8 @@ test(`evaluates() accepts decoration on children of links`, async (t) => {
       .withDistinguishingProperties(["font"])
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [style, noStyle],
         [style, noStyle],
@@ -71,8 +71,8 @@ test(`evaluates() doesn't break when link text is nested`, async (t) => {
 
   const document = h.document([<p>Hello {target}</p>]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle, noStyle],
         [hoverStyle, addCursor(noStyle)],
@@ -123,8 +123,8 @@ test(`evaluates() accepts decoration on parents of links`, async (t) => {
     )
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [linkStyle, spanStyle],
         [linkStyle, spanStyle],
@@ -143,8 +143,8 @@ test(`evaluates() deduplicate styles in diagnostic`, async (t) => {
 
   const document = h.document([<p>Hello {target}</p>]);
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    passed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    passed(R62, target, {
       1: Outcomes.IsDistinguishable(
         [defaultStyle, noStyle],
         [hoverStyle, addCursor(noStyle)],
@@ -171,8 +171,8 @@ test(`evaluate() fails an <a> element that removes the default text decoration
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [noStyle]),
     }),
   ]);
@@ -194,8 +194,8 @@ test(`evaluate() fails an <a> element that removes the default text decoration
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable([defaultStyle], [noStyle], [focusStyle]),
     }),
   ]);
@@ -222,8 +222,8 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable([noStyle], [defaultStyle], [noStyle]),
     }),
   ]);
@@ -250,8 +250,8 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable([noStyle], [noStyle], [defaultStyle]),
     }),
   ]);
@@ -278,8 +278,8 @@ test(`evaluate() fails an <a> element that applies a text decoration only on
     ]
   );
 
-  t.deepEqual(await evaluate(ER62, { document }), [
-    failed(ER62, target, {
+  t.deepEqual(await evaluate(R62, { document }), [
+    failed(R62, target, {
       1: Outcomes.IsNotDistinguishable(
         [noStyle],
         [defaultStyle],

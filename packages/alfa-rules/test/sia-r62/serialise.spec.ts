@@ -4,7 +4,7 @@ import { Style } from "@siteimprove/alfa-style";
 import { test } from "@siteimprove/alfa-test";
 import { Serialise } from "../../src/sia-r62/serialise";
 
-const { background, boxShadow } = Serialise;
+const { background } = Serialise;
 const device = Device.standard();
 
 function mkStyle(properties: Array<[string, string]>): Style {
@@ -156,60 +156,4 @@ test(`background correctly shortens background-repeat`, (t) => {
       t.deepEqual(actual, ("url(a) " + expected).trim());
     }
   }
-});
-
-test(`boxShadow() serialises a box-shadow that is not set`, (t) => {
-  const style = mkStyle([["box-shadow", "none"]]);
-
-  t.deepEqual(boxShadow(style), "");
-});
-
-test(`boxShadow() serialises a box-shadow that is set to initial`, (t) => {
-  const style = mkStyle([["box-shadow", "initial"]]);
-
-  t.deepEqual(boxShadow(style), "");
-});
-
-test(`boxShadow() serialises a box-shadow with all properties set`, (t) => {
-  const style = mkStyle([["box-shadow", "1px 2px 3px 4px red inset"]]);
-
-  t.deepEqual(boxShadow(style), "1px 2px 3px 4px rgb(100% 0% 0%) inset");
-});
-
-test(`boxShadow() serialises a box-shadow with no color set`, (t) => {
-  const style = mkStyle([["box-shadow", "1px 2px 0px 0px"]]);
-
-  t.deepEqual(boxShadow(style), "1px 2px");
-});
-
-test(`boxShadow() serialises a box-shadow with zero blur and zero spread`, (t) => {
-  const style = mkStyle([["box-shadow", "1px 2px 0px 0px red"]]);
-
-  t.deepEqual(boxShadow(style), "1px 2px rgb(100% 0% 0%)");
-});
-
-test(`boxShadow() serialises a box-shadow with zero blur and non-zero spread`, (t) => {
-  const style = mkStyle([["box-shadow", "1px 2px 0px 1px red"]]);
-
-  t.deepEqual(boxShadow(style), "1px 2px 0px 1px rgb(100% 0% 0%)");
-});
-
-test(`boxShadow() serialises a box-shadow with non-zero blur and zero spread`, (t) => {
-  const style = mkStyle([["box-shadow", "1px 2px 1px 0px red"]]);
-
-  t.deepEqual(boxShadow(style), "1px 2px 1px rgb(100% 0% 0%)");
-});
-
-test(`boxShadow() serialises a box-shadow with multiple values`, (t) => {
-  const style = mkStyle([
-    [
-      "box-shadow",
-      "1px 2px 0px 1px red, 1px 2px 0px 1px blue, 1px 2px 0px 1px black",
-    ],
-  ]);
-
-  t.deepEqual(
-    boxShadow(style),
-    "1px 2px 0px 1px rgb(100% 0% 0%), 1px 2px 0px 1px rgb(0% 0% 100%), 1px 2px 0px 1px rgb(0% 0% 0%)"
-  );
 });
