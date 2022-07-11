@@ -1,3 +1,4 @@
+import { Result } from "@siteimprove/alfa-result";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Block } from "../block";
@@ -44,6 +45,30 @@ export class StyleRule extends Rule {
 
   public get hint(): boolean {
     return this._hint;
+  }
+
+  // Due to the order of dependencies, this is at a lower level (DOM) than the
+  // CSS parser (CSS). So we can't use the correct type here.
+  // The value getter therefore needs to be called with such a parser.
+  //
+  // This is somewhat type unsafe since we cannot guarantee that
+  // StyleRule#value won't be called with another parser.
+  private _value: Result<any, string> | undefined = undefined;
+
+  /**
+   * Do not use directly.
+   * Use the wrapper Selector.parseCSSSelector in alfa-selector
+   *
+   * @internal
+   */
+  public value<T>(
+    parser: (selector: string) => Result<T, string>
+  ): Result<T, string> {
+    if (this._value === undefined) {
+      this._value = parser(this._selector);
+    }
+
+    return this._value as Result<T, string>;
   }
 
   public toJSON(): StyleRule.JSON {

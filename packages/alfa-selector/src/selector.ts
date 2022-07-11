@@ -1,6 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Token, Function, Nth, Lexer } from "@siteimprove/alfa-css";
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { Element, Node, StyleRule } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -87,8 +87,10 @@ export namespace Selector {
    * @remarks
    * The selector parser is forward-declared as it is needed within its
    * subparsers.
+   *
+   * @internal
    */
-  let parseSelector: Parser<
+  export let parseSelector: Parser<
     Slice<Token>,
     Simple | Compound | Complex | List<Simple | Compound | Complex>,
     string
@@ -2653,36 +2655,16 @@ export namespace Selector {
   );
 
   /**
-   * Store the lexed and parsed selectors and selector lists.
-   *
-   * @private
+   * Parse the selector in a style rule and returns it wrapped in a Result.
    */
-  let parseMap = Map.empty<
-    string,
-    Result<
-      Simple | Compound | Complex | List<Simple | Compound | Complex>,
-      string
-    >
-  >();
-
-  /**
-   * Lex and parse a string as a CSS selector or CSS selectors list.
-   * The results are cached to avoid reparsing the same string.
-   */
-  export function parse(
-    selector: string
+  export function parseCSSSelector(
+    rule: StyleRule
   ): Result<
     Simple | Compound | Complex | List<Simple | Compound | Complex>,
     string
   > {
-    return parseMap.get(selector).getOrElse(() => {
-      const css = parseSelector(Lexer.lex(selector)).map(
-        ([, selector]) => selector
-      );
-
-      parseMap.set(selector, css);
-
-      return css;
-    });
+    return rule.value((selector) =>
+      parseSelector(Lexer.lex(selector)).map(([, selector]) => selector)
+    );
   }
 }

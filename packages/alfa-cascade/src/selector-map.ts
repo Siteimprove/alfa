@@ -220,7 +220,7 @@ export namespace SelectorMap {
           return;
         }
 
-        for (const selector of Selector.parse(rule.selector)) {
+        for (const selector of Selector.parseCSSSelector(rule)) {
           const origin = rule.owner.includes(UserAgent)
             ? Origin.UserAgent
             : Origin.Author;

@@ -6,7 +6,9 @@ import { Selector } from "../src/selector";
 import { Context } from "../src/context";
 
 function parse(input: string) {
-  return Selector.parse(input);
+  return Selector.parseSelector(Lexer.lex(input)).map(
+    ([_, selector]) => selector
+  );
 }
 
 test(".parse() parses a type selector", (t) => {
