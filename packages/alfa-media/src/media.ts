@@ -1525,23 +1525,26 @@ export namespace Media {
       )
   );
 
-  let parseMap = Map.empty<string, Option<List>>();
+  /**
+   * Store the lexed and parsed media conditions
+   *
+   * @private
+   */
+  let parseMap = Map.empty<string, Result<List, string>>();
 
-  export function parseMediaCondition(condition: string): Option<List> {
-    let result = parseMap.get(condition);
+  /**
+   * Lex and parse a string as a media condition.
+   * The results are cached to avoid reparsing the same condition.
+   */
+  export function parseMediaCondition(condition: string): Result<List, string> {
+    return parseMap.get(condition).getOrElse(() => {
+      const list = parseList(Lexer.lex(condition)).map(
+        ([, queries]) => queries
+      );
 
-    if (result.isSome()) {
-      return result.get();
-    }
+      parseMap.set(condition, list);
 
-    result = Option.of(
-      parseList(Lexer.lex(condition))
-        .map(([, queries]) => queries)
-        .ok()
-    );
-
-    parseMap.set(condition, result.get());
-
-    return result.get();
+      return list;
+    });
   }
 }
