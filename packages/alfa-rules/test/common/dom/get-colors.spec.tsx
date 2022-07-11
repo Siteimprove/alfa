@@ -290,7 +290,7 @@ test("getForeground() handles a mix of opacity and transparency and a linear gra
 });
 
 test("getForeground() resolves `currentcolor` when color is set on parent", (t) => {
-  const target = <p>Content</p>;
+  const target = <div>Content</div>;
 
   h.document(
     [
@@ -302,9 +302,7 @@ test("getForeground() resolves `currentcolor` when color is set on parent", (t) 
                 <div>
                   <div>
                     <div>
-                      <div>
-                        <div>Hello {target}!</div>
-                      </div>
+                      <div>{target}</div>
                     </div>
                   </div>
                 </div>
@@ -316,7 +314,7 @@ test("getForeground() resolves `currentcolor` when color is set on parent", (t) 
     ],
     [
       h.sheet([
-        h.rule.style("p", {
+        h.rule.style("div", {
           color: "currentcolor",
         }),
         h.rule.style(".blue", {
@@ -356,6 +354,38 @@ test("getForeground() resolves `currentcolor` when color is set to initial on pa
     red: { type: "percentage", value: 0 },
     green: { type: "percentage", value: 0 },
     blue: { type: "percentage", value: 0 },
+    alpha: { type: "percentage", value: 1 },
+  });
+});
+
+test("getForeground() resolves `currentcolor` when color is set with opacity on the parent", (t) => {
+  const target = <span>Hello</span>;
+
+  h.document(
+    [
+      <html>
+        <div>{target}</div>
+      </html>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", {
+          color: "currentcolor",
+        }),
+        h.rule.style("div", {
+          color: "blue",
+          opacity: "0.5",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(getForeground(target, device).get()[0].toJSON(), {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 0.5 },
+    green: { type: "percentage", value: 0.5 },
+    blue: { type: "percentage", value: 1 },
     alpha: { type: "percentage", value: 1 },
   });
 });

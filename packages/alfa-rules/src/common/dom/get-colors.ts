@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
@@ -11,6 +12,7 @@ import { Result, Err } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
+import { Computed } from "@siteimprove/alfa-style/src/property/color";
 
 import { getInterposedDescendant } from "./get-interposed-descendant";
 
@@ -274,17 +276,18 @@ export function getForeground(
     .get(context, Cache.empty)
     .get(element, () => {
       const style = Style.from(element, device, context);
-      const foregroundColor = style.computed("color").value;
 
-      if (
-        foregroundColor.type === "keyword" &&
-        foregroundColor.value === "currentcolor" &&
-        element.parent().isSome()
-      ) {
-        const parent = element.parent().get();
-        if (isElement(parent)) {
-          return getForeground(parent, device, context);
-        }
+      let foregroundColor = style.computed("color").value;
+      let parent = element.parent().filter(isElement);
+
+      const isCurrentColor = (color: Computed) =>
+        color.type === "keyword" && color.value === "currentcolor";
+
+      while (parent.isSome() && isCurrentColor(foregroundColor)) {
+        foregroundColor = Style.from(parent.get(), device, context).computed(
+          "color"
+        ).value;
+        parent = parent.get().parent().filter(isElement);
       }
 
       const color = Color.resolve(foregroundColor, style);
