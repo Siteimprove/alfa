@@ -392,6 +392,10 @@ export namespace Diagnostic {
     //
     // (undocumented)
     isWithDeclaration: typeof WithDeclaration.isWithDeclaration;
+    const // Warning: (ae-forgotten-export) The symbol "WithPreviousHeading" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isWithPreviousHeading: typeof WithPreviousHeading.isWithPreviousHeading;
     const // Warning: (ae-forgotten-export) The symbol "WithRole" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
