@@ -100,3 +100,19 @@ test("evaluate() is inapplicable to elements that are not exposed", async (t) =>
 
   t.deepEqual(await evaluate(R16, { document }), [inapplicable(R16)]);
 });
+
+test("evaluate() is inapplicable to elemnts with no explicit role", async (t) => {
+  const target = <input type="checkbox" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R16, { document }), [inapplicable(R16)]);
+});
+
+test("evaluate() is inapplicable to elements with same explicit and implicit role", async (t) => {
+  const target = <input type="checkbox" role="checkbox" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R16, { document }), [inapplicable(R16)]);
+});
