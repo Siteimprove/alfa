@@ -3,6 +3,7 @@ export * from "./predicate/has-explicit-role";
 export * from "./predicate/has-heading-level";
 export * from "./predicate/has-implicit-role";
 export * from "./predicate/has-incorrect-role-without-name";
+export * from "./predicate/has-non-default-role";
 export * from "./predicate/has-non-empty-accessible-name";
 export * from "./predicate/has-role";
 export * from "./predicate/is-included-accessibility-tree";

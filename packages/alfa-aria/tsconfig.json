@@ -14,6 +14,7 @@
     "src/dom/predicate/has-heading-level.ts",
     "src/dom/predicate/has-implicit-role.ts",
     "src/dom/predicate/has-incorrect-role-without-name.ts",
+    "src/dom/predicate/has-non-default-role.ts",
     "src/dom/predicate/has-non-empty-accessible-name.ts",
     "src/dom/predicate/has-role.ts",
     "src/dom/predicate/is-included-accessibility-tree.ts",
