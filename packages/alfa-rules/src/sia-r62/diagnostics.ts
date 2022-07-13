@@ -1,6 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
-import { Comparable } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
