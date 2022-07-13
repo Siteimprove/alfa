@@ -43,7 +43,12 @@ puppeteer.launch().then(async (browser) => {
                 .role-properties .property-reference,
                 .role-properties .state-reference
               `),
-              ].filter((element)=>!element.parentElement.textContent.includes('deprecated')).map((reference) => hash(reference.getAttribute("href")));
+              ]
+                .filter(
+                  (element) =>
+                    !element.parentElement.textContent.includes("deprecated")
+                )
+                .map((reference) => hash(reference.getAttribute("href")));
 
               const required = [
                 ...role.querySelectorAll(`
