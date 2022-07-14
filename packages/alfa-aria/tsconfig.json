@@ -41,6 +41,7 @@
     "test/dom/predicate/has-accessible-name.spec.tsx",
     "test/dom/predicate/has-role.spec.tsx",
     "test/name.spec.tsx",
+    "test/name-testable-statements.spec.tsx",
     "test/node.spec.tsx"
   ],
   "references": [
