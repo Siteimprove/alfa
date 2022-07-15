@@ -1,13 +1,6 @@
-/// <reference lib="dom" />
 import { Rule } from "@siteimprove/alfa-act";
-import { DOM, Name } from "@siteimprove/alfa-aria";
-import {
-  Element,
-  Text,
-  Namespace,
-  Node,
-  Attribute,
-} from "@siteimprove/alfa-dom";
+import { DOM } from "@siteimprove/alfa-aria";
+import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -41,10 +34,11 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
   requirements: [Criterion.of("1.4.6")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
-    let disabledWidgetNames: Sequence<string> = Sequence.empty();
-    let textNodes: Sequence<Text> = Sequence.empty();
     return {
       applicability() {
+        let disabledWidgetNames: Sequence<string> = Sequence.empty();
+        let textNodes: Sequence<Text> = Sequence.empty();
+
         gather(document);
         return getApplicableLinks();
 
