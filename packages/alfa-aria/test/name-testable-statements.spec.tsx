@@ -2,11 +2,10 @@
 // Do therefore not modify it directly! If you wish to make changes, do so in
 // `scripts/name-testable-statement.js` and run `yarn generate` to rebuild this file.
 
-import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Document, h } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Name } from "../src";
@@ -15,6 +14,19 @@ const { and } = Refinement;
 const { hasId, isElement } = Element;
 
 const device = Device.standard();
+
+function getTarget(document: Document, id: string): Element {
+  return document
+    .descendants()
+    .find(and(isElement, hasId("test")))
+    .get();
+}
+
+function getName(element: Element): string {
+  return Name.from(element, device)
+    .map((name) => name.value)
+    .getOr("");
+}
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_539}
@@ -28,12 +40,9 @@ test("Name test case 539", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Rich");
+  t.equal(getName(target), "Rich");
 });
 
 /**
@@ -49,12 +58,9 @@ test("Name test case 540", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Rich's button");
+  t.equal(getName(target), "Rich's button");
 });
 
 /**
@@ -70,12 +76,9 @@ test("Name test case 541", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Rich's button");
+  t.equal(getName(target), "Rich's button");
 });
 
 /**
@@ -90,12 +93,9 @@ test("Name test case 543", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Reset");
+  t.equal(getName(target), "Reset");
 });
 
 /**
@@ -110,12 +110,9 @@ test("Name test case 544", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -130,12 +127,9 @@ test("Name test case 545", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -151,16 +145,16 @@ test("Name test case 546", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "States:");
+  t.equal(getName(target), "States:");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_547}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 547", (t) => {
   const testCase = (
@@ -175,16 +169,16 @@ test("Name test case 547", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo David");
+  t.notEqual(getName(target), "foo David");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_548}
+ *
+ * Alfa incorrectly recurses into <select> when computing name from content
+ * {@link https://github.com/Siteimprove/alfa/issues/1192}
  */
 test("Name test case 548", (t) => {
   const testCase = (
@@ -206,16 +200,16 @@ test("Name test case 548", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.notEqual(getName(target), "crazy");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_549}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 549", (t) => {
   const testCase = (
@@ -236,16 +230,16 @@ test("Name test case 549", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy Monday");
+  t.notEqual(getName(target), "crazy Monday");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_550}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 550", (t) => {
   const testCase = (
@@ -265,12 +259,9 @@ test("Name test case 550", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy 4");
+  t.notEqual(getName(target), "crazy 4");
 });
 
 /**
@@ -285,16 +276,16 @@ test("Name test case 551", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.equal(getName(target), "crazy");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_552}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 552", (t) => {
   const testCase = (
@@ -309,16 +300,16 @@ test("Name test case 552", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "fancy fruit");
+  t.notEqual(getName(target), "fancy fruit");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_553}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 553", (t) => {
   const testCase = (
@@ -333,12 +324,9 @@ test("Name test case 553", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "test content");
+  t.notEqual(getName(target), "test content");
 });
 
 /**
@@ -353,12 +341,9 @@ test("Name test case 556", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "1");
+  t.equal(getName(target), "1");
 });
 
 /**
@@ -373,12 +358,9 @@ test("Name test case 557", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "1");
+  t.equal(getName(target), "1");
 });
 
 /**
@@ -394,12 +376,9 @@ test("Name test case 558", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "");
+  t.equal(getName(target), "");
 });
 
 /**
@@ -414,12 +393,9 @@ test("Name test case 559", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "");
+  t.equal(getName(target), "");
 });
 
 /**
@@ -435,12 +411,9 @@ test("Name test case 560", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "");
+  t.equal(getName(target), "");
 });
 
 /**
@@ -455,16 +428,16 @@ test("Name test case 561", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "1");
+  t.equal(getName(target), "1");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_562}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 562", (t) => {
   const testCase = (
@@ -478,16 +451,16 @@ test("Name test case 562", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "peanuts popcorn apple jacks");
+  t.notEqual(getName(target), "peanuts popcorn apple jacks");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_563}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 563", (t) => {
   const testCase = (
@@ -499,16 +472,16 @@ test("Name test case 563", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "l peanuts");
+  t.notEqual(getName(target), "l peanuts");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_564}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 564", (t) => {
   const testCase = (
@@ -526,16 +499,16 @@ test("Name test case 564", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "l peanuts popcorn");
+  t.notEqual(getName(target), "l peanuts popcorn");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_565}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 565", (t) => {
   const testCase = (
@@ -556,19 +529,16 @@ test("Name test case 565", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(
-    Name.from(target, device).get().value,
-    "l peanuts popcorn apple jacks"
-  );
+  t.notEqual(getName(target), "l peanuts popcorn apple jacks");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_566}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 566", (t) => {
   const testCase = (
@@ -589,15 +559,9 @@ test("Name test case 566", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(
-    Name.from(target, device).get().value,
-    "t peanuts popcorn apple jacks"
-  );
+  t.notEqual(getName(target), "t peanuts popcorn apple jacks");
 });
 
 /**
@@ -615,12 +579,9 @@ test("Name test case 596", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "bar");
+  t.equal(getName(target), "bar");
 });
 
 /**
@@ -637,12 +598,9 @@ test("Name test case 597", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Tag");
+  t.equal(getName(target), "Tag");
 });
 
 /**
@@ -660,12 +618,9 @@ test("Name test case 598", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "bar");
+  t.equal(getName(target), "bar");
 });
 
 /**
@@ -684,12 +639,9 @@ test("Name test case 599", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "bar baz");
+  t.equal(getName(target), "bar baz");
 });
 
 /**
@@ -704,12 +656,9 @@ test("Name test case 600", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "");
+  t.equal(getName(target), "");
 });
 
 /**
@@ -726,12 +675,9 @@ test("Name test case 601", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -751,12 +697,9 @@ test("Name test case 602", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Tag");
+  t.equal(getName(target), "Tag");
 });
 
 /**
@@ -774,12 +717,9 @@ test("Name test case 603", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -796,12 +736,9 @@ test("Name test case 604", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Tag");
+  t.equal(getName(target), "Tag");
 });
 
 /**
@@ -819,12 +756,9 @@ test("Name test case 605", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "bar");
+  t.equal(getName(target), "bar");
 });
 
 /**
@@ -845,12 +779,9 @@ test("Name test case 606", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Tag foo");
+  t.equal(getName(target), "Tag foo");
 });
 
 /**
@@ -867,12 +798,9 @@ test("Name test case 607", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "ABC");
+  t.equal(getName(target), "ABC");
 });
 
 /**
@@ -887,12 +815,9 @@ test("Name test case 608", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Tag");
+  t.equal(getName(target), "Tag");
 });
 
 /**
@@ -910,12 +835,9 @@ test("Name test case 609", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo bar baz");
+  t.equal(getName(target), "foo bar baz");
 });
 
 /**
@@ -936,12 +858,9 @@ test("Name test case 610", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo bar");
+  t.equal(getName(target), "foo bar");
 });
 
 /**
@@ -957,12 +876,9 @@ test("Name test case 611", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -978,12 +894,9 @@ test("Name test case 612", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -999,12 +912,9 @@ test("Name test case 613", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -1020,12 +930,9 @@ test("Name test case 614", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -1041,12 +948,9 @@ test("Name test case 615", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -1062,12 +966,9 @@ test("Name test case 616", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -1087,12 +988,9 @@ test("Name test case 617", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo bar baz");
+  t.equal(getName(target), "foo bar baz");
 });
 
 /**
@@ -1112,12 +1010,9 @@ test("Name test case 618", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo bar baz");
+  t.equal(getName(target), "foo bar baz");
 });
 
 /**
@@ -1137,12 +1032,9 @@ test("Name test case 619", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo bar baz");
+  t.equal(getName(target), "foo bar baz");
 });
 
 /**
@@ -1162,12 +1054,9 @@ test("Name test case 620", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo bar baz");
+  t.equal(getName(target), "foo bar baz");
 });
 
 /**
@@ -1185,12 +1074,9 @@ test("Name test case 621", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo bar baz");
+  t.equal(getName(target), "foo bar baz");
 });
 
 /**
@@ -1213,12 +1099,9 @@ test("Name test case 659", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo bar baz");
+  t.equal(getName(target), "foo bar baz");
 });
 
 /**
@@ -1241,12 +1124,9 @@ test("Name test case 660", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo bar baz");
+  t.equal(getName(target), "foo bar baz");
 });
 
 /**
@@ -1269,12 +1149,9 @@ test("Name test case 661", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo baz");
+  t.equal(getName(target), "foo baz");
 });
 
 /**
@@ -1297,12 +1174,9 @@ test("Name test case 662", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo baz");
+  t.equal(getName(target), "foo baz");
 });
 
 /**
@@ -1325,12 +1199,9 @@ test("Name test case 663 (DO NOT USE)", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo baz");
+  t.equal(getName(target), "foo baz");
 });
 
 /**
@@ -1353,12 +1224,9 @@ test("Name test case 663a", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo baz");
+  t.equal(getName(target), "foo baz");
 });
 
 /**
@@ -1374,12 +1242,9 @@ test("Name test case 721", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "States:");
+  t.equal(getName(target), "States:");
 });
 
 /**
@@ -1395,12 +1260,9 @@ test("Name test case 723", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "States:");
+  t.equal(getName(target), "States:");
 });
 
 /**
@@ -1416,12 +1278,9 @@ test("Name test case 724", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "States:");
+  t.equal(getName(target), "States:");
 });
 
 /**
@@ -1437,12 +1296,9 @@ test("Name test case 725", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "File:");
+  t.equal(getName(target), "File:");
 });
 
 /**
@@ -1458,12 +1314,9 @@ test("Name test case 726", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "States:");
+  t.equal(getName(target), "States:");
 });
 
 /**
@@ -1482,12 +1335,9 @@ test("Name test case 727", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo David");
+  t.equal(getName(target), "foo David");
 });
 
 /**
@@ -1506,12 +1356,9 @@ test("Name test case 728", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo David");
+  t.equal(getName(target), "foo David");
 });
 
 /**
@@ -1530,12 +1377,9 @@ test("Name test case 729", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo David");
+  t.equal(getName(target), "foo David");
 });
 
 /**
@@ -1554,12 +1398,9 @@ test("Name test case 730", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo David");
+  t.equal(getName(target), "foo David");
 });
 
 /**
@@ -1578,12 +1419,9 @@ test("Name test case 731", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo David");
+  t.equal(getName(target), "foo David");
 });
 
 /**
@@ -1609,12 +1447,9 @@ test("Name test case 733", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.equal(getName(target), "crazy");
 });
 
 /**
@@ -1640,12 +1475,9 @@ test("Name test case 734", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.equal(getName(target), "crazy");
 });
 
 /**
@@ -1671,12 +1503,9 @@ test("Name test case 735", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.equal(getName(target), "crazy");
 });
 
 /**
@@ -1702,12 +1531,9 @@ test("Name test case 736", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.equal(getName(target), "crazy");
 });
 
 /**
@@ -1733,12 +1559,9 @@ test("Name test case 737", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.equal(getName(target), "crazy");
 });
 
 /**
@@ -1763,12 +1586,9 @@ test("Name test case 738", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy Monday");
+  t.equal(getName(target), "crazy Monday");
 });
 
 /**
@@ -1793,12 +1613,9 @@ test("Name test case 739", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy Monday");
+  t.equal(getName(target), "crazy Monday");
 });
 
 /**
@@ -1823,12 +1640,9 @@ test("Name test case 740", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy Monday");
+  t.equal(getName(target), "crazy Monday");
 });
 
 /**
@@ -1853,12 +1667,9 @@ test("Name test case 741", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy Monday");
+  t.equal(getName(target), "crazy Monday");
 });
 
 /**
@@ -1883,12 +1694,9 @@ test("Name test case 742", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy Monday");
+  t.equal(getName(target), "crazy Monday");
 });
 
 /**
@@ -1912,12 +1720,9 @@ test("Name test case 743", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy 4");
+  t.equal(getName(target), "crazy 4");
 });
 
 /**
@@ -1941,12 +1746,9 @@ test("Name test case 744", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy 4");
+  t.equal(getName(target), "crazy 4");
 });
 
 /**
@@ -1970,12 +1772,9 @@ test("Name test case 745", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy 4");
+  t.equal(getName(target), "crazy 4");
 });
 
 /**
@@ -1999,12 +1798,9 @@ test("Name test case 746", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy 4");
+  t.equal(getName(target), "crazy 4");
 });
 
 /**
@@ -2028,12 +1824,9 @@ test("Name test case 747", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy 4");
+  t.equal(getName(target), "crazy 4");
 });
 
 /**
@@ -2048,12 +1841,9 @@ test("Name test case 748", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.equal(getName(target), "crazy");
 });
 
 /**
@@ -2068,12 +1858,9 @@ test("Name test case 749", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.equal(getName(target), "crazy");
 });
 
 /**
@@ -2088,12 +1875,9 @@ test("Name test case 750", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.equal(getName(target), "crazy");
 });
 
 /**
@@ -2108,12 +1892,9 @@ test("Name test case 751", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.equal(getName(target), "crazy");
 });
 
 /**
@@ -2128,12 +1909,9 @@ test("Name test case 752", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "crazy");
+  t.equal(getName(target), "crazy");
 });
 
 /**
@@ -2152,12 +1930,9 @@ test("Name test case 753", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "fancy fruit");
+  t.equal(getName(target), "fancy fruit");
 });
 
 /**
@@ -2176,12 +1951,9 @@ test("Name test case 754", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "fancy fruit");
+  t.equal(getName(target), "fancy fruit");
 });
 
 /**
@@ -2200,12 +1972,9 @@ test("Name test case 755", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "fancy fruit");
+  t.equal(getName(target), "fancy fruit");
 });
 
 /**
@@ -2224,12 +1993,9 @@ test("Name test case 756", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "fancy fruit");
+  t.equal(getName(target), "fancy fruit");
 });
 
 /**
@@ -2248,12 +2014,9 @@ test("Name test case 757", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "fancy fruit");
+  t.equal(getName(target), "fancy fruit");
 });
 
 /**
@@ -2272,12 +2035,9 @@ test("Name test case 758", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "fancy fruit");
+  t.equal(getName(target), "fancy fruit");
 });
 
 /**
@@ -2296,12 +2056,9 @@ test("Name test case 759", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "fancy fruit");
+  t.equal(getName(target), "fancy fruit");
 });
 
 /**
@@ -2320,12 +2077,9 @@ test("Name test case 760", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "fancy fruit");
+  t.equal(getName(target), "fancy fruit");
 });
 
 /**
@@ -2344,12 +2098,9 @@ test("Name test case 761", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "fancy fruit");
+  t.equal(getName(target), "fancy fruit");
 });
 
 /**
@@ -2368,12 +2119,9 @@ test("Name test case 762", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "fancy fruit");
+  t.equal(getName(target), "fancy fruit");
 });
 
 /**
@@ -2402,12 +2150,9 @@ test("Name checkbox-label-embedded-combobox", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -2437,12 +2182,9 @@ test("Name checkbox-label-embedded-menu", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen times.");
+  t.equal(getName(target), "Flash the screen times.");
 });
 
 /**
@@ -2466,12 +2208,9 @@ test("Name checkbox-label-embedded-select", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -2500,12 +2239,9 @@ test("Name checkbox-label-embedded-slider", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo 5 baz");
+  t.equal(getName(target), "foo 5 baz");
 });
 
 /**
@@ -2534,12 +2270,9 @@ test("Name checkbox-label-embedded-spinbutton", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo 5 baz");
+  t.equal(getName(target), "foo 5 baz");
 });
 
 /**
@@ -2554,12 +2287,9 @@ test("Name checkbox-title", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -2588,12 +2318,9 @@ test("Name file-label-embedded-combobox", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -2623,12 +2350,9 @@ test("Name file-label-embedded-menu", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen times.");
+  t.equal(getName(target), "Flash the screen times.");
 });
 
 /**
@@ -2652,12 +2376,9 @@ test("Name file-label-embedded-select", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -2686,12 +2407,9 @@ test("Name file-label-embedded-slider", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo 5 baz");
+  t.equal(getName(target), "foo 5 baz");
 });
 
 /**
@@ -2720,12 +2438,9 @@ test("Name file-label-embedded-spinbutton", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo 5 baz");
+  t.equal(getName(target), "foo 5 baz");
 });
 
 /**
@@ -2740,12 +2455,9 @@ test("Name file-title", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -2760,12 +2472,9 @@ test("Name image-title", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -2794,12 +2503,9 @@ test("Name password-label-embedded-combobox", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -2829,12 +2535,9 @@ test("Name password-label-embedded-menu", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen times.");
+  t.equal(getName(target), "Flash the screen times.");
 });
 
 /**
@@ -2858,12 +2561,9 @@ test("Name password-label-embedded-select", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -2892,12 +2592,9 @@ test("Name password-label-embedded-slider", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo 5 baz");
+  t.equal(getName(target), "foo 5 baz");
 });
 
 /**
@@ -2926,12 +2623,9 @@ test("Name password-label-embedded-spinbutton", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo 5 baz");
+  t.equal(getName(target), "foo 5 baz");
 });
 
 /**
@@ -2946,12 +2640,9 @@ test("Name password-title", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -2980,12 +2671,9 @@ test("Name radio-label-embedded-combobox", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -3015,12 +2703,9 @@ test("Name radio-label-embedded-menu", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen times.");
+  t.equal(getName(target), "Flash the screen times.");
 });
 
 /**
@@ -3044,12 +2729,9 @@ test("Name radio-label-embedded-select", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -3078,12 +2760,9 @@ test("Name radio-label-embedded-slider", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo 5 baz");
+  t.equal(getName(target), "foo 5 baz");
 });
 
 /**
@@ -3112,12 +2791,9 @@ test("Name radio-label-embedded-spinbutton", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo 5 baz");
+  t.equal(getName(target), "foo 5 baz");
 });
 
 /**
@@ -3132,12 +2808,9 @@ test("Name radio-title", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -3166,12 +2839,9 @@ test("Name text-label-embedded-combobox", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -3201,12 +2871,9 @@ test("Name text-label-embedded-menu", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen times.");
+  t.equal(getName(target), "Flash the screen times.");
 });
 
 /**
@@ -3230,12 +2897,9 @@ test("Name text-label-embedded-select", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -3264,12 +2928,9 @@ test("Name text-label-embedded-slider", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo 5 baz");
+  t.equal(getName(target), "foo 5 baz");
 });
 
 /**
@@ -3298,12 +2959,9 @@ test("Name text-label-embedded-spinbutton", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo 5 baz");
+  t.equal(getName(target), "foo 5 baz");
 });
 
 /**
@@ -3318,12 +2976,9 @@ test("Name text-title", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "foo");
+  t.equal(getName(target), "foo");
 });
 
 /**
@@ -3371,13 +3026,10 @@ test("Name from content", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
   t.equal(
-    Name.from(target, device).get().value,
+    getName(target),
     "My name is Eli the weird. (QED) Where are my marbles?"
   );
 });
@@ -3428,13 +3080,10 @@ test("Name from content of labelledby element", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
   t.equal(
-    Name.from(target, device).get().value,
+    getName(target),
     "My name is Eli the weird. (QED) Where are my marbles?"
   );
 });
@@ -3485,13 +3134,10 @@ test("Name from content of label", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
   t.equal(
-    Name.from(target, device).get().value,
+    getName(target),
     "My name is Eli the weird. (QED) Where are my marbles?"
   );
 });
@@ -3561,12 +3207,9 @@ test("Name from content of labelledby elements one of which is hidden", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Important stuff");
+  t.equal(getName(target), "Important stuff");
 });
 
 /**
@@ -3587,12 +3230,9 @@ test("Name 1.0 combobox-focusable-alternative", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Choose your language");
+  t.equal(getName(target), "Choose your language");
 });
 
 /**
@@ -3609,12 +3249,9 @@ test("Name 1.0 combobox-focusable", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Choose your language.");
+  t.equal(getName(target), "Choose your language.");
 });
 
 /**
@@ -3640,12 +3277,9 @@ test("Name checkbox-label-embedded-listbox", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -3667,12 +3301,9 @@ test("Name checkbox-label-embedded-textbox", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -3690,12 +3321,9 @@ test("Name checkbox-label-multiple-label-alternative", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "a test This is");
+  t.equal(getName(target), "a test This is");
 });
 
 /**
@@ -3713,12 +3341,9 @@ test("Name checkbox-label-multiple-label", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "This is a test");
+  t.equal(getName(target), "This is a test");
 });
 
 /**
@@ -3747,12 +3372,9 @@ test("Name file-label-inline-block-elements", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "What is your name?");
+  t.equal(getName(target), "What is your name?");
 });
 
 /**
@@ -3772,12 +3394,9 @@ test("Name file-label-inline-block-styles", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "This is a test.");
+  t.equal(getName(target), "This is a test.");
 });
 
 /**
@@ -3809,12 +3428,9 @@ test("Name file-label-inline-hidden-elements", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "2 4 6 8 10");
+  t.equal(getName(target), "2 4 6 8 10");
 });
 
 /**
@@ -3846,12 +3462,9 @@ test("Name file-label-owned-combobox-owned-listbox", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 2 times.");
+  t.equal(getName(target), "Flash the screen 2 times.");
 });
 
 /**
@@ -3881,12 +3494,9 @@ test("Name file-label-owned-combobox", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "Flash the screen 1 times.");
+  t.equal(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -3922,15 +3532,9 @@ test("Name link-mixed-content", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(
-    Name.from(target, device).get().value,
-    "My name is Eli the weird. (QED)"
-  );
+  t.equal(getName(target), "My name is Eli the weird. (QED)");
 });
 
 /**
@@ -3947,12 +3551,9 @@ test("Name link-with-label", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(Name.from(target, device).get().value, "California");
+  t.equal(getName(target), "California");
 });
 
 /**
@@ -3975,13 +3576,7 @@ test("Name heading-combobox-focusable-alternative", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("test")))
-    .get();
+  const target = getTarget(document, "test");
 
-  t.equal(
-    Name.from(target, device).get().value,
-    "Country of origin: United States"
-  );
+  t.equal(getName(target), "Country of origin: United States");
 });
