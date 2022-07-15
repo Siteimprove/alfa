@@ -43,8 +43,8 @@ export default Rule.Atomic.of<Page, Element>({
                 (previousLevel) => previousLevel >= currentLevel - 1
               )(previous)
             )(target),
-            () => Outcomes.IsStructured,
-            () => Outcomes.IsNotStructured
+            () => Outcomes.IsStructured(previous),
+            () => Outcomes.IsNotStructured(previous)
           ),
         };
       },
@@ -52,12 +52,64 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
-export namespace Outcomes {
-  export const IsStructured = Ok.of(
-    Diagnostic.of(`The heading is correctly ordered`)
-  );
+/**
+ * @public
+ */
+export class WithPreviousHeading extends Diagnostic {
+  public static of(message: string): Diagnostic;
 
-  export const IsNotStructured = Err.of(
-    Diagnostic.of(`The heading skips one or more levels`)
-  );
+  public static of(message: string, previous: Element): WithPreviousHeading;
+
+  public static of(message: string, previous?: Element): Diagnostic {
+    return previous === undefined
+      ? Diagnostic.of(message)
+      : new WithPreviousHeading(message, previous);
+  }
+
+  private readonly _previous: Element;
+
+  constructor(message: string, previous: Element) {
+    super(message);
+    this._previous = previous;
+  }
+
+  equals(value: WithPreviousHeading): value is this;
+
+  equals(value: unknown): value is this;
+
+  equals(value: unknown): boolean {
+    return (
+      value instanceof WithPreviousHeading &&
+      value._message === this._message &&
+      value._previous.equals(this._previous)
+    );
+  }
+  toJSON(): WithPreviousHeading.JSON {
+    return { ...super.toJSON(), previous: this._previous.toJSON() };
+  }
+}
+
+/**
+ * @public
+ */
+export namespace WithPreviousHeading {
+  export interface JSON extends Diagnostic.JSON {
+    previous: Element.JSON;
+  }
+
+  export function isWithPreviousHeading(
+    value: unknown
+  ): value is WithPreviousHeading {
+    return value instanceof WithPreviousHeading;
+  }
+}
+
+export namespace Outcomes {
+  export const IsStructured = (previous: Element) =>
+    Ok.of(WithPreviousHeading.of(`The heading is correctly ordered`, previous));
+
+  export const IsNotStructured = (previous: Element) =>
+    Err.of(
+      WithPreviousHeading.of(`The heading skips one or more levels`, previous)
+    );
 }

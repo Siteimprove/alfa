@@ -31,6 +31,7 @@ export namespace DOM {
     hasHeadingLevel,
     hasImplicitRole,
     hasIncorrectRoleWithoutName,
+    hasNonDefaultRole,
     hasNonEmptyAccessibleName,
     hasRole,
     isIgnored,

@@ -100,6 +100,7 @@ export namespace DOM {
     hasHeadingLevel: typeof dom.hasHeadingLevel, // (undocumented)
     hasImplicitRole: typeof dom.hasImplicitRole, // (undocumented)
     hasIncorrectRoleWithoutName: typeof dom.hasIncorrectRoleWithoutName, // (undocumented)
+    hasNonDefaultRole: typeof dom.hasNonDefaultRole, // (undocumented)
     hasNonEmptyAccessibleName: typeof dom.hasNonEmptyAccessibleName, // (undocumented)
     hasRole: typeof dom.hasRole, // (undocumented)
     isIgnored: typeof dom.isIgnored, // (undocumented)
@@ -215,6 +216,9 @@ function hasName_2(predicate?: Predicate<Name>): Predicate<Node>;
 
 // @public (undocumented)
 function hasName_2(name: string, ...rest: Array<string>): Predicate<Node>;
+
+// @public (undocumented)
+function hasNonDefaultRole(element: Element_2): boolean;
 
 // @public (undocumented)
 function hasNonEmptyAccessibleName<T extends Element_2 | Text_2>(device: Device): Predicate<T>;

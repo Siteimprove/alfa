@@ -597,13 +597,13 @@ const Features: Features = {
     section: html(() => Option.of(Role.of("region"))),
 
     select: html(
-      () =>
-        // Despite what the HTML AAM specifies, we always map <select> elements
-        // to a listbox widget as they currently have no way of mapping to a
-        // valid combobox widget. As a combobox requires an owned textarea and a
-        // list of options, we will always end up mapping <select> elements to
-        // an invalid combobox widget.
-        Option.of(Role.of("listbox")),
+      (element) =>
+        test(
+          Element.hasDisplaySize((size) => size > 1),
+          element
+        )
+          ? Option.of(Role.of("listbox"))
+          : Option.of(Role.of("combobox")),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {
