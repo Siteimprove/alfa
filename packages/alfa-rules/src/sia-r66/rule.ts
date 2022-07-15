@@ -1,7 +1,13 @@
 /// <reference lib="dom" />
 import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Name } from "@siteimprove/alfa-aria";
-import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
+import {
+  Element,
+  Text,
+  Namespace,
+  Node,
+  Attribute,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -35,15 +41,11 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
   requirements: [Criterion.of("1.4.6")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
-    // 1. Gather all aria-disabled widgets on the document
-    // 2. Compute their name
-    // 3. Filter out text nodes that are contained in these names
-    let disabledWidgets: Sequence<Element> = Sequence.empty();
+    let disabledWidgetNames: Sequence<string> = Sequence.empty();
     let textNodes: Sequence<Text> = Sequence.empty();
     return {
       applicability() {
         gather(document);
-        console.log(textNodes.toJSON());
         return getApplicableLinks();
 
         function gather(node: Node): void {
@@ -56,10 +58,8 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
                 and(
                   hasNamespace(Namespace.HTML),
                   not(hasRole(device, (role) => role.isWidget())),
-                  and(
-                    not(hasRole(device, "group")),
-                    not(isSemanticallyDisabled)
-                  )
+                  not(hasRole(device, "group")),
+                  not(isSemanticallyDisabled)
                 )
               ),
               node.parent().get()
@@ -74,15 +74,19 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
             test(
               and(
                 isElement,
-                and(
+                or(
                   hasRole(device, (role) => role.isWidget()),
-                  isSemanticallyDisabled
+                  and(hasRole(device, "group"), isSemanticallyDisabled)
                 )
               ),
               node
             )
           ) {
-            disabledWidgets = disabledWidgets.append(node);
+            // Compute the names of these elements
+            const names = node.attributes
+              .filter((attribute) => attribute.name === "name")
+              .map((attribute) => attribute.value);
+            disabledWidgetNames = disabledWidgetNames.concat(names);
           }
 
           for (const child of node.children(Node.fullTree)) {
@@ -91,8 +95,13 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
         }
 
         function* getApplicableLinks(): Iterable<Text> {
+          // Filter out text nodes that are contained in disabledWidgetNames
           for (const textNode of textNodes) {
-            yield textNode;
+            if (
+              disabledWidgetNames.none((name) => name.includes(textNode.data))
+            ) {
+              yield textNode;
+            }
           }
         }
       },
