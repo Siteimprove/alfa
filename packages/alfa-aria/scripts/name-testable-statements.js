@@ -3,6 +3,38 @@ const path = require("path");
 const prettier = require("prettier");
 const puppeteer = require("puppeteer");
 
+function testExceptions(testId) {
+  switch (testId) {
+    case "Name_test_case_547":
+    case "Name_test_case_549":
+    case "Name_test_case_550":
+    case "Name_test_case_562":
+    case "Name_test_case_563":
+    case "Name_test_case_564":
+    case "Name_test_case_565":
+    case "Name_test_case_566":
+      return {
+        reason:
+          "Alfa does not implement step 2C of Accessible name computation",
+        issue: "https://github.com/Siteimprove/alfa/issues/305",
+      };
+    case "Name_test_case_548":
+      return {
+        reason:
+          "Alfa incorrectly recurses into <select> when computing name from content",
+        issue: "https://github.com/Siteimprove/alfa/issues/1192",
+      };
+    case "Name_test_case_552":
+    case "Name_test_case_553":
+      return {
+        reason: "Alfa does not support :before and :after pseudo-elements",
+        issue: "https://github.com/Siteimprove/alfa/issues/954",
+      };
+    default:
+      return undefined;
+  }
+}
+
 async function main() {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -30,7 +62,14 @@ async function main() {
         /if given\n([^]*)\nthen the accessible.*"(.*)".*"(.*)"/m
       );
 
-      statements.push({ title, kind, testId, code, targetId, result });
+      statements.push({
+        title,
+        kind,
+        testId,
+        code,
+        targetId,
+        result,
+      });
     }
 
     return statements;
@@ -51,10 +90,19 @@ async function main() {
 }
 
 function printNameTestCase({ title, kind, testId, code, targetId, result }) {
+  const exception = testExceptions(testId);
+
   return kind !== "name"
     ? ""
     : `/**
- * {@link ${url}#${testId}}
+ * {@link ${url}#${testId}} ${
+        exception === undefined
+          ? ""
+          : `
+ *
+ * ${exception.reason}
+ * {@link ${exception.issue}}`
+      }
  */
 test("${title}", (t) => {
   const testCase = (
@@ -65,12 +113,11 @@ test("${title}", (t) => {
 
   const document = h.document([testCase]);
 
-  const target = document
-    .descendants()
-    .find(and(isElement, hasId("${targetId}")))
-    .get();
+  const target = getTarget(document, "${targetId}");
 
-  t.equal(Name.from(target, device).get().value, "${result}");
+  t.${
+    exception === undefined ? "equal" : "notEqual"
+  }(getName(target), "${result}");
 });
 `;
 }
@@ -141,11 +188,10 @@ const warning = `// This file has been automatically generated based on the Acce
 
 `;
 
-const imports = `import { h } from "@siteimprove/alfa-dom/h";
-import { test } from "@siteimprove/alfa-test";
+const imports = `import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Element } from "@siteimprove/alfa-dom";
+import { Element, Document, h } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Name } from "../src";
@@ -154,6 +200,19 @@ const { and } = Refinement;
 const { hasId, isElement } = Element;
 
 const device = Device.standard();
+
+function getTarget(document: Document, id: string): Element {
+  return document
+    .descendants()
+    .find(and(isElement, hasId("test")))
+    .get()
+}
+
+function getName(element: Element): string {
+  return Name.from(element, device)
+    .map((name) => name.value)
+    .getOr("");
+}
 
 `;
 
