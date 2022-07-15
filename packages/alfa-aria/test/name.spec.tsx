@@ -306,7 +306,34 @@ test(".from() order tokens in aria-labelledby order, not DOM order", (t) => {
     type: "some",
     value: {
       value: "foo bar",
-      sources: [],
+      sources: [
+        {
+          attribute: "/div[1]/div[1]/@aria-labelledby",
+          name: {
+            sources: [
+              {
+                element: "/div[1]/div[2]",
+                name: {
+                  sources: [
+                    {
+                      text: "/div[1]/div[2]/text()[1]",
+                      type: "data",
+                    },
+                  ],
+                  value: "foo",
+                },
+                type: "descendant",
+              },
+              {
+                attribute: "/div[1]/div[1]/@aria-label",
+                type: "label",
+              },
+            ],
+            value: "foo bar",
+          },
+          type: "reference",
+        },
+      ],
     },
   });
 });
