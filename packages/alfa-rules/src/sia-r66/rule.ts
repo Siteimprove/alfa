@@ -1,5 +1,6 @@
+/// <reference lib="dom" />
 import { Rule } from "@siteimprove/alfa-act";
-import { DOM } from "@siteimprove/alfa-aria";
+import { DOM, Name } from "@siteimprove/alfa-aria";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -19,6 +20,7 @@ import { contrast } from "../common/expectation/contrast";
 import { Contrast as Outcomes } from "../common/outcome/contrast";
 
 import { Scope } from "../tags";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 const { hasRole, isPerceivableForAll, isSemanticallyDisabled } = DOM;
 const { hasNamespace, isElement } = Element;
@@ -33,33 +35,64 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
   requirements: [Criterion.of("1.4.6")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
+    // 1. Gather all aria-disabled widgets on the document
+    // 2. Compute their name
+    // 3. Filter out text nodes that are contained in these names
+    let disabledWidgets: Sequence<Element> = Sequence.empty();
+    let textNodes: Sequence<Text> = Sequence.empty();
     return {
       applicability() {
-        return visit(document);
+        gather(document);
+        console.log(textNodes.toJSON());
+        return getApplicableLinks();
 
-        function* visit(node: Node): Iterable<Text> {
+        function gather(node: Node): void {
+          // Gather all applicable text nodes
+          if (
+            node.parent().isSome() &&
+            test(
+              and(
+                isElement,
+                and(
+                  hasNamespace(Namespace.HTML),
+                  not(hasRole(device, (role) => role.isWidget())),
+                  and(
+                    not(hasRole(device, "group")),
+                    not(isSemanticallyDisabled)
+                  )
+                )
+              ),
+              node.parent().get()
+            ) &&
+            test(and(isText, isPerceivableForAll(device)), node)
+          ) {
+            textNodes = textNodes.append(node);
+          }
+
+          // Gather all aria-disabled widgets on the document
           if (
             test(
               and(
                 isElement,
-                or(
-                  not(hasNamespace(Namespace.HTML)),
+                and(
                   hasRole(device, (role) => role.isWidget()),
-                  and(hasRole(device, "group"), isSemanticallyDisabled)
+                  isSemanticallyDisabled
                 )
               ),
               node
             )
           ) {
-            return;
-          }
-
-          if (test(and(isText, isPerceivableForAll(device)), node)) {
-            yield node;
+            disabledWidgets = disabledWidgets.append(node);
           }
 
           for (const child of node.children(Node.fullTree)) {
-            yield* visit(child);
+            gather(child);
+          }
+        }
+
+        function* getApplicableLinks(): Iterable<Text> {
+          for (const textNode of textNodes) {
+            yield textNode;
           }
         }
       },
