@@ -1,5 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
+import { Comparable } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
@@ -647,8 +648,11 @@ export namespace Name {
         return fromReferences(attribute.get(), element, device, state);
       },
 
-      // Step 2C: Use the `aria-label` attribute, if present.
-      // https://w3c.github.io/accname/#step2C
+      // Step 2C: control embedded in a label, not currently handled
+      // https://github.com/Siteimprove/alfa/issues/305
+
+      // Step 2D: Use the `aria-label` attribute, if present.
+      // https://w3c.github.io/accname/#step2D
       () => {
         const attribute = element.attribute("aria-label");
 
@@ -659,8 +663,8 @@ export namespace Name {
         return fromLabel(attribute.get());
       },
 
-      // Step 2D: Use native features, if present and allowed.
-      // https://w3c.github.io/accname/#step2D
+      // Step 2E: Use native features, if present and allowed.
+      // https://w3c.github.io/accname/#step2E
       () => {
         // Using native features is only allowed if the role, if any, of the
         // element is not presentational and the element has a namespace with
@@ -780,11 +784,23 @@ export namespace Name {
     state: State
   ): Option<Name> {
     const root = attribute.owner.get().root();
+    const ids = attribute.tokens().toArray();
 
+    // Since there are a lost of element in the document, but very few in the
+    // aria-labelledby, it is more efficient to grab them in DOM order and then
+    // sort by tokens order rather than grab the ids one by one in the correct
+    // order.
     const references = root
       .descendants()
       .filter(isElement)
-      .filter(hasId(equals(...attribute.tokens())));
+      .filter(hasId(equals(...ids)))
+      .sortWith((a, b) =>
+        Comparable.compareNumber(
+          // the previous filter ensure that the id exists
+          ids.indexOf(a.id.get()),
+          ids.indexOf(b.id.get())
+        )
+      );
 
     const names = references.collect((element) =>
       fromNode(
