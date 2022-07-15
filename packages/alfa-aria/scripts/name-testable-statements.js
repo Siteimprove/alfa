@@ -13,12 +13,62 @@ function testExceptions(testId) {
     case "Name_test_case_564":
     case "Name_test_case_565":
     case "Name_test_case_566":
+    case "Name_test_case_617":
+    case "Name_test_case_618":
+    case "Name_test_case_619":
+    case "Name_test_case_620":
+    case "Name_test_case_621":
+    case "Name_test_case_727":
+    case "Name_test_case_728":
+    case "Name_test_case_729":
+    case "Name_test_case_730":
+    case "Name_test_case_731":
+    case "Name_test_case_738":
+    case "Name_test_case_739":
+    case "Name_test_case_740":
+    case "Name_test_case_741":
+    case "Name_test_case_742":
+    case "Name_test_case_743":
+    case "Name_test_case_744":
+    case "Name_test_case_745":
+    case "Name_test_case_746":
+    case "Name_test_case_747":
+    case "Name_checkbox-label-embedded-combobox":
+    case "Name_checkbox-label-embedded-menu":
+    case "Name_checkbox-label-embedded-select":
+    case "Name_checkbox-label-embedded-slider":
+    case "Name_checkbox-label-embedded-spinbutton":
+    case "Name_file-label-embedded-combobox":
+    case "Name_file-label-embedded-menu":
+    case "Name_file-label-embedded-select":
+    case "Name_file-label-embedded-slider":
+    case "Name_file-label-embedded-spinbutton":
+    case "Name_password-label-embedded-combobox":
+    case "Name_password-label-embedded-menu":
+    case "Name_password-label-embedded-select":
+    case "Name_password-label-embedded-slider":
+    case "Name_password-label-embedded-spinbutton":
+    case "Name_radio-label-embedded-combobox":
+    case "Name_radio-label-embedded-menu":
+    case "Name_radio-label-embedded-select":
+    case "Name_radio-label-embedded-slider":
+    case "Name_radio-label-embedded-spinbutton":
+    case "Name_text-label-embedded-combobox":
+    case "Name_text-label-embedded-menu":
+    case "Name_text-label-embedded-select":
+    case "Name_text-label-embedded-slider":
+    case "Name_text-label-embedded-spinbutton":
       return {
         reason:
           "Alfa does not implement step 2C of Accessible name computation",
         issue: "https://github.com/Siteimprove/alfa/issues/305",
       };
     case "Name_test_case_548":
+    case "Name_test_case_733":
+    case "Name_test_case_734":
+    case "Name_test_case_735":
+    case "Name_test_case_736":
+    case "Name_test_case_737":
       return {
         reason:
           "Alfa incorrectly recurses into <select> when computing name from content",
@@ -26,9 +76,29 @@ function testExceptions(testId) {
       };
     case "Name_test_case_552":
     case "Name_test_case_553":
+    case "Name_test_case_659":
+    case "Name_test_case_660":
+    case "Name_test_case_661":
+    case "Name_test_case_662":
+    case "Name_test_case_663a":
+    case "Name_test_case_753":
+    case "Name_test_case_754":
+    case "Name_test_case_755":
+    case "Name_test_case_756":
+    case "Name_test_case_757":
+    case "Name_test_case_758":
+    case "Name_test_case_759":
+    case "Name_test_case_760":
+    case "Name_test_case_761":
+    case "Name_test_case_762":
       return {
         reason: "Alfa does not support :before and :after pseudo-elements",
         issue: "https://github.com/Siteimprove/alfa/issues/954",
+      };
+    case "Name_text-label-embedded-spinbutton":
+      return {
+        reason: "Alfa join content traversal without spaces",
+        issue: "https://github.com/Siteimprove/alfa/issues/1054",
       };
     default:
       return undefined;
@@ -77,7 +147,13 @@ async function main() {
 
   browser.close();
 
-  let code = warning + imports + statements.map(printNameTestCase).join("\n");
+  let code =
+    warning +
+    imports +
+    statements
+      .filter(({ testId }) => testId !== "Name_test_case_663_.28DO_NOT_USE.29")
+      .map(printNameTestCase)
+      .join("\n");
 
   code = prettier.format(code, {
     parser: "typescript",
@@ -91,6 +167,18 @@ async function main() {
 
 function printNameTestCase({ title, kind, testId, code, targetId, result }) {
   const exception = testExceptions(testId);
+
+  // <style> elements are poorly handled by our JSX :-/
+  // This discard the type="text/css" bit of them, which is OK.
+  const match = code.match(/<style[^>]*>([^]*)<[/]style>([^]*)/m);
+  let jsxCode = code;
+  let style = "";
+
+  if (match !== null) {
+    [, style, jsxCode] = match;
+
+    style = `, [h.sheet([${styleElementToStyleSheet(style)}])]`;
+  }
 
   return kind !== "name"
     ? ""
@@ -107,11 +195,11 @@ function printNameTestCase({ title, kind, testId, code, targetId, result }) {
 test("${title}", (t) => {
   const testCase = (
     <div>
-      ${fixCodeException(testId, fixcode(code))}
+      ${fixCodeException(testId, fixcode(jsxCode))}
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document([testCase]${style});
 
   const target = getTarget(document, "${targetId}");
 
@@ -125,14 +213,6 @@ test("${title}", (t) => {
 // turning them into self-closing tags.
 function fixMissingClosingTag(code) {
   return code.replace(/<input ([^/>]*[^/])>/gm, "<input $1/>");
-}
-
-// <style> elements works poorly in JSX, turning them into JS strings.
-function fixStyleElement(code) {
-  return code.replace(
-    /<style([^>]*)>([^]*)<[/]style>/gm,
-    "<style$1>{`$2`}</style>"
-  );
 }
 
 // style attribute does not accept string in JSX, turning them into objects.
@@ -162,7 +242,7 @@ function fixStyleAttribute(code) {
 }
 
 function fixcode(code) {
-  return fixStyleAttribute(fixStyleElement(fixMissingClosingTag(code)));
+  return fixStyleAttribute(fixMissingClosingTag(code));
 }
 
 // Some test cases just have broken code :-/
@@ -180,6 +260,25 @@ function fixCodeException(id, code) {
   }
 }
 
+// Fortunately the <style> elements are not too complex
+// This is still bad…
+function styleElementToStyleSheet(style) {
+  return style.replace(
+    // [selector] {[declaration]}
+    // (actually, there can be several declarations…)
+    /([^{]*){([^}]*)}/gm,
+    (_, selector, declaration) =>
+      `h.rule.style("${selector.trim()}", [${declaration.trim().replace(
+        // [property]: [value];
+        // value may be doubled quoted or not.
+        // Each declaration is mapped into a Declaration.of and they are
+        // then joined as an array (enclosing []).
+        /([^:]*):[ "]*([^ ";]*)[ ";]*/g,
+        `Declaration.of("$1", "$2"),`
+      )}]),`
+  );
+}
+
 const url = "https://www.w3.org/wiki/AccName_1.1_Testable_Statements";
 
 const warning = `// This file has been automatically generated based on the Accessible Name Testable statements.
@@ -191,7 +290,7 @@ const warning = `// This file has been automatically generated based on the Acce
 const imports = `import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Document, h } from "@siteimprove/alfa-dom";
+import { Declaration, Document, Element, h } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Name } from "../src";

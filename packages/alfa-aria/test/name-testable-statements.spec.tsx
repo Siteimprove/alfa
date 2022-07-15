@@ -5,7 +5,7 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Document, h } from "@siteimprove/alfa-dom";
+import { Declaration, Document, Element, h } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Name } from "../src";
@@ -290,15 +290,19 @@ test("Name test case 551", (t) => {
 test("Name test case 552", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:before { content:"fancy "; }
-  `}</style>
       <label for="test">fruit</label>
       <input type="text" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [Declaration.of("content", "fancy")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
@@ -314,15 +318,21 @@ test("Name test case 552", (t) => {
 test("Name test case 553", (t) => {
   const testCase = (
     <div>
-      <style type="text/css">{`
-    [data-after]:after { content: attr(data-after); }
-  `}</style>
       <label for="test" data-after="test content"></label>
       <input type="text" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("[data-after]:after", [
+          Declaration.of("content", "attr(data-after)"),
+        ]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
@@ -973,6 +983,9 @@ test("Name test case 616", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_617}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 617", (t) => {
   const testCase = (
@@ -990,11 +1003,14 @@ test("Name test case 617", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo bar baz");
+  t.notEqual(getName(target), "foo bar baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_618}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 618", (t) => {
   const testCase = (
@@ -1012,11 +1028,14 @@ test("Name test case 618", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo bar baz");
+  t.notEqual(getName(target), "foo bar baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_619}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 619", (t) => {
   const testCase = (
@@ -1034,11 +1053,14 @@ test("Name test case 619", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo bar baz");
+  t.notEqual(getName(target), "foo bar baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_620}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 620", (t) => {
   const testCase = (
@@ -1056,11 +1078,14 @@ test("Name test case 620", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo bar baz");
+  t.notEqual(getName(target), "foo bar baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_621}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 621", (t) => {
   const testCase = (
@@ -1076,19 +1101,18 @@ test("Name test case 621", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo bar baz");
+  t.notEqual(getName(target), "foo bar baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_659}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 659", (t) => {
   const testCase = (
     <div>
-      <style type="text/css">{`
-    label:before { content: "foo"; }
-    label:after { content: "baz"; }
-  `}</style>
       <form>
         <label for="test" title="bar">
           <input id="test" type="text" name="test" title="buz" />
@@ -1097,23 +1121,30 @@ test("Name test case 659", (t) => {
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [Declaration.of("content", "foo")]),
+        h.rule.style("label:after", [Declaration.of("content", "baz")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo bar baz");
+  t.notEqual(getName(target), "foo bar baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_660}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 660", (t) => {
   const testCase = (
     <div>
-      <style type="text/css">{`
-    label:before { content: "foo"; }
-    label:after { content: "baz"; }
-  `}</style>
       <form>
         <label for="test" title="bar">
           <input id="test" type="password" name="test" title="buz" />
@@ -1122,23 +1153,30 @@ test("Name test case 660", (t) => {
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [Declaration.of("content", "foo")]),
+        h.rule.style("label:after", [Declaration.of("content", "baz")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo bar baz");
+  t.notEqual(getName(target), "foo bar baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_661}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 661", (t) => {
   const testCase = (
     <div>
-      <style type="text/css">{`
-    label:before { content: "foo"; }
-    label:after { content: "baz"; }
-  `}</style>
       <form>
         <label for="test">
           <input id="test" type="checkbox" name="test" title=" bar " />
@@ -1147,23 +1185,30 @@ test("Name test case 661", (t) => {
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [Declaration.of("content", "foo")]),
+        h.rule.style("label:after", [Declaration.of("content", "baz")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo baz");
+  t.notEqual(getName(target), "foo baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_662}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 662", (t) => {
   const testCase = (
     <div>
-      <style type="text/css">{`
-    label:before { content: "foo"; }
-    label:after { content: "baz"; }
-  `}</style>
       <form>
         <label for="test">
           <input id="test" type="radio" name="test" title=" bar " />
@@ -1172,48 +1217,30 @@ test("Name test case 662", (t) => {
     </div>
   );
 
-  const document = h.document([testCase]);
-
-  const target = getTarget(document, "test");
-
-  t.equal(getName(target), "foo baz");
-});
-
-/**
- * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_663_.28DO_NOT_USE.29}
- */
-test("Name test case 663 (DO NOT USE)", (t) => {
-  const testCase = (
-    <div>
-      <style type="text/css">{`
-    label:before { content: "foo"; }
-    label:after { content: "baz"; }
-  `}</style>
-      <form>
-        <label for="test">
-          <input id="test" type="file" name="test" title="bar" />
-        </label>
-      </form>
-    </div>
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [Declaration.of("content", "foo")]),
+        h.rule.style("label:after", [Declaration.of("content", "baz")]),
+      ]),
+    ]
   );
 
-  const document = h.document([testCase]);
-
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo baz");
+  t.notEqual(getName(target), "foo baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_663a}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 663a", (t) => {
   const testCase = (
     <div>
-      <style type="text/css">{`
-    label:before { content: "foo"; }
-    label:after { content: "baz"; }
-  `}</style>
       <form>
         <label for="test">
           <input id="test" type="image" src="foo.jpg" name="test" title="bar" />
@@ -1222,11 +1249,19 @@ test("Name test case 663a", (t) => {
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [Declaration.of("content", "foo")]),
+        h.rule.style("label:after", [Declaration.of("content", "baz")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo baz");
+  t.notEqual(getName(target), "foo baz");
 });
 
 /**
@@ -1321,6 +1356,9 @@ test("Name test case 726", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_727}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 727", (t) => {
   const testCase = (
@@ -1337,11 +1375,14 @@ test("Name test case 727", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo David");
+  t.notEqual(getName(target), "foo David");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_728}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 728", (t) => {
   const testCase = (
@@ -1358,11 +1399,14 @@ test("Name test case 728", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo David");
+  t.notEqual(getName(target), "foo David");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_729}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 729", (t) => {
   const testCase = (
@@ -1379,11 +1423,14 @@ test("Name test case 729", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo David");
+  t.notEqual(getName(target), "foo David");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_730}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 730", (t) => {
   const testCase = (
@@ -1400,11 +1447,14 @@ test("Name test case 730", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo David");
+  t.notEqual(getName(target), "foo David");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_731}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 731", (t) => {
   const testCase = (
@@ -1421,11 +1471,14 @@ test("Name test case 731", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo David");
+  t.notEqual(getName(target), "foo David");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_733}
+ *
+ * Alfa incorrectly recurses into <select> when computing name from content
+ * {@link https://github.com/Siteimprove/alfa/issues/1192}
  */
 test("Name test case 733", (t) => {
   const testCase = (
@@ -1449,11 +1502,14 @@ test("Name test case 733", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy");
+  t.notEqual(getName(target), "crazy");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_734}
+ *
+ * Alfa incorrectly recurses into <select> when computing name from content
+ * {@link https://github.com/Siteimprove/alfa/issues/1192}
  */
 test("Name test case 734", (t) => {
   const testCase = (
@@ -1477,11 +1533,14 @@ test("Name test case 734", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy");
+  t.notEqual(getName(target), "crazy");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_735}
+ *
+ * Alfa incorrectly recurses into <select> when computing name from content
+ * {@link https://github.com/Siteimprove/alfa/issues/1192}
  */
 test("Name test case 735", (t) => {
   const testCase = (
@@ -1505,11 +1564,14 @@ test("Name test case 735", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy");
+  t.notEqual(getName(target), "crazy");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_736}
+ *
+ * Alfa incorrectly recurses into <select> when computing name from content
+ * {@link https://github.com/Siteimprove/alfa/issues/1192}
  */
 test("Name test case 736", (t) => {
   const testCase = (
@@ -1533,11 +1595,14 @@ test("Name test case 736", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy");
+  t.notEqual(getName(target), "crazy");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_737}
+ *
+ * Alfa incorrectly recurses into <select> when computing name from content
+ * {@link https://github.com/Siteimprove/alfa/issues/1192}
  */
 test("Name test case 737", (t) => {
   const testCase = (
@@ -1561,11 +1626,14 @@ test("Name test case 737", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy");
+  t.notEqual(getName(target), "crazy");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_738}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 738", (t) => {
   const testCase = (
@@ -1588,11 +1656,14 @@ test("Name test case 738", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy Monday");
+  t.notEqual(getName(target), "crazy Monday");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_739}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 739", (t) => {
   const testCase = (
@@ -1615,11 +1686,14 @@ test("Name test case 739", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy Monday");
+  t.notEqual(getName(target), "crazy Monday");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_740}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 740", (t) => {
   const testCase = (
@@ -1642,11 +1716,14 @@ test("Name test case 740", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy Monday");
+  t.notEqual(getName(target), "crazy Monday");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_741}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 741", (t) => {
   const testCase = (
@@ -1669,11 +1746,14 @@ test("Name test case 741", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy Monday");
+  t.notEqual(getName(target), "crazy Monday");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_742}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 742", (t) => {
   const testCase = (
@@ -1696,11 +1776,14 @@ test("Name test case 742", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy Monday");
+  t.notEqual(getName(target), "crazy Monday");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_743}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 743", (t) => {
   const testCase = (
@@ -1722,11 +1805,14 @@ test("Name test case 743", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy 4");
+  t.notEqual(getName(target), "crazy 4");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_744}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 744", (t) => {
   const testCase = (
@@ -1748,11 +1834,14 @@ test("Name test case 744", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy 4");
+  t.notEqual(getName(target), "crazy 4");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_745}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 745", (t) => {
   const testCase = (
@@ -1774,11 +1863,14 @@ test("Name test case 745", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy 4");
+  t.notEqual(getName(target), "crazy 4");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_746}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 746", (t) => {
   const testCase = (
@@ -1800,11 +1892,14 @@ test("Name test case 746", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy 4");
+  t.notEqual(getName(target), "crazy 4");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_747}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 747", (t) => {
   const testCase = (
@@ -1826,7 +1921,7 @@ test("Name test case 747", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "crazy 4");
+  t.notEqual(getName(target), "crazy 4");
 });
 
 /**
@@ -1916,216 +2011,289 @@ test("Name test case 752", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_753}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 753", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:before { content:"fancy "; }
-  `}</style>
       <label for="test">fruit</label>
       <input type="password" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [Declaration.of("content", "fancy")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "fancy fruit");
+  t.notEqual(getName(target), "fancy fruit");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_754}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 754", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:before { content:"fancy "; }
-  `}</style>
       <label for="test">fruit</label>
       <input type="checkbox" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [Declaration.of("content", "fancy")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "fancy fruit");
+  t.notEqual(getName(target), "fancy fruit");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_755}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 755", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:before { content:"fancy "; }
-  `}</style>
       <label for="test">fruit</label>
       <input type="radio" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [Declaration.of("content", "fancy")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "fancy fruit");
+  t.notEqual(getName(target), "fancy fruit");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_756}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 756", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:before { content:"fancy "; }
-  `}</style>
       <label for="test">fruit</label>
       <input type="file" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [Declaration.of("content", "fancy")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "fancy fruit");
+  t.notEqual(getName(target), "fancy fruit");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_757}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 757", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:before { content:"fancy "; }
-  `}</style>
       <label for="test">fruit</label>
       <input type="image" src="foo.jpg" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [Declaration.of("content", "fancy")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "fancy fruit");
+  t.notEqual(getName(target), "fancy fruit");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_758}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 758", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:after { content:" fruit"; }
-  `}</style>
       <label for="test">fancy</label>
       <input type="password" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:after", [Declaration.of("content", "fruit")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "fancy fruit");
+  t.notEqual(getName(target), "fancy fruit");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_759}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 759", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:after { content:" fruit"; }
-  `}</style>
       <label for="test">fancy</label>
       <input type="checkbox" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:after", [Declaration.of("content", "fruit")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "fancy fruit");
+  t.notEqual(getName(target), "fancy fruit");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_760}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 760", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:after { content:" fruit"; }
-  `}</style>
       <label for="test">fancy</label>
       <input type="radio" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:after", [Declaration.of("content", "fruit")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "fancy fruit");
+  t.notEqual(getName(target), "fancy fruit");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_761}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 761", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:after { content:" fruit"; }
-  `}</style>
       <label for="test">fancy</label>
       <input type="file" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:after", [Declaration.of("content", "fruit")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "fancy fruit");
+  t.notEqual(getName(target), "fancy fruit");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_762}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name test case 762", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:after { content:" fruit"; }
-  `}</style>
       <label for="test">fancy</label>
       <input type="image" src="foo.jpg" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:after", [Declaration.of("content", "fruit")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "fancy fruit");
+  t.notEqual(getName(target), "fancy fruit");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-combobox}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name checkbox-label-embedded-combobox", (t) => {
   const testCase = (
@@ -2152,11 +2320,14 @@ test("Name checkbox-label-embedded-combobox", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-menu}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name checkbox-label-embedded-menu", (t) => {
   const testCase = (
@@ -2184,11 +2355,14 @@ test("Name checkbox-label-embedded-menu", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen times.");
+  t.notEqual(getName(target), "Flash the screen times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-select}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name checkbox-label-embedded-select", (t) => {
   const testCase = (
@@ -2210,11 +2384,14 @@ test("Name checkbox-label-embedded-select", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-slider}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name checkbox-label-embedded-slider", (t) => {
   const testCase = (
@@ -2241,11 +2418,14 @@ test("Name checkbox-label-embedded-slider", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo 5 baz");
+  t.notEqual(getName(target), "foo 5 baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-spinbutton}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name checkbox-label-embedded-spinbutton", (t) => {
   const testCase = (
@@ -2272,7 +2452,7 @@ test("Name checkbox-label-embedded-spinbutton", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo 5 baz");
+  t.notEqual(getName(target), "foo 5 baz");
 });
 
 /**
@@ -2294,6 +2474,9 @@ test("Name checkbox-title", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-embedded-combobox}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-embedded-combobox", (t) => {
   const testCase = (
@@ -2320,11 +2503,14 @@ test("Name file-label-embedded-combobox", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-embedded-menu}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-embedded-menu", (t) => {
   const testCase = (
@@ -2352,11 +2538,14 @@ test("Name file-label-embedded-menu", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen times.");
+  t.notEqual(getName(target), "Flash the screen times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-embedded-select}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-embedded-select", (t) => {
   const testCase = (
@@ -2378,11 +2567,14 @@ test("Name file-label-embedded-select", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-embedded-slider}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-embedded-slider", (t) => {
   const testCase = (
@@ -2409,11 +2601,14 @@ test("Name file-label-embedded-slider", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo 5 baz");
+  t.notEqual(getName(target), "foo 5 baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-embedded-spinbutton}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-embedded-spinbutton", (t) => {
   const testCase = (
@@ -2440,7 +2635,7 @@ test("Name file-label-embedded-spinbutton", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo 5 baz");
+  t.notEqual(getName(target), "foo 5 baz");
 });
 
 /**
@@ -2479,6 +2674,9 @@ test("Name image-title", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_password-label-embedded-combobox}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name password-label-embedded-combobox", (t) => {
   const testCase = (
@@ -2505,11 +2703,14 @@ test("Name password-label-embedded-combobox", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_password-label-embedded-menu}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name password-label-embedded-menu", (t) => {
   const testCase = (
@@ -2537,11 +2738,14 @@ test("Name password-label-embedded-menu", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen times.");
+  t.notEqual(getName(target), "Flash the screen times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_password-label-embedded-select}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name password-label-embedded-select", (t) => {
   const testCase = (
@@ -2563,11 +2767,14 @@ test("Name password-label-embedded-select", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_password-label-embedded-slider}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name password-label-embedded-slider", (t) => {
   const testCase = (
@@ -2594,11 +2801,14 @@ test("Name password-label-embedded-slider", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo 5 baz");
+  t.notEqual(getName(target), "foo 5 baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_password-label-embedded-spinbutton}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name password-label-embedded-spinbutton", (t) => {
   const testCase = (
@@ -2625,7 +2835,7 @@ test("Name password-label-embedded-spinbutton", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo 5 baz");
+  t.notEqual(getName(target), "foo 5 baz");
 });
 
 /**
@@ -2647,6 +2857,9 @@ test("Name password-title", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_radio-label-embedded-combobox}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name radio-label-embedded-combobox", (t) => {
   const testCase = (
@@ -2673,11 +2886,14 @@ test("Name radio-label-embedded-combobox", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_radio-label-embedded-menu}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name radio-label-embedded-menu", (t) => {
   const testCase = (
@@ -2705,11 +2921,14 @@ test("Name radio-label-embedded-menu", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen times.");
+  t.notEqual(getName(target), "Flash the screen times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_radio-label-embedded-select}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name radio-label-embedded-select", (t) => {
   const testCase = (
@@ -2731,11 +2950,14 @@ test("Name radio-label-embedded-select", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_radio-label-embedded-slider}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name radio-label-embedded-slider", (t) => {
   const testCase = (
@@ -2762,11 +2984,14 @@ test("Name radio-label-embedded-slider", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo 5 baz");
+  t.notEqual(getName(target), "foo 5 baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_radio-label-embedded-spinbutton}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name radio-label-embedded-spinbutton", (t) => {
   const testCase = (
@@ -2793,7 +3018,7 @@ test("Name radio-label-embedded-spinbutton", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo 5 baz");
+  t.notEqual(getName(target), "foo 5 baz");
 });
 
 /**
@@ -2815,6 +3040,9 @@ test("Name radio-title", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_text-label-embedded-combobox}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name text-label-embedded-combobox", (t) => {
   const testCase = (
@@ -2841,11 +3069,14 @@ test("Name text-label-embedded-combobox", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_text-label-embedded-menu}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name text-label-embedded-menu", (t) => {
   const testCase = (
@@ -2873,11 +3104,14 @@ test("Name text-label-embedded-menu", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen times.");
+  t.notEqual(getName(target), "Flash the screen times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_text-label-embedded-select}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name text-label-embedded-select", (t) => {
   const testCase = (
@@ -2899,11 +3133,14 @@ test("Name text-label-embedded-select", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_text-label-embedded-slider}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name text-label-embedded-slider", (t) => {
   const testCase = (
@@ -2930,11 +3167,14 @@ test("Name text-label-embedded-slider", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo 5 baz");
+  t.notEqual(getName(target), "foo 5 baz");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_text-label-embedded-spinbutton}
+ *
+ * Alfa does not implement step 2C of Accessible name computation
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name text-label-embedded-spinbutton", (t) => {
   const testCase = (
@@ -2961,7 +3201,7 @@ test("Name text-label-embedded-spinbutton", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "foo 5 baz");
+  t.notEqual(getName(target), "foo 5 baz");
 });
 
 /**
@@ -2987,9 +3227,6 @@ test("Name text-title", (t) => {
 test("Name from content", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    .hidden { display: none; }
-  `}</style>
       <div id="test" role="link" tabindex="0">
         <span aria-hidden="true">
           <i> Hello, </i>
@@ -3024,7 +3261,10 @@ test("Name from content", (t) => {
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+  );
 
   const target = getTarget(document, "test");
 
@@ -3040,9 +3280,6 @@ test("Name from content", (t) => {
 test("Name from content of labelledby element", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    .hidden { display: none; }
-  `}</style>
       <input id="test" type="text" aria-labelledby="lblId" />
       <div id="lblId">
         <span aria-hidden="true">
@@ -3078,7 +3315,10 @@ test("Name from content of labelledby element", (t) => {
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+  );
 
   const target = getTarget(document, "test");
 
@@ -3094,9 +3334,6 @@ test("Name from content of labelledby element", (t) => {
 test("Name from content of label", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    .hidden { display: none; }
-  `}</style>
       <input type="text" id="test" />
       <label for="test" id="label">
         <span aria-hidden="true">
@@ -3132,7 +3369,10 @@ test("Name from content of label", (t) => {
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+  );
 
   const target = getTarget(document, "test");
 
@@ -3148,9 +3388,6 @@ test("Name from content of label", (t) => {
 test("Name from content of labelledby elements one of which is hidden", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    .hidden { display: none; }
-  `}</style>
       <div>
         <input
           id="test"
@@ -3205,7 +3442,10 @@ test("Name from content of labelledby elements one of which is hidden", (t) => {
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+  );
 
   const target = getTarget(document, "test");
 
@@ -3383,16 +3623,23 @@ test("Name file-label-inline-block-elements", (t) => {
 test("Name file-label-inline-block-styles", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    label:before { content: "This"; display: block; }
-    label:after { content: "."; }
-  `}</style>
       <label for="test">is a test</label>
       <input type="text" id="test" />
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [
+      h.sheet([
+        h.rule.style("label:before", [
+          Declaration.of("content", "This"),
+          Declaration.of("display", "block"),
+        ]),
+        h.rule.style("label:after", [Declaration.of("content", ".")]),
+      ]),
+    ]
+  );
 
   const target = getTarget(document, "test");
 
@@ -3405,9 +3652,6 @@ test("Name file-label-inline-block-styles", (t) => {
 test("Name file-label-inline-hidden-elements", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    .hidden { display: none; }
-  `}</style>
       <input type="file" id="test" />
       <label for="test">
         <span class="hidden">1</span>
@@ -3426,7 +3670,10 @@ test("Name file-label-inline-hidden-elements", (t) => {
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+  );
 
   const target = getTarget(document, "test");
 
@@ -3505,9 +3752,6 @@ test("Name file-label-owned-combobox", (t) => {
 test("Name link-mixed-content", (t) => {
   const testCase = (
     <div>
-      <style>{`
-    .hidden { display: none; }
-  `}</style>
       <div id="test" role="link" tabindex="0">
         <span aria-hidden="true">
           <i> Hello, </i>
@@ -3530,7 +3774,10 @@ test("Name link-mixed-content", (t) => {
     </div>
   );
 
-  const document = h.document([testCase]);
+  const document = h.document(
+    [testCase],
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+  );
 
   const target = getTarget(document, "test");
 
