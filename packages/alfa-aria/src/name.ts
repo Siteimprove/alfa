@@ -793,10 +793,10 @@ export namespace Name {
     const root = attribute.owner.get().root();
     const ids = attribute.tokens().toArray();
 
-    // Since there are a lost of element in the document, but very few in the
-    // aria-labelledby, it is more efficient to grab them in DOM order and then
-    // sort by tokens order rather than grab the ids one by one in the correct
-    // order.
+    // Since there are a lot of elements in the document, but very few in the
+    // aria-labelledby, it is more efficient to grab them in DOM order (in a
+    // single traversal) and then sort by tokens order rather than grab the ids
+    // one by one in the correct order.
     const references = root
       .descendants()
       .filter(isElement)
