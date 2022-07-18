@@ -323,6 +323,19 @@ test("evaluate() is inapplicable to text nodes in disabled groups", async (t) =>
   t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
 });
 
+test("evaluate() is inapplicable to elements that are used in name of disabled widgets", async (t) => {
+  const document = h.document([
+    <html>
+      <fieldset aria-labelledby="label" disabled>
+        <button>Hello world</button>
+      </fieldset>
+      <div id="label">widget name</div>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R69, { document }), [inapplicable(R69)]);
+});
+
 test("evaluate() passes when a background color with sufficient contrast is input", async (t) => {
   const target = h.text("Hello world");
 
