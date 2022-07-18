@@ -19,7 +19,6 @@ import { contrast } from "../common/expectation/contrast";
 import { Contrast as Outcomes } from "../common/outcome/contrast";
 
 import { Scope } from "../tags";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 
 const { hasRole, isPerceivableForAll, isSemanticallyDisabled } = DOM;
@@ -38,32 +37,10 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
     return {
       applicability() {
         let disabledWidgetTexts: Set<Text> = Set.empty();
-        let textNodes: Sequence<Text> = Sequence.empty();
 
-        gather(document);
-        return getApplicableTexts();
+        return visit(document);
 
-        function gather(node: Node): void {
-          // Gather all applicable text nodes
-          if (
-            node.parent().isSome() &&
-            test(
-              and(
-                isElement,
-                and(
-                  hasNamespace(Namespace.HTML),
-                  not(hasRole(device, (role) => role.isWidget())),
-                  not(hasRole(device, "group")),
-                  not(isSemanticallyDisabled)
-                )
-              ),
-              node.parent().get()
-            ) &&
-            test(and(isText, isPerceivableForAll(device)), node)
-          ) {
-            textNodes = textNodes.append(node);
-          }
-
+        function* visit(node: Node): Iterable<Text> {
           // Gather all aria-disabled widgets on the document
           if (
             test(
@@ -71,34 +48,47 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
                 isElement,
                 or(
                   hasRole(device, (role) => role.isWidget()),
-                  and(hasRole(device, "group"), isSemanticallyDisabled)
+                  isSemanticallyDisabled
                 )
               ),
               node
             )
           ) {
             const name = ariaNode.from(node, device).name;
-            if (name.isSome()) {
-              for (const source of name.get().sourceNodes()) {
-                // Store text nodes that are referenced by the disabled widget
-                if (isText(source)) {
-                  disabledWidgetTexts = disabledWidgetTexts.add(source);
-                }
-              }
-            }
+            const sources: Array<Text> = name
+              .map((name) => [...name.sourceNodes()].filter(isText))
+              .getOr([]);
+            // Store text nodes that are referenced by the disabled widget
+            disabledWidgetTexts = disabledWidgetTexts.concat(sources);
+          }
+
+          // Gather all applicable text nodes
+          if (
+            node
+              .parent()
+              .some((parent) =>
+                test(
+                  and(
+                    isElement,
+                    and(
+                      hasNamespace(Namespace.HTML),
+                      not(hasRole(device, (role) => role.isWidget())),
+                      not(hasRole(device, "group")),
+                      not(isSemanticallyDisabled)
+                    )
+                  ),
+                  parent
+                )
+              ) &&
+            test(and(isText, isPerceivableForAll(device)), node) &&
+            // Filter out text nodes that are contained in disabledWidgetNames
+            !disabledWidgetTexts.has(node)
+          ) {
+            yield node;
           }
 
           for (const child of node.children(Node.fullTree)) {
-            gather(child);
-          }
-        }
-
-        function* getApplicableTexts(): Iterable<Text> {
-          // Filter out text nodes that are contained in disabledWidgetNames
-          for (const textNode of textNodes) {
-            if (disabledWidgetTexts.none((text) => text.equals(textNode))) {
-              yield textNode;
-            }
+            yield* visit(child);
           }
         }
       },

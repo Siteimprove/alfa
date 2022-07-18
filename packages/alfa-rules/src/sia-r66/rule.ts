@@ -19,7 +19,6 @@ import { contrast } from "../common/expectation/contrast";
 import { Contrast as Outcomes } from "../common/outcome/contrast";
 
 import { Scope } from "../tags";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 
 const { hasRole, isPerceivableForAll, isSemanticallyDisabled } = DOM;
