@@ -58,9 +58,13 @@ function testExceptions(testId) {
     case "Name_text-label-embedded-select":
     case "Name_text-label-embedded-slider":
     case "Name_text-label-embedded-spinbutton":
+    case "Name_checkbox-label-embedded-listbox":
+    case "Name_file-label-owned-combobox-owned-listbox":
+    case "Name_file-label-owned-combobox":
+    case "Name_heading-combobox-focusable-alternative":
       return {
         reason:
-          "Alfa does not implement step 2C of Accessible name computation",
+          "Alfa does not implement step 2C of Accessible name computation (form embedded in label)",
         issue: "https://github.com/Siteimprove/alfa/issues/305",
       };
     case "Name_test_case_548":
@@ -91,11 +95,18 @@ function testExceptions(testId) {
     case "Name_test_case_760":
     case "Name_test_case_761":
     case "Name_test_case_762":
+    case "Name_file-label-inline-block-styles":
       return {
         reason: "Alfa does not support :before and :after pseudo-elements",
         issue: "https://github.com/Siteimprove/alfa/issues/954",
       };
-    case "Name_text-label-embedded-spinbutton":
+    case "Name_from_content":
+    case "Name_from_content_of_labelledby_element":
+    case "Name_from_content_of_label":
+    case "Name_checkbox-label-embedded-textbox":
+    case "Name_file-label-inline-block-elements":
+    case "Name_file-label-inline-hidden-elements":
+    case "Name_link-mixed-content":
       return {
         reason: "Alfa join content traversal without spaces",
         issue: "https://github.com/Siteimprove/alfa/issues/1054",
@@ -151,7 +162,12 @@ async function main() {
     warning +
     imports +
     statements
-      .filter(({ testId }) => testId !== "Name_test_case_663_.28DO_NOT_USE.29")
+      .filter(
+        ({ testId }) =>
+          testId !== "Name_test_case_663_.28DO_NOT_USE.29" &&
+          testId !==
+            "Description_from_content_of_describedby_element_which_is_hidden_.28DO_NOT_USE.29"
+      )
       .map(printNameTestCase)
       .join("\n");
 

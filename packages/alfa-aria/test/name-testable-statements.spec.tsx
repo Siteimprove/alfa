@@ -153,7 +153,7 @@ test("Name test case 546", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_547}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 547", (t) => {
@@ -208,7 +208,7 @@ test("Name test case 548", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_549}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 549", (t) => {
@@ -238,7 +238,7 @@ test("Name test case 549", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_550}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 550", (t) => {
@@ -446,7 +446,7 @@ test("Name test case 561", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_562}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 562", (t) => {
@@ -469,7 +469,7 @@ test("Name test case 562", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_563}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 563", (t) => {
@@ -490,7 +490,7 @@ test("Name test case 563", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_564}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 564", (t) => {
@@ -517,7 +517,7 @@ test("Name test case 564", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_565}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 565", (t) => {
@@ -547,7 +547,7 @@ test("Name test case 565", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_566}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 566", (t) => {
@@ -984,7 +984,7 @@ test("Name test case 616", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_617}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 617", (t) => {
@@ -1009,7 +1009,7 @@ test("Name test case 617", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_618}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 618", (t) => {
@@ -1034,7 +1034,7 @@ test("Name test case 618", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_619}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 619", (t) => {
@@ -1059,7 +1059,7 @@ test("Name test case 619", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_620}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 620", (t) => {
@@ -1084,7 +1084,7 @@ test("Name test case 620", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_621}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 621", (t) => {
@@ -1357,7 +1357,7 @@ test("Name test case 726", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_727}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 727", (t) => {
@@ -1381,7 +1381,7 @@ test("Name test case 727", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_728}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 728", (t) => {
@@ -1405,7 +1405,7 @@ test("Name test case 728", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_729}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 729", (t) => {
@@ -1429,7 +1429,7 @@ test("Name test case 729", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_730}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 730", (t) => {
@@ -1453,7 +1453,7 @@ test("Name test case 730", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_731}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 731", (t) => {
@@ -1632,7 +1632,7 @@ test("Name test case 737", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_738}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 738", (t) => {
@@ -1662,7 +1662,7 @@ test("Name test case 738", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_739}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 739", (t) => {
@@ -1692,7 +1692,7 @@ test("Name test case 739", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_740}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 740", (t) => {
@@ -1722,7 +1722,7 @@ test("Name test case 740", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_741}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 741", (t) => {
@@ -1752,7 +1752,7 @@ test("Name test case 741", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_742}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 742", (t) => {
@@ -1782,7 +1782,7 @@ test("Name test case 742", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_743}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 743", (t) => {
@@ -1811,7 +1811,7 @@ test("Name test case 743", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_744}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 744", (t) => {
@@ -1840,7 +1840,7 @@ test("Name test case 744", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_745}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 745", (t) => {
@@ -1869,7 +1869,7 @@ test("Name test case 745", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_746}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 746", (t) => {
@@ -1898,7 +1898,7 @@ test("Name test case 746", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_747}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name test case 747", (t) => {
@@ -2292,7 +2292,7 @@ test("Name test case 762", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-combobox}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name checkbox-label-embedded-combobox", (t) => {
@@ -2326,7 +2326,7 @@ test("Name checkbox-label-embedded-combobox", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-menu}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name checkbox-label-embedded-menu", (t) => {
@@ -2361,7 +2361,7 @@ test("Name checkbox-label-embedded-menu", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-select}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name checkbox-label-embedded-select", (t) => {
@@ -2390,7 +2390,7 @@ test("Name checkbox-label-embedded-select", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-slider}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name checkbox-label-embedded-slider", (t) => {
@@ -2424,7 +2424,7 @@ test("Name checkbox-label-embedded-slider", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-spinbutton}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name checkbox-label-embedded-spinbutton", (t) => {
@@ -2475,7 +2475,7 @@ test("Name checkbox-title", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-embedded-combobox}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-embedded-combobox", (t) => {
@@ -2509,7 +2509,7 @@ test("Name file-label-embedded-combobox", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-embedded-menu}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-embedded-menu", (t) => {
@@ -2544,7 +2544,7 @@ test("Name file-label-embedded-menu", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-embedded-select}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-embedded-select", (t) => {
@@ -2573,7 +2573,7 @@ test("Name file-label-embedded-select", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-embedded-slider}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-embedded-slider", (t) => {
@@ -2607,7 +2607,7 @@ test("Name file-label-embedded-slider", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-embedded-spinbutton}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-embedded-spinbutton", (t) => {
@@ -2675,7 +2675,7 @@ test("Name image-title", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_password-label-embedded-combobox}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name password-label-embedded-combobox", (t) => {
@@ -2709,7 +2709,7 @@ test("Name password-label-embedded-combobox", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_password-label-embedded-menu}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name password-label-embedded-menu", (t) => {
@@ -2744,7 +2744,7 @@ test("Name password-label-embedded-menu", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_password-label-embedded-select}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name password-label-embedded-select", (t) => {
@@ -2773,7 +2773,7 @@ test("Name password-label-embedded-select", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_password-label-embedded-slider}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name password-label-embedded-slider", (t) => {
@@ -2807,7 +2807,7 @@ test("Name password-label-embedded-slider", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_password-label-embedded-spinbutton}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name password-label-embedded-spinbutton", (t) => {
@@ -2858,7 +2858,7 @@ test("Name password-title", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_radio-label-embedded-combobox}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name radio-label-embedded-combobox", (t) => {
@@ -2892,7 +2892,7 @@ test("Name radio-label-embedded-combobox", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_radio-label-embedded-menu}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name radio-label-embedded-menu", (t) => {
@@ -2927,7 +2927,7 @@ test("Name radio-label-embedded-menu", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_radio-label-embedded-select}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name radio-label-embedded-select", (t) => {
@@ -2956,7 +2956,7 @@ test("Name radio-label-embedded-select", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_radio-label-embedded-slider}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name radio-label-embedded-slider", (t) => {
@@ -2990,7 +2990,7 @@ test("Name radio-label-embedded-slider", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_radio-label-embedded-spinbutton}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name radio-label-embedded-spinbutton", (t) => {
@@ -3041,7 +3041,7 @@ test("Name radio-title", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_text-label-embedded-combobox}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name text-label-embedded-combobox", (t) => {
@@ -3075,7 +3075,7 @@ test("Name text-label-embedded-combobox", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_text-label-embedded-menu}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name text-label-embedded-menu", (t) => {
@@ -3110,7 +3110,7 @@ test("Name text-label-embedded-menu", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_text-label-embedded-select}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name text-label-embedded-select", (t) => {
@@ -3139,7 +3139,7 @@ test("Name text-label-embedded-select", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_text-label-embedded-slider}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name text-label-embedded-slider", (t) => {
@@ -3173,7 +3173,7 @@ test("Name text-label-embedded-slider", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_text-label-embedded-spinbutton}
  *
- * Alfa does not implement step 2C of Accessible name computation
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
  * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name text-label-embedded-spinbutton", (t) => {
@@ -3223,6 +3223,9 @@ test("Name text-title", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_from_content}
+ *
+ * Alfa join content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1054}
  */
 test("Name from content", (t) => {
   const testCase = (
@@ -3268,7 +3271,7 @@ test("Name from content", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(
+  t.notEqual(
     getName(target),
     "My name is Eli the weird. (QED) Where are my marbles?"
   );
@@ -3276,6 +3279,9 @@ test("Name from content", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_from_content_of_labelledby_element}
+ *
+ * Alfa join content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1054}
  */
 test("Name from content of labelledby element", (t) => {
   const testCase = (
@@ -3322,7 +3328,7 @@ test("Name from content of labelledby element", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(
+  t.notEqual(
     getName(target),
     "My name is Eli the weird. (QED) Where are my marbles?"
   );
@@ -3330,6 +3336,9 @@ test("Name from content of labelledby element", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_from_content_of_label}
+ *
+ * Alfa join content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1054}
  */
 test("Name from content of label", (t) => {
   const testCase = (
@@ -3376,7 +3385,7 @@ test("Name from content of label", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(
+  t.notEqual(
     getName(target),
     "My name is Eli the weird. (QED) Where are my marbles?"
   );
@@ -3496,6 +3505,9 @@ test("Name 1.0 combobox-focusable", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-listbox}
+ *
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name checkbox-label-embedded-listbox", (t) => {
   const testCase = (
@@ -3519,11 +3531,14 @@ test("Name checkbox-label-embedded-listbox", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_checkbox-label-embedded-textbox}
+ *
+ * Alfa join content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1054}
  */
 test("Name checkbox-label-embedded-textbox", (t) => {
   const testCase = (
@@ -3543,7 +3558,7 @@ test("Name checkbox-label-embedded-textbox", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
@@ -3588,6 +3603,9 @@ test("Name checkbox-label-multiple-label", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-inline-block-elements}
+ *
+ * Alfa join content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1054}
  */
 test("Name file-label-inline-block-elements", (t) => {
   const testCase = (
@@ -3614,11 +3632,14 @@ test("Name file-label-inline-block-elements", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "What is your name?");
+  t.notEqual(getName(target), "What is your name?");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-inline-block-styles}
+ *
+ * Alfa does not support :before and :after pseudo-elements
+ * {@link https://github.com/Siteimprove/alfa/issues/954}
  */
 test("Name file-label-inline-block-styles", (t) => {
   const testCase = (
@@ -3643,11 +3664,14 @@ test("Name file-label-inline-block-styles", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "This is a test.");
+  t.notEqual(getName(target), "This is a test.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-inline-hidden-elements}
+ *
+ * Alfa join content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1054}
  */
 test("Name file-label-inline-hidden-elements", (t) => {
   const testCase = (
@@ -3677,11 +3701,14 @@ test("Name file-label-inline-hidden-elements", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "2 4 6 8 10");
+  t.notEqual(getName(target), "2 4 6 8 10");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-owned-combobox-owned-listbox}
+ *
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-owned-combobox-owned-listbox", (t) => {
   const testCase = (
@@ -3711,11 +3738,14 @@ test("Name file-label-owned-combobox-owned-listbox", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 2 times.");
+  t.notEqual(getName(target), "Flash the screen 2 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-owned-combobox}
+ *
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name file-label-owned-combobox", (t) => {
   const testCase = (
@@ -3743,11 +3773,14 @@ test("Name file-label-owned-combobox", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Flash the screen 1 times.");
+  t.notEqual(getName(target), "Flash the screen 1 times.");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_link-mixed-content}
+ *
+ * Alfa join content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1054}
  */
 test("Name link-mixed-content", (t) => {
   const testCase = (
@@ -3781,7 +3814,7 @@ test("Name link-mixed-content", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "My name is Eli the weird. (QED)");
+  t.notEqual(getName(target), "My name is Eli the weird. (QED)");
 });
 
 /**
@@ -3805,6 +3838,9 @@ test("Name link-with-label", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_heading-combobox-focusable-alternative}
+ *
+ * Alfa does not implement step 2C of Accessible name computation (form embedded in label)
+ * {@link https://github.com/Siteimprove/alfa/issues/305}
  */
 test("Name heading-combobox-focusable-alternative", (t) => {
   const testCase = (
@@ -3825,5 +3861,5 @@ test("Name heading-combobox-focusable-alternative", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Country of origin: United States");
+  t.notEqual(getName(target), "Country of origin: United States");
 });
