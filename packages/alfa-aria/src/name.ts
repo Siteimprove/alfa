@@ -20,9 +20,11 @@ import { Role } from "./role";
 
 import * as predicate from "./name/predicate";
 
+import { isProgrammaticallyHidden } from "./dom/predicate/is-programmatically-hidden";
+
 const { hasId, isElement } = Element;
 const { isText } = Text;
-const { equals } = Predicate;
+const { equals, test } = Predicate;
 const { or } = Refinement;
 
 /**
@@ -624,7 +626,12 @@ export namespace Name {
 
     // Step 2A: Is the element hidden and not referenced?
     // https://w3c.github.io/accname/#step2A
-    if (!state.isReferencing && isHidden(element, device)) {
+    if (
+      !state.isReferencing &&
+      // https://www.w3.org/TR/wai-aria-1.2/#dfn-hidden
+      // https://github.com/w3c/accname/issues/30
+      test(isProgrammaticallyHidden(device), element)
+    ) {
       return None;
     }
 
@@ -856,35 +863,4 @@ export namespace Name {
 
 function flatten(string: string): string {
   return string.replace(/\s+/g, " ");
-}
-
-function isRendered(node: Node, device: Device): boolean {
-  if (Element.isElement(node)) {
-    const display = Style.from(node, device).computed("display").value;
-
-    const {
-      values: [outside],
-    } = display;
-
-    if (outside.value === "none") {
-      return false;
-    }
-  }
-
-  return node
-    .parent(Node.flatTree)
-    .every((parent) => isRendered(parent, device));
-}
-
-/**
- * {@link https://w3c.github.io/accname/#dfn-hidden}
- * {@link https://github.com/w3c/accname/issues/30}
- */
-function isHidden(element: Element, device: Device): boolean {
-  return (
-    !isRendered(element, device) ||
-    element
-      .attribute("aria-hidden")
-      .some((attribute) => attribute.value.toLowerCase() === "true")
-  );
 }
