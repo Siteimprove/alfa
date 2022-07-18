@@ -265,10 +265,10 @@ test("evaluate() is inapplicable to text nodes in disabled groups", async (t) =>
 test("evaluate() is inapplicable to elements that are used in name of disabled widgets", async (t) => {
   const document = h.document([
     <html>
-      <fieldset name="Disabled widget name" disabled>
+      <fieldset aria-labelledby="label" disabled>
         <button>Hello world</button>
       </fieldset>
-      <div>widget name</div>
+      <div id="label">widget name</div>
     </html>,
   ]);
 

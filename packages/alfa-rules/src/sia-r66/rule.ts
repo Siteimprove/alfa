@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { DOM } from "@siteimprove/alfa-aria";
+import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -20,6 +20,7 @@ import { Contrast as Outcomes } from "../common/outcome/contrast";
 
 import { Scope } from "../tags";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Set } from "@siteimprove/alfa-set";
 
 const { hasRole, isPerceivableForAll, isSemanticallyDisabled } = DOM;
 const { hasNamespace, isElement } = Element;
@@ -36,11 +37,11 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        let disabledWidgetNames: Sequence<string> = Sequence.empty();
+        let disabledWidgetTexts: Set<Text> = Set.empty();
         let textNodes: Sequence<Text> = Sequence.empty();
 
         gather(document);
-        return getApplicableLinks();
+        return getApplicableTexts();
 
         function gather(node: Node): void {
           // Gather all applicable text nodes
@@ -76,11 +77,15 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
               node
             )
           ) {
-            // Compute the names of these elements
-            const names = node.attributes
-              .filter((attribute) => attribute.name === "name")
-              .map((attribute) => attribute.value);
-            disabledWidgetNames = disabledWidgetNames.concat(names);
+            const name = ariaNode.from(node, device).name;
+            if (name.isSome()) {
+              for (const source of name.get().sourceNodes()) {
+                // Store text nodes that are referenced by the disabled widget
+                if (isText(source)) {
+                  disabledWidgetTexts = disabledWidgetTexts.add(source);
+                }
+              }
+            }
           }
 
           for (const child of node.children(Node.fullTree)) {
@@ -88,12 +93,10 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
           }
         }
 
-        function* getApplicableLinks(): Iterable<Text> {
+        function* getApplicableTexts(): Iterable<Text> {
           // Filter out text nodes that are contained in disabledWidgetNames
           for (const textNode of textNodes) {
-            if (
-              disabledWidgetNames.none((name) => name.includes(textNode.data))
-            ) {
+            if (disabledWidgetTexts.none((text) => text.equals(textNode))) {
               yield textNode;
             }
           }
