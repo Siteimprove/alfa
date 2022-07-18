@@ -186,6 +186,7 @@ function printNameTestCase({ title, kind, testId, code, targetId, result }) {
 
   // <style> elements are poorly handled by our JSX :-/
   // This discard the type="text/css" bit of them, which is OK.
+  // <style …>[style]</style>[jsxCode]
   const match = code.match(/<style[^>]*>([^]*)<[/]style>([^]*)/m);
   let jsxCode = code;
   let style = "";
@@ -225,9 +226,10 @@ test("${title}", (t) => {
 });
 `;
 }
-// Some input are written as <input …> with no (self-)closing tag,
+// Some input elements are written as <input …> with no (self-)closing tag,
 // turning them into self-closing tags.
 function fixMissingClosingTag(code) {
+  // <input [content]> => <input [content]/>
   return code.replace(/<input ([^/>]*[^/])>/gm, "<input $1/>");
 }
 
@@ -251,6 +253,7 @@ function styleStringToStyleObjectString(str) {
 }
 
 function fixStyleAttribute(code) {
+  // style="[style in kebab-case]" => style={{[style im camelCase]}}
   return code.replace(
     /style="([^"]*)"/gm,
     (_, style) => `style=${styleStringToStyleObjectString(style)}`
@@ -269,13 +272,15 @@ function fixCodeException(id, code) {
     case "Name_test_case_613":
       return code.replace(/<[/]body>/m, "");
     case "Name_file-label-inline-block-elements":
-      // Not technically a problem, but still make JSX unhappy
+      // Not technically a problem, but still makes JSX unhappy
       return code.replace(/<br>/m, "<br />");
     default:
       return code;
   }
 }
 
+// Our JSX doesn't really handle <style> elements. Turning them into an Alôfa
+// style sheet :-/
 // Fortunately the <style> elements are not too complex
 // This is still bad…
 function styleElementToStyleSheet(style) {
