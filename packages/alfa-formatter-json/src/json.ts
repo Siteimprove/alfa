@@ -7,7 +7,7 @@ const { stringify } = JSON;
  * @public
  */
 export default function <I, T, Q, S>(): Formatter<I, T, Q, S> {
-  return async function JSON(input, rules, outcomes) {
+  return function JSON(input, rules, outcomes) {
     return stringify(
       {
         input: Serializable.toJSON(input),

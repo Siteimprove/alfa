@@ -1,4 +1,5 @@
 import { Outcome, Rule } from "@siteimprove/alfa-act";
+import { Future } from "@siteimprove/alfa-future";
 import { Result, Err } from "@siteimprove/alfa-result";
 
 /**
@@ -8,7 +9,7 @@ export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (
   input: I,
   rules: Iterable<Rule<I, T, Q, S>>,
   outcomes: Iterable<Outcome<I, T, Q, S>>
-) => Promise<string>;
+) => Future.Maybe<string>;
 
 /**
  * @public

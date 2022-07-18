@@ -4,12 +4,13 @@
 
 ```ts
 
+import { Future } from '@siteimprove/alfa-future';
 import { Outcome } from '@siteimprove/alfa-act';
 import { Result } from '@siteimprove/alfa-result';
 import { Rule } from '@siteimprove/alfa-act';
 
 // @public (undocumented)
-export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (input: I, rules: Iterable<Rule<I, T, Q, S>>, outcomes: Iterable<Outcome<I, T, Q, S>>) => Promise<string>;
+export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (input: I, rules: Iterable<Rule<I, T, Q, S>>, outcomes: Iterable<Outcome<I, T, Q, S>>) => Future.Maybe<string>;
 
 // @public (undocumented)
 export namespace Formatter {
