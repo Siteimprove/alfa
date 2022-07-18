@@ -209,6 +209,8 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
     ...Name.from(button, device).get().sourceNodes(),
   ]);
 
+  t.equal(actual.length, 3);
+
   t.deepEqual(actual[0], {
     type: "attribute",
     namespace: null,
