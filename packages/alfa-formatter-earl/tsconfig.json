@@ -13,6 +13,9 @@
       "path": "../alfa-formatter"
     },
     {
+      "path": "../alfa-future"
+    },
+    {
       "path": "../alfa-test"
     }
   ]
