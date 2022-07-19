@@ -310,11 +310,9 @@ export namespace Calculation {
     /**
      * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-type}
      */
-    export type Map = Record<
-      {
-        [K in Base]: number;
-      }
-    >;
+    export type Map = Record<{
+      [K in Base]: number;
+    }>;
 
     /**
      * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-base-type}
@@ -383,14 +381,14 @@ export namespace Calculation {
     }
   }
 
-  export class Value extends Expression {
-    public static of(value: Numeric): Value {
+  export class Value<N extends Numeric = Numeric> extends Expression {
+    public static of<N extends Numeric = Numeric>(value: N): Value<N> {
       return new Value(value);
     }
 
-    private readonly _value: Numeric;
+    private readonly _value: N;
 
-    private constructor(value: Numeric) {
+    private constructor(value: N) {
       super();
 
       this._value = value;
@@ -418,11 +416,23 @@ export namespace Calculation {
       return Kind.of();
     }
 
-    public get value(): Numeric {
+    public get value(): N {
       return this._value;
     }
 
-    public reduce(resolve: Mapper<Numeric>): Expression {
+    public reduce(
+      this: Value<Length<Unit.Length.Absolute>>,
+      resolve: Mapper<Numeric>
+    ): Value<Length<"px">>;
+
+    public reduce(
+      this: Value<Angle>,
+      resolve: Mapper<Numeric>
+    ): Value<Angle<"deg">>;
+
+    public reduce<M extends Numeric = Numeric>(resolve: Mapper<N, M>): Value<M>;
+
+    public reduce(resolve: Mapper<N, Numeric>): Value {
       const value = this._value;
 
       if (isLength(value) && value.isAbsolute()) {
