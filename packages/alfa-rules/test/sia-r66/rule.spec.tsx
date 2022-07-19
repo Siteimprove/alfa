@@ -275,6 +275,40 @@ test("evaluate() is inapplicable to elements that are used in name of disabled w
   t.deepEqual(await evaluate(R66, { document }), [inapplicable(R66)]);
 });
 
+test(`evaluate() is inapplicable to the text that is part of a label of a disabled widget
+      and the label is the label for an input in a fieldset with the disabled attribute`, async (t) => {
+  const document = h.document([
+    <html>
+      <label style={{ color: "#888", background: "white" }}>
+        My name
+        <input type="text" disabled />
+      </label>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R66, { document }), [inapplicable(R66)]);
+});
+
+test(`evaluate() is inapplicable to the text that is part of a label of a disabled widget 
+      and the label is the label for an input in an div with role="group" and aria-disabled="true" attribute`, async (t) => {
+  const document = h.document([
+    <html>
+      <div
+        role="group"
+        aria-disabled="true"
+        style={{ color: "#888", background: "white" }}
+      >
+        <label>
+          My name
+          <input />
+        </label>
+      </div>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R66, { document }), [inapplicable(R66)]);
+});
+
 test("evaluate() passes when a background color with sufficient contrast is input", async (t) => {
   const target = h.text("Hello world");
 

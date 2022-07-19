@@ -20,6 +20,7 @@ import { Contrast as Outcomes } from "../common/outcome/contrast";
 
 import { Scope } from "../tags";
 import { Set } from "@siteimprove/alfa-set";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 const { hasRole, isPerceivableForAll, isSemanticallyDisabled } = DOM;
 const { hasNamespace, isElement } = Element;
@@ -37,10 +38,11 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
     return {
       applicability() {
         let disabledWidgetTexts: Set<Text> = Set.empty();
+        let textNodes: Sequence<Text> = Sequence.empty();
+        gather(document);
+        return getApplicableTexts();
 
-        return visit(document);
-
-        function* visit(node: Node): Iterable<Text> {
+        function gather(node: Node): void {
           // Gather all aria-disabled widgets on the document
           if (
             test(
@@ -84,11 +86,19 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
             // Filter out text nodes that are contained in disabledWidgetNames
             !disabledWidgetTexts.has(node)
           ) {
-            yield node;
+            textNodes = textNodes.append(node);
           }
 
           for (const child of node.children(Node.fullTree)) {
-            yield* visit(child);
+            gather(child);
+          }
+        }
+
+        function* getApplicableTexts(): Iterable<Text> {
+          for (const textNode of textNodes) {
+            if (!disabledWidgetTexts.has(textNode)) {
+              yield textNode;
+            }
           }
         }
       },
