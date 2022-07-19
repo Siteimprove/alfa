@@ -135,7 +135,9 @@ export default Property.register(
             return value;
           });
 
-          fontSize = expression.toLength().or(expression.toPercentage()).get();
+          fontSize = expression.toLength().get();
+
+          // return fontSize as Computed;
         }
 
         switch (fontSize.type) {
@@ -143,13 +145,13 @@ export default Property.register(
             return Resolver.length(fontSize, style.parent);
 
           case "percentage": {
-            const parent = style.parent.computed("font-size").value as Computed;
+            const parent = style.parent.computed("font-size").value;
 
             return Length.of(parent.value * fontSize.value, parent.unit);
           }
 
           case "keyword": {
-            const parent = style.parent.computed("font-size").value as Computed;
+            const parent = style.parent.computed("font-size").value;
 
             switch (fontSize.value) {
               case "larger":
