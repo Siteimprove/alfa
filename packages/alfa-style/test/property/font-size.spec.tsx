@@ -111,3 +111,18 @@ test("#cascaded() ignores `font-size: calc(20deg)`", (t) => {
 
   t.equal(style.cascaded("font-size").isNone(), true);
 });
+
+test("#computed() resolves `font-size: calc(100% + 2%)`", (t) => {
+  const element = <div style={{ fontSize: "calc(100% + 2%)" }} />;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("font-size").toJSON(), {
+    value: {
+      type: "length",
+      value: 16.32,
+      unit: "px",
+    },
+    source: h.declaration("font-size", "calc(100% + 2%)").toJSON(),
+  });
+});
