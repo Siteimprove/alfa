@@ -82,9 +82,7 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
                   parent
                 )
               ) &&
-            test(and(isText, isPerceivableForAll(device)), node) &&
-            // Filter out text nodes that are contained in disabledWidgetNames
-            !disabledWidgetTexts.has(node)
+            test(and(isText, isPerceivableForAll(device)), node)
           ) {
             textNodes = textNodes.append(node);
           }
@@ -96,6 +94,7 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
 
         function* getApplicableTexts(): Iterable<Text> {
           for (const textNode of textNodes) {
+            // Filter out text nodes that are contained in disabledWidgetNames
             if (!disabledWidgetTexts.has(textNode)) {
               yield textNode;
             }
