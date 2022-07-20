@@ -38,7 +38,7 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
     return {
       applicability() {
         // Gather all aria-disabled widgets or groups on the document
-        let disabledWidgetTexts: Set<Text> = Set.from(
+        const disabledWidgetTexts: Set<Text> = Set.from(
           document
             .descendants(Node.fullTree)
             .filter((node) =>
