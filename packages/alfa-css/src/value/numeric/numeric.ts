@@ -29,6 +29,8 @@ export abstract class Numeric<T extends string = string>
     return this._value;
   }
 
+  public abstract scale(factor: number): Numeric<T>;
+
   public equals(value: unknown): value is this {
     return value instanceof Numeric && value._value === this._value;
   }

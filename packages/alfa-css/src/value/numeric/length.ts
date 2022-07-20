@@ -68,6 +68,10 @@ export class Length<U extends Unit.Length = Unit.Length>
     return Unit.isAbsoluteLength(this._unit);
   }
 
+  public scale(factor: number): Length<U> {
+    return new Length(this._value * factor, this._unit);
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof Length &&

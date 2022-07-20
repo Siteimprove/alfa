@@ -47,6 +47,10 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
     return new Angle(Converter.angle(this._value, this._unit, unit), unit);
   }
 
+  public scale(factor: number): Angle<U> {
+    return new Angle(this._value * factor, this._unit);
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof Angle &&

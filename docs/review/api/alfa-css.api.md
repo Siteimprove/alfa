@@ -34,6 +34,8 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<"angle",
     // (undocumented)
     static of<U extends Unit.Angle>(value: number, unit: U): Angle<U>;
     // (undocumented)
+    scale(factor: number): Angle<U>;
+    // (undocumented)
     toJSON(): Angle.JSON;
     // (undocumented)
     toString(): string;
@@ -917,6 +919,8 @@ export class Integer extends Numeric<"integer"> {
     // (undocumented)
     static of(value: number): Integer;
     // (undocumented)
+    scale(factor: number): Integer;
+    // (undocumented)
     toJSON(): Integer.JSON;
     // (undocumented)
     get type(): "integer";
@@ -988,6 +992,8 @@ export class Length<U extends Unit.Length = Unit.Length> extends Dimension<"leng
     isViewportRelative(): this is Length<Unit.Length.Relative.Viewport>;
     // (undocumented)
     static of<U extends Unit.Length>(value: number, unit: U): Length<U>;
+    // (undocumented)
+    scale(factor: number): Length<U>;
     // (undocumented)
     toJSON(): Length.JSON<U>;
     // (undocumented)
@@ -1300,6 +1306,8 @@ class Number_2 extends Numeric<"number"> {
     // (undocumented)
     static of(value: number): Number_2;
     // (undocumented)
+    scale(factor: number): Number_2;
+    // (undocumented)
     toJSON(): Number_2.JSON;
     // (undocumented)
     get type(): "number";
@@ -1332,6 +1340,8 @@ export abstract class Numeric<T extends string = string> extends Value<T> implem
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
+    abstract scale(factor: number): Numeric<T>;
+    // (undocumented)
     abstract toJSON(): Numeric.JSON<T>;
     // (undocumented)
     toString(): string;
@@ -1360,6 +1370,8 @@ export class Percentage extends Numeric<"percentage"> {
     equals(value: unknown): value is this;
     // (undocumented)
     static of(value: number): Percentage;
+    // (undocumented)
+    scale(factor: number): Percentage;
     // (undocumented)
     toJSON(): Percentage.JSON;
     // (undocumented)
@@ -1494,12 +1506,12 @@ export namespace Position {
             const // (undocumented)
             parseKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword<"left"> | Keyword<"right">, Offset<Unit.Length>>, string, []>;
             const // (undocumented)
-            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"left"> | Keyword<"right">, Length<Unit.Length> | Percentage>, string, []>;
+            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"left"> | Keyword<"right">, Percentage | Length<Unit.Length>>, string, []>;
             const // (undocumented)
             parse: Parser<Slice<Token>, Component<Horizontal, Unit.Length>, string, []>;
         }
         const // (undocumented)
-        parseValue: Parser<Slice<Token>, Length<Unit.Length> | Percentage, string, []>;
+        parseValue: Parser<Slice<Token>, Percentage | Length<Unit.Length>, string, []>;
         // (undocumented)
         export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
         // (undocumented)
@@ -1507,7 +1519,7 @@ export namespace Position {
             const // (undocumented)
             parseKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword<"top"> | Keyword<"bottom">, Offset<Unit.Length>>, string, []>;
             const // (undocumented)
-            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"top"> | Keyword<"bottom">, Length<Unit.Length> | Percentage>, string, []>;
+            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"top"> | Keyword<"bottom">, Percentage | Length<Unit.Length>>, string, []>;
             const // (undocumented)
             parse: Parser<Slice<Token>, Component<Vertical, Unit.Length>, string, []>;
         }

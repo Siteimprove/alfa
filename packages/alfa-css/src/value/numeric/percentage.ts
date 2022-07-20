@@ -24,6 +24,10 @@ export class Percentage extends Numeric<"percentage"> {
     return "percentage";
   }
 
+  public scale(factor: number): Percentage {
+    return new Percentage(this._value * factor);
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Percentage && super.equals(value);
   }

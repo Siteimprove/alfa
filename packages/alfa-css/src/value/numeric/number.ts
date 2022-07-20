@@ -24,6 +24,10 @@ export class Number extends Numeric<"number"> {
     return "number";
   }
 
+  public scale(factor: number): Number {
+    return new Number(this._value * factor);
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Number && super.equals(value);
   }
