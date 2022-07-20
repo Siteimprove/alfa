@@ -276,7 +276,7 @@ test("evaluate() is inapplicable to elements that are used in name of disabled w
 });
 
 test(`evaluate() is inapplicable to the text that is part of a label of a disabled widget
-      and the label is the label for an input in a fieldset with the disabled attribute`, async (t) => {
+      and the label is the label for an input with type="text"`, async (t) => {
   const document = h.document([
     <html>
       <label style={{ color: "#888", background: "white" }}>
@@ -289,8 +289,8 @@ test(`evaluate() is inapplicable to the text that is part of a label of a disabl
   t.deepEqual(await evaluate(R66, { document }), [inapplicable(R66)]);
 });
 
-test(`evaluate() is inapplicable to the text that is part of a label of a disabled widget 
-      and the label is the label for an input in an div with role="group" and aria-disabled="true" attribute`, async (t) => {
+test(`evaluate() is inapplicable to the text that is part of a label of a disabled widget
+      and the label is the label for an input in a div with role="group" and aria-disabled="true" attribute`, async (t) => {
   const document = h.document([
     <html>
       <div
