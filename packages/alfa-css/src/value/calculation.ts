@@ -334,7 +334,9 @@ export namespace Calculation {
   /**
    * {@link https://drafts.csswg.org/css-values/#calculation-tree}
    */
-  export abstract class Expression implements Equatable, Serializable {
+  export abstract class Expression<N extends Numeric = Numeric>
+    implements Equatable, Serializable
+  {
     public abstract get type(): string;
 
     public abstract get kind(): Kind;
@@ -362,7 +364,7 @@ export namespace Calculation {
 
     public abstract equals(value: unknown): value is this;
 
-    public toJSON(): Expression.JSON {
+    public toJSON(): Expression.JSON<N> {
       return {
         type: this.type,
       };
@@ -375,13 +377,13 @@ export namespace Calculation {
   }
 
   export namespace Expression {
-    export interface JSON {
+    export interface JSON<N extends Numeric = Numeric> {
       [key: string]: json.JSON;
       type: string;
     }
   }
 
-  export class Value<N extends Numeric = Numeric> extends Expression {
+  export class Value<N extends Numeric = Numeric> extends Expression<N> {
     public static of<N extends Numeric = Numeric>(value: N): Value<N> {
       return new Value(value);
     }
@@ -450,10 +452,10 @@ export namespace Calculation {
       return value instanceof Value && value._value.equals(this._value);
     }
 
-    public toJSON(): Value.JSON {
+    public toJSON(): Value.JSON<N> {
       return {
         type: "value",
-        value: this._value.toJSON(),
+        value: Serializable.toJSON<N>(this._value),
       };
     }
 
@@ -463,15 +465,16 @@ export namespace Calculation {
   }
 
   export namespace Value {
-    export interface JSON extends Expression.JSON {
+    export interface JSON<N extends Numeric = Numeric>
+      extends Expression.JSON<N> {
       type: "value";
-      value: Numeric.JSON;
+      value: Serializable.ToJSON<N>;
     }
   }
 
-  export function isValueExpression(
-    expression: Expression
-  ): expression is Value {
+  export function isValueExpression<N extends Numeric = Numeric>(
+    expression: Expression<N>
+  ): expression is Value<N> {
     return expression.type === "value";
   }
 
@@ -479,7 +482,8 @@ export namespace Calculation {
    * {@link https://drafts.csswg.org/css-values/#calculation-tree-operator-nodes}
    */
   export abstract class Operation<
-    O extends Array<Expression> = Array<Expression>
+    N extends Numeric = Numeric,
+    O extends Array<Expression<N>> = Array<Expression<N>>
   > extends Expression {
     protected readonly _operands: Readonly<O>;
     protected readonly _kind: Kind;
@@ -499,16 +503,22 @@ export namespace Calculation {
       return this._kind;
     }
 
-    public equals(value: this): value is this {
+    public equals(value: Operation<N, O>): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Operation &&
         value.type === this.type &&
         value._operands.length === this._operands.length &&
-        value._operands.every((operand, i) => operand.equals(this._operands[i]))
+        value._operands.every((operand: Expression, i: number) =>
+          operand.equals(this._operands[i])
+        )
       );
     }
 
-    public toJSON(): Operation.JSON {
+    public toJSON(): Operation.JSON<N> {
       return {
         ...super.toJSON(),
         operands: this._operands.map((operand) => operand.toJSON()),
@@ -517,27 +527,45 @@ export namespace Calculation {
   }
 
   export namespace Operation {
-    export interface JSON extends Expression.JSON {
-      operands: Array<Expression.JSON>;
+    export interface JSON<N extends Numeric = Numeric>
+      extends Expression.JSON<N> {
+      operands: Array<Expression.JSON<N>>;
     }
 
-    export abstract class Unary extends Operation<[Expression]> {
-      protected constructor(operands: [Expression], kind: Kind) {
+    export abstract class Unary<N extends Numeric = Numeric> extends Operation<
+      N,
+      [Expression<N>]
+    > {
+      protected constructor(operands: [Expression<N>], kind: Kind) {
         super(operands, kind);
       }
     }
 
-    export abstract class Binary extends Operation<[Expression, Expression]> {
-      protected constructor(operands: [Expression, Expression], kind: Kind) {
+    // N and M are the types allowed in the Expression.Value inside this
+    // **not** the type of the expression itself (which is computed with the
+    // kind property).
+    // Types may cancel when resolving computation, e.g. `2px / 1px` is unitless
+    // but uses length as values.
+    export abstract class Binary<
+      N extends Numeric = Numeric,
+      M extends Numeric = Numeric
+    > extends Operation<N | M, [Expression<N>, Expression<M>]> {
+      protected constructor(
+        operands: [Expression<N>, Expression<M>],
+        kind: Kind
+      ) {
         super(operands, kind);
       }
     }
   }
 
-  export class Sum extends Operation.Binary {
-    public static of(
-      ...operands: [Expression, Expression]
-    ): Result<Sum, string> {
+  export class Sum<
+    N extends Numeric = Numeric,
+    M extends Numeric = Numeric
+  > extends Operation.Binary<N, M> {
+    public static of<N extends Numeric = Numeric, M extends Numeric = Numeric>(
+      ...operands: [Expression<N>, Expression<M>]
+    ): Result<Sum<N, M>, string> {
       const [fst, snd] = operands;
 
       const kind = fst.kind.add(snd.kind);
