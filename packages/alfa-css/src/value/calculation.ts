@@ -93,6 +93,10 @@ export namespace Calculation {
     expression: Expression.JSON;
   }
 
+  export function isCalculation(value: unknown): value is Calculation {
+    return value instanceof Calculation;
+  }
+
   /**
    * {@link https://drafts.css-houdini.org/css-typed-om/#numeric-typing}
    *
@@ -309,6 +313,10 @@ export namespace Calculation {
       hint: Hint | null;
     }
 
+    export function isKind(value: unknown): value is Kind {
+      return value instanceof Kind;
+    }
+
     /**
      * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-type}
      */
@@ -459,10 +467,8 @@ export namespace Calculation {
     }
   }
 
-  export function isValueExpression(
-    expression: Expression
-  ): expression is Value {
-    return expression.type === "value";
+  export function isValueExpression(value: unknown): value is Value {
+    return value instanceof Value;
   }
 
   /**
@@ -523,11 +529,6 @@ export namespace Calculation {
       }
     }
 
-    // N and M are the types allowed in the Expression.Value inside this
-    // **not** the type of the expression itself (which is computed with the
-    // kind property).
-    // Types may cancel when resolving computation, e.g. `2px / 1px` is unitless
-    // but uses length as values.
     export abstract class Binary extends Operation<[Expression, Expression]> {
       protected constructor(operands: [Expression, Expression], kind: Kind) {
         super(operands, kind);
@@ -595,8 +596,8 @@ export namespace Calculation {
     }
   }
 
-  export function isSumExpression(expression: Expression): expression is Sum {
-    return expression.type === "sum";
+  export function isSumExpression(value: unknown): value is Sum {
+    return value instanceof Sum;
   }
 
   export class Negate extends Operation.Unary {
@@ -647,10 +648,8 @@ export namespace Calculation {
     }
   }
 
-  export function isNegateExpression(
-    expression: Expression
-  ): expression is Negate {
-    return expression.type === "negate";
+  export function isNegateExpression(value: unknown): value is Negate {
+    return value instanceof Negate;
   }
 
   export class Product extends Operation.Binary {
@@ -714,10 +713,8 @@ export namespace Calculation {
     }
   }
 
-  export function isProductExpression(
-    expression: Expression
-  ): expression is Product {
-    return expression.type === "product";
+  export function isProductExpression(value: unknown): value is Product {
+    return value instanceof Product;
   }
 
   export class Invert extends Operation.Unary {
@@ -760,10 +757,8 @@ export namespace Calculation {
     }
   }
 
-  export function isInvertExpression(
-    expression: Expression
-  ): expression is Invert {
-    return expression.type === "invert";
+  export function isInvertExpression(value: unknown): value is Invert {
+    return value instanceof Invert;
   }
 
   let parseSum: Parser<Slice<Token>, Expression, string>;
