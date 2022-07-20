@@ -10,8 +10,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Token } from "../syntax/token";
 
 import { Color } from "./color";
-import { Length } from "./length";
-import { Percentage } from "./percentage";
+import { Length, Percentage } from "./numeric";
 
 import { Linear, Radial } from "..";
 
@@ -36,7 +35,8 @@ export namespace Gradient {
   export class Stop<
     C extends Color = Color,
     P extends Length | Percentage = Length | Percentage
-  > implements Equatable, Hashable, Serializable {
+  > implements Equatable, Hashable, Serializable
+  {
     public static of<C extends Color, P extends Length | Percentage>(
       color: C,
       position: Option<P> = None
@@ -133,7 +133,8 @@ export namespace Gradient {
    * {@link https://drafts.csswg.org/css-images/#color-transition-hint}
    */
   export class Hint<P extends Length | Percentage = Length | Percentage>
-    implements Equatable, Hashable, Serializable {
+    implements Equatable, Hashable, Serializable
+  {
     public static of<P extends Length | Percentage>(position: P): Hint<P> {
       return new Hint(position);
     }

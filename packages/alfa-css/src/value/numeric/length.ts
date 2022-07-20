@@ -2,10 +2,10 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax/token";
+import { Token } from "../../syntax/token";
 
-import { Converter, Convertible } from "./converter";
-import { Unit } from "./unit";
+import { Converter, Convertible } from "../unit/converter";
+import { Unit } from "../unit/unit";
 import { Dimension } from "./dimension";
 
 const { map, either } = Parser;

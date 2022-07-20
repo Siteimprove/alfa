@@ -9,7 +9,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Token } from "../../syntax/token";
 import { Value } from "../../value";
 
-import { Angle } from "../angle";
+import { Angle } from "../numeric";
 import { Gradient } from "../gradient";
 
 const { map, either, pair, option, left, right, delimited } = Parser;

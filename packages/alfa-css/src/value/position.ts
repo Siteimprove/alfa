@@ -7,8 +7,7 @@ import { Err } from "@siteimprove/alfa-result";
 import { Token } from "../syntax/token";
 import { Value } from "../value";
 import { Keyword } from "./keyword";
-import { Length } from "./length";
-import { Percentage } from "./percentage";
+import { Length, Percentage } from "./numeric";
 import { Unit } from "./unit";
 
 const { map, either, pair, right } = Parser;

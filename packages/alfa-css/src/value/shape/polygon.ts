@@ -10,20 +10,12 @@ import { Token } from "../../syntax/token";
 import { Function } from "../../syntax/function";
 import { Value } from "../../value";
 
-import { Length } from "../length";
-import { Percentage } from "../percentage";
+import { Length } from "../numeric/length";
+import { Percentage } from "../numeric/percentage";
 import { Keyword } from "../keyword";
 
-const {
-  either,
-  left,
-  map,
-  option,
-  pair,
-  right,
-  separated,
-  separatedList,
-} = Parser;
+const { either, left, map, option, pair, right, separated, separatedList } =
+  Parser;
 const { parseComma, parseWhitespace } = Token;
 
 /**
@@ -107,9 +99,8 @@ export class Polygon<
 export namespace Polygon {
   export type Fill = Keyword<"nonzero"> | Keyword<"evenodd">;
 
-  export type Vertex<
-    V extends Length | Percentage = Length | Percentage
-  > = readonly [V, V];
+  export type Vertex<V extends Length | Percentage = Length | Percentage> =
+    readonly [V, V];
 
   export interface JSON<
     F extends Fill = Fill,
@@ -128,11 +119,7 @@ export namespace Polygon {
     parseLengthPercentage
   );
 
-  export const parse: Parser<
-    Slice<Token>,
-    Polygon,
-    string
-  > = map(
+  export const parse: Parser<Slice<Token>, Polygon, string> = map(
     Function.parse(
       "polygon",
       pair(

@@ -3,9 +3,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
 
-import { Angle } from "./angle";
-import { Number } from "./number";
-import { Percentage } from "./percentage";
+import { Angle, Number, Percentage } from "./numeric";
 import { Keyword } from "./keyword";
 
 import { Current } from "./color/current";

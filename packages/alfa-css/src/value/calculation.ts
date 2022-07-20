@@ -13,12 +13,14 @@ import { Function } from "../syntax/function";
 
 import { Value } from "../value";
 
-import { Angle } from "./angle";
-import { Dimension } from "./dimension";
-import { Length } from "./length";
-import { Number } from "./number";
-import { Numeric } from "./numeric";
-import { Percentage } from "./percentage";
+import {
+  Angle,
+  Dimension,
+  Length,
+  Number,
+  Numeric,
+  Percentage,
+} from "./numeric";
 import { Unit } from "./unit";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Result, Err } from "@siteimprove/alfa-result";
