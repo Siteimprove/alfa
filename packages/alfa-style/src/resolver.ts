@@ -19,6 +19,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
 
 import { Style } from "./style";
+import { Value } from "./value";
 
 /**
  * Resolvers are functions that resolve values to their canonical, computed
@@ -31,10 +32,13 @@ export namespace Resolver {
    * Resolve a percentage, according to a base numeric value
    */
   export function percentage<N extends Numeric = Numeric>(
-    percentage: Percentage,
     base: N
-  ): N {
-    return base.scale(percentage.value) as N;
+  ): (percentage: Percentage) => N {
+    return (percentage) => base.scale(percentage.value) as N;
+  }
+
+  export function length2(style: Style): (value: Length) => Length<"px"> {
+    return (value) => length(value, style);
   }
 
   /**
@@ -57,7 +61,7 @@ export namespace Resolver {
       case "rem": {
         const { value: rootFontSize } = style.root().computed("font-size");
 
-        return Length.of(rootFontSize.value * value, fontSize.unit);
+        return Length.of(rootFontSize.value * value, rootFontSize.unit);
       }
 
       // https://www.w3.org/TR/css-values/#ex

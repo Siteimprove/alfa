@@ -5,11 +5,13 @@ import {
   Calculation,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
 import * as Family from "./font-family";
+import length2 = Resolver.length2;
 
 const { either, filter } = Parser;
 
@@ -119,33 +121,27 @@ export default Property.register(
     parse,
     (fontSize, style) =>
       fontSize.map((fontSize) => {
+        const percentageResolver = Resolver.percentage(
+          style.parent.computed("font-size").value
+        );
+        const lengthResolver = length2(style.parent);
+
         switch (fontSize.type) {
           case "calculation":
-            const { expression } = fontSize.reduce((value) => {
-              if (Length.isLength(value)) {
-                return Resolver.length(value, style.parent);
-              }
-
-              if (Percentage.isPercentage(value)) {
-                return Resolver.percentage(
-                  value,
-                  style.parent.computed("font-size").value
-                );
-              }
-
-              return value;
-            });
+            const { expression } = fontSize.reduce((value) =>
+              Selective.of(value)
+                .if(Length.isLength, lengthResolver)
+                .if(Percentage.isPercentage, percentageResolver)
+                .get()
+            );
 
             return expression.toLength().get() as Computed;
 
           case "length":
-            return Resolver.length(fontSize, style.parent);
+            return lengthResolver(fontSize);
 
           case "percentage": {
-            return Resolver.percentage(
-              fontSize,
-              style.parent.computed("font-size").value
-            );
+            return percentageResolver(fontSize);
           }
 
           case "keyword": {
