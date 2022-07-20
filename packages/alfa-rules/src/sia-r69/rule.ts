@@ -37,39 +37,35 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        let disabledWidgetTexts: Set<Text> = Set.empty();
-        gatherDisabledWidgetTexts(document);
-        return visit(document);
-
-        function gatherDisabledWidgetTexts(node: Node): void {
-          // Gather all aria-disabled widgets or groups on the document
-          if (
-            test(
-              and(
-                isElement,
+        // Gather all aria-disabled widgets or groups on the document
+        let disabledWidgetTexts: Set<Text> = Set.from(
+          document
+            .descendants(Node.fullTree)
+            .filter((node) =>
+              test(
                 and(
-                  or(
-                    hasRole(device, (role) => role.isWidget()),
-                    hasRole(device, "group")
-                  ),
-                  isSemanticallyDisabled
-                )
-              ),
-              node
+                  isElement,
+                  and(
+                    or(
+                      hasRole(device, (role) => role.isWidget()),
+                      hasRole(device, "group")
+                    ),
+                    isSemanticallyDisabled
+                  )
+                ),
+                node
+              )
             )
-          ) {
-            const name = ariaNode.from(node, device).name;
-            const sources: Array<Text> = name
-              .map((name) => [...name.sourceNodes()].filter(isText))
-              .getOr([]);
-            // Store text nodes that are referenced by the disabled widget
-            disabledWidgetTexts = disabledWidgetTexts.concat(sources);
-          }
-
-          for (const child of node.children(Node.fullTree)) {
-            gatherDisabledWidgetTexts(child);
-          }
-        }
+            .flatMap((element) =>
+              ariaNode
+                .from(element, device)
+                .name.map((name) =>
+                  Sequence.fromIterable(name.sourceNodes()).filter(isText)
+                )
+                .getOr(Sequence.empty<Text>())
+            )
+        );
+        return visit(document);
 
         function* visit(node: Node): Iterable<Text> {
           if (
