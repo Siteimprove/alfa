@@ -174,7 +174,7 @@ export namespace ElementDistinguishable {
         ["text-decoration", Serialise.textDecoration(style)] as const,
         ["box-shadow", Serialise.boxShadow(style)] as const,
       ].filter(([_, value]) => value !== ""),
-      Array.sortWith([...pairings], (a, b) => a.compare(b))
+      Array.sort(Array.from(pairings))
     );
   }
 }

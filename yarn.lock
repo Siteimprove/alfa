@@ -1447,6 +1447,7 @@ __metadata:
   dependencies:
     "@siteimprove/alfa-earl": "workspace:^0.41.0"
     "@siteimprove/alfa-formatter": "workspace:^0.41.0"
+    "@siteimprove/alfa-future": "workspace:^0.41.0"
     "@siteimprove/alfa-test": "workspace:^0.41.0"
     jsonld: ^6.0.0
   languageName: unknown
@@ -1477,6 +1478,7 @@ __metadata:
   resolution: "@siteimprove/alfa-formatter@workspace:packages/alfa-formatter"
   dependencies:
     "@siteimprove/alfa-act": "workspace:^0.41.0"
+    "@siteimprove/alfa-future": "workspace:^0.41.0"
     "@siteimprove/alfa-result": "workspace:^0.41.0"
     "@siteimprove/alfa-test": "workspace:^0.41.0"
   languageName: unknown

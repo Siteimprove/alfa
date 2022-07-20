@@ -1,5 +1,6 @@
 import { Serializable, EARL } from "@siteimprove/alfa-earl";
 import { Formatter } from "@siteimprove/alfa-formatter";
+import { Future } from "@siteimprove/alfa-future";
 
 import * as jsonld from "jsonld";
 
@@ -11,7 +12,7 @@ const { stringify } = JSON;
  * @public
  */
 export default function <I, T, Q, S>(): Formatter<I, T, Q, S> {
-  return async function EARL(input, rules, outcomes) {
+  return function EARL(input, rules, outcomes) {
     const subject = Serializable.toEARL(input);
 
     let earl = {
@@ -38,9 +39,9 @@ export default function <I, T, Q, S>(): Formatter<I, T, Q, S> {
       ],
     } as jsonld.JsonLdDocument;
 
-    const compact = await jsonld.compact(earl, ACTContext);
-
-    return stringify(compact, null, 2);
+    return Future.from(jsonld.compact(earl, ACTContext)).map((compact) =>
+      stringify(compact, null, 2)
+    );
   };
 }
 
