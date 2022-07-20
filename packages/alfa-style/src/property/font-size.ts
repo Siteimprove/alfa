@@ -127,10 +127,10 @@ export default Property.register(
               }
 
               if (Percentage.isPercentage(value)) {
-                const parent = style.parent.computed("font-size")
-                  .value as Computed;
-
-                return Length.of(parent.value * value.value, parent.unit);
+                return Resolver.percentage(
+                  value,
+                  style.parent.computed("font-size").value
+                );
               }
 
               return value;
@@ -142,9 +142,10 @@ export default Property.register(
             return Resolver.length(fontSize, style.parent);
 
           case "percentage": {
-            const parent = style.parent.computed("font-size").value;
-
-            return Length.of(parent.value * fontSize.value, parent.unit);
+            return Resolver.percentage(
+              fontSize,
+              style.parent.computed("font-size").value
+            );
           }
 
           case "keyword": {
@@ -152,16 +153,15 @@ export default Property.register(
 
             switch (fontSize.value) {
               case "larger":
-                return Length.of(parent.value * 1.2, parent.unit);
+                return parent.scale(1.2);
 
               case "smaller":
-                return Length.of(parent.value * 0.85, parent.unit);
+                return parent.scale(0.85);
 
               default: {
                 const factor = factors[fontSize.value];
 
-                const [family] = style.computed("font-family")
-                  .value as Family.Computed;
+                const [family] = style.computed("font-family").value;
 
                 const base =
                   family.type === "keyword" ? bases[family.value] : bases.serif;

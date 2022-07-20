@@ -7,6 +7,7 @@ import {
   Image,
   Length,
   Linear,
+  Numeric,
   Percentage,
   Position,
   Radial,
@@ -26,6 +27,16 @@ import { Style } from "./style";
  * @internal
  */
 export namespace Resolver {
+  /**
+   * Resolve a percentage, according to a base numeric value
+   */
+  export function percentage<N extends Numeric = Numeric>(
+    percentage: Percentage,
+    base: N
+  ): N {
+    return base.scale(percentage.value) as N;
+  }
+
   /**
    * Resolve a length in an arbitrary unit to a length in pixels.
    *
