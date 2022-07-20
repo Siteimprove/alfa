@@ -119,28 +119,25 @@ export default Property.register(
     parse,
     (fontSize, style) =>
       fontSize.map((fontSize) => {
-        if (fontSize.type === "calculation") {
-          const { expression } = fontSize.reduce((value) => {
-            if (Length.isLength(value)) {
-              return Resolver.length(value, style.parent);
-            }
-
-            if (Percentage.isPercentage(value)) {
-              const parent = style.parent.computed("font-size")
-                .value as Computed;
-
-              return Length.of(parent.value * value.value, parent.unit);
-            }
-
-            return value;
-          });
-
-          fontSize = expression.toLength().get();
-
-          // return fontSize as Computed;
-        }
-
         switch (fontSize.type) {
+          case "calculation":
+            const { expression } = fontSize.reduce((value) => {
+              if (Length.isLength(value)) {
+                return Resolver.length(value, style.parent);
+              }
+
+              if (Percentage.isPercentage(value)) {
+                const parent = style.parent.computed("font-size")
+                  .value as Computed;
+
+                return Length.of(parent.value * value.value, parent.unit);
+              }
+
+              return value;
+            });
+
+            return expression.toLength().get() as Computed;
+
           case "length":
             return Resolver.length(fontSize, style.parent);
 
