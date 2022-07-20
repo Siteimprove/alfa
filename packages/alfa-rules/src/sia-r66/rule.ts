@@ -41,19 +41,17 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
         const disabledWidgetTexts: Set<Text> = Set.from(
           document
             .descendants(Node.fullTree)
-            .filter((node) =>
-              test(
+            .filter(
+              and(
+                isElement,
                 and(
-                  isElement,
-                  and(
-                    or(
-                      hasRole(device, (role) => role.isWidget()),
-                      hasRole(device, "group")
-                    ),
-                    isSemanticallyDisabled
-                  )
-                ),
-                node
+                  hasRole(
+                    device,
+                    (role) => role.isWidget() || role.is("group")
+                  ),
+
+                  isSemanticallyDisabled
+                )
               )
             )
             .flatMap((element) =>
@@ -65,6 +63,7 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
                 .getOr(Sequence.empty<Text>())
             )
         );
+
         return visit(document);
 
         function* visit(node: Node): Iterable<Text> {
