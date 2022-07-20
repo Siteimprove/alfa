@@ -143,7 +143,7 @@ export class Calculation extends Value<"calculation"> {
 // @public (undocumented)
 export namespace Calculation {
     // (undocumented)
-    export abstract class Expression implements Equatable, Serializable {
+    export abstract class Expression<N extends Numeric = Numeric> implements Equatable, Serializable {
         // (undocumented)
         abstract equals(value: unknown): value is this;
         // (undocumented)
@@ -151,7 +151,7 @@ export namespace Calculation {
         // (undocumented)
         abstract reduce(resolve: Mapper<Numeric>): Expression;
         // (undocumented)
-        toJSON(): Expression.JSON;
+        toJSON(): Expression.JSON<N>;
         // (undocumented)
         toLength(): Option<Length>;
         // (undocumented)
@@ -164,7 +164,7 @@ export namespace Calculation {
     // (undocumented)
     export namespace Expression {
         // (undocumented)
-        export interface JSON {
+        export interface JSON<N extends Numeric = Numeric> {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
@@ -193,7 +193,7 @@ export namespace Calculation {
     // (undocumented)
     export function isSumExpression(expression: Expression): expression is Sum;
     // (undocumented)
-    export function isValueExpression(expression: Expression): expression is Value;
+    export function isValueExpression<N extends Numeric = Numeric>(expression: Expression<N>): expression is Value<N>;
     // (undocumented)
     export interface JSON {
         // (undocumented)
@@ -262,10 +262,12 @@ export namespace Calculation {
         get type(): "negate";
     }
     // (undocumented)
-    export abstract class Operation<O extends Array<Expression> = Array<Expression>> extends Expression {
+    export abstract class Operation<N extends Numeric = Numeric, O extends Array<Expression<N>> = Array<Expression<N>>> extends Expression {
         protected constructor(operands: Readonly<O>, kind: Kind);
         // (undocumented)
-        equals(value: this): value is this;
+        equals(value: Operation<N, O>): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
         // (undocumented)
         get kind(): Kind;
         // (undocumented)
@@ -275,22 +277,24 @@ export namespace Calculation {
         // (undocumented)
         protected readonly _operands: Readonly<O>;
         // (undocumented)
-        toJSON(): Operation.JSON;
+        toJSON(): Operation.JSON<N>;
     }
     // (undocumented)
     export namespace Operation {
         // (undocumented)
-        export abstract class Binary extends Operation<[Expression, Expression]> {
-            protected constructor(operands: [Expression, Expression], kind: Kind);
+        export abstract class Binary<N extends Numeric = Numeric, M extends Numeric = Numeric> extends Operation<N | M, [Expression<N>, Expression<M>]> {
+            protected constructor(operands: [Expression<N>, Expression<M>], kind: Kind);
         }
         // (undocumented)
-        export interface JSON extends Expression.JSON {
+        export interface JSON<N extends Numeric = Numeric> extends Expression.JSON<N> {
             // (undocumented)
-            operands: Array<Expression.JSON>;
+            operands: Array<Expression.JSON<N>>;
         }
         // (undocumented)
-        export abstract class Unary extends Operation<[Expression]> {
-            protected constructor(operands: [Expression], kind: Kind);
+        export abstract class Unary<N extends Numeric = Numeric> extends Operation<N, [
+        Expression<N>
+        ]> {
+            protected constructor(operands: [Expression<N>], kind: Kind);
         }
     }
     // (undocumented)
@@ -305,9 +309,9 @@ export namespace Calculation {
         get type(): "product";
     }
     // (undocumented)
-    export class Sum extends Operation.Binary {
+    export class Sum<N extends Numeric = Numeric, M extends Numeric = Numeric> extends Operation.Binary<N, M> {
         // (undocumented)
-        static of(...operands: [Expression, Expression]): Result<Sum, string>;
+        static of<N extends Numeric = Numeric, M extends Numeric = Numeric>(...operands: [Expression<N>, Expression<M>]): Result<Sum<N, M>, string>;
         // (undocumented)
         reduce(resolve: Mapper<Numeric>): Expression;
         // (undocumented)
@@ -316,32 +320,36 @@ export namespace Calculation {
         get type(): "sum";
     }
     // (undocumented)
-    export class Value extends Expression {
+    export class Value<N extends Numeric = Numeric> extends Expression<N> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         get kind(): Kind;
         // (undocumented)
-        static of(value: Numeric): Value;
+        static of<N extends Numeric = Numeric>(value: N): Value<N>;
         // (undocumented)
-        reduce(resolve: Mapper<Numeric>): Expression;
+        reduce(this: Value<Length<Unit.Length.Absolute>>, resolve: Mapper<Numeric>): Value<Length<"px">>;
         // (undocumented)
-        toJSON(): Value.JSON;
+        reduce(this: Value<Angle>, resolve: Mapper<Numeric>): Value<Angle<"deg">>;
+        // (undocumented)
+        reduce<M extends Numeric = Numeric>(resolve: Mapper<N, M>): Value<M>;
+        // (undocumented)
+        toJSON(): Value.JSON<N>;
         // (undocumented)
         toString(): string;
         // (undocumented)
         get type(): "value";
         // (undocumented)
-        get value(): Numeric;
+        get value(): N;
     }
     // (undocumented)
     export namespace Value {
         // (undocumented)
-        export interface JSON extends Expression.JSON {
+        export interface JSON<N extends Numeric = Numeric> extends Expression.JSON<N> {
             // (undocumented)
             type: "value";
             // (undocumented)
-            value: Numeric.JSON;
+            value: Serializable.ToJSON<N>;
         }
     }
     const // (undocumented)
