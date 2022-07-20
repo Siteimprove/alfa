@@ -38,11 +38,11 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
     return {
       applicability() {
         let disabledWidgetTexts: Set<Text> = Set.empty();
-        gatherdisabledWidgetTexts(document);
+        gatherDisabledWidgetTexts(document);
         return visit(document);
 
-        // Gather all aria-disabled widgets or groups on the document
-        function gatherdisabledWidgetTexts(node: Node): void {
+        function gatherDisabledWidgetTexts(node: Node): void {
+          // Gather all aria-disabled widgets or groups on the document
           if (
             test(
               and(
@@ -67,7 +67,7 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
           }
 
           for (const child of node.children(Node.fullTree)) {
-            gatherdisabledWidgetTexts(child);
+            gatherDisabledWidgetTexts(child);
           }
         }
 
