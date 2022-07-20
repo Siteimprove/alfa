@@ -6,6 +6,7 @@ import { Token } from "../../syntax/token";
 
 import { Converter, Convertible } from "../unit/converter";
 import { Unit } from "../unit/unit";
+import { Angle } from "./angle";
 import { Dimension } from "./dimension";
 
 const { map, either } = Parser;
@@ -68,7 +69,11 @@ export class Length<U extends Unit.Length = Unit.Length>
   }
 
   public equals(value: unknown): value is this {
-    return value instanceof Length && super.equals(value);
+    return (
+      value instanceof Length &&
+      super.equals(value) &&
+      value._unit === this._unit
+    );
   }
 
   public hash(hash: Hash): void {
