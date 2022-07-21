@@ -279,7 +279,7 @@ function fixCodeException(id, code) {
   }
 }
 
-// Our JSX doesn't really handle <style> elements. Turning them into an Alôfa
+// Our JSX doesn't really handle <style> elements. Turning them into an Alfa
 // style sheet :-/
 // Fortunately the <style> elements are not too complex
 // This is still bad…
