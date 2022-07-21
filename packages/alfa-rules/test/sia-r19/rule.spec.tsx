@@ -134,22 +134,12 @@ test("evaluate() passes an aria-dropeffect property with a valid token list valu
 
 test("evaluate() passes an aria-setsize property with the value -1 when the total number of items is unknown", async (t) => {
   const target = (
-    <li role="option" aria-setsize="-1" aria-posinset="5">
+    <li role="option" aria-setsize="-1">
       apples
     </li>
   );
 
-  const document = h.document([
-    <ul role="listbox">
-      {target}
-      <li role="option" aria-setsize="-1" aria-posinset="6">
-        bananas
-      </li>
-      <li role="option" aria-setsize="-1" aria-posinset="7">
-        cantaloupes
-      </li>
-    </ul>,
-  ]);
+  const document = h.document([<ul role="listbox">{target}</ul>]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-setsize").get(), {
