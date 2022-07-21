@@ -132,6 +132,22 @@ test("evaluate() passes an aria-dropeffect property with a valid token list valu
   ]);
 });
 
+test("evaluate() passes an aria-setsize property with the value -1 when the total number of items is unknown", async (t) => {
+  const target = (
+    <li role="option" aria-setsize="-1">
+      apples
+    </li>
+  );
+
+  const document = h.document([<ul role="listbox">{target}</ul>]);
+
+  t.deepEqual(await evaluate(R19, { document }), [
+    passed(R19, target.attribute("aria-setsize").get(), {
+      1: Outcomes.HasValidValue,
+    }),
+  ]);
+});
+
 test("evaluate() fails an aria-expanded state with an invalid true/false/undefined value", async (t) => {
   const target = (
     <div role="button" aria-expanded="mixed">
