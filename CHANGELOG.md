@@ -19,6 +19,43 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.42.0](../../compare/v0.41.0...v0.42.0) (2022-07-21)
+
+### Breaking
+
+- [@packages/alfa-aria](packages/alfa-aria): `isPerceivable` has been renamed `isPerceivableForAll`, matching its intend; the negation of `isIgnored`, named `isIncludedInTheAccessibilityTree`, has been added as it's a frequent use case. ([#1178](../../pull/1178))
+
+- [@packages/alfa-rules](packages/alfa-rules): SIA-R62 version 1 is now deprecated and will be removed in a later release; SIA-R62 version 2 is now the stable version and should be imported from `Rules`, not `experimentadlRules`. ([#1143](../../issues/1143), [#1180](../../pull/1180))
+
+- [@packages/alfa-formatter](packages/alfa-formatter), [@packages/alfa-formatter-earl](packages/alfa-formatter-earl), [@packages/alfa-formatter-json](packages/alfa-formatter-json), [@packages/alfa-formatter-sarif](packages/alfa-formatter-sarif): Formatters are now allowed to be synchronous again. The JSON and SARIF formatters are synchronous again. The JSON formatter returns a `Future` rather than a `Promise`. ([#1194](../../pull/1194))
+
+
+### Added
+
+- [@packages/alfa-rules](packages/alfa-rules): SIA-R65 now exports in its extended diagnostic the classes matching the targets, and the number of matches of targets and non-targets. ([#1161](../../issues/1161), [#1164](../../pull/1164))
+
+- [@packages/alfa-rules](packages/alfa-rules): SIA-R53 now exports the previous heading in its extended diagnostic. ([#1187](../../issues/1187), [#1188](../../pull/1188))
+
+### Changed
+
+- [@packages/alfa-array](packages/alfa-array): `Array.sortWith` now keeps the type of elements even if the comparer function accepts super-type arguments. ([#1189](../../pull/1189))
+
+### Fixed
+
+- [@packages/alfa-rules](packages/alfa-rules): SIA-R78 now correctly only searches for accessible content between accessible headings. ([#1039](../../issues/1039), [#1138](../../issues/1138), [#1179](../../pull/1179))
+
+- [@packages/alfa-rules](packages/alfa-rules): `getForeground` (SIA-R66, SIA-R69) now automatically resolves `currentcolor`. ([#1174](../../issues/1174), [#1182](../../pull/1182))
+
+- [@packages/alfa-rules](packages/alfa-rules): SIA-R16 now correctly only applies to elements with an explicit role. ([#949](../../issues/949), [#1185](../../pull/1185))
+
+- [@packages/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now correctly ignore texts that are used in the name of disabled widgets. ([#1149](../../issues/1149), [#1191](../../pull/1191))
+
+- [@packages/alfa-aria](packages/alfa-aria): `<input>` elements with a type of `button`, `reset` or `submit` can now correctly be named by a `<label>` element. ([#1193](../../pull/1193)) 
+
+- [@packages/alfa-aria](packages/alfa-aria): Elements that have `visibility: hidden` are now correctly ignored when computing name from content. ([#1193](../../pull/1193))
+
+- [@packages/alfa-aria](packages/alfa-aria): Names computed from `aria-labelledby` are now correctly concatenated in the order of tokens in the attribute, not in DOM order ([#1193](../../pull/1193))
+
 ## [0.41.0](../../compare/v0.40.0...v0.41.0) (2022-06-30)
 
 ### Breaking
