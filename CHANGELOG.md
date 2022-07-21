@@ -19,6 +19,16 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.42.1](../../compare/v0.42.0...v0.42.1) (2022-07-21)
+
+### Changed
+
+- [@packages/alfa-rules](packages/alfa-rules): The type `Flattened.Rule`, supertype for every rule, is now exported. ([#1197](../../pull/1197))
+
+### Fixed
+
+- [@packages/alfa-rules](packages/alfa-rules): SIA-R19 now correctly accepts signed numbers for `aria-*` attributes. ([#1183](../../issues/1183), [#1196](../../pull/1196))
+
 ## [0.42.0](../../compare/v0.41.0...v0.42.0) (2022-07-21)
 
 ### Breaking
