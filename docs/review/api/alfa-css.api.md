@@ -1500,27 +1500,7 @@ export namespace Position {
     // (undocumented)
     export namespace Component {
         // (undocumented)
-        export namespace Horizontal {
-            const // @internal (undocumented)
-            parseKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword<"left"> | Keyword<"right">, Offset<Unit.Length>>, string, []>;
-            const // @internal (undocumented)
-            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"left"> | Keyword<"right">, Percentage | Length<Unit.Length>>, string, []>;
-            const // (undocumented)
-            parse: Parser<Slice<Token>, Component<Horizontal, Unit.Length>, string, []>;
-        }
-        const // @internal (undocumented)
-        parseValue: Parser<Slice<Token>, Length | Percentage, string>;
-        // (undocumented)
         export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
-        // (undocumented)
-        export namespace Vertical {
-            const // @internal (undocumented)
-            parseKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword<"top"> | Keyword<"bottom">, Offset<Unit.Length>>, string, []>;
-            const // @internal (undocumented)
-            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"top"> | Keyword<"bottom">, Percentage | Length<Unit.Length>>, string, []>;
-            const // (undocumented)
-            parse: Parser<Slice<Token>, Component<Vertical, Unit.Length>, string, []>;
-        }
     }
     const // (undocumented)
     parseVertical: Parser<Slice<Token>, Keyword<"top"> | Keyword<"bottom">, string, []>;
