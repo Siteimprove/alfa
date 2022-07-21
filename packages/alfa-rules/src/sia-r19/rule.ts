@@ -82,7 +82,7 @@ function isValid(attribute: aria.Attribute): boolean {
       return true;
 
     case "integer":
-      return /^-?\d+$/.test(value);
+      return /^[+-]?\d+$/.test(value);
 
     case "number":
       return /^-?\d+(\.\d+)?$/.test(value);
