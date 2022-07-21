@@ -16,10 +16,10 @@ import {
   URL,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Mapper } from "@siteimprove/alfa-mapper";
 import { Real } from "@siteimprove/alfa-math";
 
 import { Style } from "./style";
-import { Value } from "./value";
 
 /**
  * Resolvers are functions that resolve values to their canonical, computed
@@ -33,11 +33,11 @@ export namespace Resolver {
    */
   export function percentage<N extends Numeric = Numeric>(
     base: N
-  ): (percentage: Percentage) => N {
+  ): Mapper<Percentage, N> {
     return (percentage) => base.scale(percentage.value) as N;
   }
 
-  export function length2(style: Style): (value: Length) => Length<"px"> {
+  export function length2(style: Style): Mapper<Length, Length<"px">> {
     return (value) => length(value, style);
   }
 
@@ -50,25 +50,25 @@ export namespace Resolver {
     const { unit, value } = length;
     const { viewport } = style.device;
 
-    const { value: fontSize } = style.computed("font-size");
+    const fontSize = style.computed("font-size").value;
 
     switch (unit) {
       // https://www.w3.org/TR/css-values/#em
       case "em":
-        return Length.of(fontSize.value * value, fontSize.unit);
+        return fontSize.scale(value);
 
       // https://www.w3.org/TR/css-values/#rem
       case "rem": {
-        const { value: rootFontSize } = style.root().computed("font-size");
+        const rootFontSize = style.root().computed("font-size").value;
 
-        return Length.of(rootFontSize.value * value, rootFontSize.unit);
+        return rootFontSize.scale(value);
       }
 
       // https://www.w3.org/TR/css-values/#ex
       case "ex":
       // https://www.w3.org/TR/css-values/#ch
       case "ch":
-        return Length.of(fontSize.value * value * 0.5, fontSize.unit);
+        return fontSize.scale(value * 0.5);
 
       // https://www.w3.org/TR/css-values/#vh
       case "vh":
