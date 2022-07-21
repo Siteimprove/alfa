@@ -37,16 +37,29 @@ export namespace Resolver {
     return (percentage) => base.scale(percentage.value) as N;
   }
 
-  export function length2(style: Style): Mapper<Length, Length<"px">> {
-    return (value) => length(value, style);
-  }
-
   /**
    * Resolve a length in an arbitrary unit to a length in pixels.
    *
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
-  export function length(length: Length, style: Style): Length<"px"> {
+  export function length(style: Style): Mapper<Length, Length<"px">>;
+
+  export function length(length: Length, style: Style): Length<"px">;
+
+  export function length(
+    lengthOrStyle: Length | Style,
+    style?: Style
+  ): Mapper<Length, Length<"px">> | Length<"px"> {
+    return Length.isLength(lengthOrStyle)
+      ? lengthUncurry(lengthOrStyle, style!)
+      : lengthCurry(lengthOrStyle);
+  }
+
+  function lengthCurry(style: Style): Mapper<Length, Length<"px">> {
+    return (value) => lengthUncurry(value, style);
+  }
+
+  function lengthUncurry(length: Length, style: Style): Length<"px"> {
     const { unit, value } = length;
     const { viewport } = style.device;
 

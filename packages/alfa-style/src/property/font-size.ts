@@ -10,9 +10,6 @@ import { Selective } from "@siteimprove/alfa-selective";
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-import * as Family from "./font-family";
-import length2 = Resolver.length2;
-
 const { either, filter } = Parser;
 
 declare module "../property" {
@@ -124,7 +121,7 @@ export default Property.register(
         const percentageResolver = Resolver.percentage(
           style.parent.computed("font-size").value
         );
-        const lengthResolver = length2(style.parent);
+        const lengthResolver = Resolver.length(style.parent);
 
         switch (fontSize.type) {
           case "calculation":
