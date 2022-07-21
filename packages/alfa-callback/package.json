@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-callback",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.41.0",
+  "version": "0.42.0",
   "license": "MIT",
   "description": "Types for modelling functions that can be passed around and called back with a value once available",
   "repository": {
@@ -18,10 +18,10 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-mapper": "workspace:^0.41.0"
+    "@siteimprove/alfa-mapper": "workspace:^0.42.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.41.0"
+    "@siteimprove/alfa-test": "workspace:^0.42.0"
   },
   "publishConfig": {
     "access": "public",
