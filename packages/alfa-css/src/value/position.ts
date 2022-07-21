@@ -89,15 +89,13 @@ export namespace Position {
 
   export type Vertical = Keyword<"top"> | Keyword<"bottom">;
 
-  export const parseVertical = Keyword.parse("top", "bottom");
+  const parseVertical = Keyword.parse("top", "bottom");
 
   export type Horizontal = Keyword<"left"> | Keyword<"right">;
 
-  export const parseHorizontal = Keyword.parse("left", "right");
+  const parseHorizontal = Keyword.parse("left", "right");
 
-  export type Offset<U extends Unit.Length = Unit.Length> =
-    | Length<U>
-    | Percentage;
+  type Offset<U extends Unit.Length = Unit.Length> = Length<U> | Percentage;
 
   export class Side<
     S extends Vertical | Horizontal = Vertical | Horizontal,

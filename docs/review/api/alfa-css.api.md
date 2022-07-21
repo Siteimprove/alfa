@@ -1502,12 +1502,8 @@ export namespace Position {
         // (undocumented)
         export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
     }
-    const // (undocumented)
-    parseVertical: Parser<Slice<Token>, Keyword<"top"> | Keyword<"bottom">, string, []>;
     // (undocumented)
     export type Horizontal = Keyword<"left"> | Keyword<"right">;
-    const // (undocumented)
-    parseHorizontal: Parser<Slice<Token>, Keyword<"left"> | Keyword<"right">, string, []>;
     // (undocumented)
     export interface JSON extends Value.JSON<"position"> {
         // (undocumented)
@@ -1552,6 +1548,7 @@ export namespace Position {
     }
     // (undocumented)
     export type Vertical = Keyword<"top"> | Keyword<"bottom">;
+        {};
 }
 
 // @public (undocumented)
