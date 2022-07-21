@@ -179,14 +179,23 @@ export namespace Position {
   export namespace Component {
     export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
 
+    /**
+     * @internal
+     */
     export const parseValue = either(Length.parse, Percentage.parse);
 
     export namespace Horizontal {
+      /**
+       * @internal
+       */
       export const parseKeyword = either(
         parseCenter,
         map(parseHorizontal, Side.of)
       );
 
+      /**
+       * @internal
+       */
       export const parseKeywordValue = map(
         pair(
           parseHorizontal,
@@ -203,11 +212,17 @@ export namespace Position {
     }
 
     export namespace Vertical {
+      /**
+       * @internal
+       */
       export const parseKeyword = either(
         parseCenter,
         map(parseVertical, Side.of)
       );
 
+      /**
+       * @internal
+       */
       export const parseKeywordValue = map(
         pair(
           parseVertical,
