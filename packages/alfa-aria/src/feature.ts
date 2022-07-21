@@ -475,7 +475,11 @@ const Features: Features = {
           /**
            * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset}
            */
-          return nameFromAttribute(element, "value");
+          return Name.fromSteps(
+            // {@link https://github.com/w3c/html-aam/pull/423}
+            () => nameFromLabel(element, device, state),
+            () => nameFromAttribute(element, "value")
+          );
         }
 
         if (test(hasInputType("submit"), element)) {
@@ -483,6 +487,8 @@ const Features: Features = {
            * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset}
            */
           return Name.fromSteps(
+            // {@link https://github.com/w3c/html-aam/pull/423}
+            () => nameFromLabel(element, device, state),
             () => nameFromAttribute(element, "value"),
             () => Option.of(Name.of("Submit"))
           );
@@ -493,6 +499,8 @@ const Features: Features = {
            * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-button-input-type-submit-and-input-type-reset}
            */
           return Name.fromSteps(
+            // {@link https://github.com/w3c/html-aam/pull/423}
+            () => nameFromLabel(element, device, state),
             () => nameFromAttribute(element, "value"),
             () => Option.of(Name.of("Reset"))
           );
@@ -503,6 +511,8 @@ const Features: Features = {
            * {@link https://www.w3.org/TR/html-aam-1.0/#input-type-image}
            */
           return Name.fromSteps(
+            // {@link https://github.com/w3c/html-aam/pull/423}
+            () => nameFromLabel(element, device, state),
             // The title attribute has poor and varying support, but the specs
             // use it.
             // This could be a browser-branched value.

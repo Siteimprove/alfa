@@ -297,6 +297,53 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
   });
 });
 
+test(".from() order tokens in aria-labelledby order, not DOM order", (t) => {
+  const target = (
+    <div id="test" aria-label="bar" aria-labelledby="ID1 test"></div>
+  );
+  const label = <div id="ID1">foo</div>;
+
+  <div>
+    {target}
+    {label}
+  </div>;
+
+  t.deepEqual(Name.from(target, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "foo bar",
+      sources: [
+        {
+          attribute: "/div[1]/div[1]/@aria-labelledby",
+          name: {
+            sources: [
+              {
+                element: "/div[1]/div[2]",
+                name: {
+                  sources: [
+                    {
+                      text: "/div[1]/div[2]/text()[1]",
+                      type: "data",
+                    },
+                  ],
+                  value: "foo",
+                },
+                type: "descendant",
+              },
+              {
+                attribute: "/div[1]/div[1]/@aria-label",
+                type: "label",
+              },
+            ],
+            value: "foo bar",
+          },
+          type: "reference",
+        },
+      ],
+    },
+  });
+});
+
 test(`.from() determines the name of a <button> element with a title attribute
       and no other non-whitespace child text content`, (t) => {
   const button = (

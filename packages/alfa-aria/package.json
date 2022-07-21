@@ -18,7 +18,7 @@
     "src/**/*.d.ts"
   ],
   "scripts": {
-    "generate": "node scripts/attributes.js && node scripts/roles.js"
+    "generate": "node scripts/attributes.js && node scripts/roles.js && node scripts/name-testable-statements.js"
   },
   "dependencies": {
     "@siteimprove/alfa-array": "workspace:^0.41.0",
