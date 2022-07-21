@@ -278,6 +278,8 @@ export class Name implements Equatable, Serializable<Name.JSON> {
     // (undocumented)
     get source(): ReadonlyArray<Name.Source>;
     // (undocumented)
+    sourceNodes(): Iterable_2<Node_2>;
+    // (undocumented)
     toJSON(): Name.JSON;
     // (undocumented)
     toString(): string;
@@ -321,6 +323,8 @@ export namespace Name {
         // (undocumented)
         export class Ancestor implements Equatable, Serializable<Ancestor.JSON> {
             // (undocumented)
+            [Symbol.iterator](): Iterator<Node_2>;
+            // (undocumented)
             get element(): Element_2;
             // (undocumented)
             equals(value: unknown): value is this;
@@ -352,6 +356,8 @@ export namespace Name {
         // (undocumented)
         export class Data implements Equatable, Serializable<Data.JSON> {
             // (undocumented)
+            [Symbol.iterator](): Iterator<Node_2>;
+            // (undocumented)
             equals(value: unknown): value is this;
             // (undocumented)
             static of(text: Text_2): Data;
@@ -378,6 +384,8 @@ export namespace Name {
         export function data(text: Text_2): Data;
         // (undocumented)
         export class Descendant implements Equatable, Serializable<Descendant.JSON> {
+            // (undocumented)
+            [Symbol.iterator](): Iterator<Node_2>;
             // (undocumented)
             get element(): Element_2;
             // (undocumented)
@@ -412,6 +420,8 @@ export namespace Name {
         // (undocumented)
         export class Label implements Equatable, Serializable<Label.JSON> {
             // (undocumented)
+            [Symbol.iterator](): Iterator<Node_2>;
+            // (undocumented)
             get attribute(): Attribute_2;
             // (undocumented)
             equals(value: unknown): value is this;
@@ -438,6 +448,8 @@ export namespace Name {
         export function label(attribute: Attribute_2): Label;
         // (undocumented)
         export class Reference implements Equatable, Serializable<Reference.JSON> {
+            // (undocumented)
+            [Symbol.iterator](): Iterator<Node_2>;
             // (undocumented)
             get attribute(): Attribute_2;
             // (undocumented)
