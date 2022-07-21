@@ -73,7 +73,7 @@ export namespace Flattened {
    *
    * @public
    */
-  export type Flattened = Sequence<Rule>;
+  export type Flattened = Sequence<act.Rule<Input, Target, Question, Subject>>;
 }
 
 /**
@@ -82,7 +82,9 @@ export namespace Flattened {
  *
  * @public
  */
-export const Flattened = Sequence.from<Flattened.Rule>(Rules.values());
+export const Flattened: Flattened.Flattened = Sequence.from<Flattened.Rule>(
+  Rules.values()
+);
 
 export default Flattened;
 
