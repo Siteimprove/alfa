@@ -51,6 +51,12 @@ export class Name implements Equatable, Serializable<Name.JSON> {
     return this._sources;
   }
 
+  public *sourceNodes(): Iterable<Node> {
+    for (const source of this._sources) {
+      yield* source;
+    }
+  }
+
   public isEmpty(): boolean {
     return this._value.length === 0;
   }
@@ -124,6 +130,10 @@ export namespace Name {
         return value instanceof Data && value._text.equals(this._text);
       }
 
+      public *[Symbol.iterator](): Iterator<Node> {
+        yield this._text;
+      }
+
       public toJSON(): Data.JSON {
         return {
           type: "data",
@@ -177,6 +187,11 @@ export namespace Name {
           value._element.equals(this._element) &&
           value._name.equals(this._name)
         );
+      }
+
+      public *[Symbol.iterator](): Iterator<Node> {
+        yield this._element;
+        yield* this._name.sourceNodes();
       }
 
       public toJSON(): Descendant.JSON {
@@ -234,6 +249,11 @@ export namespace Name {
         );
       }
 
+      public *[Symbol.iterator](): Iterator<Node> {
+        yield this._element;
+        yield* this._name.sourceNodes();
+      }
+
       public toJSON(): Ancestor.JSON {
         return {
           type: "ancestor",
@@ -279,6 +299,10 @@ export namespace Name {
         return (
           value instanceof Label && value._attribute.equals(this._attribute)
         );
+      }
+
+      public *[Symbol.iterator](): Iterator<Node> {
+        yield this._attribute;
       }
 
       public toJSON(): Label.JSON {
@@ -330,6 +354,11 @@ export namespace Name {
         return (
           value instanceof Reference && value._attribute.equals(this._attribute)
         );
+      }
+
+      public *[Symbol.iterator](): Iterator<Node> {
+        yield this._attribute;
+        yield* this._name.sourceNodes();
       }
 
       public toJSON(): Reference.JSON {
