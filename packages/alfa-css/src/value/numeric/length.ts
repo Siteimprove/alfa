@@ -6,7 +6,6 @@ import { Token } from "../../syntax/token";
 
 import { Converter, Convertible } from "../unit/converter";
 import { Unit } from "../unit/unit";
-import { Angle } from "./angle";
 import { Dimension } from "./dimension";
 
 const { map, either } = Parser;
