@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-web",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.42.0",
+  "version": "0.42.1",
   "license": "MIT",
   "description": "Types for modelling web resources, such as individual web pages and entire web sites",
   "repository": {
@@ -20,18 +20,18 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-device": "workspace:^0.42.0",
-    "@siteimprove/alfa-dom": "workspace:^0.42.0",
-    "@siteimprove/alfa-earl": "workspace:^0.42.0",
-    "@siteimprove/alfa-encoding": "workspace:^0.42.0",
-    "@siteimprove/alfa-graph": "workspace:^0.42.0",
-    "@siteimprove/alfa-http": "workspace:^0.42.0",
-    "@siteimprove/alfa-json": "workspace:^0.42.0",
-    "@siteimprove/alfa-refinement": "workspace:^0.42.0",
-    "@siteimprove/alfa-sarif": "workspace:^0.42.0"
+    "@siteimprove/alfa-device": "workspace:^0.42.1",
+    "@siteimprove/alfa-dom": "workspace:^0.42.1",
+    "@siteimprove/alfa-earl": "workspace:^0.42.1",
+    "@siteimprove/alfa-encoding": "workspace:^0.42.1",
+    "@siteimprove/alfa-graph": "workspace:^0.42.1",
+    "@siteimprove/alfa-http": "workspace:^0.42.1",
+    "@siteimprove/alfa-json": "workspace:^0.42.1",
+    "@siteimprove/alfa-refinement": "workspace:^0.42.1",
+    "@siteimprove/alfa-sarif": "workspace:^0.42.1"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.42.0"
+    "@siteimprove/alfa-test": "workspace:^0.42.1"
   },
   "publishConfig": {
     "access": "public",
