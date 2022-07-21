@@ -197,10 +197,7 @@ export namespace Position {
        * @internal
        */
       export const parseKeywordValue = map(
-        pair(
-          parseHorizontal,
-          right(Token.parseWhitespace, either(Length.parse, Percentage.parse))
-        ),
+        pair(parseHorizontal, right(Token.parseWhitespace, parseValue)),
         ([keyword, value]) => Side.of(keyword, Option.of(value))
       );
 
@@ -224,10 +221,7 @@ export namespace Position {
        * @internal
        */
       export const parseKeywordValue = map(
-        pair(
-          parseVertical,
-          right(Token.parseWhitespace, either(Length.parse, Percentage.parse))
-        ),
+        pair(parseVertical, right(Token.parseWhitespace, parseValue)),
         ([keyword, value]) => Side.of(keyword, Option.of(value))
       );
 

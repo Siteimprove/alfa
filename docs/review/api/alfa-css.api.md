@@ -1509,7 +1509,7 @@ export namespace Position {
             parse: Parser<Slice<Token>, Component<Horizontal, Unit.Length>, string, []>;
         }
         const // @internal (undocumented)
-        parseValue: Parser<Slice<Token>, Percentage | Length<Unit.Length>, string, []>;
+        parseValue: Parser<Slice<Token>, Length | Percentage, string>;
         // (undocumented)
         export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
         // (undocumented)
