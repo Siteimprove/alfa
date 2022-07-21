@@ -38,7 +38,9 @@ const { isPercentage } = Percentage;
  *
  * @public
  */
-export class Calculation extends Value<"calculation"> {
+export class Calculation<
+  D extends Calculation.Dimension = "unknown"
+> extends Value<"calculation"> {
   public static of(expression: Calculation.Expression): Calculation {
     return new Calculation(expression.reduce((value) => value));
   }
@@ -57,6 +59,17 @@ export class Calculation extends Value<"calculation"> {
 
   public get expression(): Calculation.Expression {
     return this._expression;
+  }
+
+  public isLength(): this is Calculation<"length"> {
+    return this._expression.kind.is("length");
+  }
+
+  public isLengthPercentage(): this is Calculation<"length" | "percentage"> {
+    return (
+      this._expression.kind.is("length", 1, true) ||
+      this._expression.kind.is("percentage")
+    );
   }
 
   public reduce(resolve: Mapper<Numeric>): Calculation {
@@ -96,6 +109,11 @@ export namespace Calculation {
   export function isCalculation(value: unknown): value is Calculation {
     return value instanceof Calculation;
   }
+
+  /**
+   * @internal
+   */
+  export type Dimension = Kind.Base | "none" | "unknown";
 
   /**
    * {@link https://drafts.css-houdini.org/css-typed-om/#numeric-typing}

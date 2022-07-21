@@ -24,7 +24,7 @@ declare module "../property" {
 export type Specified =
   | Length
   | Percentage
-  | Calculation
+  | Calculation<"length" | "percentage">
 
   // Absolute
   | Keyword<"xx-small">
@@ -66,8 +66,7 @@ export const parse = either(
     either(Percentage.parse, Length.parse),
     filter(
       Calculation.parse,
-      ({ expression: { kind } }) =>
-        kind.is("length", 1, true) || kind.is("percentage"),
+      (calculation) => calculation.isLengthPercentage(),
       () => `calc() expression must be of type "length" or "percentage"`
     )
   )
