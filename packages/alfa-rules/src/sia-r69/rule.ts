@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { DOM } from "@siteimprove/alfa-aria";
+import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Element, Text, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -19,6 +19,8 @@ import { contrast } from "../common/expectation/contrast";
 import { Contrast as Outcomes } from "../common/outcome/contrast";
 
 import { Scope } from "../tags";
+import { Set } from "@siteimprove/alfa-set";
+import { Sequence } from "@siteimprove/alfa-sequence";
 
 const { hasRole, isPerceivableForAll, isSemanticallyDisabled } = DOM;
 const { hasNamespace, isElement } = Element;
@@ -35,6 +37,33 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
   evaluate({ device, document }) {
     return {
       applicability() {
+        // Gather all aria-disabled widgets or groups on the document
+        const disabledWidgetTexts: Set<Text> = Set.from(
+          document
+            .descendants(Node.fullTree)
+            .filter(
+              and(
+                isElement,
+                and(
+                  hasRole(
+                    device,
+                    (role) => role.isWidget() || role.is("group")
+                  ),
+
+                  isSemanticallyDisabled
+                )
+              )
+            )
+            .flatMap((element) =>
+              ariaNode
+                .from(element, device)
+                .name.map((name) =>
+                  Sequence.fromIterable(name.sourceNodes()).filter(isText)
+                )
+                .getOr(Sequence.empty<Text>())
+            )
+        );
+
         return visit(document);
 
         function* visit(node: Node): Iterable<Text> {
@@ -54,7 +83,10 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
             return;
           }
 
-          if (test(and(isText, isPerceivableForAll(device)), node)) {
+          if (
+            test(and(isText, isPerceivableForAll(device)), node) &&
+            !disabledWidgetTexts.has(node)
+          ) {
             yield node;
           }
 
