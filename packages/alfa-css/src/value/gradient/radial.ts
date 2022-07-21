@@ -11,8 +11,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Token } from "../../syntax/token";
 import { Value } from "../../value";
 
-import { Length } from "../length";
-import { Percentage } from "../percentage";
+import { Length, Percentage } from "../numeric";
 import { Position } from "../position";
 import { Gradient } from "../gradient";
 import { Keyword } from "../keyword";
@@ -151,7 +150,8 @@ export namespace Radial {
    * {@link https://drafts.csswg.org/css-images/#valdef-ending-shape-circle}
    */
   export class Circle<R extends Length = Length>
-    implements Equatable, Hashable, Serializable<Circle.JSON> {
+    implements Equatable, Hashable, Serializable<Circle.JSON>
+  {
     public static of<R extends Length>(radius: R): Circle<R> {
       return new Circle(radius);
     }
@@ -206,7 +206,8 @@ export namespace Radial {
    * {@link https://drafts.csswg.org/css-images/#valdef-ending-shape-ellipse}
    */
   export class Ellipse<R extends Length | Percentage = Length | Percentage>
-    implements Equatable, Hashable, Serializable<Ellipse.JSON> {
+    implements Equatable, Hashable, Serializable<Ellipse.JSON>
+  {
     public static of<R extends Length | Percentage>(
       horizontal: R,
       vertical: R
@@ -273,7 +274,8 @@ export namespace Radial {
   }
 
   export class Extent
-    implements Equatable, Hashable, Serializable<Extent.JSON> {
+    implements Equatable, Hashable, Serializable<Extent.JSON>
+  {
     public static of(
       shape: Extent.Shape = Extent.Shape.Circle,
       size: Extent.Size = Extent.Size.FarthestCorner

@@ -7,8 +7,7 @@ import { Err } from "@siteimprove/alfa-result";
 import { Token } from "../syntax/token";
 import { Value } from "../value";
 import { Keyword } from "./keyword";
-import { Length } from "./length";
-import { Percentage } from "./percentage";
+import { Length, Percentage } from "./numeric";
 import { Unit } from "./unit";
 
 const { map, either, pair, right } = Parser;
@@ -90,15 +89,13 @@ export namespace Position {
 
   export type Vertical = Keyword<"top"> | Keyword<"bottom">;
 
-  export const parseVertical = Keyword.parse("top", "bottom");
+  const parseVertical = Keyword.parse("top", "bottom");
 
   export type Horizontal = Keyword<"left"> | Keyword<"right">;
 
-  export const parseHorizontal = Keyword.parse("left", "right");
+  const parseHorizontal = Keyword.parse("left", "right");
 
-  export type Offset<U extends Unit.Length = Unit.Length> =
-    | Length<U>
-    | Percentage;
+  type Offset<U extends Unit.Length = Unit.Length> = Length<U> | Percentage;
 
   export class Side<
     S extends Vertical | Horizontal = Vertical | Horizontal,
@@ -179,50 +176,33 @@ export namespace Position {
 
   export namespace Component {
     export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
+  }
 
-    export const parseValue = either(Length.parse, Percentage.parse);
+  const parseValue = either(Length.parse, Percentage.parse);
 
-    export namespace Horizontal {
-      export const parseKeyword = either(
-        parseCenter,
-        map(parseHorizontal, Side.of)
-      );
+  /**
+   * Parse a side keyword (top/bottom/let/right) or "center"
+   *
+   * @private
+   */
+  function parseKeyword<S extends Horizontal | Vertical>(
+    parser: Parser<Slice<Token>, S, string>
+  ): Parser<Slice<Token>, Keyword<"center"> | Side<S>, string> {
+    return either(parseCenter, map(parser, Side.of));
+  }
 
-      export const parseKeywordValue = map(
-        pair(
-          parseHorizontal,
-          right(Token.parseWhitespace, either(Length.parse, Percentage.parse))
-        ),
-        ([keyword, value]) => Side.of(keyword, Option.of(value))
-      );
-
-      export const parse = either<Slice<Token>, Component<Horizontal>, string>(
-        parseKeywordValue,
-        parseKeyword,
-        parseValue
-      );
-    }
-
-    export namespace Vertical {
-      export const parseKeyword = either(
-        parseCenter,
-        map(parseVertical, Side.of)
-      );
-
-      export const parseKeywordValue = map(
-        pair(
-          parseVertical,
-          right(Token.parseWhitespace, either(Length.parse, Percentage.parse))
-        ),
-        ([keyword, value]) => Side.of(keyword, Option.of(value))
-      );
-
-      export const parse = either<Slice<Token>, Component<Vertical>, string>(
-        parseKeywordValue,
-        parseKeyword,
-        parseValue
-      );
-    }
+  /**
+   * Parse a side keyword followed by an offset (Length | Percentage).
+   *
+   * @private
+   */
+  function parseKeywordValue<S extends Horizontal | Vertical>(
+    parser: Parser<Slice<Token>, S, string>
+  ): Parser<Slice<Token>, Side<S>, string> {
+    return map(
+      pair(parser, right(Token.parseWhitespace, parseValue)),
+      ([keyword, value]) => Side.of(keyword, Option.of(value))
+    );
   }
 
   /**
@@ -260,36 +240,41 @@ export namespace Position {
       Component<Horizontal>
     ]) => Position.of(horizontal, vertical);
 
-    const { Horizontal, Vertical, parseValue } = Component;
+    const parseHorizontalKeywordValue = parseKeywordValue(parseHorizontal);
+    const parseVerticalKeywordValue = parseKeywordValue(parseVertical);
+    const parseHorizontalKeyword = parseKeyword(parseHorizontal);
+    const parseVerticalKeyword = parseKeyword(parseVertical);
 
+    // Hh Vv | Vv Hh
     const parse4 = either(
       map(
         pair(
-          Horizontal.parseKeywordValue,
-          right(Token.parseWhitespace, Vertical.parseKeywordValue)
+          parseHorizontalKeywordValue,
+          right(Token.parseWhitespace, parseVerticalKeywordValue)
         ),
         mapHV
       ),
       map(
         pair(
-          Vertical.parseKeywordValue,
-          right(Token.parseWhitespace, Horizontal.parseKeywordValue)
+          parseVerticalKeywordValue,
+          right(Token.parseWhitespace, parseHorizontalKeywordValue)
         ),
         mapVH
       )
     );
 
+    // Hh V | H Vv | Vv H | V Hh
     const parse3 = legacySyntax
       ? either(
           map(
             either(
               pair(
-                Horizontal.parseKeywordValue,
-                right(Token.parseWhitespace, Vertical.parseKeyword)
+                parseHorizontalKeywordValue,
+                right(Token.parseWhitespace, parseVerticalKeyword)
               ),
               pair(
-                Horizontal.parseKeyword,
-                right(Token.parseWhitespace, Vertical.parseKeywordValue)
+                parseHorizontalKeyword,
+                right(Token.parseWhitespace, parseVerticalKeywordValue)
               )
             ),
             mapHV
@@ -297,12 +282,12 @@ export namespace Position {
           map(
             either(
               pair(
-                Vertical.parseKeywordValue,
-                right(Token.parseWhitespace, Horizontal.parseKeyword)
+                parseVerticalKeywordValue,
+                right(Token.parseWhitespace, parseHorizontalKeyword)
               ),
               pair(
-                Vertical.parseKeyword,
-                right(Token.parseWhitespace, Horizontal.parseKeywordValue)
+                parseVerticalKeyword,
+                right(Token.parseWhitespace, parseHorizontalKeywordValue)
               )
             ),
             mapVH
@@ -310,34 +295,33 @@ export namespace Position {
         )
       : () => Err.of("Three-value syntax is not allowed");
 
+    // H V | H v | h V | h v | V H = (H | h) (V | v) | V H
     const parse2 = either(
       map(
         pair(
-          either(Horizontal.parseKeyword, parseValue),
-          right(
-            Token.parseWhitespace,
-            either(Vertical.parseKeyword, parseValue)
-          )
+          either(parseHorizontalKeyword, parseValue),
+          right(Token.parseWhitespace, either(parseVerticalKeyword, parseValue))
         ),
         mapHV
       ),
       map(
         pair(
-          Vertical.parseKeyword,
-          right(Token.parseWhitespace, Horizontal.parseKeyword)
+          parseVerticalKeyword,
+          right(Token.parseWhitespace, parseHorizontalKeyword)
         ),
         mapVH
       )
     );
 
+    // H | V | h
     const parse1 = either(
-      map(Horizontal.parseKeyword, (horizontal) =>
+      map(parseHorizontalKeyword, (horizontal) =>
         Position.of<Component<Horizontal>, Component<Vertical>>(
           horizontal,
           Keyword.of("center")
         )
       ),
-      map(Vertical.parseKeyword, (vertical) =>
+      map(parseVerticalKeyword, (vertical) =>
         Position.of(Keyword.of("center"), vertical)
       ),
       map(parseValue, (horizontal) =>

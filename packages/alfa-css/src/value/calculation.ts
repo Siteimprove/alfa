@@ -13,12 +13,14 @@ import { Function } from "../syntax/function";
 
 import { Value } from "../value";
 
-import { Angle } from "./angle";
-import { Dimension } from "./dimension";
-import { Length } from "./length";
-import { Number } from "./number";
-import { Numeric } from "./numeric";
-import { Percentage } from "./percentage";
+import {
+  Angle,
+  Dimension,
+  Length,
+  Number,
+  Numeric,
+  Percentage,
+} from "./numeric";
 import { Unit } from "./unit";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Result, Err } from "@siteimprove/alfa-result";
@@ -89,6 +91,10 @@ export namespace Calculation {
     [key: string]: json.JSON;
     type: "calculation";
     expression: Expression.JSON;
+  }
+
+  export function isCalculation(value: unknown): value is Calculation {
+    return value instanceof Calculation;
   }
 
   /**
@@ -307,14 +313,16 @@ export namespace Calculation {
       hint: Hint | null;
     }
 
+    export function isKind(value: unknown): value is Kind {
+      return value instanceof Kind;
+    }
+
     /**
      * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-type}
      */
-    export type Map = Record<
-      {
-        [K in Base]: number;
-      }
-    >;
+    export type Map = Record<{
+      [K in Base]: number;
+    }>;
 
     /**
      * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-base-type}
@@ -422,7 +430,7 @@ export namespace Calculation {
       return this._value;
     }
 
-    public reduce(resolve: Mapper<Numeric>): Expression {
+    public reduce(resolve: Mapper<Numeric>): Value {
       const value = this._value;
 
       if (isLength(value) && value.isAbsolute()) {
@@ -459,10 +467,8 @@ export namespace Calculation {
     }
   }
 
-  export function isValueExpression(
-    expression: Expression
-  ): expression is Value {
-    return expression.type === "value";
+  export function isValueExpression(value: unknown): value is Value {
+    return value instanceof Value;
   }
 
   /**
@@ -489,12 +495,18 @@ export namespace Calculation {
       return this._kind;
     }
 
-    public equals(value: this): value is this {
+    public equals(value: Operation<O>): boolean;
+
+    public equals(value: unknown): value is this;
+
+    public equals(value: unknown): boolean {
       return (
         value instanceof Operation &&
         value.type === this.type &&
         value._operands.length === this._operands.length &&
-        value._operands.every((operand, i) => operand.equals(this._operands[i]))
+        value._operands.every((operand: Expression, i: number) =>
+          operand.equals(this._operands[i])
+        )
       );
     }
 
@@ -584,8 +596,8 @@ export namespace Calculation {
     }
   }
 
-  export function isSumExpression(expression: Expression): expression is Sum {
-    return expression.type === "sum";
+  export function isSumExpression(value: unknown): value is Sum {
+    return value instanceof Sum;
   }
 
   export class Negate extends Operation.Unary {
@@ -636,10 +648,8 @@ export namespace Calculation {
     }
   }
 
-  export function isNegateExpression(
-    expression: Expression
-  ): expression is Negate {
-    return expression.type === "negate";
+  export function isNegateExpression(value: unknown): value is Negate {
+    return value instanceof Negate;
   }
 
   export class Product extends Operation.Binary {
@@ -703,10 +713,8 @@ export namespace Calculation {
     }
   }
 
-  export function isProductExpression(
-    expression: Expression
-  ): expression is Product {
-    return expression.type === "product";
+  export function isProductExpression(value: unknown): value is Product {
+    return value instanceof Product;
   }
 
   export class Invert extends Operation.Unary {
@@ -749,10 +757,8 @@ export namespace Calculation {
     }
   }
 
-  export function isInvertExpression(
-    expression: Expression
-  ): expression is Invert {
-    return expression.type === "invert";
+  export function isInvertExpression(value: unknown): value is Invert {
+    return value instanceof Invert;
   }
 
   let parseSum: Parser<Slice<Token>, Expression, string>;

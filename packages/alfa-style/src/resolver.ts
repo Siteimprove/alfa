@@ -7,6 +7,7 @@ import {
   Image,
   Length,
   Linear,
+  Numeric,
   Percentage,
   Position,
   Radial,
@@ -15,6 +16,7 @@ import {
   URL,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Mapper } from "@siteimprove/alfa-mapper";
 import { Real } from "@siteimprove/alfa-math";
 
 import { Style } from "./style";
@@ -27,33 +29,59 @@ import { Style } from "./style";
  */
 export namespace Resolver {
   /**
+   * Resolve a percentage, according to a base numeric value
+   */
+  export function percentage<N extends Numeric = Numeric>(
+    base: N
+  ): Mapper<Percentage, N> {
+    return (percentage) => base.scale(percentage.value) as N;
+  }
+
+  /**
    * Resolve a length in an arbitrary unit to a length in pixels.
    *
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
-  export function length(length: Length, style: Style): Length<"px"> {
+  export function length(style: Style): Mapper<Length, Length<"px">>;
+
+  export function length(length: Length, style: Style): Length<"px">;
+
+  export function length(
+    lengthOrStyle: Length | Style,
+    style?: Style
+  ): Mapper<Length, Length<"px">> | Length<"px"> {
+    return Length.isLength(lengthOrStyle)
+      ? lengthUncurry(lengthOrStyle, style!)
+      : lengthCurry(lengthOrStyle);
+  }
+
+  function lengthCurry(style: Style): Mapper<Length, Length<"px">> {
+    return (value) => lengthUncurry(value, style);
+  }
+
+  function lengthUncurry(length: Length, style: Style): Length<"px"> {
     const { unit, value } = length;
     const { viewport } = style.device;
 
-    const { value: fontSize } = style.computed("font-size");
+    const fontSize = style.computed("font-size").value;
 
     switch (unit) {
       // https://www.w3.org/TR/css-values/#em
       case "em":
-        return Length.of(fontSize.value * value, fontSize.unit);
+        return fontSize.scale(value);
 
       // https://www.w3.org/TR/css-values/#rem
       case "rem": {
-        const { value: rootFontSize } = style.root().computed("font-size");
+        const rootFontSize = style.root().computed("font-size").value;
 
-        return Length.of(rootFontSize.value * value, fontSize.unit);
+        return rootFontSize.scale(value);
       }
 
       // https://www.w3.org/TR/css-values/#ex
       case "ex":
       // https://www.w3.org/TR/css-values/#ch
       case "ch":
-        return Length.of(fontSize.value * value * 0.5, fontSize.unit);
+        return fontSize.scale(value * 0.5);
 
       // https://www.w3.org/TR/css-values/#vh
       case "vh":

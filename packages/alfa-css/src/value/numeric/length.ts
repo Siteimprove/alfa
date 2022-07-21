@@ -2,10 +2,10 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax/token";
+import { Token } from "../../syntax/token";
 
-import { Converter, Convertible } from "./converter";
-import { Unit } from "./unit";
+import { Converter, Convertible } from "../unit/converter";
+import { Unit } from "../unit/unit";
 import { Dimension } from "./dimension";
 
 const { map, either } = Parser;
@@ -67,8 +67,16 @@ export class Length<U extends Unit.Length = Unit.Length>
     return Unit.isAbsoluteLength(this._unit);
   }
 
+  public scale(factor: number): Length<U> {
+    return new Length(this._value * factor, this._unit);
+  }
+
   public equals(value: unknown): value is this {
-    return value instanceof Length && super.equals(value);
+    return (
+      value instanceof Length &&
+      super.equals(value) &&
+      value._unit === this._unit
+    );
   }
 
   public hash(hash: Hash): void {

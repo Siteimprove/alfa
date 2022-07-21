@@ -1,7 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax/token";
+import { Token } from "../../syntax/token";
 import { Numeric } from "./numeric";
 
 const { map } = Parser;
@@ -22,6 +22,10 @@ export class Number extends Numeric<"number"> {
 
   public get type(): "number" {
     return "number";
+  }
+
+  public scale(factor: number): Number {
+    return new Number(this._value * factor);
   }
 
   public equals(value: unknown): value is this {
@@ -59,9 +63,8 @@ export namespace Number {
   /**
    * {@link https://drafts.csswg.org/css-values/#number-value}
    */
-  export const parse: Parser<
-    Slice<Token>,
-    Number,
-    string
-  > = map(Token.parseNumber(), (number) => Number.of(number.value));
+  export const parse: Parser<Slice<Token>, Number, string> = map(
+    Token.parseNumber(),
+    (number) => Number.of(number.value)
+  );
 }

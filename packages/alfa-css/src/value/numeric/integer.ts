@@ -2,7 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax/token";
+import { Token } from "../../syntax/token";
 
 import { Numeric } from "./numeric";
 
@@ -24,6 +24,10 @@ export class Integer extends Numeric<"integer"> {
 
   public get type(): "integer" {
     return "integer";
+  }
+
+  public scale(factor: number): Integer {
+    return new Integer(this._value * factor);
   }
 
   public equals(value: unknown): value is this {

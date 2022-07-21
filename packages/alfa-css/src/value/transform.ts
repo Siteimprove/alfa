@@ -3,10 +3,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax/token";
 
-import { Angle } from "./angle";
-import { Length } from "./length";
-import { Number } from "./number";
-import { Percentage } from "./percentage";
+import { Angle, Length, Number, Percentage } from "./numeric";
 
 import { Matrix } from "./transform/matrix";
 import { Perspective } from "./transform/perspective";
