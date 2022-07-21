@@ -413,20 +413,17 @@ export { experimentalRules }
 
 // @public (undocumented)
 namespace Flattened {
-    type Flattened = Sequence<act.Rule<Input, Target, Question, Subject>>;
+    type Flattened = Sequence<Rule>;
     type Input = act.Rule.Input<Rule>;
     type Question = act.Rule.Question<Rule>;
     // Warning: (ae-forgotten-export) The symbol "rules" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
     type Rule = Record_2.Value<typeof rules>;
     type Subject = act.Rule.Subject<Rule>;
     type Target = act.Rule.Target<Rule>;
-        {};
 }
 
 // @public
-const Flattened: Flattened.Flattened;
+const Flattened: Sequence<Flattened.Rule>;
 export { Flattened }
 export default Flattened;
 

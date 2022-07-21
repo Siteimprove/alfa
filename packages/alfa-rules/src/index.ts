@@ -29,7 +29,16 @@ export const Rules = Record.of(rules);
  * @public
  */
 export namespace Flattened {
-  type Rule = Record.Value<typeof rules>;
+  /**
+   * The flattened type of all rules. Target, questions, … are a union of
+   * all the possible ones; that is this looks like
+   * Rule\<Page, Document | Element | …, …\>
+   *
+   * This is a super-type of the individual type of each rule.
+   *
+   * @public
+   */
+  export type Rule = Record.Value<typeof rules>;
 
   /**
    * The type of the input of rules
@@ -60,13 +69,11 @@ export namespace Flattened {
   export type Subject = act.Rule.Subject<Rule>;
 
   /**
-   * The flattened type of all rules. Target, questions, … are a union of
-   * all the possible ones; that is this looks like
-   * Rule\<Page, Document | Element | …, …\>
+   * The flattened type of the sequence of all rules.
    *
    * @public
    */
-  export type Flattened = Sequence<act.Rule<Input, Target, Question, Subject>>;
+  export type Flattened = Sequence<Rule>;
 }
 
 /**
@@ -75,9 +82,7 @@ export namespace Flattened {
  *
  * @public
  */
-export const Flattened: Flattened.Flattened = Sequence.from(
-  Rules.values()
-) as Flattened.Flattened;
+export const Flattened = Sequence.from<Flattened.Rule>(Rules.values());
 
 export default Flattened;
 
