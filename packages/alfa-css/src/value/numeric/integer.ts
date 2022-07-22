@@ -19,11 +19,7 @@ export class Integer extends Numeric<"integer"> {
   }
 
   private constructor(value: number) {
-    super(value);
-  }
-
-  public get type(): "integer" {
-    return "integer";
+    super(value, "integer");
   }
 
   public scale(factor: number): Integer {
@@ -37,22 +33,13 @@ export class Integer extends Numeric<"integer"> {
   public hash(hash: Hash): void {
     hash.writeInt32(this._value);
   }
-
-  public toJSON(): Integer.JSON {
-    return {
-      type: "integer",
-      value: this._value,
-    };
-  }
 }
 
 /**
  * @public
  */
 export namespace Integer {
-  export interface JSON extends Numeric.JSON<"integer"> {
-    value: number;
-  }
+  export interface JSON extends Numeric.JSON<"integer"> {}
 
   export function isInteger(value: unknown): value is Integer {
     return value instanceof Integer;

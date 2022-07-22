@@ -17,11 +17,7 @@ export class Percentage extends Numeric<"percentage"> {
   }
 
   private constructor(value: number) {
-    super(value);
-  }
-
-  public get type(): "percentage" {
-    return "percentage";
+    super(value, "percentage");
   }
 
   public scale(factor: number): Percentage {
@@ -30,13 +26,6 @@ export class Percentage extends Numeric<"percentage"> {
 
   public equals(value: unknown): value is this {
     return value instanceof Percentage && super.equals(value);
-  }
-
-  public toJSON(): Percentage.JSON {
-    return {
-      type: "percentage",
-      value: this._value,
-    };
   }
 
   public toString(): string {
@@ -48,9 +37,7 @@ export class Percentage extends Numeric<"percentage"> {
  * @public
  */
 export namespace Percentage {
-  export interface JSON extends Numeric.JSON<"percentage"> {
-    value: number;
-  }
+  export interface JSON extends Numeric.JSON<"percentage"> {}
 
   export function isPercentage(value: unknown): value is Percentage {
     return value instanceof Percentage;

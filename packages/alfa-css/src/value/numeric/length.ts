@@ -24,11 +24,7 @@ export class Length<U extends Unit.Length = Unit.Length>
   }
 
   private constructor(value: number, unit: U) {
-    super(value, unit);
-  }
-
-  public get type(): "length" {
-    return "length";
+    super(value, unit, "length");
   }
 
   public get canonicalUnit(): "px" {
@@ -84,14 +80,6 @@ export class Length<U extends Unit.Length = Unit.Length>
     hash.writeString(this._unit);
   }
 
-  public toJSON(): Length.JSON<U> {
-    return {
-      type: "length",
-      value: this._value,
-      unit: this._unit,
-    };
-  }
-
   public toString(): string {
     return `${this._value}${this._unit}`;
   }
@@ -102,9 +90,7 @@ export class Length<U extends Unit.Length = Unit.Length>
  */
 export namespace Length {
   export interface JSON<U extends Unit.Length = Unit.Length>
-    extends Dimension.JSON<"length"> {
-    unit: U;
-  }
+    extends Dimension.JSON<"length", U> {}
 
   export function isLength(value: unknown): value is Length {
     return value instanceof Length;

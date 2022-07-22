@@ -9,7 +9,11 @@ import { Value } from "../../value";
 /**
  * @public
  */
-export abstract class Numeric<T extends string = string>
+export abstract class Numeric<
+    T extends Numeric.Scalar | Numeric.Dimension =
+      | Numeric.Scalar
+      | Numeric.Dimension
+  >
   extends Value<T>
   implements Comparable<Numeric<T>>
 {
@@ -19,14 +23,20 @@ export abstract class Numeric<T extends string = string>
   public static readonly Decimals = 7;
 
   protected readonly _value: number;
+  protected readonly _type: T;
 
-  protected constructor(value: number) {
+  protected constructor(value: number, type: T) {
     super();
     this._value = Real.round(value, Numeric.Decimals);
+    this._type = type;
   }
 
   public get value(): number {
     return this._value;
+  }
+
+  public get type(): T {
+    return this._type;
   }
 
   public abstract scale(factor: number): Numeric<T>;
@@ -43,7 +53,12 @@ export abstract class Numeric<T extends string = string>
     hash.writeFloat64(this._value);
   }
 
-  public abstract toJSON(): Numeric.JSON<T>;
+  public toJSON(): Numeric.JSON<T> {
+    return {
+      value: this._value,
+      type: this._type,
+    };
+  }
 
   public toString(): string {
     return `${this._value}`;
@@ -54,12 +69,29 @@ export abstract class Numeric<T extends string = string>
  * @public
  */
 export namespace Numeric {
-  export interface JSON<T extends string = string> extends Value.JSON<T> {
+  export interface JSON<T extends Scalar | Dimension = Scalar | Dimension>
+    extends Value.JSON<T> {
     [key: string]: json.JSON;
     value: number;
+    type: T;
   }
 
   export function isNumeric(value: unknown): value is Numeric {
     return value instanceof Numeric;
   }
+
+  /**
+   * {@link https://drafts.csswg.org/css-values-4/#numeric-types}
+   */
+  export type Scalar = "integer" | "number" | "percentage";
+
+  /**
+   * {@link https://drafts.csswg.org/css-values-4/#lengths}
+   * {@link https://drafts.csswg.org/css-values-4/#other-units}
+   */
+  export type Dimension = "angle" | "length";
+  // unsupported dimensions
+  // | "duration"
+  // | "frequency"
+  // | "resolution";
 }
