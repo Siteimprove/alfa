@@ -24,6 +24,7 @@ import { Linear } from '@siteimprove/alfa-css';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Node } from '@siteimprove/alfa-dom';
+import { Numeric } from '@siteimprove/alfa-css';
 import { Option } from '@siteimprove/alfa-option';
 import * as parser from '@siteimprove/alfa-parser';
 import { Percentage } from '@siteimprove/alfa-css';
@@ -214,7 +215,10 @@ export namespace Resolver {
     export function color(color: Color): Current | System | RGB<Percentage, Percentage>;
     // (undocumented)
     export function image(image: Image, style: Style): Image<URL | Linear<Gradient.Hint<Percentage | Length<"px">> | Gradient.Stop<Current | System | RGB<Percentage, Percentage>, Percentage | Length<"px">>, Angle<"deg"> | Linear.Side | Linear.Corner> | Radial<Gradient.Hint<Percentage | Length<"px">> | Gradient.Stop<Current | System | RGB<Percentage, Percentage>, Percentage | Length<"px">>, Radial.Circle<Length<"px">> | Radial.Ellipse<Percentage | Length<"px">> | Radial.Extent, Position<Percentage | Position.Center | Length<"px"> | Position.Side<Position.Horizontal, Percentage | Length<"px">>, Percentage | Position.Center | Length<"px"> | Position.Side<Position.Vertical, Percentage | Length<"px">>>>>;
+    export function length(style: Style): Mapper<Length, Length<"px">>;
+    // (undocumented)
     export function length(length: Length, style: Style): Length<"px">;
+    export function percentage<N extends Numeric = Numeric>(base: N): Mapper<Percentage, N>;
     // (undocumented)
     export function position(position: Position, style: Style): Position<Percentage | Position.Center | Length<"px"> | Position.Side<Position.Horizontal, Percentage | Length<"px">>, Percentage | Position.Center | Length<"px"> | Position.Side<Position.Vertical, Percentage | Length<"px">>>;
     // (undocumented)

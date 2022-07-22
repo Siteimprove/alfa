@@ -34,6 +34,8 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<"angle",
     // (undocumented)
     static of<U extends Unit.Angle>(value: number, unit: U): Angle<U>;
     // (undocumented)
+    scale(factor: number): Angle<U>;
+    // (undocumented)
     toJSON(): Angle.JSON;
     // (undocumented)
     toString(): string;
@@ -185,15 +187,17 @@ export namespace Calculation {
         get type(): "invert";
     }
     // (undocumented)
-    export function isInvertExpression(expression: Expression): expression is Invert;
+    export function isCalculation(value: unknown): value is Calculation;
     // (undocumented)
-    export function isNegateExpression(expression: Expression): expression is Negate;
+    export function isInvertExpression(value: unknown): value is Invert;
     // (undocumented)
-    export function isProductExpression(expression: Expression): expression is Product;
+    export function isNegateExpression(value: unknown): value is Negate;
     // (undocumented)
-    export function isSumExpression(expression: Expression): expression is Sum;
+    export function isProductExpression(value: unknown): value is Product;
     // (undocumented)
-    export function isValueExpression(expression: Expression): expression is Value;
+    export function isSumExpression(value: unknown): value is Sum;
+    // (undocumented)
+    export function isValueExpression(value: unknown): value is Value;
     // (undocumented)
     export interface JSON {
         // (undocumented)
@@ -237,6 +241,8 @@ export namespace Calculation {
         // (undocumented)
         export type Hint = Exclude<Kind.Base, "percentage">;
         // (undocumented)
+        export function isKind(value: unknown): value is Kind;
+        // (undocumented)
         export interface JSON {
             // (undocumented)
             [key: string]: json.JSON;
@@ -265,7 +271,9 @@ export namespace Calculation {
     export abstract class Operation<O extends Array<Expression> = Array<Expression>> extends Expression {
         protected constructor(operands: Readonly<O>, kind: Kind);
         // (undocumented)
-        equals(value: this): value is this;
+        equals(value: Operation<O>): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
         // (undocumented)
         get kind(): Kind;
         // (undocumented)
@@ -324,7 +332,7 @@ export namespace Calculation {
         // (undocumented)
         static of(value: Numeric): Value;
         // (undocumented)
-        reduce(resolve: Mapper<Numeric>): Expression;
+        reduce(resolve: Mapper<Numeric>): Value;
         // (undocumented)
         toJSON(): Value.JSON;
         // (undocumented)
@@ -909,6 +917,8 @@ export class Integer extends Numeric<"integer"> {
     // (undocumented)
     static of(value: number): Integer;
     // (undocumented)
+    scale(factor: number): Integer;
+    // (undocumented)
     toJSON(): Integer.JSON;
     // (undocumented)
     get type(): "integer";
@@ -980,6 +990,8 @@ export class Length<U extends Unit.Length = Unit.Length> extends Dimension<"leng
     isViewportRelative(): this is Length<Unit.Length.Relative.Viewport>;
     // (undocumented)
     static of<U extends Unit.Length>(value: number, unit: U): Length<U>;
+    // (undocumented)
+    scale(factor: number): Length<U>;
     // (undocumented)
     toJSON(): Length.JSON<U>;
     // (undocumented)
@@ -1292,6 +1304,8 @@ class Number_2 extends Numeric<"number"> {
     // (undocumented)
     static of(value: number): Number_2;
     // (undocumented)
+    scale(factor: number): Number_2;
+    // (undocumented)
     toJSON(): Number_2.JSON;
     // (undocumented)
     get type(): "number";
@@ -1324,6 +1338,8 @@ export abstract class Numeric<T extends string = string> extends Value<T> implem
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
+    abstract scale(factor: number): Numeric<T>;
+    // (undocumented)
     abstract toJSON(): Numeric.JSON<T>;
     // (undocumented)
     toString(): string;
@@ -1352,6 +1368,8 @@ export class Percentage extends Numeric<"percentage"> {
     equals(value: unknown): value is this;
     // (undocumented)
     static of(value: number): Percentage;
+    // (undocumented)
+    scale(factor: number): Percentage;
     // (undocumented)
     toJSON(): Percentage.JSON;
     // (undocumented)
@@ -1482,34 +1500,10 @@ export namespace Position {
     // (undocumented)
     export namespace Component {
         // (undocumented)
-        export namespace Horizontal {
-            const // (undocumented)
-            parseKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword<"left"> | Keyword<"right">, Offset<Unit.Length>>, string, []>;
-            const // (undocumented)
-            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"left"> | Keyword<"right">, Length<Unit.Length> | Percentage>, string, []>;
-            const // (undocumented)
-            parse: Parser<Slice<Token>, Component<Horizontal, Unit.Length>, string, []>;
-        }
-        const // (undocumented)
-        parseValue: Parser<Slice<Token>, Length<Unit.Length> | Percentage, string, []>;
-        // (undocumented)
         export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
-        // (undocumented)
-        export namespace Vertical {
-            const // (undocumented)
-            parseKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword<"top"> | Keyword<"bottom">, Offset<Unit.Length>>, string, []>;
-            const // (undocumented)
-            parseKeywordValue: Parser<Slice<Token>, Side<Keyword<"top"> | Keyword<"bottom">, Length<Unit.Length> | Percentage>, string, []>;
-            const // (undocumented)
-            parse: Parser<Slice<Token>, Component<Vertical, Unit.Length>, string, []>;
-        }
     }
-    const // (undocumented)
-    parseVertical: Parser<Slice<Token>, Keyword<"top"> | Keyword<"bottom">, string, []>;
     // (undocumented)
     export type Horizontal = Keyword<"left"> | Keyword<"right">;
-    const // (undocumented)
-    parseHorizontal: Parser<Slice<Token>, Keyword<"left"> | Keyword<"right">, string, []>;
     // (undocumented)
     export interface JSON extends Value.JSON<"position"> {
         // (undocumented)
@@ -1554,6 +1548,7 @@ export namespace Position {
     }
     // (undocumented)
     export type Vertical = Keyword<"top"> | Keyword<"bottom">;
+        {};
 }
 
 // @public (undocumented)

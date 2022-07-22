@@ -1,8 +1,8 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
-import { Convertible } from "./converter";
+import { Convertible } from "../unit/converter";
 import { Numeric } from "./numeric";
-import { Unit } from "./unit";
+import { Unit } from "../unit/unit";
 
 /**
  * {@link https://drafts.csswg.org/css-values/#dimensions}
@@ -15,7 +15,8 @@ export abstract class Dimension<
     V extends U = U
   >
   extends Numeric<T>
-  implements Convertible<U>, Comparable<Dimension<T, U>> {
+  implements Convertible<U>, Comparable<Dimension<T, U>>
+{
   protected readonly _unit: V;
 
   protected constructor(value: number, unit: V) {

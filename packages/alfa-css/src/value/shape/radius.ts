@@ -6,8 +6,8 @@ import { Token } from "../../syntax/token";
 import { Value } from "../../value";
 
 import { Keyword } from "../keyword";
-import { Length } from "../length";
-import { Percentage } from "../percentage";
+import { Length } from "../numeric/length";
+import { Percentage } from "../numeric/percentage";
 
 const { either, map, filter } = Parser;
 

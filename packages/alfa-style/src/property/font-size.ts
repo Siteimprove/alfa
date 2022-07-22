@@ -5,11 +5,10 @@ import {
   Calculation,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
-
-import * as Family from "./font-family";
 
 const { either, filter } = Parser;
 
@@ -119,50 +118,43 @@ export default Property.register(
     parse,
     (fontSize, style) =>
       fontSize.map((fontSize) => {
-        if (fontSize.type === "calculation") {
-          const { expression } = fontSize.reduce((value) => {
-            if (Length.isLength(value)) {
-              return Resolver.length(value, style.parent);
-            }
-
-            if (Percentage.isPercentage(value)) {
-              const parent = style.parent.computed("font-size")
-                .value as Computed;
-
-              return Length.of(parent.value * value.value, parent.unit);
-            }
-
-            return value;
-          });
-
-          fontSize = expression.toLength().or(expression.toPercentage()).get();
-        }
+        const percentageResolver = Resolver.percentage(
+          style.parent.computed("font-size").value
+        );
+        const lengthResolver = Resolver.length(style.parent);
 
         switch (fontSize.type) {
+          case "calculation":
+            const { expression } = fontSize.reduce((value) =>
+              Selective.of(value)
+                .if(Length.isLength, lengthResolver)
+                .if(Percentage.isPercentage, percentageResolver)
+                .get()
+            );
+
+            return expression.toLength().get() as Computed;
+
           case "length":
-            return Resolver.length(fontSize, style.parent);
+            return lengthResolver(fontSize);
 
           case "percentage": {
-            const parent = style.parent.computed("font-size").value as Computed;
-
-            return Length.of(parent.value * fontSize.value, parent.unit);
+            return percentageResolver(fontSize);
           }
 
           case "keyword": {
-            const parent = style.parent.computed("font-size").value as Computed;
+            const parent = style.parent.computed("font-size").value;
 
             switch (fontSize.value) {
               case "larger":
-                return Length.of(parent.value * 1.2, parent.unit);
+                return parent.scale(1.2);
 
               case "smaller":
-                return Length.of(parent.value * 0.85, parent.unit);
+                return parent.scale(0.85);
 
               default: {
                 const factor = factors[fontSize.value];
 
-                const [family] = style.computed("font-family")
-                  .value as Family.Computed;
+                const [family] = style.computed("font-family").value;
 
                 const base =
                   family.type === "keyword" ? bases[family.value] : bases.serif;

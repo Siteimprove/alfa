@@ -168,6 +168,17 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
+  t.deepEqual(parse("calc(2 + 3 * 4)").get(), {
+    type: "calculation",
+    expression: {
+      type: "value",
+      value: {
+        type: "number",
+        value: 14,
+      },
+    },
+  });
+
   t.deepEqual(parse("calc(2 * 3 - 4)").get(), {
     type: "calculation",
     expression: {

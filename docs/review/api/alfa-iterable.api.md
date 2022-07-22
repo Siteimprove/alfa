@@ -136,6 +136,8 @@ namespace Iterable_2 {
     // (undocumented)
     function sortWith<T>(iterable: Iterable_2<T>, comparer: Comparer<T>): Iterable_2<T>;
     // (undocumented)
+    function sortWith<T, U extends T = T>(iterable: Iterable_2<U>, comparer: Comparer<T>): Iterable_2<U>;
+    // (undocumented)
     function subtract<T>(iterable: Iterable_2<T>, ...iterables: Array<Iterable_2<T>>): Iterable_2<T>;
     // (undocumented)
     function take<T>(iterable: Iterable_2<T>, count: number): Iterable_2<T>;

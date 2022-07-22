@@ -7,7 +7,7 @@ import { Function } from "../../syntax/function";
 import { Value } from "../../value";
 
 import { Keyword } from "../keyword";
-import { Length } from "../length";
+import { Length } from "../numeric/length";
 
 const { either, map, option, pair, take, right, delimited } = Parser;
 
@@ -125,11 +125,7 @@ export namespace Rectangle {
 
   const parseLengthAuto = either(Length.parse, Keyword.parse("auto"));
 
-  export const parse: Parser<
-    Slice<Token>,
-    Rectangle,
-    string
-  > = map(
+  export const parse: Parser<Slice<Token>, Rectangle, string> = map(
     Function.parse(
       "rect",
       either(

@@ -126,6 +126,8 @@ namespace Array_2 {
     // (undocumented)
     function sort<T extends Comparable<T>>(array: Array_2<T>): Array_2<T>;
     // (undocumented)
+    function sortWith<T>(array: Array_2<T>, comparer: Comparer<T>): Array_2<T>;
+    // (undocumented)
     function sortWith<T, U extends T = T>(array: Array_2<U>, comparer: Comparer<T>): Array_2<U>;
     // (undocumented)
     function subtract<T>(array: ReadonlyArray<T>, ...iterables: Array_2<Iterable_2<T>>): Array_2<T>;

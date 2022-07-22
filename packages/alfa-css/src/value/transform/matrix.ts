@@ -5,7 +5,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Token } from "../../syntax/token";
 import { Value } from "../../value";
 
-import { Number } from "../number";
+import { Number } from "../numeric";
 
 const { map, left, right, pair, either, take, delimited, option } = Parser;
 
@@ -64,12 +64,8 @@ export class Matrix extends Value<"transform"> {
   }
 
   public toString(): string {
-    const [
-      [a, e, i, m],
-      [b, f, j, n],
-      [c, g, k, o],
-      [d, h, l, p],
-    ] = this._values;
+    const [[a, e, i, m], [b, f, j, n], [c, g, k, o], [d, h, l, p]] =
+      this._values;
 
     if (
       c.value === 0 &&
@@ -174,10 +170,8 @@ export namespace Matrix {
       )
     ),
     (result) => {
-      const [
-        _a,
-        [_b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p],
-      ] = result;
+      const [_a, [_b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p]] =
+        result;
 
       return Matrix.of(
         [_a, _e, _i, _m],

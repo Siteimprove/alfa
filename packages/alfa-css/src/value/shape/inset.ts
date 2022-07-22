@@ -10,8 +10,8 @@ import { Function } from "../../syntax/function";
 import { Value } from "../../value";
 
 import { Keyword } from "../keyword";
-import { Length } from "../length";
-import { Percentage } from "../percentage";
+import { Length } from "../numeric/length";
+import { Percentage } from "../numeric/percentage";
 
 const { either, map, filter, option, pair, right, takeAtMost } = Parser;
 const { parseDelim, parseWhitespace } = Token;

@@ -1,7 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax/token";
+import { Token } from "../../syntax/token";
 import { Numeric } from "./numeric";
 
 const { map } = Parser;
@@ -22,6 +22,10 @@ export class Percentage extends Numeric<"percentage"> {
 
   public get type(): "percentage" {
     return "percentage";
+  }
+
+  public scale(factor: number): Percentage {
+    return new Percentage(this._value * factor);
   }
 
   public equals(value: unknown): value is this {
@@ -52,11 +56,8 @@ export namespace Percentage {
     return value instanceof Percentage;
   }
 
-  export const parse: Parser<
-    Slice<Token>,
-    Percentage,
-    string
-  > = map(Token.parsePercentage(), (percentage) =>
-    Percentage.of(percentage.value)
+  export const parse: Parser<Slice<Token>, Percentage, string> = map(
+    Token.parsePercentage(),
+    (percentage) => Percentage.of(percentage.value)
   );
 }
