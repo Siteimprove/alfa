@@ -197,6 +197,8 @@ export class List<T> implements Collection.Indexed<T> {
     // (undocumented)
     sortWith(comparer: Comparer<T>): List<T>;
     // (undocumented)
+    sortWith<T, U extends T = T>(this: List<U>, comparer: Comparer<T>): List<U>;
+    // (undocumented)
     subtract(iterable: Iterable_2<T>): List<T>;
     // (undocumented)
     take(count: number): List<T>;

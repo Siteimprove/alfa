@@ -138,6 +138,8 @@ export class Slice<T> implements Collection.Indexed<T> {
     // (undocumented)
     sortWith(comparer: Comparer<T>): Slice<T>;
     // (undocumented)
+    sortWith<T, U extends T = T>(this: Slice<U>, comparer: Comparer<T>): Slice<U>;
+    // (undocumented)
     subtract(iterable: Iterable_2<T>): Slice<T>;
     // (undocumented)
     take(count: number): Slice<T>;

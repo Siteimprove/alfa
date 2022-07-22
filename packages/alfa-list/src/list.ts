@@ -403,6 +403,13 @@ export class List<T> implements Collection.Indexed<T> {
     return this.sortWith(compareComparable);
   }
 
+  public sortWith(comparer: Comparer<T>): List<T>;
+
+  public sortWith<T, U extends T = T>(
+    this: List<U>,
+    comparer: Comparer<T>
+  ): List<U>;
+
   public sortWith(comparer: Comparer<T>): List<T> {
     return List.from(Iterable.sortWith(this, comparer));
   }
