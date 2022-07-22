@@ -73,6 +73,10 @@ export class WithPreviousHeading extends Diagnostic {
     this._previous = previous;
   }
 
+  public get previous(): Element {
+    return this._previous;
+  }
+
   equals(value: WithPreviousHeading): value is this;
 
   equals(value: unknown): value is this;
