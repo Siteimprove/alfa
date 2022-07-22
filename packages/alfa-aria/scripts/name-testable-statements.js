@@ -107,10 +107,6 @@ function testExceptions(testId) {
     case "Name_file-label-inline-block-elements":
     case "Name_file-label-inline-hidden-elements":
     case "Name_link-mixed-content":
-      return {
-        reason: "Alfa join content traversal without spaces",
-        issue: "https://github.com/Siteimprove/alfa/issues/1054",
-      };
     default:
       return undefined;
   }
