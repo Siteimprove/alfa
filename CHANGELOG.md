@@ -19,52 +19,66 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.43.0](../../compare/v0.42.1...v0.43.0) (2022-07-22)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The diagnostic of SIA-R53 now correctly exposes the `previous` heading. ([#1199](../../pull/1199))
+
+- [@siteimprove/alfa-css](packages/alfa-css): `Numeric` CSS types now have a `.scale` method, keeping the underlying type and unit. ([#1195](../../pull/1195)) 
+
+- [@siteimprove/alfa-style](packages/alfa-style): A `Percentage` resolver is added. `Length` and `Percentage` resolvers can be curryfied. ([#1195](../../pull/1195))
+
+### Changed
+
+- [@siteimprove/alfa-array](packages/alfa-array), [@siteimprove/alfa-collection](packages/alfa-collection), [@siteimprove/alfa-iterable](packages/alfa-iterable), [@siteimprove/alfa-list](packages/alfa-list), [@siteimprove/alfa-sequence](packages/alfa-sequence), [@siteimprove/alfa-slice](packages/alfa-slice): The type of `sortWith` has been improved to accept a `Comparer` on a super type of the elements but keep the type of the elements in the result. ([#1198](../../pull/1198))
+
 ## [0.42.1](../../compare/v0.42.0...v0.42.1) (2022-07-21)
 
 ### Changed
 
-- [@packages/alfa-rules](packages/alfa-rules): The type `Flattened.Rule`, supertype for every rule, is now exported. ([#1197](../../pull/1197))
+- [@siteimprove/alfa-rules](packages/alfa-rules): The type `Flattened.Rule`, supertype for every rule, is now exported. ([#1197](../../pull/1197))
 
 ### Fixed
 
-- [@packages/alfa-rules](packages/alfa-rules): SIA-R19 now correctly accepts signed numbers for `aria-*` attributes. ([#1183](../../issues/1183), [#1196](../../pull/1196))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R19 now correctly accepts signed numbers for `aria-*` attributes. ([#1183](../../issues/1183), [#1196](../../pull/1196))
 
 ## [0.42.0](../../compare/v0.41.0...v0.42.0) (2022-07-21)
 
 ### Breaking
 
-- [@packages/alfa-aria](packages/alfa-aria): `isPerceivable` has been renamed `isPerceivableForAll`, matching its intend; the negation of `isIgnored`, named `isIncludedInTheAccessibilityTree`, has been added as it's a frequent use case. ([#1178](../../pull/1178))
+- [@siteimprove/alfa-aria](packages/alfa-aria): `isPerceivable` has been renamed `isPerceivableForAll`, matching its intend; the negation of `isIgnored`, named `isIncludedInTheAccessibilityTree`, has been added as it's a frequent use case. ([#1178](../../pull/1178))
 
-- [@packages/alfa-rules](packages/alfa-rules): SIA-R62 version 1 is now deprecated and will be removed in a later release; SIA-R62 version 2 is now the stable version and should be imported from `Rules`, not `experimentadlRules`. ([#1143](../../issues/1143), [#1180](../../pull/1180))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 version 1 is now deprecated and will be removed in a later release; SIA-R62 version 2 is now the stable version and should be imported from `Rules`, not `experimentadlRules`. ([#1143](../../issues/1143), [#1180](../../pull/1180))
 
-- [@packages/alfa-formatter](packages/alfa-formatter), [@packages/alfa-formatter-earl](packages/alfa-formatter-earl), [@packages/alfa-formatter-json](packages/alfa-formatter-json), [@packages/alfa-formatter-sarif](packages/alfa-formatter-sarif): Formatters are now allowed to be synchronous again. The JSON and SARIF formatters are synchronous again. The JSON formatter returns a `Future` rather than a `Promise`. ([#1194](../../pull/1194))
+- [@siteimprove/alfa-formatter](packages/alfa-formatter), [@siteimprove/alfa-formatter-earl](packages/alfa-formatter-earl), [@siteimprove/alfa-formatter-json](packages/alfa-formatter-json), [@siteimprove/alfa-formatter-sarif](packages/alfa-formatter-sarif): Formatters are now allowed to be synchronous again. The JSON and SARIF formatters are synchronous again. The JSON formatter returns a `Future` rather than a `Promise`. ([#1194](../../pull/1194))
 
 
 ### Added
 
-- [@packages/alfa-rules](packages/alfa-rules): SIA-R65 now exports in its extended diagnostic the classes matching the targets, and the number of matches of targets and non-targets. ([#1161](../../issues/1161), [#1164](../../pull/1164))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now exports in its extended diagnostic the classes matching the targets, and the number of matches of targets and non-targets. ([#1161](../../issues/1161), [#1164](../../pull/1164))
 
-- [@packages/alfa-rules](packages/alfa-rules): SIA-R53 now exports the previous heading in its extended diagnostic. ([#1187](../../issues/1187), [#1188](../../pull/1188))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R53 now exports the previous heading in its extended diagnostic. ([#1187](../../issues/1187), [#1188](../../pull/1188))
 
 ### Changed
 
-- [@packages/alfa-array](packages/alfa-array): `Array.sortWith` now keeps the type of elements even if the comparer function accepts super-type arguments. ([#1189](../../pull/1189))
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.sortWith` now keeps the type of elements even if the comparer function accepts super-type arguments. ([#1189](../../pull/1189))
 
 ### Fixed
 
-- [@packages/alfa-rules](packages/alfa-rules): SIA-R78 now correctly only searches for accessible content between accessible headings. ([#1039](../../issues/1039), [#1138](../../issues/1138), [#1179](../../pull/1179))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R78 now correctly only searches for accessible content between accessible headings. ([#1039](../../issues/1039), [#1138](../../issues/1138), [#1179](../../pull/1179))
 
-- [@packages/alfa-rules](packages/alfa-rules): `getForeground` (SIA-R66, SIA-R69) now automatically resolves `currentcolor`. ([#1174](../../issues/1174), [#1182](../../pull/1182))
+- [@siteimprove/alfa-rules](packages/alfa-rules): `getForeground` (SIA-R66, SIA-R69) now automatically resolves `currentcolor`. ([#1174](../../issues/1174), [#1182](../../pull/1182))
 
-- [@packages/alfa-rules](packages/alfa-rules): SIA-R16 now correctly only applies to elements with an explicit role. ([#949](../../issues/949), [#1185](../../pull/1185))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R16 now correctly only applies to elements with an explicit role. ([#949](../../issues/949), [#1185](../../pull/1185))
 
-- [@packages/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now correctly ignore texts that are used in the name of disabled widgets. ([#1149](../../issues/1149), [#1191](../../pull/1191))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now correctly ignore texts that are used in the name of disabled widgets. ([#1149](../../issues/1149), [#1191](../../pull/1191))
 
-- [@packages/alfa-aria](packages/alfa-aria): `<input>` elements with a type of `button`, `reset` or `submit` can now correctly be named by a `<label>` element. ([#1193](../../pull/1193)) 
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<input>` elements with a type of `button`, `reset` or `submit` can now correctly be named by a `<label>` element. ([#1193](../../pull/1193)) 
 
-- [@packages/alfa-aria](packages/alfa-aria): Elements that have `visibility: hidden` are now correctly ignored when computing name from content. ([#1193](../../pull/1193))
+- [@siteimprove/alfa-aria](packages/alfa-aria): Elements that have `visibility: hidden` are now correctly ignored when computing name from content. ([#1193](../../pull/1193))
 
-- [@packages/alfa-aria](packages/alfa-aria): Names computed from `aria-labelledby` are now correctly concatenated in the order of tokens in the attribute, not in DOM order ([#1193](../../pull/1193))
+- [@siteimprove/alfa-aria](packages/alfa-aria): Names computed from `aria-labelledby` are now correctly concatenated in the order of tokens in the attribute, not in DOM order ([#1193](../../pull/1193))
 
 ## [0.41.0](../../compare/v0.40.0...v0.41.0) (2022-06-30)
 
