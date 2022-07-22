@@ -440,13 +440,20 @@ export namespace Array {
   }
 
   export function sort<T extends Comparable<T>>(array: Array<T>): Array<T> {
-    return sortWith<T>(array, compareComparable);
+    return sortWith(array, compareComparable);
   }
+
+  export function sortWith<T>(array: Array<T>, comparer: Comparer<T>): Array<T>;
 
   export function sortWith<T, U extends T = T>(
     array: Array<U>,
     comparer: Comparer<T>
-  ): Array<U> {
+  ): Array<U>;
+
+  export function sortWith<T>(
+    array: Array<T>,
+    comparer: Comparer<T>
+  ): Array<T> {
     return array.sort(comparer);
   }
 

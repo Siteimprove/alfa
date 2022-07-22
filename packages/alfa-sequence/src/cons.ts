@@ -670,6 +670,13 @@ export class Cons<T> implements Sequence<T> {
     return this.sortWith(compareComparable);
   }
 
+  public sortWith(comparer: Comparer<T>): Sequence<T>;
+
+  public sortWith<T, U extends T = T>(
+    this: Sequence<U>,
+    comparer: Comparer<T>
+  ): Sequence<U>;
+
   public sortWith(comparer: Comparer<T>): Sequence<T> {
     return Sequence.fromArray(Array.sortWith(this.toArray(), comparer));
   }
