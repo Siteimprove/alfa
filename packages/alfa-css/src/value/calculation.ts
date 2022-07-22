@@ -2,30 +2,28 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Record } from "@siteimprove/alfa-record";
+import { Result, Err } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../syntax/token";
+
 import { Function } from "../syntax/function";
-
 import { Value } from "../value";
-
 import {
   Angle,
   Dimension,
-  Integer,
   Length,
   Number,
   Numeric,
   Percentage,
 } from "./numeric";
 import { Unit } from "./unit";
-import { Option, None } from "@siteimprove/alfa-option";
-import { Result, Err } from "@siteimprove/alfa-result";
 
 const { map, flatMap, either, delimited, pair, option } = Parser;
 
@@ -68,10 +66,20 @@ export class Calculation<
     return this._expression;
   }
 
+  public reduce(resolver: Calculation.Resolver): Calculation {
+    return new Calculation(this._expression.reduce(resolver));
+  }
+
+  // Other matchers should be added when needed.
+  /**
+   * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
+   */
   public isLength(): this is Calculation<"length"> {
     return this._expression.kind.is("length");
   }
-
+  /**
+   * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
+   */
   public isLengthPercentage(): this is Calculation<"length" | "percentage"> {
     return (
       this._expression.kind.is("length", 1, true) ||
@@ -79,8 +87,23 @@ export class Calculation<
     );
   }
 
-  public reduce(resolver: Calculation.Resolver): Calculation {
-    return new Calculation(this._expression.reduce(resolver));
+  // Other resolvers should be added when needed.
+  /**
+   * Resolves a calculation typed as a length or percentage into an absolute length.
+   * Needs a resolver to handle relative lengths and percentages.
+   */
+  public resolve(
+    this: Calculation<"length" | "percentage">,
+    resolver: Calculation.Resolver<"px", Length<"px">>
+  ): Length<"px"> {
+    // Since the expressions can theoretically contain arbitrarily units in them,
+    // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
+    // they seem to be more restricted), we can't easily type Expression itself
+    // (other than with its Kind).
+    // However, we now that a calculation matching <length-percentage> can be
+    // resolved to a Length<"px"> with certainty if the correct individual
+    // resolvers are provided.
+    return this._expression.reduce(resolver).toLength().get() as Length<"px">;
   }
 
   public hash(hash: Hash): void {}
@@ -128,22 +151,23 @@ export namespace Calculation {
    *
    * @internal
    */
-  export interface Resolver {
-    length(value: Length<Unit.Length.Relative>): Length;
-    percentage(value: Percentage): Numeric;
+  export interface Resolver<
+    L extends Unit.Length = "px",
+    P extends Numeric = Numeric
+  > {
+    length(value: Length<Unit.Length.Relative>): Length<L>;
+    percentage(value: Percentage): P;
   }
 
-  function angleResolver(angle: Angle): Angle<Angle.CanonicalUnit> {
-    return angle.withUnit(angle.canonicalUnit);
+  function angleResolver(angle: Angle): Angle<"deg"> {
+    return angle.withUnit("deg");
   }
 
-  function lengthResolver<U extends Unit.Length = Length.CanonicalUnit>(
+  function lengthResolver<U extends Unit.Length = "px">(
     resolver: Mapper<Length<Unit.Length.Relative>, Length<U>>
-  ): Mapper<Length, Length<Length.CanonicalUnit> | Length<U>> {
+  ): Mapper<Length, Length<"px"> | Length<U>> {
     return (length) =>
-      length.isRelative()
-        ? resolver(length)
-        : length.withUnit(length.canonicalUnit);
+      length.isRelative() ? resolver(length) : length.withUnit("px");
   }
 
   /**
@@ -386,7 +410,10 @@ export namespace Calculation {
     /**
      * {@link https://drafts.csswg.org/css-values/#simplify-a-calculation-tree}
      */
-    public abstract reduce(resolver: Resolver): Expression;
+    public abstract reduce<
+      L extends Unit.Length = "px",
+      P extends Numeric = Numeric
+    >(resolver: Resolver<L, P>): Expression;
 
     public toLength(): Option<Length> {
       if (isValueExpression(this) && isLength(this.value)) {
@@ -464,7 +491,9 @@ export namespace Calculation {
       return this._value;
     }
 
-    public reduce(resolver: Resolver): Value {
+    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+      resolver: Resolver<L, P>
+    ): Value {
       return Value.of(
         Selective.of(this._value)
           .if(isLength, lengthResolver(resolver.length))
@@ -581,7 +610,9 @@ export namespace Calculation {
       return "sum";
     }
 
-    public reduce(resolver: Resolver): Expression {
+    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+      resolver: Resolver<L, P>
+    ): Expression {
       const [fst, snd] = this._operands.map((operand) =>
         operand.reduce(resolver)
       );
@@ -639,7 +670,9 @@ export namespace Calculation {
       return "negate";
     }
 
-    public reduce(resolver: Resolver): Expression {
+    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+      resolver: Resolver<L, P>
+    ): Expression {
       const [operand] = this._operands.map((operand) =>
         operand.reduce(resolver)
       );
@@ -697,7 +730,9 @@ export namespace Calculation {
       return "product";
     }
 
-    public reduce(resolver: Resolver): Expression {
+    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+      resolver: Resolver<L, P>
+    ): Expression {
       const [fst, snd] = this._operands.map((operand) =>
         operand.reduce(resolver)
       );
@@ -760,7 +795,9 @@ export namespace Calculation {
       return this._operands[0].kind.invert();
     }
 
-    public reduce(resolver: Resolver): Expression {
+    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+      resolver: Resolver<L, P>
+    ): Expression {
       const [operand] = this._operands.map((operand) =>
         operand.reduce(resolver)
       );

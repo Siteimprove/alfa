@@ -23,7 +23,7 @@ import { Slice } from '@siteimprove/alfa-slice';
 // @public (undocumented)
 export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<"angle", Unit.Angle, U> {
     // (undocumented)
-    get canonicalUnit(): Angle.CanonicalUnit;
+    get canonicalUnit(): "deg";
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -42,8 +42,6 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<"angle",
 
 // @public (undocumented)
 export namespace Angle {
-    // (undocumented)
-    export type CanonicalUnit = "deg";
     // (undocumented)
     export function isAngle(value: unknown): value is Angle;
     // (undocumented)
@@ -133,6 +131,7 @@ export class Calculation<D extends Calculation.Dimension = "unknown"> extends Va
     static of(expression: Calculation.Expression): Calculation;
     // (undocumented)
     reduce(resolver: Calculation.Resolver): Calculation;
+    resolve(this: Calculation<"length" | "percentage">, resolver: Calculation.Resolver<"px", Length<"px">>): Length<"px">;
     // (undocumented)
     toJSON(): Calculation.JSON;
     // (undocumented)
@@ -154,7 +153,7 @@ export namespace Calculation {
         // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
         //
         // (undocumented)
-        abstract reduce(resolver: Resolver): Expression;
+        abstract reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
         // (undocumented)
         toJSON(): Expression.JSON;
         // (undocumented)
@@ -185,7 +184,7 @@ export namespace Calculation {
         // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
         //
         // (undocumented)
-        reduce(resolver: Resolver): Expression;
+        reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
         // (undocumented)
         toString(): string;
         // (undocumented)
@@ -268,7 +267,7 @@ export namespace Calculation {
         // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
         //
         // (undocumented)
-        reduce(resolver: Resolver): Expression;
+        reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
         // (undocumented)
         toString(): string;
         // (undocumented)
@@ -315,18 +314,18 @@ export namespace Calculation {
         // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
         //
         // (undocumented)
-        reduce(resolver: Resolver): Expression;
+        reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
         // (undocumented)
         toString(): string;
         // (undocumented)
         get type(): "product";
     }
     // @internal
-    export interface Resolver {
+    export interface Resolver<L extends Unit.Length = "px", P extends Numeric = Numeric> {
         // (undocumented)
-        length(value: Length<Unit.Length.Relative>): Length;
+        length(value: Length<Unit.Length.Relative>): Length<L>;
         // (undocumented)
-        percentage(value: Percentage): Numeric;
+        percentage(value: Percentage): P;
     }
     // (undocumented)
     export class Sum extends Operation.Binary {
@@ -335,7 +334,7 @@ export namespace Calculation {
         // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
         //
         // (undocumented)
-        reduce(resolver: Resolver): Expression;
+        reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
         // (undocumented)
         toString(): string;
         // (undocumented)
@@ -352,7 +351,7 @@ export namespace Calculation {
         // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
         //
         // (undocumented)
-        reduce(resolver: Resolver): Value;
+        reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Value;
         // (undocumented)
         toJSON(): Value.JSON;
         // (undocumented)
@@ -989,7 +988,7 @@ export namespace Keyword {
 // @public (undocumented)
 export class Length<U extends Unit.Length = Unit.Length> extends Dimension<"length", Unit.Length, U> implements Convertible<Unit.Length.Absolute> {
     // (undocumented)
-    get canonicalUnit(): Length.CanonicalUnit;
+    get canonicalUnit(): "px";
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1016,8 +1015,6 @@ export class Length<U extends Unit.Length = Unit.Length> extends Dimension<"leng
 
 // @public (undocumented)
 export namespace Length {
-    // (undocumented)
-    export type CanonicalUnit = "px";
     // (undocumented)
     export function isLength(value: unknown): value is Length;
     // (undocumented)

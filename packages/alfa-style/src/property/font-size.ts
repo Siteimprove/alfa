@@ -123,12 +123,10 @@ export default Property.register(
 
         switch (fontSize.type) {
           case "calculation":
-            const { expression } = fontSize.reduce({
+            return fontSize.resolve({
               length: lengthResolver,
               percentage: percentageResolver,
             });
-
-            return expression.toLength().get() as Computed;
 
           case "length":
             return lengthResolver(fontSize);
