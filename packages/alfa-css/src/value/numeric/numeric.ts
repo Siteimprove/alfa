@@ -9,11 +9,7 @@ import { Value } from "../../value";
 /**
  * @public
  */
-export abstract class Numeric<
-    T extends Numeric.Scalar | Numeric.Dimension =
-      | Numeric.Scalar
-      | Numeric.Dimension
-  >
+export abstract class Numeric<T extends Numeric.Type = Numeric.Type>
   extends Value<T>
   implements Comparable<Numeric<T>>
 {
@@ -69,8 +65,7 @@ export abstract class Numeric<
  * @public
  */
 export namespace Numeric {
-  export interface JSON<T extends Scalar | Dimension = Scalar | Dimension>
-    extends Value.JSON<T> {
+  export interface JSON<T extends Type = Type> extends Value.JSON<T> {
     [key: string]: json.JSON;
     value: number;
     type: T;
@@ -83,7 +78,12 @@ export namespace Numeric {
   /**
    * {@link https://drafts.csswg.org/css-values-4/#numeric-types}
    */
-  export type Scalar = "integer" | "number" | "percentage";
+  export type Scalar = "integer" | "number";
+
+  /**
+   * {@link https://drafts.csswg.org/css-values-4/#numeric-types}
+   */
+  export type Ratio = "percentage";
 
   /**
    * {@link https://drafts.csswg.org/css-values-4/#lengths}
@@ -94,4 +94,9 @@ export namespace Numeric {
   // | "duration"
   // | "frequency"
   // | "resolution";
+
+  /**
+   * @internal
+   */
+  export type Type = Scalar | Ratio | Dimension;
 }

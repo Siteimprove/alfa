@@ -3,6 +3,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Record } from "@siteimprove/alfa-record";
 
@@ -16,6 +17,7 @@ import { Value } from "../value";
 import {
   Angle,
   Dimension,
+  Integer,
   Length,
   Number,
   Numeric,
@@ -42,7 +44,12 @@ export class Calculation<
   D extends Calculation.Dimension = "unknown"
 > extends Value<"calculation"> {
   public static of(expression: Calculation.Expression): Calculation {
-    return new Calculation(expression.reduce((value) => value));
+    return new Calculation(
+      expression.reduce({
+        length: (value) => value,
+        percentage: (value) => value,
+      })
+    );
   }
 
   private readonly _expression: Calculation.Expression;
@@ -72,8 +79,8 @@ export class Calculation<
     );
   }
 
-  public reduce(resolve: Mapper<Numeric>): Calculation {
-    return new Calculation(this._expression.reduce(resolve));
+  public reduce(resolver: Calculation.Resolver): Calculation {
+    return new Calculation(this._expression.reduce(resolver));
   }
 
   public hash(hash: Hash): void {}
@@ -113,7 +120,31 @@ export namespace Calculation {
   /**
    * @internal
    */
-  export type Dimension = Kind.Base | "none" | "unknown";
+  export type Dimension = Kind.Base | "scalar" | "unknown";
+
+  /**
+   * Absolute units can be resolved automatically.
+   * Relative lengths and percentages need some help.
+   *
+   * @internal
+   */
+  export interface Resolver {
+    length(value: Length<Unit.Length.Relative>): Length;
+    percentage(value: Percentage): Numeric;
+  }
+
+  function angleResolver(angle: Angle): Angle<Angle.CanonicalUnit> {
+    return angle.withUnit(angle.canonicalUnit);
+  }
+
+  function lengthResolver<U extends Unit.Length = Length.CanonicalUnit>(
+    resolver: Mapper<Length<Unit.Length.Relative>, Length<U>>
+  ): Mapper<Length, Length<Length.CanonicalUnit> | Length<U>> {
+    return (length) =>
+      length.isRelative()
+        ? resolver(length)
+        : length.withUnit(length.canonicalUnit);
+  }
 
   /**
    * {@link https://drafts.css-houdini.org/css-typed-om/#numeric-typing}
@@ -134,9 +165,6 @@ export namespace Calculation {
       Record.of({
         length: 0,
         angle: 0,
-        time: 0,
-        frequency: 0,
-        resolution: 0,
         percentage: 0,
       }),
       None
@@ -223,13 +251,7 @@ export namespace Calculation {
           kinds.some((value, kind) => kind !== "percentage" && value !== 0)
         )
       ) {
-        for (const hint of [
-          "length",
-          "angle",
-          "time",
-          "frequency",
-          "resolution",
-        ] as const) {
+        for (const hint of ["length", "angle"] as const) {
           const kind = a.apply(hint);
 
           if (kind._kinds.equals(b.apply(hint)._kinds)) {
@@ -345,13 +367,7 @@ export namespace Calculation {
     /**
      * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-base-type}
      */
-    export type Base =
-      | "length"
-      | "angle"
-      | "time"
-      | "frequency"
-      | "resolution"
-      | "percentage";
+    export type Base = Numeric.Dimension | "percentage";
 
     /**
      * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-percent-hint}
@@ -370,7 +386,7 @@ export namespace Calculation {
     /**
      * {@link https://drafts.csswg.org/css-values/#simplify-a-calculation-tree}
      */
-    public abstract reduce(resolve: Mapper<Numeric>): Expression;
+    public abstract reduce(resolver: Resolver): Expression;
 
     public toLength(): Option<Length> {
       if (isValueExpression(this) && isLength(this.value)) {
@@ -448,18 +464,14 @@ export namespace Calculation {
       return this._value;
     }
 
-    public reduce(resolve: Mapper<Numeric>): Value {
-      const value = this._value;
-
-      if (isLength(value) && value.isAbsolute()) {
-        return Value.of(value.withUnit("px"));
-      }
-
-      if (isAngle(value)) {
-        return Value.of(value.withUnit("deg"));
-      }
-
-      return Value.of(resolve(value));
+    public reduce(resolver: Resolver): Value {
+      return Value.of(
+        Selective.of(this._value)
+          .if(isLength, lengthResolver(resolver.length))
+          .if(isAngle, angleResolver)
+          .if(isPercentage, resolver.percentage)
+          .get()
+      );
     }
 
     public equals(value: unknown): value is this {
@@ -569,9 +581,9 @@ export namespace Calculation {
       return "sum";
     }
 
-    public reduce(resolve: Mapper<Numeric>): Expression {
+    public reduce(resolver: Resolver): Expression {
       const [fst, snd] = this._operands.map((operand) =>
-        operand.reduce(resolve)
+        operand.reduce(resolver)
       );
 
       if (isValueExpression(fst) && isValueExpression(snd)) {
@@ -627,9 +639,9 @@ export namespace Calculation {
       return "negate";
     }
 
-    public reduce(resolve: Mapper<Numeric>): Expression {
+    public reduce(resolver: Resolver): Expression {
       const [operand] = this._operands.map((operand) =>
-        operand.reduce(resolve)
+        operand.reduce(resolver)
       );
 
       if (isValueExpression(operand)) {
@@ -685,9 +697,9 @@ export namespace Calculation {
       return "product";
     }
 
-    public reduce(resolve: Mapper<Numeric>): Expression {
+    public reduce(resolver: Resolver): Expression {
       const [fst, snd] = this._operands.map((operand) =>
-        operand.reduce(resolve)
+        operand.reduce(resolver)
       );
 
       if (isValueExpression(fst) && isValueExpression(snd)) {
@@ -748,9 +760,9 @@ export namespace Calculation {
       return this._operands[0].kind.invert();
     }
 
-    public reduce(resolve: Mapper<Numeric>): Expression {
+    public reduce(resolver: Resolver): Expression {
       const [operand] = this._operands.map((operand) =>
-        operand.reduce(resolve)
+        operand.reduce(resolver)
       );
 
       if (isValueExpression(operand)) {

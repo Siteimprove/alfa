@@ -12,7 +12,6 @@ import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
-import { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
 import { Predicate } from '@siteimprove/alfa-predicate';
@@ -24,7 +23,7 @@ import { Slice } from '@siteimprove/alfa-slice';
 // @public (undocumented)
 export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<"angle", Unit.Angle, U> {
     // (undocumented)
-    get canonicalUnit(): "deg";
+    get canonicalUnit(): Angle.CanonicalUnit;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -36,11 +35,7 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<"angle",
     // (undocumented)
     scale(factor: number): Angle<U>;
     // (undocumented)
-    toJSON(): Angle.JSON;
-    // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "angle";
     // (undocumented)
     withUnit<U extends Unit.Angle>(unit: U): Angle<U>;
 }
@@ -48,11 +43,11 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<"angle",
 // @public (undocumented)
 export namespace Angle {
     // (undocumented)
+    export type CanonicalUnit = "deg";
+    // (undocumented)
     export function isAngle(value: unknown): value is Angle;
     // (undocumented)
-    export interface JSON extends Dimension.JSON<"angle"> {
-        // (undocumented)
-        unit: Unit.Angle;
+    export interface JSON<U extends Unit.Angle = Unit.Angle> extends Dimension.JSON<"angle", U> {
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Angle, string>;
@@ -123,7 +118,7 @@ export namespace Box {
 }
 
 // @public (undocumented)
-export class Calculation extends Value<"calculation"> {
+export class Calculation<D extends Calculation.Dimension = "unknown"> extends Value<"calculation"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -131,9 +126,13 @@ export class Calculation extends Value<"calculation"> {
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
+    isLength(): this is Calculation<"length">;
+    // (undocumented)
+    isLengthPercentage(): this is Calculation<"length" | "percentage">;
+    // (undocumented)
     static of(expression: Calculation.Expression): Calculation;
     // (undocumented)
-    reduce(resolve: Mapper<Numeric>): Calculation;
+    reduce(resolver: Calculation.Resolver): Calculation;
     // (undocumented)
     toJSON(): Calculation.JSON;
     // (undocumented)
@@ -144,14 +143,18 @@ export class Calculation extends Value<"calculation"> {
 
 // @public (undocumented)
 export namespace Calculation {
+    // @internal (undocumented)
+    export type Dimension = Kind.Base | "scalar" | "unknown";
     // (undocumented)
     export abstract class Expression implements Equatable, Serializable {
         // (undocumented)
         abstract equals(value: unknown): value is this;
         // (undocumented)
         abstract get kind(): Kind;
+        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
+        //
         // (undocumented)
-        abstract reduce(resolve: Mapper<Numeric>): Expression;
+        abstract reduce(resolver: Resolver): Expression;
         // (undocumented)
         toJSON(): Expression.JSON;
         // (undocumented)
@@ -179,8 +182,10 @@ export namespace Calculation {
         get kind(): Kind;
         // (undocumented)
         static of(operand: Expression): Invert;
+        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
+        //
         // (undocumented)
-        reduce(resolve: Mapper<Numeric>): Expression;
+        reduce(resolver: Resolver): Expression;
         // (undocumented)
         toString(): string;
         // (undocumented)
@@ -237,7 +242,7 @@ export namespace Calculation {
     // (undocumented)
     export namespace Kind {
         // (undocumented)
-        export type Base = "length" | "angle" | "time" | "frequency" | "resolution" | "percentage";
+        export type Base = Numeric.Dimension | "percentage";
         // (undocumented)
         export type Hint = Exclude<Kind.Base, "percentage">;
         // (undocumented)
@@ -260,8 +265,10 @@ export namespace Calculation {
     export class Negate extends Operation.Unary {
         // (undocumented)
         static of(operand: Expression): Negate;
+        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
+        //
         // (undocumented)
-        reduce(resolve: Mapper<Numeric>): Expression;
+        reduce(resolver: Resolver): Expression;
         // (undocumented)
         toString(): string;
         // (undocumented)
@@ -305,19 +312,30 @@ export namespace Calculation {
     export class Product extends Operation.Binary {
         // (undocumented)
         static of(...operands: [Expression, Expression]): Result<Product, string>;
+        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
+        //
         // (undocumented)
-        reduce(resolve: Mapper<Numeric>): Expression;
+        reduce(resolver: Resolver): Expression;
         // (undocumented)
         toString(): string;
         // (undocumented)
         get type(): "product";
     }
+    // @internal
+    export interface Resolver {
+        // (undocumented)
+        length(value: Length<Unit.Length.Relative>): Length;
+        // (undocumented)
+        percentage(value: Percentage): Numeric;
+    }
     // (undocumented)
     export class Sum extends Operation.Binary {
         // (undocumented)
         static of(...operands: [Expression, Expression]): Result<Sum, string>;
+        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
+        //
         // (undocumented)
-        reduce(resolve: Mapper<Numeric>): Expression;
+        reduce(resolver: Resolver): Expression;
         // (undocumented)
         toString(): string;
         // (undocumented)
@@ -331,8 +349,10 @@ export namespace Calculation {
         get kind(): Kind;
         // (undocumented)
         static of(value: Numeric): Value;
+        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
+        //
         // (undocumented)
-        reduce(resolve: Mapper<Numeric>): Value;
+        reduce(resolver: Resolver): Value;
         // (undocumented)
         toJSON(): Value.JSON;
         // (undocumented)
@@ -353,7 +373,7 @@ export namespace Calculation {
         }
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Calculation, string, []>;
+    parse: Parser<Slice<Token>, Calculation<"unknown">, string, []>;
 }
 
 // @public (undocumented)
@@ -522,8 +542,8 @@ export namespace Declaration {
 }
 
 // @public (undocumented)
-export abstract class Dimension<T extends string = string, U extends Unit = Unit, V extends U = U> extends Numeric<T> implements Convertible<U>, Comparable<Dimension<T, U>> {
-    protected constructor(value: number, unit: V);
+export abstract class Dimension<T extends Numeric.Dimension = Numeric.Dimension, U extends Unit = Unit, V extends U = U> extends Numeric<T> implements Convertible<U>, Comparable<Dimension<T, U>> {
+    protected constructor(value: number, unit: V, type: T);
     // (undocumented)
     abstract get canonicalUnit(): U;
     // (undocumented)
@@ -532,6 +552,8 @@ export abstract class Dimension<T extends string = string, U extends Unit = Unit
     equals(value: unknown): value is this;
     // (undocumented)
     hasUnit<V extends U>(unit: V): this is Dimension<T, U, V>;
+    // (undocumented)
+    toJSON(): Dimension.JSON<T, U>;
     // (undocumented)
     get unit(): V;
     // (undocumented)
@@ -545,9 +567,9 @@ export namespace Dimension {
     // (undocumented)
     export function isDimension(value: unknown): value is Dimension;
     // (undocumented)
-    export interface JSON<T extends string = string> extends Numeric.JSON<T> {
+    export interface JSON<T extends Numeric.Dimension = Numeric.Dimension, U extends Unit = Unit> extends Numeric.JSON<T> {
         // (undocumented)
-        unit: Unit;
+        unit: U;
     }
 }
 
@@ -918,10 +940,6 @@ export class Integer extends Numeric<"integer"> {
     static of(value: number): Integer;
     // (undocumented)
     scale(factor: number): Integer;
-    // (undocumented)
-    toJSON(): Integer.JSON;
-    // (undocumented)
-    get type(): "integer";
 }
 
 // @public (undocumented)
@@ -930,8 +948,6 @@ export namespace Integer {
     export function isInteger(value: unknown): value is Integer;
     // (undocumented)
     export interface JSON extends Numeric.JSON<"integer"> {
-        // (undocumented)
-        value: number;
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Integer, string>;
@@ -973,7 +989,7 @@ export namespace Keyword {
 // @public (undocumented)
 export class Length<U extends Unit.Length = Unit.Length> extends Dimension<"length", Unit.Length, U> implements Convertible<Unit.Length.Absolute> {
     // (undocumented)
-    get canonicalUnit(): "px";
+    get canonicalUnit(): Length.CanonicalUnit;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -993,11 +1009,7 @@ export class Length<U extends Unit.Length = Unit.Length> extends Dimension<"leng
     // (undocumented)
     scale(factor: number): Length<U>;
     // (undocumented)
-    toJSON(): Length.JSON<U>;
-    // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "length";
     // (undocumented)
     withUnit<U extends Unit.Length>(unit: U): Length<U>;
 }
@@ -1005,15 +1017,15 @@ export class Length<U extends Unit.Length = Unit.Length> extends Dimension<"leng
 // @public (undocumented)
 export namespace Length {
     // (undocumented)
+    export type CanonicalUnit = "px";
+    // (undocumented)
     export function isLength(value: unknown): value is Length;
     // (undocumented)
     export function isZero(length: Length): boolean;
     const // (undocumented)
     parse: Parser<Slice<Token>, Length, string>;
     // (undocumented)
-    export interface JSON<U extends Unit.Length = Unit.Length> extends Dimension.JSON<"length"> {
-        // (undocumented)
-        unit: U;
+    export interface JSON<U extends Unit.Length = Unit.Length> extends Dimension.JSON<"length", U> {
     }
 }
 
@@ -1305,10 +1317,6 @@ class Number_2 extends Numeric<"number"> {
     static of(value: number): Number_2;
     // (undocumented)
     scale(factor: number): Number_2;
-    // (undocumented)
-    toJSON(): Number_2.JSON;
-    // (undocumented)
-    get type(): "number";
 }
 
 // @public (undocumented)
@@ -1317,8 +1325,6 @@ namespace Number_2 {
     function isNumber(value: unknown): value is Number_2;
     // (undocumented)
     interface JSON extends Numeric.JSON<"number"> {
-        // (undocumented)
-        value: number;
     }
     const // (undocumented)
     parseZero: Parser<Slice<Token>, Number_2, string>;
@@ -1328,8 +1334,8 @@ namespace Number_2 {
 export { Number_2 as Number }
 
 // @public (undocumented)
-export abstract class Numeric<T extends string = string> extends Value<T> implements Comparable<Numeric<T>> {
-    protected constructor(value: number);
+export abstract class Numeric<T extends Numeric.Type = Numeric.Type> extends Value<T> implements Comparable<Numeric<T>> {
+    protected constructor(value: number, type: T);
     // (undocumented)
     compare(value: Numeric<T>): Comparison;
     static readonly Decimals = 7;
@@ -1340,9 +1346,13 @@ export abstract class Numeric<T extends string = string> extends Value<T> implem
     // (undocumented)
     abstract scale(factor: number): Numeric<T>;
     // (undocumented)
-    abstract toJSON(): Numeric.JSON<T>;
+    toJSON(): Numeric.JSON<T>;
     // (undocumented)
     toString(): string;
+    // (undocumented)
+    get type(): T;
+    // (undocumented)
+    protected readonly _type: T;
     // (undocumented)
     get value(): number;
     // (undocumented)
@@ -1352,14 +1362,26 @@ export abstract class Numeric<T extends string = string> extends Value<T> implem
 // @public (undocumented)
 export namespace Numeric {
     // (undocumented)
-    export function isNumeric(value: unknown): value is Numeric;
+    export type Dimension = "angle" | "length";
     // (undocumented)
-    export interface JSON<T extends string = string> extends Value.JSON<T> {
+    export function isNumeric(value: unknown): value is Numeric;
+    // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Type" which is marked as @internal
+    //
+    // (undocumented)
+    export interface JSON<T extends Type = Type> extends Value.JSON<T> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
+        type: T;
+        // (undocumented)
         value: number;
     }
+    // (undocumented)
+    export type Ratio = "percentage";
+    // (undocumented)
+    export type Scalar = "integer" | "number";
+    // @internal (undocumented)
+    export type Type = Scalar | Ratio | Dimension;
 }
 
 // @public (undocumented)
@@ -1371,11 +1393,7 @@ export class Percentage extends Numeric<"percentage"> {
     // (undocumented)
     scale(factor: number): Percentage;
     // (undocumented)
-    toJSON(): Percentage.JSON;
-    // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "percentage";
 }
 
 // @public (undocumented)
@@ -1384,8 +1402,6 @@ export namespace Percentage {
     export function isPercentage(value: unknown): value is Percentage;
     // (undocumented)
     export interface JSON extends Numeric.JSON<"percentage"> {
-        // (undocumented)
-        value: number;
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Percentage, string>;

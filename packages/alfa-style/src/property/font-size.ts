@@ -5,7 +5,6 @@ import {
   Calculation,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Selective } from "@siteimprove/alfa-selective";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
@@ -124,12 +123,10 @@ export default Property.register(
 
         switch (fontSize.type) {
           case "calculation":
-            const { expression } = fontSize.reduce((value) =>
-              Selective.of(value)
-                .if(Length.isLength, lengthResolver)
-                .if(Percentage.isPercentage, percentageResolver)
-                .get()
-            );
+            const { expression } = fontSize.reduce({
+              length: lengthResolver,
+              percentage: percentageResolver,
+            });
 
             return expression.toLength().get() as Computed;
 

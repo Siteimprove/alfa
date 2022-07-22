@@ -27,7 +27,7 @@ export class Length<U extends Unit.Length = Unit.Length>
     super(value, unit, "length");
   }
 
-  public get canonicalUnit(): "px" {
+  public get canonicalUnit(): Length.CanonicalUnit {
     return "px";
   }
 
@@ -91,6 +91,8 @@ export class Length<U extends Unit.Length = Unit.Length>
 export namespace Length {
   export interface JSON<U extends Unit.Length = Unit.Length>
     extends Dimension.JSON<"length", U> {}
+
+  export type CanonicalUnit = "px";
 
   export function isLength(value: unknown): value is Length {
     return value instanceof Length;

@@ -27,7 +27,7 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
     super(value, unit, "angle");
   }
 
-  public get canonicalUnit(): "deg" {
+  public get canonicalUnit(): Angle.CanonicalUnit {
     return "deg";
   }
 
@@ -71,6 +71,8 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
 export namespace Angle {
   export interface JSON<U extends Unit.Angle = Unit.Angle>
     extends Dimension.JSON<"angle", U> {}
+
+  export type CanonicalUnit = "deg";
 
   export function isAngle(value: unknown): value is Angle {
     return value instanceof Angle;
