@@ -142,6 +142,8 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     sortWith(comparer: Comparer<T>): Sequence<T>;
     // (undocumented)
+    sortWith<T, U extends T = T>(this: Sequence<U>, comparer: Comparer<T>): Sequence<U>;
+    // (undocumented)
     subtract(iterable: Iterable_2<T>): Sequence<T>;
     // (undocumented)
     take(count: number): Sequence<T>;
@@ -298,6 +300,8 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     sort<T extends Comparable<T>>(this: Sequence<T>): Sequence<T>;
     // (undocumented)
     sortWith(comparer: Comparer<T>): Sequence<T>;
+    // (undocumented)
+    sortWith<T, U extends T = T>(this: Sequence<U>, comparer: Comparer<T>): Sequence<U>;
     // (undocumented)
     subtract(iterable: Iterable<T>): Sequence<T>;
     // (undocumented)

@@ -169,6 +169,8 @@ export namespace Collection {
         // (undocumented)
         sortWith(comparer: Comparer<T>): Indexed<T>;
         // (undocumented)
+        sortWith<T, U extends T = T>(this: Indexed<U>, comparer: Comparer<T>): Indexed<U>;
+        // (undocumented)
         subtract(iterable: Iterable_2<T>): Indexed<T>;
         // (undocumented)
         take(count: number): Indexed<T>;

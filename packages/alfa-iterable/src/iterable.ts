@@ -740,6 +740,16 @@ export namespace Iterable {
     return sortWith(iterable, compareComparable);
   }
 
+  export function sortWith<T>(
+    iterable: Iterable<T>,
+    comparer: Comparer<T>
+  ): Iterable<T>;
+
+  export function sortWith<T, U extends T = T>(
+    iterable: Iterable<U>,
+    comparer: Comparer<T>
+  ): Iterable<U>;
+
   export function* sortWith<T>(
     iterable: Iterable<T>,
     comparer: Comparer<T>

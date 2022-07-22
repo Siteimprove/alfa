@@ -405,6 +405,13 @@ export class Slice<T> implements Collection.Indexed<T> {
     return this.sortWith(compareComparable);
   }
 
+  public sortWith(comparer: Comparer<T>): Slice<T>;
+
+  public sortWith<T, U extends T = T>(
+    this: Slice<U>,
+    comparer: Comparer<T>
+  ): Slice<U>;
+
   public sortWith(comparer: Comparer<T>): Slice<T> {
     const array = Array.sortWith(this.toArray(), comparer);
 

@@ -91,6 +91,10 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   join(separator: string): string;
   sort<T extends Comparable<T>>(this: Sequence<T>): Sequence<T>;
   sortWith(comparer: Comparer<T>): Sequence<T>;
+  sortWith<T, U extends T = T>(
+    this: Sequence<U>,
+    comparer: Comparer<T>
+  ): Sequence<U>;
   compare<T>(this: Sequence<Comparable<T>>, iterable: Iterable<T>): Comparison;
   compareWith<U = T>(
     iterable: Iterable<U>,
