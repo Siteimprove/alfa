@@ -26,6 +26,7 @@ const { hasId, isElement } = Element;
 const { isText } = Text;
 const { equals, test } = Predicate;
 const { or } = Refinement;
+const { hasComputedStyle } = Style;
 
 /**
  * @public
@@ -772,7 +773,7 @@ export namespace Name {
     device: Device,
     state: State
   ): Option<Name> {
-    const names = element
+    const names: Sequence<readonly [string, Name]> = element
       .children()
       .filter(or(isText, isElement))
       .collect((element) =>
@@ -780,10 +781,24 @@ export namespace Name {
           element,
           device,
           state.reference(None).recurse(true).descend(true)
-        )
+        ).map((name) => {
+          if (
+            test(
+              hasComputedStyle(
+                "display",
+                ({ values: [outside] }) => outside.value === "block",
+                device
+              ),
+              element
+            )
+          ) {
+            return [` ${name.value} `, name];
+          }
+          return [name.value, name];
+        })
       );
 
-    const name = flatten(names.map((name) => name.value).join("")).trim();
+    const name = flatten(names.map((name) => name[0]).join("")).trim();
 
     if (name === "") {
       return None;
@@ -792,7 +807,7 @@ export namespace Name {
     return Option.of(
       Name.of(
         name,
-        names.map((name) => Source.descendant(element, name))
+        names.map((name) => Source.descendant(element, name[1]))
       )
     );
   }
