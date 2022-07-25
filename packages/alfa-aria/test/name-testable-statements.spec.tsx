@@ -3224,8 +3224,8 @@ test("Name text-title", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_from_content}
  *
- * Alfa join content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1054}
+ * Alfa joins content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1203}
  */
 test("Name from content", (t) => {
   const testCase = (
@@ -3280,8 +3280,8 @@ test("Name from content", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_from_content_of_labelledby_element}
  *
- * Alfa join content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1054}
+ * Alfa joins content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1203}
  */
 test("Name from content of labelledby element", (t) => {
   const testCase = (
@@ -3337,8 +3337,8 @@ test("Name from content of labelledby element", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_from_content_of_label}
  *
- * Alfa join content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1054}
+ * Alfa joins content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1203}
  */
 test("Name from content of label", (t) => {
   const testCase = (
@@ -3601,8 +3601,8 @@ test("Name checkbox-label-multiple-label", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-inline-block-elements}
  *
- * Alfa join content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1054}
+ * Alfa joins content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1203}
  */
 test("Name file-label-inline-block-elements", (t) => {
   const testCase = (
@@ -3667,8 +3667,8 @@ test("Name file-label-inline-block-styles", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_file-label-inline-hidden-elements}
  *
- * Alfa join content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1054}
+ * Alfa joins content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1203}
  */
 test("Name file-label-inline-hidden-elements", (t) => {
   const testCase = (
@@ -3776,8 +3776,8 @@ test("Name file-label-owned-combobox", (t) => {
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_link-mixed-content}
  *
- * Alfa join content traversal without spaces
- * {@link https://github.com/Siteimprove/alfa/issues/1054}
+ * Alfa joins content traversal without spaces
+ * {@link https://github.com/Siteimprove/alfa/issues/1203}
  */
 test("Name link-mixed-content", (t) => {
   const testCase = (
