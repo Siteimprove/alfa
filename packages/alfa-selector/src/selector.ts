@@ -34,7 +34,7 @@ const {
   zeroOrMore,
 } = Parser;
 
-const { and, not, property, equals, or } = Predicate;
+const { and, not, property, equals }= Predicate;
 const { isElement, hasName } = Element;
 
 /**
