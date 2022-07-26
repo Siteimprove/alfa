@@ -19,6 +19,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.43.1](../../compare/v0.43.0...v0.43.1) (2022-07-26)
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Fixed a regression in the role of `<select>` elements. ([#1204](../../pull/1204))
+
 ## [0.43.0](../../compare/v0.42.1...v0.43.0) (2022-07-22)
 
 ### Added
