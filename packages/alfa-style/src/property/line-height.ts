@@ -10,8 +10,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-import * as FontSize from "./font-size";
-
 const { either, filter } = Parser;
 
 declare module "../property" {
