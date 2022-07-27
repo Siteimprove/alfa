@@ -142,3 +142,20 @@ test(`evaluates() is inapplicable on element that is not in the accessiblity tre
 
   t.deepEqual(await evaluate(R42, { document }), [inapplicable(R42)]);
 });
+
+test(`evaluate() passes a native mono-line \`<select>\``, async (t) => {
+  const target1 = <option>Hello</option>;
+  const target2 = <option>World</option>;
+
+  const document = h.document([
+    <select>
+      {target1}
+      {target2}
+    </select>,
+  ]);
+
+  t.deepEqual(await evaluate(R42, { document }), [
+    passed(R42, target1, { 1: Outcomes.IsOwnedByContextRole("option") }),
+    passed(R42, target2, { 1: Outcomes.IsOwnedByContextRole("option") }),
+  ]);
+});

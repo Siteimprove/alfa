@@ -608,12 +608,16 @@ const Features: Features = {
 
     select: html(
       (element) =>
+        // mono-line <select> are mapped to combobox by HTML AAM, but their child
+        // <option> are still mapped to option, which are out of their context role.
+        // We cheat and always map <select> to
         test(
           Element.hasDisplaySize((size) => size > 1),
           element
         )
           ? Option.of(Role.of("listbox"))
-          : Option.of(Role.of("combobox")),
+          : // combobox following HTML AAM, but listbox to be correct.
+            Option.of(Role.of("listbox")),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {

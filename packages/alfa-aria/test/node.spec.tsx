@@ -672,3 +672,38 @@ test(`.from() behaves when encountering an element with global properties where
     ],
   });
 });
+
+test(`.from() maps \`<select>\` to listboxes`, (t) => {
+  // mono-line <select> are mapped to combobox by HTML AAM, but their child
+  // <option> are still mapped to option, which are out of their context role.
+  // We cheat and always map <select> to listbox
+  const select = (
+    <select>
+      <option>Hello</option>
+    </select>
+  );
+
+  t.deepEqual(Node.from(select, device).toJSON(), {
+    type: "element",
+    children: [
+      {
+        type: "element",
+        children: [
+          {
+            type: "text",
+            node: "/select[1]/option[1]/text()[1]",
+            name: "Hello",
+          },
+        ],
+        node: "/select[1]/option[1]",
+        role: "option",
+        name: "Hello",
+        attributes: [{ name: "aria-selected", value: "false" }],
+      },
+    ],
+    node: "/select[1]",
+    role: "listbox",
+    name: null,
+    attributes: [{ name: "aria-orientation", value: "vertical" }],
+  });
+});
