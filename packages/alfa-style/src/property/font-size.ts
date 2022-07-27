@@ -1,15 +1,17 @@
 import {
-  Keyword,
-  Length,
-  Percentage,
   Calculation,
+  Length,
+  Keyword,
+  Percentage,
+  Token,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-const { either, filter } = Parser;
+const { either } = Parser;
 
 declare module "../property" {
   interface Longhands {
@@ -47,28 +49,21 @@ export type Computed = Length<"px">;
 /**
  * @internal
  */
-export const parse = either(
-  either(
-    Keyword.parse(
-      "xx-small",
-      "x-small",
-      "small",
-      "medium",
-      "large",
-      "x-large",
-      "xx-large",
-      "xxx-large"
-    ),
-    Keyword.parse("larger", "smaller")
+export const parse = either<Slice<Token>, Specified, string>(
+  Keyword.parse(
+    "xx-small",
+    "x-small",
+    "small",
+    "medium",
+    "large",
+    "x-large",
+    "xx-large",
+    "xxx-large"
   ),
-  either(
-    either(Percentage.parse, Length.parse),
-    filter(
-      Calculation.parse,
-      (calculation) => calculation.isLengthPercentage(),
-      () => `calc() expression must be of type "length" or "percentage"`
-    )
-  )
+  Keyword.parse("larger", "smaller"),
+  Percentage.parse,
+  Length.parse,
+  Calculation.parseLengthPercentage
 );
 
 /**

@@ -12,8 +12,8 @@ import { Result, Err } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../syntax/token";
-
 import { Function } from "../syntax/function";
+
 import { Value } from "../value";
 import {
   Angle,
@@ -25,7 +25,7 @@ import {
 } from "./numeric";
 import { Unit } from "./unit";
 
-const { map, flatMap, either, delimited, pair, option } = Parser;
+const { delimited, either, filter, flatMap, map, option, pair } = Parser;
 
 const { isAngle } = Angle;
 const { isDimension } = Dimension;
@@ -923,4 +923,11 @@ export namespace Calculation {
   );
 
   export const parse = map(parseCalc, Calculation.of);
+
+  // other parsers + filters can be added when needed
+  export const parseLengthPercentage = filter(
+    parse,
+    (calculation) => calculation.isLengthPercentage(),
+    () => `calc() expression must be of type "length" or "percentage"`
+  );
 }

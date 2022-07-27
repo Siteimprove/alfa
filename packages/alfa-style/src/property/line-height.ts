@@ -1,16 +1,18 @@
 import {
+  Calculation,
   Keyword,
   Length,
-  Percentage,
   Number,
-  Calculation,
+  Percentage,
+  Token,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-const { either, filter } = Parser;
+const { either } = Parser;
 
 declare module "../property" {
   interface Longhands {
@@ -36,19 +38,12 @@ export type Computed = Keyword<"normal"> | Number | Length<"px">;
 /**
  * @internal
  */
-export const parse = either(
+export const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("normal"),
-  either(
-    Number.parse,
-    either(
-      either(Length.parse, Percentage.parse),
-      filter(
-        Calculation.parse,
-        (calculation) => calculation.isLengthPercentage(),
-        () => `calc() expression must be of type "length" or "percentage"`
-      )
-    )
-  )
+  Number.parse,
+  Length.parse,
+  Percentage.parse,
+  Calculation.parseLengthPercentage
 );
 
 /**
