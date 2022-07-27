@@ -77,11 +77,29 @@ export class Calculation<
   public isLength(): this is Calculation<"length"> {
     return this._expression.kind.is("length");
   }
+
+  /**
+   * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
+   */
+  public isNumber(): this is Calculation<"scalar"> {
+    return this._expression.kind.is();
+  }
+
+  /**
+   * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
+   */
+  public isPercentage(): this is Calculation<"percentage"> {
+    return this._expression.kind.is("percentage");
+  }
+
   /**
    * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
    */
   public isLengthPercentage(): this is Calculation<"length" | "percentage"> {
     return (
+      // dimension-percentage are not just (dimension | percentage) because the
+      // dimension does accept a percent hint in this case; while pure
+      // dimensions may not be hinted.
       this._expression.kind.is("length", 1, true) ||
       this._expression.kind.is("percentage")
     );
