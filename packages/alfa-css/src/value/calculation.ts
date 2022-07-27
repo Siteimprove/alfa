@@ -18,6 +18,7 @@ import { Value } from "../value";
 import {
   Angle,
   Dimension,
+  Integer,
   Length,
   Number,
   Numeric,
@@ -39,7 +40,7 @@ const { isPercentage } = Percentage;
  * @public
  */
 export class Calculation<
-  D extends Calculation.Dimension = "unknown"
+  out D extends Calculation.Dimension = Calculation.Dimension
 > extends Value<"calculation"> {
   public static of(expression: Calculation.Expression): Calculation {
     return new Calculation(
@@ -81,7 +82,7 @@ export class Calculation<
   /**
    * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
    */
-  public isNumber(): this is Calculation<"scalar"> {
+  public isNumber(): this is Calculation<"number"> {
     return this._expression.kind.is();
   }
 
@@ -95,7 +96,7 @@ export class Calculation<
   /**
    * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
    */
-  public isLengthPercentage(): this is Calculation<"length" | "percentage"> {
+  public isLengthPercentage(): this is Calculation<"length-percentage"> {
     return (
       // dimension-percentage are not just (dimension | percentage) because the
       // dimension does accept a percent hint in this case; while pure
@@ -111,7 +112,7 @@ export class Calculation<
    * Needs a resolver to handle relative lengths and percentages.
    */
   public resolve(
-    this: Calculation<"length" | "percentage">,
+    this: Calculation<"length-percentage">,
     resolver: Calculation.Resolver<"px", Length<"px">>
   ): Length<"px"> {
     // Since the expressions can theoretically contain arbitrarily units in them,
@@ -161,7 +162,10 @@ export namespace Calculation {
   /**
    * @internal
    */
-  export type Dimension = Kind.Base | "scalar" | "unknown";
+  export type Dimension =
+    | Kind.Base
+    | `${Numeric.Dimension}-percentage`
+    | "number";
 
   /**
    * Absolute units can be resolved automatically.
@@ -440,6 +444,8 @@ export namespace Calculation {
 
       return None;
     }
+
+    // public toNumber(): Option<Integer | Number>
 
     public toPercentage(): Option<Percentage> {
       if (isValueExpression(this) && isPercentage(this.value)) {
@@ -946,6 +952,12 @@ export namespace Calculation {
   export const parseLengthPercentage = filter(
     parse,
     (calculation) => calculation.isLengthPercentage(),
+    () => `calc() expression must be of type "length" or "percentage"`
+  );
+
+  export const parseLengthNumberPercentage = filter(
+    parse,
+    (calculation) => calculation.isLengthPercentage() || calculation.isNumber(),
     () => `calc() expression must be of type "length" or "percentage"`
   );
 }

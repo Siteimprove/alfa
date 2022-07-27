@@ -25,7 +25,7 @@ declare module "../property" {
 export type Specified =
   | Length
   | Percentage
-  | Calculation<"length" | "percentage">
+  | Calculation<"length-percentage">
 
   // Absolute
   | Keyword<"xx-small">

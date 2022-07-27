@@ -28,7 +28,7 @@ export type Specified =
   | Number
   | Length
   | Percentage
-  | Calculation<"length" | "percentage">;
+  | Calculation<"length-percentage">;
 
 /**
  * @internal
