@@ -1237,7 +1237,7 @@ export namespace Selector {
       return element
         .inclusiveDescendants(Node.fullTree)
         .filter(isElement)
-        .some(context.isHovered);
+        .some((element) => context.isHovered(element));
     }
   }
 
@@ -1300,7 +1300,7 @@ export namespace Selector {
       return element
         .inclusiveDescendants(Node.flatTree)
         .filter(isElement)
-        .some(context.isFocused);
+        .some((element) => context.isFocused(element));
     }
   }
 
