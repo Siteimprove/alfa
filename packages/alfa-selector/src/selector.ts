@@ -34,7 +34,7 @@ const {
   zeroOrMore,
 } = Parser;
 
-const { and, not, property, equals }= Predicate;
+const { and, not, property, equals } = Predicate;
 const { isElement, hasName } = Element;
 
 /**
@@ -1237,7 +1237,7 @@ export namespace Selector {
       return element
         .inclusiveDescendants(Node.fullTree)
         .filter(isElement)
-        .some((element) => context.isHovered(element));
+        .some(context.isHovered);
     }
   }
 
@@ -1300,7 +1300,7 @@ export namespace Selector {
       return element
         .inclusiveDescendants(Node.flatTree)
         .filter(isElement)
-        .some((element) => context.isFocused(element));
+        .some(context.isFocused);
     }
   }
 

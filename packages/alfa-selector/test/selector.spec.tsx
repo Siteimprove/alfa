@@ -1047,7 +1047,7 @@ test("#matches() checks if an element matches a :hover selector", (t) => {
   t.equal(selector.matches(p, Context.hover(p)), true);
 });
 
-test("#matches() checks if an element matches a :hover selector inherited from its descendant", (t) => {
+test("#matches() checks if an element matches a :hover selector when its descendant is hovered", (t) => {
   const selector = parse(":hover").get();
 
   const target = <span> Hello </span>;
