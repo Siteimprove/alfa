@@ -1047,6 +1047,15 @@ test("#matches() checks if an element matches a :hover selector", (t) => {
   t.equal(selector.matches(p, Context.hover(p)), true);
 });
 
+test("#matches() checks if an element matches a :hover selector when its descendant is hovered", (t) => {
+  const selector = parse(":hover").get();
+
+  const target = <span> Hello </span>;
+  const p = <div> {target} </div>;
+
+  t.equal(selector.matches(p, Context.hover(target)), true);
+});
+
 test("#matches() checks if an element matches an :active selector", (t) => {
   const selector = parse(":active").get();
 
