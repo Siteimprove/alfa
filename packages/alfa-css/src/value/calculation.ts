@@ -264,19 +264,20 @@ export namespace Calculation {
       hinted: boolean = kind === "percentage"
     ): boolean {
       for (const entry of this._kinds) {
-        if (entry[1] === 0) {
+        // this is not the dimension we're looking for, and it has power 0.
+        if (entry[0] !== kind && entry[1] === 0) {
           continue;
         }
 
-        if (kind !== undefined) {
-          if (entry[0] === kind && entry[1] === value) {
-            break;
-          }
+        // this is the dimension we're looking for, and it has the correct power.
+        if (entry[0] === kind && entry[1] === value) {
+          continue;
         }
 
         return false;
       }
 
+      // All the entries have the correct value. Is a hint allowed?
       return this._hint.isNone() || hinted;
     }
 
