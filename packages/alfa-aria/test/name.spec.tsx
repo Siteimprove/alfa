@@ -764,6 +764,70 @@ test(`.from() joins descendant names without a space`, (t) => {
   });
 });
 
+test(`.from() joins block descendant names with a space`, (t) => {
+  const button = (
+    <button>
+      <div>Block</div>
+      <div>element</div>
+    </button>
+  );
+
+  h.document([button]);
+
+  t.deepEqual(Name.from(button, device).toJSON(), {
+    type: "some",
+    value: {
+      value: "Block element",
+      sources: [
+        {
+          type: "descendant",
+          element: "/button[1]",
+          name: {
+            value: "Block",
+            sources: [
+              {
+                type: "descendant",
+                element: "/button[1]/div[1]",
+                name: {
+                  value: "Block",
+                  sources: [
+                    {
+                      type: "data",
+                      text: "/button[1]/div[1]/text()[1]",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+        {
+          type: "descendant",
+          element: "/button[1]",
+          name: {
+            value: "element",
+            sources: [
+              {
+                type: "descendant",
+                element: "/button[1]/div[2]",
+                name: {
+                  value: "element",
+                  sources: [
+                    {
+                      type: "data",
+                      text: "/button[1]/div[2]/text()[1]",
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+  });
+});
+
 test(`.from() determines the name of an <area> element with an alt attribute`, (t) => {
   const area = <area alt="Hello world" />;
 
