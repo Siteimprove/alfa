@@ -46,7 +46,7 @@ test(".parse() parses an addition expression of percentages", (t) => {
 test(".parse() parses an addition expression of absolute lengths", (t) => {
   const calculation = parse("calc(1px + 2px)").get();
 
-  t(calculation.isLength());
+  t(calculation.isDimension("length"));
 
   t.deepEqual(calculation.toJSON(), {
     type: "calculation",
@@ -64,7 +64,7 @@ test(".parse() parses an addition expression of absolute lengths", (t) => {
 test(".parse() parses an addition expression of relative lengths", (t) => {
   const calculation = parse("calc(1em + 2em)").get();
 
-  t(calculation.isLength());
+  t(calculation.isDimension("length"));
 
   t.deepEqual(calculation.toJSON(), {
     type: "calculation",
@@ -82,7 +82,7 @@ test(".parse() parses an addition expression of relative lengths", (t) => {
 test(".parse() parses an addition expression of mixed lengths", (t) => {
   const calculation = parse("calc(1px + 2em)").get();
 
-  t(calculation.isLength());
+  t(calculation.isDimension("length"));
 
   t.deepEqual(calculation.toJSON(), {
     type: "calculation",
@@ -113,7 +113,7 @@ test(".parse() parses an addition expression of mixed lengths", (t) => {
 test(".parse() parses an addition expression of a length and a percentage", (t) => {
   const calculation = parse("calc(1px + 2%").get();
 
-  t(calculation.isLengthPercentage());
+  t(calculation.isDimensionPercentage("length"));
 
   t.deepEqual(calculation.toJSON(), {
     type: "calculation",
@@ -177,7 +177,7 @@ test(".parse() parses a multiplication expression of a number and a percentage",
 test(".parse() parses a multiplication expression of a number and a length", (t) => {
   const calculation = parse("calc(2 * 3px)").get();
 
-  t(calculation.isLength());
+  t(calculation.isDimension("length"));
 
   t.deepEqual(calculation.toJSON(), {
     type: "calculation",

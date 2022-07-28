@@ -118,10 +118,12 @@ export default Property.register(
 
         switch (fontSize.type) {
           case "calculation":
-            return fontSize.resolve({
-              length: lengthResolver,
-              percentage: percentageResolver,
-            });
+            return fontSize
+              .resolve({
+                length: lengthResolver,
+                percentage: percentageResolver,
+              })
+              .get();
 
           case "length":
             return lengthResolver(fontSize);

@@ -28,7 +28,8 @@ export type Specified =
   | Number
   | Length
   | Percentage
-  | Calculation<"length-percentage">;
+  | Calculation<"length-percentage">
+  | Calculation<"number">;
 
 /**
  * @internal
@@ -43,7 +44,7 @@ export const parse = either<Slice<Token>, Specified, string>(
   Number.parse,
   Length.parse,
   Percentage.parse,
-  Calculation.parseLengthPercentage
+  Calculation.parseLengthNumberPercentage
 );
 
 /**
@@ -74,10 +75,19 @@ export default Property.register(
             return percentageResolver(height);
 
           case "calculation":
-            return height.resolve({
-              length: lengthResolver,
-              percentage: percentageResolver,
-            });
+            // TS can't see that the union is exactly covered by the overloads
+            // so we have to do this ugly split :-/
+            return (
+              height.isNumber()
+                ? height.resolve({
+                    length: lengthResolver,
+                    percentage: percentageResolver,
+                  })
+                : height.resolve({
+                    length: lengthResolver,
+                    percentage: percentageResolver,
+                  })
+            ).get();
         }
       }),
     {

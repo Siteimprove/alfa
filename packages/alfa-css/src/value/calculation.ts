@@ -18,7 +18,6 @@ import { Value } from "../value";
 import {
   Angle,
   Dimension,
-  Integer,
   Length,
   Number,
   Numeric,
@@ -30,7 +29,6 @@ const { delimited, either, filter, flatMap, map, option, pair } = Parser;
 
 const { isAngle } = Angle;
 const { isDimension } = Dimension;
-const { isInteger } = Integer;
 const { isLength } = Length;
 const { isNumber } = Number;
 const { isPercentage } = Percentage;
@@ -72,12 +70,28 @@ export class Calculation<
     return new Calculation(this._expression.reduce(resolver));
   }
 
-  // Other matchers should be added when needed.
   /**
    * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
    */
-  public isLength(): this is Calculation<"length"> {
-    return this._expression.kind.is("length");
+  public isDimension<D extends Numeric.Dimension>(
+    dimension: D
+  ): this is Calculation<D> {
+    return this._expression.kind.is(dimension);
+  }
+
+  /**
+   * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
+   */
+  public isDimensionPercentage<D extends Numeric.Dimension>(
+    dimension: D
+  ): this is Calculation<`${D}-percentage`> {
+    return (
+      // dimension-percentage are not just (dimension | percentage) because the
+      // dimension does accept a percent hint in this case; while pure
+      // dimensions may not be hinted.
+      this._expression.kind.is(dimension, 1, true) ||
+      this._expression.kind.is("percentage")
+    );
   }
 
   /**
@@ -94,19 +108,6 @@ export class Calculation<
     return this._expression.kind.is("percentage");
   }
 
-  /**
-   * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
-   */
-  public isLengthPercentage(): this is Calculation<"length-percentage"> {
-    return (
-      // dimension-percentage are not just (dimension | percentage) because the
-      // dimension does accept a percent hint in this case; while pure
-      // dimensions may not be hinted.
-      this._expression.kind.is("length", 1, true) ||
-      this._expression.kind.is("percentage")
-    );
-  }
-
   // Other resolvers should be added when needed.
   /**
    * Resolves a calculation typed as a length or percentage into an absolute length.
@@ -115,7 +116,17 @@ export class Calculation<
   public resolve(
     this: Calculation<"length-percentage">,
     resolver: Calculation.Resolver<"px", Length<"px">>
-  ): Length<"px"> {
+  ): Option<Length<"px">>;
+
+  public resolve(
+    this: Calculation<"number">,
+    resolver: Calculation.Resolver<"px", Length<"px">>
+  ): Option<Number>;
+
+  public resolve(
+    this: Calculation,
+    resolver: Calculation.Resolver<"px", Length<"px">>
+  ): Option<Numeric> {
     // Since the expressions can theoretically contain arbitrarily units in them,
     // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
     // they seem to be more restricted), we can't easily type Expression itself
@@ -123,7 +134,13 @@ export class Calculation<
     // However, we now that a calculation matching <length-percentage> can be
     // resolved to a Length<"px"> with certainty if the correct individual
     // resolvers are provided.
-    return this._expression.reduce(resolver).toLength().get() as Length<"px">;
+    const expression = this._expression.reduce(resolver);
+
+    return this.isDimensionPercentage("length")
+      ? expression.toLength()
+      : this.isNumber()
+      ? expression.toNumber()
+      : None;
   }
 
   public hash(hash: Hash): void {}
@@ -446,11 +463,8 @@ export namespace Calculation {
       return None;
     }
 
-    public toNumber(): Option<Integer | Number> {
-      if (
-        isValueExpression(this) &&
-        (isNumber(this.value) || isInteger(this.value))
-      ) {
+    public toNumber(): Option<Number> {
+      if (isValueExpression(this) && isNumber(this.value)) {
         return Option.of(this.value);
       }
 
@@ -961,13 +975,19 @@ export namespace Calculation {
   // other parsers + filters can be added when needed
   export const parseLengthPercentage = filter(
     parse,
-    (calculation) => calculation.isLengthPercentage(),
+    (calculation): calculation is Calculation<"length-percentage"> =>
+      calculation.isDimensionPercentage("length"),
     () => `calc() expression must be of type "length" or "percentage"`
   );
 
   export const parseLengthNumberPercentage = filter(
     parse,
-    (calculation) => calculation.isLengthPercentage() || calculation.isNumber(),
+    (
+      calculation
+    ): calculation is
+      | Calculation<"length-percentage">
+      | Calculation<"number"> =>
+      calculation.isDimensionPercentage("length") || calculation.isNumber(),
     () => `calc() expression must be of type "length" or "percentage"`
   );
 }
