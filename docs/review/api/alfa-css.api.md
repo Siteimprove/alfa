@@ -116,7 +116,7 @@ export namespace Box {
 }
 
 // @public (undocumented)
-export class Calculation<D extends Calculation.Dimension = "unknown"> extends Value<"calculation"> {
+export class Calculation<out D extends Calculation.Dimension = Calculation.Dimension> extends Value<"calculation"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -124,14 +124,20 @@ export class Calculation<D extends Calculation.Dimension = "unknown"> extends Va
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    isLength(): this is Calculation<"length">;
+    isDimension<D extends Numeric.Dimension>(dimension: D): this is Calculation<D>;
     // (undocumented)
-    isLengthPercentage(): this is Calculation<"length" | "percentage">;
+    isDimensionPercentage<D extends Numeric.Dimension>(dimension: D): this is Calculation<`${D}-percentage`>;
+    // (undocumented)
+    isNumber(): this is Calculation<"number">;
+    // (undocumented)
+    isPercentage(): this is Calculation<"percentage">;
     // (undocumented)
     static of(expression: Calculation.Expression): Calculation;
     // (undocumented)
     reduce(resolver: Calculation.Resolver): Calculation;
-    resolve(this: Calculation<"length" | "percentage">, resolver: Calculation.Resolver<"px", Length<"px">>): Length<"px">;
+    resolve(this: Calculation<"length-percentage">, resolver: Calculation.Resolver<"px", Length<"px">>): Option<Length<"px">>;
+    // (undocumented)
+    resolve(this: Calculation<"number">, resolver: Calculation.Resolver<"px", Length<"px">>): Option<Number_2>;
     // (undocumented)
     toJSON(): Calculation.JSON;
     // (undocumented)
@@ -143,7 +149,7 @@ export class Calculation<D extends Calculation.Dimension = "unknown"> extends Va
 // @public (undocumented)
 export namespace Calculation {
     // @internal (undocumented)
-    export type Dimension = Kind.Base | "scalar" | "unknown";
+    export type Dimension = Kind.Base | `${Numeric.Dimension}-percentage` | "number";
     // (undocumented)
     export abstract class Expression implements Equatable, Serializable {
         // (undocumented)
@@ -158,6 +164,8 @@ export namespace Calculation {
         toJSON(): Expression.JSON;
         // (undocumented)
         toLength(): Option<Length>;
+        // (undocumented)
+        toNumber(): Option<Number_2>;
         // (undocumented)
         toPercentage(): Option<Percentage>;
         // (undocumented)
@@ -371,8 +379,14 @@ export namespace Calculation {
             value: Numeric.JSON;
         }
     }
+    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Dimension" which is marked as @internal
+    //
+    // (undocumented)
+    parse: Parser<Slice<Token>, Calculation<Dimension>, string, []>;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Calculation<"unknown">, string, []>;
+    parseLengthPercentage: Parser<Slice<Token>, Calculation<"length-percentage">, string, []>;
+    const // (undocumented)
+    parseLengthNumberPercentage: Parser<Slice<Token>, Calculation<"number"> | Calculation<"length-percentage">, string, []>;
 }
 
 // @public (undocumented)
