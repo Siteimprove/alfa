@@ -44,11 +44,13 @@ exports.documenter = {
             // BEGIN error catching to remove
             // https://github.com/microsoft/rushstack/issues/3486#issuecomment-1197988205
             if (
-              project.includes("alfa-css") &&
+              // For some reason, this message pops in other packages, likely ones
+              // that are importing Calculation.
               message.logLevel === "warning" &&
               message.text.includes("Calculation<out, D>")
             ) {
               message.handled = true;
+              apiExtractorCalculationErrorCaught = true;
             }
             // END error catching to remove
           },
