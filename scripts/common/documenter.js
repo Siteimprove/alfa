@@ -49,7 +49,7 @@ exports.documenter = {
               message.logLevel === "warning" &&
               message.text.includes("Calculation<out, D>")
             ) {
-              message.handled = true;
+              message.logLevel = "none";
               apiExtractorCalculationErrorCaught = true;
             }
             // END error catching to remove
