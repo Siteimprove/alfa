@@ -2748,7 +2748,7 @@ export const Roles = {
       ],
     ],
     name: {
-      required: false,
+      required: true,
       prohibited: false,
       from: ["author", "contents"],
     },
