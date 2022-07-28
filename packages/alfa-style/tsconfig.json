@@ -211,6 +211,7 @@
     "test/property/font-size.spec.tsx",
     "test/property/font-variant.spec.tsx",
     "test/property/inset-block.spec.tsx",
+    "test/property/line-height.spec.tsx",
     "test/property/text-decoration.spec.tsx",
     "test/property/text-indent.spec.tsx",
     "test/property/text-shadow.spec.tsx",
