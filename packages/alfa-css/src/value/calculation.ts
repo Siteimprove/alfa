@@ -110,7 +110,7 @@ export class Calculation<
 
   // Other resolvers should be added when needed.
   /**
-   * Resolves a calculation typed as a length or percentage into an absolute length.
+   * Resolves a calculation typed as a length-percentage or number.
    * Needs a resolver to handle relative lengths and percentages.
    */
   public resolve(
@@ -131,9 +131,6 @@ export class Calculation<
     // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
     // they seem to be more restricted), we can't easily type Expression itself
     // (other than with its Kind).
-    // However, we now that a calculation matching <length-percentage> can be
-    // resolved to a Length<"px"> with certainty if the correct individual
-    // resolvers are provided.
     const expression = this._expression.reduce(resolver);
 
     return this.isDimensionPercentage("length")
