@@ -30,6 +30,7 @@ const { delimited, either, filter, flatMap, map, option, pair } = Parser;
 
 const { isAngle } = Angle;
 const { isDimension } = Dimension;
+const { isInteger } = Integer;
 const { isLength } = Length;
 const { isNumber } = Number;
 const { isPercentage } = Percentage;
@@ -445,7 +446,16 @@ export namespace Calculation {
       return None;
     }
 
-    // public toNumber(): Option<Integer | Number>
+    public toNumber(): Option<Integer | Number> {
+      if (
+        isValueExpression(this) &&
+        (isNumber(this.value) || isInteger(this.value))
+      ) {
+        return Option.of(this.value);
+      }
+
+      return None;
+    }
 
     public toPercentage(): Option<Percentage> {
       if (isValueExpression(this) && isPercentage(this.value)) {
