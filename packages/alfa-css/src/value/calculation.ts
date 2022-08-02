@@ -2,9 +2,12 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Record } from "@siteimprove/alfa-record";
+import { Result, Err } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -12,7 +15,6 @@ import { Token } from "../syntax/token";
 import { Function } from "../syntax/function";
 
 import { Value } from "../value";
-
 import {
   Angle,
   Dimension,
@@ -22,10 +24,8 @@ import {
   Percentage,
 } from "./numeric";
 import { Unit } from "./unit";
-import { Option, None } from "@siteimprove/alfa-option";
-import { Result, Err } from "@siteimprove/alfa-result";
 
-const { map, flatMap, either, delimited, pair, option } = Parser;
+const { delimited, either, filter, flatMap, map, option, pair } = Parser;
 
 const { isAngle } = Angle;
 const { isDimension } = Dimension;
@@ -38,9 +38,16 @@ const { isPercentage } = Percentage;
  *
  * @public
  */
-export class Calculation extends Value<"calculation"> {
+export class Calculation<
+  out D extends Calculation.Dimension = Calculation.Dimension
+> extends Value<"calculation"> {
   public static of(expression: Calculation.Expression): Calculation {
-    return new Calculation(expression.reduce((value) => value));
+    return new Calculation(
+      expression.reduce({
+        length: (value) => value,
+        percentage: (value) => value,
+      })
+    );
   }
 
   private readonly _expression: Calculation.Expression;
@@ -59,8 +66,78 @@ export class Calculation extends Value<"calculation"> {
     return this._expression;
   }
 
-  public reduce(resolve: Mapper<Numeric>): Calculation {
-    return new Calculation(this._expression.reduce(resolve));
+  public reduce(resolver: Calculation.Resolver): Calculation {
+    return new Calculation(this._expression.reduce(resolver));
+  }
+
+  /**
+   * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
+   */
+  public isDimension<D extends Numeric.Dimension>(
+    dimension: D
+  ): this is Calculation<D> {
+    return this._expression.kind.is(dimension);
+  }
+
+  /**
+   * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
+   */
+  public isDimensionPercentage<D extends Numeric.Dimension>(
+    dimension: D
+  ): this is Calculation<`${D}-percentage`> {
+    return (
+      // dimension-percentage are not just (dimension | percentage) because the
+      // dimension does accept a percent hint in this case; while pure
+      // dimensions may not be hinted.
+      this._expression.kind.is(dimension, 1, true) ||
+      this._expression.kind.is("percentage")
+    );
+  }
+
+  /**
+   * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
+   */
+  public isNumber(): this is Calculation<"number"> {
+    return this._expression.kind.is();
+  }
+
+  /**
+   * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
+   */
+  public isPercentage(): this is Calculation<"percentage"> {
+    return this._expression.kind.is("percentage");
+  }
+
+  // Other resolvers should be added when needed.
+  /**
+   * Resolves a calculation typed as a length-percentage or number.
+   * Needs a resolver to handle relative lengths and percentages.
+   */
+  public resolve(
+    this: Calculation<"length-percentage">,
+    resolver: Calculation.Resolver<"px", Length<"px">>
+  ): Option<Length<"px">>;
+
+  public resolve(
+    this: Calculation<"number">,
+    resolver: Calculation.Resolver<"px", Length<"px">>
+  ): Option<Number>;
+
+  public resolve(
+    this: Calculation,
+    resolver: Calculation.Resolver<"px", Length<"px">>
+  ): Option<Numeric> {
+    // Since the expressions can theoretically contain arbitrarily units in them,
+    // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
+    // they seem to be more restricted), we can't easily type Expression itself
+    // (other than with its Kind).
+    const expression = this._expression.reduce(resolver);
+
+    return this.isDimensionPercentage("length")
+      ? expression.toLength()
+      : this.isNumber()
+      ? expression.toNumber()
+      : None;
   }
 
   public hash(hash: Hash): void {}
@@ -98,6 +175,39 @@ export namespace Calculation {
   }
 
   /**
+   * @internal
+   */
+  export type Dimension =
+    | Kind.Base
+    | `${Numeric.Dimension}-percentage`
+    | "number";
+
+  /**
+   * Absolute units can be resolved automatically.
+   * Relative lengths and percentages need some help.
+   *
+   * @internal
+   */
+  export interface Resolver<
+    L extends Unit.Length = "px",
+    P extends Numeric = Numeric
+  > {
+    length(value: Length<Unit.Length.Relative>): Length<L>;
+    percentage(value: Percentage): P;
+  }
+
+  function angleResolver(angle: Angle): Angle<"deg"> {
+    return angle.withUnit("deg");
+  }
+
+  function lengthResolver<U extends Unit.Length = "px">(
+    resolver: Mapper<Length<Unit.Length.Relative>, Length<U>>
+  ): Mapper<Length, Length<"px"> | Length<U>> {
+    return (length) =>
+      length.isRelative() ? resolver(length) : length.withUnit("px");
+  }
+
+  /**
    * {@link https://drafts.css-houdini.org/css-typed-om/#numeric-typing}
    *
    * @remarks
@@ -116,9 +226,6 @@ export namespace Calculation {
       Record.of({
         length: 0,
         angle: 0,
-        time: 0,
-        frequency: 0,
-        resolution: 0,
         percentage: 0,
       }),
       None
@@ -154,19 +261,20 @@ export namespace Calculation {
       hinted: boolean = kind === "percentage"
     ): boolean {
       for (const entry of this._kinds) {
-        if (entry[1] === 0) {
+        // this is not the dimension we're looking for, and it has power 0.
+        if (entry[0] !== kind && entry[1] === 0) {
           continue;
         }
 
-        if (kind !== undefined) {
-          if (entry[0] === kind && entry[1] === value) {
-            break;
-          }
+        // this is the dimension we're looking for, and it has the correct power.
+        if (entry[0] === kind && entry[1] === value) {
+          continue;
         }
 
         return false;
       }
 
+      // All the entries have the correct value. Is a hint allowed?
       return this._hint.isNone() || hinted;
     }
 
@@ -205,13 +313,7 @@ export namespace Calculation {
           kinds.some((value, kind) => kind !== "percentage" && value !== 0)
         )
       ) {
-        for (const hint of [
-          "length",
-          "angle",
-          "time",
-          "frequency",
-          "resolution",
-        ] as const) {
+        for (const hint of ["length", "angle"] as const) {
           const kind = a.apply(hint);
 
           if (kind._kinds.equals(b.apply(hint)._kinds)) {
@@ -327,13 +429,7 @@ export namespace Calculation {
     /**
      * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-base-type}
      */
-    export type Base =
-      | "length"
-      | "angle"
-      | "time"
-      | "frequency"
-      | "resolution"
-      | "percentage";
+    export type Base = Numeric.Dimension | "percentage";
 
     /**
      * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-percent-hint}
@@ -352,10 +448,21 @@ export namespace Calculation {
     /**
      * {@link https://drafts.csswg.org/css-values/#simplify-a-calculation-tree}
      */
-    public abstract reduce(resolve: Mapper<Numeric>): Expression;
+    public abstract reduce<
+      L extends Unit.Length = "px",
+      P extends Numeric = Numeric
+    >(resolver: Resolver<L, P>): Expression;
 
     public toLength(): Option<Length> {
       if (isValueExpression(this) && isLength(this.value)) {
+        return Option.of(this.value);
+      }
+
+      return None;
+    }
+
+    public toNumber(): Option<Number> {
+      if (isValueExpression(this) && isNumber(this.value)) {
         return Option.of(this.value);
       }
 
@@ -430,18 +537,16 @@ export namespace Calculation {
       return this._value;
     }
 
-    public reduce(resolve: Mapper<Numeric>): Value {
-      const value = this._value;
-
-      if (isLength(value) && value.isAbsolute()) {
-        return Value.of(value.withUnit("px"));
-      }
-
-      if (isAngle(value)) {
-        return Value.of(value.withUnit("deg"));
-      }
-
-      return Value.of(resolve(value));
+    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+      resolver: Resolver<L, P>
+    ): Value {
+      return Value.of(
+        Selective.of(this._value)
+          .if(isLength, lengthResolver(resolver.length))
+          .if(isAngle, angleResolver)
+          .if(isPercentage, resolver.percentage)
+          .get()
+      );
     }
 
     public equals(value: unknown): value is this {
@@ -551,9 +656,11 @@ export namespace Calculation {
       return "sum";
     }
 
-    public reduce(resolve: Mapper<Numeric>): Expression {
+    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+      resolver: Resolver<L, P>
+    ): Expression {
       const [fst, snd] = this._operands.map((operand) =>
-        operand.reduce(resolve)
+        operand.reduce(resolver)
       );
 
       if (isValueExpression(fst) && isValueExpression(snd)) {
@@ -609,9 +716,11 @@ export namespace Calculation {
       return "negate";
     }
 
-    public reduce(resolve: Mapper<Numeric>): Expression {
+    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+      resolver: Resolver<L, P>
+    ): Expression {
       const [operand] = this._operands.map((operand) =>
-        operand.reduce(resolve)
+        operand.reduce(resolver)
       );
 
       if (isValueExpression(operand)) {
@@ -667,9 +776,11 @@ export namespace Calculation {
       return "product";
     }
 
-    public reduce(resolve: Mapper<Numeric>): Expression {
+    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+      resolver: Resolver<L, P>
+    ): Expression {
       const [fst, snd] = this._operands.map((operand) =>
-        operand.reduce(resolve)
+        operand.reduce(resolver)
       );
 
       if (isValueExpression(fst) && isValueExpression(snd)) {
@@ -730,9 +841,11 @@ export namespace Calculation {
       return this._operands[0].kind.invert();
     }
 
-    public reduce(resolve: Mapper<Numeric>): Expression {
+    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+      resolver: Resolver<L, P>
+    ): Expression {
       const [operand] = this._operands.map((operand) =>
-        operand.reduce(resolve)
+        operand.reduce(resolver)
       );
 
       if (isValueExpression(operand)) {
@@ -856,4 +969,23 @@ export namespace Calculation {
   );
 
   export const parse = map(parseCalc, Calculation.of);
+
+  // other parsers + filters can be added when needed
+  export const parseLengthPercentage = filter(
+    parse,
+    (calculation): calculation is Calculation<"length-percentage"> =>
+      calculation.isDimensionPercentage("length"),
+    () => `calc() expression must be of type "length" or "percentage"`
+  );
+
+  export const parseLengthNumberPercentage = filter(
+    parse,
+    (
+      calculation
+    ): calculation is
+      | Calculation<"length-percentage">
+      | Calculation<"number"> =>
+      calculation.isDimensionPercentage("length") || calculation.isNumber(),
+    () => `calc() expression must be of type "length" or "percentage"`
+  );
 }

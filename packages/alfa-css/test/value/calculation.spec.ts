@@ -4,13 +4,17 @@ import { Lexer } from "../../src/syntax/lexer";
 import { Calculation } from "../../src/value/calculation";
 
 function parse(input: string) {
-  return Calculation.parse(Lexer.lex(input)).map(([, calculation]) =>
-    calculation.toJSON()
+  return Calculation.parse(Lexer.lex(input)).map(
+    ([, calculation]) => calculation
   );
 }
 
 test(".parse() parses an addition expression of numbers", (t) => {
-  t.deepEqual(parse("calc(1 + 2)").get(), {
+  const calculation = parse("calc(1 + 2)").get();
+
+  t(calculation.isNumber());
+
+  t.deepEqual(calculation.toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -23,7 +27,11 @@ test(".parse() parses an addition expression of numbers", (t) => {
 });
 
 test(".parse() parses an addition expression of percentages", (t) => {
-  t.deepEqual(parse("calc(1% + 2%)").get(), {
+  const calculation = parse("calc(1% + 2%)").get();
+
+  t(calculation.isPercentage());
+
+  t.deepEqual(calculation.toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -36,7 +44,11 @@ test(".parse() parses an addition expression of percentages", (t) => {
 });
 
 test(".parse() parses an addition expression of absolute lengths", (t) => {
-  t.deepEqual(parse("calc(1px + 2px)").get(), {
+  const calculation = parse("calc(1px + 2px)").get();
+
+  t(calculation.isDimension("length"));
+
+  t.deepEqual(calculation.toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -50,7 +62,11 @@ test(".parse() parses an addition expression of absolute lengths", (t) => {
 });
 
 test(".parse() parses an addition expression of relative lengths", (t) => {
-  t.deepEqual(parse("calc(1em + 2em)").get(), {
+  const calculation = parse("calc(1em + 2em)").get();
+
+  t(calculation.isDimension("length"));
+
+  t.deepEqual(calculation.toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -64,7 +80,11 @@ test(".parse() parses an addition expression of relative lengths", (t) => {
 });
 
 test(".parse() parses an addition expression of mixed lengths", (t) => {
-  t.deepEqual(parse("calc(1px + 2em)").get(), {
+  const calculation = parse("calc(1px + 2em)").get();
+
+  t(calculation.isDimension("length"));
+
+  t.deepEqual(calculation.toJSON(), {
     type: "calculation",
     expression: {
       type: "sum",
@@ -91,7 +111,11 @@ test(".parse() parses an addition expression of mixed lengths", (t) => {
 });
 
 test(".parse() parses an addition expression of a length and a percentage", (t) => {
-  t.deepEqual(parse("calc(1px + 2%").get(), {
+  const calculation = parse("calc(1px + 2%").get();
+
+  t(calculation.isDimensionPercentage("length"));
+
+  t.deepEqual(calculation.toJSON(), {
     type: "calculation",
     expression: {
       type: "sum",
@@ -117,7 +141,11 @@ test(".parse() parses an addition expression of a length and a percentage", (t) 
 });
 
 test(".parse() parses a multiplication expression of numbers", (t) => {
-  t.deepEqual(parse("calc(2 * 3)").get(), {
+  const calculation = parse("calc(2 * 3)").get();
+
+  t(calculation.isNumber());
+
+  t.deepEqual(calculation.toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -130,7 +158,11 @@ test(".parse() parses a multiplication expression of numbers", (t) => {
 });
 
 test(".parse() parses a multiplication expression of a number and a percentage", (t) => {
-  t.deepEqual(parse("calc(2 * 3%)").get(), {
+  const calculation = parse("calc(2 * 3%)").get();
+
+  t(calculation.isPercentage());
+
+  t.deepEqual(calculation.toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -143,7 +175,11 @@ test(".parse() parses a multiplication expression of a number and a percentage",
 });
 
 test(".parse() parses a multiplication expression of a number and a length", (t) => {
-  t.deepEqual(parse("calc(2 * 3px)").get(), {
+  const calculation = parse("calc(2 * 3px)").get();
+
+  t(calculation.isDimension("length"));
+
+  t.deepEqual(calculation.toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -157,7 +193,7 @@ test(".parse() parses a multiplication expression of a number and a length", (t)
 });
 
 test(".parse() gives higher precedence to * and / than + and -", (t) => {
-  t.deepEqual(parse("calc(2 * 3 + 4)").get(), {
+  t.deepEqual(parse("calc(2 * 3 + 4)").get().toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -168,7 +204,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
-  t.deepEqual(parse("calc(2 + 3 * 4)").get(), {
+  t.deepEqual(parse("calc(2 + 3 * 4)").get().toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -179,7 +215,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
-  t.deepEqual(parse("calc(2 * 3 - 4)").get(), {
+  t.deepEqual(parse("calc(2 * 3 - 4)").get().toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -190,7 +226,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
-  t.deepEqual(parse("calc(3 / 2 + 4)").get(), {
+  t.deepEqual(parse("calc(3 / 2 + 4)").get().toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -201,7 +237,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
-  t.deepEqual(parse("calc(3 / 2 - 4)").get(), {
+  t.deepEqual(parse("calc(3 / 2 - 4)").get().toJSON(), {
     type: "calculation",
     expression: {
       type: "value",
@@ -214,7 +250,11 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
 });
 
 test(".parse() parses a nested calc() function", (t) => {
-  t.deepEqual(parse("calc(2 * calc(1 + 2))").get(), {
+  const calculation = parse("calc(2 * calc(1 + 2))").get();
+
+  t(calculation.isNumber());
+
+  t.deepEqual(calculation.toJSON(), {
     type: "calculation",
     expression: {
       type: "value",

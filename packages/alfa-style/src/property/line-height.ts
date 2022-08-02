@@ -1,10 +1,16 @@
-import { Keyword, Length, Percentage, Number } from "@siteimprove/alfa-css";
+import {
+  Calculation,
+  Keyword,
+  Length,
+  Number,
+  Percentage,
+  Token,
+} from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
-
-import * as FontSize from "./font-size";
 
 const { either } = Parser;
 
@@ -17,7 +23,13 @@ declare module "../property" {
 /**
  * @internal
  */
-export type Specified = Keyword<"normal"> | Number | Length | Percentage;
+export type Specified =
+  | Keyword<"normal">
+  | Number
+  | Length
+  | Percentage
+  | Calculation<"length-percentage">
+  | Calculation<"number">;
 
 /**
  * @internal
@@ -27,9 +39,12 @@ export type Computed = Keyword<"normal"> | Number | Length<"px">;
 /**
  * @internal
  */
-export const parse = either(
+export const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("normal"),
-  either(Number.parse, either(Length.parse, Percentage.parse))
+  Number.parse,
+  Length.parse,
+  Percentage.parse,
+  Calculation.parseLengthNumberPercentage
 );
 
 /**
@@ -43,20 +58,36 @@ export default Property.register(
     parse,
     (value, style) =>
       value.map((height) => {
+        const percentageResolver = Resolver.percentage(
+          style.parent.computed("font-size").value
+        );
+        const lengthResolver = Resolver.length(style);
+
         switch (height.type) {
           case "keyword":
           case "number":
             return height;
 
           case "length":
-            return Resolver.length(height, style);
+            return lengthResolver(height);
 
-          case "percentage": {
-            const parent = style.parent.computed("font-size")
-              .value as FontSize.Computed;
+          case "percentage":
+            return percentageResolver(height);
 
-            return Length.of(parent.value * height.value, parent.unit);
-          }
+          case "calculation":
+            // TS can't see that the union is exactly covered by the overloads
+            // so we have to do this ugly split :-/
+            return (
+              height.isNumber()
+                ? height.resolve({
+                    length: lengthResolver,
+                    percentage: percentageResolver,
+                  })
+                : height.resolve({
+                    length: lengthResolver,
+                    percentage: percentageResolver,
+                  })
+            ).get();
         }
       }),
     {

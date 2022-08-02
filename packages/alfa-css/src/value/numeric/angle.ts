@@ -24,11 +24,7 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
   }
 
   private constructor(value: number, unit: U) {
-    super(value, unit);
-  }
-
-  public get type(): "angle" {
-    return "angle";
+    super(value, unit, "angle");
   }
 
   public get canonicalUnit(): "deg" {
@@ -64,14 +60,6 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
     hash.writeString(this._unit);
   }
 
-  public toJSON(): Angle.JSON {
-    return {
-      type: "angle",
-      value: this._value,
-      unit: this._unit,
-    };
-  }
-
   public toString(): string {
     return `${this._value}${this._unit}`;
   }
@@ -81,9 +69,8 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
  * @public
  */
 export namespace Angle {
-  export interface JSON extends Dimension.JSON<"angle"> {
-    unit: Unit.Angle;
-  }
+  export interface JSON<U extends Unit.Angle = Unit.Angle>
+    extends Dimension.JSON<"angle", U> {}
 
   export function isAngle(value: unknown): value is Angle {
     return value instanceof Angle;

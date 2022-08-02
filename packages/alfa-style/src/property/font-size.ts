@@ -1,16 +1,17 @@
 import {
-  Keyword,
-  Length,
-  Percentage,
   Calculation,
+  Length,
+  Keyword,
+  Percentage,
+  Token,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Selective } from "@siteimprove/alfa-selective";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
 
-const { either, filter } = Parser;
+const { either } = Parser;
 
 declare module "../property" {
   interface Longhands {
@@ -24,7 +25,7 @@ declare module "../property" {
 export type Specified =
   | Length
   | Percentage
-  | Calculation
+  | Calculation<"length-percentage">
 
   // Absolute
   | Keyword<"xx-small">
@@ -48,29 +49,21 @@ export type Computed = Length<"px">;
 /**
  * @internal
  */
-export const parse = either(
-  either(
-    Keyword.parse(
-      "xx-small",
-      "x-small",
-      "small",
-      "medium",
-      "large",
-      "x-large",
-      "xx-large",
-      "xxx-large"
-    ),
-    Keyword.parse("larger", "smaller")
+export const parse = either<Slice<Token>, Specified, string>(
+  Keyword.parse(
+    "xx-small",
+    "x-small",
+    "small",
+    "medium",
+    "large",
+    "x-large",
+    "xx-large",
+    "xxx-large"
   ),
-  either(
-    either(Percentage.parse, Length.parse),
-    filter(
-      Calculation.parse,
-      ({ expression: { kind } }) =>
-        kind.is("length", 1, true) || kind.is("percentage"),
-      () => `calc() expression must be of type "length" or "percentage"`
-    )
-  )
+  Keyword.parse("larger", "smaller"),
+  Percentage.parse,
+  Length.parse,
+  Calculation.parseLengthPercentage
 );
 
 /**
@@ -125,14 +118,12 @@ export default Property.register(
 
         switch (fontSize.type) {
           case "calculation":
-            const { expression } = fontSize.reduce((value) =>
-              Selective.of(value)
-                .if(Length.isLength, lengthResolver)
-                .if(Percentage.isPercentage, percentageResolver)
-                .get()
-            );
-
-            return expression.toLength().get() as Computed;
+            return fontSize
+              .resolve({
+                length: lengthResolver,
+                percentage: percentageResolver,
+              })
+              .get();
 
           case "length":
             return lengthResolver(fontSize);

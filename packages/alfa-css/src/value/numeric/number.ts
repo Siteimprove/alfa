@@ -17,11 +17,7 @@ export class Number extends Numeric<"number"> {
   }
 
   private constructor(value: number) {
-    super(value);
-  }
-
-  public get type(): "number" {
-    return "number";
+    super(value, "number");
   }
 
   public scale(factor: number): Number {
@@ -31,22 +27,13 @@ export class Number extends Numeric<"number"> {
   public equals(value: unknown): value is this {
     return value instanceof Number && super.equals(value);
   }
-
-  public toJSON(): Number.JSON {
-    return {
-      type: "number",
-      value: this._value,
-    };
-  }
 }
 
 /**
  * @public
  */
 export namespace Number {
-  export interface JSON extends Numeric.JSON<"number"> {
-    value: number;
-  }
+  export interface JSON extends Numeric.JSON<"number"> {}
 
   export function isNumber(value: unknown): value is Number {
     return value instanceof Number;

@@ -10,8 +10,10 @@ import { Unit } from "../unit/unit";
  * @public
  */
 export abstract class Dimension<
-    T extends string = string,
+    T extends Numeric.Dimension = Numeric.Dimension,
+    // The type of all units of the same dimension, e.g. Length, Angle, …
     U extends Unit = Unit,
+    // The actual unit in which the dimension is expressed, e.g px, em, rad, …
     V extends U = U
   >
   extends Numeric<T>
@@ -19,8 +21,8 @@ export abstract class Dimension<
 {
   protected readonly _unit: V;
 
-  protected constructor(value: number, unit: V) {
-    super(value);
+  protected constructor(value: number, unit: V, type: T) {
+    super(value, type);
     this._unit = unit;
   }
 
@@ -53,14 +55,21 @@ export abstract class Dimension<
 
     return Comparable.compareNumber(a.value, b.value);
   }
+
+  public toJSON(): Dimension.JSON<T, U> {
+    return { ...super.toJSON(), unit: this._unit };
+  }
 }
 
 /**
  * @public
  */
 export namespace Dimension {
-  export interface JSON<T extends string = string> extends Numeric.JSON<T> {
-    unit: Unit;
+  export interface JSON<
+    T extends Numeric.Dimension = Numeric.Dimension,
+    U extends Unit = Unit
+  > extends Numeric.JSON<T> {
+    unit: U;
   }
 
   export function isDimension(value: unknown): value is Dimension {

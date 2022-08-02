@@ -12,13 +12,16 @@ exports.documenter = {
 
     let code = 0;
     // BEGIN error catching to remove
-    let apiExtractorErrorCaught = false;
+    let apiExtractorXpathErrorCaught = false;
     let xpathSeen = false;
+    let apiExtractorCalculationErrorCaught = false;
+    let calculationSeen = false;
     // END error catching to remove
 
     for (const project of projects) {
       // BEGIN error catching to remove
       xpathSeen = xpathSeen || project.includes("alfa-xpath");
+      calculationSeen = calculationSeen || project.includes("alfa-css");
       // END error catching to remove
       let file;
       try {
@@ -37,6 +40,19 @@ exports.documenter = {
             if (message.logLevel === "info") {
               message.handled = true;
             }
+
+            // BEGIN error catching to remove
+            // https://github.com/microsoft/rushstack/issues/3486#issuecomment-1197988205
+            if (
+              // For some reason, this message pops in other packages, likely ones
+              // that are importing Calculation.
+              message.logLevel === "warning" &&
+              message.text.includes("Calculation<out, D>")
+            ) {
+              message.logLevel = "none";
+              apiExtractorCalculationErrorCaught = true;
+            }
+            // END error catching to remove
           },
         });
 
@@ -50,7 +66,7 @@ exports.documenter = {
           project.includes("alfa-xpath") &&
           err.message.includes('Internal Error: Unable to follow symbol for ""')
         ) {
-          apiExtractorErrorCaught = true;
+          apiExtractorXpathErrorCaught = true;
         } else {
           console.error(err.message);
           code = 1;
@@ -60,7 +76,10 @@ exports.documenter = {
     }
 
     // BEGIN error catching to remove
-    if (xpathSeen && !apiExtractorErrorCaught) {
+    if (
+      (xpathSeen && !apiExtractorXpathErrorCaught) ||
+      (calculationSeen && !apiExtractorCalculationErrorCaught)
+    ) {
       console.error(
         "API extractor may have upgrade to TS 4.7\nInvestigate and clean `scripts/common/documenter.js`"
       );
