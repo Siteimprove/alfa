@@ -6,3 +6,4 @@ The following is an index of all the architecture decisions taken so far. Whenev
 - [**ADR 2**](decisions/adr-002.md): Move towards static analysis
 - [**ADR 3**](decisions/adr-003.md): Use TypeScript as implementation language
 - [**ADR 4**](decisions/adr-004.md): Model browser specific values and computations
+- [**ADR 5**](decisions/adr-005.md): Don't depend on third party code to produce results
