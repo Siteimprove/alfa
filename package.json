@@ -22,8 +22,8 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@microsoft/api-documenter": "^7.17.2",
-    "@microsoft/api-extractor": "^7.20.1",
+    "@microsoft/api-documenter": "^7.19.1",
+    "@microsoft/api-extractor": "^7.28.7",
     "@siteimprove/alfa-cli": "workspace:^0.43.1",
     "@types/async": "^3.2.5",
     "@types/jsonld": "^1.5.6",
