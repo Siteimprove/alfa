@@ -4,7 +4,9 @@ Alfa exposes a large API surface split across many different packages. As an API
 
 Most of the packages provided by Alfa are small, foundational packages that provide shared interfaces, common algorithms and data structures, and more. In keeping with the second [goal of Alfa][goals], it ships with its own implementations of much common functionality, ensuring a cohesive experience for API consumers and developers alike.
 
-To take a deep device into the API, start your journey at the [package overview][]. You may also carry on reading for a more digestable introduction to the API.
+The following present an introduction on some overarching principles in Alfa' API, as well as some of the common interfaces commonly used in the code base.
+
+You can get an overview of the packages architecture (grouped thematically) with the [dependency graph](./dependency-graph.png). To take a deep device into the API, start your journey at the [package overview][].
 
 > :warning: Many packages still lack accompanying explanations for their public API. The generated API documentation should therefore be considered a work in progress.
 
