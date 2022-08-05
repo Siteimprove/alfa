@@ -8,3 +8,4 @@ The following is an index of all the architecture decisions taken so far. Whenev
 - [**ADR 4**](decisions/adr-004.md): Model browser specific values and computations
 - [**ADR 5**](decisions/adr-005.md): Don't depend on third party code to produce results
 - [**ADR 6**](decisions/adr-006.md): Use pure functions, avoid hidden side effects
+- [**ADR 7**](decisions/adr-007.md): Export/import full namespace, not individual functions
