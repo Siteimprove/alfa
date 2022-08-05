@@ -122,7 +122,6 @@ Alfa ships with several ready-made integrations to various tools, making it easy
 | [**@siteimprove/alfa-jest**](packages/alfa-jest)             | [Jest](https://jestjs.io/)                   |
 | [**@siteimprove/alfa-jquery**](packages/alfa-jquery)         | [jQuery](https://jquery.com/)                |
 | [**@siteimprove/alfa-playwright**](packages/alfa-playwright) | [Playwright](https://playwright.dev/)        |
-| [**@siteimprove/alfa-protractor**](packages/alfa-protractor) | [Protractor](http://www.protractortest.org/) |
 | [**@siteimprove/alfa-puppeteer**](packages/alfa-puppeteer)   | [Puppeteer](https://pptr.dev/)               |
 | [**@siteimprove/alfa-react**](packages/alfa-react)           | [React](https://reactjs.org/)                |
 | [**@siteimprove/alfa-unexpected**](packages/alfa-unexpected) | [Unexpected](http://unexpected.js.org/)      |
@@ -194,6 +193,8 @@ The scratch files are built with the rest of Alfa as per the previous section. W
 ```console
 $ yarn build packages
 ```
+
+The scratches configuration includes the JSX parser from `@siteimprove/alfa-dom`. So you can create a `.tsx` file and use JSX syntax directly to create Alfa DOM objects.
 
 ## Architecture
 

@@ -6,3 +6,8 @@ The following is an index of all the architecture decisions taken so far. Whenev
 - [**ADR 2**](decisions/adr-002.md): Move towards static analysis
 - [**ADR 3**](decisions/adr-003.md): Use TypeScript as implementation language
 - [**ADR 4**](decisions/adr-004.md): Model browser specific values and computations
+- [**ADR 5**](decisions/adr-005.md): Don't depend on third party code to produce results
+- [**ADR 6**](decisions/adr-006.md): Use pure functions, avoid hidden side effects
+- [**ADR 7**](decisions/adr-007.md): Export/import full namespace, not individual functions
+- [**ADR 8**](decisions/adr-008.md): Use `Option<T>` to model optional values
+- [**ADR 9**](decisions/adr-009.md): Use `Result<T, E>` to model errors
