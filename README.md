@@ -194,6 +194,8 @@ The scratch files are built with the rest of Alfa as per the previous section. W
 $ yarn build packages
 ```
 
+The scratches configuration includes the JSX parser from `@siteimprove/alfa-dom`. So you can create a `.tsx` file and use JSX syntax directly to create Alfa DOM objects.
+
 ## Architecture
 
 At its core, Alfa is built around a tree structure that mirrors a subset of the [Document Object Model (DOM)](https://dom.spec.whatwg.org/) and [CSS Object Model (CSSOM)](https://www.w3.org/TR/cssom/) interfaces. This tree structure can be created statically from an HTML document and associated CSS style sheets, or it can be extracted from within a browser to also provide executing of JavaScript. Anything else that a browser would typically provide, such as querying elements or computing styles, Alfa implements according to the corresponding specifications.
