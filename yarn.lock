@@ -453,7 +453,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/request@npm:^2.88.6":
+"@cypress/request@npm:^2.88.10":
   version: 2.88.10
   resolution: "@cypress/request@npm:2.88.10"
   dependencies:
@@ -1301,7 +1301,7 @@ __metadata:
     "@siteimprove/alfa-mapper": "workspace:^0.43.1"
     "@siteimprove/alfa-test": "workspace:^0.43.1"
     "@siteimprove/alfa-web": "workspace:^0.43.1"
-    cypress: ^8.4.1
+    cypress: ^10.6.0
   languageName: unknown
   linkType: soft
 
@@ -2752,10 +2752,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/sinonjs__fake-timers@npm:^6.0.2":
-  version: 6.0.4
-  resolution: "@types/sinonjs__fake-timers@npm:6.0.4"
-  checksum: 200cb24235409964269465e8a94ad735ec8bab98f3b2405cd6351fa6f6399be268cbbd4e824c9d361d9431ae11070cff4c3b6400b18aff03cb7933985853c0c9
+"@types/sinonjs__fake-timers@npm:8.1.1":
+  version: 8.1.1
+  resolution: "@types/sinonjs__fake-timers@npm:8.1.1"
+  checksum: ca09d54d47091d87020824a73f026300fa06b17cd9f2f9b9387f28b549364b141ef194ee28db762f6588de71d8febcd17f753163cb7ea116b8387c18e80ebd5c
   languageName: node
   linkType: hard
 
@@ -3505,7 +3505,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer@npm:^5.2.1, buffer@npm:^5.5.0":
+"buffer@npm:^5.2.1, buffer@npm:^5.5.0, buffer@npm:^5.6.0":
   version: 5.7.1
   resolution: "buffer@npm:5.7.1"
   dependencies:
@@ -3775,7 +3775,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-table3@npm:~0.6.0":
+"cli-table3@npm:~0.6.1":
   version: 0.6.2
   resolution: "cli-table3@npm:0.6.2"
   dependencies:
@@ -4107,23 +4107,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^8.4.1":
-  version: 8.7.0
-  resolution: "cypress@npm:8.7.0"
+"cypress@npm:^10.6.0":
+  version: 10.6.0
+  resolution: "cypress@npm:10.6.0"
   dependencies:
-    "@cypress/request": ^2.88.6
+    "@cypress/request": ^2.88.10
     "@cypress/xvfb": ^1.2.4
     "@types/node": ^14.14.31
-    "@types/sinonjs__fake-timers": ^6.0.2
+    "@types/sinonjs__fake-timers": 8.1.1
     "@types/sizzle": ^2.3.2
     arch: ^2.2.0
     blob-util: ^2.0.2
     bluebird: ^3.7.2
+    buffer: ^5.6.0
     cachedir: ^2.3.0
     chalk: ^4.1.0
     check-more-types: ^2.24.0
     cli-cursor: ^3.1.0
-    cli-table3: ~0.6.0
+    cli-table3: ~0.6.1
     commander: ^5.1.0
     common-tags: ^1.8.0
     dayjs: ^1.10.4
@@ -4142,20 +4143,19 @@ __metadata:
     listr2: ^3.8.3
     lodash: ^4.17.21
     log-symbols: ^4.0.0
-    minimist: ^1.2.5
+    minimist: ^1.2.6
     ospath: ^1.2.2
     pretty-bytes: ^5.6.0
     proxy-from-env: 1.0.0
-    ramda: ~0.27.1
     request-progress: ^3.0.0
+    semver: ^7.3.2
     supports-color: ^8.1.1
     tmp: ~0.2.1
     untildify: ^4.0.0
-    url: ^0.11.0
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 607771bda6c37228cd8537a7faa2ae89ae9bcf2720210b22865f532059d8c7e0741bb7520f241c46ceacd503ff349e41f0eea104734e71423071dd67a79098b9
+  checksum: 53993d2d712222df13ef4802db051fee8a7ac59b180ed11b22e6f10d36f5d9b2c2622f1bbfa012f61c7756139287a976abd075275ddd37191b13f40ec8deaa85
   languageName: node
   linkType: hard
 
@@ -7914,13 +7914,6 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"punycode@npm:1.3.2":
-  version: 1.3.2
-  resolution: "punycode@npm:1.3.2"
-  checksum: b8807fd594b1db33335692d1f03e8beeddde6fda7fbb4a2e32925d88d20a3aa4cd8dcc0c109ccaccbd2ba761c208dfaaada83007087ea8bfb0129c9ef1b99ed6
-  languageName: node
-  linkType: hard
-
 "punycode@npm:^2.1.0, punycode@npm:^2.1.1":
   version: 2.1.1
   resolution: "punycode@npm:2.1.1"
@@ -7982,13 +7975,6 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"querystring@npm:0.2.0":
-  version: 0.2.0
-  resolution: "querystring@npm:0.2.0"
-  checksum: 8258d6734f19be27e93f601758858c299bdebe71147909e367101ba459b95446fbe5b975bf9beb76390156a592b6f4ac3a68b6087cea165c259705b8b4e56a69
-  languageName: node
-  linkType: hard
-
 "quick-lru@npm:^5.1.1":
   version: 5.1.1
   resolution: "quick-lru@npm:5.1.1"
@@ -8009,13 +7995,6 @@ fsevents@^2.3.2:
   version: 1.0.0
   resolution: "railroad-diagrams@npm:1.0.0"
   checksum: 9e312af352b5ed89c2118edc0c06cef2cc039681817f65266719606e4e91ff6ae5374c707cc9033fe29a82c2703edf3c63471664f97f0167c85daf6f93496319
-  languageName: node
-  linkType: hard
-
-"ramda@npm:~0.27.1":
-  version: 0.27.2
-  resolution: "ramda@npm:0.27.2"
-  checksum: 28d6735dd1eea1a796c56cf6111f3673c6105bbd736e521cdd7826c46a18eeff337c2dba4668f6eed990d539b9961fd6db19aa46ccc1530ba67a396c0a9f580d
   languageName: node
   linkType: hard
 
@@ -9186,16 +9165,6 @@ typescript@~4.5.2:
   dependencies:
     punycode: ^2.1.0
   checksum: 7167432de6817fe8e9e0c9684f1d2de2bb688c94388f7569f7dbdb1587c9f4ca2a77962f134ec90be0cc4d004c939ff0d05acc9f34a0db39a3c797dada262633
-  languageName: node
-  linkType: hard
-
-"url@npm:^0.11.0":
-  version: 0.11.0
-  resolution: "url@npm:0.11.0"
-  dependencies:
-    punycode: 1.3.2
-    querystring: 0.2.0
-  checksum: 50d100d3dd2d98b9fe3ada48cadb0b08aa6be6d3ac64112b867b56b19be4bfcba03c2a9a0d7922bfd7ac17d4834e88537749fe182430dfd9b68e520175900d90
   languageName: node
   linkType: hard
 
