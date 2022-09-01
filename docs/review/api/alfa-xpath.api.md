@@ -136,7 +136,7 @@ export namespace Builder {
         // (undocumented)
         where(predicate: Builder): Path;
     }
-    {};
+        {};
 }
 
 // Warning: (ae-internal-missing-underscore) The name "coerceItems" should be prefixed with an underscore because the declaration is marked as @internal
@@ -311,7 +311,7 @@ export namespace Expression {
         get type(): "decimal";
         // (undocumented)
         get value(): number;
-        }
+    }
     // (undocumented)
     export namespace Decimal {
         // (undocumented)
@@ -338,7 +338,7 @@ export namespace Expression {
         get type(): "double";
         // (undocumented)
         get value(): number;
-        }
+    }
     // (undocumented)
     export namespace Double {
         // (undocumented)
@@ -435,7 +435,7 @@ export namespace Expression {
         get type(): "integer";
         // (undocumented)
         get value(): number;
-        }
+    }
     // (undocumented)
     export namespace Integer {
         // (undocumented)
@@ -523,7 +523,7 @@ export namespace Expression {
         get type(): "string";
         // (undocumented)
         get value(): string;
-        }
+    }
     // (undocumented)
     export namespace String {
         // (undocumented)
@@ -779,7 +779,7 @@ interface Function_2<P extends Array<Value> = Array<Value>, R extends Value = Va
 namespace Function_2 {
     // (undocumented)
     type Parameters<V extends Array<Value>> = {
-        readonly [P in keyof V]: V[P] extends Value ? TypeFor<V[P]> : never;
+        readonly [P in keyof V]: V[P] extends (infer T extends Value) ? TypeFor<T> : never;
     };
     // (undocumented)
     type Result<V extends Value> = TypeFor<V>;
@@ -911,7 +911,7 @@ export namespace Token {
         get type(): "character";
         // (undocumented)
         get value(): number;
-        }
+    }
     // (undocumented)
     export namespace Character {
         // (undocumented)
@@ -938,7 +938,7 @@ export namespace Token {
         get type(): "comment";
         // (undocumented)
         get value(): string;
-        }
+    }
     // (undocumented)
     export namespace Comment {
         // (undocumented)
@@ -967,7 +967,7 @@ export namespace Token {
         get type(): "decimal";
         // (undocumented)
         get value(): number;
-        }
+    }
     // (undocumented)
     export namespace Decimal {
         // (undocumented)
@@ -994,7 +994,7 @@ export namespace Token {
         get type(): "double";
         // (undocumented)
         get value(): number;
-        }
+    }
     const // (undocumented)
     parseDecimal: Parser_2<Slice<Token>, Decimal, string, []>;
     // (undocumented)
@@ -1023,7 +1023,7 @@ export namespace Token {
         get type(): "integer";
         // (undocumented)
         get value(): number;
-        }
+    }
     // (undocumented)
     export namespace Integer {
         // (undocumented)
@@ -1074,7 +1074,7 @@ export namespace Token {
         get type(): "name";
         // (undocumented)
         get value(): string;
-        }
+    }
     const // (undocumented)
     parseName: (query?: string | Predicate<Name>) => Parser_2<Slice<Token>, Name, string, []>;
     // (undocumented)
@@ -1105,7 +1105,7 @@ export namespace Token {
         get type(): "string";
         // (undocumented)
         get value(): string;
-        }
+    }
     // (undocumented)
     export namespace String {
         // (undocumented)
@@ -1144,7 +1144,6 @@ export function walk(node: Node, axis: Expression.Axis.Type, options: Node.Trave
 //
 // @internal (undocumented)
 export function withFocus<T extends Item.Value, U extends Item.Value>(environment: Environment<T>, focus: Focus<U>): Environment<U>;
-
 
 // (No @packageDocumentation comment for this package)
 
