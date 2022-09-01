@@ -841,72 +841,72 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/api-documenter@npm:^7.17.2":
-  version: 7.17.2
-  resolution: "@microsoft/api-documenter@npm:7.17.2"
+"@microsoft/api-documenter@npm:^7.19.9":
+  version: 7.19.9
+  resolution: "@microsoft/api-documenter@npm:7.19.9"
   dependencies:
-    "@microsoft/api-extractor-model": 7.16.0
-    "@microsoft/tsdoc": 0.13.2
-    "@rushstack/node-core-library": 3.45.1
-    "@rushstack/ts-command-line": 4.10.7
+    "@microsoft/api-extractor-model": 7.23.3
+    "@microsoft/tsdoc": 0.14.1
+    "@rushstack/node-core-library": 3.51.1
+    "@rushstack/ts-command-line": 4.12.2
     colors: ~1.2.1
     js-yaml: ~3.13.1
     resolve: ~1.17.0
   bin:
     api-documenter: bin/api-documenter
-  checksum: 44a041cec14a71a5563bfdeba715f199dd2079c3598b9f27752ccba69b978861cbfc0f48d476d4aeb37f8576b00e3bea096bdc6571122dcbb19a145613030c22
+  checksum: ad2009e946c5002a798ac76c6f4874364bf5b36047ebb8ee6174c4196e2bc2d288128346f5a729938e4fdc8c260e9436f367012e41cc49a40a158d6dd0ceae9e
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor-model@npm:7.16.0":
-  version: 7.16.0
-  resolution: "@microsoft/api-extractor-model@npm:7.16.0"
+"@microsoft/api-extractor-model@npm:7.23.3":
+  version: 7.23.3
+  resolution: "@microsoft/api-extractor-model@npm:7.23.3"
   dependencies:
-    "@microsoft/tsdoc": 0.13.2
-    "@microsoft/tsdoc-config": ~0.15.2
-    "@rushstack/node-core-library": 3.45.1
-  checksum: ba1bf057f5eed213aea45887a93c0cdabd0d7c9da2644aeb7460748fa33a01f04b91507923e7ea511452a7dfb849498089a2c3a844986ffc4c2abf8ab6d831a6
+    "@microsoft/tsdoc": 0.14.1
+    "@microsoft/tsdoc-config": ~0.16.1
+    "@rushstack/node-core-library": 3.51.1
+  checksum: 00ec7a31d1f6d1583c3fcd97b16130bf8570e27cd3be2ecd07cf601b0c91ef63885a55bf068932c5d9278f8a9ab2046dc8305c0047158e6df5e86f5e56e35b77
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor@npm:^7.20.1":
-  version: 7.20.1
-  resolution: "@microsoft/api-extractor@npm:7.20.1"
+"@microsoft/api-extractor@npm:^7.29.5":
+  version: 7.29.5
+  resolution: "@microsoft/api-extractor@npm:7.29.5"
   dependencies:
-    "@microsoft/api-extractor-model": 7.16.0
-    "@microsoft/tsdoc": 0.13.2
-    "@microsoft/tsdoc-config": ~0.15.2
-    "@rushstack/node-core-library": 3.45.1
-    "@rushstack/rig-package": 0.3.8
-    "@rushstack/ts-command-line": 4.10.7
+    "@microsoft/api-extractor-model": 7.23.3
+    "@microsoft/tsdoc": 0.14.1
+    "@microsoft/tsdoc-config": ~0.16.1
+    "@rushstack/node-core-library": 3.51.1
+    "@rushstack/rig-package": 0.3.14
+    "@rushstack/ts-command-line": 4.12.2
     colors: ~1.2.1
     lodash: ~4.17.15
     resolve: ~1.17.0
     semver: ~7.3.0
     source-map: ~0.6.1
-    typescript: ~4.5.2
+    typescript: ~4.7.4
   bin:
     api-extractor: bin/api-extractor
-  checksum: c9fb01e3803b35f8ca2471fe67015bb74d4a997f4409737f5b3fc52ea633d8379689e4685f6502d81245649e5531cadd9bb37c50cc71068488ff0e67dea4af67
+  checksum: f80f5963591384029f71c8db2f3cd32eb098ce4f622e420b695ac947c104612a5a483126428aade638d5d751e840f79e4f36cb0c8e59c363663cf72971937b73
   languageName: node
   linkType: hard
 
-"@microsoft/tsdoc-config@npm:~0.15.2":
-  version: 0.15.2
-  resolution: "@microsoft/tsdoc-config@npm:0.15.2"
+"@microsoft/tsdoc-config@npm:~0.16.1":
+  version: 0.16.1
+  resolution: "@microsoft/tsdoc-config@npm:0.16.1"
   dependencies:
-    "@microsoft/tsdoc": 0.13.2
+    "@microsoft/tsdoc": 0.14.1
     ajv: ~6.12.6
     jju: ~1.4.0
     resolve: ~1.19.0
-  checksum: 85eb7808d4e4541199437f39e6aed235aaece0a6d0fd05c0b923067d494d20baca483fc6871880d09630f6d4e62b8bb99af0fde503eb2b2ded1b7ae5f74dfaf3
+  checksum: 2b2121803caf6584fe0264ad16f8fa10de68438c0b82bd25f918606052af5312050f38b6abd4bcf3d40f120713aab144762a7a280fa22dd12e5571cd08e348e1
   languageName: node
   linkType: hard
 
-"@microsoft/tsdoc@npm:0.13.2":
-  version: 0.13.2
-  resolution: "@microsoft/tsdoc@npm:0.13.2"
-  checksum: 70948c5647495ef99752ff500e0f612c1fcf3476ea663ace19937e4d2f86fd78f0ad92ea5876d67e06b421f347d571b3d9e49c444935dc267768d5afd15581f8
+"@microsoft/tsdoc@npm:0.14.1":
+  version: 0.14.1
+  resolution: "@microsoft/tsdoc@npm:0.14.1"
+  checksum: e4ad038ccff2cd96e0d53ee42e2136f0f5a925b16cfda14261f1c2eb55ba0088a0e3b08ff819b476ddc69b2242a391925fab7f6ae2afabb19b96f87e19c114fc
   languageName: node
   linkType: hard
 
@@ -920,9 +920,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/node-core-library@npm:3.45.1":
-  version: 3.45.1
-  resolution: "@rushstack/node-core-library@npm:3.45.1"
+"@rushstack/node-core-library@npm:3.51.1":
+  version: 3.51.1
+  resolution: "@rushstack/node-core-library@npm:3.51.1"
   dependencies:
     "@types/node": 12.20.24
     colors: ~1.2.1
@@ -931,31 +931,30 @@ __metadata:
     jju: ~1.4.0
     resolve: ~1.17.0
     semver: ~7.3.0
-    timsort: ~0.3.0
     z-schema: ~5.0.2
-  checksum: 2001e1acda14e75dc3cc4aa988c2ec9609c2ed7a59ef27a5b97ce9a0380c534ad9eb96074821a52e52e34c06cc1f4a011c15f6e5d17bbf830430e739c6d185ce
+  checksum: 92f7e39f03f4931a7007b4a79427d82bfe078146133a138219205abf873607898f7667fa368e3cb28c93bb1a2b9dc70ddaf2d316bc47a9a17b591d69d1025068
   languageName: node
   linkType: hard
 
-"@rushstack/rig-package@npm:0.3.8":
-  version: 0.3.8
-  resolution: "@rushstack/rig-package@npm:0.3.8"
+"@rushstack/rig-package@npm:0.3.14":
+  version: 0.3.14
+  resolution: "@rushstack/rig-package@npm:0.3.14"
   dependencies:
     resolve: ~1.17.0
     strip-json-comments: ~3.1.1
-  checksum: 375788eae1c18fa4807bbe96541ebddc65bcc44113f186fae2cfbf0b355deb376e20fa8a014f40a6babdcde86d446234dcbaf5d3df4fdca5bf196ec5d4c41f0b
+  checksum: 3e9c6bdfc79b4a408fbb3248593fe34e23164c4997c68b6cb905ad4a38f53ac628f90fc715c9225348cba1cf0af410bfa55ed5a58c833aa53fdde6cf4a2e0a33
   languageName: node
   linkType: hard
 
-"@rushstack/ts-command-line@npm:4.10.7":
-  version: 4.10.7
-  resolution: "@rushstack/ts-command-line@npm:4.10.7"
+"@rushstack/ts-command-line@npm:4.12.2":
+  version: 4.12.2
+  resolution: "@rushstack/ts-command-line@npm:4.12.2"
   dependencies:
     "@types/argparse": 1.0.38
     argparse: ~1.0.9
     colors: ~1.2.1
     string-argv: ~0.3.1
-  checksum: 0c57867e5ea14b9296db403c2979995fe4bdeae3787331fc2d8faa18ee612b5fbcf989afcf5e30bc7f01cfe62003d451b29fc65fdda0790b95f3aacd72d41918
+  checksum: 6ee016c7dcdc9c55cfaea5b71d8b34d942404764de72a51f2f4d50d4db51f1cc5e0df496de6b96eb9f086ab500f366f63afc33699adecf601f02bfe9a4d157f6
   languageName: node
   linkType: hard
 
@@ -2519,8 +2518,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
-    "@microsoft/api-documenter": ^7.17.2
-    "@microsoft/api-extractor": ^7.20.1
+    "@microsoft/api-documenter": ^7.19.9
+    "@microsoft/api-extractor": ^7.29.5
     "@siteimprove/alfa-cli": "workspace:^0.43.1"
     "@types/async": ^3.2.5
     "@types/jsonld": ^1.5.6
@@ -8914,13 +8913,6 @@ resolve@~1.19.0:
   languageName: node
   linkType: hard
 
-"timsort@npm:~0.3.0":
-  version: 0.3.0
-  resolution: "timsort@npm:0.3.0"
-  checksum: 1a66cb897dacabd7dd7c91b7e2301498ca9e224de2edb9e42d19f5b17c4b6dc62a8d4cbc64f28be82aaf1541cb5a78ab49aa818f42a2989ebe049a64af731e2a
-  languageName: node
-  linkType: hard
-
 "tmp@npm:~0.2.1":
   version: 0.2.1
   resolution: "tmp@npm:0.2.1"
@@ -9116,23 +9108,23 @@ typescript@^4.8.2:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@~4.5.2#~builtin<compat/typescript>":
-  version: 4.5.5
-  resolution: "typescript@patch:typescript@npm%3A4.5.5#~builtin<compat/typescript>::version=4.5.5&hash=32657b"
+"typescript@patch:typescript@~4.7.4#~builtin<compat/typescript>":
+  version: 4.7.4
+  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=32657b"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: ed34e0986bc395da29a9a749fc980741fcbf698c205d6dc282310a652ee4ae61b571c26fd62c8a264ec26ff23ef12d888d5db7b41031cfaad1798db0d090f5c3
+  checksum: 0b078b97f27848c2d10fc0777b7cb4cb85374426620edac25b2fe62459a4344569655e7f1a989d0ce9d5618cdeb958451eb2ee9436e78f7af86a99e800df967b
   languageName: node
   linkType: hard
 
-typescript@~4.5.2:
-  version: 4.5.5
-  resolution: "typescript@npm:4.5.5"
+typescript@~4.7.4:
+  version: 4.7.4
+  resolution: "typescript@npm:4.7.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 506f4c919dc8aeaafa92068c997f1d213b9df4d9756d0fae1a1e7ab66b585ab3498050e236113a1c9e57ee08c21ec6814ca7a7f61378c058d79af50a4b1f5a5e
+  checksum: 5750181b1cd7e6482c4195825547e70f944114fb47e58e4aa7553e62f11b3f3173766aef9c281783edfd881f7b8299cf35e3ca8caebe73d8464528c907a164df
   languageName: node
   linkType: hard
 
