@@ -17,9 +17,10 @@ export class Record<T>
     Foldable<Record.Value<T>>,
     Iterable<Record.Entry<T>>,
     Equatable,
-    Serializable<Record.JSON<T>> {
+    Serializable<Record.JSON<T>>
+{
   public static of<T>(properties: T): Record<T> {
-    const keys = Object.keys(properties).sort() as Array<Record.Key<T>>;
+    const keys = Object.keys(properties ?? {}).sort() as Array<Record.Key<T>>;
 
     return new Record(
       new Map(Iterable.map(keys, (key, i) => [key, i])),

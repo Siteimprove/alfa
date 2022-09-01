@@ -2444,7 +2444,7 @@ __metadata:
     minimist: ^1.2.6
     package-dependency-graph: ^1.14.3
     prettier: ^2.7.1
-    typescript: ^4.7.3
+    typescript: ^4.8.2
   languageName: unknown
   linkType: soft
 
@@ -9014,23 +9014,23 @@ resolve@~1.19.0:
   languageName: node
   linkType: hard
 
-typescript@^4.7.3:
-  version: 4.7.4
-  resolution: "typescript@npm:4.7.4"
+typescript@^4.8.2:
+  version: 4.8.2
+  resolution: "typescript@npm:4.8.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 5750181b1cd7e6482c4195825547e70f944114fb47e58e4aa7553e62f11b3f3173766aef9c281783edfd881f7b8299cf35e3ca8caebe73d8464528c907a164df
+  checksum: 7f5b81d0d558c9067f952c7af52ab7f19c2e70a916817929e4a5b256c93990bf3178eccb1ac8a850bc75df35f6781b6f4cb3370ce20d8b1ded92ed462348f628
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.7.3#~builtin<compat/typescript>":
-  version: 4.7.4
-  resolution: "typescript@patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=32657b"
+"typescript@patch:typescript@^4.8.2#~builtin<compat/typescript>":
+  version: 4.8.2
+  resolution: "typescript@patch:typescript@npm%3A4.8.2#~builtin<compat/typescript>::version=4.8.2&hash=32657b"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 0b078b97f27848c2d10fc0777b7cb4cb85374426620edac25b2fe62459a4344569655e7f1a989d0ce9d5618cdeb958451eb2ee9436e78f7af86a99e800df967b
+  checksum: fa56d8bd836ac84180c8bb908056308bebe119498e6924ca9946231fb43b0f363f5894eda604be591252693f98106467a48d3b56387b62d4ed8d3f48bd8a3161
   languageName: node
   linkType: hard
 
