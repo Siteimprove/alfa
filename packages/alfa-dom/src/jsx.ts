@@ -24,16 +24,16 @@ export function jsx<N extends string = string>(
 
     switch (name) {
       case "style":
-        const properties = value as Record<string, string>;
-
-        for (const [name, value] of entries(properties)) {
-          style[name] = value;
+        for (const [propName, propValue] of entries(value)) {
+          style[propName] = propValue;
         }
 
         continue;
 
       default:
-        attributes[name] = value === true ? value : `${value}`;
+        // Due to https://github.com/microsoft/TypeScript/issues/50567
+        // we need the type assertion on value :-/
+        attributes[name] = value === true ? (value as true) : `${value}`;
     }
   }
 

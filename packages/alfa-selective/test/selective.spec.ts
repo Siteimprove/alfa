@@ -61,7 +61,7 @@ test(`#apply() applies a selective function to a selective value`, (t) => {
   t.equal(
     Selective.of("foo")
       .if(isFoo, () => 2)
-      .apply(Selective.of("bar").if(isBar, () => (n) => n * 2))
+      .apply(Selective.of("bar").if(isBar, () => (n: number) => n * 2))
       .get(),
     4
   );
