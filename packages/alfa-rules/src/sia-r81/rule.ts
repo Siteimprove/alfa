@@ -34,7 +34,10 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   evaluate({ device, document, response }) {
     return {
       applicability() {
-        const groups = document
+        // Links with identical names may appear in different contexts.
+        // This creates two separate targets and we must take care of not
+        // colliding them.
+        const map = document
           .descendants(dom.Node.fullTree)
           .filter(isElement)
           .filter(
@@ -56,13 +59,13 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             )
           );
 
-        // Drop the context and name key
-        const elements = Sequence.from(
-          Iterable.flatMap(groups.values(), (map) => map.values())
+        // Drop the context and name keys
+        const groups = Sequence.from(
+          Iterable.flatMap(map.values(), (map) => map.values())
         );
 
         // Only keep the groups with more than one element
-        return elements.filter((elements) => elements.size > 1).map(Group.of);
+        return groups.filter((links) => links.size > 1).map(Group.of);
       },
 
       expectations(target) {
