@@ -49,7 +49,7 @@ test("#apply() applies a map of functions to each corresponding value of a map",
     [
       ...map.apply(
         Map.of(
-          ["foo", (x) => x + 1],
+          ["foo", (x: number) => x + 1],
           ["bar", (x) => x * 2],
           ["baz", (x) => x - 3],
           ["qux", (x) => x / 4]
@@ -67,7 +67,11 @@ test("#apply() applies a map of functions to each corresponding value of a map",
 
 test("#apply() drops keys with no corresponding function or value", (t) => {
   t.deepEqual(
-    [...map.apply(Map.of(["foo", (x) => x + 1], ["fez", (x) => x * 2]))],
+    [
+      ...map.apply(
+        Map.of(["foo", (x: number) => x + 1], ["fez", (x) => x * 2])
+      ),
+    ],
     [["foo", 2]]
   );
 });
