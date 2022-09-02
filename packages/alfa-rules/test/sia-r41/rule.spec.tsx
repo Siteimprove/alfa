@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -112,8 +111,6 @@ test(`evaluate() gather links from the full page`, async (t) => {
   const target = [link1, link2];
 
   const document = h.document([link1, <iframe>{h.document([link2])}</iframe>]);
-
-  console.dir(document.toJSON());
 
   t.deepEqual(await evaluate(R41, { document }), [
     passed(R41, Group.of(target), {
