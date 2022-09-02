@@ -43,9 +43,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               hasNonEmptyAccessibleName(device)
             )
           )
-          .groupBy((element) =>
-            linkContext(element, device).add(element.root())
-          )
+          .groupBy((element) => linkContext(element, device))
           .flatMap((elements) =>
             elements.groupBy((element) =>
               Node.from(element, device).name.map((name) =>
