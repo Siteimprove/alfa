@@ -126,7 +126,7 @@ export namespace Outcomes {
 function linkContext(element: Element, device: Device): Set<dom.Node> {
   let context = Set.empty<dom.Node>();
 
-  const ancestors = element.ancestors(dom.Node.flatTree).filter(isElement);
+  const ancestors = element.ancestors(dom.Node.fullTree).filter(isElement);
 
   for (const listitem of ancestors.filter(hasRole(device, "listitem"))) {
     context = context.add(listitem);
