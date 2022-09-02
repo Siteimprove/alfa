@@ -111,7 +111,7 @@ test(`evaluate() gather links from the full page`, async (t) => {
   const link2 = <a href="foo.html">Foo</a>;
   const target = [link1, link2];
 
-  const document = h.document([link1, <iframe>{link2}</iframe>]);
+  const document = h.document([link1, <iframe>{h.document([link2])}</iframe>]);
 
   console.dir(document.toJSON());
 
