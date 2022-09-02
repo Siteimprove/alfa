@@ -2,8 +2,10 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -32,7 +34,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   evaluate({ device, document, response }) {
     return {
       applicability() {
-        return document
+        const groups = document
           .descendants(dom.Node.fullTree)
           .filter(isElement)
           .filter(
@@ -43,17 +45,24 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               hasNonEmptyAccessibleName(device)
             )
           )
+          // Group by contexts (context => group)
           .groupBy((element) => linkContext(element, device))
-          .flatMap((elements) =>
+          // Group by names inside the contexts (context => [name => group])
+          .map((elements) =>
             elements.groupBy((element) =>
               Node.from(element, device).name.map((name) =>
                 normalize(name.value)
               )
             )
-          )
-          .filter((elements) => elements.size > 1)
-          .map(Group.of)
-          .values();
+          );
+
+        // Drop the context and name key
+        const elements = Sequence.from(
+          Iterable.flatMap(groups.values(), (map) => map.values())
+        );
+
+        // Only keep the groups with more than one element
+        return elements.filter((elements) => elements.size > 1).map(Group.of);
       },
 
       expectations(target) {
