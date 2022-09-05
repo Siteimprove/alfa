@@ -2,8 +2,10 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -32,7 +34,10 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   evaluate({ device, document, response }) {
     return {
       applicability() {
-        return document
+        // Links with identical names may appear in different contexts.
+        // This creates two separate targets and we must take care of not
+        // colliding them.
+        const map = document
           .descendants(dom.Node.fullTree)
           .filter(isElement)
           .filter(
@@ -43,19 +48,24 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               hasNonEmptyAccessibleName(device)
             )
           )
-          .groupBy((element) =>
-            linkContext(element, device).add(element.root())
-          )
-          .flatMap((elements) =>
+          // Group by contexts (context => group)
+          .groupBy((element) => linkContext(element, device))
+          // Group by names inside the contexts (context => [name => group])
+          .map((elements) =>
             elements.groupBy((element) =>
               Node.from(element, device).name.map((name) =>
                 normalize(name.value)
               )
             )
-          )
-          .filter((elements) => elements.size > 1)
-          .map(Group.of)
-          .values();
+          );
+
+        // Drop the context and name keys
+        const groups = Sequence.from(
+          Iterable.flatMap(map.values(), (map) => map.values())
+        );
+
+        // Only keep the groups with more than one element
+        return groups.filter((links) => links.size > 1).map(Group.of);
       },
 
       expectations(target) {
@@ -116,7 +126,7 @@ export namespace Outcomes {
 function linkContext(element: Element, device: Device): Set<dom.Node> {
   let context = Set.empty<dom.Node>();
 
-  const ancestors = element.ancestors(dom.Node.flatTree).filter(isElement);
+  const ancestors = element.ancestors(dom.Node.fullTree).filter(isElement);
 
   for (const listitem of ancestors.filter(hasRole(device, "listitem"))) {
     context = context.add(listitem);

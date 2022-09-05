@@ -41,13 +41,8 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               hasNonEmptyAccessibleName(device)
             )
           )
-          .groupBy((element) => element.root())
-          .flatMap((elements) =>
-            elements.groupBy((element) =>
-              Node.from(element, device).name.map((name) =>
-                normalize(name.value)
-              )
-            )
+          .groupBy((element) =>
+            Node.from(element, device).name.map((name) => normalize(name.value))
           )
           .filter((elements) => elements.size > 1)
           .map(Group.of)

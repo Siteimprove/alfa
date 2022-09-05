@@ -104,3 +104,17 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
     ]
   );
 });
+
+test(`evaluate() gather links from the full page`, async (t) => {
+  const link1 = <a href="foo.html">Foo</a>;
+  const link2 = <a href="foo.html">Foo</a>;
+  const target = [link1, link2];
+
+  const document = h.document([link1, <iframe>{h.document([link2])}</iframe>]);
+
+  t.deepEqual(await evaluate(R41, { document }), [
+    passed(R41, Group.of(target), {
+      1: Outcomes.ResolveSameResource,
+    }),
+  ]);
+});

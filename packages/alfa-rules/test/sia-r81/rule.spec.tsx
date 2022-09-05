@@ -141,3 +141,50 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
     ]
   );
 });
+
+test(`evaluate() creates two targets for groups of links with same name in
+     different context`, async (t) => {
+  const target1 = [<a href="foo.html">Foo</a>, <a href="foo.html">Foo</a>];
+  const target2 = [<a href="foo.html">Foo</a>, <a href="foo.html">Foo</a>];
+
+  const document = h.document([
+    <html>
+      <p>
+        {target1[0]}
+        {target1[1]}
+      </p>
+      <p>
+        {target2[0]}
+        {target2[1]}
+      </p>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R81, { document }), [
+    passed(R81, Group.of(target1), {
+      1: Outcomes.ResolveSameResource,
+    }),
+    passed(R81, Group.of(target2), {
+      1: Outcomes.ResolveSameResource,
+    }),
+  ]);
+});
+
+test(`evaluate() gather links from the full page`, async (t) => {
+  const link1 = <a href="foo.html">Foo</a>;
+  const link2 = <a href="foo.html">Foo</a>;
+  const target = [link1, link2];
+
+  const document = h.document([
+    <p>
+      {link1}
+      <iframe>{h.document([link2])}</iframe>
+    </p>,
+  ]);
+
+  t.deepEqual(await evaluate(R81, { document }), [
+    passed(R81, Group.of(target), {
+      1: Outcomes.ResolveSameResource,
+    }),
+  ]);
+});
