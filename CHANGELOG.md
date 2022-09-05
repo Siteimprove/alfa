@@ -19,6 +19,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.43.2](../../compare/v0.43.1...v0.43.2) (2022-09-05)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R41 and SIA-R81 now correctly compute their test target instead of randomly dropping some groups when other links have the same name. ([#1217](../../pull/1217))
+
 ## [0.43.1](../../compare/v0.43.0...v0.43.1) (2022-07-26)
 
 ### Fixed
