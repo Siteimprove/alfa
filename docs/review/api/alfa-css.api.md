@@ -135,9 +135,11 @@ export class Calculation<out D extends Calculation.Dimension = Calculation.Dimen
     static of(expression: Calculation.Expression): Calculation;
     // (undocumented)
     reduce(resolver: Calculation.Resolver): Calculation;
+    resolve(this: Calculation<"length">, resolver: Calculation.LengthResolver): Option<Length<"px">>;
+    // (undocumented)
     resolve(this: Calculation<"length-percentage">, resolver: Calculation.Resolver<"px", Length<"px">>): Option<Length<"px">>;
     // (undocumented)
-    resolve(this: Calculation<"number">, resolver: Calculation.Resolver<"px", Length<"px">>): Option<Number_2>;
+    resolve(this: Calculation<"number">, resolver: Calculation.PercentageResolver): Option<Number_2>;
     // (undocumented)
     toJSON(): Calculation.JSON;
     // (undocumented)
@@ -156,8 +158,6 @@ export namespace Calculation {
         abstract equals(value: unknown): value is this;
         // (undocumented)
         abstract get kind(): Kind;
-        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
-        //
         // (undocumented)
         abstract reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
         // (undocumented)
@@ -189,8 +189,6 @@ export namespace Calculation {
         get kind(): Kind;
         // (undocumented)
         static of(operand: Expression): Invert;
-        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
-        //
         // (undocumented)
         reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
         // (undocumented)
@@ -268,12 +266,15 @@ export namespace Calculation {
             [K in Base]: number;
         }>;
     }
+    // @internal
+    export interface LengthResolver<L extends Unit.Length = "px"> {
+        // (undocumented)
+        length(value: Length<Unit.Length.Relative>): Length<L>;
+    }
     // (undocumented)
     export class Negate extends Operation.Unary {
         // (undocumented)
         static of(operand: Expression): Negate;
-        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
-        //
         // (undocumented)
         reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
         // (undocumented)
@@ -316,11 +317,14 @@ export namespace Calculation {
         }
     }
     // (undocumented)
+    export interface PercentageResolver<P extends Numeric = Numeric> {
+        // (undocumented)
+        percentage(value: Percentage): P;
+    }
+    // (undocumented)
     export class Product extends Operation.Binary {
         // (undocumented)
         static of(...operands: [Expression, Expression]): Result<Product, string>;
-        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
-        //
         // (undocumented)
         reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
         // (undocumented)
@@ -328,19 +332,14 @@ export namespace Calculation {
         // (undocumented)
         get type(): "product";
     }
-    // @internal
-    export interface Resolver<L extends Unit.Length = "px", P extends Numeric = Numeric> {
-        // (undocumented)
-        length(value: Length<Unit.Length.Relative>): Length<L>;
-        // (undocumented)
-        percentage(value: Percentage): P;
-    }
+    // Warning: (ae-incompatible-release-tags) The symbol "Resolver" is marked as @public, but its signature references "LengthResolver" which is marked as @internal
+    //
+    // (undocumented)
+    export type Resolver<L extends Unit.Length = "px", P extends Numeric = Numeric> = LengthResolver<L> & PercentageResolver<P>;
     // (undocumented)
     export class Sum extends Operation.Binary {
         // (undocumented)
         static of(...operands: [Expression, Expression]): Result<Sum, string>;
-        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
-        //
         // (undocumented)
         reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
         // (undocumented)
@@ -356,8 +355,6 @@ export namespace Calculation {
         get kind(): Kind;
         // (undocumented)
         static of(value: Numeric): Value;
-        // Warning: (ae-incompatible-release-tags) The symbol "reduce" is marked as @public, but its signature references "Resolver" which is marked as @internal
-        //
         // (undocumented)
         reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Value;
         // (undocumented)
@@ -383,6 +380,8 @@ export namespace Calculation {
     //
     // (undocumented)
     parse: Parser<Slice<Token>, Calculation<Dimension>, string, []>;
+    const // (undocumented)
+    parseLength: Parser<Slice<Token>, Calculation<"length">, string, []>;
     const // (undocumented)
     parseLengthPercentage: Parser<Slice<Token>, Calculation<"length-percentage">, string, []>;
     const // (undocumented)
