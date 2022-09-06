@@ -1,5 +1,6 @@
-import { Keyword, Length } from "@siteimprove/alfa-css";
+import { Calculation, Keyword, Length, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 import { Resolver } from "../resolver";
@@ -18,6 +19,7 @@ declare module "../property" {
  */
 export type Specified =
   | Length
+  | Calculation<"length">
   | Keyword<"thin">
   | Keyword<"medium">
   | Keyword<"thick">;
@@ -30,9 +32,10 @@ export type Computed = Length<"px">;
 /**
  * @internal
  */
-export const parse = either(
+export const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("thin", "medium", "thick"),
-  Length.parse
+  Length.parse,
+  Calculation.parseLength
 );
 
 /**
@@ -44,17 +47,25 @@ export default Property.register(
   Property.of<Specified, Computed>(
     Length.of(3, "px"),
     parse,
-    (outlineWidth, style) => {
+    (value, style) => {
       if (
         style.computed("outline-style").some(({ value }) => value === "none")
       ) {
         return Value.of(Length.of(0, "px"));
       }
 
-      return outlineWidth.map((value) => {
-        switch (value.type) {
+      return value.map((width) => {
+        const length = Resolver.length(style);
+
+        switch (width.type) {
+          case "length":
+            return length(width);
+
+          case "calculation":
+            return width.resolve({ length }).get();
+
           case "keyword":
-            switch (value.value) {
+            switch (width.value) {
               case "thin":
                 return Length.of(1, "px");
 
@@ -64,9 +75,6 @@ export default Property.register(
               case "thick":
                 return Length.of(5, "px");
             }
-
-          case "length":
-            return Resolver.length(value, style);
         }
       });
     }
