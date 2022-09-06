@@ -111,25 +111,20 @@ export default Property.register(
     parse,
     (fontSize, style) =>
       fontSize.map((fontSize) => {
-        const percentageResolver = Resolver.percentage(
+        const percentage = Resolver.percentage(
           style.parent.computed("font-size").value
         );
-        const lengthResolver = Resolver.length(style.parent);
+        const length = Resolver.length(style.parent);
 
         switch (fontSize.type) {
           case "calculation":
-            return fontSize
-              .resolve({
-                length: lengthResolver,
-                percentage: percentageResolver,
-              })
-              .get();
+            return fontSize.resolve({ length, percentage }).get();
 
           case "length":
-            return lengthResolver(fontSize);
+            return length(fontSize);
 
           case "percentage": {
-            return percentageResolver(fontSize);
+            return percentage(fontSize);
           }
 
           case "keyword": {
