@@ -12,3 +12,4 @@ The following is an index of all the architecture decisions taken so far. Whenev
 - [**ADR 8**](decisions/adr-008.md): Use `Option<T>` to model optional values
 - [**ADR 9**](decisions/adr-009.md): Use `Result<T, E>` to model errors
 - [**ADR 10**](decisions/adr-010.md): Use `Future<T>` to model possibly asynchronous computations
+- [**ADR 10**](decisions/adr-011.md) : Use serializable trees with parent pointers, and downward immutability
