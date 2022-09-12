@@ -20,7 +20,7 @@ test("evaluate() passes a <div> with a role of group and a name", async (t) => {
 
   t.deepEqual(await evaluate(R60, { document }), [
     passed(R60, target, {
-      1: Outcomes.HasAccessibleName,
+      1: Outcomes.HasAccessibleName("group"),
     }),
   ]);
 });
@@ -63,7 +63,7 @@ test("evaluate() passes a <div> with a role of radiogroup and a name", async (t)
 
   t.deepEqual(await evaluate(R60, { document }), [
     passed(R60, target, {
-      1: Outcomes.HasAccessibleName,
+      1: Outcomes.HasAccessibleName("radiogroup"),
     }),
   ]);
 });
@@ -103,7 +103,7 @@ test("evaluate() passes a <tr> element with an inherited group role and individu
 
   t.deepEqual(await evaluate(R60, { document }), [
     passed(R60, target, {
-      1: Outcomes.HasAccessibleName,
+      1: Outcomes.HasAccessibleName("row"),
     }),
   ]);
 });
@@ -172,10 +172,10 @@ test("evaluate() passes innermost groups, and ignores the outermost", async (t) 
 
   t.deepEqual(await evaluate(R60, { document }), [
     passed(R60, target2, {
-      1: Outcomes.HasAccessibleName,
+      1: Outcomes.HasAccessibleName("radiogroup"),
     }),
     passed(R60, target1, {
-      1: Outcomes.HasAccessibleName,
+      1: Outcomes.HasAccessibleName("radiogroup"),
     }),
   ]);
 });
@@ -194,7 +194,7 @@ test("evaluate() fails a group element with no accessible name", async (t) => {
 
   t.deepEqual(await evaluate(R60, { document }), [
     failed(R60, target, {
-      1: Outcomes.HasNoAccessibleName,
+      1: Outcomes.HasNoAccessibleName("group"),
     }),
   ]);
 });

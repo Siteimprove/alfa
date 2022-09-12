@@ -15,7 +15,7 @@ import { Languages } from "../../sia-r109/rule";
 import { Contrast } from "../diagnostic/contrast";
 import { ColorError } from "../dom/get-colors";
 
-// R42, R55, R68
+// R42, R60, R68
 import { WithRole } from "../diagnostic/with-role";
 
 /**

@@ -1,5 +1,5 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { DOM } from "@siteimprove/alfa-aria";
+import { Rule } from "@siteimprove/alfa-act";
+import { DOM, Node as ariaNode, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -10,6 +10,7 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Map } from "@siteimprove/alfa-map";
 
 import { expectation } from "../common/act/expectation";
+import { WithRole } from "../common/diagnostic/with-role";
 import { Scope } from "../tags";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
@@ -63,11 +64,14 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
+        // Presence of a role is guaranteed by Applicability
+        const role = ariaNode.from(target, device).role.get().name;
+
         return {
           1: expectation(
             hasNonEmptyAccessibleName(device)(target),
-            () => Outcomes.HasAccessibleName,
-            () => Outcomes.HasNoAccessibleName
+            () => Outcomes.HasAccessibleName(role),
+            () => Outcomes.HasNoAccessibleName(role)
           ),
         };
       },
@@ -76,13 +80,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasAccessibleName = Ok.of(
-    Diagnostic.of(`The grouping element has an accessible name`)
-  );
+  export const HasAccessibleName = (role: Role.Name) =>
+    Ok.of(WithRole.of(`The grouping element has an accessible name`, role));
 
-  export const HasNoAccessibleName = Err.of(
-    Diagnostic.of(`The grouping element has an accessible name`)
-  );
+  export const HasNoAccessibleName = (role: Role.Name) =>
+    Err.of(WithRole.of(`The grouping element has an accessible name`, role));
 }
 
 function isFormInput(device: Device): Predicate<Element> {
