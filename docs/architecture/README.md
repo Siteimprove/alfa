@@ -14,3 +14,4 @@ The following is an index of all the architecture decisions taken so far. Whenev
 - [**ADR 10**](decisions/adr-010.md): Use `Future<T>` to model possibly asynchronous computations
 - [**ADR 11**](decisions/adr-011.md): Use serializable trees with parent pointers, and downward immutability
 - [**ADR 12**](decisions/adr-012.md): Use side-effect free (monadic) questions
+- [**ADR 13**](decisions/adr-013.md): Use trilean logic for reasoning about possibly unknown results
