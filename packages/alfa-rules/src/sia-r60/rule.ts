@@ -23,25 +23,24 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
+        // Records how many form input are within each "group"
         let groups: Map<Element, number> = Map.empty();
 
         function visit(node: Node, group: Option<Element>): void {
-          //If the element is a node, then its applicability is checked
           if (isElement(node)) {
-            // If the group is an input field, then its value has a +1
-            if (
-              group.isSome() &&
-              and(
-                isIncludedInTheAccessibilityTree(device),
-                isFormInput(device)
-              )(node)
-            ) {
-              groups = groups.set(
-                group.get(),
-                groups.get(group.get()).getOr(0) + 1
-              );
-            }
+            // If we're under a group and find a form input, count it.
+            group.forEach((group) => {
+              if (
+                and(
+                  isIncludedInTheAccessibilityTree(device),
+                  isFormInput(device)
+                )(node)
+              ) {
+                groups = groups.set(group, groups.get(group).getOr(0) + 1);
+              }
+            });
 
+            // If we find a group, remember it before descending
             if (
               and(
                 hasNamespace(Namespace.HTML),
@@ -51,7 +50,7 @@ export default Rule.Atomic.of<Page, Element>({
               group = Option.of(node);
             }
           }
-          // If the group has children, then iterate on all children of the group
+          // Recursively visit children
           for (const child of node.children(Node.fullTree)) {
             visit(child, group);
           }
@@ -59,6 +58,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         visit(document, None);
 
+        // Only keep the groups with at least two form input descendants
         return groups.filter((n) => n >= 2).keys();
       },
 
@@ -77,11 +77,11 @@ export default Rule.Atomic.of<Page, Element>({
 
 export namespace Outcomes {
   export const HasAccessibleName = Ok.of(
-    Diagnostic.of(`The grouping elements have an accessible name`)
+    Diagnostic.of(`The grouping element has an accessible name`)
   );
 
   export const HasNoAccessibleName = Err.of(
-    Diagnostic.of(`The grouping elements have an accessible name`)
+    Diagnostic.of(`The grouping element has an accessible name`)
   );
 }
 
