@@ -1,6 +1,7 @@
 import { LabelAndName } from "../../sia-r14/rule";
 import { RoleAndRequiredAttributes } from "../../sia-r16/rule";
 import { WithPreviousHeading } from "../../sia-r53/rule";
+import { WithRoleAndName } from "../../sia-r55/rule";
 import { SameNames } from "../../sia-r56/rule";
 import { DistinguishingStyles } from "../../sia-r62/diagnostics";
 import { DistinguishingStyles as DeprecatedDistinguishingStyles } from "../../sia-dr62/rule";
@@ -54,4 +55,6 @@ export namespace Diagnostic {
   export const { isWithPreviousHeading } = WithPreviousHeading;
 
   export const { isWithRole } = WithRole;
+
+  export const { isWithRoleAndName } = WithRoleAndName;
 }
