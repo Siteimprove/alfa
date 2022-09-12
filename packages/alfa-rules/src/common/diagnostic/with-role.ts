@@ -17,9 +17,9 @@ export class WithRole extends Diagnostic {
       : new WithRole(message, role);
   }
 
-  private readonly _role: Role.Name;
+  protected readonly _role: Role.Name;
 
-  private constructor(message: string, role: Role.Name) {
+  protected constructor(message: string, role: Role.Name) {
     super(message);
     this._role = role;
   }

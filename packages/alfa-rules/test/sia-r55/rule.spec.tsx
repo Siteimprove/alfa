@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R55, { Outcomes } from "../../src/sia-r55/rule";
+import R55, { Outcomes, WithRoleAndName } from "../../src/sia-r55/rule";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
@@ -16,7 +16,17 @@ test("evaluate() cannot tell when same landmarks have same names", async (t) => 
   const document = h.document([aside1, aside2]);
   const target = Group.of([aside1, aside2]);
 
-  t.deepEqual(await evaluate(R55, { document }), [cantTell(R55, target)]);
+  t.deepEqual(await evaluate(R55, { document }), [
+    cantTell(
+      R55,
+      target,
+      WithRoleAndName.of(
+        `Do these complementary landmarks have the same or equivalent content?`,
+        "complementary",
+        "More information"
+      )
+    ),
+  ]);
 });
 
 test("evaluate() passes when same landmarks have same names and content", async (t) => {
@@ -32,7 +42,11 @@ test("evaluate() passes when same landmarks have same names and content", async 
       { document },
       oracle({ "is-content-equivalent": true })
     ),
-    [passed(R55, target, { 1: Outcomes.SameResource("complementary") })]
+    [
+      passed(R55, target, {
+        1: Outcomes.SameResource("complementary", "More information"),
+      }),
+    ]
   );
 });
 
@@ -49,7 +63,11 @@ test("evaluate() fails when same landmarks have same names but different content
       { document },
       oracle({ "is-content-equivalent": false })
     ),
-    [failed(R55, target, { 1: Outcomes.DifferentResources("complementary") })]
+    [
+      failed(R55, target, {
+        1: Outcomes.DifferentResources("complementary", "More information"),
+      }),
+    ]
   );
 });
 
@@ -66,7 +84,11 @@ test("evaluate() fails when same sections have same names", async (t) => {
       { document },
       oracle({ "is-content-equivalent": false })
     ),
-    [failed(R55, target, { 1: Outcomes.DifferentResources("region") })]
+    [
+      failed(R55, target, {
+        1: Outcomes.DifferentResources("region", "More information"),
+      }),
+    ]
   );
 });
 
