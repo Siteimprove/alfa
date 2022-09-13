@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-jest",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.44.4",
+  "version": "0.44.5",
   "license": "MIT",
   "description": "Assertion integrations for the Jest testing framework",
   "repository": {
@@ -18,16 +18,16 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-act": "workspace:^0.44.4",
-    "@siteimprove/alfa-assert": "workspace:^0.44.4",
-    "@siteimprove/alfa-future": "workspace:^0.44.4",
-    "@siteimprove/alfa-mapper": "workspace:^0.44.4",
-    "@siteimprove/alfa-web": "workspace:^0.44.4",
+    "@siteimprove/alfa-act": "workspace:^0.44.5",
+    "@siteimprove/alfa-assert": "workspace:^0.44.5",
+    "@siteimprove/alfa-future": "workspace:^0.44.5",
+    "@siteimprove/alfa-mapper": "workspace:^0.44.5",
+    "@siteimprove/alfa-web": "workspace:^0.44.5",
     "@types/jest": "^26.0.10",
     "jest": "^29.0.1"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.44.4"
+    "@siteimprove/alfa-test": "workspace:^0.44.5"
   },
   "publishConfig": {
     "access": "public",
