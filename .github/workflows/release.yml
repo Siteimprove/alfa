@@ -25,16 +25,13 @@ jobs:
       # As of Sept 2022, `yarn npm publish` fails to publish on Github registry
       # see https://github.com/yarnpkg/berry/issues/4820
       # Using npm publish instead, since it seems to work.
-      - run: >
-          yarn workspaces foreach
-          --no-private
-          --topological-dev
-          exec npm publish
+      - run: npm publish --workspaces
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # yarn runs out of memory otherwise, likely due to too many workspaces creating too many child process?
-          NODE_OPTIONS: '--max-old-space-size=8192'
-      # npm publish --tolerate-republish
+        # yarn workspaces foreach
+        #          --no-private
+        #          --topological-dev
+        #          npm publish --tolerate-republish
       - uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
