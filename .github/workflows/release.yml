@@ -28,6 +28,8 @@ jobs:
           --no-private
           --topological-dev
           exec npm publish
+        env:
+          NODE_AUTH_TOKEN ${{ secrets.GITHUB_TOKEN }}
       # npm publish --tolerate-republish
       - uses: actions/create-release@v1.1.4
         env:
