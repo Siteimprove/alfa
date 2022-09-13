@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-css",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.44.3",
+  "version": "0.44.4",
   "license": "MIT",
   "description": "Implementations of the core CSS syntax and value types",
   "repository": {
@@ -18,26 +18,26 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-array": "workspace:^0.44.3",
-    "@siteimprove/alfa-device": "workspace:^0.44.3",
-    "@siteimprove/alfa-equatable": "workspace:^0.44.3",
-    "@siteimprove/alfa-hash": "workspace:^0.44.3",
-    "@siteimprove/alfa-iterable": "workspace:^0.44.3",
-    "@siteimprove/alfa-json": "workspace:^0.44.3",
-    "@siteimprove/alfa-mapper": "workspace:^0.44.3",
-    "@siteimprove/alfa-math": "workspace:^0.44.3",
-    "@siteimprove/alfa-option": "workspace:^0.44.3",
-    "@siteimprove/alfa-parser": "workspace:^0.44.3",
-    "@siteimprove/alfa-predicate": "workspace:^0.44.3",
-    "@siteimprove/alfa-record": "workspace:^0.44.3",
-    "@siteimprove/alfa-refinement": "workspace:^0.44.3",
-    "@siteimprove/alfa-result": "workspace:^0.44.3",
-    "@siteimprove/alfa-selective": "workspace:^0.44.3",
-    "@siteimprove/alfa-slice": "workspace:^0.44.3",
-    "@siteimprove/alfa-thunk": "workspace:^0.44.3"
+    "@siteimprove/alfa-array": "workspace:^0.44.4",
+    "@siteimprove/alfa-device": "workspace:^0.44.4",
+    "@siteimprove/alfa-equatable": "workspace:^0.44.4",
+    "@siteimprove/alfa-hash": "workspace:^0.44.4",
+    "@siteimprove/alfa-iterable": "workspace:^0.44.4",
+    "@siteimprove/alfa-json": "workspace:^0.44.4",
+    "@siteimprove/alfa-mapper": "workspace:^0.44.4",
+    "@siteimprove/alfa-math": "workspace:^0.44.4",
+    "@siteimprove/alfa-option": "workspace:^0.44.4",
+    "@siteimprove/alfa-parser": "workspace:^0.44.4",
+    "@siteimprove/alfa-predicate": "workspace:^0.44.4",
+    "@siteimprove/alfa-record": "workspace:^0.44.4",
+    "@siteimprove/alfa-refinement": "workspace:^0.44.4",
+    "@siteimprove/alfa-result": "workspace:^0.44.4",
+    "@siteimprove/alfa-selective": "workspace:^0.44.4",
+    "@siteimprove/alfa-slice": "workspace:^0.44.4",
+    "@siteimprove/alfa-thunk": "workspace:^0.44.4"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.44.3"
+    "@siteimprove/alfa-test": "workspace:^0.44.4"
   },
   "publishConfig": {
     "access": "public",
