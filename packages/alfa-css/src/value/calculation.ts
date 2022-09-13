@@ -110,9 +110,14 @@ export class Calculation<
 
   // Other resolvers should be added when needed.
   /**
-   * Resolves a calculation typed as a length-percentage or number.
+   * Resolves a calculation typed as a length, length-percentage or number.
    * Needs a resolver to handle relative lengths and percentages.
    */
+  public resolve(
+    this: Calculation<"length">,
+    resolver: Calculation.LengthResolver
+  ): Option<Length<"px">>;
+
   public resolve(
     this: Calculation<"length-percentage">,
     resolver: Calculation.Resolver<"px", Length<"px">>
@@ -120,7 +125,7 @@ export class Calculation<
 
   public resolve(
     this: Calculation<"number">,
-    resolver: Calculation.Resolver<"px", Length<"px">>
+    resolver: Calculation.PercentageResolver
   ): Option<Number>;
 
   public resolve(
@@ -134,7 +139,8 @@ export class Calculation<
     const expression = this._expression.reduce(resolver);
 
     return this.isDimensionPercentage("length")
-      ? expression.toLength()
+      ? // length are also length-percentage, so this catches both.
+        expression.toLength()
       : this.isNumber()
       ? expression.toNumber()
       : None;
@@ -188,13 +194,18 @@ export namespace Calculation {
    *
    * @internal
    */
-  export interface Resolver<
-    L extends Unit.Length = "px",
-    P extends Numeric = Numeric
-  > {
+  export interface LengthResolver<L extends Unit.Length = "px"> {
     length(value: Length<Unit.Length.Relative>): Length<L>;
+  }
+
+  export interface PercentageResolver<P extends Numeric = Numeric> {
     percentage(value: Percentage): P;
   }
+
+  export type Resolver<
+    L extends Unit.Length = "px",
+    P extends Numeric = Numeric
+  > = LengthResolver<L> & PercentageResolver<P>;
 
   function angleResolver(angle: Angle): Angle<"deg"> {
     return angle.withUnit("deg");
@@ -971,6 +982,13 @@ export namespace Calculation {
   export const parse = map(parseCalc, Calculation.of);
 
   // other parsers + filters can be added when needed
+  export const parseLength = filter(
+    parse,
+    (calculation): calculation is Calculation<"length"> =>
+      calculation.isDimension("length"),
+    () => `calc() expression must be of type "length"`
+  );
+
   export const parseLengthPercentage = filter(
     parse,
     (calculation): calculation is Calculation<"length-percentage"> =>
