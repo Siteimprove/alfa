@@ -32,6 +32,8 @@ jobs:
           exec npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # yarn runs out of memory otherwise, likely due to too many workspaces creating too many child process?
+          NODE_OPTIONS: '--max-old-space-size=8192'
       # npm publish --tolerate-republish
       - uses: actions/create-release@v1.1.4
         env:
