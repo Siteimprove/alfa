@@ -58,10 +58,10 @@ export default Property.register(
     parse,
     (value, style) =>
       value.map((height) => {
-        const percentageResolver = Resolver.percentage(
+        const percentage = Resolver.percentage(
           style.parent.computed("font-size").value
         );
-        const lengthResolver = Resolver.length(style);
+        const length = Resolver.length(style);
 
         switch (height.type) {
           case "keyword":
@@ -69,24 +69,16 @@ export default Property.register(
             return height;
 
           case "length":
-            return lengthResolver(height);
+            return length(height);
 
           case "percentage":
-            return percentageResolver(height);
+            return percentage(height);
 
           case "calculation":
-            // TS can't see that the union is exactly covered by the overloads
-            // so we have to do this ugly split :-/
             return (
               height.isNumber()
-                ? height.resolve({
-                    length: lengthResolver,
-                    percentage: percentageResolver,
-                  })
-                : height.resolve({
-                    length: lengthResolver,
-                    percentage: percentageResolver,
-                  })
+                ? height.resolve({ percentage })
+                : height.resolve({ length, percentage })
             ).get();
         }
       }),
