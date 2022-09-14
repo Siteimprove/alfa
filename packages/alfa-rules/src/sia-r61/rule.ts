@@ -40,8 +40,7 @@ export default Rule.Atomic.of<Page, Document>({
           .from(firstHeading.get(), device)
           .attribute("aria-level")
           .map((level) => Number(level.value))
-          // The level is guaranteed to exist because heading has a role of heading.
-          .get();
+          .getOr(0);
 
         return {
           1: expectation(
