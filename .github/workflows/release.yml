@@ -13,6 +13,8 @@ jobs:
         with:
           node-version: 16
           cache: yarn
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@siteimprove'
       - run: >
           yarn config set
           npmScopes.siteimprove.npmAuthToken
@@ -20,11 +22,16 @@ jobs:
       - run: yarn install --immutable
       - run: yarn build
       - run: yarn test
-      - run: >
-          yarn workspaces foreach
-          --no-private
-          --topological-dev
-          npm publish --tolerate-republish
+      # As of Sept 2022, `yarn npm publish` fails to publish on Github registry
+      # see https://github.com/yarnpkg/berry/issues/4820
+      # Using npm publish instead, since it seems to work.
+      - run: npm publish --workspaces
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # yarn workspaces foreach
+        #          --no-private
+        #          --topological-dev
+        #          npm publish --tolerate-republish
       - uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
