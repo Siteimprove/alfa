@@ -26,10 +26,10 @@ test(`evaluate() passes implicit row headers`, async (t) => {
 
   t.deepEqual(await evaluate(R76, { document }), [
     passed(R76, target1, {
-      1: Outcomes.HasHeaderRole,
+      1: Outcomes.HasHeaderRole("rowheader"),
     }),
     passed(R76, target2, {
-      1: Outcomes.HasHeaderRole,
+      1: Outcomes.HasHeaderRole("rowheader"),
     }),
   ]);
 });
@@ -62,16 +62,16 @@ test(`evaluate() passes explicit headers`, async (t) => {
   ]);
   t.deepEqual(await evaluate(R76, { document }), [
     passed(R76, target1, {
-      1: Outcomes.HasHeaderRole,
+      1: Outcomes.HasHeaderRole("columnheader"),
     }),
     passed(R76, target2, {
-      1: Outcomes.HasHeaderRole,
+      1: Outcomes.HasHeaderRole("columnheader"),
     }),
     passed(R76, target3, {
-      1: Outcomes.HasHeaderRole,
+      1: Outcomes.HasHeaderRole("rowheader"),
     }),
     passed(R76, target4, {
-      1: Outcomes.HasHeaderRole,
+      1: Outcomes.HasHeaderRole("rowheader"),
     }),
   ]);
 });
@@ -104,16 +104,16 @@ test(`evaluate() fails headers with neither scope nor role`, async (t) => {
 
   t.deepEqual(await evaluate(R76, { document }), [
     failed(R76, target1, {
-      1: Outcomes.HasNoHeaderRole,
+      1: Outcomes.HasNoHeaderRole("cell"),
     }),
     failed(R76, target2, {
-      1: Outcomes.HasNoHeaderRole,
+      1: Outcomes.HasNoHeaderRole("cell"),
     }),
     failed(R76, target3, {
-      1: Outcomes.HasNoHeaderRole,
+      1: Outcomes.HasNoHeaderRole("cell"),
     }),
     failed(R76, target4, {
-      1: Outcomes.HasNoHeaderRole,
+      1: Outcomes.HasNoHeaderRole("cell"),
     }),
   ]);
 });
@@ -138,10 +138,10 @@ test(`evaluate() fails headers whose role has been changed`, async (t) => {
 
   t.deepEqual(await evaluate(R76, { document }), [
     failed(R76, target1, {
-      1: Outcomes.HasNoHeaderRole,
+      1: Outcomes.HasNoHeaderRole("tab"),
     }),
     failed(R76, target2, {
-      1: Outcomes.HasNoHeaderRole,
+      1: Outcomes.HasNoHeaderRole("tab"),
     }),
   ]);
 });

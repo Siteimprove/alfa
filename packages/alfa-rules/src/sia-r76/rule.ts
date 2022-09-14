@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { DOM } from "@siteimprove/alfa-aria";
+import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -7,6 +7,7 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
+import { WithRole } from "../common/diagnostic/with-role";
 import { Scope } from "../tags";
 
 const { hasRole, isIncludedInTheAccessibilityTree, isPerceivableForAll } = DOM;
@@ -50,8 +51,8 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             test(hasRole(device, "columnheader", "rowheader"), target),
-            () => Outcomes.HasHeaderRole,
-            () => Outcomes.HasNoHeaderRole
+            () => Outcomes.HasHeaderRole(WithRole.getRoleName(target, device)),
+            () => Outcomes.HasNoHeaderRole(WithRole.getRoleName(target, device))
           ),
         };
       },
@@ -60,11 +61,9 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasHeaderRole = Ok.of(
-    Diagnostic.of(`The header element is a semantic header`)
-  );
+  export const HasHeaderRole = (role: Role.Name) =>
+    Ok.of(WithRole.of(`The header element is a semantic header`, role));
 
-  export const HasNoHeaderRole = Err.of(
-    Diagnostic.of(`The header element is not a semantic header`)
-  );
+  export const HasNoHeaderRole = (role: Role.Name) =>
+    Err.of(WithRole.of(`The header element is not a semantic header`, role));
 }
