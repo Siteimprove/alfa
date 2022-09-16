@@ -16,3 +16,4 @@ The following is an index of all the architecture decisions taken so far. Whenev
 - [**ADR 12**](decisions/adr-012.md): Use side effect free (monadic) questions
 - [**ADR 13**](decisions/adr-013.md): Use trilean logic for reasoning about possibly unknown results
 - [**ADR 14**](decisions/adr-014.md): Implement our own command line wrapper package
+- [**ADR 15**](decisions/adr-015.md): Use (extended) diagnostic in outcomes
