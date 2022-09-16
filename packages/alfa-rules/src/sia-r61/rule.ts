@@ -99,8 +99,8 @@ export class WithFirstHeading extends Diagnostic {
       : new WithFirstHeading(message, firstHeading, level);
   }
 
-  private _firstHeading: Element;
-  private _level: number;
+  private readonly _firstHeading: Element;
+  private readonly _level: number;
 
   private constructor(message: string, firstHeading: Element, level: number) {
     super(message);
