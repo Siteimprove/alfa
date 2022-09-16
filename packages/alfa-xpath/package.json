@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-xpath",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.44.5",
+  "version": "0.45.0",
   "license": "MIT",
   "description": "An implementation of a subset of the XPath query language",
   "repository": {
@@ -18,18 +18,18 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-dom": "workspace:^0.44.5",
-    "@siteimprove/alfa-equatable": "workspace:^0.44.5",
-    "@siteimprove/alfa-json": "workspace:^0.44.5",
-    "@siteimprove/alfa-option": "workspace:^0.44.5",
-    "@siteimprove/alfa-parser": "workspace:^0.44.5",
-    "@siteimprove/alfa-predicate": "workspace:^0.44.5",
-    "@siteimprove/alfa-refinement": "workspace:^0.44.5",
-    "@siteimprove/alfa-result": "workspace:^0.44.5",
-    "@siteimprove/alfa-slice": "workspace:^0.44.5"
+    "@siteimprove/alfa-dom": "workspace:^0.45.0",
+    "@siteimprove/alfa-equatable": "workspace:^0.45.0",
+    "@siteimprove/alfa-json": "workspace:^0.45.0",
+    "@siteimprove/alfa-option": "workspace:^0.45.0",
+    "@siteimprove/alfa-parser": "workspace:^0.45.0",
+    "@siteimprove/alfa-predicate": "workspace:^0.45.0",
+    "@siteimprove/alfa-refinement": "workspace:^0.45.0",
+    "@siteimprove/alfa-result": "workspace:^0.45.0",
+    "@siteimprove/alfa-slice": "workspace:^0.45.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.44.5"
+    "@siteimprove/alfa-test": "workspace:^0.45.0"
   },
   "publishConfig": {
     "access": "public",
