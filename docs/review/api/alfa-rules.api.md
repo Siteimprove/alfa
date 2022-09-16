@@ -356,10 +356,6 @@ export namespace Diagnostic {
     //
     // (undocumented)
     isContrast: typeof Contrast.isContrast;
-    const // Warning: (ae-forgotten-export) The symbol "DeprecatedElements" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    isDeprecatedElements: typeof DeprecatedElements.isDeprecatedElements;
     const // Warning: (ae-forgotten-export) The symbol "DistinguishingStyles" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
@@ -388,10 +384,22 @@ export namespace Diagnostic {
     //
     // (undocumented)
     isSameNames: typeof SameNames.isSameNames;
+    const // Warning: (ae-forgotten-export) The symbol "WithBadElements" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isWithBadElements: typeof WithBadElements.isWithBadElements;
     const // Warning: (ae-forgotten-export) The symbol "WithDeclaration" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     isWithDeclaration: typeof WithDeclaration.isWithDeclaration;
+    const // Warning: (ae-forgotten-export) The symbol "WithFirstHeading" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isWithFirstHeading: typeof WithFirstHeading.isWithFirstHeading;
+    const // Warning: (ae-forgotten-export) The symbol "WithNextHeading" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isWithNextHeading: typeof WithNextHeading.isWithNextHeading;
     const // Warning: (ae-forgotten-export) The symbol "WithPreviousHeading" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
@@ -400,6 +408,10 @@ export namespace Diagnostic {
     //
     // (undocumented)
     isWithRole: typeof WithRole.isWithRole;
+    const // Warning: (ae-forgotten-export) The symbol "WithRoleAndName" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isWithRoleAndName: typeof WithRoleAndName.isWithRoleAndName;
 }
 
 declare namespace experimentalRules {
