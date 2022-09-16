@@ -12,7 +12,7 @@ import { WithNextHeading } from "../../sia-r78/rule";
 import { ClippingAncestors } from "../../sia-r83/rule";
 import { Languages } from "../../sia-r109/rule";
 
-// R17, R70, R90
+// R17, R70, R90, R95
 import { WithBadElements } from "../diagnostic/with-bad-elements";
 
 // R42, R60, R68, R76
