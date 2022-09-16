@@ -1,6 +1,8 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { None, Option, Some } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -11,6 +13,7 @@ import { Scope } from "../tags";
 
 const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasNamespace, isContent, isElement } = Element;
+const { tee } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -44,12 +47,25 @@ export default Rule.Atomic.of<Page, Element>({
           .map((level) => Number(level.value))
           .getOr(0);
 
+        let nextLevel = -1;
         let end = false;
 
         const next = headings
           .skipUntil((heading) => heading.equals(target))
           .rest()
-          .find(hasHeadingLevel(device, (level) => level <= currentLevel))
+          .find(
+            hasHeadingLevel(
+              device,
+              tee(
+                (level) => level <= currentLevel,
+                (level, isLower) => {
+                  if (isLower) {
+                    nextLevel = level;
+                  }
+                }
+              )
+            )
+          )
           // If there is no more heading with a small enough level,
           // go to the end of the document and record we did it
           .getOrElse(() => {
@@ -78,8 +94,20 @@ export default Rule.Atomic.of<Page, Element>({
                 isContent(Node.fullTree)
               )
             ),
-            () => Outcomes.hasContent,
-            () => Outcomes.hasNoContent
+            () =>
+              Outcomes.hasContent(
+                // The link between end nad the type of next is lost by TS
+                end ? None : Some.of(next as Element),
+                currentLevel,
+                nextLevel
+              ),
+            () =>
+              Outcomes.hasNoContent(
+                // The link between end nad the type of next is lost by TS
+                end ? None : Some.of(next as Element),
+                currentLevel,
+                nextLevel
+              )
           ),
         };
       },
@@ -88,11 +116,130 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const hasContent = Ok.of(
-    Diagnostic.of("There is content between this heading and the next")
-  );
+  export const hasContent = (
+    nextHeading: Option<Element>,
+    currentLevel: number,
+    nextLevel: number
+  ) =>
+    Ok.of(
+      WithNextHeading.of(
+        "There is content between this heading and the next",
+        nextHeading,
+        currentLevel,
+        nextLevel
+      )
+    );
 
-  export const hasNoContent = Err.of(
-    Diagnostic.of("There is no content between this heading and the next")
-  );
+  export const hasNoContent = (
+    nextHeading: Option<Element>,
+    currentLevel: number,
+    nextLevel: number
+  ) =>
+    Err.of(
+      WithNextHeading.of(
+        "There is no content between this heading and the next",
+        nextHeading,
+        currentLevel,
+        nextLevel
+      )
+    );
+}
+
+/**
+ * @internal
+ */
+export class WithNextHeading extends Diagnostic {
+  public static of(message: string): Diagnostic;
+
+  public static of(
+    message: string,
+    nextHeading: Option<Element>,
+    currentLevel: number,
+    nextLevel: number
+  ): WithNextHeading;
+
+  public static of(
+    message: string,
+    nextHeading?: Option<Element>,
+    currentLevel?: number,
+    nextLevel?: number
+  ): Diagnostic {
+    return nextHeading === undefined ||
+      currentLevel === undefined ||
+      nextLevel === undefined
+      ? Diagnostic.of(message)
+      : new WithNextHeading(message, nextHeading, currentLevel, nextLevel);
+  }
+
+  private readonly _nextHeading: Option<Element>;
+  private readonly _currentLevel: number;
+  private readonly _nextLevel: number;
+
+  private constructor(
+    message: string,
+    nextHeading: Option<Element>,
+    currentLevel: number,
+    nextLevel: number
+  ) {
+    super(message);
+    this._nextHeading = nextHeading;
+    this._currentLevel = currentLevel;
+    this._nextLevel = nextLevel;
+  }
+
+  public get nextHeading(): Option<Element> {
+    return this._nextHeading;
+  }
+
+  public get currentHeadingLevel(): number {
+    return this._currentLevel;
+  }
+
+  public get nextHeadingLevel(): number {
+    return this._nextLevel;
+  }
+
+  public equals(value: WithNextHeading): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof WithNextHeading &&
+      value._message === this._message &&
+      value._nextHeading.equals(this._nextHeading) &&
+      value._currentLevel === this._currentLevel &&
+      value._nextLevel === this._nextLevel
+    );
+  }
+
+  public toJSON(): WithNextHeading.JSON {
+    return {
+      ...super.toJSON(),
+      nextHeading: this._nextHeading.toJSON(),
+      currentHeadingLevel: this._currentLevel,
+      nextHeadingLevel: this._nextLevel,
+    };
+  }
+}
+
+/**
+ * @internal
+ */
+export namespace WithNextHeading {
+  export interface JSON extends Diagnostic.JSON {
+    nextHeading: Option.JSON<Element>;
+    currentHeadingLevel: number;
+    nextHeadingLevel: number;
+  }
+
+  export function isWithNextHeading(
+    value: Diagnostic
+  ): value is WithNextHeading;
+
+  export function isWithNextHeading(value: unknown): value is WithNextHeading;
+
+  export function isWithNextHeading(value: unknown): value is WithNextHeading {
+    return value instanceof WithNextHeading;
+  }
 }
