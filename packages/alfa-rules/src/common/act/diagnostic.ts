@@ -12,15 +12,15 @@ import { WithNextHeading } from "../../sia-r78/rule";
 import { ClippingAncestors } from "../../sia-r83/rule";
 import { Languages } from "../../sia-r109/rule";
 
+// R17, R70, R90
+import { WithBadElements } from "../diagnostic/with-bad-elements";
+
 // R42, R60, R68, R76
 import { WithRole } from "../diagnostic/with-role";
 
 // R66, R69
 import { Contrast } from "../diagnostic/contrast";
 import { ColorError } from "../dom/get-colors";
-
-// R70, R90
-import { WithBadElements } from "../diagnostic/with-bad-elements";
 
 /**
  * @public

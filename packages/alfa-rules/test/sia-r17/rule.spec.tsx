@@ -66,27 +66,25 @@ test(`evaluate() passes an element which is disabled`, async (t) => {
 });
 
 test(`evaluate() fails an element with focusable content`, async (t) => {
-  const target = (
-    <div aria-hidden="true">
-      <a href="/">Link</a>
-    </div>
-  );
+  const error = <a href="/">Link</a>;
+
+  const target = <div aria-hidden="true">{error}</div>;
 
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R17, { document }), [
     failed(R17, target, {
-      1: Outcomes.IsTabbable,
+      1: Outcomes.IsTabbable([error]),
     }),
   ]);
 });
 
 test(`evaluate() fails an element with an \`aria-hidden\` ancestor`, async (t) => {
+  const error = <button>Some button</button>;
+
   const target = (
     <div aria-hidden="true">
-      <div aria-hidden="false">
-        <button>Some button</button>
-      </div>
+      <div aria-hidden="false">{error}</div>
     </div>
   );
 
@@ -94,7 +92,7 @@ test(`evaluate() fails an element with an \`aria-hidden\` ancestor`, async (t) =
 
   t.deepEqual(await evaluate(R17, { document }), [
     failed(R17, target, {
-      1: Outcomes.IsTabbable,
+      1: Outcomes.IsTabbable([error]),
     }),
   ]);
 });
@@ -110,15 +108,17 @@ test(`evaluate() fails an element with focusable content through tabindex`, asyn
 
   t.deepEqual(await evaluate(R17, { document }), [
     failed(R17, target, {
-      1: Outcomes.IsTabbable,
+      1: Outcomes.IsTabbable([target]),
     }),
   ]);
 });
 
 test(`evaluate() fails a focusable summary element`, async (t) => {
+  const error = <summary>Some button</summary>;
+
   const target = (
     <details aria-hidden="true">
-      <summary>Some button</summary>
+      {error}
       <p>Some details</p>
     </details>
   );
@@ -127,7 +127,7 @@ test(`evaluate() fails a focusable summary element`, async (t) => {
 
   t.deepEqual(await evaluate(R17, { document }), [
     failed(R17, target, {
-      1: Outcomes.IsTabbable,
+      1: Outcomes.IsTabbable([error]),
     }),
   ]);
 });
