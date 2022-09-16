@@ -35,14 +35,13 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
+        const tabbables = target
+          .descendants(Node.flatTree)
+          .filter(and(isElement, isTabbable(device)));
+
         return {
           1: expectation(
-            not(
-              Node.hasDescendant(
-                and(isElement, isTabbable(device)),
-                Node.flatTree
-              )
-            )(target),
+            tabbables.isEmpty(),
             () => Outcomes.HasNoTabbableDescendants,
             () => Outcomes.HasTabbableDescendants
           ),
