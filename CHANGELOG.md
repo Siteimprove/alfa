@@ -19,7 +19,13 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
-## [0.43.2](../../compare/v0.43.1...v0.43.2) (2022-09-05)
+## [0.44.0](../../compare/v0.43.1...v0.44.0) (2022-09-13)
+
+### Added
+
+- [@siteimprove/alfa-css](packages/alfa-css): `Calculation` now accept length only (not length-percentage) values. ([#1219](../../pull/1219))
+
+- [@siteimprove/alfa-style](packages/alfa-style): `outline-offset` and `outline-width` now accept `calc` values. ([#1219](../../pull/1219))
 
 ### Fixed
 
