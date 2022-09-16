@@ -9,6 +9,7 @@ import { DistinguishingStyles as DeprecatedDistinguishingStyles } from "../../si
 import { MatchingClasses } from "../../sia-r65/diagnostics";
 import { DeprecatedElements } from "../../sia-r70/rule";
 import { WithDeclaration } from "../../sia-r75/rule";
+import { WithNextHeading } from "../../sia-r78/rule";
 import { ClippingAncestors } from "../../sia-r83/rule";
 import { Languages } from "../../sia-r109/rule";
 
@@ -54,6 +55,8 @@ export namespace Diagnostic {
   export const { isWithDeclaration } = WithDeclaration;
 
   export const { isWithFirstHeading } = WithFirstHeading;
+
+  export const { isWithNextHeading } = WithNextHeading;
 
   export const { isWithPreviousHeading } = WithPreviousHeading;
 
