@@ -12,21 +12,7 @@ test("evaluate() passes a text node that is included in a landmark", async (t) =
   const document = h.document([<main>{target}</main>]);
 
   t.deepEqual(await evaluate(R57, { document }), [
-    passed(R57, target, {
-      1: Outcomes.IsIncludedInLandmark,
-    }),
-  ]);
-});
-
-test("evaluate() fails a text node that is not included in a landmark", async (t) => {
-  const target = h.text("This text is not included in a landmark");
-
-  const document = h.document([<div>{target}</div>, <main />]);
-
-  t.deepEqual(await evaluate(R57, { document }), [
-    failed(R57, target, {
-      1: Outcomes.IsNotIncludedInLandmark,
-    }),
+    passed(R57, target, { 1: Outcomes.IsIncludedInLandmark }),
   ]);
 });
 
@@ -39,9 +25,33 @@ test("evaluate() passes a text node that is part of the first focusable element"
   ]);
 
   t.deepEqual(await evaluate(R57, { document }), [
-    passed(R57, target, {
-      1: Outcomes.IsIncludedInFirstFocusableElement,
-    }),
+    passed(R57, target, { 1: Outcomes.IsIncludedInFirstFocusableElement }),
+  ]);
+});
+
+test("evaluate() fails a text node that is not included in a landmark", async (t) => {
+  const target = h.text("This text is not included in a landmark");
+
+  const document = h.document([<div>{target}</div>, <main />]);
+
+  t.deepEqual(await evaluate(R57, { document }), [
+    failed(R57, target, { 1: Outcomes.IsNotIncludedInLandmark }),
+  ]);
+});
+
+test("evaluate() fails text nodes in nameless sections or form", async (t) => {
+  const target1 = h.text("Nameless forms are not landmarks");
+  const target2 = h.text("Nameless sections are not landmarks");
+
+  const document = h.document([
+    <form>{target1}</form>,
+    <section>{target2}</section>,
+    <main />,
+  ]);
+
+  t.deepEqual(await evaluate(R57, { document }), [
+    failed(R57, target1, { 1: Outcomes.IsNotIncludedInLandmark }),
+    failed(R57, target2, { 1: Outcomes.IsNotIncludedInLandmark }),
   ]);
 });
 
@@ -57,6 +67,7 @@ test("evaluate() is not applicable to text nodes not in the accessibility tree",
 test("evaluate() is not applicable when no landmarks are found", async (t) => {
   const document = h.document([
     <div>This text is in the accessibility tree</div>,
+    <section>Nameless sections are not landmarks</section>,
   ]);
 
   t.deepEqual(await evaluate(R57, { document }), [inapplicable(R57)]);
