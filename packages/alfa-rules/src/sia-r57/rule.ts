@@ -2,6 +2,7 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Text, Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Style } from "@siteimprove/alfa-style";
@@ -14,10 +15,15 @@ import { expectation } from "../common/act/expectation";
 import { isWhitespace } from "../common/predicate";
 import { Scope } from "../tags";
 
-const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
+const {
+  hasIncorrectRoleWithoutName,
+  hasRole,
+  isIncludedInTheAccessibilityTree,
+} = DOM;
 const { isElement } = Element;
 const { isEmpty } = Iterable;
-const { and, nor, property } = Predicate;
+const { nor, not, property, test } = Predicate;
+const { and } = Refinement;
 const { isTabbable } = Style;
 const { isText } = Text;
 
@@ -35,9 +41,13 @@ export default Rule.Atomic.of<Page, Text>({
         const descendants = document.descendants(dom.Node.fullTree);
 
         if (
-          descendants
-            .filter(isElement)
-            .some(hasRole(device, (role) => role.isLandmark()))
+          descendants.filter(isElement).some(
+            and(
+              hasRole(device, (role) => role.isLandmark()),
+              // Circumventing https://github.com/Siteimprove/alfa/issues/298
+              not(hasIncorrectRoleWithoutName(device))
+            )
+          )
         ) {
           yield* descendants
             .filter(isText)
@@ -55,8 +65,17 @@ export default Rule.Atomic.of<Page, Text>({
           1: expectation(
             Node.from(target, device)
               .ancestors()
-              .some((ancestor) =>
-                ancestor.role.some((role) => role.isLandmark())
+              .some(
+                and(
+                  (ancestor) => ancestor.role.some((role) => role.isLandmark()),
+                  // Circumventing https://github.com/Siteimprove/alfa/issues/298
+                  // by discarding the "landmark" ancestor if the role is incorrect
+                  (ancestor) =>
+                    test(
+                      and(isElement, not(hasIncorrectRoleWithoutName(device))),
+                      ancestor.node
+                    )
+                )
               ),
             () => Outcomes.IsIncludedInLandmark,
             () =>
