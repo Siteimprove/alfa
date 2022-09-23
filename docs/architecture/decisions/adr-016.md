@@ -1,0 +1,27 @@
+# ADR 16: Use enriched questions (rhetorical questions, optional questions, diagnostic)
+
+## Context
+
+Alfa sometimes asks questions. As per [ADR 12](./adr-012.md), this is handled at the rule level by simply returning a `Question` object, that the machinery can turn into a `cantTell` outcome.
+
+We've encountered a few problems with this model, notably:
+
+1. There are pieces of data that Alfa can sometimes compute automatically, and sometimes not (e.g., the background color of an element may depend solely on a `background-color` CSS, but may also depend on an external image). In these cases, the flow between a direct value and a monadic question becomes difficult to write and follow.
+2. In some cases, a default answer is natural and works in most cases. It is not worth asking the question systematically as it creates extra burden for the end-user, but it is still worth having the possibility for callers to provide an answer.
+3. It is not always obvious **why** a question is asked. In several cases, the answer is "obvious" for the end-user but not for Alfa (e.g., computing background colors with absolutely positioned elements that are actually moved off-screen and do not interfere); this can create a lot of frustration.
+
+## Decision
+
+1. We will introduce "rhetorical questions", that inherit from the `Question` class but already contain their answer; when the machinery encounter them, it will simply unpack the answer. Questions have a `#answerIf` method that allow to conditionally turn them into rhetorical question if Alfa found the answer.
+2. Questions will accept an optional "default" answer. When an answer is needed and not provided by the caller, the default answer is used instead.
+3. We will include diagnostics and extended diagnostic in questions. When a rule returns an unanswered question, the machinery will include its diagnostics into the `cantTell` result. Diagnostics share the same structure as for other outcomes, as described in [ADR 15](./adr-015.md).
+
+## Status
+
+Accepted.
+
+## Consequences
+
+1. Cleaner code and easier to follow flow. Rhetorical questions keep the monadic structure of questions, so the rest of the code can keep mapping the result without caring whether it comes from Alfa (rhetorical question) or users (non-rhetorical questions).
+2. Optional questions, with a default answer, can be used to inject specific knowledge about a page into Alfa; for example the fact that a `X` is used as a "close modal" symbol rather than a letter, and therefore should be considered as non-text content. However, since these questions never show up in the final result of an audit, the caller must know them in advance in order to provide an answer for them. This adds some burden to the caller, in order to provide more accurate results without adding too much burden on the end-user (asking too many questions).
+3. Diagnostic for questions and `cantTell` result let consumers provide more insight to their users. This can  either be done by showing related information, or by asking the final question differently. Consumers may even decide to ask a different optional question depending on the diagnostic. 
