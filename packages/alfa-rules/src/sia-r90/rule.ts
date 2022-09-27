@@ -14,7 +14,7 @@ import { Scope } from "../tags";
 
 const { hasRole } = DOM;
 const { isElement, hasNamespace } = Element;
-const { and, not } = Refinement;
+const { and } = Refinement;
 const { isTabbable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({

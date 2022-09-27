@@ -1,6 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node, Role } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";

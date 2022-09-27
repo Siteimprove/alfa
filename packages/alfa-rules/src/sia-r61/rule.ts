@@ -1,7 +1,6 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -10,9 +9,8 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
+const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { isDocumentElement, isElement } = Element;
-const { equals } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document>({

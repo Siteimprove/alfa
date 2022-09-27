@@ -13,7 +13,7 @@ import { WithBadElements } from "../common/diagnostic/with-bad-elements";
 import { Scope } from "../tags";
 
 const { hasAttribute, isElement } = Element;
-const { not, equals } = Predicate;
+const { equals } = Predicate;
 const { and } = Refinement;
 const { isTabbable } = Style;
 
