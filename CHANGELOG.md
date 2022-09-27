@@ -19,6 +19,22 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.46.0](../../compare/v0.45.0...v0.46.0) (2022-09-27)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R17, SIA-R55, SIA-R60, SIA-R61, SIA-76, SIA-R78, SIA-R90, SIA-R95 now provide an extended diagnostic with their outcome. ([#1222](../../issues/1222), [#1224](../../pull/1224))
+
+- [@siteimprove/alfa-option](packages/alfa-option): `Option#forEach` is now provided. ([#1224](../../pull/1224))
+
+### Fixed
+
+- [@siteimprove/alfarules](packages/alfa-rules): SIA-R57 now correctly considers that nameless `<form>` and `<section>` are not landmarks. ([#1225](../../issues/1225), [#1226](../../pull/1226))
+
+## [0.45.0](../../compare/v0.44.0...v0.45.0) (2022-09-16)
+
+Only internal changes to the release pipeline.
+
 ## [0.44.0](../../compare/v0.43.1...v0.44.0) (2022-09-13)
 
 ### Added
