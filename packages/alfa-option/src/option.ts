@@ -31,6 +31,7 @@ export interface Option<T>
   isSome(): this is Some<T>;
   isNone(): this is None;
   map<U>(mapper: Mapper<T, U>): Option<U>;
+  forEach(mapper: Mapper<T, void>): void;
   apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
   flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
   flatten<T>(this: Option<Option<T>>): Option<T>;

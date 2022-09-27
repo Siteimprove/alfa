@@ -31,30 +31,26 @@ test("evaluate() passes a button with a span child", async (t) => {
 });
 
 test("evaluate() fails a button with a link child", async (t) => {
-  const target = (
-    <button>
-      Foo<a href="bar">Bar</a>
-    </button>
-  );
+  const error = <a href="bar">Bar</a>;
+
+  const target = <button>Foo{error}</button>;
 
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R90, { document }), [
-    failed(R90, target, { 1: Outcomes.HasTabbableDescendants }),
+    failed(R90, target, { 1: Outcomes.HasTabbableDescendants([error]) }),
   ]);
 });
 
 test("evaluate() fails an ARIA button with a link child", async (t) => {
-  const target = (
-    <span role="button">
-      Foo<a href="bar">Bar</a>
-    </span>
-  );
+  const error = <a href="bar">Bar</a>;
+
+  const target = <span role="button">Foo{error}</span>;
 
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R90, { document }), [
-    failed(R90, target, { 1: Outcomes.HasTabbableDescendants }),
+    failed(R90, target, { 1: Outcomes.HasTabbableDescendants([error]) }),
   ]);
 });
 

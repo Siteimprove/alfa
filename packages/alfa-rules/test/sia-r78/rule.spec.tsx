@@ -1,4 +1,5 @@
 import { h } from "@siteimprove/alfa-dom";
+import { None, Some } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
 import R78, { Outcomes } from "../../src/sia-r78/rule";
@@ -29,13 +30,13 @@ test(`evaluates() passes headings with content`, async (t) => {
   ]);
 
   t.deepEqual(await evaluate(R78, { document }), [
-    passed(R78, part1, { 1: Outcomes.hasContent }),
-    passed(R78, chap11, { 1: Outcomes.hasContent }),
-    passed(R78, sec111, { 1: Outcomes.hasContent }),
-    passed(R78, part2, { 1: Outcomes.hasContent }),
-    passed(R78, chap21, { 1: Outcomes.hasContent }),
-    passed(R78, chap22, { 1: Outcomes.hasContent }),
-    passed(R78, sec221, { 1: Outcomes.hasContent }),
+    passed(R78, part1, { 1: Outcomes.hasContent(Some.of(part2), 1, 1) }),
+    passed(R78, chap11, { 1: Outcomes.hasContent(Some.of(part2), 2, 1) }),
+    passed(R78, sec111, { 1: Outcomes.hasContent(Some.of(part2), 3, 1) }),
+    passed(R78, part2, { 1: Outcomes.hasContent(None, 1, -1) }),
+    passed(R78, chap21, { 1: Outcomes.hasContent(Some.of(chap22), 2, 2) }),
+    passed(R78, chap22, { 1: Outcomes.hasContent(None, 2, -1) }),
+    passed(R78, sec221, { 1: Outcomes.hasContent(None, 3, -1) }),
   ]);
 });
 
@@ -59,13 +60,13 @@ test(`evaluate() fails headings with no content`, async (t) => {
   ]);
 
   t.deepEqual(await evaluate(R78, { document }), [
-    failed(R78, part1, { 1: Outcomes.hasNoContent }),
-    passed(R78, part2, { 1: Outcomes.hasContent }),
-    failed(R78, chap21, { 1: Outcomes.hasNoContent }),
-    passed(R78, part3, { 1: Outcomes.hasContent }),
-    failed(R78, chap31, { 1: Outcomes.hasNoContent }),
-    passed(R78, chap32, { 1: Outcomes.hasContent }),
-    failed(R78, sec321, { 1: Outcomes.hasNoContent }),
+    failed(R78, part1, { 1: Outcomes.hasNoContent(Some.of(part2), 1, 1) }),
+    passed(R78, part2, { 1: Outcomes.hasContent(Some.of(part3), 1, 1) }),
+    failed(R78, chap21, { 1: Outcomes.hasNoContent(Some.of(part3), 2, 1) }),
+    passed(R78, part3, { 1: Outcomes.hasContent(None, 1, -1) }),
+    failed(R78, chap31, { 1: Outcomes.hasNoContent(Some.of(chap32), 2, 2) }),
+    passed(R78, chap32, { 1: Outcomes.hasContent(None, 2, -1) }),
+    failed(R78, sec321, { 1: Outcomes.hasNoContent(None, 3, -1) }),
   ]);
 });
 
@@ -83,8 +84,8 @@ test("evaluates() passes headings with only non-visible content", async (t) => {
   ]);
 
   t.deepEqual(await evaluate(R78, { document }), [
-    passed(R78, part1, { 1: Outcomes.hasContent }),
-    passed(R78, part2, { 1: Outcomes.hasContent }),
+    passed(R78, part1, { 1: Outcomes.hasContent(Some.of(part2), 1, 1) }),
+    passed(R78, part2, { 1: Outcomes.hasContent(None, 1, -1) }),
   ]);
 });
 
@@ -101,8 +102,8 @@ test("evaluates() fails a heading with only structure before the next heading", 
   ]);
 
   t.deepEqual(await evaluate(R78, { document }), [
-    failed(R78, part1, { 1: Outcomes.hasNoContent }),
-    passed(R78, part2, { 1: Outcomes.hasContent }),
+    failed(R78, part1, { 1: Outcomes.hasNoContent(Some.of(part2), 1, 1) }),
+    passed(R78, part2, { 1: Outcomes.hasContent(None, 1, -1) }),
   ]);
 });
 

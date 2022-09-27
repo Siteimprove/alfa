@@ -61,14 +61,14 @@ test("evaluate() passes an invisible iframe with negative tabindex and an intera
 });
 
 test("evaluate() fails an iframe with negative tabindex and an interactive element", async (t) => {
-  const target = (
-    <iframe tabindex="-1">{h.document([<button>Hello World!</button>])}</iframe>
-  );
+  const error = <button>Hello World!</button>;
+
+  const target = <iframe tabindex="-1">{h.document([error])}</iframe>;
 
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R95, { document }), [
-    failed(R95, target, { 1: Outcomes.HasInteractiveElement }),
+    failed(R95, target, { 1: Outcomes.HasInteractiveElement([error]) }),
   ]);
 });
 

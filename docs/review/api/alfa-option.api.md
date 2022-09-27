@@ -66,6 +66,8 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
     // (undocumented)
     flatten<T>(this: Option<Option<T>>): Option<T>;
     // (undocumented)
+    forEach(mapper: Mapper<T, void>): void;
+    // (undocumented)
     get(message?: string): T;
     // (undocumented)
     getOr<U>(value: U): T | U;
@@ -157,6 +159,8 @@ export class Some<T> implements Option<T> {
     flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
     // (undocumented)
     flatten<T>(this: Some<Option<T>>): Option<T>;
+    // (undocumented)
+    forEach(mapper: Mapper<T, void>): void;
     // (undocumented)
     get(): T;
     // (undocumented)

@@ -42,6 +42,10 @@ export class Some<T> implements Option<T> {
     return new Some(mapper(this._value));
   }
 
+  public forEach(mapper: Mapper<T, void>): void {
+    mapper(this._value);
+  }
+
   public apply<U>(mapper: Option<Mapper<T, U>>): Option<U> {
     return mapper.map((mapper) => mapper(this._value));
   }

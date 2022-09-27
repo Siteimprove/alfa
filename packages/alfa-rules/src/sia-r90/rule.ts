@@ -8,12 +8,13 @@ import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
+import { WithBadElements } from "../common/diagnostic/with-bad-elements";
 
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
 const { isElement, hasNamespace } = Element;
-const { and, not } = Refinement;
+const { and } = Refinement;
 const { isTabbable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -35,16 +36,15 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
+        const tabbables = target
+          .descendants(Node.flatTree)
+          .filter(and(isElement, isTabbable(device)));
+
         return {
           1: expectation(
-            not(
-              Node.hasDescendant(
-                and(isElement, isTabbable(device)),
-                Node.flatTree
-              )
-            )(target),
+            tabbables.isEmpty(),
             () => Outcomes.HasNoTabbableDescendants,
-            () => Outcomes.HasTabbableDescendants
+            () => Outcomes.HasTabbableDescendants(tabbables)
           ),
         };
       },
@@ -57,7 +57,6 @@ export namespace Outcomes {
     Diagnostic.of(`The element has no tabbable descendants`)
   );
 
-  export const HasTabbableDescendants = Err.of(
-    Diagnostic.of(`The element has tabbable descendants`)
-  );
+  export const HasTabbableDescendants = (errors: Iterable<Element>) =>
+    Err.of(WithBadElements.of(`The element has tabbable descendants`, errors));
 }

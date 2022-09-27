@@ -1,5 +1,4 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Array } from "@siteimprove/alfa-array";
 import { Document, Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -8,6 +7,8 @@ import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
+import { WithBadElements } from "../common/diagnostic/with-bad-elements";
+
 import { Scope } from "../tags";
 
 const { hasName, hasNamespace, isDocumentElement, isElement } = Element;
@@ -83,78 +84,6 @@ export namespace Outcomes {
 
   export const HasDeprecatedElements = (errors: Iterable<Element>) =>
     Err.of(
-      DeprecatedElements.of(`The document contains deprecated elements`, errors)
+      WithBadElements.of(`The document contains deprecated elements`, errors)
     );
-}
-
-/**
- * @internal
- */
-export class DeprecatedElements
-  extends Diagnostic
-  implements Iterable<Element>
-{
-  public static of(
-    message: string,
-    errors: Iterable<Element> = []
-  ): DeprecatedElements {
-    return new DeprecatedElements(message, Array.from(errors));
-  }
-
-  private _errors: ReadonlyArray<Element>;
-
-  private constructor(message: string, errors: Array<Element>) {
-    super(message);
-    this._errors = errors;
-  }
-
-  public get errors(): ReadonlyArray<Element> {
-    return this._errors;
-  }
-
-  public equals(value: DeprecatedElements): boolean;
-
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): boolean {
-    return (
-      value instanceof DeprecatedElements &&
-      value._message === this._message &&
-      Array.equals(value._errors, this._errors)
-    );
-  }
-
-  public *[Symbol.iterator](): Iterator<Element> {
-    yield* this._errors;
-  }
-
-  public toJSON(): DeprecatedElements.JSON {
-    return {
-      ...super.toJSON(),
-      errors: this._errors.map((element) => element.path()),
-    };
-  }
-}
-
-/**
- * @internal
- */
-export namespace DeprecatedElements {
-  export interface JSON extends Diagnostic.JSON {
-    errors: Array<string>;
-  }
-
-  export function isDeprecatedElements(
-    value: Diagnostic
-  ): value is DeprecatedElements;
-
-  export function isDeprecatedElements(
-    value: unknown
-  ): value is DeprecatedElements;
-
-  export function isDeprecatedElements(
-    value: unknown
-  ): value is DeprecatedElements {
-    return value instanceof DeprecatedElements;
-  }
 }

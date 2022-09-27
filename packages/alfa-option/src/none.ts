@@ -30,6 +30,10 @@ export const None: None = new (class None {
     return this;
   }
 
+  public forEach(): void {
+    return;
+  }
+
   public apply(): None {
     return this;
   }

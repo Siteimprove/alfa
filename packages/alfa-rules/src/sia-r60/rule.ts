@@ -1,5 +1,5 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { DOM } from "@siteimprove/alfa-aria";
+import { Rule } from "@siteimprove/alfa-act";
+import { DOM, Node as ariaNode, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -10,6 +10,7 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Map } from "@siteimprove/alfa-map";
 
 import { expectation } from "../common/act/expectation";
+import { WithRole } from "../common/diagnostic/with-role";
 import { Scope } from "../tags";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
@@ -23,25 +24,24 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
+        // Records how many form input are within each "group"
         let groups: Map<Element, number> = Map.empty();
 
         function visit(node: Node, group: Option<Element>): void {
-          //If the element is a node, then its applicability is checked
           if (isElement(node)) {
-            // If the group is an input field, then its value has a +1
-            if (
-              group.isSome() &&
-              and(
-                isIncludedInTheAccessibilityTree(device),
-                isFormInput(device)
-              )(node)
-            ) {
-              groups = groups.set(
-                group.get(),
-                groups.get(group.get()).getOr(0) + 1
-              );
-            }
+            // If we're under a group and find a form input, count it.
+            group.forEach((group) => {
+              if (
+                and(
+                  isIncludedInTheAccessibilityTree(device),
+                  isFormInput(device)
+                )(node)
+              ) {
+                groups = groups.set(group, groups.get(group).getOr(0) + 1);
+              }
+            });
 
+            // If we find a group, remember it before descending
             if (
               and(
                 hasNamespace(Namespace.HTML),
@@ -51,7 +51,7 @@ export default Rule.Atomic.of<Page, Element>({
               group = Option.of(node);
             }
           }
-          // If the group has children, then iterate on all children of the group
+          // Recursively visit children
           for (const child of node.children(Node.fullTree)) {
             visit(child, group);
           }
@@ -59,15 +59,19 @@ export default Rule.Atomic.of<Page, Element>({
 
         visit(document, None);
 
+        // Only keep the groups with at least two form input descendants
         return groups.filter((n) => n >= 2).keys();
       },
 
       expectations(target) {
+        // Presence of a role is guaranteed by Applicability
+        const role = ariaNode.from(target, device).role.get().name;
+
         return {
           1: expectation(
             hasNonEmptyAccessibleName(device)(target),
-            () => Outcomes.HasAccessibleName,
-            () => Outcomes.HasNoAccessibleName
+            () => Outcomes.HasAccessibleName(role),
+            () => Outcomes.HasNoAccessibleName(role)
           ),
         };
       },
@@ -76,13 +80,11 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasAccessibleName = Ok.of(
-    Diagnostic.of(`The grouping elements have an accessible name`)
-  );
+  export const HasAccessibleName = (role: Role.Name) =>
+    Ok.of(WithRole.of(`The grouping element has an accessible name`, role));
 
-  export const HasNoAccessibleName = Err.of(
-    Diagnostic.of(`The grouping elements have an accessible name`)
-  );
+  export const HasNoAccessibleName = (role: Role.Name) =>
+    Err.of(WithRole.of(`The grouping element has an accessible name`, role));
 }
 
 function isFormInput(device: Device): Predicate<Element> {

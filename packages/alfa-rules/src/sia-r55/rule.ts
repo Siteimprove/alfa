@@ -1,4 +1,4 @@
-import { Rule } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node, Role } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -67,21 +67,29 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
       expectations(target) {
         // Empty groups have been filtered out already, so we can safely get the
         // first element
-        const role = Node.from(Iterable.first(target).get(), device).role.get()
-          .name;
+        const first = Node.from(Iterable.first(target).get(), device);
+        const role = first.role.get().name;
+        const name = first.name.get().value;
 
         const sameResource = Question.of(
           "is-content-equivalent",
           target,
-          `Do these ${role} landmarks have the same or equivalent content?`
+          `Do these ${role} landmarks have the same or equivalent content?`,
+          {
+            diagnostic: WithRoleAndName.of(
+              `Do these ${role} landmarks have the same or equivalent content?`,
+              role,
+              name
+            ),
+          }
         );
 
         return {
           1: sameResource.map((same) =>
             expectation(
               same,
-              () => Outcomes.SameResource(role),
-              () => Outcomes.DifferentResources(role)
+              () => Outcomes.SameResource(role, name),
+              () => Outcomes.DifferentResources(role, name)
             )
           ),
         };
@@ -91,19 +99,98 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
 });
 
 export namespace Outcomes {
-  export const SameResource = (role: Role.Name) =>
+  export const SameResource = (role: Role.Name, name: string) =>
     Ok.of(
-      WithRole.of(
+      WithRoleAndName.of(
         `No two \`${role}\` have the same name and different content.`,
-        role
+        role,
+        name
       )
     );
 
-  export const DifferentResources = (role: Role.Name) =>
+  export const DifferentResources = (role: Role.Name, name: string) =>
     Err.of(
-      WithRole.of(
+      WithRoleAndName.of(
         `Some \`${role}\` have the same name and different content.`,
-        role
+        role,
+        name
       )
     );
+}
+
+/**
+ * @internal
+ */
+export class WithRoleAndName extends WithRole {
+  public static of(message: string): Diagnostic;
+
+  public static of(message: string, role: Role.Name): WithRole;
+
+  public static of(
+    message: string,
+    role: Role.Name,
+    name: string
+  ): WithRoleAndName;
+
+  public static of(
+    message: string,
+    role?: Role.Name,
+    name?: string
+  ): Diagnostic {
+    return role === undefined
+      ? new Diagnostic(message)
+      : name === undefined
+      ? new WithRole(message, role)
+      : new WithRoleAndName(message, role, name);
+  }
+
+  private readonly _name: string;
+
+  private constructor(message: string, role: Role.Name, name: string) {
+    super(message, role);
+    this._name = name;
+  }
+
+  public get name(): string {
+    return this._name;
+  }
+
+  public equals(value: WithRoleAndName): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof WithRoleAndName &&
+      value._message === this._message &&
+      value._role === this._role &&
+      value._name === this._name
+    );
+  }
+
+  public toJSON(): WithRoleAndName.JSON {
+    return {
+      ...super.toJSON(),
+      name: this._name,
+    };
+  }
+}
+
+/**
+ * @internal
+ */
+export namespace WithRoleAndName {
+  export interface JSON extends WithRole.JSON {
+    name: string;
+  }
+
+  export function isWithRoleAndName(
+    value: Diagnostic
+  ): value is WithRoleAndName;
+
+  export function isWithRoleAndName(value: unknown): value is WithRoleAndName;
+
+  export function isWithRoleAndName(value: unknown): value is WithRoleAndName {
+    return value instanceof WithRoleAndName;
+  }
 }
