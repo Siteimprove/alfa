@@ -6,7 +6,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option, None } from "@siteimprove/alfa-option";
+import { Option, None, Some } from "@siteimprove/alfa-option";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -122,12 +122,12 @@ class Layer {
 
 const layersCacheWithFakeOpacity = Cache.empty<
   Device,
-  Cache<Context, Cache<Element, Result<Array<Layer>, ColorError<"layer">>>>
+  Cache<Context, Cache<Element, Result<Array<Layer>, ColorErrors<"layer">>>>
 >();
 
 const layersCacheWithDefaultOpacity = Cache.empty<
   Device,
-  Cache<Context, Cache<Element, Result<Array<Layer>, ColorError<"layer">>>>
+  Cache<Context, Cache<Element, Result<Array<Layer>, ColorErrors<"layer">>>>
 >();
 
 function getLayers(
@@ -135,9 +135,11 @@ function getLayers(
   device: Device,
   context: Context = Context.empty(),
   opacity?: number
-): Result<Array<Layer>, ColorError<"layer">> {
+): Result<Array<Layer>, ColorErrors<"layer">> {
   const cache =
-    opacity === 1 ? layersCacheWithFakeOpacity : layersCacheWithDefaultOpacity;
+    opacity === undefined
+      ? layersCacheWithDefaultOpacity
+      : layersCacheWithFakeOpacity;
 
   return cache
     .get(device, Cache.empty)
@@ -153,11 +155,12 @@ function getLayers(
       opacity = opacity ?? style.computed("opacity").value.value;
 
       const layers: Array<Layer> = [];
+      const errors: Array<ColorError<"layer">> = [];
 
       if (color.isSome()) {
         layers.push(Layer.of([color.get()], opacity));
       } else {
-        return Err.of(
+        errors.push(
           ColorError.unresolvableBackgroundColor(element, backgroundColor)
         );
       }
@@ -170,16 +173,18 @@ function getLayers(
         // We currently have no way of extracting colors from images, so we simply
         // bail out if we encounter a background image.
         if (image.image.type === "url") {
-          return Err.of(
+          errors.push(
             ColorError.externalBackgroundImage(element, backgroundImage)
           );
+          continue;
         }
 
         // If there is a background-size, we currently have no way of guessing
         // whether it is large enough to go under the text or not.
         // So we simply bail out.
         if (!backgroundSize.equals(style.initial("background-size").value)) {
-          return Err.of(ColorError.backgroundSize(element, backgroundSize));
+          errors.push(ColorError.backgroundSize(element, backgroundSize));
+          continue;
         }
 
         // For each gradient, we extract all color stops into a background layer of
@@ -194,7 +199,7 @@ function getLayers(
             if (color.isSome()) {
               stops.push(color.get());
             } else {
-              return Err.of(
+              errors.push(
                 ColorError.unresolvableGradientStop(
                   element,
                   backgroundImage,
@@ -209,6 +214,7 @@ function getLayers(
       }
 
       if (
+        errors.length === 0 &&
         layers.length > 0 &&
         layers.every(
           (layer) =>
@@ -216,11 +222,11 @@ function getLayers(
             layer.colors.every((color) => color.alpha.value === 1)
         )
       ) {
-        return Result.of<Array<Layer>, ColorError<"layer">>(layers);
+        return Result.of<Array<Layer>, ColorErrors<"layer">>(layers);
       }
 
       if (isPositioned(device, "absolute", "fixed")(element)) {
-        return Err.of(
+        errors.push(
           ColorError.nonStaticPosition(
             element,
             style.computed("position").value
@@ -234,7 +240,7 @@ function getLayers(
       ).reject(hasTransparentBackground(device));
 
       if (!interposedDescendants.isEmpty()) {
-        return Err.of(
+        errors.push(
           ColorError.interposedDescendants(element, interposedDescendants)
         );
       }
@@ -248,12 +254,15 @@ function getLayers(
       for (const parent of element.parent(Node.flatTree).filter(isElement)) {
         // The opacity override only applies to the last layer, so it is not
         // used in the recursive calls
-        return getLayers(parent, device, context).map((parentLayers) =>
-          parentLayers.concat(layers)
-        );
+        const layersColors = getLayers(parent, device, context);
+        return errors.length === 0
+          ? layersColors.map((parentLayers) => parentLayers.concat(layers))
+          : Err.of(ColorErrors.prepend<"layer">(layersColors, errors));
       }
 
-      return Result.of<Array<Layer>, ColorError<"layer">>(layers);
+      return errors.length === 0
+        ? Result.of<Array<Layer>, ColorErrors<"layer">>(layers)
+        : Err.of(ColorErrors.of(errors));
     });
 }
 
@@ -261,18 +270,20 @@ export type Foreground = Array<Color>;
 
 const foregroundCache = Cache.empty<
   Device,
-  Cache<Context, Cache<Element, Result<Foreground, ColorError>>>
+  Cache<Context, Cache<Element, Result<Foreground, ColorErrors>>>
 >();
 
 export function getForeground(
   element: Element,
   device: Device,
   context: Context = Context.empty()
-): Result<Foreground, ColorError> {
+): Result<Foreground, ColorErrors> {
   return foregroundCache
     .get(device, Cache.empty)
     .get(context, Cache.empty)
     .get(element, () => {
+      let error: Option<ColorError<"foreground">> = None;
+
       const style = Style.from(element, device, context);
 
       let foregroundColor = style.computed("color").value;
@@ -291,7 +302,7 @@ export function getForeground(
       const color = Color.resolve(foregroundColor, style);
 
       if (color.isNone()) {
-        return Err.of(
+        error = Option.of(
           ColorError.unresolvableForegroundColor(element, foregroundColor)
         );
       }
@@ -300,51 +311,53 @@ export function getForeground(
 
       // If the color is not transparent, and the element is fully opaque,
       // then we do not need to dig further
-      if (color.get().alpha.value * opacity.value === 1) {
-        return Result.of<Foreground, ColorError>([color.get()]);
+      if (color.isSome() && color.get().alpha.value * opacity.value === 1) {
+        return Result.of<Foreground, ColorErrors>([color.get()]);
       }
 
-      const interposedDescendants = getInterposedDescendant(
-        device,
-        element
-      ).reject(hasTransparentBackground(device));
+      // If the foreground color is (partly) transparent, we need to merge it
+      // with its background and subsequent layers.
 
-      if (!interposedDescendants.isEmpty()) {
-        return Err.of(
-          ColorError.interposedDescendants(element, interposedDescendants)
-        );
-      }
+      // First, we gather the background colors, even if we did not manage to
+      // get a foreground colors, in order to have a list of all ColorError on
+      // the way.
+      const backgroundColors = getBackground(element, device, context, 1);
 
-      // First, we mix the color with the element's background according to the
-      // color's alpha channel (only).
-      // For this, we fake the opacity of the element at 1. That way, the
-      // background color is correctly handled. The background color may itself have
-      // an alpha channel, independently of its opacity, and this alpha channel
-      // needs to be taken into account (as well as the alpha/opacity of all the
-      // previous layers).
-      const colors = getBackground(element, device, context, 1).map(
-        (background) =>
+      // If we have both foreground and background color, we can merge them.
+      if (color.isSome() && backgroundColors.isOk()) {
+        // First, we mix the color with the element's background according to the
+        // color's alpha channel (only).
+        // For this, we fake the opacity of the element at 1. That way, the
+        // background color is correctly handled. The background color may itself have
+        // an alpha channel, independently of its opacity, and this alpha channel
+        // needs to be taken into account (as well as the alpha/opacity of all the
+        // previous layers).
+        const colors = backgroundColors.map((background) =>
           background.map((backdrop) =>
             Color.composite(color.get(), backdrop, 1)
           )
-      );
+        );
 
-      for (const parent of element.parent(Node.flatTree).filter(isElement)) {
-        // Next, we handle the opacity of the element.
-        // For this, we need the background colors of the parent (assuming that DOM
-        // reflects layout).
-        return colors.flatMap((colors) =>
-          getBackground(parent, device, context).map((background) =>
-            colors.flatMap((color) =>
-              background.map((backdrop) =>
-                Color.composite(color, backdrop, opacity.value)
+        for (const parent of element.parent(Node.flatTree).filter(isElement)) {
+          // Next, we handle the opacity of the element.
+          // For this, we need the background colors of the parent (assuming that DOM
+          // reflects layout).
+          return colors.flatMap((colors) =>
+            getBackground(parent, device, context).map((background) =>
+              colors.flatMap((color) =>
+                background.map((backdrop) =>
+                  Color.composite(color, backdrop, opacity.value)
+                )
               )
             )
-          )
-        );
-      }
+          );
+        }
 
-      return colors;
+        return colors;
+      } else {
+        // We are missing either foreground or background.
+        return Err.of(ColorErrors.prepend(backgroundColors, error));
+      }
     });
 }
 
@@ -354,7 +367,7 @@ const backgroundCacheWithFakeOpacity = Cache.empty<
   Device,
   Cache<
     Context,
-    Cache<Element, Result<Background, ColorError<"background" | "layer">>>
+    Cache<Element, Result<Background, ColorErrors<"background" | "layer">>>
   >
 >();
 
@@ -362,7 +375,7 @@ const backgroundCacheWithDefaultOpacity = Cache.empty<
   Device,
   Cache<
     Context,
-    Cache<Element, Result<Background, ColorError<"background" | "layer">>>
+    Cache<Element, Result<Background, ColorErrors<"background" | "layer">>>
   >
 >();
 
@@ -371,59 +384,57 @@ export function getBackground(
   device: Device,
   context: Context = Context.empty(),
   opacity?: number
-): Result<Background, ColorError<"background" | "layer">> {
+): Result<Background, ColorErrors<"background" | "layer">> {
   const textShadow = Style.from(element, device, context).computed(
     "text-shadow"
   ).value;
   const cache =
-    opacity === 1
-      ? backgroundCacheWithFakeOpacity
-      : backgroundCacheWithDefaultOpacity;
+    opacity === undefined
+      ? backgroundCacheWithDefaultOpacity
+      : backgroundCacheWithFakeOpacity;
   return cache
     .get(device, Cache.empty)
     .get(context, Cache.empty)
     .get(element, () => {
+      let error: Option<ColorError<"background">> = None;
+
       // If the element has a visible text-shadow, we don't try to guess how it looks.
       if (textShadow.type !== "keyword" && isVisibleShadow(textShadow)) {
-        return Err.of(ColorError.textShadow(element, textShadow));
+        error = Option.of(ColorError.textShadow(element, textShadow));
       }
 
-      const interposedDescendants = getInterposedDescendant(
-        device,
-        element
-      ).reject(hasTransparentBackground(device));
+      // We want to gather layers errors even if we've already found one.
+      const layersColors = getLayers(element, device, context, opacity);
 
-      if (!interposedDescendants.isEmpty()) {
-        return Err.of(
-          ColorError.interposedDescendants(element, interposedDescendants)
-        );
-      }
-
-      return getLayers(element, device, context, opacity).map((layers) =>
-        layers.reduce(
-          (backdrops, layer) =>
-            layer.colors.reduce(
-              (layers, color) =>
-                layers.concat(
-                  backdrops.map((backdrop) =>
-                    Color.composite(color, backdrop, layer.opacity)
-                  )
+      return error.isNone() && layersColors.isOk()
+        ? layersColors.map((layers) =>
+            layers.reduce(
+              (backdrops, layer) =>
+                layer.colors.reduce(
+                  (layers, color) =>
+                    layers.concat(
+                      backdrops.map((backdrop) =>
+                        Color.composite(color, backdrop, layer.opacity)
+                      )
+                    ),
+                  [] as Array<Color>
                 ),
-              [] as Array<Color>
-            ),
-          // We make the initial backdrop solid white as this can be assumed
-          // to be the color of the canvas onto which the other backgrounds
-          // are rendered.
-          [
-            RGB.of(
-              Percentage.of(1),
-              Percentage.of(1),
-              Percentage.of(1),
-              Percentage.of(1)
-            ),
-          ]
-        )
-      );
+              // We make the initial backdrop solid white as this can be assumed
+              // to be the color of the canvas onto which the other backgrounds
+              // are rendered.
+              [
+                RGB.of(
+                  Percentage.of(1),
+                  Percentage.of(1),
+                  Percentage.of(1),
+                  Percentage.of(1)
+                ),
+              ]
+            )
+          )
+        : Err.of(
+            ColorErrors.prepend<"background" | "layer">(layersColors, error)
+          );
     });
 }
 
@@ -439,6 +450,98 @@ interface ErrorName {
     | "interposed-descendant";
   foreground: "unresolvable-foreground-color";
   background: "text-shadow";
+}
+
+/**
+ * @internal
+ */
+export class ColorErrors<
+  T extends keyof ErrorName = keyof ErrorName
+> extends Diagnostic {
+  public static of(message: string): Diagnostic;
+
+  public static of<T extends keyof ErrorName = keyof ErrorName>(
+    errors: ReadonlyArray<ColorError<T>>
+  ): ColorErrors<T>;
+
+  public static of<T extends keyof ErrorName = keyof ErrorName>(
+    messageOrErrors: string | ReadonlyArray<ColorError<T>>
+  ): Diagnostic {
+    return typeof messageOrErrors === "string"
+      ? Diagnostic.of(messageOrErrors)
+      : new ColorErrors(
+          "Could not fully resolve colors",
+          Array.copy(messageOrErrors)
+        );
+  }
+
+  private readonly _errors: ReadonlyArray<ColorError<T>>;
+
+  private constructor(message: string, errors: ReadonlyArray<ColorError<T>>) {
+    super(message);
+    this._errors = errors;
+  }
+
+  public get errors(): ReadonlyArray<ColorError<T>> {
+    return this._errors;
+  }
+
+  public equals(value: ColorErrors): boolean;
+
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof ColorErrors &&
+      value._message === this._message &&
+      Array.equals(value._errors, this._errors)
+    );
+  }
+
+  public toJSON(): ColorErrors.JSON<T> {
+    return { ...super.toJSON(), errors: Array.toJSON(this._errors) };
+  }
+}
+
+/**
+ * @internal
+ */
+export namespace ColorErrors {
+  export interface JSON<T extends keyof ErrorName = keyof ErrorName>
+    extends Diagnostic.JSON {
+    errors: Array<ColorError.JSON<T>>;
+  }
+
+  export function isColorErrors<T extends keyof ErrorName = keyof ErrorName>(
+    value: Diagnostic
+  ): value is ColorErrors<T>;
+
+  export function isColorErrors<T extends keyof ErrorName = keyof ErrorName>(
+    value: unknown
+  ): value is ColorErrors<T>;
+
+  export function isColorErrors<T extends keyof ErrorName = keyof ErrorName>(
+    value: unknown
+  ): value is ColorErrors<T> {
+    return value instanceof ColorErrors;
+  }
+
+  export function prepend<
+    T extends keyof ErrorName = keyof ErrorName,
+    T1 extends T = T,
+    T2 extends T = T
+  >(
+    old: Result<unknown, ColorErrors<T1>>,
+    cur: Iterable<ColorError<T2>>
+  ): ColorErrors<T> {
+    return ColorErrors.of<T>([
+      ...cur,
+      ...old
+        .err()
+        .map((old) => old.errors)
+        .getOr([]),
+    ]);
+  }
 }
 
 /**
