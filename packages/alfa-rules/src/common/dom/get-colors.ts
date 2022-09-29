@@ -6,7 +6,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option, None, Some } from "@siteimprove/alfa-option";
+import { Option, None } from "@siteimprove/alfa-option";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
