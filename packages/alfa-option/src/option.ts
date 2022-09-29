@@ -53,7 +53,14 @@ export interface Option<T>
   andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
   or<U>(option: Option<U>): Option<T | U>;
   orElse<U>(option: Thunk<Option<U>>): Option<T | U>;
-  get(message?: string): T;
+  /**
+   * This may throw an exception. Use only when you can provide an external
+   * guarantee that it won't be used on None. E.g. in tests, or when some
+   * condition exists that TypeScript cannot see (document it!)
+   *
+   * @internal
+   */
+  getUnsafe(message?: string): T;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
   tee(callback: Callback<T>): Option<T>;

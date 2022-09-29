@@ -116,6 +116,13 @@ export class Some<T> implements Option<T> {
     return this._value;
   }
 
+  /**
+   * @internal
+   */
+  public getUnsafe(): T {
+    return this._value;
+  }
+
   public getOr(): T {
     return this._value;
   }
