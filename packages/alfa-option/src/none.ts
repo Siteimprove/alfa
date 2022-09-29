@@ -93,7 +93,7 @@ export const None: None = new (class None {
   /**
    * @internal
    */
-  public getUnsafe(message = "Attempted to .get() from None"): never {
+  public getUnsafe(message = "Attempted to .getUnsafe() from None"): never {
     throw new Error(message);
   }
 

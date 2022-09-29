@@ -102,11 +102,11 @@ export namespace Option {
     return value === None;
   }
 
-  export function of<T>(value: T): Option<T> {
+  export function of<T>(value: T): Some<T> {
     return Some.of(value);
   }
 
-  export function empty<T>(): Option<T> {
+  export function empty<T>(): None {
     return None;
   }
 
