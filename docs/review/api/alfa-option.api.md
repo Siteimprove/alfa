@@ -68,11 +68,11 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
     // (undocumented)
     forEach(mapper: Mapper<T, void>): void;
     // (undocumented)
-    get(message?: string): T;
-    // (undocumented)
     getOr<U>(value: U): T | U;
     // (undocumented)
     getOrElse<U>(value: Thunk<U>): T | U;
+    // @internal
+    getUnsafe(message?: string): T;
     // (undocumented)
     includes(value: T): this is Some<T>;
     // (undocumented)
@@ -167,6 +167,8 @@ export class Some<T> implements Option<T> {
     getOr(): T;
     // (undocumented)
     getOrElse(): T;
+    // @internal (undocumented)
+    getUnsafe(): T;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
