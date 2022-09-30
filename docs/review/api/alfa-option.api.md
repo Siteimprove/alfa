@@ -110,7 +110,7 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
 // @public (undocumented)
 export namespace Option {
     // (undocumented)
-    export function empty<T>(): Option<T>;
+    export function empty<T>(): None;
     // (undocumented)
     export function from<T>(value: T | null | undefined): Option<NonNullable<T>>;
     // (undocumented)
@@ -130,7 +130,7 @@ export namespace Option {
     // (undocumented)
     export type Maybe<T> = T | Option<T>;
     // (undocumented)
-    export function of<T>(value: T): Option<T>;
+    export function of<T>(value: T): Some<T>;
 }
 
 // @public (undocumented)
