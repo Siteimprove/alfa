@@ -37,6 +37,10 @@ export class Context {
     return this.setState(element, this.getState(element) | state);
   }
 
+  public *withState(state: Context.State): Iterable<Element> {
+    yield* this._state.filter((found) => (found & state) !== 0).keys();
+  }
+
   public hover(element: Element): Context {
     return this.addState(element, Context.State.Hover);
   }
