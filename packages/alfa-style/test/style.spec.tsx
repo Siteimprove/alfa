@@ -769,7 +769,7 @@ test(`#cascaded() resolves :hover style for an element`, (t) => {
     ]
   );
 
-  t.deepEqual(cascaded(element, "color"), {
+  t.deepEqual(cascaded(element, "color", Context.hover(element)), {
     value: {
       type: "color",
       format: "named",
@@ -806,9 +806,7 @@ test(`#cascaded() resolves :focus style for an element`, (t) => {
     ]
   );
 
-  let style = Style.from(element, device, Context.focus(element));
-
-  t.deepEqual(cascaded(element, "color"), {
+  t.deepEqual(cascaded(element, "color", Context.focus(element)), {
     value: {
       type: "color",
       format: "named",
