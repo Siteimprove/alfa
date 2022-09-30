@@ -409,21 +409,39 @@ test("getColor() can't resolve most system colors", (t) => {
   );
 
   t.deepEqual(getBackground(target, device).getErr().toJSON(), {
-    message: "Could not resolve background-color",
-    type: "layer",
-    kind: "unresolvable-background-color",
-    element: wrapper.toJSON(),
-    property: "background-color",
-    value: { type: "keyword", value: "buttonface" },
+    message: "Could not fully resolve colors",
+    errors: [
+      {
+        message: "Could not resolve background-color",
+        element: wrapper.toJSON(),
+        type: "layer",
+        kind: "unresolvable-background-color",
+        property: "background-color",
+        value: { type: "keyword", value: "buttonface" },
+      },
+    ],
   });
 
   t.deepEqual(getForeground(target, device).getErr().toJSON(), {
-    message: "Could not resolve foreground color",
-    type: "foreground",
-    kind: "unresolvable-foreground-color",
-    element: target.toJSON(),
-    property: "color",
-    value: { type: "keyword", value: "visitedtext" },
+    message: "Could not fully resolve colors",
+    errors: [
+      {
+        message: "Could not resolve foreground color",
+        type: "foreground",
+        kind: "unresolvable-foreground-color",
+        element: target.toJSON(),
+        property: "color",
+        value: { type: "keyword", value: "visitedtext" },
+      },
+      {
+        message: "Could not resolve background-color",
+        element: wrapper.toJSON(),
+        type: "layer",
+        kind: "unresolvable-background-color",
+        property: "background-color",
+        value: { type: "keyword", value: "buttonface" },
+      },
+    ],
   });
 });
 
@@ -436,24 +454,29 @@ test("getBackgroundColor() gives up in case of external background image", (t) =
   );
 
   t.deepEqual(getBackground(target, device).getErr().toJSON(), {
-    message: "A background-image with a url() was encountered",
-    type: "layer",
-    kind: "background-image",
-    element: target.toJSON(),
-    property: "background-image",
-    value: {
-      type: "list",
-      separator: ", ",
-      values: [
-        {
-          image: {
-            type: "url",
-            url: "foo.jpg",
-          },
-          type: "image",
+    message: "Could not fully resolve colors",
+    errors: [
+      {
+        message: "A background-image with a url() was encountered",
+        type: "layer",
+        kind: "background-image",
+        element: target.toJSON(),
+        property: "background-image",
+        value: {
+          type: "list",
+          separator: ", ",
+          values: [
+            {
+              image: {
+                type: "url",
+                url: "foo.jpg",
+              },
+              type: "image",
+            },
+          ],
         },
-      ],
-    },
+      },
+    ],
   });
 });
 
@@ -474,31 +497,36 @@ test("getBackgroundColor() gives up in case of sized background image", (t) => {
   );
 
   t.deepEqual(getBackground(target, device).getErr().toJSON(), {
-    message: "A background-size was encountered",
-    type: "layer",
-    kind: "background-size",
-    element: target.toJSON(),
-    property: "background-size",
-    value: {
-      separator: ", ",
-      type: "list",
-      values: [
-        {
-          type: "tuple",
+    message: "Could not fully resolve colors",
+    errors: [
+      {
+        message: "A background-size was encountered",
+        type: "layer",
+        kind: "background-size",
+        element: target.toJSON(),
+        property: "background-size",
+        value: {
+          separator: ", ",
+          type: "list",
           values: [
             {
-              type: "percentage",
-              value: 1,
-            },
-            {
-              type: "length",
-              unit: "px",
-              value: 2,
+              type: "tuple",
+              values: [
+                {
+                  type: "percentage",
+                  value: 1,
+                },
+                {
+                  type: "length",
+                  unit: "px",
+                  value: 2,
+                },
+              ],
             },
           ],
         },
-      ],
-    },
+      },
+    ],
   });
 });
 
@@ -511,55 +539,60 @@ test("getBackgroundColor() gives up in case of text shadow", (t) => {
   );
 
   t.deepEqual(getBackground(target, device).getErr().toJSON(), {
-    message: "A text-shadow was encountered",
-    type: "background",
-    kind: "text-shadow",
-    element: target.toJSON(),
-    property: "text-shadow",
-    value: {
-      blur: {
-        type: "length",
-        unit: "px",
-        value: 2,
-      },
-      color: {
-        alpha: {
-          type: "percentage",
-          value: 1,
+    message: "Could not fully resolve colors",
+    errors: [
+      {
+        message: "A text-shadow was encountered",
+        type: "background",
+        kind: "text-shadow",
+        element: target.toJSON(),
+        property: "text-shadow",
+        value: {
+          blur: {
+            type: "length",
+            unit: "px",
+            value: 2,
+          },
+          color: {
+            alpha: {
+              type: "percentage",
+              value: 1,
+            },
+            blue: {
+              type: "percentage",
+              value: 0.7960784,
+            },
+            format: "rgb",
+            green: {
+              type: "percentage",
+              value: 0.7529412,
+            },
+            red: {
+              type: "percentage",
+              value: 1,
+            },
+            type: "color",
+          },
+          horizontal: {
+            type: "length",
+            unit: "px",
+            value: 1,
+          },
+          isInset: false,
+          spread: {
+            type: "length",
+            unit: "px",
+            value: 0,
+          },
+          type: "shadow",
+          vertical: {
+            type: "length",
+            unit: "px",
+            value: 1,
+          },
         },
-        blue: {
-          type: "percentage",
-          value: 0.7960784,
-        },
-        format: "rgb",
-        green: {
-          type: "percentage",
-          value: 0.7529412,
-        },
-        red: {
-          type: "percentage",
-          value: 1,
-        },
-        type: "color",
       },
-      horizontal: {
-        type: "length",
-        unit: "px",
-        value: 1,
-      },
-      isInset: false,
-      spread: {
-        type: "length",
-        unit: "px",
-        value: 0,
-      },
-      type: "shadow",
-      vertical: {
-        type: "length",
-        unit: "px",
-        value: 1,
-      },
-    },
+    ],
   });
 });
 
@@ -620,12 +653,17 @@ test("getBackgroundColor() cannot handle positioned elements", (t) => {
   );
 
   t.deepEqual(getBackground(target, device).getErr().toJSON(), {
-    message: "A non-statically positioned element was encountered",
-    type: "layer",
-    kind: "non-static",
-    element: target.toJSON(),
-    property: "position",
-    value: { type: "keyword", value: "absolute" },
+    message: "Could not fully resolve colors",
+    errors: [
+      {
+        message: "A non-statically positioned element was encountered",
+        type: "layer",
+        kind: "non-static",
+        element: target.toJSON(),
+        property: "position",
+        value: { type: "keyword", value: "absolute" },
+      },
+    ],
   });
 });
 
@@ -644,64 +682,69 @@ test("getBackgroundColor() cannot resolve system colors in gradients", (t) => {
   );
 
   t.deepEqual(getBackground(target, device).getErr().toJSON(), {
-    message: "Could not resolve gradient color stop",
-    type: "layer",
-    kind: "unresolvable-gradient",
-    element: target.toJSON(),
-    property: "background-image",
-    value: {
-      separator: ", ",
-      type: "list",
-      values: [
-        {
-          image: {
-            direction: {
-              side: "bottom",
-              type: "side",
+    message: "Could not fully resolve colors",
+    errors: [
+      {
+        message: "Could not resolve gradient color stop",
+        type: "layer",
+        kind: "unresolvable-gradient",
+        element: target.toJSON(),
+        property: "background-image",
+        value: {
+          separator: ", ",
+          type: "list",
+          values: [
+            {
+              image: {
+                direction: {
+                  side: "bottom",
+                  type: "side",
+                },
+                items: [
+                  {
+                    color: {
+                      alpha: {
+                        type: "percentage",
+                        value: 1,
+                      },
+                      blue: {
+                        type: "percentage",
+                        value: 0,
+                      },
+                      format: "rgb",
+                      green: {
+                        type: "percentage",
+                        value: 0,
+                      },
+                      red: {
+                        type: "percentage",
+                        value: 1,
+                      },
+                      type: "color",
+                    },
+                    position: null,
+                    type: "stop",
+                  },
+                  {
+                    color: {
+                      type: "keyword",
+                      value: "highlight",
+                    },
+                    position: null,
+                    type: "stop",
+                  },
+                ],
+                kind: "linear",
+                repeats: false,
+                type: "gradient",
+              },
+              type: "image",
             },
-            items: [
-              {
-                color: {
-                  alpha: {
-                    type: "percentage",
-                    value: 1,
-                  },
-                  blue: {
-                    type: "percentage",
-                    value: 0,
-                  },
-                  format: "rgb",
-                  green: {
-                    type: "percentage",
-                    value: 0,
-                  },
-                  red: {
-                    type: "percentage",
-                    value: 1,
-                  },
-                  type: "color",
-                },
-                position: null,
-                type: "stop",
-              },
-              {
-                color: {
-                  type: "keyword",
-                  value: "highlight",
-                },
-                position: null,
-                type: "stop",
-              },
-            ],
-            kind: "linear",
-            repeats: false,
-            type: "gradient",
-          },
-          type: "image",
+          ],
         },
-      ],
-    },
-    color: { type: "keyword", value: "highlight" },
+        color: { type: "keyword", value: "highlight" },
+      },
+    ],
   });
 });
 
@@ -733,10 +776,15 @@ test("getBackgroundColor() gives up in case of interposed elements", (t) => {
   );
 
   t.deepEqual(getBackground(target, device).getErr().toJSON(), {
-    message: "An interposed descendant element was encountered",
-    type: "layer",
-    kind: "interposed-descendant",
-    element: wrapper.toJSON(),
-    positionedDescendants: [interposed.toJSON()],
+    message: "Could not fully resolve colors",
+    errors: [
+      {
+        message: "An interposed descendant element was encountered",
+        type: "layer",
+        kind: "interposed-descendant",
+        element: wrapper.toJSON(),
+        positionedDescendants: [interposed.toJSON()],
+      },
+    ],
   });
 });

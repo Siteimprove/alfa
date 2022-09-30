@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -11,7 +12,7 @@ import { evaluate } from "../common/evaluate";
 import { passed, failed, cantTell, inapplicable } from "../common/outcome";
 
 import { oracle } from "../common/oracle";
-import { ColorError } from "../../src/common/dom/get-colors";
+import { ColorError, ColorErrors } from "../../src/common/dom/get-colors";
 import { Style } from "@siteimprove/alfa-style";
 import { Device } from "@siteimprove/alfa-device";
 
@@ -291,10 +292,9 @@ test("evaluate() correctly handles circular `currentcolor` references", async (t
 
   const document = h.document([html]);
 
-  const diagnostic = ColorError.unresolvableForegroundColor(
-    html,
-    Keyword.of(color)
-  );
+  const diagnostic = ColorErrors.of([
+    ColorError.unresolvableForegroundColor(html, Keyword.of(color)),
+  ]);
 
   t.deepEqual(await evaluate(R69, { document }), [
     cantTell(R69, target, diagnostic),
@@ -558,7 +558,9 @@ test(`evaluate() cannot tell when a background has a fixed size`, async (t) => {
     "background-size"
   ).value;
 
-  const diagnostic = ColorError.backgroundSize(div, backgroundSize);
+  const diagnostic = ColorErrors.of([
+    ColorError.backgroundSize(div, backgroundSize),
+  ]);
 
   t.deepEqual(await evaluate(R69, { document }), [
     cantTell(R69, target, diagnostic),
@@ -573,7 +575,7 @@ test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
   const textShadow = Style.from(div, Device.standard()).computed(
     "text-shadow"
   ).value;
-  const diagnostic = ColorError.textShadow(div, textShadow);
+  const diagnostic = ColorErrors.of([ColorError.textShadow(div, textShadow)]);
 
   t.deepEqual(await evaluate(R69, { document }), [
     cantTell(R69, target, diagnostic),
@@ -603,7 +605,9 @@ test(`evaluate() cannot tell when encountering an interposed parent before
 
   const document = h.document([body]);
 
-  const diagnostic = ColorError.interposedDescendants(body, [interposed]);
+  const diagnostic = ColorErrors.of([
+    ColorError.interposedDescendants(body, [interposed]),
+  ]);
 
   t.deepEqual(await evaluate(R69, { document }), [
     cantTell(R69, target, diagnostic),
@@ -663,39 +667,39 @@ test(`evaluate() cannot tell when encountering an absolutely positioned parent
     );
     const document = h.document([div]);
 
-    const diagnostic = ColorError.nonStaticPosition(
-      div,
-      Keyword.of("absolute")
-    );
+    const diagnostic = ColorErrors.of([
+      ColorError.nonStaticPosition(div, Keyword.of("absolute")),
+    ]);
 
     t.deepEqual(await evaluate(R69, { document }), [
       cantTell(R69, target, diagnostic),
     ]);
   }
-  {
-    const target = h.text("Hello World");
+});
 
-    const document = h.document([
-      <div
-        style={{
-          position: "absolute",
-          backgroundColor: "#fff",
-        }}
-      >
-        {target}
-      </div>,
-    ]);
+test("evaluate() can tell when encountering an opaque background before an absolutely positioned parent", async (t) => {
+  const target = h.text("Hello World");
 
-    t.deepEqual(await evaluate(R69, { document }), [
-      passed(R69, target, {
-        1: Outcomes.HasSufficientContrast(21, 4.5, [
-          Diagnostic.Pairing.of(
-            ["foreground", rgb(0, 0, 0)],
-            ["background", rgb(1, 1, 1)],
-            21
-          ),
-        ]),
-      }),
-    ]);
-  }
+  const document = h.document([
+    <div
+      style={{
+        position: "absolute",
+        backgroundColor: "#fff",
+      }}
+    >
+      {target}
+    </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    passed(R69, target, {
+      1: Outcomes.HasSufficientContrast(21, 4.5, [
+        Diagnostic.Pairing.of(
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(1, 1, 1)],
+          21
+        ),
+      ]),
+    }),
+  ]);
 });
