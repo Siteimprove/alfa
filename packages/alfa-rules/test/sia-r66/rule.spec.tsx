@@ -11,7 +11,7 @@ import { evaluate } from "../common/evaluate";
 import { passed, failed, cantTell, inapplicable } from "../common/outcome";
 
 import { oracle } from "../common/oracle";
-import { ColorError } from "../../src/common/dom/get-colors";
+import { ColorError, ColorErrors } from "../../src/common/dom/get-colors";
 
 const rgb = (r: number, g: number, b: number, a: number = 1) =>
   RGB.of(
@@ -230,10 +230,9 @@ test("evaluate() correctly handles circular `currentcolor` references", async (t
   const html = <html style={{ color: color }}>{target}</html>;
 
   const document = h.document([html]);
-  const diagnostic = ColorError.unresolvableForegroundColor(
-    html,
-    Keyword.of(color)
-  );
+  const diagnostic = ColorErrors.of([
+    ColorError.unresolvableForegroundColor(html, Keyword.of(color)),
+  ]);
 
   t.deepEqual(await evaluate(R66, { document }), [
     cantTell(R66, target, diagnostic),

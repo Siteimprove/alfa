@@ -55,6 +55,8 @@ export class Context {
     visit(element: Element): Context;
     // (undocumented)
     static visit(element: Element): Context;
+    // (undocumented)
+    withState(state: Context.State): Iterable<Element>;
 }
 
 // @public (undocumented)

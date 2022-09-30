@@ -1,19 +1,21 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Token, Function, Nth } from "@siteimprove/alfa-css";
+import { Cache } from "@siteimprove/alfa-cache/src/cache";
+import { Function, Nth, Token } from "@siteimprove/alfa-css";
+import * as dom from "@siteimprove/alfa-dom";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option, None } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Result, Err } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence/src/sequence";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import * as dom from "@siteimprove/alfa-dom";
-import * as json from "@siteimprove/alfa-json";
-
 import { Context } from "./context";
+import State = Context.State;
 
 const {
   delimited,
@@ -1230,14 +1232,24 @@ export namespace Selector {
       super("hover");
     }
 
+    private static _cache = Cache.empty<Element, Cache<Context, boolean>>();
+
     public matches(
       element: Element,
       context: Context = Context.empty()
     ): boolean {
-      return element
-        .inclusiveDescendants(Node.fullTree)
-        .filter(isElement)
-        .some((element) => context.isHovered(element));
+      return Hover._cache.get(element, Cache.empty).get(context, () => {
+        // We assume that most of the time the context is near empty and thus it
+        // is inexpensive to check if something is in it.
+        const hovered = Sequence.from<Node>(context.withState(State.Hover));
+
+        return (
+          hovered.size !== 0 &&
+          element
+            .inclusiveDescendants(Node.fullTree)
+            .some((descendant) => hovered.includes(descendant))
+        );
+      });
     }
   }
 
@@ -1293,14 +1305,24 @@ export namespace Selector {
       super("focus-within");
     }
 
+    private static _cache = Cache.empty<Element, Cache<Context, boolean>>();
+
     public matches(
       element: Element,
       context: Context = Context.empty()
     ): boolean {
-      return element
-        .inclusiveDescendants(Node.flatTree)
-        .filter(isElement)
-        .some((element) => context.isFocused(element));
+      return FocusWithin._cache.get(element, Cache.empty).get(context, () => {
+        // We assume that most of the time the context is near empty and thus it
+        // is inexpensive to check if something is in it.
+        const focused = Sequence.from<Node>(context.withState(State.Focus));
+
+        return (
+          focused.size !== 0 &&
+          element
+            .inclusiveDescendants(Node.fullTree)
+            .some((descendant) => focused.includes(descendant))
+        );
+      });
     }
   }
 
