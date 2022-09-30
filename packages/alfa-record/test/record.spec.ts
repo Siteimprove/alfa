@@ -29,7 +29,7 @@ test("#has() returns false if a record does not have a given key", (t) => {
 test("#get() gets the value of a key of a record", (t) => {
   const record = Record.of({ foo: 42 });
 
-  t.deepEqual(record.get("foo").get(), 42);
+  t.deepEqual(record.get("foo").getUnsafe(), 42);
 });
 
 test("#get() returns none if a record does not have a given key", (t) => {
@@ -41,7 +41,7 @@ test("#get() returns none if a record does not have a given key", (t) => {
 test("#set() sets the value of a key of a record", (t) => {
   const record = Record.of({ foo: 42 }).set("foo", 12);
 
-  t.deepEqual(record.get("foo").get(), 12);
+  t.deepEqual(record.get("foo").getUnsafe(), 12);
 });
 
 test("#set() does nothing when setting the value of a key that doesn't exists", (t) => {

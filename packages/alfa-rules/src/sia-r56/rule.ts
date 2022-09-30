@@ -44,7 +44,8 @@ export default Rule.Atomic.of<Page, Group<Element>>({
             )
             // circumventing https://github.com/Siteimprove/alfa/issues/298
             .reject(hasIncorrectRoleWithoutName(device))
-            .groupBy((landmark) => Node.from(landmark, device).role.get())
+            // We have already filter by having a landmark role.
+            .groupBy((landmark) => Node.from(landmark, device).role.getUnsafe())
             .filter((elements) => elements.size > 1)
             .map(Group.of)
             .values()
@@ -54,8 +55,9 @@ export default Rule.Atomic.of<Page, Group<Element>>({
       expectations(target) {
         // Empty groups have been filtered out already, so we can safely get the
         // first element
-        const role = Node.from(Iterable.first(target).get(), device).role.get()
-          .name;
+        const role = Node.from(Iterable.first(target).getUnsafe(), device)
+          .role.map((role) => role.name)
+          .getOr("generic");
 
         const byNames = List.from(target)
           .groupBy((landmark) =>

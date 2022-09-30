@@ -177,7 +177,7 @@ function getRotation(element: Element, device: Device): Option<number> {
             fn.values.map((row) => row.map((number) => number.value))
           ).decompose();
 
-          if (decomposed.isNone()) {
+          if (!decomposed.isSome()) {
             continue;
           }
 

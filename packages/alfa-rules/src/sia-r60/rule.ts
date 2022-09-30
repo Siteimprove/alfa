@@ -65,7 +65,7 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         // Presence of a role is guaranteed by Applicability
-        const role = ariaNode.from(target, device).role.get().name;
+        const role = ariaNode.from(target, device).role.getUnsafe().name;
 
         return {
           1: expectation(

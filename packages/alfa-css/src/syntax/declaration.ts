@@ -186,34 +186,34 @@ export namespace Declaration {
     const declarations: Array<Declaration> = [];
 
     while (input.length > 0) {
-      const next = input.get(0).get();
+      for (const next of input.get(0)) {
+        input = input.slice(1);
 
-      input = input.slice(1);
-
-      if (Token.isWhitespace(next) || Token.isSemicolon(next)) {
-        continue;
-      }
-
-      if (Token.isIdent(next)) {
-        const value: Array<Token> = [next];
-
-        while (input.get(0).some(not(Token.isSemicolon))) {
-          const [remainder, component] = Component.consume(input).get();
-
-          input = remainder;
-          value.push(...component);
+        if (Token.isWhitespace(next) || Token.isSemicolon(next)) {
+          continue;
         }
 
-        const result = consume(Slice.of(value));
+        if (Token.isIdent(next)) {
+          const value: Array<Token> = [next];
 
-        if (result.isOk()) {
-          declarations.push(result.get()[1]);
-        }
-      } else {
-        while (input.get(0).some(not(Token.isSemicolon))) {
-          const [remainder] = Component.consume(input).get();
+          while (input.get(0).some(not(Token.isSemicolon))) {
+            const [remainder, component] = Component.consume(input).get();
 
-          input = remainder;
+            input = remainder;
+            value.push(...component);
+          }
+
+          const result = consume(Slice.of(value));
+
+          if (result.isOk()) {
+            declarations.push(result.get()[1]);
+          }
+        } else {
+          while (input.get(0).some(not(Token.isSemicolon))) {
+            const [remainder] = Component.consume(input).get();
+
+            input = remainder;
+          }
         }
       }
     }

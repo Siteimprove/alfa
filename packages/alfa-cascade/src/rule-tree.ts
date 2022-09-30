@@ -78,7 +78,8 @@ export class RuleTree implements Serializable {
         RuleTree.Node.add(rule, selector, declarations, children, parent)
       );
 
-      children = parent.get().children;
+      // parent was just build as a non-None Option.
+      children = parent.getUnsafe().children;
     }
 
     return parent;

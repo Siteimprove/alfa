@@ -131,7 +131,8 @@ export namespace Function {
         const [remainder, value] = result.get();
 
         if (remainder.length > 0) {
-          return Err.of(`Unexpected token ${remainder.get(0).get()}`);
+          // remainder is not empty, so remainder.get(0) is Some.
+          return Err.of(`Unexpected token ${remainder.get(0).getUnsafe()}`);
         }
 
         return Result.of([input, [fn, value] as const]);

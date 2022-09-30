@@ -176,6 +176,7 @@
     "src/resolver.ts",
     "src/style.ts",
     "src/value.ts",
+    "test/common.ts",
     "test/node/predicate/has-transparent-background.spec.tsx",
     "test/node/predicate/is-visible.spec.tsx",
     "test/property/background.spec.tsx",

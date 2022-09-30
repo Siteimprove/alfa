@@ -16,7 +16,7 @@ test(`evaluate() passes an article with a valid aria-atomic attribute`, async (t
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R20, { document }), [
-    passed(R20, target.attribute("aria-atomic").get(), {
+    passed(R20, target.attribute("aria-atomic").getUnsafe(), {
       1: Outcomes.IsDefined,
     }),
   ]);
@@ -28,7 +28,7 @@ test(`evaluate() passes a div element with a valid aria-modal attribute`, async 
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R20, { document }), [
-    passed(R20, target.attribute("aria-modal").get(), {
+    passed(R20, target.attribute("aria-modal").getUnsafe(), {
       1: Outcomes.IsDefined,
     }),
   ]);
@@ -47,13 +47,13 @@ test(`evaluate() passes a div element with different valid aria-* attributes`, a
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R20, { document }), [
-    passed(R20, target.attribute("aria-multiline").get(), {
+    passed(R20, target.attribute("aria-multiline").getUnsafe(), {
       1: Outcomes.IsDefined,
     }),
-    passed(R20, target.attribute("aria-label").get(), {
+    passed(R20, target.attribute("aria-label").getUnsafe(), {
       1: Outcomes.IsDefined,
     }),
-    passed(R20, target.attribute("aria-required").get(), {
+    passed(R20, target.attribute("aria-required").getUnsafe(), {
       1: Outcomes.IsDefined,
     }),
   ]);
@@ -65,7 +65,7 @@ test(`evaluate() fails a div element which has a non official aria attribute`, a
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R20, { document }), [
-    failed(R20, target.attribute("aria-not-checked").get(), {
+    failed(R20, target.attribute("aria-not-checked").getUnsafe(), {
       1: Outcomes.IsNotDefined,
     }),
   ]);

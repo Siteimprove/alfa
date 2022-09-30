@@ -49,7 +49,8 @@ const lexToken: Parser<Slice<number>, Token, string> = (input) => {
     return Err.of("Unexpected end of input");
   }
 
-  const next = input.get(0).get();
+  // input is not empty due to the previous test
+  const next = input.get(0).getUnsafe();
 
   if (isNumeric(next)) {
     return lexNumeric(input);
@@ -84,8 +85,10 @@ const lexToken: Parser<Slice<number>, Token, string> = (input) => {
   return Err.of("Unexpected character");
 };
 
-const isBetween = (lower: number, upper: number): Predicate<number> => (char) =>
-  char >= lower && char <= upper;
+const isBetween =
+  (lower: number, upper: number): Predicate<number> =>
+  (char) =>
+    char >= lower && char <= upper;
 
 const isAlpha = or(isBetween(0x61, 0x7a), isBetween(0x41, 0x5a));
 
@@ -201,7 +204,8 @@ const lexNumeric: Parser<Slice<number>, Token, string> = (input) => {
 };
 
 const lexString: Parser<Slice<number>, Token> = (input) => {
-  const mark = input.get(0).get();
+  // This parser is only called from lexToken after a non-empty check on input.
+  const mark = input.get(0).getUnsafe();
 
   input = input.slice(1);
 

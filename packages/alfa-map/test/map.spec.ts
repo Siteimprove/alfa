@@ -117,7 +117,7 @@ test("#has() returns false if a key does not exist in a map", (t) => {
 });
 
 test("#get() returns the value of a key in a map", (t) => {
-  t.equal(map.get("foo").get(), 1);
+  t.equal(map.get("foo").getUnsafe(), 1);
 });
 
 test("#get() returns none if a key does not exist in a map", (t) => {
@@ -138,7 +138,7 @@ test("#get() behaves when getting a colliding key in a map", (t) => {
 
   const map = Map.of([foo, 1], [bar, 2]);
 
-  t.equal(map.get(foo).get(), 1);
+  t.equal(map.get(foo).getUnsafe(), 1);
 });
 
 test("#get() behaves when getting a non-colliding key in a colliding map", (t) => {

@@ -118,7 +118,13 @@ export default Property.register(
 
         switch (fontSize.type) {
           case "calculation":
-            return fontSize.resolve({ length, percentage }).get();
+            return (
+              fontSize
+                .resolve({ length, percentage })
+                // Since the calculation has been parsed and typed, there should
+                // always be something to get.
+                .getUnsafe()
+            );
 
           case "length":
             return length(fontSize);

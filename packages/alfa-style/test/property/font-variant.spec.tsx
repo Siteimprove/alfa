@@ -1,10 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test(`#cascaded() parses \`font-variant: oldstyle-nums ruby
      historical-ligatures diagonal-fractions ordinal contextual slashed-zero\``, (t) => {
@@ -17,20 +13,18 @@ test(`#cascaded() parses \`font-variant: oldstyle-nums ruby
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("font-variant-caps").get().value.toJSON(), {
+  t.deepEqual(cascaded(element, "font-variant-caps").value, {
     type: "keyword",
     value: "initial",
   });
 
-  t.deepEqual(style.cascaded("font-variant-east-asian").get().value.toJSON(), {
+  t.deepEqual(cascaded(element, "font-variant-east-asian").value, {
     type: "list",
     values: [{ type: "keyword", value: "ruby" }],
     separator: " ",
   });
 
-  t.deepEqual(style.cascaded("font-variant-ligatures").get().value.toJSON(), {
+  t.deepEqual(cascaded(element, "font-variant-ligatures").value, {
     type: "list",
     values: [
       { type: "keyword", value: "historical-ligatures" },
@@ -39,7 +33,7 @@ test(`#cascaded() parses \`font-variant: oldstyle-nums ruby
     separator: " ",
   });
 
-  t.deepEqual(style.cascaded("font-variant-numeric").get().value.toJSON(), {
+  t.deepEqual(cascaded(element, "font-variant-numeric").value, {
     type: "list",
     values: [
       { type: "keyword", value: "oldstyle-nums" },

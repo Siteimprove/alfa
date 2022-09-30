@@ -16,8 +16,8 @@ test(".of() constructs a slice over an array", (t) => {
 test("#get() returns the value at a given index of a slice", (t) => {
   const slice = Slice.of(arr, 2, 8);
 
-  t.equal(slice.get(0).get(), 2);
-  t.equal(slice.get(5).get(), 7);
+  t.equal(slice.get(0).getUnsafe(), 2);
+  t.equal(slice.get(5).getUnsafe(), 7);
 });
 
 test("#get() returns none when an index is out of bounds", (t) => {

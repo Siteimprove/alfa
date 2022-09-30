@@ -4,15 +4,14 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { Device } from "@siteimprove/alfa-device";
 
 import { Style } from "../../src/style";
+import { cascaded } from "../common";
 
 const device = Device.standard();
 
 test("#cascaded() parses `font-size: calc(1em + 2px)`", (t) => {
   const element = <div style={{ fontSize: "calc(1em + 2px)" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("font-size").get().toJSON(), {
+  t.deepEqual(cascaded(element, "font-size"), {
     value: {
       type: "calculation",
       expression: {
@@ -59,9 +58,7 @@ test("#computed() resolves `font-size: calc(1em + 2px)`", (t) => {
 test("#cascaded() parses `font-size: calc(1em + 2%)`", (t) => {
   const element = <div style={{ fontSize: "calc(1em + 2%)" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("font-size").get().toJSON(), {
+  t.deepEqual(cascaded(element, "font-size"), {
     value: {
       type: "calculation",
       expression: {

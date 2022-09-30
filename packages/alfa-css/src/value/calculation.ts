@@ -318,7 +318,7 @@ export namespace Calculation {
 
       if (
         [a._kinds, b._kinds].some(
-          (kinds) => kinds.get("percentage").get() !== 0
+          (kinds) => kinds.get("percentage").getOr(0) !== 0
         ) &&
         [a._kinds, b._kinds].some((kinds) =>
           kinds.some((value, kind) => kind !== "percentage" && value !== 0)
@@ -363,7 +363,7 @@ export namespace Calculation {
         new Kind(
           b._kinds.reduce(
             (kinds, value, kind) =>
-              kinds.set(kind, kinds.get(kind).get() + value),
+              kinds.set(kind, kinds.get(kind).getOr(0) + value),
             a._kinds
           ),
           a._hint
@@ -392,7 +392,8 @@ export namespace Calculation {
         this._kinds
           .set(
             hint,
-            this._kinds.get(hint).get() + this._kinds.get("percentage").get()
+            this._kinds.get(hint).getOr(0) +
+              this._kinds.get("percentage").getOr(0)
           )
           .set("percentage", 0),
         Option.of(hint)
@@ -937,12 +938,15 @@ export namespace Calculation {
         invert ? Invert.of(right) : right
       );
 
-      if (right.isNone()) {
-        return (input) => Result.of([input, left]);
+      if (right.isSome()) {
+        return (input) =>
+          Product.of(left, right.get()).map((expression) => [
+            input,
+            expression,
+          ]);
       }
 
-      return (input) =>
-        Product.of(left, right.get()).map((expression) => [input, expression]);
+      return (input) => Result.of([input, left]);
     }
   );
 
@@ -970,12 +974,11 @@ export namespace Calculation {
         negate ? Negate.of(right) : right
       );
 
-      if (right.isNone()) {
-        return (input) => Result.of([input, left]);
+      if (right.isSome()) {
+        return (input) =>
+          Sum.of(left, right.get()).map((expression) => [input, expression]);
       }
-
-      return (input) =>
-        Sum.of(left, right.get()).map((expression) => [input, expression]);
+      return (input) => Result.of([input, left]);
     }
   );
 

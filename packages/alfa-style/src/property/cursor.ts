@@ -111,7 +111,7 @@ const parseCustom = map(
     option(right(parseWhitespace, separated(Number.parse, parseWhitespace)))
   ),
   ([url, coordinates]) =>
-    coordinates.isNone() ? url : Tuple.of(url, ...coordinates.get())
+    coordinates.isSome() ? Tuple.of(url, ...coordinates.get()) : url
 );
 
 const parseCustomList = map(

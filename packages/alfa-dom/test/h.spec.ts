@@ -33,7 +33,7 @@ test("h() puts the first document child in a content document", (t) => {
     [h.element("dummy"), document1, h.element("dummy"), document2]
   );
 
-  t.deepEqual(iframe.content.get(), document1);
+  t.deepEqual(iframe.content.getUnsafe(), document1);
 });
 
 test("h() puts the first shadow child in a shadow tree", (t) => {
@@ -46,7 +46,7 @@ test("h() puts the first shadow child in a shadow tree", (t) => {
     [h.element("dummy"), shadow1, h.element("dummy"), shadow2]
   );
 
-  t.deepEqual(iframe.shadow.get(), shadow1);
+  t.deepEqual(iframe.shadow.getUnsafe(), shadow1);
 });
 
 test("h() put elements in the correct namespace", (t) => {

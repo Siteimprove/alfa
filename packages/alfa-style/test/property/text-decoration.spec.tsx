@@ -1,18 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test("#cascaded() parses `text-decoration: underline`", (t) => {
   const element = <div style={{ textDecoration: "underline" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-decoration-line").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-line"), {
     value: {
       type: "list",
       values: [
@@ -26,7 +20,7 @@ test("#cascaded() parses `text-decoration: underline`", (t) => {
     source: h.declaration("text-decoration", "underline").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("text-decoration-style").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-style"), {
     value: {
       type: "keyword",
       value: "initial",
@@ -34,7 +28,7 @@ test("#cascaded() parses `text-decoration: underline`", (t) => {
     source: h.declaration("text-decoration", "underline").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("text-decoration-color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-color"), {
     value: {
       type: "keyword",
       value: "initial",
@@ -46,9 +40,7 @@ test("#cascaded() parses `text-decoration: underline`", (t) => {
 test("#cascaded() parses `text-decoration: underline overline`", (t) => {
   const element = <div style={{ textDecoration: "underline overline" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-decoration-line").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-line"), {
     value: {
       type: "list",
       values: [
@@ -70,9 +62,7 @@ test("#cascaded() parses `text-decoration: underline overline`", (t) => {
 test("#cascaded() parses `text-decoration: underline solid`", (t) => {
   const element = <div style={{ textDecoration: "underline solid" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-decoration-line").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-line"), {
     value: {
       type: "list",
       values: [
@@ -86,7 +76,7 @@ test("#cascaded() parses `text-decoration: underline solid`", (t) => {
     source: h.declaration("text-decoration", "underline solid").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("text-decoration-style").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-style"), {
     value: {
       type: "keyword",
       value: "solid",
@@ -98,9 +88,7 @@ test("#cascaded() parses `text-decoration: underline solid`", (t) => {
 test("#cascaded() parses `text-decoration: underline red`", (t) => {
   const element = <div style={{ textDecoration: "underline red" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-decoration-line").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-line"), {
     value: {
       type: "list",
       values: [
@@ -114,7 +102,7 @@ test("#cascaded() parses `text-decoration: underline red`", (t) => {
     source: h.declaration("text-decoration", "underline red").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("text-decoration-color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-color"), {
     value: {
       type: "color",
       format: "named",
@@ -127,9 +115,7 @@ test("#cascaded() parses `text-decoration: underline red`", (t) => {
 test("#cascaded() parses `text-decoration: underline solid red`", (t) => {
   const element = <div style={{ textDecoration: "underline solid red" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-decoration-line").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-line"), {
     value: {
       type: "list",
       values: [
@@ -143,7 +129,7 @@ test("#cascaded() parses `text-decoration: underline solid red`", (t) => {
     source: h.declaration("text-decoration", "underline solid red").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("text-decoration-style").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-style"), {
     value: {
       type: "keyword",
       value: "solid",
@@ -151,7 +137,7 @@ test("#cascaded() parses `text-decoration: underline solid red`", (t) => {
     source: h.declaration("text-decoration", "underline solid red").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("text-decoration-color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-color"), {
     value: {
       type: "color",
       format: "named",
@@ -169,9 +155,7 @@ test("#cascaded() parses `text-decoration: underline solid red 2px`", (t) => {
     "underline solid red 2px"
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-decoration-line").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-line"), {
     value: {
       type: "list",
       values: [
@@ -185,7 +169,7 @@ test("#cascaded() parses `text-decoration: underline solid red 2px`", (t) => {
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("text-decoration-style").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-style"), {
     value: {
       type: "keyword",
       value: "solid",
@@ -193,7 +177,7 @@ test("#cascaded() parses `text-decoration: underline solid red 2px`", (t) => {
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("text-decoration-color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-color"), {
     value: {
       type: "color",
       format: "named",
@@ -202,7 +186,7 @@ test("#cascaded() parses `text-decoration: underline solid red 2px`", (t) => {
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("text-decoration-thickness").get().toJSON(), {
+  t.deepEqual(cascaded(element, "text-decoration-thickness"), {
     value: {
       type: "length",
       value: 2,

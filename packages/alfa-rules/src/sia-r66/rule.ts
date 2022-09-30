@@ -132,7 +132,8 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
           })
         );
 
-        const parent = target.parent(Node.flatTree).get() as Element;
+        // targets are text nodes in the DOM tree, and therefore have parent.
+        const parent = target.parent(Node.flatTree).getUnsafe() as Element;
 
         return {
           1: result

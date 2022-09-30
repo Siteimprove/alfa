@@ -61,9 +61,9 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
   );
 
   const credentials =
-    flags.username.isNone() || flags.password.isNone()
-      ? undefined
-      : Credentials.of(flags.username.get(), flags.password.get());
+    flags.username.isSome() && flags.password.isSome()
+      ? Credentials.of(flags.username.get(), flags.password.get())
+      : undefined;
 
   let screenshot: Screenshot | undefined;
 
@@ -174,10 +174,10 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
 
   const output = JSON.stringify(result.get());
 
-  if (flags.output.isNone()) {
-    return Ok.of(output);
-  } else {
+  if (flags.output.isSome()) {
     fs.writeFileSync(flags.output.get(), output + "\n");
     return Ok.of("");
+  } else {
+    return Ok.of(output);
   }
 };

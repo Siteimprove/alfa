@@ -48,7 +48,8 @@ export class Crawler {
     options: Crawler.crawl.Options = {}
   ): AsyncIterable<Result<Page, [URL, string]>> {
     while (frontier.hasWaiting()) {
-      const url = frontier.dequeue().get();
+      // The loop condition ensures we can dequeue something.
+      const url = frontier.dequeue().getUnsafe();
 
       const result = await this._scraper.scrape(url, {
         ...options,

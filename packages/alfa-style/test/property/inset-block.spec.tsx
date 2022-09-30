@@ -1,18 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test("#cascaded() parses `inset-block: 1px 2px", (t) => {
   const element = <div style={{ insetBlock: "1px 2px" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("inset-block-start").get().toJSON(), {
+  t.deepEqual(cascaded(element, "inset-block-start"), {
     value: {
       type: "length",
       unit: "px",
@@ -21,7 +15,7 @@ test("#cascaded() parses `inset-block: 1px 2px", (t) => {
     source: h.declaration("inset-block", "1px 2px").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("inset-block-end").get().toJSON(), {
+  t.deepEqual(cascaded(element, "inset-block-end"), {
     value: {
       type: "length",
       unit: "px",
@@ -34,9 +28,7 @@ test("#cascaded() parses `inset-block: 1px 2px", (t) => {
 test("#cascaded() parses `inset-block: 1px", (t) => {
   const element = <div style={{ insetBlock: "1px" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("inset-block-start").get().toJSON(), {
+  t.deepEqual(cascaded(element, "inset-block-start"), {
     value: {
       type: "length",
       unit: "px",
@@ -45,7 +37,7 @@ test("#cascaded() parses `inset-block: 1px", (t) => {
     source: h.declaration("inset-block", "1px").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("inset-block-end").get().toJSON(), {
+  t.deepEqual(cascaded(element, "inset-block-end"), {
     value: {
       type: "length",
       unit: "px",

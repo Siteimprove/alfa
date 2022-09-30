@@ -1,18 +1,13 @@
 import { test } from "@siteimprove/alfa-test";
-import { Device } from "@siteimprove/alfa-device";
 
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test(`.cascaded() parses \`text-shadow: 1px 1px 2px black;\``, (t) => {
   const element = (
     <span style={{ textShadow: "1px 1px 2px black" }}>Hello world</span>
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-shadow").get().toJSON().value, {
+  t.deepEqual(cascaded(element, "text-shadow").value, {
     type: "shadow",
     vertical: { type: "length", value: 1, unit: "px" },
     horizontal: { type: "length", value: 1, unit: "px" },
@@ -28,9 +23,7 @@ test(`.cascaded() parses \`text-shadow: 1px 1px 2px;\``, (t) => {
     <span style={{ textShadow: "1px 1px 2px" }}>Hello world</span>
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-shadow").get().toJSON().value, {
+  t.deepEqual(cascaded(element, "text-shadow").value, {
     type: "shadow",
     vertical: { type: "length", value: 1, unit: "px" },
     horizontal: { type: "length", value: 1, unit: "px" },
@@ -46,9 +39,7 @@ test(`.cascaded() parses \`text-shadow: 1px 1px black;\``, (t) => {
     <span style={{ textShadow: "1px 1px black" }}>Hello world</span>
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-shadow").get().toJSON().value, {
+  t.deepEqual(cascaded(element, "text-shadow").value, {
     type: "shadow",
     vertical: { type: "length", value: 1, unit: "px" },
     horizontal: { type: "length", value: 1, unit: "px" },
@@ -64,9 +55,7 @@ test(`.cascaded() parses \`text-shadow: black 1px 1px;\``, (t) => {
     <span style={{ textShadow: "black 1px 1px" }}>Hello world</span>
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("text-shadow").get().toJSON().value, {
+  t.deepEqual(cascaded(element, "text-shadow").value, {
     type: "shadow",
     vertical: { type: "length", value: 1, unit: "px" },
     horizontal: { type: "length", value: 1, unit: "px" },

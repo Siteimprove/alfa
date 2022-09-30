@@ -206,7 +206,7 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
   </div>;
 
   const actual = Array.toJSON([
-    ...Name.from(button, device).get().sourceNodes(),
+    ...Name.from(button, device).getUnsafe().sourceNodes(),
   ]);
 
   t.equal(actual.length, 3);

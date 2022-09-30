@@ -46,7 +46,8 @@ export default Rule.Atomic.of<Page, Attribute>({
                 hasRole(device, (role) =>
                   role.isAttributeSupported(target.name as aria.Attribute.Name)
                 ),
-                target.owner.get()
+                // Since the attribute was found on a element, it has a owner.
+                target.owner.getUnsafe()
               ) ||
               ariaHtmlAllowed(target),
             () => Outcomes.IsAllowed,

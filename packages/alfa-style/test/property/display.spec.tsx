@@ -9,7 +9,7 @@ const device = Device.standard();
 function cascaded(display: string) {
   return Style.from(<div style={{ display }} />, device)
     .cascaded("display")
-    .get().value;
+    .getUnsafe().value;
 }
 
 test("#cascaded() parses `display: none`", (t) => {

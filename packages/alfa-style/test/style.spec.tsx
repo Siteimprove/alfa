@@ -1,19 +1,20 @@
 import { test } from "@siteimprove/alfa-test";
-import { h } from "@siteimprove/alfa-dom/h";
 
 import { Device } from "@siteimprove/alfa-device";
 import { Context } from "@siteimprove/alfa-selector";
 
+import { h } from "@siteimprove/alfa-dom/h";
+
 import { Style } from "../src/style";
+
+import { cascaded } from "./common";
 
 const device = Device.standard();
 
 test("#cascaded() returns the cascaded value of a property", (t) => {
   const element = <div style={{ color: "red" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "color"), {
     value: {
       type: "color",
       format: "named",
@@ -38,9 +39,7 @@ test("#cascaded() correctly handles duplicate properties", (t) => {
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "color"), {
     value: {
       type: "color",
       format: "named",
@@ -63,9 +62,7 @@ test("#cascaded() returns the most specific property value", (t) => {
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "color"), {
     value: {
       type: "color",
       format: "named",
@@ -80,9 +77,7 @@ test("#cascaded() correctly handles inline styles overriding the sheet", (t) => 
 
   h.document([element], [h.sheet([h.rule.style("div", { color: "red" })])]);
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "color"), {
     value: {
       type: "color",
       format: "named",
@@ -101,9 +96,7 @@ test(`#cascaded() correctly handles an important declaration overriding inline
     [h.sheet([h.rule.style("div", { color: "red !important" })])]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "color"), {
     value: {
       type: "color",
       format: "named",
@@ -122,9 +115,7 @@ test(`#cascaded() correctly handles important inline styles overriding an
     [h.sheet([h.rule.style("div", { color: "red !important" })])]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "color"), {
     value: {
       type: "color",
       format: "named",
@@ -150,9 +141,7 @@ test(`#cascaded() correctly handles a shorthand declaration overriding a
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -177,9 +166,7 @@ test(`#cascaded() correctly handles a longhand declaration overriding a
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "visible",
@@ -203,9 +190,7 @@ test(`#cascaded() expands a var() function`, (t) => {
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -228,9 +213,7 @@ test(`#cascaded() expands a var() function with a fallback`, (t) => {
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -257,9 +240,7 @@ test(`#cascaded() expands a var() function with an inherited value`, (t) => {
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -288,9 +269,7 @@ test(`#cascaded() expands a var() function with an overridden value`, (t) => {
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "visible",
@@ -317,9 +296,7 @@ test(`#cascaded() expands a var() function with a value that contains another
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -345,9 +322,7 @@ test(`#cascaded() expands multiple var() functions in the same declaration`, (t)
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -355,7 +330,7 @@ test(`#cascaded() expands multiple var() functions in the same declaration`, (t)
     source: h.declaration("overflow", "var(--hidden) var(--visible)").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("overflow-y").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-y"), {
     value: {
       type: "keyword",
       value: "visible",
@@ -380,9 +355,7 @@ test(`#cascaded() expands several var() function references to the same variable
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -390,7 +363,7 @@ test(`#cascaded() expands several var() function references to the same variable
     source: h.declaration("overflow", "var(--hidden) var(--hidden)").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("overflow-y").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-y"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -414,9 +387,7 @@ test(`#cascaded() expands a var() function with a fallback with a var() function
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -441,9 +412,7 @@ test(`#cascaded() returns "unset" when a var() function variable isn't defined`,
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "unset",
@@ -466,9 +435,7 @@ test(`#cascaded() returns "unset" when a var() function fallback is empty`, (t) 
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "unset",
@@ -494,9 +461,7 @@ test(`#cascaded() returns "unset" when declaration with a var() function is
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "unset",
@@ -521,9 +486,7 @@ test(`#cascaded() returns "unset" when a var() function is invalid`, (t) => {
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "unset",
@@ -549,9 +512,7 @@ test(`#cascaded() returns "unset" when var() functions contain cyclic references
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "unset",
@@ -577,9 +538,7 @@ test(`#cascaded() returns "unset" when a custom property referenced by a var()
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "unset",
@@ -633,9 +592,7 @@ test(`#cascaded() returns "unset" when confronted with a billion laughs`, (t) =>
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "unset",
@@ -670,9 +627,7 @@ test(`#cascaded() correctly resolves var() function references within context
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -702,9 +657,7 @@ test(`#cascaded() gives precedence to !important custom properties used in var()
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -734,9 +687,7 @@ test(`#cascaded() does not fall back on the inherited value of a custom property
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "unset",
@@ -767,9 +718,7 @@ test(`#cascaded() does not fall back on the inherited value of a custom property
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "unset",
@@ -793,9 +742,7 @@ test(`#cascaded() accept spaces around variable name in a var() function`, (t) =
     ]
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("overflow-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "overflow-x"), {
     value: {
       type: "keyword",
       value: "hidden",
@@ -822,9 +769,7 @@ test(`#cascaded() resolves :hover style for an element`, (t) => {
     ]
   );
 
-  let style = Style.from(element, device, Context.hover(element));
-
-  t.deepEqual(style.cascaded("color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "color"), {
     value: {
       type: "color",
       format: "named",
@@ -833,9 +778,7 @@ test(`#cascaded() resolves :hover style for an element`, (t) => {
     source: h.declaration("color", "blue").toJSON(),
   });
 
-  style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "color"), {
     value: {
       type: "color",
       format: "named",
@@ -865,7 +808,7 @@ test(`#cascaded() resolves :focus style for an element`, (t) => {
 
   let style = Style.from(element, device, Context.focus(element));
 
-  t.deepEqual(style.cascaded("color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "color"), {
     value: {
       type: "color",
       format: "named",
@@ -874,9 +817,7 @@ test(`#cascaded() resolves :focus style for an element`, (t) => {
     source: h.declaration("color", "blue").toJSON(),
   });
 
-  style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "color"), {
     value: {
       type: "color",
       format: "named",

@@ -64,7 +64,8 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const [header, table] = data.get(target).get();
+        // data has been set just before yielding targets
+        const [header, table] = data.get(target).getUnsafe();
 
         return {
           1: expectation(

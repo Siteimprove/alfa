@@ -1,11 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 for (const vertical of ["end", "start"] as const) {
   for (const horizontal of ["end", "start"] as const) {
@@ -19,9 +15,7 @@ for (const vertical of ["end", "start"] as const) {
         [h.sheet([h.rule.style("div", [h.declaration(property, "10%")])])]
       );
 
-      const style = Style.from(element, device);
-
-      t.deepEqual(style.cascaded(property).get().toJSON(), {
+      t.deepEqual(cascaded(element, property), {
         value: {
           type: "tuple",
           values: [
@@ -47,9 +41,7 @@ for (const vertical of ["end", "start"] as const) {
         [h.sheet([h.rule.style("div", [h.declaration(property, "10px 10%")])])]
       );
 
-      const style = Style.from(element, device);
-
-      t.deepEqual(style.cascaded(property).get().toJSON(), {
+      t.deepEqual(cascaded(element, property), {
         value: {
           type: "tuple",
           values: [

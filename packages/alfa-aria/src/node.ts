@@ -188,7 +188,8 @@ export namespace Node {
     // If the cache already holds an entry for the specified node, then the tree
     // that the node participates in has already been built.
     if (_cache.has(node)) {
-      return _cache.get(node).get();
+      // The previous test just ensures that there is something.
+      return _cache.get(node).getUnsafe();
     }
 
     const root = node.root(dom.Node.flatTree);

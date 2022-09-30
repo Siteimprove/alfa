@@ -137,7 +137,7 @@ test("#filter() behaves when a singleton sequence does not satisfy a predicate",
 });
 
 test("#find() finds the first value of a sequence that satisfies a predicate", (t) => {
-  t.equal(seq.find((n) => n % 2 === 0).get(), 2);
+  t.equal(seq.find((n) => n % 2 === 0).getUnsafe(), 2);
 });
 
 test("#find() returns none when no value of a sequence satisfies a predicate", (t) => {
@@ -166,8 +166,8 @@ test("#distinct() removes duplicate values from a sequence", (t) => {
 });
 
 test("#get() returns the value at a given index of a sequence", (t) => {
-  t.equal(seq.get(0).get(), 1);
-  t.equal(seq.get(3).get(), 4);
+  t.equal(seq.get(0).getUnsafe(), 1);
+  t.equal(seq.get(3).getUnsafe(), 4);
 });
 
 test("#get() returns none when an index is out of bounds", (t) => {
@@ -176,7 +176,7 @@ test("#get() returns none when an index is out of bounds", (t) => {
 });
 
 test("#first() returns the first value of a sequence", (t) => {
-  t.equal(seq.first().get(), 1);
+  t.equal(seq.first().getUnsafe(), 1);
 });
 
 test("#first() returns none when a sequence is empty", (t) => {
@@ -186,7 +186,7 @@ test("#first() returns none when a sequence is empty", (t) => {
 });
 
 test("#last() returns the last value of a sequence", (t) => {
-  t.equal(seq.last().get(), 4);
+  t.equal(seq.last().getUnsafe(), 4);
 });
 
 test("#last() returns none when a sequence is empty", (t) => {

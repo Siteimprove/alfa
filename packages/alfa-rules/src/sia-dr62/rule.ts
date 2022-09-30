@@ -96,7 +96,8 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         const nonLinkElements = containers
           .get(target)
-          .get()
+          // targets are only yielded after adding a container to the map.
+          .getUnsafe()
           .inclusiveDescendants(Node.fullTree)
           .filter(and(isElement, hasNonLinkText(device)));
 

@@ -41,7 +41,8 @@ export default Rule.Atomic.of<Page, Element>({
         const separator = [",", ";"];
         const equal = ["="];
         const properties = parsePropertiesList(
-          target.attribute("content").get().value.toLowerCase(),
+          // Big filter in the expectation ensures there is a content.
+          target.attribute("content").getUnsafe().value.toLowerCase(),
           whitespace,
           separator,
           equal

@@ -1,16 +1,11 @@
-import { Device } from "@siteimprove/alfa-device";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-import { Style } from "../../src";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test("#cascaded() parses `background-size: cover`", (t) => {
   const element = <div style={{ backgroundSize: `cover` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-size").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-size"), {
     value: {
       type: "list",
       values: [
@@ -28,9 +23,7 @@ test("#cascaded() parses `background-size: cover`", (t) => {
 test("#cascaded() parses `background-size: 10px`", (t) => {
   const element = <div style={{ backgroundSize: `10px` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-size").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-size"), {
     value: {
       type: "list",
       values: [
@@ -58,9 +51,7 @@ test("#cascaded() parses `background-size: 10px`", (t) => {
 test("#cascaded() parses `background-size: 10%`", (t) => {
   const element = <div style={{ backgroundSize: `10%` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-size").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-size"), {
     value: {
       type: "list",
       values: [
@@ -87,9 +78,7 @@ test("#cascaded() parses `background-size: 10%`", (t) => {
 test("#cascaded() parses `background-size: 10px 20px`", (t) => {
   const element = <div style={{ backgroundSize: `10px 20px` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-size").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-size"), {
     value: {
       type: "list",
       values: [
@@ -118,9 +107,7 @@ test("#cascaded() parses `background-size: 10px 20px`", (t) => {
 test("#cascaded() parses `background-size: 10px, 20px`", (t) => {
   const element = <div style={{ backgroundSize: `10px, 20px` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-size").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-size"), {
     value: {
       type: "list",
       values: [

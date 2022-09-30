@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Transformation } from "../src/transformation";
 
 test("#decompose() decomposes a translation transformation", (t) => {
-  t.deepEqual(Transformation.translate(10, 20, 30).decompose().get(), {
+  t.deepEqual(Transformation.translate(10, 20, 30).decompose().getUnsafe(), {
     translate: [10, 20, 30],
     scale: [1, 1, 1],
     skew: [0, 0, 0],
@@ -13,7 +13,7 @@ test("#decompose() decomposes a translation transformation", (t) => {
 });
 
 test("#decompose() decomposes a scaling transformation", (t) => {
-  t.deepEqual(Transformation.scale(10, 20, 30).decompose().get(), {
+  t.deepEqual(Transformation.scale(10, 20, 30).decompose().getUnsafe(), {
     translate: [0, 0, 0],
     scale: [10, 20, 30],
     skew: [0, 0, 0],
@@ -23,7 +23,7 @@ test("#decompose() decomposes a scaling transformation", (t) => {
 });
 
 test("#decompose() decomposes a rotation transformation", (t) => {
-  t.deepEqual(Transformation.rotate(0.5).decompose().get(), {
+  t.deepEqual(Transformation.rotate(0.5).decompose().getUnsafe(), {
     translate: [0, 0, 0],
     scale: [1, 1, 1],
     skew: [0, 0, 0],
@@ -33,7 +33,7 @@ test("#decompose() decomposes a rotation transformation", (t) => {
 });
 
 test("#decompose() decomposes a perspective transformation", (t) => {
-  t.deepEqual(Transformation.perspective(10).decompose().get(), {
+  t.deepEqual(Transformation.perspective(10).decompose().getUnsafe(), {
     translate: [0, 0, 0],
     scale: [1, 1, 1],
     skew: [0, 0, 0],
@@ -48,7 +48,7 @@ test("#decompose() decomposes several transformations", (t) => {
       .scale(10, 20, 30)
       .rotate(0.5)
       .decompose()
-      .get(),
+      .getUnsafe(),
     {
       translate: [10, 20, 30],
       scale: [10, 20, 30],
