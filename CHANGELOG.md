@@ -19,6 +19,21 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.47.0](../../compare/v0.46.0...v0.47.0) (2022-10-03)
+
+### Breaking
+
+
+- [@packages/alfa-rule](packages/alfa-rules): `getColors` (SIA-R66 and SIA-R69) now returns all problems it encounters when grabbing colors, instead of stopping at the first one. ([#1232](../../pull/1232))
+
+### Added 
+
+- [@packages/alfa-selector](packages/alfa-selector): A `Context#withState` iterator is added, to list the elements of a context that match a given context state. ([#1231](../../pull/1231))
+
+### Fixed
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): Performance improvement for the matching of `:hover` and `:focus-within` selectors. ([#1231](../../pull/1231))
+
 ## [0.46.0](../../compare/v0.45.0...v0.46.0) (2022-09-27)
 
 ### Added
@@ -35,7 +50,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 Only internal changes to the release pipeline.
 
-## [0.44.0](../../compare/v0.43.1...v0.44.0) (2022-09-13)
+## [0.44.0](../../compare/v0.43.2...v0.44.0) (2022-09-13)
 
 ### Added
 
@@ -43,9 +58,24 @@ Only internal changes to the release pipeline.
 
 - [@siteimprove/alfa-style](packages/alfa-style): `outline-offset` and `outline-width` now accept `calc` values. ([#1219](../../pull/1219))
 
+## [0.43.2](../../compare/v0.43.1...v0.43.2) (2022-09-05)
+
+### Breaking
+
+- [@siteimprove/alfa-css](packages/alfa-css): Easier support for `calc` expression is added, which require the type of the expression to be passed as a parameter of the `Calculation` type; the type hierarchy for `Numeric` types has been reworked. Check the pull request for details. ([#980](../../issues/980), [#1201](../../pull/1201))
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): The `line-height` property now accepts `calc` expressions. ([#1201](../../pull/1201))
+
 ### Fixed
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R41 and SIA-R81 now correctly compute their test target instead of randomly dropping some groups when other links have the same name. ([#1217](../../pull/1217))
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): The `:hover` CSS selector now matches any ancestor of the element with the hovered context. ([#1158](../../issues/1158), [#1206](../../pull/1206))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Improved computation of name from content by adding spaces around the text of `display: block` descendants. ([#1054](../../pull/1054), [#1200](../../pull/1200)) 
+
 
 ## [0.43.1](../../compare/v0.43.0...v0.43.1) (2022-07-26)
 
