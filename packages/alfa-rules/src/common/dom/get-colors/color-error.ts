@@ -27,7 +27,7 @@ interface ErrorName {
  * @internal
  */
 export class ColorErrors<
-  T extends keyof ErrorName = keyof ErrorName
+  out T extends keyof ErrorName = keyof ErrorName
 > extends Diagnostic {
   public static of(message: string): Diagnostic;
 
@@ -119,8 +119,8 @@ export namespace ColorErrors {
  * @internal
  */
 export abstract class ColorError<
-  T extends keyof ErrorName = keyof ErrorName,
-  K extends ErrorName[T] = ErrorName[T]
+  out T extends keyof ErrorName = keyof ErrorName,
+  out K extends ErrorName[T] = ErrorName[T]
 > extends Diagnostic {
   protected readonly _element: Element;
   protected readonly _type: T;

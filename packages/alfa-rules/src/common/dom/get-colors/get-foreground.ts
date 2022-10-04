@@ -20,6 +20,13 @@ const foregroundCache = Cache.empty<
   Cache<Context, Cache<Element, Result<Foreground, ColorErrors>>>
 >();
 
+/**
+ * Get the foreground colors of an element by:
+ * 1. get the color property
+ * 2. merge it with the background colors, according to opacity.
+ *
+ * @internal
+ */
 export function getForeground(
   element: Element,
   device: Device,
@@ -64,6 +71,12 @@ export function getForeground(
 
       // If the foreground color is (partly) transparent, we need to merge it
       // with its background and subsequent layers.
+      //
+      // The opacity of the element is applied to all its content, including
+      // the text. This means that we must first compute the foreground color
+      // as if the element was opaque (just handling the alpha channel of the
+      // fore- and backgrounds), and then use the opacity to blend in the
+      // previous layers.
 
       // First, we gather the background colors, even if we did not manage to
       // get a foreground colors, in order to have a list of all ColorError on
@@ -72,23 +85,18 @@ export function getForeground(
 
       // If we have both foreground and background color, we can merge them.
       if (color.isSome() && backgroundColors.isOk()) {
-        // First, we mix the color with the element's background according to the
-        // color's alpha channel (only).
-        // For this, we fake the opacity of the element at 1. That way, the
-        // background color is correctly handled. The background color may itself have
-        // an alpha channel, independently of its opacity, and this alpha channel
-        // needs to be taken into account (as well as the alpha/opacity of all the
-        // previous layers).
+        // The background color may itself have an alpha channel, independently
+        // of the opacity of the element, and this alpha channel needs to be
+        // taken into account (as well as the alpha/opacity of all previous layers).
         const colors = backgroundColors.map((background) =>
           background.map((backdrop) =>
             Color.composite(color.get(), backdrop, 1)
           )
         );
 
+        // Finally, we need to merge again, this time using the opacity of the
+        // current element.
         for (const parent of element.parent(Node.flatTree).filter(isElement)) {
-          // Next, we handle the opacity of the element.
-          // For this, we need the background colors of the parent (assuming that DOM
-          // reflects layout).
           return colors.flatMap((colors) =>
             getBackground(parent, device, context).map((background) =>
               colors.flatMap((color) =>
@@ -100,6 +108,7 @@ export function getForeground(
           );
         }
 
+        // If there is no parent, we just return the colors found so far.
         return colors;
       } else {
         // We are missing either foreground or background.

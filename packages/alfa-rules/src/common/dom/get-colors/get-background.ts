@@ -10,7 +10,7 @@ import { Style } from "@siteimprove/alfa-style";
 
 import { Color } from "./color";
 import { ColorError, ColorErrors } from "./color-error";
-import { getLayers } from "./get-layers";
+import { Layer } from "./get-layers";
 
 const { isVisibleShadow } = Style;
 
@@ -32,6 +32,13 @@ const backgroundCacheWithDefaultOpacity = Cache.empty<
   >
 >();
 
+/**
+ * Get the background colors of an element by :
+ * 1. gathering all layers, until a fully opaque one is found.
+ * 2. merging them into one composite color
+ *
+ * @internal
+ */
 export function getBackground(
   element: Element,
   device: Device,
@@ -57,36 +64,22 @@ export function getBackground(
       }
 
       // We want to gather layers errors even if we've already found one.
-      const layersColors = getLayers(element, device, context, opacity);
+      const layersColors = Layer.getLayers(element, device, context, opacity);
 
       return error.isNone() && layersColors.isOk()
-        ? layersColors.map((layers) =>
-            layers.reduce(
-              (backdrops, layer) =>
-                layer.colors.reduce(
-                  (layers, color) =>
-                    layers.concat(
-                      backdrops.map((backdrop) =>
-                        Color.composite(color, backdrop, layer.opacity)
-                      )
-                    ),
-                  [] as Array<Color.Resolved>
-                ),
-              // We make the initial backdrop solid white as this can be assumed
-              // to be the color of the canvas onto which the other backgrounds
-              // are rendered.
-              [
-                RGB.of(
-                  Percentage.of(1),
-                  Percentage.of(1),
-                  Percentage.of(1),
-                  Percentage.of(1)
-                ),
-              ]
-            )
-          )
+        ? layersColors.map((layers) => layers.reduce(Layer.merge, [white]))
         : Err.of(
             ColorErrors.prepend<"background" | "layer">(layersColors, error)
           );
     });
 }
+
+// We make the initial backdrop solid white as this can be assumed
+// to be the color of the canvas onto which the other backgrounds
+// are rendered.
+const white = RGB.of(
+  Percentage.of(1),
+  Percentage.of(1),
+  Percentage.of(1),
+  Percentage.of(1)
+);
