@@ -8,9 +8,8 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
 import { Color } from "./color";
-
 import { ColorError, ColorErrors } from "./color-error";
-import { getBackground } from "./get-colors";
+import { getBackground } from "./get-background";
 
 const { isElement } = Element;
 
