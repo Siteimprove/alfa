@@ -178,15 +178,15 @@ export class Some<T> implements Option<T> {
     // (undocumented)
     isSome(): this is Some<T>;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U>): Option<U>;
+    map<U>(mapper: Mapper<T, U>): Some<U>;
     // (undocumented)
     none(predicate: Predicate<T>): boolean;
     // (undocumented)
     static of<T>(value: T): Some<T>;
     // (undocumented)
-    or(): Option<T>;
+    or(): Some<T>;
     // (undocumented)
-    orElse(): Option<T>;
+    orElse(): Some<T>;
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     // (undocumented)
@@ -196,7 +196,7 @@ export class Some<T> implements Option<T> {
     // (undocumented)
     some(predicate: Predicate<T>): boolean;
     // (undocumented)
-    tee(callback: Callback<T>): Option<T>;
+    tee(callback: Callback<T>): this;
     // (undocumented)
     toArray(): [T];
     // (undocumented)
