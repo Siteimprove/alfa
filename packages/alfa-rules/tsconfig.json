@@ -20,7 +20,7 @@
     "src/common/dom/get-colors/color.ts",
     "src/common/dom/get-colors/color-error.ts",
     "src/common/dom/get-colors/get-colors.ts",
-    "src/common/dom/get-colors/layers.ts",
+    "src/common/dom/get-colors/get-layers.ts",
     "src/common/dom/get-interposed-descendant.ts",
     "src/common/expectation/contrast.ts",
     "src/common/expectation/get-refresh-time.ts",
