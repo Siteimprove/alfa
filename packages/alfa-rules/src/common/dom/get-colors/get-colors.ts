@@ -1,6 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
+import { Percentage, RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Option, None } from "@siteimprove/alfa-option";
@@ -9,106 +9,28 @@ import { Context } from "@siteimprove/alfa-selector";
 import { Style } from "@siteimprove/alfa-style";
 
 import { getInterposedDescendant } from "../get-interposed-descendant";
+
+import { Color } from "./color";
 import { ColorError, ColorErrors } from "./color-error";
 
 const { isElement } = Element;
 
 const { hasTransparentBackground, isPositioned, isVisibleShadow } = Style;
 
-type Color = RGB<Percentage, Percentage>;
-
-namespace Color {
-  export function resolve(
-    color: Color | Current | System,
-    style: Style
-  ): Option<Color> {
-    switch (color.type) {
-      case "keyword":
-        if (color.value === "currentcolor") {
-          color = style.computed("color").value;
-
-          if (color.type === "color") {
-            return Option.of(
-              RGB.of(
-                color.red,
-                color.green,
-                color.blue,
-                Percentage.of(color.alpha.value)
-              )
-            );
-          }
-        }
-
-        if (color.value === "canvastext") {
-          return Option.of(
-            RGB.of(
-              Percentage.of(0),
-              Percentage.of(0),
-              Percentage.of(0),
-              Percentage.of(1)
-            )
-          );
-        }
-
-        return None;
-
-      case "color":
-        return Option.of(
-          RGB.of(
-            color.red,
-            color.green,
-            color.blue,
-            Percentage.of(color.alpha.value)
-          )
-        );
-    }
-  }
-
-  /**
-   * {@link https://drafts.fxtf.org/compositing-1/#simplealphacompositing}
-   */
-  export function composite(
-    foreground: Color,
-    background: Color,
-    opacity: number
-  ): Color {
-    const foregroundOpacity = foreground.alpha.value * opacity;
-
-    if (foregroundOpacity === 1) {
-      return foreground;
-    }
-
-    const alpha = background.alpha.value * (1 - foregroundOpacity);
-
-    const [red, green, blue] = [
-      [foreground.red, background.red],
-      [foreground.green, background.green],
-      [foreground.blue, background.blue],
-    ].map(([a, b]) => a.value * foregroundOpacity + b.value * alpha);
-
-    return RGB.of(
-      Percentage.of(red),
-      Percentage.of(green),
-      Percentage.of(blue),
-      Percentage.of(foregroundOpacity + alpha)
-    );
-  }
-}
-
 class Layer {
-  public static of(colors: Iterable<Color>, opacity: number): Layer {
+  public static of(colors: Iterable<Color.Resolved>, opacity: number): Layer {
     return new Layer(Array.from(colors), opacity);
   }
 
-  private readonly _colors: ReadonlyArray<Color>;
+  private readonly _colors: ReadonlyArray<Color.Resolved>;
   private readonly _opacity: number;
 
-  private constructor(colors: ReadonlyArray<Color>, opacity: number) {
+  private constructor(colors: ReadonlyArray<Color.Resolved>, opacity: number) {
     this._colors = colors;
     this._opacity = opacity;
   }
 
-  public get colors(): ReadonlyArray<Color> {
+  public get colors(): ReadonlyArray<Color.Resolved> {
     return this._colors;
   }
 
@@ -187,7 +109,7 @@ function getLayers(
         // For each gradient, we extract all color stops into a background layer of
         // their own. As gradients need a start and an end point, there will always
         // be at least two color stops.
-        const stops: Array<Color> = [];
+        const stops: Array<Color.Resolved> = [];
 
         for (const item of image.image.items) {
           if (item.type === "stop") {
@@ -263,7 +185,7 @@ function getLayers(
     });
 }
 
-export type Foreground = Array<Color>;
+export type Foreground = Array<Color.Resolved>;
 
 const foregroundCache = Cache.empty<
   Device,
@@ -358,7 +280,7 @@ export function getForeground(
     });
 }
 
-export type Background = Array<Color>;
+export type Background = Array<Color.Resolved>;
 
 const backgroundCacheWithFakeOpacity = Cache.empty<
   Device,
@@ -414,7 +336,7 @@ export function getBackground(
                         Color.composite(color, backdrop, layer.opacity)
                       )
                     ),
-                  [] as Array<Color>
+                  [] as Array<Color.Resolved>
                 ),
               // We make the initial backdrop solid white as this can be assumed
               // to be the color of the canvas onto which the other backgrounds

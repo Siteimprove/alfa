@@ -1,6 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
-import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -8,7 +7,7 @@ import { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 
-type Color = RGB<Percentage, Percentage>;
+import { Color } from "./color";
 
 // Extended diagnostic for getColor
 
@@ -450,17 +449,17 @@ export namespace ColorError {
     public static create(
       element: Element,
       value: Style.Computed<"background-image">,
-      color: Color | Current | System
+      color: Color.Computed
     ): HasUnresolvableGradientStop {
       return new HasUnresolvableGradientStop(element, value, color);
     }
 
-    private readonly _color: Color | Current | System;
+    private readonly _color: Color.Computed;
 
     private constructor(
       element: Element,
       value: Style.Computed<"background-image">,
-      color: Color | Current | System
+      color: Color.Computed
     ) {
       super(
         "Could not resolve gradient color stop",
@@ -473,7 +472,7 @@ export namespace ColorError {
       this._color = color;
     }
 
-    public get color(): Color | Current | System {
+    public get color(): Color.Computed {
       return this._color;
     }
 
@@ -507,7 +506,7 @@ export namespace ColorError {
         "unresolvable-gradient",
         "background-image"
       > {
-      color: Serializable.ToJSON<Color | Current | System>;
+      color: Serializable.ToJSON<Color.Computed>;
     }
 
     export function isUnresolvableGradientStop(

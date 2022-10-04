@@ -17,6 +17,7 @@
     "src/common/diagnostic/with-bad-elements.ts",
     "src/common/diagnostic/with-role.ts",
     "src/common/dom/get-colors.ts",
+    "src/common/dom/get-colors/color.ts",
     "src/common/dom/get-colors/color-error.ts",
     "src/common/dom/get-colors/get-colors.ts",
     "src/common/dom/get-interposed-descendant.ts",
