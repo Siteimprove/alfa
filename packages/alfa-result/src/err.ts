@@ -128,6 +128,14 @@ export class Err<E> implements Result<never, E> {
     return value();
   }
 
+  public getErrOr(): E {
+    return this._error;
+  }
+
+  public getErrOrElse(): E {
+    return this._error;
+  }
+
   public ok(): None {
     return None;
   }

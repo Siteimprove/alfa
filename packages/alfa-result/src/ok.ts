@@ -8,6 +8,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Reducer } from "@siteimprove/alfa-reducer";
 
 import * as json from "@siteimprove/alfa-json";
+import { Thunk } from "@siteimprove/alfa-thunk/src/thunk";
 
 import { Err } from "./err";
 import { Result } from "./result";
@@ -126,6 +127,14 @@ export class Ok<T> implements Result<T, never> {
 
   public getOrElse(): T {
     return this._value;
+  }
+
+  public getErrOr<F>(error: F): F {
+    return error;
+  }
+
+  public getErrOrElse<F>(error: Thunk<F>): F {
+    return error();
   }
 
   public ok(): Option<T> {
