@@ -1,6 +1,6 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
-import { Device } from "@siteimprove/alfa-device/src/device";
+import { Device } from "@siteimprove/alfa-device";
 import {
   Document,
   Element,
