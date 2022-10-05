@@ -12,6 +12,7 @@
     "src/common/act/is-passed.ts",
     "src/common/act/question.ts",
     "src/common/applicability/audio.ts",
+    "src/common/applicability/non-disabled-texts.ts",
     "src/common/applicability/video.ts",
     "src/common/diagnostic/contrast.ts",
     "src/common/diagnostic/with-bad-elements.ts",
