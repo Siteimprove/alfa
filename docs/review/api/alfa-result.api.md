@@ -20,8 +20,7 @@ import { Predicate } from '@siteimprove/alfa-predicate';
 import { Reducer } from '@siteimprove/alfa-reducer';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
-import { Thunk } from '@siteimprove/alfa-thunk/src/thunk';
-import { Thunk as Thunk_2 } from '@siteimprove/alfa-thunk';
+import { Thunk } from '@siteimprove/alfa-thunk';
 
 // @public (undocumented)
 export class Err<E> implements Result<never, E> {
@@ -56,7 +55,7 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     getOr<U>(value: U): U;
     // (undocumented)
-    getOrElse<U>(value: Thunk_2<U>): U;
+    getOrElse<U>(value: Thunk<U>): U;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
@@ -84,7 +83,7 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     or<U, F>(result: Result<U, F>): Result<U, F>;
     // (undocumented)
-    orElse<U, F>(result: Thunk_2<Result<U, F>>): Result<U, F>;
+    orElse<U, F>(result: Thunk<Result<U, F>>): Result<U, F>;
     // (undocumented)
     reduce<U>(reducer: unknown, accumulator: U): U;
     // (undocumented)
@@ -242,11 +241,11 @@ export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, 
     // (undocumented)
     getErrOr<F>(error: F): E | F;
     // (undocumented)
-    getErrOrElse<F>(error: Thunk_2<F>): E | F;
+    getErrOrElse<F>(error: Thunk<F>): E | F;
     // (undocumented)
     getOr<U>(value: U): T | U;
     // (undocumented)
-    getOrElse<U>(value: Thunk_2<U>): T | U;
+    getOrElse<U>(value: Thunk<U>): T | U;
     // (undocumented)
     includes(value: T): this is Ok<T>;
     // (undocumented)
@@ -274,7 +273,7 @@ export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, 
     // (undocumented)
     or<U, F>(result: Result<U, F>): Result<T | U, F>;
     // (undocumented)
-    orElse<U, F>(result: Thunk_2<Result<U, F>>): Result<T | U, F>;
+    orElse<U, F>(result: Thunk<Result<U, F>>): Result<T | U, F>;
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     // (undocumented)
@@ -296,9 +295,9 @@ export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, 
 // @public (undocumented)
 export namespace Result {
     // (undocumented)
-    export function from<T, E = unknown>(thunk: Thunk_2<Promise<T>>): Promise<Result<T, E>>;
+    export function from<T, E = unknown>(thunk: Thunk<Promise<T>>): Promise<Result<T, E>>;
     // (undocumented)
-    export function from<T, E = unknown>(thunk: Thunk_2<T>): Result<T, E>;
+    export function from<T, E = unknown>(thunk: Thunk<T>): Result<T, E>;
     // (undocumented)
     export function isErr<T, E>(value: Iterable<T>): value is Err<E>;
     // (undocumented)
