@@ -85,10 +85,7 @@ export namespace Layer {
         );
 
         const layers: Array<Layer> = currentLayers.getOr([]);
-        const errors: Array<ColorError<"layer">> = currentLayers
-          .err()
-          .map((colorErrors) => Array.copy(colorErrors.errors))
-          .getOr([]);
+        const errors: Array<ColorError<"layer">> = currentLayers.getErrOr([]);
 
         // If the current layer is fully opaque, no need to go further
         if (
@@ -128,8 +125,7 @@ export namespace Layer {
         }
 
         // If the background layer does not have a lower layer that is fully opaque,
-        // we need to also locate the background layers sitting behind the current
-        // layer.
+        // we need to also locate the layers sitting behind, i.e. one the parent.
         for (const parent of element.parent(Node.flatTree).filter(isElement)) {
           // The opacity override only applies to the last layer, so it is not
           // used in the recursive calls
@@ -177,7 +173,7 @@ export namespace Layer {
     context: Context = Context.empty(),
     // Possible override of the element's opacity.
     opacity?: number
-  ): Result<Array<Layer>, ColorErrors<"layer">> {
+  ): Result<Array<Layer>, Array<ColorError<"layer">>> {
     const style = Style.from(element, device, context);
     const backgroundColor = style.computed("background-color").value;
     const backgroundImage = style.computed("background-image").value;
@@ -246,8 +242,6 @@ export namespace Layer {
       layers.push(Layer.of(stops, opacity));
     }
 
-    return errors.length === 0
-      ? Result.of(layers)
-      : Err.of(ColorErrors.of(errors));
+    return errors.length === 0 ? Result.of(layers) : Err.of(errors);
   }
 }
