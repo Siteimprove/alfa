@@ -1,7 +1,7 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
-import { Iterable } from "@siteimprove/alfa-iterable";
 
 import { expectation } from "../act/expectation";
 import { Question } from "../act/question";
@@ -10,7 +10,6 @@ import { getBackground, getForeground } from "../dom/get-colors";
 import { Contrast as Outcomes } from "../outcome/contrast";
 import { isLargeText } from "../predicate";
 
-const { flatMap, map } = Iterable;
 const { min, max, round } = Math;
 
 /**
@@ -27,22 +26,9 @@ export function hasSufficientContrast(
 
   const result = foregrounds.map((foregrounds) =>
     backgrounds.map((backgrounds) => {
-      // For each FG and each BG color, compute the contrast and store the pairing
-      const pairings = [
-        ...flatMap(foregrounds, (foreground) =>
-          map(backgrounds, (background) =>
-            Diagnostic.Pairing.of<["foreground", "background"]>(
-              ["foreground", foreground],
-              ["background", background],
-              contrast(foreground, background)
-            )
-          )
-        ),
-      ];
-
-      const highest = pairings.reduce(
-        (highest, pairing) => max(highest, pairing.contrast),
-        0
+      const { pairings, highest } = getPairings(
+        Array.from(foregrounds),
+        Array.from(backgrounds)
       );
 
       const threshold = isLargeText(device)(target)
@@ -67,6 +53,39 @@ export function hasSufficientContrast(
         askBackground.answerIf(getBackground(parent, device))
       ),
   };
+}
+
+interface Pairings {
+  pairings: Array<Diagnostic.Pairing<["foreground", "background"]>>;
+  highest: number;
+}
+
+const cache = Cache.empty<Array<RGB>, Cache<Array<RGB>, Pairings>>();
+
+/**
+ * For each FG and each BG color, compute the contrast and store the pairing
+ */
+function getPairings(
+  foregrounds: Array<RGB>,
+  backgrounds: Array<RGB>
+): Pairings {
+  return cache.get(foregrounds, Cache.empty).get(backgrounds, () => {
+    const pairings = foregrounds.flatMap((foreground) =>
+      backgrounds.map((background) =>
+        Diagnostic.Pairing.of<["foreground", "background"]>(
+          ["foreground", foreground],
+          ["background", background],
+          contrast(foreground, background)
+        )
+      )
+    );
+    const highest = pairings.reduce(
+      (highest, pairing) => max(highest, pairing.contrast),
+      0
+    );
+
+    return { pairings, highest };
+  });
 }
 
 /**
