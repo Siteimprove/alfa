@@ -4,6 +4,7 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { Device } from "@siteimprove/alfa-device";
 
 import { Style } from "../../src/style";
+import { cascaded } from "../common";
 
 const device = Device.standard();
 
@@ -18,9 +19,7 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
       [h.sheet([h.rule.style("div", [h.declaration(property, "medium")])])]
     );
 
-    const style = Style.from(element, device);
-
-    t.deepEqual(style.cascaded(property).get().toJSON(), {
+    t.deepEqual(cascaded(element, property), {
       value: {
         type: "keyword",
         value: "medium",
@@ -37,9 +36,7 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
       [h.sheet([h.rule.style("div", [h.declaration(property, "1.2em")])])]
     );
 
-    const style = Style.from(element, device);
-
-    t.deepEqual(style.cascaded(property).get().toJSON(), {
+    t.deepEqual(cascaded(element, property), {
       value: {
         type: "length",
         unit: "em",
@@ -83,11 +80,9 @@ test(`#cascaded() parses \`border-width: 1em\``, (t) => {
 
   h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
-  const style = Style.from(element, device);
-
   for (const side of ["top", "right", "bottom", "left"] as const) {
     const property = `border-${side}-width` as const;
-    t.deepEqual(style.cascaded(property).get().toJSON(), {
+    t.deepEqual(cascaded(element, property), {
       value: {
         type: "length",
         unit: "em",
@@ -104,8 +99,6 @@ test(`#cascaded() parses \`border-width: red green blue black\``, (t) => {
 
   h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
-  const style = Style.from(element, device);
-
   for (const [side, width] of [
     ["top", 1],
     ["right", 1.2],
@@ -113,7 +106,7 @@ test(`#cascaded() parses \`border-width: red green blue black\``, (t) => {
     ["left", 2],
   ] as const) {
     const property = `border-${side}-width` as const;
-    t.deepEqual(style.cascaded(property).get().toJSON(), {
+    t.deepEqual(cascaded(element, property), {
       value: {
         type: "length",
         unit: "em",

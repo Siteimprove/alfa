@@ -42,7 +42,7 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
 
   let json: string;
 
-  if (target.isNone()) {
+  if (!target.isSome()) {
     json = fs.readFileSync(0, "utf-8");
   } else {
     const result = await scrape.run({
@@ -110,10 +110,10 @@ export const run: Command.Runner<typeof Flags, typeof Arguments> = async ({
 
   const output = await formatter.get()(page, rules, outcomes);
 
-  if (flags.output.isNone()) {
-    return Result.of(output);
-  } else {
+  if (flags.output.isSome()) {
     fs.writeFileSync(flags.output.get(), output + "\n");
     return Result.of("");
+  } else {
+    return Result.of(output);
   }
 };

@@ -46,7 +46,7 @@ export function getInterposedDescendant(
         // Group the result by the offset parent
         // getOffsetParent is cached, so this is not expensive.
         // getOffsetParent is guaranteed to be Some by the previous filter.
-        .groupBy((element) => getOffsetParent(element, device).get())
+        .groupBy((element) => getOffsetParent(element, device).getUnsafe())
     )
     .get(element)
     .getOr(Sequence.empty());

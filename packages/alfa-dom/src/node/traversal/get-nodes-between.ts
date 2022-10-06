@@ -36,7 +36,8 @@ export function getNodesBetween(
 
   // Do we keep the first node or skip its subtree?
   if (!includeOptions.includeFirst) {
-    const first = between.first().get();
+    // By previous test, between is not empty
+    const first = between.first().getUnsafe();
 
     // The 'first node after the subtree rooted at first' is the next sibling
     // of the closest ancestor having one.

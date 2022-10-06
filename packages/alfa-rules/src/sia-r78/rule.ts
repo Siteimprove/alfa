@@ -76,7 +76,7 @@ export default Rule.Atomic.of<Page, Element>({
                 .descendants(Node.fullTree)
                 .last()
                 // The document contains at least the target.
-                .get()
+                .getUnsafe()
             );
           });
 

@@ -236,15 +236,38 @@ export namespace Table {
     // 7
     let children = element.children().filter(isElement);
 
+    /**
+     * The current child element of the table.
+     */
+    let current: Option<Element> = children.first();
+
+    /**
+     * Advance to the next child element of the table.
+     */
+    function advance(): Option<Element> {
+      children = children.rest();
+      current = children.first();
+      return current;
+    }
+
+    /**
+     * Skip child elements of the table while the predicate holds.
+     */
+    function skip(predicate: Predicate<Element>): void {
+      while (current.some(predicate)) {
+        advance();
+      }
+    }
+
     // 8
     skip(not(hasName("colgroup", "thead", "tbody", "tfoot", "tr")));
 
     // 9
-    while (current().some(hasName("colgroup"))) {
+    while (current.some(hasName("colgroup"))) {
       // 9.1
       // As this step contains several substeps inlined in the algorithm, its
       // substeps have been extracted into a function of their own.
-      processColumnGroup(current().get());
+      processColumnGroup(current.get());
 
       // 9.2
       advance();
@@ -264,17 +287,17 @@ export namespace Table {
 
     // Steps 12-18 are repeated for as long as there are children left in the
     // table.
-    while (current().isSome()) {
+    while (current.isSome()) {
       // 12
       skip(not(hasName("thead", "tbody", "tfoot", "tr")));
 
-      if (current().isNone()) {
+      if (current.isNone()) {
         break;
       }
 
       // 13
-      if (current().some(hasName("tr"))) {
-        processRow(current().get());
+      if (current.some(hasName("tr"))) {
+        processRow(current.get());
         advance();
         continue;
       }
@@ -283,14 +306,14 @@ export namespace Table {
       endRowGroup();
 
       // 15
-      if (current().some(hasName("tfoot"))) {
-        footers.push(current().get());
+      if (current.some(hasName("tfoot"))) {
+        footers.push(current.get());
         advance();
         continue;
       }
 
       // 16
-      processRowGroup(current().get());
+      processRowGroup(current.get());
 
       // 17
       advance();
@@ -393,30 +416,6 @@ export namespace Table {
     }
 
     /**
-     * Get the current child element of the table.
-     */
-    function current(): Option<Element> {
-      return children.first();
-    }
-
-    /**
-     * Advance to the next child element of the table.
-     */
-    function advance(): Option<Element> {
-      children = children.rest();
-      return current();
-    }
-
-    /**
-     * Skip child elements of the table while the predicate holds.
-     */
-    function skip(predicate: Predicate<Element>): void {
-      while (current().some(predicate)) {
-        advance();
-      }
-    }
-
-    /**
      * {@link https://html.spec.whatwg.org/#algorithm-for-processing-row-groups}
      */
     function processRowGroup(element: Element): void {
@@ -489,12 +488,26 @@ export namespace Table {
         return;
       }
 
+      /**
+       * The current child element of the row.
+       */
+      let current: Option<Element> = children.first();
+
+      /**
+       * Advance to the next child element of the row.
+       */
+      function advance(): Option<Element> {
+        children = children.rest();
+        current = children.first();
+        return current;
+      }
+
       // 5
       // Nothing to do
 
       // Steps 6-18 are repeated for as long as there are children left in the
       // row.
-      while (current().isSome()) {
+      while (current.isSome()) {
         // 6
         while (xCurrent < xWidth && has(xCurrent, yCurrent)) {
           xCurrent++;
@@ -507,7 +520,7 @@ export namespace Table {
 
         // 8
         let colspan = integerValue(
-          current().get(),
+          current.get(),
           "colspan",
           1 /* lower */,
           1000 /* upper */
@@ -515,7 +528,7 @@ export namespace Table {
 
         // 9
         let rowspan = integerValue(
-          current().get(),
+          current.get(),
           "rowspan",
           0 /* lower */,
           65534 /* upper */,
@@ -545,16 +558,16 @@ export namespace Table {
         // 13
         let cell: Cell;
 
-        if (current().some(hasName("th"))) {
+        if (current.some(hasName("th"))) {
           cell = Cell.header(
-            current().get(),
+            current.get(),
             Slot.of(xCurrent, yCurrent),
             colspan,
             rowspan
           );
         } else {
           cell = Cell.data(
-            current().get(),
+            current.get(),
             Slot.of(xCurrent, yCurrent),
             colspan,
             rowspan
@@ -595,21 +608,6 @@ export namespace Table {
         // 18
         // Nothing to do
       }
-
-      /**
-       * Get the current child element of the row.
-       */
-      function current(): Option<Element> {
-        return children.first();
-      }
-
-      /**
-       * Advance to the next child element of the row.
-       */
-      function advance(): Option<Element> {
-        children = children.rest();
-        return current();
-      }
     }
 
     /**
@@ -623,6 +621,20 @@ export namespace Table {
         .filter(isElement)
         .filter(hasName("col"));
 
+      /**
+       * The current child element of the column group.
+       */
+      let current: Option<Element> = children.first();
+
+      /**
+       * Advance to the next child element of the column group.
+       */
+      function advance(): Option<Element> {
+        children = children.rest();
+        current = children.first();
+        return current;
+      }
+
       let group: Group;
       let i: number;
 
@@ -635,10 +647,10 @@ export namespace Table {
 
         // Steps 3-6 are repeated for as long as there are children left in the
         // column group.
-        while (current().isSome()) {
+        while (current.isSome()) {
           // 3
           const span = integerValue(
-            current().get(),
+            current.get(),
             "span",
             1 /* lower */,
             1000 /* upper */
@@ -678,21 +690,6 @@ export namespace Table {
 
       for (let x = group.x, n = x + group.width; x < n; x++) {
         groupings.x.set(x, i);
-      }
-
-      /**
-       * Get the current child element of the column group.
-       */
-      function current(): Option<Element> {
-        return children.first();
-      }
-
-      /**
-       * Advance to the next child element of the column group.
-       */
-      function advance(): Option<Element> {
-        children = children.rest();
-        return current();
       }
     }
 

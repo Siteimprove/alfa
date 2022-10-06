@@ -62,7 +62,13 @@ export default Property.register(
             return length(width);
 
           case "calculation":
-            return width.resolve({ length }).get();
+            return (
+              width
+                .resolve({ length })
+                // Since the calculation has been parsed and typed, there should
+                // always be something to get.
+                .getUnsafe()
+            );
 
           case "keyword":
             switch (width.value) {

@@ -51,7 +51,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
       expectations(target) {
         const firstTabbable = target.tabOrder().find(isTabbable(device));
 
-        if (firstTabbable.isNone()) {
+        if (!firstTabbable.isSome()) {
           return { 1: Outcomes.HasNoTabbable };
         }
 
@@ -64,7 +64,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
             .inclusiveAncestors(Node.fullTree)
             .find(isElement);
 
-          if (destination.isNone()) {
+          if (!destination.isSome()) {
             return Outcomes.FirstTabbableIsNotLinkToContent;
           }
 
@@ -125,7 +125,9 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
               expectation<Question.Metadata, Element, Document, 0>(
                 // Oracle may still answer None to the question.
                 ref.isSome(),
-                () => isAtTheStartOfMain(ref.get()),
+                // We are in the ifTrue branch of the expectation, but TS
+                // can't narrow the type.
+                () => isAtTheStartOfMain(ref.getUnsafe()),
                 () => Outcomes.FirstTabbableIsNotInternalLink
               )
             );

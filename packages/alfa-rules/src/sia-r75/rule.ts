@@ -56,10 +56,10 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        // Applicability guarantees there is a cascaded value
         const declaration = Style.from(target, device)
           .cascaded("font-size")
-          .get().source;
+          // Applicability guarantees there is a cascaded value
+          .getUnsafe().source;
 
         const texts = target
           .descendants(Node.fullTree)

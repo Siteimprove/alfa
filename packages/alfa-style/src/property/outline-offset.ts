@@ -40,7 +40,13 @@ export default Property.register(
         case "length":
           return length(offset);
         case "calculation":
-          return offset.resolve({ length }).get();
+          return (
+            offset
+              .resolve({ length })
+              // Since the calculation has been parsed and typed, there should
+              // always be something to get.
+              .getUnsafe()
+          );
       }
     })
   )

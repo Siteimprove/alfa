@@ -1,15 +1,15 @@
 import { test } from "@siteimprove/alfa-test";
 
 test("#tabIndex() returns the tab index explicitly assigned to an element", (t) => {
-  t.equal((<div tabindex="42" />).tabIndex().get(), 42);
+  t.equal((<div tabindex="42" />).tabIndex().getUnsafe(), 42);
 });
 
 test("#tabIndex() ignores characters after the first non-digit", (t) => {
-  t.equal((<div tabindex="-1-toRemove" />).tabIndex().get(), -1);
+  t.equal((<div tabindex="-1-toRemove" />).tabIndex().getUnsafe(), -1);
 });
 
 test("#tabIndex() returns 0 for an <a> element with an href attribute", (t) => {
-  t.equal((<a href="#" />).tabIndex().get(), 0);
+  t.equal((<a href="#" />).tabIndex().getUnsafe(), 0);
 });
 
 test("#tabIndex() returns None for an <a> element without an href attribute", (t) => {
@@ -21,7 +21,7 @@ test("#tabIndex() returns None for a <div> element with tabindex null", (t) => {
 });
 
 test("#tabIndex() returns 0 for a <button> element", (t) => {
-  t.equal((<button />).tabIndex().get(), 0);
+  t.equal((<button />).tabIndex().getUnsafe(), 0);
 });
 
 test(`#tabIndex() returns 0 for a <summary> element that is the first <summary>
@@ -30,7 +30,7 @@ test(`#tabIndex() returns 0 for a <summary> element that is the first <summary>
 
   <details>{summary}</details>;
 
-  t.equal(summary.tabIndex().get(), 0);
+  t.equal(summary.tabIndex().getUnsafe(), 0);
 });
 
 test(`#tabIndex() returns None for a <summary> element that is not the child of

@@ -68,11 +68,11 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
     // (undocumented)
     forEach(mapper: Mapper<T, void>): void;
     // (undocumented)
-    get(message?: string): T;
-    // (undocumented)
     getOr<U>(value: U): T | U;
     // (undocumented)
     getOrElse<U>(value: Thunk<U>): T | U;
+    // @internal
+    getUnsafe(message?: string): T;
     // (undocumented)
     includes(value: T): this is Some<T>;
     // (undocumented)
@@ -110,7 +110,7 @@ export interface Option<T> extends Functor<T>, Applicative<T>, Monad<T>, Foldabl
 // @public (undocumented)
 export namespace Option {
     // (undocumented)
-    export function empty<T>(): Option<T>;
+    export function empty<T>(): None;
     // (undocumented)
     export function from<T>(value: T | null | undefined): Option<NonNullable<T>>;
     // (undocumented)
@@ -130,7 +130,7 @@ export namespace Option {
     // (undocumented)
     export type Maybe<T> = T | Option<T>;
     // (undocumented)
-    export function of<T>(value: T): Option<T>;
+    export function of<T>(value: T): Some<T>;
 }
 
 // @public (undocumented)
@@ -167,6 +167,8 @@ export class Some<T> implements Option<T> {
     getOr(): T;
     // (undocumented)
     getOrElse(): T;
+    // @internal (undocumented)
+    getUnsafe(): T;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
@@ -176,15 +178,15 @@ export class Some<T> implements Option<T> {
     // (undocumented)
     isSome(): this is Some<T>;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U>): Option<U>;
+    map<U>(mapper: Mapper<T, U>): Some<U>;
     // (undocumented)
     none(predicate: Predicate<T>): boolean;
     // (undocumented)
     static of<T>(value: T): Some<T>;
     // (undocumented)
-    or(): Option<T>;
+    or(): Some<T>;
     // (undocumented)
-    orElse(): Option<T>;
+    orElse(): Some<T>;
     // (undocumented)
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
     // (undocumented)
@@ -194,7 +196,7 @@ export class Some<T> implements Option<T> {
     // (undocumented)
     some(predicate: Predicate<T>): boolean;
     // (undocumented)
-    tee(callback: Callback<T>): Option<T>;
+    tee(callback: Callback<T>): this;
     // (undocumented)
     toArray(): [T];
     // (undocumented)

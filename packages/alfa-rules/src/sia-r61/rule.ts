@@ -32,10 +32,10 @@ export default Rule.Atomic.of<Page, Document>({
 
       expectations(target) {
         // The heading is guaranteed to exist because of the test in Applicability
-        const heading = firstHeading.get();
+        const heading = firstHeading.getUnsafe();
 
         const level = ariaNode
-          .from(firstHeading.get(), device)
+          .from(heading, device)
           .attribute("aria-level")
           .map((level) => Number(level.value))
           .getOr(0);

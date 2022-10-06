@@ -12,7 +12,7 @@ test(`evaluate() passes an aria-required attribute with a valid true value`, asy
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    passed(R19, target.attribute("aria-required").get(), {
+    passed(R19, target.attribute("aria-required").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
@@ -28,7 +28,7 @@ test("evaluate() passes an aria-expanded attribute with a valid undefined value"
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    passed(R19, target.attribute("aria-expanded").get(), {
+    passed(R19, target.attribute("aria-expanded").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
@@ -44,7 +44,7 @@ test("evaluate() passes an aria-pressed attribute with a valid tristate value", 
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    passed(R19, target.attribute("aria-pressed").get(), {
+    passed(R19, target.attribute("aria-pressed").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
@@ -56,7 +56,7 @@ test("evaluate() passes an aria-errormessage attribute with a valid ID reference
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    passed(R19, target.attribute("aria-errormessage").get(), {
+    passed(R19, target.attribute("aria-errormessage").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
@@ -72,7 +72,7 @@ test("evaluate() passes an aria-rowindex attribute with a valid integer value", 
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    passed(R19, target.attribute("aria-rowindex").get(), {
+    passed(R19, target.attribute("aria-rowindex").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
@@ -92,13 +92,13 @@ test(`evaluate() passes aria-valuemin, aria-valuemax and aria-valuenow
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    passed(R19, target.attribute("aria-valuemin").get(), {
+    passed(R19, target.attribute("aria-valuemin").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
-    passed(R19, target.attribute("aria-valuemax").get(), {
+    passed(R19, target.attribute("aria-valuemax").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
-    passed(R19, target.attribute("aria-valuenow").get(), {
+    passed(R19, target.attribute("aria-valuenow").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
@@ -114,7 +114,7 @@ test("evaluate() passes an aria-placeholder attribute with a valid string value"
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    passed(R19, target.attribute("aria-placeholder").get(), {
+    passed(R19, target.attribute("aria-placeholder").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
@@ -126,7 +126,7 @@ test("evaluate() passes an aria-dropeffect property with a valid token list valu
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    passed(R19, target.attribute("aria-dropeffect").get(), {
+    passed(R19, target.attribute("aria-dropeffect").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
@@ -142,7 +142,7 @@ test("evaluate() passes an aria-setsize property with the value -1 when the tota
   const document = h.document([<ul role="listbox">{target}</ul>]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    passed(R19, target.attribute("aria-setsize").get(), {
+    passed(R19, target.attribute("aria-setsize").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
   ]);
@@ -158,7 +158,7 @@ test("evaluate() fails an aria-expanded state with an invalid true/false/undefin
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    failed(R19, target.attribute("aria-expanded").get(), {
+    failed(R19, target.attribute("aria-expanded").getUnsafe(), {
       1: Outcomes.HasNoValidValue,
     }),
   ]);
@@ -174,7 +174,7 @@ test("evaluate() fails an aria-pressed state with an invalid tristate value", as
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    failed(R19, target.attribute("aria-pressed").get(), {
+    failed(R19, target.attribute("aria-pressed").getUnsafe(), {
       1: Outcomes.HasNoValidValue,
     }),
   ]);
@@ -190,7 +190,7 @@ test("evaluate() fails an aria-rowindex property with an invalid integer value",
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    failed(R19, target.attribute("aria-rowindex").get(), {
+    failed(R19, target.attribute("aria-rowindex").getUnsafe(), {
       1: Outcomes.HasNoValidValue,
     }),
   ]);
@@ -202,7 +202,7 @@ test("evaluate() fails an aria-live property with an invalid token value", async
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    failed(R19, target.attribute("aria-live").get(), {
+    failed(R19, target.attribute("aria-live").getUnsafe(), {
       1: Outcomes.HasNoValidValue,
     }),
   ]);
@@ -221,13 +221,13 @@ test("evaluate() fails an aria-rowindex property with an invalid integer value",
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    failed(R19, target.attribute("aria-valuemin").get(), {
+    failed(R19, target.attribute("aria-valuemin").getUnsafe(), {
       1: Outcomes.HasNoValidValue,
     }),
-    failed(R19, target.attribute("aria-valuemax").get(), {
+    failed(R19, target.attribute("aria-valuemax").getUnsafe(), {
       1: Outcomes.HasNoValidValue,
     }),
-    failed(R19, target.attribute("aria-valuenow").get(), {
+    failed(R19, target.attribute("aria-valuenow").getUnsafe(), {
       1: Outcomes.HasNoValidValue,
     }),
   ]);
@@ -239,7 +239,7 @@ test("evaluate() fails an aria-errormessage property with an invalid ID referenc
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
-    failed(R19, target.attribute("aria-errormessage").get(), {
+    failed(R19, target.attribute("aria-errormessage").getUnsafe(), {
       1: Outcomes.HasNoValidValue,
     }),
   ]);

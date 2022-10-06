@@ -14,7 +14,8 @@ export class Graph<T>
     Iterable<[T, Iterable<T>]>,
     Equatable,
     Hashable,
-    Serializable<Graph.JSON<T>> {
+    Serializable<Graph.JSON<T>>
+{
   public static of<T>(nodes: Map<T, Set<T>>): Graph<T> {
     return new Graph(nodes);
   }
@@ -88,7 +89,8 @@ export class Graph<T>
         nodes
           .get(from)
           .map((from) => from.add(to))
-          .get()
+          // Presence of from is guaranteed by first test.
+          .getUnsafe()
       )
     );
   }
@@ -106,7 +108,8 @@ export class Graph<T>
         nodes
           .get(from)
           .map((from) => from.delete(to))
-          .get()
+          // presence of from is guaranteed by first test.
+          .getUnsafe()
       )
     );
   }
@@ -128,7 +131,10 @@ export class Graph<T>
     const path: Array<T> = [];
 
     while (parents.has(to)) {
-      const parent = parents.get(to).get();
+      const parent = parents
+        .get(to)
+        // presence of to is guaranteed by the loop condition
+        .getUnsafe();
 
       path.unshift(to);
       to = parent;
@@ -271,9 +277,9 @@ export namespace Graph {
    * {@link https://en.wikipedia.org/wiki/Depth-first_search}
    */
   export const DepthFirst: Traversal = function* <T>(graph: Graph<T>, root: T) {
-    const stack: Array<[node: T, parent: T]> = [
-      ...graph.neighbors(root),
-    ].map((node) => [node, root]);
+    const stack: Array<[node: T, parent: T]> = [...graph.neighbors(root)].map(
+      (node) => [node, root]
+    );
 
     let seen = Set.of(root);
 
@@ -301,9 +307,9 @@ export namespace Graph {
     graph: Graph<T>,
     root: T
   ) {
-    const queue: Array<[node: T, parent: T]> = [
-      ...graph.neighbors(root),
-    ].map((node) => [node, root]);
+    const queue: Array<[node: T, parent: T]> = [...graph.neighbors(root)].map(
+      (node) => [node, root]
+    );
 
     let seen = Set.of(root, ...graph.neighbors(root));
 

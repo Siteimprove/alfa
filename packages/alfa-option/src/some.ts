@@ -38,7 +38,7 @@ export class Some<T> implements Option<T> {
     return false;
   }
 
-  public map<U>(mapper: Mapper<T, U>): Option<U> {
+  public map<U>(mapper: Mapper<T, U>): Some<U> {
     return new Some(mapper(this._value));
   }
 
@@ -104,15 +104,22 @@ export class Some<T> implements Option<T> {
     return option(this._value);
   }
 
-  public or(): Option<T> {
+  public or(): Some<T> {
     return this;
   }
 
-  public orElse(): Option<T> {
+  public orElse(): Some<T> {
     return this;
   }
 
   public get(): T {
+    return this._value;
+  }
+
+  /**
+   * @internal
+   */
+  public getUnsafe(): T {
     return this._value;
   }
 
@@ -124,7 +131,7 @@ export class Some<T> implements Option<T> {
     return this._value;
   }
 
-  public tee(callback: Callback<T>): Option<T> {
+  public tee(callback: Callback<T>): this {
     callback(this._value);
     return this;
   }

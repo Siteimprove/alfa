@@ -4,15 +4,14 @@ import { test } from "@siteimprove/alfa-test";
 import { Device } from "@siteimprove/alfa-device";
 
 import { Style } from "../../src/style";
+import { cascaded } from "../common";
 
 const device = Device.standard();
 
 test("#cascaded() parses `clip: auto`", (t) => {
   const element = <div style={{ clip: "auto" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("clip").get().toJSON(), {
+  t.deepEqual(cascaded(element, "clip"), {
     value: {
       type: "keyword",
       value: "auto",
@@ -24,11 +23,7 @@ test("#cascaded() parses `clip: auto`", (t) => {
 test("#cascaded() parses `clip: rect(1px, auto, 2em, auto)`", (t) => {
   const element = <div style={{ clip: "rect(1px, auto, 2em, auto)" }} />;
 
-  const style = Style.from(element, device);
-
-  const cascaded = style.cascaded("clip");
-
-  t.deepEqual(cascaded.get().toJSON(), {
+  t.deepEqual(cascaded(element, "clip"), {
     value: {
       type: "shape",
       shape: {
@@ -136,4 +131,3 @@ test("#cascaded() fails clip mixing comma and whitespace separation", (t) => {
 
   t.deepEqual(style.cascaded("clip").isNone(), true);
 });
-

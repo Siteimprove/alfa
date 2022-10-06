@@ -42,7 +42,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
       expectations(target) {
         const firstTabbable = target.tabOrder().find(isTabbable(device));
 
-        if (firstTabbable.isNone()) {
+        if (!firstTabbable.isSome()) {
           return { 1: Outcomes.HasNoTabbable };
         }
 

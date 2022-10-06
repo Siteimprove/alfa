@@ -8,7 +8,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 
 test("evaluate() passes an element with a lang attribute within <body> with a valid language tag", async (t) => {
   const element = <span lang="en">Hello World</span>;
-  const target = element.attribute("lang").get();
+  const target = element.attribute("lang").getUnsafe();
 
   const document = h.document([<body>{element}</body>]);
 
@@ -25,7 +25,7 @@ test("evaluate() passes an element with a lang attribute within <body> that is n
       Hello World
     </span>
   );
-  const target = element.attribute("lang").get();
+  const target = element.attribute("lang").getUnsafe();
 
   const document = h.document([<body>{element}</body>]);
 
@@ -42,7 +42,7 @@ test("evaluate() passes an element with a lang attribute within <body> that is n
       Hello World
     </span>
   );
-  const target = element.attribute("lang").get();
+  const target = element.attribute("lang").getUnsafe();
 
   const document = h.document([<body>{element}</body>]);
 
@@ -59,7 +59,7 @@ test("evaluate() passes an element with a lang attribute within <body> when the 
       Hello World
     </span>
   );
-  const target = element.attribute("lang").get();
+  const target = element.attribute("lang").getUnsafe();
 
   const document = h.document([
     <body>
@@ -76,7 +76,7 @@ test("evaluate() passes an element with a lang attribute within <body> when the 
 
 test(`evaluate() passes a span with a lang attribute within <body>  when the element's lang attribute overwrites an invalid lang attribute and ignores intertext whitespace`, async (t) => {
   const span = <span lang="en">Hello World</span>;
-  const target = span.attribute("lang").get();
+  const target = span.attribute("lang").getUnsafe();
 
   const document = h.document([
     <body>
@@ -91,7 +91,7 @@ test(`evaluate() passes a span with a lang attribute within <body>  when the ele
 
 test("evaluate() fails a text element with a lang attribute within <body> with an invalid value", async (t) => {
   const element = <span lang="invalid">Hello World</span>;
-  const target = element.attribute("lang").get()!;
+  const target = element.attribute("lang").getUnsafe()!;
 
   const document = h.document([<body>{element}</body>]);
 
@@ -109,7 +109,7 @@ test("evaluate() fails an element with an invalid lang attribute controlling an 
     </span>
   );
 
-  const target = element.attribute("lang").get()!;
+  const target = element.attribute("lang").getUnsafe()!;
 
   const document = h.document([<body>{element}</body>]);
 
@@ -123,7 +123,7 @@ test("evaluate() fails an element with an invalid lang attribute controlling an 
 test("evaluate() fails a <body> element with a lang attribute with an invalid value", async (t) => {
   const element = <body lang="invalid">Hello world</body>;
 
-  const target = element.attribute("lang").get()!;
+  const target = element.attribute("lang").getUnsafe()!;
 
   const document = h.document([element]);
 
@@ -138,8 +138,8 @@ test("evaluate() correctly handles nested elements with valid/invalid lang attri
   const element1 = <span lang="en">World</span>;
   const element2 = <div lang="invalid">Hello {element1}</div>;
 
-  const target1 = element1.attribute("lang").get();
-  const target2 = element2.attribute("lang").get();
+  const target1 = element1.attribute("lang").getUnsafe();
+  const target2 = element2.attribute("lang").getUnsafe();
 
   const document = h.document([<body>{element2}</body>]);
 

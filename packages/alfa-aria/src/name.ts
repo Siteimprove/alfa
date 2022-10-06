@@ -676,13 +676,11 @@ export namespace Name {
           return None;
         }
 
-        const attribute = element.attribute("aria-labelledby");
-
-        if (attribute.isNone()) {
-          return None;
-        }
-
-        return fromReferences(attribute.get(), element, device, state);
+        return element
+          .attribute("aria-labelledby")
+          .flatMap((attribute) =>
+            fromReferences(attribute, element, device, state)
+          );
       },
 
       // Step 2C: control embedded in a label, not currently handled
@@ -691,13 +689,9 @@ export namespace Name {
       // Step 2D: Use the `aria-label` attribute, if present.
       // https://w3c.github.io/accname/#step2D
       () => {
-        const attribute = element.attribute("aria-label");
-
-        if (attribute.isNone()) {
-          return None;
-        }
-
-        return fromLabel(attribute.get());
+        return element
+          .attribute("aria-label")
+          .flatMap((attribute) => fromLabel(attribute));
       },
 
       // Step 2E: Use native features, if present and allowed.
@@ -710,18 +704,14 @@ export namespace Name {
         // then this step produces an empty name.
         if (
           role.some((role) => role.isPresentational()) ||
-          element.namespace.isNone()
+          !element.namespace.isSome()
         ) {
           return None;
         }
 
-        const feature = Feature.from(element.namespace.get(), element.name);
-
-        if (feature.isNone()) {
-          return None;
-        }
-
-        return feature.get().name(element, device, state);
+        return Feature.from(element.namespace.get(), element.name).flatMap(
+          (feature) => feature.name(element, device, state)
+        );
       },
 
       // Step 2F: Use the subtree content, if referencing or allowed.
@@ -834,6 +824,9 @@ export namespace Name {
     device: Device,
     state: State
   ): Option<Name> {
+    if (!attribute.owner.isSome()) {
+      return None;
+    }
     const root = attribute.owner.get().root();
     const ids = attribute.tokens().toArray();
 
@@ -848,8 +841,8 @@ export namespace Name {
       .sortWith((a, b) =>
         Comparable.compareNumber(
           // the previous filter ensure that the id exists
-          ids.indexOf(a.id.get()),
-          ids.indexOf(b.id.get())
+          ids.indexOf(a.id.getUnsafe()),
+          ids.indexOf(b.id.getUnsafe())
         )
       );
 

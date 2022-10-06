@@ -4,15 +4,14 @@ import { h } from "@siteimprove/alfa-dom/h";
 import { Device } from "@siteimprove/alfa-device";
 
 import { Style } from "../../src/style";
+import { cascaded } from "../common";
 
 const device = Device.standard();
 
 test("#cascaded() parses `background-color: red`", (t) => {
   const element = <div style={{ backgroundColor: "red" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-color"), {
     value: {
       type: "color",
       format: "named",

@@ -1,14 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as Width from "../../src/property/border-image-width";
 
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 function width(
   top: number,
@@ -52,9 +49,7 @@ test(`#cascaded() parses \`border-image-width: 1px\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-width").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-width"), {
     value: width(1),
     source: h.declaration("border-image-width", "1px").toJSON(),
   });
@@ -69,9 +64,7 @@ test(`#cascaded() parses \`border-image-width: 1px 2px\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-width").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-width"), {
     value: width(1, 2),
     source: h.declaration("border-image-width", "1px 2px").toJSON(),
   });
@@ -86,9 +79,7 @@ test(`#cascaded() parses \`border-image-width: 1px 2px 3px\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-width").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-width"), {
     value: width(1, 2, 3),
     source: h.declaration("border-image-width", "1px 2px 3px").toJSON(),
   });
@@ -103,9 +94,7 @@ test(`#cascaded() parses \`border-image-width: 1px 2px 3px 4px\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-width").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-width"), {
     value: width(1, 2, 3, 4),
     source: h.declaration("border-image-width", "1px 2px 3px 4px").toJSON(),
   });

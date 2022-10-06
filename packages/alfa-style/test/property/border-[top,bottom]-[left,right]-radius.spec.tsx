@@ -1,11 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 for (const vertical of ["top", "bottom"] as const) {
   for (const horizontal of ["left", "right"] as const) {
@@ -19,9 +15,7 @@ for (const vertical of ["top", "bottom"] as const) {
         [h.sheet([h.rule.style("div", [h.declaration(property, "10%")])])]
       );
 
-      const style = Style.from(element, device);
-
-      t.deepEqual(style.cascaded(property).get().toJSON(), {
+      t.deepEqual(cascaded(element, property), {
         value: {
           type: "tuple",
           values: [
@@ -47,9 +41,7 @@ for (const vertical of ["top", "bottom"] as const) {
         [h.sheet([h.rule.style("div", [h.declaration(property, "10px 10%")])])]
       );
 
-      const style = Style.from(element, device);
-
-      t.deepEqual(style.cascaded(property).get().toJSON(), {
+      t.deepEqual(cascaded(element, property), {
         value: {
           type: "tuple",
           values: [
@@ -76,12 +68,10 @@ test(`#cascaded() parses \`border-radius: 1em 2em\``, (t) => {
 
   h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
-  const style = Style.from(element, device);
-
   for (const corners of ["top-left", "bottom-right"] as const) {
     const property = `border-${corners}-radius` as const;
 
-    t.deepEqual(style.cascaded(property).get().toJSON(), {
+    t.deepEqual(cascaded(element, property), {
       value: {
         type: "tuple",
         values: [
@@ -104,7 +94,7 @@ test(`#cascaded() parses \`border-radius: 1em 2em\``, (t) => {
   for (const corners of ["bottom-left", "top-right"] as const) {
     const property = `border-${corners}-radius` as const;
 
-    t.deepEqual(style.cascaded(property).get().toJSON(), {
+    t.deepEqual(cascaded(element, property), {
       value: {
         type: "tuple",
         values: [
@@ -131,9 +121,7 @@ test(`#cascaded() parses \`border-radius: 1em 2em / 1% 2% 3%\``, (t) => {
 
   h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-top-left-radius").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-top-left-radius"), {
     value: {
       type: "tuple",
       values: [
@@ -151,7 +139,7 @@ test(`#cascaded() parses \`border-radius: 1em 2em / 1% 2% 3%\``, (t) => {
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("border-top-right-radius").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-top-right-radius"), {
     value: {
       type: "tuple",
       values: [
@@ -169,7 +157,7 @@ test(`#cascaded() parses \`border-radius: 1em 2em / 1% 2% 3%\``, (t) => {
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("border-bottom-right-radius").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-bottom-right-radius"), {
     value: {
       type: "tuple",
       values: [
@@ -187,7 +175,7 @@ test(`#cascaded() parses \`border-radius: 1em 2em / 1% 2% 3%\``, (t) => {
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("border-bottom-left-radius").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-bottom-left-radius"), {
     value: {
       type: "tuple",
       values: [

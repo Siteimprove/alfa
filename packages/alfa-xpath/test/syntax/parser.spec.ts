@@ -4,7 +4,7 @@ import { Expression } from "../../src/expression";
 import { Parser } from "../../src/syntax/parser";
 
 function parse(t: Assertions, input: string, expected: Expression.JSON) {
-  t.deepEqual(Parser.parse(input).get().toJSON(), expected, input);
+  t.deepEqual(Parser.parse(input).getUnsafe().toJSON(), expected, input);
 }
 
 test(".parse() parses an integer literal", (t) => {

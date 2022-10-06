@@ -37,7 +37,7 @@ test("#distinct() removes duplicate values from a list", (t) => {
 });
 
 test("#get() looks up the value at an index if it exists", (t) => {
-  t.deepEqual(list.get(2).get(), 3);
+  t.deepEqual(list.get(2).getUnsafe(), 3);
 });
 
 test("#get() returns none when getting an index that is out of bounds", (t) => {
@@ -75,7 +75,7 @@ test("#set() and #get() work within the head of a list", (t) => {
 
   list = list.set(2, 42);
 
-  t.equal(list.get(2).get(), 42);
+  t.equal(list.get(2).getUnsafe(), 42);
 });
 
 test("#append() appends a value to a list", (t) => {
@@ -87,7 +87,7 @@ test("#append() behaves for large lists", (t) => {
 
   for (let i = 0; i < 100000; i++) {
     list = list.append(i);
-    t.equal(list.get(i).get(), i);
+    t.equal(list.get(i).getUnsafe(), i);
   }
 });
 

@@ -2,7 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
-import { Result } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
 import * as earl from "@siteimprove/alfa-earl";
@@ -637,7 +637,9 @@ export namespace Outcome {
     return Trilean.fold(
       (expectations) =>
         Trilean.every(expectations, (expectation) =>
-          expectation.map((expectation) => expectation.isOk()).getOr(undefined)
+          expectation
+            .map<Trilean>((expectation) => expectation.isOk())
+            .getOr(undefined)
         ),
       () =>
         Passed.of(
@@ -646,7 +648,9 @@ export namespace Outcome {
           Record.from(
             Iterable.map(expectations.entries(), ([id, expectation]) => [
               id,
-              expectation.get(),
+              // Due to the predicate in every, this branch is only taken if every
+              // expectation is a Some<Ok<T>>.
+              expectation.getUnsafe(),
             ])
           )
         ),
@@ -657,7 +661,9 @@ export namespace Outcome {
           Record.from(
             Iterable.map(expectations.entries(), ([id, expectation]) => [
               id,
-              expectation.get(),
+              // One expectation being a Some<Err<T>> is enough to take that branch,
+              // even if others are None.
+              expectation.getOr(Err.of(Diagnostic.empty)),
             ])
           )
         ),

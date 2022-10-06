@@ -56,7 +56,7 @@ test("evaluates() fails an element with both a valid and an invalid role", async
 
 test("evaluates() fails an element with an invalid role and not included in the accessibility tree by default", async (t) => {
   const span = <span role="invalid">Foo</span>;
-  const target = span.attribute("role").get();
+  const target = span.attribute("role").getUnsafe();
 
   const document = h.document([span]);
 
