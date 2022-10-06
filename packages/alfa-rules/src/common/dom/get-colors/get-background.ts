@@ -14,7 +14,7 @@ import { Layer } from "./get-layers";
 
 const { isVisibleShadow } = Style;
 
-export type Background = Array<Color.Resolved>;
+export type Background = ReadonlyArray<Color.Resolved>;
 
 const backgroundCacheWithFakeOpacity = Cache.empty<
   Device,

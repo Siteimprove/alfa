@@ -13,7 +13,7 @@ import { getBackground } from "./get-background";
 
 const { isElement } = Element;
 
-export type Foreground = Array<Color.Resolved>;
+export type Foreground = ReadonlyArray<Color.Resolved>;
 
 const foregroundCache = Cache.empty<
   Device,
