@@ -27,33 +27,36 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants(dom.Node.fullTree)
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasName("input", "select", "textarea"),
-              not(hasInputType("hidden", "button", "submit", "reset")),
-              hasAttribute("autocomplete", hasTokens),
-              hasAttribute(
-                "autocomplete",
-                (autocomplete) =>
-                  normalize(autocomplete) !== "on" &&
-                  normalize(autocomplete) !== "off"
-              ),
-              or(
-                isTabbable(device),
-                hasRole(device, (role) => role.isWidget())
-              ),
-              isPerceivableForAll(device),
-              (element) =>
-                Node.from(element, device)
-                  .attribute("aria-disabled")
-                  .none((disabled) => disabled.value === "true")
+        return (
+          document
+            .descendants(dom.Node.fullTree)
+            .filter(isElement)
+            .filter(
+              and(
+                hasNamespace(Namespace.HTML),
+                hasName("input", "select", "textarea"),
+                not(hasInputType("hidden", "button", "submit", "reset")),
+                hasAttribute("autocomplete", hasTokens),
+                hasAttribute(
+                  "autocomplete",
+                  (autocomplete) =>
+                    normalize(autocomplete) !== "on" &&
+                    normalize(autocomplete) !== "off"
+                ),
+                or(
+                  isTabbable(device),
+                  hasRole(device, (role) => role.isWidget())
+                ),
+                isPerceivableForAll(device),
+                (element) =>
+                  Node.from(element, device)
+                    .attribute("aria-disabled")
+                    .none((disabled) => disabled.value === "true")
+              )
             )
-          )
-          .map((element) => element.attribute("autocomplete").get());
+            // The big second filter ensure that autocomplete exists
+            .map((element) => element.attribute("autocomplete").getUnsafe())
+        );
       },
 
       expectations(target) {

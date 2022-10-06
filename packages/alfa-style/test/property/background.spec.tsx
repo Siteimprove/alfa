@@ -1,18 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test("#cascaded() parses `background: red`", (t) => {
   const element = <div style={{ background: `red` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-color").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-color"), {
     value: {
       type: "color",
       format: "named",
@@ -25,9 +19,7 @@ test("#cascaded() parses `background: red`", (t) => {
 test(`#cascaded() parses \`background: url("foo.png")\``, (t) => {
   const element = <div style={{ background: `url("foo.png")` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-image").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-image"), {
     value: {
       type: "list",
       values: [
@@ -48,9 +40,7 @@ test(`#cascaded() parses \`background: url("foo.png")\``, (t) => {
 test(`#cascaded() parses \`background: 12px\``, (t) => {
   const element = <div style={{ background: `12px` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-position-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-position-x"), {
     value: {
       type: "list",
       values: [
@@ -65,7 +55,7 @@ test(`#cascaded() parses \`background: 12px\``, (t) => {
     source: h.declaration("background", `12px`).toJSON(),
   });
 
-  t.deepEqual(style.cascaded("background-position-y").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-position-y"), {
     value: {
       type: "list",
       values: [
@@ -83,9 +73,7 @@ test(`#cascaded() parses \`background: 12px\``, (t) => {
 test(`#cascaded() parses \`background: 12px 0\``, (t) => {
   const element = <div style={{ background: `12px 0` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-position-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-position-x"), {
     value: {
       type: "list",
       values: [
@@ -100,7 +88,7 @@ test(`#cascaded() parses \`background: 12px 0\``, (t) => {
     source: h.declaration("background", `12px 0`).toJSON(),
   });
 
-  t.deepEqual(style.cascaded("background-position-y").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-position-y"), {
     value: {
       type: "list",
       values: [
@@ -119,9 +107,7 @@ test(`#cascaded() parses \`background: 12px 0\``, (t) => {
 test(`#cascaded() parses \`background: 0 / cover\``, (t) => {
   const element = <div style={{ background: `0 / cover` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-size").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-size"), {
     value: {
       type: "list",
       values: [

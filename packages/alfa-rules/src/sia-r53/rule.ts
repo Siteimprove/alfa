@@ -33,7 +33,10 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const previous = headings.takeUntil(equals(target)).last().get();
+        // * The target is in headings by construction of the applicability.
+        // * The first element of heading is not a target due to the .skip(1)
+        // * Therefore headings contain at least on element before the target.
+        const previous = headings.takeUntil(equals(target)).last().getUnsafe();
 
         return {
           1: expectation(

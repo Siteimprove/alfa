@@ -1,11 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test(`#cascaded() parses \`border-image-source: url("foo.png")\``, (t) => {
   const element = (
@@ -16,9 +12,7 @@ test(`#cascaded() parses \`border-image-source: url("foo.png")\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-source").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-source"), {
     value: {
       type: "image",
       image: {

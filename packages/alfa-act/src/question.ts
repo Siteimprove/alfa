@@ -166,7 +166,7 @@ export class Question<
       | Result<ANSWER, unknown>,
     answerOrMerger?: ANSWER | Mapper<Diagnostic, Diagnostic, [Diagnostic]>
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
-    let condition: boolean;
+    let condition = false;
     let answer: ANSWER;
     let diagnostic = this._diagnostic;
 
@@ -179,9 +179,8 @@ export class Question<
       // Type is enforced by overload.
       answer = answerOrMerger as ANSWER;
     } else if (isOption(conditionOrPredicateOrAnswer)) {
-      condition = conditionOrPredicateOrAnswer.isSome();
-
-      if (condition) {
+      if (conditionOrPredicateOrAnswer.isSome()) {
+        condition = true;
         answer = conditionOrPredicateOrAnswer.get();
       }
     } else {

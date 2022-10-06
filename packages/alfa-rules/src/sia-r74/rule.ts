@@ -52,7 +52,8 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         const { value: fontSize } = Style.from(target, device)
           .cascaded("font-size")
-          .get();
+          // Presence of a cascaded value is guaranteed by filter in applicability
+          .getUnsafe();
 
         return {
           1: expectation(

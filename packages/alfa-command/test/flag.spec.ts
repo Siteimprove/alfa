@@ -25,7 +25,7 @@ test(".optional() constructs an optional flag", (t) => {
 
   // When parsed with valid arguments, the value should be wrapped in `Option`.
   [, set] = flag.parse(["--foo", "hello"]).get();
-  t.deepEqual(set.value.get(), "hello");
+  t.deepEqual(set.value.getUnsafe(), "hello");
 });
 
 test(".repeatable() constructs a repeatable flag", (t) => {
@@ -49,18 +49,18 @@ test(".repeatable().optional() constructs a repeatable, optional flag", (t) => {
 
   // When parsed with valid arguments, the value be wrapped in `Option`.
   let [argv, set] = flag.parse(["--foo", "hello", "--foo", "world"]).get();
-  t.deepEqual(set.value.get(), ["hello"]);
+  t.deepEqual(set.value.getUnsafe(), ["hello"]);
 
   // When parsing the flag the second time, the second value should be combined
   // with the first value and wrapped in `Option`.
   [argv, set] = set.parse(argv).get();
-  t.deepEqual(set.value.get(), ["hello", "world"]);
+  t.deepEqual(set.value.getUnsafe(), ["hello", "world"]);
 
   // When parsing the flag the third time, the value should remain the same as
   // there are no more arguments left. As the flag is optional, this does not
   // cause an error.
   [, set] = set.parse(argv).get();
-  t.deepEqual(set.value.get(), ["hello", "world"]);
+  t.deepEqual(set.value.getUnsafe(), ["hello", "world"]);
 
   // When parsed without arguments, the value should be `None` as the flag is
   // optional.

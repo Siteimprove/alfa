@@ -1,14 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as Slice from "../../src/property/border-image-slice";
 
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 function slice(
   top: number,
@@ -48,9 +45,7 @@ test(`#cascaded() parses \`border-image-slice: 1\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-slice").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-slice"), {
     value: slice(1),
     source: h.declaration("border-image-slice", "1").toJSON(),
   });
@@ -65,9 +60,7 @@ test(`#cascaded() parses \`border-image-slice: 1 2\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-slice").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-slice"), {
     value: slice(1, 2),
     source: h.declaration("border-image-slice", "1 2").toJSON(),
   });
@@ -82,9 +75,7 @@ test(`#cascaded() parses \`border-image-slice: 1 2 3\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-slice").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-slice"), {
     value: slice(1, 2, 3),
     source: h.declaration("border-image-slice", "1 2 3").toJSON(),
   });
@@ -99,9 +90,7 @@ test(`#cascaded() parses \`border-image-slice: 1 2 3 4\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-slice").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-slice"), {
     value: slice(1, 2, 3, 4),
     source: h.declaration("border-image-slice", "1 2 3 4").toJSON(),
   });
@@ -116,9 +105,7 @@ test(`#cascaded() parses \`border-image-slice: 1 2 3 4 fill\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-slice").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-slice"), {
     value: {
       type: "tuple",
       values: [

@@ -271,7 +271,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
     }
 
     if (this._cannotBeABase) {
-      output += this._path.get(0).get();
+      output += this._path.get(0).getOr("");
     } else {
       if (
         this._host.isNone() &&

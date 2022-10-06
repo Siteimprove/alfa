@@ -23,11 +23,14 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ document }) {
     return {
       applicability() {
-        return document
-          .children()
-          .filter(isDocumentElement)
-          .filter(hasAttribute("lang", nor(isEmpty, isWhitespace)))
-          .map((element) => element.attribute("lang").get());
+        return (
+          document
+            .children()
+            .filter(isDocumentElement)
+            .filter(hasAttribute("lang", nor(isEmpty, isWhitespace)))
+            // The previous filter ensures that lang exists
+            .map((element) => element.attribute("lang").getUnsafe())
+        );
       },
 
       expectations(target) {

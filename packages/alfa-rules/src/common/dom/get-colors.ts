@@ -301,7 +301,7 @@ export function getForeground(
 
       const color = Color.resolve(foregroundColor, style);
 
-      if (color.isNone()) {
+      if (!color.isSome()) {
         error = Option.of(
           ColorError.unresolvableForegroundColor(element, foregroundColor)
         );

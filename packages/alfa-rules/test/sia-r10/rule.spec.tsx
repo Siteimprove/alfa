@@ -8,7 +8,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 
 test("evaluate() passes a valid simple autocomplete attribute on an <input> element", async (t) => {
   const element = <input autocomplete="username" />;
-  const target = element.attribute("autocomplete").get()!;
+  const target = element.attribute("autocomplete").getUnsafe();
 
   const document = h.document([element]);
 
@@ -21,7 +21,7 @@ test("evaluate() passes a valid simple autocomplete attribute on an <input> elem
 
 test("evaluate() passes a valid simple autocomplete attribute on an <input> element", async (t) => {
   const element = <input autocomplete="username" />;
-  const target = element.attribute("autocomplete").get()!;
+  const target = element.attribute("autocomplete").getUnsafe();
 
   const document = h.document([element]);
 
@@ -34,7 +34,7 @@ test("evaluate() passes a valid simple autocomplete attribute on an <input> elem
 
 test("evaluate() fails an autocomplete attribute with a non-existing term", async (t) => {
   const element = <input autocomplete="invalid" />;
-  const target = element.attribute("autocomplete").get()!;
+  const target = element.attribute("autocomplete").getUnsafe();
 
   const document = h.document([element]);
 
@@ -47,7 +47,7 @@ test("evaluate() fails an autocomplete attribute with a non-existing term", asyn
 
 test("evaluate() fails an autocomplete attribute with terms in wrong order", async (t) => {
   const element = <input autocomplete="work shipping email" />;
-  const target = element.attribute("autocomplete").get()!;
+  const target = element.attribute("autocomplete").getUnsafe();
 
   const document = h.document([element]);
 
@@ -60,7 +60,7 @@ test("evaluate() fails an autocomplete attribute with terms in wrong order", asy
 
 test("evaluate() fails an autocomplete attribute with a comma-separated list of terms", async (t) => {
   const element = <input autocomplete="work,email" />;
-  const target = element.attribute("autocomplete").get()!;
+  const target = element.attribute("autocomplete").getUnsafe();
 
   const document = h.document([element]);
 

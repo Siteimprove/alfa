@@ -1,16 +1,12 @@
-import { Device } from "@siteimprove/alfa-device";
-import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
-import { Style } from "../../src";
+import { h } from "@siteimprove/alfa-dom";
 
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test("#cascaded() parses single keyword", (t) => {
   const element = <div style={{ cursor: "auto" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("cursor").get().toJSON(), {
+  t.deepEqual(cascaded(element, "cursor"), {
     value: {
       type: "tuple",
       values: [
@@ -25,9 +21,7 @@ test("#cascaded() parses single keyword", (t) => {
 test("#cascaded() parses a URL with no coordinates", (t) => {
   const element = <div style={{ cursor: "url(cursor.png), default" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("cursor").get().toJSON(), {
+  t.deepEqual(cascaded(element, "cursor"), {
     value: {
       type: "tuple",
       values: [
@@ -51,9 +45,7 @@ test("#cascaded() parses a URL with no coordinates", (t) => {
 test("#cascaded() parses a URL with coordinates", (t) => {
   const element = <div style={{ cursor: "url(cursor.png) 2 4, pointer" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("cursor").get().toJSON(), {
+  t.deepEqual(cascaded(element, "cursor"), {
     value: {
       type: "tuple",
       values: [
@@ -91,9 +83,7 @@ test("#cascaded() parses a long list", (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("cursor").get().toJSON(), {
+  t.deepEqual(cascaded(element, "cursor"), {
     value: {
       type: "tuple",
       values: [

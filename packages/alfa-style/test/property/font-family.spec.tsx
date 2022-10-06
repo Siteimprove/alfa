@@ -1,11 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test("#cascaded() parses `font-family: Arial`", (t) => {
   const element = (
@@ -16,9 +12,7 @@ test("#cascaded() parses `font-family: Arial`", (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("font-family").get().toJSON(), {
+  t.deepEqual(cascaded(element, "font-family"), {
     value: {
       type: "list",
       separator: ", ",
@@ -42,9 +36,7 @@ test("#cascaded() parses `font-family: serif`", (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("font-family").get().toJSON(), {
+  t.deepEqual(cascaded(element, "font-family"), {
     value: {
       type: "list",
       separator: ", ",
@@ -68,9 +60,7 @@ test(`#cascaded() parses \`font-family: "Times New Roman"\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("font-family").get().toJSON(), {
+  t.deepEqual(cascaded(element, "font-family"), {
     value: {
       type: "list",
       separator: ", ",
@@ -94,9 +84,7 @@ test(`#cascaded() parses \`font-family: Times New Roman\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("font-family").get().toJSON(), {
+  t.deepEqual(cascaded(element, "font-family"), {
     value: {
       type: "list",
       separator: ", ",
@@ -120,9 +108,7 @@ test(`#cascaded() parses \`font-family: Arial, sans-serif\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("font-family").get().toJSON(), {
+  t.deepEqual(cascaded(element, "font-family"), {
     value: {
       type: "list",
       separator: ", ",

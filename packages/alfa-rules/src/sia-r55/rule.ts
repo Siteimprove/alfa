@@ -56,7 +56,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             .flatMap((sameName) =>
               sameName
                 // We have filtered by having a role, and can safely get it.
-                .groupBy((landmark) => Node.from(landmark, device).role.get())
+                .groupBy((landmark) =>
+                  Node.from(landmark, device).role.getUnsafe()
+                )
             )
             .filter((elements) => elements.size > 1)
             .map(Group.of)
@@ -67,9 +69,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
       expectations(target) {
         // Empty groups have been filtered out already, so we can safely get the
         // first element
-        const first = Node.from(Iterable.first(target).get(), device);
-        const role = first.role.get().name;
-        const name = first.name.get().value;
+        const first = Node.from(Iterable.first(target).getUnsafe(), device);
+        const role = first.role.map((role) => role.name).getOr("generic");
+        const name = first.name.map((name) => name.value).getOr("");
 
         const sameResource = Question.of(
           "is-content-equivalent",

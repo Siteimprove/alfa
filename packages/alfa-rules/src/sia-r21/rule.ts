@@ -25,17 +25,20 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants(Node.fullTree)
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML, Namespace.SVG),
-              hasAttribute("role", (value) => value.trim().length > 0),
-              not(isProgrammaticallyHidden(device))
+        return (
+          document
+            .descendants(Node.fullTree)
+            .filter(isElement)
+            .filter(
+              and(
+                hasNamespace(Namespace.HTML, Namespace.SVG),
+                hasAttribute("role", (value) => value.trim().length > 0),
+                not(isProgrammaticallyHidden(device))
+              )
             )
-          )
-          .map((element) => element.attribute("role").get());
+            // The previous filter ensures the existence of role.
+            .map((element) => element.attribute("role").getUnsafe())
+        );
       },
 
       expectations(target) {

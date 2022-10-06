@@ -411,7 +411,7 @@ export namespace Selector {
 
       const value = this._value
         .map((value) => `"${JSON.stringify(value)}"`)
-        .get();
+        .getOr("");
 
       const matcher = this._matcher.getOr("");
 
@@ -501,9 +501,9 @@ export namespace Selector {
       Token.parseDelim("=")
     ),
     (delim) =>
-      delim.isNone()
-        ? Attribute.Matcher.Equal
-        : (`${delim.get()}=` as Attribute.Matcher)
+      delim.isSome()
+        ? (`${delim.get()}=` as Attribute.Matcher)
+        : Attribute.Matcher.Equal
   );
 
   /**
@@ -534,19 +534,19 @@ export namespace Selector {
     (result) => {
       const [[namespace, name], rest] = result;
 
-      if (rest.isNone()) {
-        return Attribute.of(namespace, name);
+      if (rest.isSome()) {
+        const [[matcher, value], modifier] = rest.get();
+
+        return Attribute.of(
+          namespace,
+          name,
+          Option.of(value.value),
+          Option.of(matcher),
+          modifier
+        );
       }
 
-      const [[matcher, value], modifier] = rest.get();
-
-      return Attribute.of(
-        namespace,
-        name,
-        Option.of(value.value),
-        Option.of(matcher),
-        modifier
-      );
+      return Attribute.of(namespace, name);
     }
   );
 

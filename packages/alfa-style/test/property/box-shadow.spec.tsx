@@ -1,18 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test("#cascaded() parses `box-shadow: none`", (t) => {
   const element = <div style={{ boxShadow: "none" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
+  t.deepEqual(cascaded(element, "box-shadow"), {
     value: {
       type: "keyword",
       value: "none",
@@ -24,9 +18,7 @@ test("#cascaded() parses `box-shadow: none`", (t) => {
 test("#cascaded() parses `box-shadow: 1px 2px`", (t) => {
   const element = <div style={{ boxShadow: "1px 2px" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
+  t.deepEqual(cascaded(element, "box-shadow"), {
     value: {
       type: "list",
       separator: ", ",
@@ -68,9 +60,7 @@ test("#cascaded() parses `box-shadow: 1px 2px`", (t) => {
 test("#cascaded() parses `box-shadow: 1px 2px 3px`", (t) => {
   const element = <div style={{ boxShadow: "1px 2px 3px" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
+  t.deepEqual(cascaded(element, "box-shadow"), {
     value: {
       type: "list",
       separator: ", ",
@@ -112,9 +102,7 @@ test("#cascaded() parses `box-shadow: 1px 2px 3px`", (t) => {
 test("#cascaded() parses `box-shadow: 1px 2px 3px 4px`", (t) => {
   const element = <div style={{ boxShadow: "1px 2px 3px 4px" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
+  t.deepEqual(cascaded(element, "box-shadow"), {
     value: {
       type: "list",
       separator: ", ",
@@ -156,9 +144,7 @@ test("#cascaded() parses `box-shadow: 1px 2px 3px 4px`", (t) => {
 test("#cascaded() parses `box-shadow: 1px 2px inset`", (t) => {
   const element = <div style={{ boxShadow: "1px 2px inset" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
+  t.deepEqual(cascaded(element, "box-shadow"), {
     value: {
       type: "list",
       separator: ", ",
@@ -200,9 +186,7 @@ test("#cascaded() parses `box-shadow: 1px 2px inset`", (t) => {
 test("#cascaded() parses `box-shadow: inset 1px 2px`", (t) => {
   const element = <div style={{ boxShadow: "inset 1px 2px" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
+  t.deepEqual(cascaded(element, "box-shadow"), {
     value: {
       type: "list",
       separator: ", ",
@@ -244,9 +228,7 @@ test("#cascaded() parses `box-shadow: inset 1px 2px`", (t) => {
 test("#cascaded() parses `box-shadow: 1px 2px red`", (t) => {
   const element = <div style={{ boxShadow: "1px 2px red" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
+  t.deepEqual(cascaded(element, "box-shadow"), {
     value: {
       type: "list",
       separator: ", ",
@@ -289,9 +271,7 @@ test("#cascaded() parses `box-shadow: 1px 2px red`", (t) => {
 test("#cascaded() parses `box-shadow: red 1px 2px`", (t) => {
   const element = <div style={{ boxShadow: "red 1px 2px" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
+  t.deepEqual(cascaded(element, "box-shadow"), {
     value: {
       type: "list",
       separator: ", ",
@@ -334,9 +314,7 @@ test("#cascaded() parses `box-shadow: red 1px 2px`", (t) => {
 test("#cascaded() parses `box-shadow: red 1px 2px inset`", (t) => {
   const element = <div style={{ boxShadow: "red 1px 2px inset" }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("box-shadow").get().toJSON(), {
+  t.deepEqual(cascaded(element, "box-shadow"), {
     value: {
       type: "list",
       separator: ", ",

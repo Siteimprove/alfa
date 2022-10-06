@@ -76,10 +76,15 @@ export default Property.register(
 
           case "calculation":
             return (
-              height.isNumber()
-                ? height.resolve({ percentage })
-                : height.resolve({ length, percentage })
-            ).get();
+              (
+                height.isNumber()
+                  ? height.resolve({ percentage })
+                  : height.resolve({ length, percentage })
+              )
+                // Since the calculation has been parsed and typed, there should
+                // always be something to get.
+                .getUnsafe()
+            );
         }
       }),
     {

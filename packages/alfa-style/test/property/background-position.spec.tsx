@@ -1,18 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test("#cascaded() parses `background-position: left`", (t) => {
   const element = <div style={{ backgroundPosition: `left` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-position-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-position-x"), {
     value: {
       type: "list",
       values: [
@@ -30,7 +24,7 @@ test("#cascaded() parses `background-position: left`", (t) => {
     source: h.declaration("background-position", "left").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("background-position-y").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-position-y"), {
     value: {
       type: "list",
       values: [
@@ -48,9 +42,7 @@ test("#cascaded() parses `background-position: left`", (t) => {
 test("#cascaded() parses `background-position: top`", (t) => {
   const element = <div style={{ backgroundPosition: `top` }} />;
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("background-position-y").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-position-y"), {
     value: {
       type: "list",
       values: [
@@ -68,7 +60,7 @@ test("#cascaded() parses `background-position: top`", (t) => {
     source: h.declaration("background-position", "top").toJSON(),
   });
 
-  t.deepEqual(style.cascaded("background-position-x").get().toJSON(), {
+  t.deepEqual(cascaded(element, "background-position-x"), {
     value: {
       type: "list",
       values: [

@@ -162,18 +162,19 @@ export default Rule.Atomic.of<Page, Element>({
                 linkColors.length === 1 &&
                 getForeground(container, device).some(
                   (containerColors) =>
-                    // Similalry to the link, we assume the rule is applicable if the container has more than one foreground color
+                    // Similarly to the link, we assume the rule is applicable if the container has more than one foreground color
                     containerColors.length === 1 &&
                     linkColors[0].equals(containerColors[0])
                 )
             );
 
           for (const [link, linkTexts] of linkText) {
-            const nonLinkTexts = nonLinkText
-              .get(containers.get(link).get())
+            const nonLinkTexts = containers
+              .get(link)
+              .flatMap((container) => nonLinkText.get(container))
               // At this point, we should always have something, still
               // safeguarding against any weird case.
-              .getOr(Set.empty<Element>());
+              .getOrElse<Set<Element>>(Set.empty);
 
             if (
               linkTexts.some((linkElement) =>
@@ -191,9 +192,12 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         const nonLinkElements = containers
           .get(target)
-          .get()
-          .inclusiveDescendants(Node.fullTree)
-          .filter(and(isElement, hasNonLinkText(device)));
+          .map((node) =>
+            node
+              .inclusiveDescendants(Node.fullTree)
+              .filter(and(isElement, hasNonLinkText(device)))
+          )
+          .getOrElse<Sequence<Element>>(Sequence.empty);
 
         const linkElements = target
           // All descendants of the link.

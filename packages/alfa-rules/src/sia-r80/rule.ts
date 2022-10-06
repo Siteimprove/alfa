@@ -41,7 +41,8 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         const { value: lineHeight } = Style.from(target, device)
           .cascaded("line-height")
-          .get();
+          // Presence of a cascaded value is guaranteed by filter in applicability
+          .getUnsafe();
 
         return {
           1: expectation(

@@ -40,6 +40,8 @@ export function hasUniqueId(): Predicate<Element> {
           )
         );
       })
-      .has(element.id.get())
+      // The initial hasId in the conjunction guarantee that there is one.
+      // Still defaulting to an impossible one.
+      .has(element.id.getOr("impossible id due to spaces"))
   );
 }

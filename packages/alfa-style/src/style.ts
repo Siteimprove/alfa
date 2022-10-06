@@ -72,16 +72,14 @@ export class Style implements Serializable<Style.JSON> {
     for (const [name, variable] of variables) {
       const substitution = substitute(variable.value, variables, parent);
 
-      // If the replaced value is invalid, remove the variable entirely.
-      if (substitution.isNone()) {
-        variables.delete(name);
-      }
-
-      // Otherwise, use the replaced value as the new value of the variable.
-      else {
+      // If the replaced value is valid, use the replaced value as the new value of the variable.
+      if (substitution.isSome()) {
         const [tokens] = substitution.get();
 
         variables.set(name, Value.of(tokens, variable.source));
+      } else {
+        // Otherwise, remove the variable entirely.
+        variables.delete(name);
       }
     }
 
@@ -381,7 +379,7 @@ function parseLonghand<N extends Property.Name>(
 ) {
   const substitution = substitute(Lexer.lex(value), variables, parent);
 
-  if (substitution.isNone()) {
+  if (!substitution.isSome()) {
     return Result.of(Keyword.of("unset"));
   }
 
@@ -406,7 +404,7 @@ function parseShorthand<N extends Property.Shorthand.Name>(
 ) {
   const substitution = substitute(Lexer.lex(value), variables, parent);
 
-  if (substitution.isNone()) {
+  if (!substitution.isSome()) {
     return Result.of(
       Iterable.map(
         shorthand.properties,
@@ -551,7 +549,7 @@ function substitute(
 
       const value = resolve(name, variables, parent, fallback, visited);
 
-      if (value.isNone()) {
+      if (!value.isSome()) {
         return None;
       }
 
@@ -569,7 +567,10 @@ function substitute(
     return None;
   }
 
-  return Option.of([Slice.of(replaced), substituted]);
+  return Option.of<[tokens: Slice<Token>, substituted: boolean]>([
+    Slice.of(replaced),
+    substituted,
+  ]);
 }
 
 function trim(tokens: Slice<Token>): Slice<Token> {

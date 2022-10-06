@@ -1,16 +1,13 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as Outset from "../../src/property/border-image-outset";
 import * as Slice from "../../src/property/border-image-slice";
 import * as Width from "../../src/property/border-image-width";
 
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 function fourLength(
   top: number,
@@ -81,9 +78,7 @@ test(`#cascaded() parses \`border-image: url(foo.png)\``, (t) => {
 
   h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-source").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-source"), {
     value: {
       type: "image",
       image: {
@@ -104,9 +99,7 @@ test(`#cascaded() parses \`border-image: url(foo.png) 27 23 / 50px 30px / 1px ro
 
   h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-source").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-source"), {
     value: {
       type: "image",
       image: {
@@ -117,22 +110,22 @@ test(`#cascaded() parses \`border-image: url(foo.png) 27 23 / 50px 30px / 1px ro
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("border-image-slice").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-slice"), {
     value: slice(27, 23),
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("border-image-width").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-width"), {
     value: fourLength(50, 30),
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("border-image-outset").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-outset"), {
     value: fourLength(1),
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("border-image-repeat").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-repeat"), {
     value: {
       type: "tuple",
       values: [
@@ -159,9 +152,7 @@ test(`#cascaded() parses \`border-image: 27 23 / 50px 30px / 1px url(foo.png) ro
 
   h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-source").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-source"), {
     value: {
       type: "image",
       image: {
@@ -172,22 +163,22 @@ test(`#cascaded() parses \`border-image: 27 23 / 50px 30px / 1px url(foo.png) ro
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("border-image-slice").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-slice"), {
     value: slice(27, 23),
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("border-image-width").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-width"), {
     value: fourLength(50, 30),
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("border-image-outset").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-outset"), {
     value: fourLength(1),
     source: declaration.toJSON(),
   });
 
-  t.deepEqual(style.cascaded("border-image-repeat").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-repeat"), {
     value: {
       type: "tuple",
       values: [

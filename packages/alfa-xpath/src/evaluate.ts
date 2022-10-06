@@ -30,11 +30,11 @@ export function* evaluate(
   if (typeof expression === "string") {
     const parsed = Parser.parse(expression);
 
-    if (parsed.isNone()) {
+    if (parsed.isSome()) {
+      expression = parsed.get();
+    } else {
       return;
     }
-
-    expression = parsed.get();
   }
 
   if (expression instanceof Builder) {

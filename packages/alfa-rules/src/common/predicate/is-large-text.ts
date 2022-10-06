@@ -12,7 +12,7 @@ export function isLargeText(device: Device): Predicate<Text> {
   return (text) => {
     const parent = text.parent(Node.flatTree).filter(isElement);
 
-    if (parent.isNone()) {
+    if (!parent.isSome()) {
       return false;
     }
 

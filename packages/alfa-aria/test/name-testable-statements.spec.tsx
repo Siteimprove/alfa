@@ -19,7 +19,7 @@ function getTarget(document: Document, id: string): Element {
   return document
     .descendants()
     .find(and(isElement, hasId("test")))
-    .get();
+    .getUnsafe();
 }
 
 function getName(element: Element): string {

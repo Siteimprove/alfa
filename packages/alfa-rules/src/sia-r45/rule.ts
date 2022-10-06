@@ -47,7 +47,8 @@ export default Rule.Atomic.of<Page, Attribute>({
           );
 
         for (const cell of cells) {
-          headers = headers.set(cell.attribute("headers").get(), table);
+          // The previous filter ensures that headers exists.
+          headers = headers.set(cell.attribute("headers").getUnsafe(), table);
         }
 
         return headers;
@@ -59,7 +60,8 @@ export default Rule.Atomic.of<Page, Attribute>({
       },
 
       expectations(target) {
-        const table = headers.get(target).get();
+        // targets are headers' key, so there is something in the map.
+        const table = headers.get(target).getUnsafe();
 
         const ids = target.tokens();
 

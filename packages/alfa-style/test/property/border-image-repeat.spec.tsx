@@ -1,11 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 test(`#cascaded() parses \`border-image-repeat: round\``, (t) => {
   const element = (
@@ -16,9 +12,7 @@ test(`#cascaded() parses \`border-image-repeat: round\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-repeat").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-repeat"), {
     value: {
       type: "tuple",
       values: [
@@ -45,9 +39,7 @@ test(`#cascaded() parses \`border-image-repeat: round space\``, (t) => {
     />
   );
 
-  const style = Style.from(element, device);
-
-  t.deepEqual(style.cascaded("border-image-repeat").get().toJSON(), {
+  t.deepEqual(cascaded(element, "border-image-repeat"), {
     value: {
       type: "tuple",
       values: [

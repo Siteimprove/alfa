@@ -15,7 +15,8 @@ export class Network<N, E>
     Iterable<[N, Iterable<[N, Iterable<E>]>]>,
     Equatable,
     Hashable,
-    Serializable<Network.JSON<N, E>> {
+    Serializable<Network.JSON<N, E>>
+{
   public static of<N, E>(nodes: Map<N, Map<N, Set<E>>>): Network<N, E> {
     return new Network(nodes);
   }
@@ -110,7 +111,8 @@ export class Network<N, E>
                 .getOrElse(() => Set.from(edges))
             )
           )
-          .get()
+          // The presence of from is guaranteed by the second test.
+          .getUnsafe()
       )
     );
   }
@@ -147,7 +149,8 @@ export class Network<N, E>
 
             return from;
           })
-          .get()
+          // The presence of from is guaranteed by the initial test.
+          .getUnsafe()
       )
     );
   }
@@ -174,7 +177,8 @@ export class Network<N, E>
     const path: Array<[N, Iterable<E>]> = [];
 
     while (parents.has(to)) {
-      const [edges, parent] = parents.get(to).get();
+      // The presence of to is guaranteed by the loop condition.
+      const [edges, parent] = parents.get(to).getUnsafe();
 
       path.unshift([to, edges]);
       to = parent;

@@ -1,11 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 import { h } from "@siteimprove/alfa-dom/h";
 
-import { Device } from "@siteimprove/alfa-device";
-
-import { Style } from "../../src/style";
-
-const device = Device.standard();
+import { cascaded } from "../common";
 
 for (const box of ["block", "inline"] as const) {
   for (const side of ["start", "end"] as const) {
@@ -19,9 +15,7 @@ for (const box of ["block", "inline"] as const) {
         [h.sheet([h.rule.style("div", [h.declaration(property, "dotted")])])]
       );
 
-      const style = Style.from(element, device);
-
-      t.deepEqual(style.cascaded(property).get().toJSON(), {
+      t.deepEqual(cascaded(element, property), {
         value: {
           type: "keyword",
           value: "dotted",
@@ -41,12 +35,10 @@ for (const box of ["block", "inline"] as const) {
 
     h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
-    const style = Style.from(element, device);
-
     for (const side of ["start", "end"] as const) {
       const property = `border-${box}-${side}-style` as const;
 
-      t.deepEqual(style.cascaded(property).get().toJSON(), {
+      t.deepEqual(cascaded(element, property), {
         value: {
           type: "keyword",
           value: "dotted",
@@ -62,15 +54,13 @@ for (const box of ["block", "inline"] as const) {
 
     h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
 
-    const style = Style.from(element, device);
-
     for (const [side, borderStyle] of [
       ["start", "dotted"],
       ["end", "solid"],
     ] as const) {
       const property = `border-${box}-${side}-style` as const;
 
-      t.deepEqual(style.cascaded(property).get().toJSON(), {
+      t.deepEqual(cascaded(element, property), {
         value: {
           type: "keyword",
           value: borderStyle,

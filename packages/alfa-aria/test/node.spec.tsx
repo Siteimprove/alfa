@@ -617,9 +617,12 @@ test(`.from() correctly sets \`aria-setsize\` and \`aria-posinset\``, (t) => {
   for (let i = 0; i < items.length; i++) {
     const node = Node.from(items[i], device);
 
-    t.equal(node.attribute("aria-setsize").get().value, `${items.length}`);
+    t.equal(
+      node.attribute("aria-setsize").getUnsafe().value,
+      `${items.length}`
+    );
 
-    t.equal(node.attribute("aria-posinset").get().value, `${i + 1}`);
+    t.equal(node.attribute("aria-posinset").getUnsafe().value, `${i + 1}`);
   }
 });
 

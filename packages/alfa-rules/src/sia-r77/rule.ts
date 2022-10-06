@@ -68,7 +68,8 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const cell = data.get(target).get();
+        // targets are yielded after filling the map.
+        const cell = data.get(target).getUnsafe();
 
         return {
           1: expectation(

@@ -12,7 +12,7 @@ test(`evaluate() passes a lang attribute with valid primary tag`, async (t) => {
   const document = h.document([html]);
 
   t.deepEqual(await evaluate(R5, { document }), [
-    passed(R5, html.attribute("lang").get(), {
+    passed(R5, html.attribute("lang").getUnsafe(), {
       1: Outcomes.HasValidLanguage,
     }),
   ]);
@@ -25,7 +25,7 @@ test(`evaluate() passes a lang attribute with valid primary tag and
   const document = h.document([html]);
 
   t.deepEqual(await evaluate(R5, { document }), [
-    passed(R5, html.attribute("lang").get(), {
+    passed(R5, html.attribute("lang").getUnsafe(), {
       1: Outcomes.HasValidLanguage,
     }),
   ]);
@@ -37,7 +37,7 @@ test(`evaluate() fails a lang attribute with invalid primary tag.`, async (t) =>
   const document = h.document([html]);
 
   t.deepEqual(await evaluate(R5, { document }), [
-    failed(R5, html.attribute("lang").get(), {
+    failed(R5, html.attribute("lang").getUnsafe(), {
       1: Outcomes.HasNoValidLanguage,
     }),
   ]);

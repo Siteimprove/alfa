@@ -144,7 +144,8 @@ const identifiesTarget = (
         () => Outcomes.NoErrorIndicatorIdentifiesTarget,
         () =>
           expectation(
-            test(isPerceivableForAll(device), indicator.get()),
+            // indicator is not None due to the first expectation
+            test(isPerceivableForAll(device), indicator.getUnsafe()),
             () => Outcomes.ErrorIndicatorIdentifiesTarget,
             () => Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable
           )
@@ -163,7 +164,8 @@ const describesResolution = (
         () => Outcomes.NoErrorIndicatorDescribesResolution,
         () =>
           expectation(
-            test(isPerceivableForAll(device), indicator.get()),
+            // indicator is not None due to the first expectation
+            test(isPerceivableForAll(device), indicator.getUnsafe()),
             () => Outcomes.ErrorIndicatorDescribesResolution,
             () => Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable
           )
