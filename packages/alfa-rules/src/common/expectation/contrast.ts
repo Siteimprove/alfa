@@ -43,7 +43,10 @@ export function hasSufficientContrast(
     })
   );
 
-  const parent = target.parent(Node.flatTree).get() as Element;
+  // Associated Applicability should ensure that target have Element as parent.
+  // Additionally, stray text nodes should not exist in our use case and we'd
+  // rather crash if finding one.
+  const parent = target.parent(Node.flatTree).getUnsafe() as Element;
 
   return {
     1: result
