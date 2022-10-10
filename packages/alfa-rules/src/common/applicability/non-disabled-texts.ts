@@ -13,11 +13,13 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
+import { Style } from "@siteimprove/alfa-style";
 
-const { hasRole, isPerceivableForAll, isSemanticallyDisabled } = DOM;
+const { hasRole, isSemanticallyDisabled } = DOM;
 const { hasNamespace, isElement } = Element;
 const { or, not } = Predicate;
 const { and, test } = Refinement;
+const { isVisible } = Style;
 const { isText } = Text;
 
 const cache = Cache.empty<Document, Cache<Device, Sequence<Text>>>();
@@ -35,7 +37,7 @@ export function nonDisabledTexts(
   device: Device
 ): Sequence<Text> {
   return cache.get(document, Cache.empty).get(device, () => {
-    // Gather all aria-disabled widgets or groups on the document
+    // Gather all text nodes used to name a disabled widget or group
     const disabledWidgetNames: Set<Text> = Set.from(
       document
         // Find all disabled widgets and groups.
@@ -47,7 +49,7 @@ export function nonDisabledTexts(
             isSemanticallyDisabled
           )
         )
-        // Find all text node that are part of their names
+        // Find all text nodes that are part of their names
         .flatMap((element) =>
           ariaNode
             .from(element, device)
@@ -75,7 +77,10 @@ function* visit(
         or(
           not(hasNamespace(Namespace.HTML)),
           hasRole(device, (role) => role.isWidget()),
-          and(hasRole(device, "group"), isSemanticallyDisabled)
+          and(
+            hasRole(device, (role) => role.is("group")),
+            isSemanticallyDisabled
+          )
         )
       ),
       node
@@ -84,10 +89,10 @@ function* visit(
     return;
   }
 
-  // If it is a perceivable text, not used in the name of a disabled widget,
+  // If it is a visible text, not used in the name of a disabled widget,
   // yield it.
   if (
-    test(and(isText, isPerceivableForAll(device)), node) &&
+    test(and(isText, isVisible(device)), node) &&
     !disabledWidgetNames.has(node)
   ) {
     yield node;
