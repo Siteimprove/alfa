@@ -3,9 +3,10 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
+import { Thunk } from "@siteimprove/alfa-thunk";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -126,6 +127,14 @@ export class Ok<T> implements Result<T, never> {
 
   public getOrElse(): T {
     return this._value;
+  }
+
+  public getErrOr<F>(error: F): F {
+    return error;
+  }
+
+  public getErrOrElse<F>(error: Thunk<F>): F {
+    return error();
   }
 
   public ok(): Option<T> {

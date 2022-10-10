@@ -63,6 +63,8 @@ export interface Result<T, E = T>
   getErr(message?: string): E;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
+  getErrOr<F>(error: F): E | F;
+  getErrOrElse<F>(error: Thunk<F>): E | F;
   ok(): Option<T>;
   err(): Option<E>;
   tee(callback: Callback<T>): Result<T, E>;
