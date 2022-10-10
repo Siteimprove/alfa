@@ -1,13 +1,10 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
-import { Record } from "@siteimprove/alfa-record";
-import { Result, Err } from "@siteimprove/alfa-result";
+import { Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -25,6 +22,9 @@ import {
 } from "../numeric";
 import { Unit } from "../unit";
 
+import { Expression } from "./expression";
+import { Kind } from "./kind";
+
 const { delimited, either, filter, flatMap, map, option, pair } = Parser;
 
 const { isAngle } = Angle;
@@ -41,7 +41,7 @@ const { isPercentage } = Percentage;
 export class Calculation<
   out D extends Calculation.Dimension = Calculation.Dimension
 > extends Value<"calculation"> {
-  public static of(expression: Calculation.Expression): Calculation {
+  public static of(expression: Expression): Calculation {
     return new Calculation(
       expression.reduce({
         length: (value) => value,
@@ -50,9 +50,9 @@ export class Calculation<
     );
   }
 
-  private readonly _expression: Calculation.Expression;
+  private readonly _expression: Expression;
 
-  private constructor(expression: Calculation.Expression) {
+  private constructor(expression: Expression) {
     super();
 
     this._expression = expression;
@@ -62,11 +62,11 @@ export class Calculation<
     return "calculation";
   }
 
-  public get expression(): Calculation.Expression {
+  public get expression(): Expression {
     return this._expression;
   }
 
-  public reduce(resolver: Calculation.Resolver): Calculation {
+  public reduce(resolver: Expression.Resolver): Calculation {
     return new Calculation(this._expression.reduce(resolver));
   }
 
@@ -115,22 +115,22 @@ export class Calculation<
    */
   public resolve(
     this: Calculation<"length">,
-    resolver: Calculation.LengthResolver
+    resolver: Expression.LengthResolver
   ): Option<Length<"px">>;
 
   public resolve(
     this: Calculation<"length-percentage">,
-    resolver: Calculation.Resolver<"px", Length<"px">>
+    resolver: Expression.Resolver<"px", Length<"px">>
   ): Option<Length<"px">>;
 
   public resolve(
     this: Calculation<"number">,
-    resolver: Calculation.PercentageResolver
+    resolver: Expression.PercentageResolver
   ): Option<Number>;
 
   public resolve(
     this: Calculation,
-    resolver: Calculation.Resolver<"px", Length<"px">>
+    resolver: Expression.Resolver<"px", Length<"px">>
   ): Option<Numeric> {
     // Since the expressions can theoretically contain arbitrarily units in them,
     // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
@@ -188,25 +188,6 @@ export namespace Calculation {
     | `${Numeric.Dimension}-percentage`
     | "number";
 
-  /**
-   * Absolute units can be resolved automatically.
-   * Relative lengths and percentages need some help.
-   *
-   * @internal
-   */
-  export interface LengthResolver<L extends Unit.Length = "px"> {
-    length(value: Length<Unit.Length.Relative>): Length<L>;
-  }
-
-  export interface PercentageResolver<P extends Numeric = Numeric> {
-    percentage(value: Percentage): P;
-  }
-
-  export type Resolver<
-    L extends Unit.Length = "px",
-    P extends Numeric = Numeric
-  > = LengthResolver<L> & PercentageResolver<P>;
-
   function angleResolver(angle: Angle): Angle<"deg"> {
     return angle.withUnit("deg");
   }
@@ -216,298 +197,6 @@ export namespace Calculation {
   ): Mapper<Length, Length<"px"> | Length<U>> {
     return (length) =>
       length.isRelative() ? resolver(length) : length.withUnit("px");
-  }
-
-  /**
-   * {@link https://drafts.css-houdini.org/css-typed-om/#numeric-typing}
-   *
-   * @remarks
-   * The shared `Value` interface already uses the term "type" to denote the
-   * different types of CSS values. We therefore use the term "kind" to denote
-   * the type of a calculation.
-   */
-  export class Kind implements Equatable, Serializable {
-    public static of(kind?: Kind.Base): Kind {
-      const kinds = this._empty._kinds;
-
-      return new Kind(kind === undefined ? kinds : kinds.set(kind, 1), None);
-    }
-
-    private static _empty = new Kind(
-      Record.of({
-        length: 0,
-        angle: 0,
-        percentage: 0,
-      }),
-      None
-    );
-
-    public static empty(): Kind {
-      return this._empty;
-    }
-
-    private readonly _kinds: Kind.Map;
-
-    private readonly _hint: Option<Kind.Hint>;
-
-    private constructor(kinds: Kind.Map, hint: Option<Kind.Hint>) {
-      this._kinds = kinds;
-      this._hint = hint;
-    }
-
-    public get kinds(): Kind.Map {
-      return this._kinds;
-    }
-
-    public get hint(): Option<Kind.Hint> {
-      return this._hint;
-    }
-
-    /**
-     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
-     */
-    public is(
-      kind?: Kind.Base,
-      value: number = 1,
-      hinted: boolean = kind === "percentage"
-    ): boolean {
-      for (const entry of this._kinds) {
-        // this is not the dimension we're looking for, and it has power 0.
-        if (entry[0] !== kind && entry[1] === 0) {
-          continue;
-        }
-
-        // this is the dimension we're looking for, and it has the correct power.
-        if (entry[0] === kind && entry[1] === value) {
-          continue;
-        }
-
-        return false;
-      }
-
-      // All the entries have the correct value. Is a hint allowed?
-      return this._hint.isNone() || hinted;
-    }
-
-    /**
-     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-add-two-types}
-     */
-    public add(kind: Kind): Result<Kind, string> {
-      let a: Kind = this;
-      let b: Kind = kind;
-
-      if (a._hint.some((a) => b._hint.some((b) => a !== b))) {
-        return Err.of(`Cannot add types ${a} and ${b}`);
-      }
-
-      if (a._hint.isNone()) {
-        for (const hint of b._hint) {
-          a = a.apply(hint);
-        }
-      }
-
-      if (b._hint.isNone()) {
-        for (const hint of a._hint) {
-          b = b.apply(hint);
-        }
-      }
-
-      if (a._kinds.equals(b._kinds)) {
-        return Result.of(a);
-      }
-
-      if (
-        [a._kinds, b._kinds].some(
-          (kinds) => kinds.get("percentage").getOr(0) !== 0
-        ) &&
-        [a._kinds, b._kinds].some((kinds) =>
-          kinds.some((value, kind) => kind !== "percentage" && value !== 0)
-        )
-      ) {
-        for (const hint of ["length", "angle"] as const) {
-          const kind = a.apply(hint);
-
-          if (kind._kinds.equals(b.apply(hint)._kinds)) {
-            return Result.of(kind);
-          }
-        }
-      }
-
-      return Err.of(`Cannot add types ${a} and ${b}`);
-    }
-
-    /**
-     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-multiply-two-types}
-     */
-    public multiply(kind: Kind): Result<Kind, string> {
-      let a: Kind = this;
-      let b: Kind = kind;
-
-      if (a._hint.some((a) => b._hint.some((b) => a !== b))) {
-        return Err.of(`Cannot multiply types ${a} and ${b}`);
-      }
-
-      if (a._hint.isNone()) {
-        for (const hint of b._hint) {
-          a = a.apply(hint);
-        }
-      }
-
-      if (b._hint.isNone()) {
-        for (const hint of a._hint) {
-          b = b.apply(hint);
-        }
-      }
-
-      return Result.of(
-        new Kind(
-          b._kinds.reduce(
-            (kinds, value, kind) =>
-              kinds.set(kind, kinds.get(kind).getOr(0) + value),
-            a._kinds
-          ),
-          a._hint
-        )
-      );
-    }
-
-    /**
-     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-invert-a-type}
-     */
-    public invert(): Kind {
-      return new Kind(
-        this._kinds.reduce(
-          (kinds, value, kind) => kinds.set(kind, -1 * value),
-          this._kinds
-        ),
-        None
-      );
-    }
-
-    /**
-     * {@link https://drafts.css-houdini.org/css-typed-om/#apply-the-percent-hint}
-     */
-    public apply(hint: Kind.Hint): Kind {
-      return new Kind(
-        this._kinds
-          .set(
-            hint,
-            this._kinds.get(hint).getOr(0) +
-              this._kinds.get("percentage").getOr(0)
-          )
-          .set("percentage", 0),
-        Option.of(hint)
-      );
-    }
-
-    public equals(value: this): boolean;
-
-    public equals(value: unknown): value is this;
-
-    public equals(value: unknown): boolean {
-      return (
-        value instanceof Kind &&
-        value._kinds.equals(this._kinds) &&
-        value._hint.equals(this._hint)
-      );
-    }
-
-    public toJSON(): Kind.JSON {
-      return {
-        kinds: this._kinds.toArray(),
-        hint: this._hint.getOr(null),
-      };
-    }
-  }
-
-  export namespace Kind {
-    export interface JSON {
-      [key: string]: json.JSON;
-      kinds: Array<[Base, number]>;
-      hint: Hint | null;
-    }
-
-    export function isKind(value: unknown): value is Kind {
-      return value instanceof Kind;
-    }
-
-    /**
-     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-type}
-     */
-    export type Map = Record<{
-      [K in Base]: number;
-    }>;
-
-    /**
-     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-base-type}
-     */
-    export type Base = Numeric.Dimension | "percentage";
-
-    /**
-     * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-percent-hint}
-     */
-    export type Hint = Exclude<Kind.Base, "percentage">;
-  }
-
-  /**
-   * {@link https://drafts.csswg.org/css-values/#calculation-tree}
-   */
-  export abstract class Expression implements Equatable, Serializable {
-    public abstract get type(): string;
-
-    public abstract get kind(): Kind;
-
-    /**
-     * {@link https://drafts.csswg.org/css-values/#simplify-a-calculation-tree}
-     */
-    public abstract reduce<
-      L extends Unit.Length = "px",
-      P extends Numeric = Numeric
-    >(resolver: Resolver<L, P>): Expression;
-
-    public toLength(): Option<Length> {
-      if (isValueExpression(this) && isLength(this.value)) {
-        return Option.of(this.value);
-      }
-
-      return None;
-    }
-
-    public toNumber(): Option<Number> {
-      if (isValueExpression(this) && isNumber(this.value)) {
-        return Option.of(this.value);
-      }
-
-      return None;
-    }
-
-    public toPercentage(): Option<Percentage> {
-      if (isValueExpression(this) && isPercentage(this.value)) {
-        return Option.of(this.value);
-      }
-
-      return None;
-    }
-
-    public abstract equals(value: unknown): value is this;
-
-    public toJSON(): Expression.JSON {
-      return {
-        type: this.type,
-      };
-    }
-
-    /**
-     * {@link https://drafts.csswg.org/css-values/#serialize-a-calculation-tree}
-     */
-    public abstract toString(): string;
-  }
-
-  export namespace Expression {
-    export interface JSON {
-      [key: string]: json.JSON;
-      type: string;
-    }
   }
 
   export class Value extends Expression {
@@ -550,7 +239,7 @@ export namespace Calculation {
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Resolver<L, P>
+      resolver: Expression.Resolver<L, P>
     ): Value {
       return Value.of(
         Selective.of(this._value)
@@ -559,6 +248,30 @@ export namespace Calculation {
           .if(isPercentage, resolver.percentage)
           .get()
       );
+    }
+
+    public toLength(): Option<Length> {
+      if (isLength(this.value)) {
+        return Option.of(this.value);
+      }
+
+      return None;
+    }
+
+    public toNumber(): Option<Number> {
+      if (isNumber(this.value)) {
+        return Option.of(this.value);
+      }
+
+      return None;
+    }
+
+    public toPercentage(): Option<Percentage> {
+      if (isPercentage(this.value)) {
+        return Option.of(this.value);
+      }
+
+      return None;
     }
 
     public equals(value: unknown): value is this {
@@ -669,7 +382,7 @@ export namespace Calculation {
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Resolver<L, P>
+      resolver: Expression.Resolver<L, P>
     ): Expression {
       const [fst, snd] = this._operands.map((operand) =>
         operand.reduce(resolver)
@@ -729,7 +442,7 @@ export namespace Calculation {
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Resolver<L, P>
+      resolver: Expression.Resolver<L, P>
     ): Expression {
       const [operand] = this._operands.map((operand) =>
         operand.reduce(resolver)
@@ -789,7 +502,7 @@ export namespace Calculation {
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Resolver<L, P>
+      resolver: Expression.Resolver<L, P>
     ): Expression {
       const [fst, snd] = this._operands.map((operand) =>
         operand.reduce(resolver)
@@ -854,7 +567,7 @@ export namespace Calculation {
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Resolver<L, P>
+      resolver: Expression.Resolver<L, P>
     ): Expression {
       const [operand] = this._operands.map((operand) =>
         operand.reduce(resolver)
