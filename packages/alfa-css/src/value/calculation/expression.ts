@@ -10,6 +10,8 @@ import { Kind } from "./kind";
 
 /**
  * {@link https://drafts.csswg.org/css-values/#calculation-tree}
+ *
+ * @public
  */
 export abstract class Expression implements Equatable, Serializable {
   public abstract get type(): string;
@@ -50,6 +52,9 @@ export abstract class Expression implements Equatable, Serializable {
   public abstract toString(): string;
 }
 
+/**
+ * @public
+ */
 export namespace Expression {
   export interface JSON {
     [key: string]: json.JSON;

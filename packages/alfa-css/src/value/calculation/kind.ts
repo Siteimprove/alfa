@@ -15,7 +15,7 @@ import { Numeric } from "../numeric";
  * different types of CSS values. We therefore use the term "kind" to denote
  * the type of a calculation.
  *
- * @public
+ * @internal
  */
 export class Kind implements Equatable, Serializable {
   public static of(kind?: Kind.Base): Kind {
@@ -211,6 +211,9 @@ export class Kind implements Equatable, Serializable {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace Kind {
   export interface JSON {
     [key: string]: json.JSON;
