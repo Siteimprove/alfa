@@ -174,6 +174,10 @@ export namespace Calculation {
     | `${Numeric.Dimension}-percentage`
     | "number";
 
+  // Due to possibility of recursive expressions (`calc(1 + calc(2+3) )`), parsers
+  // are mutually recursive and must be kept together here rather than distributed
+  // in the corresponding files.
+
   let parseSum: Parser<Slice<Token>, Expression, string>;
 
   const parseCalc = map(
