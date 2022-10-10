@@ -17,6 +17,7 @@
     "src/value/calculation/calculation.ts",
     "src/value/calculation/expression.ts",
     "src/value/calculation/kind.ts",
+    "src/value/calculation/operation.ts",
     "src/value/calculation/value.ts",
     "src/value/color.ts",
     "src/value/color/current.ts",
