@@ -49,6 +49,10 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     getErr(): E;
     // (undocumented)
+    getErrOr(): E;
+    // (undocumented)
+    getErrOrElse(): E;
+    // (undocumented)
     getOr<U>(value: U): U;
     // (undocumented)
     getOrElse<U>(value: Thunk<U>): U;
@@ -140,6 +144,10 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     getErr(message?: string): never;
     // (undocumented)
+    getErrOr<F>(error: F): F;
+    // (undocumented)
+    getErrOrElse<F>(error: Thunk<F>): F;
+    // (undocumented)
     getOr(): T;
     // (undocumented)
     getOrElse(): T;
@@ -230,6 +238,10 @@ export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, 
     get(message?: string): T;
     // (undocumented)
     getErr(message?: string): E;
+    // (undocumented)
+    getErrOr<F>(error: F): E | F;
+    // (undocumented)
+    getErrOrElse<F>(error: Thunk<F>): E | F;
     // (undocumented)
     getOr<U>(value: U): T | U;
     // (undocumented)
