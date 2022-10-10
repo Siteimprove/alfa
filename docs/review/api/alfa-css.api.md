@@ -120,7 +120,7 @@ export class Calculation<out D extends Calculation.Dimension = Calculation.Dimen
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get expression(): Calculation.Expression;
+    get expression(): Expression;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
@@ -131,15 +131,17 @@ export class Calculation<out D extends Calculation.Dimension = Calculation.Dimen
     isNumber(): this is Calculation<"number">;
     // (undocumented)
     isPercentage(): this is Calculation<"percentage">;
+    // Warning: (ae-forgotten-export) The symbol "Expression" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    static of(expression: Calculation.Expression): Calculation;
+    static of(expression: Expression): Calculation;
     // (undocumented)
-    reduce(resolver: Calculation.Resolver): Calculation;
-    resolve(this: Calculation<"length">, resolver: Calculation.LengthResolver): Option<Length<"px">>;
+    reduce(resolver: Expression.Resolver): Calculation;
+    resolve(this: Calculation<"length">, resolver: Expression.LengthResolver): Option<Length<"px">>;
     // (undocumented)
-    resolve(this: Calculation<"length-percentage">, resolver: Calculation.Resolver<"px", Length<"px">>): Option<Length<"px">>;
+    resolve(this: Calculation<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Option<Length<"px">>;
     // (undocumented)
-    resolve(this: Calculation<"number">, resolver: Calculation.PercentageResolver): Option<Number_2>;
+    resolve(this: Calculation<"number">, resolver: Expression.PercentageResolver): Option<Number_2>;
     // (undocumented)
     toJSON(): Calculation.JSON;
     // (undocumented)
@@ -150,64 +152,12 @@ export class Calculation<out D extends Calculation.Dimension = Calculation.Dimen
 
 // @public (undocumented)
 export namespace Calculation {
+    // Warning: (ae-forgotten-export) The symbol "Kind" needs to be exported by the entry point index.d.ts
+    //
     // @internal (undocumented)
     export type Dimension = Kind.Base | `${Numeric.Dimension}-percentage` | "number";
     // (undocumented)
-    export abstract class Expression implements Equatable, Serializable {
-        // (undocumented)
-        abstract equals(value: unknown): value is this;
-        // (undocumented)
-        abstract get kind(): Kind;
-        // (undocumented)
-        abstract reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
-        // (undocumented)
-        toJSON(): Expression.JSON;
-        // (undocumented)
-        toLength(): Option<Length>;
-        // (undocumented)
-        toNumber(): Option<Number_2>;
-        // (undocumented)
-        toPercentage(): Option<Percentage>;
-        // (undocumented)
-        abstract toString(): string;
-        // (undocumented)
-        abstract get type(): string;
-    }
-    // (undocumented)
-    export namespace Expression {
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            type: string;
-        }
-    }
-    // (undocumented)
-    export class Invert extends Operation.Unary {
-        // (undocumented)
-        get kind(): Kind;
-        // (undocumented)
-        static of(operand: Expression): Invert;
-        // (undocumented)
-        reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "invert";
-    }
-    // (undocumented)
     export function isCalculation(value: unknown): value is Calculation;
-    // (undocumented)
-    export function isInvertExpression(value: unknown): value is Invert;
-    // (undocumented)
-    export function isNegateExpression(value: unknown): value is Negate;
-    // (undocumented)
-    export function isProductExpression(value: unknown): value is Product;
-    // (undocumented)
-    export function isSumExpression(value: unknown): value is Sum;
-    // (undocumented)
-    export function isValueExpression(value: unknown): value is Value;
     // (undocumented)
     export interface JSON {
         // (undocumented)
@@ -216,165 +166,6 @@ export namespace Calculation {
         expression: Expression.JSON;
         // (undocumented)
         type: "calculation";
-    }
-    // (undocumented)
-    export class Kind implements Equatable, Serializable {
-        // (undocumented)
-        add(kind: Kind): Result<Kind, string>;
-        // (undocumented)
-        apply(hint: Kind.Hint): Kind;
-        // (undocumented)
-        static empty(): Kind;
-        // (undocumented)
-        equals(value: this): boolean;
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        get hint(): Option<Kind.Hint>;
-        // (undocumented)
-        invert(): Kind;
-        // (undocumented)
-        is(kind?: Kind.Base, value?: number, hinted?: boolean): boolean;
-        // (undocumented)
-        get kinds(): Kind.Map;
-        // (undocumented)
-        multiply(kind: Kind): Result<Kind, string>;
-        // (undocumented)
-        static of(kind?: Kind.Base): Kind;
-        // (undocumented)
-        toJSON(): Kind.JSON;
-    }
-    // (undocumented)
-    export namespace Kind {
-        // (undocumented)
-        export type Base = Numeric.Dimension | "percentage";
-        // (undocumented)
-        export type Hint = Exclude<Kind.Base, "percentage">;
-        // (undocumented)
-        export function isKind(value: unknown): value is Kind;
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            hint: Hint | null;
-            // (undocumented)
-            kinds: Array<[Base, number]>;
-        }
-        // (undocumented)
-        export type Map = Record_2<{
-            [K in Base]: number;
-        }>;
-    }
-    // @internal
-    export interface LengthResolver<L extends Unit.Length = "px"> {
-        // (undocumented)
-        length(value: Length<Unit.Length.Relative>): Length<L>;
-    }
-    // (undocumented)
-    export class Negate extends Operation.Unary {
-        // (undocumented)
-        static of(operand: Expression): Negate;
-        // (undocumented)
-        reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "negate";
-    }
-    // (undocumented)
-    export abstract class Operation<O extends Array<Expression> = Array<Expression>> extends Expression {
-        protected constructor(operands: Readonly<O>, kind: Kind);
-        // (undocumented)
-        equals(value: Operation<O>): boolean;
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        get kind(): Kind;
-        // (undocumented)
-        protected readonly _kind: Kind;
-        // (undocumented)
-        get operands(): Readonly<O>;
-        // (undocumented)
-        protected readonly _operands: Readonly<O>;
-        // (undocumented)
-        toJSON(): Operation.JSON;
-    }
-    // (undocumented)
-    export namespace Operation {
-        // (undocumented)
-        export abstract class Binary extends Operation<[Expression, Expression]> {
-            protected constructor(operands: [Expression, Expression], kind: Kind);
-        }
-        // (undocumented)
-        export interface JSON extends Expression.JSON {
-            // (undocumented)
-            operands: Array<Expression.JSON>;
-        }
-        // (undocumented)
-        export abstract class Unary extends Operation<[Expression]> {
-            protected constructor(operands: [Expression], kind: Kind);
-        }
-    }
-    // (undocumented)
-    export interface PercentageResolver<P extends Numeric = Numeric> {
-        // (undocumented)
-        percentage(value: Percentage): P;
-    }
-    // (undocumented)
-    export class Product extends Operation.Binary {
-        // (undocumented)
-        static of(...operands: [Expression, Expression]): Result<Product, string>;
-        // (undocumented)
-        reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "product";
-    }
-    // Warning: (ae-incompatible-release-tags) The symbol "Resolver" is marked as @public, but its signature references "LengthResolver" which is marked as @internal
-    //
-    // (undocumented)
-    export type Resolver<L extends Unit.Length = "px", P extends Numeric = Numeric> = LengthResolver<L> & PercentageResolver<P>;
-    // (undocumented)
-    export class Sum extends Operation.Binary {
-        // (undocumented)
-        static of(...operands: [Expression, Expression]): Result<Sum, string>;
-        // (undocumented)
-        reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Expression;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "sum";
-    }
-    // (undocumented)
-    export class Value extends Expression {
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        get kind(): Kind;
-        // (undocumented)
-        static of(value: Numeric): Value;
-        // (undocumented)
-        reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(resolver: Resolver<L, P>): Value;
-        // (undocumented)
-        toJSON(): Value.JSON;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "value";
-        // (undocumented)
-        get value(): Numeric;
-    }
-    // (undocumented)
-    export namespace Value {
-        // (undocumented)
-        export interface JSON extends Expression.JSON {
-            // (undocumented)
-            type: "value";
-            // (undocumented)
-            value: Numeric.JSON;
-        }
     }
     const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Dimension" which is marked as @internal
     //
