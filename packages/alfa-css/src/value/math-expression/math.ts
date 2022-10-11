@@ -7,12 +7,13 @@ import { Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../../syntax/token";
-import { Function } from "../../syntax/function";
+import { Function as CSSFunction } from "../../syntax/function";
 
 import { Value as CSSValue } from "../../value";
 import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
 import { Expression } from "./expression";
+import { Function } from "./function";
 import { Kind } from "./kind";
 import { Operation } from "./operation";
 import { Value } from "./value";
@@ -147,7 +148,7 @@ export class Math<
   }
 
   public toString(): string {
-    return `calc(${this._expression})`;
+    return this._expression.toString();
   }
 }
 
@@ -180,8 +181,8 @@ export namespace Math {
   let parseSum: Parser<Slice<Token>, Expression, string>;
 
   const parseCalc = map(
-    Function.parse("calc", (input) => parseSum(input)),
-    ([, expression]) => expression
+    CSSFunction.parse("calc", (input) => parseSum(input)),
+    ([, expression]) => Function.Calculation.of(expression)
   );
 
   /**

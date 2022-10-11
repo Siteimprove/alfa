@@ -16,10 +16,7 @@ test(".parse() parses an addition expression of numbers", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 3,
-      },
+      value: { type: "number", value: 3 },
     },
   });
 });
@@ -33,10 +30,7 @@ test(".parse() parses an addition expression of percentages", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "percentage",
-        value: 0.03,
-      },
+      value: { type: "percentage", value: 0.03 },
     },
   });
 });
@@ -50,11 +44,7 @@ test(".parse() parses an addition expression of absolute lengths", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "length",
-        value: 3,
-        unit: "px",
-      },
+      value: { type: "length", value: 3, unit: "px" },
     },
   });
 });
@@ -68,11 +58,7 @@ test(".parse() parses an addition expression of relative lengths", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "length",
-        value: 3,
-        unit: "em",
-      },
+      value: { type: "length", value: 3, unit: "em" },
     },
   });
 });
@@ -85,23 +71,20 @@ test(".parse() parses an addition expression of mixed lengths", (t) => {
   t.deepEqual(calculation.toJSON(), {
     type: "math expression",
     expression: {
-      type: "sum",
-      operands: [
+      type: "calculation",
+      arguments: [
         {
-          type: "value",
-          value: {
-            type: "length",
-            value: 1,
-            unit: "px",
-          },
-        },
-        {
-          type: "value",
-          value: {
-            type: "length",
-            value: 2,
-            unit: "em",
-          },
+          type: "sum",
+          operands: [
+            {
+              type: "value",
+              value: { type: "length", value: 1, unit: "px" },
+            },
+            {
+              type: "value",
+              value: { type: "length", value: 2, unit: "em" },
+            },
+          ],
         },
       ],
     },
@@ -116,22 +99,20 @@ test(".parse() parses an addition expression of a length and a percentage", (t) 
   t.deepEqual(calculation.toJSON(), {
     type: "math expression",
     expression: {
-      type: "sum",
-      operands: [
+      type: "calculation",
+      arguments: [
         {
-          type: "value",
-          value: {
-            type: "length",
-            value: 1,
-            unit: "px",
-          },
-        },
-        {
-          type: "value",
-          value: {
-            type: "percentage",
-            value: 0.02,
-          },
+          type: "sum",
+          operands: [
+            {
+              type: "value",
+              value: { type: "length", value: 1, unit: "px" },
+            },
+            {
+              type: "value",
+              value: { type: "percentage", value: 0.02 },
+            },
+          ],
         },
       ],
     },
@@ -147,10 +128,7 @@ test(".parse() parses a multiplication expression of numbers", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 6,
-      },
+      value: { type: "number", value: 6 },
     },
   });
 });
@@ -164,10 +142,7 @@ test(".parse() parses a multiplication expression of a number and a percentage",
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "percentage",
-        value: 0.06,
-      },
+      value: { type: "percentage", value: 0.06 },
     },
   });
 });
@@ -181,11 +156,7 @@ test(".parse() parses a multiplication expression of a number and a length", (t)
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "length",
-        value: 6,
-        unit: "px",
-      },
+      value: { type: "length", value: 6, unit: "px" },
     },
   });
 });
@@ -195,10 +166,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 10,
-      },
+      value: { type: "number", value: 10 },
     },
   });
 
@@ -206,10 +174,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 14,
-      },
+      value: { type: "number", value: 14 },
     },
   });
 
@@ -217,10 +182,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 2,
-      },
+      value: { type: "number", value: 2 },
     },
   });
 
@@ -228,10 +190,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 5.5,
-      },
+      value: { type: "number", value: 5.5 },
     },
   });
 
@@ -239,10 +198,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: -2.5,
-      },
+      value: { type: "number", value: -2.5 },
     },
   });
 });
@@ -256,10 +212,7 @@ test(".parse() parses a nested calc() function", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 6,
-      },
+      value: { type: "number", value: 6 },
     },
   });
 });
@@ -273,10 +226,7 @@ test(".parse() parses longer operations chain", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 2,
-      },
+      value: { type: "number", value: 2 },
     },
   });
 
@@ -288,10 +238,7 @@ test(".parse() parses longer operations chain", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 25,
-      },
+      value: { type: "number", value: 25 },
     },
   });
 });
@@ -315,10 +262,7 @@ test(".parse() accepts products without surrounding spaces", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 2,
-      },
+      value: { type: "number", value: 2 },
     },
   });
 
@@ -330,10 +274,7 @@ test(".parse() accepts products without surrounding spaces", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 0.5,
-      },
+      value: { type: "number", value: 0.5 },
     },
   });
 });
@@ -347,10 +288,7 @@ test(".pares() accepts nesting parenthesis", (t) => {
     type: "math expression",
     expression: {
       type: "value",
-      value: {
-        type: "number",
-        value: 8,
-      },
+      value: { type: "number", value: 8 },
     },
   });
 });

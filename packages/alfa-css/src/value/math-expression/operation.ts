@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Result } from "@siteimprove/alfa-result";
 
 import {
@@ -57,10 +58,7 @@ export abstract class Operation<
   }
 
   public toJSON(): Operation.JSON<T> {
-    return {
-      ...super.toJSON(),
-      operands: this._operands.map((operand) => operand.toJSON()),
-    };
+    return { ...super.toJSON(), operands: Array.toJSON(this._operands) };
   }
 }
 

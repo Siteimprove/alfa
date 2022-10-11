@@ -16,6 +16,7 @@
     "src/value/math-expression.ts",
     "src/value/math-expression/expression.ts",
     "src/value/math-expression/kind.ts",
+    "src/value/math-expression/function.ts",
     "src/value/math-expression/math.ts",
     "src/value/math-expression/operation.ts",
     "src/value/math-expression/value.ts",
