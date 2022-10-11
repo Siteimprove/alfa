@@ -268,35 +268,35 @@ test(".parse() parses a nested calc() function", (t) => {
 });
 
 test(".parse() parses longer operations chain", (t) => {
-  const calculation1 = parse("calc(1 + 2 + 3");
+  const calculation1 = parse("calc(1 - 2 + 3").get();
 
-  // t(calculation1.isNumber());
-  //
-  // t.deepEqual(calculation1.toJSON(), {
-  //   type: "calculation",
-  //   expression: {
-  //     type: "value",
-  //     value: {
-  //       type: "number",
-  //       value: 6,
-  //     },
-  //   },
-  // });
+  t(calculation1.isNumber());
 
-  const calculation2 = parse("calc(1 * 2 * 3");
+  t.deepEqual(calculation1.toJSON(), {
+    type: "calculation",
+    expression: {
+      type: "value",
+      value: {
+        type: "number",
+        value: 2,
+      },
+    },
+  });
 
-  // t(calculation2.isNumber());
-  //
-  // t.deepEqual(calculation2.toJSON(), {
-  //   type: "calculation",
-  //   expression: {
-  //     type: "value",
-  //     value: {
-  //       type: "number",
-  //       value: 6,
-  //     },
-  //   },
-  // });
+  const calculation2 = parse("calc(10 / 2 * 5").get();
+
+  t(calculation2.isNumber());
+
+  t.deepEqual(calculation2.toJSON(), {
+    type: "calculation",
+    expression: {
+      type: "value",
+      value: {
+        type: "number",
+        value: 25,
+      },
+    },
+  });
 });
 
 test(".parse() rejects sums without surrounding spaces", (t) => {

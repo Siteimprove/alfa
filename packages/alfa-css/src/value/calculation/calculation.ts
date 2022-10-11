@@ -17,7 +17,17 @@ import { Kind } from "./kind";
 import { Operation } from "./operation";
 import { Value } from "./value";
 
-const { delimited, either, filter, flatMap, map, option, pair } = Parser;
+const {
+  delimited,
+  either,
+  filter,
+  flatMap,
+  map,
+  mapResult,
+  option,
+  pair,
+  zeroOrMore,
+} = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#math}
@@ -209,10 +219,10 @@ export namespace Calculation {
   /**
    * {@link https://drafts.csswg.org/css-values/#typedef-calc-product}
    */
-  const parseProduct = flatMap(
+  const parseProduct = mapResult(
     pair(
       parseValue,
-      option(
+      zeroOrMore(
         pair(
           delimited(
             option(Token.parseWhitespace),
@@ -225,30 +235,23 @@ export namespace Calculation {
         )
       )
     ),
-    ([left, result]) => {
-      const right = result.map(([invert, right]) =>
-        invert ? Operation.Invert.of(right) : right
-      );
-
-      if (right.isSome()) {
-        return (input) =>
-          Operation.Product.of(left, right.get()).map((expression) => [
-            input,
-            expression,
-          ]);
-      }
-
-      return (input) => Result.of([input, left]);
-    }
+    ([left, result]) =>
+      result
+        .map(([invert, right]) => (invert ? Operation.Invert.of(right) : right))
+        .reduce(
+          (left: Result<Expression, string>, right: Expression) =>
+            left.flatMap((left) => Operation.Product.of(left, right)),
+          Result.of(left)
+        )
   );
 
   /**
    * {@link https://drafts.csswg.org/css-values/#typedef-calc-sum}
    */
-  parseSum = flatMap(
+  parseSum = mapResult(
     pair(
       parseProduct,
-      option(
+      zeroOrMore(
         pair(
           delimited(
             Token.parseWhitespace,
@@ -261,20 +264,14 @@ export namespace Calculation {
         )
       )
     ),
-    ([left, result]) => {
-      const right = result.map(([negate, right]) =>
-        negate ? Operation.Negate.of(right) : right
-      );
-
-      if (right.isSome()) {
-        return (input) =>
-          Operation.Sum.of(left, right.get()).map((expression) => [
-            input,
-            expression,
-          ]);
-      }
-      return (input) => Result.of([input, left]);
-    }
+    ([left, result]) =>
+      result
+        .map(([invert, right]) => (invert ? Operation.Negate.of(right) : right))
+        .reduce(
+          (left: Result<Expression, string>, right: Expression) =>
+            left.flatMap((left) => Operation.Sum.of(left, right)),
+          Result.of(left)
+        )
   );
 
   export const parse = map(parseCalc, Calculation.of);
