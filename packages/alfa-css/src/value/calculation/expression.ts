@@ -13,10 +13,24 @@ import { Kind } from "./kind";
  *
  * @public
  */
-export abstract class Expression implements Equatable, Serializable {
-  public abstract get type(): string;
+export abstract class Expression<T extends string = string>
+  implements Equatable, Serializable
+{
+  protected readonly _type: T;
+  protected readonly _kind: Kind;
 
-  public abstract get kind(): Kind;
+  protected constructor(type: T, kind: Kind) {
+    this._type = type;
+    this._kind = kind;
+  }
+
+  public get type(): T {
+    return this._type;
+  }
+
+  public get kind(): Kind {
+    return this._kind;
+  }
 
   /**
    * {@link https://drafts.csswg.org/css-values/#simplify-a-calculation-tree}
@@ -40,7 +54,7 @@ export abstract class Expression implements Equatable, Serializable {
 
   public abstract equals(value: unknown): value is this;
 
-  public toJSON(): Expression.JSON {
+  public toJSON(): Expression.JSON<T> {
     return {
       type: this.type,
     };
@@ -56,9 +70,9 @@ export abstract class Expression implements Equatable, Serializable {
  * @public
  */
 export namespace Expression {
-  export interface JSON {
+  export interface JSON<T extends string = string> {
     [key: string]: json.JSON;
-    type: string;
+    type: T;
   }
 
   /**

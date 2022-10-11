@@ -26,34 +26,29 @@ const { isPercentage } = Percentage;
  * @public
  */
 export abstract class Operation<
+  T extends string = string,
   O extends Array<Expression> = Array<Expression>
-> extends Expression {
+> extends Expression<T> {
   protected readonly _operands: Readonly<O>;
-  protected readonly _kind: Kind;
 
-  protected constructor(operands: Readonly<O>, kind: Kind) {
-    super();
+  protected constructor(type: T, operands: Readonly<O>, kind: Kind) {
+    super(type, kind);
 
     this._operands = operands;
-    this._kind = kind;
   }
 
   public get operands(): Readonly<O> {
     return this._operands;
   }
 
-  public get kind(): Kind {
-    return this._kind;
-  }
-
-  public equals(value: Operation<O>): boolean;
+  public equals(value: Operation<T, O>): boolean;
 
   public equals(value: unknown): value is this;
 
   public equals(value: unknown): boolean {
     return (
       value instanceof Operation &&
-      value.type === this.type &&
+      value._type === this._type &&
       value._operands.length === this._operands.length &&
       value._operands.every((operand: Expression, i: number) =>
         operand.equals(this._operands[i])
@@ -61,7 +56,7 @@ export abstract class Operation<
     );
   }
 
-  public toJSON(): Operation.JSON {
+  public toJSON(): Operation.JSON<T> {
     return {
       ...super.toJSON(),
       operands: this._operands.map((operand) => operand.toJSON()),
@@ -73,23 +68,33 @@ export abstract class Operation<
  * @public
  */
 export namespace Operation {
-  export interface JSON extends Expression.JSON {
+  export interface JSON<T extends string = string> extends Expression.JSON<T> {
     operands: Array<Expression.JSON>;
   }
 
-  export abstract class Unary extends Operation<[Expression]> {
-    protected constructor(operands: [Expression], kind: Kind) {
-      super(operands, kind);
+  export abstract class Unary<T extends string = string> extends Operation<
+    T,
+    [Expression]
+  > {
+    protected constructor(type: T, operands: [Expression], kind: Kind) {
+      super(type, operands, kind);
     }
   }
 
-  export abstract class Binary extends Operation<[Expression, Expression]> {
-    protected constructor(operands: [Expression, Expression], kind: Kind) {
-      super(operands, kind);
+  export abstract class Binary<T extends string = string> extends Operation<
+    T,
+    [Expression, Expression]
+  > {
+    protected constructor(
+      type: T,
+      operands: [Expression, Expression],
+      kind: Kind
+    ) {
+      super(type, operands, kind);
     }
   }
 
-  export class Sum extends Binary {
+  export class Sum extends Binary<"sum"> {
     public static of(
       ...operands: [Expression, Expression]
     ): Result<Sum, string> {
@@ -99,9 +104,8 @@ export namespace Operation {
 
       return kind.map((kind) => new Sum(operands, kind));
     }
-
-    public get type(): "sum" {
-      return "sum";
+    private constructor(operands: [Expression, Expression], kind: Kind) {
+      super("sum", operands, kind);
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
@@ -155,13 +159,13 @@ export namespace Operation {
     return value instanceof Sum;
   }
 
-  export class Negate extends Operation {
+  export class Negate extends Unary<"negate"> {
     public static of(operand: Expression): Negate {
       return new Negate([operand], operand.kind);
     }
 
-    public get type(): "negate" {
-      return "negate";
+    private constructor(operand: [Expression], kind: Kind) {
+      super("negate", operand, kind);
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
@@ -209,7 +213,7 @@ export namespace Operation {
     return value instanceof Negate;
   }
 
-  export class Product extends Operation {
+  export class Product extends Binary<"product"> {
     public static of(
       ...operands: [Expression, Expression]
     ): Result<Product, string> {
@@ -220,8 +224,8 @@ export namespace Operation {
       return kind.map((kind) => new Product(operands, kind));
     }
 
-    public get type(): "product" {
-      return "product";
+    private constructor(operands: [Expression, Expression], kind: Kind) {
+      super("product", operands, kind);
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
@@ -276,17 +280,13 @@ export namespace Operation {
     return value instanceof Product;
   }
 
-  export class Invert extends Operation {
+  export class Invert extends Unary<"invert"> {
     public static of(operand: Expression): Invert {
       return new Invert([operand], operand.kind.invert());
     }
 
-    public get type(): "invert" {
-      return "invert";
-    }
-
-    public get kind(): Kind {
-      return this._operands[0].kind.invert();
+    private constructor(operand: [Expression], kind: Kind) {
+      super("invert", operand, kind);
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(

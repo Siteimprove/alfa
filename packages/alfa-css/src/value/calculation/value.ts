@@ -18,37 +18,22 @@ const { isPercentage } = Percentage;
  */
 export class Value extends Expression {
   public static of(value: Numeric): Value {
-    return new Value(value);
+    const kind = Selective.of(value)
+      .if(isPercentage, () => Kind.of("percentage"))
+      .if(isLength, () => Kind.of("length"))
+      .if(isAngle, () => Kind.of("angle"))
+      .else(() => Kind.of())
+      .get();
+
+    return new Value(value, kind);
   }
 
   private readonly _value: Numeric;
 
-  private constructor(value: Numeric) {
-    super();
+  private constructor(value: Numeric, kind: Kind) {
+    super("value", kind);
 
     this._value = value;
-  }
-
-  public get type(): "value" {
-    return "value";
-  }
-
-  public get kind(): Kind {
-    const value = this._value;
-
-    if (isPercentage(value)) {
-      return Kind.of("percentage");
-    }
-
-    if (isLength(value)) {
-      return Kind.of("length");
-    }
-
-    if (isAngle(value)) {
-      return Kind.of("angle");
-    }
-
-    return Kind.of();
   }
 
   public get value(): Numeric {
