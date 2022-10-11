@@ -2,12 +2,10 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../src/syntax/lexer";
-import { Calculation } from "../../src/value/calculation";
+import { Math } from "../../src/value/calculation";
 
 function parse(input: string) {
-  return Calculation.parse(Lexer.lex(input)).map(
-    ([, calculation]) => calculation
-  );
+  return Math.parse(Lexer.lex(input)).map(([, calculation]) => calculation);
 }
 
 test(".parse() parses an addition expression of numbers", (t) => {

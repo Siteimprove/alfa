@@ -25,11 +25,11 @@ const { delimited, either, filter, map, mapResult, option, pair, zeroOrMore } =
  *
  * @public
  */
-export class Calculation<
-  out D extends Calculation.Dimension = Calculation.Dimension
+export class Math<
+  out D extends Math.Dimension = Math.Dimension
 > extends CSSValue<"calculation"> {
-  public static of(expression: Expression): Calculation {
-    return new Calculation(
+  public static of(expression: Expression): Math {
+    return new Math(
       expression.reduce({
         length: (value) => value,
         percentage: (value) => value,
@@ -53,8 +53,8 @@ export class Calculation<
     return this._expression;
   }
 
-  public reduce(resolver: Expression.Resolver): Calculation {
-    return new Calculation(this._expression.reduce(resolver));
+  public reduce(resolver: Expression.Resolver): Math {
+    return new Math(this._expression.reduce(resolver));
   }
 
   /**
@@ -62,7 +62,7 @@ export class Calculation<
    */
   public isDimension<D extends Numeric.Dimension>(
     dimension: D
-  ): this is Calculation<D> {
+  ): this is Math<D> {
     return this._expression.kind.is(dimension);
   }
 
@@ -71,7 +71,7 @@ export class Calculation<
    */
   public isDimensionPercentage<D extends Numeric.Dimension>(
     dimension: D
-  ): this is Calculation<`${D}-percentage`> {
+  ): this is Math<`${D}-percentage`> {
     return (
       // dimension-percentage are not just (dimension | percentage) because the
       // dimension does accept a percent hint in this case; while pure
@@ -84,14 +84,14 @@ export class Calculation<
   /**
    * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
    */
-  public isNumber(): this is Calculation<"number"> {
+  public isNumber(): this is Math<"number"> {
     return this._expression.kind.is();
   }
 
   /**
    * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
    */
-  public isPercentage(): this is Calculation<"percentage"> {
+  public isPercentage(): this is Math<"percentage"> {
     return this._expression.kind.is("percentage");
   }
 
@@ -101,22 +101,22 @@ export class Calculation<
    * Needs a resolver to handle relative lengths and percentages.
    */
   public resolve(
-    this: Calculation<"length">,
+    this: Math<"length">,
     resolver: Expression.LengthResolver
   ): Option<Length<"px">>;
 
   public resolve(
-    this: Calculation<"length-percentage">,
+    this: Math<"length-percentage">,
     resolver: Expression.Resolver<"px", Length<"px">>
   ): Option<Length<"px">>;
 
   public resolve(
-    this: Calculation<"number">,
+    this: Math<"number">,
     resolver: Expression.PercentageResolver
   ): Option<Number>;
 
   public resolve(
-    this: Calculation,
+    this: Math,
     resolver: Expression.Resolver<"px", Length<"px">>
   ): Option<Numeric> {
     // Since the expressions can theoretically contain arbitrarily units in them,
@@ -136,12 +136,10 @@ export class Calculation<
   public hash(hash: Hash): void {}
 
   public equals(value: unknown): value is this {
-    return (
-      value instanceof Calculation && value._expression.equals(this._expression)
-    );
+    return value instanceof Math && value._expression.equals(this._expression);
   }
 
-  public toJSON(): Calculation.JSON {
+  public toJSON(): Math.JSON {
     return {
       type: "calculation",
       expression: this._expression.toJSON(),
@@ -156,15 +154,15 @@ export class Calculation<
 /**
  * @public
  */
-export namespace Calculation {
+export namespace Math {
   export interface JSON {
     [key: string]: json.JSON;
     type: "calculation";
     expression: Expression.JSON;
   }
 
-  export function isCalculation(value: unknown): value is Calculation {
-    return value instanceof Calculation;
+  export function isCalculation(value: unknown): value is Math {
+    return value instanceof Math;
   }
 
   /**
@@ -265,30 +263,26 @@ export namespace Calculation {
         )
   );
 
-  export const parse = map(parseCalc, Calculation.of);
+  export const parse = map(parseCalc, Math.of);
 
   // other parsers + filters can be added when needed
   export const parseLength = filter(
     parse,
-    (calculation): calculation is Calculation<"length"> =>
+    (calculation): calculation is Math<"length"> =>
       calculation.isDimension("length"),
     () => `calc() expression must be of type "length"`
   );
 
   export const parseLengthPercentage = filter(
     parse,
-    (calculation): calculation is Calculation<"length-percentage"> =>
+    (calculation): calculation is Math<"length-percentage"> =>
       calculation.isDimensionPercentage("length"),
     () => `calc() expression must be of type "length" or "percentage"`
   );
 
   export const parseLengthNumberPercentage = filter(
     parse,
-    (
-      calculation
-    ): calculation is
-      | Calculation<"length-percentage">
-      | Calculation<"number"> =>
+    (calculation): calculation is Math<"length-percentage"> | Math<"number"> =>
       calculation.isDimensionPercentage("length") || calculation.isNumber(),
     () => `calc() expression must be of type "length" or "percentage"`
   );

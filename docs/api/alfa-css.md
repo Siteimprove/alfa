@@ -10,7 +10,7 @@
 |  --- | --- |
 |  [Angle](./alfa-css.angle_class.md) | [https://drafts.csswg.org/css-values/\#angles](https://drafts.csswg.org/css-values/#angles) |
 |  [Block](./alfa-css.block_class.md) | [https://drafts.csswg.org/css-syntax/\#simple-block](https://drafts.csswg.org/css-syntax/#simple-block) |
-|  [Calculation](./alfa-css.calculation_class.md) | [https://drafts.csswg.org/css-values/\#math](https://drafts.csswg.org/css-values/#math) |
+|  [Math](./alfa-css.calculation_class.md) | [https://drafts.csswg.org/css-values/\#math](https://drafts.csswg.org/css-values/#math) |
 |  [Circle](./alfa-css.circle_class.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-circle](https://drafts.csswg.org/css-shapes/#funcdef-circle) |
 |  [Component](./alfa-css.component_class.md) | [https://drafts.csswg.org/css-syntax/\#component-value](https://drafts.csswg.org/css-syntax/#component-value) |
 |  [Declaration](./alfa-css.declaration_class.md) | [https://drafts.csswg.org/css-syntax/\#declaration](https://drafts.csswg.org/css-syntax/#declaration) |
@@ -61,7 +61,7 @@
 |  [Angle](./alfa-css.angle_namespace.md) |  |
 |  [Block](./alfa-css.block_namespace.md) |  |
 |  [Box](./alfa-css.box_namespace.md) |  |
-|  [Calculation](./alfa-css.calculation_namespace.md) |  |
+|  [Math](./alfa-css.calculation_namespace.md) |  |
 |  [Circle](./alfa-css.circle_namespace.md) |  |
 |  [Color](./alfa-css.color_namespace.md) |  |
 |  [Component](./alfa-css.component_namespace.md) |  |

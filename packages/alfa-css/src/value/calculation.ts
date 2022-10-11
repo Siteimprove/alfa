@@ -1,1 +1,1 @@
-export * from "./calculation/calculation";
+export * from "./calculation/math";

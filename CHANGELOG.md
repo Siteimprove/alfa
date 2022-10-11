@@ -54,7 +54,7 @@ Only internal changes to the release pipeline.
 
 ### Added
 
-- [@siteimprove/alfa-css](packages/alfa-css): `Calculation` now accept length only (not length-percentage) values. ([#1219](../../pull/1219))
+- [@siteimprove/alfa-css](packages/alfa-css): `Math` now accept length only (not length-percentage) values. ([#1219](../../pull/1219))
 
 - [@siteimprove/alfa-style](packages/alfa-style): `outline-offset` and `outline-width` now accept `calc` values. ([#1219](../../pull/1219))
 
@@ -62,7 +62,7 @@ Only internal changes to the release pipeline.
 
 ### Breaking
 
-- [@siteimprove/alfa-css](packages/alfa-css): Easier support for `calc` expression is added, which require the type of the expression to be passed as a parameter of the `Calculation` type; the type hierarchy for `Numeric` types has been reworked. Check the pull request for details. ([#980](../../issues/980), [#1201](../../pull/1201))
+- [@siteimprove/alfa-css](packages/alfa-css): Easier support for `calc` expression is added, which require the type of the expression to be passed as a parameter of the `Math` type; the type hierarchy for `Numeric` types has been reworked. Check the pull request for details. ([#980](../../issues/980), [#1201](../../pull/1201))
 
 ### Added
 

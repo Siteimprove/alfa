@@ -1,7 +1,7 @@
 import {
-  Calculation,
   Keyword,
   Length,
+  Math,
   Number,
   Percentage,
   Token,
@@ -28,8 +28,8 @@ export type Specified =
   | Number
   | Length
   | Percentage
-  | Calculation<"length-percentage">
-  | Calculation<"number">;
+  | Math<"length-percentage">
+  | Math<"number">;
 
 /**
  * @internal
@@ -44,7 +44,7 @@ export const parse = either<Slice<Token>, Specified, string>(
   Number.parse,
   Length.parse,
   Percentage.parse,
-  Calculation.parseLengthNumberPercentage
+  Math.parseLengthNumberPercentage
 );
 
 /**

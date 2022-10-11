@@ -1,4 +1,4 @@
-import { Calculation, Length } from "@siteimprove/alfa-css";
+import { Length, Math } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Property } from "../property";
@@ -15,7 +15,7 @@ declare module "../property" {
 /**
  * @internal
  */
-export type Specified = Length | Calculation<"length">;
+export type Specified = Length | Math<"length">;
 
 /**
  * @internal
@@ -25,7 +25,7 @@ export type Computed = Length<"px">;
 /**
  * @internal
  */
-export const parse = either(Length.parse, Calculation.parseLength);
+export const parse = either(Length.parse, Math.parseLength);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset}

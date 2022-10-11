@@ -1,4 +1,4 @@
-import { Calculation, Keyword, Length, Token } from "@siteimprove/alfa-css";
+import { Keyword, Length, Math, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -19,7 +19,7 @@ declare module "../property" {
  */
 export type Specified =
   | Length
-  | Calculation<"length">
+  | Math<"length">
   | Keyword<"thin">
   | Keyword<"medium">
   | Keyword<"thick">;
@@ -35,7 +35,7 @@ export type Computed = Length<"px">;
 export const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("thin", "medium", "thick"),
   Length.parse,
-  Calculation.parseLength
+  Math.parseLength
 );
 
 /**
