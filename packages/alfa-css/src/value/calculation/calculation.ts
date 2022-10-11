@@ -17,17 +17,8 @@ import { Kind } from "./kind";
 import { Operation } from "./operation";
 import { Value } from "./value";
 
-const {
-  delimited,
-  either,
-  filter,
-  flatMap,
-  map,
-  mapResult,
-  option,
-  pair,
-  zeroOrMore,
-} = Parser;
+const { delimited, either, filter, map, mapResult, option, pair, zeroOrMore } =
+  Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#math}
