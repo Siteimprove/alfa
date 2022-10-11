@@ -74,7 +74,7 @@ export default Property.register(
           case "percentage":
             return percentage(height);
 
-          case "calculation":
+          case "math expression":
             return (
               (
                 height.isNumber()

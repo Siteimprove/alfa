@@ -117,7 +117,7 @@ export default Property.register(
         const length = Resolver.length(style.parent);
 
         switch (fontSize.type) {
-          case "calculation":
+          case "math expression":
             return (
               fontSize
                 .resolve({ length, percentage })

@@ -13,7 +13,7 @@ test("#cascaded() parses `font-size: calc(1em + 2px)`", (t) => {
 
   t.deepEqual(cascaded(element, "font-size"), {
     value: {
-      type: "calculation",
+      type: "math expression",
       expression: {
         type: "sum",
         operands: [
@@ -60,7 +60,7 @@ test("#cascaded() parses `font-size: calc(1em + 2%)`", (t) => {
 
   t.deepEqual(cascaded(element, "font-size"), {
     value: {
-      type: "calculation",
+      type: "math expression",
       expression: {
         type: "sum",
         operands: [

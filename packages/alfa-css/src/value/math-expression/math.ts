@@ -27,7 +27,7 @@ const { delimited, either, filter, map, mapResult, option, pair, zeroOrMore } =
  */
 export class Math<
   out D extends Math.Dimension = Math.Dimension
-> extends CSSValue<"calculation"> {
+> extends CSSValue<"math expression"> {
   public static of(expression: Expression): Math {
     return new Math(
       expression.reduce({
@@ -45,8 +45,8 @@ export class Math<
     this._expression = expression;
   }
 
-  public get type(): "calculation" {
-    return "calculation";
+  public get type(): "math expression" {
+    return "math expression";
   }
 
   public get expression(): Expression {
@@ -141,7 +141,7 @@ export class Math<
 
   public toJSON(): Math.JSON {
     return {
-      type: "calculation",
+      type: "math expression",
       expression: this._expression.toJSON(),
     };
   }
@@ -157,7 +157,7 @@ export class Math<
 export namespace Math {
   export interface JSON {
     [key: string]: json.JSON;
-    type: "calculation";
+    type: "math expression";
     expression: Expression.JSON;
   }
 

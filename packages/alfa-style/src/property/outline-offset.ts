@@ -39,7 +39,7 @@ export default Property.register(
       switch (offset.type) {
         case "length":
           return length(offset);
-        case "calculation":
+        case "math expression":
           return (
             offset
               .resolve({ length })

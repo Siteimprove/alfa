@@ -900,7 +900,7 @@ export namespace Linear {
 }
 
 // @public (undocumented)
-class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"calculation"> {
+class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"math expression"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -931,7 +931,7 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"c
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get type(): "calculation";
+    get type(): "math expression";
 }
 
 // @public (undocumented)
@@ -949,7 +949,7 @@ namespace Math_2 {
         // (undocumented)
         expression: Expression.JSON;
         // (undocumented)
-        type: "calculation";
+        type: "math expression";
     }
     const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Dimension" which is marked as @internal
     //

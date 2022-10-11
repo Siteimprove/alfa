@@ -61,7 +61,7 @@ export default Property.register(
           case "length":
             return length(width);
 
-          case "calculation":
+          case "math expression":
             return (
               width
                 .resolve({ length })
