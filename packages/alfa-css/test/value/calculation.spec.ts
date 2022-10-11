@@ -1,3 +1,4 @@
+/// <reference lib="dom" />
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../src/syntax/lexer";
@@ -261,6 +262,97 @@ test(".parse() parses a nested calc() function", (t) => {
       value: {
         type: "number",
         value: 6,
+      },
+    },
+  });
+});
+
+test(".parse() parses longer operations chain", (t) => {
+  const calculation1 = parse("calc(1 + 2 + 3");
+
+  // t(calculation1.isNumber());
+  //
+  // t.deepEqual(calculation1.toJSON(), {
+  //   type: "calculation",
+  //   expression: {
+  //     type: "value",
+  //     value: {
+  //       type: "number",
+  //       value: 6,
+  //     },
+  //   },
+  // });
+
+  const calculation2 = parse("calc(1 * 2 * 3");
+
+  // t(calculation2.isNumber());
+  //
+  // t.deepEqual(calculation2.toJSON(), {
+  //   type: "calculation",
+  //   expression: {
+  //     type: "value",
+  //     value: {
+  //       type: "number",
+  //       value: 6,
+  //     },
+  //   },
+  // });
+});
+
+test(".parse() rejects sums without surrounding spaces", (t) => {
+  const calculation1 = parse("calc(1+2)");
+
+  t(calculation1.isErr());
+
+  const calculation2 = parse("calc(1-2)");
+
+  t(calculation2.isErr());
+});
+
+test(".parse() accepts products without surrounding spaces", (t) => {
+  const calculation1 = parse("calc(1*2)").get();
+
+  t(calculation1.isNumber());
+
+  t.deepEqual(calculation1.toJSON(), {
+    type: "calculation",
+    expression: {
+      type: "value",
+      value: {
+        type: "number",
+        value: 2,
+      },
+    },
+  });
+
+  const calculation2 = parse("calc(1/2)").get();
+
+  t(calculation2.isNumber());
+
+  t.deepEqual(calculation2.toJSON(), {
+    type: "calculation",
+    expression: {
+      type: "value",
+      value: {
+        type: "number",
+        value: 0.5,
+      },
+    },
+  });
+});
+
+test(".pares() accepts nesting parenthesis", (t) => {
+  const calculation = parse("calc((1 + 1) * (2 + 2))").get();
+
+  t(calculation.isNumber());
+
+  t.deepEqual(calculation.toJSON(), {
+    type: "calculation",
+    expression: {
+      type: "value",
+      value: {
+        type: "number",
+        value: 8,
       },
     },
   });
