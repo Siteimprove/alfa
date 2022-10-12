@@ -71,7 +71,7 @@ export namespace Function {
     ): Expression {
       const reduced = this._args[0].reduce(resolver);
 
-      // If the calculation reduces to an value, no need to keep
+      // If the calculation reduces to a value, no need to keep
       // the `calc()` wrapper.
       return isValueExpression(reduced) ? reduced : Calculation.of(reduced);
     }
