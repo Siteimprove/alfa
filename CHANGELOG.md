@@ -54,7 +54,7 @@ Only internal changes to the release pipeline.
 
 ### Added
 
-- [@siteimprove/alfa-css](packages/alfa-css): `Calculation` now accept length only (not length-percentage) values. ([#1219](../../pull/1219))
+- [@siteimprove/alfa-css](packages/alfa-css): `Calculation` now also accept length only (not length-percentage) values. ([#1219](../../pull/1219))
 
 - [@siteimprove/alfa-style](packages/alfa-style): `outline-offset` and `outline-width` now accept `calc` values. ([#1219](../../pull/1219))
 

@@ -1,7 +1,7 @@
 import {
-  Calculation,
   Length,
   Keyword,
+  Math,
   Percentage,
   Token,
 } from "@siteimprove/alfa-css";
@@ -25,7 +25,7 @@ declare module "../property" {
 export type Specified =
   | Length
   | Percentage
-  | Calculation<"length-percentage">
+  | Math<"length-percentage">
 
   // Absolute
   | Keyword<"xx-small">
@@ -63,7 +63,7 @@ export const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("larger", "smaller"),
   Percentage.parse,
   Length.parse,
-  Calculation.parseLengthPercentage
+  Math.parseLengthPercentage
 );
 
 /**
@@ -117,7 +117,7 @@ export default Property.register(
         const length = Resolver.length(style.parent);
 
         switch (fontSize.type) {
-          case "calculation":
+          case "math expression":
             return (
               fontSize
                 .resolve({ length, percentage })

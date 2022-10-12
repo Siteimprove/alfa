@@ -116,70 +116,6 @@ export namespace Box {
 }
 
 // @public (undocumented)
-export class Calculation<out D extends Calculation.Dimension = Calculation.Dimension> extends Value<"calculation"> {
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    get expression(): Expression;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    isDimension<D extends Numeric.Dimension>(dimension: D): this is Calculation<D>;
-    // (undocumented)
-    isDimensionPercentage<D extends Numeric.Dimension>(dimension: D): this is Calculation<`${D}-percentage`>;
-    // (undocumented)
-    isNumber(): this is Calculation<"number">;
-    // (undocumented)
-    isPercentage(): this is Calculation<"percentage">;
-    // Warning: (ae-forgotten-export) The symbol "Expression" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    static of(expression: Expression): Calculation;
-    // (undocumented)
-    reduce(resolver: Expression.Resolver): Calculation;
-    resolve(this: Calculation<"length">, resolver: Expression.LengthResolver): Option<Length<"px">>;
-    // (undocumented)
-    resolve(this: Calculation<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Option<Length<"px">>;
-    // (undocumented)
-    resolve(this: Calculation<"number">, resolver: Expression.PercentageResolver): Option<Number_2>;
-    // (undocumented)
-    toJSON(): Calculation.JSON;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    get type(): "calculation";
-}
-
-// @public (undocumented)
-export namespace Calculation {
-    // Warning: (ae-forgotten-export) The symbol "Kind" needs to be exported by the entry point index.d.ts
-    //
-    // @internal (undocumented)
-    export type Dimension = Kind.Base | `${Numeric.Dimension}-percentage` | "number";
-    // (undocumented)
-    export function isCalculation(value: unknown): value is Calculation;
-    // (undocumented)
-    export interface JSON {
-        // (undocumented)
-        [key: string]: json.JSON;
-        // (undocumented)
-        expression: Expression.JSON;
-        // (undocumented)
-        type: "calculation";
-    }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Dimension" which is marked as @internal
-    //
-    // (undocumented)
-    parse: Parser<Slice<Token>, Calculation<Dimension>, string, []>;
-    const // (undocumented)
-    parseLength: Parser<Slice<Token>, Calculation<"length">, string, []>;
-    const // (undocumented)
-    parseLengthPercentage: Parser<Slice<Token>, Calculation<"length-percentage">, string, []>;
-    const // (undocumented)
-    parseLengthNumberPercentage: Parser<Slice<Token>, Calculation<"number"> | Calculation<"length-percentage">, string, []>;
-}
-
-// @public (undocumented)
 export class Circle<R extends Radius = Radius, P extends Position = Position> extends Value<"basic-shape"> {
     // (undocumented)
     get center(): P;
@@ -962,6 +898,71 @@ export namespace Linear {
     const // (undocumented)
     parse: Parser<Slice<Token>, Linear, string>;
 }
+
+// @public (undocumented)
+class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"math expression"> {
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get expression(): Expression;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    isDimension<D extends Numeric.Dimension>(dimension: D): this is Math_2<D>;
+    // (undocumented)
+    isDimensionPercentage<D extends Numeric.Dimension>(dimension: D): this is Math_2<`${D}-percentage`>;
+    // (undocumented)
+    isNumber(): this is Math_2<"number">;
+    // (undocumented)
+    isPercentage(): this is Math_2<"percentage">;
+    // Warning: (ae-forgotten-export) The symbol "Expression" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    static of(expression: Expression): Math_2;
+    // (undocumented)
+    reduce(resolver: Expression.Resolver): Math_2;
+    resolve(this: Math_2<"length">, resolver: Expression.LengthResolver): Option<Length<"px">>;
+    // (undocumented)
+    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Option<Length<"px">>;
+    // (undocumented)
+    resolve(this: Math_2<"number">, resolver: Expression.PercentageResolver): Option<Number_2>;
+    // (undocumented)
+    toJSON(): Math_2.JSON;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    get type(): "math expression";
+}
+
+// @public (undocumented)
+namespace Math_2 {
+    // Warning: (ae-forgotten-export) The symbol "Kind" needs to be exported by the entry point index.d.ts
+    //
+    // @internal (undocumented)
+    type Dimension = Kind.Base | `${Numeric.Dimension}-percentage` | "number";
+    // (undocumented)
+    function isCalculation(value: unknown): value is Math_2;
+    // (undocumented)
+    interface JSON {
+        // (undocumented)
+        [key: string]: json.JSON;
+        // (undocumented)
+        expression: Expression.JSON;
+        // (undocumented)
+        type: "math expression";
+    }
+    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Dimension" which is marked as @internal
+    //
+    // (undocumented)
+    parse: Parser<Slice<Token>, Math_2<Dimension>, string, []>;
+    const // (undocumented)
+    parseLength: Parser<Slice<Token>, Math_2<"length">, string, []>;
+    const // (undocumented)
+    parseLengthPercentage: Parser<Slice<Token>, Math_2<"length-percentage">, string, []>;
+    const // (undocumented)
+    parseLengthNumberPercentage: Parser<Slice<Token>, Math_2<"number"> | Math_2<"length-percentage">, string, []>;
+}
+export { Math_2 as Math }
 
 // @public (undocumented)
 export class Matrix extends Value<"transform"> {
