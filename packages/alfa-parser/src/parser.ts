@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -325,16 +326,19 @@ export namespace Parser {
     );
   }
 
+  /**
+   * Parse a separated list containing at least one item
+   *
+   * @param parser - Parser for the items in the list
+   * @param separator - Parser for the separator between items
+   */
   export function separatedList<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     separator: Parser<I, unknown, E, A>
-  ): Parser<I, Array<T>, E, A> {
+  ): Parser<I, [T, ...Array<T>], E, A> {
     return map(
       pair(parser, zeroOrMore(right(separator, parser))),
-      ([first, rest]) => {
-        rest.unshift(first);
-        return rest;
-      }
+      ([first, rest]) => Array.prepend(rest, first)
     );
   }
 
