@@ -101,3 +101,18 @@ test("#computed() resolves `outline: solid calc(1em + 2px) red`", (t) => {
     source: h.declaration("outline", "solid calc(1em + 2px) red").toJSON(),
   });
 });
+
+test("#computed() resolves `outline-offset: max(1em, 2px)`", (t) => {
+  const element = <div style={{ outlineOffset: "max(1em, 2px)" }} />;
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("outline-offset").toJSON(), {
+    value: {
+      type: "length",
+      value: 16,
+      unit: "px",
+    },
+    source: h.declaration("outline-offset", "max(1em, 2px)").toJSON(),
+  });
+});
