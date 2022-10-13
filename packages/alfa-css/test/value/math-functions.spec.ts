@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../src/syntax/lexer";
@@ -127,4 +126,23 @@ test(".parse() does not resolve percentages", (t) => {
       ],
     },
   });
+});
+
+test("parse() accept mixed max if they can combine", (t) => {
+  for (const list of ["1px, 10%", "10%, 1px"]) {
+    const calculation = parse(`max(${list})`)
+      .get()
+      .reduce({
+        length: () => Length.of(0, "px"),
+        percentage: (percent) => Length.of(percent.value * 16, "px"),
+      });
+
+    t.deepEqual(calculation.toJSON(), {
+      type: "math expression",
+      expression: {
+        type: "value",
+        value: { value: 1.6, type: "length", unit: "px" },
+      },
+    });
+  }
 });

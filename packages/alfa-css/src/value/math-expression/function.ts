@@ -98,11 +98,12 @@ export namespace Function {
       first: Expression,
       ...expressions: ReadonlyArray<Expression>
     ): Result<Max, string> {
-      const kind = first.kind;
+      const kind = expressions.reduce(
+        (old, cur) => old.flatMap((kind) => kind.add(cur.kind)),
+        Result.of<Kind, string>(first.kind)
+      );
 
-      return expressions.every((expr) => expr.kind.similar(kind))
-        ? Result.of(new Max([first, ...expressions], kind))
-        : Err.of("All expressions in a max must have the same type");
+      return kind.map((kind) => new Max([first, ...expressions], kind));
     }
 
     private constructor(args: [Expression, ...Array<Expression>], kind: Kind) {
