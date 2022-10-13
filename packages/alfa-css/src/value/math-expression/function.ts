@@ -1,6 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Result } from "@siteimprove/alfa-result";
-import { Err } from "@siteimprove/alfa-result/src/err";
+import { Err, Result } from "@siteimprove/alfa-result";
 
 import { Angle } from "../numeric/angle";
 import { Length } from "../numeric/length";
@@ -101,7 +100,7 @@ export namespace Function {
     ): Result<Max, string> {
       const kind = first.kind;
 
-      return expressions.every((expr) => expr.kind.equals(kind))
+      return expressions.every((expr) => expr.kind.similar(kind))
         ? Result.of(new Max([first, ...expressions], kind))
         : Err.of("All expressions in a max must have the same type");
     }

@@ -203,6 +203,18 @@ export class Kind implements Equatable, Serializable {
     );
   }
 
+  /**
+   * Check whether `value` is "close enough" to `this`, by disregarding any
+   * difference in percent hint (that is "length" is similar as "length-percentage").
+   */
+  public similar(value: this): boolean;
+
+  public similar(value: unknown): value is Kind;
+
+  public similar(value: unknown): boolean {
+    return value instanceof Kind && value._kinds.equals(this._kinds);
+  }
+
   public toJSON(): Kind.JSON {
     return {
       kinds: this._kinds.toArray(),
