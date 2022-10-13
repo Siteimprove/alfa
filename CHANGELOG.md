@@ -19,10 +19,22 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
-## [0.47.0](../../compare/v0.46.0...v0.47.0) (2022-10-03)
+## [0.48.0](../../compare/v0.47.0...v0.48.0) (2022-10-13)
 
 ### Breaking
 
+- [@siteimprove/alfa-option](packages/alfa-option): `None.get()` has been removed; `Some.get()` still exists; a new `Option.getUnsafe()` is having the same behaviour as the old `Option.get()`, making the risk of uncuaght exception obvious. See the pull request for details. ([#1234](../../pull/1234))
+
+- [@siteimprove/alfa-css](packages/alfa-css): `Calculation` are renamed as `Math` as they should also include other math expression; the full code around here has been refactored with several changes in namespaces; see the pull requests for details. ([#1239](../../pull/1239), [#1240](../../pull/1240))
+
+### Added
+
+- [@siteimprove/alfa-result](packages/alfa-result): `Result.getErrOr` and `Result.getErrOrElse` are now avalaible. ([#1235](../../pull/1235))
+ 
+
+## [0.47.0](../../compare/v0.46.0...v0.47.0) (2022-10-03)
+
+### Breaking
 
 - [@packages/alfa-rule](packages/alfa-rules): `getColors` (SIA-R66 and SIA-R69) now returns all problems it encounters when grabbing colors, instead of stopping at the first one. ([#1232](../../pull/1232))
 
