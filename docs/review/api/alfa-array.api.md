@@ -26,7 +26,7 @@ namespace Array_2 {
     // (undocumented)
     function allocate<T>(capacity: number): Array_2<T>;
     // (undocumented)
-    function append<T>(array: Array_2<T>, value: T): Array_2<T>;
+    function append<T>(array: Array_2<T>, value: T): [T, ...Array_2<T>];
     // (undocumented)
     function apply<T, U>(array: ReadonlyArray<T>, mapper: ReadonlyArray<Mapper<T, U>>): Array_2<U>;
     // (undocumented)
@@ -51,6 +51,8 @@ namespace Array_2 {
     function empty<T = never>(): Array_2<T>;
     // (undocumented)
     function equals<T>(a: ReadonlyArray<T>, b: ReadonlyArray<T>): boolean;
+    // (undocumented)
+    function every<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): array is Array_2<U>;
     // (undocumented)
     function every<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
@@ -104,7 +106,7 @@ namespace Array_2 {
     // (undocumented)
     function of<T>(...values: Array_2<T>): Array_2<T>;
     // (undocumented)
-    function prepend<T>(array: Array_2<T>, value: T): Array_2<T>;
+    function prepend<T>(array: Array_2<T>, value: T): [T, ...Array_2<T>];
     // (undocumented)
     function reduce<T, U = T>(array: ReadonlyArray<T>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
     // (undocumented)

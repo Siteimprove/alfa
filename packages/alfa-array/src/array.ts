@@ -312,6 +312,16 @@ export namespace Array {
     return every(array, not(predicate));
   }
 
+  export function every<T, U extends T>(
+    array: ReadonlyArray<T>,
+    refinement: Refinement<T, U, [index: number]>
+  ): array is Array<U>;
+
+  export function every<T>(
+    array: ReadonlyArray<T>,
+    predicate: Predicate<T, [index: number]>
+  ): boolean;
+
   export function every<T>(
     array: ReadonlyArray<T>,
     predicate: Predicate<T, [index: number]>
@@ -380,14 +390,14 @@ export namespace Array {
     return array;
   }
 
-  export function append<T>(array: Array<T>, value: T): Array<T> {
+  export function append<T>(array: Array<T>, value: T): [T, ...Array<T>] {
     array.push(value);
-    return array;
+    return array as [T, ...Array<T>];
   }
 
-  export function prepend<T>(array: Array<T>, value: T): Array<T> {
+  export function prepend<T>(array: Array<T>, value: T): [T, ...Array<T>] {
     array.unshift(value);
-    return array;
+    return array as [T, ...Array<T>];
   }
 
   export function concat<T>(
