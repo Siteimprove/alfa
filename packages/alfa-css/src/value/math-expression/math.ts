@@ -18,8 +18,17 @@ import { Kind } from "./kind";
 import { Operation } from "./operation";
 import { Value } from "./value";
 
-const { delimited, either, filter, map, mapResult, option, pair, zeroOrMore } =
-  Parser;
+const {
+  delimited,
+  either,
+  filter,
+  map,
+  mapResult,
+  option,
+  pair,
+  separatedList,
+  zeroOrMore,
+} = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#math}
@@ -185,6 +194,18 @@ export namespace Math {
     ([, expression]) => Function.Calculation.of(expression)
   );
 
+  const parseMax = mapResult(
+    CSSFunction.parse("max", (input) =>
+      separatedList(
+        parseSum,
+        delimited(option(Token.parseWhitespace), Token.parseComma)
+      )(input)
+    ),
+    ([, args]) => Function.Max.of(...args)
+  );
+
+  const parseFunction = either(parseCalc, parseMax);
+
   /**
    * {@link https://drafts.csswg.org/css-values/#typedef-calc-value}
    */
@@ -198,7 +219,7 @@ export namespace Math {
       ),
       Value.of
     ),
-    parseCalc,
+    parseFunction,
     delimited(
       Token.parseOpenParenthesis,
       (input) => parseSum(input),
@@ -264,7 +285,7 @@ export namespace Math {
         )
   );
 
-  export const parse = map(parseCalc, Math.of);
+  export const parse = map(parseFunction, Math.of);
 
   // other parsers + filters can be added when needed
   export const parseLength = filter(
