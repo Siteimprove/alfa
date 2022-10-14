@@ -118,6 +118,7 @@ export namespace Function {
       const reduced = this._args.map((expr) => expr.reduce(resolver));
 
       if (Array.every(reduced, isValueExpression)) {
+        const values = reduced.map((expr) => expr.value);
         // At this point, reduced args should be either:
         // * numbers
         // * angle, in canonical unit (deg)
@@ -127,37 +128,27 @@ export namespace Function {
         // The first three are reduce-able further; percentages aren't because it
         // may end up being percentages of negative values.
 
-        if (reduced.every((value) => isNumber(value.value))) {
+        if (values.every(isNumber)) {
           return Value.of(
-            Number.of(Math.max(...reduced.map((value) => value.value.value)))
+            Number.of(Math.max(...values.map((value) => value.value)))
           );
         }
 
         if (
-          reduced.every(
+          values.every(
             // The unit test is theoretically not needed since reduced angle values
             // should always be in the canonical unit (no relative angles)
-            (value) => isAngle(value.value) && value.value.hasUnit("deg")
+            (value) => isAngle(value) && value.hasUnit("deg")
           )
         ) {
           return Value.of(
-            Angle.of(
-              Math.max(...reduced.map((value) => value.value.value)),
-              "deg"
-            )
+            Angle.of(Math.max(...values.map((value) => value.value)), "deg")
           );
         }
 
-        if (
-          reduced.every(
-            (value) => isLength(value.value) && value.value.hasUnit("px")
-          )
-        ) {
+        if (values.every((value) => isLength(value) && value.hasUnit("px"))) {
           return Value.of(
-            Length.of(
-              Math.max(...reduced.map((value) => value.value.value)),
-              "px"
-            )
+            Length.of(Math.max(...values.map((value) => value.value)), "px")
           );
         }
         // reduced contains percentages or relative lengths, we just fall through
@@ -165,7 +156,7 @@ export namespace Function {
       }
 
       // reduced contains unreduced calculations, we could eagerly compact on the
-      // fully reduced ones, but it's easier to just keep
+      // fully reduced ones, but it's easier to just keep everything
       return new Max(reduced as [Expression, ...Array<Expression>], this._kind);
     }
 
