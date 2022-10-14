@@ -1,5 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
-import { Err, Result } from "@siteimprove/alfa-result";
+import { Result } from "@siteimprove/alfa-result";
 
 import { Angle } from "../numeric/angle";
 import { Length } from "../numeric/length";

@@ -26,7 +26,7 @@ namespace Array_2 {
     // (undocumented)
     function allocate<T>(capacity: number): Array_2<T>;
     // (undocumented)
-    function append<T>(array: Array_2<T>, value: T): [T, ...Array_2<T>];
+    function append<T>(array: Array_2<T>, value: T): [...Array_2<T>, T];
     // (undocumented)
     function apply<T, U>(array: ReadonlyArray<T>, mapper: ReadonlyArray<Mapper<T, U>>): Array_2<U>;
     // (undocumented)
