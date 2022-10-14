@@ -390,9 +390,9 @@ export namespace Array {
     return array;
   }
 
-  export function append<T>(array: Array<T>, value: T): [T, ...Array<T>] {
+  export function append<T>(array: Array<T>, value: T): [...Array<T>, T] {
     array.push(value);
-    return array as [T, ...Array<T>];
+    return array as [...Array<T>, T];
   }
 
   export function prepend<T>(array: Array<T>, value: T): [T, ...Array<T>] {
