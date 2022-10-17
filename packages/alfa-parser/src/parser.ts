@@ -285,23 +285,23 @@ export namespace Parser {
   }
 
   export function delimited<I, T, E, A extends Array<unknown> = []>(
-    parser: Parser<I, unknown, E, A>,
-    separator: Parser<I, T, E, A>
+    delimiter: Parser<I, unknown, E, A>,
+    parser: Parser<I, T, E, A>
   ): Parser<I, T, E, A>;
 
   export function delimited<I, T, E, A extends Array<unknown> = []>(
     left: Parser<I, unknown, E, A>,
-    separator: Parser<I, T, E, A>,
+    parser: Parser<I, T, E, A>,
     right: Parser<I, unknown, E, A>
   ): Parser<I, T, E, A>;
 
   export function delimited<I, T, E, A extends Array<unknown> = []>(
     left: Parser<I, unknown, E, A>,
-    separator: Parser<I, T, E, A>,
+    parser: Parser<I, T, E, A>,
     right: Parser<I, unknown, E, A> = left
   ): Parser<I, T, E, A> {
     return flatMap(left, () =>
-      flatMap(separator, (separator) => map(right, () => separator))
+      flatMap(parser, (parser) => map(right, () => parser))
     );
   }
 

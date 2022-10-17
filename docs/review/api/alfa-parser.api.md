@@ -18,9 +18,9 @@ export type Parser<I, T, E = never, A extends Array_2<unknown> = []> = (input: I
 // @public (undocumented)
 export namespace Parser {
     // (undocumented)
-    export function delimited<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, unknown, E, A>, separator: Parser<I, T, E, A>): Parser<I, T, E, A>;
+    export function delimited<I, T, E, A extends Array_2<unknown> = []>(delimiter: Parser<I, unknown, E, A>, parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
     // (undocumented)
-    export function delimited<I, T, E, A extends Array_2<unknown> = []>(left: Parser<I, unknown, E, A>, separator: Parser<I, T, E, A>, right: Parser<I, unknown, E, A>): Parser<I, T, E, A>;
+    export function delimited<I, T, E, A extends Array_2<unknown> = []>(left: Parser<I, unknown, E, A>, parser: Parser<I, T, E, A>, right: Parser<I, unknown, E, A>): Parser<I, T, E, A>;
     // (undocumented)
     export function either<I, T, U, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, U, E, A>): Parser<I, T | U, E, A>;
     // (undocumented)
