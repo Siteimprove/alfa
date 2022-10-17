@@ -98,6 +98,7 @@ export namespace Function {
       first: Expression,
       ...expressions: ReadonlyArray<Expression>
     ): Result<Max, string> {
+      // {@see https://drafts.csswg.org/css-values/#determine-the-type-of-a-calculation}
       const kind = expressions.reduce(
         (old, cur) => old.flatMap((kind) => kind.add(cur.kind)),
         Result.of<Kind, string>(first.kind)
