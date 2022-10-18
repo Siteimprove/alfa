@@ -53,11 +53,13 @@ test(`isVisible() returns false when a div element is child of an iframe element
   t.equal(isVisible(div), false);
 });
 
-test(`isVisible() returns false when an element is hidden using the
+test(`isVisible() returns false when an element or text is hidden using the
       \`visibility: hidden\` property`, (t) => {
-  const element = <div style={{ visibility: "hidden" }}>Hello World</div>;
+  const text = h.text("Hello World");
+  const element = <div style={{ visibility: "hidden" }}>{text}</div>;
 
   t.equal(isVisible(element), false);
+  t.equal(isVisible(text), false);
 });
 
 test(`isVisible() returns false when an element is hidden by reducing its size
