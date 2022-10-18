@@ -16,8 +16,8 @@ import { isRendered } from "./is-rendered";
 import { isTransparent } from "./is-transparent";
 
 const { hasName, isElement, isReplaced } = Element;
-const { nor, not, or, test } = Predicate;
-const { and } = Refinement;
+const { nor, not, test } = Predicate;
+const { and, or } = Refinement;
 const { isText } = Text;
 
 /**
@@ -58,9 +58,9 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
                 context
               )
             ),
-            // Element with visibility != "visible"
+            // Element or Text with visibility != "visible"
             and(
-              isElement,
+              or(isElement, isText),
               hasComputedStyle(
                 "visibility",
                 (visibility) => visibility.value !== "visible",

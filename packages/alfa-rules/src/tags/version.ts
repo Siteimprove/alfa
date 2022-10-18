@@ -48,11 +48,8 @@ export namespace Version {
   }
 
   export function isVersion<T extends string>(
-    value: unknown,
-    type?: T
+    value: unknown
   ): value is Version {
-    return (
-      value instanceof Version && (type === undefined || value.type === type)
-    );
+    return value instanceof Version;
   }
 }
