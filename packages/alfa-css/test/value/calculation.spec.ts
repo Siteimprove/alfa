@@ -293,7 +293,7 @@ test(".parse() accepts nesting parenthesis", (t) => {
   });
 });
 
-test(".parse() acceptts whitespace inside parentheses", (t) => {
+test(".parse() accepts whitespace inside parentheses", (t) => {
   const calculation = parse("calc(   1 )").get();
 
   t(calculation.isNumber());
