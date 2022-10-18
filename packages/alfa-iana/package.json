@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-iana",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.48.0",
+  "version": "0.49.0",
   "license": "MIT",
   "description": "Functionality for working with the different IANA registries, such as the language subtag registry",
   "repository": {
@@ -21,15 +21,15 @@
     "generate": "node scripts/languages.js"
   },
   "dependencies": {
-    "@siteimprove/alfa-equatable": "workspace:^0.48.0",
-    "@siteimprove/alfa-json": "workspace:^0.48.0",
-    "@siteimprove/alfa-map": "workspace:^0.48.0",
-    "@siteimprove/alfa-option": "workspace:^0.48.0",
-    "@siteimprove/alfa-result": "workspace:^0.48.0",
-    "@siteimprove/alfa-slice": "workspace:^0.48.0"
+    "@siteimprove/alfa-equatable": "workspace:^0.49.0",
+    "@siteimprove/alfa-json": "workspace:^0.49.0",
+    "@siteimprove/alfa-map": "workspace:^0.49.0",
+    "@siteimprove/alfa-option": "workspace:^0.49.0",
+    "@siteimprove/alfa-result": "workspace:^0.49.0",
+    "@siteimprove/alfa-slice": "workspace:^0.49.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.48.0"
+    "@siteimprove/alfa-test": "workspace:^0.49.0"
   },
   "publishConfig": {
     "access": "public",

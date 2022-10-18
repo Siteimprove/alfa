@@ -19,6 +19,26 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.49.0](../../compare/v0.48.0...v0.49.0) (2022-10-18)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): `isVersion` type guard does not anymore accept an optional second parameter (it was redundant with the test). ([#1244](../../pull/1244))
+
+### Added
+
+- [@siteimprove/alfa-css](packages/alfa-css): Support for the `max()` function is now provided. ([#1241](../../pull/1241))
+
+- [@siteimprove/alfa-array](packages/alfa-array): `Array.append` and `Array.prepend` are now typed as returning an array with at least one element; `Array.every` now accepts a `Refinement` and narrows the input type accordingly. ([#1241](../../pull/1241))
+
+- [@siteimprove/alfa-parser](packages/alfa-parser): `Parser.separatedList` is now typed as returning an array with at least one element. ([#1241](../../pull/1241))
+
+### Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style): `isVisible` now correctly considers text nodes as invisible when their parent has `visibility` other than `visible`. ([#1243](../../pull/1243))
+
+- [@siteimprove/alfa-css](packages/alfa-css): Parsing of CSS functions now accepts whitespace immediatly inside the parentheses. ([#1241](../../pull/1241))
+
 ## [0.48.0](../../compare/v0.47.0...v0.48.0) (2022-10-13)
 
 ### Breaking
