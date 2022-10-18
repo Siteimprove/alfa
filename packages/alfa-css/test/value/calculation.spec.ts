@@ -279,7 +279,7 @@ test(".parse() accepts products without surrounding spaces", (t) => {
   });
 });
 
-test(".pares() accepts nesting parenthesis", (t) => {
+test(".parse() accepts nesting parenthesis", (t) => {
   const calculation = parse("calc((1 + 1) * (2 + 2))").get();
 
   t(calculation.isNumber());
@@ -289,6 +289,20 @@ test(".pares() accepts nesting parenthesis", (t) => {
     expression: {
       type: "value",
       value: { type: "number", value: 8 },
+    },
+  });
+});
+
+test(".parse() accepts whitespace inside parentheses", (t) => {
+  const calculation = parse("calc(   1 )").get();
+
+  t(calculation.isNumber());
+
+  t.deepEqual(calculation.toJSON(), {
+    type: "math expression",
+    expression: {
+      type: "value",
+      value: { type: "number", value: 1 },
     },
   });
 });

@@ -9,7 +9,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Component } from "./component";
 import { Token } from "./token";
 
-const { flatMap, peek, right } = Parser;
+const { delimited, flatMap, option, peek, right } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#function}
@@ -122,7 +122,11 @@ export namespace Function {
           return Result.of([input, [fn, undefined as never] as const]);
         }
 
-        const result = body(Slice.of(fn.value));
+        const result = delimited(
+          // whitespace just inside the parentheses are OK.
+          option(Token.parseWhitespace),
+          body
+        )(Slice.of(fn.value));
 
         if (result.isErr()) {
           return result;

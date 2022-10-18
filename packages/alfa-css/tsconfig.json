@@ -66,6 +66,7 @@
     "test/syntax/nth.spec.ts",
     "test/value/calculation.spec.ts",
     "test/value/gradient/radial.spec.ts",
+    "test/value/math-functions.spec.ts",
     "test/value/position.spec.ts",
     "test/value/shape.spec.ts",
     "test/value/shape/circle.spec.ts",

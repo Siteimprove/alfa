@@ -1,5 +1,6 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
+import { Some } from "@siteimprove/alfa-option/src/some";
 import { Selective } from "@siteimprove/alfa-selective";
 
 import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
@@ -16,8 +17,8 @@ const { isPercentage } = Percentage;
 /**
  * @public
  */
-export class Value extends Expression {
-  public static of(value: Numeric): Value {
+export class Value<N extends Numeric = Numeric> extends Expression {
+  public static of<N extends Numeric = Numeric>(value: N): Value<N> {
     const kind = Selective.of(value)
       .if(isPercentage, () => Kind.of("percentage"))
       .if(isLength, () => Kind.of("length"))
@@ -28,29 +29,65 @@ export class Value extends Expression {
     return new Value(value, kind);
   }
 
-  private readonly _value: Numeric;
+  private readonly _value: N;
 
-  private constructor(value: Numeric, kind: Kind) {
+  private constructor(value: N, kind: Kind) {
     super("value", kind);
 
     this._value = value;
   }
 
-  public get value(): Numeric {
+  public get value(): N {
     return this._value;
   }
+
+  public reduce(
+    this: Value<Angle>,
+    resolver: Expression.Resolver
+  ): Value<Angle<"deg">>;
+
+  public reduce<L extends Unit.Length = "px">(
+    this: Value<Length>,
+    resolver: Expression.Resolver<L>
+  ): Value<Length<"px" | L>>;
+
+  public reduce(
+    this: Value<Number>,
+    resolver: Expression.Resolver
+  ): Value<Number>;
+
+  public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+    this: Value<Percentage>,
+    resolver: Expression.Resolver<L, P>
+  ): Value<P>;
 
   public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
     resolver: Expression.Resolver<L, P>
   ): Value {
     return Value.of(
-      Selective.of(this._value)
+      Selective.of<Numeric>(this._value)
         .if(isLength, Value.lengthResolver(resolver.length))
         .if(isAngle, Value.angleResolver)
         .if(isPercentage, resolver.percentage)
         .get()
     );
   }
+
+  public toAngle(this: Value<Angle>): Some<Angle>;
+
+  public toAngle(this: Value<Exclude<Numeric, Angle>>): None;
+
+  public toAngle(): Option<Angle> {
+    if (isAngle(this.value)) {
+      return Option.of(this.value);
+    }
+
+    return None;
+  }
+
+  public toLength(this: Value<Length>): Some<Length>;
+
+  public toLength(this: Value<Exclude<Numeric, Length>>): None;
 
   public toLength(): Option<Length> {
     if (isLength(this.value)) {
@@ -60,6 +97,10 @@ export class Value extends Expression {
     return None;
   }
 
+  public toNumber(this: Value<Number>): Some<Number>;
+
+  public toNumber(this: Value<Exclude<Numeric, Number>>): None;
+
   public toNumber(): Option<Number> {
     if (isNumber(this.value)) {
       return Option.of(this.value);
@@ -67,6 +108,10 @@ export class Value extends Expression {
 
     return None;
   }
+
+  public toPercentage(this: Value<Percentage>): Some<Percentage>;
+
+  public toPercentage(this: Value<Exclude<Numeric, Percentage>>): None;
 
   public toPercentage(): Option<Percentage> {
     if (isPercentage(this.value)) {

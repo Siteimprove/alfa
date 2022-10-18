@@ -1,4 +1,9 @@
 import { Array } from "@siteimprove/alfa-array";
+import { Result } from "@siteimprove/alfa-result";
+
+import { Angle } from "../numeric/angle";
+import { Length } from "../numeric/length";
+import { Number } from "../numeric/number";
 import { Numeric } from "../numeric/numeric";
 import { Unit } from "../unit/unit";
 
@@ -6,6 +11,9 @@ import { Expression } from "./expression";
 import { Kind } from "./kind";
 import { Value } from "./value";
 
+const { isAngle } = Angle;
+const { isLength } = Length;
+const { isNumber } = Number;
 const { isValueExpression } = Value;
 
 /**
@@ -83,5 +91,78 @@ export namespace Function {
 
   export function isCalculation(value: unknown): value is Calculation {
     return value instanceof Calculation;
+  }
+
+  export class Max extends Function<"max", [Expression, ...Array<Expression>]> {
+    public static of(
+      first: Expression,
+      ...expressions: ReadonlyArray<Expression>
+    ): Result<Max, string> {
+      // {@see https://drafts.csswg.org/css-values/#determine-the-type-of-a-calculation}
+      const kind = expressions.reduce(
+        (old, cur) => old.flatMap((kind) => kind.add(cur.kind)),
+        Result.of<Kind, string>(first.kind)
+      );
+
+      return kind.map((kind) => new Max([first, ...expressions], kind));
+    }
+
+    private constructor(args: [Expression, ...Array<Expression>], kind: Kind) {
+      super("max", args, kind);
+    }
+
+    public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
+      resolver: Expression.Resolver<L, P>
+    ): Expression {
+      // We know from the guard in Max.of that all args have the same kind.
+
+      const reduced = this._args.map((expr) => expr.reduce(resolver));
+
+      if (Array.every(reduced, isValueExpression)) {
+        const values = reduced.map((expr) => expr.value);
+        // At this point, reduced args should be either:
+        // * numbers
+        // * angle, in canonical unit (deg)
+        // * absolute length, in canonical unit (px)
+        // * percentages
+        // * relative length, in any unit
+        // The first three are reduce-able further; percentages aren't because it
+        // may end up being percentages of negative values.
+
+        if (values.every(isNumber)) {
+          return Value.of(
+            Number.of(Math.max(...values.map((value) => value.value)))
+          );
+        }
+
+        if (
+          values.every(
+            // The unit test is theoretically not needed since reduced angle values
+            // should always be in the canonical unit (no relative angles)
+            (value) => isAngle(value) && value.hasUnit("deg")
+          )
+        ) {
+          return Value.of(
+            Angle.of(Math.max(...values.map((value) => value.value)), "deg")
+          );
+        }
+
+        if (values.every((value) => isLength(value) && value.hasUnit("px"))) {
+          return Value.of(
+            Length.of(Math.max(...values.map((value) => value.value)), "px")
+          );
+        }
+        // reduced contains percentages or relative lengths, we just fall through
+        // to the default case.
+      }
+
+      // reduced contains unreduced calculations, we could eagerly compact on the
+      // fully reduced ones, but it's easier to just keep everything
+      return new Max(reduced as [Expression, ...Array<Expression>], this._kind);
+    }
+
+    public toString(): string {
+      return `max(${this._args.map((expr) => expr.toString()).join(", ")})`;
+    }
   }
 }
