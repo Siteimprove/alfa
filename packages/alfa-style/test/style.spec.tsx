@@ -249,6 +249,33 @@ test(`#cascaded() expands a var() function with an inherited value`, (t) => {
   });
 });
 
+test(`#cascaded() prefers inheriting var() function over using fallback`, (t) => {
+  const element = <div />;
+
+  h.document(
+    [<main>{element}</main>],
+    [
+      h.sheet([
+        h.rule.style("main", {
+          "--hidden": "var(--invalid, hidden)",
+        }),
+
+        h.rule.style("div", {
+          overflowX: "var(--hidden, visible)",
+        }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(cascaded(element, "overflow-x"), {
+    value: {
+      type: "keyword",
+      value: "hidden",
+    },
+    source: h.declaration("overflow-x", "var(--hidden, visible)").toJSON(),
+  });
+});
+
 test(`#cascaded() expands a var() function with an overridden value`, (t) => {
   const element = <div />;
 
