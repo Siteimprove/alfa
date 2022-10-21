@@ -491,9 +491,7 @@ function resolve(
       // value. We therefore reject the value of the variable if it's the
       // keyword `initial`.
       // https://drafts.csswg.org/css-variables/#guaranteed-invalid
-      .flatMap((tokens) =>
-        Option.of(tokens).reject((tokens) => parseInitial(tokens).isOk())
-      )
+      .reject((tokens) => parseInitial(tokens).isOk())
 
       // If the value of the variable is invalid, as indicated by it being
       // `None`, we instead use the fallback value, if available.
