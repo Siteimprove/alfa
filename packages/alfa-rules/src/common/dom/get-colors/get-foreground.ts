@@ -4,6 +4,7 @@ import { Element, Node } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
 import { Color } from "./color";
@@ -16,7 +17,10 @@ export type Foreground = ReadonlyArray<Color.Resolved>;
 
 const foregroundCache = Cache.empty<
   Device,
-  Cache<Context, Cache<Element, Result<Foreground, ColorErrors>>>
+  Cache<
+    Context,
+    Cache<Set<Element>, Cache<Element, Result<Foreground, ColorErrors>>>
+  >
 >();
 
 /**
@@ -29,11 +33,13 @@ const foregroundCache = Cache.empty<
 export function getForeground(
   element: Element,
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
+  ignoredInterposedDescendants: Set<Element> = Set.empty()
 ): Result<Foreground, ColorErrors> {
   return foregroundCache
     .get(device, Cache.empty)
     .get(context, Cache.empty)
+    .get(ignoredInterposedDescendants, Cache.empty)
     .get(element, () => {
       let error: Option<ColorError<"foreground">> = None;
 
@@ -80,7 +86,13 @@ export function getForeground(
       // First, we gather the background colors, even if we did not manage to
       // get a foreground colors, in order to have a list of all ColorError on
       // the way.
-      const backgroundColors = getBackground(element, device, context, 1);
+      const backgroundColors = getBackground(
+        element,
+        device,
+        context,
+        1,
+        ignoredInterposedDescendants
+      );
 
       // If we have both foreground and background color, we can merge them.
       if (color.isSome() && backgroundColors.isOk()) {
@@ -97,7 +109,13 @@ export function getForeground(
         // current element.
         for (const parent of element.parent(Node.flatTree).filter(isElement)) {
           return colors.flatMap((colors) =>
-            getBackground(parent, device, context).map((background) =>
+            getBackground(
+              parent,
+              device,
+              context,
+              undefined,
+              ignoredInterposedDescendants
+            ).map((background) =>
               colors.flatMap((color) =>
                 background.map((backdrop) =>
                   Color.composite(color, backdrop, opacity.value)
