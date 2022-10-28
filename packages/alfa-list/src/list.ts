@@ -293,6 +293,14 @@ export class List<T> implements Collection.Indexed<T> {
     return List.from(Iterable.intersect(this, iterable));
   }
 
+  public tee<A extends Array<unknown> = []>(
+    callback: Callback<this, void, [...args: A]>,
+    ...args: A
+  ): this {
+    callback(this, ...args);
+    return this;
+  }
+
   public zip<U>(iterable: Iterable<U>): List<[T, U]> {
     return List.from(Iterable.zip(this, iterable));
   }

@@ -465,6 +465,14 @@ export class Cons<T> implements Sequence<T> {
     return this.filter((value) => Iterable.includes(iterable, value));
   }
 
+  public tee<A extends Array<unknown> = []>(
+    callback: Callback<this, void, [...args: A]>,
+    ...args: A
+  ): this {
+    callback(this, ...args);
+    return this;
+  }
+
   public zip<U>(iterable: Iterable<U>): Sequence<[T, U]> {
     const sequence = Sequence.from(iterable);
 

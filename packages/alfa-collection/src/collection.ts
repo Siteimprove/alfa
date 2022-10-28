@@ -1,4 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import { Array } from "@siteimprove/alfa-array";
 import { Callback } from "@siteimprove/alfa-callback";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
@@ -46,6 +47,10 @@ export interface Collection<T>
   every(predicate: Predicate<T>): boolean;
   count(predicate: Predicate<T>): number;
   distinct(): Collection<T>;
+  tee<A extends Array<unknown> = []>(
+    callback: Callback<Collection<T>, void, [...args: A]>,
+    ...args: A
+  ): Collection<T>;
 }
 
 /**
@@ -86,6 +91,10 @@ export namespace Collection {
     concat(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
     subtract(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
     intersect(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
+    tee<A extends Array<unknown> = []>(
+      callback: Callback<Keyed<K, V>, void, [...args: A]>,
+      ...args: A
+    ): Keyed<K, V>;
   }
 
   export namespace Keyed {
@@ -126,6 +135,10 @@ export namespace Collection {
     concat(iterable: Iterable<T>): Unkeyed<T>;
     subtract(iterable: Iterable<T>): Unkeyed<T>;
     intersect(iterable: Iterable<T>): Unkeyed<T>;
+    tee<A extends Array<unknown> = []>(
+      callback: Callback<Unkeyed<T>, void, [...args: A]>,
+      ...args: A
+    ): Unkeyed<T>;
   }
 
   export namespace Unkeyed {
@@ -181,6 +194,10 @@ export namespace Collection {
     concat(iterable: Iterable<T>): Indexed<T>;
     subtract(iterable: Iterable<T>): Indexed<T>;
     intersect(iterable: Iterable<T>): Indexed<T>;
+    tee<A extends Array<unknown> = []>(
+      callback: Callback<Indexed<T>, void, [...args: A]>,
+      ...args: A
+    ): Indexed<T>;
     zip<U>(iterable: Iterable<U>): Indexed<[T, U]>;
     first(): Option<T>;
     last(): Option<T>;

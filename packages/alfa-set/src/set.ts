@@ -185,6 +185,14 @@ export class Set<T> implements Collection.Unkeyed<T> {
     );
   }
 
+  public tee<A extends Array<unknown> = []>(
+    callback: Callback<this, void, [...args: A]>,
+    ...args: A
+  ): this {
+    callback(this, ...args);
+    return this;
+  }
+
   public equals<T>(value: Set<T>): boolean;
 
   public equals(value: unknown): value is this;
