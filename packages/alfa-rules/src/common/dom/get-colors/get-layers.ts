@@ -145,9 +145,15 @@ export namespace Layer {
         // If the background layer does not have a lower layer that is fully opaque,
         // we need to also locate the layers sitting behind, i.e. one the parent.
         for (const parent of element.parent(Node.flatTree).filter(isElement)) {
-          // The opacity override only applies to the last layer, so it is not
-          // used in the recursive calls
-          const layersColors = getLayers(parent, device, context);
+          const layersColors = getLayers(
+            parent,
+            device,
+            context,
+            // The opacity override only applies to the last layer, so it is not
+            // used in the recursive calls
+            undefined,
+            ignoredInterposedDescendants
+          );
 
           return errors.length === 0
             ? layersColors.map((parentLayers) => parentLayers.concat(layers))

@@ -3,6 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
 import { Context } from "@siteimprove/alfa-selector";
+import { Set } from "@siteimprove/alfa-set";
 
 import {
   getBackground,
@@ -748,7 +749,7 @@ test("getBackgroundColor() cannot resolve system colors in gradients", (t) => {
   });
 });
 
-test("getBackgroundColor() gives up in case of interposed elements", (t) => {
+test("getBackgroundColor() gives up in case of  non-ignored interposed elements", (t) => {
   const target = <span>Hello</span>;
   const interposed = <div></div>;
   const wrapper = (
@@ -787,4 +788,18 @@ test("getBackgroundColor() gives up in case of interposed elements", (t) => {
       },
     ],
   });
+
+  t.deepEqual(
+    getBackground(target, device, undefined, undefined, Set.of(interposed))
+      .get()[0]
+      .toJSON(),
+    {
+      type: "color",
+      format: "rgb",
+      red: { type: "percentage", value: 1 },
+      green: { type: "percentage", value: 1 },
+      blue: { type: "percentage", value: 1 },
+      alpha: { type: "percentage", value: 1 },
+    }
+  );
 });
