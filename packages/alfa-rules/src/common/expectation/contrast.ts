@@ -57,6 +57,49 @@ export function hasSufficientContrast(
   };
 }
 
+/**
+ * @internal
+ */
+export function hasSufficientContrastExperimental(
+  target: Text,
+  device: Device,
+  largeTextThreshold: number,
+  normalTextThreshold: number
+) {
+  const foregrounds = Question.of("foreground-colors", target);
+  const backgrounds = Question.of("background-colors", target);
+
+  const result = foregrounds.map((foregrounds) =>
+    backgrounds.map((backgrounds) => {
+      const { pairings, highest } = getPairings(foregrounds, backgrounds);
+
+      const threshold = isLargeText(device)(target)
+        ? largeTextThreshold
+        : normalTextThreshold;
+
+      return expectation(
+        // Accept if  single pairing is good enough.
+        highest >= threshold,
+        () => Outcomes.HasSufficientContrast(highest, threshold, pairings),
+        () => Outcomes.HasInsufficientContrast(highest, threshold, pairings)
+      );
+    })
+  );
+
+  // Associated Applicability should ensure that target have Element as parent.
+  // Additionally, stray text nodes should not exist in our use case and we'd
+  // rather crash if finding one.
+  const parent = target.parent(Node.flatTree).getUnsafe() as Element;
+
+  return {
+    1: result
+      .answerIf(getForeground(parent, device))
+      .map((askBackground) =>
+        askBackground.answerIf(getBackground(parent, device))
+      ),
+  };
+}
+
 interface Pairings {
   pairings: Array<Diagnostic.Pairing<["foreground", "background"]>>;
   highest: number;
