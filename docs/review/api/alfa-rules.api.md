@@ -610,6 +610,10 @@ export namespace Question {
             readonly type: "color[]";
             readonly message: "What are the foreground colors of the text node?";
         };
+        readonly "ignored-interposed-elements": {
+            readonly type: "node[]";
+            readonly message: "Which of these interposed descendants should be ignored?";
+        };
         readonly "first-tabbable-is-internal-link": {
             readonly type: "boolean";
             readonly message: "Is the first tabbable element of the document an internal link?";

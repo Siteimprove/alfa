@@ -164,6 +164,8 @@ export class Cons<T> implements Sequence<T> {
     // (undocumented)
     takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
     // (undocumented)
+    tee<A extends Array_2<unknown> = []>(callback: Callback<this, void, [...args: A]>, ...args: A): this;
+    // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
     toJSON(): Cons.JSON<T>;
@@ -320,6 +322,8 @@ export interface Sequence<T> extends Collection.Indexed<T> {
     takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<U>;
     // (undocumented)
     takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
+    // (undocumented)
+    tee<A extends Array_2<unknown> = []>(callback: Callback<Sequence<T>, void, [...args: A]>, ...args: A): Sequence<T>;
     // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)

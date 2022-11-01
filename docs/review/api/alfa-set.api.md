@@ -90,6 +90,8 @@ class Set_2<T> implements Collection.Unkeyed<T> {
     // (undocumented)
     subtract(iterable: Iterable_2<T>): Set_2<T>;
     // (undocumented)
+    tee<A extends Array_2<unknown> = []>(callback: Callback<this, void, [...args: A]>, ...args: A): this;
+    // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
     toJSON(): Set_2.JSON<T>;

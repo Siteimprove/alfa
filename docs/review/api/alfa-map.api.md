@@ -156,6 +156,8 @@ class Map_2<K, V> implements Collection.Keyed<K, V> {
     // (undocumented)
     subtract(iterable: Iterable_2<readonly [K, V]>): Map_2<K, V>;
     // (undocumented)
+    tee<A extends Array_2<unknown> = []>(callback: Callback<this, void, [...args: A]>, ...args: A): this;
+    // (undocumented)
     toArray(): Array_2<[K, V]>;
     // (undocumented)
     toJSON(): Map_2.JSON<K, V>;

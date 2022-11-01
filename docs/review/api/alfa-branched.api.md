@@ -74,6 +74,8 @@ export class Branched<T, B = never> implements Collection<T>, Iterable_2<[T, Ite
     // (undocumented)
     some(predicate: Predicate<T, [Iterable_2<B>]>): boolean;
     // (undocumented)
+    tee<A extends Array<unknown> = []>(callback: Callback<this, void, [...args: A]>, ...args: A): this;
+    // (undocumented)
     toArray(): Array<[T, Array<B>]>;
     // (undocumented)
     toJSON(): Branched.JSON<T, B>;
