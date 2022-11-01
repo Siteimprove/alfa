@@ -5,6 +5,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
 import { Color } from "./color";
@@ -19,7 +20,10 @@ const backgroundCacheWithFakeOpacity = Cache.empty<
   Device,
   Cache<
     Context,
-    Cache<Element, Result<Background, ColorErrors<"background" | "layer">>>
+    Cache<
+      Set<Element>,
+      Cache<Element, Result<Background, ColorErrors<"background" | "layer">>>
+    >
   >
 >();
 
@@ -27,7 +31,10 @@ const backgroundCacheWithDefaultOpacity = Cache.empty<
   Device,
   Cache<
     Context,
-    Cache<Element, Result<Background, ColorErrors<"background" | "layer">>>
+    Cache<
+      Set<Element>,
+      Cache<Element, Result<Background, ColorErrors<"background" | "layer">>>
+    >
   >
 >();
 
@@ -42,7 +49,8 @@ export function getBackground(
   element: Element,
   device: Device,
   context: Context = Context.empty(),
-  opacity?: number
+  opacity?: number,
+  ignoredInterposedDescendants: Set<Element> = Set.empty()
 ): Result<Background, ColorErrors<"background" | "layer">> {
   const textShadow = Style.from(element, device, context).computed(
     "text-shadow"
@@ -51,9 +59,11 @@ export function getBackground(
     opacity === undefined
       ? backgroundCacheWithDefaultOpacity
       : backgroundCacheWithFakeOpacity;
+
   return cache
     .get(device, Cache.empty)
     .get(context, Cache.empty)
+    .get(ignoredInterposedDescendants, Cache.empty)
     .get(element, () => {
       let error: Option<ColorError<"background">> = None;
 
@@ -62,8 +72,14 @@ export function getBackground(
         error = Option.of(ColorError.textShadow(element, textShadow));
       }
 
-      // We want to gather layers errors even if we've already found one.
-      const layersColors = Layer.getLayers(element, device, context, opacity);
+      // We want to gather layers errors even if we've already found one error.
+      const layersColors = Layer.getLayers(
+        element,
+        device,
+        context,
+        opacity,
+        ignoredInterposedDescendants
+      );
 
       return error.isNone() && layersColors.isOk()
         ? layersColors.map((layers) => layers.reduce(Layer.merge, [white]))

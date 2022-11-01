@@ -4,6 +4,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
+import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
 
 import { getInterposedDescendant } from "../get-interposed-descendant";
@@ -45,12 +46,24 @@ export class Layer {
 export namespace Layer {
   const layersCacheWithFakeOpacity = Cache.empty<
     Device,
-    Cache<Context, Cache<Element, Result<Array<Layer>, ColorErrors<"layer">>>>
+    Cache<
+      Context,
+      Cache<
+        Set<Element>,
+        Cache<Element, Result<Array<Layer>, ColorErrors<"layer">>>
+      >
+    >
   >();
 
   const layersCacheWithDefaultOpacity = Cache.empty<
     Device,
-    Cache<Context, Cache<Element, Result<Array<Layer>, ColorErrors<"layer">>>>
+    Cache<
+      Context,
+      Cache<
+        Set<Element>,
+        Cache<Element, Result<Array<Layer>, ColorErrors<"layer">>>
+      >
+    >
   >();
 
   /**
@@ -65,7 +78,8 @@ export namespace Layer {
     device: Device,
     context: Context = Context.empty(),
     // Possible override of the element's opacity.
-    opacity?: number
+    opacity?: number,
+    ignoredInterposedDescendants: Set<Element> = Set.empty()
   ): Result<Array<Layer>, ColorErrors<"layer">> {
     const cache =
       opacity === undefined
@@ -75,6 +89,7 @@ export namespace Layer {
     return cache
       .get(device, Cache.empty)
       .get(context, Cache.empty)
+      .get(ignoredInterposedDescendants, Cache.empty)
       .get(element, () => {
         const style = Style.from(element, device, context);
         const currentLayers = getCurrentLayers(
@@ -100,8 +115,8 @@ export namespace Layer {
           return Result.of<Array<Layer>, ColorErrors<"layer">>(layers);
         }
 
-        // If the current element is positioned, we don't know exactly where it
-        // stands and bail out.
+        // If the current element is positioned,
+        // we don't know exactly where it stands and bail out.
         if (isPositioned(device, "absolute", "fixed")(element)) {
           errors.push(
             ColorError.nonStaticPosition(
@@ -111,12 +126,15 @@ export namespace Layer {
           );
         }
 
-        // If the current element has interposed descendants, we don't know
-        // exactly where they are and bail out.
-        const interposedDescendants = getInterposedDescendant(
-          device,
-          element
-        ).reject(hasTransparentBackground(device));
+        // If the current element has interposed descendants that:
+        // 1. have non-transparent background; and
+        // 2. should not be ignored,
+        // we don't know exactly where they are and bail out.
+        const interposedDescendants = getInterposedDescendant(device, element)
+          .reject(hasTransparentBackground(device))
+          .reject(
+            ignoredInterposedDescendants.has.bind(ignoredInterposedDescendants)
+          );
 
         if (!interposedDescendants.isEmpty()) {
           errors.push(
@@ -127,9 +145,15 @@ export namespace Layer {
         // If the background layer does not have a lower layer that is fully opaque,
         // we need to also locate the layers sitting behind, i.e. one the parent.
         for (const parent of element.parent(Node.flatTree).filter(isElement)) {
-          // The opacity override only applies to the last layer, so it is not
-          // used in the recursive calls
-          const layersColors = getLayers(parent, device, context);
+          const layersColors = getLayers(
+            parent,
+            device,
+            context,
+            // The opacity override only applies to the last layer, so it is not
+            // used in the recursive calls
+            undefined,
+            ignoredInterposedDescendants
+          );
 
           return errors.length === 0
             ? layersColors.map((parentLayers) => parentLayers.concat(layers))

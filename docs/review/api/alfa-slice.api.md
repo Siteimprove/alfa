@@ -158,6 +158,8 @@ export class Slice<T> implements Collection.Indexed<T> {
     // (undocumented)
     takeWhile(predicate: Predicate<T, [index: number]>): Slice<T>;
     // (undocumented)
+    tee<A extends Array_2<unknown> = []>(callback: Callback<this, void, [...args: A]>, ...args: A): this;
+    // (undocumented)
     toArray(): Array_2<T>;
     // (undocumented)
     toJSON(): Slice.JSON<T>;
