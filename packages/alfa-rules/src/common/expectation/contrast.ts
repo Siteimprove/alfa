@@ -4,6 +4,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Set } from "@siteimprove/alfa-set";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Style } from "@siteimprove/alfa-style";
 
 import { expectation } from "../act/expectation";
 import { Group } from "../act/group";
@@ -13,10 +14,11 @@ import { getBackground, getForeground } from "../dom/get-colors";
 import { getInterposedDescendant } from "../dom/get-interposed-descendant";
 import { Contrast as Outcomes } from "../outcome/contrast";
 import { isLargeText } from "../predicate";
-import isElement = Element.isElement;
 
+const { isElement } = Element;
 const { flatMap, map } = Iterable;
 const { min, max, round } = Math;
+const { hasTransparentBackground } = Style;
 
 /**
  * @internal
@@ -68,17 +70,18 @@ export function hasSufficientContrastExperimental(
   largeTextThreshold: number,
   normalTextThreshold: number
 ) {
-  // all interposed descendants of an ancestor
+  // all non-transparent interposed descendants of an ancestor
   const interposedDescendants = target
     .ancestors(Node.fullTree)
     .filter(isElement)
-    .flatMap((element) => getInterposedDescendant(device, element));
+    .flatMap((element) => getInterposedDescendant(device, element))
+    .reject(hasTransparentBackground(device));
 
   const ignoredInterposedElements = Question.of(
     "ignored-interposed-elements",
     Group.of(interposedDescendants),
     target
-  ).answerIf(interposedDescendants.isEmpty, []);
+  ).answerIf(interposedDescendants.isEmpty(), []);
 
   // Associated Applicability should ensure that target have Element as parent.
   // Additionally, stray text nodes should not exist in our use case and we'd
