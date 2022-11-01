@@ -641,25 +641,22 @@ export namespace Rule {
   }
 }
 
-type Expectation<T, S> = Either<T, [S, Diagnostic]>;
+type Expectation<T> = Either<T, Diagnostic>;
 
 // Processes the expectations of the results of an interview.
-// When the result is Passed/Failed (Left), we accumulate the expectations that
-// are later on passed to the Outcome.
-// When we encounter at least one cantTell result (Right), we bubble up the
-// last one found.
-function processExpectation<S>(
-  acc: Expectation<List<[string, Option<Result<Diagnostic>>]>, S>,
+// When the result is Passed/Failed (Left), we accumulate the expectations that are later on passed to the Outcome.
+// When we encounter the first Diagnostic result of a cantTell (Right),
+// the processing stops and later it is passed to the cantTell Outcome.
+function processExpectation(
+  acc: Expectation<List<[string, Option<Result<Diagnostic>>]>>,
   [id, expectation]: readonly [
     string,
-    Expectation<Option.Maybe<Result<Diagnostic>>, S>
+    Expectation<Option.Maybe<Result<Diagnostic>>>
   ]
-): Expectation<List<[string, Option<Result<Diagnostic>>]>, S> {
+): Expectation<List<[string, Option<Result<Diagnostic>>]>> {
   return expectation.either(
-    // If the current result is Passed/Failed (Left),
     (result) =>
-      acc.either<Expectation<List<[string, Option<Result<Diagnostic>>]>, S>>(
-        // and the current accumulator is a list of Passed/Failed => append;
+      acc.either<Expectation<List<[string, Option<Result<Diagnostic>>]>>>(
         (accumulator) =>
           Left.of(
             accumulator.append([
@@ -667,11 +664,9 @@ function processExpectation<S>(
               Option.isOption(result) ? result : Option.of(result),
             ])
           ),
-        // and the current accumulator is a CantTell => keep it;
-        (result) => Right.of(result)
+        (diagnostic) => Right.of(diagnostic)
       ),
-    // if the current expectation is a CantTell => keep it.
-    (result) => Right.of(result)
+    (diagnostic) => Right.of(diagnostic)
   );
 }
 
@@ -683,27 +678,18 @@ function resolve<I, T, Q, S>(
   rule: Rule<I, T, Q, S>,
   oracle: Oracle<I, T, Q, S>
 ): Future<Outcome.Applicable<I, T, Q, S>> {
-  return (
-    Future.traverse(expectations, ([id, interview]) =>
-      Interview.conduct(interview, rule, oracle).map(
-        (expectation) => [id, expectation] as const
-      )
+  return Future.traverse(expectations, ([id, interview]) =>
+    Interview.conduct(interview, rule, oracle).map(
+      (expectation) => [id, expectation] as const
     )
-      // Essentially turns a List<Either> into a Either<List>.
-      // plus resolve the Option.Maybe into Option.
-      .map((expectations) =>
-        reduce<
-          readonly [string, Expectation<Option.Maybe<Result<Diagnostic>>, S>],
-          Expectation<List<[string, Option<Result<Diagnostic>>]>, S>
-        >(expectations, processExpectation, Left.of(List.empty()))
+  )
+    .map((expectations) =>
+      reduce(expectations, processExpectation, Left.of(List.empty()))
+    )
+    .map((expectation) =>
+      expectation.either(
+        (expectations) => Outcome.from(rule, target, Record.from(expectations)),
+        (diagnostic) => Outcome.CantTell.of(rule, target, diagnostic)
       )
-      .map((expectation) =>
-        expectation.either(
-          (expectations) =>
-            Outcome.from(rule, target, Record.from(expectations)),
-          ([subject, diagnostic]) =>
-            Outcome.CantTell.of(rule, target, diagnostic, subject)
-        )
-      )
-  );
+    );
 }
