@@ -243,6 +243,14 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     );
   }
 
+  public tee<A extends Array<unknown> = []>(
+    callback: Callback<this, void, [...args: A]>,
+    ...args: A
+  ): this {
+    callback(this, ...args);
+    return this;
+  }
+
   public equals<K, V>(value: Map<K, V>): boolean;
 
   public equals(value: unknown): value is this;

@@ -251,6 +251,14 @@ export class Slice<T> implements Collection.Indexed<T> {
     return new Slice(array, 0, array.length);
   }
 
+  public tee<A extends Array<unknown> = []>(
+    callback: Callback<this, void, [...args: A]>,
+    ...args: A
+  ): this {
+    callback(this, ...args);
+    return this;
+  }
+
   public zip<U>(iterable: Iterable<U>): Slice<[T, U]> {
     const array = [...Iterable.zip(this, iterable)];
 

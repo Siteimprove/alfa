@@ -245,6 +245,14 @@ export class Branched<T, B = never>
     return this;
   }
 
+  public tee<A extends Array<unknown> = []>(
+    callback: Callback<this, void, [...args: A]>,
+    ...args: A
+  ): this {
+    callback(this, ...args);
+    return this;
+  }
+
   public branch(value: T, ...branches: Array<B>): Branched<T, B> {
     return new Branched(
       merge(

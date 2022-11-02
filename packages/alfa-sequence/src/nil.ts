@@ -1,3 +1,4 @@
+import { Callback } from "@siteimprove/alfa-callback";
 import { Collection } from "@siteimprove/alfa-collection";
 import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
@@ -144,6 +145,14 @@ export const Nil: Nil = new (class Nil {
   }
 
   public intersect(): Nil {
+    return this;
+  }
+
+  public tee<A extends Array<unknown> = []>(
+    callback: Callback<this, void, [...args: A]>,
+    ...args: A
+  ): this {
+    callback(this, ...args);
     return this;
   }
 
