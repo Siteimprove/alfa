@@ -28,6 +28,7 @@
     "src/element/predicate/is-visible-shadow.ts",
     "src/index.ts",
     "src/node/node.ts",
+    "src/node/predicate/has-same-foreground-as-background.ts",
     "src/node/predicate/is-clipped.ts",
     "src/node/predicate/is-offscreen.ts",
     "src/node/predicate/is-rendered.ts",
