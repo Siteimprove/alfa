@@ -88,13 +88,18 @@ export const parseList = map(
 );
 
 /**
+ * @internal
+ */
+export const initialItem = Tuple.of(Keyword.of("auto"), Keyword.of("auto"));
+
+/**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-size}
  * @internal
  */
 export default Property.register(
   "background-size",
   Property.of<Specified, Computed>(
-    List.of([Tuple.of(Keyword.of("auto"), Keyword.of("auto"))], ", "),
+    List.of([initialItem], ", "),
     parseList,
     (value, style) =>
       value.map((sizes) =>

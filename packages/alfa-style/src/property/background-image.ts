@@ -91,13 +91,18 @@ export const parseList = map(
 );
 
 /**
+ * @internal
+ */
+export const initialItem = Keyword.of("none");
+
+/**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-image}
  * @internal
  */
 export default Property.register(
   "background-image",
   Property.of<Specified, Computed>(
-    List.of([Keyword.of("none")], ", "),
+    List.of([initialItem], ", "),
     parseList,
     (value, style) =>
       value.map((images) =>

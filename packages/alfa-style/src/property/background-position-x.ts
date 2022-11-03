@@ -59,13 +59,18 @@ export const parseList = map(
 );
 
 /**
+ * @internal
+ */
+export const initialItem = Percentage.of(0);
+
+/**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}
  * @internal
  */
 export default Property.register(
   "background-position-x",
   Property.of<Specified, Computed>(
-    List.of([Length.of(0, "px")]),
+    List.of([initialItem]),
     parseList,
     (value, style) =>
       value.map((positions) =>
