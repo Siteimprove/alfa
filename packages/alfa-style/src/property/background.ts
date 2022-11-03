@@ -1,4 +1,4 @@
-import { Keyword, Percentage, Token } from "@siteimprove/alfa-css";
+import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -6,7 +6,6 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Property } from "../property";
 
 import { List } from "./value/list";
-import { Tuple } from "./value/tuple";
 
 import * as Attachment from "./background-attachment";
 import * as Clip from "./background-clip";
