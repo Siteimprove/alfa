@@ -1,6 +1,5 @@
-/// <reference lib="dom" />
 import { Cache } from "@siteimprove/alfa-cache";
-import { Color, RGB } from "@siteimprove/alfa-css";
+import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable/src/equatable";
@@ -11,7 +10,7 @@ import { hasComputedStyle } from "../../element/predicate/has-computed-style";
 import { Property } from "../../property";
 import { Style } from "../../style";
 
-const { or, tee, test } = Predicate;
+const { or, test } = Predicate;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Text, boolean>>>();
 
@@ -42,19 +41,12 @@ export function hasSameForegroundAsBackground(
                 // first ancestor with a non-inherited background property
                 .find(
                   or(
-                    tee(
-                      hasNonColorBackgroundProperty(device, context),
-                      (elt, res) => console.log(`${elt.path()} has BG? ${res}`)
-                    ),
-                    tee(
-                      hasNonTransparentBackgroundColor(device, context),
-                      (elt, res) =>
-                        console.log(`${elt.path()} has BG color? ${res}`)
-                    )
+                    hasNonColorBackgroundProperty(device, context),
+                    hasNonTransparentBackgroundColor(device, context)
                   )
                 )
-                // If a non color `background-*` is set, assume it will be
-                // different from the foreground color.
+                // If a non color `background-*` is set, assume it will make
+                // the background different from the foreground color.
                 .reject(hasNonColorBackgroundProperty(device, context))
                 .map(
                   (ancestor) =>
@@ -97,11 +89,6 @@ function hasNonColorBackgroundProperty(
       ) {
         continue;
       }
-      console.log(
-        `${property} is ${style.specified(
-          `background-${property}`
-        )} but inital is ${Property.get(`background-${property}`).initial}`
-      );
       return true;
     }
 
