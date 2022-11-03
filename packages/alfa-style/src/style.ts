@@ -460,13 +460,11 @@ function resolve(
   visited = Set.empty<string>()
 ): Option<Slice<Token>> {
   return (
-    // First, we search the value of the variable (custom property). The value
-    // is inherited, so if the variable doesn't exist in the current mapping,
-    // we search for it in its parent
+    // If the variable is defined on the current style, get its value
     Option.from(variables.get(name))
       .map((value) => value.value)
 
-      // If no substitution found on the element, search on ancestors
+      // If no definition is found on the current style, search on ancestors
       .orElse(() =>
         parent.flatMap((parent) => {
           const variables = parent.variables;
@@ -475,18 +473,23 @@ function resolve(
             parent.parent === Style.empty() ? None : Option.of(parent.parent);
 
           return (
-            resolve(name, variables, grandparent)
+            // The fallback is only valid in the style's "var(--foo, fallback)"
+            // declaration, not on an ancestor declaration
+            resolve(name, variables, grandparent, undefined, visited.add(name))
               // Substitute any additional cascading variables within the inherited
-              // value.
+              // value. This substitution must be done in the parent's style context,
+              // not in the current style context.
               .flatMap((tokens) =>
-                substitute(tokens, variables, grandparent).map(
-                  ([tokens]) => tokens
-                )
+                substitute(
+                  tokens,
+                  variables,
+                  grandparent,
+                  visited.add(name)
+                ).map(([tokens]) => tokens)
               )
           );
         })
       )
-
       // The initial value of a custom property is the "guaranteed-invalid"
       // value. We therefore reject the value of the variable if it's the
       // keyword `initial`.
@@ -499,7 +502,7 @@ function resolve(
       .orElse(() =>
         fallback
           // Substitute any additional cascading variables within the fallback
-          // value.
+          // value. This substitution happens in the current style's context.
           .flatMap((tokens) =>
             substitute(tokens, variables, parent, visited.add(name)).map(
               ([tokens]) => tokens
@@ -543,6 +546,7 @@ function substitute(
     const next = tokens.array[tokens.offset];
 
     if (next.type === "function" && next.value === "var") {
+      // If the token is a "var(", process it.
       const result = parseVar(tokens);
 
       if (result.isErr()) {
@@ -554,19 +558,23 @@ function substitute(
 
       [tokens, [name, fallback]] = result.get();
 
+      // If we've already seen this variable, bail out (circular reference).
       if (visited.has(name)) {
         return None;
       }
 
+      // Resolve the variable's name within the current context.
       const value = resolve(name, variables, parent, fallback, visited);
 
       if (!value.isSome()) {
         return None;
       }
 
+      // Push the resulting value, replacing the initial token
       replaced.push(...value.get());
       substituted = true;
     } else {
+      // If the token is not a "var(", push it to the result, and move on.
       replaced.push(next);
       tokens = tokens.slice(1);
     }
