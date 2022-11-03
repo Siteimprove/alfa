@@ -352,7 +352,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
       .withStyle(
         [
           "background",
-          "linear-gradient(to right, rgb(0% 0% 0%) 50%, rgb(0% 0% 93.33333%) 50%) 0% 0%",
+          "linear-gradient(to right, rgb(0% 0% 0%) 50%, rgb(0% 0% 93.33333%) 50%)",
         ],
         ["color", "rgb(100% 100% 100% / 10%)"],
         ["text-decoration", "underline"]
