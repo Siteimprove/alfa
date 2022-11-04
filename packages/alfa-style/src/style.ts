@@ -42,7 +42,7 @@ type Name = Property.Name;
  */
 export class Style implements Serializable<Style.JSON> {
   public static of(
-    declarations: Iterable<Declaration>,
+    declarations: Array<Declaration>,
     device: Device,
     parent: Option<Style> = None
   ): Style {
@@ -50,21 +50,17 @@ export class Style implements Serializable<Style.JSON> {
     // pass.
     let variables = Map.empty<string, Value<Slice<Token>>>();
 
-    for (const declaration of declarations) {
+    for (const declaration of declarations.filter((declaration) =>
+      declaration.name.startsWith("--")
+    )) {
       const { name, value } = declaration;
+      const previous = variables.get(name);
 
-      if (name.startsWith("--")) {
-        const previous = variables.get(name);
-
-        if (
-          !previous.isSome() ||
-          shouldOverride(previous.get().source, declaration)
-        ) {
-          variables = variables.set(
-            name,
-            Value.of(Lexer.lex(value), Option.of(declaration))
-          );
-        }
+      if (shouldOverride(previous, declaration)) {
+        variables = variables.set(
+          name,
+          Value.of(Lexer.lex(value), Option.of(declaration))
+        );
       }
     }
 
@@ -94,10 +90,7 @@ export class Style implements Serializable<Style.JSON> {
       if (Property.isName(name)) {
         const previous = properties.get(name);
 
-        if (
-          !previous.isSome() ||
-          shouldOverride(previous.get().source, declaration)
-        ) {
+        if (shouldOverride(previous, declaration)) {
           for (const result of parseLonghand(
             Property.get(name),
             value,
@@ -120,10 +113,7 @@ export class Style implements Serializable<Style.JSON> {
           for (const [name, value] of result) {
             const previous = properties.get(name);
 
-            if (
-              !previous.isSome() ||
-              shouldOverride(previous.get().source, declaration)
-            ) {
+            if (shouldOverride(previous, declaration)) {
               properties = properties.set(
                 name,
                 Value.of(value, Option.of(declaration))
@@ -222,15 +212,13 @@ export class Style implements Serializable<Style.JSON> {
 
         return cascaded as Value<Style.Specified<N>>;
       })
-      .getOrElse(() => {
-        if (inherits === false) {
-          return this.initial(name);
-        }
-
-        return this._parent
-          .map((parent) => parent.computed(name))
-          .getOrElse(() => this.initial(name));
-      });
+      .getOrElse(() =>
+        inherits
+          ? this._parent
+              .map((parent) => parent.computed(name))
+              .getOrElse(() => this.initial(name))
+          : this.initial(name)
+      );
   }
 
   public computed<N extends Name>(name: N): Value<Style.Computed<N>> {
@@ -248,12 +236,14 @@ export class Style implements Serializable<Style.JSON> {
       );
     }
 
-    // The previous block ensure we've set the value.
-    return this._computed
-      .get(name)
-      .getUnsafe(`Computed style for ${name} does not exists`) as Value<
-      Style.Computed<N>
-    >;
+    return (
+      this._computed
+        .get(name)
+        // The previous block ensure we've set the value.
+        .getUnsafe(`Computed style for ${name} does not exists`) as Value<
+        Style.Computed<N>
+      >
+    );
   }
 
   public initial<N extends Name>(
@@ -371,12 +361,14 @@ export namespace Style {
   export const { isRendered, isVisible } = node;
 }
 
-function shouldOverride(
-  previous: Option<Declaration>,
+function shouldOverride<T>(
+  previous: Option<Value<T>>,
   next: Declaration
 ): boolean {
-  return (
-    next.important && previous.every((declaration) => !declaration.important)
+  return previous.every(
+    (previous) =>
+      next.important &&
+      previous.source.every((declaration) => !declaration.important)
   );
 }
 
