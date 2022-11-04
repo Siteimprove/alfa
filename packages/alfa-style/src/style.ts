@@ -11,6 +11,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
@@ -47,7 +48,7 @@ export class Style implements Serializable<Style.JSON> {
   ): Style {
     // First pass: Resolve cascading variables which will be used in the second
     // pass.
-    const variables = new Map<string, Value<Slice<Token>>>();
+    let variables = Map.empty<string, Value<Slice<Token>>>();
 
     for (const declaration of declarations) {
       const { name, value } = declaration;
@@ -56,10 +57,10 @@ export class Style implements Serializable<Style.JSON> {
         const previous = variables.get(name);
 
         if (
-          previous === undefined ||
-          shouldOverride(previous.source, declaration)
+          !previous.isSome() ||
+          shouldOverride(previous.get().source, declaration)
         ) {
-          variables.set(
+          variables = variables.set(
             name,
             Value.of(Lexer.lex(value), Option.of(declaration))
           );
@@ -76,16 +77,16 @@ export class Style implements Serializable<Style.JSON> {
       if (substitution.isSome()) {
         const [tokens] = substitution.get();
 
-        variables.set(name, Value.of(tokens, variable.source));
+        variables = variables.set(name, Value.of(tokens, variable.source));
       } else {
         // Otherwise, remove the variable entirely.
-        variables.delete(name);
+        variables = variables.delete(name);
       }
     }
 
     // Second pass: Resolve cascading properties using the cascading variables
     // from the first pass.
-    const properties = new Map<Name, Value>();
+    let properties = Map.empty<Name, Value>();
 
     for (const declaration of declarations) {
       const { name, value } = declaration;
@@ -94,8 +95,8 @@ export class Style implements Serializable<Style.JSON> {
         const previous = properties.get(name);
 
         if (
-          previous === undefined ||
-          shouldOverride(previous.source, declaration)
+          !previous.isSome() ||
+          shouldOverride(previous.get().source, declaration)
         ) {
           for (const result of parseLonghand(
             Property.get(name),
@@ -103,7 +104,10 @@ export class Style implements Serializable<Style.JSON> {
             variables,
             parent
           )) {
-            properties.set(name, Value.of(result, Option.of(declaration)));
+            properties = properties.set(
+              name,
+              Value.of(result, Option.of(declaration))
+            );
           }
         }
       } else if (Property.Shorthand.isName(name)) {
@@ -117,10 +121,13 @@ export class Style implements Serializable<Style.JSON> {
             const previous = properties.get(name);
 
             if (
-              previous === undefined ||
-              shouldOverride(previous.source, declaration)
+              !previous.isSome() ||
+              shouldOverride(previous.get().source, declaration)
             ) {
-              properties.set(name, Value.of(value, Option.of(declaration)));
+              properties = properties.set(
+                name,
+                Value.of(value, Option.of(declaration))
+              );
             }
           }
         }
@@ -133,8 +140,8 @@ export class Style implements Serializable<Style.JSON> {
   private static _empty = new Style(
     Device.standard(),
     None,
-    new Map(),
-    new Map()
+    Map.empty(),
+    Map.empty()
   );
 
   public static empty(): Style {
@@ -143,18 +150,18 @@ export class Style implements Serializable<Style.JSON> {
 
   private readonly _device: Device;
   private readonly _parent: Option<Style>;
-  private readonly _variables: ReadonlyMap<string, Value<Slice<Token>>>;
-  private readonly _properties: ReadonlyMap<Name, Value>;
+  private readonly _variables: Map<string, Value<Slice<Token>>>;
+  private readonly _properties: Map<Name, Value>;
 
   // We cache computed properties but not specified properties as these are
   // inexpensive to resolve from cascaded and computed properties.
-  private readonly _computed = new Map<Name, Value>();
+  private _computed = Map.empty<Name, Value>();
 
   private constructor(
     device: Device,
     parent: Option<Style>,
-    variables: ReadonlyMap<string, Value<Slice<Token>>>,
-    properties: ReadonlyMap<Name, Value>
+    variables: Map<string, Value<Slice<Token>>>,
+    properties: Map<Name, Value>
   ) {
     this._device = device;
     this._parent = parent;
@@ -170,11 +177,11 @@ export class Style implements Serializable<Style.JSON> {
     return this._parent.getOrElse(() => Style._empty);
   }
 
-  public get variables(): ReadonlyMap<string, Value<Slice<Token>>> {
+  public get variables(): Map<string, Value<Slice<Token>>> {
     return this._variables;
   }
 
-  public get properties(): ReadonlyMap<string, Value> {
+  public get properties(): Map<string, Value> {
     return this._properties;
   }
 
@@ -183,9 +190,7 @@ export class Style implements Serializable<Style.JSON> {
   }
 
   public cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>> {
-    return Option.from(this._properties.get(name)) as Option<
-      Value<Style.Cascaded<N>>
-    >;
+    return this._properties.get(name) as Option<Value<Style.Cascaded<N>>>;
   }
 
   public specified<N extends Name>(name: N): Value<Style.Specified<N>> {
@@ -233,18 +238,22 @@ export class Style implements Serializable<Style.JSON> {
       return this.initial(name);
     }
 
-    let value = this._computed.get(name);
-
-    if (value === undefined) {
-      value = Property.get(name).compute(
-        this.specified(name) as Value<Style.Specified<Name>>,
-        this
+    if (!this._computed.has(name)) {
+      this._computed = this._computed.set(
+        name,
+        Property.get(name).compute(
+          this.specified(name) as Value<Style.Specified<Name>>,
+          this
+        )
       );
-
-      this._computed.set(name, value);
     }
 
-    return value as Value<Style.Computed<N>>;
+    // The previous block ensure we've set the value.
+    return this._computed
+      .get(name)
+      .getUnsafe(`Computed style for ${name} does not exists`) as Value<
+      Style.Computed<N>
+    >;
   }
 
   public initial<N extends Name>(
@@ -374,7 +383,7 @@ function shouldOverride(
 function parseLonghand<N extends Property.Name>(
   property: Property.WithName<N>,
   value: string,
-  variables: ReadonlyMap<string, Value<Slice<Token>>>,
+  variables: Map<string, Value<Slice<Token>>>,
   parent: Option<Style>
 ) {
   const substitution = substitute(Lexer.lex(value), variables, parent);
@@ -399,7 +408,7 @@ function parseLonghand<N extends Property.Name>(
 function parseShorthand<N extends Property.Shorthand.Name>(
   shorthand: Property.Shorthand.WithName<N>,
   value: string,
-  variables: ReadonlyMap<string, Value<Slice<Token>>>,
+  variables: Map<string, Value<Slice<Token>>>,
   parent: Option<Style>
 ) {
   const substitution = substitute(Lexer.lex(value), variables, parent);
@@ -454,14 +463,15 @@ const parseInitial = Keyword.parse("initial");
  */
 function resolve(
   name: string,
-  variables: ReadonlyMap<string, Value<Slice<Token>>>,
+  variables: Map<string, Value<Slice<Token>>>,
   parent: Option<Style>,
   fallback: Option<Slice<Token>> = None,
   visited = Set.empty<string>()
 ): Option<Slice<Token>> {
   return (
     // If the variable is defined on the current style, get its value
-    Option.from(variables.get(name))
+    variables
+      .get(name)
       .map((value) => value.value)
 
       // If no definition is found on the current style, search on ancestors
@@ -534,7 +544,7 @@ const substitutionLimit = 1024;
  */
 function substitute(
   tokens: Slice<Token>,
-  variables: ReadonlyMap<string, Value<Slice<Token>>>,
+  variables: Map<string, Value<Slice<Token>>>,
   parent: Option<Style>,
   visited = Set.empty<string>()
 ): Option<[tokens: Slice<Token>, substituted: boolean]> {
