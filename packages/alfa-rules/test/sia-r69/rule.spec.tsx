@@ -1,4 +1,3 @@
-/// <reference lib="dom" />
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 

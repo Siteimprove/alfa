@@ -61,6 +61,10 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   concat(iterable: Iterable<T>): Sequence<T>;
   subtract(iterable: Iterable<T>): Sequence<T>;
   intersect(iterable: Iterable<T>): Sequence<T>;
+  tee<A extends Array<unknown> = []>(
+    callback: Callback<Sequence<T>, void, [...args: A]>,
+    ...args: A
+  ): Sequence<T>;
   zip<U>(iterable: Iterable<U>): Sequence<[T, U]>;
   first(): Option<T>;
   last(): Option<T>;

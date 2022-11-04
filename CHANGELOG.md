@@ -19,6 +19,18 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.50.0](../../compare/v0.49.0...v0.50.0) (2022-11-02)
+
+## Added
+
+- [@siteimprove/alfa-collection](packages/alfa-collection): All `Collection` subtypes now implement a `#tee` method, to evaluate a callback on the collection's content. ([#1253](../../pull/1253))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Version 2 of SIA-R66 and SIA-R69 are provided as experimental versions. These ask which interposed elements should be ignored while computing colors. ([#1253](../../pull/1253))
+
+## Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style): Undefined CSS variables are now correctly searched for inherited value before using fallback value. ([#1246](../../pull/1246))
+
 ## [0.49.0](../../compare/v0.48.0...v0.49.0) (2022-10-18)
 
 ### Breaking

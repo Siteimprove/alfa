@@ -5,6 +5,7 @@
 ```ts
 
 import { Applicative } from '@siteimprove/alfa-applicative';
+import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Callback } from '@siteimprove/alfa-callback';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparer } from '@siteimprove/alfa-comparable';
@@ -68,6 +69,8 @@ export interface Collection<T> extends Functor<T>, Applicative<T>, Monad<T>, Fol
     readonly size: number;
     // (undocumented)
     some(predicate: Predicate<T>): boolean;
+    // (undocumented)
+    tee<A extends Array_2<unknown> = []>(callback: Callback<Collection<T>, void, [...args: A]>, ...args: A): Collection<T>;
 }
 
 // @public (undocumented)
@@ -189,6 +192,8 @@ export namespace Collection {
         // (undocumented)
         takeWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
+        tee<A extends Array_2<unknown> = []>(callback: Callback<Indexed<T>, void, [...args: A]>, ...args: A): Indexed<T>;
+        // (undocumented)
         trim(predicate: Predicate<T, [index: number]>): Indexed<T>;
         // (undocumented)
         trimLeading(predicate: Predicate<T, [index: number]>): Indexed<T>;
@@ -200,7 +205,7 @@ export namespace Collection {
     // (undocumented)
     export namespace Indexed {
         // (undocumented)
-        export type JSON<T> = Array<Serializable.ToJSON<T>>;
+        export type JSON<T> = Array_2<Serializable.ToJSON<T>>;
     }
     // (undocumented)
     export interface Keyed<K, V> extends Collection<V>, Iterable_2<[K, V]>, Serializable<Keyed.JSON<K, V>> {
@@ -260,11 +265,13 @@ export namespace Collection {
         some(predicate: Predicate<V, [key: K]>): boolean;
         // (undocumented)
         subtract(iterable: Iterable_2<readonly [K, V]>): Keyed<K, V>;
+        // (undocumented)
+        tee<A extends Array_2<unknown> = []>(callback: Callback<Keyed<K, V>, void, [...args: A]>, ...args: A): Keyed<K, V>;
     }
     // (undocumented)
     export namespace Keyed {
         // (undocumented)
-        export type JSON<K, V> = Array<[
+        export type JSON<K, V> = Array_2<[
         Serializable.ToJSON<K>,
         Serializable.ToJSON<V>
         ]>;
@@ -327,11 +334,13 @@ export namespace Collection {
         some(predicate: Predicate<T>): boolean;
         // (undocumented)
         subtract(iterable: Iterable_2<T>): Unkeyed<T>;
+        // (undocumented)
+        tee<A extends Array_2<unknown> = []>(callback: Callback<Unkeyed<T>, void, [...args: A]>, ...args: A): Unkeyed<T>;
     }
     // (undocumented)
     export namespace Unkeyed {
         // (undocumented)
-        export type JSON<T> = Array<Serializable.ToJSON<T>>;
+        export type JSON<T> = Array_2<Serializable.ToJSON<T>>;
     }
 }
 

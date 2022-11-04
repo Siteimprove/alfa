@@ -210,6 +210,10 @@ export namespace Question {
       type: "color[]",
       message: "What are the foreground colors of the text node?",
     },
+    "ignored-interposed-elements": {
+      type: "node[]",
+      message: "Which of these interposed descendants should be ignored?",
+    },
     // R87
     "first-tabbable-is-internal-link": {
       type: "boolean",

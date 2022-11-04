@@ -2,17 +2,23 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
+import { Set } from "@siteimprove/alfa-set";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Style } from "@siteimprove/alfa-style";
 
 import { expectation } from "../act/expectation";
+import { Group } from "../act/group";
 import { Question } from "../act/question";
 import { Contrast as Diagnostic } from "../diagnostic/contrast";
 import { getBackground, getForeground } from "../dom/get-colors";
+import { getInterposedDescendant } from "../dom/get-interposed-descendant";
 import { Contrast as Outcomes } from "../outcome/contrast";
 import { isLargeText } from "../predicate";
 
+const { isElement } = Element;
 const { flatMap, map } = Iterable;
 const { min, max, round } = Math;
+const { hasTransparentBackground } = Style;
 
 /**
  * @internal
@@ -23,37 +29,106 @@ export function hasSufficientContrast(
   largeTextThreshold: number,
   normalTextThreshold: number
 ) {
-  const foregrounds = Question.of("foreground-colors", target);
-  const backgrounds = Question.of("background-colors", target);
+  // Associated Applicability should ensure that target have Element as parent.
+  // Additionally, stray text nodes should not exist in our use case and we'd
+  // rather crash if finding one.
+  const parent = target.parent(Node.flatTree).getUnsafe() as Element;
 
-  const result = foregrounds.map((foregrounds) =>
-    backgrounds.map((backgrounds) => {
-      const { pairings, highest } = getPairings(foregrounds, backgrounds);
-
-      const threshold = isLargeText(device)(target)
-        ? largeTextThreshold
-        : normalTextThreshold;
-
-      return expectation(
-        // Accept if  single pairing is good enough.
-        highest >= threshold,
-        () => Outcomes.HasSufficientContrast(highest, threshold, pairings),
-        () => Outcomes.HasInsufficientContrast(highest, threshold, pairings)
-      );
-    })
+  const foregrounds = Question.of("foreground-colors", target).answerIf(
+    getForeground(parent, device)
   );
+  const backgrounds = Question.of("background-colors", target).answerIf(
+    getBackground(parent, device)
+  );
+
+  const threshold = isLargeText(device)(target)
+    ? largeTextThreshold
+    : normalTextThreshold;
+
+  return {
+    1: foregrounds.map((foregrounds) =>
+      backgrounds.map((backgrounds) => {
+        const { pairings, highest } = getPairings(foregrounds, backgrounds);
+
+        return expectation(
+          // Accept if  single pairing is good enough.
+          highest >= threshold,
+          () => Outcomes.HasSufficientContrast(highest, threshold, pairings),
+          () => Outcomes.HasInsufficientContrast(highest, threshold, pairings)
+        );
+      })
+    ),
+  };
+}
+
+/**
+ * @internal
+ */
+export function hasSufficientContrastExperimental(
+  target: Text,
+  device: Device,
+  largeTextThreshold: number,
+  normalTextThreshold: number
+) {
+  // all non-transparent interposed descendants of an ancestor
+  const interposedDescendants = target
+    .ancestors(Node.fullTree)
+    .filter(isElement)
+    .flatMap((element) => getInterposedDescendant(device, element))
+    .reject(hasTransparentBackground(device));
+
+  const ignoredInterposedElements = Question.of(
+    "ignored-interposed-elements",
+    Group.of(interposedDescendants),
+    target
+  ).answerIf(interposedDescendants.isEmpty(), []);
 
   // Associated Applicability should ensure that target have Element as parent.
   // Additionally, stray text nodes should not exist in our use case and we'd
   // rather crash if finding one.
   const parent = target.parent(Node.flatTree).getUnsafe() as Element;
 
+  const foregrounds = Question.of("foreground-colors", target);
+  const backgrounds = Question.of("background-colors", target);
+
+  const threshold = isLargeText(device)(target)
+    ? largeTextThreshold
+    : normalTextThreshold;
+
   return {
-    1: result
-      .answerIf(getForeground(parent, device))
-      .map((askBackground) =>
-        askBackground.answerIf(getBackground(parent, device))
-      ),
+    1: ignoredInterposedElements.map((ignored) => {
+      const ignoredInterposed = Set.from(ignored).filter(isElement);
+
+      return foregrounds
+        .answerIf(getForeground(parent, device, undefined, ignoredInterposed))
+        .map((foregrounds) =>
+          backgrounds
+            .answerIf(
+              getBackground(
+                parent,
+                device,
+                undefined,
+                undefined,
+                ignoredInterposed
+              )
+            )
+            .map((backgrounds) => {
+              const { pairings, highest } = getPairings(
+                foregrounds,
+                backgrounds
+              );
+
+              return expectation(
+                // Accept if  single pairing is good enough.
+                highest >= threshold,
+                () =>
+                  Outcomes.HasSufficientContrast(highest, threshold, pairings),
+                () =>
+                  Outcomes.HasInsufficientContrast(highest, threshold, pairings)
+              );
+            })
+        );
+    }),
   };
 }
 
