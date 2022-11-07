@@ -1,5 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { Keyword, Length, Percentage } from "@siteimprove/alfa-css";
+import { Numeric } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
@@ -16,6 +16,7 @@ import { isRendered } from "./is-rendered";
 import { isTransparent } from "./is-transparent";
 
 const { hasName, isElement, isReplaced } = Element;
+const { isNumeric } = Numeric;
 const { nor, not, test } = Predicate;
 const { and, or } = Refinement;
 const { isText } = Text;
@@ -99,25 +100,33 @@ const isVisibleWhenEmpty = hasName("textarea");
 /**
  * Does the element have set dimensions?
  *
- * For each direction, we look if the element either has a set dimension,
- * or is stretched after being absolutely positioned; stretching only works when
- * the corresponding dimension is `auto`, but if it is not, then `hasDimension`
- * is true… (if the dimension is set to 0, isClipped handled the case)
+ * For each direction (x / y), we look if the element either has a set dimension
+ * (width / height), or is stretched after being absolutely positioned.
+ * An element has a set dimension if its value is a numeric value (not a keyword)
+ * larger than 0.
+ * An element is stretched if it has both end points (left+right / top+bottom)
+ * to a non-`auto` value.
  *
  * If an element has dimension in both directions, it is assumed to be visible.
+ *
+ * @remarks
+ * width / height keyword value are auto, max-content, min-content, and
+ * fit-content; all of them depend on content and do not stretch empty elements.
  */
 function hasDimensions(device: Device): Predicate<Element> {
-  const isSet = (value: Keyword | Length | Percentage) =>
-    value.type !== "keyword" && value.value > 0;
-
+  // A dimension of 0
   const hasDimension = (dimension: "height" | "width") =>
-    hasComputedStyle(dimension, isSet, device);
+    hasComputedStyle(
+      dimension,
+      and(isNumeric, (number) => number.value > 0),
+      device
+    );
 
   const isStretched = (...sides: ["top", "bottom"] | ["left", "right"]) =>
     and(
       isPositioned(device, "absolute"),
-      hasComputedStyle(sides[0], isSet, device),
-      hasComputedStyle(sides[1], isSet, device)
+      hasComputedStyle(sides[0], isNumeric, device),
+      hasComputedStyle(sides[1], isNumeric, device)
     );
 
   return and(
