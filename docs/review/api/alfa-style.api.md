@@ -16,11 +16,11 @@ import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
 import { Gradient } from '@siteimprove/alfa-css';
 import { Image } from '@siteimprove/alfa-css';
-import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Keyword } from '@siteimprove/alfa-css';
 import { Length } from '@siteimprove/alfa-css';
 import { Linear } from '@siteimprove/alfa-css';
+import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Node } from '@siteimprove/alfa-dom';
@@ -248,11 +248,11 @@ export class Style implements Serializable<Style.JSON> {
     // (undocumented)
     initial<N extends Name>(name: N, source?: Option<Declaration>): Value<Style.Initial<N>>;
     // (undocumented)
-    static of(declarations: Iterable_2<Declaration>, device: Device, parent?: Option<Style>): Style;
+    static of(declarations: Array<Declaration>, device: Device, parent?: Option<Style>): Style;
     // (undocumented)
     get parent(): Style;
     // (undocumented)
-    get properties(): ReadonlyMap<string, Value>;
+    get properties(): Map_2<string, Value>;
     // (undocumented)
     root(): Style;
     // (undocumented)
@@ -260,7 +260,7 @@ export class Style implements Serializable<Style.JSON> {
     // (undocumented)
     toJSON(): Style.JSON;
     // (undocumented)
-    get variables(): ReadonlyMap<string, Value<Slice<Token>>>;
+    get variables(): Map_2<string, Value<Slice<Token>>>;
 }
 
 // @public (undocumented)
