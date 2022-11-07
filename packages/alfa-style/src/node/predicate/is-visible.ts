@@ -114,7 +114,6 @@ const isVisibleWhenEmpty = hasName("textarea");
  * fit-content; all of them depend on content and do not stretch empty elements.
  */
 function hasDimensions(device: Device): Predicate<Element> {
-  // A dimension of 0
   const hasDimension = (dimension: "height" | "width") =>
     hasComputedStyle(
       dimension,
