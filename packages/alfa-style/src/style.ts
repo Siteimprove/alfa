@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
 import { Lexer, Keyword, Component, Token } from "@siteimprove/alfa-css";
@@ -42,10 +43,15 @@ type Name = Property.Name;
  */
 export class Style implements Serializable<Style.JSON> {
   public static of(
-    declarations: Array<Declaration>,
+    styleDeclarations: Iterable<Declaration>,
     device: Device,
     parent: Option<Style> = None
   ): Style {
+    // declarations are read twice, once for variables and once for properties,
+    // so we cannot use a read-once iterable. Main use case from `Style.from`
+    // is already sending an Array, so this is inexpensive
+    const declarations = Array.from(styleDeclarations);
+
     /**
      * First pass, substitute variable by their definition
      */
@@ -478,6 +484,8 @@ function resolve(
 ): Option<Slice<Token>> {
   return (
     // If the variable is defined on the current style, get its value
+    // If it is defined on an ancestor, this will also gets its value since
+    // variables maps have been pre-merged.
     variables
       .get(name)
       .map((value) => value.value)

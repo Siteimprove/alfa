@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-applicative": "workspace:^0.50.0",
+    "@siteimprove/alfa-array": "workspace:^0.50.0",
     "@siteimprove/alfa-cache": "workspace:^0.50.0",
     "@siteimprove/alfa-cascade": "workspace:^0.50.0",
     "@siteimprove/alfa-css": "workspace:^0.50.0",

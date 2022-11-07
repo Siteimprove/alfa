@@ -6,6 +6,7 @@
 
 import { Angle } from '@siteimprove/alfa-css';
 import { Applicative } from '@siteimprove/alfa-applicative';
+import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Color } from '@siteimprove/alfa-css';
 import { Context } from '@siteimprove/alfa-selector';
 import { Current } from '@siteimprove/alfa-css';
@@ -16,6 +17,7 @@ import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
 import { Gradient } from '@siteimprove/alfa-css';
 import { Image } from '@siteimprove/alfa-css';
+import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Keyword } from '@siteimprove/alfa-css';
 import { Length } from '@siteimprove/alfa-css';
@@ -248,7 +250,7 @@ export class Style implements Serializable<Style.JSON> {
     // (undocumented)
     initial<N extends Name>(name: N, source?: Option<Declaration>): Value<Style.Initial<N>>;
     // (undocumented)
-    static of(declarations: Array<Declaration>, device: Device, parent?: Option<Style>): Style;
+    static of(styleDeclarations: Iterable_2<Declaration>, device: Device, parent?: Option<Style>): Style;
     // (undocumented)
     get parent(): Style;
     // (undocumented)
@@ -294,9 +296,9 @@ export namespace Style {
         // (undocumented)
         device: Device.JSON;
         // (undocumented)
-        properties: Array<[string, Value.JSON]>;
+        properties: Array_2<[string, Value.JSON]>;
         // (undocumented)
-        variables: Array<[string, Value.JSON]>;
+        variables: Array_2<[string, Value.JSON]>;
     }
     // Warning: (ae-incompatible-release-tags) The symbol "Specified" is marked as @public, but its signature references "Property" which is marked as @internal
     //
