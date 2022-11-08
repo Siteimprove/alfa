@@ -9,6 +9,7 @@ import { Context } from "@siteimprove/alfa-selector";
 
 import { hasComputedStyle } from "../../element/predicate/has-computed-style";
 import { isPositioned } from "../../element/predicate/is-positioned";
+import { hasSameForegroundAsBackground } from "./has-same-foreground-as-background";
 
 import { isClipped } from "./is-clipped";
 import { isOffscreen } from "./is-offscreen";
@@ -47,16 +48,19 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
             isTransparent(device, context),
             isClipped(device, context),
             isOffscreen(device, context),
-            // Empty text
-            and(isText, (text) => text.data.trim() === ""),
-            // Text of size 0
             and(
               isText,
-              hasComputedStyle(
-                "font-size",
-                (size) => size.value === 0,
-                device,
-                context
+              or(
+                hasSameForegroundAsBackground(device, context),
+                // Empty text
+                (text) => text.data.trim() === "",
+                // Text of size 0
+                hasComputedStyle(
+                  "font-size",
+                  (size) => size.value === 0,
+                  device,
+                  context
+                )
               )
             ),
             // Element or Text with visibility != "visible"

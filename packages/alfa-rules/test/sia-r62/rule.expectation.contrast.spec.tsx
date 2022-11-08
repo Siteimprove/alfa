@@ -236,7 +236,7 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
     noDistinguishingProperties
       .withStyle([
         "background",
-        "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
+        "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%)",
       ])
       .withPairings(contrastPairings)
   );
@@ -280,7 +280,7 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
       .withStyle(
         [
           "background",
-          "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%) 0% 0%",
+          "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%)",
         ],
         ["color", "rgb(100% 100% 100% / 10%)"]
       )

@@ -47,13 +47,18 @@ export const parseList = map(
 );
 
 /**
+ * @internal
+ */
+export const initialItem = Keyword.of("scroll");
+
+/**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-attachment}
  * @internal
  */
 export default Property.register(
   "background-attachment",
   Property.of<Specified, Computed>(
-    List.of([Keyword.of("scroll")], ", "),
+    List.of([initialItem], ", "),
     parseList,
     (value) => value
   )

@@ -51,13 +51,18 @@ export const parseList = map(
 );
 
 /**
+ * @internal
+ */
+export const initialItem = Keyword.of("repeat");
+
+/**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat}
  * @internal
  */
 export default Property.register(
   "background-repeat-y",
   Property.of<Specified, Computed>(
-    List.of([Keyword.of("repeat")]),
+    List.of([initialItem]),
     parseList,
     (value) => value
   )

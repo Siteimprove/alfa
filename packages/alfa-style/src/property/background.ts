@@ -1,4 +1,4 @@
-import { Keyword, Percentage, Token } from "@siteimprove/alfa-css";
+import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -6,7 +6,6 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Property } from "../property";
 
 import { List } from "./value/list";
-import { Tuple } from "./value/tuple";
 
 import * as Attachment from "./background-attachment";
 import * as Clip from "./background-clip";
@@ -251,19 +250,19 @@ export default Property.registerShorthand(
 
       for (const layer of layers) {
         color = layer[0];
-        image.push(layer[1] ?? Keyword.of("none"));
-        positionX.push(layer[2] ?? Percentage.of(0));
-        positionY.push(layer[3] ?? Percentage.of(0));
-        size.push(layer[4] ?? Tuple.of(Keyword.of("auto"), Keyword.of("auto")));
-        repeatX.push(layer[5] ?? Keyword.of("repeat"));
-        repeatY.push(layer[6] ?? Keyword.of("repeat"));
-        attachment.push(layer[7] ?? Keyword.of("scroll"));
-        origin.push(layer[8] ?? Keyword.of("padding-box"));
-        clip.push(layer[9] ?? Keyword.of("border-box"));
+        image.push(layer[1] ?? Image.initialItem);
+        positionX.push(layer[2] ?? PositionX.initialItem);
+        positionY.push(layer[3] ?? PositionY.initialItem);
+        size.push(layer[4] ?? Size.initialItem);
+        repeatX.push(layer[5] ?? RepeatX.initialItem);
+        repeatY.push(layer[6] ?? RepeatY.initialItem);
+        attachment.push(layer[7] ?? Attachment.initialItem);
+        origin.push(layer[8] ?? Origin.initialItem);
+        clip.push(layer[9] ?? Clip.initialItem);
       }
 
       return [
-        ["background-color", color ?? Keyword.of("initial")],
+        ["background-color", color ?? Property.get("background-color").initial],
         ["background-image", List.of(image, ", ")],
         ["background-position-x", List.of(positionX, ", ")],
         ["background-position-y", List.of(positionY, ", ")],
