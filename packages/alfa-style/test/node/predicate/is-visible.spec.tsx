@@ -578,3 +578,43 @@ test("isVisible() returns true for an absolutely positioned element with a clipp
 
   t.equal(isVisible(element), true);
 });
+
+test(`isVisible() returns false for text with the same color as their background`, (t) => {
+  const text = h.text("Hello");
+
+  h.document(
+    [
+      <div>
+        <span>{text}</span>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", { color: "white" }),
+        h.rule.style("div", { background: "white" }),
+      ]),
+    ]
+  );
+
+  t.equal(isVisible(text), false);
+});
+
+test(`isVisible() returns true for text with the same color as their background but with other property set`, (t) => {
+  const text = h.text("Hello");
+
+  h.document(
+    [
+      <div>
+        <span>{text}</span>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style("span", { color: "white" }),
+        h.rule.style("div", { background: "border-box white" }),
+      ]),
+    ]
+  );
+
+  t.equal(isVisible(text), true);
+});

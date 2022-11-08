@@ -47,13 +47,18 @@ export const parseList = map(
 );
 
 /**
+ * @internal
+ */
+export const initialItem = Keyword.of("border-box");
+
+/**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-clip}
  * @internal
  */
 export default Property.register(
   "background-clip",
   Property.of<Specified, Computed>(
-    List.of([Keyword.of("border-box")], ", "),
+    List.of([initialItem], ", "),
     parseList,
     (value) => value
   )
