@@ -1273,6 +1273,98 @@ test(`.from() correctly handles direct chained aria-labelledby references`, (t) 
   });
 });
 
+test(`.from() correctly handles indirect chained aria-labelledby references`, (t) => {
+  const foo = (
+    <div id="foo" aria-labelledby="bar">
+      Foo
+    </div>
+  );
+
+  const bar = (
+    <button id="bar">
+      <span aria-labelledby="baz">Bar</span>
+    </button>
+  );
+
+  <div>
+    {foo}
+    {bar}
+    <div id="baz">Baz</div>
+  </div>;
+
+  // From the perspective of `foo`, `bar` has a name of "Bar" as the second
+  // `aria-labelledby` reference isn't followed.
+  t.deepEqual(getName(foo), {
+    value: "Bar",
+    sources: [
+      {
+        type: "reference",
+        attribute: "/div[1]/div[1]/@aria-labelledby",
+        name: {
+          value: "Bar",
+          sources: [
+            {
+              type: "descendant",
+              element: "/div[1]/button[1]",
+              name: {
+                value: "Bar",
+                sources: [
+                  {
+                    type: "descendant",
+                    element: "/div[1]/button[1]/span[1]",
+                    name: {
+                      value: "Bar",
+                      sources: [
+                        { type: "data", text: "/div[1]/button[1]/text()[1]" },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  });
+
+  // From the perspective of `bar`, it has a name of "Baz" as `bar` doesn't care
+  // about `foo` and therefore only sees a single `aria-labelledby` reference.
+  t.deepEqual(getName(bar), {
+    value: "Baz",
+    sources: [
+      {
+        type: "descendant",
+        element: "/div[1]/button[1]",
+        name: {
+          value: "Baz",
+          sources: [
+            {
+              type: "reference",
+              attribute: "/div[1]/button[1]/span[1]/@aria-labelledby",
+              name: {
+                value: "Baz",
+                sources: [
+                  {
+                    type: "descendant",
+                    element: "/div[1]/div[2]",
+                    name: {
+                      value: "Baz",
+                      sources: [
+                        { type: "data", text: "/div[1]/div[2]/text()[1]" },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  });
+});
+
 test(`.from() correctly handles self-referencing aria-labelledby references`, (t) => {
   const foo = (
     <div id="foo" aria-labelledby="foo bar">
