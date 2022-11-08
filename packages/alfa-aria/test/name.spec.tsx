@@ -1138,6 +1138,41 @@ test(`.from() correctly handles aria-labelledby references to hidden elements
   });
 });
 
+test(`.from() correctly handles aria-labelledby references to elements
+      with child hidden elements with child text content`, (t) => {
+  const button = <button aria-labelledby="foo"></button>;
+
+  <div>
+    {button}
+    <div id="foo">
+      <span aria-hidden="true">Hello</span> world
+    </div>
+  </div>;
+
+  t.deepEqual(getName(button), {
+    value: "world",
+    sources: [
+      {
+        type: "reference",
+        attribute: "/div[1]/button[1]/@aria-labelledby",
+        name: {
+          value: "world",
+          sources: [
+            {
+              type: "descendant",
+              element: "/div[1]/div[1]",
+              name: {
+                value: "world",
+                sources: [{ type: "data", text: "/div[1]/div[1]/text()[1]" }],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  });
+});
+
 test(`.from() correctly handles circular aria-labelledby references`, (t) => {
   const foo = (
     <div id="foo" aria-labelledby="bar">
