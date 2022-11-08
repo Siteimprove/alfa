@@ -493,6 +493,25 @@ test("isVisible() return true for an empty element with set dimensions", (t) => 
   t.equal(isVisible(element), true);
 });
 
+test("isVisible() returns false for an empty element whose set dimensions are 0", (t) => {
+  const element = <div></div>;
+
+  h.document(
+    [element],
+    [
+      h.sheet([
+        h.rule.style("div", {
+          background: "red",
+          width: "0px",
+          height: "0px",
+        }),
+      ]),
+    ]
+  );
+
+  t.equal(isVisible(element), false);
+});
+
 test("isVisible() returns true for an empty absolutely positioned element stretched within its offset parent", (t) => {
   const element = <div class="stretch"></div>;
 
@@ -503,10 +522,10 @@ test("isVisible() returns true for an empty absolutely positioned element stretc
         h.rule.style(".stretch", {
           position: "absolute",
           background: "red",
-          top: "1px",
-          bottom: "1px",
-          left: "1px",
-          right: "1px",
+          top: "0",
+          bottom: "0",
+          left: "-1px",
+          right: "-1px",
         }),
       ]),
     ]
@@ -526,8 +545,8 @@ test("isVisible() returns true for an element stretched horizontally and dimensi
           position: "absolute",
           background: "red",
           height: "100px",
-          left: "1px",
-          right: "1px",
+          left: "0",
+          right: "-1px",
         }),
       ]),
     ]
