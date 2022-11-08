@@ -1315,7 +1315,10 @@ test(`.from() correctly handles indirect chained aria-labelledby references`, (t
                     name: {
                       value: "Bar",
                       sources: [
-                        { type: "data", text: "/div[1]/button[1]/text()[1]" },
+                        {
+                          type: "data",
+                          text: "/div[1]/button[1]/span[1]/text()[1]",
+                        },
                       ],
                     },
                   },

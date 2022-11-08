@@ -771,25 +771,23 @@ export namespace Name {
       .children()
       .filter(or(isText, isElement))
       .collect((element) =>
-        fromNode(
-          element,
-          device,
-          state.reference(None).recurse(true).descend(true)
-        ).map((name) => {
-          if (
-            test(
-              hasComputedStyle(
-                "display",
-                ({ values: [outside] }) => outside.value === "block",
-                device
-              ),
-              element
-            )
-          ) {
-            return [` ${name.value} `, name];
+        fromNode(element, device, state.recurse(true).descend(true)).map(
+          (name) => {
+            if (
+              test(
+                hasComputedStyle(
+                  "display",
+                  ({ values: [outside] }) => outside.value === "block",
+                  device
+                ),
+                element
+              )
+            ) {
+              return [` ${name.value} `, name];
+            }
+            return [name.value, name];
           }
-          return [name.value, name];
-        })
+        )
       );
 
     const name = flatten(names.map((name) => name[0]).join("")).trim();
