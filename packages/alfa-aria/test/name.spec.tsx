@@ -1574,7 +1574,7 @@ test(`.from() correctly handles circular aria-labelledby references`, (t) => {
   });
 });
 
-test(`.from() correctly handles chained aria-labelledby references`, (t) => {
+test(`.from() correctly handles direct chained aria-labelledby references`, (t) => {
   const foo = (
     <div id="foo" aria-labelledby="bar">
       Foo
