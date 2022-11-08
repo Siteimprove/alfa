@@ -19,6 +19,20 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.51.0](../../compare/v0.50.0...v0.51.0) (2022-11-08)
+
+### Breaking
+
+- [@siteimprove/alfa-style](packages/alfa-style): `Style` objects now use (and export) Alfa's `Map` rather than native `ReadonlyMap`. ([#1259](../../pull/1259))
+
+### Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style): `isVisible` now correctly considers text whose color is the same as their background as invisible. ([#1251](../../issues/1251), [#1255](../../pull/1255))
+
+- [@siteimprove/alfa-style](packages/alfa-style): Improved detection of empty elements with a background, that are stretched to occupy all the parent's box. ([#1261](../../pull/1261))
+
+- [@siteimprove/alfa-style](packages/alfa-style): Improved detection of circular definition of inherited CSS variables, resulting in a huge performance boost in some corner cases. ([#1259](../../pull/1259))
+
 ## [0.50.0](../../compare/v0.49.0...v0.50.0) (2022-11-02)
 
 ## Added
