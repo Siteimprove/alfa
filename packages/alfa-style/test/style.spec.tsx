@@ -651,7 +651,7 @@ test(`#cascaded() correctly resolves var() function references within context
           "--hidden": "var(--really-hidden)",
         }),
         // This declaration references `--foo`, but inherits its value from
-        // `main` above. The substitutipn of `--foo` therefore happens within
+        // `main` above. The substitution of `--foo` therefore happens within
         // the context of `main` where it resolves to an undefined variable and
         // is thus unset. The local definition of `--invalid` does not affect
         // the parent definition of `--foo`.
