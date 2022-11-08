@@ -639,6 +639,7 @@ test(`#cascaded() correctly resolves var() function references within context
         h.rule.style("main", {
           "--really-hidden": "var(--hidden)",
           "--hidden": "hidden",
+          "--foo": "var(--invalid)",
         }),
 
         // This declaration references `--really-hidden`, but inherits its value
@@ -647,8 +648,16 @@ test(`#cascaded() correctly resolves var() function references within context
         // for `div` will therefore not apply.
         h.rule.style("div", {
           overflowX: "var(--hidden)",
-
           "--hidden": "var(--really-hidden)",
+        }),
+        // This declaration references `--foo`, but inherits its value from
+        // `main` above. The substitution of `--foo` therefore happens within
+        // the context of `main` where it resolves to an undefined variable and
+        // is thus unset. The local definition of `--invalid` does not affect
+        // the parent definition of `--foo`.
+        h.rule.style("div", {
+          color: "var(--foo)",
+          "--invalid": "red",
         }),
       ]),
     ]
@@ -660,6 +669,14 @@ test(`#cascaded() correctly resolves var() function references within context
       value: "hidden",
     },
     source: h.declaration("overflow-x", "var(--hidden)").toJSON(),
+  });
+
+  t.deepEqual(cascaded(element, "color"), {
+    value: {
+      type: "keyword",
+      value: "unset",
+    },
+    source: h.declaration("color", "var(--foo)").toJSON(),
   });
 });
 

@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
 import { Lexer, Keyword, Component, Token } from "@siteimprove/alfa-css";
@@ -11,6 +12,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
@@ -41,51 +43,73 @@ type Name = Property.Name;
  */
 export class Style implements Serializable<Style.JSON> {
   public static of(
-    declarations: Iterable<Declaration>,
+    styleDeclarations: Iterable<Declaration>,
     device: Device,
     parent: Option<Style> = None
   ): Style {
-    // First pass: Resolve cascading variables which will be used in the second
-    // pass.
-    const variables = new Map<string, Value<Slice<Token>>>();
+    // declarations are read twice, once for variables and once for properties,
+    // so we cannot use a read-once iterable. Main use case from `Style.from`
+    // is already sending an Array, so this is inexpensive
+    const declarations = Array.from(styleDeclarations);
 
-    for (const declaration of declarations) {
+    /**
+     * First pass, substitute variable by their definition
+     */
+    // First step: Gather variables that are declared on the current style
+    // The same variable may be declared several times, so we rely on
+    // declarations being pre-ordered by decreasing specificity and only take
+    // the first declaration
+    // This builds a map from variable names to their lexed value
+    // i.e. "--foo: lorem ipsum" becomes "foo => [lorem, ipsum]"
+    let currentVariables = Map.empty<string, Value<Slice<Token>>>();
+
+    for (const declaration of declarations.filter((declaration) =>
+      declaration.name.startsWith("--")
+    )) {
       const { name, value } = declaration;
+      const previous = currentVariables.get(name);
 
-      if (name.startsWith("--")) {
-        const previous = variables.get(name);
-
-        if (
-          previous === undefined ||
-          shouldOverride(previous.source, declaration)
-        ) {
-          variables.set(
-            name,
-            Value.of(Lexer.lex(value), Option.of(declaration))
-          );
-        }
+      if (shouldOverride(previous, declaration)) {
+        currentVariables = currentVariables.set(
+          name,
+          Value.of(Lexer.lex(value), Option.of(declaration))
+        );
       }
     }
 
-    // Pre-substitute the resolved cascading variables from above, replacing
-    // any `var()` function references with their substituted tokens.
+    // Second step: since CSS variables are always inherited, and inheritance
+    // takes precedence over fallback, we can merge the current variables will
+    // the parent ones, this will effectively resolve variable inheritance.
+    let variables = currentVariables.reduce(
+      (vars, value, name) => vars.set(name, value),
+      parent
+        .map((parent) => parent.variables)
+        .getOr(Map.empty<string, Value<Slice<Token>>>())
+    );
+
+    // Third step: pre-substitute the resolved cascading variables from above,
+    // replacing any `var()` function references with their substituted tokens.
+    // This effectively takes care of deleting variables with syntactically
+    // invalid values, circular references, too many substitutions, …
     for (const [name, variable] of variables) {
-      const substitution = substitute(variable.value, variables, parent);
+      const substitution = substitute(variable.value, variables);
 
       // If the replaced value is valid, use the replaced value as the new value of the variable.
       if (substitution.isSome()) {
         const [tokens] = substitution.get();
 
-        variables.set(name, Value.of(tokens, variable.source));
+        variables = variables.set(name, Value.of(tokens, variable.source));
       } else {
         // Otherwise, remove the variable entirely.
-        variables.delete(name);
+        variables = variables.delete(name);
       }
     }
 
-    // Second pass: Resolve cascading properties using the cascading variables
-    // from the first pass.
-    const properties = new Map<Name, Value>();
+    /**
+     * Second pass: Resolve cascading properties using the cascading variables
+     * from the first pass.
+     */
+    let properties = Map.empty<Name, Value>();
 
     for (const declaration of declarations) {
       const { name, value } = declaration;
@@ -93,34 +117,32 @@ export class Style implements Serializable<Style.JSON> {
       if (Property.isName(name)) {
         const previous = properties.get(name);
 
-        if (
-          previous === undefined ||
-          shouldOverride(previous.source, declaration)
-        ) {
+        if (shouldOverride(previous, declaration)) {
           for (const result of parseLonghand(
             Property.get(name),
             value,
-            variables,
-            parent
+            variables
           )) {
-            properties.set(name, Value.of(result, Option.of(declaration)));
+            properties = properties.set(
+              name,
+              Value.of(result, Option.of(declaration))
+            );
           }
         }
       } else if (Property.Shorthand.isName(name)) {
         for (const result of parseShorthand(
           Property.Shorthand.get(name),
           value,
-          variables,
-          parent
+          variables
         )) {
           for (const [name, value] of result) {
             const previous = properties.get(name);
 
-            if (
-              previous === undefined ||
-              shouldOverride(previous.source, declaration)
-            ) {
-              properties.set(name, Value.of(value, Option.of(declaration)));
+            if (shouldOverride(previous, declaration)) {
+              properties = properties.set(
+                name,
+                Value.of(value, Option.of(declaration))
+              );
             }
           }
         }
@@ -133,8 +155,8 @@ export class Style implements Serializable<Style.JSON> {
   private static _empty = new Style(
     Device.standard(),
     None,
-    new Map(),
-    new Map()
+    Map.empty(),
+    Map.empty()
   );
 
   public static empty(): Style {
@@ -143,18 +165,18 @@ export class Style implements Serializable<Style.JSON> {
 
   private readonly _device: Device;
   private readonly _parent: Option<Style>;
-  private readonly _variables: ReadonlyMap<string, Value<Slice<Token>>>;
-  private readonly _properties: ReadonlyMap<Name, Value>;
+  private readonly _variables: Map<string, Value<Slice<Token>>>;
+  private readonly _properties: Map<Name, Value>;
 
   // We cache computed properties but not specified properties as these are
   // inexpensive to resolve from cascaded and computed properties.
-  private readonly _computed = new Map<Name, Value>();
+  private _computed = Map.empty<Name, Value>();
 
   private constructor(
     device: Device,
     parent: Option<Style>,
-    variables: ReadonlyMap<string, Value<Slice<Token>>>,
-    properties: ReadonlyMap<Name, Value>
+    variables: Map<string, Value<Slice<Token>>>,
+    properties: Map<Name, Value>
   ) {
     this._device = device;
     this._parent = parent;
@@ -170,11 +192,11 @@ export class Style implements Serializable<Style.JSON> {
     return this._parent.getOrElse(() => Style._empty);
   }
 
-  public get variables(): ReadonlyMap<string, Value<Slice<Token>>> {
+  public get variables(): Map<string, Value<Slice<Token>>> {
     return this._variables;
   }
 
-  public get properties(): ReadonlyMap<string, Value> {
+  public get properties(): Map<string, Value> {
     return this._properties;
   }
 
@@ -183,9 +205,7 @@ export class Style implements Serializable<Style.JSON> {
   }
 
   public cascaded<N extends Name>(name: N): Option<Value<Style.Cascaded<N>>> {
-    return Option.from(this._properties.get(name)) as Option<
-      Value<Style.Cascaded<N>>
-    >;
+    return this._properties.get(name) as Option<Value<Style.Cascaded<N>>>;
   }
 
   public specified<N extends Name>(name: N): Value<Style.Specified<N>> {
@@ -217,15 +237,13 @@ export class Style implements Serializable<Style.JSON> {
 
         return cascaded as Value<Style.Specified<N>>;
       })
-      .getOrElse(() => {
-        if (inherits === false) {
-          return this.initial(name);
-        }
-
-        return this._parent
-          .map((parent) => parent.computed(name))
-          .getOrElse(() => this.initial(name));
-      });
+      .getOrElse(() =>
+        inherits
+          ? this._parent
+              .map((parent) => parent.computed(name))
+              .getOrElse(() => this.initial(name))
+          : this.initial(name)
+      );
   }
 
   public computed<N extends Name>(name: N): Value<Style.Computed<N>> {
@@ -233,18 +251,24 @@ export class Style implements Serializable<Style.JSON> {
       return this.initial(name);
     }
 
-    let value = this._computed.get(name);
-
-    if (value === undefined) {
-      value = Property.get(name).compute(
-        this.specified(name) as Value<Style.Specified<Name>>,
-        this
+    if (!this._computed.has(name)) {
+      this._computed = this._computed.set(
+        name,
+        Property.get(name).compute(
+          this.specified(name) as Value<Style.Specified<Name>>,
+          this
+        )
       );
-
-      this._computed.set(name, value);
     }
 
-    return value as Value<Style.Computed<N>>;
+    return (
+      this._computed
+        .get(name)
+        // The previous block ensure we've set the value.
+        .getUnsafe(`Computed style for ${name} does not exists`) as Value<
+        Style.Computed<N>
+      >
+    );
   }
 
   public initial<N extends Name>(
@@ -362,22 +386,23 @@ export namespace Style {
   export const { isRendered, isVisible } = node;
 }
 
-function shouldOverride(
-  previous: Option<Declaration>,
+function shouldOverride<T>(
+  previous: Option<Value<T>>,
   next: Declaration
 ): boolean {
-  return (
-    next.important && previous.every((declaration) => !declaration.important)
+  return previous.every(
+    (previous) =>
+      next.important &&
+      previous.source.every((declaration) => !declaration.important)
   );
 }
 
 function parseLonghand<N extends Property.Name>(
   property: Property.WithName<N>,
   value: string,
-  variables: ReadonlyMap<string, Value<Slice<Token>>>,
-  parent: Option<Style>
+  variables: Map<string, Value<Slice<Token>>>
 ) {
-  const substitution = substitute(Lexer.lex(value), variables, parent);
+  const substitution = substitute(Lexer.lex(value), variables);
 
   if (!substitution.isSome()) {
     return Result.of(Keyword.of("unset"));
@@ -399,10 +424,9 @@ function parseLonghand<N extends Property.Name>(
 function parseShorthand<N extends Property.Shorthand.Name>(
   shorthand: Property.Shorthand.WithName<N>,
   value: string,
-  variables: ReadonlyMap<string, Value<Slice<Token>>>,
-  parent: Option<Style>
+  variables: Map<string, Value<Slice<Token>>>
 ) {
-  const substitution = substitute(Lexer.lex(value), variables, parent);
+  const substitution = substitute(Lexer.lex(value), variables);
 
   if (!substitution.isSome()) {
     return Result.of(
@@ -454,38 +478,17 @@ const parseInitial = Keyword.parse("initial");
  */
 function resolve(
   name: string,
-  variables: ReadonlyMap<string, Value<Slice<Token>>>,
-  parent: Option<Style>,
+  variables: Map<string, Value<Slice<Token>>>,
   fallback: Option<Slice<Token>> = None,
   visited = Set.empty<string>()
 ): Option<Slice<Token>> {
   return (
-    // First, we search the value of the variable (custom property). The value
-    // is inherited, so if the variable doesn't exist in the current mapping,
-    // we search for it in its parent
-    Option.from(variables.get(name))
+    // If the variable is defined on the current style, get its value
+    // If it is defined on an ancestor, this will also gets its value since
+    // variables maps have been pre-merged.
+    variables
+      .get(name)
       .map((value) => value.value)
-
-      // If no substitution found on the element, search on ancestors
-      .orElse(() =>
-        parent.flatMap((parent) => {
-          const variables = parent.variables;
-
-          const grandparent =
-            parent.parent === Style.empty() ? None : Option.of(parent.parent);
-
-          return (
-            resolve(name, variables, grandparent)
-              // Substitute any additional cascading variables within the inherited
-              // value.
-              .flatMap((tokens) =>
-                substitute(tokens, variables, grandparent).map(
-                  ([tokens]) => tokens
-                )
-              )
-          );
-        })
-      )
 
       // The initial value of a custom property is the "guaranteed-invalid"
       // value. We therefore reject the value of the variable if it's the
@@ -499,9 +502,9 @@ function resolve(
       .orElse(() =>
         fallback
           // Substitute any additional cascading variables within the fallback
-          // value.
+          // value. This substitution happens in the current style's context.
           .flatMap((tokens) =>
-            substitute(tokens, variables, parent, visited.add(name)).map(
+            substitute(tokens, variables, visited.add(name)).map(
               ([tokens]) => tokens
             )
           )
@@ -531,8 +534,7 @@ const substitutionLimit = 1024;
  */
 function substitute(
   tokens: Slice<Token>,
-  variables: ReadonlyMap<string, Value<Slice<Token>>>,
-  parent: Option<Style>,
+  variables: Map<string, Value<Slice<Token>>>,
   visited = Set.empty<string>()
 ): Option<[tokens: Slice<Token>, substituted: boolean]> {
   const replaced: Array<Token> = [];
@@ -543,6 +545,7 @@ function substitute(
     const next = tokens.array[tokens.offset];
 
     if (next.type === "function" && next.value === "var") {
+      // If the token is a "var(", process it.
       const result = parseVar(tokens);
 
       if (result.isErr()) {
@@ -554,19 +557,23 @@ function substitute(
 
       [tokens, [name, fallback]] = result.get();
 
+      // If we've already seen this variable, bail out (circular reference).
       if (visited.has(name)) {
         return None;
       }
 
-      const value = resolve(name, variables, parent, fallback, visited);
+      // Resolve the variable's name within the current context.
+      const value = resolve(name, variables, fallback, visited);
 
       if (!value.isSome()) {
         return None;
       }
 
+      // Push the resulting value, replacing the initial token
       replaced.push(...value.get());
       substituted = true;
     } else {
+      // If the token is not a "var(", push it to the result, and move on.
       replaced.push(next);
       tokens = tokens.slice(1);
     }

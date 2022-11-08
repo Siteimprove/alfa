@@ -6,6 +6,7 @@
 
 import { Angle } from '@siteimprove/alfa-css';
 import { Applicative } from '@siteimprove/alfa-applicative';
+import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Color } from '@siteimprove/alfa-css';
 import { Context } from '@siteimprove/alfa-selector';
 import { Current } from '@siteimprove/alfa-css';
@@ -21,6 +22,7 @@ import * as json from '@siteimprove/alfa-json';
 import { Keyword } from '@siteimprove/alfa-css';
 import { Length } from '@siteimprove/alfa-css';
 import { Linear } from '@siteimprove/alfa-css';
+import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Node } from '@siteimprove/alfa-dom';
@@ -248,11 +250,11 @@ export class Style implements Serializable<Style.JSON> {
     // (undocumented)
     initial<N extends Name>(name: N, source?: Option<Declaration>): Value<Style.Initial<N>>;
     // (undocumented)
-    static of(declarations: Iterable_2<Declaration>, device: Device, parent?: Option<Style>): Style;
+    static of(styleDeclarations: Iterable_2<Declaration>, device: Device, parent?: Option<Style>): Style;
     // (undocumented)
     get parent(): Style;
     // (undocumented)
-    get properties(): ReadonlyMap<string, Value>;
+    get properties(): Map_2<string, Value>;
     // (undocumented)
     root(): Style;
     // (undocumented)
@@ -260,7 +262,7 @@ export class Style implements Serializable<Style.JSON> {
     // (undocumented)
     toJSON(): Style.JSON;
     // (undocumented)
-    get variables(): ReadonlyMap<string, Value<Slice<Token>>>;
+    get variables(): Map_2<string, Value<Slice<Token>>>;
 }
 
 // @public (undocumented)
@@ -294,9 +296,9 @@ export namespace Style {
         // (undocumented)
         device: Device.JSON;
         // (undocumented)
-        properties: Array<[string, Value.JSON]>;
+        properties: Array_2<[string, Value.JSON]>;
         // (undocumented)
-        variables: Array<[string, Value.JSON]>;
+        variables: Array_2<[string, Value.JSON]>;
     }
     // Warning: (ae-incompatible-release-tags) The symbol "Specified" is marked as @public, but its signature references "Property" which is marked as @internal
     //

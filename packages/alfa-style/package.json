@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-applicative": "workspace:^0.50.0",
+    "@siteimprove/alfa-array": "workspace:^0.50.0",
     "@siteimprove/alfa-cache": "workspace:^0.50.0",
     "@siteimprove/alfa-cascade": "workspace:^0.50.0",
     "@siteimprove/alfa-css": "workspace:^0.50.0",
@@ -30,6 +31,7 @@
     "@siteimprove/alfa-hash": "workspace:^0.50.0",
     "@siteimprove/alfa-iterable": "workspace:^0.50.0",
     "@siteimprove/alfa-json": "workspace:^0.50.0",
+    "@siteimprove/alfa-map": "workspace:^0.50.0",
     "@siteimprove/alfa-mapper": "workspace:^0.50.0",
     "@siteimprove/alfa-math": "workspace:^0.50.0",
     "@siteimprove/alfa-monad": "workspace:^0.50.0",
