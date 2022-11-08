@@ -756,6 +756,10 @@ export namespace Name {
   }
 
   /**
+   * @remarks
+   * Firefox incorrectly skips aria-labelledby when descending
+   * {@link https://bugzilla.mozilla.org/show_bug.cgi?id=1652712}
+   *
    * @internal
    */
   export function fromDescendants(
