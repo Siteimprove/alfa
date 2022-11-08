@@ -1,4 +1,3 @@
-import { Browser } from "@siteimprove/alfa-compatibility";
 import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
@@ -6,8 +5,6 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
 
 import { Name } from "../src";
-import { Array } from "@siteimprove/alfa-array";
-import query = Browser.query;
 
 const device = Device.standard();
 
@@ -157,41 +154,28 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
     <p id="foo">Hello world</p>
   </div>;
 
-  const actual = Array.toJSON([
-    ...Name.from(button, device).getUnsafe().sourceNodes(),
-  ]);
-
-  t.equal(actual.length, 3);
-
-  t.deepEqual(actual[0], {
-    type: "attribute",
-    namespace: null,
-    prefix: null,
-    name: "aria-labelledby",
-    value: "foo",
-  });
-
-  t.deepEqual(actual[1], {
-    type: "element",
-    children: [{ type: "text", data: "Hello world" }],
-    namespace: "http://www.w3.org/1999/xhtml",
-    prefix: null,
-    name: "p",
-    attributes: [
+  t.deepEqual(getName(button), {
+    value: "Hello world",
+    sources: [
       {
-        type: "attribute",
-        namespace: null,
-        prefix: null,
-        name: "id",
-        value: "foo",
+        type: "reference",
+        attribute: "/div[1]/button[1]/@aria-labelledby",
+        name: {
+          value: "Hello world",
+          sources: [
+            {
+              type: "descendant",
+              element: "/div[1]/p[1]",
+              name: {
+                value: "Hello world",
+                sources: [{ type: "data", text: "/div[1]/p[1]/text()[1]" }],
+              },
+            },
+          ],
+        },
       },
     ],
-    style: [],
-    shadow: null,
-    content: null,
   });
-
-  t.deepEqual(actual[2], { type: "text", data: "Hello world" });
 });
 
 test(`.from() determines the name of a <button> element with an aria-labelledby
