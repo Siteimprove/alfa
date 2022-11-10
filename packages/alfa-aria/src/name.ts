@@ -690,7 +690,6 @@ export namespace Name {
     // Step 2A: Is the element hidden and not part of a reference traversal
     // whose root was hidden?
     // https://w3c.github.io/accname/#step2A
-
     if (
       // The element is hidden
       // https://www.w3.org/TR/wai-aria-1.2/#dfn-hidden

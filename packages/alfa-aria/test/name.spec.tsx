@@ -1,8 +1,8 @@
-import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
+import { Element, h, Namespace, Text } from "@siteimprove/alfa-dom";
+import { None } from "@siteimprove/alfa-option";
 
 import { Name } from "../src";
 
@@ -1087,6 +1087,21 @@ test(`.from() determines the name of an SVG <a> element with child text content`
       },
     ],
   });
+});
+
+// https://github.com/Siteimprove/alfa/issues/1236
+test(".from() ignores hidden `<label>` elements", (t) => {
+  const input = <input id="input" />;
+
+  // We need to use `h.document` to load the user agent style sheet for `hidden`
+  h.document([
+    <label for="input" hidden>
+      Hello world
+    </label>,
+    input,
+  ]);
+
+  t.deepEqual(Name.from(input, device), None);
 });
 
 test(`.from() correctly handles aria-labelledby references to hidden elements
