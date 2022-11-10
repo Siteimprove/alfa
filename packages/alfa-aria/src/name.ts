@@ -957,5 +957,5 @@ export namespace Name {
 }
 
 function flatten(string: string): string {
-  return string.replace(/\s+/g, " ").trim();
+  return string.replace(/\s+/g, " ");
 }

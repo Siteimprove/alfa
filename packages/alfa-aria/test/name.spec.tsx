@@ -1162,7 +1162,7 @@ test(`.from() correctly handles aria-labelledby references to elements
               type: "descendant",
               element: "/div[1]/div[1]",
               name: {
-                value: "world",
+                value: " world",
                 sources: [{ type: "data", text: "/div[1]/div[1]/text()[1]" }],
               },
             },
