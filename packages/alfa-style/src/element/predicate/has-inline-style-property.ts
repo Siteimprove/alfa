@@ -4,7 +4,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Property } from "../../property";
 
 /**
- * @public
+ * @deprecated
+ * Used by R91/R92/R93 version 1
  */
 export function hasInlineStyleProperty(
   name: Property.Name

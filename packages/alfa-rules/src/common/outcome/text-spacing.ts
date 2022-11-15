@@ -2,6 +2,10 @@ import { Err, Ok } from "@siteimprove/alfa-result";
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Property } from "@siteimprove/alfa-style";
 
+/**
+ * @deprecated
+ * Used by R91/R92/R93 version 1
+ */
 export function TextSpacing(name: Property.Name) {
   return {
     NotImportant: Ok.of(
