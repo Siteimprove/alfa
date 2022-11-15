@@ -82,7 +82,7 @@ export { default as R85 } from "./sia-r85/rule";
 export { default as R86 } from "./sia-r86/rule";
 export { default as R87 } from "./sia-r87/rule";
 export { default as R90 } from "./sia-r90/rule";
-// export { default as R91 } from "./sia-r91/rule";
+export { default as R91 } from "./sia-r91/rule";
 // export { default as R92 } from "./sia-r92/rule";
 // export { default as R93 } from "./sia-r93/rule";
 // diagnostic: style attribute + ratio + minimal value + font-size computed value + property used value + extract of style attribute
