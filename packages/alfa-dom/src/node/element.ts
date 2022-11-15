@@ -71,6 +71,10 @@ export class Element<N extends string = string>
         .filter((attribute) => attribute._attachOwner(this))
         .map((attribute) => [attribute.qualifiedName, attribute])
     );
+
+    style.forEach((block) =>
+      Iterable.forEach(block, (declaration) => declaration._attachOwner(this))
+    );
     this._style = style;
 
     this._id = this.attribute("id").map((attr) => attr.value);
