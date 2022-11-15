@@ -73,6 +73,9 @@ export class Declaration implements Equatable, Serializable {
     }
   }
 
+  /**
+   * Parent rule or owner element are ignored for declaration equality.
+   */
   public equals(value: unknown): value is this {
     return (
       value instanceof Declaration &&
