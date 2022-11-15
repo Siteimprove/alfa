@@ -4,6 +4,8 @@ import { None, Option } from "@siteimprove/alfa-option";
 
 import * as json from "@siteimprove/alfa-json";
 
+import type { Element } from "../node/element";
+
 import { Rule } from "./rule";
 
 /**
@@ -21,7 +23,22 @@ export class Declaration implements Equatable, Serializable {
   private readonly _name: string;
   private readonly _value: string;
   private readonly _important: boolean;
+  /**
+   * @remarks
+   * If the declaration is in a style rule, point to it
+   */
   private _parent: Option<Rule> = None;
+  /**
+   * @remarks
+   * If the declaration is in a style attribute on an element, point to it
+   *
+   * @remarks
+   * "owner" use the same vocabulary as attribute's owner
+   *
+   * @remarks
+   * Only one of _parent and _owner should be Some.
+   */
+  private _owner: Option<Element> = None;
 
   private constructor(name: string, value: string, important: boolean) {
     this._name = name;
@@ -43,6 +60,10 @@ export class Declaration implements Equatable, Serializable {
 
   public get parent(): Option<Rule> {
     return this._parent;
+  }
+
+  public get owner(): Option<Element> {
+    return this._owner;
   }
 
   public *ancestors(): Iterable<Rule> {
@@ -79,11 +100,24 @@ export class Declaration implements Equatable, Serializable {
    * @internal
    */
   public _attachParent(parent: Rule): boolean {
-    if (this._parent.isSome()) {
+    if (this._parent.isSome() || this._owner.isSome()) {
       return false;
     }
 
     this._parent = Option.of(parent);
+
+    return true;
+  }
+
+  /**
+   * @internal
+   */
+  public _attachOwner(owner: Element): boolean {
+    if (this._parent.isSome() || this._owner.isSome()) {
+      return false;
+    }
+
+    this._owner = Option.of(owner);
 
     return true;
   }
