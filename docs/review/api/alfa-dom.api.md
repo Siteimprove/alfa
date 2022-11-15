@@ -169,7 +169,6 @@ export class Declaration implements Equatable, Serializable {
     _attachOwner(owner: Element): boolean;
     // @internal (undocumented)
     _attachParent(parent: Rule): boolean;
-    // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     get important(): boolean;

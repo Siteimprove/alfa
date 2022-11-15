@@ -6,6 +6,8 @@ import { Property } from "../../property";
 /**
  * @deprecated
  * Used by R91/R92/R93 version 1
+ *
+ * @public
  */
 export function hasInlineStyleProperty(
   name: Property.Name

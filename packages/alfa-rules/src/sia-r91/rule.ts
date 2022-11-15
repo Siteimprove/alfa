@@ -8,7 +8,6 @@ import {
 } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -21,7 +20,7 @@ import { expectation } from "../common/act/expectation";
 import { Scope, Version } from "../tags";
 
 const { hasNamespace, isElement } = Element;
-const { tee, test } = Predicate;
+const { test } = Predicate;
 const { and } = Refinement;
 const { hasComputedStyle, hasSpecifiedStyle, isImportant, isVisible } = Style;
 const { isText } = Text;

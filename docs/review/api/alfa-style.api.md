@@ -61,7 +61,7 @@ function hasCascadedStyle<N extends Property.Name>(name: N, predicate: Predicate
 
 // Warning: (ae-incompatible-release-tags) The symbol "hasCascadedValueDeclaredInInlineStyleOf" is marked as @public, but its signature references "Property" which is marked as @internal
 //
-// @public (undocumented)
+// @public @deprecated (undocumented)
 function hasCascadedValueDeclaredInInlineStyleOf(context: Element, device: Device, name: Property.Name): Predicate<Element>;
 
 // Warning: (ae-incompatible-release-tags) The symbol "hasComputedStyle" is marked as @public, but its signature references "Property" which is marked as @internal
@@ -71,7 +71,7 @@ function hasComputedStyle<N extends Property.Name>(name: N, predicate: Predicate
 
 // Warning: (ae-incompatible-release-tags) The symbol "hasInlineStyleProperty" is marked as @public, but its signature references "Property" which is marked as @internal
 //
-// @public (undocumented)
+// @public @deprecated (undocumented)
 function hasInlineStyleProperty(name: Property.Name): Predicate<Element>;
 
 // @public (undocumented)
