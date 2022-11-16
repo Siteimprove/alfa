@@ -1,29 +1,20 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import {
-  Declaration,
-  Element,
-  Namespace,
-  Node,
-  Text,
-} from "@siteimprove/alfa-dom";
+import { Declaration, Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
+import { textWithInlinedImportantProperty } from "../common/applicability/text-with-inlined-important-property";
 
 import { Scope, Version } from "../tags";
 
-const { hasNamespace, isElement } = Element;
 const { test } = Predicate;
-const { and } = Refinement;
-const { hasComputedStyle, hasSpecifiedStyle, isImportant, isVisible } = Style;
-const { isText } = Text;
+const { hasComputedStyle } = Style;
 
 const property = "letter-spacing";
 const threshold = 0.12;
@@ -35,34 +26,7 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return (
-          document
-            .descendants(Node.fullTree)
-            .filter(and(isElement, hasNamespace(Namespace.HTML)))
-            // We assume !important properties in style attribute are less frequent
-            // than visible text node children, and filter in that order.
-            .filter(
-              and(
-                // Specified value declared in a style attribute
-                hasSpecifiedStyle(
-                  property,
-                  (_, source) =>
-                    // A property is declared in a style attribute if
-                    // its declaration has an owner element
-                    source.some((declaration) => declaration.owner.isSome()),
-                  device
-                ),
-                // Computed value important
-                isImportant(device, property)
-              )
-            )
-            // visible text node children
-            .filter((element) =>
-              element
-                .children(Node.fullTree)
-                .some(and(isText, isVisible(device)))
-            )
-        );
+        return textWithInlinedImportantProperty(document, device, property);
       },
 
       expectations(target) {
