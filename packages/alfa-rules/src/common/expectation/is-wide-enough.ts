@@ -1,15 +1,11 @@
 import { Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Declaration, Element } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 
 import { expectation } from "../act/expectation";
 import { TextSpacing } from "../diagnostic/text-spacing";
-
-const { test } = Predicate;
-const { hasComputedStyle } = Style;
 
 type Name = "letter-spacing" | "line-height" | "word-spacing";
 type Computed =
