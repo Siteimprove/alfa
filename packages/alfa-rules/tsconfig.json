@@ -144,6 +144,7 @@
     "src/sia-r9/rule.ts",
     "src/sia-r90/rule.ts",
     "src/sia-r91/rule.ts",
+    "src/sia-r92/rule.ts",
     "src/sia-r94/rule.ts",
     "src/sia-r95/rule.ts",
     "src/sia-r96/rule.ts",
