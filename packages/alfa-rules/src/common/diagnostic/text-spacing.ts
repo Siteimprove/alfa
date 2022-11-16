@@ -1,4 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
+import { Length } from "@siteimprove/alfa-css";
 import { Declaration, Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -13,7 +14,7 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
   public static of<N extends Property.Name>(
     message: string,
     property: N,
-    value: Style.Computed<N>,
+    value: Length<"px">,
     fontSize: Style.Computed<"font-size">,
     ratio: number,
     threshold: number,
