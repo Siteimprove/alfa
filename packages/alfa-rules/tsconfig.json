@@ -28,6 +28,7 @@
     "src/common/dom/get-interposed-descendant.ts",
     "src/common/expectation/contrast.ts",
     "src/common/expectation/get-refresh-time.ts",
+    "src/common/expectation/is-wide-enough.ts",
     "src/common/expectation/media-text-alternative.ts",
     "src/common/expectation/media-transcript.ts",
     "src/common/expectation/video-description-track-accurate.ts",
