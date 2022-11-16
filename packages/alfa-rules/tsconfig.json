@@ -16,6 +16,7 @@
     "src/common/applicability/text-with-inlined-important-property.ts",
     "src/common/applicability/video.ts",
     "src/common/diagnostic/contrast.ts",
+    "src/common/diagnostic/text-spacing.ts",
     "src/common/diagnostic/with-bad-elements.ts",
     "src/common/diagnostic/with-role.ts",
     "src/common/dom/get-colors.ts",
