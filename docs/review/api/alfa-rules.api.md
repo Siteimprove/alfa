@@ -344,6 +344,9 @@ const _default_97: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 // @public (undocumented)
 const _default_98: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
+// @public (undocumented)
+const _default_99: Rule.Atomic<Page, Element<string>, never, Element<string>>;
+
 declare namespace deprecatedRules {
     export {
         _default_6 as DR62,
