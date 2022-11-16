@@ -12,7 +12,7 @@ const property = "line-height";
 const threshold = 1.5;
 
 export default Rule.Atomic.of<Page, Element>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r91",
+  uri: "https://alfa.siteimprove.com/rules/sia-r93",
   requirements: [Criterion.of("1.4.12")],
   tags: [Scope.Component, Version.of(2)],
   evaluate({ device, document }) {

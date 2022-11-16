@@ -56,7 +56,7 @@ export abstract class Dimension<
     return Comparable.compareNumber(a.value, b.value);
   }
 
-  public toJSON(): Dimension.JSON<T, U> {
+  public toJSON(): Dimension.JSON<T, V> {
     return { ...super.toJSON(), unit: this._unit };
   }
 }

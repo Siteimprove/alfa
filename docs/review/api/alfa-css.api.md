@@ -292,7 +292,7 @@ export abstract class Dimension<T extends Numeric.Dimension = Numeric.Dimension,
     // (undocumented)
     hasUnit<V extends U>(unit: V): this is Dimension<T, U, V>;
     // (undocumented)
-    toJSON(): Dimension.JSON<T, U>;
+    toJSON(): Dimension.JSON<T, V>;
     // (undocumented)
     get unit(): V;
     // (undocumented)

@@ -1,7 +1,6 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Length } from "@siteimprove/alfa-css";
 import { Declaration, Element } from "@siteimprove/alfa-dom";
-import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Property, Style } from "@siteimprove/alfa-style";
 
@@ -25,7 +24,7 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
   public static of<N extends Property.Name>(
     message: string,
     property?: N,
-    value?: Style.Computed<N>,
+    value?: Length<"px">,
     fontSize?: Style.Computed<"font-size">,
     ratio?: number,
     threshold?: number,
@@ -47,7 +46,7 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
   }
 
   private readonly _property: N;
-  private readonly _value: Style.Computed<N>;
+  private readonly _value: Length<"px">;
   private readonly _fontSize: Style.Computed<"font-size">;
   private readonly _ratio: number;
   private readonly _threshold: number;
@@ -59,7 +58,7 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
   private constructor(
     message: string,
     property: N,
-    value: Style.Computed<N>,
+    value: Length<"px">,
     fontSize: Style.Computed<"font-size">,
     ratio: number,
     threshold: number,
@@ -80,7 +79,7 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
     return this._property;
   }
 
-  public get value(): Style.Computed<N> {
+  public get value(): Length<"px"> {
     return this._value;
   }
 
@@ -113,7 +112,7 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
       value instanceof TextSpacing &&
       value._message === this._message &&
       value._property === this._property &&
-      Equatable.equals(value._value, this._value) &&
+      value._value.equals(this._value) &&
       value._fontSize.equals(this._fontSize) &&
       value._ratio === this._ratio &&
       value._declaration.equals(this._declaration) &&
@@ -122,10 +121,11 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
   }
 
   public toJSON(): TextSpacing.JSON<N> {
+    const value1 = this._value.toJSON();
     return {
       ...super.toJSON(),
       property: this._property,
-      value: Serializable.toJSON(this._value),
+      value: value1,
       "font-size": this._fontSize.toJSON(),
       ratio: this._ratio,
       threshold: this._threshold,
@@ -141,7 +141,7 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
 export namespace TextSpacing {
   export interface JSON<N extends Property.Name> extends Diagnostic.JSON {
     property: N;
-    value: Serializable.ToJSON<Style.Computed<N>>;
+    value: Length.JSON<"px">;
     "font-size": Serializable.ToJSON<Style.Computed<"font-size">>;
     ratio: number;
     threshold: number;
