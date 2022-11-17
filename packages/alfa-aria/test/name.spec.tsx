@@ -1,8 +1,8 @@
-import { h } from "@siteimprove/alfa-dom/h";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace, Text } from "@siteimprove/alfa-dom";
+import { Element, h, Namespace, Text } from "@siteimprove/alfa-dom";
+import { None } from "@siteimprove/alfa-option";
 
 import { Name } from "../src";
 
@@ -1089,6 +1089,21 @@ test(`.from() determines the name of an SVG <a> element with child text content`
   });
 });
 
+// https://github.com/Siteimprove/alfa/issues/1236
+test(".from() ignores hidden `<label>` elements", (t) => {
+  const input = <input id="input" />;
+
+  // We need to use `h.document` to load the user agent style sheet for `hidden`
+  h.document([
+    <label for="input" hidden>
+      Hello world
+    </label>,
+    input,
+  ]);
+
+  t.deepEqual(Name.from(input, device), None);
+});
+
 test(`.from() correctly handles aria-labelledby references to hidden elements
       with child elements with child text content`, (t) => {
   const label = <label aria-labelledby="foo" />;
@@ -1129,6 +1144,41 @@ test(`.from() correctly handles aria-labelledby references to hidden elements
                     },
                   },
                 ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  });
+});
+
+test(`.from() correctly handles aria-labelledby references to elements
+      with hidden children elements with child text content`, (t) => {
+  const button = <button aria-labelledby="foo"></button>;
+
+  <div>
+    {button}
+    <div id="foo">
+      <span aria-hidden="true">Hello</span> world
+    </div>
+  </div>;
+
+  t.deepEqual(getName(button), {
+    value: "world",
+    sources: [
+      {
+        type: "reference",
+        attribute: "/div[1]/button[1]/@aria-labelledby",
+        name: {
+          value: "world",
+          sources: [
+            {
+              type: "descendant",
+              element: "/div[1]/div[1]",
+              name: {
+                value: " world",
+                sources: [{ type: "data", text: "/div[1]/div[1]/text()[1]" }],
               },
             },
           ],
@@ -1264,6 +1314,101 @@ test(`.from() correctly handles direct chained aria-labelledby references`, (t) 
               name: {
                 value: "Baz",
                 sources: [{ type: "data", text: "/div[1]/div[3]/text()[1]" }],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  });
+});
+
+test(`.from() correctly handles indirect chained aria-labelledby references`, (t) => {
+  const foo = (
+    <div id="foo" aria-labelledby="bar">
+      Foo
+    </div>
+  );
+
+  const bar = (
+    <button id="bar">
+      <span aria-labelledby="baz">Bar</span>
+    </button>
+  );
+
+  <div>
+    {foo}
+    {bar}
+    <div id="baz">Baz</div>
+  </div>;
+
+  // From the perspective of `foo`, `bar` has a name of "Bar" as the second
+  // `aria-labelledby` reference isn't followed.
+  t.deepEqual(getName(foo), {
+    value: "Bar",
+    sources: [
+      {
+        type: "reference",
+        attribute: "/div[1]/div[1]/@aria-labelledby",
+        name: {
+          value: "Bar",
+          sources: [
+            {
+              type: "descendant",
+              element: "/div[1]/button[1]",
+              name: {
+                value: "Bar",
+                sources: [
+                  {
+                    type: "descendant",
+                    element: "/div[1]/button[1]/span[1]",
+                    name: {
+                      value: "Bar",
+                      sources: [
+                        {
+                          type: "data",
+                          text: "/div[1]/button[1]/span[1]/text()[1]",
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  });
+
+  // From the perspective of `bar`, it has a name of "Baz" as `bar` doesn't care
+  // about `foo` and therefore only sees a single `aria-labelledby` reference.
+  t.deepEqual(getName(bar), {
+    value: "Baz",
+    sources: [
+      {
+        type: "descendant",
+        element: "/div[1]/button[1]",
+        name: {
+          value: "Baz",
+          sources: [
+            {
+              type: "reference",
+              attribute: "/div[1]/button[1]/span[1]/@aria-labelledby",
+              name: {
+                value: "Baz",
+                sources: [
+                  {
+                    type: "descendant",
+                    element: "/div[1]/div[2]",
+                    name: {
+                      value: "Baz",
+                      sources: [
+                        { type: "data", text: "/div[1]/div[2]/text()[1]" },
+                      ],
+                    },
+                  },
+                ],
               },
             },
           ],

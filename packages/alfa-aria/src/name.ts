@@ -389,25 +389,30 @@ export namespace Name {
    * @internal
    */
   export class State implements Equatable, Serializable<State.JSON> {
-    private static _empty = new State([], None, false, false);
+    private static _empty = new State([], None, None, false, false);
 
     public static empty(): State {
       return this._empty;
     }
 
     private readonly _visited: Array<Element>;
+    // which element has an aria-labelledby causing the current traversal?
     private readonly _referrer: Option<Element>;
+    // which element was the target of aria-labelledby?
+    private readonly _referred: Option<Element>;
     private readonly _isRecursing: boolean;
     private readonly _isDescending: boolean;
 
     private constructor(
       visited: Array<Element>,
       referrer: Option<Element>,
+      referred: Option<Element>,
       isRecursing: boolean,
       isDescending: boolean
     ) {
       this._visited = visited;
       this._referrer = referrer;
+      this._referred = referred;
       this._isRecursing = isRecursing;
       this._isDescending = isDescending;
     }
@@ -424,9 +429,18 @@ export namespace Name {
 
     /**
      * The element that referenced the name computation.
+     * (this is the element on which aria-labelledby is set)
      */
     public get referrer(): Option<Element> {
       return this._referrer;
+    }
+
+    /**
+     * The element that is referenced during the name computation.
+     * (this is the target of the aria-labelledby attribute)
+     */
+    public get referred(): Option<Element> {
+      return this._referred;
     }
 
     /**
@@ -462,6 +476,7 @@ export namespace Name {
       return new State(
         [...this._visited, element],
         this._referrer,
+        this._referred,
         this._isRecursing,
         this._isDescending
       );
@@ -475,19 +490,33 @@ export namespace Name {
       return new State(
         this._visited,
         this._referrer,
+        this._referred,
         isRecursing,
         this._isDescending
       );
     }
 
-    public reference(referrer: Option<Element>): State {
-      if (this._referrer.equals(referrer)) {
+    /**
+     * @remarks
+     * This set both _referrer and _referred, so that they will always be
+     * either both Some or both None.
+     *
+     * @remarks
+     * We currently have no way to clear references since we currently have no
+     * use for it.
+     */
+    public reference(referrer: Element, referred: Element): State {
+      if (
+        this._referrer.includes(referrer) &&
+        this._referred.includes(referred)
+      ) {
         return this;
       }
 
       return new State(
         this._visited,
-        referrer,
+        Option.of(referrer),
+        Option.of(referred),
         this._isRecursing,
         this._isDescending
       );
@@ -501,6 +530,7 @@ export namespace Name {
       return new State(
         this._visited,
         this._referrer,
+        this._referred,
         this._isRecursing,
         isDescending
       );
@@ -515,6 +545,7 @@ export namespace Name {
         value instanceof State &&
         Array.equals(value._visited, this._visited) &&
         value._referrer.equals(this._referrer) &&
+        value._referred.equals(this._referred) &&
         value._isRecursing === this._isRecursing &&
         value._isDescending === this._isDescending
       );
@@ -524,6 +555,7 @@ export namespace Name {
       return {
         visited: this._visited.map((element) => element.path()),
         referrer: this._referrer.map((element) => element.path()).getOr(null),
+        referred: this._referred.map((element) => element.path()).getOr(null),
         isRecursing: this._isRecursing,
         isDescending: this._isDescending,
       };
@@ -535,6 +567,7 @@ export namespace Name {
       [key: string]: json.JSON;
       visited: Array<string>;
       referrer: string | null;
+      referred: string | null;
       isRecursing: boolean;
       isDescending: boolean;
     }
@@ -654,15 +687,37 @@ export namespace Name {
       return None;
     }
 
-    // Step 2A: Is the element hidden and not referenced?
+    // Step 2A: Is the element hidden and not part of a reference traversal
+    // whose root was hidden?
     // https://w3c.github.io/accname/#step2A
     if (
-      !state.isReferencing &&
+      // The element is hidden
       // https://www.w3.org/TR/wai-aria-1.2/#dfn-hidden
-      // https://github.com/w3c/accname/issues/30
+      // https://w3c.github.io/accname/#step2A (first comment)
       test(isProgrammaticallyHidden(device), element)
     ) {
-      return None;
+      // The element is not part of a traversal
+      if (!state.isReferencing) {
+        return None;
+      }
+
+      // The element is part of a native host language traversal;
+      // this is detected by having the referrer and the referred being the
+      // same.
+      // This is theoretically not needed, see
+      // https://github.com/Siteimprove/alfa/issues/1266
+      if (state.referrer.equals(state.referred)) {
+        return None;
+      }
+
+      // The element is part of an `aria-labelledby` traversal whose root was
+      // not hidden.
+      if (state.referred.none(isProgrammaticallyHidden(device))) {
+        return None;
+      }
+
+      // The element is part of an `aria-labelledby` traversal whose root
+      // was hidden, keep going.
     }
 
     return fromSteps(
@@ -771,28 +826,26 @@ export namespace Name {
       .children()
       .filter(or(isText, isElement))
       .collect((element) =>
-        fromNode(
-          element,
-          device,
-          state.reference(None).recurse(true).descend(true)
-        ).map((name) => {
-          if (
-            test(
-              hasComputedStyle(
-                "display",
-                ({ values: [outside] }) => outside.value === "block",
-                device
-              ),
-              element
-            )
-          ) {
-            return [` ${name.value} `, name];
+        fromNode(element, device, state.recurse(true).descend(true)).map(
+          (name) => {
+            if (
+              test(
+                hasComputedStyle(
+                  "display",
+                  ({ values: [outside] }) => outside.value === "block",
+                  device
+                ),
+                element
+              )
+            ) {
+              return [` ${name.value} `, name];
+            }
+            return [name.value, name];
           }
-          return [name.value, name];
-        })
+        )
       );
 
-    const name = flatten(names.map((name) => name[0]).join("")).trim();
+    const name = flatten(names.map(([value]) => value).join("")).trim();
 
     if (name === "") {
       return None;
@@ -801,7 +854,7 @@ export namespace Name {
     return Option.of(
       Name.of(
         name,
-        names.map((name) => Source.descendant(element, name[1]))
+        names.map(([, name]) => Source.descendant(element, name))
       )
     );
   }
@@ -854,7 +907,7 @@ export namespace Name {
       fromNode(
         element,
         device,
-        state.reference(Option.of(referrer)).recurse(true).descend(false)
+        state.reference(referrer, element).recurse(true).descend(false)
       )
     );
 
