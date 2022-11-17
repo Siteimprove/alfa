@@ -498,7 +498,8 @@ export namespace Name {
         // (undocumented)
         recurse(isRecursing: boolean): State;
         // (undocumented)
-        reference(referrer: Option<Element_2>): State;
+        reference(referrer: Element_2, referred: Element_2): State;
+        get referred(): Option<Element_2>;
         get referrer(): Option<Element_2>;
         // (undocumented)
         toJSON(): State.JSON;
@@ -516,6 +517,8 @@ export namespace Name {
             isDescending: boolean;
             // (undocumented)
             isRecursing: boolean;
+            // (undocumented)
+            referred: string | null;
             // (undocumented)
             referrer: string | null;
             // (undocumented)

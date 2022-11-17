@@ -180,7 +180,7 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
     Name.fromNode(
       element,
       device,
-      state.reference(Option.of(element)).recurse(true).descend(false)
+      state.reference(element, element).recurse(true).descend(false)
     ).map((name) => [name, element] as const)
   );
 
