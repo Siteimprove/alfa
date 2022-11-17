@@ -1154,7 +1154,7 @@ test(`.from() correctly handles aria-labelledby references to hidden elements
 });
 
 test(`.from() correctly handles aria-labelledby references to elements
-      with hidden child elements with child text content`, (t) => {
+      with hidden children elements with child text content`, (t) => {
   const button = <button aria-labelledby="foo"></button>;
 
   <div>
