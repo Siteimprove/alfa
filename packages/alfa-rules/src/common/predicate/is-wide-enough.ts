@@ -5,6 +5,10 @@ import { Property, Style } from "@siteimprove/alfa-style";
 
 const { hasComputedStyle } = Style;
 
+/**
+ * @deprecated
+ * Used by R91/R92/R93 version 1
+ */
 export function isWideEnough<N extends Property.Name>(
   device: Device,
   property: N,

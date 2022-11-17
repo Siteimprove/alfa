@@ -166,8 +166,9 @@ export class Declaration implements Equatable, Serializable {
     // (undocumented)
     ancestors(): Iterable<Rule>;
     // @internal (undocumented)
+    _attachOwner(owner: Element): boolean;
+    // @internal (undocumented)
     _attachParent(parent: Rule): boolean;
-    // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     get important(): boolean;
@@ -175,6 +176,8 @@ export class Declaration implements Equatable, Serializable {
     get name(): string;
     // (undocumented)
     static of(name: string, value: string, important?: boolean): Declaration;
+    // (undocumented)
+    get owner(): Option<Element>;
     // (undocumented)
     get parent(): Option<Rule>;
     // (undocumented)
@@ -317,23 +320,23 @@ export namespace Element {
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    hasAttribute: typeof predicate_2.hasAttribute, // (undocumented)
-    hasDisplaySize: typeof predicate_2.hasDisplaySize, // (undocumented)
-    hasId: typeof predicate_2.hasId, // (undocumented)
-    hasInputType: typeof predicate_2.hasInputType, // (undocumented)
-    hasName: typeof predicate_2.hasName, // (undocumented)
-    hasNamespace: typeof predicate_2.hasNamespace, // (undocumented)
-    hasTabIndex: typeof predicate_2.hasTabIndex, // (undocumented)
-    hasUniqueId: typeof predicate_2.hasUniqueId, // (undocumented)
-    isBrowsingContextContainer: typeof predicate_2.isBrowsingContextContainer, // (undocumented)
-    isContent: typeof predicate_2.isContent, // (undocumented)
-    isDisabled: typeof predicate_2.isDisabled, // (undocumented)
-    isDocumentElement: typeof predicate_2.isDocumentElement, // (undocumented)
-    isDraggable: typeof predicate_2.isDraggable, // (undocumented)
-    isEditingHost: typeof predicate_2.isEditingHost, // (undocumented)
-    isFallback: typeof predicate_2.isFallback, // (undocumented)
-    isSuggestedFocusable: typeof predicate_2.isSuggestedFocusable, // (undocumented)
-    isReplaced: typeof predicate_2.isReplaced;
+    hasAttribute: typeof predicate_3.hasAttribute, // (undocumented)
+    hasDisplaySize: typeof predicate_3.hasDisplaySize, // (undocumented)
+    hasId: typeof predicate_3.hasId, // (undocumented)
+    hasInputType: typeof predicate_3.hasInputType, // (undocumented)
+    hasName: typeof predicate_3.hasName, // (undocumented)
+    hasNamespace: typeof predicate_3.hasNamespace, // (undocumented)
+    hasTabIndex: typeof predicate_3.hasTabIndex, // (undocumented)
+    hasUniqueId: typeof predicate_3.hasUniqueId, // (undocumented)
+    isBrowsingContextContainer: typeof predicate_3.isBrowsingContextContainer, // (undocumented)
+    isContent: typeof predicate_3.isContent, // (undocumented)
+    isDisabled: typeof predicate_3.isDisabled, // (undocumented)
+    isDocumentElement: typeof predicate_3.isDocumentElement, // (undocumented)
+    isDraggable: typeof predicate_3.isDraggable, // (undocumented)
+    isEditingHost: typeof predicate_3.isEditingHost, // (undocumented)
+    isFallback: typeof predicate_3.isFallback, // (undocumented)
+    isSuggestedFocusable: typeof predicate_3.isSuggestedFocusable, // (undocumented)
+    isReplaced: typeof predicate_3.isReplaced;
 }
 
 // @public (undocumented)
@@ -901,11 +904,11 @@ export namespace Node {
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    hasChild: typeof predicate_3.hasChild, // (undocumented)
-    hasDescendant: typeof predicate_3.hasDescendant, // (undocumented)
-    hasInclusiveDescendant: typeof predicate_3.hasInclusiveDescendant, // (undocumented)
-    hasTextContent: typeof predicate_3.hasTextContent, // (undocumented)
-    isRoot: typeof predicate_3.isRoot;
+    hasChild: typeof predicate_2.hasChild, // (undocumented)
+    hasDescendant: typeof predicate_2.hasDescendant, // (undocumented)
+    hasInclusiveDescendant: typeof predicate_2.hasInclusiveDescendant, // (undocumented)
+    hasTextContent: typeof predicate_2.hasTextContent, // (undocumented)
+    isRoot: typeof predicate_2.isRoot;
 }
 
 // @public (undocumented)

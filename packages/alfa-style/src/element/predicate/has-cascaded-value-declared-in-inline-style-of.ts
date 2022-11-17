@@ -7,6 +7,9 @@ import { Property } from "../../property";
 import { hasCascadedStyle } from "./has-cascaded-style";
 
 /**
+ * @deprecated
+ * Used by R91/R92/R93 version 1
+ *
  * @public
  */
 export function hasCascadedValueDeclaredInInlineStyleOf(
