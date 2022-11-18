@@ -11,7 +11,7 @@ import { TextSpacing } from "../common/outcome/text-spacing";
 import { expectation } from "../common/act/expectation";
 
 import { isWhitespace, isWideEnough } from "../common/predicate";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { and } = Refinement;
 const { isElement, hasNamespace } = Element;
@@ -26,10 +26,13 @@ const { isText } = Text;
 
 const property = "word-spacing";
 
+/**
+ * @deprecated Use the stable R92 version 2 instead.
+ */
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r92",
   requirements: [Criterion.of("1.4.12")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Deprecated],
   evaluate({ device, document }) {
     return {
       applicability() {

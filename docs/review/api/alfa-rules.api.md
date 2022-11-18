@@ -215,7 +215,7 @@ const _default_58: Rule.Atomic<Page, Element<string>, Question.Metadata, Element
 // @public (undocumented)
 const _default_59: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 const _default_6: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
 // @public (undocumented)
@@ -248,7 +248,7 @@ const _default_68: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 // @public (undocumented)
 const _default_69: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 const _default_7: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
 // @public (undocumented)
@@ -281,7 +281,7 @@ const _default_78: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 // @public (undocumented)
 const _default_79: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 const _default_8: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
 // @public (undocumented)
@@ -314,7 +314,7 @@ const _default_88: Rule.Atomic<Page, Text, never, Text>;
 // @public (undocumented)
 const _default_89: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 const _default_9: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
 // @public (undocumented)

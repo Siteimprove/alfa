@@ -41,6 +41,9 @@ const {
 } = Style;
 const { isText } = Text;
 
+/**
+ * @deprecated Use the stable R62 version 2 instead.
+ */
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",
   requirements: [Criterion.of("1.4.1")],
