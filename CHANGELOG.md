@@ -19,6 +19,22 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.52.0](../../compare/v0.51.0...v0.52.0) (2022-11-18)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Version 2 of rules SIA-R91, SIA-R92, and SIA-R93 is now available; it targets the text node rather than the `style` attribute, thus simplifying the text spacing computation and comparison. ([#1269](../../pull/1269))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): Style `Declaration` in a `style` attribute now have an `owner` property pointing to the `element` owning the attribute. ([#1269](../../pull/1269))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Version 1 of rules SIA-R91, SIA-R92, and SIA-R93 is now deprecated. ([#1269](../../pull/1269))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Accessible name computation from `aria-labelledby` correctly include hidden descendant if the reference was itself hidden. ([#1236](../../issues/1236), [#1267](../../pull/1267))
+
 ## [0.51.0](../../compare/v0.50.0...v0.51.0) (2022-11-08)
 
 ### Breaking
