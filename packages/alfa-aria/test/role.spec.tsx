@@ -150,11 +150,11 @@ test(`.from() maps \`<select>\` to listboxes`, (t) => {
 });
 
 test(`.from() maps \`<img>\` with no source to presentational role`, (t) => {
-  const img1 = <img />;
+  const empty = { type: "container", node: "/img[1]", children: [] };
 
-  t.deepEqual(Node.from(img1, device).toJSON(), {
-    type: "container",
-    node: "/img[1]",
-    children: [],
-  });
+  const images = [<img />, <img src="" />, <img alt="Hello" src="" />];
+
+  for (const img of images) {
+    t.deepEqual(Node.from(img, device).toJSON(), empty);
+  }
 });
