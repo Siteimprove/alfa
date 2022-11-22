@@ -4,7 +4,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 
 import { isRendered } from "../../node/predicate/is-rendered";
 
-const { hasTabIndex, isDisabled } = Element;
+const { hasTabIndex, isActuallyDisabled } = Element;
 const { and, not } = Predicate;
 
 /**
@@ -13,5 +13,5 @@ const { and, not } = Predicate;
  * @public
  */
 export function isFocusable(device: Device): Predicate<Element> {
-  return and(hasTabIndex(), and(not(isDisabled), isRendered(device)));
+  return and(hasTabIndex(), and(not(isActuallyDisabled), isRendered(device)));
 }
