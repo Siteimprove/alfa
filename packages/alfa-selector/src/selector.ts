@@ -878,6 +878,10 @@ export namespace Selector {
             return Result.of(Link.of());
           case "visited":
             return Result.of(Visited.of());
+          case "disabled":
+            return Result.of(Disabled.of());
+          case "enabled":
+            return Result.of(Enabled.of());
           case "root":
             return Result.of(Root.of());
           case "empty":
