@@ -20,7 +20,9 @@ test("evaluate() passes a text node that is part of the first focusable element"
   const target = h.text("Skip to content");
 
   const document = h.document([
-    <a href="#content">{target}</a>,
+    <a href="#content">
+      <span>{target}</span>
+    </a>,
     <main id="content" />,
   ]);
 

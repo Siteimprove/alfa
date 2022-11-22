@@ -81,7 +81,7 @@ export default Rule.Atomic.of<Page, Text>({
             () =>
               expectation(
                 firstTabbable.some((element) =>
-                  element.isParentOf(target, dom.Node.flatTree)
+                  element.isInclusiveAncestorOf(target, dom.Node.flatTree)
                 ),
                 () => Outcomes.IsIncludedInFirstFocusableElement,
                 () => Outcomes.IsNotIncludedInLandmark
