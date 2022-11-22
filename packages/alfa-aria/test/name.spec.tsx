@@ -271,7 +271,7 @@ test(`.from() determines the name of a <button> element with a title attribute
 });
 
 test(`.from() determines the name of an <img> element with an alt attribute`, (t) => {
-  const img = <img alt="Hello world" />;
+  const img = <img alt="Hello world" src="foo.jpg" />;
 
   t.deepEqual(getName(img), {
     value: "Hello world",
@@ -283,7 +283,7 @@ test(`.from() determines the name of an <a> element with a <img> child element
       with an alt attribute`, (t) => {
   const a = (
     <a href="#">
-      <img alt="Hello world" />
+      <img alt="Hello world" src="foo.jpg" />
     </a>
   );
 
@@ -320,7 +320,7 @@ test(`.from() determines the name of an <a> element with a <figure> child elemen
   const a = (
     <a href="#">
       <figure>
-        <img alt="Hello world" />
+        <img alt="Hello world" src="foo.jpg" />
       </figure>
     </a>
   );
@@ -678,7 +678,7 @@ test(`.from() determines the name of a <figure> element with a <figcaption>
       child element with child text content`, (t) => {
   const figure = (
     <figure>
-      <img alt="This is an image" />
+      <img alt="This is an image" src="foo.jpg" />
       <figcaption>Hello world</figcaption>
     </figure>
   );
@@ -1027,7 +1027,7 @@ test(`.from() determines the name of a <img> element with a an empty alt
   // Due to presentational role conflict resolution, the role of `presentation`
   // is ignored to ensure that the `aria-label` attribute, which is a global
   // `aria-*` attribute, is exposed.
-  const img = <img alt="" aria-label="Hello world" />;
+  const img = <img alt="" aria-label="Hello world" src="foo.jpg" />;
 
   t.deepEqual(getName(img), {
     value: "Hello world",
