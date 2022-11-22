@@ -1,8 +1,9 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence";
+import { Sequence } from "@siteimprove/alfa-sequence/src/sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -10,46 +11,55 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { WithBadElements } from "../common/diagnostic/with-bad-elements";
 
-import { Scope } from "../tags";
+import { Scope, Version } from "../tags";
 
 const { isElement, hasName, hasNamespace, hasTabIndex } = Element;
-const { and } = Predicate;
+const { and, test } = Predicate;
 const { isTabbable, isVisible } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r95",
   requirements: [Criterion.of("2.1.1")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Version.of(2)],
   evaluate({ device, document }) {
+    let tabbables = Map.empty<Element, Sequence<Element>>();
+
     return {
       applicability() {
         return document
           .descendants(Node.fullTree)
           .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasName("iframe"),
-              hasTabIndex((tabindex) => tabindex < 0)
-            )
+          .filter(and(hasNamespace(Namespace.HTML), hasName("iframe")))
+          .filter((iframe) =>
+            iframe.content
+              .map((contentDocument) =>
+                contentDocument
+                  .descendants(Node.flatTree)
+                  .filter(isElement)
+                  .filter(and(isVisible(device), isTabbable(device)))
+              )
+              .some((sequence) => {
+                tabbables = tabbables.set(iframe, sequence);
+                return !sequence.isEmpty();
+              })
           );
       },
 
       expectations(target) {
-        const tabbable = target.content
-          .map((contentDocument) =>
-            contentDocument
-              .descendants(Node.flatTree)
-              .filter(isElement)
-              .filter(and(isVisible(device), isTabbable(device)))
-          )
-          .getOr(Sequence.empty());
-
         return {
           1: expectation(
-            tabbable.isEmpty(),
-            () => Outcomes.HasNoInteractiveElement,
-            () => Outcomes.HasInteractiveElement(tabbable)
+            test(
+              hasTabIndex((tabindex) => tabindex >= 0),
+              target
+            ),
+            () =>
+              Outcomes.IsTabbable(
+                tabbables.get(target).getOr(Sequence.empty<Element>())
+              ),
+            () =>
+              Outcomes.IsNotTabbable(
+                tabbables.get(target).getOr(Sequence.empty<Element>())
+              )
           ),
         };
       },
@@ -58,12 +68,9 @@ export default Rule.Atomic.of<Page, Element>({
 });
 
 export namespace Outcomes {
-  export const HasNoInteractiveElement = Ok.of(
-    Diagnostic.of(`The iframe contains no interactive element`)
-  );
+  export const IsTabbable = (tabbables: Iterable<Element>) =>
+    Ok.of(WithBadElements.of(`The iframe has no negative tabindex`, tabbables));
 
-  export const HasInteractiveElement = (errors: Iterable<Element>) =>
-    Err.of(
-      WithBadElements.of(`The iframe contains some interactive element`, errors)
-    );
+  export const IsNotTabbable = (tabbables: Iterable<Element>) =>
+    Err.of(WithBadElements.of(`The iframe has a negative tabindex`, tabbables));
 }
