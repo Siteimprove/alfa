@@ -26,7 +26,7 @@ const cache = Cache.empty<Document, Cache<Device, Sequence<Text>>>();
 
 /**
  * Return all text nodes that are neither:
- * * part of a widget;
+ * * part of a disabled widget;
  * * part of the name of a disabled widget;
  * * part of a disabled group.
  *
