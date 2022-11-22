@@ -330,7 +330,7 @@ export namespace Element {
     hasUniqueId: typeof predicate_3.hasUniqueId, // (undocumented)
     isBrowsingContextContainer: typeof predicate_3.isBrowsingContextContainer, // (undocumented)
     isContent: typeof predicate_3.isContent, // (undocumented)
-    isDisabled: typeof predicate_3.isDisabled, // (undocumented)
+    isActuallyDisabled: typeof predicate_3.isActuallyDisabled, // (undocumented)
     isDocumentElement: typeof predicate_3.isDocumentElement, // (undocumented)
     isDraggable: typeof predicate_3.isDraggable, // (undocumented)
     isEditingHost: typeof predicate_3.isEditingHost, // (undocumented)
@@ -561,13 +561,13 @@ export namespace ImportRule {
 }
 
 // @public (undocumented)
+function isActuallyDisabled(element: Element): boolean;
+
+// @public (undocumented)
 function isBrowsingContextContainer(element: Element): boolean;
 
 // @public
 function isContent(options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-function isDisabled(element: Element): boolean;
 
 // @public (undocumented)
 function isDocumentElement(value: unknown): value is Element<"html">;
