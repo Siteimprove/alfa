@@ -26,9 +26,8 @@ const cache = Cache.empty<Document, Cache<Device, Sequence<Text>>>();
 
 /**
  * Return all text nodes that are neither:
- * * part of a disabled widget;
- * * part of the name of a disabled widget;
- * * part of a disabled group.
+ * * part of a disabled group or widget;
+ * * part of the name of a disabled group or widget;
  *
  * @internal
  */
@@ -42,13 +41,7 @@ export function nonDisabledTexts(
       document
         // Find all disabled widgets and groups.
         .descendants(Node.fullTree)
-        .filter(isElement)
-        .filter(
-          and(
-            hasRole(device, (role) => role.isWidget() || role.is("group")),
-            isSemanticallyDisabled
-          )
-        )
+        .filter(and(isElement, isDisabledGroupOrWidget(device)))
         // Find all text nodes that are part of their names
         .flatMap((element) =>
           ariaNode
@@ -69,19 +62,12 @@ function* visit(
   device: Device,
   disabledWidgetNames: Set<Text>
 ): Iterable<Text> {
-  // If the node is a widget or a disabled group, stop looking
+  // If the node is a disabled group or widget, stop looking
   if (
     test(
       and(
         isElement,
-        or(
-          not(hasNamespace(Namespace.HTML)),
-          hasRole(device, (role) => role.isWidget()),
-          and(
-            hasRole(device, (role) => role.is("group")),
-            isSemanticallyDisabled
-          )
-        )
+        or(not(hasNamespace(Namespace.HTML)), isDisabledGroupOrWidget(device))
       ),
       node
     )
@@ -102,4 +88,11 @@ function* visit(
   for (const child of node.children(Node.fullTree)) {
     yield* visit(child, device, disabledWidgetNames);
   }
+}
+
+function isDisabledGroupOrWidget(device: Device): Predicate<Element> {
+  return and(
+    hasRole(device, (role) => role.isWidget() || role.is("group")),
+    isSemanticallyDisabled
+  );
 }
