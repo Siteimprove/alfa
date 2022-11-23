@@ -58,6 +58,9 @@ const _default: Rule.Atomic<Page, Text, Question.Metadata, Text | Group<Element<
 const _default_10: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
 // @public (undocumented)
+const _default_100: Rule.Atomic<Page, Element<string>, never, Element<string>>;
+
+// @public (undocumented)
 const _default_11: Rule.Atomic<Page, Document, never, Document>;
 
 // @public (undocumented)
