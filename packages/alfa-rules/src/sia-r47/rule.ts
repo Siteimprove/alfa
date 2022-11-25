@@ -60,7 +60,7 @@ export default Rule.Atomic.of<Page, Element>({
                 userScalableMap = userScalableMap.set(meta, scalable);
               });
 
-              return scale.and(scalable).isSome();
+              return scale.or(scalable).isSome();
             })
         );
       },
