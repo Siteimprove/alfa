@@ -21,57 +21,40 @@ export default Rule.Atomic.of<Page, Element>({
   requirements: [Criterion.of("1.4.4"), Criterion.of("1.4.10")],
   tags: [Scope.Page],
   evaluate({ document }) {
-    let maximumScaleMap = Map.empty<Element, number>();
-    let userScalableMap = Map.empty<Element, "zoom" | "fixed">();
-
     return {
       applicability() {
-        return (
-          document
-            .descendants()
-            .filter(isElement)
-            .filter(
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("meta"),
-                hasAttribute("name", equals("viewport")),
-                hasAttribute("content")
-              )
+        return document
+          .descendants()
+          .filter(isElement)
+          .filter(
+            and(
+              hasNamespace(Namespace.HTML),
+              hasName("meta"),
+              hasAttribute("name", equals("viewport")),
+              hasAttribute("content")
             )
-            // Compute the required properties and register them, reject the
-            // element if none are defined.
-            .filter((meta) => {
-              const properties = parsePropertiesList(
-                // The previous filter ensures there is a content.
-                meta.attribute("content").getUnsafe().value.toLowerCase()
-              );
-
-              const scale = parseMaximumScale(properties.get("maximum-scale"));
-              const scalable = parseUserScalable(
-                properties.get("user-scalable")
-              );
-
-              // Since we look at each `<meta>` once, no need to check for
-              // pre-existing key in the Maps.
-              scale.forEach((scale) => {
-                maximumScaleMap = maximumScaleMap.set(meta, scale);
-              });
-              scalable.forEach((scalable) => {
-                userScalableMap = userScalableMap.set(meta, scalable);
-              });
-
-              return scale.and(scalable).isSome();
-            })
-        );
+          );
       },
 
       expectations(target) {
+        const whitespace = [" ", "\xa0", "\t", "\n", "\f", "\r", "\v"];
+        const separator = [",", ";"];
+        const equal = ["="];
+        const properties = parsePropertiesList(
+          // Big filter in the expectation ensures there is a content.
+          target.attribute("content").getUnsafe().value.toLowerCase(),
+          whitespace,
+          separator,
+          equal
+        );
+
+        const scale = parseMaximumScale(properties.get("maximum-scale"));
+        const scalable = parseUserScalable(properties.get("user-scalable"));
+
         return {
           1: expectation(
-            maximumScaleMap.get(target).every((scale) => scale >= 2) &&
-              userScalableMap
-                .get(target)
-                .every((scalable) => scalable !== "fixed"),
+            scale.every((scale) => scale >= 2) &&
+              scalable.every((scalable) => scalable !== "fixed"),
             () => Outcomes.MetaDoesNotPreventZoom,
             () => Outcomes.MetaDoesPreventZoom
           ),
@@ -103,17 +86,18 @@ export namespace Outcomes {
  * in unknown ways. The algorithm considers "foo bar =  = === foobar" as a valid
  * string for "foo=foobar"
  */
-function parsePropertiesList(propertiesList: string): Map<string, string> {
+function parsePropertiesList(
+  propertiesList: string,
+  ignored: Array<string>,
+  separator: Array<string>,
+  equal: Array<string>
+): Map<string, string> {
   let valueMap = Map.empty<string, string>();
 
-  const whitespace = [" ", "\xa0", "\t", "\n", "\f", "\r", "\v"];
-  const separator = [",", ";"];
-  const equal = ["="];
-
   const sepSet = Set.from(separator);
-  const allSpecial = Set.of(...whitespace, ...separator, ...equal);
+  const allSpecial = Set.of(...ignored, ...separator, ...equal);
   const separatorAndEqual = Set.of(...separator, ...equal);
-  const notSeparator = Set.of(...whitespace, ...equal);
+  const notSeparator = Set.of(...ignored, ...equal);
 
   const { length } = propertiesList;
   let i = 0;
