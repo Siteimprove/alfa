@@ -38,6 +38,7 @@
     "@siteimprove/alfa-option": "workspace:^0.52.0",
     "@siteimprove/alfa-predicate": "workspace:^0.52.0",
     "@siteimprove/alfa-refinement": "workspace:^0.52.0",
+    "@siteimprove/alfa-selector": "workspace:^0.52.0",
     "@siteimprove/alfa-sequence": "workspace:^0.52.0",
     "@siteimprove/alfa-set": "workspace:^0.52.0",
     "@siteimprove/alfa-style": "workspace:^0.52.0",

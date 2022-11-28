@@ -23,6 +23,7 @@
   "dependencies": {
     "@siteimprove/alfa-act": "workspace:^0.52.0",
     "@siteimprove/alfa-branched": "workspace:^0.52.0",
+    "@siteimprove/alfa-option": "workspace:^0.52.0",
     "@siteimprove/alfa-predicate": "workspace:^0.52.0",
     "@siteimprove/alfa-refinement": "workspace:^0.52.0"
   },

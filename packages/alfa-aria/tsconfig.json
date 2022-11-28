@@ -97,6 +97,9 @@
       "path": "../alfa-refinement"
     },
     {
+      "path": "../alfa-selector"
+    },
+    {
       "path": "../alfa-sequence"
     },
     {
