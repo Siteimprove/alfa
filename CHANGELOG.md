@@ -19,6 +19,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.52.1](../../compare/v0.52.0...v0.52.1) (2022-11-28)
+
+### Fixed
+
+- Added some missing internal dependencies between packages. ([#1282](../../pull/1282)
+
 ## [0.52.0](../../compare/v0.51.0...v0.52.0) (2022-11-18)
 
 ### Added
