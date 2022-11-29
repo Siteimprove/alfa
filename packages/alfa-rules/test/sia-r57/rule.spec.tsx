@@ -34,7 +34,7 @@ test("evaluate() passes a text node that is part of the first focusable element"
 test("evaluate() passes a text node that is part of a dialog", async (t) => {
   const target = h.text("This text is included in a dialog");
 
-  const document = h.document([<dialog>{target}</dialog>, <main />]);
+  const document = h.document([<dialog open>{target}</dialog>, <main />]);
 
   t.deepEqual(await evaluate(R57, { document }), [
     passed(R57, target, { 1: Outcomes.IsIncludedInLandmark }),
