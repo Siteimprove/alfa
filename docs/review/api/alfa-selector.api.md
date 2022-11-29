@@ -297,12 +297,29 @@ export namespace Selector {
         }
     }
     // (undocumented)
+    export class Disabled extends Pseudo.Class<"disabled"> {
+        // (undocumented)
+        matches(element: dom.Element, context?: Context): boolean;
+        // (undocumented)
+        static of(): Disabled;
+    }
+    // (undocumented)
     export class Empty extends Pseudo.Class<"empty"> {
         // (undocumented)
         matches(element: Element): boolean;
         // (undocumented)
         static of(): Empty;
     }
+    // (undocumented)
+    export class Enabled extends Pseudo.Class<"enabled"> {
+        // (undocumented)
+        matches(element: dom.Element, context?: Context): boolean;
+        // (undocumented)
+        static of(): Enabled;
+    }
+    const // (undocumented)
+    isPseudoClass: typeof Pseudo.isClass, // (undocumented)
+    isPseudoElement: typeof Pseudo.isElement;
     // (undocumented)
     export class FileSelectorButton extends Pseudo.Element<"file-selector-button"> {
         // (undocumented)
@@ -315,9 +332,6 @@ export namespace Selector {
         // (undocumented)
         static of(): FirstChild;
     }
-    const // (undocumented)
-    isPseudoClass: typeof Pseudo.isClass, // (undocumented)
-    isPseudoElement: typeof Pseudo.isElement;
     // (undocumented)
     export class FirstLetter extends Pseudo.Element<"first-letter"> {
         // (undocumented)

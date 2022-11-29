@@ -22,6 +22,9 @@ import { WithRole } from "../diagnostic/with-role";
 import { Contrast } from "../diagnostic/contrast";
 import { ColorError } from "../dom/get-colors";
 
+// R91, R92, R93
+import { TextSpacing } from "../diagnostic/text-spacing";
+
 /**
  * @public
  */
@@ -51,6 +54,8 @@ export namespace Diagnostic {
   export const { isRoleAndRequiredAttributes } = RoleAndRequiredAttributes;
 
   export const { isSameNames } = SameNames;
+
+  export const { isTextSpacing } = TextSpacing;
 
   export const { isWithBadElements } = WithBadElements;
 

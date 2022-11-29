@@ -420,7 +420,7 @@ export namespace Element {
     hasUniqueId,
     isBrowsingContextContainer,
     isContent,
-    isDisabled,
+    isActuallyDisabled,
     isDocumentElement,
     isDraggable,
     isEditingHost,

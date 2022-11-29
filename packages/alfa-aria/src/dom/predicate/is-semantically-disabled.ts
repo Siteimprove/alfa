@@ -6,14 +6,16 @@ const { equals, or } = Predicate;
 /**
  * Checks if an element is semantically disabled.
  *
- * While this only uses Style properties, this is thematically related to
+ * While this only uses DOM properties, this is thematically related to
  * accessibility and aria-* attributes and therefore lives in alfa-aria.
  *
- * {@link https://act-rules.github.io/glossary/#disabled-element}
+ * {@link https://alfa.siteimprove.com/terms/disabled}
  *
  * @public
  */
 export const isSemanticallyDisabled: Predicate<Element> = or(
-  Element.isDisabled,
+  // Alfa hub's definition uses the `:disabled` pseudo-class, which is
+  // equivalent to "actually disabled" for HTML; we shortcut it here.
+  Element.isActuallyDisabled,
   Element.hasAttribute("aria-disabled", equals("true"))
 );

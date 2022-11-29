@@ -300,10 +300,33 @@ test("evaluate() correctly handles circular `currentcolor` references", async (t
   ]);
 });
 
-test("evaluate() is inapplicable to text nodes in widgets", async (t) => {
+test("evaluate() passes text nodes in widgets with good contrast", async (t) => {
+  const target = h.text("Hello world");
+
   const document = h.document([
     <html>
-      <button>Hello world</button>
+      <button>{target}</button>
+    </html>,
+  ]);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    passed(R69, target, {
+      1: Outcomes.HasSufficientContrast(21, 4.5, [
+        Diagnostic.Pairing.of(
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(1, 1, 1)],
+          21
+        ),
+      ]),
+    }),
+  ]);
+});
+
+test("evaluate() is inapplicable to text nodes in disabled widgets", async (t) => {
+  const document = h.document([
+    <html>
+      <button disabled>Hello world</button>
+      <button aria-disabled="true">Hello world</button>
     </html>,
   ]);
 

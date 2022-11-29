@@ -5,18 +5,21 @@ import { Element } from "../../element";
 const { equals } = Predicate;
 
 /**
- * {@link https://html.spec.whatwg.org/#concept-fe-disabled}
+ * {@link https://html.spec.whatwg.org/multipage#concept-element-disabled}
  *
  * @public
  */
-export function isDisabled(element: Element): boolean {
+export function isActuallyDisabled(element: Element): boolean {
   switch (element.name) {
-    // https://html.spec.whatwg.org/#attr-fe-disabled
+    // https://html.spec.whatwg.org/multipage#concept-fe-disabled
     case "button":
     case "input":
     case "select":
     case "textarea":
-    // https://html.spec.whatwg.org/#attr-fieldset-disabled
+    // https://html.spec.whatwg.org/#attr-optgroup-disabled
+    case "optgroup":
+      return element.attribute("disabled").isSome();
+    // https://html.spec.whatwg.org/multipage#concept-fieldset-disabled
     case "fieldset":
       if (element.attribute("disabled").isSome()) {
         return true;
@@ -26,7 +29,7 @@ export function isDisabled(element: Element): boolean {
         .ancestors()
         .filter(Element.isElement)
         .find(Element.hasName("fieldset"))
-        .reject(isDisabled)
+        .reject(isActuallyDisabled)
         .flatMap((fieldset) =>
           fieldset
             .descendants()
@@ -35,7 +38,7 @@ export function isDisabled(element: Element): boolean {
         )
         .some((legend) => legend.descendants().some(equals(element)));
 
-    // https://html.spec.whatwg.org/#attr-option-disabled
+    // https://html.spec.whatwg.org/multipage#concept-option-disabled
     case "option":
       if (element.attribute("disabled").isSome()) {
         return true;
@@ -45,11 +48,7 @@ export function isDisabled(element: Element): boolean {
         .inclusiveAncestors()
         .filter(Element.isElement)
         .find(Element.hasName("optgroup"))
-        .some(isDisabled);
-
-    // https://html.spec.whatwg.org/#attr-optgroup-disabled
-    case "optgroup":
-      return element.attribute("disabled").isSome();
+        .some(isActuallyDisabled);
   }
 
   return false;

@@ -91,7 +91,7 @@ export namespace Outcomes {
   ) =>
     Ok.of(
       TextSpacing.of(
-        "Good",
+        `${prop} is at least ${threshold} times the font-size`,
         prop,
         value,
         fontSize,
@@ -113,7 +113,7 @@ export namespace Outcomes {
   ) =>
     Err.of(
       TextSpacing.of(
-        "Bad",
+        `${prop} is less than ${threshold} times the font-size`,
         prop,
         value,
         fontSize,

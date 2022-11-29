@@ -29,6 +29,7 @@ import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Language } from '@siteimprove/alfa-iana';
+import { Length } from '@siteimprove/alfa-css';
 import { List } from '@siteimprove/alfa-list';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Node } from '@siteimprove/alfa-dom';
@@ -402,6 +403,10 @@ export namespace Diagnostic {
     //
     // (undocumented)
     isSameNames: typeof SameNames.isSameNames;
+    const // Warning: (ae-forgotten-export) The symbol "TextSpacing" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    isTextSpacing: typeof TextSpacing.isTextSpacing;
     const // Warning: (ae-forgotten-export) The symbol "WithBadElements" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
