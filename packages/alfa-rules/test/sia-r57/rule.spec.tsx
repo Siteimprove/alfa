@@ -37,7 +37,7 @@ test("evaluate() passes a text node that is part of a dialog", async (t) => {
   const document = h.document([<dialog open>{target}</dialog>, <main />]);
 
   t.deepEqual(await evaluate(R57, { document }), [
-    passed(R57, target, { 1: Outcomes.IsIncludedInLandmark }),
+    passed(R57, target, { 1: Outcomes.IsIncludedInDialog }),
   ]);
 });
 
