@@ -22,7 +22,7 @@ const {
 } = DOM;
 const { isElement } = Element;
 const { isEmpty } = Iterable;
-const { nor, not, property, test } = Predicate;
+const { nor, not, or, property, test } = Predicate;
 const { and } = Refinement;
 const { isTabbable } = Style;
 const { isText } = Text;
@@ -61,30 +61,44 @@ export default Rule.Atomic.of<Page, Text>({
       },
 
       expectations(target) {
+        // First ancestor in the accessibility tree which is dialog or landmark
+        const role = Node.from(target, device)
+          .ancestors()
+          .find(
+            or(
+              // landmark
+              and(
+                (ancestor) => ancestor.role.some((role) => role.isLandmark()),
+                // Circumventing https://github.com/Siteimprove/alfa/issues/298
+                // by discarding the "landmark" ancestor if the role is incorrect
+                (ancestor) =>
+                  test(
+                    and(isElement, not(hasIncorrectRoleWithoutName(device))),
+                    ancestor.node
+                  )
+              ),
+              // dialog
+              (ancestor) => ancestor.role.some((role) => role.is("dialog"))
+            )
+          )
+          .flatMap((ancestor) => ancestor.role);
+
         return {
           1: expectation(
-            Node.from(target, device)
-              .ancestors()
-              .some(
-                and(
-                  (ancestor) => ancestor.role.some((role) => role.isLandmark()),
-                  // Circumventing https://github.com/Siteimprove/alfa/issues/298
-                  // by discarding the "landmark" ancestor if the role is incorrect
-                  (ancestor) =>
-                    test(
-                      and(isElement, not(hasIncorrectRoleWithoutName(device))),
-                      ancestor.node
-                    )
-                )
-              ),
+            role.some((role) => role.isLandmark()),
             () => Outcomes.IsIncludedInLandmark,
             () =>
               expectation(
-                firstTabbable.some((element) =>
-                  element.isInclusiveAncestorOf(target, dom.Node.flatTree)
-                ),
-                () => Outcomes.IsIncludedInFirstFocusableElement,
-                () => Outcomes.IsNotIncludedInLandmark
+                role.some((role) => role.is("dialog")),
+                () => Outcomes.IsIncludedInDialog,
+                () =>
+                  expectation(
+                    firstTabbable.some((element) =>
+                      element.isInclusiveAncestorOf(target, dom.Node.flatTree)
+                    ),
+                    () => Outcomes.IsIncludedInFirstFocusableElement,
+                    () => Outcomes.IsNotIncludedInLandmark
+                  )
               )
           ),
         };
@@ -96,6 +110,10 @@ export default Rule.Atomic.of<Page, Text>({
 export namespace Outcomes {
   export const IsIncludedInLandmark = Ok.of(
     Diagnostic.of(`The text is included in a landmark region`)
+  );
+
+  export const IsIncludedInDialog = Ok.of(
+    Diagnostic.of(`The text is included in a dialog`)
   );
 
   export const IsIncludedInFirstFocusableElement = Ok.of(
