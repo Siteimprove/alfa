@@ -349,10 +349,14 @@ const Features: Features = {
 
     img: html(
       function* (element) {
-        for (const attribute of element.attribute("alt")) {
-          if (attribute.value === "") {
-            yield Role.of("presentation");
-          }
+        // If there is an alt attribute and it is totally empty
+        if (element.attribute("alt").some((alt) => alt.value === "")) {
+          yield Role.of("presentation");
+        }
+
+        // if there is no src attribute, or it is empty
+        if (element.attribute("src").every((src) => src.value.trim() === "")) {
+          yield Role.of("presentation");
         }
 
         yield Role.of("img");

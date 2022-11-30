@@ -442,7 +442,7 @@ const hasGlobalAttributes: Predicate<Element> = (element) =>
  */
 const isPotentiallyFocusable: Predicate<Element> = and(
   Element.hasTabIndex(),
-  not(Element.isDisabled)
+  not(Element.isActuallyDisabled)
 );
 
 /**

@@ -36,7 +36,7 @@ const {
   zeroOrMore,
 } = Parser;
 
-const { and, not, property, equals } = Predicate;
+const { and, equals, not, property, test } = Predicate;
 const { isElement, hasName } = Element;
 
 /**
@@ -878,6 +878,10 @@ export namespace Selector {
             return Result.of(Link.of());
           case "visited":
             return Result.of(Visited.of());
+          case "disabled":
+            return Result.of(Disabled.of());
+          case "enabled":
+            return Result.of(Enabled.of());
           case "root":
             return Result.of(Root.of());
           case "empty":
@@ -1408,6 +1412,62 @@ export namespace Selector {
       }
 
       return false;
+    }
+  }
+
+  /**
+   * {@link https://drafts.csswg.org/selectors/#enableddisabled}
+   * {@link https://html.spec.whatwg.org/multipage#selector-disabled}
+   */
+  export class Disabled extends Pseudo.Class<"disabled"> {
+    public static of(): Disabled {
+      return new Disabled();
+    }
+
+    private constructor() {
+      super("disabled");
+    }
+
+    public matches(
+      element: dom.Element,
+      context: Context = Context.empty()
+    ): boolean {
+      return Element.isActuallyDisabled(element);
+    }
+  }
+
+  /**
+   * {@link https://drafts.csswg.org/selectors/#enableddisabled}
+   * {@link https://html.spec.whatwg.org/multipage#selector-enabled}
+   */
+  export class Enabled extends Pseudo.Class<"enabled"> {
+    public static of(): Enabled {
+      return new Enabled();
+    }
+
+    private constructor() {
+      super("enabled");
+    }
+
+    public matches(
+      element: dom.Element,
+      context: Context = Context.empty()
+    ): boolean {
+      return test(
+        and(
+          hasName(
+            "button",
+            "input",
+            "select",
+            "textarea",
+            "optgroup",
+            "option",
+            "fieldset"
+          ),
+          not(Element.isActuallyDisabled)
+        ),
+        element
+      );
     }
   }
 

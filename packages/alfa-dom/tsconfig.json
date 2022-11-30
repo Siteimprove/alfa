@@ -34,7 +34,7 @@
     "src/node/element/predicate/has-unique-id.ts",
     "src/node/element/predicate/is-browsing-context-container.ts",
     "src/node/element/predicate/is-content.ts",
-    "src/node/element/predicate/is-disabled.ts",
+    "src/node/element/predicate/is-actually-disabled.ts",
     "src/node/element/predicate/is-document-element.ts",
     "src/node/element/predicate/is-draggable.ts",
     "src/node/element/predicate/is-editing-host.ts",
