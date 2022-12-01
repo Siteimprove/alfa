@@ -2,6 +2,7 @@ import { Rule } from "@siteimprove/alfa-act";
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -145,7 +146,7 @@ function hasDifferentColors(
       return false;
     }
 
-    return !color1.equals(color2);
+    return !color1.value.equals(color2.value);
   };
 }
 
@@ -170,7 +171,7 @@ function hasDifferentBackgroundColors(
 
     // Technically, different solid backgrounds could render as the same color if one is fully transparent
     // and the parent happens to have the same color… We Assume that this won't happen often…
-    return !color1.equals(color2);
+    return !color1.value.equals(color2.value);
   };
 }
 
@@ -198,7 +199,6 @@ function hasDifferentBorder(
     }
 
     // They both have border, we need to dig the values
-
     // We consider any difference in any of the border-* longhand as enough
     for (const side of ["top", "right", "bottom", "left"] as const) {
       for (const effect of ["color", "style", "width"] as const) {
@@ -214,7 +214,7 @@ function hasDifferentBorder(
           !(
             (effect === "color" &&
               (isKeyword(border1) || isKeyword(border2))) ||
-            border1.equals(border2)
+            Equatable.equals(border1.value, border2.value)
           )
         ) {
           return true;

@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 import R65, { Outcomes } from "../../src/sia-r65/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed } from "../common/outcome";
+import { passed, failed, cantTell } from "../common/outcome";
 import { oracle } from "../common/oracle";
 import { Map } from "@siteimprove/alfa-map";
 
@@ -412,4 +412,33 @@ test(`evaluate() passes an <a> and <button> element which have some focus indica
       1: Outcomes.HasFocusIndicator(matchingTargets, matchingNonTargets),
     }),
   ]);
+});
+
+test(`evaluates() only cares about properties values, not sources`, async (t) => {
+  const target = <a href="#">Hello</a>;
+
+  const document = h.document(
+    [target],
+    [
+      h.sheet([
+        // Removing the default focus indicator
+        h.rule.style("a:focus", { outline: "none" }),
+        // The color is the same, even though it comes from different sources.
+        // Rk: Declaration.equals ignores parent rule alreay, so we need
+        // different specified values to test this.
+        h.rule.style("a", { color: "red" }),
+        h.rule.style("a:focus", { color: "rgb(255,0,0)" }),
+        // The background color is the same, even though it comes from different sources.
+        // Rk: Declaration.equals ignores parent rule alreay, so we need
+        // different specified values to test this.
+        h.rule.style("a", { backgroundColor: "blue" }),
+        h.rule.style("a:focus", { backgroundColor: "rgb(0,0,255)" }),
+        // The borders are the same, even through they come from different sources.
+        h.rule.style("a", { border: "1px solid green" }),
+        h.rule.style("a:focus", { border: "solid green 1px" }),
+      ]),
+    ]
+  );
+
+  t.deepEqual(await evaluate(R65, { document }), [cantTell(R65, target)]);
 });
