@@ -68,7 +68,7 @@ test("evaluate() is inapplicable when meta-viewport has no `content`", async (t)
   t.deepEqual(await evaluate(R47, { document }), [inapplicable(R47)]);
 });
 
-test("evaluate() is inappilcable to meta-viewport elements who don't affect zoom", async (t) => {
+test("evaluate() is inapplicable to meta-viewport elements who don't affect zoom", async (t) => {
   const document = h.document([
     <meta name="viewport" content="width=device-width" />,
   ]);
