@@ -36,6 +36,9 @@
       "path": "../alfa-mapper"
     },
     {
+      "path": "../alfa-option"
+    },
+    {
       "path": "../alfa-promise"
     },
     {

@@ -19,7 +19,13 @@
       "path": "../alfa-option"
     },
     {
-      "path": "../alfa-sarif"
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-refinement"
+    },
+    {
+      "path": "../alfa-sequence"
     }
   ]
 }
