@@ -418,7 +418,7 @@ test(`evaluates() only cares about properties values, not sources`, async (t) =>
   const target = <a href="#">Hello</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         // Removing the default focus indicator
@@ -440,10 +440,5 @@ test(`evaluates() only cares about properties values, not sources`, async (t) =>
     ]
   );
 
-  t.deepEqual(await evaluate(R65, { document }), [
-    cantTell(R65, target),
-    passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
-  ]);
+  t.deepEqual(await evaluate(R65, { document }), [cantTell(R65, target)]);
 });
