@@ -18,10 +18,16 @@
       "path": "../alfa-equatable"
     },
     {
+      "path": "../alfa-functor"
+    },
+    {
       "path": "../alfa-iterable"
     },
     {
       "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-mapper"
     },
     {
       "path": "../alfa-option"
@@ -31,6 +37,9 @@
     },
     {
       "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-refinement"
     },
     {
       "path": "../alfa-result"
