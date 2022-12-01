@@ -287,6 +287,9 @@
       "path": "../alfa-cache"
     },
     {
+      "path": "../alfa-comparable"
+    },
+    {
       "path": "../alfa-compatibility"
     },
     {
@@ -306,6 +309,9 @@
     },
     {
       "path": "../alfa-future"
+    },
+    {
+      "path": "../alfa-hash"
     },
     {
       "path": "../alfa-http"
