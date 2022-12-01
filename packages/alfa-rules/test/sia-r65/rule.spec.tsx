@@ -13,13 +13,10 @@ const noMatches = Map.empty<string, number>();
 test(`evaluate() passes an <a> element that uses the default focus outline`, async (t) => {
   const target = <a href="#">Link</a>;
 
-  const document = h.document([target, <button />]);
+  const document = h.document([target]);
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
-    passed(R65, <button />, {
       1: Outcomes.HasFocusIndicator(noMatches, noMatches),
     }),
   ]);
@@ -29,7 +26,7 @@ test(`evaluate() passes an <a> element that uses a non-default focus outline`, a
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a:focus", {
@@ -43,9 +40,6 @@ test(`evaluate() passes an <a> element that uses a non-default focus outline`, a
     passed(R65, target, {
       1: Outcomes.HasFocusIndicator(noMatches, noMatches),
     }),
-    passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
   ]);
 });
 
@@ -54,7 +48,7 @@ test(`evaluate() fails an <a> element that removes the default focus outline and
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a:focus", {
@@ -76,9 +70,6 @@ test(`evaluate() fails an <a> element that removes the default focus outline and
       failed(R65, target, {
         1: Outcomes.HasNoFocusIndicator(noMatches, noMatches),
       }),
-      passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-      }),
     ]
   );
 });
@@ -88,7 +79,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a:focus", {
@@ -110,9 +101,6 @@ test(`evaluate() passes an <a> element that removes the default focus outline
       passed(R65, target, {
         1: Outcomes.HasFocusIndicator(noMatches, noMatches),
       }),
-      passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-      }),
     ]
   );
 });
@@ -122,7 +110,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a", {
@@ -141,9 +129,6 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     passed(R65, target, {
       1: Outcomes.HasFocusIndicator(noMatches, noMatches),
     }),
-    passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
   ]);
 });
 
@@ -152,7 +137,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [<div>{target}</div>, <button />],
+    [<div>{target}</div>],
     [
       h.sheet([
         h.rule.style("div:focus-within", {
@@ -170,9 +155,6 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     passed(R65, target, {
       1: Outcomes.HasFocusIndicator(noMatches, noMatches),
     }),
-    passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
   ]);
 });
 
@@ -185,7 +167,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
   );
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a:focus", {
@@ -203,9 +185,6 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     passed(R65, target, {
       1: Outcomes.HasFocusIndicator(noMatches, noMatches),
     }),
-    passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
   ]);
 });
 
@@ -214,7 +193,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a:focus", {
@@ -232,9 +211,6 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     passed(R65, target, {
       1: Outcomes.HasFocusIndicator(noMatches, noMatches),
     }),
-    passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
   ]);
 });
 
@@ -244,7 +220,7 @@ test(`evaluate() fails an <a> element that removes the default focus outline
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a:focus-visible", {
@@ -266,9 +242,6 @@ test(`evaluate() fails an <a> element that removes the default focus outline
       failed(R65, target, {
         1: Outcomes.HasNoFocusIndicator(noMatches, noMatches),
       }),
-      passed(R65, <button />, {
-        1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-      }),
     ]
   );
 });
@@ -278,7 +251,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a", {
@@ -299,9 +272,6 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     passed(R65, target, {
       1: Outcomes.HasFocusIndicator(noMatches, noMatches),
     }),
-    passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
   ]);
 });
 
@@ -310,7 +280,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a", {
@@ -331,9 +301,6 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     passed(R65, target, {
       1: Outcomes.HasFocusIndicator(noMatches, noMatches),
     }),
-    passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
   ]);
 });
 
@@ -342,7 +309,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a", {
@@ -361,9 +328,6 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     passed(R65, target, {
       1: Outcomes.HasFocusIndicator(noMatches, noMatches),
     }),
-    passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
   ]);
 });
 
@@ -372,7 +336,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a:focus", {
@@ -387,9 +351,6 @@ test(`evaluate() passes an <a> element that removes the default focus outline
     passed(R65, target, {
       1: Outcomes.HasFocusIndicator(noMatches, noMatches),
     }),
-    passed(R65, <button />, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
   ]);
 });
 
@@ -398,7 +359,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
   const target = <a href="#">Link</a>;
 
   const document = h.document(
-    [target, <button />],
+    [target],
     [
       h.sheet([
         h.rule.style("a", {
@@ -414,9 +375,6 @@ test(`evaluate() passes an <a> element that removes the default focus outline
 
   t.deepEqual(await evaluate(R65, { document }), [
     passed(R65, target, {
-      1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-    }),
-    passed(R65, <button />, {
       1: Outcomes.HasFocusIndicator(noMatches, noMatches),
     }),
   ]);

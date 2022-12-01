@@ -51,13 +51,6 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
 
     return {
       applicability() {
-        // Peak the first two tabbable elements to avoid forcing the whole
-        // sequence. If the size of the resulting sequence is less than 2 then
-        // fewer than 2 tabbable elements exist.
-        if (tabbables.take(2).size < 2) {
-          return [];
-        }
-
         return tabbables;
       },
 
