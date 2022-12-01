@@ -19,6 +19,9 @@
       "path": "../alfa-applicative"
     },
     {
+      "path": "../alfa-array"
+    },
+    {
       "path": "../alfa-earl"
     },
     {
