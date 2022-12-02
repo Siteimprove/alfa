@@ -19,6 +19,26 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.53.0](../../compare/v0.52.1...v0.53.0) (2022-12-02)
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R66 and SIA-R69 now also check contrast of text inside widgets (in their default state). ([#1275](../../pull/1275))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R95 version 1 is now deprecated (use SIA-DR95); SIA-R95 version 2 has essentially swapped Applicability and Expectation, following the ACT rules changes. ([#1277](../../pull/1277))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R47 is now only applicable to to `<meta viewport>` element defining one of the "interesting" properties. ([#1278](../../pull/1278))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now also applies to page with a single focusable element. ([#1276](../../pull/1276))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<img>` elements with no or empty `src` attribute now have an implicit role of `presentation`. ([#1242](../../issues/1242), [#1273](../../pull/1273))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R57 now accepts content inside `(alert)dialog`; and any descendant of the first focusable element. ([#1247](../../issues/1247), [#1272](../../issues/1272), [#1274](../../pull/1274), [#1284](../../pull/1284))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R65 now correctly compares only properties values, not their source. ([#1279](../../pull/1279))
+
 ## [0.52.1](../../compare/v0.52.0...v0.52.1) (2022-11-28)
 
 ### Fixed
