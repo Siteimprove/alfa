@@ -13,7 +13,7 @@ import { Scope } from "../tags";
 
 const { hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasId, hasName, hasNamespace, isElement } = Element;
-const { and, equals, not } = Predicate;
+const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r45",
