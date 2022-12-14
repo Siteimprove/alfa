@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-tuple",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.53.0",
+  "version": "0.53.1",
   "license": "MIT",
   "description": "Functionality for working with heterogeneous arrays, also called tuples",
   "repository": {
@@ -18,18 +18,18 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-array": "workspace:^0.53.0",
-    "@siteimprove/alfa-callback": "workspace:^0.53.0",
-    "@siteimprove/alfa-comparable": "workspace:^0.53.0",
-    "@siteimprove/alfa-hash": "workspace:^0.53.0",
-    "@siteimprove/alfa-mapper": "workspace:^0.53.0",
-    "@siteimprove/alfa-option": "workspace:^0.53.0",
-    "@siteimprove/alfa-predicate": "workspace:^0.53.0",
-    "@siteimprove/alfa-reducer": "workspace:^0.53.0",
-    "@siteimprove/alfa-refinement": "workspace:^0.53.0"
+    "@siteimprove/alfa-array": "workspace:^0.53.1",
+    "@siteimprove/alfa-callback": "workspace:^0.53.1",
+    "@siteimprove/alfa-comparable": "workspace:^0.53.1",
+    "@siteimprove/alfa-hash": "workspace:^0.53.1",
+    "@siteimprove/alfa-mapper": "workspace:^0.53.1",
+    "@siteimprove/alfa-option": "workspace:^0.53.1",
+    "@siteimprove/alfa-predicate": "workspace:^0.53.1",
+    "@siteimprove/alfa-reducer": "workspace:^0.53.1",
+    "@siteimprove/alfa-refinement": "workspace:^0.53.1"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.53.0"
+    "@siteimprove/alfa-test": "workspace:^0.53.1"
   },
   "publishConfig": {
     "access": "public",

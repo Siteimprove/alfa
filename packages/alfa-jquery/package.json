@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-jquery",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.53.0",
+  "version": "0.53.1",
   "license": "MIT",
   "description": "Functionality for translating jQuery elements into page objects",
   "repository": {
@@ -18,16 +18,16 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-device": "workspace:^0.53.0",
-    "@siteimprove/alfa-dom": "workspace:^0.53.0",
-    "@siteimprove/alfa-http": "workspace:^0.53.0",
-    "@siteimprove/alfa-option": "workspace:^0.53.0",
-    "@siteimprove/alfa-web": "workspace:^0.53.0",
+    "@siteimprove/alfa-device": "workspace:^0.53.1",
+    "@siteimprove/alfa-dom": "workspace:^0.53.1",
+    "@siteimprove/alfa-http": "workspace:^0.53.1",
+    "@siteimprove/alfa-option": "workspace:^0.53.1",
+    "@siteimprove/alfa-web": "workspace:^0.53.1",
     "@types/jquery": "^3.3.29",
     "jquery": "^3.6.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.53.0"
+    "@siteimprove/alfa-test": "workspace:^0.53.1"
   },
   "publishConfig": {
     "access": "public",

@@ -19,6 +19,14 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.53.1](../../compare/v0.53.0...v0.53.1) (2022-12-14)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R45 is no longer applicable to `<table>` elements whose role is not `table`. ([#1292](../../pull/1292))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R47 is not mapping anymore to 1.4.10. ([#1293](../../pull/1293))
+
 ## [0.53.0](../../compare/v0.52.1...v0.53.0) (2022-12-02)
 
 ### Changed
@@ -144,7 +152,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Fixed
 
-- [@siteimprove/alfarules](packages/alfa-rules): SIA-R57 now correctly considers that nameless `<form>` and `<section>` are not landmarks. ([#1225](../../issues/1225), [#1226](../../pull/1226))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R57 now correctly considers that nameless `<form>` and `<section>` are not landmarks. ([#1225](../../issues/1225), [#1226](../../pull/1226))
 
 ## [0.45.0](../../compare/v0.44.0...v0.45.0) (2022-09-16)
 
@@ -211,7 +219,7 @@ Only internal changes to the release pipeline.
 
 ### Breaking
 
-- [@siteimprove/alfa-aria](packages/alfa-aria): `isPerceivable` has been renamed `isPerceivableForAll`, matching its intend; the negation of `isIgnored`, named `isIncludedInTheAccessibilityTree`, has been added as it's a frequent use case. ([#1178](../../pull/1178))
+- [@siteimprove/alfa-aria](packages/alfa-aria): `isPerceivable` has been renamed `isPerceivableForAll`, matching its intent; the negation of `isIgnored`, named `isIncludedInTheAccessibilityTree`, has been added as it's a frequent use case. ([#1178](../../pull/1178))
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R62 version 1 is now deprecated and will be removed in a later release; SIA-R62 version 2 is now the stable version and should be imported from `Rules`, not `experimentadlRules`. ([#1143](../../issues/1143), [#1180](../../pull/1180))
 
@@ -580,7 +588,7 @@ Only internal changes to the release pipeline.
 
 ### Fixed
 
-- [@siteimprove-alfa-rules](packages/alfa-rules): SIA-R91, SIA-R92, and SIA-R93 now correctly handle change of properties between the element containing the declaration and the text. ([#897](../../issues/897), [#917](../../pull/917))
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R91, SIA-R92, and SIA-R93 now correctly handle change of properties between the element containing the declaration and the text. ([#897](../../issues/897), [#917](../../pull/917))
 
 ## [0.22.6](../../compare/v0.22.5...v0.22.6) (2021-09-29)
 
