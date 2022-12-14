@@ -18,7 +18,7 @@ const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r47",
-  requirements: [Criterion.of("1.4.4"), Criterion.of("1.4.10")],
+  requirements: [Criterion.of("1.4.4")],
   tags: [Scope.Page],
   evaluate({ document }) {
     let maximumScaleMap = Map.empty<Element, number>();
