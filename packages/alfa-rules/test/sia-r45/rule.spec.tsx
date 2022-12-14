@@ -129,3 +129,13 @@ test("evaluate() is inapplicable to a table with a presentational role", async (
 
   t.deepEqual(await evaluate(R45, { document }), [inapplicable(R45)]);
 });
+
+test("evaluate() is inapplicable to a table with a non-table role", async (t) => {
+  const document = h.document([
+    <table role="paragraph">
+      <td headers="foo">Bar</td>
+    </table>,
+  ]);
+
+  t.deepEqual(await evaluate(R45, { document }), [inapplicable(R45)]);
+});
