@@ -172,14 +172,7 @@ test("isVisible() returns true for replaced elements with no child", (t) => {
 test(`isVisible() returns false for an element that has been pulled offscreen
       by position: absolute and left: 9999px`, (t) => {
   const element = (
-    <div
-      style={{
-        position: "absolute",
-        left: "9999px",
-      }}
-    >
-      Hello world
-    </div>
+    <div style={{ position: "absolute", left: "9999px" }}>Hello world</div>
   );
 
   t.equal(isVisible(element), false);
@@ -188,14 +181,7 @@ test(`isVisible() returns false for an element that has been pulled offscreen
 test(`isVisible() returns false for an element that has been pulled offscreen
       by position: absolute and left: -9999px`, (t) => {
   const element = (
-    <div
-      style={{
-        position: "absolute",
-        left: "-9999px",
-      }}
-    >
-      Hello world
-    </div>
+    <div style={{ position: "absolute", left: "-9999px" }}>Hello world</div>
   );
 
   t.equal(isVisible(element), false);
@@ -204,14 +190,7 @@ test(`isVisible() returns false for an element that has been pulled offscreen
 test(`isVisible() returns false for an element that has been pulled offscreen
       by position: absolute and right: 9999px`, (t) => {
   const element = (
-    <div
-      style={{
-        position: "absolute",
-        right: "9999px",
-      }}
-    >
-      Hello world
-    </div>
+    <div style={{ position: "absolute", right: "9999px" }}>Hello world</div>
   );
 
   t.equal(isVisible(element), false);
@@ -220,15 +199,24 @@ test(`isVisible() returns false for an element that has been pulled offscreen
 test(`isVisible() returns false for an element that has been pulled offscreen
       by position: absolute and right: -9999px`, (t) => {
   const element = (
-    <div
-      style={{
-        position: "absolute",
-        right: "-9999px",
-      }}
-    >
-      Hello world
-    </div>
+    <div style={{ position: "absolute", right: "-9999px" }}>Hello world</div>
   );
+
+  t.equal(isVisible(element), false);
+});
+
+test(`isVisible() returns false for an element that has been pulled offscreen
+      by position: absolute and top: -9999px`, (t) => {
+  const element = (
+    <div style={{ position: "absolute", top: "-9999px" }}>Hello world</div>
+  );
+
+  t.equal(isVisible(element), false);
+});
+
+test(`isVisible() returns false for an element that has been pulled offscreen
+      by position: margin-left: -9999px`, (t) => {
+  const element = <div style={{ marginLeft: "-9999px" }}>Hello world</div>;
 
   t.equal(isVisible(element), false);
 });

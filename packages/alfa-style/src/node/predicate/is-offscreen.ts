@@ -15,7 +15,7 @@ const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
  * @remarks
  * We can't really detect if content is moved off-screen, due to the lack of
  * layout system.
- * Instead, we inspect a handful of properties that affect positioning. If there
+ * Instead, we inspect a handful of properties that affect positioning. If their
  * value is "large enough", we consider this as an indication that the content
  * is actually off-screen.
  * Since pages are mostly vertical scrolling, and most of the languages we look
@@ -51,13 +51,32 @@ export function isOffscreen(
           const { value: top } = style.computed("top");
           const { value: marginLeft } = style.computed("margin-left");
 
+          // margin-left affects also statically positioned elements.
+          // margin-left could possibly hide further sibling of the element
+          // until a block container is found.
+          // We ignore this for now, until it proves problematic.
+          if (marginLeft.type === "length" && marginLeft.value <= -9999) {
+            return true;
+          }
+
           if (position.value !== "static") {
             for (const inset of [left, right]) {
-              switch (inset.type) {
-                case "length":
-                  return abs(inset.value) >= 9999;
+              // A large move on the left or right hides the content.
+              if (inset.type === "length" && abs(inset.value) >= 9999) {
+                return true;
               }
             }
+
+            // A large move above the top hides the content.
+            if (top.type === "length" && top.value <= -9999) {
+              return true;
+            }
+
+            // If the element is positioned, with normal margin and normal
+            // inset, it is likely on screen, no matter where its parent is.
+            // We might need to instead recurse to the offset parent. For now,
+            // we'll ignore that case considering it unlikely.
+            return false;
           }
         }
 
