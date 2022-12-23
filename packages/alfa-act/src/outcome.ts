@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
@@ -19,9 +20,10 @@ import { Rule } from "./rule";
  * Q: questions' metadata type
  * S: possible types of questions' subject.
  */
-export abstract class Outcome<I, T, Q = never, S = T>
+export abstract class Outcome<I, T extends Hashable, Q = never, S = T>
   implements
     Equatable,
+    Hashable,
     json.Serializable<Outcome.JSON>,
     earl.Serializable<Outcome.EARL>,
     sarif.Serializable<sarif.Result>
@@ -40,9 +42,13 @@ export abstract class Outcome<I, T, Q = never, S = T>
     return undefined;
   }
 
-  public abstract equals<I, T, Q, S>(value: Outcome<I, T, Q, S>): boolean;
+  public abstract equals<I, T extends Hashable, Q, S>(
+    value: Outcome<I, T, Q, S>
+  ): boolean;
 
   public abstract equals(value: unknown): value is this;
+
+  public abstract hash(hash: Hash): void;
 
   public abstract toJSON(): Outcome.JSON;
 
@@ -78,8 +84,13 @@ export namespace Outcome {
     };
   }
 
-  export class Passed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
-    public static of<I, T, Q, S>(
+  export class Passed<I, T extends Hashable, Q = never, S = T> extends Outcome<
+    I,
+    T,
+    Q,
+    S
+  > {
+    public static of<I, T extends Hashable, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
@@ -117,7 +128,9 @@ export namespace Outcome {
       return this._expectations;
     }
 
-    public equals<I, T, Q, S>(value: Passed<I, T, Q, S>): boolean;
+    public equals<I, T extends Hashable, Q, S>(
+      value: Passed<I, T, Q, S>
+    ): boolean;
 
     public equals(value: unknown): value is this;
 
@@ -128,6 +141,15 @@ export namespace Outcome {
         Equatable.equals(value._target, this._target) &&
         value._expectations.equals(this._expectations)
       );
+    }
+
+    public hash(hash: Hash) {
+      this._rule.hash(hash);
+      this._target.hash(hash);
+      for (const [id, result] of this._expectations) {
+        hash.writeString(id);
+        result.hash(hash);
+      }
     }
 
     public toJSON(): Passed.JSON<T> {
@@ -213,15 +235,15 @@ export namespace Outcome {
       };
     }
 
-    export function isPassed<I, T, Q, S>(
+    export function isPassed<I, T extends Hashable, Q, S>(
       value: Outcome<I, T, Q, S>
     ): value is Passed<I, T, Q, S>;
 
-    export function isPassed<I, T, Q, S>(
+    export function isPassed<I, T extends Hashable, Q, S>(
       value: unknown
     ): value is Passed<I, T, Q, S>;
 
-    export function isPassed<I, T, Q, S>(
+    export function isPassed<I, T extends Hashable, Q, S>(
       value: unknown
     ): value is Passed<I, T, Q, S> {
       return value instanceof Passed;
@@ -230,8 +252,13 @@ export namespace Outcome {
 
   export const { of: passed, isPassed } = Passed;
 
-  export class Failed<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
-    public static of<I, T, Q, S>(
+  export class Failed<I, T extends Hashable, Q = never, S = T> extends Outcome<
+    I,
+    T,
+    Q,
+    S
+  > {
+    public static of<I, T extends Hashable, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
@@ -269,7 +296,9 @@ export namespace Outcome {
       return this._expectations;
     }
 
-    public equals<I, T, Q, S>(value: Failed<I, T, Q, S>): boolean;
+    public equals<I, T extends Hashable, Q, S>(
+      value: Failed<I, T, Q, S>
+    ): boolean;
 
     public equals(value: unknown): value is this;
 
@@ -280,6 +309,15 @@ export namespace Outcome {
         Equatable.equals(value._target, this._target) &&
         value._expectations.equals(this._expectations)
       );
+    }
+
+    public hash(hash: Hash) {
+      this._rule.hash(hash);
+      this._target.hash(hash);
+      for (const [id, result] of this._expectations) {
+        hash.writeString(id);
+        result.hash(hash);
+      }
     }
 
     public toJSON(): Failed.JSON<T> {
@@ -368,15 +406,15 @@ export namespace Outcome {
       };
     }
 
-    export function isFailed<I, T, Q, S>(
+    export function isFailed<I, T extends Hashable, Q, S>(
       value: Outcome<I, T, Q, S>
     ): value is Failed<I, T, Q, S>;
 
-    export function isFailed<I, T, Q, S>(
+    export function isFailed<I, T extends Hashable, Q, S>(
       value: unknown
     ): value is Failed<I, T, Q, S>;
 
-    export function isFailed<I, T, Q, S>(
+    export function isFailed<I, T extends Hashable, Q, S>(
       value: unknown
     ): value is Failed<I, T, Q, S> {
       return value instanceof Failed;
@@ -385,8 +423,13 @@ export namespace Outcome {
 
   export const { of: failed, isFailed } = Failed;
 
-  export class CantTell<I, T, Q = never, S = T> extends Outcome<I, T, Q, S> {
-    public static of<I, T, Q, S>(
+  export class CantTell<
+    I,
+    T extends Hashable,
+    Q = never,
+    S = T
+  > extends Outcome<I, T, Q, S> {
+    public static of<I, T extends Hashable, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
       diagnostic: Diagnostic
@@ -416,7 +459,9 @@ export namespace Outcome {
       return this._diagnostic;
     }
 
-    public equals<I, T, Q, S>(value: CantTell<I, T, Q, S>): boolean;
+    public equals<I, T extends Hashable, Q, S>(
+      value: CantTell<I, T, Q, S>
+    ): boolean;
 
     public equals(value: unknown): value is this;
 
@@ -427,6 +472,12 @@ export namespace Outcome {
         Equatable.equals(value._target, this._target) &&
         value._diagnostic.equals(this._diagnostic)
       );
+    }
+
+    public hash(hash: Hash) {
+      this._rule.hash(hash);
+      this._target.hash(hash);
+      this._diagnostic.hash(hash);
     }
 
     public toJSON(): CantTell.JSON<T> {
@@ -497,15 +548,15 @@ export namespace Outcome {
       };
     }
 
-    export function isCantTell<I, T, Q, S>(
+    export function isCantTell<I, T extends Hashable, Q, S>(
       value: Outcome<I, T, Q, S>
     ): value is CantTell<I, T, Q, S>;
 
-    export function isCantTell<I, T, Q, S>(
+    export function isCantTell<I, T extends Hashable, Q, S>(
       value: unknown
     ): value is CantTell<I, T, Q, S>;
 
-    export function isCantTell<I, T, Q, S>(
+    export function isCantTell<I, T extends Hashable, Q, S>(
       value: unknown
     ): value is CantTell<I, T, Q, S> {
       return value instanceof CantTell;
@@ -514,21 +565,21 @@ export namespace Outcome {
 
   export const { of: cantTell, isCantTell } = CantTell;
 
-  export type Applicable<I, T, Q = unknown, S = T> =
+  export type Applicable<I, T extends Hashable, Q = unknown, S = T> =
     | Passed<I, T, Q, S>
     | Failed<I, T, Q, S>
     | CantTell<I, T, Q, S>;
 
   export namespace Applicable {
-    export function isApplicable<I, T, Q, S>(
+    export function isApplicable<I, T extends Hashable, Q, S>(
       value: Outcome<I, T, Q, S>
     ): value is Applicable<I, T, Q, S>;
 
-    export function isApplicable<I, T, Q, S>(
+    export function isApplicable<I, T extends Hashable, Q, S>(
       value: unknown
     ): value is Applicable<I, T, Q, S>;
 
-    export function isApplicable<I, T, Q, S>(
+    export function isApplicable<I, T extends Hashable, Q, S>(
       value: unknown
     ): value is Applicable<I, T, Q, S> {
       return isPassed(value) || isFailed(value) || isCantTell(value);
@@ -537,13 +588,13 @@ export namespace Outcome {
 
   export const { isApplicable } = Applicable;
 
-  export class Inapplicable<I, T, Q = unknown, S = T> extends Outcome<
+  export class Inapplicable<
     I,
-    T,
-    Q,
-    S
-  > {
-    public static of<I, T, Q, S>(
+    T extends Hashable,
+    Q = unknown,
+    S = T
+  > extends Outcome<I, T, Q, S> {
+    public static of<I, T extends Hashable, Q, S>(
       rule: Rule<I, T, Q, S>
     ): Inapplicable<I, T, Q, S> {
       return new Inapplicable(rule);
@@ -553,12 +604,18 @@ export namespace Outcome {
       super(rule);
     }
 
-    public equals<I, T, Q, S>(value: Inapplicable<I, T, Q, S>): boolean;
+    public equals<I, T extends Hashable, Q, S>(
+      value: Inapplicable<I, T, Q, S>
+    ): boolean;
 
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
       return value instanceof Inapplicable && value._rule.equals(this._rule);
+    }
+
+    public hash(hash: Hash) {
+      hash.writeString(this._rule.uri);
     }
 
     public toJSON(): Inapplicable.JSON {
@@ -610,15 +667,15 @@ export namespace Outcome {
       };
     }
 
-    export function isInapplicable<I, T, Q, S>(
+    export function isInapplicable<I, T extends Hashable, Q, S>(
       value: Outcome<I, T, Q, S>
     ): value is Inapplicable<I, T, Q, S>;
 
-    export function isInapplicable<I, T, Q, S>(
+    export function isInapplicable<I, T extends Hashable, Q, S>(
       value: unknown
     ): value is Inapplicable<I, T, Q, S>;
 
-    export function isInapplicable<I, T, Q, S>(
+    export function isInapplicable<I, T extends Hashable, Q, S>(
       value: unknown
     ): value is Inapplicable<I, T, Q, S> {
       return value instanceof Inapplicable;
@@ -627,7 +684,7 @@ export namespace Outcome {
 
   export const { of: inapplicable, isInapplicable } = Inapplicable;
 
-  export function from<I, T, Q, S>(
+  export function from<I, T extends Hashable, Q, S>(
     rule: Rule<I, T, Q, S>,
     target: T,
     expectations: Record<{
