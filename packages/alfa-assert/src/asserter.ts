@@ -44,5 +44,6 @@ export class Asserter<I, T extends Hashable, Q, S> {
  * @public
  */
 export namespace Asserter {
-  export interface Options<I, T, Q, S> extends Assertion.Options<I, T, Q, S> {}
+  export interface Options<I, T extends Hashable, Q, S>
+    extends Assertion.Options<I, T, Q, S> {}
 }
