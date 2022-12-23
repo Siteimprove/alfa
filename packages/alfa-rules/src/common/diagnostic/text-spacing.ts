@@ -1,6 +1,7 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Length } from "@siteimprove/alfa-css";
 import { Declaration, Element } from "@siteimprove/alfa-dom";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Property, Style } from "@siteimprove/alfa-style";
 
@@ -118,6 +119,15 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
       value._declaration.equals(this._declaration) &&
       value._owner.equals(this._owner)
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    this._owner.hash(hash);
+    hash.writeString(this._property);
+    hash.writeNumber(this._ratio);
+    hash.writeNumber(this._threshold);
+    hash.writeNumber(this._value.value);
   }
 
   public toJSON(): TextSpacing.JSON<N> {

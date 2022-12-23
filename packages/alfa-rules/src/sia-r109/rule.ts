@@ -1,5 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Language } from "@siteimprove/alfa-iana";
 import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -149,6 +150,12 @@ export class Languages extends Diagnostic {
       value._programmatic.equals(this._programmatic) &&
       value._natural.equals(this._natural)
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    hash.writeString(this._programmatic.primary.name);
+    this._natural.forEach((lang) => hash.writeString(lang.primary.name));
   }
 
   public toJSON(): Languages.JSON {

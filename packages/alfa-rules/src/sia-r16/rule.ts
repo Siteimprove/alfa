@@ -3,6 +3,7 @@ import { DOM } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Ok, Err, Result } from "@siteimprove/alfa-result";
@@ -164,6 +165,13 @@ export class RoleAndRequiredAttributes extends Diagnostic {
       Array.equals(value._requiredAttributes, this._requiredAttributes) &&
       Array.equals(value._missingAttributes, this._missingAttributes)
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    hash.writeString(this._role);
+    this._requiredAttributes.forEach((attr) => hash.writeString(attr));
+    this._missingAttributes.forEach((attr) => hash.writeString(attr));
   }
 
   public toJSON(): RoleAndRequiredAttributes.JSON {
