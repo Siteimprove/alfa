@@ -58,16 +58,20 @@ export namespace Outcomes {
 }
 
 function embedsMedia(element: Element): boolean {
-  return element
-    .attribute("type")
-    .map((type) => MediaMIMEType.includes(type.value.split("/")[0]))
-    .getOrElse(() =>
-      element
-        .attribute("data")
-        .some((data) =>
-          MediaFileExtension.includes(data.value.split(".").splice(-1)[0])
-        )
-    );
+  return (
+    element
+      // If there is a type attribute, use it, even if the value is incorrect
+      .attribute("type")
+      .map((type) => MediaMIMEType.includes(type.value.split("/")[0]))
+      // Otherwise, look at the file extension in the URl in the data attribute.
+      .getOrElse(() =>
+        element
+          .attribute("data")
+          .some((data) =>
+            MediaFileExtension.includes(data.value.split(".").splice(-1)[0])
+          )
+      )
+  );
 }
 
 /**
