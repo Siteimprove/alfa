@@ -69,3 +69,19 @@ test("evaluate() is inapplicable on empty object", async (t) => {
 
   t.deepEqual(await evaluate(R63, { document }), [inapplicable(R63)]);
 });
+
+test("evaluate() is inapplicable on non-media object", async (t) => {
+  const target = <object title="Some object" data="foo.html" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R63, { document }), [inapplicable(R63)]);
+});
+
+test("evaluate() is inapplicable on non-media object (trusting type)", async (t) => {
+  const target = <object title="Some object" data="foo.jpg" type="text/html" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R63, { document }), [inapplicable(R63)]);
+});
