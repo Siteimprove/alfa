@@ -23,7 +23,7 @@ import { Container, Element, Inert, Text } from ".";
 
 import * as predicate from "./node/predicate";
 
-const { equals, not, test } = Predicate;
+const { and, equals, not, test } = Predicate;
 const { isRendered } = Style;
 
 /**
@@ -536,4 +536,8 @@ export namespace Node {
  * Some elements do not have an ARIA role but are nonetheless always exposed to
  * ATs. These are mostly embedded content.
  */
-const alwaysExpose = dom.Element.hasName("object");
+// <object> with a non-empty data attribute
+const alwaysExpose = and(
+  dom.Element.hasName("object"),
+  dom.Element.hasAttribute("data", (data) => data.trim() !== "")
+);
