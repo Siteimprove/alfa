@@ -6,8 +6,20 @@ import R63, { Outcomes } from "../../src/sia-r63/rule";
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
 
-test("evaluate() passes an object with a non-empty name", async (t) => {
-  const target = <object aria-label="Some object" />;
+test("evaluate() passes an object with a non-empty name (aria-label)", async (t) => {
+  const target = <object aria-label="Some object" data="foo.jpg" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R63, { document }), [
+    passed(R63, target, {
+      1: Outcomes.HasName,
+    }),
+  ]);
+});
+
+test("evaluate() passes an object with a non-empty name (title)", async (t) => {
+  const target = <object title="Some object" data="foo.jpg" />;
 
   const document = h.document([target]);
 
@@ -19,7 +31,7 @@ test("evaluate() passes an object with a non-empty name", async (t) => {
 });
 
 test("evaluate() fails an object with an empty name", async (t) => {
-  const target = <object aria-label="" />;
+  const target = <object aria-label="" data="foo.jpg" />;
 
   const document = h.document([target]);
 
@@ -31,9 +43,7 @@ test("evaluate() fails an object with an empty name", async (t) => {
 });
 
 test("evaluate() fails an object with no name", async (t) => {
-  // A content document is needed for the <object> element to be included in the
-  // accessibility tree.
-  const target = <object>{h.document(["Some nested document"])}</object>;
+  const target = <object data="foo.jpg"></object>;
 
   const document = h.document([target]);
 
