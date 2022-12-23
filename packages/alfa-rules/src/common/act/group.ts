@@ -99,7 +99,7 @@ export namespace Group {
     };
   }
 
-  export function isGroup<T extends earl.Serializable>(
+  export function isGroup<T extends Hashable>(
     value: unknown
   ): value is Group<T> {
     return value instanceof Group;
