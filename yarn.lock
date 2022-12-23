@@ -1117,6 +1117,7 @@ __metadata:
   dependencies:
     "@siteimprove/alfa-act": "workspace:^0.53.1"
     "@siteimprove/alfa-future": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.53.1"
     "@siteimprove/alfa-mapper": "workspace:^0.53.1"
     "@siteimprove/alfa-performance": "workspace:^0.53.1"
     "@siteimprove/alfa-result": "workspace:^0.53.1"
@@ -1539,6 +1540,7 @@ __metadata:
     "@siteimprove/alfa-earl": "workspace:^0.53.1"
     "@siteimprove/alfa-formatter": "workspace:^0.53.1"
     "@siteimprove/alfa-future": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.53.1"
     "@siteimprove/alfa-test": "workspace:^0.53.1"
     jsonld: ^6.0.0
   languageName: unknown
@@ -1549,6 +1551,7 @@ __metadata:
   resolution: "@siteimprove/alfa-formatter-json@workspace:packages/alfa-formatter-json"
   dependencies:
     "@siteimprove/alfa-formatter": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.53.1"
     "@siteimprove/alfa-json": "workspace:^0.53.1"
     "@siteimprove/alfa-test": "workspace:^0.53.1"
   languageName: unknown
@@ -1559,6 +1562,7 @@ __metadata:
   resolution: "@siteimprove/alfa-formatter-sarif@workspace:packages/alfa-formatter-sarif"
   dependencies:
     "@siteimprove/alfa-formatter": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.53.1"
     "@siteimprove/alfa-sarif": "workspace:^0.53.1"
     "@siteimprove/alfa-test": "workspace:^0.53.1"
   languageName: unknown
@@ -1570,6 +1574,7 @@ __metadata:
   dependencies:
     "@siteimprove/alfa-act": "workspace:^0.53.1"
     "@siteimprove/alfa-future": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.53.1"
     "@siteimprove/alfa-result": "workspace:^0.53.1"
     "@siteimprove/alfa-test": "workspace:^0.53.1"
   languageName: unknown
@@ -1696,6 +1701,7 @@ __metadata:
   resolution: "@siteimprove/alfa-interviewer@workspace:packages/alfa-interviewer"
   dependencies:
     "@siteimprove/alfa-act": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.53.1"
     "@siteimprove/alfa-result": "workspace:^0.53.1"
     "@siteimprove/alfa-test": "workspace:^0.53.1"
     "@types/node": ^14.14.31

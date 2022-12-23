@@ -21,6 +21,7 @@
     "@siteimprove/alfa-earl": "workspace:^0.53.1",
     "@siteimprove/alfa-formatter": "workspace:^0.53.1",
     "@siteimprove/alfa-future": "workspace:^0.53.1",
+    "@siteimprove/alfa-hash": "workspace:^0.53.1",
     "jsonld": "^6.0.0"
   },
   "devDependencies": {

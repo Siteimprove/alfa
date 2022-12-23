@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "@siteimprove/alfa-formatter": "workspace:^0.53.1",
+    "@siteimprove/alfa-hash": "workspace:^0.53.1",
     "@siteimprove/alfa-sarif": "workspace:^0.53.1"
   },
   "devDependencies": {
