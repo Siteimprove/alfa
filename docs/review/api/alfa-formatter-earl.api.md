@@ -5,9 +5,10 @@
 ```ts
 
 import { Formatter } from '@siteimprove/alfa-formatter';
+import { Hashable } from '@siteimprove/alfa-hash';
 
 // @public (undocumented)
-function <I, T, Q, S>(): Formatter<I, T, Q, S>;
+function <I, T extends Hashable, Q, S>(): Formatter<I, T, Q, S>;
 export default default_2;
 
 // (No @packageDocumentation comment for this package)
