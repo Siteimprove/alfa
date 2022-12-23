@@ -1001,6 +1001,7 @@ __metadata:
     "@siteimprove/alfa-equatable": "workspace:^0.53.1"
     "@siteimprove/alfa-functor": "workspace:^0.53.1"
     "@siteimprove/alfa-future": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.53.1"
     "@siteimprove/alfa-iterable": "workspace:^0.53.1"
     "@siteimprove/alfa-json": "workspace:^0.53.1"
     "@siteimprove/alfa-list": "workspace:^0.53.1"
