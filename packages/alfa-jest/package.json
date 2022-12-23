@@ -21,6 +21,7 @@
     "@siteimprove/alfa-act": "workspace:^0.53.1",
     "@siteimprove/alfa-assert": "workspace:^0.53.1",
     "@siteimprove/alfa-future": "workspace:^0.53.1",
+    "@siteimprove/alfa-hash": "workspace:^0.53.1",
     "@siteimprove/alfa-mapper": "workspace:^0.53.1",
     "@siteimprove/alfa-web": "workspace:^0.53.1",
     "@types/jest": "^26.0.10",
