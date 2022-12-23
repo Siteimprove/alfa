@@ -366,7 +366,7 @@ export namespace Node {
 
         const style = Style.from(node, device);
 
-        // Elements that are not rendered at all by means are never exposed in
+        // Elements that are not rendered at all are never exposed in
         // the accessibility tree, nor are their descendants.
         //
         // Since `aria-owns` can create an accessibility tree that is fairly
@@ -481,7 +481,13 @@ export namespace Node {
         // If the element has neither attributes, a role, nor a tabindex, it is
         // not itself interesting for accessibility purposes. It is therefore
         // exposed as a container.
-        if (attributes.isEmpty() && role.isNone() && node.tabIndex().isNone()) {
+        // Some elements (mostly embedded content) are always exposed.
+        if (
+          attributes.isEmpty() &&
+          role.isNone() &&
+          node.tabIndex().isNone() &&
+          !test(alwaysExpose, node)
+        ) {
           return Container.of(node, children(state));
         }
 
@@ -525,3 +531,9 @@ export namespace Node {
 
   export const { hasName } = predicate;
 }
+
+/**
+ * Some elements do not have an ARIA role but are nonetheless always exposed to
+ * ATs. These are mostly embedded content.
+ */
+const alwaysExpose = dom.Element.hasName("object");
