@@ -1,5 +1,6 @@
 import * as act from "@siteimprove/alfa-act";
 import { Future } from "@siteimprove/alfa-future";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Question } from "../../src/common/act/question";
@@ -20,7 +21,7 @@ function wrapper<
 
 const dontKnow = Future.now(None);
 
-export function oracle<I, T, S>(
+export function oracle<I, T extends Hashable, S>(
   answers: Partial<{
     [URI in keyof Question.Metadata]: Question.Metadata[URI][1];
   }>
