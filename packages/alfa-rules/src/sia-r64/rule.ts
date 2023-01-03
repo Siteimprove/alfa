@@ -17,11 +17,7 @@ const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r64",
-  requirements: [
-    Criterion.of("1.3.1"),
-    Criterion.of("2.4.6"),
-    Technique.of("H42"),
-  ],
+  requirements: [Criterion.of("1.3.1"), Technique.of("H42")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
     return {
