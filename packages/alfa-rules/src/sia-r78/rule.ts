@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -10,10 +10,11 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
+import isText = Text.isText;
 
 const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasNamespace, isContent, isElement } = Element;
-const { tee } = Predicate;
+const { not, tee } = Predicate;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -91,7 +92,8 @@ export default Rule.Atomic.of<Page, Element>({
             }).some(
               and(
                 isIncludedInTheAccessibilityTree(device),
-                isContent(Node.fullTree)
+                isContent(Node.fullTree),
+                not(and(isText, (text) => text.data.trim() === ""))
               )
             ),
             () =>
