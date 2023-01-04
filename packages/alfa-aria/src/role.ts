@@ -28,9 +28,7 @@ export class Role<N extends Role.Name = Role.Name>
   implements Equatable, Hashable, Serializable
 {
   public static of<N extends Role.Name>(name: N): Role<N> {
-    const role = roles.get(name);
-
-    if (!role.isSome()) {
+    return roles.get(name).getOrElse(() => {
       const { inherited } = Roles[name];
 
       const attributes = new Set(
@@ -43,10 +41,11 @@ export class Role<N extends Role.Name = Role.Name>
         }
       }
 
-      roles = roles.set(name, new Role(name, [...attributes]));
-    }
+      const role = new Role<N>(name, [...attributes]);
+      roles = roles.set(name, role);
 
-    return roles.get(name).getUnsafe() as Role<N>;
+      return role;
+    }) as Role<N>;
   }
 
   private readonly _name: N;
