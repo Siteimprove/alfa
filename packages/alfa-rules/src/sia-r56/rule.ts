@@ -2,6 +2,7 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node, Role } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -134,6 +135,12 @@ export class SameNames extends Diagnostic implements Iterable<List<Element>> {
       value._role === this._role &&
       value._errors.every((list, idx) => list.equals(this._errors[idx]))
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    hash.writeString(this._role);
+    this._errors.forEach((element) => element.hash(hash));
   }
 
   public toJSON(): SameNames.JSON {

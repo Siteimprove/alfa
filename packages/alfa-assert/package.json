@@ -20,6 +20,7 @@
   "dependencies": {
     "@siteimprove/alfa-act": "workspace:^0.54.0",
     "@siteimprove/alfa-future": "workspace:^0.54.0",
+    "@siteimprove/alfa-hash": "workspace:^0.54.0",
     "@siteimprove/alfa-mapper": "workspace:^0.54.0",
     "@siteimprove/alfa-performance": "workspace:^0.54.0",
     "@siteimprove/alfa-result": "workspace:^0.54.0"

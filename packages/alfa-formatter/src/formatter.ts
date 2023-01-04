@@ -1,11 +1,12 @@
 import { Outcome, Rule } from "@siteimprove/alfa-act";
 import { Future } from "@siteimprove/alfa-future";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Result, Err } from "@siteimprove/alfa-result";
 
 /**
  * @public
  */
-export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (
+export type Formatter<I, T extends Hashable, Q = never, S = T> = (
   input: I,
   rules: Iterable<Rule<I, T, Q, S>>,
   outcomes: Iterable<Outcome<I, T, Q, S>>
@@ -15,7 +16,7 @@ export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (
  * @public
  */
 export namespace Formatter {
-  export async function load<I, T = unknown, Q = never, S = T>(
+  export async function load<I, T extends Hashable, Q = never, S = T>(
     name: string,
     defaultScope: string = "@siteimprove"
   ): Promise<Result<Formatter<I, T, Q, S>, string>> {

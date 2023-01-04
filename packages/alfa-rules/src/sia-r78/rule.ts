@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Hash } from "@siteimprove/alfa-hash";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -211,6 +212,13 @@ export class WithNextHeading extends Diagnostic {
       value._currentLevel === this._currentLevel &&
       value._nextLevel === this._nextLevel
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    hash.writeNumber(this._currentLevel);
+    hash.writeNumber(this._nextLevel);
+    this._nextHeading.hash(hash);
   }
 
   public toJSON(): WithNextHeading.JSON {

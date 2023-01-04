@@ -1,4 +1,5 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
@@ -6,7 +7,9 @@ import * as json from "@siteimprove/alfa-json";
 /**
  * @public
  */
-export class Diagnostic implements Equatable, Serializable<Diagnostic.JSON> {
+export class Diagnostic
+  implements Equatable, Hashable, Serializable<Diagnostic.JSON>
+{
   public static of(message: string): Diagnostic {
     return new Diagnostic(normalize(message));
   }
@@ -27,6 +30,10 @@ export class Diagnostic implements Equatable, Serializable<Diagnostic.JSON> {
 
   public equals(value: unknown): boolean {
     return value instanceof Diagnostic && value._message === this._message;
+  }
+
+  public hash(hash: Hash) {
+    hash.writeString(this._message);
   }
 
   public toJSON(): Diagnostic.JSON {

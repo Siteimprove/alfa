@@ -12,6 +12,7 @@ import {
   Node,
   Rule as CSSRule,
 } from "@siteimprove/alfa-dom";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -516,6 +517,12 @@ export class ClippingAncestors extends Diagnostic {
       value._horizontal.equals(this._horizontal) &&
       value._vertical.equals(this._vertical)
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    this._vertical.hash(hash);
+    this._horizontal.hash(hash);
   }
 
   public toJSON(): ClippingAncestors.JSON {
