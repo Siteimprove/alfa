@@ -1,5 +1,6 @@
 import { Future } from "@siteimprove/alfa-future";
 import { Either } from "@siteimprove/alfa-either";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
 import { Diagnostic } from ".";
 
@@ -68,7 +69,13 @@ export namespace Interview {
   // question (by returning None).
   // Oracles must return Futures, because the full interview process is essentially
   // async (e.g., asking through a CLI).
-  export function conduct<INPUT, TARGET, QUESTION, SUBJECT, ANSWER>(
+  export function conduct<
+    INPUT,
+    TARGET extends Hashable,
+    QUESTION,
+    SUBJECT,
+    ANSWER
+  >(
     // Questions' contexts are guaranteed to be (potential) test target of
     // the rule.
     interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>,

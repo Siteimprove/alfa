@@ -22,6 +22,9 @@
       "path": "../alfa-formatter-earl"
     },
     {
+      "path": "../alfa-hash"
+    },
+    {
       "path": "../alfa-http"
     },
     {

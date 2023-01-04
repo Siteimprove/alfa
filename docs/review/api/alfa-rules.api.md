@@ -469,13 +469,15 @@ export { Flattened }
 export default Flattened;
 
 // @public (undocumented)
-export class Group<T> implements Iterable<T>, Equatable, json.Serializable<Group.JSON<T>>, earl.Serializable<Group.EARL>, sarif.Serializable<sarif.Location> {
+export class Group<T extends Hashable> implements Iterable<T>, Equatable, Hashable, json.Serializable<Group.JSON<T>>, earl.Serializable<Group.EARL>, sarif.Serializable<sarif.Location> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    static of<T extends earl.Serializable>(members: Iterable<T>): Group<T>;
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of<T extends Hashable>(members: Iterable<T>): Group<T>;
     // (undocumented)
     get size(): number;
     // (undocumented)
@@ -502,7 +504,7 @@ export namespace Group {
         };
     }
     // (undocumented)
-    export function isGroup<T extends earl.Serializable>(value: unknown): value is Group<T>;
+    export function isGroup<T extends Hashable>(value: unknown): value is Group<T>;
     // (undocumented)
     export type JSON<T> = Array_2<json.Serializable.ToJSON<T>>;
 }

@@ -1,3 +1,4 @@
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Serializable, Log } from "@siteimprove/alfa-sarif";
 import { Formatter } from "@siteimprove/alfa-formatter";
 
@@ -8,7 +9,7 @@ const { stringify } = JSON;
 /**
  * @public
  */
-export default function <I, T, Q, S>(): Formatter<I, T, Q, S> {
+export default function <I, T extends Hashable, Q, S>(): Formatter<I, T, Q, S> {
   return function SARIF(input, rules, outcomes) {
     const log: Log = {
       $schema: "https://json.schemastore.org/sarif-2.1.0.json",

@@ -1,4 +1,5 @@
 import { Future } from "@siteimprove/alfa-future";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Thunk } from "@siteimprove/alfa-thunk";
 
 import { Outcome } from "./outcome";
@@ -16,7 +17,7 @@ export class Cache {
 
   private constructor() {}
 
-  public get<I, T, Q, S>(
+  public get<I, T extends Hashable, Q, S>(
     rule: Rule<I, T, Q, S>,
     ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q, S>>>>
   ): Future<Iterable<Outcome<I, T, Q, S>>> {

@@ -2,6 +2,7 @@ import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -212,6 +213,12 @@ export class LabelAndName extends Diagnostic {
       value._textContent === this._textContent &&
       value._name === this._name
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    hash.writeString(this._name);
+    hash.writeString(this._textContent);
   }
 
   public toJSON(): LabelAndName.JSON {

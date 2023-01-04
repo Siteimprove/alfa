@@ -1,6 +1,7 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Element } from "@siteimprove/alfa-dom";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 
 /**
@@ -35,6 +36,11 @@ export class WithBadElements extends Diagnostic implements Iterable<Element> {
       value._message === this._message &&
       Array.equals(value._errors, this._errors)
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    this._errors.forEach((element) => element.hash(hash));
   }
 
   public *[Symbol.iterator](): Iterator<Element> {

@@ -1,4 +1,5 @@
 import { Future } from "@siteimprove/alfa-future";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
 
 import { Question } from "./question";
@@ -15,7 +16,7 @@ import { Rule } from "./rule";
  *               "q2": ["number?", number | undefined],
  *             \}
  */
-export type Oracle<INPUT, TARGET, QUESTION, SUBJECT> = (
+export type Oracle<INPUT, TARGET extends Hashable, QUESTION, SUBJECT> = (
   rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
   question: {
     [URI in keyof QUESTION]: Question<

@@ -1,6 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -125,6 +126,12 @@ export class WithFirstHeading extends Diagnostic {
       value._firstHeading.equals(this._firstHeading) &&
       value._level === this._level
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    hash.writeNumber(this._level);
+    this._firstHeading.hash(hash);
   }
 
   public toJSON(): WithFirstHeading.JSON {

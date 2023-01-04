@@ -56,6 +56,12 @@ export class Contrast<N extends Name = Name> extends Diagnostic {
     );
   }
 
+  public hash(hash: Hash) {
+    super.hash(hash);
+    hash.writeNumber(this._threshold);
+    // We don't hash the pairings as it may take too long.
+  }
+
   public toJSON(): Contrast.JSON<N> {
     return {
       ...super.toJSON(),
