@@ -3,6 +3,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hashable, Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -18,7 +19,7 @@ import * as predicate from "./role/predicate";
 
 const { and, not, nor } = Predicate;
 
-const roles = new Map<string, Role>();
+let roles = Map.empty<Role.Name, Role>();
 
 /**
  * @public
@@ -27,9 +28,9 @@ export class Role<N extends Role.Name = Role.Name>
   implements Equatable, Hashable, Serializable
 {
   public static of<N extends Role.Name>(name: N): Role<N> {
-    let role = roles.get(name);
+    const role = roles.get(name);
 
-    if (role === undefined) {
+    if (!role.isSome()) {
       const { inherited } = Roles[name];
 
       const attributes = new Set(
@@ -42,11 +43,10 @@ export class Role<N extends Role.Name = Role.Name>
         }
       }
 
-      role = new Role(name, [...attributes]);
-      roles.set(name, role);
+      roles = roles.set(name, new Role(name, [...attributes]));
     }
 
-    return role as Role<N>;
+    return roles.get(name).getUnsafe() as Role<N>;
   }
 
   private readonly _name: N;
