@@ -107,6 +107,18 @@ test("evaluates() fails a heading with only structure before the next heading", 
   ]);
 });
 
+test("evaluates() does not consider empty text as content", async (t) => {
+  const part1 = <h1>Hello</h1>;
+  const part2 = <h1>World</h1>;
+
+  const document = h.document([part1, h.text("  \n\t \t \n  "), part2]);
+
+  t.deepEqual(await evaluate(R78, { document }), [
+    failed(R78, part1, { 1: Outcomes.hasNoContent(Some.of(part2), 1, 1) }),
+    failed(R78, part2, { 1: Outcomes.hasNoContent(None, 1, -1) }),
+  ]);
+});
+
 test(`evaluate() is inapplicable when there is no headings`, async (t) => {
   const document = h.document([<div></div>]);
 
