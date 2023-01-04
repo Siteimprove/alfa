@@ -1001,7 +1001,7 @@ __metadata:
     "@siteimprove/alfa-equatable": "workspace:^0.54.0"
     "@siteimprove/alfa-functor": "workspace:^0.54.0"
     "@siteimprove/alfa-future": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-iterable": "workspace:^0.54.0"
     "@siteimprove/alfa-json": "workspace:^0.54.0"
     "@siteimprove/alfa-list": "workspace:^0.54.0"
@@ -1117,7 +1117,7 @@ __metadata:
   dependencies:
     "@siteimprove/alfa-act": "workspace:^0.54.0"
     "@siteimprove/alfa-future": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-mapper": "workspace:^0.54.0"
     "@siteimprove/alfa-performance": "workspace:^0.54.0"
     "@siteimprove/alfa-result": "workspace:^0.54.0"
@@ -1200,7 +1200,7 @@ __metadata:
     "@siteimprove/alfa-act": "workspace:^0.54.0"
     "@siteimprove/alfa-assert": "workspace:^0.54.0"
     "@siteimprove/alfa-future": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-mapper": "workspace:^0.54.0"
     "@siteimprove/alfa-test": "workspace:^0.54.0"
     "@types/chai": ^4.1.7
@@ -1389,7 +1389,7 @@ __metadata:
     "@siteimprove/alfa-dom": "workspace:^0.54.0"
     "@siteimprove/alfa-formatter": "workspace:^0.54.0"
     "@siteimprove/alfa-formatter-earl": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-http": "workspace:^0.54.0"
     "@siteimprove/alfa-mapper": "workspace:^0.54.0"
     "@siteimprove/alfa-test": "workspace:^0.54.0"
@@ -1542,7 +1542,7 @@ __metadata:
     "@siteimprove/alfa-earl": "workspace:^0.54.0"
     "@siteimprove/alfa-formatter": "workspace:^0.54.0"
     "@siteimprove/alfa-future": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-test": "workspace:^0.54.0"
     jsonld: ^6.0.0
   languageName: unknown
@@ -1553,7 +1553,7 @@ __metadata:
   resolution: "@siteimprove/alfa-formatter-json@workspace:packages/alfa-formatter-json"
   dependencies:
     "@siteimprove/alfa-formatter": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-json": "workspace:^0.54.0"
     "@siteimprove/alfa-test": "workspace:^0.54.0"
   languageName: unknown
@@ -1564,7 +1564,7 @@ __metadata:
   resolution: "@siteimprove/alfa-formatter-sarif@workspace:packages/alfa-formatter-sarif"
   dependencies:
     "@siteimprove/alfa-formatter": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-sarif": "workspace:^0.54.0"
     "@siteimprove/alfa-test": "workspace:^0.54.0"
   languageName: unknown
@@ -1576,7 +1576,7 @@ __metadata:
   dependencies:
     "@siteimprove/alfa-act": "workspace:^0.54.0"
     "@siteimprove/alfa-future": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-result": "workspace:^0.54.0"
     "@siteimprove/alfa-test": "workspace:^0.54.0"
   languageName: unknown
@@ -1703,7 +1703,7 @@ __metadata:
   resolution: "@siteimprove/alfa-interviewer@workspace:packages/alfa-interviewer"
   dependencies:
     "@siteimprove/alfa-act": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-result": "workspace:^0.54.0"
     "@siteimprove/alfa-test": "workspace:^0.54.0"
     "@types/node": ^14.14.31
@@ -1735,7 +1735,7 @@ __metadata:
     "@siteimprove/alfa-act": "workspace:^0.54.0"
     "@siteimprove/alfa-assert": "workspace:^0.54.0"
     "@siteimprove/alfa-future": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-mapper": "workspace:^0.54.0"
     "@siteimprove/alfa-test": "workspace:^0.54.0"
     "@siteimprove/alfa-web": "workspace:^0.54.0"
@@ -1751,7 +1751,7 @@ __metadata:
     "@siteimprove/alfa-act": "workspace:^0.54.0"
     "@siteimprove/alfa-assert": "workspace:^0.54.0"
     "@siteimprove/alfa-future": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-mapper": "workspace:^0.54.0"
     "@siteimprove/alfa-test": "workspace:^0.54.0"
     "@siteimprove/alfa-web": "workspace:^0.54.0"
@@ -2401,7 +2401,7 @@ __metadata:
     "@siteimprove/alfa-array": "workspace:^0.54.0"
     "@siteimprove/alfa-equatable": "workspace:^0.54.0"
     "@siteimprove/alfa-flags": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-json": "workspace:^0.54.0"
     "@siteimprove/alfa-option": "workspace:^0.54.0"
     "@siteimprove/alfa-predicate": "workspace:^0.54.0"
@@ -2445,7 +2445,7 @@ __metadata:
     "@siteimprove/alfa-act": "workspace:^0.54.0"
     "@siteimprove/alfa-assert": "workspace:^0.54.0"
     "@siteimprove/alfa-future": "workspace:^0.54.0"
-    "@siteimprove/alfa-hash": "workspace:^0.53.1"
+    "@siteimprove/alfa-hash": "workspace:^0.54.0"
     "@siteimprove/alfa-mapper": "workspace:^0.54.0"
     "@siteimprove/alfa-test": "workspace:^0.54.0"
     "@siteimprove/alfa-web": "workspace:^0.54.0"
