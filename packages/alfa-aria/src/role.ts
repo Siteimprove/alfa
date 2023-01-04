@@ -32,13 +32,11 @@ export class Role<N extends Role.Name = Role.Name>
     return roles.get(name).getOrElse(() => {
       const { attributes, inherited } = Roles[name];
 
-      let names = Set.from(attributes.map(([attribute]) => attribute));
+      const attributeNames = Set.from(
+        attributes.map(([attribute]) => attribute)
+      ).concat(inherited.flatMap((parent) => Role.of(parent).attributes));
 
-      for (const parent of inherited) {
-        names = names.concat(Role.of(parent).attributes);
-      }
-
-      const role = new Role<N>(name, [...names]);
+      const role = new Role<N>(name, [...attributeNames]);
       roles = roles.set(name, role);
 
       return role;
