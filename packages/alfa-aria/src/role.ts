@@ -7,6 +7,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -29,19 +30,15 @@ export class Role<N extends Role.Name = Role.Name>
 {
   public static of<N extends Role.Name>(name: N): Role<N> {
     return roles.get(name).getOrElse(() => {
-      const { inherited } = Roles[name];
+      const { attributes, inherited } = Roles[name];
 
-      const attributes = new Set(
-        [...Roles[name].attributes].map(([attribute]) => attribute)
-      );
+      let names = Set.from(attributes.map(([attribute]) => attribute));
 
       for (const parent of inherited) {
-        for (const attribute of Role.of(parent).attributes) {
-          attributes.add(attribute);
-        }
+        names = names.concat(Role.of(parent).attributes);
       }
 
-      const role = new Role<N>(name, [...attributes]);
+      const role = new Role<N>(name, [...names]);
       roles = roles.set(name, role);
 
       return role;
