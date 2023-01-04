@@ -32,7 +32,7 @@ export class Role<N extends Role.Name = Role.Name>
     return roles.get(name).getOrElse(() => {
       const { attributes, inherited } = Roles[name];
 
-      const attributeNames = Set.from(
+      const attributeNames = Set.from<Attribute.Name>(
         attributes.map(([attribute]) => attribute)
       ).concat(inherited.flatMap((parent) => Role.of(parent).attributes));
 
