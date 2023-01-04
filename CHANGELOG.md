@@ -19,6 +19,22 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.54.0](../../compare/v0.53.1...v0.54.0) (2023-01-03)
+
+### Added
+
+- [@siteimprove/alfa-style](packages/alfa-style): `margin-*` CSS properties are now supported. ([#1295](../../pull/1295))
+
+### Changed
+
+- [@siteimprove/alfa-style](packages/alfa-style): Content with large (negative) `margin-left` or `top` is now considered invisible. ([#1295](../../pull/1295))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): `<object>` elements with non-empty `data` attribute are now exposed even without any `role` or `aria-*` attribute. ([#1285](../../issues/1285), [1297](../../pull/1297))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R63 now correctly considers only `<object>` whose MIME type is audio, image, or video; MIME type is guessed from the `type` attribute or the file extension in the `data` attribute. ([#1297](../../pull/1297))
+
 ## [0.53.1](../../compare/v0.53.0...v0.53.1) (2022-12-14)
 
 ### Fixed
