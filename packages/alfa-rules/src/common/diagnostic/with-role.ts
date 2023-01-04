@@ -2,6 +2,7 @@ import { Diagnostic } from "@siteimprove/alfa-act";
 import { Node, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
+import { Hash } from "@siteimprove/alfa-hash";
 
 /**
  * @internal
@@ -38,6 +39,11 @@ export class WithRole extends Diagnostic {
       value._message === this._message &&
       value._role === this._role
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    hash.writeString(this._role);
   }
 
   public toJSON(): WithRole.JSON {

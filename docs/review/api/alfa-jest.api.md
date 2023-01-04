@@ -7,13 +7,14 @@
 import { Asserter } from '@siteimprove/alfa-assert';
 import { Future } from '@siteimprove/alfa-future';
 import { Handler } from '@siteimprove/alfa-assert';
+import { Hashable } from '@siteimprove/alfa-hash';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Rule } from '@siteimprove/alfa-act';
 
 // @public (undocumented)
 export namespace Jest {
     // (undocumented)
-    export function createPlugin<I, J, T = unknown, Q = never, S = T>(transform: Mapper<I, Future.Maybe<J>>, rules: Iterable<Rule<J, T, Q, S>>, handlers?: Iterable<Handler<J, T, Q, S>>, options?: Asserter.Options<J, T, Q, S>): void;
+    export function createPlugin<I, J, T extends Hashable, Q = never, S = T>(transform: Mapper<I, Future.Maybe<J>>, rules: Iterable<Rule<J, T, Q, S>>, handlers?: Iterable<Handler<J, T, Q, S>>, options?: Asserter.Options<J, T, Q, S>): void;
 }
 
 // (No @packageDocumentation comment for this package)

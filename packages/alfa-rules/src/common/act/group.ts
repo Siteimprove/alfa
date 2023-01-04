@@ -1,5 +1,6 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
@@ -8,17 +9,16 @@ import * as sarif from "@siteimprove/alfa-sarif";
 /**
  * @public
  */
-export class Group<T>
+export class Group<T extends Hashable>
   implements
     Iterable<T>,
     Equatable,
+    Hashable,
     json.Serializable<Group.JSON<T>>,
     earl.Serializable<Group.EARL>,
     sarif.Serializable<sarif.Location>
 {
-  public static of<T extends earl.Serializable>(
-    members: Iterable<T>
-  ): Group<T> {
+  public static of<T extends Hashable>(members: Iterable<T>): Group<T> {
     return new Group(Array.from(members));
   }
 
@@ -44,6 +44,12 @@ export class Group<T>
         Equatable.equals(member, this._members[i])
       )
     );
+  }
+
+  public hash(hash: Hash) {
+    for (const member of this._members) {
+      member.hash(hash);
+    }
   }
 
   public toJSON(): Group.JSON<T> {
@@ -93,7 +99,7 @@ export namespace Group {
     };
   }
 
-  export function isGroup<T extends earl.Serializable>(
+  export function isGroup<T extends Hashable>(
     value: unknown
   ): value is Group<T> {
     return value instanceof Group;

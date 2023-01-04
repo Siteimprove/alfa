@@ -21,6 +21,7 @@
     "@siteimprove/alfa-array": "workspace:^0.54.0",
     "@siteimprove/alfa-equatable": "workspace:^0.54.0",
     "@siteimprove/alfa-flags": "workspace:^0.54.0",
+    "@siteimprove/alfa-hash": "workspace:^0.54.0",
     "@siteimprove/alfa-json": "workspace:^0.54.0",
     "@siteimprove/alfa-option": "workspace:^0.54.0",
     "@siteimprove/alfa-predicate": "workspace:^0.54.0",

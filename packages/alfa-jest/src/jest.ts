@@ -3,6 +3,7 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { Asserter, Handler } from "@siteimprove/alfa-assert";
 import { Future } from "@siteimprove/alfa-future";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
 declare global {
@@ -17,7 +18,7 @@ declare global {
  * @public
  */
 export namespace Jest {
-  export function createPlugin<I, J, T = unknown, Q = never, S = T>(
+  export function createPlugin<I, J, T extends Hashable, Q = never, S = T>(
     transform: Mapper<I, Future.Maybe<J>>,
     rules: Iterable<Rule<J, T, Q, S>>,
     handlers: Iterable<Handler<J, T, Q, S>> = [],

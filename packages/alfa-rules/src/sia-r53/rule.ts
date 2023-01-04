@@ -1,6 +1,7 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Node } from "@siteimprove/alfa-dom";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -91,6 +92,12 @@ export class WithPreviousHeading extends Diagnostic {
       value._previous.equals(this._previous)
     );
   }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    this._previous.hash(hash);
+  }
+
   toJSON(): WithPreviousHeading.JSON {
     return { ...super.toJSON(), previous: this._previous.toJSON() };
   }
