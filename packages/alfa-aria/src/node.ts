@@ -478,17 +478,17 @@ export namespace Node {
           }
         }
 
-        // If the element has neither attributes, a role, nor a tabindex, it is
-        // not itself interesting for accessibility purposes. It is therefore
-        // exposed as a container.
+        // If the element has neither attributes, a role (other than generic),
+        // nor a tabindex, it is not itself interesting for accessibility
+        // purposes. It is therefore exposed as a container.
         // Some elements (mostly embedded content) are always exposed.
         if (
           attributes.isEmpty() &&
-          role.isNone() &&
+          role.every(Role.hasName("generic")) &&
           node.tabIndex().isNone() &&
           !test(alwaysExpose, node)
         ) {
-          return Container.of(node, children(state));
+          return Container.of(node, children(state), role);
         }
 
         // If the element has a role that designates its children as

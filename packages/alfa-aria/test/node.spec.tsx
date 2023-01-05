@@ -301,6 +301,7 @@ test(`.from() correctly handles circular aria-owns references between ancestors
   t.deepEqual(Node.from(bar, device).toJSON(), {
     type: "container",
     node: "/div[1]",
+    role: null,
     children: [
       {
         type: "element",
@@ -372,6 +373,7 @@ test(`.from() exposes elements that are aria-hidden due to a DOM
       {
         type: "container",
         node: "/div[1]/div[1]/div[1]",
+        role: null,
         children: [
           {
             type: "text",
@@ -448,6 +450,7 @@ test(`.from() does not expose elements that have no role, ARIA attributes, nor
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "container",
     node: "/div[1]",
+    role: null,
     children: [
       {
         type: "text",
@@ -465,6 +468,7 @@ test(`.from() does not expose text nodes of a parent element with
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "container",
     node: "/div[1]",
+    role: null,
     children: [
       {
         type: "inert",
@@ -543,6 +547,7 @@ test(`.from() behaves when encountering an element with global properties where
       {
         type: "container",
         node: "/div[1]/label[1]",
+        role: null,
         children: [
           {
             type: "text",
