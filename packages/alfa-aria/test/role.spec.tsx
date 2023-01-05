@@ -17,10 +17,12 @@ test(`.from() exposes implicitly required children of a presentational element
   t.deepEqual(Node.from(ul, device).toJSON(), {
     type: "container",
     node: "/ul[1]",
+    role: null,
     children: [
       {
         type: "container",
         node: "/ul[1]/li[1]",
+        role: null,
         children: [],
       },
     ],
