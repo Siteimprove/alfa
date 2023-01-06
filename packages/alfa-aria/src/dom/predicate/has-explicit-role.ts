@@ -21,7 +21,7 @@ export function hasExplicitRole<N extends Role.Name>(
 ): Predicate<Element>;
 
 export function hasExplicitRole(
-  nameOrPredicate: Predicate<Role> | Role.Name | undefined,
+  nameOrPredicate: Predicate<Role> | Role.Name = () => true,
   ...names: Array<Role.Name>
 ): Predicate<Element> {
   let predicate: Predicate<Role>;
