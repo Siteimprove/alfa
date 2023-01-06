@@ -85,9 +85,22 @@ export class Container extends Node<"container"> {
     // (undocumented)
     isIgnored(): boolean;
     // (undocumented)
-    static of(owner: dom_2.Node, children?: Iterable<Node>): Container;
+    static of(owner: dom_2.Node, children?: Iterable<Node>, role?: Option<Role>): Container;
+    // (undocumented)
+    get role(): Option<Role>;
+    // (undocumented)
+    toJSON(): Container.JSON;
     // (undocumented)
     toString(): string;
+}
+
+// @public (undocumented)
+export namespace Container {
+    // (undocumented)
+    export interface JSON extends Node.JSON<"container"> {
+        // (undocumented)
+        role: Role.Name | null;
+    }
 }
 
 // @public
@@ -146,7 +159,7 @@ export namespace Element {
         // (undocumented)
         name: string | null;
         // (undocumented)
-        role: string | null;
+        role: Role.Name | null;
     }
 }
 
@@ -199,7 +212,7 @@ function hasImplicitRole(predicate?: Predicate<Role>): Predicate<Element_2>;
 // @public (undocumented)
 function hasImplicitRole<N extends Role.Name>(name: N, ...rest: Array<N>): Predicate<Element_2>;
 
-// @public (undocumented)
+// @public
 function hasIncorrectRoleWithoutName(device: Device): Predicate<Element_2>;
 
 // @public (undocumented)
