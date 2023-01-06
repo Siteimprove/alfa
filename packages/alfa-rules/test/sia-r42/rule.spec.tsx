@@ -113,7 +113,9 @@ test(`evaluates() passes a \`row\` inside a \`rowgroup\` inside a \`table\``, as
   ]);
 });
 
-test(`evaluates() fails a \`row\` inside an orphaned \`rowgroup\``, async (t) => {
+test(`evaluates() passes a \`row\` inside an orphaned \`rowgroup\``, async (t) => {
+  // ARIA 1.3 requires the full table -> rowgroup -> row structure for row, but
+  // ARIA 1.2 only looks at the parent, not the grandparent.
   const row = <div role="row">Foo</div>;
   const rowGroup = <div role="rowgroup">{row}</div>;
 
@@ -123,8 +125,8 @@ test(`evaluates() fails a \`row\` inside an orphaned \`rowgroup\``, async (t) =>
     failed(R42, rowGroup, {
       1: Outcomes.IsNotOwnedByContextRole("rowgroup"),
     }),
-    failed(R42, row, {
-      1: Outcomes.IsNotOwnedByContextRole("row"),
+    passed(R42, row, {
+      1: Outcomes.IsOwnedByContextRole("row"),
     }),
   ]);
 });
