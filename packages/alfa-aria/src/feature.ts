@@ -82,6 +82,8 @@ export namespace Feature {
       return None;
     });
   }
+
+  export const generic = html(() => Option.of(Role.of("generic")));
 }
 
 function html(
@@ -217,7 +219,9 @@ const Features: Features = {
   [Namespace.HTML]: {
     a: html(
       (element) =>
-        element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
+        Option.of(
+          Role.of(element.attribute("href").isSome() ? "link" : "generic")
+        ),
       () => [],
       (element, device, state) =>
         Name.fromDescendants(element, device, state.visit(element))
@@ -225,13 +229,18 @@ const Features: Features = {
 
     area: html(
       (element) =>
-        element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
+        Option.of(
+          Role.of(element.attribute("href").isSome() ? "link" : "generic")
+        ),
       () => [],
       (element) => nameFromAttribute(element, "alt")
     ),
 
     article: html(() => Option.of(Role.of("article"))),
 
+    // We currently cannot detect at this point if the element has an accessible
+    // name, and always map to complementary.
+    // see https://github.com/Siteimprove/alfa/issues/298
     aside: html(() => Option.of(Role.of("complementary"))),
 
     button: html(
@@ -300,10 +309,13 @@ const Features: Features = {
         .ancestors()
         .filter(isElement)
         .some(hasName("article", "aside", "main", "nav", "section"))
-        ? None
+        ? Option.of(Role.of("generic"))
         : Option.of(Role.of("contentinfo"))
     ),
 
+    // We currently cannot detect at this point if the element has an accessible
+    // name, and always map to complementary.
+    // see https://github.com/Siteimprove/alfa/issues/298
     form: html(() => Option.of(Role.of("form"))),
 
     h1: html(
@@ -341,7 +353,7 @@ const Features: Features = {
         .ancestors()
         .filter(isElement)
         .some(hasName("article", "aside", "main", "nav", "section"))
-        ? None
+        ? Option.of(Role.of("generic"))
         : Option.of(Role.of("banner"))
     ),
 
@@ -533,17 +545,9 @@ const Features: Features = {
       (element) =>
         element
           .parent()
-          .filter(Element.isElement)
-          .flatMap((parent) => {
-            switch (parent.name) {
-              case "ol":
-              case "ul":
-              case "menu":
-                return Option.of(Role.of("listitem"));
-            }
-
-            return None;
-          }),
+          .some(and(Element.isElement, hasName("ol", "ul", "menu")))
+          ? Option.of(Role.of("listitem"))
+          : Option.of(Role.of("generic")),
       (element) => {
         // https://w3c.github.io/html-aam/#el-li
         const siblings = element
@@ -567,6 +571,26 @@ const Features: Features = {
     math: html(() => Option.of(Role.of("math"))),
 
     menu: html(() => Option.of(Role.of("list"))),
+
+    meter: html(
+      () => None,
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-max
+        for (const { value } of element.attribute("max")) {
+          yield Attribute.of("aria-valuemax", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-min
+        for (const { value } of element.attribute("min")) {
+          yield Attribute.of("aria-valuemin", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-value-meter
+        for (const { value } of element.attribute("value")) {
+          yield Attribute.of("aria-valuenow", value);
+        }
+      }
+    ),
 
     nav: html(() => Option.of(Role.of("navigation"))),
 
@@ -608,6 +632,24 @@ const Features: Features = {
 
     p: html(() => Option.of(Role.of("paragraph"))),
 
+    progress: html(
+      () => Option.of(Role.of("progressbar")),
+      function* (element) {
+        // https://w3c.github.io/html-aam/#att-max
+        for (const { value } of element.attribute("max")) {
+          yield Attribute.of("aria-valuemax", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-value-meter
+        for (const { value } of element.attribute("value")) {
+          yield Attribute.of("aria-valuenow", value);
+        }
+      }
+    ),
+
+    // We currently cannot detect at this point if the element has an accessible
+    // name, and always map to complementary.
+    // see https://github.com/Siteimprove/alfa/issues/298
     section: html(() => Option.of(Role.of("region"))),
 
     select: html(
@@ -775,40 +817,21 @@ const Features: Features = {
 
     ul: html(() => Option.of(Role.of("list"))),
 
-    meter: html(
-      () => None,
-      function* (element) {
-        // https://w3c.github.io/html-aam/#att-max
-        for (const { value } of element.attribute("max")) {
-          yield Attribute.of("aria-valuemax", value);
-        }
-
-        // https://w3c.github.io/html-aam/#att-min
-        for (const { value } of element.attribute("min")) {
-          yield Attribute.of("aria-valuemin", value);
-        }
-
-        // https://w3c.github.io/html-aam/#att-value-meter
-        for (const { value } of element.attribute("value")) {
-          yield Attribute.of("aria-valuenow", value);
-        }
-      }
-    ),
-
-    progress: html(
-      () => Option.of(Role.of("progressbar")),
-      function* (element) {
-        // https://w3c.github.io/html-aam/#att-max
-        for (const { value } of element.attribute("max")) {
-          yield Attribute.of("aria-valuemax", value);
-        }
-
-        // https://w3c.github.io/html-aam/#att-value-meter
-        for (const { value } of element.attribute("value")) {
-          yield Attribute.of("aria-valuenow", value);
-        }
-      }
-    ),
+    // Generic containers with no real semantics
+    b: Feature.generic,
+    bdi: Feature.generic,
+    bdo: Feature.generic,
+    body: Feature.generic,
+    data: Feature.generic,
+    div: Feature.generic,
+    hgroup: Feature.generic,
+    i: Feature.generic,
+    pre: Feature.generic,
+    q: Feature.generic,
+    samp: Feature.generic,
+    small: Feature.generic,
+    span: Feature.generic,
+    u: Feature.generic,
   },
 
   [Namespace.SVG]: {
