@@ -213,7 +213,7 @@ test(`.from() correctly handles self-referential aria-owns references`, (t) => {
   t.deepEqual(Node.from(div, device).toJSON(), {
     type: "element",
     node: "/div[1]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [
       {
@@ -238,7 +238,7 @@ test(`.from() correctly handles circular aria-owns references between siblings`,
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "element",
     node: "/div[1]/div[1]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [
       {
@@ -250,7 +250,7 @@ test(`.from() correctly handles circular aria-owns references between siblings`,
       {
         type: "element",
         node: "/div[1]/div[2]",
-        role: null,
+        role: "generic",
         name: null,
         attributes: [
           {
@@ -266,7 +266,7 @@ test(`.from() correctly handles circular aria-owns references between siblings`,
   t.deepEqual(Node.from(bar, device).toJSON(), {
     type: "element",
     node: "/div[1]/div[2]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [
       {
@@ -287,7 +287,7 @@ test(`.from() correctly handles circular aria-owns references between ancestors
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "element",
     node: "/div[1]/div[1]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [
       {
@@ -301,12 +301,12 @@ test(`.from() correctly handles circular aria-owns references between ancestors
   t.deepEqual(Node.from(bar, device).toJSON(), {
     type: "container",
     node: "/div[1]",
-    role: null,
+    role: "generic",
     children: [
       {
         type: "element",
         node: "/div[1]/div[1]",
-        role: null,
+        role: "generic",
         name: null,
         attributes: [
           {
@@ -345,7 +345,7 @@ test(`.from() does not expose elements that are not rendered due to a DOM
         node: "/div[1]/div[1]/div[1]",
       },
     ],
-    role: null,
+    role: "generic",
     name: null,
   });
 });
@@ -373,7 +373,7 @@ test(`.from() exposes elements that are aria-hidden due to a DOM
       {
         type: "container",
         node: "/div[1]/div[1]/div[1]",
-        role: null,
+        role: "generic",
         children: [
           {
             type: "text",
@@ -383,7 +383,7 @@ test(`.from() exposes elements that are aria-hidden due to a DOM
         ],
       },
     ],
-    role: null,
+    role: "generic",
     name: null,
   });
 });
@@ -402,17 +402,17 @@ test(".from() exposes elements if they have a role", (t) => {
 });
 
 test(".from() exposes elements if they have ARIA attributes", (t) => {
-  const foo = <div aria-label="foo" />;
+  const foo = <div aria-live="assertive" />;
 
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "element",
     node: "/div[1]",
-    role: null,
-    name: "foo",
+    role: "generic",
+    name: null,
     attributes: [
       {
-        name: "aria-label",
-        value: "foo",
+        name: "aria-live",
+        value: "assertive",
       },
     ],
     children: [],
@@ -425,7 +425,7 @@ test(".from() exposes elements if they have a tabindex", (t) => {
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "element",
     node: "/div[1]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [],
     children: [],
@@ -450,7 +450,7 @@ test(`.from() does not expose elements that have no role, ARIA attributes, nor
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "container",
     node: "/div[1]",
-    role: null,
+    role: "generic",
     children: [
       {
         type: "text",
@@ -535,7 +535,7 @@ test(`.from() behaves when encountering an element with global properties where
   t.deepEqual(Node.from(div, device).toJSON(), {
     type: "element",
     node: "/div[1]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [
       {
