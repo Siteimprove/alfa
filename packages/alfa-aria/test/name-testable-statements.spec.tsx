@@ -18,7 +18,7 @@ const device = Device.standard();
 function getTarget(document: Document, id: string): Element {
   return document
     .descendants()
-    .find(and(isElement, hasId("test")))
+    .find(and(isElement, hasId(id)))
     .getUnsafe();
 }
 

@@ -3,9 +3,11 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hashable, Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -18,7 +20,7 @@ import * as predicate from "./role/predicate";
 
 const { and, not, nor } = Predicate;
 
-const roles = new Map<string, Role>();
+let roles = Map.empty<Role.Name, Role>();
 
 /**
  * @public
@@ -27,26 +29,18 @@ export class Role<N extends Role.Name = Role.Name>
   implements Equatable, Hashable, Serializable
 {
   public static of<N extends Role.Name>(name: N): Role<N> {
-    let role = roles.get(name);
+    return roles.get(name).getOrElse(() => {
+      const { attributes, inherited } = Roles[name];
 
-    if (role === undefined) {
-      const { inherited } = Roles[name];
+      const attributeNames = Set.from<Attribute.Name>(
+        attributes.map(([attribute]) => attribute)
+      ).concat(inherited.flatMap((parent) => Role.of(parent).attributes));
 
-      const attributes = new Set(
-        [...Roles[name].attributes].map(([attribute]) => attribute)
-      );
+      const role = new Role<N>(name, [...attributeNames]);
+      roles = roles.set(name, role);
 
-      for (const parent of inherited) {
-        for (const attribute of Role.of(parent).attributes) {
-          attributes.add(attribute);
-        }
-      }
-
-      role = new Role(name, [...attributes]);
-      roles.set(name, role);
-    }
-
-    return role as Role<N>;
+      return role;
+    }) as Role<N>;
   }
 
   private readonly _name: N;

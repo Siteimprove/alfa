@@ -331,8 +331,8 @@ const device = Device.standard();
 function getTarget(document: Document, id: string): Element {
   return document
     .descendants()
-    .find(and(isElement, hasId("test")))
-    .get()
+    .find(and(isElement, hasId(id)))
+    .getUnsafe()
 }
 
 function getName(element: Element): string {
