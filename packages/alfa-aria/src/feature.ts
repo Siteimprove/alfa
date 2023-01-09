@@ -216,11 +216,11 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
   );
 };
 
-function ifScopedTo(
+function ifScopedTo<T = Role.Name | Iterable<Role>>(
   names: [string, ...Array<string>],
-  ifScoped: Role.Name | Iterable<Role>,
-  ifNotScoped: Role.Name | Iterable<Role>
-): (element: Element) => Role.Name | Iterable<Role> {
+  ifScoped: T,
+  ifNotScoped: T
+): Feature.Aspect<T> {
   return (element) =>
     element
       .ancestors()
