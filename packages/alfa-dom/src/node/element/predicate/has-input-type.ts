@@ -1,8 +1,11 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Element } from "../../element";
+import { hasName } from "./has-name";
 
-const { equals } = Predicate;
+const { equals, test } = Predicate;
+const { and } = Refinement;
 
 /**
  * {@link https://html.spec.whatwg.org/#attr-input-type}
@@ -34,6 +37,41 @@ type InputType =
 /**
  * @public
  */
+export function inputType(element: Element<"input">): InputType {
+  return element
+    .attribute("type")
+    .flatMap((attribute) =>
+      attribute.enumerate(
+        "hidden",
+        "search",
+        "tel",
+        "url",
+        "email",
+        "password",
+        "date",
+        "month",
+        "week",
+        "time",
+        "datetime-local",
+        "number",
+        "range",
+        "color",
+        "checkbox",
+        "radio",
+        "file",
+        "submit",
+        "image",
+        "reset",
+        "button",
+        "text"
+      )
+    )
+    .getOr("text");
+}
+
+/**
+ * @public
+ */
 export function hasInputType(
   predicate: Predicate<InputType>
 ): Predicate<Element>;
@@ -58,41 +96,7 @@ export function hasInputType(
     predicate = equals(inputTypeOrPredicate, ...inputTypes);
   }
 
-  return (element) => {
-    if (element.name !== "input") {
-      return false;
-    }
-
-    return predicate(
-      element
-        .attribute("type")
-        .flatMap((attribute) =>
-          attribute.enumerate(
-            "hidden",
-            "search",
-            "tel",
-            "url",
-            "email",
-            "password",
-            "date",
-            "month",
-            "week",
-            "time",
-            "datetime-local",
-            "number",
-            "range",
-            "color",
-            "checkbox",
-            "radio",
-            "file",
-            "submit",
-            "image",
-            "reset",
-            "button",
-            "text"
-          )
-        )
-        .getOr("text")
-    );
-  };
+  return and(hasName("input"), (element) =>
+    test(predicate, inputType(element))
+  );
 }

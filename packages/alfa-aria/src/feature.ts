@@ -14,7 +14,7 @@ import { Attribute } from "./attribute";
 import { Name } from "./name";
 import { Role } from "./role";
 
-const { hasInputType, hasName, isElement } = Element;
+const { hasInputType, hasName, inputType, isElement } = Element;
 const { or, test } = Predicate;
 const { and } = Refinement;
 
@@ -23,8 +23,8 @@ const { and } = Refinement;
  */
 export class Feature {
   public static of(
-    role: Role.Name | Feature.Aspect<Role.Name> | Feature.RoleAspect = () => [],
-    attributes: Feature.AttributesAspect = () => [],
+    role: Role.Name | Feature.Aspect<Role.Name | Iterable<Role>> = () => None,
+    attributes: Feature.AttributesAspect = () => None,
     name: Feature.NameAspect = () => None
   ): Feature {
     const roleAspect =
@@ -38,14 +38,14 @@ export class Feature {
   private readonly _name: Feature.NameAspect;
 
   private constructor(
-    roleAspect: Feature.RoleAspect | Feature.Aspect<Role.Name>,
+    roleAspect: Feature.Aspect<Role.Name | Iterable<Role>>,
     attributes: Feature.AttributesAspect,
     name: Feature.NameAspect
   ) {
     this._role = (element) => {
       const role = roleAspect(element);
 
-      return typeof role === "string" ? [Role.of(role)] : role;
+      return typeof role === "string" ? Option.of(Role.of(role)) : role;
     };
     this._attributes = attributes;
     this._name = name;
@@ -94,8 +94,8 @@ export namespace Feature {
 }
 
 function html(
-  role: Role.Name | Feature.Aspect<Role.Name> | Feature.RoleAspect = () => [],
-  attributes: Feature.AttributesAspect = () => [],
+  role: Role.Name | Feature.Aspect<Role.Name | Iterable<Role>> = () => None,
+  attributes: Feature.AttributesAspect = () => None,
   name: Feature.NameAspect = () => None
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
@@ -107,8 +107,8 @@ function html(
 }
 
 function svg(
-  role: Role.Name | Feature.Aspect<Role.Name> | Feature.RoleAspect = () => [],
-  attributes: Feature.AttributesAspect = () => [],
+  role: Role.Name | Feature.Aspect<Role.Name | Iterable<Role>> = () => None,
+  attributes: Feature.AttributesAspect = () => None,
   name: Feature.NameAspect = () => None
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
@@ -300,8 +300,8 @@ const Features: Features = {
         .ancestors()
         .filter(isElement)
         .some(hasName("article", "aside", "main", "nav", "section"))
-        ? Option.of(Role.of("generic"))
-        : Option.of(Role.of("contentinfo"))
+        ? "generic"
+        : "contentinfo"
     ),
 
     // We currently cannot detect at this point if the element has an accessible
@@ -326,8 +326,8 @@ const Features: Features = {
         .ancestors()
         .filter(isElement)
         .some(hasName("article", "aside", "main", "nav", "section"))
-        ? Option.of(Role.of("generic"))
-        : Option.of(Role.of("banner"))
+        ? "generic"
+        : "banner"
     ),
 
     hr: html("separator"),
@@ -351,39 +351,30 @@ const Features: Features = {
     ),
 
     input: html(
-      (element): Option<Role> => {
-        if (test(hasInputType("button", "image", "reset", "submit"), element)) {
-          return Option.of(Role.of("button"));
-        }
-
-        if (test(hasInputType("checkbox"), element)) {
-          return Option.of(Role.of("checkbox"));
-        }
-
-        if (test(hasInputType("number"), element)) {
-          return Option.of(Role.of("spinbutton"));
-        }
-
-        if (test(hasInputType("radio"), element)) {
-          return Option.of(Role.of("radio"));
-        }
-
-        if (test(hasInputType("range"), element)) {
-          return Option.of(Role.of("slider"));
-        }
-
-        if (test(hasInputType("search"), element)) {
-          return Option.of(
-            Role.of(
-              element.attribute("list").isSome() ? "combobox" : "searchbox"
-            )
-          );
-        }
-
-        if (test(hasInputType("email", "tel", "text", "url"), element)) {
-          return Option.of(
-            Role.of(element.attribute("list").isSome() ? "combobox" : "textbox")
-          );
+      (element): Role.Name | None => {
+        switch (inputType(element as Element<"input">)) {
+          case "button":
+          case "image":
+          case "reset":
+          case "submit":
+            return "button";
+          case "checkbox":
+            return "checkbox";
+          case "number":
+            return "spinbutton";
+          case "radio":
+            return "radio";
+          case "range":
+            return "slider";
+          case "search":
+            return element.attribute("list").isSome()
+              ? "combobox"
+              : "searchbox";
+          case "email":
+          case "tel":
+          case "text":
+          case "url":
+            return element.attribute("list").isSome() ? "combobox" : "textbox";
         }
 
         return None;

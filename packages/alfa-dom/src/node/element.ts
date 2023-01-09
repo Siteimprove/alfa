@@ -418,6 +418,7 @@ export namespace Element {
     hasNamespace,
     hasTabIndex,
     hasUniqueId,
+    inputType,
     isBrowsingContextContainer,
     isContent,
     isActuallyDisabled,
