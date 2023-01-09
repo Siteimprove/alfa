@@ -14,6 +14,7 @@ import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
 import * as predicate from "./element/predicate";
+import * as helpers from "./element/input-type";
 
 const { isEmpty } = Iterable;
 const { not } = Predicate;
@@ -418,7 +419,6 @@ export namespace Element {
     hasNamespace,
     hasTabIndex,
     hasUniqueId,
-    inputType,
     isBrowsingContextContainer,
     isContent,
     isActuallyDisabled,
@@ -429,6 +429,8 @@ export namespace Element {
     isSuggestedFocusable,
     isReplaced,
   } = predicate;
+
+  export const { inputType } = helpers;
 }
 
 function indent(input: string): string {
