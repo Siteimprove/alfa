@@ -592,7 +592,11 @@ const Features: Features = {
     }),
 
     option: html(
-      ifScopedTo(["select", "optgroup", "datalist"], "option", None),
+      ifScopedTo<Role.Name | None>(
+        ["select", "optgroup", "datalist"],
+        "option",
+        None
+      ),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {
