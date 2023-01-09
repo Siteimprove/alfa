@@ -216,6 +216,20 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
   );
 };
 
+function ifScopedTo(
+  names: [string, ...Array<string>],
+  ifScoped: Role.Name,
+  ifNotScoped: Role.Name
+): (element: Element) => Role.Name {
+  return (element) =>
+    element
+      .ancestors()
+      .filter(isElement)
+      .some(hasName(...names))
+      ? ifScoped
+      : ifNotScoped;
+}
+
 type Features = {
   [N in Namespace]?: {
     [element: string]: Feature | undefined;
@@ -295,13 +309,12 @@ const Features: Features = {
 
     figure: html("figure", () => [], nameFromChild(hasName("figcaption"))),
 
-    footer: html((element) =>
-      element
-        .ancestors()
-        .filter(isElement)
-        .some(hasName("article", "aside", "main", "nav", "section"))
-        ? "generic"
-        : "contentinfo"
+    footer: html(
+      ifScopedTo(
+        ["article", "aside", "main", "nav", "section"],
+        "generic",
+        "contentinfo"
+      )
     ),
 
     // We currently cannot detect at this point if the element has an accessible
@@ -321,18 +334,20 @@ const Features: Features = {
 
     h6: html("heading", () => [Attribute.of("aria-level", "6")]),
 
-    header: html((element) =>
-      element
-        .ancestors()
-        .filter(isElement)
-        .some(hasName("article", "aside", "main", "nav", "section"))
-        ? "generic"
-        : "banner"
+    header: html(
+      ifScopedTo(
+        ["article", "aside", "main", "nav", "section"],
+        "generic",
+        "banner"
+      )
     ),
 
     hr: html("separator"),
 
     img: html(
+      // We need to yield all roles, not just return one, in order for the
+      // presentational role conflict resolution to discard `presentation`
+      // and correctly default to `img`.
       function* (element) {
         // If there is an alt attribute and it is totally empty
         if (element.attribute("alt").some((alt) => alt.value === "")) {
