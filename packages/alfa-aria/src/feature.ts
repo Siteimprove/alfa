@@ -82,6 +82,8 @@ export namespace Feature {
       return None;
     });
   }
+
+  export const generic = html(() => Option.of(Role.of("generic")));
 }
 
 function html(
@@ -95,10 +97,6 @@ function html(
       () => nameFromAttribute(element, "title")
     )
   );
-}
-
-function generic(): Feature {
-  return html(() => Option.of(Role.of("generic")));
 }
 
 function svg(
@@ -820,20 +818,20 @@ const Features: Features = {
     ul: html(() => Option.of(Role.of("list"))),
 
     // Generic containers with no real semantics
-    b: generic(),
-    bdi: generic(),
-    bdo: generic(),
-    body: generic(),
-    data: generic(),
-    div: generic(),
-    hgroup: generic(),
-    i: generic(),
-    pre: generic(),
-    q: generic(),
-    samp: generic(),
-    small: generic(),
-    span: generic(),
-    u: generic(),
+    b: Feature.generic,
+    bdi: Feature.generic,
+    bdo: Feature.generic,
+    body: Feature.generic,
+    data: Feature.generic,
+    div: Feature.generic,
+    hgroup: Feature.generic,
+    i: Feature.generic,
+    pre: Feature.generic,
+    q: Feature.generic,
+    samp: Feature.generic,
+    small: Feature.generic,
+    span: Feature.generic,
+    u: Feature.generic,
   },
 
   [Namespace.SVG]: {
