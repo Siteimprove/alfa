@@ -14,7 +14,7 @@ import { Attribute } from "./attribute";
 import { Name } from "./name";
 import { Role } from "./role";
 
-const { hasInputType, hasName, inputType, isElement } = Element;
+const { hasAttribute, hasInputType, hasName, inputType, isElement } = Element;
 const { or, test } = Predicate;
 const { and } = Refinement;
 
@@ -230,6 +230,15 @@ function ifScopedTo<T = Role.Name | Iterable<Role>>(
       : ifNotScoped;
 }
 
+function ifHasAttribute<T = Role.Name | Iterable<Role>>(
+  attribute: string,
+  ifHas: T,
+  ifDoesNotHave: T
+): Feature.Aspect<T> {
+  return (element) =>
+    test(hasAttribute(attribute), element) ? ifHas : ifDoesNotHave;
+}
+
 type Features = {
   [N in Namespace]?: {
     [element: string]: Feature | undefined;
@@ -239,14 +248,14 @@ type Features = {
 const Features: Features = {
   [Namespace.HTML]: {
     a: html(
-      (element) => (element.attribute("href").isSome() ? "link" : "generic"),
+      ifHasAttribute("href", "link", "generic"),
       () => [],
       (element, device, state) =>
         Name.fromDescendants(element, device, state.visit(element))
     ),
 
     area: html(
-      (element) => (element.attribute("href").isSome() ? "link" : "generic"),
+      ifHasAttribute("href", "link", "generic"),
       () => [],
       (element) => nameFromAttribute(element, "alt")
     ),
@@ -318,7 +327,7 @@ const Features: Features = {
     ),
 
     // We currently cannot detect at this point if the element has an accessible
-    // name, and always map to complementary.
+    // name, and always map to form.
     // see https://github.com/Siteimprove/alfa/issues/298
     form: html("form"),
 
@@ -615,22 +624,18 @@ const Features: Features = {
     }),
 
     // We currently cannot detect at this point if the element has an accessible
-    // name, and always map to complementary.
+    // name, and always map to region.
     // see https://github.com/Siteimprove/alfa/issues/298
     section: html("region"),
 
     select: html(
-      (element) =>
-        // mono-line <select> are mapped to combobox by HTML AAM, but their child
-        // <option> are still mapped to option, which are out of their context role.
-        // We cheat and always map <select> to listbox
-        test(
-          Element.hasDisplaySize((size) => size > 1),
-          element
-        )
-          ? "listbox"
-          : // combobox following HTML AAM, but listbox to be correct.
-            "listbox",
+      // mono-line <select> are mapped to combobox by HTML AAM, but their child
+      // <option> are still mapped to option, which are out of their context role.
+      // We cheat and always map <select> to listbox
+      "listbox",
+      // (element) =>
+      //   test(Element.hasDisplaySize((size) => size > 1), element)
+      //   ? "listbox" : combobox
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {
@@ -798,9 +803,7 @@ const Features: Features = {
   },
 
   [Namespace.SVG]: {
-    a: svg((element) =>
-      element.attribute("href").isSome() ? "link" : "group"
-    ),
+    a: svg(ifHasAttribute("href", "link", "group")),
 
     circle: svg("graphics-symbol"),
 
