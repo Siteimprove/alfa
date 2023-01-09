@@ -172,7 +172,7 @@ export class Feature {
     // (undocumented)
     get name(): Feature.NameAspect;
     // (undocumented)
-    static of(role?: Feature.RoleAspect, attributes?: Feature.AttributesAspect, name?: Feature.NameAspect): Feature;
+    static of(role?: Role.Name | Feature.Aspect<Role.Name | Iterable_2<Role>>, attributes?: Feature.AttributesAspect, name?: Feature.NameAspect): Feature;
     // (undocumented)
     get role(): Feature.RoleAspect;
 }
@@ -189,6 +189,8 @@ export namespace Feature {
     export type NameAspect = Aspect<Option<Name>, [Device, Name.State]>;
     // (undocumented)
     export type RoleAspect = Aspect<Iterable_2<Role>>;
+    const // (undocumented)
+    generic: Feature;
 }
 
 // @public (undocumented)
