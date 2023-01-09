@@ -218,9 +218,9 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
 
 function ifScopedTo(
   names: [string, ...Array<string>],
-  ifScoped: Role.Name,
-  ifNotScoped: Role.Name
-): (element: Element) => Role.Name {
+  ifScoped: Role.Name | Iterable<Role>,
+  ifNotScoped: Role.Name | Iterable<Role>
+): (element: Element) => Role.Name | Iterable<Role> {
   return (element) =>
     element
       .ancestors()
@@ -525,8 +525,8 @@ const Features: Features = {
         element
           .parent()
           .some(and(Element.isElement, hasName("ol", "ul", "menu")))
-          ? Option.of(Role.of("listitem"))
-          : Option.of(Role.of("generic")),
+          ? "listitem"
+          : "generic",
       (element) => {
         // https://w3c.github.io/html-aam/#el-li
         const siblings = element
@@ -583,13 +583,7 @@ const Features: Features = {
     }),
 
     option: html(
-      (element) =>
-        element
-          .ancestors()
-          .filter(isElement)
-          .some(hasName("select", "optgroup", "datalist"))
-          ? Option.of(Role.of("option"))
-          : None,
+      ifScopedTo(["select", "optgroup", "datalist"], "option", None),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {
@@ -629,14 +623,14 @@ const Features: Features = {
       (element) =>
         // mono-line <select> are mapped to combobox by HTML AAM, but their child
         // <option> are still mapped to option, which are out of their context role.
-        // We cheat and always map <select> to
+        // We cheat and always map <select> to listbox
         test(
           Element.hasDisplaySize((size) => size > 1),
           element
         )
-          ? Option.of(Role.of("listbox"))
+          ? "listbox"
           : // combobox following HTML AAM, but listbox to be correct.
-            Option.of(Role.of("listbox")),
+            "listbox",
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {
