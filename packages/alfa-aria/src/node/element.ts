@@ -120,7 +120,7 @@ export class Element extends Node<"element"> {
  */
 export namespace Element {
   export interface JSON extends Node.JSON<"element"> {
-    role: string | null;
+    role: Role.Name | null;
     name: string | null;
     attributes: Array<Attribute.JSON>;
   }
