@@ -17,10 +17,12 @@ test(`.from() exposes implicitly required children of a presentational element
   t.deepEqual(Node.from(ul, device).toJSON(), {
     type: "container",
     node: "/ul[1]",
+    role: null,
     children: [
       {
         type: "container",
         node: "/ul[1]/li[1]",
+        role: null,
         children: [],
       },
     ],
@@ -38,6 +40,7 @@ test(`.from() doesn't inherit presentational roles into explicitly required
   t.deepEqual(Node.from(ul, device).toJSON(), {
     type: "container",
     node: "/ul[1]",
+    role: null,
     children: [
       {
         type: "element",
@@ -71,10 +74,12 @@ test(`.from() doesn't inherit presentational roles into children of implicitly
   t.deepEqual(Node.from(ul, device).toJSON(), {
     type: "container",
     node: "/ul[1]",
+    role: null,
     children: [
       {
         type: "container",
         node: "/ul[1]/li[1]",
+        role: null,
         children: [
           {
             type: "element",
@@ -108,6 +113,7 @@ test(`.from() doesn't expose children of elements with roles that designate
       {
         type: "container",
         node: "/button[1]/img[1]",
+        role: null,
         children: [],
       },
     ],
@@ -150,7 +156,12 @@ test(`.from() maps \`<select>\` to listboxes`, (t) => {
 });
 
 test(`.from() maps \`<img>\` with no source to presentational role`, (t) => {
-  const empty = { type: "container", node: "/img[1]", children: [] };
+  const empty = {
+    type: "container",
+    node: "/img[1]",
+    role: null,
+    children: [],
+  };
 
   const images = [<img />, <img src="" />, <img alt="Hello" src="" />];
 
