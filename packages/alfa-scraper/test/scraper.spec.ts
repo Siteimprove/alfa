@@ -1,6 +1,7 @@
 import * as url from "url";
 
 import { test } from "@siteimprove/alfa-test";
+import { Awaiter } from "../src";
 
 import { Scraper } from "../src/scraper";
 
@@ -45,7 +46,10 @@ test("#scrape() scrapes a page with a delayed meta refresh", async (t) =>
 test("#scrape() scrapes a page with an immediate location change", async (t) =>
   await Scraper.with(async (scraper) => {
     const url = `${fixture}/location-change-immediate.html`;
-    const result = await scraper.scrape(url);
+    const result = await scraper.scrape(url, {
+      // Giving a bit of time for the location change to actually happen
+      awaiter: Awaiter.duration(100, Awaiter.loaded()),
+    });
 
     t.equal(result.isOk(), true);
 
