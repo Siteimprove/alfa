@@ -38,6 +38,14 @@ export class Role<N extends Role.Name = Role.Name>
         inherited.flatMap((parent) => Role.of(parent).supportedAttributes)
       );
 
+      const requiredAttributes = Set.from<Attribute.Name>(
+        attributes
+          .filter((attribute, { required }) => required)
+          .map(([attribute]) => attribute)
+      ).concat(
+        inherited.flatMap((parent) => Role.of(parent).supportedAttributes)
+      );
+
       const role = new Role<N>(name, [...supportedAttributes], [], []);
       roles = roles.set(name, role);
 
