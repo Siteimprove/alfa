@@ -32,13 +32,13 @@ export class Role<N extends Role.Name = Role.Name>
     return roles.get(name).getOrElse(() => {
       const { attributes, inherited } = Roles[name];
 
-      const attributeNames = Set.from<Attribute.Name>(
+      const supportedAttributes = Set.from<Attribute.Name>(
         attributes.map(([attribute]) => attribute)
       ).concat(
         inherited.flatMap((parent) => Role.of(parent).supportedAttributes)
       );
 
-      const role = new Role<N>(name, [...attributeNames], [], []);
+      const role = new Role<N>(name, [...supportedAttributes], [], []);
       roles = roles.set(name, role);
 
       return role;
@@ -224,21 +224,7 @@ export class Role<N extends Role.Name = Role.Name>
    * Check if this role supports the specified attribute.
    */
   public isAttributeSupported(name: Attribute.Name): boolean {
-    const { inherited, attributes } = Roles[this._name];
-
-    for (const [found] of attributes) {
-      if (name === found) {
-        return true;
-      }
-    }
-
-    for (const parent of inherited) {
-      if (Role.of(parent).isAttributeSupported(name)) {
-        return true;
-      }
-    }
-
-    return false;
+    return this._supportedAttributes.includes(name);
   }
 
   /**
