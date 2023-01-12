@@ -17,3 +17,5 @@ updates:
     labels:
       - "actions"
       - "dependencies"
+    reviewers:
+      - "Jym77"
