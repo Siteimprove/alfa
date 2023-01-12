@@ -38,7 +38,7 @@ export class Role<N extends Role.Name = Role.Name>
         inherited.flatMap((parent) => Role.of(parent).supportedAttributes)
       );
 
-      const role = new Role<N>(name, [...attributeNames]);
+      const role = new Role<N>(name, [...attributeNames], [], []);
       roles = roles.set(name, role);
 
       return role;
@@ -46,11 +46,20 @@ export class Role<N extends Role.Name = Role.Name>
   }
 
   private readonly _name: N;
-  private readonly _supportedAttributes: Array<Attribute.Name>;
+  private readonly _supportedAttributes: ReadonlyArray<Attribute.Name>;
+  private readonly _requiredAttributes: ReadonlyArray<Attribute.Name>;
+  private readonly _prohibitedAttributes: ReadonlyArray<Attribute.Name>;
 
-  private constructor(name: N, attributes: Array<Attribute.Name>) {
+  private constructor(
+    name: N,
+    supportedAttributes: Array<Attribute.Name>,
+    requiredAttributes: Array<Attribute.Name>,
+    prohibitedAttributes: Array<Attribute.Name>
+  ) {
     this._name = name;
-    this._supportedAttributes = attributes;
+    this._supportedAttributes = supportedAttributes;
+    this._requiredAttributes = requiredAttributes;
+    this._prohibitedAttributes = prohibitedAttributes;
   }
 
   public get name(): N {
@@ -62,6 +71,20 @@ export class Role<N extends Role.Name = Role.Name>
    */
   public get supportedAttributes(): ReadonlyArray<Attribute.Name> {
     return this._supportedAttributes;
+  }
+
+  /**
+   * Get all attributes required by this role and its inherited (ancestors) roles.
+   */
+  public get requiredAttributes(): ReadonlyArray<Attribute.Name> {
+    return this._requiredAttributes;
+  }
+
+  /**
+   * Get all attributes prohibited on this role and its inherited (ancestors) roles.
+   */
+  public get prohibitedAttributes(): ReadonlyArray<Attribute.Name> {
+    return this._prohibitedAttributes;
   }
 
   /**
