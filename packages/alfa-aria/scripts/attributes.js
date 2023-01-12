@@ -3,12 +3,10 @@ const path = require("path");
 const prettier = require("prettier");
 const puppeteer = require("puppeteer");
 
-import { aria } from "./specifications";
-
 puppeteer.launch().then(async (browser) => {
   const page = await browser.newPage();
 
-  await page.goto(aria);
+  await page.goto("https://w3c.github.io/aria/");
 
   const attributes = await page.evaluate(() =>
     Object.fromEntries(

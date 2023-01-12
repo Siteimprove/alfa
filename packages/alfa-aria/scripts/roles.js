@@ -3,13 +3,19 @@ const path = require("path");
 const prettier = require("prettier");
 const puppeteer = require("puppeteer");
 
-import { aria, modules } from "./specifications";
+const specifications = [
+  // "https://w3c.github.io/aria/",
+  // We stick to 1.2 as this is the version used by ACT rules.
+  "https://www.w3.org/TR/wai-aria-1.2/",
+  "https://www.w3.org/TR/graphics-aria/",
+  "https://www.w3.org/TR/dpub-aria/",
+];
 
 puppeteer.launch().then(async (browser) => {
   const page = await browser.newPage();
   const roles = {};
 
-  for (const specification of [aria, ...modules]) {
+  for (const specification of specifications) {
     await page.goto(specification);
 
     Object.assign(
