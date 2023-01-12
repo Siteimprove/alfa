@@ -78,7 +78,7 @@ function hasRequiredValues(
       );
     }
 
-    for (const attribute of role.attributes) {
+    for (const attribute of role.supportedAttributes) {
       if (role.isAttributeRequired(attribute)) {
         required.push(attribute);
 

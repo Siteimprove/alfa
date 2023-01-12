@@ -34,7 +34,9 @@ export class Role<N extends Role.Name = Role.Name>
 
       const attributeNames = Set.from<Attribute.Name>(
         attributes.map(([attribute]) => attribute)
-      ).concat(inherited.flatMap((parent) => Role.of(parent).attributes));
+      ).concat(
+        inherited.flatMap((parent) => Role.of(parent).supportedAttributes)
+      );
 
       const role = new Role<N>(name, [...attributeNames]);
       roles = roles.set(name, role);
@@ -44,11 +46,11 @@ export class Role<N extends Role.Name = Role.Name>
   }
 
   private readonly _name: N;
-  private readonly _attributes: Array<Attribute.Name>;
+  private readonly _supportedAttributes: Array<Attribute.Name>;
 
   private constructor(name: N, attributes: Array<Attribute.Name>) {
     this._name = name;
-    this._attributes = attributes;
+    this._supportedAttributes = attributes;
   }
 
   public get name(): N {
@@ -56,10 +58,10 @@ export class Role<N extends Role.Name = Role.Name>
   }
 
   /**
-   * Get all attributes supported by this role and its inherited roles.
+   * Get all attributes supported by this role and its inherited (ancestors) roles.
    */
-  public get attributes(): ReadonlyArray<Attribute.Name> {
-    return this._attributes;
+  public get supportedAttributes(): ReadonlyArray<Attribute.Name> {
+    return this._supportedAttributes;
   }
 
   /**
@@ -426,7 +428,7 @@ type Members<T> = T extends Iterable<infer T> ? T : never;
  * Check if an element has one or more global `aria-*` attributes.
  */
 const hasGlobalAttributes: Predicate<Element> = (element) =>
-  Iterable.some(Role.of("roletype").attributes, (attribute) =>
+  Iterable.some(Role.of("roletype").supportedAttributes, (attribute) =>
     element.attribute(attribute).isSome()
   );
 
