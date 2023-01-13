@@ -63,7 +63,7 @@ function hasRequiredValues(
   const node = aria.Node.from(element, device);
 
   let roleName: string = "";
-  let required: Array<aria.Attribute.Name> = [];
+  let required: ReadonlyArray<aria.Attribute.Name> = [];
   let missing: Array<aria.Attribute.Name> = [];
 
   for (const role of node.role) {
@@ -78,17 +78,15 @@ function hasRequiredValues(
       );
     }
 
-    for (const attribute of role.supportedAttributes) {
-      if (role.isAttributeRequired(attribute)) {
-        required.push(attribute);
+    required = role.requiredAttributes;
 
-        if (
-          node.attribute(attribute).every(property("value", isEmpty)) &&
-          !isManagedAttribute(element, role.name, attribute)
-        ) {
-          missing.push(attribute);
-          result = false;
-        }
+    for (const attribute of required) {
+      if (
+        node.attribute(attribute).every(property("value", isEmpty)) &&
+        !isManagedAttribute(element, role.name, attribute)
+      ) {
+        missing.push(attribute);
+        result = false;
       }
     }
   }
