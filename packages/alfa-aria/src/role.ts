@@ -1,3 +1,4 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hashable, Hash } from "@siteimprove/alfa-hash";
@@ -30,15 +31,35 @@ export class Role<N extends Role.Name = Role.Name>
 {
   public static of<N extends Role.Name>(name: N): Role<N> {
     return roles.get(name).getOrElse(() => {
-      const { attributes, inherited } = Roles[name];
+      // The "as const" building of Roles makes TS give it a very
+      // rigid type, and we need to manually help it to correctly merge the
+      // Attribute.Name keys into a single union type. As of TS 4.8.2, removing
+      // the type guard, or trying to destructure Roles[name] in one go, breaks.
+      const attributes: ReadonlyArray<
+        Readonly<[Attribute.Name, Readonly<{ required: boolean }>]>
+      > = Roles[name].attributes;
+      const inherited = Roles[name].inherited;
 
-      const supportedAttributes = Set.from<Attribute.Name>(
+      const supportedAttributes = Set.from(
         attributes.map(([attribute]) => attribute)
       ).concat(
         inherited.flatMap((parent) => Role.of(parent).supportedAttributes)
       );
 
-      const role = new Role<N>(name, [...supportedAttributes], [], []);
+      const requiredAttributes = Set.from(
+        Array.collect(attributes, ([attribute, { required }]) =>
+          required ? Option.of(attribute) : None
+        )
+      ).concat(
+        inherited.flatMap((parent) => Role.of(parent).requiredAttributes)
+      );
+
+      const role = new Role<N>(
+        name,
+        [...supportedAttributes],
+        [...requiredAttributes],
+        []
+      );
       roles = roles.set(name, role);
 
       return role;
@@ -231,21 +252,7 @@ export class Role<N extends Role.Name = Role.Name>
    * Check if this role requires the specified attribute.
    */
   public isAttributeRequired(name: Attribute.Name): boolean {
-    const { inherited, attributes } = Roles[this._name];
-
-    for (const [found, { required }] of attributes) {
-      if (name === found && required) {
-        return true;
-      }
-    }
-
-    for (const parent of inherited) {
-      if (Role.of(parent).isAttributeRequired(name)) {
-        return true;
-      }
-    }
-
-    return false;
+    return this._requiredAttributes.includes(name);
   }
 
   /**
