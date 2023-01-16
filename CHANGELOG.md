@@ -19,6 +19,30 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.55.0](../../compare/v0.54.0...v0.55.0) (2023-01-16)
+
+### Added
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): The `generic` role is now supported and DOM elements with a `generic` role are mapped to `Container` ARIA nodes; prohibited attributes are now managed. ([#1205](../../issues/1205), [#1305](../../pull/1306), [#1310](../../pull/1310))
+
+- [@siteimprove/alfa-act](packages/alfa-act): `Outcome` are now hashable. ([#1298](../../pull/1298))
+
+  - [@siteimprove/alfa-rules](packages/alfa-rules): Added SIA-R18 version 2 (as experimental) which rejects prohibited attributes. ([#1205](../../issues/1205), [#1310](../../pull/1310))
+
+### Changed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): ARIA data is now gathered from ARIA 1.2. ([#1205](../../issues/1205), [#1305](../../pull/1305))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R64 does not map to 2.4.6 anymore, following ACT rules. ([#1300](../../pull/1300))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R78 does not anymore consider empty text node as content. ([#1301](../../pull/1301))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Fixed `hasExplicitRole` predicate to work as intended when no argument is provided. ([#1306](../../pull/1306))
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): Added `<aside>` to the list of elements whose role depend on the presence of a name. ([#1306](../../pull/1306))
+
 ## [0.54.0](../../compare/v0.53.1...v0.54.0) (2023-01-03)
 
 ### Added
