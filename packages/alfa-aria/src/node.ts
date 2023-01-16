@@ -444,7 +444,7 @@ export namespace Node {
 
         // First pass: Look up implicit attributes on the role.
         if (role.isSome()) {
-          for (const attribute of role.get().attributes) {
+          for (const attribute of role.get().supportedAttributes) {
             for (const value of role.get().implicitAttributeValue(attribute)) {
               attributes = attributes.set(
                 attribute,
