@@ -662,7 +662,6 @@ export namespace Node {
 
 // @public (undocumented)
 export class Role<N extends Role.Name = Role.Name> implements Equatable, Hashable, Serializable {
-    get attributes(): ReadonlyArray<Attribute.Name>;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -674,6 +673,7 @@ export class Role<N extends Role.Name = Role.Name> implements Equatable, Hashabl
     implicitAttributeValue(name: Attribute.Name): Option<string>;
     is<N extends Role.Name>(name: N): this is Role<N | Role.SubclassOf<N>>;
     isAbstract(): this is Role<Role.Abstract>;
+    isAttributeProhibited(name: Attribute.Name): boolean;
     isAttributeRequired(name: Attribute.Name): boolean;
     isAttributeSupported(name: Attribute.Name): boolean;
     isConcrete(): this is Role<Role.Concrete>;
@@ -688,8 +688,11 @@ export class Role<N extends Role.Name = Role.Name> implements Equatable, Hashabl
     get name(): N;
     // (undocumented)
     static of<N extends Role.Name>(name: N): Role<N>;
+    get prohibitedAttributes(): ReadonlyArray<Attribute.Name>;
+    get requiredAttributes(): ReadonlyArray<Attribute.Name>;
     get requiredChildren(): ReadonlyArray<ReadonlyArray<Role.Name>>;
     get requiredParent(): ReadonlyArray<ReadonlyArray<Role.Name>>;
+    get supportedAttributes(): ReadonlyArray<Attribute.Name>;
     // (undocumented)
     toJSON(): Role.JSON;
 }

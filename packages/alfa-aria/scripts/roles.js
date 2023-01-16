@@ -4,12 +4,15 @@ const prettier = require("prettier");
 const puppeteer = require("puppeteer");
 
 const specifications = [
-  // "https://w3c.github.io/aria/",
   // We stick to 1.2 as this is the version used by ACT rules.
   "https://www.w3.org/TR/wai-aria-1.2/",
   "https://www.w3.org/TR/graphics-aria/",
   "https://www.w3.org/TR/dpub-aria/",
 ];
+
+/**
+ * Grab the ARIA specification, and parses the HTML code to get the relevant bits.
+ */
 
 puppeteer.launch().then(async (browser) => {
   const page = await browser.newPage();
@@ -26,26 +29,39 @@ puppeteer.launch().then(async (browser) => {
         }
 
         return Object.fromEntries(
+          // The `.role` class grabs each individual role section.
+          // Most of the releveant data is in the table, not the text.
           [...document.querySelectorAll(".role")]
             .map((role) => {
+              // This is the <h4> heading of the section
               const key = role
                 .querySelector(".role-name")
                 .getAttribute("title");
 
+              // From here, we start looking at the various rows in the table,
+              // the .role-* classes select the data cell and then we look at
+              // its content.
+
+              // Is it an abstract role?
               const abstract =
                 role.querySelector(".role-abstract")?.textContent === "True" ??
                 false;
 
+              // Which roles does it inherit from?
               const inherited = [
                 ...role.querySelectorAll(".role-parent code"),
               ].map((code) => code.textContent);
 
+              // Grabbing the list of supported/required/prohibited attributes.
               const supported = [
                 ...role.querySelectorAll(`
                 .role-properties .property-reference,
                 .role-properties .state-reference
               `),
               ]
+                // Some supported attributes are deprecated from ARIA 1.1 to 1.2
+                // Sadly they are still listed as supported, with a note, so we
+                // need to parse that note :-/
                 .filter(
                   (element) =>
                     !element.parentElement.textContent.includes("deprecated")
@@ -59,6 +75,14 @@ puppeteer.launch().then(async (browser) => {
               `),
               ].map((reference) => hash(reference.getAttribute("href")));
 
+              const prohibited = [
+                ...role.querySelectorAll(`
+                .role-disallowed .property-reference,
+                .role-disallowed .state-reference
+              `),
+              ].map((reference) => hash(reference.getAttribute("href")));
+
+              // Grabbing the default value of attributes.
               const values = new Map(
                 [
                   ...role.querySelectorAll(`
@@ -80,20 +104,28 @@ puppeteer.launch().then(async (browser) => {
                 })
               );
 
+              // Finally gathering all attributes, with the correct flags.
               const attributes = [
                 ...new Set(
-                  [...supported, ...required, ...values.keys()].sort()
+                  [
+                    ...supported,
+                    ...required,
+                    ...prohibited,
+                    ...values.keys(),
+                  ].sort()
                 ),
               ].map((attribute) => {
                 return [
                   attribute,
                   {
                     required: required.includes(attribute),
+                    prohibited: prohibited.includes(attribute),
                     value: values.get(attribute) ?? null,
                   },
                 ];
               });
 
+              // Can it be named from author or contents?
               const from =
                 role
                   .querySelector(".role-namefrom")
@@ -102,6 +134,7 @@ puppeteer.launch().then(async (browser) => {
                   .filter((from) => from !== "n/a")
                   .sort() ?? [];
 
+              // Is the name required or prohibited?
               const name = {
                 required:
                   role.querySelector(".role-namerequired")?.textContent ===
@@ -112,6 +145,7 @@ puppeteer.launch().then(async (browser) => {
                 from: from.filter((method) => method !== "prohibited"),
               };
 
+              // What are the required context role?
               const parent = {
                 required: [
                   ...role.querySelectorAll(".role-scope, .role-scope li"),
@@ -127,6 +161,7 @@ puppeteer.launch().then(async (browser) => {
                   ),
               };
 
+              // Are children presentational? What are the required owned elements?
               const children = {
                 presentational:
                   role.querySelector(".role-childpresentational")

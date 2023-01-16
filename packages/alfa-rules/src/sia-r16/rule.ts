@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { DOM } from "@siteimprove/alfa-aria";
+import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
@@ -13,7 +13,6 @@ import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
 
-import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { hasNonDefaultRole, isIncludedInTheAccessibilityTree } = DOM;
@@ -40,15 +39,7 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const diagnostic = hasRequiredValues(device, target);
-
-        return {
-          1: expectation(
-            diagnostic.isOk(),
-            () => Outcomes.HasAllStates(diagnostic.get()),
-            () => Outcomes.HasNotAllStates(diagnostic.getErr())
-          ),
-        };
+        return { 1: hasRequiredValues(device, target) };
       },
     };
   },
@@ -58,71 +49,80 @@ function hasRequiredValues(
   device: Device,
   element: Element
 ): Result<RoleAndRequiredAttributes> {
-  let result = true;
-
   const node = aria.Node.from(element, device);
 
-  let roleName: string = "";
-  let required: Array<aria.Attribute.Name> = [];
-  let missing: Array<aria.Attribute.Name> = [];
-
   for (const role of node.role) {
-    roleName = role.name;
     // The `separator` role is poorly architected in the sense that its
     // inheritance and attribute requirements depend on aspects of the element
     // carrying the role. If the element is not focusable, the `separator`
     // role has no required attributes.
     if (role.is("separator") && !isFocusable(device)(element)) {
-      return Ok.of(
-        RoleAndRequiredAttributes.of("", roleName, required, missing)
-      );
+      return Outcomes.HasAllStates(role.name, [], []);
     }
 
-    for (const attribute of role.attributes) {
-      if (role.isAttributeRequired(attribute)) {
-        required.push(attribute);
+    const required = role.requiredAttributes;
+    const missing: Array<aria.Attribute.Name> = [];
+    let result = true;
 
-        if (
-          node.attribute(attribute).every(property("value", isEmpty)) &&
-          !isManagedAttribute(element, role.name, attribute)
-        ) {
-          missing.push(attribute);
-          result = false;
-        }
+    for (const attribute of required) {
+      // We need to keep going through all attributes to gather all the missing
+      // ones
+      if (
+        node.attribute(attribute).every(property("value", isEmpty)) &&
+        !isManagedAttribute(element, role.name, attribute)
+      ) {
+        missing.push(attribute);
+        result = false;
       }
     }
+
+    return result
+      ? Outcomes.HasAllStates(role.name, required, missing)
+      : Outcomes.HasNotAllStates(role.name, required, missing);
   }
 
-  return result
-    ? Ok.of(RoleAndRequiredAttributes.of("", roleName, required, missing))
-    : Err.of(RoleAndRequiredAttributes.of("", roleName, required, missing));
+  // If there is no role for the node, we have a problem; applicability ensures
+  // the presence of a role. Throwing a Failed result to trigger looking into it
+  return Outcomes.RuleError;
 }
 
 /**
  * @internal
  */
 export class RoleAndRequiredAttributes extends Diagnostic {
+  public static of(message: string): Diagnostic;
+
   public static of(
     message: string,
-    role: string = "",
-    requiredAttributes: ReadonlyArray<aria.Attribute.Name> = [],
-    missingAttributes: ReadonlyArray<aria.Attribute.Name> = []
-  ): RoleAndRequiredAttributes {
-    return new RoleAndRequiredAttributes(
-      message,
-      role,
-      requiredAttributes,
-      missingAttributes
-    );
+    role: Role.Name,
+    requiredAttributes: ReadonlyArray<aria.Attribute.Name>,
+    missingAttributes: ReadonlyArray<aria.Attribute.Name>
+  ): RoleAndRequiredAttributes;
+
+  public static of(
+    message: string,
+    role?: Role.Name,
+    requiredAttributes?: ReadonlyArray<aria.Attribute.Name>,
+    missingAttributes?: ReadonlyArray<aria.Attribute.Name>
+  ): Diagnostic {
+    return role === undefined
+      ? Diagnostic.of(message)
+      : new RoleAndRequiredAttributes(
+          message,
+          role,
+          // Presence is ensured by the overload
+          requiredAttributes!,
+          missingAttributes!
+        );
   }
 
-  private readonly _role: string;
+  private readonly _role: Role.Name;
   private readonly _requiredAttributes: ReadonlyArray<aria.Attribute.Name>;
   private readonly _missingAttributes: ReadonlyArray<aria.Attribute.Name>;
 
   private constructor(
     message: string,
-    role: string,
+    role: Role.Name,
     requiredAttributes: ReadonlyArray<aria.Attribute.Name>,
     missingAttributes: ReadonlyArray<aria.Attribute.Name>
   ) {
@@ -132,7 +132,7 @@ export class RoleAndRequiredAttributes extends Diagnostic {
     this._missingAttributes = missingAttributes;
   }
 
-  public get role(): string {
+  public get role(): Role.Name {
     return this._role;
   }
 
@@ -142,15 +142,6 @@ export class RoleAndRequiredAttributes extends Diagnostic {
 
   public get missingAttributes(): ReadonlyArray<aria.Attribute.Name> {
     return this._missingAttributes;
-  }
-
-  public withMessage(message: string): RoleAndRequiredAttributes {
-    return new RoleAndRequiredAttributes(
-      message,
-      this._role,
-      this._requiredAttributes,
-      this._missingAttributes
-    );
   }
 
   public equals(value: RoleAndRequiredAttributes): boolean;
@@ -214,19 +205,38 @@ export namespace RoleAndRequiredAttributes {
 }
 
 export namespace Outcomes {
-  export const HasAllStates = (diagnostic: RoleAndRequiredAttributes) =>
+  export const HasAllStates = (
+    role: Role.Name,
+    required: ReadonlyArray<aria.Attribute.Name>,
+    missing: ReadonlyArray<aria.Attribute.Name>
+  ) =>
     Ok.of(
-      diagnostic.withMessage(
-        `The element has all required states and properties`
+      RoleAndRequiredAttributes.of(
+        "The element has all required states and properties",
+        role,
+        required,
+        missing
       )
     );
 
-  export const HasNotAllStates = (diagnostic: RoleAndRequiredAttributes) =>
+  export const HasNotAllStates = (
+    role: Role.Name,
+    required: ReadonlyArray<aria.Attribute.Name>,
+    missing: ReadonlyArray<aria.Attribute.Name>
+  ) =>
     Err.of(
-      diagnostic.withMessage(
-        `The element does not have all required states and properties`
+      RoleAndRequiredAttributes.of(
+        "The element does not have all required states and properties",
+        role,
+        required,
+        missing
       )
     );
+
+  // This should never happen
+  export const RuleError = Err.of(
+    RoleAndRequiredAttributes.of("", "generic", [], [])
+  );
 }
 
 // Some aria-* attributes are managed by UAs out of the HTML AAM and we
