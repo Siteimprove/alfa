@@ -36,7 +36,9 @@ export class Role<N extends Role.Name = Role.Name>
       // Attribute.Name keys into a single union type. As of TS 4.8.2, removing
       // the type guard, or trying to destructure Roles[name] in one go, breaks.
       const attributes: ReadonlyArray<
-        Readonly<[Attribute.Name, Readonly<{ required: boolean }>]>
+        Readonly<
+          [Attribute.Name, Readonly<{ required: boolean; prohibited: boolean }>]
+        >
       > = Roles[name].attributes;
       const inherited = Roles[name].inherited;
 
@@ -54,11 +56,19 @@ export class Role<N extends Role.Name = Role.Name>
         inherited.flatMap((parent) => Role.of(parent).requiredAttributes)
       );
 
+      const prohibitedAttributes = Set.from(
+        Array.collect(attributes, ([attribute, { prohibited }]) =>
+          prohibited ? Option.of(attribute) : None
+        )
+      ).concat(
+        inherited.flatMap((parent) => Role.of(parent).prohibitedAttributes)
+      );
+
       const role = new Role<N>(
         name,
         [...supportedAttributes],
         [...requiredAttributes],
-        []
+        [...prohibitedAttributes]
       );
       roles = roles.set(name, role);
 
@@ -253,6 +263,13 @@ export class Role<N extends Role.Name = Role.Name>
    */
   public isAttributeRequired(name: Attribute.Name): boolean {
     return this._requiredAttributes.includes(name);
+  }
+
+  /**
+   * Check if this role prohibits the specified attribute.
+   */
+  public isAttributeProhibited(name: Attribute.Name): boolean {
+    return this._prohibitedAttributes.includes(name);
   }
 
   /**

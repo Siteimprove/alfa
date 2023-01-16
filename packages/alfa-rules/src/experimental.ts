@@ -1,3 +1,4 @@
+export { default as ER18 } from "./sia-er18/rule";
 export { default as ER66 } from "./sia-er66/rule";
 export { default as ER69 } from "./sia-er69/rule";
 export { default as ER87 } from "./sia-er87/rule";
