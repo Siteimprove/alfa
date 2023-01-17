@@ -4,21 +4,18 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Set } from "@siteimprove/alfa-set";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Style } from "@siteimprove/alfa-style";
 
 import { expectation } from "../act/expectation";
 import { Group } from "../act/group";
 import { Question } from "../act/question";
 import { Contrast as Diagnostic } from "../diagnostic/contrast";
-import { getBackground, getForeground } from "../dom/get-colors";
-import { getInterposedDescendant } from "../dom/get-interposed-descendant";
+import { ColorError, getBackground, getForeground } from "../dom/get-colors";
 import { Contrast as Outcomes } from "../outcome/contrast";
 import { isLargeText } from "../predicate";
 
 const { isElement } = Element;
 const { flatMap, map } = Iterable;
 const { min, max, round } = Math;
-const { hasTransparentBackground } = Style;
 
 /**
  * @internal
@@ -87,19 +84,22 @@ export function hasSufficientContrastExperimental(
     // if we cannot resolve automatically
     .err()
     .map((errors) =>
-      errors.errors
-        // gather all interposed-descendant errors
-        .filter((error) => error.kind === "interposed-descendant")
-        // and keep the interposed element.
-        .map((error) => error.element)
+      flatMap(
+        errors.errors
+          // gather all interposed-descendant errors
+          .filter(ColorError.isInterposedDescendants),
+        // and keep the interposed elements.
+        (error) => error.positionedDescendants
+      )
     )
     .getOr<Array<Element>>([]);
   const background = getBackground(parent, device)
     .err()
     .map((errors) =>
-      errors.errors
-        .filter((error) => error.kind === "interposed-descendant")
-        .map((error) => error.element)
+      flatMap(
+        errors.errors.filter(ColorError.isInterposedDescendants),
+        (error) => error.positionedDescendants
+      )
     )
     .getOr<Array<Element>>([]);
 
