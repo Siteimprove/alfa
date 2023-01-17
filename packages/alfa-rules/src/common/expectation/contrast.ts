@@ -70,25 +70,48 @@ export function hasSufficientContrastExperimental(
   largeTextThreshold: number,
   normalTextThreshold: number
 ) {
-  // all non-transparent interposed descendants of an ancestor, except ancestors
-  // of the target (which are not "interposed" as far as the target is concerned)
-  const interposedDescendants = target
-    .ancestors(Node.fullTree)
-    .filter(isElement)
-    .flatMap((element) => getInterposedDescendant(device, element))
-    .reject(hasTransparentBackground(device))
-    .reject((node) => node.isAncestorOf(target, Node.fullTree));
+  // Associated Applicability should ensure that target have Element as parent.
+  // Additionally, stray text nodes should not exist in our use case and we'd
+  // rather crash if finding one.
+  const parent = target.parent(Node.flatTree).getUnsafe() as Element;
+
+  // We try to compute foreground and background colors first.
+  // If they resolve correctly, we're happy and do not need to ask anything.
+  // But if they do have interposed descendants, we need to ask which one to
+  // ignore, and recompute colors.
+  // When no interposed descendants are encountered, the second call to
+  // getBackground/getForeground should trigger a cache hit and be cheap since
+  // Set.empty() returns a static value.
+
+  const foreground = getForeground(parent, device)
+    // if we cannot resolve automatically
+    .err()
+    .map((errors) =>
+      errors.errors
+        // gather all interposed-descendant errors
+        .filter((error) => error.kind === "interposed-descendant")
+        // and keep the interposed element.
+        .map((error) => error.element)
+    )
+    .getOr<Array<Element>>([]);
+  const background = getBackground(parent, device)
+    .err()
+    .map((errors) =>
+      errors.errors
+        .filter((error) => error.kind === "interposed-descendant")
+        .map((error) => error.element)
+    )
+    .getOr<Array<Element>>([]);
+
+  // We use a set to dedupe elements, it is likely that the same are interposed
+  // for foreground and background.
+  const interposedDescendants = Set.from(foreground).concat(background);
 
   const ignoredInterposedElements = Question.of(
     "ignored-interposed-elements",
     Group.of(interposedDescendants),
     target
   ).answerIf(interposedDescendants.isEmpty(), []);
-
-  // Associated Applicability should ensure that target have Element as parent.
-  // Additionally, stray text nodes should not exist in our use case and we'd
-  // rather crash if finding one.
-  const parent = target.parent(Node.flatTree).getUnsafe() as Element;
 
   const foregrounds = Question.of("foreground-colors", target);
   const backgrounds = Question.of("background-colors", target);
