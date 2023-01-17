@@ -723,6 +723,45 @@ test(`evaluate() does not consider ancestors as interposed elements`, async (t) 
   ]);
 });
 
+test(`evaluate() ignore interposed descendants if it can resolve colors
+      before seeing any`, async (t) => {
+  const target = h.text("Hello World");
+  const div = <div style={{ backgroundColor: "yellow" }}>{target}</div>;
+  const interposed = (
+    <div
+      style={{
+        position: "absolute",
+        backgroundColor: "red",
+        width: "100%",
+        height: "100%",
+      }}
+    ></div>
+  );
+
+  // target is inside the div with solid color, so it doesn't care about the
+  // interposed element and can fully resolve its colors before encountering it.
+  const body = (
+    <body>
+      {interposed}
+      {div}
+    </body>
+  );
+
+  const document = h.document([body]);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    passed(R69, target, {
+      1: Outcomes.HasSufficientContrast(19.56, 4.5, [
+        Diagnostic.Pairing.of(
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(1, 1, 0)],
+          19.56
+        ),
+      ]),
+    }),
+  ]);
+});
+
 test(`evaluate() cannot tell when encountering an absolutely positioned parent
       before encountering an opaque background`, async (t) => {
   {
