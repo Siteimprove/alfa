@@ -77,11 +77,11 @@ export function hasSufficientContrastExperimental(
 
   // We try to compute foreground and background colors first.
   // If they resolve correctly, we're happy and do not need to ask anything.
-  // But if they do have interposed descendants, we need to ask which one to
+  // But if they do have interposed descendants, we need to ask which ones to
   // ignore, and recompute colors.
   // When no interposed descendants are encountered, the second call to
   // getBackground/getForeground should trigger a cache hit and be cheap since
-  // Set.empty() returns a static value.
+  // Set.empty() is a static value.
 
   const foreground = getForeground(parent, device)
     // if we cannot resolve automatically
