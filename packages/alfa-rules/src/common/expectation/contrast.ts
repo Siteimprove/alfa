@@ -70,12 +70,14 @@ export function hasSufficientContrastExperimental(
   largeTextThreshold: number,
   normalTextThreshold: number
 ) {
-  // all non-transparent interposed descendants of an ancestor
+  // all non-transparent interposed descendants of an ancestor, except ancestors
+  // of the target (which are not "interposed" as far as the target is concerned)
   const interposedDescendants = target
     .ancestors(Node.fullTree)
     .filter(isElement)
     .flatMap((element) => getInterposedDescendant(device, element))
-    .reject(hasTransparentBackground(device));
+    .reject(hasTransparentBackground(device))
+    .reject((node) => node.isAncestorOf(target, Node.fullTree));
 
   const ignoredInterposedElements = Question.of(
     "ignored-interposed-elements",
