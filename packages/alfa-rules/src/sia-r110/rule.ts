@@ -15,7 +15,7 @@ const { hasAttribute, hasNamespace, isElement } = Element;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
-  uri: "https://alfa.siteimprove.com/rules/sia-r21",
+  uri: "https://alfa.siteimprove.com/rules/sia-r110",
   requirements: [
     Criterion.of("1.3.1"),
     Technique.of("ARIA4"),
@@ -46,7 +46,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             target
               .tokens()
-              .every(
+              .some(
                 (token) => Role.isName(token) && Role.of(token).isConcrete()
               ),
             () => Outcomes.HasValidRole,
@@ -60,7 +60,7 @@ export default Rule.Atomic.of<Page, Attribute>({
 
 export namespace Outcomes {
   export const HasValidRole = Ok.of(
-    Diagnostic.of(`The element has a valid role`)
+    Diagnostic.of(`The element has a at least one valid role`)
   );
 
   export const HasNoValidRole = Err.of(
