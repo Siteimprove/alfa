@@ -56,10 +56,10 @@ export default Rule.Atomic.of<Page, Attribute>({
 
 export namespace Outcomes {
   export const HasValidRole = Ok.of(
-    Diagnostic.of(`The element has a valid role`)
+    Diagnostic.of(`The element has only valid roles`)
   );
 
   export const HasNoValidRole = Err.of(
-    Diagnostic.of(`The element does not have a valid role`)
+    Diagnostic.of(`The element does not have at least one valid role`)
   );
 }
