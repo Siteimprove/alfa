@@ -4,9 +4,9 @@ import { Device } from "@siteimprove/alfa-device";
 import { Attribute, Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
@@ -17,10 +17,9 @@ import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { not, equals, property } = Predicate;
-const { and } = Refinement;
+const { and, not, equals, property } = Predicate;
 
-export default Rule.Atomic.of<Page, Attribute<aria.Attribute.Name>>({
+export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r19",
   tags: [Scope.Component],
   evaluate({ device, document }) {
@@ -32,13 +31,17 @@ export default Rule.Atomic.of<Page, Attribute<aria.Attribute.Name>>({
           .filter(hasNamespace(Namespace.HTML, Namespace.SVG))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
-              and(isAriaAttribute, property("value", not(isEmpty)))
+              and(
+                property("name", aria.Attribute.isName),
+                property("value", not(isEmpty))
+              )
             )
           );
       },
 
       expectations(target) {
-        const { name, value } = target;
+        // We know from the Applicability that this is an `aria-*` attribute.
+        const { name, value } = target as Attribute<aria.Attribute.Name>;
         const attribute = aria.Attribute.of(name, value);
 
         // The owner is ensured because the applicability search for elements and
@@ -66,11 +69,6 @@ export namespace Outcomes {
     Diagnostic.of(`The attribute does not have a valid value`)
   );
 }
-
-const isAriaAttribute = property("name", aria.Attribute.isName) as Refinement<
-  Attribute,
-  Attribute<aria.Attribute.Name>
->;
 
 function isValid(attribute: aria.Attribute): boolean {
   const { type, value, options } = attribute;
@@ -111,20 +109,23 @@ function isValid(attribute: aria.Attribute): boolean {
 /**
  * All ids that exist in the tree of a given root.
  */
-const idsCache = Cache.empty<Node, Sequence<string>>();
+const idsCache = Cache.empty<Node, Set<string>>();
 
 function treeHasId(id: string, node: Node): boolean {
   // We absolutely need no traversal options here, because `id` are scoped to
   // trees, so we do not want to cross shadow or content boundaries.
   return idsCache
     .get(node.root(), () =>
-      node
-        .root()
-        .descendants()
-        .filter(isElement)
-        .collect((elt) => elt.id)
+      // Turning it into a Set for faster lookup.
+      Set.from(
+        node
+          .root()
+          .descendants()
+          .filter(isElement)
+          .collect((element) => element.id)
+      )
     )
-    .includes(id);
+    .has(id);
 }
 
 function isRequiredRefValid(
@@ -148,7 +149,7 @@ function isRequiredRefValid(
       (type === "id-reference" || type === "id-reference-list")
     ) {
       // This is a required attribute with an ID ref (list) value, one of the tokens
-      // must exist has an ID in the same tree.
+      // must exist as an ID in the same tree.
       // Note: as of ARIA 1.2, this is only aria-controls on scrollbar…
       return value.split(" ").some((token) => treeHasId(token.trim(), owner));
     }

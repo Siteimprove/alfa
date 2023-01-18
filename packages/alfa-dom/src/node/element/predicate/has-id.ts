@@ -19,6 +19,7 @@ export function hasId(id: string, ...rest: Array<string>): Predicate<Element>;
  * @public
  */
 export function hasId(ids: Iterable<string>): Predicate<Element>;
+
 export function hasId(
   idOrPredicate: string | Predicate<string> | Iterable<string> = () => true,
   ...ids: Array<string>
