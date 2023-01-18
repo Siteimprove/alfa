@@ -11,6 +11,7 @@ import { Asserter, Handler } from "@siteimprove/alfa-assert";
 import { Device } from "@siteimprove/alfa-device";
 import { Document, Node } from "@siteimprove/alfa-dom";
 import { Formatter } from "@siteimprove/alfa-formatter";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Request, Response } from "@siteimprove/alfa-http";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Page } from "@siteimprove/alfa-web";
@@ -39,7 +40,7 @@ declare global {
  * @public
  */
 export namespace Cypress {
-  export function createPlugin<T = unknown, Q = never, S = T>(
+  export function createPlugin<T extends Hashable, Q = never, S = T>(
     rules: Iterable<act.Rule<Page, T, Q, S>>,
     handlers: Iterable<Handler<Page, T, Q, S>> = [],
     options: Asserter.Options<Page, T, Q, S> = {}
@@ -112,7 +113,7 @@ export namespace Cypress {
      * `after()` hook that will write any files collected during the test run
      * _after_ the tests are done.
      */
-    export function persist<I, T, Q, S>(
+    export function persist<I, T extends Hashable, Q, S>(
       output: Mapper<I, string>,
       format: Formatter<I, T, Q, S> = earl()
     ): Handler<I, T, Q, S> {

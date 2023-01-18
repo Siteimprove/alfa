@@ -13,7 +13,7 @@ import { Scope } from "../tags";
 
 const { hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasId, hasName, hasNamespace, isElement } = Element;
-const { and, equals, not } = Predicate;
+const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r45",
@@ -28,10 +28,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           hasNamespace(Namespace.HTML),
           hasName("table"),
           isPerceivableForAll(device),
-          hasRole(
-            device,
-            not((role) => role.isPresentational())
-          )
+          hasRole(device, (role) => role.is("table"))
         )
       )
       .reduce((headers, table) => {

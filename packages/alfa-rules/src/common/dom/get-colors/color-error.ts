@@ -2,6 +2,7 @@ import { Diagnostic } from "@siteimprove/alfa-act";
 import { Array } from "@siteimprove/alfa-array";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -67,6 +68,11 @@ export class ColorErrors<
       value._message === this._message &&
       Array.equals(value._errors, this._errors)
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    this._errors.forEach((error) => error.hash(hash));
   }
 
   public toJSON(): ColorErrors.JSON<T> {
@@ -157,6 +163,13 @@ export abstract class ColorError<
       value._type === this._type &&
       value._kind === this._kind
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    this._element.hash(hash);
+    hash.writeString(this._kind);
+    hash.writeString(this._type);
   }
 
   public toJSON(): ColorError.JSON<T, K> {

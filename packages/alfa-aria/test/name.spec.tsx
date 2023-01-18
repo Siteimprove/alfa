@@ -222,7 +222,7 @@ test(`.from() determines the name of a <button> element with an aria-labelledby
 
 test(".from() order tokens in aria-labelledby order, not DOM order", (t) => {
   const target = (
-    <div id="test" aria-label="bar" aria-labelledby="ID1 test"></div>
+    <button id="test" aria-label="bar" aria-labelledby="ID1 test"></button>
   );
   const label = <div id="ID1">foo</div>;
 
@@ -236,19 +236,19 @@ test(".from() order tokens in aria-labelledby order, not DOM order", (t) => {
     sources: [
       {
         type: "reference",
-        attribute: "/div[1]/div[1]/@aria-labelledby",
+        attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "foo bar",
           sources: [
             {
-              element: "/div[1]/div[2]",
+              element: "/div[1]/div[1]",
               name: {
                 value: "foo",
-                sources: [{ text: "/div[1]/div[2]/text()[1]", type: "data" }],
+                sources: [{ text: "/div[1]/div[1]/text()[1]", type: "data" }],
               },
               type: "descendant",
             },
-            { attribute: "/div[1]/div[1]/@aria-label", type: "label" },
+            { attribute: "/div[1]/button[1]/@aria-label", type: "label" },
           ],
         },
       },
@@ -271,7 +271,7 @@ test(`.from() determines the name of a <button> element with a title attribute
 });
 
 test(`.from() determines the name of an <img> element with an alt attribute`, (t) => {
-  const img = <img alt="Hello world" />;
+  const img = <img alt="Hello world" src="foo.jpg" />;
 
   t.deepEqual(getName(img), {
     value: "Hello world",
@@ -283,7 +283,7 @@ test(`.from() determines the name of an <a> element with a <img> child element
       with an alt attribute`, (t) => {
   const a = (
     <a href="#">
-      <img alt="Hello world" />
+      <img alt="Hello world" src="foo.jpg" />
     </a>
   );
 
@@ -320,7 +320,7 @@ test(`.from() determines the name of an <a> element with a <figure> child elemen
   const a = (
     <a href="#">
       <figure>
-        <img alt="Hello world" />
+        <img alt="Hello world" src="foo.jpg" />
       </figure>
     </a>
   );
@@ -631,7 +631,7 @@ test(`.from() joins block descendant names with a space`, (t) => {
 });
 
 test(`.from() determines the name of an <area> element with an alt attribute`, (t) => {
-  const area = <area alt="Hello world" />;
+  const area = <area href="foo" alt="Hello world" />;
 
   t.deepEqual(getName(area), {
     value: "Hello world",
@@ -678,7 +678,7 @@ test(`.from() determines the name of a <figure> element with a <figcaption>
       child element with child text content`, (t) => {
   const figure = (
     <figure>
-      <img alt="This is an image" />
+      <img alt="This is an image" src="foo.jpg" />
       <figcaption>Hello world</figcaption>
     </figure>
   );
@@ -1027,7 +1027,7 @@ test(`.from() determines the name of a <img> element with a an empty alt
   // Due to presentational role conflict resolution, the role of `presentation`
   // is ignored to ensure that the `aria-label` attribute, which is a global
   // `aria-*` attribute, is exposed.
-  const img = <img alt="" aria-label="Hello world" />;
+  const img = <img alt="" aria-label="Hello world" src="foo.jpg" />;
 
   t.deepEqual(getName(img), {
     value: "Hello world",
@@ -1190,15 +1190,15 @@ test(`.from() correctly handles aria-labelledby references to elements
 
 test(`.from() correctly handles circular aria-labelledby references`, (t) => {
   const foo = (
-    <div id="foo" aria-labelledby="bar">
+    <button id="foo" aria-labelledby="bar">
       Foo
-    </div>
+    </button>
   );
 
   const bar = (
-    <div id="bar" aria-labelledby="foo">
+    <button id="bar" aria-labelledby="foo">
       Bar
-    </div>
+    </button>
   );
 
   <div>
@@ -1211,16 +1211,18 @@ test(`.from() correctly handles circular aria-labelledby references`, (t) => {
     sources: [
       {
         type: "reference",
-        attribute: "/div[1]/div[1]/@aria-labelledby",
+        attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "Bar",
           sources: [
             {
               type: "descendant",
-              element: "/div[1]/div[2]",
+              element: "/div[1]/button[2]",
               name: {
                 value: "Bar",
-                sources: [{ type: "data", text: "/div[1]/div[2]/text()[1]" }],
+                sources: [
+                  { type: "data", text: "/div[1]/button[2]/text()[1]" },
+                ],
               },
             },
           ],
@@ -1234,16 +1236,18 @@ test(`.from() correctly handles circular aria-labelledby references`, (t) => {
     sources: [
       {
         type: "reference",
-        attribute: "/div[1]/div[2]/@aria-labelledby",
+        attribute: "/div[1]/button[2]/@aria-labelledby",
         name: {
           value: "Foo",
           sources: [
             {
               type: "descendant",
-              element: "/div[1]/div[1]",
+              element: "/div[1]/button[1]",
               name: {
                 value: "Foo",
-                sources: [{ type: "data", text: "/div[1]/div[1]/text()[1]" }],
+                sources: [
+                  { type: "data", text: "/div[1]/button[1]/text()[1]" },
+                ],
               },
             },
           ],
@@ -1255,15 +1259,15 @@ test(`.from() correctly handles circular aria-labelledby references`, (t) => {
 
 test(`.from() correctly handles direct chained aria-labelledby references`, (t) => {
   const foo = (
-    <div id="foo" aria-labelledby="bar">
+    <button id="foo" aria-labelledby="bar">
       Foo
-    </div>
+    </button>
   );
 
   const bar = (
-    <div id="bar" aria-labelledby="baz">
+    <button id="bar" aria-labelledby="baz">
       Bar
-    </div>
+    </button>
   );
 
   <div>
@@ -1279,16 +1283,18 @@ test(`.from() correctly handles direct chained aria-labelledby references`, (t) 
     sources: [
       {
         type: "reference",
-        attribute: "/div[1]/div[1]/@aria-labelledby",
+        attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "Bar",
           sources: [
             {
               type: "descendant",
-              element: "/div[1]/div[2]",
+              element: "/div[1]/button[2]",
               name: {
                 value: "Bar",
-                sources: [{ type: "data", text: "/div[1]/div[2]/text()[1]" }],
+                sources: [
+                  { type: "data", text: "/div[1]/button[2]/text()[1]" },
+                ],
               },
             },
           ],
@@ -1304,16 +1310,16 @@ test(`.from() correctly handles direct chained aria-labelledby references`, (t) 
     sources: [
       {
         type: "reference",
-        attribute: "/div[1]/div[2]/@aria-labelledby",
+        attribute: "/div[1]/button[2]/@aria-labelledby",
         name: {
           value: "Baz",
           sources: [
             {
               type: "descendant",
-              element: "/div[1]/div[3]",
+              element: "/div[1]/div[1]",
               name: {
                 value: "Baz",
-                sources: [{ type: "data", text: "/div[1]/div[3]/text()[1]" }],
+                sources: [{ type: "data", text: "/div[1]/div[1]/text()[1]" }],
               },
             },
           ],
@@ -1325,9 +1331,9 @@ test(`.from() correctly handles direct chained aria-labelledby references`, (t) 
 
 test(`.from() correctly handles indirect chained aria-labelledby references`, (t) => {
   const foo = (
-    <div id="foo" aria-labelledby="bar">
+    <button id="foo" aria-labelledby="bar">
       Foo
-    </div>
+    </button>
   );
 
   const bar = (
@@ -1349,25 +1355,25 @@ test(`.from() correctly handles indirect chained aria-labelledby references`, (t
     sources: [
       {
         type: "reference",
-        attribute: "/div[1]/div[1]/@aria-labelledby",
+        attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "Bar",
           sources: [
             {
               type: "descendant",
-              element: "/div[1]/button[1]",
+              element: "/div[1]/button[2]",
               name: {
                 value: "Bar",
                 sources: [
                   {
                     type: "descendant",
-                    element: "/div[1]/button[1]/span[1]",
+                    element: "/div[1]/button[2]/span[1]",
                     name: {
                       value: "Bar",
                       sources: [
                         {
                           type: "data",
-                          text: "/div[1]/button[1]/span[1]/text()[1]",
+                          text: "/div[1]/button[2]/span[1]/text()[1]",
                         },
                       ],
                     },
@@ -1388,23 +1394,23 @@ test(`.from() correctly handles indirect chained aria-labelledby references`, (t
     sources: [
       {
         type: "descendant",
-        element: "/div[1]/button[1]",
+        element: "/div[1]/button[2]",
         name: {
           value: "Baz",
           sources: [
             {
               type: "reference",
-              attribute: "/div[1]/button[1]/span[1]/@aria-labelledby",
+              attribute: "/div[1]/button[2]/span[1]/@aria-labelledby",
               name: {
                 value: "Baz",
                 sources: [
                   {
                     type: "descendant",
-                    element: "/div[1]/div[2]",
+                    element: "/div[1]/div[1]",
                     name: {
                       value: "Baz",
                       sources: [
-                        { type: "data", text: "/div[1]/div[2]/text()[1]" },
+                        { type: "data", text: "/div[1]/div[1]/text()[1]" },
                       ],
                     },
                   },
@@ -1420,9 +1426,9 @@ test(`.from() correctly handles indirect chained aria-labelledby references`, (t
 
 test(`.from() correctly handles self-referencing aria-labelledby references`, (t) => {
   const foo = (
-    <div id="foo" aria-labelledby="foo bar">
+    <button id="foo" aria-labelledby="foo bar">
       Hello
-    </div>
+    </button>
   );
 
   <div>
@@ -1435,24 +1441,26 @@ test(`.from() correctly handles self-referencing aria-labelledby references`, (t
     sources: [
       {
         type: "reference",
-        attribute: "/div[1]/div[1]/@aria-labelledby",
+        attribute: "/div[1]/button[1]/@aria-labelledby",
         name: {
           value: "Hello world",
           sources: [
             {
               type: "descendant",
-              element: "/div[1]/div[1]",
+              element: "/div[1]/button[1]",
               name: {
                 value: "Hello",
-                sources: [{ type: "data", text: "/div[1]/div[1]/text()[1]" }],
+                sources: [
+                  { type: "data", text: "/div[1]/button[1]/text()[1]" },
+                ],
               },
             },
             {
               type: "descendant",
-              element: "/div[1]/div[2]",
+              element: "/div[1]/div[1]",
               name: {
                 value: "world",
-                sources: [{ type: "data", text: "/div[1]/div[2]/text()[1]" }],
+                sources: [{ type: "data", text: "/div[1]/div[1]/text()[1]" }],
               },
             },
           ],

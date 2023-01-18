@@ -20,6 +20,7 @@ export const Roles = {
         "aria-atomic",
         {
           required: false,
+          prohibited: false,
           value: "true",
         },
       ],
@@ -27,6 +28,7 @@ export const Roles = {
         "aria-live",
         {
           required: false,
+          prohibited: false,
           value: "assertive",
         },
       ],
@@ -69,6 +71,7 @@ export const Roles = {
         "aria-activedescendant",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -76,6 +79,7 @@ export const Roles = {
         "aria-disabled",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -83,6 +87,7 @@ export const Roles = {
         "aria-errormessage",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -90,6 +95,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -97,6 +103,7 @@ export const Roles = {
         "aria-haspopup",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -104,6 +111,7 @@ export const Roles = {
         "aria-invalid",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -129,6 +137,7 @@ export const Roles = {
         "aria-posinset",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -136,6 +145,7 @@ export const Roles = {
         "aria-setsize",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -147,94 +157,6 @@ export const Roles = {
     },
     parent: {
       required: [],
-    },
-    children: {
-      presentational: false,
-      required: [],
-    },
-  },
-  associationlist: {
-    abstract: false,
-    inherited: ["section"],
-    attributes: [],
-    name: {
-      required: false,
-      prohibited: false,
-      from: ["author"],
-    },
-    parent: {
-      required: [],
-    },
-    children: {
-      presentational: false,
-      required: [["associationlistitemkey"], ["associationlistitemvalue"]],
-    },
-  },
-  associationlistitemkey: {
-    abstract: false,
-    inherited: ["section"],
-    attributes: [
-      [
-        "aria-level",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-posinset",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-setsize",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-    ],
-    name: {
-      required: false,
-      prohibited: false,
-      from: ["author"],
-    },
-    parent: {
-      required: [["associationlist"]],
-    },
-    children: {
-      presentational: false,
-      required: [],
-    },
-  },
-  associationlistitemvalue: {
-    abstract: false,
-    inherited: ["section"],
-    attributes: [
-      [
-        "aria-posinset",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-setsize",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-    ],
-    name: {
-      required: false,
-      prohibited: false,
-      from: ["author"],
-    },
-    parent: {
-      required: [["associationlist"]],
     },
     children: {
       presentational: false,
@@ -283,6 +205,7 @@ export const Roles = {
         "aria-disabled",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -290,6 +213,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -297,6 +221,7 @@ export const Roles = {
         "aria-haspopup",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -304,6 +229,7 @@ export const Roles = {
         "aria-pressed",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -324,7 +250,24 @@ export const Roles = {
   caption: {
     abstract: false,
     inherited: ["section"],
-    attributes: [],
+    attributes: [
+      [
+        "aria-label",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: true,
@@ -346,13 +289,7 @@ export const Roles = {
         "aria-colindex",
         {
           required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-colindextext",
-        {
-          required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -360,6 +297,7 @@ export const Roles = {
         "aria-colspan",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -367,13 +305,7 @@ export const Roles = {
         "aria-rowindex",
         {
           required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-rowindextext",
-        {
-          required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -381,6 +313,7 @@ export const Roles = {
         "aria-rowspan",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -406,6 +339,7 @@ export const Roles = {
         "aria-checked",
         {
           required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -413,6 +347,7 @@ export const Roles = {
         "aria-errormessage",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -420,6 +355,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -427,6 +363,7 @@ export const Roles = {
         "aria-invalid",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -434,6 +371,7 @@ export const Roles = {
         "aria-readonly",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -441,6 +379,7 @@ export const Roles = {
         "aria-required",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -461,7 +400,24 @@ export const Roles = {
   code: {
     abstract: false,
     inherited: ["section"],
-    attributes: [],
+    attributes: [
+      [
+        "aria-label",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: true,
@@ -483,6 +439,7 @@ export const Roles = {
         "aria-sort",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -508,6 +465,7 @@ export const Roles = {
         "aria-activedescendant",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -515,13 +473,15 @@ export const Roles = {
         "aria-autocomplete",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
       [
         "aria-controls",
         {
-          required: false,
+          required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -529,6 +489,7 @@ export const Roles = {
         "aria-errormessage",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -536,6 +497,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -543,6 +505,7 @@ export const Roles = {
         "aria-haspopup",
         {
           required: false,
+          prohibited: false,
           value: "listbox",
         },
       ],
@@ -550,6 +513,7 @@ export const Roles = {
         "aria-invalid",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -557,6 +521,7 @@ export const Roles = {
         "aria-readonly",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -564,6 +529,7 @@ export const Roles = {
         "aria-required",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -588,46 +554,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: [],
-    },
-    parent: {
-      required: [],
-    },
-    children: {
-      presentational: false,
-      required: [],
-    },
-  },
-  comment: {
-    abstract: false,
-    inherited: ["article"],
-    attributes: [
-      [
-        "aria-level",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-posinset",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-setsize",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-    ],
-    name: {
-      required: false,
-      prohibited: false,
-      from: ["author", "contents"],
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -662,6 +589,7 @@ export const Roles = {
         "aria-activedescendant",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -669,6 +597,7 @@ export const Roles = {
         "aria-disabled",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -676,7 +605,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: [],
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -709,8 +638,8 @@ export const Roles = {
     attributes: [],
     name: {
       required: false,
-      prohibited: true,
-      from: [],
+      prohibited: false,
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -723,7 +652,24 @@ export const Roles = {
   deletion: {
     abstract: false,
     inherited: ["section"],
-    attributes: [],
+    attributes: [
+      [
+        "aria-label",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: true,
@@ -791,7 +737,24 @@ export const Roles = {
   emphasis: {
     abstract: false,
     inherited: ["section"],
-    attributes: [],
+    attributes: [
+      [
+        "aria-label",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: true,
@@ -844,7 +807,7 @@ export const Roles = {
     inherited: ["landmark"],
     attributes: [],
     name: {
-      required: true,
+      required: false,
       prohibited: false,
       from: ["author"],
     },
@@ -859,7 +822,32 @@ export const Roles = {
   generic: {
     abstract: false,
     inherited: ["structure"],
-    attributes: [],
+    attributes: [
+      [
+        "aria-label",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-roledescription",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: true,
@@ -881,6 +869,7 @@ export const Roles = {
         "aria-multiselectable",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -888,6 +877,7 @@ export const Roles = {
         "aria-readonly",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -913,6 +903,7 @@ export const Roles = {
         "aria-disabled",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -920,6 +911,7 @@ export const Roles = {
         "aria-errormessage",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -927,6 +919,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -934,6 +927,7 @@ export const Roles = {
         "aria-haspopup",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -941,6 +935,7 @@ export const Roles = {
         "aria-invalid",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -948,6 +943,7 @@ export const Roles = {
         "aria-readonly",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -955,6 +951,7 @@ export const Roles = {
         "aria-required",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -962,6 +959,7 @@ export const Roles = {
         "aria-selected",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -987,6 +985,7 @@ export const Roles = {
         "aria-activedescendant",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -994,6 +993,7 @@ export const Roles = {
         "aria-disabled",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1019,6 +1019,7 @@ export const Roles = {
         "aria-level",
         {
           required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1027,23 +1028,6 @@ export const Roles = {
       required: true,
       prohibited: false,
       from: ["author", "contents"],
-    },
-    parent: {
-      required: [],
-    },
-    children: {
-      presentational: false,
-      required: [],
-    },
-  },
-  image: {
-    abstract: false,
-    inherited: [],
-    attributes: [],
-    name: {
-      required: false,
-      prohibited: false,
-      from: [],
     },
     parent: {
       required: [],
@@ -1078,6 +1062,7 @@ export const Roles = {
         "aria-disabled",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1085,7 +1070,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: [],
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1098,7 +1083,24 @@ export const Roles = {
   insertion: {
     abstract: false,
     inherited: ["section"],
-    attributes: [],
+    attributes: [
+      [
+        "aria-label",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: true,
@@ -1119,7 +1121,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: [],
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1137,6 +1139,7 @@ export const Roles = {
         "aria-disabled",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1144,6 +1147,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1151,6 +1155,7 @@ export const Roles = {
         "aria-haspopup",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1193,6 +1198,7 @@ export const Roles = {
         "aria-errormessage",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1200,6 +1206,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1207,6 +1214,7 @@ export const Roles = {
         "aria-invalid",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1214,6 +1222,7 @@ export const Roles = {
         "aria-multiselectable",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1221,6 +1230,7 @@ export const Roles = {
         "aria-orientation",
         {
           required: false,
+          prohibited: false,
           value: "vertical",
         },
       ],
@@ -1228,6 +1238,7 @@ export const Roles = {
         "aria-readonly",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1235,6 +1246,7 @@ export const Roles = {
         "aria-required",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1257,9 +1269,18 @@ export const Roles = {
     inherited: ["section"],
     attributes: [
       [
+        "aria-level",
+        {
+          required: false,
+          prohibited: false,
+          value: null,
+        },
+      ],
+      [
         "aria-posinset",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1267,6 +1288,7 @@ export const Roles = {
         "aria-setsize",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1292,6 +1314,7 @@ export const Roles = {
         "aria-live",
         {
           required: false,
+          prohibited: false,
           value: "polite",
         },
       ],
@@ -1326,29 +1349,12 @@ export const Roles = {
       required: [],
     },
   },
-  mark: {
-    abstract: false,
-    inherited: ["section"],
-    attributes: [],
-    name: {
-      required: false,
-      prohibited: true,
-      from: [],
-    },
-    parent: {
-      required: [],
-    },
-    children: {
-      presentational: false,
-      required: [],
-    },
-  },
   marquee: {
     abstract: false,
     inherited: ["section"],
     attributes: [],
     name: {
-      required: false,
+      required: true,
       prohibited: false,
       from: ["author"],
     },
@@ -1385,6 +1391,7 @@ export const Roles = {
         "aria-orientation",
         {
           required: false,
+          prohibited: false,
           value: "vertical",
         },
       ],
@@ -1417,6 +1424,7 @@ export const Roles = {
         "aria-orientation",
         {
           required: false,
+          prohibited: false,
           value: "horizontal",
         },
       ],
@@ -1449,6 +1457,7 @@ export const Roles = {
         "aria-disabled",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1456,6 +1465,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1463,6 +1473,7 @@ export const Roles = {
         "aria-haspopup",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1470,6 +1481,7 @@ export const Roles = {
         "aria-posinset",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1477,6 +1489,7 @@ export const Roles = {
         "aria-setsize",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1487,12 +1500,7 @@ export const Roles = {
       from: ["author", "contents"],
     },
     parent: {
-      required: [
-        ["menu"],
-        ["menubar"],
-        ["group", "menu"],
-        ["group", "menubar"],
-      ],
+      required: [["group"], ["menu"], ["menubar"]],
     },
     children: {
       presentational: false,
@@ -1507,6 +1515,7 @@ export const Roles = {
         "aria-checked",
         {
           required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1517,12 +1526,7 @@ export const Roles = {
       from: ["author", "contents"],
     },
     parent: {
-      required: [
-        ["menu"],
-        ["menubar"],
-        ["group", "menu"],
-        ["group", "menubar"],
-      ],
+      required: [["group"], ["menu"], ["menubar"]],
     },
     children: {
       presentational: true,
@@ -1531,28 +1535,15 @@ export const Roles = {
   },
   menuitemradio: {
     abstract: false,
-    inherited: ["menuitem"],
-    attributes: [
-      [
-        "aria-checked",
-        {
-          required: true,
-          value: null,
-        },
-      ],
-    ],
+    inherited: ["menuitemcheckbox"],
+    attributes: [],
     name: {
       required: true,
       prohibited: false,
       from: ["author", "contents"],
     },
     parent: {
-      required: [
-        ["menu"],
-        ["menubar"],
-        ["group", "menu"],
-        ["group", "menubar"],
-      ],
+      required: [["group"], ["menu"], ["menubar"]],
     },
     children: {
       presentational: true,
@@ -1567,6 +1558,7 @@ export const Roles = {
         "aria-valuemax",
         {
           required: false,
+          prohibited: false,
           value: "100",
         },
       ],
@@ -1574,6 +1566,7 @@ export const Roles = {
         "aria-valuemin",
         {
           required: false,
+          prohibited: false,
           value: "0",
         },
       ],
@@ -1581,6 +1574,7 @@ export const Roles = {
         "aria-valuenow",
         {
           required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1657,6 +1651,7 @@ export const Roles = {
         "aria-checked",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1664,20 +1659,23 @@ export const Roles = {
         "aria-posinset",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
       [
         "aria-selected",
         {
-          required: false,
-          value: null,
+          required: true,
+          prohibited: false,
+          value: "false",
         },
       ],
       [
         "aria-setsize",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1688,7 +1686,7 @@ export const Roles = {
       from: ["author", "contents"],
     },
     parent: {
-      required: [["listbox"], ["group", "listbox"]],
+      required: [["group"], ["listbox"]],
     },
     children: {
       presentational: true,
@@ -1698,7 +1696,24 @@ export const Roles = {
   paragraph: {
     abstract: false,
     inherited: ["section"],
-    attributes: [],
+    attributes: [
+      [
+        "aria-label",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: true,
@@ -1715,7 +1730,24 @@ export const Roles = {
   presentation: {
     abstract: false,
     inherited: ["structure"],
-    attributes: [],
+    attributes: [
+      [
+        "aria-label",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: true,
@@ -1737,6 +1769,7 @@ export const Roles = {
         "aria-valuemax",
         {
           required: false,
+          prohibited: false,
           value: "100",
         },
       ],
@@ -1744,6 +1777,7 @@ export const Roles = {
         "aria-valuemin",
         {
           required: false,
+          prohibited: false,
           value: "0",
         },
       ],
@@ -1769,6 +1803,7 @@ export const Roles = {
         "aria-checked",
         {
           required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1776,6 +1811,7 @@ export const Roles = {
         "aria-posinset",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1783,6 +1819,7 @@ export const Roles = {
         "aria-setsize",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1808,6 +1845,7 @@ export const Roles = {
         "aria-errormessage",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1815,6 +1853,7 @@ export const Roles = {
         "aria-invalid",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1822,6 +1861,7 @@ export const Roles = {
         "aria-readonly",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1829,6 +1869,7 @@ export const Roles = {
         "aria-required",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1854,6 +1895,7 @@ export const Roles = {
         "aria-valuemax",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1861,6 +1903,7 @@ export const Roles = {
         "aria-valuemin",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1868,6 +1911,7 @@ export const Roles = {
         "aria-valuenow",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1875,6 +1919,7 @@ export const Roles = {
         "aria-valuetext",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1882,7 +1927,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: [],
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -1917,20 +1962,7 @@ export const Roles = {
         "aria-atomic",
         {
           required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-braillelabel",
-        {
-          required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-brailleroledescription",
-        {
-          required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1938,6 +1970,7 @@ export const Roles = {
         "aria-busy",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1945,6 +1978,7 @@ export const Roles = {
         "aria-controls",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1952,6 +1986,7 @@ export const Roles = {
         "aria-current",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1959,13 +1994,7 @@ export const Roles = {
         "aria-describedby",
         {
           required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-description",
-        {
-          required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1973,6 +2002,7 @@ export const Roles = {
         "aria-details",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1980,6 +2010,7 @@ export const Roles = {
         "aria-dropeffect",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1987,6 +2018,7 @@ export const Roles = {
         "aria-flowto",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -1994,6 +2026,7 @@ export const Roles = {
         "aria-grabbed",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2001,6 +2034,7 @@ export const Roles = {
         "aria-hidden",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2008,6 +2042,7 @@ export const Roles = {
         "aria-keyshortcuts",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2015,6 +2050,7 @@ export const Roles = {
         "aria-label",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2022,6 +2058,7 @@ export const Roles = {
         "aria-labelledby",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2029,6 +2066,7 @@ export const Roles = {
         "aria-live",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2036,6 +2074,7 @@ export const Roles = {
         "aria-owns",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2043,6 +2082,7 @@ export const Roles = {
         "aria-relevant",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2050,6 +2090,7 @@ export const Roles = {
         "aria-roledescription",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2075,6 +2116,7 @@ export const Roles = {
         "aria-colindex",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2082,6 +2124,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2089,6 +2132,7 @@ export const Roles = {
         "aria-level",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2096,6 +2140,7 @@ export const Roles = {
         "aria-posinset",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2103,13 +2148,7 @@ export const Roles = {
         "aria-rowindex",
         {
           required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-rowindextext",
-        {
-          required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2117,6 +2156,7 @@ export const Roles = {
         "aria-selected",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2124,6 +2164,7 @@ export const Roles = {
         "aria-setsize",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2134,14 +2175,7 @@ export const Roles = {
       from: ["author", "contents"],
     },
     parent: {
-      required: [
-        ["grid"],
-        ["table"],
-        ["treegrid"],
-        ["rowgroup", "grid"],
-        ["rowgroup", "table"],
-        ["rowgroup", "treegrid"],
-      ],
+      required: [["grid"], ["rowgroup"], ["table"], ["treegrid"]],
     },
     children: {
       presentational: false,
@@ -2173,6 +2207,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2180,6 +2215,7 @@ export const Roles = {
         "aria-sort",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2205,6 +2241,7 @@ export const Roles = {
         "aria-controls",
         {
           required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2212,6 +2249,7 @@ export const Roles = {
         "aria-disabled",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2219,6 +2257,7 @@ export const Roles = {
         "aria-orientation",
         {
           required: false,
+          prohibited: false,
           value: "vertical",
         },
       ],
@@ -2226,6 +2265,7 @@ export const Roles = {
         "aria-valuemax",
         {
           required: false,
+          prohibited: false,
           value: "100",
         },
       ],
@@ -2233,6 +2273,7 @@ export const Roles = {
         "aria-valuemin",
         {
           required: false,
+          prohibited: false,
           value: "0",
         },
       ],
@@ -2240,6 +2281,7 @@ export const Roles = {
         "aria-valuenow",
         {
           required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2315,7 +2357,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: [],
+      from: ["author", "contents"],
     },
     parent: {
       required: [],
@@ -2333,6 +2375,7 @@ export const Roles = {
         "aria-orientation",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2340,7 +2383,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: [],
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2358,6 +2401,7 @@ export const Roles = {
         "aria-disabled",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2365,6 +2409,7 @@ export const Roles = {
         "aria-orientation",
         {
           required: false,
+          prohibited: false,
           value: "horizontal",
         },
       ],
@@ -2372,6 +2417,7 @@ export const Roles = {
         "aria-valuemax",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2379,6 +2425,7 @@ export const Roles = {
         "aria-valuemin",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2386,6 +2433,7 @@ export const Roles = {
         "aria-valuenow",
         {
           required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2393,6 +2441,7 @@ export const Roles = {
         "aria-valuetext",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2418,6 +2467,7 @@ export const Roles = {
         "aria-errormessage",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2425,6 +2475,7 @@ export const Roles = {
         "aria-haspopup",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2432,6 +2483,7 @@ export const Roles = {
         "aria-invalid",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2439,6 +2491,7 @@ export const Roles = {
         "aria-orientation",
         {
           required: false,
+          prohibited: false,
           value: "horizontal",
         },
       ],
@@ -2446,6 +2499,7 @@ export const Roles = {
         "aria-readonly",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2453,6 +2507,7 @@ export const Roles = {
         "aria-valuemax",
         {
           required: false,
+          prohibited: false,
           value: "100",
         },
       ],
@@ -2460,6 +2515,7 @@ export const Roles = {
         "aria-valuemin",
         {
           required: false,
+          prohibited: false,
           value: "0",
         },
       ],
@@ -2467,6 +2523,7 @@ export const Roles = {
         "aria-valuenow",
         {
           required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2492,6 +2549,7 @@ export const Roles = {
         "aria-errormessage",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2499,6 +2557,7 @@ export const Roles = {
         "aria-invalid",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2506,6 +2565,7 @@ export const Roles = {
         "aria-readonly",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2513,6 +2573,7 @@ export const Roles = {
         "aria-required",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2520,6 +2581,7 @@ export const Roles = {
         "aria-valuemax",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2527,6 +2589,7 @@ export const Roles = {
         "aria-valuemin",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2534,6 +2597,7 @@ export const Roles = {
         "aria-valuenow",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2541,6 +2605,7 @@ export const Roles = {
         "aria-valuetext",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2566,6 +2631,7 @@ export const Roles = {
         "aria-atomic",
         {
           required: false,
+          prohibited: false,
           value: "true",
         },
       ],
@@ -2573,6 +2639,7 @@ export const Roles = {
         "aria-live",
         {
           required: false,
+          prohibited: false,
           value: "polite",
         },
       ],
@@ -2593,7 +2660,24 @@ export const Roles = {
   strong: {
     abstract: false,
     inherited: ["section"],
-    attributes: [],
+    attributes: [
+      [
+        "aria-label",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: true,
@@ -2627,7 +2711,24 @@ export const Roles = {
   subscript: {
     abstract: false,
     inherited: ["section"],
-    attributes: [],
+    attributes: [
+      [
+        "aria-label",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: true,
@@ -2639,29 +2740,29 @@ export const Roles = {
     children: {
       presentational: false,
       required: [],
-    },
-  },
-  suggestion: {
-    abstract: false,
-    inherited: ["section"],
-    attributes: [],
-    name: {
-      required: false,
-      prohibited: true,
-      from: [],
-    },
-    parent: {
-      required: [],
-    },
-    children: {
-      presentational: false,
-      required: [["insertion"], ["deletion"]],
     },
   },
   superscript: {
     abstract: false,
     inherited: ["section"],
-    attributes: [],
+    attributes: [
+      [
+        "aria-label",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+      [
+        "aria-labelledby",
+        {
+          required: false,
+          prohibited: true,
+          value: null,
+        },
+      ],
+    ],
     name: {
       required: false,
       prohibited: true,
@@ -2683,6 +2784,7 @@ export const Roles = {
         "aria-checked",
         {
           required: true,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2708,6 +2810,7 @@ export const Roles = {
         "aria-disabled",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2715,6 +2818,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2722,6 +2826,7 @@ export const Roles = {
         "aria-haspopup",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2729,6 +2834,7 @@ export const Roles = {
         "aria-posinset",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2736,6 +2842,7 @@ export const Roles = {
         "aria-selected",
         {
           required: false,
+          prohibited: false,
           value: "false",
         },
       ],
@@ -2743,12 +2850,13 @@ export const Roles = {
         "aria-setsize",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
     ],
     name: {
-      required: true,
+      required: false,
       prohibited: false,
       from: ["author", "contents"],
     },
@@ -2768,6 +2876,7 @@ export const Roles = {
         "aria-colcount",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2775,6 +2884,7 @@ export const Roles = {
         "aria-rowcount",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2800,6 +2910,7 @@ export const Roles = {
         "aria-multiselectable",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2807,6 +2918,7 @@ export const Roles = {
         "aria-orientation",
         {
           required: false,
+          prohibited: false,
           value: "horizontal",
         },
       ],
@@ -2847,8 +2959,8 @@ export const Roles = {
     attributes: [],
     name: {
       required: false,
-      prohibited: true,
-      from: [],
+      prohibited: false,
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2866,6 +2978,7 @@ export const Roles = {
         "aria-activedescendant",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2873,6 +2986,7 @@ export const Roles = {
         "aria-autocomplete",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2880,6 +2994,7 @@ export const Roles = {
         "aria-errormessage",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2887,6 +3002,7 @@ export const Roles = {
         "aria-haspopup",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2894,6 +3010,7 @@ export const Roles = {
         "aria-invalid",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2901,6 +3018,7 @@ export const Roles = {
         "aria-multiline",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2908,6 +3026,7 @@ export const Roles = {
         "aria-placeholder",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2915,6 +3034,7 @@ export const Roles = {
         "aria-readonly",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2922,6 +3042,7 @@ export const Roles = {
         "aria-required",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -2945,8 +3066,8 @@ export const Roles = {
     attributes: [],
     name: {
       required: false,
-      prohibited: true,
-      from: [],
+      prohibited: false,
+      from: ["author"],
     },
     parent: {
       required: [],
@@ -2981,6 +3102,7 @@ export const Roles = {
         "aria-orientation",
         {
           required: false,
+          prohibited: false,
           value: "horizontal",
         },
       ],
@@ -3003,7 +3125,7 @@ export const Roles = {
     inherited: ["section"],
     attributes: [],
     name: {
-      required: false,
+      required: true,
       prohibited: false,
       from: ["author", "contents"],
     },
@@ -3023,6 +3145,7 @@ export const Roles = {
         "aria-errormessage",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -3030,6 +3153,7 @@ export const Roles = {
         "aria-invalid",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -3037,6 +3161,7 @@ export const Roles = {
         "aria-multiselectable",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -3044,6 +3169,7 @@ export const Roles = {
         "aria-orientation",
         {
           required: false,
+          prohibited: false,
           value: "vertical",
         },
       ],
@@ -3051,6 +3177,7 @@ export const Roles = {
         "aria-required",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -3093,6 +3220,7 @@ export const Roles = {
         "aria-expanded",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -3100,13 +3228,7 @@ export const Roles = {
         "aria-haspopup",
         {
           required: false,
-          value: null,
-        },
-      ],
-      [
-        "aria-level",
-        {
-          required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -3117,7 +3239,7 @@ export const Roles = {
       from: ["author", "contents"],
     },
     parent: {
-      required: [["tree"], ["group", "treeitem"]],
+      required: [["group"], ["tree"]],
     },
     children: {
       presentational: false,
@@ -3149,6 +3271,7 @@ export const Roles = {
         "aria-modal",
         {
           required: false,
+          prohibited: false,
           value: null,
         },
       ],
@@ -3156,7 +3279,7 @@ export const Roles = {
     name: {
       required: false,
       prohibited: false,
-      from: [],
+      from: ["author"],
     },
     parent: {
       required: [],

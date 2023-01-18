@@ -6,6 +6,8 @@
 
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Flags } from '@siteimprove/alfa-flags';
+import { Hash } from '@siteimprove/alfa-hash';
+import { Hashable } from '@siteimprove/alfa-hash';
 import * as json from '@siteimprove/alfa-json';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
@@ -13,7 +15,7 @@ import { Refinement } from '@siteimprove/alfa-refinement';
 import { Sequence } from '@siteimprove/alfa-sequence';
 
 // @public
-export abstract class Node<F extends Flags.allFlags, T extends string = string> implements Iterable<Node<F>>, Equatable, json.Serializable<Node.JSON<T>> {
+export abstract class Node<F extends Flags.allFlags, T extends string = string> implements Iterable<Node<F>>, Equatable, Hashable, json.Serializable<Node.JSON<T>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Node<F>>;
     protected constructor(children: Array<Node<F>>, type: T);
@@ -43,6 +45,8 @@ export abstract class Node<F extends Flags.allFlags, T extends string = string> 
     // (undocumented)
     get frozen(): boolean;
     protected _frozen: boolean;
+    // (undocumented)
+    hash(hash: Hash): void;
     // (undocumented)
     inclusiveAncestors(options?: Flags<F>): Sequence<Node<F>>;
     // (undocumented)

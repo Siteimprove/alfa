@@ -213,7 +213,7 @@ test(`.from() correctly handles self-referential aria-owns references`, (t) => {
   t.deepEqual(Node.from(div, device).toJSON(), {
     type: "element",
     node: "/div[1]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [
       {
@@ -238,7 +238,7 @@ test(`.from() correctly handles circular aria-owns references between siblings`,
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "element",
     node: "/div[1]/div[1]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [
       {
@@ -250,7 +250,7 @@ test(`.from() correctly handles circular aria-owns references between siblings`,
       {
         type: "element",
         node: "/div[1]/div[2]",
-        role: null,
+        role: "generic",
         name: null,
         attributes: [
           {
@@ -266,7 +266,7 @@ test(`.from() correctly handles circular aria-owns references between siblings`,
   t.deepEqual(Node.from(bar, device).toJSON(), {
     type: "element",
     node: "/div[1]/div[2]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [
       {
@@ -287,7 +287,7 @@ test(`.from() correctly handles circular aria-owns references between ancestors
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "element",
     node: "/div[1]/div[1]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [
       {
@@ -301,11 +301,12 @@ test(`.from() correctly handles circular aria-owns references between ancestors
   t.deepEqual(Node.from(bar, device).toJSON(), {
     type: "container",
     node: "/div[1]",
+    role: "generic",
     children: [
       {
         type: "element",
         node: "/div[1]/div[1]",
-        role: null,
+        role: "generic",
         name: null,
         attributes: [
           {
@@ -344,7 +345,7 @@ test(`.from() does not expose elements that are not rendered due to a DOM
         node: "/div[1]/div[1]/div[1]",
       },
     ],
-    role: null,
+    role: "generic",
     name: null,
   });
 });
@@ -372,6 +373,7 @@ test(`.from() exposes elements that are aria-hidden due to a DOM
       {
         type: "container",
         node: "/div[1]/div[1]/div[1]",
+        role: "generic",
         children: [
           {
             type: "text",
@@ -381,7 +383,7 @@ test(`.from() exposes elements that are aria-hidden due to a DOM
         ],
       },
     ],
-    role: null,
+    role: "generic",
     name: null,
   });
 });
@@ -400,17 +402,17 @@ test(".from() exposes elements if they have a role", (t) => {
 });
 
 test(".from() exposes elements if they have ARIA attributes", (t) => {
-  const foo = <div aria-label="foo" />;
+  const foo = <div aria-live="assertive" />;
 
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "element",
     node: "/div[1]",
-    role: null,
-    name: "foo",
+    role: "generic",
+    name: null,
     attributes: [
       {
-        name: "aria-label",
-        value: "foo",
+        name: "aria-live",
+        value: "assertive",
       },
     ],
     children: [],
@@ -423,7 +425,7 @@ test(".from() exposes elements if they have a tabindex", (t) => {
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "element",
     node: "/div[1]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [],
     children: [],
@@ -448,6 +450,7 @@ test(`.from() does not expose elements that have no role, ARIA attributes, nor
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "container",
     node: "/div[1]",
+    role: "generic",
     children: [
       {
         type: "text",
@@ -465,6 +468,7 @@ test(`.from() does not expose text nodes of a parent element with
   t.deepEqual(Node.from(foo, device).toJSON(), {
     type: "container",
     node: "/div[1]",
+    role: null,
     children: [
       {
         type: "inert",
@@ -491,114 +495,6 @@ test(`.from() does not expose fallback DOM nodes for legacy browsers`, (t) => {
       {
         type: "inert",
         node: "/iframe[1]/div[1]",
-      },
-    ],
-  });
-});
-
-test(`.from() exposes implicitly required children of a presentational element
-      with an inherited presentational role`, (t) => {
-  const ul = (
-    <ul role="presentation">
-      <li />
-    </ul>
-  );
-
-  t.deepEqual(Node.from(ul, device).toJSON(), {
-    type: "container",
-    node: "/ul[1]",
-    children: [
-      {
-        type: "container",
-        node: "/ul[1]/li[1]",
-        children: [],
-      },
-    ],
-  });
-});
-
-test(`.from() doesn't inherit presentational roles into explicitly required
-      children of a presentational element`, (t) => {
-  const ul = (
-    <ul role="presentation">
-      <li role="listitem" />
-    </ul>
-  );
-
-  t.deepEqual(Node.from(ul, device).toJSON(), {
-    type: "container",
-    node: "/ul[1]",
-    children: [
-      {
-        type: "element",
-        node: "/ul[1]/li[1]",
-        role: "listitem",
-        name: null,
-        attributes: [
-          { name: "aria-setsize", value: "1" },
-          { name: "aria-posinset", value: "1" },
-        ],
-        children: [],
-      },
-    ],
-  });
-});
-
-test(`.from() doesn't inherit presentational roles into children of implicitly
-      required children of a presentational element`, (t) => {
-  const ul = (
-    <ul role="presentation">
-      <li>
-        {
-          // This element should _not_ inherit a presentational role as the
-          // parent <li> element has no required children.
-        }
-        <button />
-      </li>
-    </ul>
-  );
-
-  t.deepEqual(Node.from(ul, device).toJSON(), {
-    type: "container",
-    node: "/ul[1]",
-    children: [
-      {
-        type: "container",
-        node: "/ul[1]/li[1]",
-        children: [
-          {
-            type: "element",
-            node: "/ul[1]/li[1]/button[1]",
-            role: "button",
-            name: null,
-            attributes: [],
-            children: [],
-          },
-        ],
-      },
-    ],
-  });
-});
-
-test(`.from() doesn't expose children of elements with roles that designate
-      their children as presentational`, (t) => {
-  const button = (
-    <button>
-      <img src="#" />
-    </button>
-  );
-
-  t.deepEqual(Node.from(button, device).toJSON(), {
-    type: "element",
-    node: "/button[1]",
-    role: "button",
-    name: null,
-    attributes: [],
-    children: [
-      {
-        type: "container",
-        node: "/button[1]/img[1]",
-        children: [],
       },
     ],
   });
@@ -639,7 +535,7 @@ test(`.from() behaves when encountering an element with global properties where
   t.deepEqual(Node.from(div, device).toJSON(), {
     type: "element",
     node: "/div[1]",
-    role: null,
+    role: "generic",
     name: null,
     attributes: [
       {
@@ -651,6 +547,7 @@ test(`.from() behaves when encountering an element with global properties where
       {
         type: "container",
         node: "/div[1]/label[1]",
+        role: null,
         children: [
           {
             type: "text",
@@ -673,40 +570,5 @@ test(`.from() behaves when encountering an element with global properties where
         ],
       },
     ],
-  });
-});
-
-test(`.from() maps \`<select>\` to listboxes`, (t) => {
-  // mono-line <select> are mapped to combobox by HTML AAM, but their child
-  // <option> are still mapped to option, which are out of their context role.
-  // We cheat and always map <select> to listbox
-  const select = (
-    <select>
-      <option>Hello</option>
-    </select>
-  );
-
-  t.deepEqual(Node.from(select, device).toJSON(), {
-    type: "element",
-    children: [
-      {
-        type: "element",
-        children: [
-          {
-            type: "text",
-            node: "/select[1]/option[1]/text()[1]",
-            name: "Hello",
-          },
-        ],
-        node: "/select[1]/option[1]",
-        role: "option",
-        name: "Hello",
-        attributes: [{ name: "aria-selected", value: "false" }],
-      },
-    ],
-    node: "/select[1]",
-    role: "listbox",
-    name: null,
-    attributes: [{ name: "aria-orientation", value: "vertical" }],
   });
 });

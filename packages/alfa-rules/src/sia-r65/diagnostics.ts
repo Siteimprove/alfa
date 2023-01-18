@@ -1,4 +1,5 @@
 import { Diagnostic } from "@siteimprove/alfa-act";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Map } from "@siteimprove/alfa-map";
 
 export class MatchingClasses extends Diagnostic {
@@ -41,6 +42,12 @@ export class MatchingClasses extends Diagnostic {
       value._matchingTargets.equals(this._matchingTargets) &&
       value._matchingNonTargets.equals(this._matchingNonTargets)
     );
+  }
+
+  public hash(hash: Hash) {
+    super.hash(hash);
+    this._matchingTargets.hash(hash);
+    this._matchingNonTargets.hash(hash);
   }
 
   public toJSON(): MatchingClasses.JSON {

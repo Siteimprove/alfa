@@ -10,6 +10,9 @@
       "path": "../alfa-formatter"
     },
     {
+      "path": "../alfa-hash"
+    },
+    {
       "path": "../alfa-sarif"
     },
     {

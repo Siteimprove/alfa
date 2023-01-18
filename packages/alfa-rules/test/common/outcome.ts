@@ -1,9 +1,10 @@
 import { Diagnostic, Rule, Outcome } from "@siteimprove/alfa-act";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
-export function passed<T, Q, S>(
+export function passed<T extends Hashable, Q, S>(
   rule: Rule<Page, T, Q, S>,
   target: T,
   expectations: { [id: string]: Result<Diagnostic> }
@@ -15,7 +16,7 @@ export function passed<T, Q, S>(
   ).toJSON();
 }
 
-export function failed<T, Q, S>(
+export function failed<T extends Hashable, Q, S>(
   rule: Rule<Page, T, Q, S>,
   target: T,
   expectations: { [id: string]: Result<Diagnostic> }
@@ -27,13 +28,13 @@ export function failed<T, Q, S>(
   ).toJSON();
 }
 
-export function inapplicable<T, Q, S>(
+export function inapplicable<T extends Hashable, Q, S>(
   rule: Rule<Page, T, Q, S>
 ): Outcome.Inapplicable.JSON {
   return Outcome.Inapplicable.of(rule).toJSON();
 }
 
-export function cantTell<T, Q, S>(
+export function cantTell<T extends Hashable, Q, S>(
   rule: Rule<Page, T, Q, S>,
   target: T,
   diagnostic: Diagnostic = Diagnostic.empty

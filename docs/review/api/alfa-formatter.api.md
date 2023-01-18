@@ -5,17 +5,18 @@
 ```ts
 
 import { Future } from '@siteimprove/alfa-future';
+import { Hashable } from '@siteimprove/alfa-hash';
 import { Outcome } from '@siteimprove/alfa-act';
 import { Result } from '@siteimprove/alfa-result';
 import { Rule } from '@siteimprove/alfa-act';
 
 // @public (undocumented)
-export type Formatter<I = unknown, T = unknown, Q = never, S = T> = (input: I, rules: Iterable<Rule<I, T, Q, S>>, outcomes: Iterable<Outcome<I, T, Q, S>>) => Future.Maybe<string>;
+export type Formatter<I, T extends Hashable, Q = never, S = T> = (input: I, rules: Iterable<Rule<I, T, Q, S>>, outcomes: Iterable<Outcome<I, T, Q, S>>) => Future.Maybe<string>;
 
 // @public (undocumented)
 export namespace Formatter {
     // (undocumented)
-    export function load<I, T = unknown, Q = never, S = T>(name: string, defaultScope?: string): Promise<Result<Formatter<I, T, Q, S>, string>>;
+    export function load<I, T extends Hashable, Q = never, S = T>(name: string, defaultScope?: string): Promise<Result<Formatter<I, T, Q, S>, string>>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -42,7 +42,8 @@
     "test/dom/predicate/has-role.spec.tsx",
     "test/name.spec.tsx",
     "test/name-testable-statements.spec.tsx",
-    "test/node.spec.tsx"
+    "test/node.spec.tsx",
+    "test/role.spec.tsx"
   ],
   "references": [
     {

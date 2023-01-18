@@ -8,7 +8,7 @@ export * from "./predicate/has-tab-index";
 export * from "./predicate/has-unique-id";
 export * from "./predicate/is-browsing-context-container";
 export * from "./predicate/is-content";
-export * from "./predicate/is-disabled";
+export * from "./predicate/is-actually-disabled";
 export * from "./predicate/is-document-element";
 export * from "./predicate/is-draggable";
 export * from "./predicate/is-editing-host";

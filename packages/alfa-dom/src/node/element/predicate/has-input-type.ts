@@ -1,35 +1,12 @@
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 import { Element } from "../../element";
+import { InputType, inputType } from "../input-type";
+import { hasName } from "./has-name";
 
-const { equals } = Predicate;
-
-/**
- * {@link https://html.spec.whatwg.org/#attr-input-type}
- */
-type InputType =
-  | "hidden"
-  | "search"
-  | "tel"
-  | "url"
-  | "email"
-  | "password"
-  | "date"
-  | "month"
-  | "week"
-  | "time"
-  | "datetime-local"
-  | "number"
-  | "range"
-  | "color"
-  | "checkbox"
-  | "radio"
-  | "file"
-  | "submit"
-  | "image"
-  | "reset"
-  | "button"
-  | "text";
+const { equals, test } = Predicate;
+const { and } = Refinement;
 
 /**
  * @public
@@ -58,41 +35,7 @@ export function hasInputType(
     predicate = equals(inputTypeOrPredicate, ...inputTypes);
   }
 
-  return (element) => {
-    if (element.name !== "input") {
-      return false;
-    }
-
-    return predicate(
-      element
-        .attribute("type")
-        .flatMap((attribute) =>
-          attribute.enumerate(
-            "hidden",
-            "search",
-            "tel",
-            "url",
-            "email",
-            "password",
-            "date",
-            "month",
-            "week",
-            "time",
-            "datetime-local",
-            "number",
-            "range",
-            "color",
-            "checkbox",
-            "radio",
-            "file",
-            "submit",
-            "image",
-            "reset",
-            "button",
-            "text"
-          )
-        )
-        .getOr("text")
-    );
-  };
+  return and(hasName("input"), (element) =>
+    test(predicate, inputType(element))
+  );
 }

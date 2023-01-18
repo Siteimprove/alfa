@@ -1,8 +1,9 @@
 import { Diagnostic, Question, Rule } from "@siteimprove/alfa-act";
+import { Hashable } from "@siteimprove/alfa-hash";
 import { Result, Err } from "@siteimprove/alfa-result";
 
-export const Pass = (uri: string) =>
-  Rule.Atomic.of<string, string>({
+export const Pass = <T extends Hashable, Q = never>(uri: string) =>
+  Rule.Atomic.of<T, T, Q>({
     uri,
 
     evaluate(input) {
@@ -20,8 +21,8 @@ export const Pass = (uri: string) =>
     },
   });
 
-export const Fail = (uri: string) =>
-  Rule.Atomic.of<string, string>({
+export const Fail = <T extends Hashable, Q = never>(uri: string) =>
+  Rule.Atomic.of<T, T, Q>({
     uri,
 
     evaluate(input) {
@@ -39,8 +40,8 @@ export const Fail = (uri: string) =>
     },
   });
 
-export const CantTell = (uri: string) =>
-  Rule.Atomic.of<string, string, { "is-passed": ["boolean", boolean] }>({
+export const CantTell = <T extends Hashable>(uri: string) =>
+  Rule.Atomic.of<T, T, { "is-passed": ["boolean", boolean] }>({
     uri,
 
     evaluate(input) {
@@ -50,13 +51,13 @@ export const CantTell = (uri: string) =>
         },
 
         expectations(target) {
-          const isPassed = Question.of<
+          const isPassed = Question.of<"boolean", T, T, boolean, "is-passed">(
             "boolean",
-            string,
-            string,
-            boolean,
-            "is-passed"
-          >("boolean", "is-passed", "Does the rule pass?", target, target);
+            "is-passed",
+            "Does the rule pass?",
+            target,
+            target
+          );
           return {
             1: isPassed.map((passed) =>
               passed

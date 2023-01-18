@@ -3,6 +3,8 @@ export * from "./value";
 
 export * from "./property";
 
+// Importing the individual properties merges them into the Longhands and
+// Shorthands namespaces and effectively "declares" them.
 import "./property/background";
 import "./property/background-attachment";
 import "./property/background-clip";
@@ -110,6 +112,11 @@ import "./property/inset-inline-start";
 import "./property/left";
 import "./property/letter-spacing";
 import "./property/line-height";
+import "./property/margin";
+import "./property/margin-bottom";
+import "./property/margin-left";
+import "./property/margin-right";
+import "./property/margin-top";
 import "./property/min-height";
 import "./property/min-width";
 import "./property/opacity";

@@ -330,13 +330,17 @@ export namespace Element {
     hasUniqueId: typeof predicate_3.hasUniqueId, // (undocumented)
     isBrowsingContextContainer: typeof predicate_3.isBrowsingContextContainer, // (undocumented)
     isContent: typeof predicate_3.isContent, // (undocumented)
-    isDisabled: typeof predicate_3.isDisabled, // (undocumented)
+    isActuallyDisabled: typeof predicate_3.isActuallyDisabled, // (undocumented)
     isDocumentElement: typeof predicate_3.isDocumentElement, // (undocumented)
     isDraggable: typeof predicate_3.isDraggable, // (undocumented)
     isEditingHost: typeof predicate_3.isEditingHost, // (undocumented)
     isFallback: typeof predicate_3.isFallback, // (undocumented)
     isSuggestedFocusable: typeof predicate_3.isSuggestedFocusable, // (undocumented)
     isReplaced: typeof predicate_3.isReplaced;
+    const // Warning: (ae-forgotten-export) The symbol "helpers" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    inputType: typeof helpers.inputType;
 }
 
 // @public (undocumented)
@@ -492,11 +496,13 @@ function hasId(id: string, ...rest: Array<string>): Predicate<Element>;
 // @public (undocumented)
 function hasInclusiveDescendant(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
 
-// Warning: (ae-forgotten-export) The symbol "InputType" needs to be exported by the entry point index.d.ts
+// Warning: (ae-incompatible-release-tags) The symbol "hasInputType" is marked as @public, but its signature references "InputType" which is marked as @internal
 //
 // @public (undocumented)
 function hasInputType(predicate: Predicate<InputType>): Predicate<Element>;
 
+// Warning: (ae-incompatible-release-tags) The symbol "hasInputType" is marked as @public, but its signature references "InputType" which is marked as @internal
+//
 // @public (undocumented)
 function hasInputType(inputType: InputType, ...rest: Array<InputType>): Predicate<Element>;
 
@@ -560,14 +566,22 @@ export namespace ImportRule {
     }
 }
 
+// @internal (undocumented)
+type InputType = "hidden" | "search" | "tel" | "url" | "email" | "password" | "date" | "month" | "week" | "time" | "datetime-local" | "number" | "range" | "color" | "checkbox" | "radio" | "file" | "submit" | "image" | "reset" | "button" | "text";
+
+// Warning: (ae-incompatible-release-tags) The symbol "inputType" is marked as @public, but its signature references "InputType" which is marked as @internal
+//
+// @public (undocumented)
+function inputType(element: Element<"input">): InputType;
+
+// @public (undocumented)
+function isActuallyDisabled(element: Element): boolean;
+
 // @public (undocumented)
 function isBrowsingContextContainer(element: Element): boolean;
 
 // @public
 function isContent(options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-function isDisabled(element: Element): boolean;
 
 // @public (undocumented)
 function isDocumentElement(value: unknown): value is Element<"html">;

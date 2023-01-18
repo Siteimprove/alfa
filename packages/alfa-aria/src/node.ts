@@ -23,7 +23,7 @@ import { Container, Element, Inert, Text } from ".";
 
 import * as predicate from "./node/predicate";
 
-const { equals, not, test } = Predicate;
+const { and, equals, not, test } = Predicate;
 const { isRendered } = Style;
 
 /**
@@ -366,7 +366,7 @@ export namespace Node {
 
         const style = Style.from(node, device);
 
-        // Elements that are not rendered at all by means are never exposed in
+        // Elements that are not rendered at all are never exposed in
         // the accessibility tree, nor are their descendants.
         //
         // Since `aria-owns` can create an accessibility tree that is fairly
@@ -444,7 +444,7 @@ export namespace Node {
 
         // First pass: Look up implicit attributes on the role.
         if (role.isSome()) {
-          for (const attribute of role.get().attributes) {
+          for (const attribute of role.get().supportedAttributes) {
             for (const value of role.get().implicitAttributeValue(attribute)) {
               attributes = attributes.set(
                 attribute,
@@ -478,11 +478,17 @@ export namespace Node {
           }
         }
 
-        // If the element has neither attributes, a role, nor a tabindex, it is
-        // not itself interesting for accessibility purposes. It is therefore
-        // exposed as a container.
-        if (attributes.isEmpty() && role.isNone() && node.tabIndex().isNone()) {
-          return Container.of(node, children(state));
+        // If the element has neither attributes, a role (other than generic),
+        // nor a tabindex, it is not itself interesting for accessibility
+        // purposes. It is therefore exposed as a container.
+        // Some elements (mostly embedded content) are always exposed.
+        if (
+          attributes.isEmpty() &&
+          role.every(Role.hasName("generic")) &&
+          node.tabIndex().isNone() &&
+          !test(alwaysExpose, node)
+        ) {
+          return Container.of(node, children(state), role);
         }
 
         // If the element has a role that designates its children as
@@ -525,3 +531,13 @@ export namespace Node {
 
   export const { hasName } = predicate;
 }
+
+/**
+ * Some elements do not have an ARIA role but are nonetheless always exposed to
+ * ATs. These are mostly embedded content.
+ */
+// <object> with a non-empty data attribute
+const alwaysExpose = and(
+  dom.Element.hasName("object"),
+  dom.Element.hasAttribute("data", (data) => data.trim() !== "")
+);

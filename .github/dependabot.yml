@@ -17,3 +17,5 @@ updates:
     labels:
       - "actions"
       - "dependencies"
+    reviewers:
+      - "Siteimprove/alfa-owners"

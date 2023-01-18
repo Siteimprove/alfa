@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Attribute>({
   requirements: [Technique.of("ARIA5")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
-    const global = Set.from(Role.of("roletype").attributes);
+    const global = Set.from(Role.of("roletype").supportedAttributes);
 
     return {
       applicability() {

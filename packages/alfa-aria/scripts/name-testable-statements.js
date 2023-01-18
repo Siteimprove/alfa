@@ -110,6 +110,14 @@ function testExceptions(testId) {
         reason: "Alfa joins content traversal without spaces",
         issue: "https://github.com/Siteimprove/alfa/issues/1203",
       };
+    case "Name_test_case_596":
+    case "Name_test_case_597":
+    case "Name_test_case_598":
+    case "Name_test_case_599":
+      return {
+        reason: "ARIA 1.2 maps div to generic, which prohibits name",
+        issue: "https://github.com/w3c/accname/issues/180",
+      };
     default:
       return undefined;
   }
@@ -323,8 +331,8 @@ const device = Device.standard();
 function getTarget(document: Document, id: string): Element {
   return document
     .descendants()
-    .find(and(isElement, hasId("test")))
-    .get()
+    .find(and(isElement, hasId(id)))
+    .getUnsafe()
 }
 
 function getName(element: Element): string {

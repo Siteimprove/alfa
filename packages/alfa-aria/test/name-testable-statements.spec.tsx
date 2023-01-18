@@ -18,7 +18,7 @@ const device = Device.standard();
 function getTarget(document: Document, id: string): Element {
   return document
     .descendants()
-    .find(and(isElement, hasId("test")))
+    .find(and(isElement, hasId(id)))
     .getUnsafe();
 }
 
@@ -576,6 +576,9 @@ test("Name test case 566", (t) => {
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_596}
+ *
+ * ARIA 1.2 maps div to generic, which prohibits name
+ * {@link https://github.com/w3c/accname/issues/180}
  */
 test("Name test case 596", (t) => {
   const testCase = (
@@ -591,11 +594,14 @@ test("Name test case 596", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "bar");
+  t.notEqual(getName(target), "bar");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_597}
+ *
+ * ARIA 1.2 maps div to generic, which prohibits name
+ * {@link https://github.com/w3c/accname/issues/180}
  */
 test("Name test case 597", (t) => {
   const testCase = (
@@ -610,11 +616,14 @@ test("Name test case 597", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "Tag");
+  t.notEqual(getName(target), "Tag");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_598}
+ *
+ * ARIA 1.2 maps div to generic, which prohibits name
+ * {@link https://github.com/w3c/accname/issues/180}
  */
 test("Name test case 598", (t) => {
   const testCase = (
@@ -630,11 +639,14 @@ test("Name test case 598", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "bar");
+  t.notEqual(getName(target), "bar");
 });
 
 /**
  * {@link https://www.w3.org/wiki/AccName_1.1_Testable_Statements#Name_test_case_599}
+ *
+ * ARIA 1.2 maps div to generic, which prohibits name
+ * {@link https://github.com/w3c/accname/issues/180}
  */
 test("Name test case 599", (t) => {
   const testCase = (
@@ -651,7 +663,7 @@ test("Name test case 599", (t) => {
 
   const target = getTarget(document, "test");
 
-  t.equal(getName(target), "bar baz");
+  t.notEqual(getName(target), "bar baz");
 });
 
 /**

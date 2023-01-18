@@ -1,5 +1,6 @@
 /// <reference path="../types/unexpected.d.ts" />
 
+import { Hashable } from "@siteimprove/alfa-hash";
 import * as unexpected from "unexpected";
 
 import { Rule } from "@siteimprove/alfa-act";
@@ -20,7 +21,7 @@ declare module "unexpected" {
  * @public
  */
 export namespace Unexpected {
-  export function createPlugin<I, J, T = unknown, Q = never, S = T>(
+  export function createPlugin<I, J, T extends Hashable, Q = never, S = T>(
     transform: Mapper<I, Future.Maybe<J>>,
     rules: Iterable<Rule<J, T, Q, S>>,
     handlers: Iterable<Handler<J, T, Q, S>> = [],

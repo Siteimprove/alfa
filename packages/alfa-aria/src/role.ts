@@ -1,11 +1,14 @@
+import { Array } from "@siteimprove/alfa-array";
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hashable, Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Map } from "@siteimprove/alfa-map";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Set } from "@siteimprove/alfa-set";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -18,7 +21,7 @@ import * as predicate from "./role/predicate";
 
 const { and, not, nor } = Predicate;
 
-const roles = new Map<string, Role>();
+let roles = Map.empty<Role.Name, Role>();
 
 /**
  * @public
@@ -27,34 +30,67 @@ export class Role<N extends Role.Name = Role.Name>
   implements Equatable, Hashable, Serializable
 {
   public static of<N extends Role.Name>(name: N): Role<N> {
-    let role = roles.get(name);
+    return roles.get(name).getOrElse(() => {
+      // The "as const" building of Roles makes TS give it a very
+      // rigid type, and we need to manually help it to correctly merge the
+      // Attribute.Name keys into a single union type. As of TS 4.8.2, removing
+      // the type guard, or trying to destructure Roles[name] in one go, breaks.
+      const attributes: ReadonlyArray<
+        Readonly<
+          [Attribute.Name, Readonly<{ required: boolean; prohibited: boolean }>]
+        >
+      > = Roles[name].attributes;
+      const inherited = Roles[name].inherited;
 
-    if (role === undefined) {
-      const { inherited } = Roles[name];
-
-      const attributes = new Set(
-        [...Roles[name].attributes].map(([attribute]) => attribute)
+      const supportedAttributes = Set.from(
+        attributes.map(([attribute]) => attribute)
+      ).concat(
+        inherited.flatMap((parent) => Role.of(parent).supportedAttributes)
       );
 
-      for (const parent of inherited) {
-        for (const attribute of Role.of(parent).attributes) {
-          attributes.add(attribute);
-        }
-      }
+      const requiredAttributes = Set.from(
+        Array.collect(attributes, ([attribute, { required }]) =>
+          required ? Option.of(attribute) : None
+        )
+      ).concat(
+        inherited.flatMap((parent) => Role.of(parent).requiredAttributes)
+      );
 
-      role = new Role(name, [...attributes]);
-      roles.set(name, role);
-    }
+      const prohibitedAttributes = Set.from(
+        Array.collect(attributes, ([attribute, { prohibited }]) =>
+          prohibited ? Option.of(attribute) : None
+        )
+      ).concat(
+        inherited.flatMap((parent) => Role.of(parent).prohibitedAttributes)
+      );
 
-    return role as Role<N>;
+      const role = new Role<N>(
+        name,
+        [...supportedAttributes],
+        [...requiredAttributes],
+        [...prohibitedAttributes]
+      );
+      roles = roles.set(name, role);
+
+      return role;
+    }) as Role<N>;
   }
 
   private readonly _name: N;
-  private readonly _attributes: Array<Attribute.Name>;
+  private readonly _supportedAttributes: ReadonlyArray<Attribute.Name>;
+  private readonly _requiredAttributes: ReadonlyArray<Attribute.Name>;
+  private readonly _prohibitedAttributes: ReadonlyArray<Attribute.Name>;
 
-  private constructor(name: N, attributes: Array<Attribute.Name>) {
+  private constructor(
+    name: N,
+    supportedAttributes: Array<Attribute.Name>,
+    requiredAttributes: Array<Attribute.Name>,
+    prohibitedAttributes: Array<Attribute.Name>
+  ) {
     this._name = name;
-    this._attributes = attributes;
+    this._supportedAttributes = supportedAttributes;
+    this._requiredAttributes = requiredAttributes;
+    this._prohibitedAttributes = prohibitedAttributes;
   }
 
   public get name(): N {
@@ -62,10 +98,24 @@ export class Role<N extends Role.Name = Role.Name>
   }
 
   /**
-   * Get all attributes supported by this role and its inherited roles.
+   * Get all attributes supported by this role and its inherited (ancestors) roles.
    */
-  public get attributes(): ReadonlyArray<Attribute.Name> {
-    return this._attributes;
+  public get supportedAttributes(): ReadonlyArray<Attribute.Name> {
+    return this._supportedAttributes;
+  }
+
+  /**
+   * Get all attributes required by this role and its inherited (ancestors) roles.
+   */
+  public get requiredAttributes(): ReadonlyArray<Attribute.Name> {
+    return this._requiredAttributes;
+  }
+
+  /**
+   * Get all attributes prohibited on this role and its inherited (ancestors) roles.
+   */
+  public get prohibitedAttributes(): ReadonlyArray<Attribute.Name> {
+    return this._prohibitedAttributes;
   }
 
   /**
@@ -205,42 +255,21 @@ export class Role<N extends Role.Name = Role.Name>
    * Check if this role supports the specified attribute.
    */
   public isAttributeSupported(name: Attribute.Name): boolean {
-    const { inherited, attributes } = Roles[this._name];
-
-    for (const [found] of attributes) {
-      if (name === found) {
-        return true;
-      }
-    }
-
-    for (const parent of inherited) {
-      if (Role.of(parent).isAttributeSupported(name)) {
-        return true;
-      }
-    }
-
-    return false;
+    return this._supportedAttributes.includes(name);
   }
 
   /**
    * Check if this role requires the specified attribute.
    */
   public isAttributeRequired(name: Attribute.Name): boolean {
-    const { inherited, attributes } = Roles[this._name];
+    return this._requiredAttributes.includes(name);
+  }
 
-    for (const [found, { required }] of attributes) {
-      if (name === found && required) {
-        return true;
-      }
-    }
-
-    for (const parent of inherited) {
-      if (Role.of(parent).isAttributeRequired(name)) {
-        return true;
-      }
-    }
-
-    return false;
+  /**
+   * Check if this role prohibits the specified attribute.
+   */
+  public isAttributeProhibited(name: Attribute.Name): boolean {
+    return this._prohibitedAttributes.includes(name);
   }
 
   /**
@@ -432,7 +461,7 @@ type Members<T> = T extends Iterable<infer T> ? T : never;
  * Check if an element has one or more global `aria-*` attributes.
  */
 const hasGlobalAttributes: Predicate<Element> = (element) =>
-  Iterable.some(Role.of("roletype").attributes, (attribute) =>
+  Iterable.some(Role.of("roletype").supportedAttributes, (attribute) =>
     element.attribute(attribute).isSome()
   );
 
@@ -442,7 +471,7 @@ const hasGlobalAttributes: Predicate<Element> = (element) =>
  */
 const isPotentiallyFocusable: Predicate<Element> = and(
   Element.hasTabIndex(),
-  not(Element.isDisabled)
+  not(Element.isActuallyDisabled)
 );
 
 /**

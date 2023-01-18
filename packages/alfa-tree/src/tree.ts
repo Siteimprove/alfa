@@ -1,5 +1,6 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Flags } from "@siteimprove/alfa-flags";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Lazy } from "@siteimprove/alfa-lazy";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -32,7 +33,11 @@ export abstract class Node<
   F extends Flags.allFlags,
   // The type
   T extends string = string
-> implements Iterable<Node<F>>, Equatable, json.Serializable<Node.JSON<T>>
+> implements
+    Iterable<Node<F>>,
+    Equatable,
+    Hashable,
+    json.Serializable<Node.JSON<T>>
 {
   protected readonly _children: Array<Node<F>>;
   protected _parent: Option<Node<F>> = None;
@@ -350,6 +355,10 @@ export abstract class Node<
 
   public equals(value: unknown): boolean {
     return value === this;
+  }
+
+  public hash(hash: Hash) {
+    hash.writeObject(this);
   }
 
   public toJSON(): Node.JSON<T> {

@@ -14,7 +14,7 @@ import { Attribute } from "./attribute";
 import { Name } from "./name";
 import { Role } from "./role";
 
-const { hasInputType, hasName, isElement } = Element;
+const { hasAttribute, hasInputType, hasName, inputType, isElement } = Element;
 const { or, test } = Predicate;
 const { and } = Refinement;
 
@@ -23,11 +23,14 @@ const { and } = Refinement;
  */
 export class Feature {
   public static of(
-    role: Feature.RoleAspect = () => [],
-    attributes: Feature.AttributesAspect = () => [],
+    role: Role.Name | Feature.Aspect<Role.Name | Iterable<Role>> = () => None,
+    attributes: Feature.AttributesAspect = () => None,
     name: Feature.NameAspect = () => None
   ): Feature {
-    return new Feature(role, attributes, name);
+    const roleAspect =
+      typeof role === "function" ? role : () => Option.of(Role.of(role));
+
+    return new Feature(roleAspect, attributes, name);
   }
 
   private readonly _role: Feature.RoleAspect;
@@ -35,11 +38,15 @@ export class Feature {
   private readonly _name: Feature.NameAspect;
 
   private constructor(
-    role: Feature.RoleAspect,
+    roleAspect: Feature.Aspect<Role.Name | Iterable<Role>>,
     attributes: Feature.AttributesAspect,
     name: Feature.NameAspect
   ) {
-    this._role = role;
+    this._role = (element) => {
+      const role = roleAspect(element);
+
+      return typeof role === "string" ? Option.of(Role.of(role)) : role;
+    };
     this._attributes = attributes;
     this._name = name;
   }
@@ -82,11 +89,13 @@ export namespace Feature {
       return None;
     });
   }
+
+  export const generic = html("generic");
 }
 
 function html(
-  role: Feature.RoleAspect = () => [],
-  attributes: Feature.AttributesAspect = () => [],
+  role: Role.Name | Feature.Aspect<Role.Name | Iterable<Role>> = () => None,
+  attributes: Feature.AttributesAspect = () => None,
   name: Feature.NameAspect = () => None
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
@@ -98,8 +107,8 @@ function html(
 }
 
 function svg(
-  role: Feature.RoleAspect = () => [],
-  attributes: Feature.AttributesAspect = () => [],
+  role: Role.Name | Feature.Aspect<Role.Name | Iterable<Role>> = () => None,
+  attributes: Feature.AttributesAspect = () => None,
   name: Feature.NameAspect = () => None
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
@@ -207,6 +216,29 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
   );
 };
 
+function ifScopedTo<T = Role.Name | Iterable<Role>>(
+  names: [string, ...Array<string>],
+  ifScoped: T,
+  ifNotScoped: T
+): Feature.Aspect<T> {
+  return (element) =>
+    element
+      .ancestors()
+      .filter(isElement)
+      .some(hasName(...names))
+      ? ifScoped
+      : ifNotScoped;
+}
+
+function ifHasAttribute<T = Role.Name | Iterable<Role>>(
+  attribute: string,
+  ifHas: T,
+  ifDoesNotHave: T
+): Feature.Aspect<T> {
+  return (element) =>
+    test(hasAttribute(attribute), element) ? ifHas : ifDoesNotHave;
+}
+
 type Features = {
   [N in Namespace]?: {
     [element: string]: Feature | undefined;
@@ -216,54 +248,49 @@ type Features = {
 const Features: Features = {
   [Namespace.HTML]: {
     a: html(
-      (element) =>
-        element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
+      ifHasAttribute("href", "link", "generic"),
       () => [],
       (element, device, state) =>
         Name.fromDescendants(element, device, state.visit(element))
     ),
 
     area: html(
-      (element) =>
-        element.attribute("href").isSome() ? Option.of(Role.of("link")) : None,
+      ifHasAttribute("href", "link", "generic"),
       () => [],
       (element) => nameFromAttribute(element, "alt")
     ),
 
-    article: html(() => Option.of(Role.of("article"))),
+    article: html("article"),
 
-    aside: html(() => Option.of(Role.of("complementary"))),
+    // We currently cannot detect at this point if the element has an accessible
+    // name, and always map to complementary.
+    // see https://github.com/Siteimprove/alfa/issues/298
+    aside: html("complementary"),
 
-    button: html(
-      () => Option.of(Role.of("button")),
-      function* (element) {
-        // https://w3c.github.io/html-aam/#att-disabled
-        for (const _ of element.attribute("disabled")) {
-          yield Attribute.of("aria-disabled", "true");
-        }
+    button: html("button", function* (element) {
+      // https://w3c.github.io/html-aam/#att-disabled
+      for (const _ of element.attribute("disabled")) {
+        yield Attribute.of("aria-disabled", "true");
       }
-    ),
+    }),
 
     // https://w3c.github.io/html-aam/#el-datalist
     // <datalist> only has a role if it is correctly mapped to an <input>
     // via the list attribute. We should probably check that.
     // Additionally, it seems to never be rendered, hence always ignored.
-    datalist: html(() => Option.of(Role.of("listbox"))),
+    datalist: html("listbox"),
 
-    dd: html(() => Option.of(Role.of("definition"))),
+    dd: html("definition"),
 
-    dfn: html(() => Option.of(Role.of("term"))),
+    dfn: html("term"),
 
-    dialog: html(
-      () => Option.of(Role.of("dialog")),
-      function* (element) {
-        // https://w3c.github.io/html-aam/#att-open-dialog
-        yield Attribute.of(
-          "aria-expanded",
-          element.attribute("open").isSome() ? "true" : "false"
-        );
-      }
-    ),
+    dialog: html("dialog", function* (element) {
+      // https://w3c.github.io/html-aam/#att-open-dialog
+      yield Attribute.of(
+        "aria-expanded",
+        element.attribute("open").isSome() ? "true" : "false"
+      );
+    }),
 
     details: html(
       () => None,
@@ -276,10 +303,10 @@ const Features: Features = {
       }
     ),
 
-    dt: html(() => Option.of(Role.of("term"))),
+    dt: html("term"),
 
     fieldset: html(
-      () => Option.of(Role.of("group")),
+      "group",
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {
@@ -289,70 +316,56 @@ const Features: Features = {
       nameFromChild(hasName("legend"))
     ),
 
-    figure: html(
-      () => Option.of(Role.of("figure")),
-      () => [],
-      nameFromChild(hasName("figcaption"))
+    figure: html("figure", () => [], nameFromChild(hasName("figcaption"))),
+
+    footer: html(
+      ifScopedTo(
+        ["article", "aside", "main", "nav", "section"],
+        "generic",
+        "contentinfo"
+      )
     ),
 
-    footer: html((element) =>
-      element
-        .ancestors()
-        .filter(isElement)
-        .some(hasName("article", "aside", "main", "nav", "section"))
-        ? None
-        : Option.of(Role.of("contentinfo"))
+    // We currently cannot detect at this point if the element has an accessible
+    // name, and always map to form.
+    // see https://github.com/Siteimprove/alfa/issues/298
+    form: html("form"),
+
+    h1: html("heading", () => [Attribute.of("aria-level", "1")]),
+
+    h2: html("heading", () => [Attribute.of("aria-level", "2")]),
+
+    h3: html("heading", () => [Attribute.of("aria-level", "3")]),
+
+    h4: html("heading", () => [Attribute.of("aria-level", "4")]),
+
+    h5: html("heading", () => [Attribute.of("aria-level", "5")]),
+
+    h6: html("heading", () => [Attribute.of("aria-level", "6")]),
+
+    header: html(
+      ifScopedTo(
+        ["article", "aside", "main", "nav", "section"],
+        "generic",
+        "banner"
+      )
     ),
 
-    form: html(() => Option.of(Role.of("form"))),
-
-    h1: html(
-      () => Option.of(Role.of("heading")),
-      () => [Attribute.of("aria-level", "1")]
-    ),
-
-    h2: html(
-      () => Option.of(Role.of("heading")),
-      () => [Attribute.of("aria-level", "2")]
-    ),
-
-    h3: html(
-      () => Option.of(Role.of("heading")),
-      () => [Attribute.of("aria-level", "3")]
-    ),
-
-    h4: html(
-      () => Option.of(Role.of("heading")),
-      () => [Attribute.of("aria-level", "4")]
-    ),
-
-    h5: html(
-      () => Option.of(Role.of("heading")),
-      () => [Attribute.of("aria-level", "5")]
-    ),
-
-    h6: html(
-      () => Option.of(Role.of("heading")),
-      () => [Attribute.of("aria-level", "6")]
-    ),
-
-    header: html((element) =>
-      element
-        .ancestors()
-        .filter(isElement)
-        .some(hasName("article", "aside", "main", "nav", "section"))
-        ? None
-        : Option.of(Role.of("banner"))
-    ),
-
-    hr: html(() => Option.of(Role.of("separator"))),
+    hr: html("separator"),
 
     img: html(
+      // We need to yield all roles, not just return one, in order for the
+      // presentational role conflict resolution to discard `presentation`
+      // and correctly default to `img`.
       function* (element) {
-        for (const attribute of element.attribute("alt")) {
-          if (attribute.value === "") {
-            yield Role.of("presentation");
-          }
+        // If there is an alt attribute and it is totally empty
+        if (element.attribute("alt").some((alt) => alt.value === "")) {
+          yield Role.of("presentation");
+        }
+
+        // if there is no src attribute, or it is empty
+        if (element.attribute("src").every((src) => src.value.trim() === "")) {
+          yield Role.of("presentation");
         }
 
         yield Role.of("img");
@@ -362,39 +375,30 @@ const Features: Features = {
     ),
 
     input: html(
-      (element): Option<Role> => {
-        if (test(hasInputType("button", "image", "reset", "submit"), element)) {
-          return Option.of(Role.of("button"));
-        }
-
-        if (test(hasInputType("checkbox"), element)) {
-          return Option.of(Role.of("checkbox"));
-        }
-
-        if (test(hasInputType("number"), element)) {
-          return Option.of(Role.of("spinbutton"));
-        }
-
-        if (test(hasInputType("radio"), element)) {
-          return Option.of(Role.of("radio"));
-        }
-
-        if (test(hasInputType("range"), element)) {
-          return Option.of(Role.of("slider"));
-        }
-
-        if (test(hasInputType("search"), element)) {
-          return Option.of(
-            Role.of(
-              element.attribute("list").isSome() ? "combobox" : "searchbox"
-            )
-          );
-        }
-
-        if (test(hasInputType("email", "tel", "text", "url"), element)) {
-          return Option.of(
-            Role.of(element.attribute("list").isSome() ? "combobox" : "textbox")
-          );
+      (element): Role.Name | None => {
+        switch (inputType(element as Element<"input">)) {
+          case "button":
+          case "image":
+          case "reset":
+          case "submit":
+            return "button";
+          case "checkbox":
+            return "checkbox";
+          case "number":
+            return "spinbutton";
+          case "radio":
+            return "radio";
+          case "range":
+            return "slider";
+          case "search":
+            return element.attribute("list").isSome()
+              ? "combobox"
+              : "searchbox";
+          case "email":
+          case "tel":
+          case "text":
+          case "url":
+            return element.attribute("list").isSome() ? "combobox" : "textbox";
         }
 
         return None;
@@ -529,17 +533,9 @@ const Features: Features = {
       (element) =>
         element
           .parent()
-          .filter(Element.isElement)
-          .flatMap((parent) => {
-            switch (parent.name) {
-              case "ol":
-              case "ul":
-              case "menu":
-                return Option.of(Role.of("listitem"));
-            }
-
-            return None;
-          }),
+          .some(and(Element.isElement, hasName("ol", "ul", "menu")))
+          ? "listitem"
+          : "generic",
       (element) => {
         // https://w3c.github.io/html-aam/#el-li
         const siblings = element
@@ -558,34 +554,49 @@ const Features: Features = {
       }
     ),
 
-    main: html(() => Option.of(Role.of("main"))),
+    main: html("main"),
 
-    math: html(() => Option.of(Role.of("math"))),
+    math: html("math"),
 
-    menu: html(() => Option.of(Role.of("list"))),
+    menu: html("list"),
 
-    nav: html(() => Option.of(Role.of("navigation"))),
-
-    ol: html(() => Option.of(Role.of("list"))),
-
-    optgroup: html(
-      () => Option.of(Role.of("group")),
+    meter: html(
+      () => None,
       function* (element) {
-        // https://w3c.github.io/html-aam/#att-disabled
-        for (const _ of element.attribute("disabled")) {
-          yield Attribute.of("aria-disabled", "true");
+        // https://w3c.github.io/html-aam/#att-max
+        for (const { value } of element.attribute("max")) {
+          yield Attribute.of("aria-valuemax", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-min
+        for (const { value } of element.attribute("min")) {
+          yield Attribute.of("aria-valuemin", value);
+        }
+
+        // https://w3c.github.io/html-aam/#att-value-meter
+        for (const { value } of element.attribute("value")) {
+          yield Attribute.of("aria-valuenow", value);
         }
       }
     ),
 
+    nav: html("navigation"),
+
+    ol: html("list"),
+
+    optgroup: html("group", function* (element) {
+      // https://w3c.github.io/html-aam/#att-disabled
+      for (const _ of element.attribute("disabled")) {
+        yield Attribute.of("aria-disabled", "true");
+      }
+    }),
+
     option: html(
-      (element) =>
-        element
-          .ancestors()
-          .filter(isElement)
-          .some(hasName("select", "optgroup", "datalist"))
-          ? Option.of(Role.of("option"))
-          : None,
+      ifScopedTo<Role.Name | None>(
+        ["select", "optgroup", "datalist"],
+        "option",
+        None
+      ),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {
@@ -600,24 +611,35 @@ const Features: Features = {
       }
     ),
 
-    output: html(() => Option.of(Role.of("status"))),
+    output: html("status"),
 
-    p: html(() => Option.of(Role.of("paragraph"))),
+    p: html("paragraph"),
 
-    section: html(() => Option.of(Role.of("region"))),
+    progress: html("progressbar", function* (element) {
+      // https://w3c.github.io/html-aam/#att-max
+      for (const { value } of element.attribute("max")) {
+        yield Attribute.of("aria-valuemax", value);
+      }
+
+      // https://w3c.github.io/html-aam/#att-value-meter
+      for (const { value } of element.attribute("value")) {
+        yield Attribute.of("aria-valuenow", value);
+      }
+    }),
+
+    // We currently cannot detect at this point if the element has an accessible
+    // name, and always map to region.
+    // see https://github.com/Siteimprove/alfa/issues/298
+    section: html("region"),
 
     select: html(
-      (element) =>
-        // mono-line <select> are mapped to combobox by HTML AAM, but their child
-        // <option> are still mapped to option, which are out of their context role.
-        // We cheat and always map <select> to
-        test(
-          Element.hasDisplaySize((size) => size > 1),
-          element
-        )
-          ? Option.of(Role.of("listbox"))
-          : // combobox following HTML AAM, but listbox to be correct.
-            Option.of(Role.of("listbox")),
+      // mono-line <select> are mapped to combobox by HTML AAM, but their child
+      // <option> are still mapped to option, which are out of their context role.
+      // We cheat and always map <select> to listbox
+      "listbox",
+      // (element) =>
+      //   test(Element.hasDisplaySize((size) => size > 1), element)
+      //   ? "listbox" : combobox
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
         for (const _ of element.attribute("disabled")) {
@@ -637,13 +659,9 @@ const Features: Features = {
       nameFromLabel
     ),
 
-    table: html(
-      () => Option.of(Role.of("table")),
-      () => [],
-      nameFromChild(hasName("caption"))
-    ),
+    table: html("table", () => [], nameFromChild(hasName("caption"))),
 
-    tbody: html(() => Option.of(Role.of("rowgroup"))),
+    tbody: html("rowgroup"),
 
     td: html(
       (element) =>
@@ -678,7 +696,7 @@ const Features: Features = {
     ),
 
     textarea: html(
-      () => Option.of(Role.of("textbox")),
+      "textbox",
       function* (element) {
         // https://w3c.github.io/html-aam/#el-textarea
         yield Attribute.of("aria-multiline", "true");
@@ -711,7 +729,7 @@ const Features: Features = {
       }
     ),
 
-    tfoot: html(() => Option.of(Role.of("rowgroup"))),
+    tfoot: html("rowgroup"),
 
     th: html(
       (element) =>
@@ -765,83 +783,62 @@ const Features: Features = {
       }
     ),
 
-    thead: html(() => Option.of(Role.of("rowgroup"))),
+    thead: html("rowgroup"),
 
-    tr: html(() => Option.of(Role.of("row"))),
+    tr: html("row"),
 
-    ul: html(() => Option.of(Role.of("list"))),
+    ul: html("list"),
 
-    meter: html(
-      () => None,
-      function* (element) {
-        // https://w3c.github.io/html-aam/#att-max
-        for (const { value } of element.attribute("max")) {
-          yield Attribute.of("aria-valuemax", value);
-        }
-
-        // https://w3c.github.io/html-aam/#att-min
-        for (const { value } of element.attribute("min")) {
-          yield Attribute.of("aria-valuemin", value);
-        }
-
-        // https://w3c.github.io/html-aam/#att-value-meter
-        for (const { value } of element.attribute("value")) {
-          yield Attribute.of("aria-valuenow", value);
-        }
-      }
-    ),
-
-    progress: html(
-      () => Option.of(Role.of("progressbar")),
-      function* (element) {
-        // https://w3c.github.io/html-aam/#att-max
-        for (const { value } of element.attribute("max")) {
-          yield Attribute.of("aria-valuemax", value);
-        }
-
-        // https://w3c.github.io/html-aam/#att-value-meter
-        for (const { value } of element.attribute("value")) {
-          yield Attribute.of("aria-valuenow", value);
-        }
-      }
-    ),
+    // Generic containers with no real semantics
+    b: Feature.generic,
+    bdi: Feature.generic,
+    bdo: Feature.generic,
+    body: Feature.generic,
+    data: Feature.generic,
+    div: Feature.generic,
+    hgroup: Feature.generic,
+    i: Feature.generic,
+    pre: Feature.generic,
+    q: Feature.generic,
+    samp: Feature.generic,
+    small: Feature.generic,
+    span: Feature.generic,
+    u: Feature.generic,
   },
 
   [Namespace.SVG]: {
-    a: svg((element) =>
-      Option.of(Role.of(element.attribute("href").isSome() ? "link" : "group"))
-    ),
+    a: svg(ifHasAttribute("href", "link", "group")),
 
-    circle: svg(() => Option.of(Role.of("graphics-symbol"))),
+    circle: svg("graphics-symbol"),
 
-    ellipse: svg(() => Option.of(Role.of("graphics-symbol"))),
+    ellipse: svg("graphics-symbol"),
 
-    foreignObject: svg(() => Option.of(Role.of("group"))),
+    foreignObject: svg("group"),
 
-    g: svg(() => Option.of(Role.of("group"))),
+    g: svg("group"),
 
-    image: svg(() => Option.of(Role.of("img"))),
+    image: svg("img"),
 
-    line: svg(() => Option.of(Role.of("graphics-symbol"))),
+    line: svg("graphics-symbol"),
 
-    mesh: svg(() => Option.of(Role.of("img"))),
+    mesh: svg("img"),
 
-    path: svg(() => Option.of(Role.of("graphics-symbol"))),
+    path: svg("graphics-symbol"),
 
-    polygon: svg(() => Option.of(Role.of("graphics-symbol"))),
+    polygon: svg("graphics-symbol"),
 
-    polyline: svg(() => Option.of(Role.of("graphics-symbol"))),
+    polyline: svg("graphics-symbol"),
 
-    rect: svg(() => Option.of(Role.of("graphics-symbol"))),
+    rect: svg("graphics-symbol"),
 
-    svg: svg(() => Option.of(Role.of("graphics-document"))),
+    svg: svg("graphics-document"),
 
-    symbol: svg(() => Option.of(Role.of("graphics-object"))),
+    symbol: svg("graphics-object"),
 
-    text: svg(() => Option.of(Role.of("group"))),
+    text: svg("group"),
 
-    textPath: svg(() => Option.of(Role.of("group"))),
+    textPath: svg("group"),
 
-    use: svg(() => Option.of(Role.of("graphics-object"))),
+    use: svg("graphics-object"),
   },
 };
