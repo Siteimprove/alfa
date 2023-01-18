@@ -1,7 +1,9 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Attribute, Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
@@ -14,9 +16,10 @@ import { Scope } from "../tags";
 
 const { isElement, hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { and, not, equals, property } = Predicate;
+const { not, equals, property } = Predicate;
+const { and } = Refinement;
 
-export default Rule.Atomic.of<Page, Attribute>({
+export default Rule.Atomic.of<Page, Attribute<aria.Attribute.Name>>({
   uri: "https://alfa.siteimprove.com/rules/sia-r19",
   tags: [Scope.Component],
   evaluate({ document }) {
@@ -28,10 +31,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           .filter(hasNamespace(Namespace.HTML, Namespace.SVG))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
-              and(
-                property("name", aria.Attribute.isName),
-                property("value", not(isEmpty))
-              )
+              and(isAriaAttribute, property("value", not(isEmpty)))
             )
           );
       },
@@ -41,8 +41,7 @@ export default Rule.Atomic.of<Page, Attribute>({
 
         return {
           1: expectation(
-            aria.Attribute.isName(name) &&
-              isValid(aria.Attribute.of(name, value)),
+            isValid(aria.Attribute.of(name, value)),
             () => Outcomes.HasValidValue,
             () => Outcomes.HasNoValidValue
           ),
@@ -61,6 +60,11 @@ export namespace Outcomes {
     Diagnostic.of(`The attribute does not have a valid value`)
   );
 }
+
+const isAriaAttribute = property("name", aria.Attribute.isName) as Refinement<
+  Attribute,
+  Attribute<aria.Attribute.Name>
+>;
 
 function isValid(attribute: aria.Attribute): boolean {
   const { type, value, options } = attribute;
