@@ -555,19 +555,19 @@ export namespace ColorError {
     public static of(
       message: string,
       element: Element,
-      positionDescendants: Iterable<Element>
+      positionedDescendants: Iterable<Element>
     ): HasInterposedDescendants;
 
     public static of(
       message: string,
       element?: Element,
-      positionDescendants?: Iterable<Element>
+      positionedDescendants?: Iterable<Element>
     ): Diagnostic {
-      return element !== undefined && positionDescendants !== undefined
+      return element !== undefined && positionedDescendants !== undefined
         ? new HasInterposedDescendants(
             message,
             element,
-            Sequence.from(positionDescendants)
+            Sequence.from(positionedDescendants)
           )
         : Diagnostic.of(message);
     }

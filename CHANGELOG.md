@@ -91,7 +91,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Fixed
 
-- Added some missing internal dependencies between packages. ([#1282](../../pull/1282)
+- Added some missing internal dependencies between packages. ([#1282](../../pull/1282))
 
 ## [0.52.0](../../compare/v0.51.0...v0.52.0) (2022-11-18)
 

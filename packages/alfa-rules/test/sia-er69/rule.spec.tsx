@@ -604,8 +604,8 @@ test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
   ]);
 });
 
-test(`evaluate() cannot tell when encountering a non-ignored interposed parent before
-      encountering an opaque background`, async (t) => {
+test(`evaluate() cannot tell when encountering a non-ignored interposed
+      ancestor's sibling before encountering an opaque background`, async (t) => {
   const target = h.text("Hello World");
   const interposed = (
     <span
@@ -697,6 +697,88 @@ test(`evaluate() ignores transparent interposed element before
           ["foreground", rgb(0, 0, 0)],
           ["background", rgb(1, 1, 1)],
           21
+        ),
+      ]),
+    }),
+  ]);
+});
+
+test(`evaluate() does not consider ancestors as interposed elements`, async (t) => {
+  const target1 = h.text("Hello World");
+  const target2 = h.text("Lorem ipsum");
+  const interposed = (
+    <div
+      style={{
+        position: "absolute",
+        backgroundColor: "red",
+        width: "100%",
+        height: "100%",
+      }}
+    >
+      {target1}
+    </div>
+  );
+
+  // target1 is inside interposed, therefore it does not consider it as an
+  // "interposed element", but as an absolutely positioned ancestor.
+  // target2 is outside interposed and considers it as an "interposed element",
+  // it may be interposed between the offset parent (body) and itself.
+  const body = (
+    <body>
+      {interposed}
+      {target2}
+    </body>
+  );
+
+  const document = h.document([body]);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    passed(R69, target1, {
+      1: Outcomes.HasSufficientContrast(5.25, 4.5, [
+        Diagnostic.Pairing.of(
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(1, 0, 0)],
+          5.25
+        ),
+      ]),
+    }),
+    cantTell(R69, target2),
+  ]);
+});
+
+test(`evaluate() ignore interposed descendants if it can resolve colors
+      before seeing any`, async (t) => {
+  const target = h.text("Hello World");
+  const div = <div style={{ backgroundColor: "yellow" }}>{target}</div>;
+  const interposed = (
+    <div
+      style={{
+        position: "absolute",
+        backgroundColor: "red",
+        width: "100%",
+        height: "100%",
+      }}
+    ></div>
+  );
+
+  // target is inside the div with solid color, so it doesn't care about the
+  // interposed element and can fully resolve its colors before encountering it.
+  const body = (
+    <body>
+      {interposed}
+      {div}
+    </body>
+  );
+
+  const document = h.document([body]);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    passed(R69, target, {
+      1: Outcomes.HasSufficientContrast(19.56, 4.5, [
+        Diagnostic.Pairing.of(
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(1, 1, 0)],
+          19.56
         ),
       ]),
     }),
