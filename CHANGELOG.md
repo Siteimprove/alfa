@@ -19,6 +19,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.52.2](../../compare/v0.52.1...v0.52.2) (2023-01-18)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-ER66 and SIA-ER69 now have improved detection of interposed descendants and ask more accurate questions.
+
 ## [0.52.1](../../compare/v0.52.0...v0.52.1) (2022-11-28)
 
 ### Fixed
