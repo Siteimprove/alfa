@@ -50,7 +50,8 @@ export default Rule.Atomic.of<Page, Attribute>({
 
         return {
           1: expectation(
-            isValid(attribute) && isRequiredRefValid(attribute, owner, device),
+            isValid(attribute) &&
+              isAttributeOptionalOrValid(attribute, owner, device),
             () => Outcomes.HasValidValue,
             () => Outcomes.HasNoValidValue
           ),
@@ -128,7 +129,14 @@ function treeHasId(id: string, node: Node): boolean {
     .has(id);
 }
 
-function isRequiredRefValid(
+/**
+ * false if an aria-* attribute is:
+ * * required on its owner's role; and
+ * * of type id reference (list); and
+ * * pointing to non-existing id; and
+ * * not `aria-controls` on `combobox`, which is an exception.
+ */
+function isAttributeOptionalOrValid(
   attribute: aria.Attribute,
   owner: Element,
   device: Device
@@ -141,6 +149,7 @@ function isRequiredRefValid(
       // aria-controls is no more required in ARIA 1.3 (and authoring practices)
       // but that hasn't made it to ARIA 1.2 :-(
       // @see https://github.com/w3c/aria/pull/1335
+      // We may want to beef up that bit at some point to look at `aria-expanded`.
       return true;
     }
 
