@@ -63,6 +63,9 @@ const _default_100: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 // @public (undocumented)
 const _default_101: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
+// @public (undocumented)
+const _default_102: Rule.Atomic<Page, Attribute<string>, never, Attribute<string>>;
+
 // @public @deprecated (undocumented)
 const _default_11: Rule.Atomic<Page, Element<string>, never, Element<string>>;
 
