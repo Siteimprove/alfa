@@ -2,8 +2,9 @@ import { Future } from "@siteimprove/alfa-future";
 import { Either } from "@siteimprove/alfa-either";
 import { Hashable } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
-import { Diagnostic } from ".";
+import { Tuple } from "@siteimprove/alfa-tuple";
 
+import { Diagnostic } from "./diagnostic";
 import { Oracle } from "./oracle";
 import { Question } from "./question";
 import { Rule } from "./rule";
@@ -58,17 +59,27 @@ export namespace Interview {
    */
   export type MaxDepth = 3;
 
-  //   To conduct an interview:
-  // * if it is an answer, just send it back;
-  // * if it is a rhetorical question, fetch its answer and recursively conduct
-  //   an interview on it;
-  // * if it is a true question, ask it to the oracle and recursively conduct an
-  //   interview on the result.
-  //
-  // Oracles must return Options, to have the possibility to not answer a given
-  // question (by returning None).
-  // Oracles must return Futures, because the full interview process is essentially
-  // async (e.g., asking through a CLI).
+  /**
+   *  Conduct an interview:
+   *  * if it is an answer, just send it back;
+   *  * if it is a rhetorical question, fetch its answer and recursively conduct
+   *    an interview on it;
+   *  * if it is a true question, ask it to the oracle and recursively conduct an
+   *    interview on the result.
+   *
+   *  Oracles must return Options, to have the possibility to not answer a given
+   *  question (by returning None).
+   *  Oracles must return Futures, because the full interview process is essentially
+   *  async (e.g., asking through a CLI).
+   *
+   *  The final result of the interview is either a final answer, or a diagnostic
+   *  explaining why a final answer couldn't be found. Final answer will be turned
+   *  into Passed/Failed outcomes, and diagnostic into Can't tell; the diagnostic
+   *  is provided by the last unanswered question.
+   *
+   *  In both case, we also record whether the oracle was actually used or not;
+   *  this is useful to record the mode (auto/semi-auto) of the outcome.
+   */
   export function conduct<
     INPUT,
     TARGET extends Hashable,
@@ -80,8 +91,9 @@ export namespace Interview {
     // the rule.
     interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>,
     rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
-    oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>
-  ): Future<Either<ANSWER, Diagnostic>> {
+    oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>,
+    oracleUsed: boolean = false
+  ): Future<Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>>> {
     if (interview instanceof Question) {
       let answer: Future<Option<Interview<QUESTION, SUBJECT, TARGET, ANSWER>>>;
 
@@ -90,6 +102,8 @@ export namespace Interview {
       } else {
         answer = oracle(rule, interview).map((option) =>
           option
+            // Record that the oracle was successfully used
+            .tee((_) => (oracleUsed = true))
             // If oracle has no answer, use fallback
             .or(interview.fallback)
             // Need to bind due to eta-contraction losing `this`.
@@ -99,11 +113,16 @@ export namespace Interview {
 
       return answer.flatMap((answer) =>
         answer
-          .map((answer) => conduct(answer, rule, oracle))
-          .getOrElse(() => Future.now(Either.right(interview.diagnostic)))
+          // Recursively conduct an interview
+          .map((answer) => conduct(answer, rule, oracle, oracleUsed))
+          // If we still don't have a final answer, return the last diagnostic.
+          .getOrElse(() =>
+            Future.now(Either.right(Tuple.of(interview.diagnostic, oracleUsed)))
+          )
       );
     }
 
-    return Future.now(Either.left(interview));
+    // The interview is not a question, so it is a final answer.
+    return Future.now(Either.left(Tuple.of(interview, oracleUsed)));
   }
 }

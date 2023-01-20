@@ -15,6 +15,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
+import { Tuple } from "@siteimprove/alfa-tuple";
 
 import { Cache } from "./cache";
 import { Diagnostic } from "./diagnostic";
@@ -264,16 +265,36 @@ export namespace Rule {
 
           return Future.traverse(applicability(), (interview) =>
             Interview.conduct(interview, this, oracle).map((target) =>
-              target
-                .left()
-                // If questions are left unanswered in Applicability,
-                // we return an Inapplicable outcome; hence we can
-                // just drop any Right that stays after conducting the
-                // interview.
-                .flatMap((t) => (Option.isOption(t) ? t : Option.of(t)))
+              target.either<Tuple<[Option<T>, boolean]>>(
+                // We have a target, wrap it properly and return it.
+                ([target, oracleUsed]) =>
+                  Tuple.of(
+                    Option.isOption(target) ? target : Option.of(target),
+                    oracleUsed
+                  ),
+                // We have an unanswered question and return None
+                ([_, oracleUsed]) => Tuple.of(None, oracleUsed)
+              )
             )
           )
-            .map((targets) => Sequence.from(flatten<T>(targets)))
+            .map((targets) =>
+              // We both need to keep with each target whether the oracle was used,
+              // and with the global sequence whether it was used at all.
+              // The second case is needed to decide whether the oracle was used
+              // when producing an Inapplicable result (empty sequence).
+              // None are clearer from the sequence, and Some are opened to only
+              // keep the targets.
+              Sequence.from(targets).reduce(
+                ([acc, wasUsed], [cur, isUsed]) =>
+                  cur.isSome()
+                    ? Tuple.of(
+                        acc.append(Tuple.of(cur.get(), isUsed)),
+                        wasUsed || isUsed
+                      )
+                    : Tuple.of(acc, wasUsed || isUsed),
+                Tuple.of(Sequence.empty<Tuple<[T, boolean]>>(), false)
+              )
+            )
             .tee(() => {
               performance?.measure(
                 Event.endApplicability(this),
@@ -283,12 +304,12 @@ export namespace Rule {
                 Event.startExpectation(this)
               ).start;
             })
-            .flatMap<Iterable<Outcome<I, T, Q, S>>>((targets) => {
+            .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
               if (targets.isEmpty()) {
                 return Future.now([Outcome.Inapplicable.of(this)]);
               }
 
-              return Future.traverse(targets, (target) =>
+              return Future.traverse(targets, ([target, oracleUsed]) =>
                 resolve(target, Record.of(expectations(target)), this, oracle)
               ).tee(() => {
                 performance?.measure(
@@ -650,7 +671,7 @@ export namespace Rule {
   }
 }
 
-type Expectation<T> = Either<T, Diagnostic>;
+type Expectation<T> = Either<Tuple<[T, boolean]>, Tuple<[Diagnostic, boolean]>>;
 
 // Processes the expectations of the results of an interview.
 // When the result is Passed/Failed (Left), we accumulate the expectations that are later on passed to the Outcome.
@@ -664,18 +685,21 @@ function processExpectation(
   ]
 ): Expectation<List<[string, Option<Result<Diagnostic>>]>> {
   return expectation.either(
-    (result) =>
+    ([result, oracleUsed]) =>
       acc.either<Expectation<List<[string, Option<Result<Diagnostic>>]>>>(
-        (accumulator) =>
+        ([accumulator, oracleUsedAccumulator]) =>
           Left.of(
-            accumulator.append([
-              id,
-              Option.isOption(result) ? result : Option.of(result),
-            ])
+            Tuple.of(
+              accumulator.append([
+                id,
+                Option.isOption(result) ? result : Option.of(result),
+              ]),
+              oracleUsedAccumulator || oracleUsed
+            )
           ),
-        (diagnostic) => Right.of(diagnostic)
+        ([diagnostic, oracleUsed]) => Right.of(Tuple.of(diagnostic, oracleUsed))
       ),
-    (diagnostic) => Right.of(diagnostic)
+    ([diagnostic, oracleUsed]) => Right.of(Tuple.of(diagnostic, oracleUsed))
   );
 }
 
@@ -693,12 +717,17 @@ function resolve<I, T extends Hashable, Q, S>(
     )
   )
     .map((expectations) =>
-      reduce(expectations, processExpectation, Left.of(List.empty()))
+      reduce(
+        expectations,
+        processExpectation,
+        Left.of(Tuple.of(List.empty(), false))
+      )
     )
     .map((expectation) =>
       expectation.either(
-        (expectations) => Outcome.from(rule, target, Record.from(expectations)),
-        (diagnostic) => Outcome.CantTell.of(rule, target, diagnostic)
+        ([expectations, _]) =>
+          Outcome.from(rule, target, Record.from(expectations)),
+        ([diagnostic, _]) => Outcome.CantTell.of(rule, target, diagnostic)
       )
     );
 }
