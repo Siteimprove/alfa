@@ -19,6 +19,22 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.56.0](../../compare/v0.55.1...v0.56.0) (2023-01-20)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Added SIA-R110 checking that at least one token in a `role` attribute is valid. ([#1314](../../pull/1314))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): `hasId` now also accepts an `Iterable<string>` as input. ([#1313](../../pull/1313))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R21 does not map to WCAG anymore, since incorrect role tokens are not a problem when a fallback exist. ([#1314](../../pull/1314))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R19 now requires that required Id ref (list) attributes point to existing elements. ([#1313](../../pull/1313))
+
 ## [0.55.1](../../compare/v0.55.0...v0.55.1) (2023-01-18)
 
 ### Fixed
