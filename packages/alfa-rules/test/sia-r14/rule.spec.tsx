@@ -47,7 +47,7 @@ test(`evaluate() passes a <button> element whose perceivable text content includ
 
 test(`evaluate() passes a <button> element whose perceivable text content includes symbols and
       control characters and is included in its accessible name set by aria-label`, async (t) => {
-  const target = <button aria-label="Hello +-|­▼ world">Hello­←</button>;
+  const target = <button aria-label="Hello ← world">Hello­ +-|­▼</button>;
   // In the line above there are some control characters (eg. 'soft hyphen') which may not 
   // be visible in all text editors. 
 
