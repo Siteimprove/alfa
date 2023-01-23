@@ -1,12 +1,9 @@
 import { Array } from "@siteimprove/alfa-array";
-
-import * as earl from "@siteimprove/alfa-earl";
 import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -14,9 +11,12 @@ import { Performance } from "@siteimprove/alfa-performance";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
-import * as sarif from "@siteimprove/alfa-sarif";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Tuple } from "@siteimprove/alfa-tuple";
+
+import * as earl from "@siteimprove/alfa-earl";
+import * as json from "@siteimprove/alfa-json";
+import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Cache } from "./cache";
 import { Diagnostic } from "./diagnostic";
@@ -286,14 +286,18 @@ export namespace Rule {
               // when producing an Inapplicable result (empty sequence).
               // None are cleared from the sequence, and Some are opened to only
               // keep the targets.
+              //
+              // For efficiency, we prepend the targets and reverse the full
+              // sequence later to conserve the order.
+              // This result in a O(n) rather than O(n²) process.
               Sequence.from(targets).reduce(
                 ([acc, wasUsed], [cur, isUsed]) =>
-                  cur.isSome()
-                    ? Tuple.of(
-                        acc.append(Tuple.of(cur.get(), isUsed)),
-                        wasUsed || isUsed
-                      )
-                    : Tuple.of(acc, wasUsed || isUsed),
+                  Tuple.of(
+                    cur.isSome()
+                      ? acc.prepend(Tuple.of(cur.get(), isUsed))
+                      : acc,
+                    wasUsed || isUsed
+                  ),
                 Tuple.of(Sequence.empty<Tuple<[T, boolean]>>(), false)
               )
             )
@@ -314,7 +318,9 @@ export namespace Rule {
               }
 
               return Future.traverse(
-                targets,
+                // Since targets were prepended when Applicability was processed,
+                // we now need to reverse the sequence to restore initial order.
+                targets.reverse(),
                 ([target, oracleUsedInApplicability]) =>
                   resolve(
                     target,
@@ -445,14 +451,18 @@ export namespace Rule {
               // The second case is needed to decide whether the oracle was used
               // when producing an Inapplicable result (empty sequence).
               // Inapplicable outcomes one are cleared from the sequence.
+              //
+              // For efficiency, we prepend the targets and reverse the full
+              // sequence later to conserve the order.
+              // This result in a O(n) rather than O(n²) process.
               Sequence.from(flatten(outcomes)).reduce(
                 ([acc, wasUsed], outcome) =>
-                  Applicable.isApplicable<I, T, Q, S>(outcome)
-                    ? Tuple.of(
-                        acc.append(outcome),
-                        wasUsed || outcome.isSemiAuto
-                      )
-                    : Tuple.of(acc, wasUsed || outcome.isSemiAuto),
+                  Tuple.of(
+                    Applicable.isApplicable<I, T, Q, S>(outcome)
+                      ? acc.prepend(outcome)
+                      : acc,
+                    wasUsed || outcome.isSemiAuto
+                  ),
                 Tuple.of(
                   Sequence.empty<Outcome.Applicable<I, T, Q, S>>(),
                   false
@@ -469,7 +479,9 @@ export namespace Rule {
               const { expectations } = evaluate(input, rulePerformance);
 
               return Future.traverse(
-                targets.groupBy((outcome) => outcome.target),
+                // Since targets were prepended when Applicability was processed,
+                // we now need to reverse the sequence to restore initial order.
+                targets.reverse().groupBy((outcome) => outcome.target),
                 ([target, outcomes]) =>
                   resolve(
                     target,
@@ -730,6 +742,8 @@ function processExpectation(
           Right.of(Tuple.of(diagnostic, oracleUsedAccumulator || oracleUsed))
       ),
     // The accumulator already contains cantTell, skip.
+    // Note that we only keep the mode of the first Expectation that cannot tell,
+    // which is likely OK.
     () => acc
   );
 }

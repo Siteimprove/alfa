@@ -72,12 +72,12 @@ export namespace Interview {
    *  Oracles must return Futures, because the full interview process is essentially
    *  async (e.g., asking through a CLI).
    *
-   *  The final result of the interview is either a final answer, or a diagnostic
-   *  explaining why a final answer couldn't be found. Final answer will be turned
-   *  into Passed/Failed outcomes, and diagnostic into Can't tell; the diagnostic
-   *  is provided by the last unanswered question.
+   *  The final result of the interview is either a final answer (Left), or
+   *  a diagnostic (Right) explaining why a final answer couldn't be found.
+   *  Final answer will be turned into Passed/Failed outcomes, and diagnostic
+   *  into Can't tell; the diagnostic is provided by the last unanswered question.
    *
-   *  In both case, we also record whether the oracle was actually used or not;
+   *  In both cases, we also record whether the oracle was actually used;
    *  this is useful to record the mode (auto/semi-auto) of the outcome.
    */
   export function conduct<

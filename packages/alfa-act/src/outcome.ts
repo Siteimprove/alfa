@@ -126,8 +126,6 @@ export namespace Outcome {
 
   /**
    * {@link https://www.w3.org/TR/EARL10-Schema/#TestMode}
-   *
-   * @public
    */
   export enum Mode {
     Automatic = "automatic",
