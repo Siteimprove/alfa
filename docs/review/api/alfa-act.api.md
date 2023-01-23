@@ -26,6 +26,7 @@ import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Thunk } from '@siteimprove/alfa-thunk';
+import { Tuple } from '@siteimprove/alfa-tuple';
 
 // @public
 export class Audit<I, T extends Hashable, Q = never, S = T> {
@@ -86,8 +87,7 @@ export type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = Int
 
 // @public (undocumented)
 export namespace Interview {
-    // (undocumented)
-    export function conduct<INPUT, TARGET extends Hashable, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>): Future<Either<ANSWER, Diagnostic>>;
+    export function conduct<INPUT, TARGET extends Hashable, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>, oracleUsed?: boolean): Future<Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>>>;
     // @internal (undocumented)
     export type MaxDepth = 3;
 }
@@ -98,14 +98,20 @@ export type Oracle<INPUT, TARGET extends Hashable, QUESTION, SUBJECT> = (rule: R
 }[keyof QUESTION]) => Future<Option<QUESTION[keyof QUESTION] extends [any, infer A] ? A : never>>;
 
 // @public
-export abstract class Outcome<I, T extends Hashable, Q = never, S = T> implements Equatable, Hashable, json.Serializable<Outcome.JSON>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
-    protected constructor(rule: Rule<I, T, Q, S>);
+export abstract class Outcome<I, T extends Hashable, Q = never, S = T, V extends Outcome.Value = Outcome.Value> implements Equatable, Hashable, json.Serializable<Outcome.JSON<V>>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
+    protected constructor(value: V, rule: Rule<I, T, Q, S>, mode: Outcome.Mode);
     // (undocumented)
-    abstract equals<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): boolean;
+    equals<I, T extends Hashable, Q, S, V extends Outcome.Value = Outcome.Value>(value: Outcome<I, T, Q, S, V>): boolean;
     // (undocumented)
-    abstract equals(value: unknown): value is this;
+    equals(value: unknown): value is this;
     // (undocumented)
-    abstract hash(hash: Hash): void;
+    hash(hash: Hash): void;
+    // (undocumented)
+    get isSemiAuto(): boolean;
+    // (undocumented)
+    get mode(): Outcome.Mode;
+    // (undocumented)
+    protected readonly _mode: Outcome.Mode;
     // (undocumented)
     get rule(): Rule<I, T, Q, S>;
     // (undocumented)
@@ -115,9 +121,11 @@ export abstract class Outcome<I, T extends Hashable, Q = never, S = T> implement
     // (undocumented)
     toEARL(): Outcome.EARL;
     // (undocumented)
-    abstract toJSON(): Outcome.JSON;
+    toJSON(): Outcome.JSON<V>;
     // (undocumented)
     abstract toSARIF(): sarif.Result;
+    // (undocumented)
+    get value(): V;
 }
 
 // @public (undocumented)
@@ -131,8 +139,10 @@ export namespace Outcome {
         // (undocumented)
         export function isApplicable<I, T extends Hashable, Q, S>(value: unknown): value is Applicable<I, T, Q, S>;
     }
+    // Warning: (ae-incompatible-release-tags) The symbol "CantTell" is marked as @public, but its signature references "Value" which is marked as @internal
+    //
     // (undocumented)
-    export class CantTell<I, T extends Hashable, Q = never, S = T> extends Outcome<I, T, Q, S> {
+    export class CantTell<I, T extends Hashable, Q = never, S = T> extends Outcome<I, T, Q, S, Value.CantTell> {
         // (undocumented)
         get diagnostic(): Diagnostic;
         // (undocumented)
@@ -142,7 +152,7 @@ export namespace Outcome {
         // (undocumented)
         hash(hash: Hash): void;
         // (undocumented)
-        static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic): CantTell<I, T, Q, S>;
+        static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic, mode: Mode): CantTell<I, T, Q, S>;
         // (undocumented)
         get target(): T;
         // (undocumented)
@@ -169,21 +179,18 @@ export namespace Outcome {
         export function isCantTell<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is CantTell<I, T, Q, S>;
         // (undocumented)
         export function isCantTell<I, T extends Hashable, Q, S>(value: unknown): value is CantTell<I, T, Q, S>;
+        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
+        //
         // (undocumented)
-        export interface JSON<T> extends Outcome.JSON {
+        export interface JSON<T> extends Outcome.JSON<Value.CantTell> {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
             diagnostic: json.Serializable.ToJSON<Diagnostic>;
             // (undocumented)
-            outcome: "cantTell";
-            // (undocumented)
             target: json.Serializable.ToJSON<T>;
         }
     }
-    const // (undocumented)
-    passed: typeof Passed.of, // (undocumented)
-    isPassed: typeof Passed.isPassed;
     // (undocumented)
     export interface EARL extends earl.EARL {
         // (undocumented)
@@ -193,8 +200,10 @@ export namespace Outcome {
             "@id": string;
         };
     }
+    // Warning: (ae-incompatible-release-tags) The symbol "Failed" is marked as @public, but its signature references "Value" which is marked as @internal
+    //
     // (undocumented)
-    export class Failed<I, T extends Hashable, Q = never, S = T> extends Outcome<I, T, Q, S> {
+    export class Failed<I, T extends Hashable, Q = never, S = T> extends Outcome<I, T, Q, S, Value.Failed> {
         // (undocumented)
         equals<I, T extends Hashable, Q, S>(value: Failed<I, T, Q, S>): boolean;
         // (undocumented)
@@ -208,7 +217,7 @@ export namespace Outcome {
         // (undocumented)
         static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record_2<{
             [key: string]: Result<Diagnostic>;
-        }>): Failed<I, T, Q, S>;
+        }>, mode: Mode): Failed<I, T, Q, S>;
         // (undocumented)
         get target(): T;
         // (undocumented)
@@ -219,8 +228,8 @@ export namespace Outcome {
         toSARIF(): sarif.Result;
     }
     const // (undocumented)
-    failed: typeof Failed.of, // (undocumented)
-    isFailed: typeof Failed.isFailed;
+    passed: typeof Passed.of, // (undocumented)
+    isPassed: typeof Passed.isPassed;
     // (undocumented)
     export namespace Failed {
         // (undocumented)
@@ -239,14 +248,14 @@ export namespace Outcome {
         export function isFailed<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Failed<I, T, Q, S>;
         // (undocumented)
         export function isFailed<I, T extends Hashable, Q, S>(value: unknown): value is Failed<I, T, Q, S>;
+        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
+        //
         // (undocumented)
-        export interface JSON<T> extends Outcome.JSON {
+        export interface JSON<T> extends Outcome.JSON<Value.Failed> {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
             expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
-            // (undocumented)
-            outcome: "failed";
             // (undocumented)
             target: json.Serializable.ToJSON<T>;
         }
@@ -254,20 +263,20 @@ export namespace Outcome {
     // (undocumented)
     export function from<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record_2<{
         [key: string]: Option<Result<Diagnostic>>;
-    }>): Outcome.Applicable<I, T, Q, S>;
+    }>, mode: Mode): Outcome.Applicable<I, T, Q, S>;
     const // (undocumented)
-    cantTell: typeof CantTell.of, // (undocumented)
-    isCantTell: typeof CantTell.isCantTell;
+    failed: typeof Failed.of, // (undocumented)
+    isFailed: typeof Failed.isFailed;
+    // Warning: (ae-incompatible-release-tags) The symbol "Inapplicable" is marked as @public, but its signature references "Value" which is marked as @internal
+    //
     // (undocumented)
-    export class Inapplicable<I, T extends Hashable, Q = unknown, S = T> extends Outcome<I, T, Q, S> {
+    export class Inapplicable<I, T extends Hashable, Q = unknown, S = T> extends Outcome<I, T, Q, S, Value.Inapplicable> {
         // (undocumented)
         equals<I, T extends Hashable, Q, S>(value: Inapplicable<I, T, Q, S>): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        hash(hash: Hash): void;
-        // (undocumented)
-        static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>): Inapplicable<I, T, Q, S>;
+        static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, mode: Mode): Inapplicable<I, T, Q, S>;
         // (undocumented)
         toEARL(): Inapplicable.EARL;
         // (undocumented)
@@ -291,27 +300,41 @@ export namespace Outcome {
         export function isInapplicable<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Inapplicable<I, T, Q, S>;
         // (undocumented)
         export function isInapplicable<I, T extends Hashable, Q, S>(value: unknown): value is Inapplicable<I, T, Q, S>;
+        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
+        //
         // (undocumented)
-        export interface JSON extends Outcome.JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            outcome: "inapplicable";
+        export interface JSON extends Outcome.JSON<Value.Inapplicable> {
         }
     }
     const // (undocumented)
-    isApplicable: typeof Applicable.isApplicable;
+    cantTell: typeof CantTell.of, // (undocumented)
+    isCantTell: typeof CantTell.isCantTell;
+    // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
+    //
     // (undocumented)
-    export interface JSON {
+    export interface JSON<V extends Value = Value> {
         // (undocumented)
         [key: string]: json.JSON;
         // (undocumented)
-        outcome: string;
+        mode: Mode;
         // (undocumented)
         rule: Rule.JSON;
+        // (undocumented)
+        value: V;
     }
     // (undocumented)
-    export class Passed<I, T extends Hashable, Q = never, S = T> extends Outcome<I, T, Q, S> {
+    export enum Mode {
+        // (undocumented)
+        Automatic = "automatic",
+        // (undocumented)
+        SemiAuto = "semiAuto"
+    }
+    const // (undocumented)
+    isApplicable: typeof Applicable.isApplicable;
+    // Warning: (ae-incompatible-release-tags) The symbol "Passed" is marked as @public, but its signature references "Value" which is marked as @internal
+    //
+    // (undocumented)
+    export class Passed<I, T extends Hashable, Q = never, S = T> extends Outcome<I, T, Q, S, Value.Passed> {
         // (undocumented)
         equals<I, T extends Hashable, Q, S>(value: Passed<I, T, Q, S>): boolean;
         // (undocumented)
@@ -325,7 +348,7 @@ export namespace Outcome {
         // (undocumented)
         static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record_2<{
             [key: string]: Result<Diagnostic>;
-        }>): Passed<I, T, Q, S>;
+        }>, mode: Mode): Passed<I, T, Q, S>;
         // (undocumented)
         get target(): T;
         // (undocumented)
@@ -335,9 +358,6 @@ export namespace Outcome {
         // (undocumented)
         toSARIF(): sarif.Result;
     }
-    const // (undocumented)
-    inapplicable: typeof Inapplicable.of, // (undocumented)
-    isInapplicable: typeof Inapplicable.isInapplicable;
     // (undocumented)
     export namespace Passed {
         // (undocumented)
@@ -356,17 +376,31 @@ export namespace Outcome {
         export function isPassed<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Passed<I, T, Q, S>;
         // (undocumented)
         export function isPassed<I, T extends Hashable, Q, S>(value: unknown): value is Passed<I, T, Q, S>;
+        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
+        //
         // (undocumented)
-        export interface JSON<T> extends Outcome.JSON {
+        export interface JSON<T> extends Outcome.JSON<Value.Passed> {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
             expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
             // (undocumented)
-            outcome: "passed";
-            // (undocumented)
             target: json.Serializable.ToJSON<T>;
         }
+    }
+    const // (undocumented)
+    inapplicable: typeof Inapplicable.of, // (undocumented)
+    isInapplicable: typeof Inapplicable.isInapplicable;
+    // @internal (undocumented)
+    export enum Value {
+        // (undocumented)
+        CantTell = "cantTell",
+        // (undocumented)
+        Failed = "failed",
+        // (undocumented)
+        Inapplicable = "inapplicable",
+        // (undocumented)
+        Passed = "passed"
     }
 }
 
