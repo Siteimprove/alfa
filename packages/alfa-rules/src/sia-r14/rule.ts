@@ -57,7 +57,7 @@ export default Rule.Atomic.of<Page, Element>({
         // Removes all punctuation (underscore, hyphen, brackets, quotation marks, etc)
         // and normalise
         function removePunctuationAndNormalise(input: string): string {
-          return normalize(input.replace(/\p{P}/gu, ""));
+          return normalize(input.replace(/\p{P}|\p{S}|\p{Cf}/gu, ""));
         }
 
         const textContent = removePunctuationAndNormalise(
