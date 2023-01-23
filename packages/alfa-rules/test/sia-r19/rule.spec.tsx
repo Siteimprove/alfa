@@ -50,7 +50,7 @@ test("evaluate() passes an aria-pressed attribute with a valid tristate value", 
   ]);
 });
 
-test("evaluate() passes an aria-errormessage attribute with a valid ID reference value", async (t) => {
+test("evaluate() passes a non-required aria-errormessage attribute with a valid but non-existent ID reference value", async (t) => {
   const target = <div role="textbox" aria-errormessage="my-error"></div>;
 
   const document = h.document([target]);
@@ -148,6 +148,18 @@ test("evaluate() passes an aria-setsize property with the value -1 when the tota
   ]);
 });
 
+test("evaluate() passes an aria-controls property on a combobox pointing to a non-existent ID", async (t) => {
+  const target = <div role="combobox" aria-controls="content"></div>;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R19, { document }), [
+    passed(R19, target.attribute("aria-controls").getUnsafe(), {
+      1: Outcomes.HasValidValue,
+    }),
+  ]);
+});
+
 test("evaluate() fails an aria-expanded state with an invalid true/false/undefined value", async (t) => {
   const target = (
     <div role="button" aria-expanded="mixed">
@@ -240,6 +252,18 @@ test("evaluate() fails an aria-errormessage property with an invalid ID referenc
 
   t.deepEqual(await evaluate(R19, { document }), [
     failed(R19, target.attribute("aria-errormessage").getUnsafe(), {
+      1: Outcomes.HasNoValidValue,
+    }),
+  ]);
+});
+
+test("evaluate() fails a required aria-controls property pointing to a non-existent ID", async (t) => {
+  const target = <div role="scrollbar" aria-controls="content"></div>;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R19, { document }), [
+    failed(R19, target.attribute("aria-controls").getUnsafe(), {
       1: Outcomes.HasNoValidValue,
     }),
   ]);

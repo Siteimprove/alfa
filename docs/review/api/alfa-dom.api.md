@@ -494,6 +494,9 @@ function hasId(predicate?: Predicate<string>): Predicate<Element>;
 function hasId(id: string, ...rest: Array<string>): Predicate<Element>;
 
 // @public (undocumented)
+function hasId(ids: Iterable_2<string>): Predicate<Element>;
+
+// @public (undocumented)
 function hasInclusiveDescendant(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
 
 // Warning: (ae-incompatible-release-tags) The symbol "hasInputType" is marked as @public, but its signature references "InputType" which is marked as @internal
