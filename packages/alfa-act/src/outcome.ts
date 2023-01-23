@@ -25,49 +25,71 @@ export abstract class Outcome<
   T extends Hashable,
   Q = never,
   S = T,
-  O extends Outcome.Kind = Outcome.Kind
+  V extends Outcome.Value = Outcome.Value
 > implements
     Equatable,
     Hashable,
-    json.Serializable<Outcome.JSON<O>>,
+    json.Serializable<Outcome.JSON<V>>,
     earl.Serializable<Outcome.EARL>,
     sarif.Serializable<sarif.Result>
 {
-  private _outcome: O;
-
+  private readonly _value: V;
   protected readonly _rule: Rule<I, T, Q, S>;
+  protected readonly _mode: Outcome.Mode;
 
-  protected constructor(outcome: O, rule: Rule<I, T, Q, S>) {
-    this._outcome = outcome;
+  protected constructor(value: V, rule: Rule<I, T, Q, S>, mode: Outcome.Mode) {
+    this._value = value;
     this._rule = rule;
+    this._mode = mode;
   }
 
-  public get outcome(): O {
-    return this._outcome;
+  public get value(): V {
+    return this._value;
   }
 
   public get rule(): Rule<I, T, Q, S> {
     return this._rule;
   }
 
+  public get mode(): Outcome.Mode {
+    return this._mode;
+  }
+
+  public get isSemiAuto(): boolean {
+    return this._mode === Outcome.Mode.SemiAuto;
+  }
+
   public get target(): T | undefined {
     return undefined;
   }
 
-  public abstract equals<
+  public equals<
     I,
     T extends Hashable,
     Q,
     S,
-    O extends Outcome.Kind = Outcome.Kind
-  >(value: Outcome<I, T, Q, S, O>): boolean;
+    V extends Outcome.Value = Outcome.Value
+  >(value: Outcome<I, T, Q, S, V>): boolean;
 
-  public abstract equals(value: unknown): value is this;
+  public equals(value: unknown): value is this;
 
-  public abstract hash(hash: Hash): void;
+  public equals(value: unknown): boolean {
+    return (
+      value instanceof Outcome &&
+      value._rule.equals(this._rule) &&
+      value._value === this._value &&
+      value._mode === this._mode
+    );
+  }
 
-  public toJSON(): Outcome.JSON<O> {
-    return { outcome: this._outcome, rule: this._rule.toJSON() };
+  public hash(hash: Hash): void {
+    this._rule.hash(hash);
+    hash.writeString(this._value);
+    hash.writeString(this._mode);
+  }
+
+  public toJSON(): Outcome.JSON<V> {
+    return { value: this._value, rule: this._rule.toJSON(), mode: this._mode };
   }
 
   public toEARL(): Outcome.EARL {
@@ -76,6 +98,7 @@ export abstract class Outcome<
         earl: "http://www.w3.org/ns/earl#",
       },
       "@type": "earl:Assertion",
+      mode: `earl:${this._mode}`,
       "earl:test": {
         "@id": this._rule.uri,
       },
@@ -90,19 +113,32 @@ export abstract class Outcome<
  */
 export namespace Outcome {
   /**
-   * @public
+   * {@link https://www.w3.org/TR/EARL10-Schema/#OutcomeValue}
+   *
+   * @internal
    */
-  export enum Kind {
+  export enum Value {
     Inapplicable = "inapplicable",
     Passed = "passed",
     Failed = "failed",
-    CantTell = "canttell",
+    CantTell = "cantTell",
   }
 
-  export interface JSON<O extends Kind = Kind> {
+  /**
+   * {@link https://www.w3.org/TR/EARL10-Schema/#TestMode}
+   *
+   * @public
+   */
+  export enum Mode {
+    Automatic = "automatic",
+    SemiAuto = "semiAuto",
+  }
+
+  export interface JSON<V extends Value = Value> {
     [key: string]: json.JSON;
-    outcome: O;
+    value: V;
     rule: Rule.JSON;
+    mode: Mode;
   }
 
   export interface EARL extends earl.EARL {
@@ -117,16 +153,17 @@ export namespace Outcome {
     T,
     Q,
     S,
-    Kind.Passed
+    Value.Passed
   > {
     public static of<I, T extends Hashable, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
-      }>
+      }>,
+      mode: Mode
     ): Passed<I, T, Q, S> {
-      return new Passed(rule, target, expectations);
+      return new Passed(rule, target, expectations, mode);
     }
 
     private readonly _target: T;
@@ -139,9 +176,10 @@ export namespace Outcome {
       target: T,
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
-      }>
+      }>,
+      mode: Mode
     ) {
-      super(Kind.Passed, rule);
+      super(Value.Passed, rule, mode);
 
       this._target = target;
       this._expectations = Record.from(expectations.toArray());
@@ -165,15 +203,15 @@ export namespace Outcome {
 
     public equals(value: unknown): boolean {
       return (
+        super.equals(value) &&
         value instanceof Passed &&
-        value._rule.equals(this._rule) &&
         Equatable.equals(value._target, this._target) &&
         value._expectations.equals(this._expectations)
       );
     }
 
     public hash(hash: Hash) {
-      this._rule.hash(hash);
+      super.hash(hash);
       this._target.hash(hash);
       for (const [id, result] of this._expectations) {
         hash.writeString(id);
@@ -245,7 +283,7 @@ export namespace Outcome {
   }
 
   export namespace Passed {
-    export interface JSON<T> extends Outcome.JSON<Kind.Passed> {
+    export interface JSON<T> extends Outcome.JSON<Value.Passed> {
       [key: string]: json.JSON;
       target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
@@ -284,16 +322,17 @@ export namespace Outcome {
     T,
     Q,
     S,
-    Kind.Failed
+    Value.Failed
   > {
     public static of<I, T extends Hashable, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
-      }>
+      }>,
+      mode: Mode
     ): Failed<I, T, Q, S> {
-      return new Failed(rule, target, expectations);
+      return new Failed(rule, target, expectations, mode);
     }
 
     private readonly _target: T;
@@ -306,9 +345,10 @@ export namespace Outcome {
       target: T,
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
-      }>
+      }>,
+      mode: Mode
     ) {
-      super(Kind.Failed, rule);
+      super(Value.Failed, rule, mode);
 
       this._target = target;
       this._expectations = Record.from(expectations.toArray());
@@ -332,15 +372,15 @@ export namespace Outcome {
 
     public equals(value: unknown): boolean {
       return (
+        super.equals(value) &&
         value instanceof Failed &&
-        value._rule.equals(this._rule) &&
         Equatable.equals(value._target, this._target) &&
         value._expectations.equals(this._expectations)
       );
     }
 
     public hash(hash: Hash) {
-      this._rule.hash(hash);
+      super.hash(hash);
       this._target.hash(hash);
       for (const [id, result] of this._expectations) {
         hash.writeString(id);
@@ -415,7 +455,7 @@ export namespace Outcome {
   }
 
   export namespace Failed {
-    export interface JSON<T> extends Outcome.JSON<Kind.Failed> {
+    export interface JSON<T> extends Outcome.JSON<Value.Failed> {
       [key: string]: json.JSON;
       target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
@@ -454,13 +494,14 @@ export namespace Outcome {
     T extends Hashable,
     Q = never,
     S = T
-  > extends Outcome<I, T, Q, S, Kind.CantTell> {
+  > extends Outcome<I, T, Q, S, Value.CantTell> {
     public static of<I, T extends Hashable, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
-      diagnostic: Diagnostic
+      diagnostic: Diagnostic,
+      mode: Mode
     ): CantTell<I, T, Q, S> {
-      return new CantTell(rule, target, diagnostic);
+      return new CantTell(rule, target, diagnostic, mode);
     }
 
     private readonly _target: T;
@@ -469,9 +510,10 @@ export namespace Outcome {
     private constructor(
       rule: Rule<I, T, Q, S>,
       target: T,
-      diagnostic: Diagnostic
+      diagnostic: Diagnostic,
+      mode: Mode
     ) {
-      super(Kind.CantTell, rule);
+      super(Value.CantTell, rule, mode);
 
       this._target = target;
       this._diagnostic = diagnostic;
@@ -493,15 +535,15 @@ export namespace Outcome {
 
     public equals(value: unknown): boolean {
       return (
+        super.equals(value) &&
         value instanceof CantTell &&
-        value._rule.equals(this._rule) &&
         Equatable.equals(value._target, this._target) &&
         value._diagnostic.equals(this._diagnostic)
       );
     }
 
     public hash(hash: Hash) {
-      this._rule.hash(hash);
+      super.hash(hash);
       this._target.hash(hash);
       this._diagnostic.hash(hash);
     }
@@ -556,7 +598,7 @@ export namespace Outcome {
   }
 
   export namespace CantTell {
-    export interface JSON<T> extends Outcome.JSON<Kind.CantTell> {
+    export interface JSON<T> extends Outcome.JSON<Value.CantTell> {
       [key: string]: json.JSON;
       target: json.Serializable.ToJSON<T>;
       diagnostic: json.Serializable.ToJSON<Diagnostic>;
@@ -617,15 +659,16 @@ export namespace Outcome {
     T extends Hashable,
     Q = unknown,
     S = T
-  > extends Outcome<I, T, Q, S, Kind.Inapplicable> {
+  > extends Outcome<I, T, Q, S, Value.Inapplicable> {
     public static of<I, T extends Hashable, Q, S>(
-      rule: Rule<I, T, Q, S>
+      rule: Rule<I, T, Q, S>,
+      mode: Mode
     ): Inapplicable<I, T, Q, S> {
-      return new Inapplicable(rule);
+      return new Inapplicable(rule, mode);
     }
 
-    private constructor(rule: Rule<I, T, Q, S>) {
-      super(Kind.Inapplicable, rule);
+    private constructor(rule: Rule<I, T, Q, S>, mode: Mode) {
+      super(Value.Inapplicable, rule, mode);
     }
 
     public equals<I, T extends Hashable, Q, S>(
@@ -635,11 +678,7 @@ export namespace Outcome {
     public equals(value: unknown): value is this;
 
     public equals(value: unknown): boolean {
-      return value instanceof Inapplicable && value._rule.equals(this._rule);
-    }
-
-    public hash(hash: Hash) {
-      hash.writeString(this._rule.uri);
+      return super.equals(value) && value instanceof Inapplicable;
     }
 
     public toJSON(): Inapplicable.JSON {
@@ -674,7 +713,7 @@ export namespace Outcome {
   }
 
   export namespace Inapplicable {
-    export interface JSON extends Outcome.JSON<Kind.Inapplicable> {}
+    export interface JSON extends Outcome.JSON<Value.Inapplicable> {}
 
     export interface EARL extends Outcome.EARL {
       "earl:result": {
@@ -707,7 +746,8 @@ export namespace Outcome {
     target: T,
     expectations: Record<{
       [key: string]: Option<Result<Diagnostic>>;
-    }>
+    }>,
+    mode: Mode
   ): Outcome.Applicable<I, T, Q, S> {
     return Trilean.fold(
       (expectations) =>
@@ -727,7 +767,8 @@ export namespace Outcome {
               // expectation is a Some<Ok<T>>.
               expectation.getUnsafe(),
             ])
-          )
+          ),
+          mode
         ),
       () =>
         Failed.of(
@@ -740,9 +781,10 @@ export namespace Outcome {
               // even if others are None.
               expectation.getOr(Err.of(Diagnostic.empty)),
             ])
-          )
+          ),
+          mode
         ),
-      () => CantTell.of(rule, target, Diagnostic.empty),
+      () => CantTell.of(rule, target, Diagnostic.empty, mode),
       expectations.values()
     );
   }

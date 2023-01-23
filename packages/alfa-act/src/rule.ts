@@ -1,8 +1,12 @@
 import { Array } from "@siteimprove/alfa-array";
+
+import * as earl from "@siteimprove/alfa-earl";
+import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -10,11 +14,8 @@ import { Performance } from "@siteimprove/alfa-performance";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
-import { Sequence } from "@siteimprove/alfa-sequence";
-
-import * as earl from "@siteimprove/alfa-earl";
-import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Tuple } from "@siteimprove/alfa-tuple";
 
 import { Cache } from "./cache";
@@ -24,9 +25,8 @@ import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Requirement } from "./requirement";
 import { Tag } from "./tag";
-import { Either, Left, Right } from "@siteimprove/alfa-either";
 
-const { flatMap, flatten, reduce } = Iterable;
+const { flatten, reduce } = Iterable;
 
 /**
  * @public
@@ -146,6 +146,8 @@ export abstract class Rule<I, T extends Hashable, Q = never, S = T>
  * @public
  */
 export namespace Rule {
+  import Applicable = Outcome.Applicable;
+
   export interface JSON {
     [key: string]: json.JSON;
     type: string;
@@ -282,7 +284,7 @@ export namespace Rule {
               // and with the global sequence whether it was used at all.
               // The second case is needed to decide whether the oracle was used
               // when producing an Inapplicable result (empty sequence).
-              // None are clearer from the sequence, and Some are opened to only
+              // None are cleared from the sequence, and Some are opened to only
               // keep the targets.
               Sequence.from(targets).reduce(
                 ([acc, wasUsed], [cur, isUsed]) =>
@@ -306,7 +308,9 @@ export namespace Rule {
             })
             .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
               if (targets.isEmpty()) {
-                return Future.now([Outcome.Inapplicable.of(this)]);
+                return Future.now([
+                  Outcome.Inapplicable.of(this, getMode(oracleUsed)),
+                ]);
               }
 
               return Future.traverse(targets, ([target, oracleUsed]) =>
@@ -428,19 +432,30 @@ export namespace Rule {
             rule.evaluate(input, oracle, outcomes, performance)
           )
             .map((outcomes) =>
-              Sequence.from(
-                flatMap(outcomes, function* (outcomes) {
-                  for (const outcome of outcomes) {
-                    if (Outcome.isApplicable(outcome)) {
-                      yield outcome;
-                    }
-                  }
-                })
+              // We both need to keep with each outcome whether the oracle was used,
+              // and with the global sequence whether it was used at all.
+              // The second case is needed to decide whether the oracle was used
+              // when producing an Inapplicable result (empty sequence).
+              // Inapplicable outcomes one are cleared from the sequence.
+              Sequence.from(flatten(outcomes)).reduce(
+                ([acc, wasUsed], outcome) =>
+                  Applicable.isApplicable<I, T, Q, S>(outcome)
+                    ? Tuple.of(
+                        acc.append(outcome),
+                        wasUsed || outcome.isSemiAuto
+                      )
+                    : Tuple.of(acc, wasUsed || outcome.isSemiAuto),
+                Tuple.of(
+                  Sequence.empty<Outcome.Applicable<I, T, Q, S>>(),
+                  false
+                )
               )
             )
-            .flatMap<Iterable<Outcome<I, T, Q, S>>>((targets) => {
+            .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
               if (targets.isEmpty()) {
-                return Future.now([Outcome.Inapplicable.of(this)]);
+                return Future.now([
+                  Outcome.Inapplicable.of(this, getMode(oracleUsed)),
+                ]);
               }
 
               const { expectations } = evaluate(input, rulePerformance);
@@ -725,9 +740,19 @@ function resolve<I, T extends Hashable, Q, S>(
     )
     .map((expectation) =>
       expectation.either(
-        ([expectations, _]) =>
-          Outcome.from(rule, target, Record.from(expectations)),
-        ([diagnostic, _]) => Outcome.CantTell.of(rule, target, diagnostic)
+        ([expectations, oracleUsed]) =>
+          Outcome.from(
+            rule,
+            target,
+            Record.from(expectations),
+            getMode(oracleUsed)
+          ),
+        ([diagnostic, oracleUsed]) =>
+          Outcome.CantTell.of(rule, target, diagnostic, getMode(oracleUsed))
       )
     );
+}
+
+function getMode(oracleUsed: boolean): Outcome.Mode {
+  return oracleUsed ? Outcome.Mode.SemiAuto : Outcome.Mode.Automatic;
 }
