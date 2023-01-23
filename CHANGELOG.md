@@ -19,6 +19,22 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.52.3](../../compare/v0.52.2...v0.52.3) (2023-01-21)
+
+# Added
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): The `generic` role is now supported and DOM elements with a `generic` role are mapped to `Container` ARIA nodes; prohibited attributes are now managed. ([#1205](../../issues/1205), [#1305](../../pull/1306), [#1310](../../pull/1310))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Added SIA-R18 version 2 (as experimental) which rejects prohibited attributes. ([#1205](../../issues/1205), [#1310](../../pull/1310))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Added SIA-R110 checking that at least one token in a `role` attribute is valid. ([#1314](../../pull/1314))
+
+### Changed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria): ARIA data is now gathered from ARIA 1.2. ([#1205](../../issues/1205), [#1305](../../pull/1305))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R21 does not map to WCAG anymore, since incorrect role tokens are not a problem when a fallback exist. ([#1314](../../pull/1314))
+
 ## [0.52.2](../../compare/v0.52.1...v0.52.2) (2023-01-18)
 
 ### Fixed
