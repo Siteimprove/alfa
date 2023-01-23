@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -67,9 +68,14 @@ test(`evaluate() fails an <a> element that removes the default focus outline and
       })
     ),
     [
-      failed(R65, target, {
-        1: Outcomes.HasNoFocusIndicator(noMatches, noMatches),
-      }),
+      failed(
+        R65,
+        target,
+        {
+          1: Outcomes.HasNoFocusIndicator(noMatches, noMatches),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -98,9 +104,14 @@ test(`evaluate() passes an <a> element that removes the default focus outline
       })
     ),
     [
-      passed(R65, target, {
-        1: Outcomes.HasFocusIndicator(noMatches, noMatches),
-      }),
+      passed(
+        R65,
+        target,
+        {
+          1: Outcomes.HasFocusIndicator(noMatches, noMatches),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -239,9 +250,14 @@ test(`evaluate() fails an <a> element that removes the default focus outline
       })
     ),
     [
-      failed(R65, target, {
-        1: Outcomes.HasNoFocusIndicator(noMatches, noMatches),
-      }),
+      failed(
+        R65,
+        target,
+        {
+          1: Outcomes.HasNoFocusIndicator(noMatches, noMatches),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });

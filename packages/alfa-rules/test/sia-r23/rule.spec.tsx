@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
@@ -25,7 +26,14 @@ test(`evaluate() passes an audio with perceivable transcript`, async (t) => {
         transcript: Option.of(transcript),
       })
     ),
-    [passed(R23, target, { 1: Outcomes.HasPerceivableTranscript("<audio>") })]
+    [
+      passed(
+        R23,
+        target,
+        { 1: Outcomes.HasPerceivableTranscript("<audio>") },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -47,7 +55,14 @@ test(`evaluate() passes an audio with a link to a transcript`, async (t) => {
         "transcript-perceivable": true,
       })
     ),
-    [passed(R23, target, { 1: Outcomes.HasPerceivableLink("<audio>") })]
+    [
+      passed(
+        R23,
+        target,
+        { 1: Outcomes.HasPerceivableLink("<audio>") },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -67,7 +82,14 @@ test(`evaluate() fails an audio with no transcript`, async (t) => {
         "transcript-link": None,
       })
     ),
-    [failed(R23, target, { 1: Outcomes.HasNoTranscriptLink("<audio>") })]
+    [
+      failed(
+        R23,
+        target,
+        { 1: Outcomes.HasNoTranscriptLink("<audio>") },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -88,9 +110,14 @@ test(`evaluates() fails an audio with non-perceivable transcript`, async (t) => 
       })
     ),
     [
-      failed(R23, target, {
-        1: Outcomes.HasNonPerceivableTranscript("<audio>"),
-      }),
+      failed(
+        R23,
+        target,
+        {
+          1: Outcomes.HasNonPerceivableTranscript("<audio>"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -109,13 +136,18 @@ test(`evaluate fails an audio with link to non-perceivable transcript`, async (t
         "is-audio-streaming": false,
         "is-playing": true,
         transcript: None,
-        "transcript-link": Option.of(transcript)
+        "transcript-link": Option.of(transcript),
       })
     ),
     [
-      passed(R23, target, {
-        1: Outcomes.HasPerceivableLink("<audio>"),
-      }),
+      passed(
+        R23,
+        target,
+        {
+          1: Outcomes.HasPerceivableLink("<audio>"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -142,9 +174,14 @@ test(`evaluate fails an audio with non-perceivable link to transcript`, async (t
       })
     ),
     [
-      failed(R23, target, {
-        1: Outcomes.HasNonPerceivableLink("<audio>"),
-      }),
+      failed(
+        R23,
+        target,
+        {
+          1: Outcomes.HasNonPerceivableLink("<audio>"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -160,7 +197,7 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
       { document },
       oracle({ "is-audio-streaming": false, "is-playing": true })
     ),
-    [cantTell(R23, target)]
+    [cantTell(R23, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -179,6 +216,6 @@ test(`evaluate() is inapplicable to streaming audios`, async (t) => {
 
   t.deepEqual(
     await evaluate(R23, { document }, oracle({ "is-audio-streaming": true })),
-    [inapplicable(R23)]
+    [inapplicable(R23, Outcome.Mode.SemiAuto)]
   );
 });

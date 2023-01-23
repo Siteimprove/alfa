@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -53,9 +54,14 @@ test(`evaluate() fails two links that have the same name, but reference
       })
     ),
     [
-      failed(R81, Group.of(target), {
-        1: Outcomes.ResolveDifferentResource,
-      }),
+      failed(
+        R81,
+        Group.of(target),
+        {
+          1: Outcomes.ResolveDifferentResource,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -82,9 +88,14 @@ test(`evaluate() passes two links that have the same name and reference
       })
     ),
     [
-      passed(R81, Group.of(target), {
-        1: Outcomes.ResolveEquivalentResource,
-      }),
+      passed(
+        R81,
+        Group.of(target),
+        {
+          1: Outcomes.ResolveEquivalentResource,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });

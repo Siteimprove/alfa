@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -47,9 +48,14 @@ test(`evaluate() passes a document whose first tabbable link references an
       })
     ),
     [
-      passed(ER87, document, {
-        1: Outcomes.FirstTabbableIsLinkToContent,
-      }),
+      passed(
+        ER87,
+        document,
+        {
+          1: Outcomes.FirstTabbableIsLinkToContent,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -76,9 +82,14 @@ test(`evaluate() fails a document whose first tabbable link does not
       })
     ),
     [
-      failed(ER87, document, {
-        1: Outcomes.FirstTabbableIsNotInternalLink,
-      }),
+      failed(
+        ER87,
+        document,
+        {
+          1: Outcomes.FirstTabbableIsNotInternalLink,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -101,9 +112,14 @@ test(`evaluate() passes a document whose first tabbable link references an
       })
     ),
     [
-      passed(ER87, document, {
-        1: Outcomes.FirstTabbableIsLinkToContent,
-      }),
+      passed(
+        ER87,
+        document,
+        {
+          1: Outcomes.FirstTabbableIsLinkToContent,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -131,9 +147,14 @@ test(`evaluate() passes a document whose first tabbable link references an
       })
     ),
     [
-      passed(ER87, document, {
-        1: Outcomes.FirstTabbableIsLinkToContent,
-      }),
+      passed(
+        ER87,
+        document,
+        {
+          1: Outcomes.FirstTabbableIsLinkToContent,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -249,9 +270,14 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
       })
     ),
     [
-      failed(ER87, document, {
-        1: Outcomes.FirstTabbableIsNotVisible,
-      }),
+      failed(
+        ER87,
+        document,
+        {
+          1: Outcomes.FirstTabbableIsNotVisible,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -282,9 +308,14 @@ test(`evaluate() passes a document whose first tabbable link is visible`, async 
       })
     ),
     [
-      passed(ER87, document, {
-        1: Outcomes.FirstTabbableIsLinkToContent,
-      }),
+      passed(
+        ER87,
+        document,
+        {
+          1: Outcomes.FirstTabbableIsLinkToContent,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });

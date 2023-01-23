@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
@@ -24,7 +25,14 @@ test(`evaluate() passes when R25 passes`, async (t) => {
         "has-description": true,
       })
     ),
-    [passed(R37, target, { 1: Outcomes.HasAudioDescription })]
+    [
+      passed(
+        R37,
+        target,
+        { 1: Outcomes.HasAudioDescription },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -47,7 +55,14 @@ test(`evaluate() passes when R31 passes`, async (t) => {
         label: Option.of(label),
       })
     ),
-    [passed(R37, target, { 1: Outcomes.HasAudioDescription })]
+    [
+      passed(
+        R37,
+        target,
+        { 1: Outcomes.HasAudioDescription },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -71,7 +86,14 @@ test(`evaluate() fails when no input rule passes`, async (t) => {
         label: None,
       })
     ),
-    [failed(R37, target, { 1: Outcomes.HasNoAudioDescription })]
+    [
+      failed(
+        R37,
+        target,
+        { 1: Outcomes.HasNoAudioDescription },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -86,7 +108,7 @@ test(`evaluate() cannot tell if no input rule can tell`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": true })
     ),
-    [cantTell(R37, target)]
+    [cantTell(R37, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -106,7 +128,7 @@ test(`evaluate() cannot tell when some input rule cannot tell and no input rule 
         "has-description": false,
       })
     ),
-    [cantTell(R37, target)]
+    [cantTell(R37, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -129,6 +151,6 @@ test(`evaluate() is inapplicable to videos without audio`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": false })
     ),
-    [inapplicable(R37)]
+    [inapplicable(R37, Outcome.Mode.SemiAuto)]
   );
 });

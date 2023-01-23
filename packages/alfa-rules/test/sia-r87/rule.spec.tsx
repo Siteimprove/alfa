@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -48,9 +49,14 @@ test(`evaluate() passes a document whose first tabbable link references an
       })
     ),
     [
-      passed(R87, document, {
-        1: Outcomes.FirstTabbableIsLinkToContent,
-      }),
+      passed(
+        R87,
+        document,
+        {
+          1: Outcomes.FirstTabbableIsLinkToContent,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -73,9 +79,14 @@ test(`evaluate() passes a document whose first tabbable link references an
       })
     ),
     [
-      passed(R87, document, {
-        1: Outcomes.FirstTabbableIsLinkToContent,
-      }),
+      passed(
+        R87,
+        document,
+        {
+          1: Outcomes.FirstTabbableIsLinkToContent,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -104,9 +115,14 @@ test(`evaluate() passes a document whose first tabbable link references an
       })
     ),
     [
-      passed(R87, document, {
-        1: Outcomes.FirstTabbableIsLinkToContent,
-      }),
+      passed(
+        R87,
+        document,
+        {
+          1: Outcomes.FirstTabbableIsLinkToContent,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -222,9 +238,14 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
       })
     ),
     [
-      failed(R87, document, {
-        1: Outcomes.FirstTabbableIsNotVisible,
-      }),
+      failed(
+        R87,
+        document,
+        {
+          1: Outcomes.FirstTabbableIsNotVisible,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -255,9 +276,14 @@ test(`evaluate() passes a document whose first tabbable link is not visible`, as
       })
     ),
     [
-      passed(R87, document, {
-        1: Outcomes.FirstTabbableIsLinkToContent,
-      }),
+      passed(
+        R87,
+        document,
+        {
+          1: Outcomes.FirstTabbableIsLinkToContent,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });

@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -22,7 +23,7 @@ test(`evaluate() passes a video with captions`, async (t) => {
         "has-captions": true,
       })
     ),
-    [passed(R22, target, { 1: Outcomes.HasCaptions })]
+    [passed(R22, target, { 1: Outcomes.HasCaptions }, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -41,7 +42,7 @@ test(`evaluate() fails a video without captions`, async (t) => {
         "has-captions": false,
       })
     ),
-    [failed(R22, target, { 1: Outcomes.HasNoCaptions })]
+    [failed(R22, target, { 1: Outcomes.HasNoCaptions }, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -56,7 +57,7 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": true })
     ),
-    [cantTell(R22, target)]
+    [cantTell(R22, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -79,6 +80,6 @@ test(`evaluate() is inapplicable to audio-less videos`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": false })
     ),
-    [inapplicable(R22)]
+    [inapplicable(R22, Outcome.Mode.SemiAuto)]
   );
 });

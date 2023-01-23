@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -17,15 +18,20 @@ test("evaluate() passes videos with less than 3 second of audio", async (t) => {
       R48,
       { document },
       oracle({
-        "is-above-duration-threshold": true,
         "has-audio": true,
+        "is-above-duration-threshold": true,
         "is-below-audio-duration-threshold": true,
       })
     ),
     [
-      passed(R48, target, {
-        1: Outcomes.DurationBelowThreshold("video"),
-      }),
+      passed(
+        R48,
+        target,
+        {
+          1: Outcomes.DurationBelowThreshold("video"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -40,15 +46,20 @@ test("evaluate() fails videos with more than 3 second of audio", async (t) => {
       R48,
       { document },
       oracle({
-        "is-above-duration-threshold": true,
         "has-audio": true,
+        "is-above-duration-threshold": true,
         "is-below-audio-duration-threshold": false,
       })
     ),
     [
-      failed(R48, target, {
-        1: Outcomes.DurationAboveThreshold("video"),
-      }),
+      failed(
+        R48,
+        target,
+        {
+          1: Outcomes.DurationAboveThreshold("video"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -64,9 +75,9 @@ test("evaluate() can't tell when questions are left unanswered", async (t) => {
     await evaluate(
       R48,
       { document },
-      oracle({ "is-above-duration-threshold": true, "has-audio": true })
+      oracle({ "has-audio": true, "is-above-duration-threshold": true })
     ),
-    [cantTell(R48, target)]
+    [cantTell(R48, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -83,9 +94,9 @@ test("evaluate() is inapplicable to short videos", async (t) => {
     await evaluate(
       R48,
       { document },
-      oracle({ "is-above-duration-threshold": false })
+      oracle({ "has-audio": true, "is-above-duration-threshold": false })
     ),
-    [inapplicable(R48)]
+    [inapplicable(R48, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -93,12 +104,8 @@ test("evaluate() is inapplicable to audio-less videos", async (t) => {
   const document = h.document([<video autoplay src="foo.mp4" />]);
 
   t.deepEqual(
-    await evaluate(
-      R48,
-      { document },
-      oracle({ "is-above-duration-threshold": true, "has-audio": false })
-    ),
-    [inapplicable(R48)]
+    await evaluate(R48, { document }, oracle({ "has-audio": false })),
+    [inapplicable(R48, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -109,14 +116,7 @@ test("evaluate() is inapplicable to videos that don't autoplay", async (t) => {
 
   const document = h.document([target, controls]);
 
-  t.deepEqual(
-    await evaluate(
-      R48,
-      { document },
-      oracle({ "is-above-duration-threshold": true, "has-audio": true })
-    ),
-    [inapplicable(R48)]
-  );
+  t.deepEqual(await evaluate(R48, { document }), [inapplicable(R48)]);
 });
 
 test("evaluate() is inapplicable to paused videos", async (t) => {
@@ -126,14 +126,7 @@ test("evaluate() is inapplicable to paused videos", async (t) => {
 
   const document = h.document([target, controls]);
 
-  t.deepEqual(
-    await evaluate(
-      R48,
-      { document },
-      oracle({ "is-above-duration-threshold": true, "has-audio": true })
-    ),
-    [inapplicable(R48)]
-  );
+  t.deepEqual(await evaluate(R48, { document }), [inapplicable(R48)]);
 });
 
 test("evaluate() is inapplicable to muted videos", async (t) => {
@@ -143,12 +136,5 @@ test("evaluate() is inapplicable to muted videos", async (t) => {
 
   const document = h.document([target, controls]);
 
-  t.deepEqual(
-    await evaluate(
-      R48,
-      { document },
-      oracle({ "is-above-duration-threshold": true, "has-audio": true })
-    ),
-    [inapplicable(R48)]
-  );
+  t.deepEqual(await evaluate(R48, { document }), [inapplicable(R48)]);
 });

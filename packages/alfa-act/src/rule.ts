@@ -313,8 +313,16 @@ export namespace Rule {
                 ]);
               }
 
-              return Future.traverse(targets, ([target, oracleUsed]) =>
-                resolve(target, Record.of(expectations(target)), this, oracle)
+              return Future.traverse(
+                targets,
+                ([target, oracleUsedInApplicability]) =>
+                  resolve(
+                    target,
+                    Record.of(expectations(target)),
+                    this,
+                    oracle,
+                    oracleUsedInApplicability
+                  )
               ).tee(() => {
                 performance?.measure(
                   Event.endExpectation(this),
@@ -467,7 +475,8 @@ export namespace Rule {
                     target,
                     Record.of(expectations(outcomes)),
                     this,
-                    oracle
+                    oracle,
+                    oracleUsed
                   )
               );
             })
@@ -699,10 +708,14 @@ function processExpectation(
     Expectation<Option.Maybe<Result<Diagnostic>>>
   ]
 ): Expectation<List<[string, Option<Result<Diagnostic>>]>> {
-  return expectation.either(
-    ([result, oracleUsed]) =>
-      acc.either<Expectation<List<[string, Option<Result<Diagnostic>>]>>>(
-        ([accumulator, oracleUsedAccumulator]) =>
+  return acc.either(
+    // The accumulator only contains true result, keep going.
+    ([accumulator, oracleUsedAccumulator]) =>
+      expectation.either<
+        Expectation<List<[string, Option<Result<Diagnostic>>]>>
+      >(
+        // The current result is defined, accumulate.
+        ([result, oracleUsed]) =>
           Left.of(
             Tuple.of(
               accumulator.append([
@@ -712,9 +725,12 @@ function processExpectation(
               oracleUsedAccumulator || oracleUsed
             )
           ),
-        ([diagnostic, oracleUsed]) => Right.of(Tuple.of(diagnostic, oracleUsed))
+        // The current result is cantTell, abort.
+        ([diagnostic, oracleUsed]) =>
+          Right.of(Tuple.of(diagnostic, oracleUsedAccumulator || oracleUsed))
       ),
-    ([diagnostic, oracleUsed]) => Right.of(Tuple.of(diagnostic, oracleUsed))
+    // The accumulator already contains cantTell, skip.
+    () => acc
   );
 }
 
@@ -724,7 +740,8 @@ function resolve<I, T extends Hashable, Q, S>(
     [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
   }>,
   rule: Rule<I, T, Q, S>,
-  oracle: Oracle<I, T, Q, S>
+  oracle: Oracle<I, T, Q, S>,
+  oracleUsedInApplicability: boolean
 ): Future<Outcome.Applicable<I, T, Q, S>> {
   return Future.traverse(expectations, ([id, interview]) =>
     Interview.conduct(interview, rule, oracle).map(
@@ -735,7 +752,7 @@ function resolve<I, T extends Hashable, Q, S>(
       reduce(
         expectations,
         processExpectation,
-        Left.of(Tuple.of(List.empty(), false))
+        Left.of(Tuple.of(List.empty(), oracleUsedInApplicability))
       )
     )
     .map((expectation) =>

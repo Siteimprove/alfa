@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -27,7 +28,14 @@ test(`evaluate() passes video with accurate descriptions track`, async (t) => {
         "track-describes-video": true,
       })
     ),
-    [passed(R36, target, { 1: Outcomes.HasDescriptionTrack })]
+    [
+      passed(
+        R36,
+        target,
+        { 1: Outcomes.HasDescriptionTrack },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -50,7 +58,14 @@ test(`evaluate() fails video with inaccurate descriptions track`, async (t) => {
         "track-describes-video": false,
       })
     ),
-    [failed(R36, target, { 1: Outcomes.HasNoDescriptionTrack })]
+    [
+      failed(
+        R36,
+        target,
+        { 1: Outcomes.HasNoDescriptionTrack },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -69,7 +84,7 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": true })
     ),
-    [cantTell(R36, target)]
+    [cantTell(R36, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -100,7 +115,7 @@ test(`evaluate() is inapplicable to videos without audio`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": false })
     ),
-    [inapplicable(R36)]
+    [inapplicable(R36, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -109,12 +124,5 @@ test(`evaluate() is inapplicable to videos without description track`, async (t)
 
   const document = h.document([target]);
 
-  t.deepEqual(
-    await evaluate(
-      R36,
-      { document },
-      oracle({ "is-video-streaming": false, "has-audio": true })
-    ),
-    [inapplicable(R36)]
-  );
+  t.deepEqual(await evaluate(R36, { document }), [inapplicable(R36)]);
 });

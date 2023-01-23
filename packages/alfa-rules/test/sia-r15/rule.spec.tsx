@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -57,9 +58,14 @@ test("evaluate() passes when two iframes embed equivalent resources", async (t) 
       oracle({ "reference-equivalent-resources": true })
     ),
     [
-      passed(R15, Group.of(target), {
-        1: Outcomes.EmbedEquivalentResources,
-      }),
+      passed(
+        R15,
+        Group.of(target),
+        {
+          1: Outcomes.EmbedEquivalentResources,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -97,9 +103,14 @@ test("evaluate() fails when two iframes embed different resources", async (t) =>
       oracle({ "reference-equivalent-resources": false })
     ),
     [
-      failed(R15, Group.of(target), {
-        1: Outcomes.EmbedDifferentResources,
-      }),
+      failed(
+        R15,
+        Group.of(target),
+        {
+          1: Outcomes.EmbedDifferentResources,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });

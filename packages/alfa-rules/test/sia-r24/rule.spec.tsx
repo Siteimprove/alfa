@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -34,9 +35,14 @@ test(`evaluate() passes when non-streaming video elements have all audio and
       })
     ),
     [
-      passed(R24, target, {
-        1: Outcomes.HasPerceivableTranscript("<video>"),
-      }),
+      passed(
+        R24,
+        target,
+        {
+          1: Outcomes.HasPerceivableTranscript("<video>"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -64,9 +70,14 @@ test(`evaluate() fails when non-streaming video elements have no audio and
       })
     ),
     [
-      failed(R24, target, {
-        1: Outcomes.HasNoTranscriptLink("<video>"),
-      }),
+      failed(
+        R24,
+        target,
+        {
+          1: Outcomes.HasNoTranscriptLink("<video>"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -91,7 +102,7 @@ test("evaluate() can't tell when some questions are left unanswered", async (t) 
         transcript: None,
       })
     ),
-    [cantTell(R24, target)]
+    [cantTell(R24, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 

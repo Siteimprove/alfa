@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
@@ -25,7 +26,14 @@ test(`evaluate() passes when R23 passes`, async (t) => {
         transcript: Option.of(transcript),
       })
     ),
-    [passed(R30, target, { 1: Outcomes.HasTextAlternative })]
+    [
+      passed(
+        R30,
+        target,
+        { 1: Outcomes.HasTextAlternative },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -48,7 +56,14 @@ test(`evaluate() passes when R29 passes`, async (t) => {
         label: Option.of(label),
       })
     ),
-    [passed(R30, target, { 1: Outcomes.HasTextAlternative })]
+    [
+      passed(
+        R30,
+        target,
+        { 1: Outcomes.HasTextAlternative },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -73,7 +88,14 @@ test(`evaluate() fails when all input rules fail`, async (t) => {
         label: Option.of(label),
       })
     ),
-    [failed(R30, target, { 1: Outcomes.HasNoTextAlternative })]
+    [
+      failed(
+        R30,
+        target,
+        { 1: Outcomes.HasNoTextAlternative },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -88,7 +110,7 @@ test(`evaluate() cannot tell if no input rule can tell`, async (t) => {
       { document },
       oracle({ "is-audio-streaming": false, "is-playing": true })
     ),
-    [cantTell(R30, target)]
+    [cantTell(R30, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -110,7 +132,7 @@ test(`evaluate() cannot tell when some input rule cannot tell and no input rule 
         // R29
       })
     ),
-    [cantTell(R30, target)]
+    [cantTell(R30, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -125,7 +147,7 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
       { document },
       oracle({ "is-audio-streaming": false, "is-playing": true })
     ),
-    [cantTell(R30, target)]
+    [cantTell(R30, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -144,6 +166,6 @@ test(`evaluate() is inapplicable to streaming audios`, async (t) => {
 
   t.deepEqual(
     await evaluate(R30, { document }, oracle({ "is-audio-streaming": true })),
-    [inapplicable(R30)]
+    [inapplicable(R30, Outcome.Mode.SemiAuto)]
   );
 });

@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -24,9 +25,14 @@ test("evaluate() passes documents whose lang attribute matches the main language
   t.deepEqual(
     await evaluate(R109, { document }, oracle({ "document-language": "en" })),
     [
-      passed(R109, document, {
-        1: Outcomes.HasCorrectLang(english, english),
-      }),
+      passed(
+        R109,
+        document,
+        {
+          1: Outcomes.HasCorrectLang(english, english),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -45,9 +51,14 @@ test("evaluate() passes documents whose lang primary attribute matches the main 
       oracle({ "document-language": "en-us" })
     ),
     [
-      passed(R109, document, {
-        1: Outcomes.HasCorrectLang(british, american),
-      }),
+      passed(
+        R109,
+        document,
+        {
+          1: Outcomes.HasCorrectLang(british, american),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -61,7 +72,14 @@ test("evaluate() fails documents whose lang attribute does not match the main la
 
   t.deepEqual(
     await evaluate(R109, { document }, oracle({ "document-language": "en" })),
-    [failed(R109, document, { 1: Outcomes.HasIncorrectLang(french, english) })]
+    [
+      failed(
+        R109,
+        document,
+        { 1: Outcomes.HasIncorrectLang(french, english) },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -78,7 +96,14 @@ test("evaluate() fails documents without main language", async (t) => {
       { document },
       oracle({ "document-language": "gibberish" })
     ),
-    [failed(R109, document, { 1: Outcomes.HasNoLanguage(english) })]
+    [
+      failed(
+        R109,
+        document,
+        { 1: Outcomes.HasNoLanguage(english) },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 

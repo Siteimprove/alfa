@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
@@ -24,7 +25,14 @@ test(`evaluate() passes when R22 passes`, async (t) => {
         "has-captions": true,
       })
     ),
-    [passed(R27, target, { 1: Outcomes.HasTextAlternative })]
+    [
+      passed(
+        R27,
+        target,
+        { 1: Outcomes.HasTextAlternative },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -47,7 +55,14 @@ test(`evaluate() passes when R31 passes`, async (t) => {
         label: Option.of(label),
       })
     ),
-    [passed(R27, target, { 1: Outcomes.HasTextAlternative })]
+    [
+      passed(
+        R27,
+        target,
+        { 1: Outcomes.HasTextAlternative },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -70,7 +85,14 @@ test(`evaluate() fails when all input rules fail`, async (t) => {
         label: None,
       })
     ),
-    [failed(R27, target, { 1: Outcomes.HasNoTextAlternative })]
+    [
+      failed(
+        R27,
+        target,
+        { 1: Outcomes.HasNoTextAlternative },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -85,7 +107,7 @@ test(`evaluate() cannot tell if no input rule can tell`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": true })
     ),
-    [cantTell(R27, target)]
+    [cantTell(R27, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -106,7 +128,7 @@ test(`evaluate() cannot tell when some input rule cannot tell and no input rule 
         // R31
       })
     ),
-    [cantTell(R27, target)]
+    [cantTell(R27, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -129,6 +151,6 @@ test(`evaluate() is inapplicable to videos without audio`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": false })
     ),
-    [inapplicable(R27)]
+    [inapplicable(R27, Outcome.Mode.SemiAuto)]
   );
 });

@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -43,9 +44,14 @@ test("evaluate() passes when same landmarks have same names and content", async 
       oracle({ "is-content-equivalent": true })
     ),
     [
-      passed(R55, target, {
-        1: Outcomes.SameResource("complementary", "More information"),
-      }),
+      passed(
+        R55,
+        target,
+        {
+          1: Outcomes.SameResource("complementary", "More information"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -64,9 +70,14 @@ test("evaluate() fails when same landmarks have same names but different content
       oracle({ "is-content-equivalent": false })
     ),
     [
-      failed(R55, target, {
-        1: Outcomes.DifferentResources("complementary", "More information"),
-      }),
+      failed(
+        R55,
+        target,
+        {
+          1: Outcomes.DifferentResources("complementary", "More information"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -85,9 +96,14 @@ test("evaluate() fails when same sections have same names", async (t) => {
       oracle({ "is-content-equivalent": false })
     ),
     [
-      failed(R55, target, {
-        1: Outcomes.DifferentResources("region", "More information"),
-      }),
+      failed(
+        R55,
+        target,
+        {
+          1: Outcomes.DifferentResources("region", "More information"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
