@@ -511,9 +511,11 @@ test(`.from() exposes implicitly required children of a presentational element
   t.deepEqual(Node.from(ul, device).toJSON(), {
     type: "container",
     node: "/ul[1]",
+    role: null,
     children: [
       {
         type: "container",
+        role: null,
         node: "/ul[1]/li[1]",
         children: [],
       },
@@ -531,6 +533,7 @@ test(`.from() doesn't inherit presentational roles into explicitly required
 
   t.deepEqual(Node.from(ul, device).toJSON(), {
     type: "container",
+    role: null,
     node: "/ul[1]",
     children: [
       {
@@ -564,10 +567,12 @@ test(`.from() doesn't inherit presentational roles into children of implicitly
 
   t.deepEqual(Node.from(ul, device).toJSON(), {
     type: "container",
+    role: null,
     node: "/ul[1]",
     children: [
       {
         type: "container",
+        role: null,
         node: "/ul[1]/li[1]",
         children: [
           {
@@ -601,6 +606,7 @@ test(`.from() doesn't expose children of elements with roles that designate
     children: [
       {
         type: "container",
+        role: null,
         node: "/button[1]/img[1]",
         children: [],
       },
