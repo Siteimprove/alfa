@@ -20,18 +20,30 @@ import { Rule } from "./rule";
  * Q: questions' metadata type
  * S: possible types of questions' subject.
  */
-export abstract class Outcome<I, T extends Hashable, Q = never, S = T>
-  implements
+export abstract class Outcome<
+  I,
+  T extends Hashable,
+  Q = never,
+  S = T,
+  O extends Outcome.Kind = Outcome.Kind
+> implements
     Equatable,
     Hashable,
-    json.Serializable<Outcome.JSON>,
+    json.Serializable<Outcome.JSON<O>>,
     earl.Serializable<Outcome.EARL>,
     sarif.Serializable<sarif.Result>
 {
+  private _outcome: O;
+
   protected readonly _rule: Rule<I, T, Q, S>;
 
-  protected constructor(rule: Rule<I, T, Q, S>) {
+  protected constructor(outcome: O, rule: Rule<I, T, Q, S>) {
+    this._outcome = outcome;
     this._rule = rule;
+  }
+
+  public get outcome(): O {
+    return this._outcome;
   }
 
   public get rule(): Rule<I, T, Q, S> {
@@ -42,15 +54,21 @@ export abstract class Outcome<I, T extends Hashable, Q = never, S = T>
     return undefined;
   }
 
-  public abstract equals<I, T extends Hashable, Q, S>(
-    value: Outcome<I, T, Q, S>
-  ): boolean;
+  public abstract equals<
+    I,
+    T extends Hashable,
+    Q,
+    S,
+    O extends Outcome.Kind = Outcome.Kind
+  >(value: Outcome<I, T, Q, S, O>): boolean;
 
   public abstract equals(value: unknown): value is this;
 
   public abstract hash(hash: Hash): void;
 
-  public abstract toJSON(): Outcome.JSON;
+  public toJSON(): Outcome.JSON<O> {
+    return { outcome: this._outcome, rule: this._rule.toJSON() };
+  }
 
   public toEARL(): Outcome.EARL {
     return {
@@ -71,9 +89,19 @@ export abstract class Outcome<I, T extends Hashable, Q = never, S = T>
  * @public
  */
 export namespace Outcome {
-  export interface JSON {
+  /**
+   * @public
+   */
+  export enum Kind {
+    Inapplicable = "inapplicable",
+    Passed = "passed",
+    Failed = "failed",
+    CantTell = "canttell",
+  }
+
+  export interface JSON<O extends Kind = Kind> {
     [key: string]: json.JSON;
-    outcome: string;
+    outcome: O;
     rule: Rule.JSON;
   }
 
@@ -88,7 +116,8 @@ export namespace Outcome {
     I,
     T,
     Q,
-    S
+    S,
+    Kind.Passed
   > {
     public static of<I, T extends Hashable, Q, S>(
       rule: Rule<I, T, Q, S>,
@@ -112,7 +141,7 @@ export namespace Outcome {
         [key: string]: Result<Diagnostic>;
       }>
     ) {
-      super(rule);
+      super(Kind.Passed, rule);
 
       this._target = target;
       this._expectations = Record.from(expectations.toArray());
@@ -154,8 +183,7 @@ export namespace Outcome {
 
     public toJSON(): Passed.JSON<T> {
       return {
-        outcome: "passed",
-        rule: this._rule.toJSON(),
+        ...super.toJSON(),
         target: json.Serializable.toJSON(this._target),
         expectations: this._expectations
           .toArray()
@@ -217,9 +245,8 @@ export namespace Outcome {
   }
 
   export namespace Passed {
-    export interface JSON<T> extends Outcome.JSON {
+    export interface JSON<T> extends Outcome.JSON<Kind.Passed> {
       [key: string]: json.JSON;
-      outcome: "passed";
       target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
@@ -256,7 +283,8 @@ export namespace Outcome {
     I,
     T,
     Q,
-    S
+    S,
+    Kind.Failed
   > {
     public static of<I, T extends Hashable, Q, S>(
       rule: Rule<I, T, Q, S>,
@@ -280,7 +308,7 @@ export namespace Outcome {
         [key: string]: Result<Diagnostic>;
       }>
     ) {
-      super(rule);
+      super(Kind.Failed, rule);
 
       this._target = target;
       this._expectations = Record.from(expectations.toArray());
@@ -322,8 +350,7 @@ export namespace Outcome {
 
     public toJSON(): Failed.JSON<T> {
       return {
-        outcome: "failed",
-        rule: this._rule.toJSON(),
+        ...super.toJSON(),
         target: json.Serializable.toJSON(this._target),
         expectations: this._expectations
           .toArray()
@@ -388,9 +415,8 @@ export namespace Outcome {
   }
 
   export namespace Failed {
-    export interface JSON<T> extends Outcome.JSON {
+    export interface JSON<T> extends Outcome.JSON<Kind.Failed> {
       [key: string]: json.JSON;
-      outcome: "failed";
       target: json.Serializable.ToJSON<T>;
       expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
     }
@@ -428,7 +454,7 @@ export namespace Outcome {
     T extends Hashable,
     Q = never,
     S = T
-  > extends Outcome<I, T, Q, S> {
+  > extends Outcome<I, T, Q, S, Kind.CantTell> {
     public static of<I, T extends Hashable, Q, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
@@ -445,7 +471,7 @@ export namespace Outcome {
       target: T,
       diagnostic: Diagnostic
     ) {
-      super(rule);
+      super(Kind.CantTell, rule);
 
       this._target = target;
       this._diagnostic = diagnostic;
@@ -482,8 +508,7 @@ export namespace Outcome {
 
     public toJSON(): CantTell.JSON<T> {
       return {
-        outcome: "cantTell",
-        rule: this._rule.toJSON(),
+        ...super.toJSON(),
         target: json.Serializable.toJSON(this._target),
         diagnostic: this._diagnostic.toJSON(),
       };
@@ -531,9 +556,8 @@ export namespace Outcome {
   }
 
   export namespace CantTell {
-    export interface JSON<T> extends Outcome.JSON {
+    export interface JSON<T> extends Outcome.JSON<Kind.CantTell> {
       [key: string]: json.JSON;
-      outcome: "cantTell";
       target: json.Serializable.ToJSON<T>;
       diagnostic: json.Serializable.ToJSON<Diagnostic>;
     }
@@ -593,7 +617,7 @@ export namespace Outcome {
     T extends Hashable,
     Q = unknown,
     S = T
-  > extends Outcome<I, T, Q, S> {
+  > extends Outcome<I, T, Q, S, Kind.Inapplicable> {
     public static of<I, T extends Hashable, Q, S>(
       rule: Rule<I, T, Q, S>
     ): Inapplicable<I, T, Q, S> {
@@ -601,7 +625,7 @@ export namespace Outcome {
     }
 
     private constructor(rule: Rule<I, T, Q, S>) {
-      super(rule);
+      super(Kind.Inapplicable, rule);
     }
 
     public equals<I, T extends Hashable, Q, S>(
@@ -619,10 +643,7 @@ export namespace Outcome {
     }
 
     public toJSON(): Inapplicable.JSON {
-      return {
-        outcome: "inapplicable",
-        rule: this._rule.toJSON(),
-      };
+      return super.toJSON();
     }
 
     public toEARL(): Inapplicable.EARL {
@@ -653,10 +674,7 @@ export namespace Outcome {
   }
 
   export namespace Inapplicable {
-    export interface JSON extends Outcome.JSON {
-      [key: string]: json.JSON;
-      outcome: "inapplicable";
-    }
+    export interface JSON extends Outcome.JSON<Kind.Inapplicable> {}
 
     export interface EARL extends Outcome.EARL {
       "earl:result": {
