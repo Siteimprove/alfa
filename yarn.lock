@@ -1018,6 +1018,7 @@ __metadata:
     "@siteimprove/alfa-test": "workspace:^0.56.0"
     "@siteimprove/alfa-thunk": "workspace:^0.56.0"
     "@siteimprove/alfa-trilean": "workspace:^0.56.0"
+    "@siteimprove/alfa-tuple": "workspace:^0.56.0"
   languageName: unknown
   linkType: soft
 
@@ -2421,7 +2422,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-tuple@workspace:packages/alfa-tuple":
+"@siteimprove/alfa-tuple@workspace:^0.56.0, @siteimprove/alfa-tuple@workspace:packages/alfa-tuple":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-tuple@workspace:packages/alfa-tuple"
   dependencies:

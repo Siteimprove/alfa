@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -18,7 +19,14 @@ test("evaluate() passes images whose name is descriptive", async (t) => {
       { document },
       oracle({ "name-describes-purpose": true })
     ),
-    [passed(R39, target, { 1: Outcomes.NameIsDescriptive("img") })]
+    [
+      passed(
+        R39,
+        target,
+        { 1: Outcomes.NameIsDescriptive("img") },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -33,7 +41,14 @@ test("evaluate() passes images whose name is not descriptive", async (t) => {
       { document },
       oracle({ "name-describes-purpose": false })
     ),
-    [failed(R39, target, { 1: Outcomes.NameIsNotDescriptive("img") })]
+    [
+      failed(
+        R39,
+        target,
+        { 1: Outcomes.NameIsNotDescriptive("img") },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 

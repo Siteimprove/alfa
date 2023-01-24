@@ -86,6 +86,9 @@
     },
     {
       "path": "../alfa-trilean"
+    },
+    {
+      "path": "../alfa-tuple"
     }
   ]
 }

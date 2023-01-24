@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
@@ -28,10 +29,15 @@ test(`evaluate() passes an audio that is labelled as alternative for text`, asyn
       })
     ),
     [
-      passed(R29, target, {
-        1: Outcomes.HasPerceivableAlternative("<audio>"),
-        2: Outcomes.HasPerceivableLabel("<audio>"),
-      }),
+      passed(
+        R29,
+        target,
+        {
+          1: Outcomes.HasPerceivableAlternative("<audio>"),
+          2: Outcomes.HasPerceivableLabel("<audio>"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -54,10 +60,15 @@ test(`evaluate() fails an audio that is not alternative for text`, async (t) => 
       })
     ),
     [
-      failed(R29, target, {
-        1: Outcomes.HasNoAlternative("<audio>"),
-        2: Outcomes.HasPerceivableLabel("<audio>"),
-      }),
+      failed(
+        R29,
+        target,
+        {
+          1: Outcomes.HasNoAlternative("<audio>"),
+          2: Outcomes.HasPerceivableLabel("<audio>"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -80,10 +91,15 @@ test(`evaluate() fails an audio that is not labelled as alternative for text`, a
       })
     ),
     [
-      failed(R29, target, {
-        1: Outcomes.HasPerceivableAlternative("<audio>"),
-        2: Outcomes.HasNoLabel("<audio>"),
-      }),
+      failed(
+        R29,
+        target,
+        {
+          1: Outcomes.HasPerceivableAlternative("<audio>"),
+          2: Outcomes.HasNoLabel("<audio>"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -107,10 +123,15 @@ test(`evaluate() fails an audio alternative for invisible text`, async (t) => {
       })
     ),
     [
-      failed(R29, target, {
-        1: Outcomes.HasNonPerceivableAlternative("<audio>"),
-        2: Outcomes.HasPerceivableLabel("<audio>"),
-      }),
+      failed(
+        R29,
+        target,
+        {
+          1: Outcomes.HasNonPerceivableAlternative("<audio>"),
+          2: Outcomes.HasPerceivableLabel("<audio>"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -138,10 +159,15 @@ test(`evaluate() fails an audio that is invisibly labelled as alternative for te
       })
     ),
     [
-      failed(R29, target, {
-        1: Outcomes.HasPerceivableAlternative("<audio>"),
-        2: Outcomes.HasNonPerceivableLabel("<audio>"),
-      }),
+      failed(
+        R29,
+        target,
+        {
+          1: Outcomes.HasPerceivableAlternative("<audio>"),
+          2: Outcomes.HasNonPerceivableLabel("<audio>"),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -157,7 +183,7 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
       { document },
       oracle({ "is-audio-streaming": false, "is-playing": true })
     ),
-    [cantTell(R29, target)]
+    [cantTell(R29, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -176,6 +202,6 @@ test(`evaluate() is inapplicable to streaming audios`, async (t) => {
 
   t.deepEqual(
     await evaluate(R29, { document }, oracle({ "is-audio-streaming": true })),
-    [inapplicable(R29)]
+    [inapplicable(R29, Outcome.Mode.SemiAuto)]
   );
 });

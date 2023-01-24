@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -22,7 +23,14 @@ test(`evaluate() passes video with descriptive audio`, async (t) => {
         "has-description": true,
       })
     ),
-    [passed(R25, target, { 1: Outcomes.HasInformativeAudio })]
+    [
+      passed(
+        R25,
+        target,
+        { 1: Outcomes.HasInformativeAudio },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -41,7 +49,14 @@ test(`evaluate() fails video without descriptive audio`, async (t) => {
         "has-description": false,
       })
     ),
-    [failed(R25, target, { 1: Outcomes.HasNoInformativeAudio })]
+    [
+      failed(
+        R25,
+        target,
+        { 1: Outcomes.HasNoInformativeAudio },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -56,7 +71,7 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": true })
     ),
-    [cantTell(R25, target)]
+    [cantTell(R25, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -79,6 +94,6 @@ test(`evaluate() is inapplicable to audio-less videos`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": false })
     ),
-    [inapplicable(R25)]
+    [inapplicable(R25, Outcome.Mode.SemiAuto)]
   );
 });

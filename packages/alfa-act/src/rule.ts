@@ -1,4 +1,5 @@
 import { Array } from "@siteimprove/alfa-array";
+import { Either, Left, Right } from "@siteimprove/alfa-either";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Future } from "@siteimprove/alfa-future";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
@@ -11,6 +12,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Record } from "@siteimprove/alfa-record";
 import { Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Tuple } from "@siteimprove/alfa-tuple";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
@@ -23,9 +25,8 @@ import { Oracle } from "./oracle";
 import { Outcome } from "./outcome";
 import { Requirement } from "./requirement";
 import { Tag } from "./tag";
-import { Either, Left, Right } from "@siteimprove/alfa-either";
 
-const { flatMap, flatten, reduce } = Iterable;
+const { flatten, reduce } = Iterable;
 
 /**
  * @public
@@ -145,6 +146,8 @@ export abstract class Rule<I, T extends Hashable, Q = never, S = T>
  * @public
  */
 export namespace Rule {
+  import Applicable = Outcome.Applicable;
+
   export interface JSON {
     [key: string]: json.JSON;
     type: string;
@@ -264,16 +267,40 @@ export namespace Rule {
 
           return Future.traverse(applicability(), (interview) =>
             Interview.conduct(interview, this, oracle).map((target) =>
-              target
-                .left()
-                // If questions are left unanswered in Applicability,
-                // we return an Inapplicable outcome; hence we can
-                // just drop any Right that stays after conducting the
-                // interview.
-                .flatMap((t) => (Option.isOption(t) ? t : Option.of(t)))
+              target.either<Tuple<[Option<T>, boolean]>>(
+                // We have a target, wrap it properly and return it.
+                ([target, oracleUsed]) =>
+                  Tuple.of(
+                    Option.isOption(target) ? target : Option.of(target),
+                    oracleUsed
+                  ),
+                // We have an unanswered question and return None
+                ([_, oracleUsed]) => Tuple.of(None, oracleUsed)
+              )
             )
           )
-            .map((targets) => Sequence.from(flatten<T>(targets)))
+            .map((targets) =>
+              // We both need to keep with each target whether the oracle was used,
+              // and with the global sequence whether it was used at all.
+              // The second case is needed to decide whether the oracle was used
+              // when producing an Inapplicable result (empty sequence).
+              // None are cleared from the sequence, and Some are opened to only
+              // keep the targets.
+              //
+              // For efficiency, we prepend the targets and reverse the full
+              // sequence later to conserve the order.
+              // This result in a O(n) rather than O(n²) process.
+              Sequence.from(targets).reduce(
+                ([acc, wasUsed], [cur, isUsed]) =>
+                  Tuple.of(
+                    cur.isSome()
+                      ? acc.prepend(Tuple.of(cur.get(), isUsed))
+                      : acc,
+                    wasUsed || isUsed
+                  ),
+                Tuple.of(Sequence.empty<Tuple<[T, boolean]>>(), false)
+              )
+            )
             .tee(() => {
               performance?.measure(
                 Event.endApplicability(this),
@@ -283,13 +310,25 @@ export namespace Rule {
                 Event.startExpectation(this)
               ).start;
             })
-            .flatMap<Iterable<Outcome<I, T, Q, S>>>((targets) => {
+            .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
               if (targets.isEmpty()) {
-                return Future.now([Outcome.Inapplicable.of(this)]);
+                return Future.now([
+                  Outcome.Inapplicable.of(this, getMode(oracleUsed)),
+                ]);
               }
 
-              return Future.traverse(targets, (target) =>
-                resolve(target, Record.of(expectations(target)), this, oracle)
+              return Future.traverse(
+                // Since targets were prepended when Applicability was processed,
+                // we now need to reverse the sequence to restore initial order.
+                targets.reverse(),
+                ([target, oracleUsedInApplicability]) =>
+                  resolve(
+                    target,
+                    Record.of(expectations(target)),
+                    this,
+                    oracle,
+                    oracleUsedInApplicability
+                  )
               ).tee(() => {
                 performance?.measure(
                   Event.endExpectation(this),
@@ -407,31 +446,49 @@ export namespace Rule {
             rule.evaluate(input, oracle, outcomes, performance)
           )
             .map((outcomes) =>
-              Sequence.from(
-                flatMap(outcomes, function* (outcomes) {
-                  for (const outcome of outcomes) {
-                    if (Outcome.isApplicable(outcome)) {
-                      yield outcome;
-                    }
-                  }
-                })
+              // We both need to keep with each outcome whether the oracle was used,
+              // and with the global sequence whether it was used at all.
+              // The second case is needed to decide whether the oracle was used
+              // when producing an Inapplicable result (empty sequence).
+              // Inapplicable outcomes one are cleared from the sequence.
+              //
+              // For efficiency, we prepend the targets and reverse the full
+              // sequence later to conserve the order.
+              // This result in a O(n) rather than O(n²) process.
+              Sequence.from(flatten(outcomes)).reduce(
+                ([acc, wasUsed], outcome) =>
+                  Tuple.of(
+                    Applicable.isApplicable<I, T, Q, S>(outcome)
+                      ? acc.prepend(outcome)
+                      : acc,
+                    wasUsed || outcome.isSemiAuto
+                  ),
+                Tuple.of(
+                  Sequence.empty<Outcome.Applicable<I, T, Q, S>>(),
+                  false
+                )
               )
             )
-            .flatMap<Iterable<Outcome<I, T, Q, S>>>((targets) => {
+            .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
               if (targets.isEmpty()) {
-                return Future.now([Outcome.Inapplicable.of(this)]);
+                return Future.now([
+                  Outcome.Inapplicable.of(this, getMode(oracleUsed)),
+                ]);
               }
 
               const { expectations } = evaluate(input, rulePerformance);
 
               return Future.traverse(
-                targets.groupBy((outcome) => outcome.target),
+                // Since targets were prepended when Applicability was processed,
+                // we now need to reverse the sequence to restore initial order.
+                targets.reverse().groupBy((outcome) => outcome.target),
                 ([target, outcomes]) =>
                   resolve(
                     target,
                     Record.of(expectations(outcomes)),
                     this,
-                    oracle
+                    oracle,
+                    oracleUsed
                   )
               );
             })
@@ -650,7 +707,7 @@ export namespace Rule {
   }
 }
 
-type Expectation<T> = Either<T, Diagnostic>;
+type Expectation<T> = Either<Tuple<[T, boolean]>, Tuple<[Diagnostic, boolean]>>;
 
 // Processes the expectations of the results of an interview.
 // When the result is Passed/Failed (Left), we accumulate the expectations that are later on passed to the Outcome.
@@ -663,19 +720,31 @@ function processExpectation(
     Expectation<Option.Maybe<Result<Diagnostic>>>
   ]
 ): Expectation<List<[string, Option<Result<Diagnostic>>]>> {
-  return expectation.either(
-    (result) =>
-      acc.either<Expectation<List<[string, Option<Result<Diagnostic>>]>>>(
-        (accumulator) =>
+  return acc.either(
+    // The accumulator only contains true result, keep going.
+    ([accumulator, oracleUsedAccumulator]) =>
+      expectation.either<
+        Expectation<List<[string, Option<Result<Diagnostic>>]>>
+      >(
+        // The current result is defined, accumulate.
+        ([result, oracleUsed]) =>
           Left.of(
-            accumulator.append([
-              id,
-              Option.isOption(result) ? result : Option.of(result),
-            ])
+            Tuple.of(
+              accumulator.append([
+                id,
+                Option.isOption(result) ? result : Option.of(result),
+              ]),
+              oracleUsedAccumulator || oracleUsed
+            )
           ),
-        (diagnostic) => Right.of(diagnostic)
+        // The current result is cantTell, abort.
+        ([diagnostic, oracleUsed]) =>
+          Right.of(Tuple.of(diagnostic, oracleUsedAccumulator || oracleUsed))
       ),
-    (diagnostic) => Right.of(diagnostic)
+    // The accumulator already contains cantTell, skip.
+    // Note that we only keep the mode of the first Expectation that cannot tell,
+    // which is likely OK.
+    () => acc
   );
 }
 
@@ -685,7 +754,8 @@ function resolve<I, T extends Hashable, Q, S>(
     [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
   }>,
   rule: Rule<I, T, Q, S>,
-  oracle: Oracle<I, T, Q, S>
+  oracle: Oracle<I, T, Q, S>,
+  oracleUsedInApplicability: boolean
 ): Future<Outcome.Applicable<I, T, Q, S>> {
   return Future.traverse(expectations, ([id, interview]) =>
     Interview.conduct(interview, rule, oracle).map(
@@ -693,12 +763,27 @@ function resolve<I, T extends Hashable, Q, S>(
     )
   )
     .map((expectations) =>
-      reduce(expectations, processExpectation, Left.of(List.empty()))
+      reduce(
+        expectations,
+        processExpectation,
+        Left.of(Tuple.of(List.empty(), oracleUsedInApplicability))
+      )
     )
     .map((expectation) =>
       expectation.either(
-        (expectations) => Outcome.from(rule, target, Record.from(expectations)),
-        (diagnostic) => Outcome.CantTell.of(rule, target, diagnostic)
+        ([expectations, oracleUsed]) =>
+          Outcome.from(
+            rule,
+            target,
+            Record.from(expectations),
+            getMode(oracleUsed)
+          ),
+        ([diagnostic, oracleUsed]) =>
+          Outcome.CantTell.of(rule, target, diagnostic, getMode(oracleUsed))
       )
     );
+}
+
+function getMode(oracleUsed: boolean): Outcome.Mode {
+  return oracleUsed ? Outcome.Mode.SemiAuto : Outcome.Mode.Automatic;
 }

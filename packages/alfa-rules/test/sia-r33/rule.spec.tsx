@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -27,7 +28,14 @@ test(`evaluate() passes when non-streaming video-only elements have all visual i
         transcript: Option.of(transcript),
       })
     ),
-    [passed(R33, target, { 1: Outcomes.HasPerceivableTranscript("<video>") })]
+    [
+      passed(
+        R33,
+        target,
+        { 1: Outcomes.HasPerceivableTranscript("<video>") },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -47,7 +55,14 @@ test(`evaluate() fails when non-streaming video-only elements have no visual inf
         "transcript-link": None,
       })
     ),
-    [failed(R33, target, { 1: Outcomes.HasNoTranscriptLink("<video>") })]
+    [
+      failed(
+        R33,
+        target,
+        { 1: Outcomes.HasNoTranscriptLink("<video>") },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -66,7 +81,7 @@ test("evaluate() can't tell when some questions are left unanswered", async (t) 
         transcript: None,
       })
     ),
-    [cantTell(R33, target)]
+    [cantTell(R33, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -98,6 +113,6 @@ test("evaluate() is inapplicable to videos with audio", async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": true })
     ),
-    [inapplicable(R33)]
+    [inapplicable(R33, Outcome.Mode.SemiAuto)]
   );
 });

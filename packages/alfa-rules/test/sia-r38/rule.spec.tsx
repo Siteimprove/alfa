@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -35,9 +36,14 @@ test("evaluate() passes when some atomic rules are passing", async (t) => {
       })
     ),
     [
-      passed(R38, target, {
-        1: Outcomes.HasAlternative,
-      }),
+      passed(
+        R38,
+        target,
+        {
+          1: Outcomes.HasAlternative,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -61,6 +67,6 @@ test("evaluate() can't tell when there are not enough answers to expectation", a
         "has-audio": true,
       })
     ),
-    [cantTell(R38, target)]
+    [cantTell(R38, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });

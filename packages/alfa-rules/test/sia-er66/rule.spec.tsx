@@ -1,9 +1,10 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
 
-import R66 from "../../src/sia-r66/rule";
+import R66 from "../../src/sia-er66/rule";
 import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast";
 import { Contrast as Outcomes } from "../../src/common/outcome/contrast";
 
@@ -349,15 +350,20 @@ test("evaluate() passes when a background color with sufficient contrast is inpu
       })
     ),
     [
-      passed(R66, target, {
-        1: Outcomes.HasSufficientContrast(21, 7, [
-          Diagnostic.Pairing.of(
-            ["foreground", rgb(0, 0, 0)],
-            ["background", rgb(1, 1, 1)],
-            21
-          ),
-        ]),
-      }),
+      passed(
+        R66,
+        target,
+        {
+          1: Outcomes.HasSufficientContrast(21, 7, [
+            Diagnostic.Pairing.of(
+              ["foreground", rgb(0, 0, 0)],
+              ["background", rgb(1, 1, 1)],
+              21
+            ),
+          ]),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -380,15 +386,20 @@ test("evaluate() fails when a background color with insufficient contrast is inp
       })
     ),
     [
-      failed(R66, target, {
-        1: Outcomes.HasInsufficientContrast(1, 7, [
-          Diagnostic.Pairing.of(
-            ["foreground", rgb(0, 0, 0)],
-            ["background", rgb(0, 0, 0)],
-            1
-          ),
-        ]),
-      }),
+      failed(
+        R66,
+        target,
+        {
+          1: Outcomes.HasInsufficientContrast(1, 7, [
+            Diagnostic.Pairing.of(
+              ["foreground", rgb(0, 0, 0)],
+              ["background", rgb(0, 0, 0)],
+              1
+            ),
+          ]),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });

@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
@@ -415,15 +416,20 @@ test("evaluate() passes when a background color with sufficient contrast is inpu
       })
     ),
     [
-      passed(R69, target, {
-        1: Outcomes.HasSufficientContrast(21, 4.5, [
-          Diagnostic.Pairing.of(
-            ["foreground", rgb(0, 0, 0)],
-            ["background", rgb(1, 1, 1)],
-            21
-          ),
-        ]),
-      }),
+      passed(
+        R69,
+        target,
+        {
+          1: Outcomes.HasSufficientContrast(21, 4.5, [
+            Diagnostic.Pairing.of(
+              ["foreground", rgb(0, 0, 0)],
+              ["background", rgb(1, 1, 1)],
+              21
+            ),
+          ]),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -451,15 +457,20 @@ test("evaluate() fails when a background color with insufficient contrast is inp
       })
     ),
     [
-      failed(R69, target, {
-        1: Outcomes.HasInsufficientContrast(1, 4.5, [
-          Diagnostic.Pairing.of(
-            ["foreground", rgb(0, 0, 0)],
-            ["background", rgb(0, 0, 0)],
-            1
-          ),
-        ]),
-      }),
+      failed(
+        R69,
+        target,
+        {
+          1: Outcomes.HasInsufficientContrast(1, 4.5, [
+            Diagnostic.Pairing.of(
+              ["foreground", rgb(0, 0, 0)],
+              ["background", rgb(0, 0, 0)],
+              1
+            ),
+          ]),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -641,7 +652,7 @@ test(`evaluate() cannot tell when encountering a non-ignored interposed
       { document },
       oracle({ "ignored-interposed-elements": [] })
     ),
-    [cantTell(R69, target, diagnostic)]
+    [cantTell(R69, target, diagnostic, Outcome.Mode.SemiAuto)]
   );
 
   // It should be ignored, resolve automatically.
@@ -652,15 +663,20 @@ test(`evaluate() cannot tell when encountering a non-ignored interposed
       oracle({ "ignored-interposed-elements": [interposed] })
     ),
     [
-      passed(R69, target, {
-        1: Outcomes.HasSufficientContrast(21, 4.5, [
-          Diagnostic.Pairing.of(
-            ["foreground", rgb(0, 0, 0)],
-            ["background", rgb(1, 1, 1)],
-            21
-          ),
-        ]),
-      }),
+      passed(
+        R69,
+        target,
+        {
+          1: Outcomes.HasSufficientContrast(21, 4.5, [
+            Diagnostic.Pairing.of(
+              ["foreground", rgb(0, 0, 0)],
+              ["background", rgb(1, 1, 1)],
+              21
+            ),
+          ]),
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });

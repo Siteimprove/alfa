@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
@@ -24,7 +25,7 @@ test(`evaluate() passes when R32 passes`, async (t) => {
         "has-audio-track": true,
       })
     ),
-    [passed(R35, target, { 1: Outcomes.HasAlternative })]
+    [passed(R35, target, { 1: Outcomes.HasAlternative }, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -47,7 +48,7 @@ test(`evaluate() passes when R26 passes`, async (t) => {
         label: Option.of(label),
       })
     ),
-    [passed(R35, target, { 1: Outcomes.HasAlternative })]
+    [passed(R35, target, { 1: Outcomes.HasAlternative }, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -74,7 +75,14 @@ test(`evaluate() fails when no input rule passes`, async (t) => {
         "transcript-link": None,
       })
     ),
-    [failed(R35, target, { 1: Outcomes.HasNoAlternative })]
+    [
+      failed(
+        R35,
+        target,
+        { 1: Outcomes.HasNoAlternative },
+        Outcome.Mode.SemiAuto
+      ),
+    ]
   );
 });
 
@@ -89,7 +97,7 @@ test(`evaluate() cannot tell if no input rule can tell`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": false })
     ),
-    [cantTell(R35, target)]
+    [cantTell(R35, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -109,7 +117,7 @@ test(`evaluate() cannot tell when some input rule cannot tell and no input rule 
         "has-audio-track": false,
       })
     ),
-    [cantTell(R35, target)]
+    [cantTell(R35, target, undefined, Outcome.Mode.SemiAuto)]
   );
 });
 
@@ -132,6 +140,6 @@ test(`evaluate() is inapplicable to videos with audio`, async (t) => {
       { document },
       oracle({ "is-video-streaming": false, "has-audio": true })
     ),
-    [inapplicable(R35)]
+    [inapplicable(R35, Outcome.Mode.SemiAuto)]
   );
 });

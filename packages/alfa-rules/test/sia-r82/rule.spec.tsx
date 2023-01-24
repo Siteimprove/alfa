@@ -1,3 +1,4 @@
+import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
@@ -38,10 +39,15 @@ test("evaluate() passes when a form field has no error indicator", async (t) => 
       })
     ),
     [
-      passed(R82, target, {
-        1: Outcomes.HasNoErrorIndicator,
-        2: Outcomes.HasNoErrorIndicator,
-      }),
+      passed(
+        R82,
+        target,
+        {
+          1: Outcomes.HasNoErrorIndicator,
+          2: Outcomes.HasNoErrorIndicator,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -60,10 +66,15 @@ test(`evaluate() passes when a form field has an error indicator that identifies
       })
     ),
     [
-      passed(R82, target, {
-        1: Outcomes.ErrorIndicatorIdentifiesTarget,
-        2: Outcomes.ErrorIndicatorDescribesResolution,
-      }),
+      passed(
+        R82,
+        target,
+        {
+          1: Outcomes.ErrorIndicatorIdentifiesTarget,
+          2: Outcomes.ErrorIndicatorDescribesResolution,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -82,10 +93,15 @@ test(`evaluate() fails when a form field has an error indicator that does not
       })
     ),
     [
-      failed(R82, target, {
-        1: Outcomes.NoErrorIndicatorIdentifiesTarget,
-        2: Outcomes.NoErrorIndicatorDescribesResolution,
-      }),
+      failed(
+        R82,
+        target,
+        {
+          1: Outcomes.NoErrorIndicatorIdentifiesTarget,
+          2: Outcomes.NoErrorIndicatorDescribesResolution,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -104,10 +120,15 @@ test(`evaluate() fails when a form field has an error indicator that identifies
       })
     ),
     [
-      failed(R82, target, {
-        1: Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable,
-        2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
-      }),
+      failed(
+        R82,
+        target,
+        {
+          1: Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable,
+          2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
@@ -126,10 +147,15 @@ test(`evaluate() fails when a form field has an error indicator that identifies
       })
     ),
     [
-      failed(R82, target, {
-        1: Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable,
-        2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
-      }),
+      failed(
+        R82,
+        target,
+        {
+          1: Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable,
+          2: Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
+        },
+        Outcome.Mode.SemiAuto
+      ),
     ]
   );
 });
