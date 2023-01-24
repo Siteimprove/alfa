@@ -19,6 +19,16 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.57.0](../../compare/v0.56.0...v0.57.0) (2023-01-24)
+
+### Added
+
+- [@siteimprove/alfa-act](packages/alfa-act): `Outcome` now has a `mode` (automatic / semi-automatic)which records whether an oracle was successfully used for producing it. ([#1318](../../pull/1318))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R14 now considers Symbols (S) and format control (Cf) characters as non-text content. ([#1220](../../issues/1220), [#1316](../../pull/1316)) 
+
 ## [0.56.0](../../compare/v0.55.1...v0.56.0) (2023-01-20)
 
 ### Added
