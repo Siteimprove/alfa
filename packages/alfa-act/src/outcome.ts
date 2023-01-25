@@ -126,7 +126,7 @@ export abstract class Outcome<
         earl: "http://www.w3.org/ns/earl#",
       },
       "@type": "earl:Assertion",
-      mode: `earl:${this._mode}`,
+      "earl:mode": `earl:${this._mode}`,
       "earl:test": {
         "@id": this._rule.uri,
       },
@@ -169,6 +169,7 @@ export namespace Outcome {
 
   export interface EARL extends earl.EARL {
     "@type": "earl:Assertion";
+    "earl:mode": `earl:${Mode}`;
     "earl:test": {
       "@id": string;
     };
