@@ -19,6 +19,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.57.2](../../compare/v0.57.1...v0.57.2) (2023-01-25)
+
+### Fixed
+
+- [@siteimprove/alfa-act](packages/alfa-act): Correctly serialize `outcome#mode` in EARL. ([#1321](../../pull/1321))
+
 ## [0.57.1](../../compare/v0.57.0...v0.57.1) (2023-01-25)
 
 ### Fixed
