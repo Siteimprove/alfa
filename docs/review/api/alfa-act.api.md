@@ -99,7 +99,7 @@ export type Oracle<INPUT, TARGET extends Hashable, QUESTION, SUBJECT> = (rule: R
 
 // @public
 export abstract class Outcome<I, T extends Hashable, Q = never, S = T, V extends Outcome.Value = Outcome.Value> implements Equatable, Hashable, json.Serializable<Outcome.JSON<V>>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
-    protected constructor(value: V, rule: Rule<I, T, Q, S>, mode: Outcome.Mode);
+    protected constructor(outcome: V, rule: Rule<I, T, Q, S>, mode: Outcome.Mode);
     // (undocumented)
     equals<I, T extends Hashable, Q, S, V extends Outcome.Value = Outcome.Value>(value: Outcome<I, T, Q, S, V>): boolean;
     // (undocumented)
@@ -113,8 +113,8 @@ export abstract class Outcome<I, T extends Hashable, Q = never, S = T, V extends
     // (undocumented)
     protected readonly _mode: Outcome.Mode;
     // (undocumented)
+    get outcome(): V;
     get rule(): Rule<I, T, Q, S>;
-    // (undocumented)
     protected readonly _rule: Rule<I, T, Q, S>;
     // (undocumented)
     get target(): T | undefined;
@@ -124,8 +124,6 @@ export abstract class Outcome<I, T extends Hashable, Q = never, S = T, V extends
     toJSON(): Outcome.JSON<V>;
     // (undocumented)
     abstract toSARIF(): sarif.Result;
-    // (undocumented)
-    get value(): V;
 }
 
 // @public (undocumented)
@@ -318,9 +316,9 @@ export namespace Outcome {
         // (undocumented)
         mode: Mode;
         // (undocumented)
-        rule: Rule.JSON;
+        outcome: V;
         // (undocumented)
-        value: V;
+        rule: Rule.JSON;
     }
     // (undocumented)
     export enum Mode {

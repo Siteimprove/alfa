@@ -33,24 +33,48 @@ export abstract class Outcome<
     earl.Serializable<Outcome.EARL>,
     sarif.Serializable<sarif.Result>
 {
-  private readonly _value: V;
+  /**
+   * {@link https://www.w3.org/TR/EARL10-Schema/#outcome}
+   */
+  private readonly _outcome: V;
+  /**
+   * {@link https://www.w3.org/TR/EARL10-Schema/#test}
+   * While this is called a "test" in EARL, in Alfa this is always a "rule".
+   */
   protected readonly _rule: Rule<I, T, Q, S>;
+  /**
+   * {@link https://www.w3.org/TR/EARL10-Schema/#mode}
+   */
   protected readonly _mode: Outcome.Mode;
 
-  protected constructor(value: V, rule: Rule<I, T, Q, S>, mode: Outcome.Mode) {
-    this._value = value;
+  protected constructor(
+    outcome: V,
+    rule: Rule<I, T, Q, S>,
+    mode: Outcome.Mode
+  ) {
+    this._outcome = outcome;
     this._rule = rule;
     this._mode = mode;
   }
 
-  public get value(): V {
-    return this._value;
+  /**
+   * {@link https://www.w3.org/TR/EARL10-Schema/#outcome}
+   */
+  public get outcome(): V {
+    return this._outcome;
   }
 
+  /**
+   * {@link https://www.w3.org/TR/EARL10-Schema/#test}
+   * While this is called a "test" in EARL, in Alfa this is always a "rule".
+   */
   public get rule(): Rule<I, T, Q, S> {
     return this._rule;
   }
 
+  /**
+   * {@link https://www.w3.org/TR/EARL10-Schema/#mode}
+   */
   public get mode(): Outcome.Mode {
     return this._mode;
   }
@@ -77,19 +101,23 @@ export abstract class Outcome<
     return (
       value instanceof Outcome &&
       value._rule.equals(this._rule) &&
-      value._value === this._value &&
+      value._outcome === this._outcome &&
       value._mode === this._mode
     );
   }
 
   public hash(hash: Hash): void {
     this._rule.hash(hash);
-    hash.writeString(this._value);
+    hash.writeString(this._outcome);
     hash.writeString(this._mode);
   }
 
   public toJSON(): Outcome.JSON<V> {
-    return { value: this._value, rule: this._rule.toJSON(), mode: this._mode };
+    return {
+      outcome: this._outcome,
+      rule: this._rule.toJSON(),
+      mode: this._mode,
+    };
   }
 
   public toEARL(): Outcome.EARL {
@@ -134,7 +162,7 @@ export namespace Outcome {
 
   export interface JSON<V extends Value = Value> {
     [key: string]: json.JSON;
-    value: V;
+    outcome: V;
     rule: Rule.JSON;
     mode: Mode;
   }
