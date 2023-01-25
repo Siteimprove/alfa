@@ -35,18 +35,15 @@ export abstract class Outcome<
 {
   /**
    * {@link https://www.w3.org/TR/EARL10-Schema/#outcome}
-   * @private
    */
   private readonly _outcome: V;
   /**
    * {@link https://www.w3.org/TR/EARL10-Schema/#test}
    * While this is called a "test" in EARL, in Alfa this is always a "rule".
-   * @protected
    */
   protected readonly _rule: Rule<I, T, Q, S>;
   /**
    * {@link https://www.w3.org/TR/EARL10-Schema/#mode}
-   * @protected
    */
   protected readonly _mode: Outcome.Mode;
 
@@ -60,14 +57,24 @@ export abstract class Outcome<
     this._mode = mode;
   }
 
+  /**
+   * {@link https://www.w3.org/TR/EARL10-Schema/#outcome}
+   */
   public get outcome(): V {
     return this._outcome;
   }
 
+  /**
+   * {@link https://www.w3.org/TR/EARL10-Schema/#test}
+   * While this is called a "test" in EARL, in Alfa this is always a "rule".
+   */
   public get rule(): Rule<I, T, Q, S> {
     return this._rule;
   }
 
+  /**
+   * {@link https://www.w3.org/TR/EARL10-Schema/#mode}
+   */
   public get mode(): Outcome.Mode {
     return this._mode;
   }
