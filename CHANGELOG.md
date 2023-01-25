@@ -19,6 +19,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.57.1](../../compare/v0.57.0...v0.57.1) (2023-01-25)
+
+### Fixed
+
+- [@siteimprove/alfa-act](packages/alfa-act): Revert an accidental breaking change from v0.57.0 where getter and JSON property `Outcome#outcome` was renamed to `Outcome#value`; it is back to `Outcome#outcome`. ([#1320](../../pull/1320))
+
 ## [0.57.0](../../compare/v0.56.0...v0.57.0) (2023-01-24)
 
 ### Added
