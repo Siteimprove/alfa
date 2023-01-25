@@ -194,6 +194,8 @@ export namespace Outcome {
         // (undocumented)
         "@type": "earl:Assertion";
         // (undocumented)
+        "earl:mode": `earl:${Mode}`;
+        // (undocumented)
         "earl:test": {
             "@id": string;
         };
