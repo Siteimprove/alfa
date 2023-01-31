@@ -19,6 +19,10 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.57.3](../../compare/v0.57.2...v0.57.3) (2023-01-31)
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-ER66 and SIA-ER69 now only ask `ignored-interposed-elements` about the ones encountered before the first non `interposed-descendant` problem is encountered. ([#1322](../../pull/1322))
+
 ## [0.57.2](../../compare/v0.57.1...v0.57.2) (2023-01-25)
 
 ### Fixed
