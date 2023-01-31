@@ -14,7 +14,7 @@ import { Contrast as Outcomes } from "../outcome/contrast";
 import { isLargeText } from "../predicate";
 
 const { isElement } = Element;
-const { flatMap, map } = Iterable;
+const { flatMap, map, takeWhile } = Iterable;
 const { min, max, round } = Math;
 
 /**
@@ -85,9 +85,11 @@ export function hasSufficientContrastExperimental(
     .err()
     .map((errors) =>
       flatMap(
-        errors.errors
-          // gather all interposed-descendant errors
-          .filter(ColorError.isInterposedDescendants),
+        // We only keep the initial "interposed-descendants" problems. As soon as we
+        // encounter some other problem, the "ignored-interposed-elements" question
+        // won't solve it, and we'll ask for colors anyway. So there is no need to ask
+        // "ignored-interposed-elements" for them.
+        takeWhile(errors.errors, ColorError.isInterposedDescendants),
         // and keep the interposed elements.
         (error) => error.positionedDescendants
       )
@@ -97,7 +99,7 @@ export function hasSufficientContrastExperimental(
     .err()
     .map((errors) =>
       flatMap(
-        errors.errors.filter(ColorError.isInterposedDescendants),
+        takeWhile(errors.errors, ColorError.isInterposedDescendants),
         (error) => error.positionedDescendants
       )
     )
