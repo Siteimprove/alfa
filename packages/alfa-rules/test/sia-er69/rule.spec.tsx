@@ -1,5 +1,7 @@
 import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
+import { Future } from "@siteimprove/alfa-future";
+import { None } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
 import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
@@ -725,8 +727,8 @@ test(`evaluate() does not consider ancestors as interposed elements`, async (t) 
   const interposed = (
     <div
       style={{
+        background: "url('foo.jpg')",
         position: "absolute",
-        backgroundColor: "red",
         width: "100%",
         height: "100%",
       }}
@@ -735,6 +737,7 @@ test(`evaluate() does not consider ancestors as interposed elements`, async (t) 
     </div>
   );
 
+  // interposed is interposed inside the <body>.
   // target1 is inside interposed, therefore it does not consider it as an
   // "interposed element", but as an absolutely positioned ancestor.
   // target2 is outside interposed and considers it as an "interposed element",
@@ -748,18 +751,19 @@ test(`evaluate() does not consider ancestors as interposed elements`, async (t) 
 
   const document = h.document([body]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
-    passed(R69, target1, {
-      1: Outcomes.HasSufficientContrast(5.25, 4.5, [
-        Diagnostic.Pairing.of(
-          ["foreground", rgb(0, 0, 0)],
-          ["background", rgb(1, 0, 0)],
-          5.25
-        ),
-      ]),
-    }),
-    cantTell(R69, target2),
-  ]);
+  await evaluate(R69, { document }, (_, question) => {
+    let expected = "Unexpected question";
+    if (question.context === target1) {
+      expected = "background-colors";
+    }
+
+    if (question.context === target2) {
+      expected = "ignored-interposed-elements";
+    }
+
+    t.deepEqual(question.uri, expected);
+    return Future.now(None);
+  });
 });
 
 test(`evaluate() ignore interposed descendants if it can resolve colors
