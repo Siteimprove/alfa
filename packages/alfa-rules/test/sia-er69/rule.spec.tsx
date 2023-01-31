@@ -1,8 +1,7 @@
-/// <reference lib="dom" />
 import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { Future } from "@siteimprove/alfa-future";
-import { None, Option } from "@siteimprove/alfa-option";
+import { None } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
 import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
