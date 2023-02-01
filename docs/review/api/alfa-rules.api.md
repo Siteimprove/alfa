@@ -460,20 +460,21 @@ declare namespace experimentalRules {
 export { experimentalRules }
 
 // @public (undocumented)
-namespace Flattened {
-    type Flattened = Sequence<act.Rule<Input, Target, Question, Subject>>;
-    type Input = act.Rule.Input<Rule>;
-    type Question = act.Rule.Question<Rule>;
+export namespace Flattened {
+    export type Input = act.Rule.Input<RulesUnion>;
+    export type Question = act.Rule.Question<RulesUnion>;
+    export type Rule = act.Rule<Input, Target, Question, Subject>;
     // Warning: (ae-forgotten-export) The symbol "rules" needs to be exported by the entry point index.d.ts
-    type Rule = Record_2.Value<typeof rules>;
-    type Subject = act.Rule.Subject<Rule>;
-    type Target = act.Rule.Target<Rule>;
+    export type RulesUnion = Record_2.Value<typeof rules>;
+    export type Subject = act.Rule.Subject<RulesUnion>;
+    export type Target = act.Rule.Target<RulesUnion>;
+        {};
 }
 
 // @public
-const Flattened: Flattened.Flattened;
-export { Flattened }
-export default Flattened;
+const FlattenedRules: Sequence<Flattened.Rule>;
+export { FlattenedRules }
+export default FlattenedRules;
 
 // @public (undocumented)
 export class Group<T extends Hashable> implements Iterable<T>, Equatable, Hashable, json.Serializable<Group.JSON<T>>, earl.Serializable<Group.EARL>, sarif.Serializable<sarif.Location> {
