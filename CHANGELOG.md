@@ -19,6 +19,12 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.58.0](../../compare/v0.57.3...v0.58.0) (2023-02-01)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The types and values exported by the `index` file have been reworked in a more intuitive way, see the associated pull request for details. ([#1330](../../pull/1330))
+
 ## [0.57.3](../../compare/v0.57.2...v0.57.3) (2023-01-31)
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): SIA-ER66 and SIA-ER69 now only ask `ignored-interposed-elements` about the ones encountered before the first non `interposed-descendant` problem is encountered. ([#1322](../../pull/1322))
