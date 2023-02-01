@@ -24,8 +24,7 @@ Then, commit the changes, create a new release tag, and push:
 ```console
 $ git commit --message <version> --all
 $ git tag --message <version> --annotate <version>
-$ git push
-$ git push origin <version>
+$ git push --follow-tags
 ```
 
 Once the release tag has been pushed, the release workflow defined in [`.github/workflows/release.yml`](../.github/workflows/release.yml) kicks off and takes care of publishing the packages and pushing a new release to GitHub.
