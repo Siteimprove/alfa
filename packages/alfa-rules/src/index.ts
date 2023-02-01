@@ -30,6 +30,39 @@ export const Rules = Record.of(rules);
  */
 export namespace Flattened {
   /**
+   * A union of all the possible types of rules
+   */
+  type RulesUnion = Record.Value<typeof rules>;
+
+  /**
+   * The type of the input of rules
+   *
+   * @public
+   */
+  export type Input = act.Rule.Input<RulesUnion>;
+
+  /**
+   * The type of the targets of rules
+   *
+   * @public
+   */
+  export type Target = act.Rule.Target<RulesUnion>;
+
+  /**
+   * The type of the questions asked by rules
+   *
+   * @public
+   */
+  export type Question = act.Rule.Question<RulesUnion>;
+
+  /**
+   * The type of the subjects of questions asked by rules
+   *
+   * @public
+   */
+  export type Subject = act.Rule.Subject<RulesUnion>;
+
+  /**
    * The flattened type of all rules. Target, questions, … are a union of
    * all the possible ones; that is this looks like
    * Rule\<Page, Document | Element | …, …\>
@@ -38,42 +71,7 @@ export namespace Flattened {
    *
    * @public
    */
-  export type Rule = Record.Value<typeof rules>;
-
-  /**
-   * The type of the input of rules
-   *
-   * @public
-   */
-  export type Input = act.Rule.Input<Rule>;
-
-  /**
-   * The type of the targets of rules
-   *
-   * @public
-   */
-  export type Target = act.Rule.Target<Rule>;
-
-  /**
-   * The type of the questions asked by rules
-   *
-   * @public
-   */
-  export type Question = act.Rule.Question<Rule>;
-
-  /**
-   * The type of the subjects of questions asked by rules
-   *
-   * @public
-   */
-  export type Subject = act.Rule.Subject<Rule>;
-
-  /**
-   * The flattened type of the sequence of all rules.
-   *
-   * @public
-   */
-  export type Flattened = Sequence<act.Rule<Input, Target, Question, Subject>>;
+  export type Rule = act.Rule<Input, Target, Question, Subject>;
 }
 
 /**
@@ -82,9 +80,11 @@ export namespace Flattened {
  *
  * @public
  */
-export const Flattened = Sequence.from(Rules.values()) as Flattened.Flattened;
+export const FlattenedRules: Sequence<Flattened.Rule> = Sequence.from(
+  Rules.values()
+);
 
-export default Flattened;
+export default FlattenedRules;
 
 export * from "./common/act/diagnostic";
 export * from "./common/act/group";
