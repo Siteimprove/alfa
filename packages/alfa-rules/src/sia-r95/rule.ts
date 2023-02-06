@@ -19,7 +19,14 @@ const { isTabbable, isVisible } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r95",
-  requirements: [Criterion.of("2.1.1")],
+  requirements: [
+    Criterion.of("2.1.1"),
+    // The 2.1.3 secondary mapping is missing in ACT rules
+    // https://github.com/act-rules/act-rules.github.io/issues/2026
+    // Commenting it out as it would otherwise invalidate our implementation
+    // in the reports.
+    // Criterion.of("2.1.3"),
+  ],
   tags: [Scope.Component, Version.of(2)],
   evaluate({ device, document }) {
     let tabbables = Map.empty<Element, Sequence<Element>>();
