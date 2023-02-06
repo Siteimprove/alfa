@@ -35,3 +35,22 @@ test("#computed() resolves `line-height: calc(1 + 2)`", (t) => {
     source: h.declaration("line-height", "calc(1 + 2)").toJSON(),
   });
 });
+
+test("#computed() resolves percentages from the element's \`font-size\`", (t) => {
+  const target = (
+    <div style={{ lineHeight: "150%", fontSize: "10px" }}>Hello</div>
+  );
+
+  <div style={{ fontSize: "20px" }}>{target}</div>;
+
+  const style = Style.from(target, device);
+
+  t.deepEqual(style.computed("line-height").toJSON(), {
+    value: {
+      type: "length",
+      unit: "px",
+      value: 15,
+    },
+    source: h.declaration("line-height", "150%").toJSON(),
+  });
+});
