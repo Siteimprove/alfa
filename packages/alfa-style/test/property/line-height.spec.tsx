@@ -36,7 +36,7 @@ test("#computed() resolves `line-height: calc(1 + 2)`", (t) => {
   });
 });
 
-test("#computed() does not resolve `line-height: 150%` from parent", (t) => {
+test("#computed() resolves percentages from the element's \`font-size\`", (t) => {
   const target = (
     <div style={{ lineHeight: "150%", fontSize: "10px" }}>Hello</div>
   );
