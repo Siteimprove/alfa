@@ -68,13 +68,13 @@ export function audioTranscript(target: Element, device: Device) {
   const alt = Question.of(
     "transcript",
     target,
-    `Where is the transcript of the \`<audio>\` element?`
+    `Where is the transcript that describes the content of the \`<audio>\` element?`
   );
 
   const label = Question.of(
     "transcript-link",
     target,
-    `Where is the link pointing to a perceivable transcript of the \`<audio>\` element?`
+    `Where is the link pointing to a perceivable transcript that describes the content of the \`<audio>\` element?`
   );
 
   return mediaTranscript(alt, label, device, "<audio>");
@@ -84,13 +84,13 @@ export function videoTranscript(target: Element, device: Device) {
   const alt = Question.of(
     "transcript",
     target,
-    `Where is the transcript of the \`<video>\` element?`
+    `Where is the transcript that describes the content of the \`<video>\` element?`
   );
 
   const label = Question.of(
     "transcript-link",
     target,
-    `Where is the link pointing to a perceivable transcript of the \`<video>\` element?`
+    `Where is the link pointing to a perceivable transcript that describes the content of the \`<video>\` element?`
   );
 
   return mediaTranscript(alt, label, device, "<video>");

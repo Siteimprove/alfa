@@ -52,7 +52,6 @@ test(`evaluate() passes an audio with a link to a transcript`, async (t) => {
         "is-playing": true,
         transcript: None,
         "transcript-link": Option.of(transcript),
-        "transcript-perceivable": true,
       })
     ),
     [
