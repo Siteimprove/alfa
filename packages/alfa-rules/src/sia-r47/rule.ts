@@ -18,7 +18,14 @@ const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r47",
-  requirements: [Criterion.of("1.4.4")],
+  requirements: [
+    Criterion.of("1.4.4"),
+    // The 1.4.10 secondary mapping is missing in ACT rules
+    // https://github.com/act-rules/act-rules.github.io/issues/2025
+    // Commenting it out as it would otherwise invalidate our implementation
+    // in the reports.
+    // Criterion.of("1.4.10"),
+  ],
   tags: [Scope.Page],
   evaluate({ document }) {
     let maximumScaleMap = Map.empty<Element, number>();
