@@ -122,7 +122,7 @@ export namespace Question {
     },
     "has-captions": {
       type: "boolean",
-      message: `Does the \`<video>\` element have captions?`,
+      message: `Does the \`<video>\` element have captions that describe the content of the video?`,
     },
     "has-description": {
       type: "boolean",
@@ -158,16 +158,11 @@ export namespace Question {
     },
     transcript: {
       type: "node",
-      message: `Where is the transcript of the [audio/video] element?`,
+      message: `Where is the transcript that describes the content of the [audio/video] element?`,
     },
     "transcript-link": {
       type: "node",
-      message: `Where is the link pointing to the transcript of the [audio/video]
-                  element?`,
-    },
-    "transcript-perceivable": {
-      type: "boolean",
-      message: `Is the transcript of the [audio/video] element perceivable?`,
+      message: `Where is the link pointing to the transcript that describes the content of the [audio/video] element?`,
     },
     // R39
     "name-describes-purpose": {

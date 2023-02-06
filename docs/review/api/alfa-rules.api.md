@@ -567,7 +567,7 @@ export namespace Question {
         };
         readonly "has-captions": {
             readonly type: "boolean";
-            readonly message: "Does the `<video>` element have captions?";
+            readonly message: "Does the `<video>` element have captions that describe the content of the video?";
         };
         readonly "has-description": {
             readonly type: "boolean";
@@ -603,15 +603,11 @@ export namespace Question {
         };
         readonly transcript: {
             readonly type: "node";
-            readonly message: "Where is the transcript of the [audio/video] element?";
+            readonly message: "Where is the transcript that describes the content of the [audio/video] element?";
         };
         readonly "transcript-link": {
             readonly type: "node";
-            readonly message: "Where is the link pointing to the transcript of the [audio/video]\n                  element?";
-        };
-        readonly "transcript-perceivable": {
-            readonly type: "boolean";
-            readonly message: "Is the transcript of the [audio/video] element perceivable?";
+            readonly message: "Where is the link pointing to the transcript that describes the content of the [audio/video] element?";
         };
         readonly "name-describes-purpose": {
             readonly type: "boolean";
