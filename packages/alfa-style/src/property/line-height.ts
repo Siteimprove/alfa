@@ -59,7 +59,7 @@ export default Property.register(
     (value, style) =>
       value.map((height) => {
         const percentage = Resolver.percentage(
-          style.parent.computed("font-size").value
+          style.computed("font-size").value
         );
         const length = Resolver.length(style);
 
