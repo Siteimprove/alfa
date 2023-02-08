@@ -22,7 +22,7 @@ jobs:
           node-version: 16
           cache: yarn
       - run: yarn install --immutable
-      - run: yarn build
+      - run: yarn build --quiet
       - uses: github/codeql-action/init@v2.2.1
         with:
           languages: javascript
