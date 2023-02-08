@@ -3,7 +3,7 @@ const process = require("process");
 const minimist = require("minimist");
 
 const argv = minimist(process.argv.slice(2), {
-  boolean: ["force", "verbose", "quiet", "minimal", "pretty"],
+  boolean: ["force", "verbose", "quiet", "pretty"],
 });
 
 exports.flags = {
@@ -11,6 +11,6 @@ exports.flags = {
   force: argv.force,
   verbose: argv.verbose,
   quiet: argv.quiet,
-  minimal: argv.minimal,
+  minimal: !argv.verbose && !argv.quiet,
   pretty: argv.pretty,
 };
