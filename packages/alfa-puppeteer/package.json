@@ -21,12 +21,8 @@
     "@siteimprove/alfa-device": "workspace:^0.58.0",
     "@siteimprove/alfa-dom": "workspace:^0.58.0",
     "@siteimprove/alfa-http": "workspace:^0.58.0",
-    "@siteimprove/alfa-option": "workspace:^0.58.0",
     "@siteimprove/alfa-web": "workspace:^0.58.0",
     "puppeteer": "^13.1.2"
-  },
-  "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.58.0"
   },
   "publishConfig": {
     "access": "public",
