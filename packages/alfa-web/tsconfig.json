@@ -10,35 +10,14 @@
     "src/site.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-device"
-    },
-    {
-      "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-earl"
-    },
-    {
-      "path": "../alfa-encoding"
-    },
-    {
-      "path": "../alfa-graph"
-    },
-    {
-      "path": "../alfa-http"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-sarif"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-device" },
+    { "path": "../alfa-dom" },
+    { "path": "../alfa-earl" },
+    { "path": "../alfa-encoding" },
+    { "path": "../alfa-graph" },
+    { "path": "../alfa-http" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-sarif" }
   ]
 }

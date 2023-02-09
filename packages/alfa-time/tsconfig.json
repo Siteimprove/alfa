@@ -7,9 +7,5 @@
     "src/timeout.ts",
     "test/time.spec.ts"
   ],
-  "references": [
-    {
-      "path": "../alfa-test"
-    }
-  ]
+  "references": [{ "path": "../alfa-test" }]
 }

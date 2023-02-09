@@ -10,23 +10,10 @@
     "src/technique/data.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-act"
-    },
-    {
-      "path": "../alfa-branched"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-act" },
+    { "path": "../alfa-branched" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-refinement" }
   ]
 }

@@ -3,44 +3,18 @@
   "extends": "../tsconfig.json",
   "files": ["src/branched.ts", "src/index.ts", "test/branched.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-callback"
-    },
-    {
-      "path": "../alfa-collection"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-list"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-reducer"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-callback" },
+    { "path": "../alfa-collection" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-list" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-reducer" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-test" }
   ]
 }

@@ -7,12 +7,5 @@
     "src/json.ts",
     "src/serializable.ts"
   ],
-  "references": [
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-test"
-    }
-  ]
+  "references": [{ "path": "../alfa-refinement" }]
 }

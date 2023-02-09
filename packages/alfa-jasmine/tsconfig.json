@@ -7,26 +7,9 @@
     "src/jasmine/add-async-matcher.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-act"
-    },
-    {
-      "path": "../alfa-assert"
-    },
-    {
-      "path": "../alfa-future"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-web"
-    }
+    { "path": "../alfa-act" },
+    { "path": "../alfa-assert" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-mapper" }
   ]
 }

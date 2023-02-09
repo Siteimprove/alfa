@@ -2,9 +2,5 @@
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/tuple.ts", "test/tuple.spec.ts"],
-  "references": [
-    {
-      "path": "../alfa-test"
-    }
-  ]
+  "references": [{ "path": "../alfa-test" }]
 }

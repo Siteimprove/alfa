@@ -9,9 +9,5 @@
     "test/matrix.spec.ts",
     "test/vector.spec.ts"
   ],
-  "references": [
-    {
-      "path": "../alfa-test"
-    }
-  ]
+  "references": [{ "path": "../alfa-test" }]
 }

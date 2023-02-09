@@ -12,35 +12,14 @@
     "src/response.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-earl"
-    },
-    {
-      "path": "../alfa-encoding"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-map"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-url"
-    }
+    { "path": "../alfa-earl" },
+    { "path": "../alfa-encoding" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-map" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-url" }
   ]
 }

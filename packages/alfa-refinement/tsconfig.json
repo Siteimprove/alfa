@@ -3,14 +3,8 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/refinement.ts", "test/refinement.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-test" }
   ]
 }

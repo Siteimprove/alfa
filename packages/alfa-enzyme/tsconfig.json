@@ -3,20 +3,9 @@
   "extends": "../tsconfig.json",
   "files": ["src/enzyme.ts", "src/index.ts"],
   "references": [
-    {
-      "path": "../alfa-cheerio"
-    },
-    {
-      "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-react"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-web"
-    }
+    { "path": "../alfa-cheerio" },
+    { "path": "../alfa-dom" },
+    { "path": "../alfa-react" },
+    { "path": "../alfa-web" }
   ]
 }

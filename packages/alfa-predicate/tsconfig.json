@@ -3,17 +3,9 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/predicate.ts", "test/predicate.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-callback"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-callback" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-test" }
   ]
 }

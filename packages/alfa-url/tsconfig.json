@@ -3,29 +3,13 @@
   "extends": "../tsconfig.json",
   "files": ["src/builtin.ts", "src/index.ts", "src/url.ts", "test/url.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-sequence"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-sequence" },
+    { "path": "../alfa-test" }
   ]
 }

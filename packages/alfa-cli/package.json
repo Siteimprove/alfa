@@ -22,6 +22,7 @@
     "@siteimprove/alfa-act": "workspace:^0.58.0",
     "@siteimprove/alfa-command": "workspace:^0.58.0",
     "@siteimprove/alfa-device": "workspace:^0.58.0",
+    "@siteimprove/alfa-formatter": "workspace:^0.58.0",
     "@siteimprove/alfa-http": "workspace:^0.58.0",
     "@siteimprove/alfa-interviewer": "workspace:^0.58.0",
     "@siteimprove/alfa-iterable": "workspace:^0.58.0",
