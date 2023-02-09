@@ -20,7 +20,7 @@ jobs:
           npmScopes.siteimprove.npmAuthToken
           ${{ secrets.GITHUB_TOKEN }}
       - run: yarn install --immutable
-      - run: yarn build
+      - run: yarn build --quiet
       - run: yarn test
       - run: >
           yarn workspaces foreach

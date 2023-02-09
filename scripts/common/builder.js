@@ -5,5 +5,5 @@ const { flags } = require("./flags");
 
 exports.builder = ts.createSolutionBuilder(host, ["tsconfig.json"], {
   force: flags.force,
-  verbose: flags.verbose,
+  verbose: true, // verbosity is now managed by different reporter implementations
 });
