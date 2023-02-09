@@ -1,0 +1,17 @@
+{
+  "dedupe": {
+    "command": "yarn install --immutable && yarn dedupe",
+    "description": "Deduplicate packages",
+    "commitMsg": "Dedupe packages"
+  },
+  "depgraph":{
+    "command": "yarn install --immutable && yarn dependency-graph",
+    "description": "Update dependency graph",
+    "commitMsg": "Update dependency graph"
+  },
+  "document": {
+    "command": "yarn install --immutable && yarn build --quiet && yarn document",
+    "description": "Update packages documentation",
+    "commitMsg": "Update documentation"
+  }
+}

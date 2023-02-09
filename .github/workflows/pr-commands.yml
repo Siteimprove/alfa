@@ -1,0 +1,20 @@
+name: PR commands
+# Commands that can be run via a comment on the PR.
+# Comment `!pr <command-name>` to trigger them.
+# See .pr-commands/config.json for config
+# Use `!pr help` for help
+#
+# See https://github.com/Siteimprove/pr-command
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  pull-request-command:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: siteimprove/pr-command/advanced@v2
+        with:
+          # Personal access token (PAT) used to fetch the repository and add reaction on comment.
+          token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
