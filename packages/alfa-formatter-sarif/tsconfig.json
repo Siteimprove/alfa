@@ -6,17 +6,8 @@
   },
   "files": ["package.json", "src/index.ts", "src/sarif.ts"],
   "references": [
-    {
-      "path": "../alfa-formatter"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-sarif"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-formatter" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-sarif" }
   ]
 }

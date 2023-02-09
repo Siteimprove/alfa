@@ -8,17 +8,9 @@
     "test/promise.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-array"
-    },
-    {
-      "path": "../alfa-callback"
-    },
-    {
-      "path": "../alfa-continuation"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-array" },
+    { "path": "../alfa-callback" },
+    { "path": "../alfa-continuation" },
+    { "path": "../alfa-test" }
   ]
 }

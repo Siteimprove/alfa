@@ -3,20 +3,9 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/now.ts", "src/performance.ts"],
   "references": [
-    {
-      "path": "../alfa-callback"
-    },
-    {
-      "path": "../alfa-emitter"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-thunk"
-    }
+    { "path": "../alfa-callback" },
+    { "path": "../alfa-emitter" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-thunk" }
   ]
 }

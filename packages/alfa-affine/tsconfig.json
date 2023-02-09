@@ -7,20 +7,10 @@
     "test/transformation.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-math"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-math" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-test" }
   ]
 }

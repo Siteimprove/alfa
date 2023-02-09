@@ -80,59 +80,22 @@
     "test/node/traversal/lowest-common-ancestor.spec.tsx"
   ],
   "references": [
-    {
-      "path": "../alfa-cache"
-    },
-    {
-      "path": "../alfa-css"
-    },
-    {
-      "path": "../alfa-earl"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-flags"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-lazy"
-    },
-    {
-      "path": "../alfa-media"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-sarif"
-    },
-    {
-      "path": "../alfa-sequence"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-trampoline"
-    },
-    {
-      "path": "../alfa-tree"
-    }
+    { "path": "../alfa-cache" },
+    { "path": "../alfa-css" },
+    { "path": "../alfa-earl" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-flags" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-lazy" },
+    { "path": "../alfa-media" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-sarif" },
+    { "path": "../alfa-sequence" },
+    { "path": "../alfa-test" },
+    { "path": "../alfa-trampoline" },
+    { "path": "../alfa-tree" }
   ]
 }

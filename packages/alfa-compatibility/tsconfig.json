@@ -8,15 +8,5 @@
     "src/feature/data.ts",
     "src/index.ts"
   ],
-  "references": [
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-test"
-    }
-  ]
+  "references": [{ "path": "../alfa-iterable" }, { "path": "../alfa-json" }]
 }

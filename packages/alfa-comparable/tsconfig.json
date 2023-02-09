@@ -7,12 +7,5 @@
     "src/comparison.ts",
     "src/index.ts"
   ],
-  "references": [
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-test"
-    }
-  ]
+  "references": [{ "path": "../alfa-refinement" }]
 }

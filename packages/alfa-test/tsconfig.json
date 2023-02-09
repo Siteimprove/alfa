@@ -9,9 +9,5 @@
     "src/types.ts",
     "test/test.spec.ts"
   ],
-  "references": [
-    {
-      "path": "../alfa-highlight"
-    }
-  ]
+  "references": [{ "path": "../alfa-highlight" }]
 }

@@ -8,26 +8,12 @@
     "test/language.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-map"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-slice"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-map" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-slice" },
+    { "path": "../alfa-test" }
   ]
 }

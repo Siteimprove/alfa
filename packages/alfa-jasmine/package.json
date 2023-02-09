@@ -20,15 +20,10 @@
   "dependencies": {
     "@siteimprove/alfa-act": "workspace:^0.58.0",
     "@siteimprove/alfa-assert": "workspace:^0.58.0",
-    "@siteimprove/alfa-future": "workspace:^0.58.0",
     "@siteimprove/alfa-hash": "workspace:^0.58.0",
     "@siteimprove/alfa-mapper": "workspace:^0.58.0",
-    "@siteimprove/alfa-web": "workspace:^0.58.0",
     "@types/jasmine": "^3.3.12",
     "jasmine": "^3.9.0"
-  },
-  "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.58.0"
   },
   "publishConfig": {
     "access": "public",

@@ -11,38 +11,16 @@
     "test/text.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-functor"
-    },
-    {
-      "path": "../alfa-highlight"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-parser"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-thunk"
-    }
+    { "path": "../alfa-functor" },
+    { "path": "../alfa-highlight" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-parser" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-test" },
+    { "path": "../alfa-thunk" }
   ]
 }

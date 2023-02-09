@@ -3,17 +3,8 @@
   "extends": "../tsconfig.json",
   "files": ["src/earl.ts", "src/index.ts", "src/serializable.ts"],
   "references": [
-    {
-      "path": "../alfa-json-ld"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-json-ld" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-refinement" }
   ]
 }

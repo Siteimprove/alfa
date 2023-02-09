@@ -24,9 +24,6 @@
     "@siteimprove/alfa-web": "workspace:^0.58.0",
     "webdriverio": "^7.20.5"
   },
-  "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.58.0"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/"

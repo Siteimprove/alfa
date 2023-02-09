@@ -10,7 +10,7 @@ import { Log } from 'sarif';
 import { Option } from '@siteimprove/alfa-option';
 import { ReportingDescriptor } from 'sarif';
 import { Result } from 'sarif';
-import * as sarif from 'sarif';
+import type * as sarif from 'sarif';
 import { Some } from '@siteimprove/alfa-option';
 
 export { Artifact }
@@ -41,7 +41,6 @@ export namespace Serializable {
     // (undocumented)
     export function toSARIF(value: unknown): Option<SARIF>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

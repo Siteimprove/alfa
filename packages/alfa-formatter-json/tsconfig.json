@@ -3,17 +3,8 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/json.ts"],
   "references": [
-    {
-      "path": "../alfa-formatter"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-formatter" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-json" }
   ]
 }

@@ -22,9 +22,8 @@
   },
   "dependencies": {
     "@siteimprove/alfa-array": "workspace:^0.58.0",
-    "@siteimprove/alfa-branched": "workspace:^0.58.0",
     "@siteimprove/alfa-cache": "workspace:^0.58.0",
-    "@siteimprove/alfa-compatibility": "workspace:^0.58.0",
+    "@siteimprove/alfa-comparable": "workspace:^0.58.0",
     "@siteimprove/alfa-device": "workspace:^0.58.0",
     "@siteimprove/alfa-dom": "workspace:^0.58.0",
     "@siteimprove/alfa-equatable": "workspace:^0.58.0",
@@ -47,7 +46,9 @@
     "@siteimprove/alfa-tree": "workspace:^0.58.0"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.58.0"
+    "@siteimprove/alfa-test": "workspace:^0.58.0",
+    "prettier": "^2.7.1",
+    "puppeteer": "^13.1.2"
   },
   "publishConfig": {
     "access": "public",
