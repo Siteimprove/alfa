@@ -32,54 +32,15 @@ test("evaluate() passes a valid simple autocomplete attribute on an <input> elem
   ]);
 });
 
-test("evaluate() passes autocomplete attribute with \`section-blue shipping\`", async (t) => {
+test("evaluate() fails autocomplete attribute with missing required term", async (t) => {
   const element = <input autocomplete="section-blue shipping" />;
   const target = element.attribute("autocomplete").getUnsafe();
 
   const document = h.document([element]);
 
   t.deepEqual(await evaluate(R10, { document }), [
-    passed(R10, target, {
-      1: Outcomes.HasValidValue,
-    }),
-  ]);
-});
-
-test("evaluate() passes autocomplete attribute with \`webauthn\` token", async (t) => {
-  const element = <input autocomplete="webauthn" />;
-  const target = element.attribute("autocomplete").getUnsafe();
-
-  const document = h.document([element]);
-
-  t.deepEqual(await evaluate(R10, { document }), [
-    passed(R10, target, {
-      1: Outcomes.HasValidValue,
-    }),
-  ]);
-});
-
-test("evaluate() passes autocomplete attribute with \`section-blue webauthn\`", async (t) => {
-  const element = <input autocomplete="section-blue webauthn" />;
-  const target = element.attribute("autocomplete").getUnsafe();
-
-  const document = h.document([element]);
-
-  t.deepEqual(await evaluate(R10, { document }), [
-    passed(R10, target, {
-      1: Outcomes.HasValidValue,
-    }),
-  ]);
-});
-
-test("evaluate() passes autocomplete attribute with \`section-blue shipping webauthn\`", async (t) => {
-  const element = <input autocomplete="section-blue shipping webauthn" />;
-  const target = element.attribute("autocomplete").getUnsafe();
-
-  const document = h.document([element]);
-
-  t.deepEqual(await evaluate(R10, { document }), [
-    passed(R10, target, {
-      1: Outcomes.HasValidValue,
+    failed(R10, target, {
+      1: Outcomes.HasNoValidValue,
     }),
   ]);
 });
