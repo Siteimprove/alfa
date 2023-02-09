@@ -80,8 +80,8 @@ function hasTokens(input: string): boolean {
 }
 
 /**
- * {@link https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill-detail-tokens}
- */
+ * {@link https://html.spec.whatwg.org/multipage/#autofill-detail-tokens}
+ */ 
 const isValidAutocomplete: Predicate<Attribute> = (autocomplete) => {
   const tokens = autocomplete.value.toLowerCase();
 
