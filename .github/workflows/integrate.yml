@@ -25,6 +25,6 @@ jobs:
           cache: yarn
       - run: yarn install --immutable
       - run: yarn dedupe --check
-      - run: yarn build
+      - run: yarn build --quiet
       - run: yarn test
       - run: yarn document
