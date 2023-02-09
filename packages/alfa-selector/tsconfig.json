@@ -12,44 +12,18 @@
     "test/selector.spec.tsx"
   ],
   "references": [
-    {
-      "path": "../alfa-array"
-    },
-    {
-      "path": "../alfa-css"
-    },
-    {
-      "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-map"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-parser"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-slice"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-array" },
+    { "path": "../alfa-css" },
+    { "path": "../alfa-dom" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-map" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-parser" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-slice" },
+    { "path": "../alfa-test" }
   ]
 }

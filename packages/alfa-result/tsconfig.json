@@ -9,50 +9,20 @@
     "test/result.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-applicative"
-    },
-    {
-      "path": "../alfa-callback"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-foldable"
-    },
-    {
-      "path": "../alfa-functor"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-monad"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-reducer"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-thunk"
-    }
+    { "path": "../alfa-applicative" },
+    { "path": "../alfa-callback" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-foldable" },
+    { "path": "../alfa-functor" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-monad" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-reducer" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-test" },
+    { "path": "../alfa-thunk" }
   ]
 }

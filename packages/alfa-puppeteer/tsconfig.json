@@ -3,23 +3,10 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/puppeteer.ts"],
   "references": [
-    {
-      "path": "../alfa-device"
-    },
-    {
-      "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-http"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-web"
-    }
+    { "path": "../alfa-device" },
+    { "path": "../alfa-dom" },
+    { "path": "../alfa-http" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-web" }
   ]
 }

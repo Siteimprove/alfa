@@ -27,35 +27,15 @@
     "test/syntax/parser.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-parser"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-slice"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-dom" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-parser" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-slice" },
+    { "path": "../alfa-test" }
   ]
 }

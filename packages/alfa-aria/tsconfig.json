@@ -46,80 +46,30 @@
     "test/role.spec.tsx"
   ],
   "references": [
-    {
-      "path": "../alfa-array"
-    },
-    {
-      "path": "../alfa-branched"
-    },
-    {
-      "path": "../alfa-cache"
-    },
-    {
-      "path": "../alfa-compatibility"
-    },
-    {
-      "path": "../alfa-device"
-    },
-    {
-      "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-flags"
-    },
-    {
-      "path": "../alfa-graph"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-map"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-selector"
-    },
-    {
-      "path": "../alfa-sequence"
-    },
-    {
-      "path": "../alfa-set"
-    },
-    {
-      "path": "../alfa-style"
-    },
-    {
-      "path": "../alfa-table"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-thunk"
-    },
-    {
-      "path": "../alfa-tree"
-    }
+    { "path": "../alfa-array" },
+    { "path": "../alfa-branched" },
+    { "path": "../alfa-cache" },
+    { "path": "../alfa-comparable" },
+    { "path": "../alfa-compatibility" },
+    { "path": "../alfa-device" },
+    { "path": "../alfa-dom" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-flags" },
+    { "path": "../alfa-graph" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-map" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-selector" },
+    { "path": "../alfa-sequence" },
+    { "path": "../alfa-set" },
+    { "path": "../alfa-style" },
+    { "path": "../alfa-table" },
+    { "path": "../alfa-thunk" },
+    { "path": "../alfa-tree" }
   ]
 }

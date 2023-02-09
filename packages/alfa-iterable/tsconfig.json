@@ -3,38 +3,15 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/iterable.ts"],
   "references": [
-    {
-      "path": "../alfa-callback"
-    },
-    {
-      "path": "../alfa-comparable"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-reducer"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-callback" },
+    { "path": "../alfa-comparable" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-reducer" },
+    { "path": "../alfa-refinement" }
   ]
 }

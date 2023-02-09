@@ -6,20 +6,9 @@
   },
   "files": ["package.json", "src/index.ts", "src/earl.ts"],
   "references": [
-    {
-      "path": "../alfa-earl"
-    },
-    {
-      "path": "../alfa-formatter"
-    },
-    {
-      "path": "../alfa-future"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-earl" },
+    { "path": "../alfa-formatter" },
+    { "path": "../alfa-future" },
+    { "path": "../alfa-hash" }
   ]
 }

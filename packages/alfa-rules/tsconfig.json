@@ -272,125 +272,43 @@
     "test/sia-r110/rule.spec.tsx"
   ],
   "references": [
-    {
-      "path": "../alfa-act"
-    },
-    {
-      "path": "../alfa-affine"
-    },
-    {
-      "path": "../alfa-aria"
-    },
-    {
-      "path": "../alfa-array"
-    },
-    {
-      "path": "../alfa-branched"
-    },
-    {
-      "path": "../alfa-cache"
-    },
-    {
-      "path": "../alfa-comparable"
-    },
-    {
-      "path": "../alfa-compatibility"
-    },
-    {
-      "path": "../alfa-css"
-    },
-    {
-      "path": "../alfa-device"
-    },
-    {
-      "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-earl"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-future"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-http"
-    },
-    {
-      "path": "../alfa-iana"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-list"
-    },
-    {
-      "path": "../alfa-map"
-    },
-    {
-      "path": "../alfa-math"
-    },
-    {
-      "path": "../alfa-media"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-record"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-sarif"
-    },
-    {
-      "path": "../alfa-selector"
-    },
-    {
-      "path": "../alfa-sequence"
-    },
-    {
-      "path": "../alfa-set"
-    },
-    {
-      "path": "../alfa-style"
-    },
-    {
-      "path": "../alfa-table"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-thunk"
-    },
-    {
-      "path": "../alfa-trilean"
-    },
-    {
-      "path": "../alfa-url"
-    },
-    {
-      "path": "../alfa-wcag"
-    },
-    {
-      "path": "../alfa-web"
-    }
+    { "path": "../alfa-act" },
+    { "path": "../alfa-affine" },
+    { "path": "../alfa-aria" },
+    { "path": "../alfa-array" },
+    { "path": "../alfa-cache" },
+    { "path": "../alfa-comparable" },
+    { "path": "../alfa-css" },
+    { "path": "../alfa-device" },
+    { "path": "../alfa-dom" },
+    { "path": "../alfa-earl" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-future" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-http" },
+    { "path": "../alfa-iana" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-list" },
+    { "path": "../alfa-map" },
+    { "path": "../alfa-math" },
+    { "path": "../alfa-media" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-record" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-sarif" },
+    { "path": "../alfa-selector" },
+    { "path": "../alfa-sequence" },
+    { "path": "../alfa-set" },
+    { "path": "../alfa-style" },
+    { "path": "../alfa-table" },
+    { "path": "../alfa-test" },
+    { "path": "../alfa-thunk" },
+    { "path": "../alfa-trilean" },
+    { "path": "../alfa-url" },
+    { "path": "../alfa-wcag" },
+    { "path": "../alfa-web" }
   ]
 }

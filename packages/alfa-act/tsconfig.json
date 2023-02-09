@@ -15,80 +15,29 @@
     "src/tag.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-applicative"
-    },
-    {
-      "path": "../alfa-array"
-    },
-    {
-      "path": "../alfa-earl"
-    },
-    {
-      "path": "../alfa-either"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-functor"
-    },
-    {
-      "path": "../alfa-future"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-list"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-monad"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-performance"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-record"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-sarif"
-    },
-    {
-      "path": "../alfa-sequence"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-thunk"
-    },
-    {
-      "path": "../alfa-trilean"
-    },
-    {
-      "path": "../alfa-tuple"
-    }
+    { "path": "../alfa-applicative" },
+    { "path": "../alfa-array" },
+    { "path": "../alfa-earl" },
+    { "path": "../alfa-either" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-functor" },
+    { "path": "../alfa-future" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-list" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-monad" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-performance" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-record" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-sarif" },
+    { "path": "../alfa-sequence" },
+    { "path": "../alfa-thunk" },
+    { "path": "../alfa-trilean" },
+    { "path": "../alfa-tuple" }
   ]
 }

@@ -76,62 +76,22 @@
     "test/value/shape/rectangle.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-array"
-    },
-    {
-      "path": "../alfa-comparable"
-    },
-    {
-      "path": "../alfa-device"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-math"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-parser"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-record"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-selective"
-    },
-    {
-      "path": "../alfa-slice"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-thunk"
-    }
+    { "path": "../alfa-array" },
+    { "path": "../alfa-comparable" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-math" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-parser" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-record" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-selective" },
+    { "path": "../alfa-slice" },
+    { "path": "../alfa-test" }
   ]
 }

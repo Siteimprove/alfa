@@ -3,20 +3,9 @@
   "extends": "../tsconfig.json",
   "files": ["src/hash.ts", "src/hashable.ts", "src/index.ts"],
   "references": [
-    {
-      "path": "../alfa-encoding"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-encoding" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-refinement" }
   ]
 }

@@ -3,32 +3,14 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/record.ts", "test/record.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-foldable"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-list"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-reducer"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-foldable" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-list" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-reducer" },
+    { "path": "../alfa-test" }
   ]
 }

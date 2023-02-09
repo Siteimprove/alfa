@@ -11,53 +11,21 @@
     "test/scraper.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-array"
-    },
-    {
-      "path": "../alfa-device"
-    },
-    {
-      "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-http"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-promise"
-    },
-    {
-      "path": "../alfa-puppeteer"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-time"
-    },
-    {
-      "path": "../alfa-url"
-    },
-    {
-      "path": "../alfa-web"
-    }
+    { "path": "../alfa-array" },
+    { "path": "../alfa-device" },
+    { "path": "../alfa-dom" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-http" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-promise" },
+    { "path": "../alfa-puppeteer" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-test" },
+    { "path": "../alfa-time" },
+    { "path": "../alfa-url" },
+    { "path": "../alfa-web" }
   ]
 }

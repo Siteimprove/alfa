@@ -3,17 +3,8 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/interviewer.ts"],
   "references": [
-    {
-      "path": "../alfa-act"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-act" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-result" }
   ]
 }

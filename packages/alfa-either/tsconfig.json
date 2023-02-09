@@ -3,41 +3,16 @@
   "extends": "../tsconfig.json",
   "files": ["src/either.ts", "src/index.ts", "src/left.ts", "src/right.ts"],
   "references": [
-    {
-      "path": "../alfa-applicative"
-    },
-    {
-      "path": "../alfa-callback"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-foldable"
-    },
-    {
-      "path": "../alfa-functor"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-monad"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-reducer"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-applicative" },
+    { "path": "../alfa-callback" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-foldable" },
+    { "path": "../alfa-functor" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-monad" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-reducer" }
   ]
 }

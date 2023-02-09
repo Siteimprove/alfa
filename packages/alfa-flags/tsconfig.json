@@ -3,17 +3,9 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/flags.ts", "test/flags.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-array"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-array" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-test" }
   ]
 }

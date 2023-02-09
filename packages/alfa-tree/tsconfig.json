@@ -3,32 +3,14 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/tree.ts"],
   "references": [
-    {
-      "path": "../alfa-array"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-flags"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-sequence"
-    }
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-flags" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-lazy" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-sequence" }
   ]
 }

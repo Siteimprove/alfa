@@ -10,44 +10,17 @@
     "src/user-agent.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-cache"
-    },
-    {
-      "path": "../alfa-comparable"
-    },
-    {
-      "path": "../alfa-css"
-    },
-    {
-      "path": "../alfa-device"
-    },
-    {
-      "path": "../alfa-dom"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-media"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-selector"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-cache" },
+    { "path": "../alfa-comparable" },
+    { "path": "../alfa-css" },
+    { "path": "../alfa-device" },
+    { "path": "../alfa-dom" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-media" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-selector" }
   ]
 }

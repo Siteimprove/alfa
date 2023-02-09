@@ -8,47 +8,20 @@
     "test/media.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-css"
-    },
-    {
-      "path": "../alfa-device"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-functor"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-parser"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-slice"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-comparable" },
+    { "path": "../alfa-css" },
+    { "path": "../alfa-device" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-functor" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-parser" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-slice" },
+    { "path": "../alfa-test" }
   ]
 }

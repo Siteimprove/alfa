@@ -3,38 +3,16 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/selective.ts", "test/selective.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-applicative"
-    },
-    {
-      "path": "../alfa-either"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-functor"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-monad"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-applicative" },
+    { "path": "../alfa-either" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-functor" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-monad" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-test" }
   ]
 }

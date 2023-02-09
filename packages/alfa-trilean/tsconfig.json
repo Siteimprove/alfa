@@ -3,14 +3,8 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/trilean.ts", "test/trilean.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-test" }
   ]
 }
