@@ -3,20 +3,9 @@
   "extends": "../tsconfig.json",
   "files": ["src/formatter.ts", "src/index.ts"],
   "references": [
-    {
-      "path": "../alfa-act"
-    },
-    {
-      "path": "../alfa-future"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-act" },
+    { "path": "../alfa-future" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-result" }
   ]
 }

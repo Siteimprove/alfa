@@ -3,26 +3,10 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/jest.ts"],
   "references": [
-    {
-      "path": "../alfa-act"
-    },
-    {
-      "path": "../alfa-assert"
-    },
-    {
-      "path": "../alfa-future"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-web"
-    }
+    { "path": "../alfa-act" },
+    { "path": "../alfa-assert" },
+    { "path": "../alfa-future" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-mapper" }
   ]
 }

@@ -10,26 +10,14 @@
     "test/asserter.spec.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-act"
-    },
-    {
-      "path": "../alfa-future"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-performance"
-    },
-    {
-      "path": "../alfa-result"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-act" },
+    { "path": "../alfa-future" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-performance" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-sequence" },
+    { "path": "../alfa-test" }
   ]
 }

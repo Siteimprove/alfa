@@ -1,6 +1,6 @@
 export { Artifact, Location, Log, ReportingDescriptor, Result } from "sarif";
 
-import * as sarif from "sarif";
+import type * as sarif from "sarif";
 
 /**
  * @public

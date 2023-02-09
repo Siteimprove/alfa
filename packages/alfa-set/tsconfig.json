@@ -3,44 +3,17 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/set.ts"],
   "references": [
-    {
-      "path": "../alfa-array"
-    },
-    {
-      "path": "../alfa-callback"
-    },
-    {
-      "path": "../alfa-collection"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-map"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-reducer"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-array" },
+    { "path": "../alfa-callback" },
+    { "path": "../alfa-collection" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-map" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-reducer" },
+    { "path": "../alfa-refinement" }
   ]
 }

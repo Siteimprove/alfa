@@ -12,23 +12,10 @@
     "src/viewport.ts"
   ],
   "references": [
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-map"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-map" }
   ]
 }

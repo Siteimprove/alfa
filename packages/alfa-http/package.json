@@ -28,9 +28,6 @@
     "@siteimprove/alfa-refinement": "workspace:^0.58.0",
     "@siteimprove/alfa-url": "workspace:^0.58.0"
   },
-  "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.58.0"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/"

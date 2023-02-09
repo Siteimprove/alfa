@@ -3,29 +3,13 @@
   "extends": "../tsconfig.json",
   "files": ["src/graph.ts", "src/index.ts", "test/graph.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-map"
-    },
-    {
-      "path": "../alfa-sequence"
-    },
-    {
-      "path": "../alfa-set"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-map" },
+    { "path": "../alfa-sequence" },
+    { "path": "../alfa-set" },
+    { "path": "../alfa-test" }
   ]
 }

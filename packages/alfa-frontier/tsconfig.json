@@ -3,23 +3,11 @@
   "extends": "../tsconfig.json",
   "files": ["src/frontier.ts", "src/index.ts", "test/frontier.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-test"
-    },
-    {
-      "path": "../alfa-url"
-    }
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-test" },
+    { "path": "../alfa-url" }
   ]
 }

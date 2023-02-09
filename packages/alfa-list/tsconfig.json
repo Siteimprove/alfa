@@ -3,59 +3,23 @@
   "extends": "../tsconfig.json",
   "files": ["src/index.ts", "src/list.ts", "src/node.ts", "test/list.spec.ts"],
   "references": [
-    {
-      "path": "../alfa-array"
-    },
-    {
-      "path": "../alfa-bits"
-    },
-    {
-      "path": "../alfa-callback"
-    },
-    {
-      "path": "../alfa-collection"
-    },
-    {
-      "path": "../alfa-comparable"
-    },
-    {
-      "path": "../alfa-equatable"
-    },
-    {
-      "path": "../alfa-functor"
-    },
-    {
-      "path": "../alfa-hash"
-    },
-    {
-      "path": "../alfa-iterable"
-    },
-    {
-      "path": "../alfa-json"
-    },
-    {
-      "path": "../alfa-map"
-    },
-    {
-      "path": "../alfa-mapper"
-    },
-    {
-      "path": "../alfa-option"
-    },
-    {
-      "path": "../alfa-predicate"
-    },
-    {
-      "path": "../alfa-reducer"
-    },
-    {
-      "path": "../alfa-refinement"
-    },
-    {
-      "path": "../alfa-set"
-    },
-    {
-      "path": "../alfa-test"
-    }
+    { "path": "../alfa-array" },
+    { "path": "../alfa-bits" },
+    { "path": "../alfa-callback" },
+    { "path": "../alfa-collection" },
+    { "path": "../alfa-comparable" },
+    { "path": "../alfa-equatable" },
+    { "path": "../alfa-functor" },
+    { "path": "../alfa-hash" },
+    { "path": "../alfa-iterable" },
+    { "path": "../alfa-json" },
+    { "path": "../alfa-map" },
+    { "path": "../alfa-mapper" },
+    { "path": "../alfa-option" },
+    { "path": "../alfa-predicate" },
+    { "path": "../alfa-reducer" },
+    { "path": "../alfa-refinement" },
+    { "path": "../alfa-set" },
+    { "path": "../alfa-test" }
   ]
 }
