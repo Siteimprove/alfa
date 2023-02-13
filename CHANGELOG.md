@@ -19,6 +19,22 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.59.0](../../compare/v0.58.0...v0.59.0) (2023-02-09)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The `transcript-perceivable` question has been removed, since it wasn't used by any rule. ([#1329](../../issues/1329), [#1336](../../pull/1336))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): Requirement mappings of SIA-R16, SIA-R47 and SIA-R95 have changed to align with the latest ACT rules versions. ([#1335](../../pull/1335))
+
+### Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style): Percentage `line-height` is now correctly computed according to the `font-size` of the element, not its parent. ([#1323](../../issues/1323), [#1334](../../pull/1334))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The text of the `has-caption`, `transcript`, and `transcript-link` questions has been improved to explicit that captions or transcript only matter if they are descriptive enough. ([#1329](../../issues/1329), [#1336](../../pull/1336))
+
 ## [0.58.0](../../compare/v0.57.3...v0.58.0) (2023-02-01)
 
 ### Breaking

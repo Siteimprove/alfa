@@ -8,6 +8,8 @@ on:
       - main
   schedule:
     - cron: "0 21 * * 1"
+  merge_group:
+    types: [checks_requested]
 concurrency:
   group: scan-${{ github.ref }}
   cancel-in-progress: true
@@ -23,8 +25,8 @@ jobs:
           cache: yarn
       - run: yarn install --immutable
       - run: yarn build --quiet
-      - uses: github/codeql-action/init@v2.2.3
+      - uses: github/codeql-action/init@v2.2.4
         with:
           languages: javascript
           config-file: .github/codeql/config.yml
-      - uses: github/codeql-action/analyze@v2.2.3
+      - uses: github/codeql-action/analyze@v2.2.4

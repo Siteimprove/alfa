@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-unexpected",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.58.0",
+  "version": "0.59.0",
   "license": "MIT",
   "description": "Assertion integrations for the Unexpected testing framework",
   "repository": {
@@ -19,11 +19,11 @@
     "types/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-act": "workspace:^0.58.0",
-    "@siteimprove/alfa-assert": "workspace:^0.58.0",
-    "@siteimprove/alfa-future": "workspace:^0.58.0",
-    "@siteimprove/alfa-hash": "workspace:^0.58.0",
-    "@siteimprove/alfa-mapper": "workspace:^0.58.0",
+    "@siteimprove/alfa-act": "workspace:^0.59.0",
+    "@siteimprove/alfa-assert": "workspace:^0.59.0",
+    "@siteimprove/alfa-future": "workspace:^0.59.0",
+    "@siteimprove/alfa-hash": "workspace:^0.59.0",
+    "@siteimprove/alfa-mapper": "workspace:^0.59.0",
     "unexpected": "^13.0.0"
   },
   "publishConfig": {
