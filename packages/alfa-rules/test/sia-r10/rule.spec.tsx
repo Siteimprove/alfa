@@ -32,6 +32,45 @@ test("evaluate() passes a valid simple autocomplete attribute on an <input> elem
   ]);
 });
 
+test("evaluate() fails autocomplete attribute with missing required term", async (t) => {
+  const element = <input autocomplete="section-blue shipping" />;
+  const target = element.attribute("autocomplete").getUnsafe();
+
+  const document = h.document([element]);
+
+  t.deepEqual(await evaluate(R10, { document }), [
+    failed(R10, target, {
+      1: Outcomes.HasNoValidValue,
+    }),
+  ]);
+});
+
+test("evaluate() passes autocomplete attribute with \`section-blue shipping name webauthn\`", async (t) => {
+  const element = <input autocomplete="section-blue shipping name webauthn" />;
+  const target = element.attribute("autocomplete").getUnsafe();
+
+  const document = h.document([element]);
+
+  t.deepEqual(await evaluate(R10, { document }), [
+    passed(R10, target, {
+      1: Outcomes.HasValidValue,
+    }),
+  ]);
+});
+
+test("evaluate() passes autocomplete attribute with \`section-blue shipping home tel webauthn\`", async (t) => {
+  const element = <input autocomplete="section-blue shipping name webauthn" />;
+  const target = element.attribute("autocomplete").getUnsafe();
+
+  const document = h.document([element]);
+
+  t.deepEqual(await evaluate(R10, { document }), [
+    passed(R10, target, {
+      1: Outcomes.HasValidValue,
+    }),
+  ]);
+});
+
 test("evaluate() fails an autocomplete attribute with a non-existing term", async (t) => {
   const element = <input autocomplete="invalid" />;
   const target = element.attribute("autocomplete").getUnsafe();
@@ -47,6 +86,45 @@ test("evaluate() fails an autocomplete attribute with a non-existing term", asyn
 
 test("evaluate() fails an autocomplete attribute with terms in wrong order", async (t) => {
   const element = <input autocomplete="work shipping email" />;
+  const target = element.attribute("autocomplete").getUnsafe();
+
+  const document = h.document([element]);
+
+  t.deepEqual(await evaluate(R10, { document }), [
+    failed(R10, target, {
+      1: Outcomes.HasNoValidValue,
+    }),
+  ]);
+});
+
+test("evaluate() fails an autocomplete attribute with valid tokens followed by an invalid token", async (t) => {
+  const element = <input autocomplete="name home tel invalid" />;
+  const target = element.attribute("autocomplete").getUnsafe();
+
+  const document = h.document([element]);
+
+  t.deepEqual(await evaluate(R10, { document }), [
+    failed(R10, target, {
+      1: Outcomes.HasNoValidValue,
+    }),
+  ]);
+});
+
+test("evaluate() fails an autocomplete attribute with modifier token followed by nothing", async (t) => {
+  const element = <input autocomplete="home" />;
+  const target = element.attribute("autocomplete").getUnsafe();
+
+  const document = h.document([element]);
+
+  t.deepEqual(await evaluate(R10, { document }), [
+    failed(R10, target, {
+      1: Outcomes.HasNoValidValue,
+    }),
+  ]);
+});
+
+test("evaluate() fails an autocomplete attribute with modifier token followed by invalid token", async (t) => {
+  const element = <input autocomplete="home webauthn" />;
   const target = element.attribute("autocomplete").getUnsafe();
 
   const document = h.document([element]);
