@@ -76,15 +76,6 @@ export default Rule.Atomic.of<Page, Attribute>({
   },
 });
 
-export namespace Outcomes {
-  export const HasValidValue = Ok.of(
-    Diagnostic.of(`The \`autocomplete\` attribute has a valid value`)
-  );
-  export const HasNoValidValue = Err.of(
-    Diagnostic.of(`The \`autocomplete\` attribute does not have a valid value`)
-  );
-}
-
 function hasTokens(input: string): boolean {
   return input.trim() !== "" && input.split(/\s+/).length > 0;
 }
@@ -95,13 +86,17 @@ function hasTokens(input: string): boolean {
 const isValidAutocomplete: Predicate<Attribute> = (autocomplete) => {
   const tokens = autocomplete.value.toLowerCase().trim().split(/\s+/);
 
-  // The line comments refers to the numbered bullets describing the allowed values outlined in the HTML specification linked above
+  // The following line comments each refers to the corresponding position in the HTML specification linked above at the time of writing
   const parse = right(
     option(section), // 1.
     right(
       option(addressType), // 2.
       right(
-        either(unmodifiable /*3.a*/, right(option(modifier) /*3.b.1*/, modifiable /*3.b.2*/)), // 3.
+        // 3.
+        either(
+          unmodifiable, // 3.a
+          right(option(modifier) /*3.b.1*/, modifiable /*3.b.2*/)
+        ),
         right(
           option(webauthn), // 4.
           end((token) => `Expected EOF, but got ${token}`)
@@ -207,4 +202,13 @@ function sectionParser(): Parser<Slice<string>, string, string> {
       `Expected token beginning with \`section-\`, but got ${input}`
     );
   };
+}
+
+export namespace Outcomes {
+  export const HasValidValue = Ok.of(
+    Diagnostic.of(`The \`autocomplete\` attribute has a valid value`)
+  );
+  export const HasNoValidValue = Err.of(
+    Diagnostic.of(`The \`autocomplete\` attribute does not have a valid value`)
+  );
 }
