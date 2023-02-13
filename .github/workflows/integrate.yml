@@ -6,6 +6,8 @@ on:
   pull_request:
     branches:
       - "*"
+  merge_group:
+    types: [checks_requested]
 concurrency:
   group: integrate-${{ github.ref }}
   cancel-in-progress: true
