@@ -8,6 +8,8 @@ on:
       - main
   schedule:
     - cron: "0 21 * * 1"
+  merge_group:
+    types: [checks_requested]
 concurrency:
   group: scan-${{ github.ref }}
   cancel-in-progress: true
