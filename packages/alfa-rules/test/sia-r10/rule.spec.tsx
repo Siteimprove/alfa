@@ -110,7 +110,7 @@ test("evaluate() fails an autocomplete attribute with valid tokens followed by a
   ]);
 });
 
-test("evaluate() fails an autocomplete attribute with \`home\` followed by nothing", async (t) => {
+test("evaluate() fails an autocomplete attribute with modifier token followed by nothing", async (t) => {
   const element = <input autocomplete="home" />;
   const target = element.attribute("autocomplete").getUnsafe();
 
@@ -123,7 +123,7 @@ test("evaluate() fails an autocomplete attribute with \`home\` followed by nothi
   ]);
 });
 
-test("evaluate() fails an autocomplete attribute with \`home webauthn\`", async (t) => {
+test("evaluate() fails an autocomplete attribute with modifier token followed by invalid token", async (t) => {
   const element = <input autocomplete="home webauthn" />;
   const target = element.attribute("autocomplete").getUnsafe();
 
