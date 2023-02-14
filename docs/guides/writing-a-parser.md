@@ -30,7 +30,7 @@ meaning that the token can either have the literal value of `shipping` or `billi
 
 ## Implementing the parser
 
-Out aim is to write a parser that consumes an array of tokens (in our case strings) and returns a result of either `Ok`, with the result and the rest of the tokens, or an `Err` result with a message containing relevant information on why the parsing failed.
+Our aim is to write a parser that consumes an array of tokens (in our case strings) and returns a result of either `Ok`, with the result and the rest of the tokens, or an `Err` result with a message containing relevant information on why the parsing failed.
 
 The strategy is:
 - write individual atomic parsers to parse each indivial token using string matching
