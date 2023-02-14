@@ -4,7 +4,7 @@ This guide shows how to implement a simple parser using the [alfa-parser](https:
 
 ## Background
 
-The `alfa-parser` package contains functionality to make it easy to implement a parser. This package is used internally by Alfa to parse HTML, CSS etc., but it can be used for any parsing scenario.
+The `alfa-parser` package contains functionality to make it easy to implement a parser ([parsers combinators](https://en.wikipedia.org/wiki/Parser_combinator)). This package is used internally by Alfa to parse HTML, CSS etc., but it can be used for any parsing scenario.
 
 For this guide we want to create a parser that parses the content of the HTML attribute `autocomplete`. The content of the attribute must follow a set of rules as defined in the [HTML specification](https://html.spec.whatwg.org/multipage/#autofill-detail-tokens).
 
@@ -20,11 +20,11 @@ We can express the grammar as follows
 ```
 [section] [addressType] (unmodifiable | [modifier] modifiable) [webauthn] EOF
 ```
-where a token name sorounded by square brackets `[]` means it is an optional token, tokens seperated by a vertical line `|` means exactly one of the tokens must be present and `EOF` is a special token signaling that no more tokens are allowed.
+where a token name surrounded by square brackets `[]` means it is an optional token, tokens separated by a vertical line `|` means exactly one of the tokens must be present and `EOF` is a special token signalling that no more tokens are allowed.
 
 Here the possible values for the tokens are not listed, but as an example `addressType` is defined as follows
 ```
-addressType = "shipping" | "billing"
+addressType ::= "shipping" | "billing"
 ```
 meaning that the token can either have the literal value of `shipping` or `billing`.
 
@@ -49,7 +49,7 @@ The types from `alfa-result` will be used by the parser to signal success or fai
 We will implement two of the "atomic" parsers and leave out the rest as they are very similar. In the actual implementation in [#1339][PR] this was done in a more general way where a function generates the parser from an array of literal values.
 
 ```TS
-const segment: Parser<Slice<string>, string, string> = (input: Slice<string>) => {
+const section: Parser<Slice<string>, string, string> = (input: Slice<string>) => {
   const token = input.first(); // Get the next token
   
   if (token.isSome() && token.get().startsWith("section-")) { // Check if we got a token and it has a valid literal value
@@ -82,7 +82,7 @@ Now let's imagine we also implemented the other parsers in a similar fashion. We
 const parse = right(
   option(section), // The attribute should optionally begin with a section token
   right(
-    option(addressType), Next, optionally an addressType token
+    option(addressType), // Next, optionally an addressType token
     right(
       either( // Then, required, either an unmodifiable token or an optional modifier token followed by a modifiable token
         unmodifiable,
