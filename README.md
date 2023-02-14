@@ -204,6 +204,9 @@ By implementing browser aspects, such as a style system and the accessibility tr
 
 At the code level, Alfa is structured as a monolithic repository consisting of several packages that each have their own area of responsibility. You can find more information on the overall architecture of Alfa in the [architecture documentation](docs/architecture). We also write and maintain [architecture decision reports](docs/architecture/decisions) if you want to get the complete picture of how Alfa came to be.
 
+## Guides
+A list of guides on how to develop with Alfa can be found under [guides](docs/guides).
+
 ## Funding
 
 [<img src="media/europe.svg" height="96" align="right" alt="European emblem">](https://ec.europa.eu/)
