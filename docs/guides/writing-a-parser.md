@@ -34,7 +34,7 @@ Our aim is to write a parser that consumes an array of tokens (in our case strin
 
 The strategy is:
 - write individual atomic parsers to parse each indivial token using string matching
-- combine the atomic parser using the combinators from `alfa-parser` into the final parser in such a way that it encodes the grammar
+- combine the atomic parsers using the combinators from `alfa-parser` into the final parser in such a way that it encodes the grammar
 
 Start by adding the following imports
 ```TS
