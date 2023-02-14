@@ -30,7 +30,11 @@ meaning that the token can either have the literal value of `shipping` or `billi
 
 ## Implementing the parser
 
-Our strategy is to define individual "atomic" parsers for each of the tokens and then use the functions available in the `alfa-parser` package to combine them into the final parser in such a way that it encodes the grammar defined above. The individual parsers will be very simple since they will only check that a token has one of the valid literal values for that token. If it does, it will return an `Ok` result with the parsed token and the rest of the tokens ready to be parsed by the next parser. If it doesn't, it will return an `Err` result with a message and the parsing will terminate.
+Out aim is to write a parser that consumes an array of tokens (in our case strings) and returns a result of either `Ok`, with the result and the rest of the tokens, or an `Err` result with a message containing relevant information on why the parsing failed.
+
+The strategy is:
+- write individual atomic parsers to parse each indivial token using string matching
+- combine the atomic parser using the combinators from `alfa-parser` into the final parser in such a way that it encodes the grammar
 
 Start by adding the following imports
 ```TS
@@ -40,7 +44,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 const { either, end, option, right } = Parser;
 ```
-The types from `alfa-result` will be used by the parser to signal success or failure and the `Slice` type is used by the parser to consume an array of tokens in a memory efficient way. The functions, or combinators, from the `Parser` namespace that we will be using have been stored as `const`s for convenience.
+The types from `alfa-result` will be used by the parser to signal success or failure and the `Slice` type is used by the parser to consume an array of tokens in a memory efficient way. The functions, or combinators, from the `Parser` namespace that will be used have been stored as `const`s for convenience.
 
 We will implement two of the "atomic" parsers and leave out the rest as they are very similar. In the actual implementation in [#1339][PR] this was done in a more general way where a function generates the parser from an array of literal values.
 
