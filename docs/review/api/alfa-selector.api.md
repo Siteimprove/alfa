@@ -401,8 +401,6 @@ export namespace Selector {
     // (undocumented)
     export class Host extends Pseudo.Class<"host"> {
         // (undocumented)
-        matches(_element: Element): boolean;
-        // (undocumented)
         static of(): Host;
     }
     // (undocumented)
