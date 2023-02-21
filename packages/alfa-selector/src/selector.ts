@@ -884,6 +884,8 @@ export namespace Selector {
             return Result.of(Enabled.of());
           case "root":
             return Result.of(Root.of());
+          case "host":
+            return Result.of(Host.of());
           case "empty":
             return Result.of(Empty.of());
           case "first-child":
@@ -1486,6 +1488,25 @@ export namespace Selector {
     public matches(element: Element): boolean {
       // The root element is the element whose parent is NOT itself an element.
       return element.parent().every(not(isElement));
+    }
+  }
+
+  /**
+   * {@link https://drafts.csswg.org/css-scoping-1/#selectordef-host}
+   */
+  export class Host extends Pseudo.Class<"host"> {
+    public static of(): Host {
+      return new Host();
+    }
+
+    private constructor() {
+      super("host");
+    }
+
+    public matches(_element: Element): boolean {
+      // The shadow DOM is currently not supported so there should not be any matches.
+      // If support for the shadow DOM is added, then this should be implemented.
+      return false;
     }
   }
 
