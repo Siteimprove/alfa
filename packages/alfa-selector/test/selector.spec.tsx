@@ -693,14 +693,7 @@ test(".parse() parses a named pseudo-class selector", (t) => {
 });
 
 test(".parse() parses :host pseudo-class selector", (t) => {
-  const parseResult = parse(":host");
-
-  if (parseResult.isErr()) {
-    t.fail(parseResult.getErr());
-    return;
-  }
-
-  t.deepEqual(parseResult.get().toJSON(), {
+  t.deepEqual(parse(":host").get().toJSON(), {
     type: "pseudo-class",
     name: "host",
   });

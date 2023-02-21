@@ -1503,11 +1503,6 @@ export namespace Selector {
       super("host");
     }
 
-    public matches(_element: Element): boolean {
-      // The shadow DOM is currently not supported so there should not be any matches.
-      // If support for the shadow DOM is added, then this should be implemented.
-      return false;
-    }
   }
 
   /**
