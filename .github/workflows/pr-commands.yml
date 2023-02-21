@@ -14,6 +14,7 @@ jobs:
   pull-request-command:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           # We use versions 14 and 16 in the integrate workflow
