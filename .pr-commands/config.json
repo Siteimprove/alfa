@@ -14,4 +14,8 @@
     "description": "Update packages documentation",
     "commitMsg": "Update documentation"
   }
+  "version": {
+    "command": "yarn -v && node -v",
+    "description": "Show versions"
+  }
 }
