@@ -1502,7 +1502,6 @@ export namespace Selector {
     private constructor() {
       super("host");
     }
-
   }
 
   /**
