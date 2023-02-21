@@ -19,7 +19,6 @@ jobs:
         with:
           # We use versions 14 and 16 in the integrate workflow
           node-version: 16
-          cache: yarn
       - uses: siteimprove/pr-command/advanced@v2
         with:
           # Personal access token (PAT) used to fetch the repository and add reaction on comment.
