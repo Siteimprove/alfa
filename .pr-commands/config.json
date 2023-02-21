@@ -13,7 +13,7 @@
     "command": "yarn install --immutable && yarn build --quiet && yarn document",
     "description": "Update packages documentation",
     "commitMsg": "Update documentation"
-  }
+  },
   "version": {
     "command": "yarn -v && node -v",
     "description": "Show versions"
