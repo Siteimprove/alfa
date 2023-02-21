@@ -14,6 +14,10 @@ jobs:
   pull-request-command:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: lts
+          cache: yarn
       - uses: siteimprove/pr-command/advanced@v2
         with:
           # Personal access token (PAT) used to fetch the repository and add reaction on comment.
