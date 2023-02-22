@@ -106,8 +106,9 @@ export namespace Parser {
 
   export function oneOrMore<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>
-  ): Parser<I, Array<T>, E, A> {
-    return takeAtLeast(parser, 1);
+  ): Parser<I, [T, ...Array<T>], E, A> {
+    // The result contains at least one token, so this cast is safe
+    return takeAtLeast(parser, 1) as Parser<I, [T, ...Array<T>], E, A>;
   }
 
   export function take<I, T, E, A extends Array<unknown> = []>(

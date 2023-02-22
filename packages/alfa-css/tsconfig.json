@@ -73,7 +73,8 @@
     "test/value/shape/ellipse.spec.ts",
     "test/value/shape/inset.spec.ts",
     "test/value/shape/polygon.spec.ts",
-    "test/value/shape/rectangle.spec.ts"
+    "test/value/shape/rectangle.spec.ts",
+    "test/value/color/rgb.spec.ts"
   ],
   "references": [
     { "path": "../alfa-array" },

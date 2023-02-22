@@ -42,7 +42,7 @@ export namespace Parser {
     // (undocumented)
     export function mapResult<I, T, U, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, mapper: Mapper<T, Result<U, E>>): Parser<I, U, E, A>;
     // (undocumented)
-    export function oneOrMore<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Array_2<T>, E, A>;
+    export function oneOrMore<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, [T, ...Array_2<T>], E, A>;
     // (undocumented)
     export function option<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Option<T>, E, A>;
     // (undocumented)

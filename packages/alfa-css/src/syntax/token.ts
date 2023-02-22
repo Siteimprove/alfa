@@ -8,6 +8,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
+const { map, oneOrMore } = Parser;
 const { fromCharCode } = String;
 const { and } = Refinement;
 
@@ -811,7 +812,10 @@ export namespace Token {
 
   export const { of: whitespace, isWhitespace } = Whitespace;
 
-  export const parseWhitespace = parseToken(isWhitespace);
+  export const parseWhitespace = map(
+    oneOrMore(parseToken(isWhitespace)),
+    ([first]) => first
+  );
 
   export class Colon implements Equatable, Serializable<Colon.JSON> {
     private static _instance = new Colon();
