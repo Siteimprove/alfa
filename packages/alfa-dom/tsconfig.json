@@ -41,6 +41,7 @@
     "src/node/element/predicate/is-editing-host.ts",
     "src/node/element/predicate/is-fallback.ts",
     "src/node/element/predicate/is-replaced.ts",
+    "src/node/element/predicate/is-scoped-to.ts",
     "src/node/element/predicate/is-suggested-focusable.ts",
     "src/node/fragment.ts",
     "src/node/predicate.ts",
