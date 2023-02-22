@@ -14,7 +14,14 @@ import { Attribute } from "./attribute";
 import { Name } from "./name";
 import { Role } from "./role";
 
-const { hasAttribute, hasInputType, hasName, inputType, isElement } = Element;
+const {
+  hasAttribute,
+  hasInputType,
+  hasName,
+  inputType,
+  isElement,
+  isScopedTo,
+} = Element;
 const { or, test } = Predicate;
 const { and } = Refinement;
 
@@ -222,12 +229,7 @@ function ifScopedTo<T = Role.Name | Iterable<Role>>(
   ifNotScoped: T
 ): Feature.Aspect<T> {
   return (element) =>
-    element
-      .ancestors()
-      .filter(isElement)
-      .some(hasName(...names))
-      ? ifScoped
-      : ifNotScoped;
+    test(isScopedTo(names), element) ? ifScoped : ifNotScoped;
 }
 
 function ifHasAttribute<T = Role.Name | Iterable<Role>>(
