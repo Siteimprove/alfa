@@ -229,7 +229,7 @@ function ifScopedTo<T = Role.Name | Iterable<Role>>(
   ifNotScoped: T
 ): Feature.Aspect<T> {
   return (element) =>
-    test(isScopedTo(names), element) ? ifScoped : ifNotScoped;
+    test(isScopedTo(...names), element) ? ifScoped : ifNotScoped;
 }
 
 function ifHasAttribute<T = Role.Name | Iterable<Role>>(

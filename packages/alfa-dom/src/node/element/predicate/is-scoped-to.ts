@@ -6,11 +6,12 @@ import { Element } from "../../element";
  * @public
  */
 export function isScopedTo(
-  names: [string, ...Array<string>]
+  name: string,
+  ...rest: Array<string>
 ): Predicate<Element> {
   return (element) =>
     element
       .ancestors()
       .filter(Element.isElement)
-      .some(Element.hasName(...names));
+      .some(Element.hasName(name, ...rest));
 }
