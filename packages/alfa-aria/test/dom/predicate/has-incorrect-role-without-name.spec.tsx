@@ -43,3 +43,31 @@ test("hasIncorrectRoleWithoutName returns false for `<section>` with explicit ro
   t.deepEqual(DOM.hasRole(device, "region")(target), true);
   t.deepEqual(DOM.hasIncorrectRoleWithoutName(device)(target), false);
 });
+
+test("hasIncorrectRoleWithoutName returns true for nameless `<aside>` scoped to sectioning element", (t) => {
+  const target = (
+    <aside>
+      Aside without name have no role if scoped to sectioning element
+    </aside>
+  );
+
+  h.document([<section>target</section>]);
+
+  // Role is incorrectly set
+  t.deepEqual(DOM.hasRole(device, "complementary")(target), true);
+  t.deepEqual(DOM.hasIncorrectRoleWithoutName(device)(target), true);
+});
+
+test("hasIncorrectRoleWithoutName returns false for nameless `<aside>` scoped to body or main", (t) => {
+  const target = (
+    <aside>
+      Aside without name have complementary role if scoped to body or main
+    </aside>
+  );
+
+  h.document([<main>target</main>]);
+
+  // Role is incorrectly set
+  t.deepEqual(DOM.hasRole(device, "complementary")(target), true);
+  t.deepEqual(DOM.hasIncorrectRoleWithoutName(device)(target), false);
+});
