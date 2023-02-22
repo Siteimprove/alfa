@@ -335,6 +335,7 @@ export namespace Element {
     isDraggable: typeof predicate_3.isDraggable, // (undocumented)
     isEditingHost: typeof predicate_3.isEditingHost, // (undocumented)
     isFallback: typeof predicate_3.isFallback, // (undocumented)
+    isScopedTo: typeof predicate_3.isScopedTo, // (undocumented)
     isSuggestedFocusable: typeof predicate_3.isSuggestedFocusable, // (undocumented)
     isReplaced: typeof predicate_3.isReplaced;
     const // Warning: (ae-forgotten-export) The symbol "helpers" needs to be exported by the entry point index.d.ts
@@ -603,6 +604,9 @@ function isReplaced(element: Element): element is Element<"audio" | "canvas" | "
 
 // @public (undocumented)
 function isRoot(options?: Node.Traversal): Predicate<Node>;
+
+// @public (undocumented)
+function isScopedTo(name: string, ...rest: Array<string>): Predicate<Element>;
 
 // @public (undocumented)
 function isSuggestedFocusable(element: Element): boolean;
