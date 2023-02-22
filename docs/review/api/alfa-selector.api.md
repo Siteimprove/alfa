@@ -399,6 +399,11 @@ export namespace Selector {
         }
     }
     // (undocumented)
+    export class Host extends Pseudo.Class<"host"> {
+        // (undocumented)
+        static of(): Host;
+    }
+    // (undocumented)
     export class Hover extends Pseudo.Class<"hover"> {
         // (undocumented)
         matches(element: Element, context?: Context): boolean;
