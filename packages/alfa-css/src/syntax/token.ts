@@ -8,7 +8,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-const { oneOrMore } = Parser;
+const { map, oneOrMore } = Parser;
 const { fromCharCode } = String;
 const { and } = Refinement;
 
@@ -812,7 +812,12 @@ export namespace Token {
 
   export const { of: whitespace, isWhitespace } = Whitespace;
 
-  export const parseWhitespace = oneOrMore(parseToken(isWhitespace));
+  // If more than one whitespace is parsed, we only want one in the result.
+  // Calling `oneOrMore` ensures at least one, so indexing should be safe.
+  export const parseWhitespace = map(
+    oneOrMore(parseToken(isWhitespace)),
+    (whitespaces) => whitespaces[0]
+  );
 
   export class Colon implements Equatable, Serializable<Colon.JSON> {
     private static _instance = new Colon();
