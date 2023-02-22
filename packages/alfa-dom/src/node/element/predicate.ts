@@ -13,5 +13,6 @@ export * from "./predicate/is-document-element";
 export * from "./predicate/is-draggable";
 export * from "./predicate/is-editing-host";
 export * from "./predicate/is-fallback";
+export * from "./predicate/is-scoped-to";
 export * from "./predicate/is-suggested-focusable";
 export * from "./predicate/is-replaced";
