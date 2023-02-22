@@ -1,5 +1,4 @@
 import { h } from "@siteimprove/alfa-dom/h";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
