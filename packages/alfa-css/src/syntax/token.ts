@@ -814,7 +814,7 @@ export namespace Token {
 
   export const parseWhitespace = map(
     oneOrMore(parseToken(isWhitespace)),
-    ([first,]) => first
+    ([first]) => first
   );
 
   export class Colon implements Equatable, Serializable<Colon.JSON> {
