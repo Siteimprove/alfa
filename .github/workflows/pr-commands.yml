@@ -14,10 +14,11 @@ jobs:
   pull-request-command:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: lts
-          cache: yarn
+          # We use versions 14 and 16 in the integrate workflow
+          node-version: 16
       - uses: siteimprove/pr-command/advanced@v2
         with:
           # Personal access token (PAT) used to fetch the repository and add reaction on comment.
