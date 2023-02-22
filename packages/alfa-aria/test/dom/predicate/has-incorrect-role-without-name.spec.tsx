@@ -1,4 +1,5 @@
 import { h } from "@siteimprove/alfa-dom/h";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
@@ -51,7 +52,7 @@ test("hasIncorrectRoleWithoutName returns true for nameless `<aside>` scoped to 
     </aside>
   );
 
-  h.document([<section>target</section>]);
+  h.document([<section>{target}</section>]);
 
   // Role is incorrectly set
   t.deepEqual(DOM.hasRole(device, "complementary")(target), true);
@@ -65,9 +66,8 @@ test("hasIncorrectRoleWithoutName returns false for nameless `<aside>` scoped to
     </aside>
   );
 
-  h.document([<main>target</main>]);
+  h.document([<main>{target}</main>]);
 
-  // Role is incorrectly set
   t.deepEqual(DOM.hasRole(device, "complementary")(target), true);
   t.deepEqual(DOM.hasIncorrectRoleWithoutName(device)(target), false);
 });
