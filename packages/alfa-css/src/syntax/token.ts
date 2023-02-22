@@ -812,11 +812,9 @@ export namespace Token {
 
   export const { of: whitespace, isWhitespace } = Whitespace;
 
-  // If more than one whitespace is parsed, we only want one in the result.
-  // Calling `oneOrMore` ensures at least one, so indexing should be safe.
   export const parseWhitespace = map(
     oneOrMore(parseToken(isWhitespace)),
-    (whitespaces) => whitespaces[0]
+    ([first,]) => first
   );
 
   export class Colon implements Equatable, Serializable<Colon.JSON> {
