@@ -1,10 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R16, {
-  Outcomes,
-  RoleAndRequiredAttributes,
-} from "../../src/sia-r16/rule";
+import R16, { Outcomes } from "../../src/sia-r16/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
@@ -43,6 +40,40 @@ test(`evaluate() passes a focusable <div> element with a role of separator and
   t.deepEqual(await evaluate(R16, { document }), [
     passed(R16, target, {
       1: Outcomes.HasAllStates("separator", ["aria-valuenow"], []),
+    }),
+  ]);
+});
+
+test(`evaluate() passes a <div> element with a role of combobox,
+      aria-expanded value of false and missing aria-controls attribute`, async (t) => {
+  const target = <div role="combobox" aria-expanded="false"></div>;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R16, { document }), [
+    passed(R16, target, {
+      1: Outcomes.HasAllStates(
+        "combobox",
+        ["aria-controls", "aria-expanded"],
+        []
+      ),
+    }),
+  ]);
+});
+
+test(`evaluate() passes a <div> element with a role of combobox,
+      aria-expanded value of true and missing aria-controls attribute`, async (t) => {
+  const target = <div role="combobox" aria-expanded="true"></div>;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R16, { document }), [
+    passed(R16, target, {
+      1: Outcomes.HasAllStates(
+        "combobox",
+        ["aria-controls", "aria-expanded"],
+        []
+      ),
     }),
   ]);
 });
