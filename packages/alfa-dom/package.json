@@ -12,6 +12,17 @@
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./h": "./h.js",
+    "./h.js": "./h.js",
+    "./jsx": "./jsx.js",
+    "./jsx.js": "./jsx.js",
+    "./jsx-runtime": "./jsx-runtime.js",
+    "./jsx-runtime.js": "./jsx-runtime.js",
+    "./native": "./native.js",
+    "./native.js": "./native.js"
+  },
   "types": "src/index.d.ts",
   "files": [
     "h.js",
