@@ -19,6 +19,28 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.60.0](../../compare/v0.59.0...v0.60.0) (2023-02-23)
+
+### Breaking
+
+- [@siteimprove/alfa-dom](packages/alfa-dom): Now uses an `exports` map which prevents importing from files in sub-directories. The exports map is mostly needed for `jsxImportSource` to work in projects using `type: module`. ([#1357](../../pull/1357))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R16 now consider that `aria-controls` is not required on `combobox`. This align with SIA-R19 behavior. ([#1340](../../issues/1340), [#1358](../../pull/1358))
+
+### Added
+
+- [@siteimprove/alfa-selector](packages/alfa-selector): The `:host` pseudo-class is now parse. Alfa never matches any element with it yet, but CSS rules using it has part of the selector are not discarded anymore. ([#1347](../../issues/1347), [#1352](../../pull/1352)) 
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R10 now correctly accepts `webauthn` token in `autocomplete attribute. ([#1332](../../issues/1332), [#1339](../../pull/1339))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R57 now correctly consider that `<aside>` element not scoped to a sectionning content element have an implicit role of `complementary`. ([#1327](../../issues/1327), [#1355](../../pull/1355))
+
+- [@siteimprove/alfa-style](packages/alfa-style): Fixed a parsing error where CSS variables whose value starts or ends with a whitespace could create a parsing failure in properties using them. ([#1291](../../issues/1291), [#1354](../../pull/1354))
+
 ## [0.59.0](../../compare/v0.58.0...v0.59.0) (2023-02-09)
 
 ### Breaking
@@ -98,7 +120,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 - [@siteimprove/alfa-act](packages/alfa-act): `Outcome` are now hashable. ([#1298](../../pull/1298))
 
-  - [@siteimprove/alfa-rules](packages/alfa-rules): Added SIA-R18 version 2 (as experimental) which rejects prohibited attributes. ([#1205](../../issues/1205), [#1310](../../pull/1310))
+- [@siteimprove/alfa-rules](packages/alfa-rules): Added SIA-R18 version 2 (as experimental) which rejects prohibited attributes. ([#1205](../../issues/1205), [#1310](../../pull/1310))
 
 ### Changed
 
