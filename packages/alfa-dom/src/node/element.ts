@@ -426,6 +426,7 @@ export namespace Element {
     isDraggable,
     isEditingHost,
     isFallback,
+    isScopedTo,
     isSuggestedFocusable,
     isReplaced,
   } = predicate;
