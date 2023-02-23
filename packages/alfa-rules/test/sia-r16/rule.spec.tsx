@@ -62,7 +62,7 @@ test(`evaluate() passes a <div> element with a role of combobox,
 });
 
 test(`evaluate() passes a <div> element with a role of combobox,
-aria-expanded value of false and missing aria-controls attribute`, async (t) => {
+      aria-expanded value of true and missing aria-controls attribute`, async (t) => {
   const target = <div role="combobox" aria-expanded="true"></div>;
 
   const document = h.document([target]);

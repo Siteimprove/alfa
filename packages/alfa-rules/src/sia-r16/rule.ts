@@ -274,12 +274,8 @@ function isAttributeOptional(
   role: aria.Role.Name,
   attribute: aria.Attribute.Name
 ) {
-  if (role === "combobox" && attribute === "aria-controls") {
-    // combobox only requires aria-controls when opened, which we can't detect
-    // same as for sia-r19, @see https://github.com/Siteimprove/alfa/pull/1313
-    // should be refined to look at `aria-expanded` at some point
-    return true;
-  }
-
-  return false;
+  // combobox only requires aria-controls when opened, which we can't detect
+  // same as for sia-r19, @see https://github.com/Siteimprove/alfa/pull/1313
+  // should be refined to look at `aria-expanded` at some point
+  return role === "combobox" && attribute === "aria-controls";
 }
