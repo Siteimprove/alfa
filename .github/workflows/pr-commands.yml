@@ -6,20 +6,180 @@ name: PR commands
 #
 # See https://github.com/Siteimprove/pr-command
 
-on:
-  issue_comment:
-    types: [created]
+runs:
+  using: "composite"
+  steps:
+    - name: "Running Jym version"
+      run: |
+        echo "Totally running Jym version"
+      shell: bash
+      
+    - name: 'Should handle PR comment?'
+      run: |
+        if [[ "${{github.event.issue.pull_request && startsWith(github.event.comment.body, inputs.prefix)}}" == "false" ]]; then
+          echo ::set-output name=should_run::false
+        else
+          echo ::set-output name=should_run::true
+        fi
+      id: check
+      shell: bash
 
-jobs:
-  pull-request-command:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          # We use versions 14 and 16 in the integrate workflow
-          node-version: 16
-      - uses: siteimprove/pr-command/advanced@v2
-        with:
-          # Personal access token (PAT) used to fetch the repository and add reaction on comment.
-          token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+    - name: Checkout pull-request branch
+      uses: actions/checkout@v3
+      if: ${{ steps.check.outputs.should_run == 'true' }}
+      with:
+        # token: ${{ inputs.token }}
+        token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+
+    - name: Config files exists
+      run: 'test -f ./.pr-commands/config.json || (echo Pr-commands config file does not exist && exit 1)'
+      if: ${{ steps.check.outputs.should_run == 'true' }}
+      shell: bash
+
+    - name: Read config
+      run: |
+        echo 'CONFIG_JSON<<EOF' >> $GITHUB_ENV
+        cat ./.pr-commands/config.json >> $GITHUB_ENV
+        echo 'EOF' >> $GITHUB_ENV
+      if: ${{ steps.check.outputs.should_run == 'true' }}
+      shell: bash
+
+    - name: Should print help?
+      run: |
+        echo ::set-output name=is_help::true
+      if: ${{ steps.check.outputs.should_run == 'true' && startsWith(github.event.comment.body, format('{0} {1}', inputs.prefix, 'help')) }}
+      id: help_check
+      shell: bash
+
+    - name: Print help
+      if: ${{ steps.help_check.outputs.is_help == 'true' }}
+      uses: actions/github-script@v6
+      env:
+        PREFIX: ${{ inputs.prefix }}
+      with:
+        # github-token: ${{ inputs.token }}
+        github-token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+        script: |
+          const prefix = process.env.PREFIX
+          const jsonObject = JSON.parse(process.env.CONFIG_JSON);
+          let message = "Hi there 👋 \n\n You have the following options: \n - `!pr help` writes this comment";
+          for (let [key, value] of Object.entries(jsonObject))
+            message = message + `\n - \`${prefix} ${key}\` ${value.description}`;
+          github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.payload.issue.number,
+            body: `${message}`
+          });
+
+    - name: Get PR Command details
+      if: ${{ steps.check.outputs.should_run == 'true' && !steps.help_check.outputs.is_help }}
+      uses: actions/github-script@v6
+      id: command_details
+      env:
+        PREFIX: ${{ inputs.prefix }}
+        COMMENT: ${{ github.event.comment.body }}
+      with:
+        # github-token: ${{ inputs.token }}
+        github-token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+        script: |
+          const prefix = process.env.PREFIX
+          const command = process.env.COMMENT.replace(prefix, '').trimStart()
+          const jsonObject = JSON.parse(process.env.CONFIG_JSON);
+          if (!Object.keys(jsonObject).includes(command)) {
+            console.log(`Command \`${command}\` is not defined`)
+            process.exit(1)
+          }
+          await exec.exec(`bash -c "echo 'hasCommand=${!!jsonObject[command].command}' >> $GITHUB_OUTPUT"`)
+          return jsonObject[command]
+
+    - name: React with Emoji on start
+      uses: actions/github-script@v6
+      if: ${{ steps.command_details.outputs.hasCommand == 'true' && steps.check.outputs.should_run == 'true' && !steps.help_check.outputs.is_help }}
+      env:
+        COMMAND_DETAILS: ${{ steps.command_details.outputs.result }}
+      with:
+        # github-token: ${{ inputs.token }}
+        github-token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+        script: |
+          const jsonObject = JSON.parse(process.env.COMMAND_DETAILS);
+          if (jsonObject.startEmoji === null) return
+          github.rest.reactions.createForIssueComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            comment_id: context.payload.comment.id,
+            content: (jsonObject.startEmoji || 'rocket')
+          });
+    - name: Handle PR Command
+      if: ${{ steps.check.outputs.should_run == 'true' && !steps.help_check.outputs.is_help }}
+      uses: actions/github-script@v6
+      env:
+        COMMENT: ${{ github.event.comment.body }}
+        COMMAND_DETAILS: ${{ steps.command_details.outputs.result }}
+      with:
+        # github-token: ${{ inputs.token }}
+        github-token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+        script: |
+          const jsonObject = JSON.parse(process.env.COMMAND_DETAILS);
+          console.log("I will run", jsonObject.command)
+          let myOutput = '';
+          if (jsonObject.command) {
+            const options = {};
+            options.listeners = {
+              stdout: (data) => {
+                myOutput += data.toString();
+              },
+              stderr: (data) => {
+                myOutput += data.toString();
+              }
+            };
+            const execres = await exec.exec(`bash -c "${jsonObject.command}"`, undefined, options)
+            if (execres != 0) process.exit(execres)
+          }
+          console.log("I will commit", jsonObject.commitMsg)
+          if (jsonObject.commitMsg) {
+            const execres = await exec.exec(`bash -c "git config user.name github-actions && git config user.email 41898282+github-actions[bot]@users.noreply.github.com && git add . && (git commit -m '${jsonObject.commitMsg}' || true) && git push --force-with-lease"`)
+            if (execres != 0) process.exit(execres)
+          }
+          console.log("I will write", jsonObject.commentMsg)
+          if (jsonObject.commentMsg) {
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: `${jsonObject.commentMsg.replace('<COMMAND_RESULT>', myOutput)}`
+            });
+          }
+
+    - name: React with Emoji on success
+      uses: actions/github-script@v6
+      if: ${{ steps.command_details.outputs.hasCommand == 'true' && steps.check.outputs.should_run == 'true' && !steps.help_check.outputs.is_help }}
+      env:
+        COMMAND_DETAILS: ${{ steps.command_details.outputs.result }}
+      with:
+        # github-token: ${{ inputs.token }}
+        github-token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+        script: |
+          const jsonObject = JSON.parse(process.env.COMMAND_DETAILS);
+          console.log("I put on a", jsonObject.successEmoji)
+          if (jsonObject.successEmoji === null) return
+          github.rest.reactions.createForIssueComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            comment_id: context.payload.comment.id,
+            content: (jsonObject.successEmoji || 'hooray')
+          });
+
+    - name: 'Failure: React with confused'
+      if: ${{ failure() && steps.check.outputs.should_run == 'true' }}
+      uses: actions/github-script@v6
+      with:
+        # github-token: ${{ inputs.token }}
+        github-token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+        script: |
+          github.rest.reactions.createForIssueComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            comment_id: context.payload.comment.id,
+            content: 'confused'
+          });
