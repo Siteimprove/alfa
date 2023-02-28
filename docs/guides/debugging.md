@@ -80,6 +80,8 @@ The rule to check, and the file to load, are configured after the `import` block
 
 Since we run into the Github repo, it is very easy to test with an older version of Alfa. As long as only the `scratches` directory has been changed, just `git checkout vX.Y.Z` will go back to any version (`yarn install` and `yarn build` need to be rerun). This makes it easy to check when a breaking change has been introduced. Be wary that by going back too far in time, the `scratches/page.ts` script itself might break if it's using more modern constructions…
 
+Travelling back in time to find when a change occurred can also be automated with [`git bisect`](https://git-scm.com/docs/git-bisect).
+
 In case of regression, or change of behavior, finding the precise version where it was introduced and then searching for cues in the [Changelog](../../CHANGELOG.md) is often a good way to narrow dowrn the possible cause.
 
 ## Finding an element
@@ -168,7 +170,7 @@ console.log(`Got it? ${found}`);
 
 This is, of course, where things get tricky and less generic. A good way to get debug information is to add `console.log`/`console.dir` statements to the rule itself (or to the predicates used) and see what happens.
 
-It is also possible to run the script in debug mode, with `node --inspect-brk scratches/page.js`. This is however not always easy to follow due to the numerous function calls performed by NodeJS and Alfa.
+It is also possible to run the script in debug mode, with `node --inspect-brk scratches/page.js`. This is however not always easy to follow due to the numerous function calls performed by NodeJS and Alfa. Most TypeScript IDEs also provide an integrated debugging tool that can be used in similar ways.
 
 To add debug statements in the rule, you normally want to restrict them to the observed element, to limit noise:
 
