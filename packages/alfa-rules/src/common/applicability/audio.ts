@@ -15,8 +15,7 @@ const { isRendered } = Style;
 
 export function audio(
   document: Document,
-  device: Device,
-  options: audio.Options = {}
+  device: Device
 ): Iterable<Interview<Question.Metadata, Element, Element, Option<Element>>> {
   return document
     .descendants(Node.fullTree)
@@ -40,8 +39,4 @@ export function audio(
             )
       )
     );
-}
-
-export namespace audio {
-  export interface Options {}
 }
