@@ -15,6 +15,7 @@ import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
+import { Sequence as Sequence_2 } from '@siteimprove/alfa-sequence/src/sequence';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Trampoline } from '@siteimprove/alfa-trampoline';
 import * as tree from '@siteimprove/alfa-tree';
@@ -211,6 +212,8 @@ export class Document extends Node<"document"> {
     _attachFrame(frame: Element): boolean;
     // @internal (undocumented)
     _attachParent(): boolean;
+    // (undocumented)
+    elementDescendants(options?: Node.Traversal): Sequence_2<Element>;
     // (undocumented)
     static empty(): Document;
     // (undocumented)
@@ -779,6 +782,8 @@ export namespace NamespaceRule {
 // @public (undocumented)
 export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
     protected constructor(children: Array<Node>, type: T);
+    // (undocumented)
+    elementDescendants(options?: Node.Traversal): Sequence<Element>;
     // (undocumented)
     equals(value: Node): boolean;
     // (undocumented)
