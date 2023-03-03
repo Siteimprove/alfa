@@ -1350,15 +1350,13 @@ export namespace Token {
 function parseToken<T extends Token>(
   refinement: Refinement<Token, T>
 ): Parser<Slice<Token>, T, string> {
-  return (input) => {
-    const result = input
+  return (input) =>
+    input
       .first()
-      .andThen((token) =>
+      .map((token) =>
         refinement(token)
-          ? Option.of(Ok.of<[Slice<Token>, T]>([input.rest(), token]))
-          : None
-      );
-
-    return result.isSome() ? result.get() : Err.of("Expected token");
-  };
+          ? Ok.of<[Slice<Token>, T]>([input.rest(), token])
+          : Err.of("Mismatching token")
+      )
+      .getOr(Err.of("No token left"));
 }

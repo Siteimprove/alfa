@@ -11,5 +11,5 @@ test("`parseWhiteSpace` handles empty slice of array with more whitespace after 
   // It should not parse the whitespace after the slice (and go into an infinite loop),
   // but instead return an instance of `Err`.
   const slice = Slice.of([ident("foo"), whitespace()], 1, 1);
-  t.equal(parseWhitespace(slice).getErr(), "Expected token");
+  t.equal(parseWhitespace(slice).getErr(), "No token left");
 });
