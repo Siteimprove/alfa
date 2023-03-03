@@ -64,6 +64,7 @@
     "test/syntax/declaration.spec.ts",
     "test/syntax/lexer.spec.ts",
     "test/syntax/nth.spec.ts",
+    "test/syntax/token.spec.ts",
     "test/value/calculation.spec.ts",
     "test/value/gradient/radial.spec.ts",
     "test/value/math-functions.spec.ts",
