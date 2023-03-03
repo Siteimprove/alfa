@@ -135,16 +135,25 @@ export abstract class Node<
     return node.children(options).includes(this);
   }
 
+  private _descendants: Array<Sequence<Node<F>>> = [];
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
    */
+  // While this is lazily built, actually generating the sequence takes time to
+  // walk through the tree and resolve all the continuations.
+  // Caching it saves a lot of time by generating the sequence only once.
   public descendants(options?: Flags<F>): Sequence<Node<F>> {
-    return this.children(options).flatMap((child) =>
-      Sequence.of(
-        child,
-        Lazy.of(() => child.descendants(options))
-      )
-    );
+    if (this._descendants[options?.value ?? 0] === undefined) {
+      this._descendants[options?.value ?? 0] = this.children(options).flatMap(
+        (child) =>
+          Sequence.of(
+            child,
+            Lazy.of(() => child.descendants(options))
+          )
+      );
+    }
+
+    return this._descendants[options?.value ?? 0];
   }
 
   /**
