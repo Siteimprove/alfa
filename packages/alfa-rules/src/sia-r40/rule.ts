@@ -26,8 +26,7 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return (
           document
-            .descendants(Node.fullTree)
-            .filter(isElement)
+            .elementDescendants(Node.fullTree)
             .filter(
               and(
                 hasRole(device, (role) => role.is("region")),

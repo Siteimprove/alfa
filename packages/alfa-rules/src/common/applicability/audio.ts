@@ -19,8 +19,7 @@ export function audio(
   options: audio.Options = {}
 ): Iterable<Interview<Question.Metadata, Element, Element, Option<Element>>> {
   return document
-    .descendants(Node.fullTree)
-    .filter(isElement)
+    .elementDescendants(Node.fullTree)
     .filter(
       // Non-rendered <audio> are not playing
       and(hasNamespace(Namespace.HTML), hasName("audio"), isRendered(device))

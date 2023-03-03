@@ -19,8 +19,7 @@ export function video(
   const { audio, track } = options;
 
   return document
-    .descendants(Node.fullTree)
-    .filter(isElement)
+    .elementDescendants(Node.fullTree)
     .filter(
       and(
         hasNamespace(Namespace.HTML),

@@ -26,30 +26,27 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants(Node.fullTree)
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              or(hasName("img"), and(hasName("input"), hasInputType("image"))),
-              isIncludedInTheAccessibilityTree(device),
-              (element) =>
-                test(
-                  hasAccessibleName(device, (accessibleName) =>
-                    element
-                      .attribute("src")
-                      .map((attr) => getFilename(attr.value))
-                      .some(
-                        (filename) =>
-                          filename.toLowerCase() ===
-                          accessibleName.value.toLowerCase().trim()
-                      )
-                  ),
+        return document.elementDescendants(Node.fullTree).filter(
+          and(
+            hasNamespace(Namespace.HTML),
+            or(hasName("img"), and(hasName("input"), hasInputType("image"))),
+            isIncludedInTheAccessibilityTree(device),
+            (element) =>
+              test(
+                hasAccessibleName(device, (accessibleName) =>
                   element
-                )
-            )
-          );
+                    .attribute("src")
+                    .map((attr) => getFilename(attr.value))
+                    .some(
+                      (filename) =>
+                        filename.toLowerCase() ===
+                        accessibleName.value.toLowerCase().trim()
+                    )
+                ),
+                element
+              )
+          )
+        );
       },
 
       expectations(target) {

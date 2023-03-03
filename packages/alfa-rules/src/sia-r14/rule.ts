@@ -29,28 +29,25 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants(Node.fullTree)
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML, Namespace.SVG),
-              hasAttribute(
-                (attribute) =>
-                  attribute.name === "aria-label" ||
-                  attribute.name === "aria-labelledby"
-              ),
-              isFocusable(device),
-              hasRole(
-                device,
-                (role) => role.isWidget() && role.isNamedBy("contents")
-              ),
-              hasDescendant(
-                and(Text.isText, isPerceivableForAll(device)),
-                Node.flatTree
-              )
+        return document.elementDescendants(Node.fullTree).filter(
+          and(
+            hasNamespace(Namespace.HTML, Namespace.SVG),
+            hasAttribute(
+              (attribute) =>
+                attribute.name === "aria-label" ||
+                attribute.name === "aria-labelledby"
+            ),
+            isFocusable(device),
+            hasRole(
+              device,
+              (role) => role.isWidget() && role.isNamedBy("contents")
+            ),
+            hasDescendant(
+              and(Text.isText, isPerceivableForAll(device)),
+              Node.flatTree
             )
-          );
+          )
+        );
       },
 
       expectations(target) {

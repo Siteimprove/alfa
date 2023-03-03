@@ -19,8 +19,7 @@ export default Rule.Atomic.of<Page, Element>({
   tags: [Scope.Component],
   evaluate({ device, document }) {
     const headings = document
-      .descendants(Node.flatTree)
-      .filter(isElement)
+      .elementDescendants(Node.flatTree)
       .filter(
         and(
           hasRole(device, "heading"),

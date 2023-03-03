@@ -26,8 +26,7 @@ export default Rule.Atomic.of<Page, Attribute>({
     return {
       applicability() {
         return document
-          .descendants(Node.composedNested)
-          .filter(isElement)
+          .elementDescendants(Node.composedNested)
           .filter(hasNamespace(Namespace.HTML, Namespace.SVG))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
@@ -121,8 +120,7 @@ function treeHasId(id: string, node: Node): boolean {
       Set.from(
         node
           .root()
-          .descendants()
-          .filter(isElement)
+          .elementDescendants()
           .collect((element) => element.id)
       )
     )
