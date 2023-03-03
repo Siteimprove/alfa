@@ -1,18 +1,14 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { DOM, Role } from "@siteimprove/alfa-aria";
-import { Attribute, Element, Namespace, Node } from "@siteimprove/alfa-dom";
-import { Predicate } from "@siteimprove/alfa-predicate";
+import { Role } from "@siteimprove/alfa-aria";
+import { Attribute } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
+import { roleAttributes } from "../common/applicability/role-attributes";
 
 import { Scope } from "../tags";
-
-const { isProgrammaticallyHidden } = DOM;
-const { hasAttribute, hasNamespace, isElement } = Element;
-const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r21",
@@ -21,20 +17,7 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return (
-          document
-            .descendants(Node.fullTree)
-            .filter(isElement)
-            .filter(
-              and(
-                hasNamespace(Namespace.HTML, Namespace.SVG),
-                hasAttribute("role", (value) => value.trim().length > 0),
-                not(isProgrammaticallyHidden(device))
-              )
-            )
-            // The previous filter ensures the existence of role.
-            .map((element) => element.attribute("role").getUnsafe())
-        );
+        return roleAttributes(document, device);
       },
 
       expectations(target) {
