@@ -13,6 +13,7 @@
     "src/common/act/question.ts",
     "src/common/applicability/audio.ts",
     "src/common/applicability/non-disabled-texts.ts",
+    "src/common/applicability/role-attributes.ts",
     "src/common/applicability/text-with-inlined-important-property.ts",
     "src/common/applicability/video.ts",
     "src/common/diagnostic/contrast.ts",
