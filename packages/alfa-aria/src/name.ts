@@ -2,13 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
-import {
-  Attribute,
-  Document,
-  Element,
-  Node,
-  Text,
-} from "@siteimprove/alfa-dom";
+import { Attribute, Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
