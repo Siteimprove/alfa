@@ -104,13 +104,14 @@ export abstract class Node<
   // if necessary. Once the tree is fully frozen, this only cost an extra look
   // through this.parent which is not expensive.
   public root(options?: Flags<F>): Node<F> {
-    let lastKnownRoot = this._lastKnownRoot[options?.value ?? 0] ?? this;
+    const value = options?.value ?? 0;
+    let lastKnownRoot = this._lastKnownRoot[value] ?? this;
 
     for (const parent of lastKnownRoot.parent(options)) {
       lastKnownRoot = parent.root(options);
     }
 
-    this._lastKnownRoot[options?.value ?? 0] = lastKnownRoot;
+    this._lastKnownRoot[value] = lastKnownRoot;
     return lastKnownRoot;
   }
 
@@ -143,17 +144,17 @@ export abstract class Node<
   // walk through the tree and resolve all the continuations.
   // Caching it saves a lot of time by generating the sequence only once.
   public descendants(options?: Flags<F>): Sequence<Node<F>> {
-    if (this._descendants[options?.value ?? 0] === undefined) {
-      this._descendants[options?.value ?? 0] = this.children(options).flatMap(
-        (child) =>
-          Sequence.of(
-            child,
-            Lazy.of(() => child.descendants(options))
-          )
+    const value = options?.value ?? 0;
+    if (this._descendants[value] === undefined) {
+      this._descendants[value] = this.children(options).flatMap((child) =>
+        Sequence.of(
+          child,
+          Lazy.of(() => child.descendants(options))
+        )
       );
     }
 
-    return this._descendants[options?.value ?? 0];
+    return this._descendants[value];
   }
 
   /**
@@ -258,13 +259,14 @@ export abstract class Node<
   // Due to reversing, this is not lazy and is costly at build time.
   // This only looks in frozen parts of the tree.
   public preceding(options?: Flags<F>): Sequence<Node<F>> {
-    if (this._preceding[options?.value ?? 0] === undefined) {
-      this._preceding[options?.value ?? 0] = this.inclusiveSiblings(options)
+    const value = options?.value ?? 0;
+    if (this._preceding[value] === undefined) {
+      this._preceding[value] = this.inclusiveSiblings(options)
         .takeUntil(equals(this))
         .reverse();
     }
 
-    return this._preceding[options?.value ?? 0];
+    return this._preceding[value];
   }
 
   private _following: Array<Sequence<Node<F>>> = [];
@@ -275,13 +277,14 @@ export abstract class Node<
   // Due to skipUntil, this is not fully lazy and is costly at build time.
   // This only looks in frozen parts of the tree.
   public following(options?: Flags<F>): Sequence<Node<F>> {
-    if (this._following[options?.value ?? 0] === undefined) {
-      this._following[options?.value ?? 0] = this.inclusiveSiblings(options)
+    const value = options?.value ?? 0;
+    if (this._following[value] === undefined) {
+      this._following[value] = this.inclusiveSiblings(options)
         .skipUntil(equals(this))
         .rest();
     }
 
-    return this._following[options?.value ?? 0];
+    return this._following[value];
   }
 
   /**
@@ -300,11 +303,12 @@ export abstract class Node<
   // Due to last, this is not lazy and is costly at build time.
   // This only looks in frozen parts of the tree.
   public last(options?: Flags<F>): Option<Node<F>> {
-    if (this._last[options?.value ?? 0] === undefined) {
-      this._last[options?.value ?? 0] = this.children(options).last();
+    const value = options?.value ?? 0;
+    if (this._last[value] === undefined) {
+      this._last[value] = this.children(options).last();
     }
 
-    return this._last[options?.value ?? 0];
+    return this._last[value];
   }
 
   /**
