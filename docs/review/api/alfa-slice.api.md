@@ -27,7 +27,7 @@ export class Slice<T> implements Collection.Indexed<T> {
     append(value: T): Slice<T>;
     // (undocumented)
     apply<U>(mapper: Slice<Mapper<T, U>>): Slice<U>;
-    // (undocumented)
+    // @deprecated (undocumented)
     get array(): ReadonlyArray<T>;
     // (undocumented)
     collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Slice<U>;

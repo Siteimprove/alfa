@@ -83,7 +83,7 @@ export namespace Block {
     }
     export type Open = Token.OpenParenthesis | Token.OpenSquareBracket | Token.OpenCurlyBracket;
     const // (undocumented)
-    consume: Parser<Slice<Token>, Block>;
+    consume: Parser<Slice<Token>, Block, string>;
 }
 
 // @public (undocumented)
