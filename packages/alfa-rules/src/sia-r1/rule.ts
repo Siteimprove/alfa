@@ -34,8 +34,7 @@ export default Rule.Atomic.of<Page, Document>({
 
       expectations(target) {
         const title = target
-          .descendants()
-          .filter(isElement)
+          .elementDescendants()
           .find(and(hasNamespace(Namespace.HTML), hasName("title")));
 
         return {

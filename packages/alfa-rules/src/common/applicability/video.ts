@@ -22,14 +22,15 @@ export function video(
 ): Iterable<Interview<Question.Metadata, Element, Element, Option<Element>>> {
   const { audio, track } = options;
 
-  const videos = visibleVideos.get(document, Cache.empty).get(device, () =>
-    document
-      .descendants(Node.fullTree)
-      .filter(isElement)
-      .filter(
-        and(hasNamespace(Namespace.HTML), hasName("video"), isVisible(device))
-      )
-  );
+  const videos = visibleVideos
+    .get(document, Cache.empty)
+    .get(device, () =>
+      document
+        .elementDescendants(Node.fullTree)
+        .filter(
+          and(hasNamespace(Namespace.HTML), hasName("video"), isVisible(device))
+        )
+    );
 
   return (
     track === undefined

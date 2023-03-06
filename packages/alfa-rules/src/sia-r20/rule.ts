@@ -18,8 +18,7 @@ export default Rule.Atomic.of<Page, Attribute>({
     return {
       applicability() {
         return document
-          .descendants(Node.composedNested)
-          .filter(isElement)
+          .elementDescendants(Node.composedNested)
           .flatMap((element) =>
             Sequence.from(element.attributes).filter((attribute) =>
               attribute.name.startsWith("aria-")

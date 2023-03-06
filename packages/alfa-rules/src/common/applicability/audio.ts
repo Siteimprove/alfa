@@ -29,8 +29,7 @@ export function audio(
 ): Sequence<Interview<Question.Metadata, Element, Element, Option<Element>>> {
   return cache.get(document, Cache.empty).get(device, () =>
     document
-      .descendants(Node.fullTree)
-      .filter(isElement)
+      .elementDescendants(Node.fullTree)
       .filter(
         // Non-rendered <audio> are not playing
         and(hasNamespace(Namespace.HTML), hasName("audio"), isRendered(device))

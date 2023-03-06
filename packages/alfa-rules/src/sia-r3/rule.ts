@@ -22,8 +22,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants(Node.composedNested)
-          .filter(isElement)
+          .elementDescendants(Node.composedNested)
           .filter(hasId(not(isEmpty)));
       },
 

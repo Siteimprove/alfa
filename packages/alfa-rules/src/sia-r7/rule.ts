@@ -73,8 +73,7 @@ export default Rule.Atomic.of<Page, Attribute>({
         }
 
         return document
-          .descendants(Node.fullTree)
-          .filter(isElement)
+          .elementDescendants(Node.fullTree)
           .filter(and(hasNamespace(Namespace.HTML), hasName("body")))
           .flatMap((element) => Sequence.from(visit(element, None)))
           .distinct();

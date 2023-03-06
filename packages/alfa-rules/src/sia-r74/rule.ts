@@ -24,29 +24,26 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants(Node.fullTree)
-          .filter(isElement)
-          .filter(
-            and(
-              hasRole(device, "paragraph"),
-              (element) =>
-                Style.from(element, device)
-                  .cascaded("font-size")
-                  .some(({ value: fontSize }) => {
-                    switch (fontSize.type) {
-                      case "length":
-                      case "percentage":
-                        return fontSize.value > 0;
+        return document.elementDescendants(Node.fullTree).filter(
+          and(
+            hasRole(device, "paragraph"),
+            (element) =>
+              Style.from(element, device)
+                .cascaded("font-size")
+                .some(({ value: fontSize }) => {
+                  switch (fontSize.type) {
+                    case "length":
+                    case "percentage":
+                      return fontSize.value > 0;
 
-                      default:
-                        return true;
-                    }
-                  }),
-              Node.hasTextContent(),
-              isVisible(device)
-            )
-          );
+                    default:
+                      return true;
+                  }
+                }),
+            Node.hasTextContent(),
+            isVisible(device)
+          )
+        );
       },
 
       expectations(target) {

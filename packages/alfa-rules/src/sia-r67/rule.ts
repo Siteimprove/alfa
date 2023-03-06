@@ -23,8 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants(dom.Node.fullTree)
-          .filter(isElement)
+          .elementDescendants(dom.Node.fullTree)
           .filter(
             and(
               or(

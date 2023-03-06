@@ -34,15 +34,13 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants(Node.fullTree)
-          .filter(isElement)
+          .elementDescendants(Node.fullTree)
           .filter(and(hasNamespace(Namespace.HTML), hasName("iframe")))
           .filter((iframe) =>
             iframe.content
               .map((contentDocument) =>
                 contentDocument
-                  .descendants(Node.flatTree)
-                  .filter(isElement)
+                  .elementDescendants(Node.flatTree)
                   .filter(and(isVisible(device), isTabbable(device)))
               )
               .some((sequence) => {

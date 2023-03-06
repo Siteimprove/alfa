@@ -20,16 +20,13 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants(dom.Node.fullTree)
-          .filter(isElement)
-          .filter(
-            and(isIncludedInTheAccessibilityTree(device), (element) =>
-              Node.from(element, device)
-                .attribute("aria-live")
-                .some((attribute) => attribute.value === "assertive")
-            )
-          );
+        return document.elementDescendants(dom.Node.fullTree).filter(
+          and(isIncludedInTheAccessibilityTree(device), (element) =>
+            Node.from(element, device)
+              .attribute("aria-live")
+              .some((attribute) => attribute.value === "assertive")
+          )
+        );
       },
 
       expectations(target) {

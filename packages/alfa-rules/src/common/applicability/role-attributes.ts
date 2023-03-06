@@ -29,8 +29,7 @@ export function roleAttributes(
 ): Sequence<Attribute<"role">> {
   return cache.get(document, Cache.empty).get(device, () =>
     document
-      .descendants(Node.fullTree)
-      .filter(isElement)
+      .elementDescendants(Node.fullTree)
       .filter(
         and(
           hasNamespace(Namespace.HTML, Namespace.SVG),

@@ -22,8 +22,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants(Node.fullTree)
-          .filter(isElement)
+          .elementDescendants(Node.fullTree)
           .filter(and(hasRole(device, "paragraph"), isVisible(device)));
       },
 

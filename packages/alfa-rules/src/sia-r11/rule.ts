@@ -27,16 +27,13 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants(Node.fullTree)
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasRole(device, (role) => role.is("link")),
-              isIncludedInTheAccessibilityTree(device)
-            )
-          );
+        return document.elementDescendants(Node.fullTree).filter(
+          and(
+            hasNamespace(Namespace.HTML),
+            hasRole(device, (role) => role.is("link")),
+            isIncludedInTheAccessibilityTree(device)
+          )
+        );
       },
 
       expectations(target) {
