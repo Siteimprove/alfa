@@ -2,8 +2,8 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Result, Err } from "@siteimprove/alfa-result";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
@@ -947,7 +947,8 @@ export namespace Token {
   export const parseComma = parseToken(isComma);
 
   export class OpenParenthesis
-    implements Equatable, Serializable<OpenParenthesis.JSON> {
+    implements Equatable, Serializable<OpenParenthesis.JSON>
+  {
     private static _instance = new OpenParenthesis();
 
     public static of(): OpenParenthesis {
@@ -997,7 +998,8 @@ export namespace Token {
   export const parseOpenParenthesis = parseToken(isOpenParenthesis);
 
   export class CloseParenthesis
-    implements Equatable, Serializable<CloseParenthesis.JSON> {
+    implements Equatable, Serializable<CloseParenthesis.JSON>
+  {
     private static _instance = new CloseParenthesis();
 
     public static of(): CloseParenthesis {
@@ -1047,7 +1049,8 @@ export namespace Token {
   export const parseCloseParenthesis = parseToken(isCloseParenthesis);
 
   export class OpenSquareBracket
-    implements Equatable, Serializable<OpenSquareBracket.JSON> {
+    implements Equatable, Serializable<OpenSquareBracket.JSON>
+  {
     private static _instance = new OpenSquareBracket();
 
     public static of(): OpenSquareBracket {
@@ -1092,15 +1095,14 @@ export namespace Token {
     }
   }
 
-  export const {
-    of: openSquareBracket,
-    isOpenSquareBracket,
-  } = OpenSquareBracket;
+  export const { of: openSquareBracket, isOpenSquareBracket } =
+    OpenSquareBracket;
 
   export const parseOpenSquareBracket = parseToken(isOpenSquareBracket);
 
   export class CloseSquareBracket
-    implements Equatable, Serializable<CloseSquareBracket.JSON> {
+    implements Equatable, Serializable<CloseSquareBracket.JSON>
+  {
     private static _instance = new CloseSquareBracket();
 
     public static of(): CloseSquareBracket {
@@ -1145,15 +1147,14 @@ export namespace Token {
     }
   }
 
-  export const {
-    of: closeSquareBracket,
-    isCloseSquareBracket,
-  } = CloseSquareBracket;
+  export const { of: closeSquareBracket, isCloseSquareBracket } =
+    CloseSquareBracket;
 
   export const parseCloseSquareBracket = parseToken(isCloseSquareBracket);
 
   export class OpenCurlyBracket
-    implements Equatable, Serializable<OpenCurlyBracket.JSON> {
+    implements Equatable, Serializable<OpenCurlyBracket.JSON>
+  {
     private static _instance = new OpenCurlyBracket();
 
     public static of(): OpenCurlyBracket {
@@ -1203,7 +1204,8 @@ export namespace Token {
   export const parseOpenCurlyBracket = parseToken(isOpenCurlyBracket);
 
   export class CloseCurlyBracket
-    implements Equatable, Serializable<CloseCurlyBracket.JSON> {
+    implements Equatable, Serializable<CloseCurlyBracket.JSON>
+  {
     private static _instance = new CloseCurlyBracket();
 
     public static of(): CloseCurlyBracket {
@@ -1248,15 +1250,14 @@ export namespace Token {
     }
   }
 
-  export const {
-    of: closeCurlyBracket,
-    isCloseCurlyBracket,
-  } = CloseCurlyBracket;
+  export const { of: closeCurlyBracket, isCloseCurlyBracket } =
+    CloseCurlyBracket;
 
   export const parseCloseCurlyBracket = parseToken(isCloseCurlyBracket);
 
   export class OpenComment
-    implements Equatable, Serializable<OpenComment.JSON> {
+    implements Equatable, Serializable<OpenComment.JSON>
+  {
     private static _instance = new OpenComment();
 
     public static of(): OpenComment {
@@ -1300,7 +1301,8 @@ export namespace Token {
   export const parseOpenComment = parseToken(isOpenComment);
 
   export class CloseComment
-    implements Equatable, Serializable<CloseComment.JSON> {
+    implements Equatable, Serializable<CloseComment.JSON>
+  {
     private static _instance = new CloseComment();
 
     public static of(): CloseComment {
@@ -1347,13 +1349,13 @@ export namespace Token {
 function parseToken<T extends Token>(
   refinement: Refinement<Token, T>
 ): Parser<Slice<Token>, T, string> {
-  return (input) => {
-    const token = input.array[input.offset];
-
-    if (token !== undefined && refinement(token)) {
-      return Result.of([input.slice(1), token]);
-    }
-
-    return Err.of("Expected token");
-  };
+  return (input) =>
+    input
+      .first()
+      .map((token) =>
+        refinement(token)
+          ? Ok.of<[Slice<Token>, T]>([input.rest(), token])
+          : Err.of("Mismatching token")
+      )
+      .getOr(Err.of("No token left"));
 }
