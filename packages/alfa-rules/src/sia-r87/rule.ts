@@ -62,8 +62,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
             url.fragment.flatMap((fragment) =>
               element
                 .root()
-                .inclusiveDescendants()
-                .filter(isElement)
+                .elementDescendants()
                 .find((element) => element.id.includes(fragment))
             )
           );

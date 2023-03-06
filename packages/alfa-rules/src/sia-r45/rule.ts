@@ -1,9 +1,11 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
+import { Cache } from "@siteimprove/alfa-cache";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence/src/sequence";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -20,9 +22,10 @@ export default Rule.Atomic.of<Page, Attribute>({
   requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
+    const cellsCache = Cache.empty<Element, Sequence<Element>>();
+
     const headers = document
-      .descendants()
-      .filter(isElement)
+      .elementDescendants()
       .filter(
         and(
           hasNamespace(Namespace.HTML),
@@ -32,17 +35,13 @@ export default Rule.Atomic.of<Page, Attribute>({
         )
       )
       .reduce((headers, table) => {
-        const cells = table
-          .descendants()
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasName("td", "th"),
-              hasAttribute("headers")
-            )
-          );
-
+        const cells = cellsCache
+          .get(table, () =>
+            table
+              .elementDescendants()
+              .filter(and(hasNamespace(Namespace.HTML), hasName("td", "th")))
+          )
+          .filter(hasAttribute("headers"));
         for (const cell of cells) {
           // The previous filter ensures that headers exists.
           headers = headers.set(cell.attribute("headers").getUnsafe(), table);
@@ -62,16 +61,13 @@ export default Rule.Atomic.of<Page, Attribute>({
 
         const ids = target.tokens();
 
-        const cells = table
-          .descendants()
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasName("td", "th"),
-              hasId(equals(...ids))
-            )
-          );
+        const cells = cellsCache
+          .get(table, () =>
+            table
+              .elementDescendants()
+              .filter(and(hasNamespace(Namespace.HTML), hasName("td", "th")))
+          )
+          .filter(hasId(equals(...ids)));
 
         return {
           1: expectation(

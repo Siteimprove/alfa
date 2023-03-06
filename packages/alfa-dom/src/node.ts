@@ -165,6 +165,14 @@ export abstract class Node<T extends string = string>
     }
   }
 
+  // This does almost nothing but can be overwritten by inherited classes for
+  // specific optimisations.
+  public elementDescendants(
+    options: Node.Traversal = Node.Traversal.empty
+  ): Sequence<Element> {
+    return this.descendants(options).filter(Element.isElement);
+  }
+
   public equals(value: Node): boolean;
 
   public equals(value: unknown): value is this;

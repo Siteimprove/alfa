@@ -26,8 +26,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       *applicability() {
         const tables = document
-          .descendants()
-          .filter(isElement)
+          .elementDescendants()
           .filter(
             and(
               hasNamespace(Namespace.HTML),
@@ -44,8 +43,7 @@ export default Rule.Atomic.of<Page, Element>({
           }
 
           const dataCells = table
-            .descendants()
-            .filter(isElement)
+            .elementDescendants()
             .filter(
               and(
                 hasNamespace(Namespace.HTML),

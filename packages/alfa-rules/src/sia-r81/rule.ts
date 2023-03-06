@@ -38,8 +38,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
         // This creates two separate targets and we must take care of not
         // colliding them.
         const map = document
-          .descendants(dom.Node.fullTree)
-          .filter(isElement)
+          .elementDescendants(dom.Node.fullTree)
           .filter(
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
@@ -143,8 +142,7 @@ function linkContext(element: Element, device: Device): Set<dom.Node> {
   for (const describedby of element.attribute("aria-describedby")) {
     for (const reference of element
       .root()
-      .descendants()
-      .filter(isElement)
+      .elementDescendants()
       .filter(hasId(equals(...describedby.tokens())))) {
       context = context.add(reference);
     }

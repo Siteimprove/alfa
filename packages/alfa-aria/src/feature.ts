@@ -160,7 +160,7 @@ const labels = Cache.empty<Node, Sequence<Element>>();
 const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
   const root = element.root();
 
-  const elements = root.inclusiveDescendants().filter(isElement);
+  const elements = root.elementDescendants();
 
   const isFirstReference = element.id.some((id) =>
     ids

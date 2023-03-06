@@ -38,10 +38,8 @@ export default Rule.Atomic.of<Page, Text>({
 
     return {
       *applicability() {
-        const descendants = document.descendants(dom.Node.fullTree);
-
         if (
-          descendants.filter(isElement).some(
+          document.elementDescendants(dom.Node.fullTree).some(
             and(
               hasRole(device, (role) => role.isLandmark()),
               // Circumventing https://github.com/Siteimprove/alfa/issues/298
@@ -49,7 +47,8 @@ export default Rule.Atomic.of<Page, Text>({
             )
           )
         ) {
-          yield* descendants
+          yield* document
+            .descendants(dom.Node.fullTree)
             .filter(isText)
             .filter(
               and(

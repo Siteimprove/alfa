@@ -892,8 +892,7 @@ export namespace Name {
     // single traversal) and then sort by tokens order rather than grab the ids
     // one by one in the correct order.
     const references = root
-      .descendants()
-      .filter(isElement)
+      .elementDescendants()
       .filter(hasId(equals(...ids)))
       .sortWith((a, b) =>
         Comparable.compareNumber(

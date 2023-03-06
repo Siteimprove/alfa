@@ -34,8 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants(Node.composedNested)
-          .filter(isElement)
+          .elementDescendants(Node.composedNested)
           .filter(
             and(hasNamespace(Namespace.HTML, Namespace.SVG), hasNonDefaultRole)
           )

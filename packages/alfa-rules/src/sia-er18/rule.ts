@@ -28,8 +28,7 @@ export default Rule.Atomic.of<Page, Attribute>({
     return {
       applicability() {
         return document
-          .descendants(Node.fullTree)
-          .filter(isElement)
+          .elementDescendants(Node.fullTree)
           .filter(isIncludedInTheAccessibilityTree(device))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(

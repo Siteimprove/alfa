@@ -29,8 +29,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return document
-          .descendants()
-          .filter(isElement)
+          .elementDescendants()
           .find(
             and(
               hasNamespace(Namespace.HTML),

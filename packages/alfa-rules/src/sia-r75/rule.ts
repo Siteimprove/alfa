@@ -28,31 +28,28 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .descendants(Node.fullTree)
-          .filter(isElement)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              not(hasName("sup", "sub")),
-              Node.hasTextContent(),
-              isVisible(device),
-              hasCascadedStyle(
-                `font-size`,
-                (fontSize) => {
-                  switch (fontSize.type) {
-                    case "length":
-                    case "percentage":
-                      return fontSize.value > 0;
+        return document.elementDescendants(Node.fullTree).filter(
+          and(
+            hasNamespace(Namespace.HTML),
+            not(hasName("sup", "sub")),
+            Node.hasTextContent(),
+            isVisible(device),
+            hasCascadedStyle(
+              `font-size`,
+              (fontSize) => {
+                switch (fontSize.type) {
+                  case "length":
+                  case "percentage":
+                    return fontSize.value > 0;
 
-                    default:
-                      return true;
-                  }
-                },
-                device
-              )
+                  default:
+                    return true;
+                }
+              },
+              device
             )
-          );
+          )
+        );
       },
 
       expectations(target) {
