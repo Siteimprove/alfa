@@ -19,6 +19,18 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.61.0](../../compare/v0.60.0...v0.61.0) (2023-03-06)
+
+In addition to the following changes, this release also contains caching of several frequently used methods, which should result in increased time performance for most cases (at the cost of extra memory usage).
+
+### Added
+
+- [@siteipmorev/alfa-dom](packages/alfa-dom): `Node.elementDescendants` is now available, returning all descendants that are also `Element`; for `Document`, this is cached for performance and should therefore be faster than the equivalent `Document.descendants().filter(isElement)` if used several time on the same `Document`. ([#1366](../../pull/1366)) 
+
+### Fixed
+
+- [@siteimprove/alfa-css](packages/alfa-css): Fixed parsing of `Token` to properly handle advancing in the `Slice` even once it's been emptied; this could create unbounded recursion in some cases, notably when parsing strings ending with whitespace. ([#1365](../../pull/1365))  
+
 ## [0.60.0](../../compare/v0.59.0...v0.60.0) (2023-02-23)
 
 ### Breaking
@@ -31,7 +43,7 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 ### Added
 
-- [@siteimprove/alfa-selector](packages/alfa-selector): The `:host` pseudo-class is now parse. Alfa never matches any element with it yet, but CSS rules using it has part of the selector are not discarded anymore. ([#1347](../../issues/1347), [#1352](../../pull/1352)) 
+- [@siteimprove/alfa-selector](packages/alfa-selector): The `:host` pseudo-class is now parsed. Alfa never matches any element with it yet, but CSS rules using it has part of the selector are not discarded anymore. ([#1347](../../issues/1347), [#1352](../../pull/1352)) 
 
 ### Fixed
 
