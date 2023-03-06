@@ -1,13 +1,18 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
-import { Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
+import { Option } from "@siteimprove/alfa-option";
 import { Component } from "./component";
 import { Token } from "./token";
+
+const { isOpenParenthesis } = Token.OpenParenthesis;
+const { isOpenSquareBracket } = Token.OpenSquareBracket;
+const { isOpenCurlyBracket } = Token.OpenCurlyBracket;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#simple-block}
@@ -100,27 +105,38 @@ export namespace Block {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-simple-block}
    */
-  export const consume: Parser<Slice<Token>, Block> = (input) => {
-    const token = input.array[input.offset] as Open;
+  export const consume: Parser<Slice<Token>, Block, string> = (input) => {
+    return input
+      .first()
+      .filter(
+        (token): token is Open =>
+          isOpenParenthesis(token) ||
+          isOpenSquareBracket(token) ||
+          isOpenCurlyBracket(token)
+      )
+      .andThen((token) => {
+        const value: Array<Token> = [];
 
-    const value: Array<Token> = [];
+        input = input.rest();
 
-    input = input.slice(1);
+        while (input.length > 0) {
+          const next = input.first();
 
-    while (input.length > 0) {
-      const next = input.array[input.offset];
+          if (next.isSome() && next.get().type === token.mirror.type) {
+            input = input.rest();
+            break;
+          }
 
-      if (next.type === token.mirror.type) {
-        input = input.slice(1);
-        break;
-      }
+          const [remainder, component] = Component.consume(input).get();
 
-      const [remainder, component] = Component.consume(input).get();
+          input = remainder;
+          value.push(...component);
+        }
 
-      input = remainder;
-      value.push(...component);
-    }
-
-    return Result.of([input, Block.of(token, value)]);
+        return Option.of(
+          Ok.of<[Slice<Token>, Block]>([input, Block.of(token, value)])
+        );
+      })
+      .getOr(Err.of("Expected open parenthesis or bracket"));
   };
 }

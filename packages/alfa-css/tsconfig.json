@@ -61,6 +61,7 @@
     "src/value/unit/converter.ts",
     "src/value/unit/unit.ts",
     "src/value/url.ts",
+    "test/syntax/block.spec.ts",
     "test/syntax/declaration.spec.ts",
     "test/syntax/lexer.spec.ts",
     "test/syntax/nth.spec.ts",

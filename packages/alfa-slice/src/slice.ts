@@ -45,6 +45,9 @@ export class Slice<T> implements Collection.Indexed<T> {
     this._length = length;
   }
 
+  /**
+   * @deprecated the array shouldn't be accessed directly
+   */
   public get array(): ReadonlyArray<T> {
     return this._array;
   }
