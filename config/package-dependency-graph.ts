@@ -141,22 +141,6 @@ export default {
       ],
     },
     {
-      name: "Integrations with frameworks",
-      children: [
-        {
-          name: "Test frameworks",
-          children: [
-            "@siteimprove/alfa-assert",
-            "@siteimprove/alfa-chai",
-            "@siteimprove/alfa-cypress",
-            "@siteimprove/alfa-jasmine",
-            "@siteimprove/alfa-jest",
-            "@siteimprove/alfa-unexpected",
-          ],
-        },
-      ],
-    },
-    {
       name: "Understanding the web",
       children: [
         {
