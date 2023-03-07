@@ -10,7 +10,7 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
-const { hasNamespace, isDocumentElement, isElement } = Element;
+const { hasNamespace, isDocumentElement } = Element;
 const { and, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({

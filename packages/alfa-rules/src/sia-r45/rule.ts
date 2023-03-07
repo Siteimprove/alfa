@@ -14,7 +14,7 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { hasRole, isPerceivableForAll } = DOM;
-const { hasAttribute, hasId, hasName, hasNamespace, isElement } = Element;
+const { hasAttribute, hasId, hasName, hasNamespace } = Element;
 const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({

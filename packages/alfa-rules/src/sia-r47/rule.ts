@@ -13,7 +13,7 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasAttribute, hasName, hasNamespace, isElement } = Element;
+const { hasAttribute, hasName, hasNamespace } = Element;
 const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({

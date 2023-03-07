@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { Attribute, Element, Node } from "@siteimprove/alfa-dom";
+import { Attribute, Node } from "@siteimprove/alfa-dom";
 import { Ok, Err } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
@@ -8,9 +8,6 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
-
-const { isElement } = Element;
-
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r20",
   tags: [Scope.Component],

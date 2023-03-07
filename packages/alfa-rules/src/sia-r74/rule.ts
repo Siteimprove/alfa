@@ -13,7 +13,6 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
-const { isElement } = Element;
 const { and } = Predicate;
 const { isVisible } = Style;
 
