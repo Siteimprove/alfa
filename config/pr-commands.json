@@ -10,7 +10,7 @@
     "commitMsg": "Update dependency graph"
   },
   "document": {
-    "command": "CI=false yarn document",
+    "command": "CI=false yarn document --quiet",
     "description": "Update packages documentation",
     "commitMsg": "Update documentation"
   }
