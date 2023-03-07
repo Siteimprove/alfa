@@ -17,10 +17,8 @@
     { "path": "alfa-cascade" },
     { "path": "alfa-chai" },
     { "path": "alfa-cheerio" },
-    { "path": "alfa-cli" },
     { "path": "alfa-clone" },
     { "path": "alfa-collection" },
-    { "path": "alfa-command" },
     { "path": "alfa-comparable" },
     { "path": "alfa-compatibility" },
     { "path": "alfa-continuation" },
@@ -49,7 +47,6 @@
     { "path": "alfa-highlight" },
     { "path": "alfa-http" },
     { "path": "alfa-iana" },
-    { "path": "alfa-interviewer" },
     { "path": "alfa-iterable" },
     { "path": "alfa-jasmine" },
     { "path": "alfa-jest" },
@@ -67,10 +64,8 @@
     { "path": "alfa-option" },
     { "path": "alfa-parser" },
     { "path": "alfa-performance" },
-    { "path": "alfa-playwright" },
     { "path": "alfa-predicate" },
     { "path": "alfa-promise" },
-    { "path": "alfa-puppeteer" },
     { "path": "alfa-react" },
     { "path": "alfa-record" },
     { "path": "alfa-reducer" },
@@ -98,7 +93,6 @@
     { "path": "alfa-vue" },
     { "path": "alfa-wcag" },
     { "path": "alfa-web" },
-    { "path": "alfa-webdriver" },
     { "path": "alfa-xpath" }
   ]
 }

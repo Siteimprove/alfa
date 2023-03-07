@@ -165,14 +165,6 @@ export default {
           ],
         },
         "@siteimprove/alfa-jquery",
-        {
-          name: "Browser automations",
-          children: [
-            "@siteimprove/alfa-playwright",
-            "@siteimprove/alfa-puppeteer",
-            "@siteimprove/alfa-webdriver",
-          ],
-        },
       ],
     },
     {
