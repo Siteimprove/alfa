@@ -2,19 +2,7 @@ export default {
   nestedGroups: () => [
     {
       name: "Accessibility Conformance Testing",
-      children: [
-        "@siteimprove/alfa-act",
-        "@siteimprove/alfa-wcag",
-        {
-          name: "Formatter",
-          children: [
-            "@siteimprove/alfa-formatter",
-            "@siteimprove/alfa-formatter-earl",
-            "@siteimprove/alfa-formatter-json",
-            "@siteimprove/alfa-formatter-sarif",
-          ],
-        },
-      ],
+      children: ["@siteimprove/alfa-act", "@siteimprove/alfa-wcag"],
     },
     {
       name: "Data types",
