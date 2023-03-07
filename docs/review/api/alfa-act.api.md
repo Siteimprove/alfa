@@ -78,6 +78,9 @@ export namespace Diagnostic {
     empty: Diagnostic;
 }
 
+// @public (undocumented)
+export function dummy(x: number): number;
+
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
 //
 // @public
