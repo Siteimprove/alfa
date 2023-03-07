@@ -15,3 +15,10 @@ export * from "./question";
 export * from "./requirement";
 export * from "./rule";
 export * from "./tag";
+
+/**
+ * @public
+ */
+export function dummy(x: number): number {
+  return x;
+}
