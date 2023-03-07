@@ -8,8 +8,9 @@ Alfa is an open and standards-based accessibility conformance testing engine. It
 
 - [Goals](#goals)
 - [Usage](#usage)
-- [Integrations](#integrations)
 - [Examples](#examples)
+- [Command Line Interface](#command-line-interface)
+- [Integrations](#integrations)
 - [Requirements](#requirements)
 - [Building](#building)
 - [Experimenting](#experimenting)
@@ -33,7 +34,7 @@ Alfa is distributed through [GitHub Packages](../../packages) as a set of separa
 $ npm install @siteimprove/alfa-<package-name>
 ```
 
-> :warning: Make sure to instruct your client to pull packages belonging to the `@siteimprove` scope from GitHub by adding the line `@siteimprove:registry=https://npm.pkg.github.com/siteimprove` to your `.npmrc` file.
+> :warning: Make sure to instruct your client to pull packages belonging to the `@siteimprove` scope from GitHub by adding the line `@siteimprove:registry=https://npm.pkg.github.com/siteimprove` to your `.npmrc` file. See [Installing a package from Github registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#installing-a-package) for details.
 
 On their own, each of these packages do very little, but when put together they provide a full suite of tools for performing accessibility comformance testing across all stages of the content development and publication workflow. If you are looking for an easy way to started using Alfa, check out the section on [integrations](#integrations); we might already have a ready-made solution for you!
 
@@ -105,32 +106,15 @@ Crawler.with(async (crawler) => {
 
 For more complex use cases, please check the [Alfa examples](https://github.com/Siteimprove/alfa-examples) repository. It shows how to use Alfa to test components or full web pages; how to filter outcomes based on conformance level, WCAG version, or more; how to interact with pages (e.g. open a menu) before running an audit; how to answer questions asked by Alfa (`cantTell` outcomes); or how to add custom rules to the default rule set.
 
+## Command Line Interface
+
+Alfa ships with a Command Line Interface, making it easy to audit a single page. The CLI lives in the [Alfa integrations][] repository.
+
 ## Integrations
 
-Alfa ships with several ready-made integrations to various tools, making it easy and simple to integrate accessibility conformance testing as part of your development workflow. If you have suggestions for additional integerations, feel free to [open an issue][]! We are always looking for new places where Alfa can be put to good use.
+Alfa ships with several ready-made integrations to various tools, making it easy and simple to integrate accessibility conformance testing as part of your development workflow. If you have suggestions for additional integerations, feel free to [open an issue][]! We are always looking for new places where Alfa can be put to good use. Integrations live in the [Alfa integrations][] repository.
 
 > :warning: The integrations are still experimental and subject to change.
-
-| Package                                                      | Integrates with                              |
-| :----------------------------------------------------------- | :------------------------------------------- |
-| [**@siteimprove/alfa-angular**](packages/alfa-angular)       | [Angular](https://angular.io/)               |
-| [**@siteimprove/alfa-chai**](packages/alfa-chai)             | [Chai](https://www.chaijs.com/)              |
-| [**@siteimprove/alfa-cheerio**](packages/alfa-cheerio)       | [Cheerio](https://cheerio.js.org/)           |
-| [**@siteimprove/alfa-cypress**](packages/alfa-cypress)       | [Cypress](https://www.cypress.io/)           |
-| [**@siteimprove/alfa-enzyme**](packages/alfa-enzyme)         | [Enzyme](https://github.com/airbnb/enzyme)   |
-| [**@siteimprove/alfa-jasmine**](packages/alfa-jasmine)       | [Jasmine](https://jasmine.github.io/)        |
-| [**@siteimprove/alfa-jest**](packages/alfa-jest)             | [Jest](https://jestjs.io/)                   |
-| [**@siteimprove/alfa-jquery**](packages/alfa-jquery)         | [jQuery](https://jquery.com/)                |
-| [**@siteimprove/alfa-playwright**](packages/alfa-playwright) | [Playwright](https://playwright.dev/)        |
-| [**@siteimprove/alfa-puppeteer**](packages/alfa-puppeteer)   | [Puppeteer](https://pptr.dev/)               |
-| [**@siteimprove/alfa-react**](packages/alfa-react)           | [React](https://reactjs.org/)                |
-| [**@siteimprove/alfa-unexpected**](packages/alfa-unexpected) | [Unexpected](http://unexpected.js.org/)      |
-| [**@siteimprove/alfa-vue**](packages/alfa-vue)               | [Vue](https://vuejs.org/)                    |
-| [**@siteimprove/alfa-webdriver**](packages/alfa-webdriver)   | [WebdriverIO](https://webdriver.io/)         |
-
-## Examples
-
-For examples of how to use Alfa in various contexts, such as unit testing, end-to-end testing, and custom scripted testing, take a look at the [@siteimprove/alfa-examples](https://github.com/siteimprove/alfa-examples) repository.
 
 ## Requirements
 
@@ -138,7 +122,7 @@ Alfa will run in any [ECMAScript 2020](https://262.ecma-international.org/11.0/)
 
 ## Building
 
-In order to build Alfa, a recent version (>= 12) of [Node.js][] is required in addition to the [Yarn](https://yarnpkg.com/) package manager. Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
+In order to build Alfa, a recent version (>= 14) of [Node.js][] is required in addition to the [Yarn](https://yarnpkg.com/) package manager. Once Node.js and Yarn are installed, go ahead and install the Alfa development dependencies:
 
 ```console
 $ yarn install
@@ -205,6 +189,7 @@ By implementing browser aspects, such as a style system and the accessibility tr
 At the code level, Alfa is structured as a monolithic repository consisting of several packages that each have their own area of responsibility. You can find more information on the overall architecture of Alfa in the [architecture documentation](docs/architecture). We also write and maintain [architecture decision reports](docs/architecture/decisions) if you want to get the complete picture of how Alfa came to be.
 
 ## Guides
+
 A list of guides on how to develop with Alfa can be found under [guides](docs/guides).
 
 ## Funding
@@ -217,5 +202,6 @@ Alfa is part of a project that has received funding from the European Union's [H
 
 Copyright &copy; [Siteimprove A/S](https://siteimprove.com/). Released under the terms of the [MIT license](LICENSE.md).
 
+[alfa integrations]: https://github.com/Siteimprove/alfa-integrations
 [open an issue]: ../../issues/new/choose "Open a new issue"
 [node.js]: https://nodejs.org/en/
