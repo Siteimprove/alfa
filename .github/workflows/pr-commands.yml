@@ -1,7 +1,7 @@
 name: PR commands
 # Commands that can be run via a comment on the PR.
 # Comment `!pr <command-name>` to trigger them.
-# See .pr-commands/config.json for config
+# See config/pr-commands.json for configuration
 # Use `!pr help` for help
 #
 # See https://github.com/Siteimprove/pr-command
@@ -14,12 +14,28 @@ jobs:
   pull-request-command:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: "Should pr command run?"
+        id: should-run
+        uses: siteimprove/pr-command/check-run/check@v2.2
         with:
-          # We use versions 14 and 16 in the integrate workflow
+          # Personal access token (PAT) used to fetch the repository and add reaction on comment.
+          token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
+
+      # The repository has been checked out by PR commands!
+
+      - name: "Set up Node"
+        if: env.PR_COMMAND_WILL_RUN == 'true'
+        uses: actions/setup-node@v3
+        with:
+          # We use versions 14 and 16 in the integrate workflow
           node-version: 16
-      - uses: siteimprove/pr-command/advanced@v2
+
+      - name: "Install dependencies"
+        if: env.PR_COMMAND_WILL_RUN == 'true'
+        run: yarn install --immutable
+
+      - name: "React to command"
+        uses: siteimprove/pr-command/check-run/run@v2.2
         with:
           # Personal access token (PAT) used to fetch the repository and add reaction on comment.
           token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
