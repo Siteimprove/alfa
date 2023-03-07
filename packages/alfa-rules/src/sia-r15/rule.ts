@@ -18,7 +18,7 @@ import { Scope } from "../tags";
 import { normalize } from "../common/normalize";
 
 const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
-const { isElement, hasName, hasNamespace } = Element;
+const { hasName, hasNamespace } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({

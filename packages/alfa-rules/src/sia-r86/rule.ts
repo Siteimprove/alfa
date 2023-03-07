@@ -9,7 +9,6 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { isIncludedInTheAccessibilityTree, isMarkedDecorative } = DOM;
-const { isElement } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r86",

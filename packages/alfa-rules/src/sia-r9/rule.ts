@@ -11,7 +11,7 @@ import { Scope } from "../tags";
 import { getRefreshTime } from "../common/expectation/get-refresh-time";
 import { RefreshDelay as Outcomes } from "../common/outcome/refresh-delay";
 
-const { hasAttribute, hasName, hasNamespace, isElement } = Element;
+const { hasAttribute, hasName, hasNamespace } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({

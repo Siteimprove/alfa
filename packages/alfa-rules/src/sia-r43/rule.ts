@@ -15,7 +15,7 @@ const {
   hasNonEmptyAccessibleName,
   isIncludedInTheAccessibilityTree,
 } = DOM;
-const { isElement, hasNamespace } = Element;
+const { hasNamespace } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({

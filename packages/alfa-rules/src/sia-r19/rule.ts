@@ -15,7 +15,7 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { isElement, hasNamespace } = Element;
+const { hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not, equals, property } = Predicate;
 

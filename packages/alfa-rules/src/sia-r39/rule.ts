@@ -12,7 +12,7 @@ import { Question } from "../common/act/question";
 import { Scope } from "../tags";
 
 const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
-const { isElement, hasInputType, hasName, hasNamespace } = Element;
+const { hasInputType, hasName, hasNamespace } = Element;
 const { and, or, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({

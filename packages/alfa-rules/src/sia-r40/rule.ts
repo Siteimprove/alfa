@@ -15,7 +15,6 @@ const {
   hasRole,
   isIncludedInTheAccessibilityTree,
 } = DOM;
-const { isElement } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({

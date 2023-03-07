@@ -12,7 +12,7 @@ import { Scope } from "../tags";
 
 const { isEmpty } = Iterable;
 const { not } = Predicate;
-const { hasId, hasUniqueId, isElement } = Element;
+const { hasId, hasUniqueId } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r3",
