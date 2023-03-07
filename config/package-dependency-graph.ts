@@ -17,14 +17,6 @@ export default {
       ],
     },
     {
-      name: "Command line",
-      children: [
-        "@siteimprove/alfa-cli",
-        "@siteimprove/alfa-command",
-        "@siteimprove/alfa-interviewer",
-      ],
-    },
-    {
       name: "Data types",
       children: [
         {
