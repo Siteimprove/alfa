@@ -217,13 +217,5 @@ export default {
         "@siteimprove/alfa-xpath",
       ],
     },
-    {
-      name: "Web crawler",
-      children: [
-        "@siteimprove/alfa-crawler",
-        "@siteimprove/alfa-frontier",
-        "@siteimprove/alfa-scraper",
-      ],
-    },
   ],
 };
