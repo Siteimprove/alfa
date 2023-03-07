@@ -154,16 +154,6 @@ export default {
             "@siteimprove/alfa-unexpected",
           ],
         },
-        {
-          name: "Components libraries",
-          children: [
-            "@siteimprove/alfa-angular",
-            "@siteimprove/alfa-cheerio",
-            "@siteimprove/alfa-enzyme",
-            "@siteimprove/alfa-react",
-            "@siteimprove/alfa-vue",
-          ],
-        },
       ],
     },
     {
