@@ -164,7 +164,6 @@ export default {
             "@siteimprove/alfa-vue",
           ],
         },
-        "@siteimprove/alfa-jquery",
       ],
     },
     {
