@@ -9,14 +9,21 @@ const { whitespace, openParenthesis, closeParenthesis } = Token;
 test(".consume() of empty returns error", (t) => {
   t.deepEqual(consume(Slice.empty()).toJSON(), {
     type: "err",
-    error: "Expected open parenthesis or bracket",
+    error: "Expected opening delimiter",
   });
 });
 
 test(".consume() of invalid input returns error", (t) => {
   t.deepEqual(consume(Slice.of([whitespace()])).toJSON(), {
     type: "err",
-    error: "Expected open parenthesis or bracket",
+    error: "Expected opening delimiter",
+  });
+});
+
+test(".consume() of unclosed block returns error", (t) => {
+  t.deepEqual(consume(Slice.of([openParenthesis(), whitespace()])).toJSON(), {
+    type: "err",
+    error: "Expected closing delimiter",
   });
 });
 
@@ -30,6 +37,34 @@ test(".consume() parses empty parenthesis block", (t) => {
         type: "open-parenthesis",
       },
       value: [],
+    }
+  );
+});
+
+test(".consume() parses nested blocks", (t) => {
+  t.deepEqual(
+    consume(
+      Slice.of([
+        openParenthesis(),
+        openParenthesis(),
+        closeParenthesis(),
+        closeParenthesis(),
+      ])
+    )
+      .map(([, block]) => block.toJSON())
+      .get(),
+    {
+      token: {
+        type: "open-parenthesis",
+      },
+      value: [
+        {
+          type: "open-parenthesis",
+        },
+        {
+          type: "close-parenthesis",
+        },
+      ],
     }
   );
 });

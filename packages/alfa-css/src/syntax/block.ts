@@ -1,7 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Ok } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
@@ -9,10 +9,13 @@ import * as json from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Component } from "./component";
 import { Token } from "./token";
+import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { isOpenParenthesis } = Token.OpenParenthesis;
 const { isOpenSquareBracket } = Token.OpenSquareBracket;
 const { isOpenCurlyBracket } = Token.OpenCurlyBracket;
+
+const { or } = Refinement;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#simple-block}
@@ -106,23 +109,26 @@ export namespace Block {
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-simple-block}
    */
   export const consume: Parser<Slice<Token>, Block, string> = (input) => {
-    return input
+    const result = input
       .first()
       .filter(
-        (token): token is Open =>
-          isOpenParenthesis(token) ||
-          isOpenSquareBracket(token) ||
-          isOpenCurlyBracket(token)
+        or(isOpenParenthesis, or(isOpenSquareBracket, isOpenCurlyBracket))
       )
-      .andThen((token) => {
+      .map((token) => {
         const value: Array<Token> = [];
 
         input = input.rest();
 
-        while (input.length > 0) {
+        // This loop terminates either when it reaches the closing delimiter or
+        // the end of the input
+        while (true) {
           const next = input.first();
 
-          if (next.isSome() && next.get().type === token.mirror.type) {
+          if (!next.isSome()) {
+            return Err.of("Expected closing delimiter");
+          }
+
+          if (next.get().type === token.mirror.type) {
             input = input.rest();
             break;
           }
@@ -133,10 +139,11 @@ export namespace Block {
           value.push(...component);
         }
 
-        return Option.of(
-          Ok.of<[Slice<Token>, Block]>([input, Block.of(token, value)])
-        );
-      })
-      .getOr(Err.of("Expected open parenthesis or bracket"));
+        return Result.of<[Slice<Token>, Block], string>([
+          input,
+          Block.of(token, value),
+        ]);
+      });
+    return result.getOr(Err.of("Expected opening delimiter"));
   };
 }
