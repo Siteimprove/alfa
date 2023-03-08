@@ -1,21 +1,17 @@
 {
   "dedupe": {
-    "command": "yarn install --immutable && yarn dedupe",
+    "command": "CI=false yarn dedupe",
     "description": "Deduplicate packages",
     "commitMsg": "Dedupe packages"
   },
   "depgraph":{
-    "command": "yarn install --immutable && yarn dependency-graph",
+    "command": "yarn dependency-graph",
     "description": "Update dependency graph",
     "commitMsg": "Update dependency graph"
   },
   "document": {
-    "command": "yarn install --immutable && yarn build --quiet && CI=false yarn document",
+    "command": "CI=false yarn document --quiet",
     "description": "Update packages documentation",
     "commitMsg": "Update documentation"
-  },
-  "version": {
-    "command": "yarn -v && node -v",
-    "description": "Show versions"
   }
 }
