@@ -8,18 +8,18 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Serializable](./alfa-json.serializable_interface.md) |  |
+|  [Serializable](./alfa-json.serializable.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [JSON\_2](./alfa-json.json_2_namespace.md) |  |
-|  [Serializable](./alfa-json.serializable_namespace.md) |  |
+|  [JSON\_2](./alfa-json.json_2.md) |  |
+|  [Serializable](./alfa-json.serializable.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [JSON\_2](./alfa-json.json_2_typealias.md) |  |
+|  [JSON\_2](./alfa-json.json_2.md) |  |
 

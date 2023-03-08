@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Graph](./alfa-graph.graph_class.md) |  |
+|  [Graph](./alfa-graph.graph.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Graph](./alfa-graph.graph_namespace.md) |  |
+|  [Graph](./alfa-graph.graph.md) |  |
 

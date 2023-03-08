@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Chai\_2](./alfa-chai.chai_2_namespace.md) |  |
+|  [Chai\_2](./alfa-chai.chai_2.md) |  |
 

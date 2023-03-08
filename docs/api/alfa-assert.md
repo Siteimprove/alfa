@@ -8,19 +8,19 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Asserter](./alfa-assert.asserter_class.md) |  |
-|  [Assertion](./alfa-assert.assertion_class.md) |  |
+|  [Asserter](./alfa-assert.asserter.md) |  |
+|  [Assertion](./alfa-assert.assertion.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Handler](./alfa-assert.handler_interface.md) |  |
+|  [Handler](./alfa-assert.handler.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Asserter](./alfa-assert.asserter_namespace.md) |  |
-|  [Assertion](./alfa-assert.assertion_namespace.md) |  |
+|  [Asserter](./alfa-assert.asserter.md) |  |
+|  [Assertion](./alfa-assert.assertion.md) |  |
 

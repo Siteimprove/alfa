@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Thunk](./alfa-thunk.thunk_namespace.md) |  |
+|  [Thunk](./alfa-thunk.thunk.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Thunk](./alfa-thunk.thunk_typealias.md) |  |
+|  [Thunk](./alfa-thunk.thunk.md) |  |
 

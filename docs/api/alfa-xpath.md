@@ -8,44 +8,44 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Builder](./alfa-xpath.builder_class.md) |  |
+|  [Builder](./alfa-xpath.builder.md) |  |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [axis(axis, name)](./alfa-xpath.axis_1_function.md) |  |
-|  [context()](./alfa-xpath.context_1_function.md) |  |
-|  [evaluate(scope, expression, options)](./alfa-xpath.evaluate_1_function.md) |  |
-|  [nth(i)](./alfa-xpath.nth_1_function.md) |  |
-|  [step(left, right)](./alfa-xpath.step_1_function.md) |  |
+|  [axis(axis, name)](./alfa-xpath.axis.md) |  |
+|  [context()](./alfa-xpath.context.md) |  |
+|  [evaluate(scope, expression, options)](./alfa-xpath.evaluate.md) |  |
+|  [nth(i)](./alfa-xpath.nth.md) |  |
+|  [step(left, right)](./alfa-xpath.step.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Item](./alfa-xpath.item_interface.md) |  |
+|  [Item](./alfa-xpath.item.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [axis](./alfa-xpath.axis_namespace.md) |  |
-|  [Builder](./alfa-xpath.builder_namespace.md) |  |
-|  [evaluate](./alfa-xpath.evaluate_namespace.md) |  |
-|  [Expression](./alfa-xpath.expression_namespace.md) |  |
-|  [Item](./alfa-xpath.item_namespace.md) |  |
-|  [Lexer](./alfa-xpath.lexer_namespace.md) |  |
-|  [Parser](./alfa-xpath.parser_namespace.md) |  |
-|  [Token](./alfa-xpath.token_namespace.md) |  |
+|  [axis](./alfa-xpath.axis.md) |  |
+|  [Builder](./alfa-xpath.builder.md) |  |
+|  [evaluate](./alfa-xpath.evaluate.md) |  |
+|  [Expression](./alfa-xpath.expression.md) |  |
+|  [Item](./alfa-xpath.item.md) |  |
+|  [Lexer](./alfa-xpath.lexer.md) |  |
+|  [Parser](./alfa-xpath.parser.md) |  |
+|  [Token](./alfa-xpath.token.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Expression](./alfa-xpath.expression_typealias.md) |  |
-|  [Token](./alfa-xpath.token_typealias.md) | [https://www.w3.org/TR/xpath-31/\#terminal-symbols](https://www.w3.org/TR/xpath-31/#terminal-symbols) |
-|  [Type](./alfa-xpath.type_typealias.md) |  |
-|  [TypeFor](./alfa-xpath.typefor_typealias.md) |  |
-|  [Value](./alfa-xpath.value_typealias.md) |  |
+|  [Expression](./alfa-xpath.expression.md) |  |
+|  [Token](./alfa-xpath.token.md) | [https://www.w3.org/TR/xpath-31/\#terminal-symbols](https://www.w3.org/TR/xpath-31/#terminal-symbols) |
+|  [Type](./alfa-xpath.type.md) |  |
+|  [TypeFor](./alfa-xpath.typefor.md) |  |
+|  [Value](./alfa-xpath.value.md) |  |
 

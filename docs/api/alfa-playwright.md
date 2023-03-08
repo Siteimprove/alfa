@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Playwright](./alfa-playwright.playwright_namespace.md) |  |
+|  [Playwright](./alfa-playwright.playwright.md) |  |
 

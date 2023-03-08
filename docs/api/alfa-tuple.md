@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Tuple](./alfa-tuple.tuple_namespace.md) |  |
+|  [Tuple](./alfa-tuple.tuple.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Tuple](./alfa-tuple.tuple_typealias.md) |  |
+|  [Tuple](./alfa-tuple.tuple.md) |  |
 

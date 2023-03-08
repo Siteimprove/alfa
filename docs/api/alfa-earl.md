@@ -8,12 +8,12 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [EARL](./alfa-earl.earl_interface.md) |  |
-|  [Serializable](./alfa-earl.serializable_interface.md) |  |
+|  [EARL](./alfa-earl.earl.md) |  |
+|  [Serializable](./alfa-earl.serializable.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Serializable](./alfa-earl.serializable_namespace.md) |  |
+|  [Serializable](./alfa-earl.serializable.md) |  |
 
