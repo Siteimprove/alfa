@@ -3,144 +3,105 @@ digraph {
   graph [compound=true];
   subgraph cluster_Accessibility_Conformance_Testing {
     _siteimprove_alfa_act _siteimprove_alfa_wcag;
-    subgraph cluster_Formatter {
-      _siteimprove_alfa_formatter _siteimprove_alfa_formatter_earl _siteimprove_alfa_formatter_json _siteimprove_alfa_formatter_sarif;
 
-      label = "Formatter";
-      color = "#00007f";
-    }
-  
     label = "Accessibility Conformance Testing";
     color = "#000000";
   }
 
-  subgraph cluster_Command_line {
-    _siteimprove_alfa_cli _siteimprove_alfa_command _siteimprove_alfa_interviewer;
+  subgraph cluster_Alternatives {
+    _siteimprove_alfa_either _siteimprove_alfa_option _siteimprove_alfa_result _siteimprove_alfa_selective;
 
-    label = "Command line";
+    label = "Alternatives";
+    color = "#00007f";
+  }
+
+  subgraph cluster_Collections {
+    _siteimprove_alfa_bits _siteimprove_alfa_branched _siteimprove_alfa_collection _siteimprove_alfa_flags _siteimprove_alfa_list _siteimprove_alfa_map _siteimprove_alfa_record _siteimprove_alfa_sequence _siteimprove_alfa_set _siteimprove_alfa_slice _siteimprove_alfa_tree _siteimprove_alfa_tuple;
+    subgraph cluster_Built_ins {
+      _siteimprove_alfa_array _siteimprove_alfa_iterable;
+
+      label = "Built ins";
+      color = "#007f00";
+    }
+
+    label = "Collections";
     color = "#0000ff";
   }
 
-  subgraph cluster_Data_types {
-    _siteimprove_alfa_affine _siteimprove_alfa_cache _siteimprove_alfa_highlight _siteimprove_alfa_math _siteimprove_alfa_parser _siteimprove_alfa_test _siteimprove_alfa_time;
-    subgraph cluster_Alternatives {
-      _siteimprove_alfa_either _siteimprove_alfa_option _siteimprove_alfa_result _siteimprove_alfa_selective;
+  subgraph cluster_Comparison {
+    _siteimprove_alfa_comparable _siteimprove_alfa_equatable;
 
-      label = "Alternatives";
-      color = "#007f7f";
-    }
-  
-    subgraph cluster_Collections {
-      _siteimprove_alfa_bits _siteimprove_alfa_branched _siteimprove_alfa_collection _siteimprove_alfa_flags _siteimprove_alfa_list _siteimprove_alfa_map _siteimprove_alfa_record _siteimprove_alfa_sequence _siteimprove_alfa_set _siteimprove_alfa_slice _siteimprove_alfa_tree _siteimprove_alfa_tuple;
-      subgraph cluster_Built_ins {
-        _siteimprove_alfa_array _siteimprove_alfa_iterable;
-
-        label = "Built ins";
-        color = "#00ff00";
-      }
-    
-      label = "Collections";
-      color = "#007fff";
-    }
-  
-    subgraph cluster_Comparison {
-      _siteimprove_alfa_comparable _siteimprove_alfa_equatable;
-
-      label = "Comparison";
-      color = "#00ff7f";
-    }
-  
-    subgraph cluster_Computations {
-      
-      subgraph cluster_Asynchronous {
-        _siteimprove_alfa_future _siteimprove_alfa_promise _siteimprove_alfa_thenable;
-
-        label = "Asynchronous";
-        color = "#7f0000";
-      }
-    
-      subgraph cluster_Synchronous {
-        _siteimprove_alfa_lazy _siteimprove_alfa_trampoline;
-
-        label = "Synchronous";
-        color = "#7f007f";
-      }
-    
-      label = "Computations";
-      color = "#00ffff";
-    }
-  
-    subgraph cluster_Graphs {
-      _siteimprove_alfa_graph _siteimprove_alfa_network;
-
-      label = "Graphs";
-      color = "#7f00ff";
-    }
-  
-    subgraph cluster_Hash_tables {
-      _siteimprove_alfa_encoding _siteimprove_alfa_fnv _siteimprove_alfa_hash;
-
-      label = "Hash tables";
-      color = "#7f7f00";
-    }
-  
-    subgraph cluster_Logic {
-      _siteimprove_alfa_predicate _siteimprove_alfa_refinement _siteimprove_alfa_trilean;
-
-      label = "Logic";
-      color = "#7f7f7f";
-    }
-  
-    subgraph cluster_Performance_measurements {
-      _siteimprove_alfa_emitter _siteimprove_alfa_performance;
-
-      label = "Performance measurements";
-      color = "#7f7fff";
-    }
-  
-    subgraph cluster_Serialization {
-      _siteimprove_alfa_earl _siteimprove_alfa_json _siteimprove_alfa_json_ld _siteimprove_alfa_sarif;
-
-      label = "Serialization";
-      color = "#7fff00";
-    }
-  
-    subgraph cluster_Type_definitions {
-      _siteimprove_alfa_applicative _siteimprove_alfa_callback _siteimprove_alfa_clone _siteimprove_alfa_continuation _siteimprove_alfa_foldable _siteimprove_alfa_functor _siteimprove_alfa_generator _siteimprove_alfa_mapper _siteimprove_alfa_monad _siteimprove_alfa_reducer _siteimprove_alfa_thunk;
-
-      label = "Type definitions";
-      color = "#7fff7f";
-    }
-  
-    label = "Data types";
-    color = "#007f00";
+    label = "Comparison";
+    color = "#007f7f";
   }
 
-  subgraph cluster_Integrations_with_frameworks {
-    _siteimprove_alfa_jquery;
-    subgraph cluster_Test_frameworks {
-      _siteimprove_alfa_assert _siteimprove_alfa_chai _siteimprove_alfa_cypress _siteimprove_alfa_jasmine _siteimprove_alfa_jest _siteimprove_alfa_unexpected;
+  subgraph cluster_Computations {
 
-      label = "Test frameworks";
-      color = "#ff007f";
-    }
-  
-    subgraph cluster_Components_libraries {
-      _siteimprove_alfa_angular _siteimprove_alfa_cheerio _siteimprove_alfa_enzyme _siteimprove_alfa_react _siteimprove_alfa_vue;
+    subgraph cluster_Asynchronous {
+      _siteimprove_alfa_future _siteimprove_alfa_promise _siteimprove_alfa_thenable;
 
-      label = "Components libraries";
-      color = "#ff00ff";
+      label = "Asynchronous";
+      color = "#00ff00";
     }
-  
-    subgraph cluster_Browser_automations {
-      _siteimprove_alfa_playwright _siteimprove_alfa_puppeteer _siteimprove_alfa_webdriver;
 
-      label = "Browser automations";
-      color = "#ff7f00";
+    subgraph cluster_Synchronous {
+      _siteimprove_alfa_lazy _siteimprove_alfa_trampoline;
+
+      label = "Synchronous";
+      color = "#00ff7f";
     }
-  
-    label = "Integrations with frameworks";
-    color = "#ff0000";
+
+    label = "Computations";
+    color = "#007fff";
+  }
+
+  subgraph cluster_Graphs {
+    _siteimprove_alfa_graph _siteimprove_alfa_network;
+
+    label = "Graphs";
+    color = "#00ffff";
+  }
+
+  subgraph cluster_Hash_tables {
+    _siteimprove_alfa_encoding _siteimprove_alfa_fnv _siteimprove_alfa_hash;
+
+    label = "Hash tables";
+    color = "#7f0000";
+  }
+
+  subgraph cluster_Logic {
+    _siteimprove_alfa_predicate _siteimprove_alfa_refinement _siteimprove_alfa_trilean;
+
+    label = "Logic";
+    color = "#7f007f";
+  }
+
+  subgraph cluster_Performance_measurements {
+    _siteimprove_alfa_emitter _siteimprove_alfa_performance;
+
+    label = "Performance measurements";
+    color = "#7f00ff";
+  }
+
+  subgraph cluster_Serialization {
+    _siteimprove_alfa_earl _siteimprove_alfa_json _siteimprove_alfa_json_ld _siteimprove_alfa_sarif;
+
+    label = "Serialization";
+    color = "#7f7f00";
+  }
+
+  subgraph cluster_Type_definitions {
+    _siteimprove_alfa_applicative _siteimprove_alfa_callback _siteimprove_alfa_clone _siteimprove_alfa_continuation _siteimprove_alfa_foldable _siteimprove_alfa_functor _siteimprove_alfa_generator _siteimprove_alfa_mapper _siteimprove_alfa_monad _siteimprove_alfa_reducer _siteimprove_alfa_thunk;
+
+    label = "Type definitions";
+    color = "#7f7f7f";
+  }
+
+  subgraph cluster_other {
+    _siteimprove_alfa_affine _siteimprove_alfa_cache _siteimprove_alfa_highlight _siteimprove_alfa_math _siteimprove_alfa_parser _siteimprove_alfa_test _siteimprove_alfa_time;
+
+    label = "other";
+    color = "#7f7fff";
   }
 
   subgraph cluster_Understanding_the_web {
@@ -149,288 +110,251 @@ digraph {
       _siteimprove_alfa_http _siteimprove_alfa_url _siteimprove_alfa_web;
 
       label = "Infrastructure";
-      color = "#ffff00";
+      color = "#7fff7f";
     }
-  
+
     subgraph cluster_CSS_syntax {
       _siteimprove_alfa_css _siteimprove_alfa_media;
 
       label = "CSS syntax";
-      color = "#000000";
+      color = "#ff0000";
     }
-  
+
     subgraph cluster_HTML {
       _siteimprove_alfa_dom _siteimprove_alfa_table;
 
       label = "HTML";
-      color = "#00007f";
+      color = "#ff007f";
     }
-  
+
     subgraph cluster_CSS {
       _siteimprove_alfa_cascade _siteimprove_alfa_selector _siteimprove_alfa_style;
 
       label = "CSS";
-      color = "#0000ff";
+      color = "#ff00ff";
     }
-  
+
     label = "Understanding the web";
-    color = "#ff7f7f";
+    color = "#7fff00";
   }
 
-  subgraph cluster_Web_crawler {
-    _siteimprove_alfa_crawler _siteimprove_alfa_frontier _siteimprove_alfa_scraper;
-
-    label = "Web crawler";
-    color = "#007f00";
-  }
-
-  _siteimprove_alfa_act -> _siteimprove_alfa_applicative[color = "#007f00" ltail=cluster_Accessibility_Conformance_Testing lhead=cluster_Data_types]
-  _siteimprove_alfa_affine -> _siteimprove_alfa_equatable[color = "#00ff7f" lhead=cluster_Comparison]
-  _siteimprove_alfa_affine -> _siteimprove_alfa_json[color = "#7fff00" lhead=cluster_Serialization]
-  _siteimprove_alfa_affine -> _siteimprove_alfa_math[color = "#00ff7f"]
-  _siteimprove_alfa_affine -> _siteimprove_alfa_option[color = "#007f7f" lhead=cluster_Alternatives]
-  _siteimprove_alfa_angular -> _siteimprove_alfa_device[color = "#ff7f7f" ltail=cluster_Integrations_with_frameworks lhead=cluster_Understanding_the_web]
-  _siteimprove_alfa_applicative -> _siteimprove_alfa_functor[color = "#7f007f"]
-  _siteimprove_alfa_applicative -> _siteimprove_alfa_mapper[color = "#7fff7f"]
-  _siteimprove_alfa_aria -> _siteimprove_alfa_array[color = "#007f00" ltail=cluster_Understanding_the_web lhead=cluster_Data_types]
-  _siteimprove_alfa_aria -> _siteimprove_alfa_device[color = "#7f0000"]
-  _siteimprove_alfa_aria -> _siteimprove_alfa_dom[color = "#00007f" lhead=cluster_HTML]
-  _siteimprove_alfa_aria -> _siteimprove_alfa_selector[color = "#0000ff" lhead=cluster_CSS]
-  _siteimprove_alfa_array -> _siteimprove_alfa_callback[color = "#7fff7f" ltail=cluster_Collections lhead=cluster_Type_definitions]
-  _siteimprove_alfa_array -> _siteimprove_alfa_comparable[color = "#00ff7f" ltail=cluster_Collections lhead=cluster_Comparison]
-  _siteimprove_alfa_array -> _siteimprove_alfa_hash[color = "#7f7f00" ltail=cluster_Collections lhead=cluster_Hash_tables]
-  _siteimprove_alfa_array -> _siteimprove_alfa_iterable[color = "#7f7f7f"]
-  _siteimprove_alfa_array -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Collections lhead=cluster_Serialization]
-  _siteimprove_alfa_array -> _siteimprove_alfa_option[color = "#007f7f" ltail=cluster_Collections lhead=cluster_Alternatives]
-  _siteimprove_alfa_array -> _siteimprove_alfa_predicate[color = "#7f7f7f" ltail=cluster_Collections lhead=cluster_Logic]
-  _siteimprove_alfa_assert -> _siteimprove_alfa_act[color = "#000000" ltail=cluster_Integrations_with_frameworks lhead=cluster_Accessibility_Conformance_Testing]
-  _siteimprove_alfa_assert -> _siteimprove_alfa_future[color = "#007f00" ltail=cluster_Integrations_with_frameworks lhead=cluster_Data_types]
-  _siteimprove_alfa_branched -> _siteimprove_alfa_collection[color = "#00ff7f"]
-  _siteimprove_alfa_branched -> _siteimprove_alfa_iterable[color = "#00ff00" lhead=cluster_Built_ins]
-  _siteimprove_alfa_branched -> _siteimprove_alfa_list[color = "#7fff00"]
-  _siteimprove_alfa_cache -> _siteimprove_alfa_iterable[color = "#007fff" lhead=cluster_Collections]
-  _siteimprove_alfa_cache -> _siteimprove_alfa_mapper[color = "#7fff7f" lhead=cluster_Type_definitions]
-  _siteimprove_alfa_cache -> _siteimprove_alfa_option[color = "#007f7f" lhead=cluster_Alternatives]
-  _siteimprove_alfa_callback -> _siteimprove_alfa_mapper[color = "#7fff7f"]
-  _siteimprove_alfa_cascade -> _siteimprove_alfa_css[color = "#000000" ltail=cluster_CSS lhead=cluster_CSS_syntax]
-  _siteimprove_alfa_cascade -> _siteimprove_alfa_device[color = "#7f0000" ltail=cluster_CSS]
-  _siteimprove_alfa_cascade -> _siteimprove_alfa_dom[color = "#00007f" ltail=cluster_CSS lhead=cluster_HTML]
-  _siteimprove_alfa_cascade -> _siteimprove_alfa_selector[color = "#ff00ff"]
-  _siteimprove_alfa_chai -> _siteimprove_alfa_assert[color = "#007f7f"]
-  _siteimprove_alfa_cli -> _siteimprove_alfa_act[color = "#000000" ltail=cluster_Command_line lhead=cluster_Accessibility_Conformance_Testing]
-  _siteimprove_alfa_cli -> _siteimprove_alfa_command[color = "#7f7fff"]
-  _siteimprove_alfa_cli -> _siteimprove_alfa_device[color = "#ff7f7f" ltail=cluster_Command_line lhead=cluster_Understanding_the_web]
-  _siteimprove_alfa_cli -> _siteimprove_alfa_interviewer[color = "#7fff7f"]
-  _siteimprove_alfa_cli -> _siteimprove_alfa_iterable[color = "#007f00" ltail=cluster_Command_line lhead=cluster_Data_types]
-  _siteimprove_alfa_cli -> _siteimprove_alfa_rules[color = "#ff0000" ltail=cluster_Command_line]
-  _siteimprove_alfa_cli -> _siteimprove_alfa_scraper[color = "#007f00" ltail=cluster_Command_line lhead=cluster_Web_crawler]
-  _siteimprove_alfa_collection -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
-  _siteimprove_alfa_comparable -> _siteimprove_alfa_refinement[color = "#7f7f7f" ltail=cluster_Comparison lhead=cluster_Logic]
-  _siteimprove_alfa_continuation -> _siteimprove_alfa_callback[color = "#00007f"]
-  _siteimprove_alfa_continuation -> _siteimprove_alfa_mapper[color = "#7fff7f"]
-  _siteimprove_alfa_crawler -> _siteimprove_alfa_dom[color = "#ff7f7f" ltail=cluster_Web_crawler lhead=cluster_Understanding_the_web]
-  _siteimprove_alfa_crawler -> _siteimprove_alfa_frontier[color = "#007f7f"]
-  _siteimprove_alfa_crawler -> _siteimprove_alfa_mapper[color = "#007f00" ltail=cluster_Web_crawler lhead=cluster_Data_types]
-  _siteimprove_alfa_crawler -> _siteimprove_alfa_scraper[color = "#ff007f"]
-  _siteimprove_alfa_cypress -> _siteimprove_alfa_assert[color = "#007f7f"]
-  _siteimprove_alfa_dom -> _siteimprove_alfa_css[color = "#000000" ltail=cluster_HTML lhead=cluster_CSS_syntax]
-  _siteimprove_alfa_earl -> _siteimprove_alfa_json_ld[color = "#7f00ff"]
-  _siteimprove_alfa_earl -> _siteimprove_alfa_option[color = "#007f7f" ltail=cluster_Serialization lhead=cluster_Alternatives]
-  _siteimprove_alfa_earl -> _siteimprove_alfa_refinement[color = "#7f7f7f" ltail=cluster_Serialization lhead=cluster_Logic]
-  _siteimprove_alfa_either -> _siteimprove_alfa_applicative[color = "#7fff7f" ltail=cluster_Alternatives lhead=cluster_Type_definitions]
-  _siteimprove_alfa_either -> _siteimprove_alfa_equatable[color = "#00ff7f" ltail=cluster_Alternatives lhead=cluster_Comparison]
-  _siteimprove_alfa_either -> _siteimprove_alfa_hash[color = "#7f7f00" ltail=cluster_Alternatives lhead=cluster_Hash_tables]
-  _siteimprove_alfa_either -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Alternatives lhead=cluster_Serialization]
-  _siteimprove_alfa_either -> _siteimprove_alfa_option[color = "#ff007f"]
-  _siteimprove_alfa_emitter -> _siteimprove_alfa_callback[color = "#7fff7f" ltail=cluster_Performance_measurements lhead=cluster_Type_definitions]
-  _siteimprove_alfa_enzyme -> _siteimprove_alfa_react[color = "#7fff00"]
-  _siteimprove_alfa_flags -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
-  _siteimprove_alfa_fnv -> _siteimprove_alfa_hash[color = "#7f7f00"]
-  _siteimprove_alfa_foldable -> _siteimprove_alfa_reducer[color = "#007f00"]
-  _siteimprove_alfa_formatter -> _siteimprove_alfa_act[color = "#007f7f" ltail=cluster_Formatter]
-  _siteimprove_alfa_formatter_earl -> _siteimprove_alfa_formatter[color = "#7fff00"]
-  _siteimprove_alfa_formatter_json -> _siteimprove_alfa_formatter[color = "#7fff00"]
-  _siteimprove_alfa_formatter_sarif -> _siteimprove_alfa_formatter[color = "#7fff00"]
-  _siteimprove_alfa_functor -> _siteimprove_alfa_mapper[color = "#7fff7f"]
-  _siteimprove_alfa_future -> _siteimprove_alfa_applicative[color = "#7fff7f" ltail=cluster_Computations lhead=cluster_Type_definitions]
-  _siteimprove_alfa_future -> _siteimprove_alfa_array[color = "#007fff" ltail=cluster_Computations lhead=cluster_Collections]
-  _siteimprove_alfa_future -> _siteimprove_alfa_thenable[color = "#ff00ff"]
-  _siteimprove_alfa_generator -> _siteimprove_alfa_mapper[color = "#7fff7f"]
-  _siteimprove_alfa_generator -> _siteimprove_alfa_reducer[color = "#007f00"]
-  _siteimprove_alfa_graph -> _siteimprove_alfa_equatable[color = "#00ff7f" ltail=cluster_Graphs lhead=cluster_Comparison]
-  _siteimprove_alfa_graph -> _siteimprove_alfa_hash[color = "#7f7f00" ltail=cluster_Graphs lhead=cluster_Hash_tables]
-  _siteimprove_alfa_graph -> _siteimprove_alfa_iterable[color = "#007fff" ltail=cluster_Graphs lhead=cluster_Collections]
-  _siteimprove_alfa_graph -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Graphs lhead=cluster_Serialization]
-  _siteimprove_alfa_hash -> _siteimprove_alfa_encoding[color = "#7f7f7f"]
-  _siteimprove_alfa_hash -> _siteimprove_alfa_equatable[color = "#00ff7f" ltail=cluster_Hash_tables lhead=cluster_Comparison]
-  _siteimprove_alfa_hash -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Hash_tables lhead=cluster_Serialization]
-  _siteimprove_alfa_hash -> _siteimprove_alfa_refinement[color = "#7f7f7f" ltail=cluster_Hash_tables lhead=cluster_Logic]
-  _siteimprove_alfa_http -> _siteimprove_alfa_url[color = "#ff7f00"]
-  _siteimprove_alfa_jasmine -> _siteimprove_alfa_assert[color = "#007f7f"]
-  _siteimprove_alfa_jest -> _siteimprove_alfa_assert[color = "#007f7f"]
-  _siteimprove_alfa_json_ld -> _siteimprove_alfa_json[color = "#7f7fff"]
-  _siteimprove_alfa_lazy -> _siteimprove_alfa_equatable[color = "#00ff7f" ltail=cluster_Computations lhead=cluster_Comparison]
-  _siteimprove_alfa_lazy -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Computations lhead=cluster_Serialization]
-  _siteimprove_alfa_lazy -> _siteimprove_alfa_trampoline[color = "#7f007f"]
-  _siteimprove_alfa_list -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
-  _siteimprove_alfa_list -> _siteimprove_alfa_bits[color = "#007fff"]
-  _siteimprove_alfa_list -> _siteimprove_alfa_collection[color = "#00ff7f"]
-  _siteimprove_alfa_list -> _siteimprove_alfa_map[color = "#ff007f"]
-  _siteimprove_alfa_list -> _siteimprove_alfa_set[color = "#ff7f00"]
-  _siteimprove_alfa_map -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
-  _siteimprove_alfa_map -> _siteimprove_alfa_bits[color = "#007fff"]
-  _siteimprove_alfa_map -> _siteimprove_alfa_collection[color = "#00ff7f"]
-  _siteimprove_alfa_media -> _siteimprove_alfa_css[color = "#7f0000"]
-  _siteimprove_alfa_media -> _siteimprove_alfa_device[color = "#7f0000" ltail=cluster_CSS_syntax]
-  _siteimprove_alfa_monad -> _siteimprove_alfa_applicative[color = "#007fff"]
-  _siteimprove_alfa_monad -> _siteimprove_alfa_functor[color = "#7f007f"]
-  _siteimprove_alfa_monad -> _siteimprove_alfa_mapper[color = "#7fff7f"]
-  _siteimprove_alfa_network -> _siteimprove_alfa_graph[color = "#ff0000"]
-  _siteimprove_alfa_option -> _siteimprove_alfa_predicate[color = "#7f7f7f" ltail=cluster_Alternatives lhead=cluster_Logic]
-  _siteimprove_alfa_parser -> _siteimprove_alfa_array[color = "#007fff" lhead=cluster_Collections]
-  _siteimprove_alfa_parser -> _siteimprove_alfa_callback[color = "#7fff7f" lhead=cluster_Type_definitions]
-  _siteimprove_alfa_parser -> _siteimprove_alfa_option[color = "#007f7f" lhead=cluster_Alternatives]
-  _siteimprove_alfa_parser -> _siteimprove_alfa_predicate[color = "#7f7f7f" lhead=cluster_Logic]
-  _siteimprove_alfa_performance -> _siteimprove_alfa_emitter[color = "#7f7f00"]
-  _siteimprove_alfa_performance -> _siteimprove_alfa_json[color = "#7fff00" ltail=cluster_Performance_measurements lhead=cluster_Serialization]
-  _siteimprove_alfa_predicate -> _siteimprove_alfa_callback[color = "#7fff7f" ltail=cluster_Logic lhead=cluster_Type_definitions]
-  _siteimprove_alfa_predicate -> _siteimprove_alfa_equatable[color = "#00ff7f" ltail=cluster_Logic lhead=cluster_Comparison]
-  _siteimprove_alfa_record -> _siteimprove_alfa_iterable[color = "#00ff00" lhead=cluster_Built_ins]
-  _siteimprove_alfa_record -> _siteimprove_alfa_list[color = "#7fff00"]
-  _siteimprove_alfa_refinement -> _siteimprove_alfa_predicate[color = "#ff7f00"]
-  _siteimprove_alfa_result -> _siteimprove_alfa_option[color = "#ff007f"]
+  _siteimprove_alfa_act -> _siteimprove_alfa_applicative[color = "#7f7f7f" ltail=cluster_Accessibility_Conformance_Testing lhead=cluster_Type_definitions]
+  _siteimprove_alfa_act -> _siteimprove_alfa_array[color = "#0000ff" ltail=cluster_Accessibility_Conformance_Testing lhead=cluster_Collections]
+  _siteimprove_alfa_act -> _siteimprove_alfa_earl[color = "#7f7f00" ltail=cluster_Accessibility_Conformance_Testing lhead=cluster_Serialization]
+  _siteimprove_alfa_act -> _siteimprove_alfa_either[color = "#00007f" ltail=cluster_Accessibility_Conformance_Testing lhead=cluster_Alternatives]
+  _siteimprove_alfa_act -> _siteimprove_alfa_equatable[color = "#007f7f" ltail=cluster_Accessibility_Conformance_Testing lhead=cluster_Comparison]
+  _siteimprove_alfa_act -> _siteimprove_alfa_future[color = "#007fff" ltail=cluster_Accessibility_Conformance_Testing lhead=cluster_Computations]
+  _siteimprove_alfa_act -> _siteimprove_alfa_hash[color = "#7f0000" ltail=cluster_Accessibility_Conformance_Testing lhead=cluster_Hash_tables]
+  _siteimprove_alfa_act -> _siteimprove_alfa_performance[color = "#7f00ff" ltail=cluster_Accessibility_Conformance_Testing lhead=cluster_Performance_measurements]
+  _siteimprove_alfa_act -> _siteimprove_alfa_predicate[color = "#7f007f" ltail=cluster_Accessibility_Conformance_Testing lhead=cluster_Logic]
+  _siteimprove_alfa_affine -> _siteimprove_alfa_equatable[color = "#007f7f" ltail=cluster_other lhead=cluster_Comparison]
+  _siteimprove_alfa_affine -> _siteimprove_alfa_json[color = "#7f7f00" ltail=cluster_other lhead=cluster_Serialization]
+  _siteimprove_alfa_affine -> _siteimprove_alfa_math[color = "#000000"]
+  _siteimprove_alfa_affine -> _siteimprove_alfa_option[color = "#00007f" ltail=cluster_other lhead=cluster_Alternatives]
+  _siteimprove_alfa_applicative -> _siteimprove_alfa_functor[color = "#007f00"]
+  _siteimprove_alfa_applicative -> _siteimprove_alfa_mapper[color = "#7f0000"]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_array[color = "#0000ff" ltail=cluster_Understanding_the_web lhead=cluster_Collections]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_cache[color = "#7f7fff" ltail=cluster_Understanding_the_web lhead=cluster_other]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_comparable[color = "#007f7f" ltail=cluster_Understanding_the_web lhead=cluster_Comparison]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_device[color = "#007f7f"]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_dom[color = "#ff007f" lhead=cluster_HTML]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_graph[color = "#00ffff" ltail=cluster_Understanding_the_web lhead=cluster_Graphs]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_hash[color = "#7f0000" ltail=cluster_Understanding_the_web lhead=cluster_Hash_tables]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_json[color = "#7f7f00" ltail=cluster_Understanding_the_web lhead=cluster_Serialization]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_mapper[color = "#7f7f7f" ltail=cluster_Understanding_the_web lhead=cluster_Type_definitions]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_option[color = "#00007f" ltail=cluster_Understanding_the_web lhead=cluster_Alternatives]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_predicate[color = "#7f007f" ltail=cluster_Understanding_the_web lhead=cluster_Logic]
+  _siteimprove_alfa_aria -> _siteimprove_alfa_selector[color = "#ff00ff" lhead=cluster_CSS]
+  _siteimprove_alfa_array -> _siteimprove_alfa_callback[color = "#7f7f7f" ltail=cluster_Collections lhead=cluster_Type_definitions]
+  _siteimprove_alfa_array -> _siteimprove_alfa_comparable[color = "#007f7f" ltail=cluster_Collections lhead=cluster_Comparison]
+  _siteimprove_alfa_array -> _siteimprove_alfa_hash[color = "#7f0000" ltail=cluster_Collections lhead=cluster_Hash_tables]
+  _siteimprove_alfa_array -> _siteimprove_alfa_iterable[color = "#00ff00"]
+  _siteimprove_alfa_array -> _siteimprove_alfa_json[color = "#7f7f00" ltail=cluster_Collections lhead=cluster_Serialization]
+  _siteimprove_alfa_array -> _siteimprove_alfa_option[color = "#00007f" ltail=cluster_Collections lhead=cluster_Alternatives]
+  _siteimprove_alfa_array -> _siteimprove_alfa_predicate[color = "#7f007f" ltail=cluster_Collections lhead=cluster_Logic]
+  _siteimprove_alfa_branched -> _siteimprove_alfa_collection[color = "#ff00ff"]
+  _siteimprove_alfa_branched -> _siteimprove_alfa_iterable[color = "#007f00" lhead=cluster_Built_ins]
+  _siteimprove_alfa_branched -> _siteimprove_alfa_list[color = "#00ffff"]
+  _siteimprove_alfa_cache -> _siteimprove_alfa_iterable[color = "#0000ff" ltail=cluster_other lhead=cluster_Collections]
+  _siteimprove_alfa_cache -> _siteimprove_alfa_mapper[color = "#7f7f7f" ltail=cluster_other lhead=cluster_Type_definitions]
+  _siteimprove_alfa_callback -> _siteimprove_alfa_mapper[color = "#7f0000"]
+  _siteimprove_alfa_cascade -> _siteimprove_alfa_css[color = "#ff0000" ltail=cluster_CSS lhead=cluster_CSS_syntax]
+  _siteimprove_alfa_cascade -> _siteimprove_alfa_device[color = "#007f7f" ltail=cluster_CSS]
+  _siteimprove_alfa_cascade -> _siteimprove_alfa_dom[color = "#ff007f" ltail=cluster_CSS lhead=cluster_HTML]
+  _siteimprove_alfa_cascade -> _siteimprove_alfa_selector[color = "#7f0000"]
+  _siteimprove_alfa_collection -> _siteimprove_alfa_array[color = "#007f00" lhead=cluster_Built_ins]
+  _siteimprove_alfa_comparable -> _siteimprove_alfa_refinement[color = "#7f007f" ltail=cluster_Comparison lhead=cluster_Logic]
+  _siteimprove_alfa_continuation -> _siteimprove_alfa_callback[color = "#7f7fff"]
+  _siteimprove_alfa_continuation -> _siteimprove_alfa_mapper[color = "#7f0000"]
+  _siteimprove_alfa_dom -> _siteimprove_alfa_css[color = "#ff0000" ltail=cluster_HTML lhead=cluster_CSS_syntax]
+  _siteimprove_alfa_dom -> _siteimprove_alfa_lazy[color = "#007fff" ltail=cluster_Understanding_the_web lhead=cluster_Computations]
+  _siteimprove_alfa_earl -> _siteimprove_alfa_json_ld[color = "#00ffff"]
+  _siteimprove_alfa_earl -> _siteimprove_alfa_option[color = "#00007f" ltail=cluster_Serialization lhead=cluster_Alternatives]
+  _siteimprove_alfa_earl -> _siteimprove_alfa_refinement[color = "#7f007f" ltail=cluster_Serialization lhead=cluster_Logic]
+  _siteimprove_alfa_either -> _siteimprove_alfa_applicative[color = "#7f7f7f" ltail=cluster_Alternatives lhead=cluster_Type_definitions]
+  _siteimprove_alfa_either -> _siteimprove_alfa_equatable[color = "#007f7f" ltail=cluster_Alternatives lhead=cluster_Comparison]
+  _siteimprove_alfa_either -> _siteimprove_alfa_hash[color = "#7f0000" ltail=cluster_Alternatives lhead=cluster_Hash_tables]
+  _siteimprove_alfa_either -> _siteimprove_alfa_json[color = "#7f7f00" ltail=cluster_Alternatives lhead=cluster_Serialization]
+  _siteimprove_alfa_either -> _siteimprove_alfa_option[color = "#7f00ff"]
+  _siteimprove_alfa_emitter -> _siteimprove_alfa_callback[color = "#7f7f7f" ltail=cluster_Performance_measurements lhead=cluster_Type_definitions]
+  _siteimprove_alfa_flags -> _siteimprove_alfa_array[color = "#007f00" lhead=cluster_Built_ins]
+  _siteimprove_alfa_fnv -> _siteimprove_alfa_hash[color = "#007fff"]
+  _siteimprove_alfa_foldable -> _siteimprove_alfa_reducer[color = "#7fff7f"]
+  _siteimprove_alfa_functor -> _siteimprove_alfa_mapper[color = "#7f0000"]
+  _siteimprove_alfa_future -> _siteimprove_alfa_applicative[color = "#7f7f7f" ltail=cluster_Computations lhead=cluster_Type_definitions]
+  _siteimprove_alfa_future -> _siteimprove_alfa_array[color = "#0000ff" ltail=cluster_Computations lhead=cluster_Collections]
+  _siteimprove_alfa_future -> _siteimprove_alfa_thenable[color = "#7f7f00"]
+  _siteimprove_alfa_generator -> _siteimprove_alfa_mapper[color = "#7f0000"]
+  _siteimprove_alfa_generator -> _siteimprove_alfa_reducer[color = "#7fff7f"]
+  _siteimprove_alfa_graph -> _siteimprove_alfa_equatable[color = "#007f7f" ltail=cluster_Graphs lhead=cluster_Comparison]
+  _siteimprove_alfa_graph -> _siteimprove_alfa_hash[color = "#7f0000" ltail=cluster_Graphs lhead=cluster_Hash_tables]
+  _siteimprove_alfa_graph -> _siteimprove_alfa_iterable[color = "#0000ff" ltail=cluster_Graphs lhead=cluster_Collections]
+  _siteimprove_alfa_graph -> _siteimprove_alfa_json[color = "#7f7f00" ltail=cluster_Graphs lhead=cluster_Serialization]
+  _siteimprove_alfa_hash -> _siteimprove_alfa_encoding[color = "#7f007f"]
+  _siteimprove_alfa_hash -> _siteimprove_alfa_equatable[color = "#007f7f" ltail=cluster_Hash_tables lhead=cluster_Comparison]
+  _siteimprove_alfa_hash -> _siteimprove_alfa_json[color = "#7f7f00" ltail=cluster_Hash_tables lhead=cluster_Serialization]
+  _siteimprove_alfa_hash -> _siteimprove_alfa_refinement[color = "#7f007f" ltail=cluster_Hash_tables lhead=cluster_Logic]
+  _siteimprove_alfa_http -> _siteimprove_alfa_url[color = "#7fff7f"]
+  _siteimprove_alfa_json_ld -> _siteimprove_alfa_json[color = "#00ff7f"]
+  _siteimprove_alfa_lazy -> _siteimprove_alfa_equatable[color = "#007f7f" ltail=cluster_Computations lhead=cluster_Comparison]
+  _siteimprove_alfa_lazy -> _siteimprove_alfa_json[color = "#7f7f00" ltail=cluster_Computations lhead=cluster_Serialization]
+  _siteimprove_alfa_lazy -> _siteimprove_alfa_trampoline[color = "#00ff7f"]
+  _siteimprove_alfa_list -> _siteimprove_alfa_array[color = "#007f00" lhead=cluster_Built_ins]
+  _siteimprove_alfa_list -> _siteimprove_alfa_bits[color = "#ff0000"]
+  _siteimprove_alfa_list -> _siteimprove_alfa_collection[color = "#ff00ff"]
+  _siteimprove_alfa_list -> _siteimprove_alfa_map[color = "#00ffff"]
+  _siteimprove_alfa_list -> _siteimprove_alfa_set[color = "#7f007f"]
+  _siteimprove_alfa_map -> _siteimprove_alfa_array[color = "#007f00" lhead=cluster_Built_ins]
+  _siteimprove_alfa_map -> _siteimprove_alfa_bits[color = "#ff0000"]
+  _siteimprove_alfa_map -> _siteimprove_alfa_collection[color = "#ff00ff"]
+  _siteimprove_alfa_media -> _siteimprove_alfa_css[color = "#ff7f7f"]
+  _siteimprove_alfa_media -> _siteimprove_alfa_device[color = "#007f7f" ltail=cluster_CSS_syntax]
+  _siteimprove_alfa_monad -> _siteimprove_alfa_applicative[color = "#ff7f7f"]
+  _siteimprove_alfa_monad -> _siteimprove_alfa_functor[color = "#007f00"]
+  _siteimprove_alfa_monad -> _siteimprove_alfa_mapper[color = "#7f0000"]
+  _siteimprove_alfa_network -> _siteimprove_alfa_graph[color = "#00ff7f"]
+  _siteimprove_alfa_option -> _siteimprove_alfa_predicate[color = "#7f007f" ltail=cluster_Alternatives lhead=cluster_Logic]
+  _siteimprove_alfa_parser -> _siteimprove_alfa_predicate[color = "#7f007f" ltail=cluster_other lhead=cluster_Logic]
+  _siteimprove_alfa_performance -> _siteimprove_alfa_emitter[color = "#7f0000"]
+  _siteimprove_alfa_performance -> _siteimprove_alfa_json[color = "#7f7f00" ltail=cluster_Performance_measurements lhead=cluster_Serialization]
+  _siteimprove_alfa_predicate -> _siteimprove_alfa_callback[color = "#7f7f7f" ltail=cluster_Logic lhead=cluster_Type_definitions]
+  _siteimprove_alfa_predicate -> _siteimprove_alfa_equatable[color = "#007f7f" ltail=cluster_Logic lhead=cluster_Comparison]
+  _siteimprove_alfa_record -> _siteimprove_alfa_iterable[color = "#007f00" lhead=cluster_Built_ins]
+  _siteimprove_alfa_record -> _siteimprove_alfa_list[color = "#00ffff"]
+  _siteimprove_alfa_refinement -> _siteimprove_alfa_predicate[color = "#7f7f7f"]
+  _siteimprove_alfa_result -> _siteimprove_alfa_option[color = "#7f00ff"]
   _siteimprove_alfa_rules -> _siteimprove_alfa_act[color = "#000000" lhead=cluster_Accessibility_Conformance_Testing]
-  _siteimprove_alfa_rules -> _siteimprove_alfa_affine[color = "#007f00" lhead=cluster_Data_types]
-  _siteimprove_alfa_rules -> _siteimprove_alfa_aria[color = "#ff7f7f" lhead=cluster_Understanding_the_web]
-  _siteimprove_alfa_scraper -> _siteimprove_alfa_puppeteer[color = "#ff0000" ltail=cluster_Web_crawler lhead=cluster_Integrations_with_frameworks]
-  _siteimprove_alfa_selective -> _siteimprove_alfa_either[color = "#00ffff"]
-  _siteimprove_alfa_sequence -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
-  _siteimprove_alfa_sequence -> _siteimprove_alfa_collection[color = "#00ff7f"]
-  _siteimprove_alfa_sequence -> _siteimprove_alfa_lazy[color = "#00ffff" ltail=cluster_Collections lhead=cluster_Computations]
-  _siteimprove_alfa_sequence -> _siteimprove_alfa_map[color = "#ff007f"]
-  _siteimprove_alfa_sequence -> _siteimprove_alfa_set[color = "#ff7f00"]
-  _siteimprove_alfa_set -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
-  _siteimprove_alfa_set -> _siteimprove_alfa_collection[color = "#00ff7f"]
-  _siteimprove_alfa_set -> _siteimprove_alfa_map[color = "#ff007f"]
-  _siteimprove_alfa_slice -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
-  _siteimprove_alfa_slice -> _siteimprove_alfa_collection[color = "#00ff7f"]
-  _siteimprove_alfa_style -> _siteimprove_alfa_cascade[color = "#00ffff"]
-  _siteimprove_alfa_style -> _siteimprove_alfa_selector[color = "#ff00ff"]
-  _siteimprove_alfa_table -> _siteimprove_alfa_dom[color = "#7f007f"]
-  _siteimprove_alfa_test -> _siteimprove_alfa_highlight[color = "#ffff00"]
-  _siteimprove_alfa_thenable -> _siteimprove_alfa_refinement[color = "#7f7f7f" ltail=cluster_Computations lhead=cluster_Logic]
-  _siteimprove_alfa_thunk -> _siteimprove_alfa_mapper[color = "#7fff7f"]
-  _siteimprove_alfa_thunk -> _siteimprove_alfa_reducer[color = "#007f00"]
-  _siteimprove_alfa_tree -> _siteimprove_alfa_flags[color = "#7fff7f"]
-  _siteimprove_alfa_tree -> _siteimprove_alfa_sequence[color = "#0000ff"]
-  _siteimprove_alfa_trilean -> _siteimprove_alfa_iterable[color = "#007fff" ltail=cluster_Logic lhead=cluster_Collections]
-  _siteimprove_alfa_tuple -> _siteimprove_alfa_array[color = "#00ff00" lhead=cluster_Built_ins]
-  _siteimprove_alfa_unexpected -> _siteimprove_alfa_assert[color = "#007f7f"]
-  _siteimprove_alfa_vue -> _siteimprove_alfa_cheerio[color = "#7f7f00"]
-  _siteimprove_alfa_wcag -> _siteimprove_alfa_act[color = "#007f7f"]
-  _siteimprove_alfa_web -> _siteimprove_alfa_device[color = "#7f0000" ltail=cluster_Infrastructure]
-  _siteimprove_alfa_web -> _siteimprove_alfa_dom[color = "#00007f" ltail=cluster_Infrastructure lhead=cluster_HTML]
-  _siteimprove_alfa_web -> _siteimprove_alfa_http[color = "#7f00ff"]
-  _siteimprove_alfa_xpath -> _siteimprove_alfa_dom[color = "#00007f" lhead=cluster_HTML]
+  _siteimprove_alfa_rules -> _siteimprove_alfa_affine[color = "#7f7fff" lhead=cluster_other]
+  _siteimprove_alfa_rules -> _siteimprove_alfa_aria[color = "#7fff00" lhead=cluster_Understanding_the_web]
+  _siteimprove_alfa_rules -> _siteimprove_alfa_array[color = "#0000ff" lhead=cluster_Collections]
+  _siteimprove_alfa_rules -> _siteimprove_alfa_comparable[color = "#007f7f" lhead=cluster_Comparison]
+  _siteimprove_alfa_rules -> _siteimprove_alfa_earl[color = "#7f7f00" lhead=cluster_Serialization]
+  _siteimprove_alfa_rules -> _siteimprove_alfa_future[color = "#007fff" lhead=cluster_Computations]
+  _siteimprove_alfa_rules -> _siteimprove_alfa_hash[color = "#7f0000" lhead=cluster_Hash_tables]
+  _siteimprove_alfa_rules -> _siteimprove_alfa_option[color = "#00007f" lhead=cluster_Alternatives]
+  _siteimprove_alfa_rules -> _siteimprove_alfa_predicate[color = "#7f007f" lhead=cluster_Logic]
+  _siteimprove_alfa_rules -> _siteimprove_alfa_thunk[color = "#7f7f7f" lhead=cluster_Type_definitions]
+  _siteimprove_alfa_selective -> _siteimprove_alfa_either[color = "#00007f"]
+  _siteimprove_alfa_sequence -> _siteimprove_alfa_array[color = "#007f00" lhead=cluster_Built_ins]
+  _siteimprove_alfa_sequence -> _siteimprove_alfa_collection[color = "#ff00ff"]
+  _siteimprove_alfa_sequence -> _siteimprove_alfa_lazy[color = "#007fff" ltail=cluster_Collections lhead=cluster_Computations]
+  _siteimprove_alfa_sequence -> _siteimprove_alfa_map[color = "#00ffff"]
+  _siteimprove_alfa_sequence -> _siteimprove_alfa_set[color = "#7f007f"]
+  _siteimprove_alfa_set -> _siteimprove_alfa_array[color = "#007f00" lhead=cluster_Built_ins]
+  _siteimprove_alfa_set -> _siteimprove_alfa_collection[color = "#ff00ff"]
+  _siteimprove_alfa_set -> _siteimprove_alfa_map[color = "#00ffff"]
+  _siteimprove_alfa_slice -> _siteimprove_alfa_array[color = "#007f00" lhead=cluster_Built_ins]
+  _siteimprove_alfa_slice -> _siteimprove_alfa_collection[color = "#ff00ff"]
+  _siteimprove_alfa_style -> _siteimprove_alfa_cascade[color = "#ff7f00"]
+  _siteimprove_alfa_style -> _siteimprove_alfa_selector[color = "#7f0000"]
+  _siteimprove_alfa_table -> _siteimprove_alfa_dom[color = "#007fff"]
+  _siteimprove_alfa_test -> _siteimprove_alfa_highlight[color = "#7f7fff"]
+  _siteimprove_alfa_thenable -> _siteimprove_alfa_refinement[color = "#7f007f" ltail=cluster_Computations lhead=cluster_Logic]
+  _siteimprove_alfa_thunk -> _siteimprove_alfa_mapper[color = "#7f0000"]
+  _siteimprove_alfa_thunk -> _siteimprove_alfa_reducer[color = "#7fff7f"]
+  _siteimprove_alfa_tree -> _siteimprove_alfa_flags[color = "#00ff00"]
+  _siteimprove_alfa_tree -> _siteimprove_alfa_sequence[color = "#ff007f"]
+  _siteimprove_alfa_trilean -> _siteimprove_alfa_iterable[color = "#0000ff" ltail=cluster_Logic lhead=cluster_Collections]
+  _siteimprove_alfa_tuple -> _siteimprove_alfa_array[color = "#007f00" lhead=cluster_Built_ins]
+  _siteimprove_alfa_wcag -> _siteimprove_alfa_act[color = "#ff7f00"]
+  _siteimprove_alfa_web -> _siteimprove_alfa_device[color = "#007f7f" ltail=cluster_Infrastructure]
+  _siteimprove_alfa_web -> _siteimprove_alfa_dom[color = "#ff007f" ltail=cluster_Infrastructure lhead=cluster_HTML]
+  _siteimprove_alfa_web -> _siteimprove_alfa_http[color = "#7fff00"]
+  _siteimprove_alfa_xpath -> _siteimprove_alfa_dom[color = "#ff007f" lhead=cluster_HTML]
 
-  _siteimprove_alfa_act[label = "@siteimprove/alfa-act", color = "#007f7f"]
-  _siteimprove_alfa_applicative[label = "@siteimprove/alfa-applicative", color = "#007fff"]
-  _siteimprove_alfa_array[label = "@siteimprove/alfa-array", color = "#00ff00"]
-  _siteimprove_alfa_earl[label = "@siteimprove/alfa-earl", color = "#00ff7f"]
-  _siteimprove_alfa_either[label = "@siteimprove/alfa-either", color = "#00ffff"]
-  _siteimprove_alfa_equatable[label = "@siteimprove/alfa-equatable", color = "#7f0000"]
-  _siteimprove_alfa_functor[label = "@siteimprove/alfa-functor", color = "#7f007f"]
-  _siteimprove_alfa_future[label = "@siteimprove/alfa-future", color = "#7f00ff"]
-  _siteimprove_alfa_hash[label = "@siteimprove/alfa-hash", color = "#7f7f00"]
-  _siteimprove_alfa_iterable[label = "@siteimprove/alfa-iterable", color = "#7f7f7f"]
-  _siteimprove_alfa_json[label = "@siteimprove/alfa-json", color = "#7f7fff"]
-  _siteimprove_alfa_list[label = "@siteimprove/alfa-list", color = "#7fff00"]
-  _siteimprove_alfa_mapper[label = "@siteimprove/alfa-mapper", color = "#7fff7f"]
-  _siteimprove_alfa_monad[label = "@siteimprove/alfa-monad", color = "#ff0000"]
-  _siteimprove_alfa_option[label = "@siteimprove/alfa-option", color = "#ff007f"]
-  _siteimprove_alfa_performance[label = "@siteimprove/alfa-performance", color = "#ff00ff"]
-  _siteimprove_alfa_predicate[label = "@siteimprove/alfa-predicate", color = "#ff7f00"]
-  _siteimprove_alfa_record[label = "@siteimprove/alfa-record", color = "#ff7f7f"]
-  _siteimprove_alfa_refinement[label = "@siteimprove/alfa-refinement", color = "#ffff00"]
-  _siteimprove_alfa_result[label = "@siteimprove/alfa-result", color = "#000000"]
-  _siteimprove_alfa_sarif[label = "@siteimprove/alfa-sarif", color = "#00007f"]
-  _siteimprove_alfa_sequence[label = "@siteimprove/alfa-sequence", color = "#0000ff"]
-  _siteimprove_alfa_thunk[label = "@siteimprove/alfa-thunk", color = "#007f00"]
-  _siteimprove_alfa_trilean[label = "@siteimprove/alfa-trilean", color = "#007f7f"]
-  _siteimprove_alfa_tuple[label = "@siteimprove/alfa-tuple", color = "#007fff"]
-  _siteimprove_alfa_affine[label = "@siteimprove/alfa-affine", color = "#00ff00"]
-  _siteimprove_alfa_math[label = "@siteimprove/alfa-math", color = "#00ff7f"]
-  _siteimprove_alfa_angular[label = "@siteimprove/alfa-angular", color = "#00ffff"]
-  _siteimprove_alfa_device[label = "@siteimprove/alfa-device", color = "#7f0000"]
-  _siteimprove_alfa_dom[label = "@siteimprove/alfa-dom", color = "#7f007f"]
-  _siteimprove_alfa_http[label = "@siteimprove/alfa-http", color = "#7f00ff"]
-  _siteimprove_alfa_web[label = "@siteimprove/alfa-web", color = "#7f7f00"]
-  _siteimprove_alfa_aria[label = "@siteimprove/alfa-aria", color = "#7f7f7f"]
-  _siteimprove_alfa_cache[label = "@siteimprove/alfa-cache", color = "#7f7fff"]
-  _siteimprove_alfa_comparable[label = "@siteimprove/alfa-comparable", color = "#7fff00"]
-  _siteimprove_alfa_flags[label = "@siteimprove/alfa-flags", color = "#7fff7f"]
-  _siteimprove_alfa_graph[label = "@siteimprove/alfa-graph", color = "#ff0000"]
-  _siteimprove_alfa_map[label = "@siteimprove/alfa-map", color = "#ff007f"]
-  _siteimprove_alfa_selector[label = "@siteimprove/alfa-selector", color = "#ff00ff"]
-  _siteimprove_alfa_set[label = "@siteimprove/alfa-set", color = "#ff7f00"]
-  _siteimprove_alfa_style[label = "@siteimprove/alfa-style", color = "#ff7f7f"]
-  _siteimprove_alfa_table[label = "@siteimprove/alfa-table", color = "#ffff00"]
-  _siteimprove_alfa_tree[label = "@siteimprove/alfa-tree", color = "#000000"]
-  _siteimprove_alfa_callback[label = "@siteimprove/alfa-callback", color = "#00007f"]
-  _siteimprove_alfa_clone[label = "@siteimprove/alfa-clone", color = "#0000ff"]
-  _siteimprove_alfa_reducer[label = "@siteimprove/alfa-reducer", color = "#007f00"]
-  _siteimprove_alfa_assert[label = "@siteimprove/alfa-assert", color = "#007f7f"]
-  _siteimprove_alfa_bits[label = "@siteimprove/alfa-bits", color = "#007fff"]
-  _siteimprove_alfa_branched[label = "@siteimprove/alfa-branched", color = "#00ff00"]
-  _siteimprove_alfa_collection[label = "@siteimprove/alfa-collection", color = "#00ff7f"]
-  _siteimprove_alfa_cascade[label = "@siteimprove/alfa-cascade", color = "#00ffff"]
-  _siteimprove_alfa_css[label = "@siteimprove/alfa-css", color = "#7f0000"]
-  _siteimprove_alfa_media[label = "@siteimprove/alfa-media", color = "#7f007f"]
-  _siteimprove_alfa_chai[label = "@siteimprove/alfa-chai", color = "#7f00ff"]
-  _siteimprove_alfa_cheerio[label = "@siteimprove/alfa-cheerio", color = "#7f7f00"]
-  _siteimprove_alfa_cli[label = "@siteimprove/alfa-cli", color = "#7f7f7f"]
-  _siteimprove_alfa_command[label = "@siteimprove/alfa-command", color = "#7f7fff"]
-  _siteimprove_alfa_formatter[label = "@siteimprove/alfa-formatter", color = "#7fff00"]
-  _siteimprove_alfa_interviewer[label = "@siteimprove/alfa-interviewer", color = "#7fff7f"]
-  _siteimprove_alfa_rules[label = "@siteimprove/alfa-rules", color = "#ff0000"]
-  _siteimprove_alfa_scraper[label = "@siteimprove/alfa-scraper", color = "#ff007f"]
-  _siteimprove_alfa_time[label = "@siteimprove/alfa-time", color = "#ff00ff"]
-  _siteimprove_alfa_url[label = "@siteimprove/alfa-url", color = "#ff7f00"]
-  _siteimprove_alfa_foldable[label = "@siteimprove/alfa-foldable", color = "#ff7f7f"]
-  _siteimprove_alfa_highlight[label = "@siteimprove/alfa-highlight", color = "#ffff00"]
-  _siteimprove_alfa_parser[label = "@siteimprove/alfa-parser", color = "#000000"]
+  _siteimprove_alfa_act[label = "@siteimprove/alfa-act", color = "#ff7f00"]
+  _siteimprove_alfa_applicative[label = "@siteimprove/alfa-applicative", color = "#ff7f7f"]
+  _siteimprove_alfa_array[label = "@siteimprove/alfa-array", color = "#ffff00"]
+  _siteimprove_alfa_earl[label = "@siteimprove/alfa-earl", color = "#000000"]
+  _siteimprove_alfa_either[label = "@siteimprove/alfa-either", color = "#00007f"]
+  _siteimprove_alfa_equatable[label = "@siteimprove/alfa-equatable", color = "#0000ff"]
+  _siteimprove_alfa_functor[label = "@siteimprove/alfa-functor", color = "#007f00"]
+  _siteimprove_alfa_future[label = "@siteimprove/alfa-future", color = "#007f7f"]
+  _siteimprove_alfa_hash[label = "@siteimprove/alfa-hash", color = "#007fff"]
+  _siteimprove_alfa_iterable[label = "@siteimprove/alfa-iterable", color = "#00ff00"]
+  _siteimprove_alfa_json[label = "@siteimprove/alfa-json", color = "#00ff7f"]
+  _siteimprove_alfa_list[label = "@siteimprove/alfa-list", color = "#00ffff"]
+  _siteimprove_alfa_mapper[label = "@siteimprove/alfa-mapper", color = "#7f0000"]
+  _siteimprove_alfa_monad[label = "@siteimprove/alfa-monad", color = "#7f007f"]
+  _siteimprove_alfa_option[label = "@siteimprove/alfa-option", color = "#7f00ff"]
+  _siteimprove_alfa_performance[label = "@siteimprove/alfa-performance", color = "#7f7f00"]
+  _siteimprove_alfa_predicate[label = "@siteimprove/alfa-predicate", color = "#7f7f7f"]
+  _siteimprove_alfa_record[label = "@siteimprove/alfa-record", color = "#7f7fff"]
+  _siteimprove_alfa_refinement[label = "@siteimprove/alfa-refinement", color = "#7fff00"]
+  _siteimprove_alfa_result[label = "@siteimprove/alfa-result", color = "#7fff7f"]
+  _siteimprove_alfa_sarif[label = "@siteimprove/alfa-sarif", color = "#ff0000"]
+  _siteimprove_alfa_sequence[label = "@siteimprove/alfa-sequence", color = "#ff007f"]
+  _siteimprove_alfa_thunk[label = "@siteimprove/alfa-thunk", color = "#ff00ff"]
+  _siteimprove_alfa_trilean[label = "@siteimprove/alfa-trilean", color = "#ff7f00"]
+  _siteimprove_alfa_tuple[label = "@siteimprove/alfa-tuple", color = "#ff7f7f"]
+  _siteimprove_alfa_affine[label = "@siteimprove/alfa-affine", color = "#ffff00"]
+  _siteimprove_alfa_math[label = "@siteimprove/alfa-math", color = "#000000"]
+  _siteimprove_alfa_aria[label = "@siteimprove/alfa-aria", color = "#00007f"]
+  _siteimprove_alfa_cache[label = "@siteimprove/alfa-cache", color = "#0000ff"]
+  _siteimprove_alfa_comparable[label = "@siteimprove/alfa-comparable", color = "#007f00"]
+  _siteimprove_alfa_device[label = "@siteimprove/alfa-device", color = "#007f7f"]
+  _siteimprove_alfa_dom[label = "@siteimprove/alfa-dom", color = "#007fff"]
+  _siteimprove_alfa_flags[label = "@siteimprove/alfa-flags", color = "#00ff00"]
+  _siteimprove_alfa_graph[label = "@siteimprove/alfa-graph", color = "#00ff7f"]
+  _siteimprove_alfa_map[label = "@siteimprove/alfa-map", color = "#00ffff"]
+  _siteimprove_alfa_selector[label = "@siteimprove/alfa-selector", color = "#7f0000"]
+  _siteimprove_alfa_set[label = "@siteimprove/alfa-set", color = "#7f007f"]
+  _siteimprove_alfa_style[label = "@siteimprove/alfa-style", color = "#7f00ff"]
+  _siteimprove_alfa_table[label = "@siteimprove/alfa-table", color = "#7f7f00"]
+  _siteimprove_alfa_tree[label = "@siteimprove/alfa-tree", color = "#7f7f7f"]
+  _siteimprove_alfa_callback[label = "@siteimprove/alfa-callback", color = "#7f7fff"]
+  _siteimprove_alfa_clone[label = "@siteimprove/alfa-clone", color = "#7fff00"]
+  _siteimprove_alfa_reducer[label = "@siteimprove/alfa-reducer", color = "#7fff7f"]
+  _siteimprove_alfa_bits[label = "@siteimprove/alfa-bits", color = "#ff0000"]
+  _siteimprove_alfa_branched[label = "@siteimprove/alfa-branched", color = "#ff007f"]
+  _siteimprove_alfa_collection[label = "@siteimprove/alfa-collection", color = "#ff00ff"]
+  _siteimprove_alfa_cascade[label = "@siteimprove/alfa-cascade", color = "#ff7f00"]
+  _siteimprove_alfa_css[label = "@siteimprove/alfa-css", color = "#ff7f7f"]
+  _siteimprove_alfa_media[label = "@siteimprove/alfa-media", color = "#ffff00"]
+  _siteimprove_alfa_foldable[label = "@siteimprove/alfa-foldable", color = "#000000"]
   _siteimprove_alfa_compatibility[label = "@siteimprove/alfa-compatibility", color = "#00007f"]
   _siteimprove_alfa_continuation[label = "@siteimprove/alfa-continuation", color = "#0000ff"]
-  _siteimprove_alfa_crawler[label = "@siteimprove/alfa-crawler", color = "#007f00"]
-  _siteimprove_alfa_frontier[label = "@siteimprove/alfa-frontier", color = "#007f7f"]
-  _siteimprove_alfa_selective[label = "@siteimprove/alfa-selective", color = "#007fff"]
-  _siteimprove_alfa_slice[label = "@siteimprove/alfa-slice", color = "#00ff00"]
-  _siteimprove_alfa_cypress[label = "@siteimprove/alfa-cypress", color = "#00ff7f"]
-  _siteimprove_alfa_formatter_earl[label = "@siteimprove/alfa-formatter-earl", color = "#00ffff"]
-  _siteimprove_alfa_lazy[label = "@siteimprove/alfa-lazy", color = "#7f0000"]
-  _siteimprove_alfa_trampoline[label = "@siteimprove/alfa-trampoline", color = "#7f007f"]
-  _siteimprove_alfa_json_ld[label = "@siteimprove/alfa-json-ld", color = "#7f00ff"]
-  _siteimprove_alfa_emitter[label = "@siteimprove/alfa-emitter", color = "#7f7f00"]
-  _siteimprove_alfa_encoding[label = "@siteimprove/alfa-encoding", color = "#7f7f7f"]
-  _siteimprove_alfa_enzyme[label = "@siteimprove/alfa-enzyme", color = "#7f7fff"]
-  _siteimprove_alfa_react[label = "@siteimprove/alfa-react", color = "#7fff00"]
-  _siteimprove_alfa_fnv[label = "@siteimprove/alfa-fnv", color = "#7fff7f"]
-  _siteimprove_alfa_formatter_json[label = "@siteimprove/alfa-formatter-json", color = "#ff0000"]
-  _siteimprove_alfa_formatter_sarif[label = "@siteimprove/alfa-formatter-sarif", color = "#ff007f"]
-  _siteimprove_alfa_thenable[label = "@siteimprove/alfa-thenable", color = "#ff00ff"]
-  _siteimprove_alfa_generator[label = "@siteimprove/alfa-generator", color = "#ff7f00"]
-  _siteimprove_alfa_iana[label = "@siteimprove/alfa-iana", color = "#ff7f7f"]
-  _siteimprove_alfa_jasmine[label = "@siteimprove/alfa-jasmine", color = "#ffff00"]
-  _siteimprove_alfa_jest[label = "@siteimprove/alfa-jest", color = "#000000"]
-  _siteimprove_alfa_jquery[label = "@siteimprove/alfa-jquery", color = "#00007f"]
-  _siteimprove_alfa_network[label = "@siteimprove/alfa-network", color = "#0000ff"]
-  _siteimprove_alfa_playwright[label = "@siteimprove/alfa-playwright", color = "#007f00"]
-  _siteimprove_alfa_promise[label = "@siteimprove/alfa-promise", color = "#007f7f"]
-  _siteimprove_alfa_puppeteer[label = "@siteimprove/alfa-puppeteer", color = "#007fff"]
-  _siteimprove_alfa_wcag[label = "@siteimprove/alfa-wcag", color = "#00ff00"]
-  _siteimprove_alfa_test[label = "@siteimprove/alfa-test", color = "#00ff7f"]
-  _siteimprove_alfa_unexpected[label = "@siteimprove/alfa-unexpected", color = "#00ffff"]
-  _siteimprove_alfa_vue[label = "@siteimprove/alfa-vue", color = "#7f0000"]
-  _siteimprove_alfa_webdriver[label = "@siteimprove/alfa-webdriver", color = "#7f007f"]
-  _siteimprove_alfa_xpath[label = "@siteimprove/alfa-xpath", color = "#7f00ff"]
+  _siteimprove_alfa_parser[label = "@siteimprove/alfa-parser", color = "#007f00"]
+  _siteimprove_alfa_selective[label = "@siteimprove/alfa-selective", color = "#007f7f"]
+  _siteimprove_alfa_slice[label = "@siteimprove/alfa-slice", color = "#007fff"]
+  _siteimprove_alfa_lazy[label = "@siteimprove/alfa-lazy", color = "#00ff00"]
+  _siteimprove_alfa_trampoline[label = "@siteimprove/alfa-trampoline", color = "#00ff7f"]
+  _siteimprove_alfa_json_ld[label = "@siteimprove/alfa-json-ld", color = "#00ffff"]
+  _siteimprove_alfa_emitter[label = "@siteimprove/alfa-emitter", color = "#7f0000"]
+  _siteimprove_alfa_encoding[label = "@siteimprove/alfa-encoding", color = "#7f007f"]
+  _siteimprove_alfa_fnv[label = "@siteimprove/alfa-fnv", color = "#7f00ff"]
+  _siteimprove_alfa_thenable[label = "@siteimprove/alfa-thenable", color = "#7f7f00"]
+  _siteimprove_alfa_generator[label = "@siteimprove/alfa-generator", color = "#7f7f7f"]
+  _siteimprove_alfa_highlight[label = "@siteimprove/alfa-highlight", color = "#7f7fff"]
+  _siteimprove_alfa_http[label = "@siteimprove/alfa-http", color = "#7fff00"]
+  _siteimprove_alfa_url[label = "@siteimprove/alfa-url", color = "#7fff7f"]
+  _siteimprove_alfa_iana[label = "@siteimprove/alfa-iana", color = "#ff0000"]
+  _siteimprove_alfa_network[label = "@siteimprove/alfa-network", color = "#ff007f"]
+  _siteimprove_alfa_promise[label = "@siteimprove/alfa-promise", color = "#ff00ff"]
+  _siteimprove_alfa_rules[label = "@siteimprove/alfa-rules", color = "#ff7f00"]
+  _siteimprove_alfa_wcag[label = "@siteimprove/alfa-wcag", color = "#ff7f7f"]
+  _siteimprove_alfa_web[label = "@siteimprove/alfa-web", color = "#ffff00"]
+  _siteimprove_alfa_test[label = "@siteimprove/alfa-test", color = "#000000"]
+  _siteimprove_alfa_time[label = "@siteimprove/alfa-time", color = "#00007f"]
+  _siteimprove_alfa_xpath[label = "@siteimprove/alfa-xpath", color = "#0000ff"]
 }
