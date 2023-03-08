@@ -8,6 +8,8 @@ import { Block } from "./block";
 import { Function } from "./function";
 import { Token } from "./token";
 
+const { delimited, option } = Parser;
+
 /**
  * {@link https://drafts.csswg.org/css-syntax/#component-value}
  *
@@ -89,25 +91,5 @@ export namespace Component {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#parse-component-value}
    */
-  export const parse: Parser<Slice<Token>, Component, string> = (input) => {
-    while (Token.isWhitespace(input.array[input.offset])) {
-      input = input.slice(1);
-    }
-
-    if (input.length === 0) {
-      return Err.of("Unexpected end of input");
-    }
-
-    const component = consume(input);
-
-    while (Token.isWhitespace(input.array[input.offset])) {
-      input = input.slice(1);
-    }
-
-    if (input.length !== 0) {
-      return Err.of("Expected end of input");
-    }
-
-    return component;
-  };
+  export const parse = delimited(option(Token.parseWhitespace), consume);
 }
