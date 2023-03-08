@@ -9,7 +9,7 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasName, hasNamespace, isDocumentElement, isElement } = Element;
+const { hasName, hasNamespace, isDocumentElement } = Element;
 const { hasChild, hasTextContent } = Node;
 const { and, fold } = Predicate;
 

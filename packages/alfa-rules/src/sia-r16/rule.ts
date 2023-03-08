@@ -16,8 +16,7 @@ import * as aria from "@siteimprove/alfa-aria";
 import { Scope } from "../tags";
 
 const { hasNonDefaultRole, isIncludedInTheAccessibilityTree } = DOM;
-const { hasAttribute, hasInputType, hasName, hasNamespace, isElement } =
-  Element;
+const { hasAttribute, hasInputType, hasName, hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, property, test } = Predicate;
 const { isFocusable } = Style;

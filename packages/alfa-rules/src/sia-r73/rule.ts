@@ -11,7 +11,6 @@ import { Page } from "@siteimprove/alfa-web";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
-const { isElement } = Element;
 const { and } = Predicate;
 const { isVisible } = Style;
 

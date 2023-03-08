@@ -11,7 +11,7 @@ import { WithBadElements } from "../common/diagnostic/with-bad-elements";
 
 import { Scope } from "../tags";
 
-const { hasName, hasNamespace, isDocumentElement, isElement } = Element;
+const { hasName, hasNamespace, isDocumentElement } = Element;
 const { and, test } = Predicate;
 const { isRendered } = Style;
 

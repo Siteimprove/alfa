@@ -23,7 +23,7 @@ const {
   hasRole,
   isIncludedInTheAccessibilityTree,
 } = DOM;
-const { hasNamespace, isElement } = Element;
+const { hasNamespace } = Element;
 const { and, equals } = Predicate;
 
 export default Rule.Atomic.of<Page, Group<Element>>({

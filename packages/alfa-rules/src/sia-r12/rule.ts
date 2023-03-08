@@ -12,7 +12,7 @@ import { Scope } from "../tags";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;
-const { isElement, hasInputType, hasNamespace } = Element;
+const { hasInputType, hasNamespace } = Element;
 const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
