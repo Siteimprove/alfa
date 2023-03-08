@@ -59,31 +59,31 @@ export namespace Component {
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-component-value}
    */
   export const consume: Parser<Slice<Token>, Component, string> = (input) => {
-    if (input.length === 0) {
-      return Err.of("Unexpected end of file");
-    }
+    return input
+      .first()
+      .map((next) => {
+        if (
+          Token.isOpenParenthesis(next) ||
+          Token.isOpenSquareBracket(next) ||
+          Token.isOpenCurlyBracket(next)
+        ) {
+          return Block.consume(input).map<[Slice<Token>, Component]>(
+            ([input, value]) => [input, Component.of(value)]
+          );
+        }
 
-    const next = input.array[input.offset];
+        if (Token.isFunction(next)) {
+          return Function.consume(input).map<[Slice<Token>, Component]>(
+            ([input, value]) => [input, Component.of(value)]
+          );
+        }
 
-    if (
-      Token.isOpenParenthesis(next) ||
-      Token.isOpenSquareBracket(next) ||
-      Token.isOpenCurlyBracket(next)
-    ) {
-      return Block.consume(input).map(([input, value]) => [
-        input,
-        Component.of(value),
-      ]);
-    }
-
-    if (Token.isFunction(next)) {
-      return Function.consume(input).map(([input, value]) => [
-        input,
-        Component.of(value),
-      ]);
-    }
-
-    return Result.of([input.slice(1), Component.of([next])]);
+        return Result.of<[Slice<Token>, Component], string>([
+          input.rest(),
+          Component.of([next]),
+        ]);
+      })
+      .getOr(Err.of("Unexpected end of file"));
   };
 
   /**
