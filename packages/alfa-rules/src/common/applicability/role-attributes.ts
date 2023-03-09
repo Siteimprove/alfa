@@ -12,7 +12,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 const { isProgrammaticallyHidden } = DOM;
-const { hasAttribute, hasNamespace, isElement } = Element;
+const { hasAttribute, hasNamespace } = Element;
 const { and, not } = Predicate;
 
 const cache = Cache.empty<

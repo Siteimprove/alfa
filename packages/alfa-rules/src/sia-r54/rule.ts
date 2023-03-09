@@ -11,7 +11,6 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { isIncludedInTheAccessibilityTree } = DOM;
-const { isElement } = Element;
 const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({

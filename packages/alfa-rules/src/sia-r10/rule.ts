@@ -18,8 +18,7 @@ import { normalize } from "../common/normalize";
 import { Scope } from "../tags";
 
 const { hasRole, isPerceivableForAll } = DOM;
-const { hasAttribute, hasInputType, hasName, hasNamespace, isElement } =
-  Element;
+const { hasAttribute, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;
 const { isTabbable } = Style;
 const { either, end, option, right } = Parser;

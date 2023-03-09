@@ -15,7 +15,7 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
-const { hasDisplaySize, hasInputType, isElement } = Element;
+const { hasDisplaySize, hasInputType } = Element;
 const { test, property } = Predicate;
 
 export default Rule.Atomic.of<Page, Attribute>({

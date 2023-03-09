@@ -14,7 +14,7 @@ import { Question } from "../common/act/question";
 import { Scope, Stability } from "../tags";
 
 const { hasRole, isPerceivableForAll } = DOM;
-const { isElement, hasNamespace } = Element;
+const { hasNamespace } = Element;
 const { and, test } = Predicate;
 
 /**
