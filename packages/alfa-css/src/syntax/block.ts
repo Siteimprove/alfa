@@ -6,15 +6,10 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Refinement } from "@siteimprove/alfa-refinement";
 import { Component } from "./component";
 import { Token } from "./token";
 
-const { isOpenParenthesis } = Token.OpenParenthesis;
-const { isOpenSquareBracket } = Token.OpenSquareBracket;
-const { isOpenCurlyBracket } = Token.OpenCurlyBracket;
-
-const { or } = Refinement;
+const { either, flatMap } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#simple-block}
@@ -107,42 +102,38 @@ export namespace Block {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-simple-block}
    */
-  export const consume: Parser<Slice<Token>, Block, string> = (input) => {
-    const result = input
-      .first()
-      .filter(
-        or(isOpenParenthesis, or(isOpenSquareBracket, isOpenCurlyBracket))
-      )
-      .map((token) => {
-        const value: Array<Token> = [];
+  export const consume: Parser<Slice<Token>, Block, string> = flatMap(
+    either<Slice<Token>, Open, string>(
+      Token.parseOpenParenthesis,
+      Token.parseOpenSquareBracket,
+      Token.parseOpenCurlyBracket
+    ),
+    (token) => (input) => {
+      const value: Array<Token> = [];
+      // This loop terminates either when it reaches the closing delimiter or
+      // the end of the input
+      while (true) {
+        const next = input.first();
 
-        input = input.rest();
-
-        // This loop terminates either when it reaches the closing delimiter or
-        // the end of the input
-        while (true) {
-          const next = input.first();
-
-          if (!next.isSome()) {
-            return Err.of("Expected closing delimiter");
-          }
-
-          if (next.get().type === token.mirror.type) {
-            input = input.rest();
-            break;
-          }
-
-          const [remainder, component] = Component.consume(input).get();
-
-          input = remainder;
-          value.push(...component);
+        if (!next.isSome()) {
+          return Err.of("Expected closing delimiter");
         }
 
-        return Result.of<[Slice<Token>, Block], string>([
-          input,
-          Block.of(token, value),
-        ]);
-      });
-    return result.getOr(Err.of("Expected opening delimiter"));
-  };
+        if (next.get().type === token.mirror.type) {
+          input = input.rest();
+          break;
+        }
+
+        const [remainder, component] = Component.consume(input).get();
+
+        input = remainder;
+        value.push(...component);
+      }
+
+      return Result.of<[Slice<Token>, Block], string>([
+        input,
+        Block.of(token, value),
+      ]);
+    }
+  );
 }

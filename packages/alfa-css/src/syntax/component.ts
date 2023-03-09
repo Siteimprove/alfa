@@ -8,7 +8,7 @@ import { Block } from "./block";
 import { Function } from "./function";
 import { Token } from "./token";
 
-const { delimited, option } = Parser;
+const { delimited, option, either, peek, right, map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#component-value}
@@ -60,33 +60,22 @@ export namespace Component {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-component-value}
    */
-  export const consume: Parser<Slice<Token>, Component, string> = (input) => {
-    return input
-      .first()
-      .map((next) => {
-        if (
-          Token.isOpenParenthesis(next) ||
-          Token.isOpenSquareBracket(next) ||
-          Token.isOpenCurlyBracket(next)
-        ) {
-          return Block.consume(input).map<[Slice<Token>, Component]>(
-            ([input, value]) => [input, Component.of(value)]
-          );
-        }
-
-        if (Token.isFunction(next)) {
-          return Function.consume(input).map<[Slice<Token>, Component]>(
-            ([input, value]) => [input, Component.of(value)]
-          );
-        }
-
-        return Result.of<[Slice<Token>, Component], string>([
-          input.rest(),
-          Component.of([next]),
-        ]);
-      })
-      .getOr(Err.of("Unexpected end of file"));
-  };
+  export const consume: Parser<Slice<Token>, Component, string> = (input) =>
+    // eta expansion is necessary for `this` binding to resolve correctly
+    either(
+      map(Block.consume, (value) => Component.of(value)),
+      map(Function.consume, (value) => Component.of(value)),
+      (input) =>
+        input
+          .first()
+          .map((token) =>
+            Result.of<[Slice<Token>, Component], string>([
+              input.rest(),
+              Component.of([token]),
+            ])
+          )
+          .getOr(Err.of("Unexpected end of file"))
+    )(input);
 
   /**
    * {@link https://drafts.csswg.org/css-syntax/#parse-component-value}

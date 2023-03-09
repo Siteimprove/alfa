@@ -9,14 +9,14 @@ const { whitespace, openParenthesis, closeParenthesis } = Token;
 test(".consume() of empty returns error", (t) => {
   t.deepEqual(consume(Slice.empty()).toJSON(), {
     type: "err",
-    error: "Expected opening delimiter",
+    error: "No token left",
   });
 });
 
 test(".consume() of invalid input returns error", (t) => {
   t.deepEqual(consume(Slice.of([whitespace()])).toJSON(), {
     type: "err",
-    error: "Expected opening delimiter",
+    error: "Mismatching token",
   });
 });
 
