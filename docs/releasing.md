@@ -9,6 +9,7 @@ Start by building the API documentation for the new version:
 ```shell
 $ yarn extract 
 $ yarn document
+$ git add docs/api
 ```
 
 Next, mark all public packages for increment:
