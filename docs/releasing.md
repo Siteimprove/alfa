@@ -7,12 +7,13 @@ Alfa uses the currently experimental [Yarn release workflow](https://yarnpkg.com
 Start by building the API documentation for the new version:
 
 ```shell
-$ yarn api
+$ yarn extract 
+$ yarn document
 ```
 
 Next, mark all public packages for increment:
 
-```console
+```shell
 $ yarn workspaces foreach \
     --no-private \
     --topological-dev \
@@ -21,7 +22,7 @@ $ yarn workspaces foreach \
 
 When finished, inspect the file created at `.yarn/versions/<hash>.yml` to verify that all packages have been marked with the chosen increment. Once verified, apply the increment:
 
-```console
+```shell
 $ yarn version apply --all
 ```
 
@@ -29,7 +30,7 @@ With the increment applied and the lockfile updated, edit the [changelog](../CHA
 
 Then, commit the changes, create a new release tag, and push:
 
-```console
+```shell
 $ git commit --message <version> --all
 $ git tag --message <version> --annotate <version>
 $ git push --follow-tags

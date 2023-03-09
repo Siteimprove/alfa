@@ -9,9 +9,9 @@
     "description": "Update dependency graph",
     "commitMsg": "Update dependency graph"
   },
-  "document": {
-    "command": "CI=false yarn document --quiet",
-    "description": "Update packages documentation",
-    "commitMsg": "Update documentation"
+  "extract": {
+    "command": "CI=false yarn extract --quiet",
+    "description": "Extract packages API",
+    "commitMsg": "Extract API"
   }
 }
