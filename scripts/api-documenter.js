@@ -25,8 +25,6 @@ function document() {
   let code = 0;
 
   try {
-    const apiModel = new ApiModel();
-
     // Ideally, we should locate these via the API config, not hard coding the
     // relative path.
     const modelDir = path.join(__dirname, "..", "docs", "data", "api");
@@ -37,6 +35,8 @@ function document() {
       "config",
       "api-documenter.json"
     );
+
+    const apiModel = new ApiModel();
 
     fs.readdirSync(modelDir)
       .filter((file) => file.endsWith(".api.json"))
