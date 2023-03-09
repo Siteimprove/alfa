@@ -426,13 +426,12 @@ export namespace Token {
 function parseToken<T extends Token>(
   refinement: Refinement<Token, T>
 ): Parser<Slice<Token>, T, string> {
-  return (input) => {
-    const token = input.array[input.offset];
-
-    if (token !== undefined && refinement(token)) {
-      return Result.of([input.slice(1), token]);
-    }
-
-    return Err.of("Expected token");
-  };
+  return (input) =>
+    input
+      .first()
+      .filter(refinement)
+      .map((token) =>
+        Result.of<[Slice<Token>, T], string>([input.rest(), token])
+      )
+      .getOr(Err.of("Expected token"));
 }

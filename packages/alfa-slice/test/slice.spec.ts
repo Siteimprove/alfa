@@ -9,7 +9,6 @@ test(".of() constructs a slice over an array", (t) => {
 
   t.equal(slice.offset, 2);
   t.equal(slice.length, 6);
-  t.equal(slice.array, arr);
   t.deepEqual([...slice], [2, 3, 4, 5, 6, 7]);
 });
 
