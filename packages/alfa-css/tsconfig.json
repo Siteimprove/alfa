@@ -64,6 +64,7 @@
     "test/syntax/block.spec.ts",
     "test/syntax/component.spec.ts",
     "test/syntax/declaration.spec.ts",
+    "test/syntax/function.spec.ts",
     "test/syntax/lexer.spec.ts",
     "test/syntax/nth.spec.ts",
     "test/syntax/token.spec.ts",

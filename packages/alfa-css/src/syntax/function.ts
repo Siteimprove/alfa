@@ -9,7 +9,20 @@ import * as json from "@siteimprove/alfa-json";
 import { Component } from "./component";
 import { Token } from "./token";
 
-const { delimited, flatMap, option, peek, right } = Parser;
+const {
+  delimited,
+  flatMap,
+  option,
+  peek,
+  right,
+  left,
+  pair,
+  map,
+  zeroOrMore,
+  takeUntil,
+  either,
+  end,
+} = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#function}
@@ -82,29 +95,29 @@ export namespace Function {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-function}
    */
-  export const consume: Parser<Slice<Token>, Function> = (input) => {
-    const { value: name } = input.array[input.offset] as Token.Function;
-
-    const value: Array<Token> = [];
-
-    input = input.slice(1);
-
-    while (input.length > 0) {
-      const next = input.array[input.offset];
-
-      if (Token.isCloseParenthesis(next)) {
-        input = input.slice(1);
-        break;
-      }
-
-      const [remainder, component] = Component.consume(input).get();
-
-      input = remainder;
-      value.push(...component);
-    }
-
-    return Result.of([input, Function.of(name, value)]);
-  };
+  export const consume: Parser<Slice<Token>, Function, string> = (input) =>
+    // eta expansion is necessary for `this` binding to resolve correctly
+    map(
+      pair(
+        Token.parseFunction(),
+        map(
+          left(
+            takeUntil(
+              Component.consume,
+              either(
+                Token.parseCloseParenthesis,
+                end<Slice<Token>, string>(
+                  () => "Dummy error message since this should never fail"
+                )
+              )
+            ),
+            option(Token.parseCloseParenthesis)
+          ),
+          (components) => components.flatMap((component) => [...component])
+        )
+      ),
+      ([{ value: name }, value]) => Function.of(name, value)
+    )(input);
 
   export const parse = <T>(
     name?: string,
