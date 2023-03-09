@@ -204,7 +204,7 @@ export namespace Component {
     const // (undocumented)
     consume: Parser<Slice<Token>, Component, string>;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Component, string>;
+    parse: Parser<Slice<Token>, Component, string, []>;
 }
 
 // @public
@@ -387,7 +387,7 @@ namespace Function_2 {
         value: Array<Token.JSON>;
     }
     const // (undocumented)
-    consume: Parser<Slice<Token>, Function_2>;
+    consume: Parser<Slice<Token>, Function_2, string>;
     const // (undocumented)
     parse: <T>(name?: string, body?: Parser<Slice<Token>, T, string, []> | undefined) => Parser<Slice<Token>, readonly [Function_2, T], string, []>;
 }
