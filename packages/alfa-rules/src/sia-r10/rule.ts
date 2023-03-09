@@ -178,27 +178,27 @@ function parserOf(
   tokens: Array<string>
 ): Parser<Slice<string>, string, string> {
   return (input) => {
-    const token = input.array[input.offset];
-
-    if (token !== undefined && tokens.includes(token)) {
-      return Result.of([input.slice(1), token]);
-    }
-
-    return Err.of(`Expected valid token, but got ${input.toJSON()}`);
+    return input
+      .first()
+      .filter((token) => tokens.includes(token))
+      .map((token) =>
+        Result.of<[Slice<string>, string], string>([input.rest(), token])
+      )
+      .getOr(Err.of(`Expected valid token, but got ${input.toJSON()}`));
   };
 }
 
 function sectionParser(): Parser<Slice<string>, string, string> {
   return (input) => {
-    const token = input.array[input.offset];
-
-    if (token !== undefined && token.startsWith("section-")) {
-      return Result.of([input.slice(1), token]);
-    }
-
-    return Err.of(
-      `Expected token beginning with \`section-\`, but got ${input}`
-    );
+    return input
+      .first()
+      .filter((token) => token.startsWith("section-"))
+      .map((token) =>
+        Result.of<[Slice<string>, string], string>([input.rest(), token])
+      )
+      .getOr(
+        Err.of(`Expected token beginning with \`section-\`, but got ${input}`)
+      );
   };
 }
 
