@@ -2,7 +2,15 @@
 
 > :warning: Make sure to stash all local changes, including untracked files, before running any of the commands below: `git stash --include-untracked`
 
-Alfa uses the currently experimental [Yarn release workflow](https://yarnpkg.com/features/release-workflow) to manage releases. While this release workflow is geared towards individually versioned packages, we instead keep all package versions synchronised. The first step towards a release is therefore to mark all public packages for increment:
+Alfa uses the currently experimental [Yarn release workflow](https://yarnpkg.com/features/release-workflow) to manage releases. While this release workflow is geared towards individually versioned packages, we instead keep all package versions synchronised. 
+
+Start by building the API documentation for the new version:
+
+```shell
+$ yarn api
+```
+
+Next, mark all public packages for increment:
 
 ```console
 $ yarn workspaces foreach \
