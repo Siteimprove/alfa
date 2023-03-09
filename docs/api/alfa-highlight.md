@@ -8,17 +8,17 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Marker](./alfa-highlight.marker_interface.md) |  |
+|  [Marker](./alfa-highlight.marker.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Marker](./alfa-highlight.marker_namespace.md) |  |
+|  [Marker](./alfa-highlight.marker.md) |  |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [mark](./alfa-highlight.mark_variable.md) |  |
+|  [mark](./alfa-highlight.mark.md) |  |
 

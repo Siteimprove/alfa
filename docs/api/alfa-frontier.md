@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Frontier](./alfa-frontier.frontier_class.md) |  |
+|  [Frontier](./alfa-frontier.frontier.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Frontier](./alfa-frontier.frontier_namespace.md) |  |
+|  [Frontier](./alfa-frontier.frontier.md) |  |
 

@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [JQuery\_2](./alfa-jquery.jquery_2_namespace.md) |  |
+|  [JQuery\_2](./alfa-jquery.jquery_2.md) |  |
 

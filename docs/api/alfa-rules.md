@@ -8,34 +8,35 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Group](./alfa-rules.group_class.md) |  |
-|  [Scope](./alfa-rules.scope_class.md) |  |
-
-## Interfaces
-
-|  Interface | Description |
-|  --- | --- |
-|  [Question](./alfa-rules.question_interface.md) |  |
+|  [Group](./alfa-rules.group.md) |  |
+|  [Scope](./alfa-rules.scope.md) |  |
+|  [Stability](./alfa-rules.stability.md) |  |
+|  [Version](./alfa-rules.version.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Group](./alfa-rules.group_namespace.md) |  |
-|  [Question](./alfa-rules.question_namespace.md) |  |
-|  [Scope](./alfa-rules.scope_namespace.md) |  |
+|  [deprecatedRules](./alfa-rules.deprecatedrules.md) |  |
+|  [Diagnostic](./alfa-rules.diagnostic.md) |  |
+|  [experimentalRules](./alfa-rules.experimentalrules.md) |  |
+|  [Flattened](./alfa-rules.flattened.md) |  |
+|  [Group](./alfa-rules.group.md) |  |
+|  [Question](./alfa-rules.question.md) |  |
+|  [Scope](./alfa-rules.scope.md) |  |
+|  [Stability](./alfa-rules.stability.md) |  |
+|  [Version](./alfa-rules.version.md) |  |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [Flattened](./alfa-rules.flattened_variable.md) | A list of all available rules joined under a single type. The type of each rule is not preserved in the list as the types have been flattened. |
-|  [Rules](./alfa-rules.rules_variable.md) | An immutable record of individual rules. The type of each individual rule is preserved in the record. |
+|  [FlattenedRules](./alfa-rules.flattenedrules.md) | A list of all available rules joined under a single type. The type of each rule is not preserved in the list as the types have been flattened. |
+|  [Rules](./alfa-rules.rules.md) | An immutable record of individual rules. The type of each individual rule is preserved in the record. |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Flattened](./alfa-rules.flattened_typealias.md) |  |
-|  [Rules](./alfa-rules.rules_typealias.md) |  |
+|  [Rules](./alfa-rules.rules.md) |  |
 

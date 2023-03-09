@@ -8,5 +8,11 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Thenable](./alfa-thenable.thenable_interface.md) |  |
+|  [Thenable](./alfa-thenable.thenable.md) |  |
+
+## Namespaces
+
+|  Namespace | Description |
+|  --- | --- |
+|  [Thenable](./alfa-thenable.thenable.md) |  |
 

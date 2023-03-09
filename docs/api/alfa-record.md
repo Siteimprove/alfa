@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Record\_2](./alfa-record.record_2_class.md) |  |
+|  [Record\_2](./alfa-record.record_2.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Record\_2](./alfa-record.record_2_namespace.md) |  |
+|  [Record\_2](./alfa-record.record_2.md) |  |
 

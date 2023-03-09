@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Network](./alfa-network.network_class.md) |  |
+|  [Network](./alfa-network.network.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Network](./alfa-network.network_namespace.md) |  |
+|  [Network](./alfa-network.network.md) |  |
 

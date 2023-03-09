@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Iterable\_2](./alfa-iterable.iterable_2_namespace.md) |  |
+|  [Iterable\_2](./alfa-iterable.iterable_2.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Iterable\_2](./alfa-iterable.iterable_2_typealias.md) |  |
+|  [Iterable\_2](./alfa-iterable.iterable_2.md) |  |
 

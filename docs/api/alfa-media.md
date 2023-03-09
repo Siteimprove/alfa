@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Media](./alfa-media.media_namespace.md) |  |
+|  [Media](./alfa-media.media.md) |  |
 

@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Parser](./alfa-parser.parser_namespace.md) |  |
+|  [Parser](./alfa-parser.parser.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Parser](./alfa-parser.parser_typealias.md) |  |
+|  [Parser](./alfa-parser.parser.md) |  |
 
