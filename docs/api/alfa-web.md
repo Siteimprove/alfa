@@ -8,20 +8,20 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Page](./alfa-web.page_class.md) | [https://en.wikipedia.org/wiki/Web\_page](https://en.wikipedia.org/wiki/Web_page) |
-|  [Site](./alfa-web.site_class.md) | [https://en.wikipedia.org/wiki/Web\_site](https://en.wikipedia.org/wiki/Web_site) |
+|  [Page](./alfa-web.page.md) | [https://en.wikipedia.org/wiki/Web\_page](https://en.wikipedia.org/wiki/Web_page) |
+|  [Site](./alfa-web.site.md) | [https://en.wikipedia.org/wiki/Web\_site](https://en.wikipedia.org/wiki/Web_site) |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Resource](./alfa-web.resource_interface.md) | [https://en.wikipedia.org/wiki/Web\_resource](https://en.wikipedia.org/wiki/Web_resource) |
+|  [Resource](./alfa-web.resource.md) | [https://en.wikipedia.org/wiki/Web\_resource](https://en.wikipedia.org/wiki/Web_resource) |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Page](./alfa-web.page_namespace.md) |  |
-|  [Resource](./alfa-web.resource_namespace.md) |  |
-|  [Site](./alfa-web.site_namespace.md) |  |
+|  [Page](./alfa-web.page.md) |  |
+|  [Resource](./alfa-web.resource.md) |  |
+|  [Site](./alfa-web.site.md) |  |
 

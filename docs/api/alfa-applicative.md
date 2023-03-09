@@ -10,5 +10,5 @@ This package provides types for modelling [applicative functors](https://en.wiki
 
 |  Interface | Description |
 |  --- | --- |
-|  [Applicative](./alfa-applicative.applicative_interface.md) |  |
+|  [Applicative](./alfa-applicative.applicative.md) |  |
 

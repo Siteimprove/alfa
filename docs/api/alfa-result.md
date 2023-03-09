@@ -8,20 +8,20 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Err](./alfa-result.err_class.md) |  |
-|  [Ok](./alfa-result.ok_class.md) |  |
+|  [Err](./alfa-result.err.md) |  |
+|  [Ok](./alfa-result.ok.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Result](./alfa-result.result_interface.md) |  |
+|  [Result](./alfa-result.result.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Err](./alfa-result.err_namespace.md) |  |
-|  [Ok](./alfa-result.ok_namespace.md) |  |
-|  [Result](./alfa-result.result_namespace.md) |  |
+|  [Err](./alfa-result.err.md) |  |
+|  [Ok](./alfa-result.ok.md) |  |
+|  [Result](./alfa-result.result.md) |  |
 

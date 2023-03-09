@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Unexpected](./alfa-unexpected.unexpected_namespace.md) |  |
+|  [Unexpected](./alfa-unexpected.unexpected.md) |  |
 

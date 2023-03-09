@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Cache](./alfa-cache.cache_class.md) |  |
+|  [Cache](./alfa-cache.cache.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Cache](./alfa-cache.cache_namespace.md) |  |
+|  [Cache](./alfa-cache.cache.md) |  |
 

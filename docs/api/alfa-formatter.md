@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Formatter](./alfa-formatter.formatter_namespace.md) |  |
+|  [Formatter](./alfa-formatter.formatter.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Formatter](./alfa-formatter.formatter_typealias.md) |  |
+|  [Formatter](./alfa-formatter.formatter.md) |  |
 

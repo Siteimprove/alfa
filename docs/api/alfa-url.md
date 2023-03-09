@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [URL](./alfa-url.url_class.md) | [https://url.spec.whatwg.org/](https://url.spec.whatwg.org/) |
+|  [URL](./alfa-url.url.md) | [https://url.spec.whatwg.org/](https://url.spec.whatwg.org/) |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [URL](./alfa-url.url_namespace.md) |  |
+|  [URL](./alfa-url.url.md) |  |
 

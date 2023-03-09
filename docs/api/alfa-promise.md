@@ -10,11 +10,11 @@ This package provides functionality for working with promises.
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Promise\_2](./alfa-promise.promise_2_namespace.md) |  |
+|  [Promise\_2](./alfa-promise.promise_2.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Promise\_2](./alfa-promise.promise_2_typealias.md) |  |
+|  [Promise\_2](./alfa-promise.promise_2.md) |  |
 

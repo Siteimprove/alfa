@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Bits](./alfa-bits.bits_namespace.md) |  |
+|  [Bits](./alfa-bits.bits.md) |  |
 

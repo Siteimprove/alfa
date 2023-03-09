@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Trilean](./alfa-trilean.trilean_namespace.md) |  |
+|  [Trilean](./alfa-trilean.trilean.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Trilean](./alfa-trilean.trilean_typealias.md) | [https://en.wikipedia.org/wiki/Three-valued\_logic](https://en.wikipedia.org/wiki/Three-valued_logic) |
+|  [Trilean](./alfa-trilean.trilean.md) | [https://en.wikipedia.org/wiki/Three-valued\_logic](https://en.wikipedia.org/wiki/Three-valued_logic) |
 

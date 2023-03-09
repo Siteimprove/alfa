@@ -8,26 +8,26 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Some](./alfa-option.some_class.md) |  |
+|  [Some](./alfa-option.some.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [None](./alfa-option.none_interface.md) |  |
-|  [Option](./alfa-option.option_interface.md) |  |
+|  [None](./alfa-option.none.md) |  |
+|  [Option](./alfa-option.option.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [None](./alfa-option.none_namespace.md) |  |
-|  [Option](./alfa-option.option_namespace.md) |  |
-|  [Some](./alfa-option.some_namespace.md) |  |
+|  [None](./alfa-option.none.md) |  |
+|  [Option](./alfa-option.option.md) |  |
+|  [Some](./alfa-option.some.md) |  |
 
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [None](./alfa-option.none_variable.md) |  |
+|  [None](./alfa-option.none.md) |  |
 

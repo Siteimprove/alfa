@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [List](./alfa-list.list_class.md) |  |
+|  [List](./alfa-list.list.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [List](./alfa-list.list_namespace.md) |  |
+|  [List](./alfa-list.list.md) |  |
 
