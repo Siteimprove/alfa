@@ -8,7 +8,7 @@ import { Block } from "./block";
 import { Function } from "./function";
 import { Token } from "./token";
 
-const { delimited, option, either, peek, right, map } = Parser;
+const { delimited, option, either, map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#component-value}
