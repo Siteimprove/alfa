@@ -22,6 +22,8 @@ if (status !== 0) {
 system.exit(document(flags.project));
 
 function document() {
+  let code = 0;
+
   try {
     const apiModel = new ApiModel();
 
@@ -29,6 +31,12 @@ function document() {
     // relative path.
     const modelDir = path.join(__dirname, "..", "docs", "data", "api");
     const outputFolder = path.join(__dirname, "..", "docs", "api");
+    const configFile = path.join(
+      __dirname,
+      "..",
+      "config",
+      "api-documenter.json"
+    );
 
     fs.readdirSync(modelDir)
       .filter((file) => file.endsWith(".api.json"))
@@ -37,7 +45,7 @@ function document() {
     const documenter = new MarkdownDocumenter({
       apiModel,
       outputFolder,
-      documenterConfig: new DocumenterConfig(),
+      documenterConfig: DocumenterConfig.loadFile(configFile),
     });
 
     documenter.generateFiles();
