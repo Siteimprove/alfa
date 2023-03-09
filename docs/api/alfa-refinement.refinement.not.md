@@ -4,8 +4,3 @@
 
 ## Refinement.not variable
 
-<b>Signature:</b>
-
-```typescript
-not: Not
-```

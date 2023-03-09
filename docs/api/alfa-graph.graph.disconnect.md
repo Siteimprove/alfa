@@ -4,20 +4,10 @@
 
 ## Graph.disconnect() method
 
-<b>Signature:</b>
-
-```typescript
-disconnect(from: T, to: T): Graph<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  from | T |  |
 |  to | T |  |
-
-<b>Returns:</b>
-
-[Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

@@ -4,8 +4,3 @@
 
 ## Sheet.JSON.rules property
 
-<b>Signature:</b>
-
-```typescript
-rules: Array<Rule.JSON>;
-```

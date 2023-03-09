@@ -4,12 +4,3 @@
 
 ## MediaRule.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): MediaRule.JSON;
-```
-<b>Returns:</b>
-
-[MediaRule.JSON](./alfa-dom.mediarule.json.md)
-

@@ -4,20 +4,10 @@
 
 ## Document.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(children: Iterable<Node>, style?: Iterable<Sheet>): Document;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  children | Iterable&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; |  |
 |  style | Iterable&lt;[Sheet](./alfa-dom.sheet.md)<!-- -->&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Document](./alfa-dom.document.md)
 

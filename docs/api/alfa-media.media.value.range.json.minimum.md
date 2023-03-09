@@ -4,8 +4,3 @@
 
 ## Media.Value.Range.JSON.minimum property
 
-<b>Signature:</b>
-
-```typescript
-minimum: Bound.JSON<T> | null;
-```

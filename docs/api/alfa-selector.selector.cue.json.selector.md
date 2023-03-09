@@ -4,8 +4,3 @@
 
 ## Selector.Cue.JSON.selector property
 
-<b>Signature:</b>
-
-```typescript
-selector: Option.JSON<Selector>;
-```

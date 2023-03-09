@@ -4,10 +4,3 @@
 
 ## Slice.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON<T> = Array<Serializable.ToJSON<T>>;
-```
-<b>References:</b> [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
-

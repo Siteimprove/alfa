@@ -4,17 +4,11 @@
 
 ## Token.Function namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Function 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isFunction(value)](./alfa-css.token.function.isfunction.md) |  |
+|  [isFunction](./alfa-css.token.function.isfunction.md) |  |
 
 ## Interfaces
 

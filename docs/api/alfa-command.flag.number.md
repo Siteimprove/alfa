@@ -4,20 +4,10 @@
 
 ## Flag.number() function
 
-<b>Signature:</b>
-
-```typescript
-function number(name: string, description: string): Flag<number>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  description | string |  |
-
-<b>Returns:</b>
-
-[Flag](./alfa-command.flag.md)<!-- -->&lt;number&gt;
 

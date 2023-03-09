@@ -4,19 +4,9 @@
 
 ## Slice.prepend() method
 
-<b>Signature:</b>
-
-```typescript
-prepend(value: T): Slice<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

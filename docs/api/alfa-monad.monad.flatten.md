@@ -4,19 +4,9 @@
 
 ## Monad.flatten() method
 
-<b>Signature:</b>
-
-```typescript
-flatten<T>(this: Monad<Monad<T>>): Monad<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Monad](./alfa-monad.monad.md)<!-- -->&lt;[Monad](./alfa-monad.monad.md)<!-- -->&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Monad](./alfa-monad.monad.md)<!-- -->&lt;T&gt;
 

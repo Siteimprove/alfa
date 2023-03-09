@@ -4,19 +4,9 @@
 
 ## Iterable\_2.isEmpty() function
 
-<b>Signature:</b>
-
-```typescript
-function isEmpty<T>(iterable: Iterable<T>): iterable is Iterable<never>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-iterable is Iterable&lt;never&gt;
 

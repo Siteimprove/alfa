@@ -4,19 +4,9 @@
 
 ## Option.isNone() function
 
-<b>Signature:</b>
-
-```typescript
-function isNone<T>(value: Iterable<T>): value is None;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is [None](./alfa-option.none.md)
+|  value | unknown |  |
 

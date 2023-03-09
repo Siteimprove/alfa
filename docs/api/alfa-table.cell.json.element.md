@@ -4,8 +4,3 @@
 
 ## Cell.JSON.element property
 
-<b>Signature:</b>
-
-```typescript
-element: string;
-```

@@ -4,19 +4,9 @@
 
 ## Language.Extended.isName() function
 
-<b>Signature:</b>
-
-```typescript
-function isName(name: string): name is Name;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-
-<b>Returns:</b>
-
-name is [Name](./alfa-iana.language.extended.name.md)
 

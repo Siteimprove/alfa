@@ -4,12 +4,3 @@
 
 ## Ok.or() method
 
-<b>Signature:</b>
-
-```typescript
-or(): Ok<T>;
-```
-<b>Returns:</b>
-
-[Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
-

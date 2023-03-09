@@ -4,19 +4,9 @@
 
 ## Branched.reject() method
 
-<b>Signature:</b>
-
-```typescript
-reject<U extends T>(refinement: Refinement<T, U, [Iterable<B>]>): Branched<Exclude<T, U>, B>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[Iterable&lt;B&gt;\]&gt; |  |
-
-<b>Returns:</b>
-
-[Branched](./alfa-branched.branched.md)<!-- -->&lt;Exclude&lt;T, U&gt;, B&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
 

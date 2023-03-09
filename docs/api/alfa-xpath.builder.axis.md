@@ -4,16 +4,9 @@
 
 ## Builder.Axis class
 
-<b>Signature:</b>
-
-```typescript
-export class Axis extends Axis_base 
-```
-<b>Extends:</b> Axis\_base
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [where(predicate)](./alfa-xpath.builder.axis.where.md) |  |  |
+|  [where](./alfa-xpath.builder.axis.where.md) |  |  |
 

@@ -4,19 +4,9 @@
 
 ## Screenshot.Type.JPEG.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(quality: number): JPEG;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  quality | number |  |
-
-<b>Returns:</b>
-
-[JPEG](./alfa-scraper.screenshot.type.jpeg.md)
 

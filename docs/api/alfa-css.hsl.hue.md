@@ -4,8 +4,3 @@
 
 ## HSL.hue property
 
-<b>Signature:</b>
-
-```typescript
-get hue(): H;
-```

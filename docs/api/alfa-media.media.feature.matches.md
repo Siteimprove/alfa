@@ -4,19 +4,9 @@
 
 ## Media.Feature.matches() method
 
-<b>Signature:</b>
-
-```typescript
-abstract matches(device: Device): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  device | [Device](./alfa-device.device.md) |  |
-
-<b>Returns:</b>
-
-boolean
 

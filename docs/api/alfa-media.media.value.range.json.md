@@ -4,17 +4,11 @@
 
 ## Media.Value.Range.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<T> 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [maximum](./alfa-media.media.value.range.json.maximum.md) |  | [Bound.JSON](./alfa-media.media.value.bound.json.md)<!-- -->&lt;T&gt; \| null |  |
-|  [minimum](./alfa-media.media.value.range.json.minimum.md) |  | [Bound.JSON](./alfa-media.media.value.bound.json.md)<!-- -->&lt;T&gt; \| null |  |
-|  [type](./alfa-media.media.value.range.json.type.md) |  | "range" |  |
+|  [maximum](./alfa-media.media.value.range.json.maximum.md) |  |  |  |
+|  [minimum](./alfa-media.media.value.range.json.minimum.md) |  |  |  |
+|  [type](./alfa-media.media.value.range.json.type.md) |  |  |  |
 

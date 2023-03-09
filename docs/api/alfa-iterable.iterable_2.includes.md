@@ -4,20 +4,10 @@
 
 ## Iterable\_2.includes() function
 
-<b>Signature:</b>
-
-```typescript
-function includes<T>(iterable: Iterable<T>, value: T): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  value | T |  |
-
-<b>Returns:</b>
-
-boolean
 

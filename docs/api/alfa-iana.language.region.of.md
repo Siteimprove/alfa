@@ -4,19 +4,9 @@
 
 ## Language.Region.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(name: Region.Name): Region;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | [Region.Name](./alfa-iana.language.region.name.md) |  |
-
-<b>Returns:</b>
-
-[Region](./alfa-iana.language.region.md)
 

@@ -4,8 +4,3 @@
 
 ## Linear.Corner.JSON.vertical property
 
-<b>Signature:</b>
-
-```typescript
-vertical: Position.Vertical;
-```

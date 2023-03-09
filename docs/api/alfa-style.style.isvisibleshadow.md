@@ -4,8 +4,3 @@
 
 ## Style.isVisibleShadow variable
 
-<b>Signature:</b>
-
-```typescript
-isVisibleShadow: typeof element.isVisibleShadow
-```

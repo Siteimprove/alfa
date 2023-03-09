@@ -4,12 +4,3 @@
 
 ## Criterion.toEARL() method
 
-<b>Signature:</b>
-
-```typescript
-toEARL(): Criterion.EARL;
-```
-<b>Returns:</b>
-
-[Criterion.EARL](./alfa-wcag.criterion.earl.md)
-

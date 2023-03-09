@@ -4,19 +4,9 @@
 
 ## Hash.writeUnknown() method
 
-<b>Signature:</b>
-
-```typescript
-writeUnknown(data: unknown): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | unknown |  |
-
-<b>Returns:</b>
-
-this
 

@@ -4,19 +4,9 @@
 
 ## Graph.neighbors() method
 
-<b>Signature:</b>
-
-```typescript
-neighbors(node: T): Iterable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | T |  |
-
-<b>Returns:</b>
-
-Iterable&lt;T&gt;
 

@@ -4,12 +4,3 @@
 
 ## Some.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Some.JSON<T>;
-```
-<b>Returns:</b>
-
-[Some.JSON](./alfa-option.some.json.md)<!-- -->&lt;T&gt;
-

@@ -4,19 +4,9 @@
 
 ## Set\_2.get() method
 
-<b>Signature:</b>
-
-```typescript
-get(value: T): Option<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

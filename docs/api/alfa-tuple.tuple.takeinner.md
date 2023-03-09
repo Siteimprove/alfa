@@ -4,10 +4,3 @@
 
 ## Tuple.TakeInner type
 
-<b>Signature:</b>
-
-```typescript
-type TakeInner<T extends Tuple, N extends number, A extends Tuple> = T extends readonly [infer H, ...infer R] ? N extends Size<A> ? A : TakeInner<R, N, Append<A, H>> : Empty;
-```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Size](./alfa-tuple.tuple.size.md)<!-- -->, [Append](./alfa-tuple.tuple.append.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
-

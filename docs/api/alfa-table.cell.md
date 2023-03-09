@@ -4,13 +4,6 @@
 
 ## Cell namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Cell 
-```
-
 ## Classes
 
 |  Class | Description |
@@ -22,7 +15,7 @@ export declare namespace Cell
 
 |  Function | Description |
 |  --- | --- |
-|  [isCell(value)](./alfa-table.cell.iscell.md) |  |
+|  [isCell](./alfa-table.cell.iscell.md) |  |
 
 ## Interfaces
 

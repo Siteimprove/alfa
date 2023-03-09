@@ -4,8 +4,3 @@
 
 ## Cell.Header.JSON.scope property
 
-<b>Signature:</b>
-
-```typescript
-scope: Scope;
-```

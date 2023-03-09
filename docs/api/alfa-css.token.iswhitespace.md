@@ -4,8 +4,3 @@
 
 ## Token.isWhitespace variable
 
-<b>Signature:</b>
-
-```typescript
-isWhitespace: typeof Whitespace.isWhitespace
-```

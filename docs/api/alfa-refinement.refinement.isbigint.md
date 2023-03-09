@@ -4,19 +4,9 @@
 
 ## Refinement.isBigInt() function
 
-<b>Signature:</b>
-
-```typescript
-export function isBigInt(value: unknown): value is bigint;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is bigint
 

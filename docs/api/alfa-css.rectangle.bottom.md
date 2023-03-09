@@ -4,8 +4,3 @@
 
 ## Rectangle.bottom property
 
-<b>Signature:</b>
-
-```typescript
-get bottom(): O;
-```

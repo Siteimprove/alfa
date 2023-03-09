@@ -4,12 +4,6 @@
 
 ## RGB.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<C extends Number | Percentage, A extends Number | Percentage>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ static of<C extends Number | Percentage, A extends Number | Percentage>(red: C, 
 |  green | C |  |
 |  blue | C |  |
 |  alpha | A |  |
-
-<b>Returns:</b>
-
-[RGB](./alfa-css.rgb.md)<!-- -->&lt;C, A&gt;
 

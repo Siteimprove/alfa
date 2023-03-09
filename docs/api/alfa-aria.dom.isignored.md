@@ -4,8 +4,3 @@
 
 ## DOM.isIgnored variable
 
-<b>Signature:</b>
-
-```typescript
-isIgnored: typeof dom.isIgnored
-```

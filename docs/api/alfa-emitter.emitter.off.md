@@ -4,19 +4,9 @@
 
 ## Emitter.off() method
 
-<b>Signature:</b>
-
-```typescript
-off(listener: Callback<never>): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  listener | [Callback](./alfa-callback.callback.md)<!-- -->&lt;never&gt; |  |
-
-<b>Returns:</b>
-
-this
 

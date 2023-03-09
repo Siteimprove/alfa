@@ -4,8 +4,3 @@
 
 ## Diagnostic.isLanguages variable
 
-<b>Signature:</b>
-
-```typescript
-isLanguages: typeof Languages.isLanguages
-```

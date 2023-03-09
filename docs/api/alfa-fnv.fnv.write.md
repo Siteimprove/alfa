@@ -4,19 +4,9 @@
 
 ## FNV.write() method
 
-<b>Signature:</b>
-
-```typescript
-write(data: Uint8Array): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | Uint8Array |  |
-
-<b>Returns:</b>
-
-this
 

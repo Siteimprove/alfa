@@ -4,19 +4,9 @@
 
 ## Media.Type.isType() function
 
-<b>Signature:</b>
-
-```typescript
-function isType(value: unknown): value is Type;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Type](./alfa-media.media.type.md)
 

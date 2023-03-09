@@ -4,12 +4,3 @@
 
 ## Selector.Compound.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
-
-```typescript
-[Symbol.iterator](): Iterator<Compound>;
-```
-<b>Returns:</b>
-
-Iterator&lt;[Compound](./alfa-selector.selector.compound.md)<!-- -->&gt;
-

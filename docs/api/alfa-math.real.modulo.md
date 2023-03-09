@@ -4,28 +4,10 @@
 
 ## Real.modulo() function
 
-Compute the modulus of a division of two reals.
-
-[https://en.wikipedia.org/wiki/Modulo\_operation](https://en.wikipedia.org/wiki/Modulo_operation)
-
-<b>Signature:</b>
-
-```typescript
-function modulo(p: number, d: number): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  p | number |  |
 |  d | number |  |
-
-<b>Returns:</b>
-
-number
-
-## Remarks
-
-The modulo operation is different from the remainder operation supported natively in JavaScript through the % operator.
 

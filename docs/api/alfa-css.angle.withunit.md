@@ -4,19 +4,9 @@
 
 ## Angle.withUnit() method
 
-<b>Signature:</b>
-
-```typescript
-withUnit<U extends Unit.Angle>(unit: U): Angle<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | U |  |
-
-<b>Returns:</b>
-
-[Angle](./alfa-css.angle.md)<!-- -->&lt;U&gt;
 

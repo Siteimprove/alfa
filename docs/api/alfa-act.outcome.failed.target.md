@@ -4,8 +4,3 @@
 
 ## Outcome.Failed.target property
 
-<b>Signature:</b>
-
-```typescript
-get target(): T;
-```

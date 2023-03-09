@@ -4,19 +4,9 @@
 
 ## Map\_2.delete() method
 
-<b>Signature:</b>
-
-```typescript
-delete(key: K): Map<K, V>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K |  |
-
-<b>Returns:</b>
-
-Map&lt;K, V&gt;
 

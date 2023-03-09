@@ -4,10 +4,3 @@
 
 ## Selector.Pseudo type
 
-<b>Signature:</b>
-
-```typescript
-export type Pseudo = Pseudo.Class | Pseudo.Element;
-```
-<b>References:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->, [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)
-

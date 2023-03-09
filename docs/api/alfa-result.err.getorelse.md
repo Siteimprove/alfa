@@ -4,19 +4,9 @@
 
 ## Err.getOrElse() method
 
-<b>Signature:</b>
-
-```typescript
-getOrElse<U>(value: Thunk<U>): U;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;U&gt; |  |
-
-<b>Returns:</b>
-
-U
 

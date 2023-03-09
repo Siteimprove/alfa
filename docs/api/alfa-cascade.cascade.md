@@ -4,13 +4,6 @@
 
 ## Cascade namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Cascade 
-```
-
 ## Interfaces
 
 |  Interface | Description |

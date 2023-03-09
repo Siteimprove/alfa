@@ -4,21 +4,9 @@
 
 ## Decoder.decode() function
 
-[https://encoding.spec.whatwg.org/\#dom-textdecoder-decode](https://encoding.spec.whatwg.org/#dom-textdecoder-decode) [https://encoding.spec.whatwg.org/\#utf-8-decoder](https://encoding.spec.whatwg.org/#utf-8-decoder)
-
-<b>Signature:</b>
-
-```typescript
-function decode(input: Uint8Array): string;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  input | Uint8Array |  |
-
-<b>Returns:</b>
-
-string
 

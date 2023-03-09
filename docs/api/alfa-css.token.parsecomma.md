@@ -4,8 +4,3 @@
 
 ## Token.parseComma variable
 
-<b>Signature:</b>
-
-```typescript
-parseComma: Parser<Slice<Token>, Comma, string, []>
-```

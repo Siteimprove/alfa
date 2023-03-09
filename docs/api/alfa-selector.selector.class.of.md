@@ -4,19 +4,9 @@
 
 ## Selector.Class.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(name: string): Class;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-
-<b>Returns:</b>
-
-[Class](./alfa-selector.selector.class.md)
 

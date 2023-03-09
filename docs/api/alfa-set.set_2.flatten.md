@@ -4,19 +4,9 @@
 
 ## Set\_2.flatten() method
 
-<b>Signature:</b>
-
-```typescript
-flatten<T>(this: Set<Set<T>>): Set<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | Set&lt;Set&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-Set&lt;T&gt;
 

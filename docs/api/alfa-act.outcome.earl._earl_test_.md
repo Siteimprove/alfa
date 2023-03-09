@@ -4,10 +4,3 @@
 
 ## Outcome.EARL."earl:test" property
 
-<b>Signature:</b>
-
-```typescript
-"earl:test": {
-            "@id": string;
-        };
-```

@@ -4,8 +4,3 @@
 
 ## Linear.Position.Vertical type
 
-<b>Signature:</b>
-
-```typescript
-type Vertical = "top" | "bottom";
-```

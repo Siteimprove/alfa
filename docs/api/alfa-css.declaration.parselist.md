@@ -4,10 +4,3 @@
 
 ## Declaration.parseList variable
 
-[https://drafts.csswg.org/css-syntax/\#parse-a-list-of-declarations](https://drafts.csswg.org/css-syntax/#parse-a-list-of-declarations)
-
-<b>Signature:</b>
-
-```typescript
-parseList: Parser<Slice<Token>, Iterable<Declaration>, string>
-```

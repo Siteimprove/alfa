@@ -4,19 +4,9 @@
 
 ## Frontier.isFrontier() function
 
-<b>Signature:</b>
-
-```typescript
-function isFrontier(value: unknown): value is Frontier;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Frontier](./alfa-frontier.frontier.md)
 

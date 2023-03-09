@@ -4,12 +4,6 @@
 
 ## Generator\_2.reduce() function
 
-<b>Signature:</b>
-
-```typescript
-function reduce<T, U, R, N>(generator: Generator<T, R, N>, reducer: Reducer<T, U>, accumulator: U): U;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ function reduce<T, U, R, N>(generator: Generator<T, R, N>, reducer: Reducer<T, U
 |  generator | Generator&lt;T, R, N&gt; |  |
 |  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U&gt; |  |
 |  accumulator | U |  |
-
-<b>Returns:</b>
-
-U
 

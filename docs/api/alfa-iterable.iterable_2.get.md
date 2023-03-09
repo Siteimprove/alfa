@@ -4,20 +4,10 @@
 
 ## Iterable\_2.get() function
 
-<b>Signature:</b>
-
-```typescript
-function get<T>(iterable: Iterable<T>, index: number): Option<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  index | number |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

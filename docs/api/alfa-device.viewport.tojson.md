@@ -4,12 +4,3 @@
 
 ## Viewport.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Viewport.JSON;
-```
-<b>Returns:</b>
-
-[Viewport.JSON](./alfa-device.viewport.json.md)
-

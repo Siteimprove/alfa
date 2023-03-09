@@ -4,12 +4,6 @@
 
 ## Selector.Compound namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace Compound 
-```
-
 ## Interfaces
 
 |  Interface | Description |

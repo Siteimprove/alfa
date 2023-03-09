@@ -4,19 +4,9 @@
 
 ## Slice.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from<T>(iterable: Iterable<T>): Slice<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

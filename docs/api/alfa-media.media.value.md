@@ -4,12 +4,6 @@
 
 ## Media.Value namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace Value 
-```
-
 ## Classes
 
 |  Class | Description |

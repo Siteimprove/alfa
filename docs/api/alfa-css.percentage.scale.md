@@ -4,19 +4,9 @@
 
 ## Percentage.scale() method
 
-<b>Signature:</b>
-
-```typescript
-scale(factor: number): Percentage;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  factor | number |  |
-
-<b>Returns:</b>
-
-[Percentage](./alfa-css.percentage.md)
 

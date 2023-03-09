@@ -4,8 +4,3 @@
 
 ## Scraper.scrape.Options.awaiter property
 
-<b>Signature:</b>
-
-```typescript
-readonly awaiter?: Awaiter;
-```

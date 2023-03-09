@@ -4,18 +4,11 @@
 
 ## Enzyme namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Enzyme 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [toPage(value)](./alfa-enzyme.enzyme.topage.md) |  |
+|  [toPage](./alfa-enzyme.enzyme.topage.md) |  |
 
 ## Type Aliases
 

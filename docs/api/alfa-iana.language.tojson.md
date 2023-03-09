@@ -4,12 +4,3 @@
 
 ## Language.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Language.JSON;
-```
-<b>Returns:</b>
-
-[Language.JSON](./alfa-iana.language.json.md)
-

@@ -4,8 +4,3 @@
 
 ## Request.EARL."http:body" property
 
-<b>Signature:</b>
-
-```typescript
-"http:body": Body.EARL;
-```

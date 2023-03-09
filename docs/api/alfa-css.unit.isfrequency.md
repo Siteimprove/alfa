@@ -4,19 +4,9 @@
 
 ## Unit.isFrequency() function
 
-<b>Signature:</b>
-
-```typescript
-function isFrequency(unit: string): unit is Frequency;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | string |  |
-
-<b>Returns:</b>
-
-unit is [Frequency](./alfa-css.unit.frequency.md)
 

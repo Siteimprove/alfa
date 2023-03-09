@@ -4,19 +4,12 @@
 
 ## Header namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Header 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(json)](./alfa-http.header.from.md) |  |
-|  [isHeader(value)](./alfa-http.header.isheader.md) |  |
+|  [from](./alfa-http.header.from.md) |  |
+|  [isHeader](./alfa-http.header.isheader.md) |  |
 
 ## Interfaces
 

@@ -4,20 +4,13 @@
 
 ## Serializable namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Serializable 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isSerializable(value)](./alfa-json.serializable.isserializable.md) |  |
-|  [toJSON(value)](./alfa-json.serializable.tojson.md) |  |
-|  [toJSON(value)](./alfa-json.serializable.tojson_1.md) |  |
+|  [isSerializable](./alfa-json.serializable.isserializable.md) |  |
+|  [toJSON](./alfa-json.serializable.tojson.md) |  |
+|  [toJSON](./alfa-json.serializable.tojson.md) |  |
 
 ## Type Aliases
 

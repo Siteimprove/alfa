@@ -4,20 +4,10 @@
 
 ## Iterable\_2.some() function
 
-<b>Signature:</b>
-
-```typescript
-function some<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-boolean
 

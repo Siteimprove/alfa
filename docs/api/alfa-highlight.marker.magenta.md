@@ -4,8 +4,3 @@
 
 ## Marker.magenta variable
 
-<b>Signature:</b>
-
-```typescript
-magenta: Marker
-```

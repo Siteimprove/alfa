@@ -4,8 +4,3 @@
 
 ## Role.hasName variable
 
-<b>Signature:</b>
-
-```typescript
-hasName: typeof predicate.hasName
-```

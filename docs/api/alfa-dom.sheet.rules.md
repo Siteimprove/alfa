@@ -4,8 +4,3 @@
 
 ## Sheet.rules property
 
-<b>Signature:</b>
-
-```typescript
-get rules(): Iterable<Rule>;
-```

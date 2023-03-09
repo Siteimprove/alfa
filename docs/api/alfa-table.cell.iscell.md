@@ -4,19 +4,9 @@
 
 ## Cell.isCell() function
 
-<b>Signature:</b>
-
-```typescript
-function isCell(value: unknown): value is Cell;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Cell](./alfa-table.cell.md)
 

@@ -4,19 +4,9 @@
 
 ## Slice.isSlice() function
 
-<b>Signature:</b>
-
-```typescript
-function isSlice<T>(value: Iterable<T>): value is Slice<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
+|  value | unknown |  |
 

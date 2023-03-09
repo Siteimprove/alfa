@@ -4,19 +4,9 @@
 
 ## Collection.Indexed.sort() method
 
-<b>Signature:</b>
-
-```typescript
-sort<T extends Comparable<T>>(this: Indexed<T>): Indexed<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

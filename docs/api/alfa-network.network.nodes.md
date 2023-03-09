@@ -4,12 +4,3 @@
 
 ## Network.nodes() method
 
-<b>Signature:</b>
-
-```typescript
-nodes(): Iterable<N>;
-```
-<b>Returns:</b>
-
-Iterable&lt;N&gt;
-

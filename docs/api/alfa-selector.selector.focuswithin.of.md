@@ -4,12 +4,3 @@
 
 ## Selector.FocusWithin.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(): FocusWithin;
-```
-<b>Returns:</b>
-
-[FocusWithin](./alfa-selector.selector.focuswithin.md)
-

@@ -4,8 +4,3 @@
 
 ## Hex.JSON.format property
 
-<b>Signature:</b>
-
-```typescript
-format: "hex";
-```

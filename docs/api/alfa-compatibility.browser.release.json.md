@@ -4,16 +4,10 @@
 
 ## Browser.Release.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [browser](./alfa-compatibility.browser.release.json.browser.md) |  | string |  |
-|  [version](./alfa-compatibility.browser.release.json.version.md) |  | string |  |
+|  [browser](./alfa-compatibility.browser.release.json.browser.md) |  |  |  |
+|  [version](./alfa-compatibility.browser.release.json.version.md) |  |  |  |
 

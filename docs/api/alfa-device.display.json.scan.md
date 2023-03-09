@@ -4,8 +4,3 @@
 
 ## Display.JSON.scan property
 
-<b>Signature:</b>
-
-```typescript
-scan: `${Scan}`;
-```

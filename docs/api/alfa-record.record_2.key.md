@@ -4,8 +4,3 @@
 
 ## Record\_2.Key type
 
-<b>Signature:</b>
-
-```typescript
-type Key<T> = Extract<keyof T, string>;
-```

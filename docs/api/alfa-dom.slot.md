@@ -4,19 +4,12 @@
 
 ## Slot namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Slot 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [findSlotables(slot)](./alfa-dom.slot.findslotables.md) | [https://dom.spec.whatwg.org/\#find-slotables](https://dom.spec.whatwg.org/#find-slotables) |
-|  [isSlot(element)](./alfa-dom.slot.isslot.md) |  |
-|  [isSlot(value)](./alfa-dom.slot.isslot_1.md) |  |
-|  [name(slot)](./alfa-dom.slot.name.md) | [https://dom.spec.whatwg.org/\#slot-name](https://dom.spec.whatwg.org/#slot-name) |
+|  [findSlotables](./alfa-dom.slot.findslotables.md) |  |
+|  [isSlot](./alfa-dom.slot.isslot.md) |  |
+|  [isSlot](./alfa-dom.slot.isslot.md) |  |
+|  [name](./alfa-dom.slot.name.md) |  |
 

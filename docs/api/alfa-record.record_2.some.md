@@ -4,19 +4,9 @@
 
 ## Record\_2.some() method
 
-<b>Signature:</b>
-
-```typescript
-some(predicate: Predicate<Record.Value<T>, [Record.Key<T>]>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;Record.Value&lt;T&gt;, \[Record.Key&lt;T&gt;\]&gt; |  |
-
-<b>Returns:</b>
-
-boolean
 

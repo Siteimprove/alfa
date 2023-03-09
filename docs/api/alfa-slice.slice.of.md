@@ -4,12 +4,6 @@
 
 ## Slice.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T>(array: ReadonlyArray<T>, start?: number, end?: number): Slice<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ static of<T>(array: ReadonlyArray<T>, start?: number, end?: number): Slice<T>;
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  start | number | <i>(Optional)</i> |
 |  end | number | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

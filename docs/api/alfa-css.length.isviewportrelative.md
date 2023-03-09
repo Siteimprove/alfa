@@ -4,12 +4,3 @@
 
 ## Length.isViewportRelative() method
 
-<b>Signature:</b>
-
-```typescript
-isViewportRelative(): this is Length<Unit.Length.Relative.Viewport>;
-```
-<b>Returns:</b>
-
-this is [Length](./alfa-css.length.md)<!-- -->&lt;[Unit.Length.Relative.Viewport](./alfa-css.unit.length.relative.viewport.md)<!-- -->&gt;
-

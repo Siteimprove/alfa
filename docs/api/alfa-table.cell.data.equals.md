@@ -4,19 +4,9 @@
 
 ## Cell.Data.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(cell: Data): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  cell | [Data](./alfa-table.cell.data.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

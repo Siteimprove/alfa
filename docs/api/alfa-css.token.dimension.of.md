@@ -4,12 +4,6 @@
 
 ## Token.Dimension.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(value: number, unit: string, isInteger: boolean, isSigned: boolean): Dimension;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ static of(value: number, unit: string, isInteger: boolean, isSigned: boolean): D
 |  unit | string |  |
 |  isInteger | boolean |  |
 |  isSigned | boolean |  |
-
-<b>Returns:</b>
-
-[Dimension](./alfa-css.token.dimension.md)
 

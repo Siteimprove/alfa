@@ -4,10 +4,3 @@
 
 ## Criterion.versions property
 
-The versions in which this criterion is defined.
-
-<b>Signature:</b>
-
-```typescript
-get versions(): Iterable<Criterion.Version>;
-```

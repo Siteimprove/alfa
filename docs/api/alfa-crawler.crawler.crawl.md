@@ -4,12 +4,6 @@
 
 ## Crawler.crawl namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace crawl 
-```
-
 ## Interfaces
 
 |  Interface | Description |

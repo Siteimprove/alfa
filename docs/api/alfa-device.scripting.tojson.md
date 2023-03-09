@@ -4,12 +4,3 @@
 
 ## Scripting.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Scripting.JSON;
-```
-<b>Returns:</b>
-
-[Scripting.JSON](./alfa-device.scripting.json.md)
-

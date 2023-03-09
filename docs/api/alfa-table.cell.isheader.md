@@ -4,8 +4,3 @@
 
 ## Cell.isHeader variable
 
-<b>Signature:</b>
-
-```typescript
-isHeader: typeof Header.isHeader
-```

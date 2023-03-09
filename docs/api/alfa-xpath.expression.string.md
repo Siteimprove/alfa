@@ -4,12 +4,6 @@
 
 ## Expression.String namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace String 
-```
-
 ## Interfaces
 
 |  Interface | Description |

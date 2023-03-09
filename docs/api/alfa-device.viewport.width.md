@@ -4,10 +4,3 @@
 
 ## Viewport.width property
 
-[https://www.w3.org/TR/mediaqueries/\#width](https://www.w3.org/TR/mediaqueries/#width)
-
-<b>Signature:</b>
-
-```typescript
-get width(): number;
-```

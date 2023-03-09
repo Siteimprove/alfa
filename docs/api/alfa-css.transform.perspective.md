@@ -4,19 +4,9 @@
 
 ## Transform.perspective() function
 
-<b>Signature:</b>
-
-```typescript
-function perspective<D extends Length>(depth: D): Perspective<D>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  depth | D |  |
-
-<b>Returns:</b>
-
-[Perspective](./alfa-css.perspective.md)<!-- -->&lt;D&gt;
 

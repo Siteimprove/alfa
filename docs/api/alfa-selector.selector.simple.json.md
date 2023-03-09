@@ -4,10 +4,3 @@
 
 ## Selector.Simple.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON = Type.JSON | Universal.JSON | Attribute.JSON | Class.JSON | Id.JSON | Pseudo.JSON;
-```
-<b>References:</b> [Type.JSON](./alfa-selector.selector.type.json.md)<!-- -->, [Universal.JSON](./alfa-selector.selector.universal.json.md)<!-- -->, [Attribute.JSON](./alfa-selector.selector.attribute.json.md)<!-- -->, [Class.JSON](./alfa-selector.selector.class.json.md)<!-- -->, [Id.JSON](./alfa-selector.selector.id.json.md)<!-- -->, [Pseudo.JSON](./alfa-selector.selector.pseudo.json.md)
-

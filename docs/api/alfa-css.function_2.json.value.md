@@ -4,8 +4,3 @@
 
 ## Function\_2.JSON.value property
 
-<b>Signature:</b>
-
-```typescript
-value: Array<Token.JSON>;
-```

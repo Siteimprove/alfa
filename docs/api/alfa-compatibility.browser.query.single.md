@@ -4,10 +4,3 @@
 
 ## Browser.Query.Single type
 
-<b>Signature:</b>
-
-```typescript
-type Single<N extends Name> = readonly [N, Version<N>];
-```
-<b>References:</b> [Name](./alfa-compatibility.browser.name.md)<!-- -->, [Version](./alfa-compatibility.browser.version.md)
-

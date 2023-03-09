@@ -4,19 +4,9 @@
 
 ## Left.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals<L>(value: Left<L>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Left](./alfa-either.left.md)<!-- -->&lt;L&gt; |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

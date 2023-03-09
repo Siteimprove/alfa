@@ -4,10 +4,3 @@
 
 ## Flattened.RulesUnion type
 
-A union of all the possible types of rules
-
-<b>Signature:</b>
-
-```typescript
-type RulesUnion = Record.Value<typeof rules>;
-```

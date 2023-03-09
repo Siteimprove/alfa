@@ -4,20 +4,10 @@
 
 ## Right.either() method
 
-<b>Signature:</b>
-
-```typescript
-either<T>(left: unknown, right: Mapper<R, T>): T;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  left | unknown |  |
 |  right | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt; |  |
-
-<b>Returns:</b>
-
-T
 

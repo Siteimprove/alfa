@@ -4,8 +4,3 @@
 
 ## Diagnostic.isWithRole variable
 
-<b>Signature:</b>
-
-```typescript
-isWithRole: typeof WithRole.isWithRole
-```

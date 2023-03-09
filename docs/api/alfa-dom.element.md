@@ -4,18 +4,11 @@
 
 ## Element namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Element 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isElement(value)](./alfa-dom.element.iselement.md) |  |
+|  [isElement](./alfa-dom.element.iselement.md) |  |
 
 ## Interfaces
 

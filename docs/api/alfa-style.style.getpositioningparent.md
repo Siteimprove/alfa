@@ -4,8 +4,3 @@
 
 ## Style.getPositioningParent variable
 
-<b>Signature:</b>
-
-```typescript
-getPositioningParent: typeof element.getPositioningParent
-```

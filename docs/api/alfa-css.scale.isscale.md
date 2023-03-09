@@ -4,19 +4,9 @@
 
 ## Scale.isScale() function
 
-<b>Signature:</b>
-
-```typescript
-function isScale(value: unknown): value is Scale;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Scale](./alfa-css.scale.md)
 

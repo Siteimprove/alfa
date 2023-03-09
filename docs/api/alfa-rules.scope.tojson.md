@@ -4,12 +4,3 @@
 
 ## Scope.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Scope.JSON<S>;
-```
-<b>Returns:</b>
-
-[Scope.JSON](./alfa-rules.scope.json.md)<!-- -->&lt;S&gt;
-

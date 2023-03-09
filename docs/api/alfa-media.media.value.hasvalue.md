@@ -4,19 +4,9 @@
 
 ## Media.Value.hasValue() method
 
-<b>Signature:</b>
-
-```typescript
-hasValue<U extends T>(refinement: Refinement<T, U>): this is Value<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
-
-<b>Returns:</b>
-
-this is [Value](./alfa-media.media.value.md)<!-- -->&lt;U&gt;
 

@@ -4,8 +4,3 @@
 
 ## Media.Query.condition property
 
-<b>Signature:</b>
-
-```typescript
-get condition(): Option<Feature | Condition>;
-```

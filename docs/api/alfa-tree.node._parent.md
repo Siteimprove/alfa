@@ -4,8 +4,3 @@
 
 ## Node.\_parent property
 
-<b>Signature:</b>
-
-```typescript
-protected _parent: Option<Node<F>>;
-```

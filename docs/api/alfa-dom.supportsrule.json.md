@@ -4,16 +4,9 @@
 
 ## SupportsRule.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends ConditionRule.JSON 
-```
-<b>Extends:</b> [ConditionRule.JSON](./alfa-dom.conditionrule.json.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-dom.supportsrule.json.type.md) |  | "supports" |  |
+|  [type](./alfa-dom.supportsrule.json.type.md) |  |  |  |
 

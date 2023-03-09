@@ -4,12 +4,3 @@
 
 ## Token.Number.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Number.JSON;
-```
-<b>Returns:</b>
-
-[Number.JSON](./alfa-css.token.number.json.md)
-

@@ -4,19 +4,9 @@
 
 ## Iterable\_2.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from<T>(arrayLike: ArrayLike<T>): Iterable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  arrayLike | ArrayLike&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Iterable&lt;T&gt;
 

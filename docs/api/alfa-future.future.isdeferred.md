@@ -4,12 +4,3 @@
 
 ## Future.isDeferred() method
 
-<b>Signature:</b>
-
-```typescript
-abstract isDeferred(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

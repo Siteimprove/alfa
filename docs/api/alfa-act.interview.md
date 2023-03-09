@@ -4,16 +4,3 @@
 
 ## Interview type
 
-An Interview is either a direct ANSWER; or a question who is ultimately going to produce one, possibly through more questions (aka, an Interview).
-
-The QUESTION type maps questions' URI to the expected type of answer, both as a JavaScript manipulable representation (T), and an actual type (A). The SUBJECT and CONTEXT types are the subject and context of the question.
-
-<b>Signature:</b>
-
-```typescript
-export declare type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = Interview.MaxDepth> = ANSWER | {
-    [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, CONTEXT, QUESTION[URI] extends [any, infer A] ? A : never, D extends -1 ? ANSWER : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>, URI extends string ? URI : never>;
-}[keyof QUESTION];
-```
-<b>References:</b> [Question](./alfa-act.question.md)<!-- -->, [Interview](./alfa-act.interview.md)
-

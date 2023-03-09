@@ -4,12 +4,3 @@
 
 ## Rule.Atomic.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Atomic.JSON;
-```
-<b>Returns:</b>
-
-[Atomic.JSON](./alfa-act.rule.atomic.json.md)
-

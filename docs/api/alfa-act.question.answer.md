@@ -4,19 +4,9 @@
 
 ## Question.answer() method
 
-<b>Signature:</b>
-
-```typescript
-answer(answer: ANSWER): T;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  answer | ANSWER |  |
-
-<b>Returns:</b>
-
-T
 

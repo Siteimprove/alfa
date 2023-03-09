@@ -4,16 +4,10 @@
 
 ## Media.Not.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [condition](./alfa-media.media.not.json.condition.md) |  | [Condition.JSON](./alfa-media.media.condition.json.md) \| [Feature.JSON](./alfa-media.media.feature.json.md) |  |
-|  [type](./alfa-media.media.not.json.type.md) |  | "not" |  |
+|  [condition](./alfa-media.media.not.json.condition.md) |  |  |  |
+|  [type](./alfa-media.media.not.json.type.md) |  |  |  |
 

@@ -4,19 +4,9 @@
 
 ## List.sort() method
 
-<b>Signature:</b>
-
-```typescript
-sort<T extends Comparable<T>>(this: List<T>): List<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [List](./alfa-list.list.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

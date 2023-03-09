@@ -4,20 +4,10 @@
 
 ## Argument.default() method
 
-<b>Signature:</b>
-
-```typescript
-default(value: T, label?: string): Argument<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
 |  label | string | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Argument](./alfa-command.argument.md)<!-- -->&lt;T&gt;
 

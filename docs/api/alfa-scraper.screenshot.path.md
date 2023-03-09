@@ -4,8 +4,3 @@
 
 ## Screenshot.path property
 
-<b>Signature:</b>
-
-```typescript
-get path(): string;
-```

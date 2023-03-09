@@ -4,20 +4,10 @@
 
 ## Context.hasState() method
 
-<b>Signature:</b>
-
-```typescript
-hasState(element: Element, state: Context.State): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
 |  state | [Context.State](./alfa-selector.context.state.md) |  |
-
-<b>Returns:</b>
-
-boolean
 

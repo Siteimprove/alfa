@@ -4,19 +4,9 @@
 
 ## Token.isCharacter() function
 
-<b>Signature:</b>
-
-```typescript
-function isCharacter(value: unknown): value is Character;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Character](./alfa-xpath.token.character.md)
 

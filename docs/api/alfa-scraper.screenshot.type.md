@@ -4,10 +4,3 @@
 
 ## Screenshot.Type type
 
-<b>Signature:</b>
-
-```typescript
-type Type = Type.PNG | Type.JPEG;
-```
-<b>References:</b> [Type.PNG](./alfa-scraper.screenshot.type.png.md)<!-- -->, [Type.JPEG](./alfa-scraper.screenshot.type.jpeg.md)
-

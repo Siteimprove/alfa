@@ -4,19 +4,9 @@
 
 ## Unit.isAngle() function
 
-<b>Signature:</b>
-
-```typescript
-function isAngle(unit: string): unit is Angle;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | string |  |
-
-<b>Returns:</b>
-
-unit is [Angle](./alfa-css.unit.angle.md)
 

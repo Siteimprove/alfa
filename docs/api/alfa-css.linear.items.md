@@ -4,8 +4,3 @@
 
 ## Linear.items property
 
-<b>Signature:</b>
-
-```typescript
-get items(): Iterable<I>;
-```

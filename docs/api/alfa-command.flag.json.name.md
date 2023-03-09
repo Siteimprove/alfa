@@ -4,8 +4,3 @@
 
 ## Flag.JSON.name property
 
-<b>Signature:</b>
-
-```typescript
-name: string;
-```

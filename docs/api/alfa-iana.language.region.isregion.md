@@ -4,19 +4,9 @@
 
 ## Language.Region.isRegion() function
 
-<b>Signature:</b>
-
-```typescript
-function isRegion(value: unknown): value is Region;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Region](./alfa-iana.language.region.md)
 

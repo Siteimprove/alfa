@@ -4,20 +4,10 @@
 
 ## Vector.multiply() function
 
-<b>Signature:</b>
-
-```typescript
-function multiply(v: Vector, s: number): Vector;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
 |  s | number |  |
-
-<b>Returns:</b>
-
-[Vector](./alfa-math.vector.md)
 

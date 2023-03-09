@@ -4,12 +4,6 @@
 
 ## Tuple.reduceWhile() function
 
-<b>Signature:</b>
-
-```typescript
-export function reduceWhile<T extends Tuple, U>(tuple: T, predicate: Predicate<Item<T>, [index: number]>, reducer: Reducer<Item<T>, U, [index: number]>, accumulator: U): U;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ export function reduceWhile<T extends Tuple, U>(tuple: T, predicate: Predicate<I
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: number\]&gt; |  |
 |  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt; |  |
 |  accumulator | U |  |
-
-<b>Returns:</b>
-
-U
 

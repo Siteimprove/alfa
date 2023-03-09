@@ -4,8 +4,3 @@
 
 ## Assertion.to property
 
-<b>Signature:</b>
-
-```typescript
-get to(): this;
-```

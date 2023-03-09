@@ -4,19 +4,9 @@
 
 ## Cookies.delete() method
 
-<b>Signature:</b>
-
-```typescript
-delete(name: string): Cookies;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-
-<b>Returns:</b>
-
-[Cookies](./alfa-http.cookies.md)
 

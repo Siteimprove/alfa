@@ -4,19 +4,9 @@
 
 ## Collection.reject() method
 
-<b>Signature:</b>
-
-```typescript
-reject<U extends T>(refinement: Refinement<T, U>): Collection<Exclude<T, U>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
-
-<b>Returns:</b>
-
-[Collection](./alfa-collection.collection.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
 

@@ -4,18 +4,11 @@
 
 ## Image namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Image 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isImage(value)](./alfa-css.image.isimage.md) |  |
+|  [isImage](./alfa-css.image.isimage.md) |  |
 
 ## Interfaces
 
@@ -27,5 +20,5 @@ export declare namespace Image
 
 |  Variable | Description |
 |  --- | --- |
-|  [parse](./alfa-css.image.parse.md) | [https://drafts.csswg.org/css-images/\#typedef-image](https://drafts.csswg.org/css-images/#typedef-image) |
+|  [parse](./alfa-css.image.parse.md) |  |
 

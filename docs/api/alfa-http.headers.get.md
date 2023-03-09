@@ -4,19 +4,9 @@
 
 ## Headers.get() method
 
-<b>Signature:</b>
-
-```typescript
-get(name: string): Option<Header>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Header](./alfa-http.header.md)<!-- -->&gt;
 

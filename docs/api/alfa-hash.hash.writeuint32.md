@@ -4,19 +4,9 @@
 
 ## Hash.writeUint32() method
 
-<b>Signature:</b>
-
-```typescript
-writeUint32(data: number): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | number |  |
-
-<b>Returns:</b>
-
-this
 

@@ -4,18 +4,12 @@
 
 ## Rule.Atomic namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Atomic 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isAtomic(value)](./alfa-act.rule.atomic.isatomic.md) |  |
-|  [isAtomic(value)](./alfa-act.rule.atomic.isatomic_1.md) |  |
+|  [isAtomic](./alfa-act.rule.atomic.isatomic.md) |  |
+|  [isAtomic](./alfa-act.rule.atomic.isatomic.md) |  |
 
 ## Interfaces
 

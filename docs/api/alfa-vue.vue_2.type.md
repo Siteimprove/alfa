@@ -4,10 +4,3 @@
 
 ## Vue\_2.Type type
 
-<b>Signature:</b>
-
-```typescript
-type Type = Wrapper<V | null> | Cheerio.Type;
-```
-<b>References:</b> [Cheerio.Type](./alfa-cheerio.cheerio.type.md)
-

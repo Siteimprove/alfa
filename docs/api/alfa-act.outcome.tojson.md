@@ -4,12 +4,3 @@
 
 ## Outcome.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Outcome.JSON<V>;
-```
-<b>Returns:</b>
-
-[Outcome.JSON](./alfa-act.outcome.json.md)<!-- -->&lt;V&gt;
-

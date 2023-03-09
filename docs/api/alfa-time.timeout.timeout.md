@@ -4,8 +4,3 @@
 
 ## Timeout.timeout property
 
-<b>Signature:</b>
-
-```typescript
-get timeout(): number;
-```

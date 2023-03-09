@@ -4,20 +4,10 @@
 
 ## Array\_2.hash() function
 
-<b>Signature:</b>
-
-```typescript
-function hash<T>(array: ReadonlyArray<T>, hash: Hash): void;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  hash | [Hash](./alfa-hash.hash.md) |  |
-
-<b>Returns:</b>
-
-void
 

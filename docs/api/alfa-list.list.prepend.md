@@ -4,19 +4,9 @@
 
 ## List.prepend() method
 
-<b>Signature:</b>
-
-```typescript
-prepend(value: T): List<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

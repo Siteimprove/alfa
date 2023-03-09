@@ -4,8 +4,3 @@
 
 ## Position.Side.side property
 
-<b>Signature:</b>
-
-```typescript
-get side(): S;
-```

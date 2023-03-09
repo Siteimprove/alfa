@@ -4,20 +4,10 @@
 
 ## Display.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(resolution: number, scan?: Display.Scan): Display;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  resolution | number |  |
 |  scan | [Display.Scan](./alfa-device.display.scan.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Display](./alfa-device.display.md)
 

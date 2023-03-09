@@ -4,12 +4,3 @@
 
 ## Gradient.Hint.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Hint.JSON;
-```
-<b>Returns:</b>
-
-[Hint.JSON](./alfa-css.gradient.hint.json.md)
-

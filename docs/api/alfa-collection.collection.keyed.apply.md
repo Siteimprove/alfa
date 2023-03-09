@@ -4,19 +4,9 @@
 
 ## Collection.Keyed.apply() method
 
-<b>Signature:</b>
-
-```typescript
-apply<U>(mapper: Keyed<K, Mapper<V, U>>): Keyed<K, U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, U&gt;
 

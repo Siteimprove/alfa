@@ -4,19 +4,9 @@
 
 ## axis.descendant() function
 
-<b>Signature:</b>
-
-```typescript
-function descendant(name?: string): Builder.Axis;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Builder.Axis](./alfa-xpath.builder.axis.md)
 

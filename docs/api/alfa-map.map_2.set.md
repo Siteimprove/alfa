@@ -4,20 +4,10 @@
 
 ## Map\_2.set() method
 
-<b>Signature:</b>
-
-```typescript
-set(key: K, value: V): Map<K, V>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K |  |
 |  value | V |  |
-
-<b>Returns:</b>
-
-Map&lt;K, V&gt;
 

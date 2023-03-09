@@ -4,19 +4,9 @@
 
 ## Result.get() method
 
-<b>Signature:</b>
-
-```typescript
-get(message?: string): T;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  message | string | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-T
 

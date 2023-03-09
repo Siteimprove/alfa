@@ -4,8 +4,3 @@
 
 ## Expression.Integer.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "integer";
-```

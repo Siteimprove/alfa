@@ -4,8 +4,3 @@
 
 ## Outcome.CantTell.JSON.diagnostic property
 
-<b>Signature:</b>
-
-```typescript
-diagnostic: json.Serializable.ToJSON<Diagnostic>;
-```

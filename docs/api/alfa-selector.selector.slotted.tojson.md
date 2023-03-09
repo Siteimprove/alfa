@@ -4,12 +4,3 @@
 
 ## Selector.Slotted.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Slotted.JSON;
-```
-<b>Returns:</b>
-
-[Slotted.JSON](./alfa-selector.selector.slotted.json.md)
-

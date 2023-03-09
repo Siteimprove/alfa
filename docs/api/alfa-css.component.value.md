@@ -4,8 +4,3 @@
 
 ## Component.value property
 
-<b>Signature:</b>
-
-```typescript
-get value(): Array<Token>;
-```

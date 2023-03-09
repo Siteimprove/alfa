@@ -4,10 +4,3 @@
 
 ## Dimension.canonicalUnit property
 
-[https://drafts.csswg.org/css-values/\#canonical-unit](https://drafts.csswg.org/css-values/#canonical-unit)
-
-<b>Signature:</b>
-
-```typescript
-abstract get canonicalUnit(): U;
-```

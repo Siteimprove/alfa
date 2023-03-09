@@ -4,10 +4,3 @@
 
 ## Tuple.Append type
 
-<b>Signature:</b>
-
-```typescript
-export type Append<T extends Tuple, V> = [...T, V];
-```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)
-

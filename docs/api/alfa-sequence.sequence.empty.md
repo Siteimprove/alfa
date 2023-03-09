@@ -4,12 +4,3 @@
 
 ## Sequence.empty() function
 
-<b>Signature:</b>
-
-```typescript
-function empty<T = never>(): Sequence<T>;
-```
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
-

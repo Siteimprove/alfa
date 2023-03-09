@@ -4,15 +4,9 @@
 
 ## Selector.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-export interface JSON<T extends string = string> 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-selector.selector.json.type.md) |  | T |  |
+|  [type](./alfa-selector.selector.json.type.md) |  |  |  |
 

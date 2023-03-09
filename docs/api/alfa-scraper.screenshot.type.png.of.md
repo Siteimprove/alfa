@@ -4,19 +4,9 @@
 
 ## Screenshot.Type.PNG.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(background: boolean): PNG;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  background | boolean |  |
-
-<b>Returns:</b>
-
-[PNG](./alfa-scraper.screenshot.type.png.md)
 

@@ -4,19 +4,9 @@
 
 ## Refinement.isUndefined() function
 
-<b>Signature:</b>
-
-```typescript
-export function isUndefined(value: unknown): value is undefined;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is undefined
 

@@ -4,19 +4,9 @@
 
 ## Cookie.isCookie() function
 
-<b>Signature:</b>
-
-```typescript
-function isCookie(value: unknown): value is Cookie;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Cookie](./alfa-http.cookie.md)
 

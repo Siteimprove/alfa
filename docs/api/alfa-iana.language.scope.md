@@ -4,12 +4,3 @@
 
 ## Language.Scope type
 
-[https://tools.ietf.org/html/bcp47\#section-3.1.11](https://tools.ietf.org/html/bcp47#section-3.1.11)
-
-<b>Signature:</b>
-
-```typescript
-type Scope = Exclude<Languages["primary"][Primary.Name]["scope"], null>;
-```
-<b>References:</b> [Primary.Name](./alfa-iana.language.primary.name.md)
-

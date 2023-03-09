@@ -4,10 +4,3 @@
 
 ## Name.Source type
 
-<b>Signature:</b>
-
-```typescript
-type Source = Source.Data | Source.Descendant | Source.Ancestor | Source.Label | Source.Reference;
-```
-<b>References:</b> [Source.Data](./alfa-aria.name.source.data.md)<!-- -->, [Source.Descendant](./alfa-aria.name.source.descendant.md)<!-- -->, [Source.Ancestor](./alfa-aria.name.source.ancestor.md)<!-- -->, [Source.Label](./alfa-aria.name.source.label.md)<!-- -->, [Source.Reference](./alfa-aria.name.source.reference.md)
-

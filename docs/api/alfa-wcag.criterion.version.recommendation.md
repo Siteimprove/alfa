@@ -4,10 +4,3 @@
 
 ## Criterion.Version.Recommendation variable
 
-The current version of the WCAG Recommendation.
-
-<b>Signature:</b>
-
-```typescript
-Recommendation = "2.1"
-```

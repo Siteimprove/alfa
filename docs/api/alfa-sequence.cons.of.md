@@ -4,20 +4,10 @@
 
 ## Cons.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T>(head: T, tail?: Lazy<Sequence<T>>): Cons<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  head | T |  |
 |  tail | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
 

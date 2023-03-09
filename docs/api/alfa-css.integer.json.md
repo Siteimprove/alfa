@@ -4,10 +4,3 @@
 
 ## Integer.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Numeric.JSON<"integer"> 
-```
-<b>Extends:</b> [Numeric.JSON](./alfa-css.numeric.json.md)<!-- -->&lt;"integer"&gt;
-

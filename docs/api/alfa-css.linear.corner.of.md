@@ -4,20 +4,10 @@
 
 ## Linear.Corner.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(vertical: Position.Vertical, horizontal: Position.Horizontal): Corner;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  vertical | [Position.Vertical](./alfa-css.linear.position.vertical.md) |  |
 |  horizontal | [Position.Horizontal](./alfa-css.linear.position.horizontal.md) |  |
-
-<b>Returns:</b>
-
-[Corner](./alfa-css.linear.corner.md)
 

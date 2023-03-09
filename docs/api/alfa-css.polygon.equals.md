@@ -4,19 +4,9 @@
 
 ## Polygon.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Polygon): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Polygon](./alfa-css.polygon.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

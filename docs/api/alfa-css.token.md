@@ -4,11 +4,3 @@
 
 ## Token type
 
-
-<b>Signature:</b>
-
-```typescript
-export declare type Token = Token.Ident | Token.Function | Token.AtKeyword | Token.Hash | Token.String | Token.URL | Token.BadURL | Token.Delim | Token.Number | Token.Percentage | Token.Dimension | Token.Whitespace | Token.Colon | Token.Semicolon | Token.Comma | Token.OpenParenthesis | Token.CloseParenthesis | Token.OpenSquareBracket | Token.CloseSquareBracket | Token.OpenCurlyBracket | Token.CloseCurlyBracket | Token.OpenComment | Token.CloseComment;
-```
-<b>References:</b> [Token.Ident](./alfa-css.token.ident.md)<!-- -->, [Token.Function](./alfa-css.token.function.md)<!-- -->, [Token.AtKeyword](./alfa-css.token.atkeyword.md)<!-- -->, [Token.Hash](./alfa-css.token.hash.md)<!-- -->, [Token.String](./alfa-css.token.string.md)<!-- -->, [Token.URL](./alfa-css.token.url.md)<!-- -->, [Token.BadURL](./alfa-css.token.badurl.md)<!-- -->, [Token.Delim](./alfa-css.token.delim.md)<!-- -->, [Token.Number](./alfa-css.token.number.md)<!-- -->, [Token.Percentage](./alfa-css.token.percentage.md)<!-- -->, [Token.Dimension](./alfa-css.token.dimension.md)<!-- -->, [Token.Whitespace](./alfa-css.token.whitespace.md)<!-- -->, [Token.Colon](./alfa-css.token.colon.md)<!-- -->, [Token.Semicolon](./alfa-css.token.semicolon.md)<!-- -->, [Token.Comma](./alfa-css.token.comma.md)<!-- -->, [Token.OpenParenthesis](./alfa-css.token.openparenthesis.md)<!-- -->, [Token.CloseParenthesis](./alfa-css.token.closeparenthesis.md)<!-- -->, [Token.OpenSquareBracket](./alfa-css.token.opensquarebracket.md)<!-- -->, [Token.CloseSquareBracket](./alfa-css.token.closesquarebracket.md)<!-- -->, [Token.OpenCurlyBracket](./alfa-css.token.opencurlybracket.md)<!-- -->, [Token.CloseCurlyBracket](./alfa-css.token.closecurlybracket.md)<!-- -->, [Token.OpenComment](./alfa-css.token.opencomment.md)<!-- -->, [Token.CloseComment](./alfa-css.token.closecomment.md)
-

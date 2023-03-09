@@ -4,8 +4,3 @@
 
 ## Header.EARL."http:fieldName" property
 
-<b>Signature:</b>
-
-```typescript
-"http:fieldName": string;
-```

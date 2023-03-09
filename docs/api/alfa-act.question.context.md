@@ -4,8 +4,3 @@
 
 ## Question.context property
 
-<b>Signature:</b>
-
-```typescript
-get context(): CONTEXT;
-```

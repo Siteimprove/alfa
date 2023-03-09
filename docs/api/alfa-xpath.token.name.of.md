@@ -4,20 +4,10 @@
 
 ## Token.Name.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(prefix: Option<string>, value: string): Name;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  prefix | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
 |  value | string |  |
-
-<b>Returns:</b>
-
-[Name](./alfa-xpath.token.name.md)
 

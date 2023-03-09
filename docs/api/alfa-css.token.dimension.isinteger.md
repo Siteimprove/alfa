@@ -4,8 +4,3 @@
 
 ## Token.Dimension.isInteger property
 
-<b>Signature:</b>
-
-```typescript
-get isInteger(): boolean;
-```

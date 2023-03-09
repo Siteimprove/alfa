@@ -4,8 +4,3 @@
 
 ## Browser.Release.JSON.browser property
 
-<b>Signature:</b>
-
-```typescript
-browser: string;
-```

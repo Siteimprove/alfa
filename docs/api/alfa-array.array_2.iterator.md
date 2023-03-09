@@ -4,19 +4,9 @@
 
 ## Array\_2.iterator() function
 
-<b>Signature:</b>
-
-```typescript
-function iterator<T>(array: ReadonlyArray<T>): Iterator<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Iterator&lt;T&gt;
 

@@ -4,17 +4,11 @@
 
 ## Argument.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [description](./alfa-command.argument.json.description.md) |  | string |  |
-|  [name](./alfa-command.argument.json.name.md) |  | string |  |
-|  [options](./alfa-command.argument.json.options.md) |  | { \[key: string\]: json.JSON; optional: boolean; repeatable: boolean; default: string \| null; } |  |
+|  [description](./alfa-command.argument.json.description.md) |  |  |  |
+|  [name](./alfa-command.argument.json.name.md) |  |  |  |
+|  [options](./alfa-command.argument.json.options.md) |  |  |  |
 

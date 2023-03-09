@@ -4,20 +4,10 @@
 
 ## Sequence.of() function
 
-<b>Signature:</b>
-
-```typescript
-function of<T>(head: T, tail?: Lazy<Sequence<T>>): Sequence<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  head | T |  |
 |  tail | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

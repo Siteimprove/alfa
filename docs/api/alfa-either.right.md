@@ -4,19 +4,12 @@
 
 ## Right namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Right 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isRight(value)](./alfa-either.right.isright.md) |  |
-|  [isRight(value)](./alfa-either.right.isright_1.md) |  |
+|  [isRight](./alfa-either.right.isright.md) |  |
+|  [isRight](./alfa-either.right.isright.md) |  |
 
 ## Interfaces
 

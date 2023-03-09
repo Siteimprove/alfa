@@ -4,14 +4,6 @@
 
 ## Rule.Event.(constructor)
 
-Constructs a new instance of the `Event` class
-
-<b>Signature:</b>
-
-```typescript
-constructor(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME);
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |

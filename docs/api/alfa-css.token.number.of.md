@@ -4,12 +4,6 @@
 
 ## Token.Number.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(value: number, isInteger: boolean, isSigned: boolean): Number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ static of(value: number, isInteger: boolean, isSigned: boolean): Number;
 |  value | number |  |
 |  isInteger | boolean |  |
 |  isSigned | boolean |  |
-
-<b>Returns:</b>
-
-[Number](./alfa-css.token.number.md)
 

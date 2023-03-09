@@ -4,8 +4,3 @@
 
 ## Outcome.isApplicable variable
 
-<b>Signature:</b>
-
-```typescript
-isApplicable: typeof Applicable.isApplicable
-```

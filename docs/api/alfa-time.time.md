@@ -4,30 +4,23 @@
 
 ## Time class
 
-
-<b>Signature:</b>
-
-```typescript
-export declare class Time 
-```
-
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(epoch)](./alfa-time.time._constructor_.md) |  | Constructs a new instance of the <code>Time</code> class |
+|  [(constructor)](./alfa-time.time._constructor_.md) |  |  |
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [epoch](./alfa-time.time.epoch.md) | <code>readonly</code> | number |  |
+|  [epoch](./alfa-time.time.epoch.md) |  |  |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [elapsed(now)](./alfa-time.time.elapsed.md) |  |  |
-|  [now()](./alfa-time.time.now.md) | <code>static</code> |  |
-|  [of(epoch)](./alfa-time.time.of.md) | <code>static</code> |  |
+|  [elapsed](./alfa-time.time.elapsed.md) |  |  |
+|  [now](./alfa-time.time.now.md) |  |  |
+|  [of](./alfa-time.time.of.md) |  |  |
 

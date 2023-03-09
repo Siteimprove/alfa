@@ -4,8 +4,3 @@
 
 ## React\_2.Type type
 
-<b>Signature:</b>
-
-```typescript
-type Type = ReactElement<unknown>;
-```

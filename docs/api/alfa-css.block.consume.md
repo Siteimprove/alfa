@@ -4,10 +4,3 @@
 
 ## Block.consume variable
 
-[https://drafts.csswg.org/css-syntax/\#consume-a-simple-block](https://drafts.csswg.org/css-syntax/#consume-a-simple-block)
-
-<b>Signature:</b>
-
-```typescript
-consume: Parser<Slice<Token>, Block>
-```

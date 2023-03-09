@@ -4,16 +4,9 @@
 
 ## Namespace namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Namespace 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isNamespace(value)](./alfa-dom.namespace.isnamespace.md) |  |
+|  [isNamespace](./alfa-dom.namespace.isnamespace.md) |  |
 

@@ -4,8 +4,3 @@
 
 ## Rule.Atomic.JSON.type property
 
-<b>Signature:</b>
-
-```typescript
-type: "atomic";
-```

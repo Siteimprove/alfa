@@ -4,8 +4,3 @@
 
 ## Outcome.passed variable
 
-<b>Signature:</b>
-
-```typescript
-passed: typeof Passed.of
-```

@@ -4,18 +4,12 @@
 
 ## Rule.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [requirements](./alfa-act.rule.json.requirements.md) |  | Array&lt;[Requirement.JSON](./alfa-act.requirement.json.md)<!-- -->&gt; |  |
-|  [tags](./alfa-act.rule.json.tags.md) |  | Array&lt;[Tag.JSON](./alfa-act.tag.json.md)<!-- -->&gt; |  |
-|  [type](./alfa-act.rule.json.type.md) |  | string |  |
-|  [uri](./alfa-act.rule.json.uri.md) |  | string |  |
+|  [requirements](./alfa-act.rule.json.requirements.md) |  |  |  |
+|  [tags](./alfa-act.rule.json.tags.md) |  |  |  |
+|  [type](./alfa-act.rule.json.type.md) |  |  |  |
+|  [uri](./alfa-act.rule.json.uri.md) |  |  |  |
 

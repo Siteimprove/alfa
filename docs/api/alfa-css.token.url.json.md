@@ -4,16 +4,10 @@
 
 ## Token.URL.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.token.url.json.type.md) |  | "url" |  |
-|  [value](./alfa-css.token.url.json.value.md) |  | string |  |
+|  [type](./alfa-css.token.url.json.type.md) |  |  |  |
+|  [value](./alfa-css.token.url.json.value.md) |  |  |  |
 

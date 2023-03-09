@@ -4,19 +4,9 @@
 
 ## Media.Value.Range.map() method
 
-<b>Signature:</b>
-
-```typescript
-map<U>(mapper: Mapper<T, U>): Range<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
-
-<b>Returns:</b>
-
-[Range](./alfa-media.media.value.range.md)<!-- -->&lt;U&gt;
 

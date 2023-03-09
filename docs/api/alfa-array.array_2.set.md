@@ -4,12 +4,6 @@
 
 ## Array\_2.set() function
 
-<b>Signature:</b>
-
-```typescript
-function set<T>(array: Array<T>, index: number, value: T): Array<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ function set<T>(array: Array<T>, index: number, value: T): Array<T>;
 |  array | Array&lt;T&gt; |  |
 |  index | number |  |
 |  value | T |  |
-
-<b>Returns:</b>
-
-Array&lt;T&gt;
 

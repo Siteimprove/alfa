@@ -4,19 +4,9 @@
 
 ## Token.Character.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(value: number): Character;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | number |  |
-
-<b>Returns:</b>
-
-[Character](./alfa-xpath.token.character.md)
 

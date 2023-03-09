@@ -4,12 +4,3 @@
 
 ## Position.Side.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Side.JSON;
-```
-<b>Returns:</b>
-
-[Side.JSON](./alfa-css.position.side.json.md)
-

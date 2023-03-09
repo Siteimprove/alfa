@@ -4,12 +4,3 @@
 
 ## Token.CloseComment.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): CloseComment.JSON;
-```
-<b>Returns:</b>
-
-[CloseComment.JSON](./alfa-css.token.closecomment.json.md)
-

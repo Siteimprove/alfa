@@ -4,20 +4,13 @@
 
 ## Graph namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Graph 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(iterable)](./alfa-graph.graph.from.md) |  |
-|  [isGraph(value)](./alfa-graph.graph.isgraph.md) |  |
-|  [isGraph(value)](./alfa-graph.graph.isgraph_1.md) |  |
+|  [from](./alfa-graph.graph.from.md) |  |
+|  [isGraph](./alfa-graph.graph.isgraph.md) |  |
+|  [isGraph](./alfa-graph.graph.isgraph.md) |  |
 
 ## Interfaces
 
@@ -29,8 +22,8 @@ export declare namespace Graph
 
 |  Variable | Description |
 |  --- | --- |
-|  [BreadthFirst](./alfa-graph.graph.breadthfirst.md) | [https://en.wikipedia.org/wiki/Breadth-first\_search](https://en.wikipedia.org/wiki/Breadth-first_search) |
-|  [DepthFirst](./alfa-graph.graph.depthfirst.md) | [https://en.wikipedia.org/wiki/Depth-first\_search](https://en.wikipedia.org/wiki/Depth-first_search) |
+|  [BreadthFirst](./alfa-graph.graph.breadthfirst.md) |  |
+|  [DepthFirst](./alfa-graph.graph.depthfirst.md) |  |
 
 ## Type Aliases
 

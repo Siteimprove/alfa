@@ -4,12 +4,6 @@
 
 ## Expression.Path namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Path 
-```
-
 ## Interfaces
 
 |  Interface | Description |

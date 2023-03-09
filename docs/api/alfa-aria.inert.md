@@ -4,21 +4,13 @@
 
 ## Inert class
 
-
-<b>Signature:</b>
-
-```typescript
-export declare class Inert extends Node<"inert"> 
-```
-<b>Extends:</b> [Node](./alfa-aria.node.md)<!-- -->&lt;"inert"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [clone()](./alfa-aria.inert.clone.md) |  |  |
-|  [isIgnored()](./alfa-aria.inert.isignored.md) |  |  |
-|  [of(owner)](./alfa-aria.inert.of.md) | <code>static</code> |  |
-|  [toJSON()](./alfa-aria.inert.tojson.md) |  |  |
-|  [toString()](./alfa-aria.inert.tostring.md) |  |  |
+|  [clone](./alfa-aria.inert.clone.md) |  |  |
+|  [isIgnored](./alfa-aria.inert.isignored.md) |  |  |
+|  [of](./alfa-aria.inert.of.md) |  |  |
+|  [toJSON](./alfa-aria.inert.tojson.md) |  |  |
+|  [toString](./alfa-aria.inert.tostring.md) |  |  |
 

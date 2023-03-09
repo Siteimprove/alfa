@@ -4,19 +4,9 @@
 
 ## Rectangle.isRectangle() function
 
-<b>Signature:</b>
-
-```typescript
-function isRectangle(value: unknown): value is Rectangle;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Rectangle](./alfa-css.rectangle.md)
 

@@ -4,12 +4,6 @@
 
 ## Graph.path() method
 
-<b>Signature:</b>
-
-```typescript
-path(from: T, to: T, traversal?: Graph.Traversal): Sequence<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ path(from: T, to: T, traversal?: Graph.Traversal): Sequence<T>;
 |  from | T |  |
 |  to | T |  |
 |  traversal | [Graph.Traversal](./alfa-graph.graph.traversal.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

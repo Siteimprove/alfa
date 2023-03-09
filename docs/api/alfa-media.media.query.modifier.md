@@ -4,8 +4,3 @@
 
 ## Media.Query.modifier property
 
-<b>Signature:</b>
-
-```typescript
-get modifier(): Option<Modifier>;
-```

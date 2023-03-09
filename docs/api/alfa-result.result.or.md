@@ -4,19 +4,9 @@
 
 ## Result.or() method
 
-<b>Signature:</b>
-
-```typescript
-or<U, F>(result: Result<U, F>): Result<T | U, F>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  result | [Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt; |  |
-
-<b>Returns:</b>
-
-[Result](./alfa-result.result.md)<!-- -->&lt;T \| U, F&gt;
 

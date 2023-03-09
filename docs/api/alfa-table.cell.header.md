@@ -4,8 +4,3 @@
 
 ## Cell.header variable
 
-<b>Signature:</b>
-
-```typescript
-header: typeof Header.of
-```

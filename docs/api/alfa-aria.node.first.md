@@ -4,19 +4,9 @@
 
 ## Node.first() method
 
-<b>Signature:</b>
-
-```typescript
-first(options?: Node.Traversal): Option<Node>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;
 

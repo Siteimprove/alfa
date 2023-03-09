@@ -4,19 +4,9 @@
 
 ## Result.map() method
 
-<b>Signature:</b>
-
-```typescript
-map<U>(mapper: Mapper<T, U>): Result<U, E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
-
-<b>Returns:</b>
-
-[Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;
 

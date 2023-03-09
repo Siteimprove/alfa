@@ -4,20 +4,10 @@
 
 ## Array\_2.sortWith() function
 
-<b>Signature:</b>
-
-```typescript
-function sortWith<T>(array: Array<T>, comparer: Comparer<T>): Array<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  array | Array&lt;T&gt; |  |
+|  array | Array&lt;U&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Array&lt;T&gt;
 

@@ -4,12 +4,3 @@
 
 ## Value.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Value.JSON<T>;
-```
-<b>Returns:</b>
-
-[Value.JSON](./alfa-style.value.json.md)<!-- -->&lt;T&gt;
-

@@ -4,8 +4,3 @@
 
 ## Block.JSON.value property
 
-<b>Signature:</b>
-
-```typescript
-value: Array<Token.JSON>;
-```

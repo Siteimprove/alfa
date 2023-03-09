@@ -4,20 +4,10 @@
 
 ## Name.Source.Descendant.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(element: Element, name: Name): Descendant;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
 |  name | [Name](./alfa-aria.name.md) |  |
-
-<b>Returns:</b>
-
-[Descendant](./alfa-aria.name.source.descendant.md)
 

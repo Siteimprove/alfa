@@ -4,16 +4,10 @@
 
 ## FontFaceRule.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [style](./alfa-dom.fontfacerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) |  |
-|  [type](./alfa-dom.fontfacerule.json.type.md) |  | "font-face" |  |
+|  [style](./alfa-dom.fontfacerule.json.style.md) |  |  |  |
+|  [type](./alfa-dom.fontfacerule.json.type.md) |  |  |  |
 

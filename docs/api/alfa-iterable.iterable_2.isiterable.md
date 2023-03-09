@@ -4,19 +4,9 @@
 
 ## Iterable\_2.isIterable() function
 
-<b>Signature:</b>
-
-```typescript
-function isIterable<T>(value: unknown): value is Iterable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is Iterable&lt;T&gt;
 

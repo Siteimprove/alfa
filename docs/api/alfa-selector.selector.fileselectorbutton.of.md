@@ -4,12 +4,3 @@
 
 ## Selector.FileSelectorButton.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(): FileSelectorButton;
-```
-<b>Returns:</b>
-
-[FileSelectorButton](./alfa-selector.selector.fileselectorbutton.md)
-

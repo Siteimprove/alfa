@@ -4,12 +4,3 @@
 
 ## Radial.Extent.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Extent.JSON;
-```
-<b>Returns:</b>
-
-[Extent.JSON](./alfa-css.radial.extent.json.md)
-

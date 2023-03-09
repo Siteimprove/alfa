@@ -4,19 +4,13 @@
 
 ## Command.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [arguments](./alfa-command.command.json.arguments.md) |  | Array&lt;[Argument.JSON](./alfa-command.argument.json.md)<!-- -->&gt; |  |
-|  [description](./alfa-command.command.json.description.md) |  | string |  |
-|  [flags](./alfa-command.command.json.flags.md) |  | Array&lt;[Flag.JSON](./alfa-command.flag.json.md)<!-- -->&gt; |  |
-|  [name](./alfa-command.command.json.name.md) |  | string |  |
-|  [subcommands](./alfa-command.command.json.subcommands.md) |  | Array&lt;[Command.JSON](./alfa-command.command.json.md)<!-- -->&gt; |  |
+|  [arguments](./alfa-command.command.json.arguments.md) |  |  |  |
+|  [description](./alfa-command.command.json.description.md) |  |  |  |
+|  [flags](./alfa-command.command.json.flags.md) |  |  |  |
+|  [name](./alfa-command.command.json.name.md) |  |  |  |
+|  [subcommands](./alfa-command.command.json.subcommands.md) |  |  |  |
 

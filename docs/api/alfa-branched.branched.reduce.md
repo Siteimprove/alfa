@@ -4,20 +4,10 @@
 
 ## Branched.reduce() method
 
-<b>Signature:</b>
-
-```typescript
-reduce<U>(reducer: Reducer<T, U, [Iterable<B>]>, accumulator: U): U;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U, \[Iterable&lt;B&gt;\]&gt; |  |
 |  accumulator | U |  |
-
-<b>Returns:</b>
-
-U
 

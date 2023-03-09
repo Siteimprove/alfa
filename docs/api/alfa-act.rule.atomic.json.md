@@ -4,16 +4,9 @@
 
 ## Rule.Atomic.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Rule.JSON 
-```
-<b>Extends:</b> [Rule.JSON](./alfa-act.rule.json.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-act.rule.atomic.json.type.md) |  | "atomic" |  |
+|  [type](./alfa-act.rule.atomic.json.type.md) |  |  |  |
 

@@ -4,8 +4,3 @@
 
 ## Marker.italic variable
 
-<b>Signature:</b>
-
-```typescript
-italic: Marker
-```

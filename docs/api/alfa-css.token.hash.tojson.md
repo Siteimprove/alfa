@@ -4,12 +4,3 @@
 
 ## Token.Hash.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Hash.JSON;
-```
-<b>Returns:</b>
-
-[Hash.JSON](./alfa-css.token.hash.json.md)
-

@@ -4,12 +4,3 @@
 
 ## Language.Subtag.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-abstract toJSON(): Subtag.JSON<T, N>;
-```
-<b>Returns:</b>
-
-[Subtag.JSON](./alfa-iana.language.subtag.json.md)<!-- -->&lt;T, N&gt;
-

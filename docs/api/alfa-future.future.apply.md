@@ -4,19 +4,9 @@
 
 ## Future.apply() method
 
-<b>Signature:</b>
-
-```typescript
-apply<U>(mapper: Future<Mapper<T, U>>): Future<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Future](./alfa-future.future.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Future](./alfa-future.future.md)<!-- -->&lt;U&gt;
 

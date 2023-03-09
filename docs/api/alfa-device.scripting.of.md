@@ -4,19 +4,9 @@
 
 ## Scripting.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(enabled: boolean): Scripting;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  enabled | boolean |  |
-
-<b>Returns:</b>
-
-[Scripting](./alfa-device.scripting.md)
 

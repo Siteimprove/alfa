@@ -4,20 +4,10 @@
 
 ## Selector.Type.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(namespace: Option<string>, name: string): Type;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  namespace | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
 |  name | string |  |
-
-<b>Returns:</b>
-
-[Type](./alfa-selector.selector.type.md)
 

@@ -4,20 +4,3 @@
 
 ## Builder.Path\_base variable
 
-<b>Signature:</b>
-
-```typescript
-Path_base: {
-        new (expression: Expression.Path): {
-            child(name?: string | undefined): Path;
-            parent(name?: string | undefined): Path;
-            descendant(name?: string | undefined): Path;
-            ancestor(name?: string | undefined): Path;
-            attribute(name?: string | undefined): Path;
-            readonly expression: Expression.Path;
-            equals(value: unknown): value is any;
-            toJSON(): JSON;
-            toString(): string;
-        };
-    }
-```

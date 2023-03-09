@@ -4,8 +4,3 @@
 
 ## Token.parseComment variable
 
-<b>Signature:</b>
-
-```typescript
-parseComment: Parser<Slice<Token>, Comment, string, []>
-```

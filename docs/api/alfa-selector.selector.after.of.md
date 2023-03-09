@@ -4,12 +4,3 @@
 
 ## Selector.After.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(): After;
-```
-<b>Returns:</b>
-
-[After](./alfa-selector.selector.after.md)
-

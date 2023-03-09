@@ -4,19 +4,9 @@
 
 ## Comment.isComment() function
 
-<b>Signature:</b>
-
-```typescript
-function isComment(value: unknown): value is Comment;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Comment](./alfa-dom.comment.md)
 

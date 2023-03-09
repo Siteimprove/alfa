@@ -4,8 +4,3 @@
 
 ## Flag.Version variable
 
-<b>Signature:</b>
-
-```typescript
-Version: unique symbol
-```

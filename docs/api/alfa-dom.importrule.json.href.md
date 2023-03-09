@@ -4,8 +4,3 @@
 
 ## ImportRule.JSON.href property
 
-<b>Signature:</b>
-
-```typescript
-href: string;
-```

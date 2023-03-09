@@ -4,8 +4,3 @@
 
 ## Token.isColon variable
 
-<b>Signature:</b>
-
-```typescript
-isColon: typeof Colon.isColon
-```

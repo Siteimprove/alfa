@@ -4,19 +4,9 @@
 
 ## Question.apply() method
 
-<b>Signature:</b>
-
-```typescript
-apply<U>(mapper: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Mapper<T, U>, URI>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;, URI&gt; |  |
-
-<b>Returns:</b>
-
-[Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, U, URI&gt;
 

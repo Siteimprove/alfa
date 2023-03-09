@@ -4,19 +4,9 @@
 
 ## Selector.isAttribute() function
 
-<b>Signature:</b>
-
-```typescript
-export function isAttribute(value: unknown): value is Attribute;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Attribute](./alfa-selector.selector.attribute.md)
 

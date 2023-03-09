@@ -4,19 +4,9 @@
 
 ## Iterable\_2.flatten() function
 
-<b>Signature:</b>
-
-```typescript
-function flatten<T>(iterable: Iterable<Iterable<T>>): Iterable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;Iterable&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-Iterable&lt;T&gt;
 

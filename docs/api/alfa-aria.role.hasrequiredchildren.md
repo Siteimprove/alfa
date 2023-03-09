@@ -4,14 +4,3 @@
 
 ## Role.hasRequiredChildren() method
 
-Check if this role has required children.
-
-<b>Signature:</b>
-
-```typescript
-hasRequiredChildren(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

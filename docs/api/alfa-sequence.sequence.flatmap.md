@@ -4,19 +4,9 @@
 
 ## Sequence.flatMap() method
 
-<b>Signature:</b>
-
-```typescript
-flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>): Sequence<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;
 

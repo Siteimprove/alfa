@@ -4,16 +4,10 @@
 
 ## Ok.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<T> 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-result.ok.json.type.md) |  | "ok" |  |
-|  [value](./alfa-result.ok.json.value.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
+|  [type](./alfa-result.ok.json.type.md) |  |  |  |
+|  [value](./alfa-result.ok.json.value.md) |  |  |  |
 

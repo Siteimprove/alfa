@@ -4,16 +4,10 @@
 
 ## Node.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<T extends string = string> 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [children?](./alfa-tree.node.json.children.md) |  | Array&lt;[JSON](./alfa-tree.node.json.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  [type](./alfa-tree.node.json.type.md) |  | T |  |
+|  [children](./alfa-tree.node.json.children.md) |  |  |  |
+|  [type](./alfa-tree.node.json.type.md) |  |  |  |
 

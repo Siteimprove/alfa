@@ -4,10 +4,3 @@
 
 ## Viewport.height property
 
-[https://www.w3.org/TR/mediaqueries/\#height](https://www.w3.org/TR/mediaqueries/#height)
-
-<b>Signature:</b>
-
-```typescript
-get height(): number;
-```

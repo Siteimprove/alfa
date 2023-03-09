@@ -4,8 +4,3 @@
 
 ## Diagnostic.isColorError variable
 
-<b>Signature:</b>
-
-```typescript
-isColorError: typeof ColorError.isColorError
-```

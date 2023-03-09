@@ -4,8 +4,3 @@
 
 ## Refinement.nand variable
 
-<b>Signature:</b>
-
-```typescript
-nand: Nand
-```

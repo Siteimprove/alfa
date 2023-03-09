@@ -4,8 +4,3 @@
 
 ## Rule.Composite.JSON.composes property
 
-<b>Signature:</b>
-
-```typescript
-composes: Array<Rule.JSON>;
-```

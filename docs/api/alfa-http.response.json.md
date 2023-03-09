@@ -4,18 +4,12 @@
 
 ## Response.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [body](./alfa-http.response.json.body.md) |  | string |  |
-|  [headers](./alfa-http.response.json.headers.md) |  | [Headers.JSON](./alfa-http.headers.json.md) |  |
-|  [status](./alfa-http.response.json.status.md) |  | number |  |
-|  [url](./alfa-http.response.json.url.md) |  | string |  |
+|  [body](./alfa-http.response.json.body.md) |  |  |  |
+|  [headers](./alfa-http.response.json.headers.md) |  |  |  |
+|  [status](./alfa-http.response.json.status.md) |  |  |  |
+|  [url](./alfa-http.response.json.url.md) |  |  |  |
 

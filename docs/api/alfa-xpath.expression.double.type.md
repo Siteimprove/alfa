@@ -4,8 +4,3 @@
 
 ## Expression.Double.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "double";
-```

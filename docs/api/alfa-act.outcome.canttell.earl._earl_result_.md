@@ -4,14 +4,3 @@
 
 ## Outcome.CantTell.EARL."earl:result" property
 
-<b>Signature:</b>
-
-```typescript
-"earl:result": {
-                "@type": "earl:TestResult";
-                "earl:outcome": {
-                    "@id": "earl:cantTell";
-                };
-                "earl:pointer"?: earl.EARL;
-            };
-```

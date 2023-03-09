@@ -4,19 +4,10 @@
 
 ## Selector.Root class
 
-[https://drafts.csswg.org/selectors/\#root-pseudo](https://drafts.csswg.org/selectors/#root-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class Root extends Pseudo.Class<"root"> 
-```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"root"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches(element)](./alfa-selector.selector.root.matches.md) |  |  |
-|  [of()](./alfa-selector.selector.root.of.md) | <code>static</code> |  |
+|  [matches](./alfa-selector.selector.root.matches.md) |  |  |
+|  [of](./alfa-selector.selector.root.of.md) |  |  |
 

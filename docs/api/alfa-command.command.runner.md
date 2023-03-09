@@ -4,10 +4,3 @@
 
 ## Command.Runner type
 
-<b>Signature:</b>
-
-```typescript
-type Runner<F extends Flags, A extends Arguments> = (input: Input<F, A>) => Output;
-```
-<b>References:</b> [Flags](./alfa-command.command.flags.md)<!-- -->, [Arguments](./alfa-command.command.arguments.md)<!-- -->, [Input](./alfa-command.command.input.md)<!-- -->, [Output](./alfa-command.command.output.md)
-

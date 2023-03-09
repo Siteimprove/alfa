@@ -4,18 +4,11 @@
 
 ## KeyframeRule.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Rule.JSON 
-```
-<b>Extends:</b> [Rule.JSON](./alfa-dom.rule.json.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [key](./alfa-dom.keyframerule.json.key.md) |  | string |  |
-|  [style](./alfa-dom.keyframerule.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) |  |
-|  [type](./alfa-dom.keyframerule.json.type.md) |  | "keyframe" |  |
+|  [key](./alfa-dom.keyframerule.json.key.md) |  |  |  |
+|  [style](./alfa-dom.keyframerule.json.style.md) |  |  |  |
+|  [type](./alfa-dom.keyframerule.json.type.md) |  |  |  |
 

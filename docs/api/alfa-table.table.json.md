@@ -4,17 +4,11 @@
 
 ## Table.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [cells](./alfa-table.table.json.cells.md) |  | Array&lt;[Cell.JSON](./alfa-table.cell.json.md)<!-- -->&gt; |  |
-|  [element](./alfa-table.table.json.element.md) |  | string |  |
-|  [groups](./alfa-table.table.json.groups.md) |  | Array&lt;[Group.JSON](./alfa-table.group.json.md)<!-- -->&gt; |  |
+|  [cells](./alfa-table.table.json.cells.md) |  |  |  |
+|  [element](./alfa-table.table.json.element.md) |  |  |  |
+|  [groups](./alfa-table.table.json.groups.md) |  |  |  |
 

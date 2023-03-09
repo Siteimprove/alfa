@@ -4,19 +4,9 @@
 
 ## Predicate.equals() function
 
-<b>Signature:</b>
-
-```typescript
-function equals<T>(...values: Array<T>): Predicate<unknown>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | Array&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;unknown&gt;
 

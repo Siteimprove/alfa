@@ -4,8 +4,3 @@
 
 ## GroupingRule.\_rules property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _rules: Array<Rule>;
-```

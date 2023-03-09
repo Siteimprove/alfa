@@ -4,19 +4,9 @@
 
 ## Page.isPage() function
 
-<b>Signature:</b>
-
-```typescript
-function isPage(value: unknown): value is Page;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Page](./alfa-web.page.md)
 

@@ -4,19 +4,9 @@
 
 ## List.trimLeading() method
 
-<b>Signature:</b>
-
-```typescript
-trimLeading(predicate: Predicate<T, [index: number]>): List<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

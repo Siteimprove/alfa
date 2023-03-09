@@ -4,8 +4,3 @@
 
 ## Radial.Ellipse.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "ellipse";
-```

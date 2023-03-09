@@ -4,8 +4,3 @@
 
 ## Radial.Ellipse.JSON.type property
 
-<b>Signature:</b>
-
-```typescript
-type: "ellipse";
-```

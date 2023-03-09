@@ -4,20 +4,10 @@
 
 ## Flag.Set.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T>(value: T, parse: Flag.Parser<T>): Set<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
 |  parse | [Flag.Parser](./alfa-command.flag.parser.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Set](./alfa-command.flag.set.md)<!-- -->&lt;T&gt;
 

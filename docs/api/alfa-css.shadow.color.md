@@ -4,8 +4,3 @@
 
 ## Shadow.color property
 
-<b>Signature:</b>
-
-```typescript
-get color(): C;
-```

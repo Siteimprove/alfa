@@ -4,20 +4,10 @@
 
 ## Bits.take() function
 
-<b>Signature:</b>
-
-```typescript
-function take(bits: number, n: number): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  bits | number |  |
 |  n | number |  |
-
-<b>Returns:</b>
-
-number
 

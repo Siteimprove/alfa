@@ -4,8 +4,3 @@
 
 ## Token.openSquareBracket variable
 
-<b>Signature:</b>
-
-```typescript
-openSquareBracket: typeof OpenSquareBracket.of
-```

@@ -4,12 +4,6 @@
 
 ## Translate.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<X extends Length | Percentage, Y extends Length | Percentage, Z extends Length>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ static of<X extends Length | Percentage, Y extends Length | Percentage, Z extend
 |  x | X |  |
 |  y | Y |  |
 |  z | Z |  |
-
-<b>Returns:</b>
-
-[Translate](./alfa-css.translate.md)<!-- -->&lt;X, Y, Z&gt;
 

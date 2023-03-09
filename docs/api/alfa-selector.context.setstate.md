@@ -4,20 +4,10 @@
 
 ## Context.setState() method
 
-<b>Signature:</b>
-
-```typescript
-setState(element: Element, state: Context.State): Context;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
 |  state | [Context.State](./alfa-selector.context.state.md) |  |
-
-<b>Returns:</b>
-
-[Context](./alfa-selector.context.md)
 

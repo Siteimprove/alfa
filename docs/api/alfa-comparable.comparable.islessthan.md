@@ -4,22 +4,10 @@
 
 ## Comparable.isLessThan() function
 
-Check if one value is less than another.
-
-<b>Signature:</b>
-
-```typescript
-function isLessThan<T>(a: Comparable<T>, b: T): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | [Comparable](./alfa-comparable.comparable.md)<!-- -->&lt;T&gt; |  |
 |  b | T |  |
-
-<b>Returns:</b>
-
-boolean
 

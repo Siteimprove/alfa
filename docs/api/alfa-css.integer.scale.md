@@ -4,19 +4,9 @@
 
 ## Integer.scale() method
 
-<b>Signature:</b>
-
-```typescript
-scale(factor: number): Integer;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  factor | number |  |
-
-<b>Returns:</b>
-
-[Integer](./alfa-css.integer.md)
 

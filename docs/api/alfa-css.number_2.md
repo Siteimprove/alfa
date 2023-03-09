@@ -4,18 +4,11 @@
 
 ## Number\_2 namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Number 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isNumber(value)](./alfa-css.number_2.isnumber.md) |  |
+|  [isNumber](./alfa-css.number_2.isnumber.md) |  |
 
 ## Interfaces
 
@@ -27,6 +20,6 @@ export declare namespace Number
 
 |  Variable | Description |
 |  --- | --- |
-|  [parse](./alfa-css.number_2.parse.md) | [https://drafts.csswg.org/css-values/\#number-value](https://drafts.csswg.org/css-values/#number-value) |
-|  [parseZero](./alfa-css.number_2.parsezero.md) | [https://drafts.csswg.org/css-values/\#zero-value](https://drafts.csswg.org/css-values/#zero-value) |
+|  [parse](./alfa-css.number_2.parse.md) |  |
+|  [parseZero](./alfa-css.number_2.parsezero.md) |  |
 

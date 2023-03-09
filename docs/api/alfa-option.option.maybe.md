@@ -4,10 +4,3 @@
 
 ## Option.Maybe type
 
-<b>Signature:</b>
-
-```typescript
-type Maybe<T> = T | Option<T>;
-```
-<b>References:</b> [Option](./alfa-option.option.md)
-

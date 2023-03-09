@@ -4,8 +4,3 @@
 
 ## Token.isDelim variable
 
-<b>Signature:</b>
-
-```typescript
-isDelim: typeof Delim.isDelim
-```

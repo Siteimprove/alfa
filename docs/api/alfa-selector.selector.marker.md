@@ -4,18 +4,9 @@
 
 ## Selector.Marker class
 
-[https://drafts.csswg.org/css-pseudo-4/\#marker-pseudo](https://drafts.csswg.org/css-pseudo-4/#marker-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class Marker extends Pseudo.Element<"marker"> 
-```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"marker"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [of()](./alfa-selector.selector.marker.of.md) | <code>static</code> |  |
+|  [of](./alfa-selector.selector.marker.of.md) |  |  |
 

@@ -4,16 +4,9 @@
 
 ## Document.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Node.JSON<"document"> 
-```
-<b>Extends:</b> [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"document"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [style](./alfa-dom.document.json.style.md) |  | Array&lt;[Sheet.JSON](./alfa-dom.sheet.json.md)<!-- -->&gt; |  |
+|  [style](./alfa-dom.document.json.style.md) |  |  |  |
 

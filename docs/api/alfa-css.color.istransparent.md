@@ -4,19 +4,9 @@
 
 ## Color.isTransparent() function
 
-<b>Signature:</b>
-
-```typescript
-function isTransparent(color: Color): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  color | [Color](./alfa-css.color.md) |  |
-
-<b>Returns:</b>
-
-boolean
 

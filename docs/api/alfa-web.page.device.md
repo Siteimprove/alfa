@@ -4,8 +4,3 @@
 
 ## Page.device property
 
-<b>Signature:</b>
-
-```typescript
-get device(): Device;
-```

@@ -4,12 +4,6 @@
 
 ## Collection.Unkeyed namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Unkeyed 
-```
-
 ## Type Aliases
 
 |  Type Alias | Description |

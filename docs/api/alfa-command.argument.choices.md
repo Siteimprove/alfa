@@ -4,19 +4,9 @@
 
 ## Argument.choices() method
 
-<b>Signature:</b>
-
-```typescript
-choices<U extends T>(...choices: Array<U>): Argument<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  choices | Array&lt;U&gt; |  |
-
-<b>Returns:</b>
-
-[Argument](./alfa-command.argument.md)<!-- -->&lt;U&gt;
 

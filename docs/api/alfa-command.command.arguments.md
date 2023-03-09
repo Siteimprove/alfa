@@ -4,12 +4,6 @@
 
 ## Command.Arguments namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Arguments 
-```
-
 ## Type Aliases
 
 |  Type Alias | Description |

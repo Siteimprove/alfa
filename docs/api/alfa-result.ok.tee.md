@@ -4,19 +4,9 @@
 
 ## Ok.tee() method
 
-<b>Signature:</b>
-
-```typescript
-tee(callback: Callback<T>): Ok<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
 

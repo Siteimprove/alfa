@@ -4,8 +4,3 @@
 
 ## Credentials.JSON.username property
 
-<b>Signature:</b>
-
-```typescript
-username: string;
-```

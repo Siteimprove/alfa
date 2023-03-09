@@ -4,14 +4,6 @@
 
 ## Assertions.rejects() method
 
-[https://nodejs.org/api/assert.html\#assert\_assert\_rejects\_block\_error\_message](https://nodejs.org/api/assert.html#assert_assert_rejects_block_error_message)
-
-<b>Signature:</b>
-
-```typescript
-rejects<T>(block: Function | Promise<T>, error?: RegExp | Function | Object | Error, message?: string): void;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -19,8 +11,4 @@ rejects<T>(block: Function | Promise<T>, error?: RegExp | Function | Object | Er
 |  block | Function \| Promise&lt;T&gt; |  |
 |  error | RegExp \| Function \| Object \| Error | <i>(Optional)</i> |
 |  message | string | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-void
 

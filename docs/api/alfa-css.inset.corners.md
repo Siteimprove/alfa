@@ -4,8 +4,3 @@
 
 ## Inset.corners property
 
-<b>Signature:</b>
-
-```typescript
-get corners(): Option<readonly [C, C, C, C]>;
-```

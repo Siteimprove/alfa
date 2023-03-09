@@ -4,19 +4,9 @@
 
 ## Selector.Pseudo.Element.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Element): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Element](./alfa-selector.selector.pseudo.element.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

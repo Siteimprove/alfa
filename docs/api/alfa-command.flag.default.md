@@ -4,20 +4,10 @@
 
 ## Flag.default() method
 
-<b>Signature:</b>
-
-```typescript
-default(value: T, label?: string): Flag<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
 |  label | string | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Flag](./alfa-command.flag.md)<!-- -->&lt;T&gt;
 

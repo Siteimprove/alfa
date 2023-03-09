@@ -4,12 +4,3 @@
 
 ## Gradient.Stop.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Stop.JSON;
-```
-<b>Returns:</b>
-
-[Stop.JSON](./alfa-css.gradient.stop.json.md)
-

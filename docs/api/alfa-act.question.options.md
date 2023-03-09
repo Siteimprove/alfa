@@ -4,16 +4,10 @@
 
 ## Question.Options interface
 
-<b>Signature:</b>
-
-```typescript
-interface Options<A> 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [diagnostic?](./alfa-act.question.options.diagnostic.md) | <code>readonly</code> | [Diagnostic](./alfa-act.diagnostic.md) | <i>(Optional)</i> |
-|  [fallback?](./alfa-act.question.options.fallback.md) | <code>readonly</code> | [Option](./alfa-option.option.md)<!-- -->&lt;A&gt; | <i>(Optional)</i> |
+|  [diagnostic](./alfa-act.question.options.diagnostic.md) |  |  |  |
+|  [fallback](./alfa-act.question.options.fallback.md) |  |  |  |
 

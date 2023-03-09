@@ -4,20 +4,10 @@
 
 ## Timeout.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(timeout: number, time?: Time): Timeout;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  timeout | number |  |
 |  time | [Time](./alfa-time.time.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Timeout](./alfa-time.timeout.md)
 

@@ -4,19 +4,9 @@
 
 ## Audit.evaluate() method
 
-<b>Signature:</b>
-
-```typescript
-evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable<Outcome<I, T, Q, S>>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  performance | [Performance](./alfa-performance.performance.md)<!-- -->&lt;[Rule.Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S&gt;&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Future](./alfa-future.future.md)<!-- -->&lt;Iterable&lt;[Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S&gt;&gt;&gt;
 

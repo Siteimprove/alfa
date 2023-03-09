@@ -4,8 +4,3 @@
 
 ## Shape.box property
 
-<b>Signature:</b>
-
-```typescript
-get box(): B;
-```

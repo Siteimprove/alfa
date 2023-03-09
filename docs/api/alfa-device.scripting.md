@@ -4,19 +4,12 @@
 
 ## Scripting namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Scripting 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(json)](./alfa-device.scripting.from.md) |  |
-|  [isScripting(value)](./alfa-device.scripting.isscripting.md) |  |
+|  [from](./alfa-device.scripting.from.md) |  |
+|  [isScripting](./alfa-device.scripting.isscripting.md) |  |
 
 ## Interfaces
 

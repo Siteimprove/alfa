@@ -4,19 +4,9 @@
 
 ## Requirement.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Requirement): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Requirement](./alfa-act.requirement.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

@@ -4,8 +4,3 @@
 
 ## RuleTree.Node.JSON.selector property
 
-<b>Signature:</b>
-
-```typescript
-selector: Selector.JSON;
-```

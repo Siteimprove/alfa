@@ -4,19 +4,9 @@
 
 ## Selector.NthLastOfType.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: NthLastOfType): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [NthLastOfType](./alfa-selector.selector.nthlastoftype.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

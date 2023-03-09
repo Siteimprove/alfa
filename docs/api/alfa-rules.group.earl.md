@@ -4,18 +4,11 @@
 
 ## Group.EARL interface
 
-<b>Signature:</b>
-
-```typescript
-interface EARL extends earl.EARL 
-```
-<b>Extends:</b> earl.[EARL](./alfa-earl.earl.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@context"](./alfa-rules.group.earl.__context_.md) |  | { ptr: "http://www.w3.org/2009/pointers\#"; } |  |
-|  ["@type"](./alfa-rules.group.earl.__type_.md) |  | \["ptr:Pointer", "ptr:PointersGroup", "ptr:RelatedPointers"\] |  |
-|  ["ptr:groupPointer"](./alfa-rules.group.earl._ptr_grouppointer_.md) |  | { "@list": Array&lt;earl.[EARL](./alfa-earl.earl.md)<!-- -->&gt;; } |  |
+|  ["@context"](./alfa-rules.group.earl.__context_.md) |  |  |  |
+|  ["@type"](./alfa-rules.group.earl.__type_.md) |  |  |  |
+|  ["ptr:groupPointer"](./alfa-rules.group.earl._ptr_grouppointer_.md) |  |  |  |
 

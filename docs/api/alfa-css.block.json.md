@@ -4,16 +4,10 @@
 
 ## Block.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [token](./alfa-css.block.json.token.md) |  | [Token.JSON](./alfa-css.token.json.md) |  |
-|  [value](./alfa-css.block.json.value.md) |  | Array&lt;[Token.JSON](./alfa-css.token.json.md)<!-- -->&gt; |  |
+|  [token](./alfa-css.block.json.token.md) |  |  |  |
+|  [value](./alfa-css.block.json.value.md) |  |  |  |
 

@@ -4,18 +4,11 @@
 
 ## Table namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Table 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(element)](./alfa-table.table.from.md) |  |
+|  [from](./alfa-table.table.from.md) |  |
 
 ## Interfaces
 

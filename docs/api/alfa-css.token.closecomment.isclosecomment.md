@@ -4,19 +4,9 @@
 
 ## Token.CloseComment.isCloseComment() function
 
-<b>Signature:</b>
-
-```typescript
-function isCloseComment(value: unknown): value is CloseComment;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [CloseComment](./alfa-css.token.closecomment.md)
 

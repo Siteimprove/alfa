@@ -4,12 +4,3 @@
 
 ## GroupingRule.children() method
 
-<b>Signature:</b>
-
-```typescript
-children(): Iterable<Rule>;
-```
-<b>Returns:</b>
-
-Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;
-

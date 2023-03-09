@@ -4,14 +4,3 @@
 
 ## Role.isConcrete() method
 
-Check if this role is non-abstract.
-
-<b>Signature:</b>
-
-```typescript
-isConcrete(): this is Role<Role.Concrete>;
-```
-<b>Returns:</b>
-
-this is [Role](./alfa-aria.role.md)<!-- -->&lt;[Role.Concrete](./alfa-aria.role.concrete.md)<!-- -->&gt;
-

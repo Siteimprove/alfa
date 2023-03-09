@@ -4,8 +4,3 @@
 
 ## Expression.Path.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "path";
-```

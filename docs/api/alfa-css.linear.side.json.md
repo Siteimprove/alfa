@@ -4,16 +4,10 @@
 
 ## Linear.Side.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [side](./alfa-css.linear.side.json.side.md) |  | [Position.Vertical](./alfa-css.linear.position.vertical.md) \| [Position.Horizontal](./alfa-css.linear.position.horizontal.md) |  |
-|  [type](./alfa-css.linear.side.json.type.md) |  | "side" |  |
+|  [side](./alfa-css.linear.side.json.side.md) |  |  |  |
+|  [type](./alfa-css.linear.side.json.type.md) |  |  |  |
 

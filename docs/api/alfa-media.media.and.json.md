@@ -4,17 +4,11 @@
 
 ## Media.And.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [left](./alfa-media.media.and.json.left.md) |  | [Feature.JSON](./alfa-media.media.feature.json.md) \| [Condition.JSON](./alfa-media.media.condition.json.md) |  |
-|  [right](./alfa-media.media.and.json.right.md) |  | [Feature.JSON](./alfa-media.media.feature.json.md) \| [Condition.JSON](./alfa-media.media.condition.json.md) |  |
-|  [type](./alfa-media.media.and.json.type.md) |  | "and" |  |
+|  [left](./alfa-media.media.and.json.left.md) |  |  |  |
+|  [right](./alfa-media.media.and.json.right.md) |  |  |  |
+|  [type](./alfa-media.media.and.json.type.md) |  |  |  |
 

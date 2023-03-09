@@ -4,24 +4,17 @@
 
 ## Column namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Column 
-```
-
 ## Classes
 
 |  Class | Description |
 |  --- | --- |
-|  [Group](./alfa-table.column.group.md) | [https://html.spec.whatwg.org/\#concept-column-group](https://html.spec.whatwg.org/#concept-column-group) |
+|  [Group](./alfa-table.column.group.md) |  |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isColumn(value)](./alfa-table.column.iscolumn.md) |  |
+|  [isColumn](./alfa-table.column.iscolumn.md) |  |
 
 ## Interfaces
 

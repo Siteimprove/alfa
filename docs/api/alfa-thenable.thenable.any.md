@@ -4,19 +4,9 @@
 
 ## Thenable.any() function
 
-<b>Signature:</b>
-
-```typescript
-function any<T, E = unknown>(...thenables: Array<Thenable<T, E>>): Thenable<T, Array<E>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  thenables | Array&lt;[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, Array&lt;E&gt;&gt;
 

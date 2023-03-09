@@ -4,19 +4,9 @@
 
 ## Set\_2.none() method
 
-<b>Signature:</b>
-
-```typescript
-none(predicate: Predicate<T>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-boolean
 

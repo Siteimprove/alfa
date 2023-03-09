@@ -4,13 +4,6 @@
 
 ## jsx namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace jsx 
-```
-
 ## Interfaces
 
 |  Interface | Description |
@@ -21,7 +14,7 @@ export declare namespace jsx
 
 |  Namespace | Description |
 |  --- | --- |
-|  [JSX](./alfa-dom.jsx.jsx.md) | [https://www.typescriptlang.org/docs/handbook/jsx.html](https://www.typescriptlang.org/docs/handbook/jsx.html) |
+|  [JSX](./alfa-dom.jsx.jsx.md) |  |
 
 ## Type Aliases
 

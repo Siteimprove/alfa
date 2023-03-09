@@ -4,8 +4,3 @@
 
 ## Flags.\_value property
 
-<b>Signature:</b>
-
-```typescript
-protected _value: number;
-```

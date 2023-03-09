@@ -4,19 +4,9 @@
 
 ## Linear.Side.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(side: Position.Vertical | Position.Horizontal): Side;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  side | [Position.Vertical](./alfa-css.linear.position.vertical.md) \| [Position.Horizontal](./alfa-css.linear.position.horizontal.md) |  |
-
-<b>Returns:</b>
-
-[Side](./alfa-css.linear.side.md)
 

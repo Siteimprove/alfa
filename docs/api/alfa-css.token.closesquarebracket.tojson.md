@@ -4,12 +4,3 @@
 
 ## Token.CloseSquareBracket.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): CloseSquareBracket.JSON;
-```
-<b>Returns:</b>
-
-[CloseSquareBracket.JSON](./alfa-css.token.closesquarebracket.json.md)
-

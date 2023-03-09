@@ -4,12 +4,3 @@
 
 ## Frontier.hasInProgress() method
 
-<b>Signature:</b>
-
-```typescript
-hasInProgress(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

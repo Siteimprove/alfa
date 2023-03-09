@@ -4,8 +4,3 @@
 
 ## Media.Feature.Width.name property
 
-<b>Signature:</b>
-
-```typescript
-get name(): "width";
-```

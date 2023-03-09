@@ -4,19 +4,9 @@
 
 ## Promise\_2.defer() function
 
-<b>Signature:</b>
-
-```typescript
-function defer<T>(continuation: Continuation<T, void, [reject: Callback<unknown>]>): Promise<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  continuation | [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;T, void, \[reject: [Callback](./alfa-callback.callback.md)<!-- -->&lt;unknown&gt;\]&gt; |  |
-
-<b>Returns:</b>
-
-Promise&lt;T&gt;
 

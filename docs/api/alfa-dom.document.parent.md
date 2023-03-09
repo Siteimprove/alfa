@@ -4,19 +4,9 @@
 
 ## Document.parent() method
 
-<b>Signature:</b>
-
-```typescript
-parent(options?: Node.Traversal): Option<Node>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Node.Traversal](./alfa-dom.node.traversal.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-dom.node.md)<!-- -->&gt;
 

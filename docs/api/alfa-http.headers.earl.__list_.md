@@ -4,8 +4,3 @@
 
 ## Headers.EARL."@list" property
 
-<b>Signature:</b>
-
-```typescript
-"@list": Array<Header.EARL>;
-```

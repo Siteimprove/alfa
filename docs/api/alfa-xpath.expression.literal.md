@@ -4,10 +4,3 @@
 
 ## Expression.Literal type
 
-<b>Signature:</b>
-
-```typescript
-type Literal = Integer | Decimal | Double | String;
-```
-<b>References:</b> [Integer](./alfa-xpath.expression.integer.md)<!-- -->, [Decimal](./alfa-xpath.expression.decimal.md)<!-- -->, [Double](./alfa-xpath.expression.double.md)<!-- -->, [String](./alfa-xpath.expression.string.md)
-

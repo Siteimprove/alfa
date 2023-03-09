@@ -4,8 +4,3 @@
 
 ## Marker.dim variable
 
-<b>Signature:</b>
-
-```typescript
-dim: Marker
-```

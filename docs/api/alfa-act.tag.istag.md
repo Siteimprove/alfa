@@ -4,20 +4,10 @@
 
 ## Tag.isTag() function
 
-<b>Signature:</b>
-
-```typescript
-function isTag<T extends string>(value: unknown, type?: T): value is Tag<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
 |  type | T | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-value is [Tag](./alfa-act.tag.md)<!-- -->&lt;T&gt;
 

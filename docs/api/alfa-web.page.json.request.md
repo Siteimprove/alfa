@@ -4,8 +4,3 @@
 
 ## Page.JSON.request property
 
-<b>Signature:</b>
-
-```typescript
-request: Request.JSON;
-```

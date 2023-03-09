@@ -4,8 +4,3 @@
 
 ## Text.name property
 
-<b>Signature:</b>
-
-```typescript
-get name(): Option<Name>;
-```

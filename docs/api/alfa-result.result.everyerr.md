@@ -4,19 +4,9 @@
 
 ## Result.everyErr() method
 
-<b>Signature:</b>
-
-```typescript
-everyErr<F extends E>(refinement: Refinement<E, F>): this is Result<T, F>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;E, F&gt; |  |
-
-<b>Returns:</b>
-
-this is [Result](./alfa-result.result.md)<!-- -->&lt;T, F&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;E&gt; |  |
 

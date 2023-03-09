@@ -4,18 +4,11 @@
 
 ## Type namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Type 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isType(value)](./alfa-dom.type.istype.md) |  |
+|  [isType](./alfa-dom.type.istype.md) |  |
 
 ## Interfaces
 

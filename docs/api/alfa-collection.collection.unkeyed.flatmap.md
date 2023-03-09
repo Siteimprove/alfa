@@ -4,19 +4,9 @@
 
 ## Collection.Unkeyed.flatMap() method
 
-<b>Signature:</b>
-
-```typescript
-flatMap<U>(mapper: Mapper<T, Unkeyed<U>>): Unkeyed<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;U&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;U&gt;
 

@@ -4,19 +4,9 @@
 
 ## URL.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(url: string): URL;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  url | string |  |
-
-<b>Returns:</b>
-
-[URL](./alfa-css.url.md)
 

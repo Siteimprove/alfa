@@ -4,12 +4,6 @@
 
 ## Array\_2.reduceUntil() function
 
-<b>Signature:</b>
-
-```typescript
-function reduceUntil<T, U = T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ function reduceUntil<T, U = T>(array: ReadonlyArray<T>, predicate: Predicate<T, 
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 |  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 |  accumulator | U |  |
-
-<b>Returns:</b>
-
-U
 

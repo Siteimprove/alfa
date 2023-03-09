@@ -4,18 +4,10 @@
 
 ## Equatable namespace
 
-This namespace provides additional types and functions for the [Equatable](./alfa-equatable.equatable.md) interface.
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Equatable 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [equals(a, b)](./alfa-equatable.equatable.equals.md) | Check if two unknown values are equal. |
-|  [isEquatable(value)](./alfa-equatable.equatable.isequatable.md) | Check if an unknown value implements the [Equatable](./alfa-equatable.equatable.md) interface. |
+|  [equals](./alfa-equatable.equatable.equals.md) |  |
+|  [isEquatable](./alfa-equatable.equatable.isequatable.md) |  |
 

@@ -4,18 +4,12 @@
 
 ## RuleTree.Node.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [children](./alfa-cascade.ruletree.node.json.children.md) |  | Array&lt;[Node.JSON](./alfa-cascade.ruletree.node.json.md)<!-- -->&gt; |  |
-|  [declarations](./alfa-cascade.ruletree.node.json.declarations.md) |  | Array&lt;[Declaration.JSON](./alfa-dom.declaration.json.md)<!-- -->&gt; |  |
-|  [rule](./alfa-cascade.ruletree.node.json.rule.md) |  | [Rule.JSON](./alfa-dom.rule.json.md) |  |
-|  [selector](./alfa-cascade.ruletree.node.json.selector.md) |  | [Selector.JSON](./alfa-selector.selector.json.md) |  |
+|  [children](./alfa-cascade.ruletree.node.json.children.md) |  |  |  |
+|  [declarations](./alfa-cascade.ruletree.node.json.declarations.md) |  |  |  |
+|  [rule](./alfa-cascade.ruletree.node.json.rule.md) |  |  |  |
+|  [selector](./alfa-cascade.ruletree.node.json.selector.md) |  |  |  |
 

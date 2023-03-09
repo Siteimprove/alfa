@@ -4,19 +4,9 @@
 
 ## List.apply() method
 
-<b>Signature:</b>
-
-```typescript
-apply<U>(mapper: List<Mapper<T, U>>): List<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [List](./alfa-list.list.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;U&gt;
 

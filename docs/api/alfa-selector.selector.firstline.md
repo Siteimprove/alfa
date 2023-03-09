@@ -4,18 +4,9 @@
 
 ## Selector.FirstLine class
 
-[https://drafts.csswg.org/css-pseudo-4/\#first-line-pseudo](https://drafts.csswg.org/css-pseudo-4/#first-line-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class FirstLine extends Pseudo.Element<"first-line"> 
-```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"first-line"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [of()](./alfa-selector.selector.firstline.of.md) | <code>static</code> |  |
+|  [of](./alfa-selector.selector.firstline.of.md) |  |  |
 

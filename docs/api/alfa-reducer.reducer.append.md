@@ -4,12 +4,3 @@
 
 ## Reducer.append() function
 
-<b>Signature:</b>
-
-```typescript
-function append<T>(): Reducer<T, Iterable<T>>;
-```
-<b>Returns:</b>
-
-[Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, Iterable&lt;T&gt;&gt;
-

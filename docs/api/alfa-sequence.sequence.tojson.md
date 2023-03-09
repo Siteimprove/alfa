@@ -4,12 +4,3 @@
 
 ## Sequence.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Sequence.JSON<T>;
-```
-<b>Returns:</b>
-
-[Sequence.JSON](./alfa-sequence.sequence.json.md)<!-- -->&lt;T&gt;
-

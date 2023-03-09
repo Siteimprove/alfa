@@ -4,19 +4,9 @@
 
 ## Cons.prepend() method
 
-<b>Signature:</b>
-
-```typescript
-prepend(value: T): Cons<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
 

@@ -4,19 +4,9 @@
 
 ## Outcome.Failed.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals<I, T extends Hashable, Q, S>(value: Failed<I, T, Q, S>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Failed](./alfa-act.outcome.failed.md)<!-- -->&lt;I, T, Q, S&gt; |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

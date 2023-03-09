@@ -4,19 +4,12 @@
 
 ## Linear.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Value.JSON<"gradient"> 
-```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"gradient"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [direction](./alfa-css.linear.json.direction.md) |  | [Direction.JSON](./alfa-css.linear.direction.json.md) |  |
-|  [items](./alfa-css.linear.json.items.md) |  | Array&lt;[Gradient.Item.JSON](./alfa-css.gradient.item.json.md)<!-- -->&gt; |  |
-|  [kind](./alfa-css.linear.json.kind.md) |  | "linear" |  |
-|  [repeats](./alfa-css.linear.json.repeats.md) |  | boolean |  |
+|  [direction](./alfa-css.linear.json.direction.md) |  |  |  |
+|  [items](./alfa-css.linear.json.items.md) |  |  |  |
+|  [kind](./alfa-css.linear.json.kind.md) |  |  |  |
+|  [repeats](./alfa-css.linear.json.repeats.md) |  |  |  |
 

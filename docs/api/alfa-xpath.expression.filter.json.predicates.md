@@ -4,8 +4,3 @@
 
 ## Expression.Filter.JSON.predicates property
 
-<b>Signature:</b>
-
-```typescript
-predicates: Array<Expression.JSON>;
-```

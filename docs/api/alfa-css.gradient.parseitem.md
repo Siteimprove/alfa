@@ -4,8 +4,3 @@
 
 ## Gradient.parseItem variable
 
-<b>Signature:</b>
-
-```typescript
-parseItem: Parser<Slice<Token>, Item, string>
-```

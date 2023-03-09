@@ -4,8 +4,3 @@
 
 ## Token.isString variable
 
-<b>Signature:</b>
-
-```typescript
-isString: typeof String.isString
-```

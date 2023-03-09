@@ -4,8 +4,3 @@
 
 ## Version.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "version";
-```

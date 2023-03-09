@@ -4,8 +4,3 @@
 
 ## Expression.FunctionCall.name property
 
-<b>Signature:</b>
-
-```typescript
-get name(): string;
-```

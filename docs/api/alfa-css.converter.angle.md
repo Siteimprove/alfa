@@ -4,10 +4,3 @@
 
 ## Converter.angle variable
 
-[https://drafts.csswg.org/css-values/\#angles](https://drafts.csswg.org/css-values/#angles)
-
-<b>Signature:</b>
-
-```typescript
-angle: Converter<Unit.Angle>
-```

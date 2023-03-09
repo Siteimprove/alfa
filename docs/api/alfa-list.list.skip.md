@@ -4,19 +4,9 @@
 
 ## List.skip() method
 
-<b>Signature:</b>
-
-```typescript
-skip(count: number): List<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  count | number |  |
-
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

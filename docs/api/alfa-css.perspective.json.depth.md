@@ -4,8 +4,3 @@
 
 ## Perspective.JSON.depth property
 
-<b>Signature:</b>
-
-```typescript
-depth: Length.JSON;
-```

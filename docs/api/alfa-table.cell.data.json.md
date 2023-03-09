@@ -4,16 +4,9 @@
 
 ## Cell.Data.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Cell.JSON 
-```
-<b>Extends:</b> [Cell.JSON](./alfa-table.cell.json.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-table.cell.data.json.type.md) |  | "data" |  |
+|  [type](./alfa-table.cell.data.json.type.md) |  |  |  |
 

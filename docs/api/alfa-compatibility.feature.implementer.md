@@ -4,14 +4,3 @@
 
 ## Feature.Implementer type
 
-<b>Signature:</b>
-
-```typescript
-type Implementer<N extends Name> = N extends Name ? keyof Features[N]["support"] : never;
-```
-<b>References:</b> [Name](./alfa-compatibility.feature.name.md)
-
-## Remarks
-
-This type distributes the implementers over the given feature names rather than narrow to a common subset of implementers.
-

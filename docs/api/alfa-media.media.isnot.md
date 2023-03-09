@@ -4,8 +4,3 @@
 
 ## Media.isNot variable
 
-<b>Signature:</b>
-
-```typescript
-isNot: typeof Not.isNot
-```

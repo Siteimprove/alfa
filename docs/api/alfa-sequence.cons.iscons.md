@@ -4,19 +4,9 @@
 
 ## Cons.isCons() function
 
-<b>Signature:</b>
-
-```typescript
-function isCons<T>(value: Iterable<T>): value is Cons<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is [Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
+|  value | unknown |  |
 

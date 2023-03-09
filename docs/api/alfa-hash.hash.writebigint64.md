@@ -4,19 +4,9 @@
 
 ## Hash.writeBigInt64() method
 
-<b>Signature:</b>
-
-```typescript
-writeBigInt64(data: bigint): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | bigint |  |
-
-<b>Returns:</b>
-
-this
 

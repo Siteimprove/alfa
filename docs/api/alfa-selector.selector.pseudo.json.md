@@ -4,10 +4,3 @@
 
 ## Selector.Pseudo.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON = Class.JSON | Element.JSON;
-```
-<b>References:</b> [Class.JSON](./alfa-selector.selector.pseudo.class.json.md)<!-- -->, [Element.JSON](./alfa-selector.selector.pseudo.element.json.md)
-

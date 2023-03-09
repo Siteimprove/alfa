@@ -4,12 +4,3 @@
 
 ## Name.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Name.JSON;
-```
-<b>Returns:</b>
-
-[Name.JSON](./alfa-aria.name.json.md)
-

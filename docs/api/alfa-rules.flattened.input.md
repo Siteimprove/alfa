@@ -4,12 +4,3 @@
 
 ## Flattened.Input type
 
-The type of the input of rules
-
-<b>Signature:</b>
-
-```typescript
-export type Input = act.Rule.Input<RulesUnion>;
-```
-<b>References:</b> [Rule.Input](./alfa-act.rule.input.md)
-

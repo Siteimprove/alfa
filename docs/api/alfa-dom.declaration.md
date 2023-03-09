@@ -4,18 +4,11 @@
 
 ## Declaration namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Declaration 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(json)](./alfa-dom.declaration.from.md) |  |
+|  [from](./alfa-dom.declaration.from.md) |  |
 
 ## Interfaces
 

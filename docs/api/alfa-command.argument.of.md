@@ -4,12 +4,6 @@
 
 ## Argument.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T>(name: string, description: string, parse: Argument.Parser<T>): Argument<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ static of<T>(name: string, description: string, parse: Argument.Parser<T>): Argu
 |  name | string |  |
 |  description | string |  |
 |  parse | [Argument.Parser](./alfa-command.argument.parser.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Argument](./alfa-command.argument.md)<!-- -->&lt;T&gt;
 

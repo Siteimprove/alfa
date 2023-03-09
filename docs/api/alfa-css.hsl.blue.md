@@ -4,8 +4,3 @@
 
 ## HSL.blue property
 
-<b>Signature:</b>
-
-```typescript
-get blue(): Percentage;
-```

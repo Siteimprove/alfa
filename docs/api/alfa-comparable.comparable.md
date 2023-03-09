@@ -4,32 +4,24 @@
 
 ## Comparable namespace
 
-This namespace provides additional functions for the [Comparable](./alfa-comparable.comparable.md) interface.
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Comparable 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [compare(a, b)](./alfa-comparable.comparable.compare.md) | Compare two strings. |
-|  [compare(a, b)](./alfa-comparable.comparable.compare_1.md) | Compare two numbers. |
-|  [compare(a, b)](./alfa-comparable.comparable.compare_2.md) | Compare two big integers. |
-|  [compare(a, b)](./alfa-comparable.comparable.compare_3.md) | Compare two booleans. |
-|  [compare(a, b)](./alfa-comparable.comparable.compare_4.md) | Compare two comparable values. |
-|  [compareBigInt(a, b)](./alfa-comparable.comparable.comparebigint.md) |  |
-|  [compareBoolean(a, b)](./alfa-comparable.comparable.compareboolean.md) |  |
-|  [compareComparable(a, b)](./alfa-comparable.comparable.comparecomparable.md) |  |
-|  [compareNumber(a, b)](./alfa-comparable.comparable.comparenumber.md) |  |
-|  [compareString(a, b)](./alfa-comparable.comparable.comparestring.md) |  |
-|  [isComparable(value)](./alfa-comparable.comparable.iscomparable.md) | Check if an unknown value implements the [Comparable](./alfa-comparable.comparable.md) interface. |
-|  [isEqual(a, b)](./alfa-comparable.comparable.isequal.md) | Check if one value is equal to another |
-|  [isGreaterThan(a, b)](./alfa-comparable.comparable.isgreaterthan.md) | Check if one value is greater than another. |
-|  [isGreaterThanOrEqual(a, b)](./alfa-comparable.comparable.isgreaterthanorequal.md) | Check if one value is greater than or equal to another. |
-|  [isLessThan(a, b)](./alfa-comparable.comparable.islessthan.md) | Check if one value is less than another. |
-|  [isLessThanOrEqual(a, b)](./alfa-comparable.comparable.islessthanorequal.md) | Check if one value is less than or equal to another. |
+|  [compare](./alfa-comparable.comparable.compare.md) |  |
+|  [compare](./alfa-comparable.comparable.compare.md) |  |
+|  [compare](./alfa-comparable.comparable.compare.md) |  |
+|  [compare](./alfa-comparable.comparable.compare.md) |  |
+|  [compare](./alfa-comparable.comparable.compare.md) |  |
+|  [compareBigInt](./alfa-comparable.comparable.comparebigint.md) |  |
+|  [compareBoolean](./alfa-comparable.comparable.compareboolean.md) |  |
+|  [compareComparable](./alfa-comparable.comparable.comparecomparable.md) |  |
+|  [compareNumber](./alfa-comparable.comparable.comparenumber.md) |  |
+|  [compareString](./alfa-comparable.comparable.comparestring.md) |  |
+|  [isComparable](./alfa-comparable.comparable.iscomparable.md) |  |
+|  [isEqual](./alfa-comparable.comparable.isequal.md) |  |
+|  [isGreaterThan](./alfa-comparable.comparable.isgreaterthan.md) |  |
+|  [isGreaterThanOrEqual](./alfa-comparable.comparable.isgreaterthanorequal.md) |  |
+|  [isLessThan](./alfa-comparable.comparable.islessthan.md) |  |
+|  [isLessThanOrEqual](./alfa-comparable.comparable.islessthanorequal.md) |  |
 

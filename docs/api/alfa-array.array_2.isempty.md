@@ -4,19 +4,9 @@
 
 ## Array\_2.isEmpty() function
 
-<b>Signature:</b>
-
-```typescript
-function isEmpty<T>(array: ReadonlyArray<T>): array is Array<never>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-array is Array&lt;never&gt;
 

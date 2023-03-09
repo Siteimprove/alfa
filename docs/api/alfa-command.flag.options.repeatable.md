@@ -4,8 +4,3 @@
 
 ## Flag.Options.repeatable property
 
-<b>Signature:</b>
-
-```typescript
-readonly repeatable: boolean;
-```

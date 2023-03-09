@@ -4,20 +4,10 @@
 
 ## Angle.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<U extends Unit.Angle>(value: number, unit: U): Angle<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | number |  |
 |  unit | U |  |
-
-<b>Returns:</b>
-
-[Angle](./alfa-css.angle.md)<!-- -->&lt;U&gt;
 

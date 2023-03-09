@@ -4,12 +4,3 @@
 
 ## Attribute.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Attribute.JSON<N>;
-```
-<b>Returns:</b>
-
-[Attribute.JSON](./alfa-dom.attribute.json.md)<!-- -->&lt;N&gt;
-

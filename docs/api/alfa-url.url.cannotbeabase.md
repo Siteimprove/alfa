@@ -4,10 +4,3 @@
 
 ## URL.cannotBeABase property
 
-[https://url.spec.whatwg.org/\#url-cannot-be-a-base-url-flag](https://url.spec.whatwg.org/#url-cannot-be-a-base-url-flag)
-
-<b>Signature:</b>
-
-```typescript
-get cannotBeABase(): boolean;
-```

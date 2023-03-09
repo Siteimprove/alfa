@@ -4,8 +4,3 @@
 
 ## Angle.canonicalUnit property
 
-<b>Signature:</b>
-
-```typescript
-get canonicalUnit(): "deg";
-```

@@ -4,8 +4,3 @@
 
 ## Style.Specified type
 
-<b>Signature:</b>
-
-```typescript
-type Specified<N extends Name> = Property.Value.Specified<N>;
-```

@@ -4,17 +4,11 @@
 
 ## Viewport.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [height](./alfa-device.viewport.json.height.md) |  | number |  |
-|  [orientation](./alfa-device.viewport.json.orientation.md) |  | \`${[Orientation](./alfa-device.viewport.orientation.md)<!-- -->}\` |  |
-|  [width](./alfa-device.viewport.json.width.md) |  | number |  |
+|  [height](./alfa-device.viewport.json.height.md) |  |  |  |
+|  [orientation](./alfa-device.viewport.json.orientation.md) |  |  |  |
+|  [width](./alfa-device.viewport.json.width.md) |  |  |  |
 

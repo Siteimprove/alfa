@@ -4,12 +4,6 @@
 
 ## Predicate.test() function
 
-<b>Signature:</b>
-
-```typescript
-function test<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, value: T, ...args: A): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ function test<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, valu
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt; |  |
 |  value | T |  |
 |  args | A |  |
-
-<b>Returns:</b>
-
-boolean
 

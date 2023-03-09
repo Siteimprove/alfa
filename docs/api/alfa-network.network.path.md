@@ -4,12 +4,6 @@
 
 ## Network.path() method
 
-<b>Signature:</b>
-
-```typescript
-path(from: N, to: N, traversal?: Network.Traversal): Sequence<[node: N, edges: Iterable<E>]>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ path(from: N, to: N, traversal?: Network.Traversal): Sequence<[node: N, edges: I
 |  from | N |  |
 |  to | N |  |
 |  traversal | [Network.Traversal](./alfa-network.network.traversal.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;\[node: N, edges: Iterable&lt;E&gt;\]&gt;
 

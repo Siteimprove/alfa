@@ -4,20 +4,10 @@
 
 ## Iterable\_2.subtract() function
 
-<b>Signature:</b>
-
-```typescript
-function subtract<T>(iterable: Iterable<T>, ...iterables: Array<Iterable<T>>): Iterable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  iterables | Array&lt;Iterable&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-Iterable&lt;T&gt;
 

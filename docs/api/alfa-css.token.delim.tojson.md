@@ -4,12 +4,3 @@
 
 ## Token.Delim.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Delim.JSON;
-```
-<b>Returns:</b>
-
-[Delim.JSON](./alfa-css.token.delim.json.md)
-

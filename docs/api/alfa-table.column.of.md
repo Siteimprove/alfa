@@ -4,19 +4,9 @@
 
 ## Column.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(x: number): Column;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  x | number |  |
-
-<b>Returns:</b>
-
-[Column](./alfa-table.column.md)
 

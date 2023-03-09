@@ -4,12 +4,3 @@
 
 ## Linear.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Linear.JSON;
-```
-<b>Returns:</b>
-
-[Linear.JSON](./alfa-css.linear.json.md)
-

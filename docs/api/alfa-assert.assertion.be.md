@@ -4,8 +4,3 @@
 
 ## Assertion.be property
 
-<b>Signature:</b>
-
-```typescript
-get be(): this;
-```

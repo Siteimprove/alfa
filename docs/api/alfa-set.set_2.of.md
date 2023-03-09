@@ -4,19 +4,9 @@
 
 ## Set\_2.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T>(...values: Array<T>): Set<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | Array&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Set&lt;T&gt;
 

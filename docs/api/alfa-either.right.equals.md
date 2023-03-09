@@ -4,19 +4,9 @@
 
 ## Right.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals<R>(value: Right<R>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Right](./alfa-either.right.md)<!-- -->&lt;R&gt; |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

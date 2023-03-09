@@ -4,20 +4,10 @@
 
 ## h.rule.keyframes() function
 
-<b>Signature:</b>
-
-```typescript
-function keyframes(name: string, rules: Array<Rule>): KeyframesRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  rules | Array&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-[KeyframesRule](./alfa-dom.keyframesrule.md)
 

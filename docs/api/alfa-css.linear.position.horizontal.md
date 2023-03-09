@@ -4,8 +4,3 @@
 
 ## Linear.Position.Horizontal type
 
-<b>Signature:</b>
-
-```typescript
-type Horizontal = "left" | "right";
-```

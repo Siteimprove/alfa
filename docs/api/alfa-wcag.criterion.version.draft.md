@@ -4,10 +4,3 @@
 
 ## Criterion.Version.Draft variable
 
-The current version of the WCAG Working Draft.
-
-<b>Signature:</b>
-
-```typescript
-Draft = "2.2"
-```

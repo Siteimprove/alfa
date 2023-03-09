@@ -4,20 +4,10 @@
 
 ## Selector.Disabled.matches() method
 
-<b>Signature:</b>
-
-```typescript
-matches(element: dom.Element, context?: Context): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | dom.[Element](./alfa-dom.element.md) |  |
 |  context | [Context](./alfa-selector.context.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-boolean
 

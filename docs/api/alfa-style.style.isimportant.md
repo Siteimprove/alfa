@@ -4,8 +4,3 @@
 
 ## Style.isImportant variable
 
-<b>Signature:</b>
-
-```typescript
-isImportant: typeof element.isImportant
-```

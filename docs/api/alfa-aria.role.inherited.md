@@ -4,12 +4,3 @@
 
 ## Role.Inherited type
 
-The inherited roles for the specified role.
-
-<b>Signature:</b>
-
-```typescript
-type Inherited<N extends Name> = N extends "roletype" | "none" ? never : Members<Roles[N]["inherited"]>;
-```
-<b>References:</b> [Name](./alfa-aria.role.name.md)
-

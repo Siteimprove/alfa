@@ -4,12 +4,6 @@
 
 ## h.type() function
 
-<b>Signature:</b>
-
-```typescript
-function type<N extends string = string>(name: N, publicId?: string, systemId?: string): Type<N>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ function type<N extends string = string>(name: N, publicId?: string, systemId?: 
 |  name | N |  |
 |  publicId | string | <i>(Optional)</i> |
 |  systemId | string | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Type](./alfa-dom.type.md)<!-- -->&lt;N&gt;
 

@@ -4,19 +4,9 @@
 
 ## Future.isFuture() function
 
-<b>Signature:</b>
-
-```typescript
-function isFuture<T>(value: AsyncIterable<T>): value is Future<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | AsyncIterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
+|  value | unknown |  |
 

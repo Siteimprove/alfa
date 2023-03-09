@@ -4,12 +4,6 @@
 
 ## Shadow.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color>(horizontal: H, vertical: V, blur: B, spread: S, color: C, isInset: boolean): Shadow<H, V, B, S, C>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -20,8 +14,4 @@ static of<H extends Length = Length, V extends Length = H, B extends Length = Le
 |  spread | S |  |
 |  color | C |  |
 |  isInset | boolean |  |
-
-<b>Returns:</b>
-
-[Shadow](./alfa-css.shadow.md)<!-- -->&lt;H, V, B, S, C&gt;
 

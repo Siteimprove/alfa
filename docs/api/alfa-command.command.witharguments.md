@@ -4,12 +4,6 @@
 
 ## Command.withArguments() method
 
-<b>Signature:</b>
-
-```typescript
-static withArguments<F extends Command.Flags, A extends Command.Arguments>(name: string, version: string, description: string, flags: F, args: A, parent?: Option<Command>, run?: (command: Command<F, A, {}>) => Command.Runner<F, A>): Command<F, A, {}>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -21,8 +15,4 @@ static withArguments<F extends Command.Flags, A extends Command.Arguments>(name:
 |  args | A |  |
 |  parent | [Option](./alfa-option.option.md)<!-- -->&lt;[Command](./alfa-command.command.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  run | (command: [Command](./alfa-command.command.md)<!-- -->&lt;F, A, {}&gt;) =&gt; [Command.Runner](./alfa-command.command.runner.md)<!-- -->&lt;F, A&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Command](./alfa-command.command.md)<!-- -->&lt;F, A, {}&gt;
 

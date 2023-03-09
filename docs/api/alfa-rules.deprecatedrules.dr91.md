@@ -4,13 +4,3 @@
 
 ## deprecatedRules.DR91 variable
 
-> Warning: This API is now obsolete.
-> 
-> Use the stable R91 version 2 instead.
-> 
-
-<b>Signature:</b>
-
-```typescript
-_default: Rule.Atomic<Page, Element<string>, never, Element<string>>
-```

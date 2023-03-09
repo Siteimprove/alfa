@@ -4,19 +4,9 @@
 
 ## Command.run() method
 
-<b>Signature:</b>
-
-```typescript
-run(input: Array<string> | Command.Input<F, A>): Command.Output;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  input | Array&lt;string&gt; \| [Command.Input](./alfa-command.command.input.md)<!-- -->&lt;F, A&gt; |  |
-
-<b>Returns:</b>
-
-[Command.Output](./alfa-command.command.output.md)
 

@@ -4,19 +4,9 @@
 
 ## Collection.Indexed.subtract() method
 
-<b>Signature:</b>
-
-```typescript
-subtract(iterable: Iterable<T>): Indexed<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

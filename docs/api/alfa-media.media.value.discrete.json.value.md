@@ -4,8 +4,3 @@
 
 ## Media.Value.Discrete.JSON.value property
 
-<b>Signature:</b>
-
-```typescript
-value: Serializable.ToJSON<T>;
-```

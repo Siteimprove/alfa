@@ -4,8 +4,3 @@
 
 ## Screenshot.Type.PNG.JSON.type property
 
-<b>Signature:</b>
-
-```typescript
-type: "png";
-```

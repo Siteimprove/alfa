@@ -4,10 +4,3 @@
 
 ## Transformation.Components.skew property
 
-A vector representing \[xy, xz, yz\] skewing.
-
-<b>Signature:</b>
-
-```typescript
-skew: Vector;
-```

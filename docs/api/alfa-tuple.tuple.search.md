@@ -4,12 +4,6 @@
 
 ## Tuple.search() function
 
-<b>Signature:</b>
-
-```typescript
-export function search<T extends Tuple>(tuple: T, value: Item<T>, comparer: Comparer<Item<T>>): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ export function search<T extends Tuple>(tuple: T, value: Item<T>, comparer: Comp
 |  tuple | T |  |
 |  value | [Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-number
 

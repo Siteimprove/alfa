@@ -4,22 +4,15 @@
 
 ## Assertions interface
 
-
-<b>Signature:</b>
-
-```typescript
-export interface Assertions 
-```
-
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [deepEqual(actual, expected, message)](./alfa-test.assertions.deepequal.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_deepequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_deepequal_actual_expected_message) |
-|  [equal(actual, expected, message)](./alfa-test.assertions.equal.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_equal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_equal_actual_expected_message) |
-|  [fail(message)](./alfa-test.assertions.fail.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_fail\_message](https://nodejs.org/api/assert.html#assert_assert_fail_message) |
-|  [notDeepEqual(actual, expected, message)](./alfa-test.assertions.notdeepequal.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_notdeepequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_notdeepequal_actual_expected_message) |
-|  [notEqual(actual, expected, message)](./alfa-test.assertions.notequal.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_notequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_notequal_actual_expected_message) |
-|  [rejects(block, error, message)](./alfa-test.assertions.rejects.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_rejects\_block\_error\_message](https://nodejs.org/api/assert.html#assert_assert_rejects_block_error_message) |
-|  [throws(block, error, message)](./alfa-test.assertions.throws.md) | [https://nodejs.org/api/assert.html\#assert\_assert\_throws\_block\_error\_message](https://nodejs.org/api/assert.html#assert_assert_throws_block_error_message) |
+|  [deepEqual](./alfa-test.assertions.deepequal.md) |  |
+|  [equal](./alfa-test.assertions.equal.md) |  |
+|  [fail](./alfa-test.assertions.fail.md) |  |
+|  [notDeepEqual](./alfa-test.assertions.notdeepequal.md) |  |
+|  [notEqual](./alfa-test.assertions.notequal.md) |  |
+|  [rejects](./alfa-test.assertions.rejects.md) |  |
+|  [throws](./alfa-test.assertions.throws.md) |  |
 

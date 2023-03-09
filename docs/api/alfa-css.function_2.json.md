@@ -4,16 +4,10 @@
 
 ## Function\_2.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-css.function_2.json.name.md) |  | string |  |
-|  [value](./alfa-css.function_2.json.value.md) |  | Array&lt;[Token.JSON](./alfa-css.token.json.md)<!-- -->&gt; |  |
+|  [name](./alfa-css.function_2.json.name.md) |  |  |  |
+|  [value](./alfa-css.function_2.json.value.md) |  |  |  |
 

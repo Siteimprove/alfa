@@ -4,19 +4,9 @@
 
 ## Collection.apply() method
 
-<b>Signature:</b>
-
-```typescript
-apply<U>(mapper: Collection<Mapper<T, U>>): Collection<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Collection](./alfa-collection.collection.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Collection](./alfa-collection.collection.md)<!-- -->&lt;U&gt;
 

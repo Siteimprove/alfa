@@ -4,21 +4,9 @@
 
 ## Role.isAttributeRequired() method
 
-Check if this role requires the specified attribute.
-
-<b>Signature:</b>
-
-```typescript
-isAttributeRequired(name: Attribute.Name): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | [Attribute.Name](./alfa-aria.attribute.name.md) |  |
-
-<b>Returns:</b>
-
-boolean
 

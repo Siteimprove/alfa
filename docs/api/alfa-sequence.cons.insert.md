@@ -4,20 +4,10 @@
 
 ## Cons.insert() method
 
-<b>Signature:</b>
-
-```typescript
-insert(index: number, value: T): Cons<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  index | number |  |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
 

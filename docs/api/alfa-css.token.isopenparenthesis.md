@@ -4,8 +4,3 @@
 
 ## Token.isOpenParenthesis variable
 
-<b>Signature:</b>
-
-```typescript
-isOpenParenthesis: typeof OpenParenthesis.isOpenParenthesis
-```

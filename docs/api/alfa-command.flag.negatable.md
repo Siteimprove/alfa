@@ -4,19 +4,9 @@
 
 ## Flag.negatable() method
 
-<b>Signature:</b>
-
-```typescript
-negatable(mapper: Mapper<T>): Flag<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Flag](./alfa-command.flag.md)<!-- -->&lt;T&gt;
 

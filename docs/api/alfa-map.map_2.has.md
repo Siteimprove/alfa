@@ -4,19 +4,9 @@
 
 ## Map\_2.has() method
 
-<b>Signature:</b>
-
-```typescript
-has(key: K): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K |  |
-
-<b>Returns:</b>
-
-boolean
 

@@ -4,19 +4,9 @@
 
 ## Headers.delete() method
 
-<b>Signature:</b>
-
-```typescript
-delete(name: string): Headers;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-
-<b>Returns:</b>
-
-[Headers](./alfa-http.headers.md)
 

@@ -4,8 +4,3 @@
 
 ## Rotate.angle property
 
-<b>Signature:</b>
-
-```typescript
-get angle(): A;
-```

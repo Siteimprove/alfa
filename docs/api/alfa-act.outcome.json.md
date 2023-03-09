@@ -4,17 +4,11 @@
 
 ## Outcome.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<V extends Value = Value> 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [mode](./alfa-act.outcome.json.mode.md) |  | [Mode](./alfa-act.outcome.mode.md) |  |
-|  [outcome](./alfa-act.outcome.json.outcome.md) |  | V |  |
-|  [rule](./alfa-act.outcome.json.rule.md) |  | [Rule.JSON](./alfa-act.rule.json.md) |  |
+|  [mode](./alfa-act.outcome.json.mode.md) |  |  |  |
+|  [outcome](./alfa-act.outcome.json.outcome.md) |  |  |  |
+|  [rule](./alfa-act.outcome.json.rule.md) |  |  |  |
 

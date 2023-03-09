@@ -4,12 +4,6 @@
 
 ## Token.Decimal namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Decimal 
-```
-
 ## Interfaces
 
 |  Interface | Description |

@@ -4,12 +4,3 @@
 
 ## Group.toSARIF() method
 
-<b>Signature:</b>
-
-```typescript
-toSARIF(): sarif.Location;
-```
-<b>Returns:</b>
-
-sarif.Location
-

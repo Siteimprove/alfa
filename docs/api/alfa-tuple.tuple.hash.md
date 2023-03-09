@@ -4,20 +4,10 @@
 
 ## Tuple.hash() function
 
-<b>Signature:</b>
-
-```typescript
-export function hash<T extends Tuple>(tuple: T, hash: Hash): void;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
 |  hash | [Hash](./alfa-hash.hash.md) |  |
-
-<b>Returns:</b>
-
-void
 

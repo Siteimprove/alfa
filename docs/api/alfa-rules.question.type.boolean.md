@@ -4,8 +4,3 @@
 
 ## Question.Type.boolean property
 
-<b>Signature:</b>
-
-```typescript
-boolean: boolean;
-```

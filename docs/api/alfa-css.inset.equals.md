@@ -4,19 +4,9 @@
 
 ## Inset.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Inset): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Inset](./alfa-css.inset.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

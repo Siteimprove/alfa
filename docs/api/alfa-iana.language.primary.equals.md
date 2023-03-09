@@ -4,19 +4,9 @@
 
 ## Language.Primary.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Primary): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Primary](./alfa-iana.language.primary.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

@@ -4,12 +4,3 @@
 
 ## Future.isSuspended() method
 
-<b>Signature:</b>
-
-```typescript
-abstract isSuspended(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

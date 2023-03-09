@@ -4,19 +4,9 @@
 
 ## h.rule.fontFace() function
 
-<b>Signature:</b>
-
-```typescript
-function fontFace(declarations: Array<Declaration> | Record<string, string>): FontFaceRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  declarations | Array&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; \| Record&lt;string, string&gt; |  |
-
-<b>Returns:</b>
-
-[FontFaceRule](./alfa-dom.fontfacerule.md)
 

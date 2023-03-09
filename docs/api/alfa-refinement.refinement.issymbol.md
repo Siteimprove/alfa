@@ -4,19 +4,9 @@
 
 ## Refinement.isSymbol() function
 
-<b>Signature:</b>
-
-```typescript
-export function isSymbol(value: unknown): value is symbol;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is symbol
 

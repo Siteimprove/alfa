@@ -4,12 +4,6 @@
 
 ## Selector.Is namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace Is 
-```
-
 ## Interfaces
 
 |  Interface | Description |

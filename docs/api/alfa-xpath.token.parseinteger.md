@@ -4,8 +4,3 @@
 
 ## Token.parseInteger variable
 
-<b>Signature:</b>
-
-```typescript
-parseInteger: Parser<Slice<Token>, Integer, string, []>
-```

@@ -4,8 +4,3 @@
 
 ## Language.Region.Name type
 
-<b>Signature:</b>
-
-```typescript
-type Name = keyof Languages["region"];
-```

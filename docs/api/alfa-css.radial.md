@@ -4,19 +4,12 @@
 
 ## Radial namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Radial 
-```
-
 ## Classes
 
 |  Class | Description |
 |  --- | --- |
-|  [Circle](./alfa-css.radial.circle.md) | [https://drafts.csswg.org/css-images/\#valdef-ending-shape-circle](https://drafts.csswg.org/css-images/#valdef-ending-shape-circle) |
-|  [Ellipse](./alfa-css.radial.ellipse.md) | [https://drafts.csswg.org/css-images/\#valdef-ending-shape-ellipse](https://drafts.csswg.org/css-images/#valdef-ending-shape-ellipse) |
+|  [Circle](./alfa-css.radial.circle.md) |  |
+|  [Ellipse](./alfa-css.radial.ellipse.md) |  |
 |  [Extent](./alfa-css.radial.extent.md) |  |
 
 ## Interfaces
@@ -38,7 +31,7 @@ export declare namespace Radial
 
 |  Variable | Description |
 |  --- | --- |
-|  [parse](./alfa-css.radial.parse.md) | [https://drafts.csswg.org/css-images/\#funcdef-radial-gradient](https://drafts.csswg.org/css-images/#funcdef-radial-gradient) |
+|  [parse](./alfa-css.radial.parse.md) |  |
 
 ## Type Aliases
 

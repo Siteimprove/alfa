@@ -4,19 +4,9 @@
 
 ## Builder.Axis.where() method
 
-<b>Signature:</b>
-
-```typescript
-where(predicate: Builder): Axis;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Builder](./alfa-xpath.builder.md) |  |
-
-<b>Returns:</b>
-
-[Axis](./alfa-xpath.builder.axis.md)
 

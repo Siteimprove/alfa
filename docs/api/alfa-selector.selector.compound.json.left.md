@@ -4,8 +4,3 @@
 
 ## Selector.Compound.JSON.left property
 
-<b>Signature:</b>
-
-```typescript
-left: Simple.JSON;
-```

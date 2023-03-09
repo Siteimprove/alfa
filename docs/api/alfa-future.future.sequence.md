@@ -4,19 +4,9 @@
 
 ## Future.sequence() function
 
-<b>Signature:</b>
-
-```typescript
-function sequence<T>(futures: Iterable<Future<T>>): Future<Iterable<T>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  futures | Iterable&lt;[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Future](./alfa-future.future.md)<!-- -->&lt;Iterable&lt;T&gt;&gt;
 

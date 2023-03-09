@@ -4,19 +4,12 @@
 
 ## Err namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Err 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isErr(value)](./alfa-result.err.iserr.md) |  |
-|  [isErr(value)](./alfa-result.err.iserr_1.md) |  |
+|  [isErr](./alfa-result.err.iserr.md) |  |
+|  [isErr](./alfa-result.err.iserr.md) |  |
 
 ## Interfaces
 

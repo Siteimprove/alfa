@@ -4,8 +4,3 @@
 
 ## Shadow.style property
 
-<b>Signature:</b>
-
-```typescript
-get style(): Iterable<Sheet>;
-```

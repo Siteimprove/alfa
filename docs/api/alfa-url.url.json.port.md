@@ -4,8 +4,3 @@
 
 ## URL.JSON.port property
 
-<b>Signature:</b>
-
-```typescript
-port: number | null;
-```

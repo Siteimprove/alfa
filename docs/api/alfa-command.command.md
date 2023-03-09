@@ -4,13 +4,6 @@
 
 ## Command namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Command 
-```
-
 ## Interfaces
 
 |  Interface | Description |

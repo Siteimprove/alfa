@@ -4,19 +4,9 @@
 
 ## Right.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<R>(value: R): Right<R>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | R |  |
-
-<b>Returns:</b>
-
-[Right](./alfa-either.right.md)<!-- -->&lt;R&gt;
 

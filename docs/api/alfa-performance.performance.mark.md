@@ -4,8 +4,3 @@
 
 ## Performance.mark variable
 
-<b>Signature:</b>
-
-```typescript
-mark: typeof Mark.of
-```

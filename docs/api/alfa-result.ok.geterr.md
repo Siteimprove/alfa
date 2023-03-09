@@ -4,19 +4,9 @@
 
 ## Ok.getErr() method
 
-<b>Signature:</b>
-
-```typescript
-getErr(message?: string): never;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  message | string | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-never
 

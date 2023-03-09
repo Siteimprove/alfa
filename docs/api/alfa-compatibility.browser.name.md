@@ -4,8 +4,3 @@
 
 ## Browser.Name type
 
-<b>Signature:</b>
-
-```typescript
-type Name = keyof Browsers & string;
-```

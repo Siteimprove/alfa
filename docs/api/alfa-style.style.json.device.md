@@ -4,8 +4,3 @@
 
 ## Style.JSON.device property
 
-<b>Signature:</b>
-
-```typescript
-device: Device.JSON;
-```

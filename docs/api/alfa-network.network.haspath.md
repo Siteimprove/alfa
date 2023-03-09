@@ -4,20 +4,10 @@
 
 ## Network.hasPath() method
 
-<b>Signature:</b>
-
-```typescript
-hasPath(from: N, to: N): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  from | N |  |
 |  to | N |  |
-
-<b>Returns:</b>
-
-boolean
 

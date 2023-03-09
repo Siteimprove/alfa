@@ -4,12 +4,6 @@
 
 ## Token.Character namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Character 
-```
-
 ## Interfaces
 
 |  Interface | Description |

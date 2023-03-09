@@ -4,12 +4,3 @@
 
 ## Map\_2.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Map.JSON<K, V>;
-```
-<b>Returns:</b>
-
-Map.JSON&lt;K, V&gt;
-

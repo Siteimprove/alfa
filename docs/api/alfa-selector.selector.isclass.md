@@ -4,19 +4,9 @@
 
 ## Selector.isClass() function
 
-<b>Signature:</b>
-
-```typescript
-export function isClass(value: unknown): value is Class;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Class](./alfa-selector.selector.class.md)
 

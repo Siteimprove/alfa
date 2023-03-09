@@ -4,8 +4,3 @@
 
 ## Media.Value.minimumRange variable
 
-<b>Signature:</b>
-
-```typescript
-minimumRange: typeof Range.minimum
-```

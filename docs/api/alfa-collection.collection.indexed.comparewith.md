@@ -4,20 +4,10 @@
 
 ## Collection.Indexed.compareWith() method
 
-<b>Signature:</b>
-
-```typescript
-compareWith<U = T>(iterable: Iterable<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;U&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-[Comparison](./alfa-comparable.comparison.md)
 

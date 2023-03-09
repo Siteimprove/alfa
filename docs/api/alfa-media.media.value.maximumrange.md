@@ -4,8 +4,3 @@
 
 ## Media.Value.maximumRange variable
 
-<b>Signature:</b>
-
-```typescript
-maximumRange: typeof Range.maximum
-```

@@ -4,8 +4,3 @@
 
 ## Matrix.JSON.kind property
 
-<b>Signature:</b>
-
-```typescript
-kind: "matrix";
-```

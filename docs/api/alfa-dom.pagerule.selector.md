@@ -4,8 +4,3 @@
 
 ## PageRule.selector property
 
-<b>Signature:</b>
-
-```typescript
-get selector(): string;
-```

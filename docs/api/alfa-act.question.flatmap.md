@@ -4,19 +4,9 @@
 
 ## Question.flatMap() method
 
-<b>Signature:</b>
-
-```typescript
-flatMap<U>(mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, U, URI&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, U, URI&gt;
 

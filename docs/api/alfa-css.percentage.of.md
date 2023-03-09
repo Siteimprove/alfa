@@ -4,19 +4,9 @@
 
 ## Percentage.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(value: number): Percentage;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | number |  |
-
-<b>Returns:</b>
-
-[Percentage](./alfa-css.percentage.md)
 

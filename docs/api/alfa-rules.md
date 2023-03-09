@@ -31,8 +31,8 @@
 
 |  Variable | Description |
 |  --- | --- |
-|  [FlattenedRules](./alfa-rules.flattenedrules.md) | A list of all available rules joined under a single type. The type of each rule is not preserved in the list as the types have been flattened. |
-|  [Rules](./alfa-rules.rules.md) | An immutable record of individual rules. The type of each individual rule is preserved in the record. |
+|  [FlattenedRules](./alfa-rules.flattenedrules.md) |  |
+|  [Rules](./alfa-rules.rules.md) |  |
 
 ## Type Aliases
 

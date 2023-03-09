@@ -4,21 +4,9 @@
 
 ## Node.inclusiveAncestors() method
 
-[https://dom.spec.whatwg.org/\#concept-tree-inclusive-ancestor](https://dom.spec.whatwg.org/#concept-tree-inclusive-ancestor)
-
-<b>Signature:</b>
-
-```typescript
-inclusiveAncestors(options?: Flags<F>): Sequence<Node<F>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
 

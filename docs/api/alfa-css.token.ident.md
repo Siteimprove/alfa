@@ -4,8 +4,3 @@
 
 ## Token.ident variable
 
-<b>Signature:</b>
-
-```typescript
-ident: typeof Ident.of
-```

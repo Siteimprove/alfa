@@ -4,8 +4,3 @@
 
 ## Requirement.EARL."@type" property
 
-<b>Signature:</b>
-
-```typescript
-"@type": ["earl:TestCriterion", "earl:TestRequirement"];
-```

@@ -4,19 +4,9 @@
 
 ## Selector.isCompound() function
 
-<b>Signature:</b>
-
-```typescript
-export function isCompound(value: unknown): value is Compound;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Compound](./alfa-selector.selector.compound.md)
 

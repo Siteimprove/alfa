@@ -4,19 +4,9 @@
 
 ## Hash.writeString() method
 
-<b>Signature:</b>
-
-```typescript
-writeString(data: string): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | string |  |
-
-<b>Returns:</b>
-
-this
 

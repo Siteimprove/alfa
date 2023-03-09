@@ -4,19 +4,9 @@
 
 ## Language.Extended.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(name: Extended.Name): Extended;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | [Extended.Name](./alfa-iana.language.extended.name.md) |  |
-
-<b>Returns:</b>
-
-[Extended](./alfa-iana.language.extended.md)
 

@@ -4,13 +4,6 @@
 
 ## Outcome namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Outcome 
-```
-
 ## Classes
 
 |  Class | Description |
@@ -24,13 +17,13 @@ export declare namespace Outcome
 
 |  Enumeration | Description |
 |  --- | --- |
-|  [Mode](./alfa-act.outcome.mode.md) | [https://www.w3.org/TR/EARL10-Schema/\#TestMode](https://www.w3.org/TR/EARL10-Schema/#TestMode) |
+|  [Mode](./alfa-act.outcome.mode.md) |  |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(rule, target, expectations, mode)](./alfa-act.outcome.from.md) |  |
+|  [from](./alfa-act.outcome.from.md) |  |
 
 ## Interfaces
 

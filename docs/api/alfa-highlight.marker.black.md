@@ -4,8 +4,3 @@
 
 ## Marker.black variable
 
-<b>Signature:</b>
-
-```typescript
-black: Marker
-```

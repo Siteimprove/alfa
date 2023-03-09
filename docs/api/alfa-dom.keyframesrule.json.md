@@ -4,17 +4,10 @@
 
 ## KeyframesRule.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends GroupingRule.JSON 
-```
-<b>Extends:</b> [GroupingRule.JSON](./alfa-dom.groupingrule.json.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-dom.keyframesrule.json.name.md) |  | string |  |
-|  [type](./alfa-dom.keyframesrule.json.type.md) |  | "keyframes" |  |
+|  [name](./alfa-dom.keyframesrule.json.name.md) |  |  |  |
+|  [type](./alfa-dom.keyframesrule.json.type.md) |  |  |  |
 

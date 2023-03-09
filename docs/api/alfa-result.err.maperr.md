@@ -4,19 +4,9 @@
 
 ## Err.mapErr() method
 
-<b>Signature:</b>
-
-```typescript
-mapErr<F>(mapper: Mapper<E, F>): Err<F>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;E, F&gt; |  |
-
-<b>Returns:</b>
-
-[Err](./alfa-result.err.md)<!-- -->&lt;F&gt;
 

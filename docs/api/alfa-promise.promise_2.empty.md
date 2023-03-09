@@ -4,12 +4,3 @@
 
 ## Promise\_2.empty() function
 
-<b>Signature:</b>
-
-```typescript
-function empty(): Promise<void>;
-```
-<b>Returns:</b>
-
-Promise&lt;void&gt;
-

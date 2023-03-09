@@ -4,19 +4,9 @@
 
 ## Slotable.isSlotable() function
 
-<b>Signature:</b>
-
-```typescript
-function isSlotable(value: unknown): value is Slotable;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Slotable](./alfa-dom.slotable.md)
 

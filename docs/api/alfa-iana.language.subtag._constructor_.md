@@ -4,14 +4,6 @@
 
 ## Language.Subtag.(constructor)
 
-Constructs a new instance of the `Subtag` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor(name: N);
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |

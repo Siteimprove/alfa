@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Cell](./alfa-table.cell.md) | [https://html.spec.whatwg.org/\#concept-cell](https://html.spec.whatwg.org/#concept-cell) |
-|  [Column](./alfa-table.column.md) | [https://html.spec.whatwg.org/\#concept-column](https://html.spec.whatwg.org/#concept-column) |
-|  [Row](./alfa-table.row.md) | [https://html.spec.whatwg.org/\#concept-row](https://html.spec.whatwg.org/#concept-row) |
-|  [Slot](./alfa-table.slot.md) | [https://html.spec.whatwg.org/\#concept-slots](https://html.spec.whatwg.org/#concept-slots) |
-|  [Table](./alfa-table.table.md) | [https://html.spec.whatwg.org/\#concept-table](https://html.spec.whatwg.org/#concept-table) |
+|  [Cell](./alfa-table.cell.md) |  |
+|  [Column](./alfa-table.column.md) |  |
+|  [Row](./alfa-table.row.md) |  |
+|  [Slot](./alfa-table.slot.md) |  |
+|  [Table](./alfa-table.table.md) |  |
 
 ## Namespaces
 

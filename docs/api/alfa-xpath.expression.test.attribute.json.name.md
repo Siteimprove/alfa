@@ -4,8 +4,3 @@
 
 ## Expression.Test.Attribute.JSON.name property
 
-<b>Signature:</b>
-
-```typescript
-name: string | null;
-```

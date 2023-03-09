@@ -4,8 +4,3 @@
 
 ## HSL.saturation property
 
-<b>Signature:</b>
-
-```typescript
-get saturation(): Percentage;
-```

@@ -4,18 +4,11 @@
 
 ## FontFaceRule namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace FontFaceRule 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isFontFaceRule(value)](./alfa-dom.fontfacerule.isfontfacerule.md) |  |
+|  [isFontFaceRule](./alfa-dom.fontfacerule.isfontfacerule.md) |  |
 
 ## Interfaces
 

@@ -4,19 +4,9 @@
 
 ## Network.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from<N, E>(iterable: Iterable<readonly [N, Iterable<readonly [N, Iterable<E>]>]>): Network<N, E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;readonly \[N, Iterable&lt;readonly \[N, Iterable&lt;E&gt;\]&gt;\]&gt; |  |
-
-<b>Returns:</b>
-
-[Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

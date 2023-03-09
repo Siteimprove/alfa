@@ -4,18 +4,9 @@
 
 ## Selector.GrammarError class
 
-[https://drafts.csswg.org/css-pseudo-4/\#selectordef-grammar-error](https://drafts.csswg.org/css-pseudo-4/#selectordef-grammar-error)
-
-<b>Signature:</b>
-
-```typescript
-export class GrammarError extends Pseudo.Element<"grammar-error"> 
-```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"grammar-error"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [of()](./alfa-selector.selector.grammarerror.of.md) | <code>static</code> |  |
+|  [of](./alfa-selector.selector.grammarerror.of.md) |  |  |
 

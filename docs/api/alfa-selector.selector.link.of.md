@@ -4,12 +4,3 @@
 
 ## Selector.Link.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(): Link;
-```
-<b>Returns:</b>
-
-[Link](./alfa-selector.selector.link.md)
-

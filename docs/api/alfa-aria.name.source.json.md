@@ -4,10 +4,3 @@
 
 ## Name.Source.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON = Data.JSON | Descendant.JSON | Ancestor.JSON | Label.JSON | Reference.JSON;
-```
-<b>References:</b> [Data.JSON](./alfa-aria.name.source.data.json.md)<!-- -->, [Descendant.JSON](./alfa-aria.name.source.descendant.json.md)<!-- -->, [Ancestor.JSON](./alfa-aria.name.source.ancestor.json.md)<!-- -->, [Label.JSON](./alfa-aria.name.source.label.json.md)<!-- -->, [Reference.JSON](./alfa-aria.name.source.reference.json.md)
-

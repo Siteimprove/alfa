@@ -4,10 +4,3 @@
 
 ## Item.TypeFor type
 
-<b>Signature:</b>
-
-```typescript
-type TypeFor<V extends Value> = Descriptor.For<V, Type>;
-```
-<b>References:</b> [Value](./alfa-xpath.item.value.md)<!-- -->, [Type](./alfa-xpath.item.type.md)
-

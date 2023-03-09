@@ -4,8 +4,3 @@
 
 ## HSL.JSON.format property
 
-<b>Signature:</b>
-
-```typescript
-format: "hsl";
-```

@@ -4,8 +4,3 @@
 
 ## Inset.topRight property
 
-<b>Signature:</b>
-
-```typescript
-get topRight(): Option<C>;
-```

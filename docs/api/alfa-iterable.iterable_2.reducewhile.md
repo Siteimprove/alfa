@@ -4,12 +4,6 @@
 
 ## Iterable\_2.reduceWhile() function
 
-<b>Signature:</b>
-
-```typescript
-function reduceWhile<T, U = T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ function reduceWhile<T, U = T>(iterable: Iterable<T>, predicate: Predicate<T, [i
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 |  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 |  accumulator | U |  |
-
-<b>Returns:</b>
-
-U
 

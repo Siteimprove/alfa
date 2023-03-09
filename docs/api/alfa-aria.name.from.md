@@ -4,20 +4,10 @@
 
 ## Name.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from(node: Element | Text, device: Device): Option<Name>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | [Element](./alfa-dom.element.md) \| [Text](./alfa-dom.text.md) |  |
 |  device | [Device](./alfa-device.device.md) |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Name](./alfa-aria.name.md)<!-- -->&gt;
 

@@ -4,10 +4,3 @@
 
 ## Tuple.Insert type
 
-<b>Signature:</b>
-
-```typescript
-export type Insert<T extends Tuple, I extends number, V> = InsertInner<T, I, V, Empty>;
-```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
-

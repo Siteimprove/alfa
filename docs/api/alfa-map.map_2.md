@@ -4,22 +4,15 @@
 
 ## Map\_2 namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Map 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(iterable)](./alfa-map.map_2.from.md) |  |
-|  [fromArray(array)](./alfa-map.map_2.fromarray.md) |  |
-|  [fromIterable(iterable)](./alfa-map.map_2.fromiterable.md) |  |
-|  [isMap(value)](./alfa-map.map_2.ismap.md) |  |
-|  [isMap(value)](./alfa-map.map_2.ismap_1.md) |  |
+|  [from](./alfa-map.map_2.from.md) |  |
+|  [fromArray](./alfa-map.map_2.fromarray.md) |  |
+|  [fromIterable](./alfa-map.map_2.fromiterable.md) |  |
+|  [isMap](./alfa-map.map_2.ismap.md) |  |
+|  [isMap](./alfa-map.map_2.ismap.md) |  |
 
 ## Type Aliases
 

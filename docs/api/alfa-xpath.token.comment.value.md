@@ -4,8 +4,3 @@
 
 ## Token.Comment.value property
 
-<b>Signature:</b>
-
-```typescript
-get value(): string;
-```

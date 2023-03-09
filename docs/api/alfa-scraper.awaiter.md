@@ -4,11 +4,3 @@
 
 ## Awaiter type
 
-
-<b>Signature:</b>
-
-```typescript
-export declare type Awaiter = (page: Page, timeout: Timeout) => Promise<Option<string>>;
-```
-<b>References:</b> [Timeout](./alfa-time.timeout.md)<!-- -->, [Option](./alfa-option.option.md)
-

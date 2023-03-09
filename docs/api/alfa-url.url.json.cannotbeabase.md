@@ -4,8 +4,3 @@
 
 ## URL.JSON.cannotBeABase property
 
-<b>Signature:</b>
-
-```typescript
-cannotBeABase: boolean;
-```

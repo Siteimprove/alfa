@@ -4,8 +4,3 @@
 
 ## Shadow.JSON.isInset property
 
-<b>Signature:</b>
-
-```typescript
-isInset: boolean;
-```

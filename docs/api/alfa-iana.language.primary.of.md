@@ -4,19 +4,9 @@
 
 ## Language.Primary.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(name: Primary.Name): Primary;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | [Primary.Name](./alfa-iana.language.primary.name.md) |  |
-
-<b>Returns:</b>
-
-[Primary](./alfa-iana.language.primary.md)
 

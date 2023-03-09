@@ -4,8 +4,3 @@
 
 ## JSON\_2.Array type
 
-<b>Signature:</b>
-
-```typescript
-type Array = JSON[];
-```

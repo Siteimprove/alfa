@@ -4,12 +4,3 @@
 
 ## Declaration.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Declaration.JSON;
-```
-<b>Returns:</b>
-
-[Declaration.JSON](./alfa-css.declaration.json.md)
-

@@ -4,19 +4,9 @@
 
 ## Scraper.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(browser?: Promise<puppeteer.Browser>): Promise<Scraper>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  browser | Promise&lt;puppeteer.Browser&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-Promise&lt;[Scraper](./alfa-scraper.scraper.md)<!-- -->&gt;
 

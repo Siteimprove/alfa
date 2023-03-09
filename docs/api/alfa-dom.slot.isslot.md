@@ -4,19 +4,9 @@
 
 ## Slot.isSlot() function
 
-<b>Signature:</b>
-
-```typescript
-function isSlot(element: Element): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

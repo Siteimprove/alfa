@@ -4,21 +4,9 @@
 
 ## Flags.has() method
 
-Test whether a given flag is present (or set) in the set of flags
-
-<b>Signature:</b>
-
-```typescript
-has(flag: F): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  flag | F |  |
-
-<b>Returns:</b>
-
-boolean
 

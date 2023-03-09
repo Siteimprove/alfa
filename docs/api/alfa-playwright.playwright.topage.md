@@ -4,19 +4,9 @@
 
 ## Playwright.toPage() function
 
-<b>Signature:</b>
-
-```typescript
-function toPage(value: Type): Promise<Page>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Type](./alfa-playwright.playwright.type.md) |  |
-
-<b>Returns:</b>
-
-Promise&lt;[Page](./alfa-web.page.md)<!-- -->&gt;
 

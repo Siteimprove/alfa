@@ -4,12 +4,6 @@
 
 ## Attribute.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string): Attribute<N>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ static of<N extends string = string>(namespace: Option<Namespace>, prefix: Optio
 |  prefix | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
 |  name | N |  |
 |  value | string |  |
-
-<b>Returns:</b>
-
-[Attribute](./alfa-dom.attribute.md)<!-- -->&lt;N&gt;
 

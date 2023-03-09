@@ -4,12 +4,6 @@
 
 ## Element.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(owner: dom.Node, role?: Option<Role>, name?: Option<Name>, attributes?: Iterable<Attribute>, children?: Iterable<Node>): Element;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -19,8 +13,4 @@ static of(owner: dom.Node, role?: Option<Role>, name?: Option<Name>, attributes?
 |  name | [Option](./alfa-option.option.md)<!-- -->&lt;[Name](./alfa-aria.name.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  attributes | Iterable&lt;[Attribute](./alfa-aria.attribute.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  children | Iterable&lt;[Node](./alfa-aria.node.md)<!-- -->&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Element](./alfa-aria.element.md)
 

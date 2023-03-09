@@ -4,20 +4,10 @@
 
 ## Array\_2.includes() function
 
-<b>Signature:</b>
-
-```typescript
-function includes<T>(array: ReadonlyArray<T>, value: T): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  value | T |  |
-
-<b>Returns:</b>
-
-boolean
 

@@ -4,19 +4,9 @@
 
 ## Map\_2.some() method
 
-<b>Signature:</b>
-
-```typescript
-some(predicate: Predicate<V, [key: K]>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
-
-<b>Returns:</b>
-
-boolean
 

@@ -4,8 +4,3 @@
 
 ## Media.Value.Range.maximum property
 
-<b>Signature:</b>
-
-```typescript
-get maximum(): Option<Bound<T>>;
-```

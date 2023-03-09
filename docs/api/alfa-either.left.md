@@ -4,19 +4,12 @@
 
 ## Left namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Left 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isLeft(value)](./alfa-either.left.isleft.md) |  |
-|  [isLeft(value)](./alfa-either.left.isleft_1.md) |  |
+|  [isLeft](./alfa-either.left.isleft.md) |  |
+|  [isLeft](./alfa-either.left.isleft.md) |  |
 
 ## Interfaces
 

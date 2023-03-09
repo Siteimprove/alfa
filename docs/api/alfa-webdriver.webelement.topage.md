@@ -4,20 +4,10 @@
 
 ## WebElement.toPage() function
 
-<b>Signature:</b>
-
-```typescript
-function toPage(webElement: WebElement, browser: WebdriverIO.Browser): Promise<Page>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  webElement | [WebElement](./alfa-webdriver.webelement.md) |  |
 |  browser | WebdriverIO.Browser |  |
-
-<b>Returns:</b>
-
-Promise&lt;[Page](./alfa-web.page.md)<!-- -->&gt;
 

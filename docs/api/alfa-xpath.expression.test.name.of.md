@@ -4,20 +4,10 @@
 
 ## Expression.Test.Name.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(prefix: Option<string>, name: string): Name;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  prefix | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
 |  name | string |  |
-
-<b>Returns:</b>
-
-[Name](./alfa-xpath.expression.test.name.md)
 

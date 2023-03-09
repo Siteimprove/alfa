@@ -4,9 +4,3 @@
 
 ## Refinement type
 
-
-<b>Signature:</b>
-
-```typescript
-export declare type Refinement<T, U extends T, A extends Array<unknown> = []> = (value: T, ...args: A) => value is U;
-```

@@ -4,12 +4,3 @@
 
 ## Performance.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T = string>(): Performance<T>;
-```
-<b>Returns:</b>
-
-[Performance](./alfa-performance.performance.md)<!-- -->&lt;T&gt;
-

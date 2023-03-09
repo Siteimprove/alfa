@@ -4,19 +4,9 @@
 
 ## List.flatten() method
 
-<b>Signature:</b>
-
-```typescript
-flatten<T>(this: List<List<T>>): List<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [List](./alfa-list.list.md)<!-- -->&lt;[List](./alfa-list.list.md)<!-- -->&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

@@ -4,23 +4,17 @@
 
 ## URL.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [cannotBeABase](./alfa-url.url.json.cannotbeabase.md) |  | boolean |  |
-|  [fragment](./alfa-url.url.json.fragment.md) |  | string \| null |  |
-|  [host](./alfa-url.url.json.host.md) |  | string \| null |  |
-|  [password](./alfa-url.url.json.password.md) |  | string \| null |  |
-|  [path](./alfa-url.url.json.path.md) |  | Array&lt;string&gt; |  |
-|  [port](./alfa-url.url.json.port.md) |  | number \| null |  |
-|  [query](./alfa-url.url.json.query.md) |  | string \| null |  |
-|  [scheme](./alfa-url.url.json.scheme.md) |  | string |  |
-|  [username](./alfa-url.url.json.username.md) |  | string \| null |  |
+|  [cannotBeABase](./alfa-url.url.json.cannotbeabase.md) |  |  |  |
+|  [fragment](./alfa-url.url.json.fragment.md) |  |  |  |
+|  [host](./alfa-url.url.json.host.md) |  |  |  |
+|  [password](./alfa-url.url.json.password.md) |  |  |  |
+|  [path](./alfa-url.url.json.path.md) |  |  |  |
+|  [port](./alfa-url.url.json.port.md) |  |  |  |
+|  [query](./alfa-url.url.json.query.md) |  |  |  |
+|  [scheme](./alfa-url.url.json.scheme.md) |  |  |  |
+|  [username](./alfa-url.url.json.username.md) |  |  |  |
 

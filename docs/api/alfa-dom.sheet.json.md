@@ -4,17 +4,11 @@
 
 ## Sheet.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [condition](./alfa-dom.sheet.json.condition.md) |  | string \| null |  |
-|  [disabled](./alfa-dom.sheet.json.disabled.md) |  | boolean |  |
-|  [rules](./alfa-dom.sheet.json.rules.md) |  | Array&lt;[Rule.JSON](./alfa-dom.rule.json.md)<!-- -->&gt; |  |
+|  [condition](./alfa-dom.sheet.json.condition.md) |  |  |  |
+|  [disabled](./alfa-dom.sheet.json.disabled.md) |  |  |  |
+|  [rules](./alfa-dom.sheet.json.rules.md) |  |  |  |
 

@@ -4,20 +4,10 @@
 
 ## Header.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(name: string, value: string): Header;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  value | string |  |
-
-<b>Returns:</b>
-
-[Header](./alfa-http.header.md)
 

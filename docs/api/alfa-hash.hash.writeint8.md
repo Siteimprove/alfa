@@ -4,19 +4,9 @@
 
 ## Hash.writeInt8() method
 
-<b>Signature:</b>
-
-```typescript
-writeInt8(data: number): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | number |  |
-
-<b>Returns:</b>
-
-this
 

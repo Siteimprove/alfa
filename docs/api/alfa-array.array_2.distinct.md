@@ -4,19 +4,9 @@
 
 ## Array\_2.distinct() function
 
-<b>Signature:</b>
-
-```typescript
-function distinct<T>(array: ReadonlyArray<T>): Array<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Array&lt;T&gt;
 

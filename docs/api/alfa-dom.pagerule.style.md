@@ -4,8 +4,3 @@
 
 ## PageRule.style property
 
-<b>Signature:</b>
-
-```typescript
-get style(): Block;
-```

@@ -4,12 +4,3 @@
 
 ## Header.toEARL() method
 
-<b>Signature:</b>
-
-```typescript
-toEARL(): Header.EARL;
-```
-<b>Returns:</b>
-
-[Header.EARL](./alfa-http.header.earl.md)
-

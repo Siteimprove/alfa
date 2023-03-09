@@ -4,8 +4,3 @@
 
 ## Scope.scope property
 
-<b>Signature:</b>
-
-```typescript
-get scope(): S;
-```

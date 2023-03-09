@@ -4,12 +4,3 @@
 
 ## Left.map() method
 
-<b>Signature:</b>
-
-```typescript
-map(): Left<L>;
-```
-<b>Returns:</b>
-
-[Left](./alfa-either.left.md)<!-- -->&lt;L&gt;
-

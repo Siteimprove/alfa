@@ -4,10 +4,3 @@
 
 ## Transformation.Components.translate property
 
-A vector representing \[x, y, z\] translation.
-
-<b>Signature:</b>
-
-```typescript
-translate: Vector;
-```

@@ -4,20 +4,10 @@
 
 ## Sequence.tee() method
 
-<b>Signature:</b>
-
-```typescript
-tee<A extends Array<unknown> = []>(callback: Callback<Sequence<T>, void, [...args: A]>, ...args: A): Sequence<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt; |  |
 |  args | A |  |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

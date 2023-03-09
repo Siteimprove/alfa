@@ -4,12 +4,3 @@
 
 ## Node.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Node.JSON<T>;
-```
-<b>Returns:</b>
-
-[Node.JSON](./alfa-aria.node.json.md)<!-- -->&lt;T&gt;
-

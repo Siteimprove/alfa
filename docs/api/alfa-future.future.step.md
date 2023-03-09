@@ -4,12 +4,3 @@
 
 ## Future.step() method
 
-<b>Signature:</b>
-
-```typescript
-protected abstract step(): Future<T>;
-```
-<b>Returns:</b>
-
-[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
-

@@ -4,8 +4,3 @@
 
 ## Expression.FunctionCall.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "function-call";
-```

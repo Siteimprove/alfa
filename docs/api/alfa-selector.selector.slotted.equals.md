@@ -4,19 +4,9 @@
 
 ## Selector.Slotted.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Slotted): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Slotted](./alfa-selector.selector.slotted.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

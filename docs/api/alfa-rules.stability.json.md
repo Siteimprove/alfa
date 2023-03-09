@@ -4,16 +4,9 @@
 
 ## Stability.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<S extends string = string> extends Tag.JSON<"stability"> 
-```
-<b>Extends:</b> [Tag.JSON](./alfa-act.tag.json.md)<!-- -->&lt;"stability"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [stability](./alfa-rules.stability.json.stability.md) |  | S |  |
+|  [stability](./alfa-rules.stability.json.stability.md) |  |  |  |
 

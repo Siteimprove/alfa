@@ -4,10 +4,3 @@
 
 ## Converter type
 
-Converters are functions that convert an input value from one unit within a set of units to another unit within the same set of units.
-
-<b>Signature:</b>
-
-```typescript
-export declare type Converter<U extends string> = (value: number, from: U, to: U) => number;
-```

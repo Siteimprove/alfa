@@ -4,16 +4,10 @@
 
 ## Language.Subtag.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<T extends string = string, N extends string = string> 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-iana.language.subtag.json.name.md) |  | N |  |
-|  [type](./alfa-iana.language.subtag.json.type.md) |  | T |  |
+|  [name](./alfa-iana.language.subtag.json.name.md) |  |  |  |
+|  [type](./alfa-iana.language.subtag.json.type.md) |  |  |  |
 

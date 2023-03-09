@@ -4,13 +4,6 @@
 
 ## Function\_2 namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Function 
-```
-
 ## Interfaces
 
 |  Interface | Description |
@@ -21,6 +14,6 @@ export declare namespace Function
 
 |  Variable | Description |
 |  --- | --- |
-|  [consume](./alfa-css.function_2.consume.md) | [https://drafts.csswg.org/css-syntax/\#consume-a-function](https://drafts.csswg.org/css-syntax/#consume-a-function) |
+|  [consume](./alfa-css.function_2.consume.md) |  |
 |  [parse](./alfa-css.function_2.parse.md) |  |
 

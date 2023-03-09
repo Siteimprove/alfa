@@ -4,8 +4,3 @@
 
 ## Row.Group.height property
 
-<b>Signature:</b>
-
-```typescript
-get height(): number;
-```

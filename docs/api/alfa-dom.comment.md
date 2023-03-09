@@ -4,18 +4,11 @@
 
 ## Comment namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Comment 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isComment(value)](./alfa-dom.comment.iscomment.md) |  |
+|  [isComment](./alfa-dom.comment.iscomment.md) |  |
 
 ## Interfaces
 

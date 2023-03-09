@@ -4,8 +4,3 @@
 
 ## Style.properties property
 
-<b>Signature:</b>
-
-```typescript
-get properties(): Map<string, Value>;
-```

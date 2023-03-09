@@ -4,10 +4,3 @@
 
 ## Assertion.Options.filter property
 
-Predicate for filtering outcomes that should count towards an assertion failure.; only failed outcomes matching this filter will be reported. If left unset, all failed outcomes will be reported
-
-<b>Signature:</b>
-
-```typescript
-readonly filter?: Predicate<Outcome.Failed<I, T, Q, S>>;
-```

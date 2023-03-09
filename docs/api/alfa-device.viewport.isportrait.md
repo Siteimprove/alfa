@@ -4,12 +4,3 @@
 
 ## Viewport.isPortrait() method
 
-<b>Signature:</b>
-
-```typescript
-isPortrait(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

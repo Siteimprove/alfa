@@ -4,19 +4,9 @@
 
 ## StyleRule.isStyleRule() function
 
-<b>Signature:</b>
-
-```typescript
-function isStyleRule(value: unknown): value is StyleRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [StyleRule](./alfa-dom.stylerule.md)
 

@@ -4,20 +4,10 @@
 
 ## Bits.skip() function
 
-<b>Signature:</b>
-
-```typescript
-function skip(bits: number, n: number): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  bits | number |  |
 |  n | number |  |
-
-<b>Returns:</b>
-
-number
 

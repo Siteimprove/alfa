@@ -4,22 +4,15 @@
 
 ## Set\_2 namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Set 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(iterable)](./alfa-set.set_2.from.md) |  |
-|  [fromArray(array)](./alfa-set.set_2.fromarray.md) |  |
-|  [fromIterable(iterable)](./alfa-set.set_2.fromiterable.md) |  |
-|  [isSet(value)](./alfa-set.set_2.isset.md) |  |
-|  [isSet(value)](./alfa-set.set_2.isset_1.md) |  |
+|  [from](./alfa-set.set_2.from.md) |  |
+|  [fromArray](./alfa-set.set_2.fromarray.md) |  |
+|  [fromIterable](./alfa-set.set_2.fromiterable.md) |  |
+|  [isSet](./alfa-set.set_2.isset.md) |  |
+|  [isSet](./alfa-set.set_2.isset.md) |  |
 
 ## Type Aliases
 

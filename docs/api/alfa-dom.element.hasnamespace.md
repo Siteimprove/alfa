@@ -4,8 +4,3 @@
 
 ## Element.hasNamespace variable
 
-<b>Signature:</b>
-
-```typescript
-hasNamespace: typeof predicate.hasNamespace
-```

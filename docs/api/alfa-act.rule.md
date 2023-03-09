@@ -4,13 +4,6 @@
 
 ## Rule namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Rule 
-```
-
 ## Classes
 
 |  Class | Description |
@@ -23,7 +16,7 @@ export declare namespace Rule
 
 |  Function | Description |
 |  --- | --- |
-|  [isRule(value)](./alfa-act.rule.isrule.md) |  |
+|  [isRule](./alfa-act.rule.isrule.md) |  |
 
 ## Interfaces
 

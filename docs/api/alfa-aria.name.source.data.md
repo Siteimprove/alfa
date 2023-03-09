@@ -4,12 +4,6 @@
 
 ## Name.Source.Data namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Data 
-```
-
 ## Interfaces
 
 |  Interface | Description |

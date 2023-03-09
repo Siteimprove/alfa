@@ -4,8 +4,3 @@
 
 ## DOM.hasAccessibleName variable
 
-<b>Signature:</b>
-
-```typescript
-hasAccessibleName: typeof dom.hasAccessibleName
-```

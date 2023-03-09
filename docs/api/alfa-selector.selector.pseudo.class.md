@@ -4,12 +4,6 @@
 
 ## Selector.Pseudo.Class namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Class 
-```
-
 ## Interfaces
 
 |  Interface | Description |

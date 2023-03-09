@@ -4,19 +4,9 @@
 
 ## Value.map() method
 
-<b>Signature:</b>
-
-```typescript
-map<U>(mapper: Mapper<T, U, [source: Option<Declaration>]>): Value<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[source: [Option](./alfa-option.option.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt;\]&gt; |  |
-
-<b>Returns:</b>
-
-[Value](./alfa-style.value.md)<!-- -->&lt;U&gt;
 

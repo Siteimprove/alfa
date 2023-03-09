@@ -4,8 +4,3 @@
 
 ## Refinement.xor variable
 
-<b>Signature:</b>
-
-```typescript
-xor: Xor
-```

@@ -4,8 +4,6 @@
 
 ## alfa-applicative package
 
-This package provides types for modelling [applicative functors](https://en.wikipedia.org/wiki/Applicative_functor)<!-- -->.
-
 ## Interfaces
 
 |  Interface | Description |

@@ -4,8 +4,3 @@
 
 ## Angular.Type type
 
-<b>Signature:</b>
-
-```typescript
-type Type = ComponentFixture<unknown>;
-```

@@ -4,19 +4,9 @@
 
 ## Token.Colon.isColon() function
 
-<b>Signature:</b>
-
-```typescript
-function isColon(value: unknown): value is Colon;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Colon](./alfa-css.token.colon.md)
 

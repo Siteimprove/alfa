@@ -4,12 +4,3 @@
 
 ## Shadow.empty() method
 
-<b>Signature:</b>
-
-```typescript
-static empty(): Shadow;
-```
-<b>Returns:</b>
-
-[Shadow](./alfa-dom.shadow.md)
-

@@ -4,20 +4,10 @@
 
 ## Iterable\_2.forEach() function
 
-<b>Signature:</b>
-
-```typescript
-function forEach<T>(iterable: Iterable<T>, callback: Callback<T, void, [index: number]>): void;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, void, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-void
 

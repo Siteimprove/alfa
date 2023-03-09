@@ -4,19 +4,12 @@
 
 ## Record\_2 namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Record 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(entries)](./alfa-record.record_2.from.md) |  |
-|  [isRecord(value)](./alfa-record.record_2.isrecord.md) |  |
+|  [from](./alfa-record.record_2.from.md) |  |
+|  [isRecord](./alfa-record.record_2.isrecord.md) |  |
 
 ## Type Aliases
 

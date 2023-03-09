@@ -4,20 +4,10 @@
 
 ## h.attribute() function
 
-<b>Signature:</b>
-
-```typescript
-function attribute<N extends string = string>(name: N, value: string): Attribute<N>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | N |  |
 |  value | string |  |
-
-<b>Returns:</b>
-
-[Attribute](./alfa-dom.attribute.md)<!-- -->&lt;N&gt;
 

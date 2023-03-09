@@ -4,8 +4,3 @@
 
 ## Token.OpenSquareBracket.mirror property
 
-<b>Signature:</b>
-
-```typescript
-get mirror(): CloseSquareBracket;
-```

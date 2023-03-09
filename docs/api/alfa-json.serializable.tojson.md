@@ -4,10 +4,3 @@
 
 ## Serializable.ToJSON type
 
-<b>Signature:</b>
-
-```typescript
-type ToJSON<T> = T extends Serializable<infer U> ? U : T extends JSON ? T : JSON;
-```
-<b>References:</b> [Serializable](./alfa-json.serializable.md)
-

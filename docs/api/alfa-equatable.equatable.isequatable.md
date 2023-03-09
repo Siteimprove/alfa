@@ -4,21 +4,9 @@
 
 ## Equatable.isEquatable() function
 
-Check if an unknown value implements the [Equatable](./alfa-equatable.equatable.md) interface.
-
-<b>Signature:</b>
-
-```typescript
-function isEquatable(value: unknown): value is Equatable;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Equatable](./alfa-equatable.equatable.md)
 

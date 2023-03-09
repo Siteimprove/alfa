@@ -4,12 +4,6 @@
 
 ## Performance.Measure.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T>(data: T, start: number, duration: number): Measure<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ static of<T>(data: T, start: number, duration: number): Measure<T>;
 |  data | T |  |
 |  start | number |  |
 |  duration | number |  |
-
-<b>Returns:</b>
-
-[Measure](./alfa-performance.performance.measure.md)<!-- -->&lt;T&gt;
 

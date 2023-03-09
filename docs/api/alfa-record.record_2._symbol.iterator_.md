@@ -4,12 +4,3 @@
 
 ## Record\_2.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
-
-```typescript
-[Symbol.iterator](): Iterator<Record.Entry<T>>;
-```
-<b>Returns:</b>
-
-Iterator&lt;Record.Entry&lt;T&gt;&gt;
-

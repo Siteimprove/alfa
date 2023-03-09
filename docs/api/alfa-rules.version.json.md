@@ -4,16 +4,9 @@
 
 ## Version.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<N extends number = number> extends Tag.JSON<"version"> 
-```
-<b>Extends:</b> [Tag.JSON](./alfa-act.tag.json.md)<!-- -->&lt;"version"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [version](./alfa-rules.version.json.version.md) |  | N |  |
+|  [version](./alfa-rules.version.json.version.md) |  |  |  |
 

@@ -4,8 +4,3 @@
 
 ## ImportRule.sheet property
 
-<b>Signature:</b>
-
-```typescript
-get sheet(): Sheet;
-```

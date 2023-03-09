@@ -4,19 +4,9 @@
 
 ## Media.Value.Bound.map() method
 
-<b>Signature:</b>
-
-```typescript
-map<U>(mapper: Mapper<T, U>): Bound<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
-
-<b>Returns:</b>
-
-[Bound](./alfa-media.media.value.bound.md)<!-- -->&lt;U&gt;
 

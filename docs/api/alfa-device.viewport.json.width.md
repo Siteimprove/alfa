@@ -4,8 +4,3 @@
 
 ## Viewport.JSON.width property
 
-<b>Signature:</b>
-
-```typescript
-width: number;
-```

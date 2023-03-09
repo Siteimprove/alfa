@@ -4,12 +4,6 @@
 
 ## Color.rgb() function
 
-<b>Signature:</b>
-
-```typescript
-function rgb<C extends Number | Percentage, A extends Number | Percentage>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ function rgb<C extends Number | Percentage, A extends Number | Percentage>(red: 
 |  green | C |  |
 |  blue | C |  |
 |  alpha | A |  |
-
-<b>Returns:</b>
-
-[RGB](./alfa-css.rgb.md)<!-- -->&lt;C, A&gt;
 

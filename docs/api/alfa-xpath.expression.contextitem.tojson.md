@@ -4,12 +4,3 @@
 
 ## Expression.ContextItem.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): ContextItem.JSON;
-```
-<b>Returns:</b>
-
-[ContextItem.JSON](./alfa-xpath.expression.contextitem.json.md)
-

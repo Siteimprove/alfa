@@ -4,12 +4,3 @@
 
 ## Radius.Side.Closest type
 
-[https://drafts.csswg.org/css-shapes/\#closest-side](https://drafts.csswg.org/css-shapes/#closest-side)
-
-<b>Signature:</b>
-
-```typescript
-type Closest = Keyword<"closest-side">;
-```
-<b>References:</b> [Keyword](./alfa-css.keyword.md)
-

@@ -4,8 +4,3 @@
 
 ## Language.Primary.Name type
 
-<b>Signature:</b>
-
-```typescript
-type Name = keyof Languages["primary"];
-```

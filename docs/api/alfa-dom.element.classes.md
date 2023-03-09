@@ -4,10 +4,3 @@
 
 ## Element.classes property
 
-[https://dom.spec.whatwg.org/\#concept-class](https://dom.spec.whatwg.org/#concept-class)
-
-<b>Signature:</b>
-
-```typescript
-get classes(): Sequence<string>;
-```

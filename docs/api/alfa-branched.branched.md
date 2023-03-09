@@ -4,21 +4,14 @@
 
 ## Branched namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Branched 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(values)](./alfa-branched.branched.from.md) |  |
-|  [isBranched(value)](./alfa-branched.branched.isbranched.md) |  |
-|  [sequence(values)](./alfa-branched.branched.sequence.md) |  |
-|  [traverse(values, mapper)](./alfa-branched.branched.traverse.md) |  |
+|  [from](./alfa-branched.branched.from.md) |  |
+|  [isBranched](./alfa-branched.branched.isbranched.md) |  |
+|  [sequence](./alfa-branched.branched.sequence.md) |  |
+|  [traverse](./alfa-branched.branched.traverse.md) |  |
 
 ## Type Aliases
 

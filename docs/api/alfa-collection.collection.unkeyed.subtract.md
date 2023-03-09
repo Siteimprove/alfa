@@ -4,19 +4,9 @@
 
 ## Collection.Unkeyed.subtract() method
 
-<b>Signature:</b>
-
-```typescript
-subtract(iterable: Iterable<T>): Unkeyed<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

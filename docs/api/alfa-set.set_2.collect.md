@@ -4,19 +4,9 @@
 
 ## Set\_2.collect() method
 
-<b>Signature:</b>
-
-```typescript
-collect<U>(mapper: Mapper<T, Option<U>>): Set<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;&gt; |  |
-
-<b>Returns:</b>
-
-Set&lt;U&gt;
 

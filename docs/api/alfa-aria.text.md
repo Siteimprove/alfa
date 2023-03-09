@@ -4,13 +4,6 @@
 
 ## Text namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Text 
-```
-
 ## Interfaces
 
 |  Interface | Description |

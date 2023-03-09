@@ -4,19 +4,12 @@
 
 ## Keyword namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Keyword 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isKeyword(value)](./alfa-css.keyword.iskeyword.md) |  |
-|  [parse(keywords)](./alfa-css.keyword.parse.md) |  |
+|  [isKeyword](./alfa-css.keyword.iskeyword.md) |  |
+|  [parse](./alfa-css.keyword.parse.md) |  |
 
 ## Interfaces
 

@@ -4,8 +4,3 @@
 
 ## Radial.JSON.position property
 
-<b>Signature:</b>
-
-```typescript
-position: Position.JSON;
-```

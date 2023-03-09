@@ -4,20 +4,14 @@
 
 ## Flag.Options interface
 
-<b>Signature:</b>
-
-```typescript
-interface Options 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [aliases](./alfa-command.flag.options.aliases.md) | <code>readonly</code> | Array&lt;string&gt; |  |
-|  [default](./alfa-command.flag.options.default.md) | <code>readonly</code> | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
-|  [negatable](./alfa-command.flag.options.negatable.md) | <code>readonly</code> | boolean |  |
-|  [optional](./alfa-command.flag.options.optional.md) | <code>readonly</code> | boolean |  |
-|  [repeatable](./alfa-command.flag.options.repeatable.md) | <code>readonly</code> | boolean |  |
-|  [type](./alfa-command.flag.options.type.md) | <code>readonly</code> | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  [aliases](./alfa-command.flag.options.aliases.md) |  |  |  |
+|  [default](./alfa-command.flag.options.default.md) |  |  |  |
+|  [negatable](./alfa-command.flag.options.negatable.md) |  |  |  |
+|  [optional](./alfa-command.flag.options.optional.md) |  |  |  |
+|  [repeatable](./alfa-command.flag.options.repeatable.md) |  |  |  |
+|  [type](./alfa-command.flag.options.type.md) |  |  |  |
 

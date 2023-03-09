@@ -4,19 +4,9 @@
 
 ## Left.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<L>(value: L): Left<L>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | L |  |
-
-<b>Returns:</b>
-
-[Left](./alfa-either.left.md)<!-- -->&lt;L&gt;
 

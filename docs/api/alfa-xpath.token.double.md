@@ -4,12 +4,6 @@
 
 ## Token.Double namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Double 
-```
-
 ## Interfaces
 
 |  Interface | Description |

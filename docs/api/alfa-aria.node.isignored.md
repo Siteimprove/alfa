@@ -4,12 +4,3 @@
 
 ## Node.isIgnored() method
 
-<b>Signature:</b>
-
-```typescript
-abstract isIgnored(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

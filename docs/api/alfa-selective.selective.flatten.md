@@ -4,19 +4,9 @@
 
 ## Selective.flatten() method
 
-<b>Signature:</b>
-
-```typescript
-flatten<S, T>(this: Selective<S, Selective<S, T>>): Selective<S, T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T&gt;
 

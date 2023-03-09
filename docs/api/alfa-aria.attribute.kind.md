@@ -4,12 +4,3 @@
 
 ## Attribute.Kind type
 
-The kind of the specified attribute.
-
-<b>Signature:</b>
-
-```typescript
-type Kind<N extends Name = Name> = Attributes[N]["kind"];
-```
-<b>References:</b> [Name](./alfa-aria.attribute.name.md)
-

@@ -4,8 +4,3 @@
 
 ## Argument.parse property
 
-<b>Signature:</b>
-
-```typescript
-get parse(): Argument.Parser<T>;
-```

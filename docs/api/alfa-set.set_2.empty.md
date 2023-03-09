@@ -4,12 +4,3 @@
 
 ## Set\_2.empty() method
 
-<b>Signature:</b>
-
-```typescript
-static empty<T>(): Set<T>;
-```
-<b>Returns:</b>
-
-Set&lt;T&gt;
-

@@ -4,19 +4,9 @@
 
 ## Name.Source.Data.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(text: Text): Data;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  text | [Text](./alfa-dom.text.md) |  |
-
-<b>Returns:</b>
-
-[Data](./alfa-aria.name.source.data.md)
 

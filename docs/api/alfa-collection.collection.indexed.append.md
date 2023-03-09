@@ -4,19 +4,9 @@
 
 ## Collection.Indexed.append() method
 
-<b>Signature:</b>
-
-```typescript
-append(value: T): Indexed<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

@@ -4,21 +4,9 @@
 
 ## Math\_2.isDimensionPercentage() method
 
-[https://drafts.css-houdini.org/css-typed-om/\#cssnumericvalue-match](https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match)
-
-<b>Signature:</b>
-
-```typescript
-isDimensionPercentage<D extends Numeric.Dimension>(dimension: D): this is Math<`${D}-percentage`>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  dimension | D |  |
-
-<b>Returns:</b>
-
-this is Math&lt;\`${D}-percentage\`&gt;
 

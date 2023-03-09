@@ -4,8 +4,3 @@
 
 ## Circle.parse variable
 
-<b>Signature:</b>
-
-```typescript
-parse: Parser<Slice<Token>, Circle, string>
-```

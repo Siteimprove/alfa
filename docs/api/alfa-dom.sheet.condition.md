@@ -4,8 +4,3 @@
 
 ## Sheet.condition property
 
-<b>Signature:</b>
-
-```typescript
-get condition(): Option<string>;
-```

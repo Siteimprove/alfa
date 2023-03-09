@@ -4,12 +4,6 @@
 
 ## Assertion.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<I, T extends Hashable, Q, S>(input: I, rules: Iterable<Rule<I, T, Q, S>>, handlers?: Iterable<Handler<I, T, Q, S>>, options?: Assertion.Options<I, T, Q, S>): Assertion<I, T, Q, S>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ static of<I, T extends Hashable, Q, S>(input: I, rules: Iterable<Rule<I, T, Q, S
 |  rules | Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;&gt; |  |
 |  handlers | Iterable&lt;[Handler](./alfa-assert.handler.md)<!-- -->&lt;I, T, Q, S&gt;&gt; | <i>(Optional)</i> |
 |  options | [Assertion.Options](./alfa-assert.assertion.options.md)<!-- -->&lt;I, T, Q, S&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Assertion](./alfa-assert.assertion.md)<!-- -->&lt;I, T, Q, S&gt;
 

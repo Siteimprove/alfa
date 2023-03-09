@@ -4,8 +4,3 @@
 
 ## Question.\_uri property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _uri: URI;
-```

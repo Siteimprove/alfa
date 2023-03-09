@@ -4,19 +4,9 @@
 
 ## RGB.isRGB() function
 
-<b>Signature:</b>
-
-```typescript
-function isRGB<C extends Number | Percentage, A extends Number | Percentage>(value: unknown): value is RGB<C, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [RGB](./alfa-css.rgb.md)<!-- -->&lt;C, A&gt;
 

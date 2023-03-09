@@ -4,8 +4,3 @@
 
 ## Token.Number.isSigned property
 
-<b>Signature:</b>
-
-```typescript
-get isSigned(): boolean;
-```

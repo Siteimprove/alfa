@@ -4,10 +4,3 @@
 
 ## Either.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON<L, R = L> = Left.JSON<L> | Right.JSON<R>;
-```
-<b>References:</b> [Left.JSON](./alfa-either.left.json.md)<!-- -->, [Right.JSON](./alfa-either.right.json.md)
-

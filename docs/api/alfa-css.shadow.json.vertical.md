@@ -4,8 +4,3 @@
 
 ## Shadow.JSON.vertical property
 
-<b>Signature:</b>
-
-```typescript
-vertical: Length.JSON;
-```

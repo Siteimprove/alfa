@@ -4,19 +4,9 @@
 
 ## Performance.Mark.isMark() function
 
-<b>Signature:</b>
-
-```typescript
-function isMark<T>(value: unknown | Entry<T>): value is Mark<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown \| [Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is [Mark](./alfa-performance.performance.mark.md)<!-- -->&lt;T&gt;
 

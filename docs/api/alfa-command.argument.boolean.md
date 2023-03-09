@@ -4,20 +4,10 @@
 
 ## Argument.boolean() function
 
-<b>Signature:</b>
-
-```typescript
-function boolean(name: string, description: string): Argument<boolean>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  description | string |  |
-
-<b>Returns:</b>
-
-[Argument](./alfa-command.argument.md)<!-- -->&lt;boolean&gt;
 

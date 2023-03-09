@@ -4,13 +4,6 @@
 
 ## Device namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Device 
-```
-
 ## Enumerations
 
 |  Enumeration | Description |
@@ -21,8 +14,8 @@ export declare namespace Device
 
 |  Function | Description |
 |  --- | --- |
-|  [from(json)](./alfa-device.device.from.md) |  |
-|  [standard()](./alfa-device.device.standard.md) |  |
+|  [from](./alfa-device.device.from.md) |  |
+|  [standard](./alfa-device.device.standard.md) |  |
 
 ## Interfaces
 

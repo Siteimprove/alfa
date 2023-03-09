@@ -4,12 +4,3 @@
 
 ## Style.empty() method
 
-<b>Signature:</b>
-
-```typescript
-static empty(): Style;
-```
-<b>Returns:</b>
-
-[Style](./alfa-style.style.md)
-

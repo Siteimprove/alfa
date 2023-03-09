@@ -4,18 +4,11 @@
 
 ## Technique.EARL interface
 
-<b>Signature:</b>
-
-```typescript
-interface EARL extends Requirement.EARL 
-```
-<b>Extends:</b> [Requirement.EARL](./alfa-act.requirement.earl.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@context"](./alfa-wcag.technique.earl.__context_.md) |  | { earl: "http://www.w3.org/ns/earl\#"; dct: "http://purl.org/dc/terms/"; } |  |
-|  ["dct:isPartOf"](./alfa-wcag.technique.earl._dct_ispartof_.md) |  | "https://www.w3.org/WAI/WCAG21/Techniques/" |  |
-|  ["dct:title"](./alfa-wcag.technique.earl._dct_title_.md) |  | string |  |
+|  ["@context"](./alfa-wcag.technique.earl.__context_.md) |  |  |  |
+|  ["dct:isPartOf"](./alfa-wcag.technique.earl._dct_ispartof_.md) |  |  |  |
+|  ["dct:title"](./alfa-wcag.technique.earl._dct_title_.md) |  |  |  |
 

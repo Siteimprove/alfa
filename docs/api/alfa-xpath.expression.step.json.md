@@ -4,10 +4,3 @@
 
 ## Expression.Step.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON = Postfix.JSON | Axis.JSON;
-```
-<b>References:</b> [Postfix.JSON](./alfa-xpath.expression.postfix.json.md)<!-- -->, [Axis.JSON](./alfa-xpath.expression.axis.json.md)
-

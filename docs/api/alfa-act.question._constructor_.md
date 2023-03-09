@@ -4,14 +4,6 @@
 
 ## Question.(constructor)
 
-Constructs a new instance of the `Question` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor(type: TYPE, uri: URI, message: string, diagnostic: Diagnostic, fallback: Option<ANSWER>, subject: SUBJECT, context: CONTEXT, quester: Mapper<ANSWER, T>);
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |

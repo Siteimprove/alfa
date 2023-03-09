@@ -4,18 +4,11 @@
 
 ## Hex namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Hex 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isHex(value)](./alfa-css.hex.ishex.md) |  |
+|  [isHex](./alfa-css.hex.ishex.md) |  |
 
 ## Interfaces
 
@@ -27,5 +20,5 @@ export declare namespace Hex
 
 |  Variable | Description |
 |  --- | --- |
-|  [parse](./alfa-css.hex.parse.md) | [https://drafts.csswg.org/css-color/\#typedef-hex-color](https://drafts.csswg.org/css-color/#typedef-hex-color) |
+|  [parse](./alfa-css.hex.parse.md) |  |
 

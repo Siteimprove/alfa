@@ -4,20 +4,10 @@
 
 ## Iterable\_2.takeLast() function
 
-<b>Signature:</b>
-
-```typescript
-function takeLast<T>(iterable: Iterable<T>, count?: number): Iterable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  count | number | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-Iterable&lt;T&gt;
 

@@ -4,13 +4,6 @@
 
 ## Display namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Display 
-```
-
 ## Enumerations
 
 |  Enumeration | Description |
@@ -21,8 +14,8 @@ export declare namespace Display
 
 |  Function | Description |
 |  --- | --- |
-|  [from(json)](./alfa-device.display.from.md) |  |
-|  [standard()](./alfa-device.display.standard.md) |  |
+|  [from](./alfa-device.display.from.md) |  |
+|  [standard](./alfa-device.display.standard.md) |  |
 
 ## Interfaces
 

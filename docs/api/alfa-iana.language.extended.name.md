@@ -4,8 +4,3 @@
 
 ## Language.Extended.Name type
 
-<b>Signature:</b>
-
-```typescript
-type Name = keyof Languages["extended"];
-```

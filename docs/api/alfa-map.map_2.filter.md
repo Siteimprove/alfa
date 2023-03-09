@@ -4,19 +4,9 @@
 
 ## Map\_2.filter() method
 
-<b>Signature:</b>
-
-```typescript
-filter<U extends V>(refinement: Refinement<V, U, [key: K]>): Map<K, U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
-
-<b>Returns:</b>
-
-Map&lt;K, U&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
 

@@ -4,19 +4,9 @@
 
 ## Gradient.Hint.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<P extends Length | Percentage>(position: P): Hint<P>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  position | P |  |
-
-<b>Returns:</b>
-
-[Hint](./alfa-css.gradient.hint.md)<!-- -->&lt;P&gt;
 

@@ -4,19 +4,9 @@
 
 ## Sequence.prepend() method
 
-<b>Signature:</b>
-
-```typescript
-prepend(value: T): Sequence<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

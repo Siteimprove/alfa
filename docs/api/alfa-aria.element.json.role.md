@@ -4,8 +4,3 @@
 
 ## Element.JSON.role property
 
-<b>Signature:</b>
-
-```typescript
-role: Role.Name | null;
-```

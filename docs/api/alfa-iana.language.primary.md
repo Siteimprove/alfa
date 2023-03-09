@@ -4,8 +4,3 @@
 
 ## Language.primary variable
 
-<b>Signature:</b>
-
-```typescript
-primary: typeof Primary.of
-```

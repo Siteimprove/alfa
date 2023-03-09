@@ -4,19 +4,9 @@
 
 ## Network.isNetwork() function
 
-<b>Signature:</b>
-
-```typescript
-function isNetwork<N, E>(value: Iterable<readonly [N, Iterable<readonly [N, Iterable<E>]>]>): value is Network<N, E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;readonly \[N, Iterable&lt;readonly \[N, Iterable&lt;E&gt;\]&gt;\]&gt; |  |
-
-<b>Returns:</b>
-
-value is [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
+|  value | unknown |  |
 

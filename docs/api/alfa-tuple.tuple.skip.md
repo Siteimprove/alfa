@@ -4,10 +4,3 @@
 
 ## Tuple.Skip type
 
-<b>Signature:</b>
-
-```typescript
-export type Skip<T extends Tuple, N extends number> = SkipInner<T, N, Empty>;
-```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
-

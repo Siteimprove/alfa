@@ -4,19 +4,9 @@
 
 ## Nth.for() method
 
-<b>Signature:</b>
-
-```typescript
-for(n: number): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  n | number |  |
-
-<b>Returns:</b>
-
-number
 

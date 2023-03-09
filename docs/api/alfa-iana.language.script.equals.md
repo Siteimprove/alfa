@@ -4,19 +4,9 @@
 
 ## Language.Script.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Script): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Script](./alfa-iana.language.script.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

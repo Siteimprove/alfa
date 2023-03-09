@@ -4,8 +4,3 @@
 
 ## Selector.Complex.JSON.combinator property
 
-<b>Signature:</b>
-
-```typescript
-combinator: string;
-```

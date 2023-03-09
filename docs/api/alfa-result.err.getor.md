@@ -4,19 +4,9 @@
 
 ## Err.getOr() method
 
-<b>Signature:</b>
-
-```typescript
-getOr<U>(value: U): U;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | U |  |
-
-<b>Returns:</b>
-
-U
 

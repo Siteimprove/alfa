@@ -4,19 +4,9 @@
 
 ## Ok.getErrOr() method
 
-<b>Signature:</b>
-
-```typescript
-getErrOr<F>(error: F): F;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  error | F |  |
-
-<b>Returns:</b>
-
-F
 

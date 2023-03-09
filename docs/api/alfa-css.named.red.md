@@ -4,8 +4,3 @@
 
 ## Named.red property
 
-<b>Signature:</b>
-
-```typescript
-get red(): Number;
-```

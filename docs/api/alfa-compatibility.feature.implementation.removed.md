@@ -4,8 +4,3 @@
 
 ## Feature.Implementation.removed property
 
-<b>Signature:</b>
-
-```typescript
-readonly removed?: Browser.Version<I>;
-```

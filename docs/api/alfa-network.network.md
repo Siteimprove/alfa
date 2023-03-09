@@ -4,20 +4,13 @@
 
 ## Network namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Network 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(iterable)](./alfa-network.network.from.md) |  |
-|  [isNetwork(value)](./alfa-network.network.isnetwork.md) |  |
-|  [isNetwork(value)](./alfa-network.network.isnetwork_1.md) |  |
+|  [from](./alfa-network.network.from.md) |  |
+|  [isNetwork](./alfa-network.network.isnetwork.md) |  |
+|  [isNetwork](./alfa-network.network.isnetwork.md) |  |
 
 ## Interfaces
 
@@ -29,8 +22,8 @@ export declare namespace Network
 
 |  Variable | Description |
 |  --- | --- |
-|  [BreadthFirst](./alfa-network.network.breadthfirst.md) | [https://en.wikipedia.org/wiki/Breadth-first\_search](https://en.wikipedia.org/wiki/Breadth-first_search) |
-|  [DepthFirst](./alfa-network.network.depthfirst.md) | [https://en.wikipedia.org/wiki/Depth-first\_search](https://en.wikipedia.org/wiki/Depth-first_search) |
+|  [BreadthFirst](./alfa-network.network.breadthfirst.md) |  |
+|  [DepthFirst](./alfa-network.network.depthfirst.md) |  |
 
 ## Type Aliases
 

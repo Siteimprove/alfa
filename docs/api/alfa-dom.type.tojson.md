@@ -4,12 +4,3 @@
 
 ## Type.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Type.JSON<N>;
-```
-<b>Returns:</b>
-
-[Type.JSON](./alfa-dom.type.json.md)<!-- -->&lt;N&gt;
-

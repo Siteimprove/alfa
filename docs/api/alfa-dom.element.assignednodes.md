@@ -4,14 +4,3 @@
 
 ## Element.assignedNodes() method
 
-[https://html.spec.whatwg.org/\#dom-slot-assignednodes](https://html.spec.whatwg.org/#dom-slot-assignednodes)
-
-<b>Signature:</b>
-
-```typescript
-assignedNodes(): Iterable<Slotable>;
-```
-<b>Returns:</b>
-
-Iterable&lt;[Slotable](./alfa-dom.slotable.md)<!-- -->&gt;
-

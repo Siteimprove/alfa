@@ -4,12 +4,3 @@
 
 ## Value.toString() method
 
-<b>Signature:</b>
-
-```typescript
-abstract toString(): string;
-```
-<b>Returns:</b>
-
-string
-

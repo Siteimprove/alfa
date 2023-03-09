@@ -4,10 +4,3 @@
 
 ## Attribute.Global type
 
-The names of all global attributes.
-
-<b>Signature:</b>
-
-```typescript
-type Global = Members<Roles["roletype"]["attributes"]>[0];
-```

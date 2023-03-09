@@ -4,19 +4,9 @@
 
 ## Cell.Header.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(cell: Header): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  cell | [Header](./alfa-table.cell.header.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

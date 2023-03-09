@@ -4,19 +4,12 @@
 
 ## Page namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Page 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(json)](./alfa-web.page.from.md) |  |
-|  [isPage(value)](./alfa-web.page.ispage.md) |  |
+|  [from](./alfa-web.page.from.md) |  |
+|  [isPage](./alfa-web.page.ispage.md) |  |
 
 ## Interfaces
 

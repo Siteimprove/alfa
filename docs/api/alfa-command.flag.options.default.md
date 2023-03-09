@@ -4,8 +4,3 @@
 
 ## Flag.Options.default property
 
-<b>Signature:</b>
-
-```typescript
-readonly default: Option<string>;
-```

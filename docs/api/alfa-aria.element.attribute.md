@@ -4,19 +4,9 @@
 
 ## Element.attribute() method
 
-<b>Signature:</b>
-
-```typescript
-attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;[Attribute](./alfa-aria.attribute.md)<!-- -->, [Attribute](./alfa-aria.attribute.md)<!-- -->&lt;N&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Attribute](./alfa-aria.attribute.md)<!-- -->&lt;N&gt;&gt;
+|  predicate | N |  |
 

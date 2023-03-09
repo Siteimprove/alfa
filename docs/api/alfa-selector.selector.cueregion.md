@@ -4,12 +4,6 @@
 
 ## Selector.CueRegion namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace CueRegion 
-```
-
 ## Interfaces
 
 |  Interface | Description |

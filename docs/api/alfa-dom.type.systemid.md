@@ -4,8 +4,3 @@
 
 ## Type.systemId property
 
-<b>Signature:</b>
-
-```typescript
-get systemId(): Option<string>;
-```

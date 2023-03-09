@@ -4,8 +4,3 @@
 
 ## Language.script variable
 
-<b>Signature:</b>
-
-```typescript
-script: typeof Script.of
-```

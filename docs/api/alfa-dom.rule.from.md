@@ -4,19 +4,9 @@
 
 ## Rule.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from(json: StyleRule.JSON): StyleRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  json | [StyleRule.JSON](./alfa-dom.stylerule.json.md) |  |
-
-<b>Returns:</b>
-
-[StyleRule](./alfa-dom.stylerule.md)
+|  json | [SupportsRule.JSON](./alfa-dom.supportsrule.json.md) |  |
 

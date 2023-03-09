@@ -4,18 +4,11 @@
 
 ## HSL namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace HSL 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isHSL(value)](./alfa-css.hsl.ishsl.md) |  |
+|  [isHSL](./alfa-css.hsl.ishsl.md) |  |
 
 ## Interfaces
 
@@ -27,5 +20,5 @@ export declare namespace HSL
 
 |  Variable | Description |
 |  --- | --- |
-|  [parse](./alfa-css.hsl.parse.md) | [https://drafts.csswg.org/css-color/\#funcdef-hsl](https://drafts.csswg.org/css-color/#funcdef-hsl) |
+|  [parse](./alfa-css.hsl.parse.md) |  |
 

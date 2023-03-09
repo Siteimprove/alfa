@@ -4,12 +4,3 @@
 
 ## Media.Value.Range.toLength() method
 
-<b>Signature:</b>
-
-```typescript
-toLength(): Range<T | Length<"px">>;
-```
-<b>Returns:</b>
-
-[Range](./alfa-media.media.value.range.md)<!-- -->&lt;T \| [Length](./alfa-css.length.md)<!-- -->&lt;"px"&gt;&gt;
-

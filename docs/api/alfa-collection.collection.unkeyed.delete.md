@@ -4,19 +4,9 @@
 
 ## Collection.Unkeyed.delete() method
 
-<b>Signature:</b>
-
-```typescript
-delete(value: T): Unkeyed<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

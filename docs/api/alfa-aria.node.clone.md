@@ -4,19 +4,9 @@
 
 ## Node.clone() method
 
-<b>Signature:</b>
-
-```typescript
-abstract clone(parent?: Option<Node>): Node;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  parent | [Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Node](./alfa-aria.node.md)
 

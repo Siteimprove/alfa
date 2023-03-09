@@ -4,12 +4,3 @@
 
 ## Some.get() method
 
-<b>Signature:</b>
-
-```typescript
-get(): T;
-```
-<b>Returns:</b>
-
-T
-

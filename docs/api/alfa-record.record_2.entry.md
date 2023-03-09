@@ -4,10 +4,3 @@
 
 ## Record\_2.Entry type
 
-<b>Signature:</b>
-
-```typescript
-type Entry<T> = {
-        [K in Key<T>]: [K, T[K]];
-    }[Key<T>];
-```

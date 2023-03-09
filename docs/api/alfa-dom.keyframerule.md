@@ -4,18 +4,11 @@
 
 ## KeyframeRule namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace KeyframeRule 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isKeyframeRule(value)](./alfa-dom.keyframerule.iskeyframerule.md) |  |
+|  [isKeyframeRule](./alfa-dom.keyframerule.iskeyframerule.md) |  |
 
 ## Interfaces
 

@@ -4,12 +4,3 @@
 
 ## Slot.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Slot.JSON;
-```
-<b>Returns:</b>
-
-[Slot.JSON](./alfa-table.slot.json.md)
-

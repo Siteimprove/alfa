@@ -4,8 +4,3 @@
 
 ## Node.frozen property
 
-<b>Signature:</b>
-
-```typescript
-get frozen(): boolean;
-```

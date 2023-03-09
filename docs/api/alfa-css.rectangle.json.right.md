@@ -4,8 +4,3 @@
 
 ## Rectangle.JSON.right property
 
-<b>Signature:</b>
-
-```typescript
-right: Length.JSON | Keyword.JSON;
-```

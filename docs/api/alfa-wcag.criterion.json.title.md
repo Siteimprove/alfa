@@ -4,8 +4,3 @@
 
 ## Criterion.JSON.title property
 
-<b>Signature:</b>
-
-```typescript
-title: string;
-```

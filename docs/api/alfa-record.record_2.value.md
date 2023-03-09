@@ -4,8 +4,3 @@
 
 ## Record\_2.Value type
 
-<b>Signature:</b>
-
-```typescript
-type Value<T> = T[Key<T>];
-```

@@ -4,12 +4,6 @@
 
 ## Selector.Cue namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace Cue 
-```
-
 ## Interfaces
 
 |  Interface | Description |

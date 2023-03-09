@@ -4,8 +4,3 @@
 
 ## Math\_2.parseLengthNumberPercentage variable
 
-<b>Signature:</b>
-
-```typescript
-parseLengthNumberPercentage: Parser<Slice<Token>, Math<"number"> | Math<"length-percentage">, string, []>
-```

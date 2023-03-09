@@ -4,15 +4,9 @@
 
 ## Archive.Format enum
 
-<b>Signature:</b>
-
-```typescript
-enum Format 
-```
-
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  MHTML | <code>&quot;mhtml&quot;</code> |  |
+|  MHTML |  |  |
 

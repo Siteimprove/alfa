@@ -4,19 +4,9 @@
 
 ## Headers.isHeaders() function
 
-<b>Signature:</b>
-
-```typescript
-function isHeaders(value: unknown): value is Headers;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Headers](./alfa-http.headers.md)
 

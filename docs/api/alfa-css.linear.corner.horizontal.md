@@ -4,8 +4,3 @@
 
 ## Linear.Corner.horizontal property
 
-<b>Signature:</b>
-
-```typescript
-get horizontal(): Position.Horizontal;
-```

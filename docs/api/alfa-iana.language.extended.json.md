@@ -4,16 +4,9 @@
 
 ## Language.Extended.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Subtag.JSON<"extended", Name> 
-```
-<b>Extends:</b> [Subtag.JSON](./alfa-iana.language.subtag.json.md)<!-- -->&lt;"extended", [Name](./alfa-iana.language.extended.name.md)<!-- -->&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [prefix](./alfa-iana.language.extended.json.prefix.md) |  | [Primary.Name](./alfa-iana.language.primary.name.md) |  |
+|  [prefix](./alfa-iana.language.extended.json.prefix.md) |  |  |  |
 

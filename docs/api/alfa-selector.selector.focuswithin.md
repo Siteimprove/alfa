@@ -4,19 +4,10 @@
 
 ## Selector.FocusWithin class
 
-[https://drafts.csswg.org/selectors/\#focus-within-pseudo](https://drafts.csswg.org/selectors/#focus-within-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class FocusWithin extends Pseudo.Class<"focus-within"> 
-```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"focus-within"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches(element, context)](./alfa-selector.selector.focuswithin.matches.md) |  |  |
-|  [of()](./alfa-selector.selector.focuswithin.of.md) | <code>static</code> |  |
+|  [matches](./alfa-selector.selector.focuswithin.matches.md) |  |  |
+|  [of](./alfa-selector.selector.focuswithin.of.md) |  |  |
 

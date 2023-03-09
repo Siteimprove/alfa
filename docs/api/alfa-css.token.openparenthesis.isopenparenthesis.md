@@ -4,19 +4,9 @@
 
 ## Token.OpenParenthesis.isOpenParenthesis() function
 
-<b>Signature:</b>
-
-```typescript
-function isOpenParenthesis(value: unknown): value is OpenParenthesis;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [OpenParenthesis](./alfa-css.token.openparenthesis.md)
 

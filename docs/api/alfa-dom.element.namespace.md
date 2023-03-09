@@ -4,8 +4,3 @@
 
 ## Element.namespace property
 
-<b>Signature:</b>
-
-```typescript
-get namespace(): Option<Namespace>;
-```

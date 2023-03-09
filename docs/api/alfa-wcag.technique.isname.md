@@ -4,19 +4,9 @@
 
 ## Technique.isName() function
 
-<b>Signature:</b>
-
-```typescript
-function isName(value: string): value is Name;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
-
-<b>Returns:</b>
-
-value is [Name](./alfa-wcag.technique.name.md)
 

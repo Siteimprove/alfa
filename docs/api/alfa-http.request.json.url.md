@@ -4,8 +4,3 @@
 
 ## Request.JSON.url property
 
-<b>Signature:</b>
-
-```typescript
-url: string;
-```

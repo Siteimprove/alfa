@@ -4,10 +4,3 @@
 
 ## Color.parse variable
 
-[https://drafts.csswg.org/css-color/\#typedef-color](https://drafts.csswg.org/css-color/#typedef-color)
-
-<b>Signature:</b>
-
-```typescript
-parse: Parser<Slice<Token>, Color, string>
-```

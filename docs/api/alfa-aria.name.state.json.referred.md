@@ -4,8 +4,3 @@
 
 ## Name.State.JSON.referred property
 
-<b>Signature:</b>
-
-```typescript
-referred: string | null;
-```

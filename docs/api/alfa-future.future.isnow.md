@@ -4,12 +4,3 @@
 
 ## Future.isNow() method
 
-<b>Signature:</b>
-
-```typescript
-abstract isNow(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

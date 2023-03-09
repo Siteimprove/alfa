@@ -4,8 +4,3 @@
 
 ## Shadow.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "shadow";
-```

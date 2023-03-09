@@ -4,20 +4,10 @@
 
 ## Scale.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(x: Number, y: Number): Scale;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  x | Number |  |
 |  y | Number |  |
-
-<b>Returns:</b>
-
-[Scale](./alfa-css.scale.md)
 

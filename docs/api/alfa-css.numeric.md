@@ -4,18 +4,11 @@
 
 ## Numeric namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Numeric 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isNumeric(value)](./alfa-css.numeric.isnumeric.md) |  |
+|  [isNumeric](./alfa-css.numeric.isnumeric.md) |  |
 
 ## Interfaces
 
@@ -27,7 +20,7 @@ export declare namespace Numeric
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Dimension](./alfa-css.numeric.dimension.md) | [https://drafts.csswg.org/css-values-4/\#lengths](https://drafts.csswg.org/css-values-4/#lengths) [https://drafts.csswg.org/css-values-4/\#other-units](https://drafts.csswg.org/css-values-4/#other-units) |
-|  [Ratio](./alfa-css.numeric.ratio.md) | [https://drafts.csswg.org/css-values-4/\#numeric-types](https://drafts.csswg.org/css-values-4/#numeric-types) |
-|  [Scalar](./alfa-css.numeric.scalar.md) | [https://drafts.csswg.org/css-values-4/\#numeric-types](https://drafts.csswg.org/css-values-4/#numeric-types) |
+|  [Dimension](./alfa-css.numeric.dimension.md) |  |
+|  [Ratio](./alfa-css.numeric.ratio.md) |  |
+|  [Scalar](./alfa-css.numeric.scalar.md) |  |
 

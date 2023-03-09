@@ -4,8 +4,3 @@
 
 ## Hex.green property
 
-<b>Signature:</b>
-
-```typescript
-get green(): Number;
-```

@@ -4,12 +4,3 @@
 
 ## Set\_2.isEmpty() method
 
-<b>Signature:</b>
-
-```typescript
-isEmpty(): this is Set<never>;
-```
-<b>Returns:</b>
-
-this is Set&lt;never&gt;
-

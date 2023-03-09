@@ -4,19 +4,9 @@
 
 ## Cookies.add() method
 
-<b>Signature:</b>
-
-```typescript
-add(cookie: Cookie): Cookies;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  cookie | [Cookie](./alfa-http.cookie.md) |  |
-
-<b>Returns:</b>
-
-[Cookies](./alfa-http.cookies.md)
 

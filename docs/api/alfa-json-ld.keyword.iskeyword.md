@@ -4,19 +4,9 @@
 
 ## Keyword.isKeyword() function
 
-<b>Signature:</b>
-
-```typescript
-function isKeyword(key: string): key is Keyword;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | string |  |
-
-<b>Returns:</b>
-
-key is [Keyword](./alfa-json-ld.keyword.md)
 

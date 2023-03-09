@@ -4,19 +4,9 @@
 
 ## Length.hasUnit() method
 
-<b>Signature:</b>
-
-```typescript
-hasUnit<U extends Unit.Length>(unit: U): this is Length<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | U |  |
-
-<b>Returns:</b>
-
-this is [Length](./alfa-css.length.md)<!-- -->&lt;U&gt;
 

@@ -4,19 +4,9 @@
 
 ## Err.flatten() method
 
-<b>Signature:</b>
-
-```typescript
-flatten<T, E>(this: Result<never, E>): Result<T, E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Result](./alfa-result.result.md)<!-- -->&lt;never, E&gt; |  |
-
-<b>Returns:</b>
-
-[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
 

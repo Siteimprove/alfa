@@ -4,21 +4,9 @@
 
 ## Role.isSuperclassOf() method
 
-Check if this role is a superclass of the role with the specified name.
-
-<b>Signature:</b>
-
-```typescript
-isSuperclassOf<N extends Role.Name>(name: N): this is Role<Role.SuperclassOf<N>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | N |  |
-
-<b>Returns:</b>
-
-this is [Role](./alfa-aria.role.md)<!-- -->&lt;[Role.SuperclassOf](./alfa-aria.role.superclassof.md)<!-- -->&lt;N&gt;&gt;
 

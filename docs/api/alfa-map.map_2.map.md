@@ -4,19 +4,9 @@
 
 ## Map\_2.map() method
 
-<b>Signature:</b>
-
-```typescript
-map<U>(mapper: Mapper<V, U, [key: K]>): Map<K, U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
-
-<b>Returns:</b>
-
-Map&lt;K, U&gt;
 

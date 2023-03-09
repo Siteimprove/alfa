@@ -4,19 +4,9 @@
 
 ## Language.Variant.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(name: Variant.Name): Variant;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | [Variant.Name](./alfa-iana.language.variant.name.md) |  |
-
-<b>Returns:</b>
-
-[Variant](./alfa-iana.language.variant.md)
 

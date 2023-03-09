@@ -4,18 +4,10 @@
 
 ## Applicative interface
 
-
-<b>Signature:</b>
-
-```typescript
-export interface Applicative<T> extends Functor<T> 
-```
-<b>Extends:</b> [Functor](./alfa-functor.functor.md)<!-- -->&lt;T&gt;
-
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [apply(mapper)](./alfa-applicative.applicative.apply.md) |  |
-|  [map(mapper)](./alfa-applicative.applicative.map.md) |  |
+|  [apply](./alfa-applicative.applicative.apply.md) |  |
+|  [map](./alfa-applicative.applicative.map.md) |  |
 

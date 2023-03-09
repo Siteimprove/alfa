@@ -4,12 +4,3 @@
 
 ## Left.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
-
-```typescript
-[Symbol.iterator](): Iterator<L>;
-```
-<b>Returns:</b>
-
-Iterator&lt;L&gt;
-

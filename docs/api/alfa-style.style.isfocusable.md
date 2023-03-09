@@ -4,8 +4,3 @@
 
 ## Style.isFocusable variable
 
-<b>Signature:</b>
-
-```typescript
-isFocusable: typeof element.isFocusable
-```

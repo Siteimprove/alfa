@@ -4,21 +4,9 @@
 
 ## Awaiter.selector() function
 
-Wait for an element matching the given selector to be present and visible.
-
-<b>Signature:</b>
-
-```typescript
-function selector(selector: string): Awaiter;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  selector | string |  |
-
-<b>Returns:</b>
-
-[Awaiter](./alfa-scraper.awaiter.md)
 

@@ -4,24 +4,10 @@
 
 ## Comparable.compareBoolean() function
 
-<b>Signature:</b>
-
-```typescript
-function compareBoolean(a: boolean, b: boolean): Comparison;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | boolean |  |
 |  b | boolean |  |
-
-<b>Returns:</b>
-
-[Comparison](./alfa-comparable.comparison.md)
-
-## Remarks
-
-This should only be used in cases where branch mispredictions caused by the more general [Comparable.compare()](./alfa-comparable.comparable.compare_3.md) are undesired.
 

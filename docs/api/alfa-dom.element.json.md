@@ -4,22 +4,15 @@
 
 ## Element.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<N extends string = string> extends Node.JSON<"element"> 
-```
-<b>Extends:</b> [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"element"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [attributes](./alfa-dom.element.json.attributes.md) |  | Array&lt;[Attribute.JSON](./alfa-dom.attribute.json.md)<!-- -->&gt; |  |
-|  [content](./alfa-dom.element.json.content.md) |  | [Document.JSON](./alfa-dom.document.json.md) \| null |  |
-|  [name](./alfa-dom.element.json.name.md) |  | N |  |
-|  [namespace](./alfa-dom.element.json.namespace.md) |  | string \| null |  |
-|  [prefix](./alfa-dom.element.json.prefix.md) |  | string \| null |  |
-|  [shadow](./alfa-dom.element.json.shadow.md) |  | [Shadow.JSON](./alfa-dom.shadow.json.md) \| null |  |
-|  [style](./alfa-dom.element.json.style.md) |  | [Block.JSON](./alfa-dom.block.json.md) \| null |  |
+|  [attributes](./alfa-dom.element.json.attributes.md) |  |  |  |
+|  [content](./alfa-dom.element.json.content.md) |  |  |  |
+|  [name](./alfa-dom.element.json.name.md) |  |  |  |
+|  [namespace](./alfa-dom.element.json.namespace.md) |  |  |  |
+|  [prefix](./alfa-dom.element.json.prefix.md) |  |  |  |
+|  [shadow](./alfa-dom.element.json.shadow.md) |  |  |  |
+|  [style](./alfa-dom.element.json.style.md) |  |  |  |
 

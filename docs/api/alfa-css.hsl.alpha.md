@@ -4,8 +4,3 @@
 
 ## HSL.alpha property
 
-<b>Signature:</b>
-
-```typescript
-get alpha(): A;
-```

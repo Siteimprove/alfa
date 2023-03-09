@@ -4,20 +4,10 @@
 
 ## List.set() method
 
-<b>Signature:</b>
-
-```typescript
-set(index: number, value: T): List<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  index | number |  |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

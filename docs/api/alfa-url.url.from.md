@@ -4,19 +4,9 @@
 
 ## URL.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from(json: JSON): URL;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-url.url.json.md) |  |
-
-<b>Returns:</b>
-
-[URL](./alfa-url.url.md)
 

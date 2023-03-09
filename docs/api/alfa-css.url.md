@@ -4,18 +4,11 @@
 
 ## URL namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace URL 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isURL(value)](./alfa-css.url.isurl.md) |  |
+|  [isURL](./alfa-css.url.isurl.md) |  |
 
 ## Interfaces
 
@@ -27,5 +20,5 @@ export declare namespace URL
 
 |  Variable | Description |
 |  --- | --- |
-|  [parse](./alfa-css.url.parse.md) | [https://drafts.csswg.org/css-values/\#url-value](https://drafts.csswg.org/css-values/#url-value) |
+|  [parse](./alfa-css.url.parse.md) |  |
 

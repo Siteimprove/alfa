@@ -4,8 +4,3 @@
 
 ## Media.Not.condition property
 
-<b>Signature:</b>
-
-```typescript
-get condition(): Feature | Condition;
-```

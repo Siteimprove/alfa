@@ -4,19 +4,9 @@
 
 ## Either.teeRight() method
 
-<b>Signature:</b>
-
-```typescript
-teeRight(callback: Callback<R>): Either<L, R>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;R&gt; |  |
-
-<b>Returns:</b>
-
-[Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;
 

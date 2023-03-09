@@ -4,18 +4,11 @@
 
 ## Skew namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Skew 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isSkew(value)](./alfa-css.skew.isskew.md) |  |
+|  [isSkew](./alfa-css.skew.isskew.md) |  |
 
 ## Interfaces
 

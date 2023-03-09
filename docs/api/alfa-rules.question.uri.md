@@ -4,8 +4,3 @@
 
 ## Question.Uri type
 
-<b>Signature:</b>
-
-```typescript
-type Uri = keyof typeof Data;
-```

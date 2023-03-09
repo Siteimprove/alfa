@@ -4,21 +4,9 @@
 
 ## Node.textContent() method
 
-[https://dom.spec.whatwg.org/\#concept-descendant-text-content](https://dom.spec.whatwg.org/#concept-descendant-text-content)
-
-<b>Signature:</b>
-
-```typescript
-textContent(options?: Node.Traversal): string;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Node.Traversal](./alfa-dom.node.traversal.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-string
 

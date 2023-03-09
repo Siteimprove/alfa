@@ -4,12 +4,3 @@
 
 ## Block.Close type
 
-The tokens that are allowed to close a block.
-
-<b>Signature:</b>
-
-```typescript
-type Close = Token.CloseParenthesis | Token.CloseSquareBracket | Token.CloseCurlyBracket;
-```
-<b>References:</b> [Token.CloseParenthesis](./alfa-css.token.closeparenthesis.md)<!-- -->, [Token.CloseSquareBracket](./alfa-css.token.closesquarebracket.md)<!-- -->, [Token.CloseCurlyBracket](./alfa-css.token.closecurlybracket.md)
-

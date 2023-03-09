@@ -4,8 +4,3 @@
 
 ## Numeric.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): T;
-```

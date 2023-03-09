@@ -4,21 +4,9 @@
 
 ## Node.parent() method
 
-[https://dom.spec.whatwg.org/\#concept-tree-parent](https://dom.spec.whatwg.org/#concept-tree-parent)
-
-<b>Signature:</b>
-
-```typescript
-parent(options?: Node.Traversal): Option<Node>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;
 

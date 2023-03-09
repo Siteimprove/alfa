@@ -4,19 +4,9 @@
 
 ## Media.List.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(queries: Iterable<Query>): List;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  queries | Iterable&lt;[Query](./alfa-media.media.query.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-[List](./alfa-media.media.list.md)
 

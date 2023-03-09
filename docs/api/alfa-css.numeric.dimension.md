@@ -4,10 +4,3 @@
 
 ## Numeric.Dimension type
 
-[https://drafts.csswg.org/css-values-4/\#lengths](https://drafts.csswg.org/css-values-4/#lengths) [https://drafts.csswg.org/css-values-4/\#other-units](https://drafts.csswg.org/css-values-4/#other-units)
-
-<b>Signature:</b>
-
-```typescript
-type Dimension = "angle" | "length";
-```

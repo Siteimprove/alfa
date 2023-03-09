@@ -4,19 +4,13 @@
 
 ## Expression.FunctionCall.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [arity](./alfa-xpath.expression.functioncall.json.arity.md) |  | number |  |
-|  [name](./alfa-xpath.expression.functioncall.json.name.md) |  | string |  |
-|  [parameters](./alfa-xpath.expression.functioncall.json.parameters.md) |  | Array&lt;[Expression.JSON](./alfa-xpath.expression.json.md)<!-- -->&gt; |  |
-|  [prefix](./alfa-xpath.expression.functioncall.json.prefix.md) |  | string \| null |  |
-|  [type](./alfa-xpath.expression.functioncall.json.type.md) |  | "function-call" |  |
+|  [arity](./alfa-xpath.expression.functioncall.json.arity.md) |  |  |  |
+|  [name](./alfa-xpath.expression.functioncall.json.name.md) |  |  |  |
+|  [parameters](./alfa-xpath.expression.functioncall.json.parameters.md) |  |  |  |
+|  [prefix](./alfa-xpath.expression.functioncall.json.prefix.md) |  |  |  |
+|  [type](./alfa-xpath.expression.functioncall.json.type.md) |  |  |  |
 

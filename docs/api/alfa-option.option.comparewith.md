@@ -4,20 +4,10 @@
 
 ## Option.compareWith() method
 
-<b>Signature:</b>
-
-```typescript
-compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  option | [Option](./alfa-option.option.md)<!-- -->&lt;U&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T, U&gt; |  |
-
-<b>Returns:</b>
-
-[Comparison](./alfa-comparable.comparison.md)
 

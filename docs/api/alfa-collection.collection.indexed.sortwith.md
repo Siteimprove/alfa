@@ -4,19 +4,10 @@
 
 ## Collection.Indexed.sortWith() method
 
-<b>Signature:</b>
-
-```typescript
-sortWith(comparer: Comparer<T>): Indexed<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
+|  this | [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

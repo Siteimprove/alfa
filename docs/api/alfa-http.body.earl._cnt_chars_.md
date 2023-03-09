@@ -4,8 +4,3 @@
 
 ## Body.EARL."cnt:chars" property
 
-<b>Signature:</b>
-
-```typescript
-"cnt:chars": string;
-```

@@ -4,19 +4,9 @@
 
 ## Collection.Keyed.forEach() method
 
-<b>Signature:</b>
-
-```typescript
-forEach(callback: Callback<V, void, [key: K]>): void;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;V, void, \[key: K\]&gt; |  |
-
-<b>Returns:</b>
-
-void
 

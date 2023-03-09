@@ -4,12 +4,3 @@
 
 ## Emitter.asyncIterator() method
 
-<b>Signature:</b>
-
-```typescript
-asyncIterator(): AsyncIterator<T>;
-```
-<b>Returns:</b>
-
-AsyncIterator&lt;T&gt;
-

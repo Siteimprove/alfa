@@ -4,12 +4,3 @@
 
 ## Ok.noneErr() method
 
-<b>Signature:</b>
-
-```typescript
-noneErr(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

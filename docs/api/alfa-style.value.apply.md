@@ -4,19 +4,9 @@
 
 ## Value.apply() method
 
-<b>Signature:</b>
-
-```typescript
-apply<U>(mapper: Value<Mapper<T, U>>): Value<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Value](./alfa-style.value.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Value](./alfa-style.value.md)<!-- -->&lt;U&gt;
 

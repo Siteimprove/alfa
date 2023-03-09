@@ -4,10 +4,3 @@
 
 ## Item.Optional type
 
-<b>Signature:</b>
-
-```typescript
-type Optional<T extends Type = Type> = Descriptors.Optional<T>;
-```
-<b>References:</b> [Type](./alfa-xpath.item.type.md)
-

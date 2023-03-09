@@ -4,12 +4,3 @@
 
 ## Selector.Type.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
-
-```typescript
-[Symbol.iterator](): Iterator<Type>;
-```
-<b>Returns:</b>
-
-Iterator&lt;[Type](./alfa-selector.selector.type.md)<!-- -->&gt;
-

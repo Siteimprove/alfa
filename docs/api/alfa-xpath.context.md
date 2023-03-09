@@ -4,13 +4,3 @@
 
 ## context() function
 
-
-<b>Signature:</b>
-
-```typescript
-export declare function context(): Builder.ContextItem;
-```
-<b>Returns:</b>
-
-[Builder.ContextItem](./alfa-xpath.builder.contextitem.md)
-

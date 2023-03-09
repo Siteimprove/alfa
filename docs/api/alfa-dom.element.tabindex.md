@@ -4,14 +4,3 @@
 
 ## Element.tabIndex() method
 
-[https://html.spec.whatwg.org/\#dom-tabindex](https://html.spec.whatwg.org/#dom-tabindex)
-
-<b>Signature:</b>
-
-```typescript
-tabIndex(): Option<number>;
-```
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;number&gt;
-

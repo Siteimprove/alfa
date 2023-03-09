@@ -4,12 +4,3 @@
 
 ## Graph.toArray() method
 
-<b>Signature:</b>
-
-```typescript
-toArray(): Array<[T, Array<T>]>;
-```
-<b>Returns:</b>
-
-Array&lt;\[T, Array&lt;T&gt;\]&gt;
-

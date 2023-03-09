@@ -4,19 +4,9 @@
 
 ## Timeout.remaining() method
 
-<b>Signature:</b>
-
-```typescript
-remaining(now?: number): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  now | number | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-number
 

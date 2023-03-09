@@ -4,20 +4,10 @@
 
 ## Iterable\_2.takeLastUntil() function
 
-<b>Signature:</b>
-
-```typescript
-function takeLastUntil<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>): Iterable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-Iterable&lt;T&gt;
 

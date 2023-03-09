@@ -4,20 +4,10 @@
 
 ## Collection.Indexed.insert() method
 
-<b>Signature:</b>
-
-```typescript
-insert(index: number, value: T): Indexed<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  index | number |  |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

@@ -4,21 +4,9 @@
 
 ## Slotable.findSlot() function
 
-[https://dom.spec.whatwg.org/\#find-a-slot](https://dom.spec.whatwg.org/#find-a-slot)
-
-<b>Signature:</b>
-
-```typescript
-function findSlot(slotable: Slotable): Option<Slot>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  slotable | [Slotable](./alfa-dom.slotable.md) |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Slot](./alfa-dom.slot.md)<!-- -->&gt;
 

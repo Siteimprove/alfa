@@ -4,8 +4,3 @@
 
 ## Token.Percentage.JSON.isInteger property
 
-<b>Signature:</b>
-
-```typescript
-isInteger: boolean;
-```

@@ -4,19 +4,9 @@
 
 ## Ellipse.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Ellipse): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Ellipse](./alfa-css.ellipse.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

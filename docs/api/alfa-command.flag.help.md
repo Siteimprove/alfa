@@ -4,8 +4,3 @@
 
 ## Flag.Help variable
 
-<b>Signature:</b>
-
-```typescript
-Help: unique symbol
-```

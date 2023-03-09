@@ -4,16 +4,9 @@
 
 ## Selector.Universal.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Selector.JSON<"universal"> 
-```
-<b>Extends:</b> [Selector.JSON](./alfa-selector.selector.json.md)<!-- -->&lt;"universal"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [namespace](./alfa-selector.selector.universal.json.namespace.md) |  | string \| null |  |
+|  [namespace](./alfa-selector.selector.universal.json.namespace.md) |  |  |  |
 

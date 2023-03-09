@@ -4,20 +4,9 @@
 
 ## nth() function
 
-
-<b>Signature:</b>
-
-```typescript
-export declare function nth(i: number): Builder<Expression.Integer>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  i | number |  |
-
-<b>Returns:</b>
-
-[Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Integer](./alfa-xpath.expression.integer.md)<!-- -->&gt;
 

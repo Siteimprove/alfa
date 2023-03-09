@@ -4,10 +4,3 @@
 
 ## Expression.Test.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON = Kind.JSON | Name.JSON;
-```
-<b>References:</b> [Kind.JSON](./alfa-xpath.expression.test.kind.json.md)<!-- -->, [Name.JSON](./alfa-xpath.expression.test.name.json.md)
-

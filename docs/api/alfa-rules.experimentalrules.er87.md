@@ -4,10 +4,3 @@
 
 ## experimentalRules.ER87 variable
 
-This version of R87 ask questions whose subject is not the target of the rule. The context of the question is still the test target (the document), but the subjects can be various elements (the first focusable element, or its destination once it's been identified as a link). This needs changes in Dory, Nemo, and likely databases to be stored; this needs changes in the Page Report to be able to highlight an element different from the test target.
-
-<b>Signature:</b>
-
-```typescript
-_default: Rule.Atomic<Page, Document, Question.Metadata, Element<string>>
-```

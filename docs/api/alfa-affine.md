@@ -4,8 +4,6 @@
 
 ## alfa-affine package
 
-This package provides functionality for working with [affine transformations](https://en.wikipedia.org/wiki/Affine_transformation)<!-- -->.
-
 ## Classes
 
 |  Class | Description |

@@ -4,8 +4,3 @@
 
 ## Flag.Set.parse property
 
-<b>Signature:</b>
-
-```typescript
-get parse(): Flag.Parser<T>;
-```

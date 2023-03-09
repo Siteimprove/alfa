@@ -4,8 +4,3 @@
 
 ## Row.anchor property
 
-<b>Signature:</b>
-
-```typescript
-get anchor(): Slot;
-```

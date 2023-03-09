@@ -4,12 +4,3 @@
 
 ## Builder.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Builder.JSON;
-```
-<b>Returns:</b>
-
-[Builder.JSON](./alfa-xpath.builder.json.md)
-

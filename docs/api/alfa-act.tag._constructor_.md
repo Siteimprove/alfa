@@ -4,10 +4,3 @@
 
 ## Tag.(constructor)
 
-Constructs a new instance of the `Tag` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor();
-```

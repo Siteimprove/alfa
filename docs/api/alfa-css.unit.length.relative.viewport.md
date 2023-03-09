@@ -4,10 +4,3 @@
 
 ## Unit.Length.Relative.Viewport type
 
-[https://drafts.csswg.org/css-values/\#viewport-relative-lengths](https://drafts.csswg.org/css-values/#viewport-relative-lengths)
-
-<b>Signature:</b>
-
-```typescript
-type Viewport = "vw" | "vh" | "vmin" | "vmax";
-```

@@ -4,12 +4,3 @@
 
 ## ConditionRule.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-abstract toJSON(): ConditionRule.JSON;
-```
-<b>Returns:</b>
-
-[ConditionRule.JSON](./alfa-dom.conditionrule.json.md)
-

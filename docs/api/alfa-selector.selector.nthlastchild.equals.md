@@ -4,19 +4,9 @@
 
 ## Selector.NthLastChild.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: NthLastChild): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [NthLastChild](./alfa-selector.selector.nthlastchild.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

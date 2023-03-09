@@ -4,19 +4,9 @@
 
 ## List.zip() method
 
-<b>Signature:</b>
-
-```typescript
-zip<U>(iterable: Iterable<U>): List<[T, U]>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;U&gt; |  |
-
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;\[T, U\]&gt;
 

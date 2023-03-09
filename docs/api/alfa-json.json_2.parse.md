@@ -4,19 +4,9 @@
 
 ## JSON\_2.parse() function
 
-<b>Signature:</b>
-
-```typescript
-function parse(value: string): JSON;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
-
-<b>Returns:</b>
-
-JSON
 

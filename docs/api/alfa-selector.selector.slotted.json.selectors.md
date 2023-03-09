@@ -4,8 +4,3 @@
 
 ## Selector.Slotted.JSON.selectors property
 
-<b>Signature:</b>
-
-```typescript
-selectors: Array<Simple.JSON | Compound.JSON>;
-```

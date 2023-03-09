@@ -4,19 +4,9 @@
 
 ## Ok.isOk() function
 
-<b>Signature:</b>
-
-```typescript
-function isOk<T>(value: Iterable<T>): value is Ok<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is [Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
+|  value | unknown |  |
 

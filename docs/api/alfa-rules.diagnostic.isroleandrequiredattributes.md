@@ -4,8 +4,3 @@
 
 ## Diagnostic.isRoleAndRequiredAttributes variable
 
-<b>Signature:</b>
-
-```typescript
-isRoleAndRequiredAttributes: typeof RoleAndRequiredAttributes.isRoleAndRequiredAttributes
-```

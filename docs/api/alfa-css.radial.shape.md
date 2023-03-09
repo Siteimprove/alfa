@@ -4,10 +4,3 @@
 
 ## Radial.Shape type
 
-<b>Signature:</b>
-
-```typescript
-type Shape = Circle | Ellipse | Extent;
-```
-<b>References:</b> [Circle](./alfa-css.radial.circle.md)<!-- -->, [Ellipse](./alfa-css.radial.ellipse.md)<!-- -->, [Extent](./alfa-css.radial.extent.md)
-

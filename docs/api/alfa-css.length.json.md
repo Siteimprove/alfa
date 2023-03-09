@@ -4,10 +4,3 @@
 
 ## Length.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<U extends Unit.Length = Unit.Length> extends Dimension.JSON<"length", U> 
-```
-<b>Extends:</b> [Dimension.JSON](./alfa-css.dimension.json.md)<!-- -->&lt;"length", U&gt;
-

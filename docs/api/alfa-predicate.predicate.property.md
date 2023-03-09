@@ -4,20 +4,10 @@
 
 ## Predicate.property() function
 
-<b>Signature:</b>
-
-```typescript
-function property<T, K extends keyof T = keyof T, A extends Array<unknown> = []>(property: K, predicate: Predicate<T[K], A>): Predicate<T, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  property | K |  |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T\[K\], A&gt; |  |
-
-<b>Returns:</b>
-
-[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;
 

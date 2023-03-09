@@ -4,8 +4,3 @@
 
 ## Unit.isFontRelativeLength variable
 
-<b>Signature:</b>
-
-```typescript
-isFontRelativeLength: typeof Length.isFontRelative
-```

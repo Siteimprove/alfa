@@ -4,12 +4,3 @@
 
 ## Attribute.Type type
 
-The type of the specified attribute.
-
-<b>Signature:</b>
-
-```typescript
-type Type<N extends Name = Name> = Attributes[N]["type"];
-```
-<b>References:</b> [Name](./alfa-aria.attribute.name.md)
-

@@ -21,5 +21,5 @@
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Selector](./alfa-selector.selector.md) | [https://drafts.csswg.org/selectors/\#selector](https://drafts.csswg.org/selectors/#selector) |
+|  [Selector](./alfa-selector.selector.md) |  |
 

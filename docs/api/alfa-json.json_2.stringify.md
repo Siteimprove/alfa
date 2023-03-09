@@ -4,19 +4,9 @@
 
 ## JSON\_2.stringify() function
 
-<b>Signature:</b>
-
-```typescript
-function stringify(value: JSON): string;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | JSON |  |
-
-<b>Returns:</b>
-
-string
 

@@ -4,19 +4,9 @@
 
 ## Tag.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Tag): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Tag](./alfa-act.tag.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

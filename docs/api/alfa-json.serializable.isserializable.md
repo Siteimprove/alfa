@@ -4,19 +4,9 @@
 
 ## Serializable.isSerializable() function
 
-<b>Signature:</b>
-
-```typescript
-function isSerializable<T extends JSON>(value: unknown): value is Serializable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Serializable](./alfa-json.serializable.md)<!-- -->&lt;T&gt;
 

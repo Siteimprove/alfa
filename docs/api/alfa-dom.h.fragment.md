@@ -4,19 +4,9 @@
 
 ## h.fragment() function
 
-<b>Signature:</b>
-
-```typescript
-function fragment(children: Array<Node | string>): Fragment;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  children | Array&lt;[Node](./alfa-dom.node.md) \| string&gt; |  |
-
-<b>Returns:</b>
-
-[Fragment](./alfa-dom.fragment.md)
 

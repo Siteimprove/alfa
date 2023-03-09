@@ -4,12 +4,3 @@
 
 ## Iterable\_2.empty() function
 
-<b>Signature:</b>
-
-```typescript
-function empty<T>(): Iterable<T>;
-```
-<b>Returns:</b>
-
-Iterable&lt;T&gt;
-

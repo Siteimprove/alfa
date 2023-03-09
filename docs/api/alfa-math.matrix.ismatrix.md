@@ -4,19 +4,9 @@
 
 ## Matrix.isMatrix() function
 
-<b>Signature:</b>
-
-```typescript
-function isMatrix(value: unknown): value is Matrix;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Matrix](./alfa-math.matrix.md)
 

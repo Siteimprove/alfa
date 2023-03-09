@@ -4,12 +4,3 @@
 
 ## Conformance.AA type
 
-All criteria needed for level AA conformance.
-
-<b>Signature:</b>
-
-```typescript
-type AA<V extends Criterion.Version = Criterion.Version.Recommendation> = Criterion.Level.A<V> | Criterion.Level.AA<V>;
-```
-<b>References:</b> [Criterion.Version](./alfa-wcag.criterion.version.md)<!-- -->, [Criterion.Version.Recommendation](./alfa-wcag.criterion.version.recommendation.md)<!-- -->, [Criterion.Level.A](./alfa-wcag.criterion.level.a.md)<!-- -->, [Criterion.Level.AA](./alfa-wcag.criterion.level.aa.md)
-

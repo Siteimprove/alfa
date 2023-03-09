@@ -4,12 +4,3 @@
 
 ## Ok.everyErr() method
 
-<b>Signature:</b>
-
-```typescript
-everyErr(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

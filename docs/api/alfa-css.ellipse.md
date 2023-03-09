@@ -4,18 +4,11 @@
 
 ## Ellipse namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Ellipse 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isEllipse(value)](./alfa-css.ellipse.isellipse.md) |  |
+|  [isEllipse](./alfa-css.ellipse.isellipse.md) |  |
 
 ## Interfaces
 

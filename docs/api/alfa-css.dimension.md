@@ -4,18 +4,11 @@
 
 ## Dimension namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Dimension 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isDimension(value)](./alfa-css.dimension.isdimension.md) |  |
+|  [isDimension](./alfa-css.dimension.isdimension.md) |  |
 
 ## Interfaces
 

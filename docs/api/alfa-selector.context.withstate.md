@@ -4,19 +4,9 @@
 
 ## Context.withState() method
 
-<b>Signature:</b>
-
-```typescript
-withState(state: Context.State): Iterable<Element>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  state | [Context.State](./alfa-selector.context.state.md) |  |
-
-<b>Returns:</b>
-
-Iterable&lt;[Element](./alfa-dom.element.md)<!-- -->&gt;
 

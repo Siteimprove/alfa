@@ -4,20 +4,10 @@
 
 ## Iterable\_2.count() function
 
-<b>Signature:</b>
-
-```typescript
-function count<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-number
 

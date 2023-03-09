@@ -4,19 +4,9 @@
 
 ## Refinement.isString() function
 
-<b>Signature:</b>
-
-```typescript
-export function isString(value: unknown): value is string;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is string
 

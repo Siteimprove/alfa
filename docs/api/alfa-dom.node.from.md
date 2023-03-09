@@ -4,19 +4,9 @@
 
 ## Node.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from(json: Element.JSON): Element;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  json | [Element.JSON](./alfa-dom.element.json.md) |  |
-
-<b>Returns:</b>
-
-[Element](./alfa-dom.element.md)
+|  json | [JSON](./alfa-dom.node.json.md) |  |
 

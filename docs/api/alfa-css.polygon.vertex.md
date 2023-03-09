@@ -4,10 +4,3 @@
 
 ## Polygon.Vertex type
 
-<b>Signature:</b>
-
-```typescript
-type Vertex<V extends Length | Percentage = Length | Percentage> = readonly [V, V];
-```
-<b>References:</b> [Length](./alfa-css.length.md)<!-- -->, [Percentage](./alfa-css.percentage.md)
-

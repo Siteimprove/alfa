@@ -8,11 +8,11 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Equatable](./alfa-equatable.equatable.md) | This interface describes structures that define an [equivalence relation](https://en.wikipedia.org/wiki/Equivalence_relation)<!-- -->. |
+|  [Equatable](./alfa-equatable.equatable.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Equatable](./alfa-equatable.equatable.md) | This namespace provides additional types and functions for the [Equatable](./alfa-equatable.equatable.md) interface. |
+|  [Equatable](./alfa-equatable.equatable.md) |  |
 

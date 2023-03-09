@@ -4,12 +4,6 @@
 
 ## Hash.writeInt() method
 
-<b>Signature:</b>
-
-```typescript
-writeInt(data: number, size?: 8 | 16 | 32, signed?: boolean): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ writeInt(data: number, size?: 8 | 16 | 32, signed?: boolean): this;
 |  data | number |  |
 |  size | 8 \| 16 \| 32 | <i>(Optional)</i> |
 |  signed | boolean | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-this
 

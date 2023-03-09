@@ -4,12 +4,6 @@
 
 ## Array\_2.compareWith() function
 
-<b>Signature:</b>
-
-```typescript
-function compareWith<T, U = T>(a: ReadonlyArray<T>, b: Iterable<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ function compareWith<T, U = T>(a: ReadonlyArray<T>, b: Iterable<U>, comparer: Co
 |  a | ReadonlyArray&lt;T&gt; |  |
 |  b | Iterable&lt;U&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-[Comparison](./alfa-comparable.comparison.md)
 

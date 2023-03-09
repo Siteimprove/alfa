@@ -4,21 +4,9 @@
 
 ## Slot.name() function
 
-[https://dom.spec.whatwg.org/\#slot-name](https://dom.spec.whatwg.org/#slot-name)
-
-<b>Signature:</b>
-
-```typescript
-function name(slot: Slot): string;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  slot | [Slot](./alfa-dom.slot.md) |  |
-
-<b>Returns:</b>
-
-string
 

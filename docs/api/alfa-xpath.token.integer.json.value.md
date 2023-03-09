@@ -4,8 +4,3 @@
 
 ## Token.Integer.JSON.value property
 
-<b>Signature:</b>
-
-```typescript
-value: number;
-```

@@ -4,12 +4,3 @@
 
 ## Expression.Test.Node.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(): Node;
-```
-<b>Returns:</b>
-
-[Node](./alfa-xpath.expression.test.node.md)
-

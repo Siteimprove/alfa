@@ -4,8 +4,3 @@
 
 ## Credentials.username property
 
-<b>Signature:</b>
-
-```typescript
-get username(): string;
-```

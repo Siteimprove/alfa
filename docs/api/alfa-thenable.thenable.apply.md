@@ -4,20 +4,10 @@
 
 ## Thenable.apply() function
 
-<b>Signature:</b>
-
-```typescript
-function apply<T, U, E = unknown, F = E>(thenable: Thenable<T, E>, mapper: Thenable<Mapper<T, U>, F>): Thenable<U, E | F>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  thenable | [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt; |  |
 |  mapper | [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;, F&gt; |  |
-
-<b>Returns:</b>
-
-[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;U, E \| F&gt;
 

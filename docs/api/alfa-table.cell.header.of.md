@@ -4,12 +4,6 @@
 
 ## Cell.Header.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(element: Element, anchor: Slot, width: number, height: number, headers?: Iterable<Slot>, scope?: Scope): Header;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -20,8 +14,4 @@ static of(element: Element, anchor: Slot, width: number, height: number, headers
 |  height | number |  |
 |  headers | Iterable&lt;[Slot](./alfa-table.slot.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  scope | [Scope](./alfa-table.scope.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Header](./alfa-table.cell.header.md)
 

@@ -4,12 +4,6 @@
 
 ## Rotate.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<A extends Angle>(x: Number, y: Number, z: Number, angle: A): Rotate<A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ static of<A extends Angle>(x: Number, y: Number, z: Number, angle: A): Rotate<A>
 |  y | Number |  |
 |  z | Number |  |
 |  angle | A |  |
-
-<b>Returns:</b>
-
-[Rotate](./alfa-css.rotate.md)<!-- -->&lt;A&gt;
 

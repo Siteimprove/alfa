@@ -4,8 +4,3 @@
 
 ## Name.Source.Label.JSON.attribute property
 
-<b>Signature:</b>
-
-```typescript
-attribute: string;
-```

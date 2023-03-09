@@ -4,8 +4,3 @@
 
 ## Scraper.scrape.Options.archive property
 
-<b>Signature:</b>
-
-```typescript
-readonly archive?: Archive;
-```

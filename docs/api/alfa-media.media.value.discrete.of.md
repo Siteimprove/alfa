@@ -4,19 +4,9 @@
 
 ## Media.Value.Discrete.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T>(value: T): Discrete<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Discrete](./alfa-media.media.value.discrete.md)<!-- -->&lt;T&gt;
 

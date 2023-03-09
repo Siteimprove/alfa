@@ -4,12 +4,6 @@
 
 ## Vector.equals() function
 
-<b>Signature:</b>
-
-```typescript
-function equals(v: Vector, u: Vector, e: number): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ function equals(v: Vector, u: Vector, e: number): boolean;
 |  v | [Vector](./alfa-math.vector.md) |  |
 |  u | [Vector](./alfa-math.vector.md) |  |
 |  e | number |  |
-
-<b>Returns:</b>
-
-boolean
 

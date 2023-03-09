@@ -4,8 +4,3 @@
 
 ## Credentials.password property
 
-<b>Signature:</b>
-
-```typescript
-get password(): string;
-```

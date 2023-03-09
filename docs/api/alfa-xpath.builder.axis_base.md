@@ -4,20 +4,3 @@
 
 ## Builder.Axis\_base variable
 
-<b>Signature:</b>
-
-```typescript
-Axis_base: {
-        new (expression: Expression.Axis): {
-            child(name?: string | undefined): Path;
-            parent(name?: string | undefined): Path;
-            descendant(name?: string | undefined): Path;
-            ancestor(name?: string | undefined): Path;
-            attribute(name?: string | undefined): Path;
-            readonly expression: Expression.Axis;
-            equals(value: unknown): value is any;
-            toJSON(): JSON;
-            toString(): string;
-        };
-    }
-```

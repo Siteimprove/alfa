@@ -4,12 +4,6 @@
 
 ## Language.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(primary: Language.Primary, extended?: Option<Language.Extended>, script?: Option<Language.Script>, region?: Option<Language.Region>, variants?: Array<Language.Variant>): Language;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -19,8 +13,4 @@ static of(primary: Language.Primary, extended?: Option<Language.Extended>, scrip
 |  script | [Option](./alfa-option.option.md)<!-- -->&lt;[Language.Script](./alfa-iana.language.script.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  region | [Option](./alfa-option.option.md)<!-- -->&lt;[Language.Region](./alfa-iana.language.region.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  variants | Array&lt;[Language.Variant](./alfa-iana.language.variant.md)<!-- -->&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Language](./alfa-iana.language.md)
 

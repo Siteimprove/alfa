@@ -4,20 +4,13 @@
 
 ## HSL.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Value.JSON<"color"> 
-```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"color"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [alpha](./alfa-css.hsl.json.alpha.md) |  | Number.JSON \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
-|  [format](./alfa-css.hsl.json.format.md) |  | "hsl" |  |
-|  [hue](./alfa-css.hsl.json.hue.md) |  | Number.JSON \| [Angle.JSON](./alfa-css.angle.json.md) |  |
-|  [lightness](./alfa-css.hsl.json.lightness.md) |  | [Percentage.JSON](./alfa-css.percentage.json.md) |  |
-|  [saturation](./alfa-css.hsl.json.saturation.md) |  | [Percentage.JSON](./alfa-css.percentage.json.md) |  |
+|  [alpha](./alfa-css.hsl.json.alpha.md) |  |  |  |
+|  [format](./alfa-css.hsl.json.format.md) |  |  |  |
+|  [hue](./alfa-css.hsl.json.hue.md) |  |  |  |
+|  [lightness](./alfa-css.hsl.json.lightness.md) |  |  |  |
+|  [saturation](./alfa-css.hsl.json.saturation.md) |  |  |  |
 

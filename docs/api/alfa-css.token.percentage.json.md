@@ -4,17 +4,11 @@
 
 ## Token.Percentage.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [isInteger](./alfa-css.token.percentage.json.isinteger.md) |  | boolean |  |
-|  [type](./alfa-css.token.percentage.json.type.md) |  | "percentage" |  |
-|  [value](./alfa-css.token.percentage.json.value.md) |  | number |  |
+|  [isInteger](./alfa-css.token.percentage.json.isinteger.md) |  |  |  |
+|  [type](./alfa-css.token.percentage.json.type.md) |  |  |  |
+|  [value](./alfa-css.token.percentage.json.value.md) |  |  |  |
 

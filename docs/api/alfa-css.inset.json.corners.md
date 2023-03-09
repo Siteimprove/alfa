@@ -4,8 +4,3 @@
 
 ## Inset.JSON.corners property
 
-<b>Signature:</b>
-
-```typescript
-corners: Option.JSON<readonly [C, C, C, C]>;
-```

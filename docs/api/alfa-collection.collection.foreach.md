@@ -4,19 +4,9 @@
 
 ## Collection.forEach() method
 
-<b>Signature:</b>
-
-```typescript
-forEach(callback: Callback<T>): void;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-void
 

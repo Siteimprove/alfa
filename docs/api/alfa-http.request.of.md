@@ -4,12 +4,6 @@
 
 ## Request.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(method: string, url: URL, headers?: Headers, body?: ArrayBuffer): Request;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ static of(method: string, url: URL, headers?: Headers, body?: ArrayBuffer): Requ
 |  url | [URL](./alfa-url.url.md) |  |
 |  headers | [Headers](./alfa-http.headers.md) | <i>(Optional)</i> |
 |  body | ArrayBuffer | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Request](./alfa-http.request.md)
 

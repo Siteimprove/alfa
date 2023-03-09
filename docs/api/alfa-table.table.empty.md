@@ -4,19 +4,9 @@
 
 ## Table.empty() method
 
-<b>Signature:</b>
-
-```typescript
-static empty(element: Element): Table;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
-
-<b>Returns:</b>
-
-[Table](./alfa-table.table.md)
 

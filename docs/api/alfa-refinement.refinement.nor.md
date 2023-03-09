@@ -4,8 +4,3 @@
 
 ## Refinement.nor variable
 
-<b>Signature:</b>
-
-```typescript
-nor: Nor
-```

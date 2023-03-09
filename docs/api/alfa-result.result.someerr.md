@@ -4,19 +4,9 @@
 
 ## Result.someErr() method
 
-<b>Signature:</b>
-
-```typescript
-someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;E, F&gt; |  |
-
-<b>Returns:</b>
-
-this is [Err](./alfa-result.err.md)<!-- -->&lt;F&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;E&gt; |  |
 

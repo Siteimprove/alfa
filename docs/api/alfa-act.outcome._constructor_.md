@@ -4,14 +4,6 @@
 
 ## Outcome.(constructor)
 
-Constructs a new instance of the `Outcome` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor(outcome: V, rule: Rule<I, T, Q, S>, mode: Outcome.Mode);
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |

@@ -4,17 +4,11 @@
 
 ## Gradient.Stop.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [color](./alfa-css.gradient.stop.json.color.md) |  | [Color.JSON](./alfa-css.color.json.md) |  |
-|  [position](./alfa-css.gradient.stop.json.position.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Percentage.JSON](./alfa-css.percentage.json.md) \| null |  |
-|  [type](./alfa-css.gradient.stop.json.type.md) |  | "stop" |  |
+|  [color](./alfa-css.gradient.stop.json.color.md) |  |  |  |
+|  [position](./alfa-css.gradient.stop.json.position.md) |  |  |  |
+|  [type](./alfa-css.gradient.stop.json.type.md) |  |  |  |
 

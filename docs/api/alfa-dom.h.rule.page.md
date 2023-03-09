@@ -4,20 +4,10 @@
 
 ## h.rule.page() function
 
-<b>Signature:</b>
-
-```typescript
-function page(selector: string, declarations: Array<Declaration> | Record<string, string>): PageRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  selector | string |  |
 |  declarations | Array&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; \| Record&lt;string, string&gt; |  |
-
-<b>Returns:</b>
-
-[PageRule](./alfa-dom.pagerule.md)
 

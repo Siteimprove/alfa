@@ -4,19 +4,9 @@
 
 ## Media.Feature.Width.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(value: Value<Length>): Width;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Value](./alfa-media.media.value.md)<!-- -->&lt;[Length](./alfa-css.length.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-Width
 

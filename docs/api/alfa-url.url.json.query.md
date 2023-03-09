@@ -4,8 +4,3 @@
 
 ## URL.JSON.query property
 
-<b>Signature:</b>
-
-```typescript
-query: string | null;
-```

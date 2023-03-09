@@ -4,8 +4,3 @@
 
 ## Token.CloseCurlyBracket.mirror property
 
-<b>Signature:</b>
-
-```typescript
-get mirror(): OpenCurlyBracket;
-```

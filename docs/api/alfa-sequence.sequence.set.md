@@ -4,20 +4,10 @@
 
 ## Sequence.set() method
 
-<b>Signature:</b>
-
-```typescript
-set(index: number, value: T): Sequence<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  index | number |  |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

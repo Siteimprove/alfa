@@ -4,19 +4,9 @@
 
 ## List.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T>(...values: Array<T>): List<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | Array&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

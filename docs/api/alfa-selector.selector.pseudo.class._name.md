@@ -4,8 +4,3 @@
 
 ## Selector.Pseudo.Class.\_name property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _name: N;
-```

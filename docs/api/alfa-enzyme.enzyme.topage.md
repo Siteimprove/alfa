@@ -4,19 +4,9 @@
 
 ## Enzyme.toPage() function
 
-<b>Signature:</b>
-
-```typescript
-function toPage(value: Type): Page;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Type](./alfa-enzyme.enzyme.type.md) |  |
-
-<b>Returns:</b>
-
-[Page](./alfa-web.page.md)
 

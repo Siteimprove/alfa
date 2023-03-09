@@ -4,13 +4,3 @@
 
 ## Argument.JSON.options property
 
-<b>Signature:</b>
-
-```typescript
-options: {
-            [key: string]: json.JSON;
-            optional: boolean;
-            repeatable: boolean;
-            default: string | null;
-        };
-```

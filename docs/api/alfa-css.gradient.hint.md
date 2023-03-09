@@ -4,12 +4,6 @@
 
 ## Gradient.Hint namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Hint 
-```
-
 ## Interfaces
 
 |  Interface | Description |

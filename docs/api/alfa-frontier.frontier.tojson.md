@@ -4,12 +4,3 @@
 
 ## Frontier.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Frontier.JSON;
-```
-<b>Returns:</b>
-
-[Frontier.JSON](./alfa-frontier.frontier.json.md)
-

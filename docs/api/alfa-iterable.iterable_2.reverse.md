@@ -4,19 +4,9 @@
 
 ## Iterable\_2.reverse() function
 
-<b>Signature:</b>
-
-```typescript
-function reverse<T>(iterable: Iterable<T>): Iterable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Iterable&lt;T&gt;
 

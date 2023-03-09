@@ -4,16 +4,10 @@
 
 ## Frontier.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [items](./alfa-frontier.frontier.json.items.md) |  | Array&lt;Item.JSON&gt; |  |
-|  [scope](./alfa-frontier.frontier.json.scope.md) |  | string |  |
+|  [items](./alfa-frontier.frontier.json.items.md) |  |  |  |
+|  [scope](./alfa-frontier.frontier.json.scope.md) |  |  |  |
 

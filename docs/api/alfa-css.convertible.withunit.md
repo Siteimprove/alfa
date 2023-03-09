@@ -4,19 +4,9 @@
 
 ## Convertible.withUnit() method
 
-<b>Signature:</b>
-
-```typescript
-withUnit<V extends U>(unit: V): Convertible<V>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | V |  |
-
-<b>Returns:</b>
-
-[Convertible](./alfa-css.convertible.md)<!-- -->&lt;V&gt;
 

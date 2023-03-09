@@ -4,10 +4,3 @@
 
 ## Node.includeIgnored variable
 
-Traversal options to include ignored nodes in the traversal.
-
-<b>Signature:</b>
-
-```typescript
-includeIgnored: Traversal
-```

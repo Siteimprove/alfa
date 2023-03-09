@@ -4,8 +4,6 @@
 
 ## alfa-aria package
 
-This package provides functionality for working with [ARIA](https://www.w3.org/TR/wai-aria/) and the accessibility tree.
-
 ## Classes
 
 |  Class | Description |
@@ -15,7 +13,7 @@ This package provides functionality for working with [ARIA](https://www.w3.org/T
 |  [Element](./alfa-aria.element.md) |  |
 |  [Inert](./alfa-aria.inert.md) |  |
 |  [Name](./alfa-aria.name.md) |  |
-|  [Node](./alfa-aria.node.md) | [https://w3c.github.io/aria/\#accessibility\_tree](https://w3c.github.io/aria/#accessibility_tree) |
+|  [Node](./alfa-aria.node.md) |  |
 |  [Role](./alfa-aria.role.md) |  |
 |  [Text](./alfa-aria.text.md) |  |
 
@@ -31,7 +29,7 @@ This package provides functionality for working with [ARIA](https://www.w3.org/T
 |  --- | --- |
 |  [Attribute](./alfa-aria.attribute.md) |  |
 |  [Container](./alfa-aria.container.md) |  |
-|  [DOM](./alfa-aria.dom.md) | Helpers and Predicates for accessibility aspects of DOM objects |
+|  [DOM](./alfa-aria.dom.md) |  |
 |  [Element](./alfa-aria.element.md) |  |
 |  [Name](./alfa-aria.name.md) |  |
 |  [Node](./alfa-aria.node.md) |  |

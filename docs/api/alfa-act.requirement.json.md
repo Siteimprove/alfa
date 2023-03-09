@@ -4,15 +4,9 @@
 
 ## Requirement.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [uri](./alfa-act.requirement.json.uri.md) |  | string |  |
+|  [uri](./alfa-act.requirement.json.uri.md) |  |  |  |
 

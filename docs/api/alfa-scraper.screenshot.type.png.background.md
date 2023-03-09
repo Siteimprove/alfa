@@ -4,8 +4,3 @@
 
 ## Screenshot.Type.PNG.background property
 
-<b>Signature:</b>
-
-```typescript
-get background(): boolean;
-```

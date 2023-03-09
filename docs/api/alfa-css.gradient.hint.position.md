@@ -4,8 +4,3 @@
 
 ## Gradient.Hint.position property
 
-<b>Signature:</b>
-
-```typescript
-get position(): P;
-```

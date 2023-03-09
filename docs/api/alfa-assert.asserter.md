@@ -4,13 +4,6 @@
 
 ## Asserter namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Asserter 
-```
-
 ## Interfaces
 
 |  Interface | Description |

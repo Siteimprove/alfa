@@ -4,20 +4,13 @@
 
 ## Criterion namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Criterion 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [fromURI(uri)](./alfa-wcag.criterion.fromuri.md) |  |
-|  [isChapter(value)](./alfa-wcag.criterion.ischapter.md) |  |
-|  [isCriterion(value)](./alfa-wcag.criterion.iscriterion.md) |  |
+|  [fromURI](./alfa-wcag.criterion.fromuri.md) |  |
+|  [isChapter](./alfa-wcag.criterion.ischapter.md) |  |
+|  [isCriterion](./alfa-wcag.criterion.iscriterion.md) |  |
 
 ## Interfaces
 
@@ -37,9 +30,9 @@ export declare namespace Criterion
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Chapter](./alfa-wcag.criterion.chapter.md) | The chapters of all criteria. |
-|  [Level](./alfa-wcag.criterion.level.md) | The level of the specified criterion under the specified version. |
-|  [Title](./alfa-wcag.criterion.title.md) | The title of the specified criterion. |
-|  [URI](./alfa-wcag.criterion.uri.md) | The URI of the specified criterion. |
-|  [Version](./alfa-wcag.criterion.version.md) | The different versions of the WCAG. |
+|  [Chapter](./alfa-wcag.criterion.chapter.md) |  |
+|  [Level](./alfa-wcag.criterion.level.md) |  |
+|  [Title](./alfa-wcag.criterion.title.md) |  |
+|  [URI](./alfa-wcag.criterion.uri.md) |  |
+|  [Version](./alfa-wcag.criterion.version.md) |  |
 

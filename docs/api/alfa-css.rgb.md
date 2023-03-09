@@ -4,18 +4,11 @@
 
 ## RGB namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace RGB 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isRGB(value)](./alfa-css.rgb.isrgb.md) |  |
+|  [isRGB](./alfa-css.rgb.isrgb.md) |  |
 
 ## Interfaces
 
@@ -27,5 +20,5 @@ export declare namespace RGB
 
 |  Variable | Description |
 |  --- | --- |
-|  [parse](./alfa-css.rgb.parse.md) | [https://drafts.csswg.org/css-color/\#funcdef-rgb](https://drafts.csswg.org/css-color/#funcdef-rgb) |
+|  [parse](./alfa-css.rgb.parse.md) |  |
 

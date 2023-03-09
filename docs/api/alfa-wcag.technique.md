@@ -4,19 +4,12 @@
 
 ## Technique namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Technique 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isName(value)](./alfa-wcag.technique.isname.md) |  |
-|  [isTechnique(value)](./alfa-wcag.technique.istechnique.md) |  |
+|  [isName](./alfa-wcag.technique.isname.md) |  |
+|  [isTechnique](./alfa-wcag.technique.istechnique.md) |  |
 
 ## Interfaces
 
@@ -29,7 +22,7 @@ export declare namespace Technique
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Name](./alfa-wcag.technique.name.md) | The names of all techniques. |
-|  [Title](./alfa-wcag.technique.title.md) | The title of the technique with the specified name. |
-|  [URI](./alfa-wcag.technique.uri.md) | The URI of the technique with the specified name. |
+|  [Name](./alfa-wcag.technique.name.md) |  |
+|  [Title](./alfa-wcag.technique.title.md) |  |
+|  [URI](./alfa-wcag.technique.uri.md) |  |
 

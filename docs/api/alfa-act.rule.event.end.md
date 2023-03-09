@@ -4,20 +4,9 @@
 
 ## Rule.Event.end() function
 
-<b>Signature:</b>
-
-```typescript
-function end<I, T extends Hashable, Q, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "end", N>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
-|  name | N |  |
-
-<b>Returns:</b>
-
-[Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S, "end", N&gt;
 

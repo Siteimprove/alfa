@@ -4,19 +4,9 @@
 
 ## Token.Comment.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(value: string): Comment;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
-
-<b>Returns:</b>
-
-[Comment](./alfa-xpath.token.comment.md)
 

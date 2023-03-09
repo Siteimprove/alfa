@@ -4,12 +4,3 @@
 
 ## Selector.Visited.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(): Visited;
-```
-<b>Returns:</b>
-
-[Visited](./alfa-selector.selector.visited.md)
-

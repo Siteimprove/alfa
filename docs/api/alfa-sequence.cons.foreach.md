@@ -4,19 +4,9 @@
 
 ## Cons.forEach() method
 
-<b>Signature:</b>
-
-```typescript
-forEach(callback: Callback<T, void, [index: number]>): void;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, void, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-void
 

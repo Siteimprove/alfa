@@ -4,8 +4,3 @@
 
 ## Cell.hasElement variable
 
-<b>Signature:</b>
-
-```typescript
-hasElement: typeof predicate.hasElement
-```

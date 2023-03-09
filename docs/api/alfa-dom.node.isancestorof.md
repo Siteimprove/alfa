@@ -4,20 +4,10 @@
 
 ## Node.isAncestorOf() method
 
-<b>Signature:</b>
-
-```typescript
-isAncestorOf(node: Node, options?: Node.Traversal): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | [Node](./alfa-dom.node.md) |  |
 |  options | [Node.Traversal](./alfa-dom.node.traversal.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-boolean
 

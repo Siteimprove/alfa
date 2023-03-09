@@ -4,12 +4,3 @@
 
 ## Selector.FirstChild.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(): FirstChild;
-```
-<b>Returns:</b>
-
-[FirstChild](./alfa-selector.selector.firstchild.md)
-

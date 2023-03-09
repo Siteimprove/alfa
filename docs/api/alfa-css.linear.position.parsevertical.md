@@ -4,8 +4,3 @@
 
 ## Linear.Position.parseVertical variable
 
-<b>Signature:</b>
-
-```typescript
-parseVertical: Parser<Slice<Token>, Vertical, string, []>
-```

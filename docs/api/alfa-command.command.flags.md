@@ -4,12 +4,6 @@
 
 ## Command.Flags namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Flags 
-```
-
 ## Type Aliases
 
 |  Type Alias | Description |

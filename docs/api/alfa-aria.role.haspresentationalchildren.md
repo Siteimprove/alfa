@@ -4,14 +4,3 @@
 
 ## Role.hasPresentationalChildren() method
 
-Check if this role has presentational children.
-
-<b>Signature:</b>
-
-```typescript
-hasPresentationalChildren(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

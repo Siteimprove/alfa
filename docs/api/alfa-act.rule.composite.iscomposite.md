@@ -4,19 +4,9 @@
 
 ## Rule.Composite.isComposite() function
 
-<b>Signature:</b>
-
-```typescript
-function isComposite<I, T extends Hashable, Q>(value: Rule<I, T, Q>): value is Composite<I, T, Q>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q&gt; |  |
-
-<b>Returns:</b>
-
-value is [Composite](./alfa-act.rule.composite.md)<!-- -->&lt;I, T, Q&gt;
+|  value | unknown |  |
 

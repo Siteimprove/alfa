@@ -4,8 +4,3 @@
 
 ## Argument.Options.optional property
 
-<b>Signature:</b>
-
-```typescript
-optional: boolean;
-```

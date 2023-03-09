@@ -4,8 +4,3 @@
 
 ## Element.hasAttribute variable
 
-<b>Signature:</b>
-
-```typescript
-hasAttribute: typeof predicate.hasAttribute
-```

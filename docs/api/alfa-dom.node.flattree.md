@@ -4,12 +4,3 @@
 
 ## Node.flatTree variable
 
-Traversal options to traverse the flat tree.
-
-[https://drafts.csswg.org/css-scoping-1/\#flattening](https://drafts.csswg.org/css-scoping-1/#flattening)
-
-<b>Signature:</b>
-
-```typescript
-flatTree: Traversal
-```

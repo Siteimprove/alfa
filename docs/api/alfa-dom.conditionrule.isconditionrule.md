@@ -4,19 +4,9 @@
 
 ## ConditionRule.isConditionRule() function
 
-<b>Signature:</b>
-
-```typescript
-function isConditionRule(value: unknown): value is ConditionRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [ConditionRule](./alfa-dom.conditionrule.md)
 

@@ -4,19 +4,9 @@
 
 ## Option.includes() method
 
-<b>Signature:</b>
-
-```typescript
-includes(value: T): this is Some<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-this is [Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
 

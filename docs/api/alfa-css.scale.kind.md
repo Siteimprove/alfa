@@ -4,8 +4,3 @@
 
 ## Scale.kind property
 
-<b>Signature:</b>
-
-```typescript
-get kind(): "scale";
-```

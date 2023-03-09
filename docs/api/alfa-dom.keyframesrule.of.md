@@ -4,20 +4,10 @@
 
 ## KeyframesRule.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(name: string, rules: Iterable<Rule>): KeyframesRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  rules | Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-[KeyframesRule](./alfa-dom.keyframesrule.md)
 

@@ -4,19 +4,9 @@
 
 ## Refinement.isBoolean() function
 
-<b>Signature:</b>
-
-```typescript
-export function isBoolean(value: unknown): value is boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is boolean
 

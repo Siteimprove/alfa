@@ -4,8 +4,3 @@
 
 ## Token.String.value property
 
-<b>Signature:</b>
-
-```typescript
-get value(): string;
-```

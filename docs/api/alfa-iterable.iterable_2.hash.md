@@ -4,20 +4,10 @@
 
 ## Iterable\_2.hash() function
 
-<b>Signature:</b>
-
-```typescript
-function hash<T>(iterable: Iterable<T>, hash: Hash): void;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  hash | [Hash](./alfa-hash.hash.md) |  |
-
-<b>Returns:</b>
-
-void
 

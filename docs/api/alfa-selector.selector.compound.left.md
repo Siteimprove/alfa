@@ -4,8 +4,3 @@
 
 ## Selector.Compound.left property
 
-<b>Signature:</b>
-
-```typescript
-get left(): Simple;
-```

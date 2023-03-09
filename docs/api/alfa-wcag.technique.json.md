@@ -4,18 +4,11 @@
 
 ## Technique.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Requirement.JSON 
-```
-<b>Extends:</b> [Requirement.JSON](./alfa-act.requirement.json.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-wcag.technique.json.name.md) |  | [Name](./alfa-wcag.technique.name.md) |  |
-|  [title](./alfa-wcag.technique.json.title.md) |  | [Title](./alfa-wcag.technique.title.md) |  |
-|  [uri](./alfa-wcag.technique.json.uri.md) |  | [URI](./alfa-wcag.technique.uri.md) |  |
+|  [name](./alfa-wcag.technique.json.name.md) |  |  |  |
+|  [title](./alfa-wcag.technique.json.title.md) |  |  |  |
+|  [uri](./alfa-wcag.technique.json.uri.md) |  |  |  |
 

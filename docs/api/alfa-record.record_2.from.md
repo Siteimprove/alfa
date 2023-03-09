@@ -4,19 +4,9 @@
 
 ## Record\_2.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from<T>(entries: Iterable<Entry<T>>): Record<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  entries | Iterable&lt;Entry&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-Record&lt;T&gt;
 

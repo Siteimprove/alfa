@@ -4,19 +4,9 @@
 
 ## Sequence.skip() method
 
-<b>Signature:</b>
-
-```typescript
-skip(count: number): Sequence<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  count | number |  |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

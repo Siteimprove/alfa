@@ -4,12 +4,3 @@
 
 ## Slice.iterator() method
 
-<b>Signature:</b>
-
-```typescript
-iterator(): Iterator<T>;
-```
-<b>Returns:</b>
-
-Iterator&lt;T&gt;
-

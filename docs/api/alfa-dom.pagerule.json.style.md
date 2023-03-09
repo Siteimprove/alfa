@@ -4,8 +4,3 @@
 
 ## PageRule.JSON.style property
 
-<b>Signature:</b>
-
-```typescript
-style: Block.JSON;
-```

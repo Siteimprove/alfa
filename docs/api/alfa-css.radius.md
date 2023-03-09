@@ -4,18 +4,11 @@
 
 ## Radius namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Radius 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isRadius(value)](./alfa-css.radius.isradius.md) |  |
+|  [isRadius](./alfa-css.radius.isradius.md) |  |
 
 ## Interfaces
 

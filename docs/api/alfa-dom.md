@@ -37,14 +37,14 @@
 
 |  Enumeration | Description |
 |  --- | --- |
-|  [Namespace](./alfa-dom.namespace.md) | [https://infra.spec.whatwg.org/\#namespaces](https://infra.spec.whatwg.org/#namespaces) |
+|  [Namespace](./alfa-dom.namespace.md) |  |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [h(name, attributes, children, style)](./alfa-dom.h.md) |  |
-|  [jsx(name, properties, children)](./alfa-dom.jsx.md) |  |
+|  [h](./alfa-dom.h.md) |  |
+|  [jsx](./alfa-dom.jsx.md) |  |
 
 ## Interfaces
 

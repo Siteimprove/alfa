@@ -4,12 +4,3 @@
 
 ## Selector.Focus.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(): Focus;
-```
-<b>Returns:</b>
-
-[Focus](./alfa-selector.selector.focus.md)
-

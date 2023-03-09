@@ -4,19 +4,9 @@
 
 ## Column.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(column: Column): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  column | [Column](./alfa-table.column.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

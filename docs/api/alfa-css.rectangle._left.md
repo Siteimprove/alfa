@@ -4,8 +4,3 @@
 
 ## Rectangle.\_left property
 
-<b>Signature:</b>
-
-```typescript
-readonly _left: O;
-```

@@ -4,12 +4,6 @@
 
 ## Iterable\_2.slice() function
 
-<b>Signature:</b>
-
-```typescript
-function slice<T>(iterable: Iterable<T>, start: number, end?: number): Iterable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ function slice<T>(iterable: Iterable<T>, start: number, end?: number): Iterable<
 |  iterable | Iterable&lt;T&gt; |  |
 |  start | number |  |
 |  end | number | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-Iterable&lt;T&gt;
 

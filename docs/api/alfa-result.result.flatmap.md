@@ -4,19 +4,9 @@
 
 ## Result.flatMap() method
 
-<b>Signature:</b>
-
-```typescript
-flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;
 

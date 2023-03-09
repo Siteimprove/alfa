@@ -4,8 +4,3 @@
 
 ## Expression.FunctionCall.JSON.parameters property
 
-<b>Signature:</b>
-
-```typescript
-parameters: Array<Expression.JSON>;
-```

@@ -4,12 +4,3 @@
 
 ## Group.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
-
-```typescript
-[Symbol.iterator](): Iterator<T>;
-```
-<b>Returns:</b>
-
-Iterator&lt;T&gt;
-

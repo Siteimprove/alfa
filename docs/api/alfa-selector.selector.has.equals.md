@@ -4,19 +4,9 @@
 
 ## Selector.Has.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Has): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Has](./alfa-selector.selector.has.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

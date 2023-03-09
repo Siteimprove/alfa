@@ -4,19 +4,9 @@
 
 ## Result.includes() method
 
-<b>Signature:</b>
-
-```typescript
-includes(value: T): this is Ok<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-this is [Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
 

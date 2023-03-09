@@ -4,12 +4,3 @@
 
 ## Token.Colon.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Colon.JSON;
-```
-<b>Returns:</b>
-
-[Colon.JSON](./alfa-css.token.colon.json.md)
-

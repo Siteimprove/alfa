@@ -4,12 +4,3 @@
 
 ## Polygon.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Polygon.JSON<F, V>;
-```
-<b>Returns:</b>
-
-[Polygon.JSON](./alfa-css.polygon.json.md)<!-- -->&lt;F, V&gt;
-

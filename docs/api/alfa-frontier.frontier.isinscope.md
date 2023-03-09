@@ -4,19 +4,9 @@
 
 ## Frontier.isInScope() method
 
-<b>Signature:</b>
-
-```typescript
-isInScope(url: string | URL): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  url | string \| [URL](./alfa-url.url.md) |  |
-
-<b>Returns:</b>
-
-boolean
 

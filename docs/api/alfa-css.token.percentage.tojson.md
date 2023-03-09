@@ -4,12 +4,3 @@
 
 ## Token.Percentage.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Percentage.JSON;
-```
-<b>Returns:</b>
-
-[Percentage.JSON](./alfa-css.token.percentage.json.md)
-

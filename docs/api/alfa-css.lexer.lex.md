@@ -4,19 +4,9 @@
 
 ## Lexer.lex() function
 
-<b>Signature:</b>
-
-```typescript
-function lex(input: string): Slice<Token>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  input | string |  |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;
 

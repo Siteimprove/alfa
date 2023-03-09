@@ -4,19 +4,9 @@
 
 ## Matrix.columns() function
 
-<b>Signature:</b>
-
-```typescript
-function columns(m: Matrix): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
-
-<b>Returns:</b>
-
-number
 

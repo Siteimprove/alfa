@@ -4,20 +4,10 @@
 
 ## SupportsRule.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(condition: string, rules: Iterable<Rule>): SupportsRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  condition | string |  |
 |  rules | Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-[SupportsRule](./alfa-dom.supportsrule.md)
 

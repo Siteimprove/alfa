@@ -4,20 +4,10 @@
 
 ## Slice.insert() method
 
-<b>Signature:</b>
-
-```typescript
-insert(index: number, value: T): Slice<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  index | number |  |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

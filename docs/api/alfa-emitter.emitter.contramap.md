@@ -4,19 +4,9 @@
 
 ## Emitter.contraMap() method
 
-<b>Signature:</b>
-
-```typescript
-contraMap<U>(mapper: Mapper<U, T>): Emitter<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;U, T&gt; |  |
-
-<b>Returns:</b>
-
-[Emitter](./alfa-emitter.emitter.md)<!-- -->&lt;U&gt;
 

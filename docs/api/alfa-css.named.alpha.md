@@ -4,8 +4,3 @@
 
 ## Named.alpha property
 
-<b>Signature:</b>
-
-```typescript
-get alpha(): Number;
-```

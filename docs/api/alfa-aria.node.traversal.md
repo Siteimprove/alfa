@@ -4,18 +4,12 @@
 
 ## Node.Traversal namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Traversal 
-```
-
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
 |  [empty](./alfa-aria.node.traversal.empty.md) |  |
-|  [ignored](./alfa-aria.node.traversal.ignored.md) | When set, traverse both exposed and ignored nodes. |
+|  [ignored](./alfa-aria.node.traversal.ignored.md) |  |
 |  [none](./alfa-aria.node.traversal.none.md) |  |
 
 ## Type Aliases

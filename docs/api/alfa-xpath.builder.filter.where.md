@@ -4,19 +4,9 @@
 
 ## Builder.Filter.where() method
 
-<b>Signature:</b>
-
-```typescript
-where(predicate: Builder): Filter;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Builder](./alfa-xpath.builder.md) |  |
-
-<b>Returns:</b>
-
-[Filter](./alfa-xpath.builder.filter.md)
 

@@ -4,19 +4,9 @@
 
 ## Flag.Set.map() method
 
-<b>Signature:</b>
-
-```typescript
-map<U>(mapper: Mapper<T, U>): Set<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
-
-<b>Returns:</b>
-
-[Set](./alfa-command.flag.set.md)<!-- -->&lt;U&gt;
 

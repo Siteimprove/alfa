@@ -4,12 +4,3 @@
 
 ## Token.CloseParenthesis.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): CloseParenthesis.JSON;
-```
-<b>Returns:</b>
-
-[CloseParenthesis.JSON](./alfa-css.token.closeparenthesis.json.md)
-

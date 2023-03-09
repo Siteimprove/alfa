@@ -4,12 +4,3 @@
 
 ## Gradient type
 
-[https://drafts.csswg.org/css-images/\#gradients](https://drafts.csswg.org/css-images/#gradients)
-
-<b>Signature:</b>
-
-```typescript
-export declare type Gradient = Linear | Radial;
-```
-<b>References:</b> [Linear](./alfa-css.linear.md)<!-- -->, [Radial](./alfa-css.radial.md)
-

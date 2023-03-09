@@ -4,19 +4,9 @@
 
 ## String\_2.isString() function
 
-<b>Signature:</b>
-
-```typescript
-function isString(value: unknown): value is String;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is String
 

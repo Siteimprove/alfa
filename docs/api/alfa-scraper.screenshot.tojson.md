@@ -4,12 +4,3 @@
 
 ## Screenshot.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Screenshot.JSON;
-```
-<b>Returns:</b>
-
-[Screenshot.JSON](./alfa-scraper.screenshot.json.md)
-

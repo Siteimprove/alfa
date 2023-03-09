@@ -4,17 +4,10 @@
 
 ## Outcome.CantTell.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<T> extends Outcome.JSON<Value.CantTell> 
-```
-<b>Extends:</b> [Outcome.JSON](./alfa-act.outcome.json.md)<!-- -->&lt;Value.CantTell&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [diagnostic](./alfa-act.outcome.canttell.json.diagnostic.md) |  | json.[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;[Diagnostic](./alfa-act.diagnostic.md)<!-- -->&gt; |  |
-|  [target](./alfa-act.outcome.canttell.json.target.md) |  | json.[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
+|  [diagnostic](./alfa-act.outcome.canttell.json.diagnostic.md) |  |  |  |
+|  [target](./alfa-act.outcome.canttell.json.target.md) |  |  |  |
 

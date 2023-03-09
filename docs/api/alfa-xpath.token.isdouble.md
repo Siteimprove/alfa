@@ -4,19 +4,9 @@
 
 ## Token.isDouble() function
 
-<b>Signature:</b>
-
-```typescript
-function isDouble(value: unknown): value is Double;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Double](./alfa-xpath.token.double.md)
 

@@ -4,19 +4,9 @@
 
 ## Slice.concat() method
 
-<b>Signature:</b>
-
-```typescript
-concat(iterable: Iterable<T>): Slice<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

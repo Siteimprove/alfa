@@ -4,12 +4,6 @@
 
 ## Language.Subtag namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Subtag 
-```
-
 ## Interfaces
 
 |  Interface | Description |

@@ -4,26 +4,19 @@
 
 ## Rule.Event namespace
 
-
-<b>Signature:</b>
-
-```typescript
-namespace Event 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [end(rule, name)](./alfa-act.rule.event.end.md) |  |
-|  [end(rule)](./alfa-act.rule.event.end_1.md) |  |
-|  [endApplicability(rule)](./alfa-act.rule.event.endapplicability.md) |  |
-|  [endExpectation(rule)](./alfa-act.rule.event.endexpectation.md) |  |
-|  [isEvent(value)](./alfa-act.rule.event.isevent.md) |  |
-|  [start(rule, name)](./alfa-act.rule.event.start.md) |  |
-|  [start(rule)](./alfa-act.rule.event.start_1.md) |  |
-|  [startApplicability(rule)](./alfa-act.rule.event.startapplicability.md) |  |
-|  [startExpectation(rule)](./alfa-act.rule.event.startexpectation.md) |  |
+|  [end](./alfa-act.rule.event.end.md) |  |
+|  [end](./alfa-act.rule.event.end.md) |  |
+|  [endApplicability](./alfa-act.rule.event.endapplicability.md) |  |
+|  [endExpectation](./alfa-act.rule.event.endexpectation.md) |  |
+|  [isEvent](./alfa-act.rule.event.isevent.md) |  |
+|  [start](./alfa-act.rule.event.start.md) |  |
+|  [start](./alfa-act.rule.event.start.md) |  |
+|  [startApplicability](./alfa-act.rule.event.startapplicability.md) |  |
+|  [startExpectation](./alfa-act.rule.event.startexpectation.md) |  |
 
 ## Interfaces
 

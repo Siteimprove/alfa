@@ -4,19 +4,9 @@
 
 ## Option.apply() method
 
-<b>Signature:</b>
-
-```typescript
-apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Option](./alfa-option.option.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

@@ -4,12 +4,3 @@
 
 ## Left.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Left.JSON<L>;
-```
-<b>Returns:</b>
-
-[Left.JSON](./alfa-either.left.json.md)<!-- -->&lt;L&gt;
-

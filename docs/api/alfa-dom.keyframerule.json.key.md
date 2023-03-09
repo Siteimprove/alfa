@@ -4,8 +4,3 @@
 
 ## KeyframeRule.JSON.key property
 
-<b>Signature:</b>
-
-```typescript
-key: string;
-```

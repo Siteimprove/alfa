@@ -4,12 +4,3 @@
 
 ## Display.standard() function
 
-<b>Signature:</b>
-
-```typescript
-function standard(): Display;
-```
-<b>Returns:</b>
-
-[Display](./alfa-device.display.md)
-

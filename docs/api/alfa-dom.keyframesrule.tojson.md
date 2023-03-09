@@ -4,12 +4,3 @@
 
 ## KeyframesRule.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): KeyframesRule.JSON;
-```
-<b>Returns:</b>
-
-[KeyframesRule.JSON](./alfa-dom.keyframesrule.json.md)
-

@@ -4,19 +4,9 @@
 
 ## Record\_2.isRecord() function
 
-<b>Signature:</b>
-
-```typescript
-function isRecord<T>(value: unknown): value is Record<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is Record&lt;T&gt;
 

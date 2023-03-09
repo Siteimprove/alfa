@@ -4,12 +4,3 @@
 
 ## Err.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
-
-```typescript
-[Symbol.iterator](): Generator<never, void, unknown>;
-```
-<b>Returns:</b>
-
-Generator&lt;never, void, unknown&gt;
-

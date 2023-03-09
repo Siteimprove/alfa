@@ -4,10 +4,3 @@
 
 ## Hash.(constructor)
 
-Constructs a new instance of the `Hash` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor();
-```

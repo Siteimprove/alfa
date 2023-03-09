@@ -4,19 +4,9 @@
 
 ## Outcome.Applicable.isApplicable() function
 
-<b>Signature:</b>
-
-```typescript
-function isApplicable<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Applicable<I, T, Q, S>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S&gt; |  |
-
-<b>Returns:</b>
-
-value is [Applicable](./alfa-act.outcome.applicable.md)<!-- -->&lt;I, T, Q, S&gt;
+|  value | unknown |  |
 

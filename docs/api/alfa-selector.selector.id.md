@@ -4,12 +4,6 @@
 
 ## Selector.Id namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace Id 
-```
-
 ## Interfaces
 
 |  Interface | Description |

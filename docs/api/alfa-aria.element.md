@@ -4,13 +4,6 @@
 
 ## Element namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Element 
-```
-
 ## Interfaces
 
 |  Interface | Description |

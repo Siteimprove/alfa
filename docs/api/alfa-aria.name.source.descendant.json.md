@@ -4,17 +4,11 @@
 
 ## Name.Source.Descendant.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [element](./alfa-aria.name.source.descendant.json.element.md) |  | string |  |
-|  [name](./alfa-aria.name.source.descendant.json.name.md) |  | [Name.JSON](./alfa-aria.name.json.md) |  |
-|  [type](./alfa-aria.name.source.descendant.json.type.md) |  | "descendant" |  |
+|  [element](./alfa-aria.name.source.descendant.json.element.md) |  |  |  |
+|  [name](./alfa-aria.name.source.descendant.json.name.md) |  |  |  |
+|  [type](./alfa-aria.name.source.descendant.json.type.md) |  |  |  |
 

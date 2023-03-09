@@ -4,19 +4,9 @@
 
 ## Token.Number.isNumber() function
 
-<b>Signature:</b>
-
-```typescript
-function isNumber(value: unknown): value is Number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Number](./alfa-css.token.number.md)
 

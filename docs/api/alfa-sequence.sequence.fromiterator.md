@@ -4,19 +4,9 @@
 
 ## Sequence.fromIterator() function
 
-<b>Signature:</b>
-
-```typescript
-function fromIterator<T>(iterator: Iterator<T>): Sequence<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterator | Iterator&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

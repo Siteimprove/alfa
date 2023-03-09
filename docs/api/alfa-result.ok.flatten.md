@@ -4,19 +4,9 @@
 
 ## Ok.flatten() method
 
-<b>Signature:</b>
-
-```typescript
-flatten<T, E>(this: Ok<Result<T, E>>): Result<T, E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Ok](./alfa-result.ok.md)<!-- -->&lt;[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
 

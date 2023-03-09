@@ -4,10 +4,3 @@
 
 ## Unit.Time type
 
-[https://drafts.csswg.org/css-values/\#time](https://drafts.csswg.org/css-values/#time)
-
-<b>Signature:</b>
-
-```typescript
-type Time = "s" | "ms";
-```

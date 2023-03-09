@@ -4,19 +4,9 @@
 
 ## List.append() method
 
-<b>Signature:</b>
-
-```typescript
-append(value: T): List<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

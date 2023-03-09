@@ -4,11 +4,3 @@
 
 ## Continuation type
 
-
-<b>Signature:</b>
-
-```typescript
-export declare type Continuation<T, R = void, A extends Array<unknown> = []> = Callback<Callback<T, R>, R, A>;
-```
-<b>References:</b> [Callback](./alfa-callback.callback.md)
-

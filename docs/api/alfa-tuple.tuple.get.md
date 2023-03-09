@@ -4,10 +4,3 @@
 
 ## Tuple.Get type
 
-<b>Signature:</b>
-
-```typescript
-export type Get<T extends Tuple, I extends number> = GetInner<T, I, Empty>;
-```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
-

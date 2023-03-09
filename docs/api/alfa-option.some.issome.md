@@ -4,19 +4,9 @@
 
 ## Some.isSome() function
 
-<b>Signature:</b>
-
-```typescript
-function isSome<T>(value: Iterable<T>): value is Some<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is [Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
+|  value | unknown |  |
 

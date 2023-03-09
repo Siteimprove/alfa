@@ -4,19 +4,10 @@
 
 ## Selector.Empty class
 
-[https://drafts.csswg.org/selectors/\#empty-pseudo](https://drafts.csswg.org/selectors/#empty-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class Empty extends Pseudo.Class<"empty"> 
-```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"empty"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches(element)](./alfa-selector.selector.empty.matches.md) |  |  |
-|  [of()](./alfa-selector.selector.empty.of.md) | <code>static</code> |  |
+|  [matches](./alfa-selector.selector.empty.matches.md) |  |  |
+|  [of](./alfa-selector.selector.empty.of.md) |  |  |
 

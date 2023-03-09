@@ -4,8 +4,3 @@
 
 ## Scope.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "scope";
-```

@@ -4,19 +4,9 @@
 
 ## Iterable\_2.toJSON() function
 
-<b>Signature:</b>
-
-```typescript
-function toJSON<T>(iterable: Iterable<T>): Array<Serializable.ToJSON<T>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;&gt;
 

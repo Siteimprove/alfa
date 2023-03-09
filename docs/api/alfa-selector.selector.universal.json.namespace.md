@@ -4,8 +4,3 @@
 
 ## Selector.Universal.JSON.namespace property
 
-<b>Signature:</b>
-
-```typescript
-namespace: string | null;
-```

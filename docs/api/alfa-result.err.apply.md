@@ -4,12 +4,3 @@
 
 ## Err.apply() method
 
-<b>Signature:</b>
-
-```typescript
-apply(): Err<E>;
-```
-<b>Returns:</b>
-
-[Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
-

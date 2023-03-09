@@ -4,19 +4,9 @@
 
 ## Transformation.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(matrix: Matrix): Transformation;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  matrix | [Matrix](./alfa-math.matrix.md) |  |
-
-<b>Returns:</b>
-
-[Transformation](./alfa-affine.transformation.md)
 

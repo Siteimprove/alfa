@@ -4,10 +4,3 @@
 
 ## Node.composedNested variable
 
-Traversal options to traverse in shadow-including tree order and inside nested browsing context container, a common use case.
-
-<b>Signature:</b>
-
-```typescript
-composedNested: Traversal
-```

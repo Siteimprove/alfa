@@ -4,19 +4,9 @@
 
 ## Refinement.isNull() function
 
-<b>Signature:</b>
-
-```typescript
-export function isNull(value: unknown): value is null;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is null
 

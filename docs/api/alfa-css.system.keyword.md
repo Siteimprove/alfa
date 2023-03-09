@@ -4,8 +4,3 @@
 
 ## System.Keyword type
 
-<b>Signature:</b>
-
-```typescript
-type Keyword = "canvas" | "canvastext" | "linktext" | "visitedtext" | "activetext" | "buttonface" | "buttontext" | "field" | "fieldtext" | "highlight" | "highlighttext" | "graytext";
-```

@@ -4,19 +4,9 @@
 
 ## Fragment.isFragment() function
 
-<b>Signature:</b>
-
-```typescript
-function isFragment(value: unknown): value is Fragment;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Fragment](./alfa-dom.fragment.md)
 

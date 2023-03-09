@@ -4,12 +4,3 @@
 
 ## Token.OpenParenthesis.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): OpenParenthesis.JSON;
-```
-<b>Returns:</b>
-
-[OpenParenthesis.JSON](./alfa-css.token.openparenthesis.json.md)
-

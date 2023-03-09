@@ -4,19 +4,9 @@
 
 ## Media.Value.Range.isRange() function
 
-<b>Signature:</b>
-
-```typescript
-function isRange<T>(value: unknown): value is Range<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Range](./alfa-media.media.value.range.md)<!-- -->&lt;T&gt;
 

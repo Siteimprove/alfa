@@ -4,20 +4,10 @@
 
 ## Feature.getScope() function
 
-<b>Signature:</b>
-
-```typescript
-function getScope<N extends Name>(feature: N, scope?: Browser.Scope): Browser.Scope<Implementer<N>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  feature | N |  |
 |  scope | [Browser.Scope](./alfa-compatibility.browser.scope.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Browser.Scope](./alfa-compatibility.browser.scope.md)<!-- -->&lt;[Implementer](./alfa-compatibility.feature.implementer.md)<!-- -->&lt;N&gt;&gt;
 

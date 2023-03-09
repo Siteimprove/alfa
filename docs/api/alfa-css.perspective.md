@@ -4,18 +4,11 @@
 
 ## Perspective namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Perspective 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isPerspective(value)](./alfa-css.perspective.isperspective.md) |  |
+|  [isPerspective](./alfa-css.perspective.isperspective.md) |  |
 
 ## Interfaces
 
@@ -27,5 +20,5 @@ export declare namespace Perspective
 
 |  Variable | Description |
 |  --- | --- |
-|  [parse](./alfa-css.perspective.parse.md) | [https://drafts.csswg.org/css-transforms-2/\#funcdef-perspective](https://drafts.csswg.org/css-transforms-2/#funcdef-perspective) |
+|  [parse](./alfa-css.perspective.parse.md) |  |
 

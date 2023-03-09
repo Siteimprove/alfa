@@ -4,8 +4,3 @@
 
 ## Radial.Ellipse.JSON.horizontal property
 
-<b>Signature:</b>
-
-```typescript
-horizontal: Length.JSON | Percentage.JSON;
-```

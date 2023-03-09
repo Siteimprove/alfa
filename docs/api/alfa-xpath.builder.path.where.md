@@ -4,19 +4,9 @@
 
 ## Builder.Path.where() method
 
-<b>Signature:</b>
-
-```typescript
-where(predicate: Builder): Path;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Builder](./alfa-xpath.builder.md) |  |
-
-<b>Returns:</b>
-
-[Path](./alfa-xpath.builder.path.md)
 

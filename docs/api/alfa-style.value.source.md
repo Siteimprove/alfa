@@ -4,8 +4,3 @@
 
 ## Value.source property
 
-<b>Signature:</b>
-
-```typescript
-get source(): Option<Declaration>;
-```

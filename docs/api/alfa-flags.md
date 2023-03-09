@@ -8,7 +8,7 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Flags](./alfa-flags.flags.md) | Class for modelling set of boolean flags. Flags are stored as bits in a single number. Due to Javascript limitation on bitwise operations, this means that a maximum of 32 flags can be handled. We currently limit the class at a maximum of 8 flags since it fits our needs. |
+|  [Flags](./alfa-flags.flags.md) |  |
 
 ## Namespaces
 

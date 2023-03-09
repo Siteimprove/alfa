@@ -4,10 +4,3 @@
 
 ## URL.port property
 
-[https://url.spec.whatwg.org/\#concept-url-port](https://url.spec.whatwg.org/#concept-url-port)
-
-<b>Signature:</b>
-
-```typescript
-get port(): Option<number>;
-```

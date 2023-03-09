@@ -4,8 +4,3 @@
 
 ## Transformation.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON = Array<Array<number>>;
-```

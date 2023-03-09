@@ -4,19 +4,9 @@
 
 ## Ok.and() method
 
-<b>Signature:</b>
-
-```typescript
-and<U, F>(result: Result<U, F>): Result<U, F>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  result | [Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt; |  |
-
-<b>Returns:</b>
-
-[Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;
 

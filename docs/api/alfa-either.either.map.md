@@ -4,19 +4,9 @@
 
 ## Either.map() method
 
-<b>Signature:</b>
-
-```typescript
-map<T>(mapper: Mapper<R, T>): Either<L, T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt; |  |
-
-<b>Returns:</b>
-
-[Either](./alfa-either.either.md)<!-- -->&lt;L, T&gt;
 

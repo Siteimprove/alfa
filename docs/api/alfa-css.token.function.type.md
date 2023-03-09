@@ -4,8 +4,3 @@
 
 ## Token.Function.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "function";
-```

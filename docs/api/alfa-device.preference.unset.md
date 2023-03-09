@@ -4,19 +4,9 @@
 
 ## Preference.unset() function
 
-<b>Signature:</b>
-
-```typescript
-export function unset<N extends Name>(name: N): Value<N>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | N |  |
-
-<b>Returns:</b>
-
-[Value](./alfa-device.preference.value.md)<!-- -->&lt;N&gt;
 

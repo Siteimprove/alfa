@@ -4,19 +4,9 @@
 
 ## Result.getErr() method
 
-<b>Signature:</b>
-
-```typescript
-getErr(message?: string): E;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  message | string | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-E
 

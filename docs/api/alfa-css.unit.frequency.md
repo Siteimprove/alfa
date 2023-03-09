@@ -4,10 +4,3 @@
 
 ## Unit.Frequency type
 
-[https://drafts.csswg.org/css-values/\#frequency](https://drafts.csswg.org/css-values/#frequency)
-
-<b>Signature:</b>
-
-```typescript
-type Frequency = "hz" | "kHz";
-```

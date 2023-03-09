@@ -4,20 +4,10 @@
 
 ## Collection.Indexed.compare() method
 
-<b>Signature:</b>
-
-```typescript
-compare<T>(this: Indexed<Comparable<T>>, iterable: Iterable<T>): Comparison;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;[Comparable](./alfa-comparable.comparable.md)<!-- -->&lt;T&gt;&gt; |  |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Comparison](./alfa-comparable.comparison.md)
 

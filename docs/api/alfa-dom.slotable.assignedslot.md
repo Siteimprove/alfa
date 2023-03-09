@@ -4,16 +4,3 @@
 
 ## Slotable.assignedSlot() method
 
-Get the slot that this slotable is assigned to.
-
-[https://dom.spec.whatwg.org/\#dom-slotable-assignedslot](https://dom.spec.whatwg.org/#dom-slotable-assignedslot)
-
-<b>Signature:</b>
-
-```typescript
-assignedSlot(): Option<Slot>;
-```
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Slot](./alfa-dom.slot.md)<!-- -->&gt;
-

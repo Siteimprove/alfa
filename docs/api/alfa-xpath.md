@@ -14,11 +14,11 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [axis(axis, name)](./alfa-xpath.axis.md) |  |
-|  [context()](./alfa-xpath.context.md) |  |
-|  [evaluate(scope, expression, options)](./alfa-xpath.evaluate.md) |  |
-|  [nth(i)](./alfa-xpath.nth.md) |  |
-|  [step(left, right)](./alfa-xpath.step.md) |  |
+|  [axis](./alfa-xpath.axis.md) |  |
+|  [context](./alfa-xpath.context.md) |  |
+|  [evaluate](./alfa-xpath.evaluate.md) |  |
+|  [nth](./alfa-xpath.nth.md) |  |
+|  [step](./alfa-xpath.step.md) |  |
 
 ## Interfaces
 
@@ -44,7 +44,7 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [Expression](./alfa-xpath.expression.md) |  |
-|  [Token](./alfa-xpath.token.md) | [https://www.w3.org/TR/xpath-31/\#terminal-symbols](https://www.w3.org/TR/xpath-31/#terminal-symbols) |
+|  [Token](./alfa-xpath.token.md) |  |
 |  [Type](./alfa-xpath.type.md) |  |
 |  [TypeFor](./alfa-xpath.typefor.md) |  |
 |  [Value](./alfa-xpath.value.md) |  |

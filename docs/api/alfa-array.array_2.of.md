@@ -4,19 +4,9 @@
 
 ## Array\_2.of() function
 
-<b>Signature:</b>
-
-```typescript
-function of<T>(...values: Array<T>): Array<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | Array&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Array&lt;T&gt;
 

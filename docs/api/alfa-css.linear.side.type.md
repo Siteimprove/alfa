@@ -4,8 +4,3 @@
 
 ## Linear.Side.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "side";
-```

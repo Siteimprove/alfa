@@ -4,8 +4,3 @@
 
 ## Expression.Axis.JSON.test property
 
-<b>Signature:</b>
-
-```typescript
-test: Test.JSON | null;
-```

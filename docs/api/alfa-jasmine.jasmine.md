@@ -4,16 +4,9 @@
 
 ## Jasmine namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Jasmine 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [createPlugin(transform, rules, handlers, options)](./alfa-jasmine.jasmine.createplugin.md) |  |
+|  [createPlugin](./alfa-jasmine.jasmine.createplugin.md) |  |
 

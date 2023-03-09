@@ -4,12 +4,6 @@
 
 ## Sequence.reduceWhile() method
 
-<b>Signature:</b>
-
-```typescript
-reduceWhile<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ reduceWhile<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, 
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 |  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 |  accumulator | U |  |
-
-<b>Returns:</b>
-
-U
 

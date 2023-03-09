@@ -4,8 +4,3 @@
 
 ## Row.Group.element property
 
-<b>Signature:</b>
-
-```typescript
-get element(): Element;
-```

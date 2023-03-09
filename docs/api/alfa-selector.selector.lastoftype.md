@@ -4,19 +4,10 @@
 
 ## Selector.LastOfType class
 
-[https://drafts.csswg.org/selectors/\#last-of-type-pseudo](https://drafts.csswg.org/selectors/#last-of-type-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class LastOfType extends Pseudo.Class<"last-of-type"> 
-```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"last-of-type"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches(element)](./alfa-selector.selector.lastoftype.matches.md) |  |  |
-|  [of()](./alfa-selector.selector.lastoftype.of.md) | <code>static</code> |  |
+|  [matches](./alfa-selector.selector.lastoftype.matches.md) |  |  |
+|  [of](./alfa-selector.selector.lastoftype.of.md) |  |  |
 

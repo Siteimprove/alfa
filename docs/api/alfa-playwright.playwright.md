@@ -4,19 +4,12 @@
 
 ## Playwright namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Playwright 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [toNode(value)](./alfa-playwright.playwright.tonode.md) |  |
-|  [toPage(value)](./alfa-playwright.playwright.topage.md) |  |
+|  [toNode](./alfa-playwright.playwright.tonode.md) |  |
+|  [toPage](./alfa-playwright.playwright.topage.md) |  |
 
 ## Type Aliases
 

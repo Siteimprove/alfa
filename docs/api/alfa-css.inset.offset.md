@@ -4,10 +4,3 @@
 
 ## Inset.Offset type
 
-<b>Signature:</b>
-
-```typescript
-type Offset = Length | Percentage;
-```
-<b>References:</b> [Length](./alfa-css.length.md)<!-- -->, [Percentage](./alfa-css.percentage.md)
-

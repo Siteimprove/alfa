@@ -4,10 +4,3 @@
 
 ## Unit.Resolution type
 
-[https://drafts.csswg.org/css-values/\#resolution](https://drafts.csswg.org/css-values/#resolution)
-
-<b>Signature:</b>
-
-```typescript
-type Resolution = "dpi" | "dpcm" | "dppx";
-```

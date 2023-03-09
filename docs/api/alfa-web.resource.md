@@ -4,16 +4,9 @@
 
 ## Resource namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Resource 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isResource(value)](./alfa-web.resource.isresource.md) |  |
+|  [isResource](./alfa-web.resource.isresource.md) |  |
 

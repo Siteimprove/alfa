@@ -4,10 +4,3 @@
 
 ## Display.resolution property
 
-[https://www.w3.org/TR/mediaqueries/\#resolution](https://www.w3.org/TR/mediaqueries/#resolution)
-
-<b>Signature:</b>
-
-```typescript
-get resolution(): number;
-```

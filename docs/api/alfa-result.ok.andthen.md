@@ -4,19 +4,9 @@
 
 ## Ok.andThen() method
 
-<b>Signature:</b>
-
-```typescript
-andThen<U, F>(result: Mapper<T, Result<U, F>>): Result<U, F>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  result | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;
 

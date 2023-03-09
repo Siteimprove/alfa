@@ -4,19 +4,9 @@
 
 ## Result.of() function
 
-<b>Signature:</b>
-
-```typescript
-function of<T, E>(value: T): Result<T, E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
 

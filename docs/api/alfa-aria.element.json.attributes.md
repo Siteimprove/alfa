@@ -4,8 +4,3 @@
 
 ## Element.JSON.attributes property
 
-<b>Signature:</b>
-
-```typescript
-attributes: Array<Attribute.JSON>;
-```

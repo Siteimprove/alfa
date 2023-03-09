@@ -4,12 +4,3 @@
 
 ## Emitter.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T = void>(): Emitter<T>;
-```
-<b>Returns:</b>
-
-[Emitter](./alfa-emitter.emitter.md)<!-- -->&lt;T&gt;
-

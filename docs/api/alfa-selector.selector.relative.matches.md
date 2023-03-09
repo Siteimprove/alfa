@@ -4,12 +4,3 @@
 
 ## Selector.Relative.matches() method
 
-<b>Signature:</b>
-
-```typescript
-matches(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

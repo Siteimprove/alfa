@@ -4,19 +4,9 @@
 
 ## Array\_2.allocate() function
 
-<b>Signature:</b>
-
-```typescript
-function allocate<T>(capacity: number): Array<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  capacity | number |  |
-
-<b>Returns:</b>
-
-Array&lt;T&gt;
 

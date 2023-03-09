@@ -4,8 +4,3 @@
 
 ## URL.JSON.fragment property
 
-<b>Signature:</b>
-
-```typescript
-fragment: string | null;
-```

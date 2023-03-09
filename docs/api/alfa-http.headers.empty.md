@@ -4,12 +4,3 @@
 
 ## Headers.empty() method
 
-<b>Signature:</b>
-
-```typescript
-static empty(): Headers;
-```
-<b>Returns:</b>
-
-[Headers](./alfa-http.headers.md)
-

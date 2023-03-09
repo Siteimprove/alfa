@@ -4,16 +4,10 @@
 
 ## Media.Value.Discrete.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<T> 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-media.media.value.discrete.json.type.md) |  | "discrete" |  |
-|  [value](./alfa-media.media.value.discrete.json.value.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
+|  [type](./alfa-media.media.value.discrete.json.type.md) |  |  |  |
+|  [value](./alfa-media.media.value.discrete.json.value.md) |  |  |  |
 

@@ -4,13 +4,6 @@
 
 ## Credentials namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Credentials 
-```
-
 ## Interfaces
 
 |  Interface | Description |

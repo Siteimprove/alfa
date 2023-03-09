@@ -4,8 +4,3 @@
 
 ## Gradient.Hint.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "hint";
-```

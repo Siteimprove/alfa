@@ -4,8 +4,3 @@
 
 ## Element.content property
 
-<b>Signature:</b>
-
-```typescript
-get content(): Option<Document>;
-```

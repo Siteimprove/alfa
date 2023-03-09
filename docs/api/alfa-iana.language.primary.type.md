@@ -4,8 +4,3 @@
 
 ## Language.Primary.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "primary";
-```

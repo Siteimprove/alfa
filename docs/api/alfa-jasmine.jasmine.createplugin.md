@@ -4,12 +4,6 @@
 
 ## Jasmine.createPlugin() function
 
-<b>Signature:</b>
-
-```typescript
-function createPlugin<I, J, T extends Hashable, Q = never, S = T>(transform: Mapper<I, Promise<J>>, rules: Iterable<Rule<J, T, Q, S>>, handlers?: Iterable<Handler<J, T, Q, S>>, options?: Asserter.Options<J, T, Q, S>): void;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ function createPlugin<I, J, T extends Hashable, Q = never, S = T>(transform: Map
 |  rules | Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;J, T, Q, S&gt;&gt; |  |
 |  handlers | Iterable&lt;[Handler](./alfa-assert.handler.md)<!-- -->&lt;J, T, Q, S&gt;&gt; | <i>(Optional)</i> |
 |  options | [Asserter.Options](./alfa-assert.asserter.options.md)<!-- -->&lt;J, T, Q, S&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-void
 

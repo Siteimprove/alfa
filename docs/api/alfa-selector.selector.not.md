@@ -4,12 +4,6 @@
 
 ## Selector.Not namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace Not 
-```
-
 ## Interfaces
 
 |  Interface | Description |

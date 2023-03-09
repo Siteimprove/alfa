@@ -4,8 +4,3 @@
 
 ## Rule.uri property
 
-<b>Signature:</b>
-
-```typescript
-get uri(): string;
-```

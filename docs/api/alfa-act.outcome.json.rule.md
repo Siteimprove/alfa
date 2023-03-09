@@ -4,8 +4,3 @@
 
 ## Outcome.JSON.rule property
 
-<b>Signature:</b>
-
-```typescript
-rule: Rule.JSON;
-```

@@ -4,19 +4,9 @@
 
 ## Language.Subtag.equals() method
 
-<b>Signature:</b>
-
-```typescript
-abstract equals<T extends string, N extends string>(value: Subtag<T, N>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Subtag](./alfa-iana.language.subtag.md)<!-- -->&lt;T, N&gt; |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

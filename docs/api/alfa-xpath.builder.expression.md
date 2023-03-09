@@ -4,8 +4,3 @@
 
 ## Builder.expression property
 
-<b>Signature:</b>
-
-```typescript
-readonly expression: T;
-```

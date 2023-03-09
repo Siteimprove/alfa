@@ -4,10 +4,3 @@
 
 ## Angle.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<U extends Unit.Angle = Unit.Angle> extends Dimension.JSON<"angle", U> 
-```
-<b>Extends:</b> [Dimension.JSON](./alfa-css.dimension.json.md)<!-- -->&lt;"angle", U&gt;
-

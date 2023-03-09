@@ -4,15 +4,3 @@
 
 ## Outcome.Failed.EARL."earl:result" property
 
-<b>Signature:</b>
-
-```typescript
-"earl:result": {
-                "@type": "earl:TestResult";
-                "earl:outcome": {
-                    "@id": "earl:failed";
-                };
-                "earl:info": string;
-                "earl:pointer"?: earl.EARL;
-            };
-```

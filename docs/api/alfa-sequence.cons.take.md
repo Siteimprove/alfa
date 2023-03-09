@@ -4,19 +4,9 @@
 
 ## Cons.take() method
 
-<b>Signature:</b>
-
-```typescript
-take(count: number): Sequence<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  count | number |  |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

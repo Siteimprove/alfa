@@ -4,19 +4,9 @@
 
 ## Set\_2.fromIterable() function
 
-<b>Signature:</b>
-
-```typescript
-function fromIterable<T>(iterable: Iterable<T>): Set<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Set&lt;T&gt;
 

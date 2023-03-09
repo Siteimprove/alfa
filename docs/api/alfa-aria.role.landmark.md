@@ -4,12 +4,3 @@
 
 ## Role.Landmark type
 
-The names of all landmark roles.
-
-<b>Signature:</b>
-
-```typescript
-type Landmark = SubclassOf<"landmark">;
-```
-<b>References:</b> [SubclassOf](./alfa-aria.role.subclassof.md)
-

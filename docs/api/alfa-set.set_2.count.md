@@ -4,19 +4,9 @@
 
 ## Set\_2.count() method
 
-<b>Signature:</b>
-
-```typescript
-count(predicate: Predicate<T>): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-number
 

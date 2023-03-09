@@ -4,19 +4,9 @@
 
 ## Option.flatten() method
 
-<b>Signature:</b>
-
-```typescript
-flatten<T>(this: Option<Option<T>>): Option<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Option](./alfa-option.option.md)<!-- -->&lt;[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

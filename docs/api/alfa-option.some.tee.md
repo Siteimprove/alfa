@@ -4,19 +4,9 @@
 
 ## Some.tee() method
 
-<b>Signature:</b>
-
-```typescript
-tee(callback: Callback<T>): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-this
 

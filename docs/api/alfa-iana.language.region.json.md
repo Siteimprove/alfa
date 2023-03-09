@@ -4,10 +4,3 @@
 
 ## Language.Region.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Subtag.JSON<"region", Name> 
-```
-<b>Extends:</b> [Subtag.JSON](./alfa-iana.language.subtag.json.md)<!-- -->&lt;"region", [Name](./alfa-iana.language.region.name.md)<!-- -->&gt;
-

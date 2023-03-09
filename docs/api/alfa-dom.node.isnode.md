@@ -4,19 +4,9 @@
 
 ## Node.isNode() function
 
-<b>Signature:</b>
-
-```typescript
-function isNode(value: unknown): value is Node;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Node](./alfa-dom.node.md)
 

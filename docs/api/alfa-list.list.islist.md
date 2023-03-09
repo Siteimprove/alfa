@@ -4,19 +4,9 @@
 
 ## List.isList() function
 
-<b>Signature:</b>
-
-```typescript
-function isList<T>(value: Iterable<T>): value is List<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
+|  value | unknown |  |
 

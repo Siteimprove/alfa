@@ -4,8 +4,3 @@
 
 ## Token.isHash variable
 
-<b>Signature:</b>
-
-```typescript
-isHash: typeof Hash.isHash
-```

@@ -4,14 +4,6 @@
 
 ## Language.(constructor)
 
-Constructs a new instance of the `Language` class
-
-<b>Signature:</b>
-
-```typescript
-constructor(primary: Language.Primary, extended: Option<Language.Extended>, script: Option<Language.Script>, region: Option<Language.Region>, variants: Array<Language.Variant>);
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |

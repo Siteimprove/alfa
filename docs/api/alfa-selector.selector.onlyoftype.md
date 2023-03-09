@@ -4,19 +4,10 @@
 
 ## Selector.OnlyOfType class
 
-[https://drafts.csswg.org/selectors/\#only-of-type-pseudo](https://drafts.csswg.org/selectors/#only-of-type-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class OnlyOfType extends Pseudo.Class<"only-of-type"> 
-```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"only-of-type"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches(element)](./alfa-selector.selector.onlyoftype.matches.md) |  |  |
-|  [of()](./alfa-selector.selector.onlyoftype.of.md) | <code>static</code> |  |
+|  [matches](./alfa-selector.selector.onlyoftype.matches.md) |  |  |
+|  [of](./alfa-selector.selector.onlyoftype.of.md) |  |  |
 

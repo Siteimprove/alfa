@@ -4,18 +4,12 @@
 
 ## Rule.Composite namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Composite 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isComposite(value)](./alfa-act.rule.composite.iscomposite.md) |  |
-|  [isComposite(value)](./alfa-act.rule.composite.iscomposite_1.md) |  |
+|  [isComposite](./alfa-act.rule.composite.iscomposite.md) |  |
+|  [isComposite](./alfa-act.rule.composite.iscomposite.md) |  |
 
 ## Interfaces
 

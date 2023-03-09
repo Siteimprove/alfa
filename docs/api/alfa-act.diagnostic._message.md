@@ -4,8 +4,3 @@
 
 ## Diagnostic.\_message property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _message: string;
-```

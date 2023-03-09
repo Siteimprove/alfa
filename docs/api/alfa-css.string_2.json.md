@@ -4,16 +4,9 @@
 
 ## String\_2.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Value.JSON<"string"> 
-```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"string"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [value](./alfa-css.string_2.json.value.md) |  | string |  |
+|  [value](./alfa-css.string_2.json.value.md) |  |  |  |
 

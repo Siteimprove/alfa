@@ -4,19 +4,9 @@
 
 ## Angle.scale() method
 
-<b>Signature:</b>
-
-```typescript
-scale(factor: number): Angle<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  factor | number |  |
-
-<b>Returns:</b>
-
-[Angle](./alfa-css.angle.md)<!-- -->&lt;U&gt;
 

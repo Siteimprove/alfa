@@ -4,19 +4,9 @@
 
 ## Element.attribute() method
 
-<b>Signature:</b>
-
-```typescript
-attribute<A extends string = string>(name: A): Option<Attribute<A>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | A |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Attribute](./alfa-dom.attribute.md)<!-- -->&lt;A&gt;&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Attribute](./alfa-dom.attribute.md)<!-- -->&lt;A&gt;&gt; |  |
 

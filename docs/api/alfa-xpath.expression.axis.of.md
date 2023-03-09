@@ -4,12 +4,6 @@
 
 ## Expression.Axis.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(axis: Axis.Type, test?: Option<Test>, predicates?: Array<Expression>): Axis;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ static of(axis: Axis.Type, test?: Option<Test>, predicates?: Array<Expression>):
 |  axis | [Axis.Type](./alfa-xpath.expression.axis.type.md) |  |
 |  test | [Option](./alfa-option.option.md)<!-- -->&lt;[Test](./alfa-xpath.expression.test.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  predicates | Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Axis](./alfa-xpath.expression.axis.md)
 

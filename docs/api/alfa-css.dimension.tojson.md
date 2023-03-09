@@ -4,12 +4,3 @@
 
 ## Dimension.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Dimension.JSON<T, V>;
-```
-<b>Returns:</b>
-
-[Dimension.JSON](./alfa-css.dimension.json.md)<!-- -->&lt;T, V&gt;
-

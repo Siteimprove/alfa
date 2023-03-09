@@ -4,12 +4,9 @@
 
 ## Emitter.once() method
 
-<b>Signature:</b>
+## Parameters
 
-```typescript
-once(): Promise<T>;
-```
-<b>Returns:</b>
-
-Promise&lt;T&gt;
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  listener | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
 

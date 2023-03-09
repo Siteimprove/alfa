@@ -4,8 +4,3 @@
 
 ## Screenshot.Type.JPEG.JSON.quality property
 
-<b>Signature:</b>
-
-```typescript
-quality: number;
-```

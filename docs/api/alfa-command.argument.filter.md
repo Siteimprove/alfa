@@ -4,20 +4,10 @@
 
 ## Argument.filter() method
 
-<b>Signature:</b>
-
-```typescript
-filter<U extends T>(refinement: Refinement<T, U>, ifError?: Thunk<string>): Argument<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
 |  ifError | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Argument](./alfa-command.argument.md)<!-- -->&lt;U&gt;
 

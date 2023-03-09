@@ -4,19 +4,9 @@
 
 ## Version.isVersion() function
 
-<b>Signature:</b>
-
-```typescript
-function isVersion<T extends string>(value: unknown): value is Version;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Version](./alfa-rules.version.md)
 

@@ -4,12 +4,3 @@
 
 ## Outcome.Inapplicable.toSARIF() method
 
-<b>Signature:</b>
-
-```typescript
-toSARIF(): sarif.Result;
-```
-<b>Returns:</b>
-
-sarif.Result
-

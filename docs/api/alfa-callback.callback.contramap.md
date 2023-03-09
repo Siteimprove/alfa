@@ -4,20 +4,10 @@
 
 ## Callback.contraMap() function
 
-<b>Signature:</b>
-
-```typescript
-function contraMap<T, R, U, A extends Array<unknown> = []>(callback: Callback<T, R, A>, mapper: Mapper<U, T>): Callback<U, R, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, R, A&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;U, T&gt; |  |
-
-<b>Returns:</b>
-
-[Callback](./alfa-callback.callback.md)<!-- -->&lt;U, R, A&gt;
 

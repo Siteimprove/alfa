@@ -4,18 +4,11 @@
 
 ## Scale namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Scale 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isScale(value)](./alfa-css.scale.isscale.md) |  |
+|  [isScale](./alfa-css.scale.isscale.md) |  |
 
 ## Interfaces
 

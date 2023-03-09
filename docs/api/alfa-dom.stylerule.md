@@ -4,18 +4,11 @@
 
 ## StyleRule namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace StyleRule 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isStyleRule(value)](./alfa-dom.stylerule.isstylerule.md) |  |
+|  [isStyleRule](./alfa-dom.stylerule.isstylerule.md) |  |
 
 ## Interfaces
 

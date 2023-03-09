@@ -4,19 +4,9 @@
 
 ## Column.isColumn() function
 
-<b>Signature:</b>
-
-```typescript
-function isColumn(value: unknown): value is Column;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Column](./alfa-table.column.md)
 

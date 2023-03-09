@@ -4,19 +4,9 @@
 
 ## Some.some() method
 
-<b>Signature:</b>
-
-```typescript
-some(predicate: Predicate<T>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-boolean
 

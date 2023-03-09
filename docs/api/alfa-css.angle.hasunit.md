@@ -4,19 +4,9 @@
 
 ## Angle.hasUnit() method
 
-<b>Signature:</b>
-
-```typescript
-hasUnit<U extends Unit.Angle>(unit: U): this is Angle<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | U |  |
-
-<b>Returns:</b>
-
-this is [Angle](./alfa-css.angle.md)<!-- -->&lt;U&gt;
 

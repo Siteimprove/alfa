@@ -4,8 +4,3 @@
 
 ## Response.EARL."@type" property
 
-<b>Signature:</b>
-
-```typescript
-"@type": ["http:Message", "http:Response"];
-```

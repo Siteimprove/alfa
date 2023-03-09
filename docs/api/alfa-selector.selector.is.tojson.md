@@ -4,12 +4,3 @@
 
 ## Selector.Is.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Is.JSON;
-```
-<b>Returns:</b>
-
-[Is.JSON](./alfa-selector.selector.is.json.md)
-

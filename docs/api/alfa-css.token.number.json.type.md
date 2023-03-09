@@ -4,8 +4,3 @@
 
 ## Token.Number.JSON.type property
 
-<b>Signature:</b>
-
-```typescript
-type: "number";
-```

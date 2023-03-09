@@ -4,8 +4,3 @@
 
 ## Name.Source.Reference.JSON.name property
 
-<b>Signature:</b>
-
-```typescript
-name: Name.JSON;
-```

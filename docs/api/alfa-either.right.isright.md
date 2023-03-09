@@ -4,19 +4,9 @@
 
 ## Right.isRight() function
 
-<b>Signature:</b>
-
-```typescript
-function isRight<R>(value: Iterable<R>): value is Right<R>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;R&gt; |  |
-
-<b>Returns:</b>
-
-value is [Right](./alfa-either.right.md)<!-- -->&lt;R&gt;
+|  value | unknown |  |
 

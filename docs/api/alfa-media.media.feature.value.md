@@ -4,8 +4,3 @@
 
 ## Media.Feature.value property
 
-<b>Signature:</b>
-
-```typescript
-get value(): Option<Value<T>>;
-```

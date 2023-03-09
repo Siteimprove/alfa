@@ -4,20 +4,10 @@
 
 ## Name.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(value: string, sources?: Iterable<Name.Source>): Name;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
 |  sources | Iterable&lt;[Name.Source](./alfa-aria.name.source.md)<!-- -->&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Name](./alfa-aria.name.md)
 

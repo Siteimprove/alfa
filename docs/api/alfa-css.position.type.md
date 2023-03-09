@@ -4,8 +4,3 @@
 
 ## Position.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "position";
-```

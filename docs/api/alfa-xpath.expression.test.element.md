@@ -4,12 +4,6 @@
 
 ## Expression.Test.Element namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Element 
-```
-
 ## Interfaces
 
 |  Interface | Description |

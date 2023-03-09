@@ -4,12 +4,6 @@
 
 ## Selector.Attribute namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace Attribute 
-```
-
 ## Enumerations
 
 |  Enumeration | Description |

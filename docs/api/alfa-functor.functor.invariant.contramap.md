@@ -4,19 +4,9 @@
 
 ## Functor.Invariant.contraMap() method
 
-<b>Signature:</b>
-
-```typescript
-contraMap<U>(mapper: Mapper<U, T>): Invariant<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;U, T&gt; |  |
-
-<b>Returns:</b>
-
-[Invariant](./alfa-functor.functor.invariant.md)<!-- -->&lt;U&gt;
 

@@ -4,12 +4,6 @@
 
 ## Iterable\_2.insert() function
 
-<b>Signature:</b>
-
-```typescript
-function insert<T>(iterable: Iterable<T>, index: number, value: T): Iterable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ function insert<T>(iterable: Iterable<T>, index: number, value: T): Iterable<T>;
 |  iterable | Iterable&lt;T&gt; |  |
 |  index | number |  |
 |  value | T |  |
-
-<b>Returns:</b>
-
-Iterable&lt;T&gt;
 

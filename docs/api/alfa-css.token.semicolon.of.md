@@ -4,12 +4,3 @@
 
 ## Token.Semicolon.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(): Semicolon;
-```
-<b>Returns:</b>
-
-[Semicolon](./alfa-css.token.semicolon.md)
-

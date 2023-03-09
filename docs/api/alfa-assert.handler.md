@@ -4,9 +4,3 @@
 
 ## Handler interface
 
-
-<b>Signature:</b>
-
-```typescript
-export interface Handler<I, T extends Hashable, Q, S> 
-```

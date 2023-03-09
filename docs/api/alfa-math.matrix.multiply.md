@@ -4,22 +4,10 @@
 
 ## Matrix.multiply() function
 
-[https://en.wikipedia.org/wiki/Matrix\_multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication)
-
-<b>Signature:</b>
-
-```typescript
-function multiply(m: Matrix, n: number | Matrix): Matrix;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 |  n | number \| [Matrix](./alfa-math.matrix.md) |  |
-
-<b>Returns:</b>
-
-[Matrix](./alfa-math.matrix.md)
 

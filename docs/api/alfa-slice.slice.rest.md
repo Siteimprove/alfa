@@ -4,12 +4,3 @@
 
 ## Slice.rest() method
 
-<b>Signature:</b>
-
-```typescript
-rest(): Slice<T>;
-```
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
-

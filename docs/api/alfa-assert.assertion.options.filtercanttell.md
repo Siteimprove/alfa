@@ -4,10 +4,3 @@
 
 ## Assertion.Options.filterCantTell property
 
-Predicate for filtering cantTell outcome. If left unset, no cantTell outcome will be reported.
-
-<b>Signature:</b>
-
-```typescript
-readonly filterCantTell?: Predicate<Outcome.CantTell<I, T, Q, S>>;
-```

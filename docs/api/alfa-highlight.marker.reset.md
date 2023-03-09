@@ -4,8 +4,3 @@
 
 ## Marker.reset variable
 
-<b>Signature:</b>
-
-```typescript
-reset: Marker
-```

@@ -4,17 +4,9 @@
 
 ## Encoder namespace
 
-[https://encoding.spec.whatwg.org/\#textencoder](https://encoding.spec.whatwg.org/#textencoder)
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Encoder 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [encode(input)](./alfa-encoding.encoder.encode.md) | [https://encoding.spec.whatwg.org/\#dom-textencoder-encode](https://encoding.spec.whatwg.org/#dom-textencoder-encode) [https://encoding.spec.whatwg.org/\#utf-8-encoder](https://encoding.spec.whatwg.org/#utf-8-encoder) |
+|  [encode](./alfa-encoding.encoder.encode.md) |  |
 

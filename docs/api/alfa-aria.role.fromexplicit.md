@@ -4,21 +4,9 @@
 
 ## Role.fromExplicit() function
 
-Get the role explicitly assigned to an element, if any.
-
-<b>Signature:</b>
-
-```typescript
-function fromExplicit(element: Element): Option<Role>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Role](./alfa-aria.role.md)<!-- -->&gt;
 

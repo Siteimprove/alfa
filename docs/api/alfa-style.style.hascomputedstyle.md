@@ -4,8 +4,3 @@
 
 ## Style.hasComputedStyle variable
 
-<b>Signature:</b>
-
-```typescript
-hasComputedStyle: typeof element.hasComputedStyle
-```

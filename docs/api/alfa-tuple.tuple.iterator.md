@@ -4,19 +4,9 @@
 
 ## Tuple.iterator() function
 
-<b>Signature:</b>
-
-```typescript
-export function iterator<T extends Tuple>(tuple: T): Iterator<Item<T>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
-
-<b>Returns:</b>
-
-Iterator&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;&gt;
 

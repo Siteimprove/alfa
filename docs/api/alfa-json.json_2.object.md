@@ -4,8 +4,3 @@
 
 ## JSON\_2.Object interface
 
-<b>Signature:</b>
-
-```typescript
-interface Object 
-```

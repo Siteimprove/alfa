@@ -4,19 +4,9 @@
 
 ## Cheerio.toPage() function
 
-<b>Signature:</b>
-
-```typescript
-function toPage(value: Type): Page;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Type](./alfa-cheerio.cheerio.type.md) |  |
-
-<b>Returns:</b>
-
-[Page](./alfa-web.page.md)
 

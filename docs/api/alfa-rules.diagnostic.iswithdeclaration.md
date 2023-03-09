@@ -4,8 +4,3 @@
 
 ## Diagnostic.isWithDeclaration variable
 
-<b>Signature:</b>
-
-```typescript
-isWithDeclaration: typeof WithDeclaration.isWithDeclaration
-```

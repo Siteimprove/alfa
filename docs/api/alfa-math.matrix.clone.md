@@ -4,19 +4,9 @@
 
 ## Matrix.clone() function
 
-<b>Signature:</b>
-
-```typescript
-function clone(m: Matrix): Matrix;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
-
-<b>Returns:</b>
-
-[Matrix](./alfa-math.matrix.md)
 

@@ -4,19 +4,9 @@
 
 ## Option.or() method
 
-<b>Signature:</b>
-
-```typescript
-or<U>(option: Option<U>): Option<T | U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  option | [Option](./alfa-option.option.md)<!-- -->&lt;U&gt; |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;T \| U&gt;
 

@@ -4,19 +4,9 @@
 
 ## Graph.has() method
 
-<b>Signature:</b>
-
-```typescript
-has(node: T): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | T |  |
-
-<b>Returns:</b>
-
-boolean
 

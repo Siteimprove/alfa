@@ -4,19 +4,10 @@
 
 ## Selector.Enabled class
 
-[https://drafts.csswg.org/selectors/\#enableddisabled](https://drafts.csswg.org/selectors/#enableddisabled) [https://html.spec.whatwg.org/multipage\#selector-enabled](https://html.spec.whatwg.org/multipage#selector-enabled)
-
-<b>Signature:</b>
-
-```typescript
-export class Enabled extends Pseudo.Class<"enabled"> 
-```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"enabled"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches(element, context)](./alfa-selector.selector.enabled.matches.md) |  |  |
-|  [of()](./alfa-selector.selector.enabled.of.md) | <code>static</code> |  |
+|  [matches](./alfa-selector.selector.enabled.matches.md) |  |  |
+|  [of](./alfa-selector.selector.enabled.of.md) |  |  |
 

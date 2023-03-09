@@ -4,18 +4,11 @@
 
 ## Fragment namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Fragment 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isFragment(value)](./alfa-dom.fragment.isfragment.md) |  |
+|  [isFragment](./alfa-dom.fragment.isfragment.md) |  |
 
 ## Interfaces
 

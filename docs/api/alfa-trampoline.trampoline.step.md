@@ -4,12 +4,3 @@
 
 ## Trampoline.step() method
 
-<b>Signature:</b>
-
-```typescript
-protected abstract step(): Trampoline<T>;
-```
-<b>Returns:</b>
-
-[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;
-

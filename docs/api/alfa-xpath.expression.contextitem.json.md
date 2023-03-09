@@ -4,15 +4,9 @@
 
 ## Expression.ContextItem.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-xpath.expression.contextitem.json.type.md) |  | "context-item" |  |
+|  [type](./alfa-xpath.expression.contextitem.json.type.md) |  |  |  |
 

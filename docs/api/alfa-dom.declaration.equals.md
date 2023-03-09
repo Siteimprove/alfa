@@ -4,21 +4,9 @@
 
 ## Declaration.equals() method
 
-Parent rule or owner element are ignored for declaration equality.
-
-<b>Signature:</b>
-
-```typescript
-equals(value: unknown): value is this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is this
 

@@ -4,19 +4,9 @@
 
 ## Circle.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Circle): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Circle](./alfa-css.circle.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

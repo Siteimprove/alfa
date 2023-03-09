@@ -4,12 +4,6 @@
 
 ## Command.withSubcommands() method
 
-<b>Signature:</b>
-
-```typescript
-static withSubcommands<F extends Command.Flags, S extends Command.Subcommands>(name: string, version: string, description: string, flags: F, subcommands: Mapper<Command, S>, parent?: Option<Command>, run?: (command: Command<F, {}, S>) => Command.Runner<F, {}>): Command<F, {}, S>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -21,8 +15,4 @@ static withSubcommands<F extends Command.Flags, S extends Command.Subcommands>(n
 |  subcommands | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;[Command](./alfa-command.command.md)<!-- -->, S&gt; |  |
 |  parent | [Option](./alfa-option.option.md)<!-- -->&lt;[Command](./alfa-command.command.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  run | (command: [Command](./alfa-command.command.md)<!-- -->&lt;F, {}, S&gt;) =&gt; [Command.Runner](./alfa-command.command.runner.md)<!-- -->&lt;F, {}&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Command](./alfa-command.command.md)<!-- -->&lt;F, {}, S&gt;
 

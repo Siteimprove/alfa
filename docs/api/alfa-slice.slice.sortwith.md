@@ -4,19 +4,10 @@
 
 ## Slice.sortWith() method
 
-<b>Signature:</b>
-
-```typescript
-sortWith(comparer: Comparer<T>): Slice<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
+|  this | [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

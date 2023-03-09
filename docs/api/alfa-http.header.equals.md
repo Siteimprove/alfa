@@ -4,19 +4,9 @@
 
 ## Header.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Header): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Header](./alfa-http.header.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

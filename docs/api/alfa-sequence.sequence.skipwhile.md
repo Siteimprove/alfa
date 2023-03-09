@@ -4,19 +4,9 @@
 
 ## Sequence.skipWhile() method
 
-<b>Signature:</b>
-
-```typescript
-skipWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

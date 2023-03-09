@@ -4,19 +4,9 @@
 
 ## Emitter.emit() method
 
-<b>Signature:</b>
-
-```typescript
-emit(event: T): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  event | T |  |
-
-<b>Returns:</b>
-
-boolean
 

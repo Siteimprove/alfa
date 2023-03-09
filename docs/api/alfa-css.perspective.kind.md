@@ -4,8 +4,3 @@
 
 ## Perspective.kind property
 
-<b>Signature:</b>
-
-```typescript
-get kind(): "perspective";
-```

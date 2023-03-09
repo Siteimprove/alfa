@@ -4,19 +4,9 @@
 
 ## Collection.Keyed.every() method
 
-<b>Signature:</b>
-
-```typescript
-every(predicate: Predicate<V, [key: K]>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
-
-<b>Returns:</b>
-
-boolean
 

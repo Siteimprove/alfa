@@ -4,50 +4,42 @@
 
 ## Hash class
 
-
-<b>Signature:</b>
-
-```typescript
-export declare abstract class Hash implements Equatable, Hashable 
-```
-<b>Implements:</b> [Equatable](./alfa-equatable.equatable.md)<!-- -->, [Hashable](./alfa-hash.hashable.md)
-
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)()](./alfa-hash.hash._constructor_.md) | <code>protected</code> | Constructs a new instance of the <code>Hash</code> class |
+|  [(constructor)](./alfa-hash.hash._constructor_.md) |  |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [equals(value)](./alfa-hash.hash.equals.md) |  |  |
-|  [equals(value)](./alfa-hash.hash.equals_1.md) |  |  |
-|  [finish()](./alfa-hash.hash.finish.md) |  | Get the current hash value as a 32-bit integer. |
-|  [hash(hash)](./alfa-hash.hash.hash.md) |  |  |
-|  [write(data)](./alfa-hash.hash.write.md) |  |  |
-|  [writeBigInt(data, size, signed)](./alfa-hash.hash.writebigint.md) |  |  |
-|  [writeBigInt64(data)](./alfa-hash.hash.writebigint64.md) |  |  |
-|  [writeBigUint64(data)](./alfa-hash.hash.writebiguint64.md) |  |  |
-|  [writeBoolean(data)](./alfa-hash.hash.writeboolean.md) |  |  |
-|  [writeFloat(data, size)](./alfa-hash.hash.writefloat.md) |  |  |
-|  [writeFloat32(data)](./alfa-hash.hash.writefloat32.md) |  |  |
-|  [writeFloat64(data)](./alfa-hash.hash.writefloat64.md) |  |  |
-|  [writeHashable(data)](./alfa-hash.hash.writehashable.md) |  |  |
-|  [writeInt(data, size, signed)](./alfa-hash.hash.writeint.md) |  |  |
-|  [writeInt16(data)](./alfa-hash.hash.writeint16.md) |  |  |
-|  [writeInt32(data)](./alfa-hash.hash.writeint32.md) |  |  |
-|  [writeInt8(data)](./alfa-hash.hash.writeint8.md) |  |  |
-|  [writeJSON(data)](./alfa-hash.hash.writejson.md) |  |  |
-|  [writeNull()](./alfa-hash.hash.writenull.md) |  |  |
-|  [writeNumber(data)](./alfa-hash.hash.writenumber.md) |  |  |
-|  [writeObject(data)](./alfa-hash.hash.writeobject.md) |  |  |
-|  [writeString(data)](./alfa-hash.hash.writestring.md) |  |  |
-|  [writeSymbol(data)](./alfa-hash.hash.writesymbol.md) |  |  |
-|  [writeUint16(data)](./alfa-hash.hash.writeuint16.md) |  |  |
-|  [writeUint32(data)](./alfa-hash.hash.writeuint32.md) |  |  |
-|  [writeUint8(data)](./alfa-hash.hash.writeuint8.md) |  |  |
-|  [writeUndefined()](./alfa-hash.hash.writeundefined.md) |  |  |
-|  [writeUnknown(data)](./alfa-hash.hash.writeunknown.md) |  |  |
+|  [equals](./alfa-hash.hash.equals.md) |  |  |
+|  [equals](./alfa-hash.hash.equals.md) |  |  |
+|  [finish](./alfa-hash.hash.finish.md) |  |  |
+|  [hash](./alfa-hash.hash.hash.md) |  |  |
+|  [write](./alfa-hash.hash.write.md) |  |  |
+|  [writeBigInt](./alfa-hash.hash.writebigint.md) |  |  |
+|  [writeBigInt64](./alfa-hash.hash.writebigint64.md) |  |  |
+|  [writeBigUint64](./alfa-hash.hash.writebiguint64.md) |  |  |
+|  [writeBoolean](./alfa-hash.hash.writeboolean.md) |  |  |
+|  [writeFloat](./alfa-hash.hash.writefloat.md) |  |  |
+|  [writeFloat32](./alfa-hash.hash.writefloat32.md) |  |  |
+|  [writeFloat64](./alfa-hash.hash.writefloat64.md) |  |  |
+|  [writeHashable](./alfa-hash.hash.writehashable.md) |  |  |
+|  [writeInt](./alfa-hash.hash.writeint.md) |  |  |
+|  [writeInt16](./alfa-hash.hash.writeint16.md) |  |  |
+|  [writeInt32](./alfa-hash.hash.writeint32.md) |  |  |
+|  [writeInt8](./alfa-hash.hash.writeint8.md) |  |  |
+|  [writeJSON](./alfa-hash.hash.writejson.md) |  |  |
+|  [writeNull](./alfa-hash.hash.writenull.md) |  |  |
+|  [writeNumber](./alfa-hash.hash.writenumber.md) |  |  |
+|  [writeObject](./alfa-hash.hash.writeobject.md) |  |  |
+|  [writeString](./alfa-hash.hash.writestring.md) |  |  |
+|  [writeSymbol](./alfa-hash.hash.writesymbol.md) |  |  |
+|  [writeUint16](./alfa-hash.hash.writeuint16.md) |  |  |
+|  [writeUint32](./alfa-hash.hash.writeuint32.md) |  |  |
+|  [writeUint8](./alfa-hash.hash.writeuint8.md) |  |  |
+|  [writeUndefined](./alfa-hash.hash.writeundefined.md) |  |  |
+|  [writeUnknown](./alfa-hash.hash.writeunknown.md) |  |  |
 

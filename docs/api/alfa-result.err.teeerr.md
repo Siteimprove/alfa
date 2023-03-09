@@ -4,19 +4,9 @@
 
 ## Err.teeErr() method
 
-<b>Signature:</b>
-
-```typescript
-teeErr(callback: Callback<E>): Err<E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;E&gt; |  |
-
-<b>Returns:</b>
-
-[Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
 

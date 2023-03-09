@@ -4,12 +4,3 @@
 
 ## Graph.nodes() method
 
-<b>Signature:</b>
-
-```typescript
-nodes(): Iterable<T>;
-```
-<b>Returns:</b>
-
-Iterable&lt;T&gt;
-

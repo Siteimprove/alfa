@@ -4,19 +4,9 @@
 
 ## Context.getState() method
 
-<b>Signature:</b>
-
-```typescript
-getState(element: Element): Context.State;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
-
-<b>Returns:</b>
-
-[Context.State](./alfa-selector.context.state.md)
 

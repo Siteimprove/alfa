@@ -4,20 +4,10 @@
 
 ## Iterable\_2.zip() function
 
-<b>Signature:</b>
-
-```typescript
-function zip<T, U = T>(a: Iterable<T>, b: Iterable<U>): Iterable<[T, U]>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | Iterable&lt;T&gt; |  |
 |  b | Iterable&lt;U&gt; |  |
-
-<b>Returns:</b>
-
-Iterable&lt;\[T, U\]&gt;
 

@@ -4,23 +4,9 @@
 
 ## Map\_2.flatten() method
 
-<b>Signature:</b>
-
-```typescript
-flatten<K, V>(this: Map<K, Map<K, V>>): Map<K, V>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | Map&lt;K, Map&lt;K, V&gt;&gt; |  |
-
-<b>Returns:</b>
-
-Map&lt;K, V&gt;
-
-## Remarks
-
-As the order of maps is undefined, it is also undefined which keys are kept when duplicate keys are encountered.
 

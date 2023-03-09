@@ -4,14 +4,3 @@
 
 ## Math\_2.isNumber() method
 
-[https://drafts.css-houdini.org/css-typed-om/\#cssnumericvalue-match](https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match)
-
-<b>Signature:</b>
-
-```typescript
-isNumber(): this is Math<"number">;
-```
-<b>Returns:</b>
-
-this is Math&lt;"number"&gt;
-

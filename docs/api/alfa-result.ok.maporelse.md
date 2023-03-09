@@ -4,19 +4,9 @@
 
 ## Ok.mapOrElse() method
 
-<b>Signature:</b>
-
-```typescript
-mapOrElse<U>(ok: Mapper<T, U>): U;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  ok | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
-
-<b>Returns:</b>
-
-U
 

@@ -4,8 +4,3 @@
 
 ## Table.JSON.cells property
 
-<b>Signature:</b>
-
-```typescript
-cells: Array<Cell.JSON>;
-```

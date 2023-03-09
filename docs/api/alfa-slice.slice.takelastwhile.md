@@ -4,19 +4,9 @@
 
 ## Slice.takeLastWhile() method
 
-<b>Signature:</b>
-
-```typescript
-takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Slice<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 

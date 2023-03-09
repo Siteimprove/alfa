@@ -4,12 +4,3 @@
 
 ## Technique.toEARL() method
 
-<b>Signature:</b>
-
-```typescript
-toEARL(): Technique.EARL;
-```
-<b>Returns:</b>
-
-[Technique.EARL](./alfa-wcag.technique.earl.md)
-

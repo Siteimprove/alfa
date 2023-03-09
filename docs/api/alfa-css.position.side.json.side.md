@@ -4,8 +4,3 @@
 
 ## Position.Side.JSON.side property
 
-<b>Signature:</b>
-
-```typescript
-side: Keyword.JSON;
-```

@@ -4,12 +4,6 @@
 
 ## Network.connect() method
 
-<b>Signature:</b>
-
-```typescript
-connect(from: N, to: N, ...edges: Array<E>): Network<N, E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ connect(from: N, to: N, ...edges: Array<E>): Network<N, E>;
 |  from | N |  |
 |  to | N |  |
 |  edges | Array&lt;E&gt; |  |
-
-<b>Returns:</b>
-
-[Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

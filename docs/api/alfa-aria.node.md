@@ -4,13 +4,6 @@
 
 ## Node namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Node 
-```
-
 ## Classes
 
 |  Class | Description |
@@ -21,7 +14,7 @@ export declare namespace Node
 
 |  Function | Description |
 |  --- | --- |
-|  [from(node, device)](./alfa-aria.node.from.md) |  |
+|  [from](./alfa-aria.node.from.md) |  |
 
 ## Interfaces
 
@@ -40,5 +33,5 @@ export declare namespace Node
 |  Variable | Description |
 |  --- | --- |
 |  [hasName](./alfa-aria.node.hasname.md) |  |
-|  [includeIgnored](./alfa-aria.node.includeignored.md) | Traversal options to include ignored nodes in the traversal. |
+|  [includeIgnored](./alfa-aria.node.includeignored.md) |  |
 

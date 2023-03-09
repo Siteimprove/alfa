@@ -4,18 +4,11 @@
 
 ## Name namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Name 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(node, device)](./alfa-aria.name.from.md) |  |
+|  [from](./alfa-aria.name.from.md) |  |
 
 ## Interfaces
 

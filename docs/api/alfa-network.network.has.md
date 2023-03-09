@@ -4,19 +4,9 @@
 
 ## Network.has() method
 
-<b>Signature:</b>
-
-```typescript
-has(node: N): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | N |  |
-
-<b>Returns:</b>
-
-boolean
 

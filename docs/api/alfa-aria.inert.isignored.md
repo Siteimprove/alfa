@@ -4,12 +4,3 @@
 
 ## Inert.isIgnored() method
 
-<b>Signature:</b>
-
-```typescript
-isIgnored(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

@@ -4,12 +4,6 @@
 
 ## Selector.Slotted namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace Slotted 
-```
-
 ## Interfaces
 
 |  Interface | Description |

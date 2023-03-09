@@ -4,18 +4,12 @@
 
 ## Cascade.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [device](./alfa-cascade.cascade.json.device.md) |  | [Device.JSON](./alfa-device.device.json.md) |  |
-|  [root](./alfa-cascade.cascade.json.root.md) |  | [Document.JSON](./alfa-dom.document.json.md) \| [Shadow.JSON](./alfa-dom.shadow.json.md) |  |
-|  [rules](./alfa-cascade.cascade.json.rules.md) |  | [RuleTree.JSON](./alfa-cascade.ruletree.json.md) |  |
-|  [selectors](./alfa-cascade.cascade.json.selectors.md) |  | SelectorMap.JSON |  |
+|  [device](./alfa-cascade.cascade.json.device.md) |  |  |  |
+|  [root](./alfa-cascade.cascade.json.root.md) |  |  |  |
+|  [rules](./alfa-cascade.cascade.json.rules.md) |  |  |  |
+|  [selectors](./alfa-cascade.cascade.json.selectors.md) |  |  |  |
 

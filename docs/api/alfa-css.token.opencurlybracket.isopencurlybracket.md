@@ -4,19 +4,9 @@
 
 ## Token.OpenCurlyBracket.isOpenCurlyBracket() function
 
-<b>Signature:</b>
-
-```typescript
-function isOpenCurlyBracket(value: unknown): value is OpenCurlyBracket;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [OpenCurlyBracket](./alfa-css.token.opencurlybracket.md)
 

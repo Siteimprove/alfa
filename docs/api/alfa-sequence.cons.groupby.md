@@ -4,19 +4,9 @@
 
 ## Cons.groupBy() method
 
-<b>Signature:</b>
-
-```typescript
-groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map<K, Sequence<T>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  grouper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, K, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-Map&lt;K, [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;&gt;
 

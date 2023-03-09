@@ -4,8 +4,3 @@
 
 ## Page.EARL."dct:source" property
 
-<b>Signature:</b>
-
-```typescript
-"dct:source": string;
-```

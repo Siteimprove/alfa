@@ -4,8 +4,3 @@
 
 ## Name.Source.Data.text property
 
-<b>Signature:</b>
-
-```typescript
-get text(): Text;
-```

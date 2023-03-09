@@ -4,13 +4,6 @@
 
 ## Site namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Site 
-```
-
 ## Interfaces
 
 |  Interface | Description |

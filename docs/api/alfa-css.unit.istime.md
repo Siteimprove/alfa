@@ -4,19 +4,9 @@
 
 ## Unit.isTime() function
 
-<b>Signature:</b>
-
-```typescript
-function isTime(unit: string): unit is Time;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | string |  |
-
-<b>Returns:</b>
-
-unit is [Time](./alfa-css.unit.time.md)
 

@@ -4,19 +4,9 @@
 
 ## Group.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T extends Hashable>(members: Iterable<T>): Group<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  members | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Group](./alfa-rules.group.md)<!-- -->&lt;T&gt;
 

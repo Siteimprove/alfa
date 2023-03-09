@@ -4,8 +4,3 @@
 
 ## Slot.JSON.x property
 
-<b>Signature:</b>
-
-```typescript
-x: number;
-```

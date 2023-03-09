@@ -4,8 +4,3 @@
 
 ## Linear.Side.JSON.side property
 
-<b>Signature:</b>
-
-```typescript
-side: Position.Vertical | Position.Horizontal;
-```

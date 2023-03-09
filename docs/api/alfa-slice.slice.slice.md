@@ -4,20 +4,10 @@
 
 ## Slice.slice() method
 
-<b>Signature:</b>
-
-```typescript
-slice(start: number, end?: number): Slice<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  start | number |  |
 |  end | number | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

@@ -4,8 +4,3 @@
 
 ## Selector.parse variable
 
-<b>Signature:</b>
-
-```typescript
-parse: Parser<Slice<Token>, Simple | Compound | Complex | List<Simple | Compound | Complex>, string, []>
-```

@@ -4,18 +4,11 @@
 
 ## Frontier namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Frontier 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isFrontier(value)](./alfa-frontier.frontier.isfrontier.md) |  |
+|  [isFrontier](./alfa-frontier.frontier.isfrontier.md) |  |
 
 ## Interfaces
 

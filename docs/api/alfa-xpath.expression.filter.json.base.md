@@ -4,8 +4,3 @@
 
 ## Expression.Filter.JSON.base property
 
-<b>Signature:</b>
-
-```typescript
-base: Expression.JSON;
-```

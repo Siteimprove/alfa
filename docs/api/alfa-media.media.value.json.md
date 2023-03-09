@@ -4,15 +4,9 @@
 
 ## Media.Value.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-media.media.value.json.type.md) |  | string |  |
+|  [type](./alfa-media.media.value.json.type.md) |  |  |  |
 

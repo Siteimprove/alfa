@@ -4,21 +4,9 @@
 
 ## Thenable.isThenable() function
 
-Check if an unknown value implements the [Thenable](./alfa-thenable.thenable.md) interface.
-
-<b>Signature:</b>
-
-```typescript
-function isThenable<T, E = unknown>(value: unknown): value is Thenable<T, E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;
 

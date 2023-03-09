@@ -4,8 +4,3 @@
 
 ## Diagnostic.empty variable
 
-<b>Signature:</b>
-
-```typescript
-empty: Diagnostic
-```

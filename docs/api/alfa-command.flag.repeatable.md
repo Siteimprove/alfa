@@ -4,12 +4,3 @@
 
 ## Flag.repeatable() method
 
-<b>Signature:</b>
-
-```typescript
-repeatable(): Flag<Array<T>>;
-```
-<b>Returns:</b>
-
-[Flag](./alfa-command.flag.md)<!-- -->&lt;Array&lt;T&gt;&gt;
-

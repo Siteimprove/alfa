@@ -4,19 +4,9 @@
 
 ## Lexer.lex() function
 
-<b>Signature:</b>
-
-```typescript
-function lex(input: string): Array<Token>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  input | string |  |
-
-<b>Returns:</b>
-
-Array&lt;[Token](./alfa-xpath.token.md)<!-- -->&gt;
 

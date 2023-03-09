@@ -4,18 +4,11 @@
 
 ## Attribute namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Attribute 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isAttribute(value)](./alfa-dom.attribute.isattribute.md) |  |
+|  [isAttribute](./alfa-dom.attribute.isattribute.md) |  |
 
 ## Interfaces
 

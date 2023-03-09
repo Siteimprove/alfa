@@ -4,8 +4,3 @@
 
 ## Rectangle.\_bottom property
 
-<b>Signature:</b>
-
-```typescript
-readonly _bottom: O;
-```

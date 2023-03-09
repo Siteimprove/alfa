@@ -4,12 +4,3 @@
 
 ## Device.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Device.JSON;
-```
-<b>Returns:</b>
-
-[Device.JSON](./alfa-device.device.json.md)
-

@@ -4,8 +4,3 @@
 
 ## Radial.Circle.JSON.radius property
 
-<b>Signature:</b>
-
-```typescript
-radius: Length.JSON;
-```

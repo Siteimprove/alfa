@@ -4,19 +4,9 @@
 
 ## Token.parseNumber() function
 
-<b>Signature:</b>
-
-```typescript
-function parseNumber(predicate?: Predicate<Number>): Parser<Slice<Token>, Number, string, []>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Number](./alfa-css.token.number.md)<!-- -->&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Number](./alfa-css.token.number.md)<!-- -->, string, \[\]&gt;
 

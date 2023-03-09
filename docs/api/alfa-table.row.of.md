@@ -4,19 +4,9 @@
 
 ## Row.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(y: number): Row;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  y | number |  |
-
-<b>Returns:</b>
-
-[Row](./alfa-table.row.md)
 

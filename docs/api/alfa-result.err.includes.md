@@ -4,12 +4,3 @@
 
 ## Err.includes() method
 
-<b>Signature:</b>
-
-```typescript
-includes(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

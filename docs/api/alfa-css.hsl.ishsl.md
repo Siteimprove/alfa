@@ -4,19 +4,9 @@
 
 ## HSL.isHSL() function
 
-<b>Signature:</b>
-
-```typescript
-function isHSL<H extends Number | Angle, A extends Number | Percentage>(value: unknown): value is HSL<H, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [HSL](./alfa-css.hsl.md)<!-- -->&lt;H, A&gt;
 

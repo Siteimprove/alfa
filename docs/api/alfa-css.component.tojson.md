@@ -4,12 +4,3 @@
 
 ## Component.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Component.JSON;
-```
-<b>Returns:</b>
-
-[Component.JSON](./alfa-css.component.json.md)
-

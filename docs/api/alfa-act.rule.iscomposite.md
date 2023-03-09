@@ -4,8 +4,3 @@
 
 ## Rule.isComposite variable
 
-<b>Signature:</b>
-
-```typescript
-isComposite: typeof Composite.isComposite
-```

@@ -4,10 +4,3 @@
 
 ## Flags.set property
 
-Adds a list of flags to the set (aka sets the flags), and return a new one.
-
-<b>Signature:</b>
-
-```typescript
-set: (...flags: Array<F>) => this;
-```

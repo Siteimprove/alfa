@@ -4,19 +4,9 @@
 
 ## Network.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals<N, E>(value: Network<N, E>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt; |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

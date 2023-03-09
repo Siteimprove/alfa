@@ -4,19 +4,9 @@
 
 ## GroupingRule.isGroupingRule() function
 
-<b>Signature:</b>
-
-```typescript
-function isGroupingRule(value: unknown): value is GroupingRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [GroupingRule](./alfa-dom.groupingrule.md)
 

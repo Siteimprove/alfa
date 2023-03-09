@@ -4,10 +4,3 @@
 
 ## HSL.parse variable
 
-[https://drafts.csswg.org/css-color/\#funcdef-hsl](https://drafts.csswg.org/css-color/#funcdef-hsl)
-
-<b>Signature:</b>
-
-```typescript
-parse: Parser<Slice<Token>, HSL, string>
-```

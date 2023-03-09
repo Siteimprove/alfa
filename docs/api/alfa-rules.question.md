@@ -4,25 +4,18 @@
 
 ## Question namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Question 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [of(uri, subject, message, options)](./alfa-rules.question.of.md) |  |
-|  [of(uri, subject, context, message, options)](./alfa-rules.question.of_1.md) |  |
+|  [of](./alfa-rules.question.of.md) |  |
+|  [of](./alfa-rules.question.of.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Type](./alfa-rules.question.type.md) | Maps the <code>type</code> parameter of questions to the expected type of the answer. |
+|  [Type](./alfa-rules.question.type.md) |  |
 
 ## Variables
 
@@ -35,7 +28,7 @@ export declare namespace Question
 |  Type Alias | Description |
 |  --- | --- |
 |  [Data](./alfa-rules.question.data.md) |  |
-|  [Metadata](./alfa-rules.question.metadata.md) | Maps the <code>uri</code> parameter of questions to their <code>type</code> parameter and the expected type of answers. |
+|  [Metadata](./alfa-rules.question.metadata.md) |  |
 |  [TypeName](./alfa-rules.question.typename.md) |  |
 |  [Typeof](./alfa-rules.question.typeof.md) |  |
 |  [Uri](./alfa-rules.question.uri.md) |  |

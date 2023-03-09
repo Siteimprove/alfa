@@ -4,14 +4,3 @@
 
 ## Cell.isEmpty() method
 
-[https://html.spec.whatwg.org/\#empty-cell](https://html.spec.whatwg.org/#empty-cell)
-
-<b>Signature:</b>
-
-```typescript
-isEmpty(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

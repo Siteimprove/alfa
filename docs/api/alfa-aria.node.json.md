@@ -4,16 +4,9 @@
 
 ## Node.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<T extends string = string> extends tree.Node.JSON<T> 
-```
-<b>Extends:</b> tree.[Node.JSON](./alfa-tree.node.json.md)<!-- -->&lt;T&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [node](./alfa-aria.node.json.node.md) |  | string |  |
+|  [node](./alfa-aria.node.json.node.md) |  |  |  |
 

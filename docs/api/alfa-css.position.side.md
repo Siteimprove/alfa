@@ -4,12 +4,6 @@
 
 ## Position.Side namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace Side 
-```
-
 ## Interfaces
 
 |  Interface | Description |

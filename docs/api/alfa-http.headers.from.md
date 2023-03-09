@@ -4,19 +4,9 @@
 
 ## Headers.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from(json: JSON): Headers;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-http.headers.json.md) |  |
-
-<b>Returns:</b>
-
-[Headers](./alfa-http.headers.md)
 

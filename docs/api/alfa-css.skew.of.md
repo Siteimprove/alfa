@@ -4,20 +4,10 @@
 
 ## Skew.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<X extends Angle, Y extends Angle>(x: X, y: Y): Skew<X, Y>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  x | X |  |
 |  y | Y |  |
-
-<b>Returns:</b>
-
-[Skew](./alfa-css.skew.md)<!-- -->&lt;X, Y&gt;
 

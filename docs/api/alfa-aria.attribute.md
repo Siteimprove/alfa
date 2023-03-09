@@ -4,18 +4,11 @@
 
 ## Attribute namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Attribute 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isName(value)](./alfa-aria.attribute.isname.md) |  |
+|  [isName](./alfa-aria.attribute.isname.md) |  |
 
 ## Interfaces
 
@@ -27,10 +20,10 @@ export declare namespace Attribute
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Default](./alfa-aria.attribute.default.md) | The default value, if any, of the specified attribute. |
-|  [Global](./alfa-aria.attribute.global.md) | The names of all global attributes. |
-|  [Kind](./alfa-aria.attribute.kind.md) | The kind of the specified attribute. |
+|  [Default](./alfa-aria.attribute.default.md) |  |
+|  [Global](./alfa-aria.attribute.global.md) |  |
+|  [Kind](./alfa-aria.attribute.kind.md) |  |
 |  [Name](./alfa-aria.attribute.name.md) |  |
-|  [Option](./alfa-aria.attribute.option.md) | The type of the options allowed by the specified attribute. |
-|  [Type](./alfa-aria.attribute.type.md) | The type of the specified attribute. |
+|  [Option](./alfa-aria.attribute.option.md) |  |
+|  [Type](./alfa-aria.attribute.type.md) |  |
 

@@ -4,16 +4,10 @@
 
 ## Token.Comment.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-xpath.token.comment.json.type.md) |  | "comment" |  |
-|  [value](./alfa-xpath.token.comment.json.value.md) |  | string |  |
+|  [type](./alfa-xpath.token.comment.json.type.md) |  |  |  |
+|  [value](./alfa-xpath.token.comment.json.value.md) |  |  |  |
 

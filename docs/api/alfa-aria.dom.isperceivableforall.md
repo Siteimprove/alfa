@@ -4,8 +4,3 @@
 
 ## DOM.isPerceivableForAll variable
 
-<b>Signature:</b>
-
-```typescript
-isPerceivableForAll: typeof dom.isPerceivableForAll
-```

@@ -4,12 +4,3 @@
 
 ## Err.getErrOr() method
 
-<b>Signature:</b>
-
-```typescript
-getErrOr(): E;
-```
-<b>Returns:</b>
-
-E
-

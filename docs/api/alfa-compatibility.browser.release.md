@@ -4,12 +4,6 @@
 
 ## Browser.Release namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Release 
-```
-
 ## Interfaces
 
 |  Interface | Description |

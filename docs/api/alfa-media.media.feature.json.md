@@ -4,17 +4,11 @@
 
 ## Media.Feature.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-export interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-media.media.feature.json.name.md) |  | string |  |
-|  [type](./alfa-media.media.feature.json.type.md) |  | "feature" |  |
-|  [value](./alfa-media.media.feature.json.value.md) |  | [Value.JSON](./alfa-media.media.value.json.md) \| null |  |
+|  [name](./alfa-media.media.feature.json.name.md) |  |  |  |
+|  [type](./alfa-media.media.feature.json.type.md) |  |  |  |
+|  [value](./alfa-media.media.feature.json.value.md) |  |  |  |
 

@@ -4,19 +4,9 @@
 
 ## Token.parseDimension() function
 
-<b>Signature:</b>
-
-```typescript
-function parseDimension(predicate?: Predicate<Dimension>): Parser<Slice<Token>, Dimension, string, []>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Dimension](./alfa-css.token.dimension.md)<!-- -->&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Dimension](./alfa-css.token.dimension.md)<!-- -->, string, \[\]&gt;
 

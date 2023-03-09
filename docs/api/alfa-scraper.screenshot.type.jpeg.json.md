@@ -4,16 +4,10 @@
 
 ## Screenshot.Type.JPEG.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [quality](./alfa-scraper.screenshot.type.jpeg.json.quality.md) |  | number |  |
-|  [type](./alfa-scraper.screenshot.type.jpeg.json.type.md) |  | "jpeg" |  |
+|  [quality](./alfa-scraper.screenshot.type.jpeg.json.quality.md) |  |  |  |
+|  [type](./alfa-scraper.screenshot.type.jpeg.json.type.md) |  |  |  |
 

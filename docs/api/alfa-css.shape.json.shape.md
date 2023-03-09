@@ -4,8 +4,3 @@
 
 ## Shape.JSON.shape property
 
-<b>Signature:</b>
-
-```typescript
-shape: Circle.JSON | Ellipse.JSON | Inset.JSON | Polygon.JSON | Rectangle.JSON;
-```

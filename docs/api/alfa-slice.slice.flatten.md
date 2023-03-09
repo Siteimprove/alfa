@@ -4,19 +4,9 @@
 
 ## Slice.flatten() method
 
-<b>Signature:</b>
-
-```typescript
-flatten<T>(this: Slice<Slice<T>>): Slice<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Slice](./alfa-slice.slice.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

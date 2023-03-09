@@ -4,8 +4,3 @@
 
 ## Outcome.target property
 
-<b>Signature:</b>
-
-```typescript
-get target(): T | undefined;
-```

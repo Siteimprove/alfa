@@ -4,16 +4,9 @@
 
 ## Selector.Id.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Selector.JSON<"id"> 
-```
-<b>Extends:</b> [Selector.JSON](./alfa-selector.selector.json.md)<!-- -->&lt;"id"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-selector.selector.id.json.name.md) |  | string |  |
+|  [name](./alfa-selector.selector.id.json.name.md) |  |  |  |
 

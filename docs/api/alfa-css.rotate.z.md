@@ -4,8 +4,3 @@
 
 ## Rotate.z property
 
-<b>Signature:</b>
-
-```typescript
-get z(): Number;
-```

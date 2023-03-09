@@ -4,8 +4,3 @@
 
 ## Dimension.\_unit property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _unit: V;
-```

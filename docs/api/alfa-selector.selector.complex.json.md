@@ -4,18 +4,11 @@
 
 ## Selector.Complex.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Selector.JSON<"complex"> 
-```
-<b>Extends:</b> [Selector.JSON](./alfa-selector.selector.json.md)<!-- -->&lt;"complex"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [combinator](./alfa-selector.selector.complex.json.combinator.md) |  | string |  |
-|  [left](./alfa-selector.selector.complex.json.left.md) |  | [Simple.JSON](./alfa-selector.selector.simple.json.md) \| [Compound.JSON](./alfa-selector.selector.compound.json.md) \| [JSON](./alfa-selector.selector.complex.json.md) |  |
-|  [right](./alfa-selector.selector.complex.json.right.md) |  | [Simple.JSON](./alfa-selector.selector.simple.json.md) \| [Compound.JSON](./alfa-selector.selector.compound.json.md) |  |
+|  [combinator](./alfa-selector.selector.complex.json.combinator.md) |  |  |  |
+|  [left](./alfa-selector.selector.complex.json.left.md) |  |  |  |
+|  [right](./alfa-selector.selector.complex.json.right.md) |  |  |  |
 

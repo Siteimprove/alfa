@@ -4,19 +4,9 @@
 
 ## Scripting.isScripting() function
 
-<b>Signature:</b>
-
-```typescript
-function isScripting(value: unknown): value is Scripting;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Scripting](./alfa-device.scripting.md)
 

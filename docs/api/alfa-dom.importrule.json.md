@@ -4,17 +4,10 @@
 
 ## ImportRule.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends ConditionRule.JSON 
-```
-<b>Extends:</b> [ConditionRule.JSON](./alfa-dom.conditionrule.json.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [href](./alfa-dom.importrule.json.href.md) |  | string |  |
-|  [type](./alfa-dom.importrule.json.type.md) |  | "import" |  |
+|  [href](./alfa-dom.importrule.json.href.md) |  |  |  |
+|  [type](./alfa-dom.importrule.json.type.md) |  |  |  |
 

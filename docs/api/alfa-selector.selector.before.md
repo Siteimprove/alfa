@@ -4,18 +4,9 @@
 
 ## Selector.Before class
 
-[https://drafts.csswg.org/css-pseudo/\#selectordef-before](https://drafts.csswg.org/css-pseudo/#selectordef-before)
-
-<b>Signature:</b>
-
-```typescript
-export class Before extends Pseudo.Element<"before"> 
-```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"before"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [of()](./alfa-selector.selector.before.of.md) | <code>static</code> |  |
+|  [of](./alfa-selector.selector.before.of.md) |  |  |
 

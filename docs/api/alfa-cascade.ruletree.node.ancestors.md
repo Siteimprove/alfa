@@ -4,12 +4,3 @@
 
 ## RuleTree.Node.ancestors() method
 
-<b>Signature:</b>
-
-```typescript
-ancestors(): Iterable<Node>;
-```
-<b>Returns:</b>
-
-Iterable&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt;
-

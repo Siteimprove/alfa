@@ -4,19 +4,9 @@
 
 ## Inert.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(owner: dom.Node): Inert;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  owner | dom.[Node](./alfa-dom.node.md) |  |
-
-<b>Returns:</b>
-
-[Inert](./alfa-aria.inert.md)
 

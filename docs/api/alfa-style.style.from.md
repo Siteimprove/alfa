@@ -4,12 +4,6 @@
 
 ## Style.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from(element: Element, device: Device, context?: Context): Style;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ function from(element: Element, device: Device, context?: Context): Style;
 |  element | [Element](./alfa-dom.element.md) |  |
 |  device | [Device](./alfa-device.device.md) |  |
 |  context | [Context](./alfa-selector.context.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Style](./alfa-style.style.md)
 

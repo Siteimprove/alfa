@@ -4,8 +4,3 @@
 
 ## Question.uri property
 
-<b>Signature:</b>
-
-```typescript
-get uri(): URI;
-```

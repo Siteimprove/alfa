@@ -4,19 +4,9 @@
 
 ## Result.getOr() method
 
-<b>Signature:</b>
-
-```typescript
-getOr<U>(value: U): T | U;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | U |  |
-
-<b>Returns:</b>
-
-T \| U
 

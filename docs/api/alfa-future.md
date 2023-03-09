@@ -8,7 +8,7 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Future](./alfa-future.future.md) | [http://blog.higher-order.com/assets/trampolines.pdf](http://blog.higher-order.com/assets/trampolines.pdf) |
+|  [Future](./alfa-future.future.md) |  |
 
 ## Namespaces
 

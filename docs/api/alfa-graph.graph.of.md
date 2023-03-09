@@ -4,19 +4,9 @@
 
 ## Graph.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T>(nodes: Map<T, Set<T>>): Graph<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  nodes | Map&lt;T, Set&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

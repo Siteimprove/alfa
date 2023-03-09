@@ -4,18 +4,11 @@
 
 ## Text namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Text 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isText(value)](./alfa-dom.text.istext.md) |  |
+|  [isText](./alfa-dom.text.istext.md) |  |
 
 ## Interfaces
 

@@ -4,8 +4,3 @@
 
 ## Media.isAnd variable
 
-<b>Signature:</b>
-
-```typescript
-isAnd: typeof And.isAnd
-```

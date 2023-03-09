@@ -4,17 +4,10 @@
 
 ## Criterion.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Requirement.JSON 
-```
-<b>Extends:</b> [Requirement.JSON](./alfa-act.requirement.json.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [chapter](./alfa-wcag.criterion.json.chapter.md) |  | [Chapter](./alfa-wcag.criterion.chapter.md) |  |
-|  [title](./alfa-wcag.criterion.json.title.md) |  | string |  |
+|  [chapter](./alfa-wcag.criterion.json.chapter.md) |  |  |  |
+|  [title](./alfa-wcag.criterion.json.title.md) |  |  |  |
 

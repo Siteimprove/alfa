@@ -4,19 +4,9 @@
 
 ## Network.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<N, E>(nodes: Map<N, Map<N, Set<E>>>): Network<N, E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  nodes | Map&lt;N, Map&lt;N, Set&lt;E&gt;&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

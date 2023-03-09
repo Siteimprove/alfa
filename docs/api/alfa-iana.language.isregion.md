@@ -4,8 +4,3 @@
 
 ## Language.isRegion variable
 
-<b>Signature:</b>
-
-```typescript
-isRegion: typeof Region.isRegion
-```

@@ -4,8 +4,3 @@
 
 ## Radial.Circle.JSON.type property
 
-<b>Signature:</b>
-
-```typescript
-type: "circle";
-```

@@ -4,12 +4,3 @@
 
 ## Request.toEARL() method
 
-<b>Signature:</b>
-
-```typescript
-toEARL(): Request.EARL;
-```
-<b>Returns:</b>
-
-[Request.EARL](./alfa-http.request.earl.md)
-

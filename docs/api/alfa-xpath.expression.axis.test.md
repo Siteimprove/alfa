@@ -4,8 +4,3 @@
 
 ## Expression.Axis.test property
 
-<b>Signature:</b>
-
-```typescript
-get test(): Option<Test>;
-```

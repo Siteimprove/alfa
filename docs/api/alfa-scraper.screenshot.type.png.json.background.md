@@ -4,8 +4,3 @@
 
 ## Screenshot.Type.PNG.JSON.background property
 
-<b>Signature:</b>
-
-```typescript
-background: boolean;
-```

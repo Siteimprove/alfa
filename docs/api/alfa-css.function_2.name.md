@@ -4,8 +4,3 @@
 
 ## Function\_2.name property
 
-<b>Signature:</b>
-
-```typescript
-get name(): string;
-```

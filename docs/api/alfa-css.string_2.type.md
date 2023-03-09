@@ -4,8 +4,3 @@
 
 ## String\_2.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "string";
-```

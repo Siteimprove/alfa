@@ -4,11 +4,3 @@
 
 ## Type type
 
-
-<b>Signature:</b>
-
-```typescript
-export declare type Type = Item.Type | Item.Sequence<Item.Type> | Item.Optional<Item.Type>;
-```
-<b>References:</b> [Item.Type](./alfa-xpath.item.type.md)<!-- -->, [Item.Sequence](./alfa-xpath.item.sequence.md)<!-- -->, [Item.Optional](./alfa-xpath.item.optional.md)
-

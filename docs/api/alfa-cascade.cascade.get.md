@@ -4,12 +4,6 @@
 
 ## Cascade.get() method
 
-<b>Signature:</b>
-
-```typescript
-get(element: Element, context?: Context, filter?: Option<AncestorFilter>): Option<RuleTree.Node>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ get(element: Element, context?: Context, filter?: Option<AncestorFilter>): Optio
 |  element | [Element](./alfa-dom.element.md) |  |
 |  context | [Context](./alfa-selector.context.md) | <i>(Optional)</i> |
 |  filter | [Option](./alfa-option.option.md)<!-- -->&lt;AncestorFilter&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[RuleTree.Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt;
 

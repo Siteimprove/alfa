@@ -4,12 +4,3 @@
 
 ## List.distinct() method
 
-<b>Signature:</b>
-
-```typescript
-distinct(): List<T>;
-```
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
-

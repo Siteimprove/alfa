@@ -4,8 +4,3 @@
 
 ## StyleRule.hint property
 
-<b>Signature:</b>
-
-```typescript
-get hint(): boolean;
-```

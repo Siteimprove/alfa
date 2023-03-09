@@ -4,8 +4,3 @@
 
 ## RGB.JSON.red property
 
-<b>Signature:</b>
-
-```typescript
-red: Number.JSON | Percentage.JSON;
-```

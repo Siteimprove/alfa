@@ -4,19 +4,9 @@
 
 ## Matrix.size() function
 
-<b>Signature:</b>
-
-```typescript
-function size(m: Matrix): [number, number];
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
-
-<b>Returns:</b>
-
-\[number, number\]
 

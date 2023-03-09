@@ -4,19 +4,9 @@
 
 ## Option.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from<T>(value: T | null | undefined): Option<NonNullable<T>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T \| null \| undefined |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;NonNullable&lt;T&gt;&gt;
 

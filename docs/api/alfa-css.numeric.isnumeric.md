@@ -4,19 +4,9 @@
 
 ## Numeric.isNumeric() function
 
-<b>Signature:</b>
-
-```typescript
-function isNumeric(value: unknown): value is Numeric;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Numeric](./alfa-css.numeric.md)
 

@@ -4,8 +4,3 @@
 
 ## Question.Options.fallback property
 
-<b>Signature:</b>
-
-```typescript
-readonly fallback?: Option<A>;
-```

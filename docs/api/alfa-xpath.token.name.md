@@ -4,12 +4,6 @@
 
 ## Token.Name namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Name 
-```
-
 ## Interfaces
 
 |  Interface | Description |

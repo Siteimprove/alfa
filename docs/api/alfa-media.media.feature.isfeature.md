@@ -4,19 +4,9 @@
 
 ## Media.Feature.isFeature() function
 
-<b>Signature:</b>
-
-```typescript
-export function isFeature(value: unknown): value is Feature;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Feature](./alfa-media.media.feature.md)
 

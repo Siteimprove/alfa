@@ -4,8 +4,3 @@
 
 ## Type.JSON.systemId property
 
-<b>Signature:</b>
-
-```typescript
-systemId: string | null;
-```

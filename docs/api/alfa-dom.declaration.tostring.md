@@ -4,12 +4,3 @@
 
 ## Declaration.toString() method
 
-<b>Signature:</b>
-
-```typescript
-toString(): string;
-```
-<b>Returns:</b>
-
-string
-

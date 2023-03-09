@@ -4,24 +4,10 @@
 
 ## Vector.cross() function
 
-Compute the cross product of two 3-dimensional vectors.
-
-[https://en.wikipedia.org/wiki/Cross\_product](https://en.wikipedia.org/wiki/Cross_product)
-
-<b>Signature:</b>
-
-```typescript
-function cross(v: Vector, u: Vector): Vector;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
 |  u | [Vector](./alfa-math.vector.md) |  |
-
-<b>Returns:</b>
-
-[Vector](./alfa-math.vector.md)
 

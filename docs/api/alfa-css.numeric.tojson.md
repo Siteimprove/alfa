@@ -4,12 +4,3 @@
 
 ## Numeric.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Numeric.JSON<T>;
-```
-<b>Returns:</b>
-
-[Numeric.JSON](./alfa-css.numeric.json.md)<!-- -->&lt;T&gt;
-

@@ -4,8 +4,3 @@
 
 ## Argument.Options.default property
 
-<b>Signature:</b>
-
-```typescript
-default: Option<string>;
-```

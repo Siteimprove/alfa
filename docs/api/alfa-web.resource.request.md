@@ -4,8 +4,3 @@
 
 ## Resource.request property
 
-<b>Signature:</b>
-
-```typescript
-readonly request: Request;
-```

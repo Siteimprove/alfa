@@ -4,20 +4,10 @@
 
 ## Frontier.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(scope: string | URL, seed?: Iterable<string | URL>): Frontier;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  scope | string \| [URL](./alfa-url.url.md) |  |
 |  seed | Iterable&lt;string \| [URL](./alfa-url.url.md)<!-- -->&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Frontier](./alfa-frontier.frontier.md)
 

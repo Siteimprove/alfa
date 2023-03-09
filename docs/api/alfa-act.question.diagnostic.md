@@ -4,8 +4,3 @@
 
 ## Question.diagnostic property
 
-<b>Signature:</b>
-
-```typescript
-get diagnostic(): Diagnostic;
-```

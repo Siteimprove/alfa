@@ -4,12 +4,3 @@
 
 ## Language.Region.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Region.JSON;
-```
-<b>Returns:</b>
-
-[Region.JSON](./alfa-iana.language.region.json.md)
-

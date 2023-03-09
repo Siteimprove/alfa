@@ -4,10 +4,3 @@
 
 ## Role.requiredParent property
 
-Get the required parent of this role.
-
-<b>Signature:</b>
-
-```typescript
-get requiredParent(): ReadonlyArray<ReadonlyArray<Role.Name>>;
-```

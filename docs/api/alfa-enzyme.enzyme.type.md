@@ -4,8 +4,3 @@
 
 ## Enzyme.Type type
 
-<b>Signature:</b>
-
-```typescript
-type Type = CommonWrapper;
-```

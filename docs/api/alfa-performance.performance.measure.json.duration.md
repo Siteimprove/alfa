@@ -4,8 +4,3 @@
 
 ## Performance.Measure.JSON.duration property
 
-<b>Signature:</b>
-
-```typescript
-duration: number;
-```

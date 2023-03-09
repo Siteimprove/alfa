@@ -4,19 +4,9 @@
 
 ## Block.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(declarations: Iterable<Declaration>): Block;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  declarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-[Block](./alfa-dom.block.md)
 

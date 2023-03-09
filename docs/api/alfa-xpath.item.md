@@ -4,13 +4,6 @@
 
 ## Item namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Item 
-```
-
 ## Type Aliases
 
 |  Type Alias | Description |

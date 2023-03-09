@@ -4,19 +4,9 @@
 
 ## Graph.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals<T>(value: Graph<T>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

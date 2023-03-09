@@ -4,8 +4,3 @@
 
 ## Command.JSON.arguments property
 
-<b>Signature:</b>
-
-```typescript
-arguments: Array<Argument.JSON>;
-```

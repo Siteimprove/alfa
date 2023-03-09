@@ -4,10 +4,3 @@
 
 ## Value.(constructor)
 
-Constructs a new instance of the `Value` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor();
-```

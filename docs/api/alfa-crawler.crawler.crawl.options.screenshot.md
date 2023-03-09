@@ -4,8 +4,3 @@
 
 ## Crawler.crawl.Options.screenshot property
 
-<b>Signature:</b>
-
-```typescript
-screenshot?: Mapper<URL, Screenshot>;
-```

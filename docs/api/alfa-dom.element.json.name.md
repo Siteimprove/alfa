@@ -4,8 +4,3 @@
 
 ## Element.JSON.name property
 
-<b>Signature:</b>
-
-```typescript
-name: N;
-```

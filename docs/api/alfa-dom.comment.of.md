@@ -4,19 +4,9 @@
 
 ## Comment.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(data: string): Comment;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | string |  |
-
-<b>Returns:</b>
-
-[Comment](./alfa-dom.comment.md)
 

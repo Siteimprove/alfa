@@ -4,19 +4,9 @@
 
 ## Performance.Measure.isMeasure() function
 
-<b>Signature:</b>
-
-```typescript
-function isMeasure<T>(value: unknown | Entry<T>): value is Measure<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown \| [Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is [Measure](./alfa-performance.performance.measure.md)<!-- -->&lt;T&gt;
 

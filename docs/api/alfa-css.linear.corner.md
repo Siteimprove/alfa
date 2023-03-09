@@ -4,12 +4,6 @@
 
 ## Linear.Corner namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Corner 
-```
-
 ## Interfaces
 
 |  Interface | Description |

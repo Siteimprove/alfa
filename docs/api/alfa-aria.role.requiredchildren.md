@@ -4,10 +4,3 @@
 
 ## Role.requiredChildren property
 
-Get the required children of this role.
-
-<b>Signature:</b>
-
-```typescript
-get requiredChildren(): ReadonlyArray<ReadonlyArray<Role.Name>>;
-```

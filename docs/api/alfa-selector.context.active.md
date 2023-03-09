@@ -4,19 +4,9 @@
 
 ## Context.active() method
 
-<b>Signature:</b>
-
-```typescript
-static active(element: Element): Context;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
-
-<b>Returns:</b>
-
-[Context](./alfa-selector.context.md)
 

@@ -4,12 +4,6 @@
 
 ## Element.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable<Attribute>, children?: Iterable<Node>, style?: Option<Block>): Element<N>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -20,8 +14,4 @@ static of<N extends string = string>(namespace: Option<Namespace>, prefix: Optio
 |  attributes | Iterable&lt;[Attribute](./alfa-dom.attribute.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  children | Iterable&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  style | [Option](./alfa-option.option.md)<!-- -->&lt;[Block](./alfa-dom.block.md)<!-- -->&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Element](./alfa-dom.element.md)<!-- -->&lt;N&gt;
 

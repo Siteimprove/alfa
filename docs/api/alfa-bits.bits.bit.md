@@ -4,19 +4,9 @@
 
 ## Bits.bit() function
 
-<b>Signature:</b>
-
-```typescript
-function bit(i: number): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  i | number |  |
-
-<b>Returns:</b>
-
-number
 

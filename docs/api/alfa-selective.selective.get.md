@@ -4,12 +4,3 @@
 
 ## Selective.get() method
 
-<b>Signature:</b>
-
-```typescript
-get(): S | T;
-```
-<b>Returns:</b>
-
-S \| T
-

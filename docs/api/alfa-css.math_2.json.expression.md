@@ -4,8 +4,3 @@
 
 ## Math\_2.JSON.expression property
 
-<b>Signature:</b>
-
-```typescript
-expression: Expression.JSON;
-```

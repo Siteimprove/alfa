@@ -4,19 +4,9 @@
 
 ## Viewport.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from(json: JSON): Viewport;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-device.viewport.json.md) |  |
-
-<b>Returns:</b>
-
-[Viewport](./alfa-device.viewport.md)
 

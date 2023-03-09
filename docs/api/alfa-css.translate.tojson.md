@@ -4,12 +4,3 @@
 
 ## Translate.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Translate.JSON;
-```
-<b>Returns:</b>
-
-[Translate.JSON](./alfa-css.translate.json.md)
-

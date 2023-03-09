@@ -4,12 +4,3 @@
 
 ## Media.And.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): And.JSON;
-```
-<b>Returns:</b>
-
-[And.JSON](./alfa-media.media.and.json.md)
-

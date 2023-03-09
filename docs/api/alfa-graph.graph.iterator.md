@@ -4,12 +4,3 @@
 
 ## Graph.iterator() method
 
-<b>Signature:</b>
-
-```typescript
-iterator(): Iterator<[T, Iterable<T>]>;
-```
-<b>Returns:</b>
-
-Iterator&lt;\[T, Iterable&lt;T&gt;\]&gt;
-

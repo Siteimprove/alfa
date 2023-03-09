@@ -10,8 +10,8 @@
 |  --- | --- |
 |  [Device](./alfa-device.device.md) |  |
 |  [Display](./alfa-device.display.md) |  |
-|  [Preference](./alfa-device.preference.md) | [https://drafts.csswg.org/mediaqueries-5/\#mf-user-preferences](https://drafts.csswg.org/mediaqueries-5/#mf-user-preferences) |
-|  [Scripting](./alfa-device.scripting.md) | [https://drafts.csswg.org/mediaqueries-5/\#mf-scripting](https://drafts.csswg.org/mediaqueries-5/#mf-scripting) |
+|  [Preference](./alfa-device.preference.md) |  |
+|  [Scripting](./alfa-device.scripting.md) |  |
 |  [Viewport](./alfa-device.viewport.md) |  |
 
 ## Namespaces

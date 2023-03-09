@@ -4,18 +4,11 @@
 
 ## Polygon.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<F extends Fill = Fill, V extends Length | Percentage = Length | Percentage> extends Value.JSON<"basic-shape"> 
-```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"basic-shape"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [fill](./alfa-css.polygon.json.fill.md) |  | [Option.JSON](./alfa-option.option.json.md)<!-- -->&lt;F&gt; |  |
-|  [kind](./alfa-css.polygon.json.kind.md) |  | "polygon" |  |
-|  [vertices](./alfa-css.polygon.json.vertices.md) |  | Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;[Vertex](./alfa-css.polygon.vertex.md)<!-- -->&lt;V&gt;&gt;&gt; |  |
+|  [fill](./alfa-css.polygon.json.fill.md) |  |  |  |
+|  [kind](./alfa-css.polygon.json.kind.md) |  |  |  |
+|  [vertices](./alfa-css.polygon.json.vertices.md) |  |  |  |
 

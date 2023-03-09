@@ -4,8 +4,3 @@
 
 ## Expression.Filter.base property
 
-<b>Signature:</b>
-
-```typescript
-get base(): Expression;
-```

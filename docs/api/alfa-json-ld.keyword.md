@@ -4,10 +4,3 @@
 
 ## Keyword type
 
-[https://www.w3.org/TR/json-ld/\#dfn-keyword](https://www.w3.org/TR/json-ld/#dfn-keyword)
-
-<b>Signature:</b>
-
-```typescript
-export declare type Keyword = "@base" | "@container" | "@context" | "@direction" | "@graph" | "@id" | "@import" | "@included" | "@index" | "@json" | "@language" | "@list" | "@nest" | "@none" | "@prefix" | "@propagate" | "@protected" | "@reverse" | "@set" | "@type" | "@value" | "@version" | "@vocab";
-```

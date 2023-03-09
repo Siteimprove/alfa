@@ -4,19 +4,9 @@
 
 ## Token.OpenSquareBracket.isOpenSquareBracket() function
 
-<b>Signature:</b>
-
-```typescript
-function isOpenSquareBracket(value: unknown): value is OpenSquareBracket;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [OpenSquareBracket](./alfa-css.token.opensquarebracket.md)
 

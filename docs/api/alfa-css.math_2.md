@@ -4,18 +4,11 @@
 
 ## Math\_2 namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Math 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isCalculation(value)](./alfa-css.math_2.iscalculation.md) |  |
+|  [isCalculation](./alfa-css.math_2.iscalculation.md) |  |
 
 ## Interfaces
 

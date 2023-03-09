@@ -4,15 +4,9 @@
 
 ## Tag.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<T extends string = string> 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-act.tag.json.type.md) |  | T |  |
+|  [type](./alfa-act.tag.json.type.md) |  |  |  |
 

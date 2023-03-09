@@ -4,8 +4,3 @@
 
 ## Feature.Name type
 
-<b>Signature:</b>
-
-```typescript
-type Name = keyof Features;
-```

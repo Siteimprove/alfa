@@ -4,8 +4,3 @@
 
 ## Element.qualifiedName property
 
-<b>Signature:</b>
-
-```typescript
-get qualifiedName(): string;
-```

@@ -4,19 +4,9 @@
 
 ## Err.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<E>(error: E): Err<E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  error | E |  |
-
-<b>Returns:</b>
-
-[Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
 

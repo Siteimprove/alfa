@@ -4,8 +4,3 @@
 
 ## KeyframeRule.key property
 
-<b>Signature:</b>
-
-```typescript
-get key(): string;
-```

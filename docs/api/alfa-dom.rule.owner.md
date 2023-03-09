@@ -4,8 +4,3 @@
 
 ## Rule.owner property
 
-<b>Signature:</b>
-
-```typescript
-get owner(): Option<Sheet>;
-```

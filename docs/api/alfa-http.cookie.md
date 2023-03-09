@@ -4,19 +4,12 @@
 
 ## Cookie namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Cookie 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(json)](./alfa-http.cookie.from.md) |  |
-|  [isCookie(value)](./alfa-http.cookie.iscookie.md) |  |
+|  [from](./alfa-http.cookie.from.md) |  |
+|  [isCookie](./alfa-http.cookie.iscookie.md) |  |
 
 ## Interfaces
 

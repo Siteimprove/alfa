@@ -4,19 +4,9 @@
 
 ## Token.Ident.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(value: string): Ident;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
-
-<b>Returns:</b>
-
-[Ident](./alfa-css.token.ident.md)
 

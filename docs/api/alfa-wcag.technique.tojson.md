@@ -4,12 +4,3 @@
 
 ## Technique.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Technique.JSON;
-```
-<b>Returns:</b>
-
-[Technique.JSON](./alfa-wcag.technique.json.md)
-

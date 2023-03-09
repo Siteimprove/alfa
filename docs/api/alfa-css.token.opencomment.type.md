@@ -4,8 +4,3 @@
 
 ## Token.OpenComment.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "open-comment";
-```

@@ -4,17 +4,11 @@
 
 ## Device.Type enum
 
-<b>Signature:</b>
-
-```typescript
-enum Type 
-```
-
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  Print | <code>&quot;print&quot;</code> |  |
-|  Screen | <code>&quot;screen&quot;</code> |  |
-|  Speech | <code>&quot;speech&quot;</code> |  |
+|  Print |  |  |
+|  Screen |  |  |
+|  Speech |  |  |
 

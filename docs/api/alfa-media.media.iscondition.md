@@ -4,8 +4,3 @@
 
 ## Media.isCondition variable
 
-<b>Signature:</b>
-
-```typescript
-isCondition: typeof Condition.isCondition
-```

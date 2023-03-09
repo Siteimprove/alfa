@@ -4,8 +4,3 @@
 
 ## Question.\_diagnostic property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _diagnostic: Diagnostic;
-```

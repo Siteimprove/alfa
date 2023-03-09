@@ -4,19 +4,9 @@
 
 ## Parser.parse() function
 
-<b>Signature:</b>
-
-```typescript
-function parse(input: string): Option<Expression>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  input | string |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt;
 

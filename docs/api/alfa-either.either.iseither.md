@@ -4,19 +4,9 @@
 
 ## Either.isEither() function
 
-<b>Signature:</b>
-
-```typescript
-function isEither<L, R>(value: Iterable<L | R>): value is Either<L, R>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;L \| R&gt; |  |
-
-<b>Returns:</b>
-
-value is [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;
+|  value | unknown |  |
 

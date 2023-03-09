@@ -4,19 +4,9 @@
 
 ## Value.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Value): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Value](./alfa-style.value.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

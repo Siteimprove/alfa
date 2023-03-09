@@ -4,10 +4,3 @@
 
 ## Gradient.parseItemList variable
 
-[https://drafts.csswg.org/css-images/\#typedef-color-stop-list](https://drafts.csswg.org/css-images/#typedef-color-stop-list)
-
-<b>Signature:</b>
-
-```typescript
-parseItemList: Parser<Slice<Token>, Array<Item>, string>
-```

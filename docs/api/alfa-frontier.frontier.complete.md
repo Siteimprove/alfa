@@ -4,21 +4,9 @@
 
 ## Frontier.complete() method
 
-Mark a URL as completed.
-
-<b>Signature:</b>
-
-```typescript
-complete(url: string | URL): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  url | string \| [URL](./alfa-url.url.md) |  |
-
-<b>Returns:</b>
-
-boolean
 

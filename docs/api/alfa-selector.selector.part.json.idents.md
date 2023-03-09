@@ -4,8 +4,3 @@
 
 ## Selector.Part.JSON.idents property
 
-<b>Signature:</b>
-
-```typescript
-idents: Array<Token.Ident.JSON>;
-```

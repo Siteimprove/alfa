@@ -4,21 +4,9 @@
 
 ## Frontier.enqueue() method
 
-Add a new URL to this frontier. If the URL is either not in scope or has already been seen, the URL is not added to the frontier and `false` is returned. Otherwise, `true` is returned.
-
-<b>Signature:</b>
-
-```typescript
-enqueue(url: string | URL): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  url | string \| [URL](./alfa-url.url.md) |  |
-
-<b>Returns:</b>
-
-boolean
 

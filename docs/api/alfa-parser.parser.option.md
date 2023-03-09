@@ -4,19 +4,9 @@
 
 ## Parser.option() function
 
-<b>Signature:</b>
-
-```typescript
-function option<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Option<T>, E, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-
-<b>Returns:</b>
-
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, [Option](./alfa-option.option.md)<!-- -->&lt;T&gt;, E, A&gt;
 

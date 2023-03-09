@@ -4,8 +4,3 @@
 
 ## Matrix.JSON.values property
 
-<b>Signature:</b>
-
-```typescript
-values: Values<Number.JSON>;
-```

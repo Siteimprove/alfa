@@ -4,19 +4,10 @@
 
 ## Selector.FirstChild class
 
-[https://drafts.csswg.org/selectors/\#first-child-pseudo](https://drafts.csswg.org/selectors/#first-child-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class FirstChild extends Pseudo.Class<"first-child"> 
-```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"first-child"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches(element)](./alfa-selector.selector.firstchild.matches.md) |  |  |
-|  [of()](./alfa-selector.selector.firstchild.of.md) | <code>static</code> |  |
+|  [matches](./alfa-selector.selector.firstchild.matches.md) |  |  |
+|  [of](./alfa-selector.selector.firstchild.of.md) |  |  |
 

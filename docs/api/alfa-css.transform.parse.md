@@ -4,10 +4,3 @@
 
 ## Transform.parse variable
 
-[https://drafts.csswg.org/css-transforms/\#typedef-transform-function](https://drafts.csswg.org/css-transforms/#typedef-transform-function)
-
-<b>Signature:</b>
-
-```typescript
-parse: Parser<Slice<Token>, Transform, string, []>
-```

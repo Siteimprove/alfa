@@ -4,19 +4,9 @@
 
 ## Selector.List.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: List): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [List](./alfa-selector.selector.list.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

@@ -4,10 +4,3 @@
 
 ## Trilean.Predicate type
 
-<b>Signature:</b>
-
-```typescript
-type Predicate<T, A extends Array<unknown> = []> = (value: T, ...args: A) => Trilean;
-```
-<b>References:</b> [Trilean](./alfa-trilean.trilean.md)
-

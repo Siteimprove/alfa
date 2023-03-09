@@ -4,14 +4,6 @@
 
 ## Rule.(constructor)
 
-Constructs a new instance of the `Rule` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor(uri: string, requirements: Array<Requirement>, tags: Array<Tag>, evaluator: Rule.Evaluate<I, T, Q, S>);
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |

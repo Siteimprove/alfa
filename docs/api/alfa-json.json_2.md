@@ -4,9 +4,3 @@
 
 ## JSON\_2 type
 
-
-<b>Signature:</b>
-
-```typescript
-export declare type JSON = string | number | boolean | null | JSON.Array | JSON.Object;
-```

@@ -4,15 +4,9 @@
 
 ## Token.CloseComment.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.token.closecomment.json.type.md) |  | "close-comment" |  |
+|  [type](./alfa-css.token.closecomment.json.type.md) |  |  |  |
 

@@ -4,16 +4,9 @@
 
 ## Text.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Node.JSON<"text"> 
-```
-<b>Extends:</b> [Node.JSON](./alfa-aria.node.json.md)<!-- -->&lt;"text"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-aria.text.json.name.md) |  | string \| null |  |
+|  [name](./alfa-aria.text.json.name.md) |  |  |  |
 

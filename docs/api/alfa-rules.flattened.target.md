@@ -4,12 +4,3 @@
 
 ## Flattened.Target type
 
-The type of the targets of rules
-
-<b>Signature:</b>
-
-```typescript
-export type Target = act.Rule.Target<RulesUnion>;
-```
-<b>References:</b> [Rule.Target](./alfa-act.rule.target.md)
-

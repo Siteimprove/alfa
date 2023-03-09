@@ -4,19 +4,9 @@
 
 ## Group.isGroup() function
 
-<b>Signature:</b>
-
-```typescript
-function isGroup<T extends Hashable>(value: unknown): value is Group<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Group](./alfa-rules.group.md)<!-- -->&lt;T&gt;
 

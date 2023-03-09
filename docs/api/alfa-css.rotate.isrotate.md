@@ -4,19 +4,9 @@
 
 ## Rotate.isRotate() function
 
-<b>Signature:</b>
-
-```typescript
-function isRotate<A extends Angle>(value: unknown): value is Rotate<A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Rotate](./alfa-css.rotate.md)<!-- -->&lt;A&gt;
 

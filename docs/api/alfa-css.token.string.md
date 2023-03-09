@@ -4,8 +4,3 @@
 
 ## Token.string variable
 
-<b>Signature:</b>
-
-```typescript
-string: typeof String.of
-```

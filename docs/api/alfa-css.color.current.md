@@ -4,8 +4,3 @@
 
 ## Color.current variable
 
-<b>Signature:</b>
-
-```typescript
-current: Current
-```

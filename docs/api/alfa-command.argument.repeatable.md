@@ -4,12 +4,3 @@
 
 ## Argument.repeatable() method
 
-<b>Signature:</b>
-
-```typescript
-repeatable(): Argument<Iterable<T>>;
-```
-<b>Returns:</b>
-
-[Argument](./alfa-command.argument.md)<!-- -->&lt;Iterable&lt;T&gt;&gt;
-

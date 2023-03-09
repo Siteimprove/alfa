@@ -4,12 +4,3 @@
 
 ## Lazy.toThunk() method
 
-<b>Signature:</b>
-
-```typescript
-toThunk(): Thunk<T>;
-```
-<b>Returns:</b>
-
-[Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt;
-

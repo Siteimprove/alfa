@@ -4,19 +4,9 @@
 
 ## Criterion.fromURI() function
 
-<b>Signature:</b>
-
-```typescript
-function fromURI(uri: string): Option<Criterion>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  uri | string |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[Criterion](./alfa-wcag.criterion.md)<!-- -->&gt;
 

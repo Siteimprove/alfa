@@ -4,19 +4,9 @@
 
 ## Rule.Event.startExpectation() function
 
-<b>Signature:</b>
-
-```typescript
-function startExpectation<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "expectation">;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
-
-<b>Returns:</b>
-
-[Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S, "start", "expectation"&gt;
 

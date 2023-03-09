@@ -4,22 +4,16 @@
 
 ## h.rule namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace rule 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [fontFace(declarations)](./alfa-dom.h.rule.fontface.md) |  |
-|  [keyframe(key, declarations)](./alfa-dom.h.rule.keyframe.md) |  |
-|  [keyframes(name, rules)](./alfa-dom.h.rule.keyframes.md) |  |
-|  [media(condition, rules)](./alfa-dom.h.rule.media.md) |  |
-|  [namespace(namespace, prefix)](./alfa-dom.h.rule.namespace.md) |  |
-|  [page(selector, declarations)](./alfa-dom.h.rule.page.md) |  |
-|  [style(selector, declarations, hint)](./alfa-dom.h.rule.style.md) |  |
-|  [supports(condition, rules)](./alfa-dom.h.rule.supports.md) |  |
+|  [fontFace](./alfa-dom.h.rule.fontface.md) |  |
+|  [keyframe](./alfa-dom.h.rule.keyframe.md) |  |
+|  [keyframes](./alfa-dom.h.rule.keyframes.md) |  |
+|  [media](./alfa-dom.h.rule.media.md) |  |
+|  [namespace](./alfa-dom.h.rule.namespace.md) |  |
+|  [page](./alfa-dom.h.rule.page.md) |  |
+|  [style](./alfa-dom.h.rule.style.md) |  |
+|  [supports](./alfa-dom.h.rule.supports.md) |  |
 

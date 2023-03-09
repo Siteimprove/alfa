@@ -4,19 +4,9 @@
 
 ## Collection.collect() method
 
-<b>Signature:</b>
-
-```typescript
-collect<U>(mapper: Mapper<T, Option<U>>): Collection<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Collection](./alfa-collection.collection.md)<!-- -->&lt;U&gt;
 

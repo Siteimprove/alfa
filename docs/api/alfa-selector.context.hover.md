@@ -4,19 +4,9 @@
 
 ## Context.hover() method
 
-<b>Signature:</b>
-
-```typescript
-static hover(element: Element): Context;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
-
-<b>Returns:</b>
-
-[Context](./alfa-selector.context.md)
 

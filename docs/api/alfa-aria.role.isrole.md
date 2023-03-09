@@ -4,20 +4,10 @@
 
 ## Role.isRole() function
 
-<b>Signature:</b>
-
-```typescript
-function isRole<N extends Name>(value: unknown, name?: N): value is Role<Name>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
 |  name | N | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-value is [Role](./alfa-aria.role.md)<!-- -->&lt;[Name](./alfa-aria.role.name.md)<!-- -->&gt;
 

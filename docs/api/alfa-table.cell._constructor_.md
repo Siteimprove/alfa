@@ -4,14 +4,6 @@
 
 ## Cell.(constructor)
 
-Constructs a new instance of the `Cell` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor(element: Element, anchor: Slot, width: number, height: number, headers: Array<Slot>);
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |

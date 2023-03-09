@@ -4,19 +4,9 @@
 
 ## Result.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from<T, E = unknown>(thunk: Thunk<Promise<T>>): Promise<Result<T, E>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;Promise&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-Promise&lt;[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;&gt;
+|  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt; |  |
 

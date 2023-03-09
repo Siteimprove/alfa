@@ -4,12 +4,6 @@
 
 ## Parser.takeBetween() function
 
-<b>Signature:</b>
-
-```typescript
-function takeBetween<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, lower: number, upper: number): Parser<I, Array<T>, E, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ function takeBetween<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 |  lower | number |  |
 |  upper | number |  |
-
-<b>Returns:</b>
-
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, Array&lt;T&gt;, E, A&gt;
 

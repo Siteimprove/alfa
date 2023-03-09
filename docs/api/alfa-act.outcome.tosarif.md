@@ -4,12 +4,3 @@
 
 ## Outcome.toSARIF() method
 
-<b>Signature:</b>
-
-```typescript
-abstract toSARIF(): sarif.Result;
-```
-<b>Returns:</b>
-
-sarif.Result
-

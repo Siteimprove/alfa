@@ -4,20 +4,10 @@
 
 ## Collection.tee() method
 
-<b>Signature:</b>
-
-```typescript
-tee<A extends Array<unknown> = []>(callback: Callback<Collection<T>, void, [...args: A]>, ...args: A): Collection<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt; |  |
 |  args | A |  |
-
-<b>Returns:</b>
-
-[Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;
 

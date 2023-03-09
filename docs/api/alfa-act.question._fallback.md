@@ -4,8 +4,3 @@
 
 ## Question.\_fallback property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _fallback: Option<ANSWER>;
-```

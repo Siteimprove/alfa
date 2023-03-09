@@ -4,8 +4,3 @@
 
 ## Cell.\_anchor property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _anchor: Slot;
-```

@@ -4,19 +4,9 @@
 
 ## Array\_2.flatten() function
 
-<b>Signature:</b>
-
-```typescript
-function flatten<T>(array: ReadonlyArray<ReadonlyArray<T>>): Array<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;ReadonlyArray&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-Array&lt;T&gt;
 

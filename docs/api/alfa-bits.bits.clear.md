@@ -4,20 +4,10 @@
 
 ## Bits.clear() function
 
-<b>Signature:</b>
-
-```typescript
-function clear(bits: number, i: number): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  bits | number |  |
 |  i | number |  |
-
-<b>Returns:</b>
-
-number
 

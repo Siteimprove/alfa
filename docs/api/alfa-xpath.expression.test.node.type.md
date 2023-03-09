@@ -4,8 +4,3 @@
 
 ## Expression.Test.Node.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "kind";
-```

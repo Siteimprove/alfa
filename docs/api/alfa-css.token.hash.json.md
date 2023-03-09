@@ -4,17 +4,11 @@
 
 ## Token.Hash.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [isIdentifier](./alfa-css.token.hash.json.isidentifier.md) |  | boolean |  |
-|  [type](./alfa-css.token.hash.json.type.md) |  | "hash" |  |
-|  [value](./alfa-css.token.hash.json.value.md) |  | string |  |
+|  [isIdentifier](./alfa-css.token.hash.json.isidentifier.md) |  |  |  |
+|  [type](./alfa-css.token.hash.json.type.md) |  |  |  |
+|  [value](./alfa-css.token.hash.json.value.md) |  |  |  |
 

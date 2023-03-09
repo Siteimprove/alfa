@@ -4,19 +4,9 @@
 
 ## Serializable.isSerializable() function
 
-<b>Signature:</b>
-
-```typescript
-function isSerializable<T extends SARIF>(value: unknown): value is Serializable<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Serializable](./alfa-sarif.serializable.md)<!-- -->&lt;T&gt;
 

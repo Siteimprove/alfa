@@ -4,10 +4,3 @@
 
 ## Transformation.Components.rotate property
 
-A quaternion representing \[x, y, z, w\] rotation.
-
-<b>Signature:</b>
-
-```typescript
-rotate: Vector;
-```

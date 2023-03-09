@@ -4,19 +4,9 @@
 
 ## Sequence.isSequence() function
 
-<b>Signature:</b>
-
-```typescript
-function isSequence<T>(value: Iterable<T>): value is Sequence<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+|  value | unknown |  |
 

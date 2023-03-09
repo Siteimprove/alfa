@@ -4,12 +4,3 @@
 
 ## Shape.Basic type
 
-[https://drafts.csswg.org/css-shapes/\#typedef-basic-shape](https://drafts.csswg.org/css-shapes/#typedef-basic-shape)
-
-<b>Signature:</b>
-
-```typescript
-type Basic = Circle | Ellipse | Inset | Polygon | Rectangle;
-```
-<b>References:</b> [Circle](./alfa-css.circle.md)<!-- -->, [Ellipse](./alfa-css.ellipse.md)<!-- -->, [Inset](./alfa-css.inset.md)<!-- -->, [Polygon](./alfa-css.polygon.md)<!-- -->, [Rectangle](./alfa-css.rectangle.md)
-

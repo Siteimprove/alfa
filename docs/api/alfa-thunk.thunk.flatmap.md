@@ -4,20 +4,10 @@
 
 ## Thunk.flatMap() function
 
-<b>Signature:</b>
-
-```typescript
-function flatMap<T, U>(thunk: Thunk<T>, mapper: Mapper<T, Thunk<U>>): Thunk<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;U&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;U&gt;
 

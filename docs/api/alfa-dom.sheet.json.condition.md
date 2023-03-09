@@ -4,8 +4,3 @@
 
 ## Sheet.JSON.condition property
 
-<b>Signature:</b>
-
-```typescript
-condition: string | null;
-```

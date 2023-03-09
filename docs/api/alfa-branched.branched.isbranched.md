@@ -4,19 +4,9 @@
 
 ## Branched.isBranched() function
 
-<b>Signature:</b>
-
-```typescript
-function isBranched<T, B = never>(value: unknown): value is Branched<T, B>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;
 

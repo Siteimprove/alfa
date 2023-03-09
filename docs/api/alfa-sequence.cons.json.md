@@ -4,10 +4,3 @@
 
 ## Cons.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON<T> = Collection.Indexed.JSON<T>;
-```
-<b>References:</b> [Collection.Indexed.JSON](./alfa-collection.collection.indexed.json.md)
-

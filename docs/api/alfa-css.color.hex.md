@@ -4,19 +4,9 @@
 
 ## Color.hex() function
 
-<b>Signature:</b>
-
-```typescript
-function hex(value: number): Hex;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | number |  |
-
-<b>Returns:</b>
-
-[Hex](./alfa-css.hex.md)
 

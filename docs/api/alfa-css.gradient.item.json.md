@@ -4,10 +4,3 @@
 
 ## Gradient.Item.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON = Stop.JSON | Hint.JSON;
-```
-<b>References:</b> [Stop.JSON](./alfa-css.gradient.stop.json.md)<!-- -->, [Hint.JSON](./alfa-css.gradient.hint.json.md)
-

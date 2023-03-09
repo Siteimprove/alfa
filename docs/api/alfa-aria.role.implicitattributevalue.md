@@ -4,21 +4,9 @@
 
 ## Role.implicitAttributeValue() method
 
-Get the implicit value of the specified attribute, if any.
-
-<b>Signature:</b>
-
-```typescript
-implicitAttributeValue(name: Attribute.Name): Option<string>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | [Attribute.Name](./alfa-aria.attribute.name.md) |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;string&gt;
 

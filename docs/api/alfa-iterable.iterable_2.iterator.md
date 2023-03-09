@@ -4,19 +4,9 @@
 
 ## Iterable\_2.iterator() function
 
-<b>Signature:</b>
-
-```typescript
-function iterator<T>(iterable: Iterable<T>): Iterator<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Iterator&lt;T&gt;
 

@@ -4,10 +4,3 @@
 
 ## Gradient.parseHint variable
 
-[https://drafts.csswg.org/css-images/\#typedef-linear-color-hint](https://drafts.csswg.org/css-images/#typedef-linear-color-hint)
-
-<b>Signature:</b>
-
-```typescript
-parseHint: Parser<Slice<Token>, Hint, string>
-```

@@ -4,19 +4,10 @@
 
 ## Selector.OnlyChild class
 
-[https://drafts.csswg.org/selectors/\#only-child-pseudo](https://drafts.csswg.org/selectors/#only-child-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class OnlyChild extends Pseudo.Class<"only-child"> 
-```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"only-child"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches(element)](./alfa-selector.selector.onlychild.matches.md) |  |  |
-|  [of()](./alfa-selector.selector.onlychild.of.md) | <code>static</code> |  |
+|  [matches](./alfa-selector.selector.onlychild.matches.md) |  |  |
+|  [of](./alfa-selector.selector.onlychild.of.md) |  |  |
 

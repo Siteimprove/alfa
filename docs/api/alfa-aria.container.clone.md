@@ -4,19 +4,9 @@
 
 ## Container.clone() method
 
-<b>Signature:</b>
-
-```typescript
-clone(parent?: Option<Node>): Container;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  parent | [Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->&gt; | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Container](./alfa-aria.container.md)
 

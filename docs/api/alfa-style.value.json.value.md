@@ -4,8 +4,3 @@
 
 ## Value.JSON.value property
 
-<b>Signature:</b>
-
-```typescript
-value: Serializable.ToJSON<T>;
-```

@@ -4,20 +4,10 @@
 
 ## Attribute.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<N extends Attribute.Name>(name: N, value: string): Attribute<N>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | N |  |
 |  value | string |  |
-
-<b>Returns:</b>
-
-[Attribute](./alfa-aria.attribute.md)<!-- -->&lt;N&gt;
 

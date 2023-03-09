@@ -4,8 +4,3 @@
 
 ## Outcome.Failed.JSON.expectations property
 
-<b>Signature:</b>
-
-```typescript
-expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;
-```

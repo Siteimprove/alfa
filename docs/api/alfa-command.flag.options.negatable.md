@@ -4,8 +4,3 @@
 
 ## Flag.Options.negatable property
 
-<b>Signature:</b>
-
-```typescript
-readonly negatable: boolean;
-```

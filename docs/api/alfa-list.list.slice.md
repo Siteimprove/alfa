@@ -4,20 +4,10 @@
 
 ## List.slice() method
 
-<b>Signature:</b>
-
-```typescript
-slice(start: number, end?: number): List<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  start | number |  |
 |  end | number | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

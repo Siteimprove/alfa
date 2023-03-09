@@ -4,24 +4,10 @@
 
 ## Comparable.compareString() function
 
-<b>Signature:</b>
-
-```typescript
-function compareString(a: string, b: string): Comparison;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | string |  |
 |  b | string |  |
-
-<b>Returns:</b>
-
-[Comparison](./alfa-comparable.comparison.md)
-
-## Remarks
-
-This should only be used in cases where branch mispredictions caused by the more general [Comparable.compare()](./alfa-comparable.comparable.compare.md) are undesired.
 

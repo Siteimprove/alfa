@@ -4,12 +4,3 @@
 
 ## Token.OpenParenthesis.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(): OpenParenthesis;
-```
-<b>Returns:</b>
-
-[OpenParenthesis](./alfa-css.token.openparenthesis.md)
-

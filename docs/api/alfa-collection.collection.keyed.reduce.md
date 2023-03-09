@@ -4,20 +4,10 @@
 
 ## Collection.Keyed.reduce() method
 
-<b>Signature:</b>
-
-```typescript
-reduce<U>(reducer: Reducer<V, U, [key: K]>, accumulator: U): U;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
 |  accumulator | U |  |
-
-<b>Returns:</b>
-
-U
 

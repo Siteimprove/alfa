@@ -4,19 +4,9 @@
 
 ## Headers.add() method
 
-<b>Signature:</b>
-
-```typescript
-add(header: Header): Headers;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  header | [Header](./alfa-http.header.md) |  |
-
-<b>Returns:</b>
-
-[Headers](./alfa-http.headers.md)
 

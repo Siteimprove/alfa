@@ -4,10 +4,3 @@
 
 ## Preference.Value type
 
-<b>Signature:</b>
-
-```typescript
-export type Value<N extends Name = Name> = Preferences[N];
-```
-<b>References:</b> [Name](./alfa-device.preference.name.md)
-

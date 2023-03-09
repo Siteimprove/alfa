@@ -4,8 +4,3 @@
 
 ## Marker.underline variable
 
-<b>Signature:</b>
-
-```typescript
-underline: Marker
-```

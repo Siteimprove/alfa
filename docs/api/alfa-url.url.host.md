@@ -4,10 +4,3 @@
 
 ## URL.host property
 
-[https://url.spec.whatwg.org/\#concept-url-host](https://url.spec.whatwg.org/#concept-url-host)
-
-<b>Signature:</b>
-
-```typescript
-get host(): Option<string>;
-```

@@ -4,12 +4,6 @@
 
 ## Selector.NthLastOfType namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace NthLastOfType 
-```
-
 ## Interfaces
 
 |  Interface | Description |

@@ -4,16 +4,3 @@
 
 ## Set\_2.distinct() method
 
-<b>Signature:</b>
-
-```typescript
-distinct(): Set<T>;
-```
-<b>Returns:</b>
-
-Set&lt;T&gt;
-
-## Remarks
-
-As sets don't contain duplicate values, they will only ever contain distinct values.
-

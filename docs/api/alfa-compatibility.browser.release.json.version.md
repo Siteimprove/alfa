@@ -4,8 +4,3 @@
 
 ## Browser.Release.JSON.version property
 
-<b>Signature:</b>
-
-```typescript
-version: string;
-```

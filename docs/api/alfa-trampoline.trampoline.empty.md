@@ -4,12 +4,3 @@
 
 ## Trampoline.empty() function
 
-<b>Signature:</b>
-
-```typescript
-function empty(): Trampoline<void>;
-```
-<b>Returns:</b>
-
-[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;void&gt;
-

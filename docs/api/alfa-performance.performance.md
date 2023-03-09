@@ -4,13 +4,6 @@
 
 ## Performance namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Performance 
-```
-
 ## Classes
 
 |  Class | Description |
@@ -22,7 +15,7 @@ export declare namespace Performance
 
 |  Function | Description |
 |  --- | --- |
-|  [isPerformance(value)](./alfa-performance.performance.isperformance.md) |  |
+|  [isPerformance](./alfa-performance.performance.isperformance.md) |  |
 
 ## Interfaces
 

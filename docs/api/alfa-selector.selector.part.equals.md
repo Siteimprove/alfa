@@ -4,19 +4,9 @@
 
 ## Selector.Part.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Part): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Part](./alfa-selector.selector.part.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

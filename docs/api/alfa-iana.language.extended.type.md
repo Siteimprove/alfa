@@ -4,8 +4,3 @@
 
 ## Language.Extended.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "extended";
-```

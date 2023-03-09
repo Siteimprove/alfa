@@ -4,8 +4,3 @@
 
 ## Element.inputType variable
 
-<b>Signature:</b>
-
-```typescript
-inputType: typeof helpers.inputType
-```

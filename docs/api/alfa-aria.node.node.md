@@ -4,8 +4,3 @@
 
 ## Node.node property
 
-<b>Signature:</b>
-
-```typescript
-get node(): dom.Node;
-```

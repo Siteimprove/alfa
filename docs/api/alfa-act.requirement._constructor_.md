@@ -4,10 +4,3 @@
 
 ## Requirement.(constructor)
 
-Constructs a new instance of the `Requirement` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor();
-```

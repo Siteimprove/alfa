@@ -4,8 +4,3 @@
 
 ## Language.Primary.JSON.scope property
 
-<b>Signature:</b>
-
-```typescript
-scope: Scope | null;
-```

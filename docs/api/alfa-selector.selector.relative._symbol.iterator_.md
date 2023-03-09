@@ -4,12 +4,3 @@
 
 ## Selector.Relative.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
-
-```typescript
-[Symbol.iterator](): Iterator<Relative>;
-```
-<b>Returns:</b>
-
-Iterator&lt;[Relative](./alfa-selector.selector.relative.md)<!-- -->&gt;
-

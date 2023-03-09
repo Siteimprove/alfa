@@ -4,14 +4,6 @@
 
 ## Node.(constructor)
 
-Constructs a new instance of the `Node` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor(children: Array<Node<F>>, type: T);
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |

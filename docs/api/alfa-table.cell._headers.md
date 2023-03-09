@@ -4,8 +4,3 @@
 
 ## Cell.\_headers property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _headers: Array<Slot>;
-```

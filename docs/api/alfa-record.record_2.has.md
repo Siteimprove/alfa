@@ -4,19 +4,9 @@
 
 ## Record\_2.has() method
 
-<b>Signature:</b>
-
-```typescript
-has(key: string): key is Record.Key<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | string |  |
-
-<b>Returns:</b>
-
-key is Record.Key&lt;T&gt;
 

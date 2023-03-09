@@ -4,12 +4,3 @@
 
 ## Page.toEARL() method
 
-<b>Signature:</b>
-
-```typescript
-toEARL(): Page.EARL;
-```
-<b>Returns:</b>
-
-[Page.EARL](./alfa-web.page.earl.md)
-

@@ -4,14 +4,3 @@
 
 ## Flattened.Rule type
 
-The flattened type of all rules. Target, questions, … are a union of all the possible ones; that is this looks like Rule<!-- -->&lt;<!-- -->Page, Document \| Element \| …, …<!-- -->&gt;
-
-This is a super-type of the individual type of each rule.
-
-<b>Signature:</b>
-
-```typescript
-export type Rule = act.Rule<Input, Target, Question, Subject>;
-```
-<b>References:</b> [Rule](./alfa-act.rule.md)<!-- -->, [Input](./alfa-rules.flattened.input.md)<!-- -->, [Target](./alfa-rules.flattened.target.md)<!-- -->, [Question](./alfa-rules.flattened.question.md)<!-- -->, [Subject](./alfa-rules.flattened.subject.md)
-

@@ -4,21 +4,9 @@
 
 ## Flags.add() method
 
-Adds a list of flags to the set, and return a new one.
-
-<b>Signature:</b>
-
-```typescript
-add(...flags: Array<F>): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  flags | Array&lt;F&gt; |  |
-
-<b>Returns:</b>
-
-this
 

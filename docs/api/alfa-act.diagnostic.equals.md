@@ -4,19 +4,9 @@
 
 ## Diagnostic.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(value: Diagnostic): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Diagnostic](./alfa-act.diagnostic.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

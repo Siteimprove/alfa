@@ -4,10 +4,3 @@
 
 ## Criterion.Chapter type
 
-The chapters of all criteria.
-
-<b>Signature:</b>
-
-```typescript
-type Chapter = keyof Criteria;
-```

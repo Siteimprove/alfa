@@ -4,19 +4,9 @@
 
 ## Node.Traversal.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(...flags: Array<Traversal.Flag>): Traversal;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  flags | Array&lt;[Traversal.Flag](./alfa-aria.node.traversal.flag.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-[Traversal](./alfa-aria.node.traversal.md)
 

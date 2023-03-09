@@ -4,20 +4,10 @@
 
 ## Trilean.nand() function
 
-<b>Signature:</b>
-
-```typescript
-function nand<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  left | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt; |  |
 |  right | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt; |  |
-
-<b>Returns:</b>
-
-[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;
 

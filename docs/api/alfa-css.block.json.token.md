@@ -4,8 +4,3 @@
 
 ## Block.JSON.token property
 
-<b>Signature:</b>
-
-```typescript
-token: Token.JSON;
-```

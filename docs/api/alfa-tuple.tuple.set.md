@@ -4,10 +4,3 @@
 
 ## Tuple.Set type
 
-<b>Signature:</b>
-
-```typescript
-export type Set<T extends Tuple, I extends number, V> = SetInner<T, I, V, Empty>;
-```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
-

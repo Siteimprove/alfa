@@ -4,16 +4,9 @@
 
 ## URL.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Value.JSON<"url"> 
-```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"url"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [url](./alfa-css.url.json.url.md) |  | string |  |
+|  [url](./alfa-css.url.json.url.md) |  |  |  |
 

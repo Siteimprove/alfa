@@ -4,20 +4,10 @@
 
 ## Selective.if() method
 
-<b>Signature:</b>
-
-```typescript
-if<P extends S, U>(refinement: Refinement<S, P>, mapper: Mapper<P, U>): Selective<Exclude<S, P>, T | U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;S, P&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;P, U&gt; |  |
-
-<b>Returns:</b>
-
-[Selective](./alfa-selective.selective.md)<!-- -->&lt;Exclude&lt;S, P&gt;, T \| U&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;S&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S, U&gt; |  |
 

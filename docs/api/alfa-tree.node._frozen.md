@@ -4,15 +4,3 @@
 
 ## Node.\_frozen property
 
-Whether the node is frozen.
-
-<b>Signature:</b>
-
-```typescript
-protected _frozen: boolean;
-```
-
-## Remarks
-
-As nodes are initialized without a parent and possibly attached to a parent after construction, this makes hierarchies of nodes mutable. That is, a node without a parent node may be assigned one by being passed as a child to a parent node. When this happens, a node becomes frozen. Nodes can also become frozen before being assigned a parent by using the `Node#freeze()` method.
-

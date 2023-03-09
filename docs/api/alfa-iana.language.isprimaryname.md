@@ -4,8 +4,3 @@
 
 ## Language.isPrimaryName variable
 
-<b>Signature:</b>
-
-```typescript
-isPrimaryName: typeof Primary.isName
-```

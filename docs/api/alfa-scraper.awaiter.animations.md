@@ -4,25 +4,9 @@
 
 ## Awaiter.animations() function
 
-Wait for all animations to end after another awaiter has finished.
-
-<b>Signature:</b>
-
-```typescript
-function animations(after?: Awaiter): Awaiter;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  after | [Awaiter](./alfa-scraper.awaiter.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Awaiter](./alfa-scraper.awaiter.md)
-
-## Remarks
-
-For animations that loop infinitely, this awaiter will never resolve.
 

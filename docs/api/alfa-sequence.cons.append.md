@@ -4,19 +4,9 @@
 
 ## Cons.append() method
 
-<b>Signature:</b>
-
-```typescript
-append(value: T): Cons<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-
-<b>Returns:</b>
-
-[Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
 

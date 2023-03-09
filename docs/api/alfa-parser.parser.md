@@ -4,11 +4,3 @@
 
 ## Parser type
 
-
-<b>Signature:</b>
-
-```typescript
-export declare type Parser<I, T, E = never, A extends Array<unknown> = []> = (input: I, ...args: A) => Result<[I, T], E>;
-```
-<b>References:</b> [Result](./alfa-result.result.md)
-

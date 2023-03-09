@@ -4,8 +4,3 @@
 
 ## Radial.Ellipse.horizontal property
 
-<b>Signature:</b>
-
-```typescript
-get horizontal(): R;
-```

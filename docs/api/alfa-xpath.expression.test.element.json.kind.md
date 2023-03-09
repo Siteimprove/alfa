@@ -4,8 +4,3 @@
 
 ## Expression.Test.Element.JSON.kind property
 
-<b>Signature:</b>
-
-```typescript
-kind: "element";
-```

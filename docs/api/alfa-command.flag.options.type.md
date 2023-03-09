@@ -4,8 +4,3 @@
 
 ## Flag.Options.type property
 
-<b>Signature:</b>
-
-```typescript
-readonly type: Option<string>;
-```

@@ -4,19 +4,10 @@
 
 ## Selector.LastChild class
 
-[https://drafts.csswg.org/selectors/\#last-child-pseudo](https://drafts.csswg.org/selectors/#last-child-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class LastChild extends Pseudo.Class<"last-child"> 
-```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"last-child"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches(element)](./alfa-selector.selector.lastchild.matches.md) |  |  |
-|  [of()](./alfa-selector.selector.lastchild.of.md) | <code>static</code> |  |
+|  [matches](./alfa-selector.selector.lastchild.matches.md) |  |  |
+|  [of](./alfa-selector.selector.lastchild.of.md) |  |  |
 

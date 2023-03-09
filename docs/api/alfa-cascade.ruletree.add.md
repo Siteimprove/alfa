@@ -4,23 +4,9 @@
 
 ## RuleTree.add() method
 
-<b>Signature:</b>
-
-```typescript
-add(rules: Iterable<{
-        rule: Rule;
-        selector: Selector;
-        declarations: Iterable<Declaration>;
-    }>): Option<RuleTree.Node>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  rules | Iterable&lt;{ rule: [Rule](./alfa-dom.rule.md)<!-- -->; selector: [Selector](./alfa-selector.selector.md)<!-- -->; declarations: Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt;; }&gt; |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;[RuleTree.Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt;
 

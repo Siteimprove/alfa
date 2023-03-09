@@ -4,19 +4,9 @@
 
 ## Some.flatten() method
 
-<b>Signature:</b>
-
-```typescript
-flatten<T>(this: Some<Option<T>>): Option<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Some](./alfa-option.some.md)<!-- -->&lt;[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

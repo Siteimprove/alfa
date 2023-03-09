@@ -4,8 +4,3 @@
 
 ## Rule.\_evaluate property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _evaluate: Rule.Evaluate<I, T, Q, S>;
-```

@@ -4,15 +4,9 @@
 
 ## Token.Colon.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.token.colon.json.type.md) |  | "colon" |  |
+|  [type](./alfa-css.token.colon.json.type.md) |  |  |  |
 

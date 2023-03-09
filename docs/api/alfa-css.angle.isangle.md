@@ -4,19 +4,9 @@
 
 ## Angle.isAngle() function
 
-<b>Signature:</b>
-
-```typescript
-function isAngle(value: unknown): value is Angle;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Angle](./alfa-css.angle.md)
 

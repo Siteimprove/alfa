@@ -4,8 +4,3 @@
 
 ## Numeric.\_type property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _type: T;
-```

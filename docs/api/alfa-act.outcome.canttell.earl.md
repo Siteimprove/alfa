@@ -4,16 +4,9 @@
 
 ## Outcome.CantTell.EARL interface
 
-<b>Signature:</b>
-
-```typescript
-interface EARL extends Outcome.EARL 
-```
-<b>Extends:</b> [Outcome.EARL](./alfa-act.outcome.earl.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["earl:result"](./alfa-act.outcome.canttell.earl._earl_result_.md) |  | { "@type": "earl:TestResult"; "earl:outcome": { "@id": "earl:cantTell"; }; "earl:pointer"?: earl.[EARL](./alfa-earl.earl.md)<!-- -->; } |  |
+|  ["earl:result"](./alfa-act.outcome.canttell.earl._earl_result_.md) |  |  |  |
 

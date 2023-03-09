@@ -4,16 +4,9 @@
 
 ## Cache namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Cache 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(iterable)](./alfa-cache.cache.from.md) |  |
+|  [from](./alfa-cache.cache.from.md) |  |
 

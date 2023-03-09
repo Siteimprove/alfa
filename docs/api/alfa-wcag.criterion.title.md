@@ -4,12 +4,3 @@
 
 ## Criterion.Title type
 
-The title of the specified criterion.
-
-<b>Signature:</b>
-
-```typescript
-type Title<C extends Chapter = Chapter> = Criteria[C]["title"];
-```
-<b>References:</b> [Chapter](./alfa-wcag.criterion.chapter.md)
-

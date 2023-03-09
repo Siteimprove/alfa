@@ -4,16 +4,9 @@
 
 ## Builder.Path class
 
-<b>Signature:</b>
-
-```typescript
-export class Path extends Path_base 
-```
-<b>Extends:</b> Path\_base
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [where(predicate)](./alfa-xpath.builder.path.where.md) |  |  |
+|  [where](./alfa-xpath.builder.path.where.md) |  |  |
 

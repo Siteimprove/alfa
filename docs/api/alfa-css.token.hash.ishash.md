@@ -4,19 +4,9 @@
 
 ## Token.Hash.isHash() function
 
-<b>Signature:</b>
-
-```typescript
-function isHash(value: unknown): value is Hash;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Hash](./alfa-css.token.hash.md)
 

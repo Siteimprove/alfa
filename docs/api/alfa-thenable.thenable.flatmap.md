@@ -4,20 +4,10 @@
 
 ## Thenable.flatMap() function
 
-<b>Signature:</b>
-
-```typescript
-function flatMap<T, U, E = unknown, F = E>(thenable: Thenable<T, E>, mapper: Mapper<T, Thenable<U, F>>): Thenable<U, E | F>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  thenable | [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;U, F&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;U, E \| F&gt;
 

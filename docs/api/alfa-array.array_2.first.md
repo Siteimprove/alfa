@@ -4,19 +4,9 @@
 
 ## Array\_2.first() function
 
-<b>Signature:</b>
-
-```typescript
-function first<T>(array: ReadonlyArray<T>): Option<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

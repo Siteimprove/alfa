@@ -4,19 +4,9 @@
 
 ## FontFaceRule.isFontFaceRule() function
 
-<b>Signature:</b>
-
-```typescript
-function isFontFaceRule(value: unknown): value is FontFaceRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [FontFaceRule](./alfa-dom.fontfacerule.md)
 

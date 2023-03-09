@@ -4,8 +4,3 @@
 
 ## Question.\_subject property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _subject: SUBJECT;
-```

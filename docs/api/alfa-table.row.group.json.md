@@ -4,17 +4,11 @@
 
 ## Row.Group.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [element](./alfa-table.row.group.json.element.md) |  | string |  |
-|  [height](./alfa-table.row.group.json.height.md) |  | number |  |
-|  [y](./alfa-table.row.group.json.y.md) |  | number |  |
+|  [element](./alfa-table.row.group.json.element.md) |  |  |  |
+|  [height](./alfa-table.row.group.json.height.md) |  |  |  |
+|  [y](./alfa-table.row.group.json.y.md) |  |  |  |
 

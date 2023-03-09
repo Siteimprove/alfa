@@ -4,12 +4,6 @@
 
 ## Declaration.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(name: string, value: Iterable<Token>, important?: boolean): Declaration;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ static of(name: string, value: Iterable<Token>, important?: boolean): Declaratio
 |  name | string |  |
 |  value | Iterable&lt;[Token](./alfa-css.token.md)<!-- -->&gt; |  |
 |  important | boolean | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Declaration](./alfa-css.declaration.md)
 

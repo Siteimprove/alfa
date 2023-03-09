@@ -4,12 +4,6 @@
 
 ## Transform.rotate() function
 
-<b>Signature:</b>
-
-```typescript
-function rotate<A extends Angle>(x: Number, y: Number, z: Number, angle: A): Rotate<A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ function rotate<A extends Angle>(x: Number, y: Number, z: Number, angle: A): Rot
 |  y | Number |  |
 |  z | Number |  |
 |  angle | A |  |
-
-<b>Returns:</b>
-
-[Rotate](./alfa-css.rotate.md)<!-- -->&lt;A&gt;
 

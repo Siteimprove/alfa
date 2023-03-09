@@ -4,20 +4,10 @@
 
 ## Real.multiply() function
 
-<b>Signature:</b>
-
-```typescript
-function multiply(p: number, q: number): number;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  p | number |  |
 |  q | number |  |
-
-<b>Returns:</b>
-
-number
 

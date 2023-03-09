@@ -4,12 +4,6 @@
 
 ## Predicate.fold() function
 
-<b>Signature:</b>
-
-```typescript
-function fold<T, A extends Array<unknown> = [], V = T, W = T>(predicate: Predicate<T, A>, ifTrue: Mapper<T, V>, ifFalse: Mapper<T, W>, value: T, ...args: A): V | W;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -19,8 +13,4 @@ function fold<T, A extends Array<unknown> = [], V = T, W = T>(predicate: Predica
 |  ifFalse | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, W&gt; |  |
 |  value | T |  |
 |  args | A |  |
-
-<b>Returns:</b>
-
-V \| W
 

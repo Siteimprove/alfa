@@ -4,19 +4,9 @@
 
 ## Set\_2.reject() method
 
-<b>Signature:</b>
-
-```typescript
-reject<U extends T>(refinement: Refinement<T, U>): Set<Exclude<T, U>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
-
-<b>Returns:</b>
-
-Set&lt;Exclude&lt;T, U&gt;&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
 

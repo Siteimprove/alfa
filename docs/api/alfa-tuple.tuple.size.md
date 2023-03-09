@@ -4,10 +4,3 @@
 
 ## Tuple.Size type
 
-<b>Signature:</b>
-
-```typescript
-export type Size<T extends Tuple> = T["length"];
-```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)
-

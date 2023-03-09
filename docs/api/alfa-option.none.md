@@ -4,9 +4,3 @@
 
 ## None variable
 
-
-<b>Signature:</b>
-
-```typescript
-None: None
-```

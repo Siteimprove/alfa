@@ -4,21 +4,9 @@
 
 ## Node.path() method
 
-Get an XPath that uniquely identifies the node across descendants of its root.
-
-<b>Signature:</b>
-
-```typescript
-path(options?: Node.Traversal): string;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Node.Traversal](./alfa-dom.node.traversal.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-string
 

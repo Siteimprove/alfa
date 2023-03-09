@@ -4,13 +4,6 @@
 
 ## evaluate namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace evaluate 
-```
-
 ## Interfaces
 
 |  Interface | Description |

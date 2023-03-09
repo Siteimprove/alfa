@@ -4,19 +4,9 @@
 
 ## Array\_2.isArray() function
 
-<b>Signature:</b>
-
-```typescript
-function isArray<T>(value: Iterable<T>): value is Array<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is Array&lt;T&gt;
+|  value | unknown |  |
 

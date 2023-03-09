@@ -4,19 +4,9 @@
 
 ## Err.isErr() function
 
-<b>Signature:</b>
-
-```typescript
-function isErr<T, E>(value: Iterable<T>): value is Err<E>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-value is [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
+|  value | unknown |  |
 

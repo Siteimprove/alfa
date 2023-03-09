@@ -4,8 +4,3 @@
 
 ## Ellipse.JSON.kind property
 
-<b>Signature:</b>
-
-```typescript
-kind: "ellipse";
-```

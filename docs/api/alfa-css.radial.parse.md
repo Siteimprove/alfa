@@ -4,10 +4,3 @@
 
 ## Radial.parse variable
 
-[https://drafts.csswg.org/css-images/\#funcdef-radial-gradient](https://drafts.csswg.org/css-images/#funcdef-radial-gradient)
-
-<b>Signature:</b>
-
-```typescript
-parse: Parser<Slice<Token>, Radial, string>
-```

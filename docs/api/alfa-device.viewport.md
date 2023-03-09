@@ -4,13 +4,6 @@
 
 ## Viewport namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Viewport 
-```
-
 ## Enumerations
 
 |  Enumeration | Description |
@@ -21,8 +14,8 @@ export declare namespace Viewport
 
 |  Function | Description |
 |  --- | --- |
-|  [from(json)](./alfa-device.viewport.from.md) |  |
-|  [standard()](./alfa-device.viewport.standard.md) |  |
+|  [from](./alfa-device.viewport.from.md) |  |
+|  [standard](./alfa-device.viewport.standard.md) |  |
 
 ## Interfaces
 

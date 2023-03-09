@@ -4,19 +4,9 @@
 
 ## Lazy.flatten() method
 
-<b>Signature:</b>
-
-```typescript
-flatten<T>(this: Lazy<Lazy<T>>): Lazy<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;[Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;
 

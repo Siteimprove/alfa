@@ -4,19 +4,9 @@
 
 ## Clone.clone() function
 
-<b>Signature:</b>
-
-```typescript
-function clone<T extends Clone<T>>(value: Clone<T>): T;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Clone](./alfa-clone.clone.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-T
 

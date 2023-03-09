@@ -4,19 +4,9 @@
 
 ## Future.delay() function
 
-<b>Signature:</b>
-
-```typescript
-function delay<T>(thunk: Thunk<T>): Future<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

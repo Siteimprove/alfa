@@ -4,13 +4,6 @@
 
 ## Collection namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Collection 
-```
-
 ## Interfaces
 
 |  Interface | Description |

@@ -4,20 +4,10 @@
 
 ## Node.isInclusiveAncestorOf() method
 
-<b>Signature:</b>
-
-```typescript
-isInclusiveAncestorOf(node: Node, options?: Node.Traversal): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | [Node](./alfa-aria.node.md) |  |
 |  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-boolean
 

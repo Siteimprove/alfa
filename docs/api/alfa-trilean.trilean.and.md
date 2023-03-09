@@ -4,19 +4,9 @@
 
 ## Trilean.and() function
 
-<b>Signature:</b>
-
-```typescript
-function and<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]): Predicate<T, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicates | \[[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;, [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;, ...Array&lt;[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;&gt;\] |  |
-
-<b>Returns:</b>
-
-[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;
 

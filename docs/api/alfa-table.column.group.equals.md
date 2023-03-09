@@ -4,19 +4,9 @@
 
 ## Column.Group.equals() method
 
-<b>Signature:</b>
-
-```typescript
-equals(group: Group): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  group | [Group](./alfa-table.column.group.md) |  |
-
-<b>Returns:</b>
-
-boolean
+|  value | unknown |  |
 

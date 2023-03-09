@@ -4,19 +4,9 @@
 
 ## Column.compare() method
 
-<b>Signature:</b>
-
-```typescript
-compare(anchored: Anchored): Comparison;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  anchored | Anchored |  |
-
-<b>Returns:</b>
-
-[Comparison](./alfa-comparable.comparison.md)
 

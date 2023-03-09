@@ -4,15 +4,3 @@
 
 ## Nth.parse variable
 
-<b>Signature:</b>
-
-```typescript
-parse: Parser<Slice<Token>, Nth, string>
-```
-
-## Remarks
-
-The An+B syntax isn't really meant for the tokens produced by the CSS lexer and so the resulting parser ends up being quite complex.
-
-[https://drafts.csswg.org/css-syntax/\#anb-production](https://drafts.csswg.org/css-syntax/#anb-production)
-

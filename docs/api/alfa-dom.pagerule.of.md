@@ -4,20 +4,10 @@
 
 ## PageRule.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(selector: string, declarations: Iterable<Declaration>): PageRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  selector | string |  |
 |  declarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-[PageRule](./alfa-dom.pagerule.md)
 

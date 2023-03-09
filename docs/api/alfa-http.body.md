@@ -4,18 +4,11 @@
 
 ## Body namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Body 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isBody(value)](./alfa-http.body.isbody.md) |  |
+|  [isBody](./alfa-http.body.isbody.md) |  |
 
 ## Interfaces
 

@@ -4,8 +4,3 @@
 
 ## Selector.isPseudoElement variable
 
-<b>Signature:</b>
-
-```typescript
-isPseudoElement: typeof Pseudo.isElement
-```

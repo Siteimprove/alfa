@@ -4,19 +4,9 @@
 
 ## Set\_2.subtract() method
 
-<b>Signature:</b>
-
-```typescript
-subtract(iterable: Iterable<T>): Set<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Set&lt;T&gt;
 

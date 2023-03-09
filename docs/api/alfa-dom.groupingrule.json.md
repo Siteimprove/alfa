@@ -4,16 +4,9 @@
 
 ## GroupingRule.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Rule.JSON 
-```
-<b>Extends:</b> [Rule.JSON](./alfa-dom.rule.json.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [rules](./alfa-dom.groupingrule.json.rules.md) |  | Array&lt;[Rule.JSON](./alfa-dom.rule.json.md)<!-- -->&gt; |  |
+|  [rules](./alfa-dom.groupingrule.json.rules.md) |  |  |  |
 

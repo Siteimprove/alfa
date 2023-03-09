@@ -4,12 +4,6 @@
 
 ## Color.hsl() function
 
-<b>Signature:</b>
-
-```typescript
-function hsl<H extends Number | Angle, A extends Number | Percentage>(hue: H, saturation: Percentage, lightness: Percentage, alpha: A): HSL<H, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ function hsl<H extends Number | Angle, A extends Number | Percentage>(hue: H, sa
 |  saturation | [Percentage](./alfa-css.percentage.md) |  |
 |  lightness | [Percentage](./alfa-css.percentage.md) |  |
 |  alpha | A |  |
-
-<b>Returns:</b>
-
-[HSL](./alfa-css.hsl.md)<!-- -->&lt;H, A&gt;
 

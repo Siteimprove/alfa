@@ -4,14 +4,6 @@
 
 ## Numeric.(constructor)
 
-Constructs a new instance of the `Numeric` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor(value: number, type: T);
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |

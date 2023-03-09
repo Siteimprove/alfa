@@ -4,19 +4,9 @@
 
 ## Map\_2.find() method
 
-<b>Signature:</b>
-
-```typescript
-find<U extends V>(refinement: Refinement<V, U, [key: K]>): Option<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
 

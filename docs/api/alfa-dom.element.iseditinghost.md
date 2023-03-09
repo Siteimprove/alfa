@@ -4,8 +4,3 @@
 
 ## Element.isEditingHost variable
 
-<b>Signature:</b>
-
-```typescript
-isEditingHost: typeof predicate.isEditingHost
-```

@@ -4,8 +4,3 @@
 
 ## Outcome.Failed.JSON.target property
 
-<b>Signature:</b>
-
-```typescript
-target: json.Serializable.ToJSON<T>;
-```

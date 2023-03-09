@@ -4,19 +4,9 @@
 
 ## Math\_2.reduce() method
 
-<b>Signature:</b>
-
-```typescript
-reduce(resolver: Expression.Resolver): Math;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  resolver | Expression.Resolver |  |
-
-<b>Returns:</b>
-
-Math
 

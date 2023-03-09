@@ -4,10 +4,3 @@
 
 ## Rule.(constructor)
 
-Constructs a new instance of the `Rule` class
-
-<b>Signature:</b>
-
-```typescript
-protected constructor();
-```

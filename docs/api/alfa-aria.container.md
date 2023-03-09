@@ -4,13 +4,6 @@
 
 ## Container namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Container 
-```
-
 ## Interfaces
 
 |  Interface | Description |

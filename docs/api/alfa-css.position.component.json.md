@@ -4,10 +4,3 @@
 
 ## Position.Component.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
-```
-<b>References:</b> [Keyword.JSON](./alfa-css.keyword.json.md)<!-- -->, [Length.JSON](./alfa-css.length.json.md)<!-- -->, [Percentage.JSON](./alfa-css.percentage.json.md)<!-- -->, [Side.JSON](./alfa-css.position.side.json.md)
-

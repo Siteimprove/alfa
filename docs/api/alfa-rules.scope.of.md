@@ -4,19 +4,9 @@
 
 ## Scope.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<S extends string>(scope: S): Scope<S>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  scope | S |  |
-
-<b>Returns:</b>
-
-[Scope](./alfa-rules.scope.md)<!-- -->&lt;S&gt;
 

@@ -4,19 +4,9 @@
 
 ## Map\_2.reject() method
 
-<b>Signature:</b>
-
-```typescript
-reject<U extends V>(refinement: Refinement<V, U, [key: K]>): Map<K, Exclude<V, U>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
-
-<b>Returns:</b>
-
-Map&lt;K, Exclude&lt;V, U&gt;&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
 

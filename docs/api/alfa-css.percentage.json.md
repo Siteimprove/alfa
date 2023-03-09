@@ -4,10 +4,3 @@
 
 ## Percentage.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Numeric.JSON<"percentage"> 
-```
-<b>Extends:</b> [Numeric.JSON](./alfa-css.numeric.json.md)<!-- -->&lt;"percentage"&gt;
-

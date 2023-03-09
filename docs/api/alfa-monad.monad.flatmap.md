@@ -4,19 +4,9 @@
 
 ## Monad.flatMap() method
 
-<b>Signature:</b>
-
-```typescript
-flatMap<U>(mapper: Mapper<T, Monad<U>>): Monad<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Monad](./alfa-monad.monad.md)<!-- -->&lt;U&gt;&gt; |  |
-
-<b>Returns:</b>
-
-[Monad](./alfa-monad.monad.md)<!-- -->&lt;U&gt;
 

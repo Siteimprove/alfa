@@ -4,14 +4,3 @@
 
 ## URL.hasCredentials() method
 
-[https://url.spec.whatwg.org/\#include-credentials](https://url.spec.whatwg.org/#include-credentials)
-
-<b>Signature:</b>
-
-```typescript
-hasCredentials(): boolean;
-```
-<b>Returns:</b>
-
-boolean
-

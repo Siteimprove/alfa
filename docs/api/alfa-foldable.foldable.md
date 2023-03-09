@@ -4,16 +4,9 @@
 
 ## Foldable interface
 
-
-<b>Signature:</b>
-
-```typescript
-export interface Foldable<T> 
-```
-
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [reduce(reducer, accumulator)](./alfa-foldable.foldable.reduce.md) |  |
+|  [reduce](./alfa-foldable.foldable.reduce.md) |  |
 

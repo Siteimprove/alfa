@@ -4,8 +4,3 @@
 
 ## Selector.Relative.combinator property
 
-<b>Signature:</b>
-
-```typescript
-get combinator(): Combinator;
-```

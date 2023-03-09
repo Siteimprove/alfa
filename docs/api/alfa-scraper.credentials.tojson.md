@@ -4,12 +4,3 @@
 
 ## Credentials.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Credentials.JSON;
-```
-<b>Returns:</b>
-
-[Credentials.JSON](./alfa-scraper.credentials.json.md)
-

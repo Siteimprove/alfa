@@ -4,16 +4,10 @@
 
 ## Math\_2.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [expression](./alfa-css.math_2.json.expression.md) |  | Expression.JSON |  |
-|  [type](./alfa-css.math_2.json.type.md) |  | "math expression" |  |
+|  [expression](./alfa-css.math_2.json.expression.md) |  |  |  |
+|  [type](./alfa-css.math_2.json.type.md) |  |  |  |
 

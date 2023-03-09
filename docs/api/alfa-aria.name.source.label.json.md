@@ -4,16 +4,10 @@
 
 ## Name.Source.Label.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [attribute](./alfa-aria.name.source.label.json.attribute.md) |  | string |  |
-|  [type](./alfa-aria.name.source.label.json.type.md) |  | "label" |  |
+|  [attribute](./alfa-aria.name.source.label.json.attribute.md) |  |  |  |
+|  [type](./alfa-aria.name.source.label.json.type.md) |  |  |  |
 

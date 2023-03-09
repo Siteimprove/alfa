@@ -4,19 +4,9 @@
 
 ## Collection.Unkeyed.intersect() method
 
-<b>Signature:</b>
-
-```typescript
-intersect(iterable: Iterable<T>): Unkeyed<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

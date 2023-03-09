@@ -4,12 +4,3 @@
 
 ## Assertion.accessible() method
 
-<b>Signature:</b>
-
-```typescript
-accessible(): Future<Result<string>>;
-```
-<b>Returns:</b>
-
-[Future](./alfa-future.future.md)<!-- -->&lt;[Result](./alfa-result.result.md)<!-- -->&lt;string&gt;&gt;
-

@@ -4,10 +4,3 @@
 
 ## Component.consume variable
 
-[https://drafts.csswg.org/css-syntax/\#consume-a-component-value](https://drafts.csswg.org/css-syntax/#consume-a-component-value)
-
-<b>Signature:</b>
-
-```typescript
-consume: Parser<Slice<Token>, Component, string>
-```

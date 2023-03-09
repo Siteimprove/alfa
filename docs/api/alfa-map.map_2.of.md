@@ -4,19 +4,9 @@
 
 ## Map\_2.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<K, V>(...entries: Array<readonly [K, V]>): Map<K, V>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  entries | Array&lt;readonly \[K, V\]&gt; |  |
-
-<b>Returns:</b>
-
-Map&lt;K, V&gt;
 

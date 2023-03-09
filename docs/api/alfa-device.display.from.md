@@ -4,19 +4,9 @@
 
 ## Display.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from(json: JSON): Display;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-device.display.json.md) |  |
-
-<b>Returns:</b>
-
-[Display](./alfa-device.display.md)
 

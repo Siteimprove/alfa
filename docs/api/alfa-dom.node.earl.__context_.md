@@ -4,10 +4,3 @@
 
 ## Node.EARL."@context" property
 
-<b>Signature:</b>
-
-```typescript
-"@context": {
-            ptr: "http://www.w3.org/2009/pointers#";
-        };
-```

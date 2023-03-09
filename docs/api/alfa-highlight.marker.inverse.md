@@ -4,8 +4,3 @@
 
 ## Marker.inverse variable
 
-<b>Signature:</b>
-
-```typescript
-inverse: Marker
-```

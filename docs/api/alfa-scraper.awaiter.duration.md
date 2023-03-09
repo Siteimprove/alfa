@@ -4,22 +4,10 @@
 
 ## Awaiter.duration() function
 
-Wait for a fixed duration after another awaiter has finished.
-
-<b>Signature:</b>
-
-```typescript
-function duration(duration: number, after?: Awaiter): Awaiter;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  duration | number |  |
 |  after | [Awaiter](./alfa-scraper.awaiter.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Awaiter](./alfa-scraper.awaiter.md)
 

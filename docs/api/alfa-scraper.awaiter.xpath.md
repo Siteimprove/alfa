@@ -4,21 +4,9 @@
 
 ## Awaiter.xpath() function
 
-Wait for an element matching the given expression to be present and visible.
-
-<b>Signature:</b>
-
-```typescript
-function xpath(expression: string): Awaiter;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  expression | string |  |
-
-<b>Returns:</b>
-
-[Awaiter](./alfa-scraper.awaiter.md)
 

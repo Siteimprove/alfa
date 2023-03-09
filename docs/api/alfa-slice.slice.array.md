@@ -4,8 +4,3 @@
 
 ## Slice.array property
 
-<b>Signature:</b>
-
-```typescript
-get array(): ReadonlyArray<T>;
-```

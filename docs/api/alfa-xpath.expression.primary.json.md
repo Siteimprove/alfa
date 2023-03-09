@@ -4,10 +4,3 @@
 
 ## Expression.Primary.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON = Literal.JSON | ContextItem.JSON | FunctionCall.JSON;
-```
-<b>References:</b> [Literal.JSON](./alfa-xpath.expression.literal.json.md)<!-- -->, [ContextItem.JSON](./alfa-xpath.expression.contextitem.json.md)<!-- -->, [FunctionCall.JSON](./alfa-xpath.expression.functioncall.json.md)
-

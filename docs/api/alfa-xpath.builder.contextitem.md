@@ -4,16 +4,9 @@
 
 ## Builder.ContextItem class
 
-<b>Signature:</b>
-
-```typescript
-export class ContextItem extends ContextItem_base 
-```
-<b>Extends:</b> ContextItem\_base
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [where(predicate)](./alfa-xpath.builder.contextitem.where.md) |  |  |
+|  [where](./alfa-xpath.builder.contextitem.where.md) |  |  |
 

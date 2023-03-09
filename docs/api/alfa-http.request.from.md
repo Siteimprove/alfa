@@ -4,19 +4,9 @@
 
 ## Request.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from(json: JSON): Request;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-http.request.json.md) |  |
-
-<b>Returns:</b>
-
-[Request](./alfa-http.request.md)
 

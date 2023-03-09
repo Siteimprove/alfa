@@ -4,8 +4,3 @@
 
 ## Radius.JSON.value property
 
-<b>Signature:</b>
-
-```typescript
-value: Length.JSON | Percentage.JSON | Keyword.JSON;
-```

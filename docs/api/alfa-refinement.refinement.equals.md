@@ -4,8 +4,3 @@
 
 ## Refinement.equals variable
 
-<b>Signature:</b>
-
-```typescript
-equals: Equals
-```

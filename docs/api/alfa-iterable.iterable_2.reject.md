@@ -4,20 +4,10 @@
 
 ## Iterable\_2.reject() function
 
-<b>Signature:</b>
-
-```typescript
-function reject<T, U extends T>(iterable: Iterable<T>, refinement: Refinement<T, U, [index: number]>): Iterable<Exclude<T, U>>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
-
-<b>Returns:</b>
-
-Iterable&lt;Exclude&lt;T, U&gt;&gt;
+|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
 

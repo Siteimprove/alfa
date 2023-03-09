@@ -4,8 +4,3 @@
 
 ## Diagnostic.isSameNames variable
 
-<b>Signature:</b>
-
-```typescript
-isSameNames: typeof SameNames.isSameNames
-```

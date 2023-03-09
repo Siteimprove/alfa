@@ -4,19 +4,9 @@
 
 ## Column.Group.isGroup() function
 
-<b>Signature:</b>
-
-```typescript
-function isGroup(value: unknown): value is Group;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Group](./alfa-table.column.group.md)
 

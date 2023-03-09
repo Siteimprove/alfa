@@ -4,20 +4,10 @@
 
 ## Array\_2.has() function
 
-<b>Signature:</b>
-
-```typescript
-function has<T>(array: ReadonlyArray<T>, index: number): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  index | number |  |
-
-<b>Returns:</b>
-
-boolean
 

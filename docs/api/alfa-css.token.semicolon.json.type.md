@@ -4,8 +4,3 @@
 
 ## Token.Semicolon.JSON.type property
 
-<b>Signature:</b>
-
-```typescript
-type: "semicolon";
-```

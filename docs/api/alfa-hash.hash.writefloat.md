@@ -4,20 +4,10 @@
 
 ## Hash.writeFloat() method
 
-<b>Signature:</b>
-
-```typescript
-writeFloat(data: number, size?: 32 | 64): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | number |  |
 |  size | 32 \| 64 | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-this
 

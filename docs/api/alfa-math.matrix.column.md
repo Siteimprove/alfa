@@ -4,20 +4,10 @@
 
 ## Matrix.column() function
 
-<b>Signature:</b>
-
-```typescript
-function column(m: Matrix, i: number): Array<number>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 |  i | number |  |
-
-<b>Returns:</b>
-
-Array&lt;number&gt;
 

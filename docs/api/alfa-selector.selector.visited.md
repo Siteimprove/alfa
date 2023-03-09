@@ -4,19 +4,10 @@
 
 ## Selector.Visited class
 
-[https://drafts.csswg.org/selectors/\#visited-pseudo](https://drafts.csswg.org/selectors/#visited-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class Visited extends Pseudo.Class<"visited"> 
-```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"visited"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches(element, context)](./alfa-selector.selector.visited.matches.md) |  |  |
-|  [of()](./alfa-selector.selector.visited.of.md) | <code>static</code> |  |
+|  [matches](./alfa-selector.selector.visited.matches.md) |  |  |
+|  [of](./alfa-selector.selector.visited.of.md) |  |  |
 

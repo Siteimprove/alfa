@@ -8,12 +8,12 @@
 
 |  Package | Description |
 |  --- | --- |
-|  [@siteimprove/alfa-act](./alfa-act.md) | This package provides functionality for implementing rules specified in the [ACT Rules Format](https://www.w3.org/TR/act-rules-format/)<!-- -->. |
-|  [@siteimprove/alfa-affine](./alfa-affine.md) | This package provides functionality for working with [affine transformations](https://en.wikipedia.org/wiki/Affine_transformation)<!-- -->. |
-|  [@siteimprove/alfa-angular](./alfa-angular.md) | This package provides integrations and utilities for the [Angular](https://angular.io/) application framework. |
-|  [@siteimprove/alfa-applicative](./alfa-applicative.md) | This package provides types for modelling [applicative functors](https://en.wikipedia.org/wiki/Applicative_functor)<!-- -->. |
-|  [@siteimprove/alfa-aria](./alfa-aria.md) | This package provides functionality for working with [ARIA](https://www.w3.org/TR/wai-aria/) and the accessibility tree. |
-|  [@siteimprove/alfa-array](./alfa-array.md) | This package provides functionality for working with arrays. |
+|  [@siteimprove/alfa-act](./alfa-act.md) |  |
+|  [@siteimprove/alfa-affine](./alfa-affine.md) |  |
+|  [@siteimprove/alfa-angular](./alfa-angular.md) |  |
+|  [@siteimprove/alfa-applicative](./alfa-applicative.md) |  |
+|  [@siteimprove/alfa-aria](./alfa-aria.md) |  |
+|  [@siteimprove/alfa-array](./alfa-array.md) |  |
 |  [@siteimprove/alfa-assert](./alfa-assert.md) |  |
 |  [@siteimprove/alfa-bits](./alfa-bits.md) |  |
 |  [@siteimprove/alfa-branched](./alfa-branched.md) |  |
@@ -75,7 +75,7 @@
 |  [@siteimprove/alfa-performance](./alfa-performance.md) |  |
 |  [@siteimprove/alfa-playwright](./alfa-playwright.md) |  |
 |  [@siteimprove/alfa-predicate](./alfa-predicate.md) |  |
-|  [@siteimprove/alfa-promise](./alfa-promise.md) | This package provides functionality for working with promises. |
+|  [@siteimprove/alfa-promise](./alfa-promise.md) |  |
 |  [@siteimprove/alfa-puppeteer](./alfa-puppeteer.md) |  |
 |  [@siteimprove/alfa-react](./alfa-react.md) |  |
 |  [@siteimprove/alfa-record](./alfa-record.md) |  |

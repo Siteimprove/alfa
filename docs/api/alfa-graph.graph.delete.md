@@ -4,19 +4,9 @@
 
 ## Graph.delete() method
 
-<b>Signature:</b>
-
-```typescript
-delete(node: T): Graph<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | T |  |
-
-<b>Returns:</b>
-
-[Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

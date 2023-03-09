@@ -4,8 +4,3 @@
 
 ## Rotate.JSON.z property
 
-<b>Signature:</b>
-
-```typescript
-z: Number.JSON;
-```

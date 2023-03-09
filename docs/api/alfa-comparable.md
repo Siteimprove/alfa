@@ -14,13 +14,13 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Comparable](./alfa-comparable.comparable.md) | This interface describes strcutures that define a [total order](https://en.wikipedia.org/wiki/Total_order)<!-- -->. |
+|  [Comparable](./alfa-comparable.comparable.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Comparable](./alfa-comparable.comparable.md) | This namespace provides additional functions for the [Comparable](./alfa-comparable.comparable.md) interface. |
+|  [Comparable](./alfa-comparable.comparable.md) |  |
 
 ## Type Aliases
 

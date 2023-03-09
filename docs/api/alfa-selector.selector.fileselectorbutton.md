@@ -4,18 +4,9 @@
 
 ## Selector.FileSelectorButton class
 
-[https://drafts.csswg.org/css-pseudo-4/\#file-selector-button-pseudo](https://drafts.csswg.org/css-pseudo-4/#file-selector-button-pseudo)
-
-<b>Signature:</b>
-
-```typescript
-export class FileSelectorButton extends Pseudo.Element<"file-selector-button"> 
-```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"file-selector-button"&gt;
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [of()](./alfa-selector.selector.fileselectorbutton.of.md) | <code>static</code> |  |
+|  [of](./alfa-selector.selector.fileselectorbutton.of.md) |  |  |
 

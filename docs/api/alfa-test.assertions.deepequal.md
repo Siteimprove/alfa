@@ -4,14 +4,6 @@
 
 ## Assertions.deepEqual() method
 
-[https://nodejs.org/api/assert.html\#assert\_assert\_deepequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_deepequal_actual_expected_message)
-
-<b>Signature:</b>
-
-```typescript
-deepEqual<T>(actual: T, expected: T, message?: string): void;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -19,8 +11,4 @@ deepEqual<T>(actual: T, expected: T, message?: string): void;
 |  actual | T |  |
 |  expected | T |  |
 |  message | string | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-void
 

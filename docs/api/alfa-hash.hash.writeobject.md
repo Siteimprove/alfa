@@ -4,19 +4,9 @@
 
 ## Hash.writeObject() method
 
-<b>Signature:</b>
-
-```typescript
-writeObject(data: object): this;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | object |  |
-
-<b>Returns:</b>
-
-this
 

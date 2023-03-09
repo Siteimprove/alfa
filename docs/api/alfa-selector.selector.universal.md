@@ -4,12 +4,6 @@
 
 ## Selector.Universal namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace Universal 
-```
-
 ## Interfaces
 
 |  Interface | Description |

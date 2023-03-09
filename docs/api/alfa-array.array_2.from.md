@@ -4,23 +4,9 @@
 
 ## Array\_2.from() function
 
-<b>Signature:</b>
-
-```typescript
-function from<T>(iterable: Iterable<T>): Array<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Array&lt;T&gt;
-
-## Remarks
-
-Unlike the built-in function of the same name, this function will pass along existing arrays as-is instead of returning a copy.
 

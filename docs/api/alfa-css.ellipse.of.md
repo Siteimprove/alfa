@@ -4,12 +4,6 @@
 
 ## Ellipse.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<R extends Radius = Radius, P extends Position = Position>(rx: R, ry: R, center: P): Ellipse<R, P>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ static of<R extends Radius = Radius, P extends Position = Position>(rx: R, ry: R
 |  rx | R |  |
 |  ry | R |  |
 |  center | P |  |
-
-<b>Returns:</b>
-
-[Ellipse](./alfa-css.ellipse.md)<!-- -->&lt;R, P&gt;
 

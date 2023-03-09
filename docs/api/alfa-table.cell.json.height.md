@@ -4,8 +4,3 @@
 
 ## Cell.JSON.height property
 
-<b>Signature:</b>
-
-```typescript
-height: number;
-```

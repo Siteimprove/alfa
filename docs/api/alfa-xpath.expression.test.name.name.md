@@ -4,8 +4,3 @@
 
 ## Expression.Test.Name.name property
 
-<b>Signature:</b>
-
-```typescript
-get name(): string;
-```

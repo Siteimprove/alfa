@@ -4,8 +4,3 @@
 
 ## Name.Source.Data.JSON.text property
 
-<b>Signature:</b>
-
-```typescript
-text: string;
-```

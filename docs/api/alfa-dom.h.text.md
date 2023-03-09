@@ -4,19 +4,9 @@
 
 ## h.text() function
 
-<b>Signature:</b>
-
-```typescript
-function text(data: string): Text;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | string |  |
-
-<b>Returns:</b>
-
-[Text](./alfa-dom.text.md)
 

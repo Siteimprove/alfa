@@ -4,17 +4,10 @@
 
 ## Outcome.Passed.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<T> extends Outcome.JSON<Value.Passed> 
-```
-<b>Extends:</b> [Outcome.JSON](./alfa-act.outcome.json.md)<!-- -->&lt;Value.Passed&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [expectations](./alfa-act.outcome.passed.json.expectations.md) |  | Array&lt;\[string, [Result.JSON](./alfa-result.result.json.md)<!-- -->&lt;[Diagnostic.JSON](./alfa-act.diagnostic.json.md)<!-- -->&gt;\]&gt; |  |
-|  [target](./alfa-act.outcome.passed.json.target.md) |  | json.[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
+|  [expectations](./alfa-act.outcome.passed.json.expectations.md) |  |  |  |
+|  [target](./alfa-act.outcome.passed.json.target.md) |  |  |  |
 

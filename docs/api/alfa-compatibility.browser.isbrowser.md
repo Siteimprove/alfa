@@ -4,19 +4,9 @@
 
 ## Browser.isBrowser() function
 
-<b>Signature:</b>
-
-```typescript
-function isBrowser(browser: string): browser is Name;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  browser | string |  |
-
-<b>Returns:</b>
-
-browser is [Name](./alfa-compatibility.browser.name.md)
 

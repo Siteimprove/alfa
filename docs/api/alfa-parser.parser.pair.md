@@ -4,20 +4,10 @@
 
 ## Parser.pair() function
 
-<b>Signature:</b>
-
-```typescript
-function pair<I, T, U, E, A extends Array<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, U, E, A>): Parser<I, [T, U], E, A>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  left | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 |  right | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, U, E, A&gt; |  |
-
-<b>Returns:</b>
-
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, \[T, U\], E, A&gt;
 

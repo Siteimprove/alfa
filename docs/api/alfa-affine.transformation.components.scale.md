@@ -4,10 +4,3 @@
 
 ## Transformation.Components.scale property
 
-A vector representing \[x, y, z\] scaling.
-
-<b>Signature:</b>
-
-```typescript
-scale: Vector;
-```

@@ -4,20 +4,10 @@
 
 ## Graph.traverse() method
 
-<b>Signature:</b>
-
-```typescript
-traverse(root: T, traversal?: Graph.Traversal): Sequence<[node: T, parent: T]>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  root | T |  |
 |  traversal | [Graph.Traversal](./alfa-graph.graph.traversal.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;\[node: T, parent: T\]&gt;
 

@@ -4,14 +4,3 @@
 
 ## URL.blank() method
 
-[https://tools.ietf.org/html/rfc6694\#section-3](https://tools.ietf.org/html/rfc6694#section-3)
-
-<b>Signature:</b>
-
-```typescript
-static blank(): URL;
-```
-<b>Returns:</b>
-
-[URL](./alfa-url.url.md)
-

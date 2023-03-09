@@ -4,18 +4,11 @@
 
 ## ImportRule namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace ImportRule 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isImportRule(value)](./alfa-dom.importrule.isimportrule.md) |  |
+|  [isImportRule](./alfa-dom.importrule.isimportrule.md) |  |
 
 ## Interfaces
 

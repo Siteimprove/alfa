@@ -4,10 +4,3 @@
 
 ## Number\_2.parse variable
 
-[https://drafts.csswg.org/css-values/\#number-value](https://drafts.csswg.org/css-values/#number-value)
-
-<b>Signature:</b>
-
-```typescript
-parse: Parser<Slice<Token>, Number, string>
-```

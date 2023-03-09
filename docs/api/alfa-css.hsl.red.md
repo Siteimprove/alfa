@@ -4,8 +4,3 @@
 
 ## HSL.red property
 
-<b>Signature:</b>
-
-```typescript
-get red(): Percentage;
-```

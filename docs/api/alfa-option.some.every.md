@@ -4,19 +4,9 @@
 
 ## Some.every() method
 
-<b>Signature:</b>
-
-```typescript
-every(predicate: Predicate<T>): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-boolean
 

@@ -4,19 +4,9 @@
 
 ## Token.Delim.isDelim() function
 
-<b>Signature:</b>
-
-```typescript
-function isDelim(value: unknown): value is Delim;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Delim](./alfa-css.token.delim.md)
 

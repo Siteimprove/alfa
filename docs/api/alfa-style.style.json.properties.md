@@ -4,8 +4,3 @@
 
 ## Style.JSON.properties property
 
-<b>Signature:</b>
-
-```typescript
-properties: Array<[string, Value.JSON]>;
-```

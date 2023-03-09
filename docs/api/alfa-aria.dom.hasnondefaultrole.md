@@ -4,8 +4,3 @@
 
 ## DOM.hasNonDefaultRole variable
 
-<b>Signature:</b>
-
-```typescript
-hasNonDefaultRole: typeof dom.hasNonDefaultRole
-```

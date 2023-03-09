@@ -4,20 +4,10 @@
 
 ## Generator\_2.flatMap() function
 
-<b>Signature:</b>
-
-```typescript
-function flatMap<T, U, R, N>(generator: Generator<T, R, N>, mapper: Mapper<T, Generator<U, R, N>>): Generator<U, R, N>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  generator | Generator&lt;T, R, N&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Generator&lt;U, R, N&gt;&gt; |  |
-
-<b>Returns:</b>
-
-Generator&lt;U, R, N&gt;
 

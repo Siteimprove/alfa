@@ -4,10 +4,3 @@
 
 ## Tuple.GetInner type
 
-<b>Signature:</b>
-
-```typescript
-type GetInner<T extends Tuple, I extends number, S extends Tuple> = T extends readonly [infer H, ...infer R] ? I extends Size<S> ? H : GetInner<R, I, Append<S, H>> : never;
-```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Size](./alfa-tuple.tuple.size.md)<!-- -->, [Append](./alfa-tuple.tuple.append.md)
-

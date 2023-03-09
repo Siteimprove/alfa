@@ -4,19 +4,9 @@
 
 ## Lazy.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<T>(thunk: Thunk<T>): Lazy<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;
 

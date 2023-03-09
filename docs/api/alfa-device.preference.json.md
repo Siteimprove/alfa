@@ -4,16 +4,10 @@
 
 ## Preference.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-export interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-device.preference.json.name.md) |  | string |  |
-|  [value](./alfa-device.preference.json.value.md) |  | string |  |
+|  [name](./alfa-device.preference.json.name.md) |  |  |  |
+|  [value](./alfa-device.preference.json.value.md) |  |  |  |
 

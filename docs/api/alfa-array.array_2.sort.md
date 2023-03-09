@@ -4,19 +4,9 @@
 
 ## Array\_2.sort() function
 
-<b>Signature:</b>
-
-```typescript
-function sort<T extends Comparable<T>>(array: Array<T>): Array<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | Array&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-Array&lt;T&gt;
 

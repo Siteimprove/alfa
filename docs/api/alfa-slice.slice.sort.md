@@ -4,19 +4,9 @@
 
 ## Slice.sort() method
 
-<b>Signature:</b>
-
-```typescript
-sort<T extends Comparable<T>>(this: Slice<T>): Slice<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

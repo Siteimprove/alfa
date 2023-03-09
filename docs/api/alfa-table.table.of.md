@@ -4,12 +4,6 @@
 
 ## Table.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(element: Element, cells: Iterable<Cell>, groups: Iterable<Group>): Table;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ static of(element: Element, cells: Iterable<Cell>, groups: Iterable<Group>): Tab
 |  element | [Element](./alfa-dom.element.md) |  |
 |  cells | Iterable&lt;[Cell](./alfa-table.cell.md)<!-- -->&gt; |  |
 |  groups | Iterable&lt;[Group](./alfa-table.group.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-[Table](./alfa-table.table.md)
 

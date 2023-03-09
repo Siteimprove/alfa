@@ -4,13 +4,6 @@
 
 ## Nth namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Nth 
-```
-
 ## Interfaces
 
 |  Interface | Description |

@@ -4,8 +4,3 @@
 
 ## Question.Options.diagnostic property
 
-<b>Signature:</b>
-
-```typescript
-readonly diagnostic?: Diagnostic;
-```

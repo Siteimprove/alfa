@@ -4,8 +4,3 @@
 
 ## Rule.Event.Type type
 
-<b>Signature:</b>
-
-```typescript
-type Type = "start" | "end";
-```

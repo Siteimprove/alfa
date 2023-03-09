@@ -4,20 +4,10 @@
 
 ## h.rule.media() function
 
-<b>Signature:</b>
-
-```typescript
-function media(condition: string, rules: Array<Rule>): MediaRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  condition | string |  |
 |  rules | Array&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-[MediaRule](./alfa-dom.mediarule.md)
 

@@ -4,10 +4,3 @@
 
 ## Expression.Test.Kind.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON = Node.JSON | Document.JSON | Element.JSON | Attribute.JSON | Comment.JSON | Text.JSON;
-```
-<b>References:</b> [Node.JSON](./alfa-xpath.expression.test.node.json.md)<!-- -->, [Document.JSON](./alfa-xpath.expression.test.document.json.md)<!-- -->, [Element.JSON](./alfa-xpath.expression.test.element.json.md)<!-- -->, [Attribute.JSON](./alfa-xpath.expression.test.attribute.json.md)<!-- -->, [Comment.JSON](./alfa-xpath.expression.test.comment.json.md)<!-- -->, [Text.JSON](./alfa-xpath.expression.test.text.json.md)
-

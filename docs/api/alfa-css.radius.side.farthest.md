@@ -4,12 +4,3 @@
 
 ## Radius.Side.Farthest type
 
-[https://drafts.csswg.org/css-shapes/\#farthest-side](https://drafts.csswg.org/css-shapes/#farthest-side)
-
-<b>Signature:</b>
-
-```typescript
-type Farthest = Keyword<"farthest-side">;
-```
-<b>References:</b> [Keyword](./alfa-css.keyword.md)
-

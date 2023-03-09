@@ -4,8 +4,3 @@
 
 ## Token.isSemicolon variable
 
-<b>Signature:</b>
-
-```typescript
-isSemicolon: typeof Semicolon.isSemicolon
-```

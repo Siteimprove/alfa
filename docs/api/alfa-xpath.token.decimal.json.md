@@ -4,16 +4,10 @@
 
 ## Token.Decimal.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-xpath.token.decimal.json.type.md) |  | "decimal" |  |
-|  [value](./alfa-xpath.token.decimal.json.value.md) |  | number |  |
+|  [type](./alfa-xpath.token.decimal.json.type.md) |  |  |  |
+|  [value](./alfa-xpath.token.decimal.json.value.md) |  |  |  |
 

@@ -4,17 +4,11 @@
 
 ## Media.Feature.Height namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Height 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isHeight(value)](./alfa-media.media.feature.height.isheight.md) |  |
-|  [isHeight(value)](./alfa-media.media.feature.height.isheight_1.md) |  |
-|  [tryFrom(value)](./alfa-media.media.feature.height.tryfrom.md) |  |
+|  [isHeight](./alfa-media.media.feature.height.isheight.md) |  |
+|  [isHeight](./alfa-media.media.feature.height.isheight.md) |  |
+|  [tryFrom](./alfa-media.media.feature.height.tryfrom.md) |  |
 

@@ -4,14 +4,3 @@
 
 ## URL.toString() method
 
-[https://url.spec.whatwg.org/\#concept-url-serializer](https://url.spec.whatwg.org/#concept-url-serializer)
-
-<b>Signature:</b>
-
-```typescript
-toString(): string;
-```
-<b>Returns:</b>
-
-string
-

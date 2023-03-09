@@ -4,12 +4,6 @@
 
 ## Outcome.CantTell.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic, mode: Mode): CantTell<I, T, Q, S>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -18,8 +12,4 @@ static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, diagno
 |  target | T |  |
 |  diagnostic | [Diagnostic](./alfa-act.diagnostic.md) |  |
 |  mode | [Mode](./alfa-act.outcome.mode.md) |  |
-
-<b>Returns:</b>
-
-[CantTell](./alfa-act.outcome.canttell.md)<!-- -->&lt;I, T, Q, S&gt;
 

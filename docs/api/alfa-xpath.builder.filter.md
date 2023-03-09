@@ -4,16 +4,9 @@
 
 ## Builder.Filter class
 
-<b>Signature:</b>
-
-```typescript
-export class Filter extends Filter_base 
-```
-<b>Extends:</b> Filter\_base
-
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [where(predicate)](./alfa-xpath.builder.filter.where.md) |  |  |
+|  [where](./alfa-xpath.builder.filter.where.md) |  |  |
 

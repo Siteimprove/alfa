@@ -4,8 +4,3 @@
 
 ## Context."@version" property
 
-<b>Signature:</b>
-
-```typescript
-"@version"?: 1.1;
-```

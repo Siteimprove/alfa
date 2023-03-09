@@ -4,20 +4,13 @@
 
 ## Slice namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Slice 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from(iterable)](./alfa-slice.slice.from.md) |  |
-|  [isSlice(value)](./alfa-slice.slice.isslice.md) |  |
-|  [isSlice(value)](./alfa-slice.slice.isslice_1.md) |  |
+|  [from](./alfa-slice.slice.from.md) |  |
+|  [isSlice](./alfa-slice.slice.isslice.md) |  |
+|  [isSlice](./alfa-slice.slice.isslice.md) |  |
 
 ## Type Aliases
 

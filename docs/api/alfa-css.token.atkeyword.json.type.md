@@ -4,8 +4,3 @@
 
 ## Token.AtKeyword.JSON.type property
 
-<b>Signature:</b>
-
-```typescript
-type: "at-keyword";
-```

@@ -4,19 +4,9 @@
 
 ## Collection.Unkeyed.map() method
 
-<b>Signature:</b>
-
-```typescript
-map<U>(mapper: Mapper<T, U>): Unkeyed<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
-
-<b>Returns:</b>
-
-[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;U&gt;
 

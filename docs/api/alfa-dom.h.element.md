@@ -4,12 +4,6 @@
 
 ## h.element() function
 
-<b>Signature:</b>
-
-```typescript
-function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace): Element<N>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -19,8 +13,4 @@ function element<N extends string = string>(name: N, attributes?: Array<Attribut
 |  children | Array&lt;[Node](./alfa-dom.node.md) \| string&gt; | <i>(Optional)</i> |
 |  style | Array&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; \| Record&lt;string, string&gt; | <i>(Optional)</i> |
 |  namespace | [Namespace](./alfa-dom.namespace.md) | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Element](./alfa-dom.element.md)<!-- -->&lt;N&gt;
 

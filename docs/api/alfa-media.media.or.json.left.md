@@ -4,8 +4,3 @@
 
 ## Media.Or.JSON.left property
 
-<b>Signature:</b>
-
-```typescript
-left: Feature.JSON | Condition.JSON;
-```

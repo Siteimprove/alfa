@@ -4,18 +4,11 @@
 
 ## NamespaceRule namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace NamespaceRule 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isNamespaceRule(value)](./alfa-dom.namespacerule.isnamespacerule.md) |  |
+|  [isNamespaceRule](./alfa-dom.namespacerule.isnamespacerule.md) |  |
 
 ## Interfaces
 

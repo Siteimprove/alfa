@@ -4,12 +4,3 @@
 
 ## Radial.Circle.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Circle.JSON;
-```
-<b>Returns:</b>
-
-[Circle.JSON](./alfa-css.radial.circle.json.md)
-

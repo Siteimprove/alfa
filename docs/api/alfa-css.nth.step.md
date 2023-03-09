@@ -4,8 +4,3 @@
 
 ## Nth.step property
 
-<b>Signature:</b>
-
-```typescript
-get step(): number;
-```

@@ -4,19 +4,9 @@
 
 ## Flag.matches() method
 
-<b>Signature:</b>
-
-```typescript
-matches(name: string): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-
-<b>Returns:</b>
-
-boolean
 

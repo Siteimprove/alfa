@@ -4,19 +4,9 @@
 
 ## Branched.forEach() method
 
-<b>Signature:</b>
-
-```typescript
-forEach(callback: Callback<T, void, [Iterable<B>]>): void;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, void, \[Iterable&lt;B&gt;\]&gt; |  |
-
-<b>Returns:</b>
-
-void
 

@@ -4,10 +4,3 @@
 
 ## Position.Vertical type
 
-<b>Signature:</b>
-
-```typescript
-export type Vertical = Keyword<"top"> | Keyword<"bottom">;
-```
-<b>References:</b> [Keyword](./alfa-css.keyword.md)
-

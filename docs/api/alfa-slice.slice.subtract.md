@@ -4,19 +4,9 @@
 
 ## Slice.subtract() method
 
-<b>Signature:</b>
-
-```typescript
-subtract(iterable: Iterable<T>): Slice<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

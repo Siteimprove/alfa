@@ -4,8 +4,3 @@
 
 ## Device.scripting property
 
-<b>Signature:</b>
-
-```typescript
-get scripting(): Scripting;
-```

@@ -4,8 +4,3 @@
 
 ## jsx.JSX.IntrinsicElements interface
 
-<b>Signature:</b>
-
-```typescript
-interface IntrinsicElements 
-```

@@ -4,19 +4,9 @@
 
 ## Criterion.isChapter() function
 
-<b>Signature:</b>
-
-```typescript
-function isChapter(value: string): value is Chapter;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
-
-<b>Returns:</b>
-
-value is [Chapter](./alfa-wcag.criterion.chapter.md)
 

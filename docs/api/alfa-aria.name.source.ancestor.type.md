@@ -4,8 +4,3 @@
 
 ## Name.Source.Ancestor.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "ancestor";
-```

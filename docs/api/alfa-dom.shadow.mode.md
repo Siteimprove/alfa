@@ -4,16 +4,10 @@
 
 ## Shadow.Mode enum
 
-<b>Signature:</b>
-
-```typescript
-enum Mode 
-```
-
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  Closed | <code>&quot;closed&quot;</code> |  |
-|  Open | <code>&quot;open&quot;</code> |  |
+|  Closed |  |  |
+|  Open |  |  |
 

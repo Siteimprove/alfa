@@ -4,19 +4,9 @@
 
 ## Iterable\_2.last() function
 
-<b>Signature:</b>
-
-```typescript
-function last<T>(iterable: Iterable<T>): Option<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

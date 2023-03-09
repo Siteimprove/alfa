@@ -4,13 +4,6 @@
 
 ## Assertion namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Assertion 
-```
-
 ## Interfaces
 
 |  Interface | Description |

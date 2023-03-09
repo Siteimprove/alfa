@@ -4,19 +4,9 @@
 
 ## Media.Or.isOr() function
 
-<b>Signature:</b>
-
-```typescript
-function isOr(value: unknown): value is Or;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Or](./alfa-media.media.or.md)
 

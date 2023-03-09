@@ -4,16 +4,9 @@
 
 ## Selector.NthOfType.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Pseudo.Class.JSON<"nth-of-type"> 
-```
-<b>Extends:</b> [Pseudo.Class.JSON](./alfa-selector.selector.pseudo.class.json.md)<!-- -->&lt;"nth-of-type"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [index](./alfa-selector.selector.nthoftype.json.index.md) |  | [Nth.JSON](./alfa-css.nth.json.md) |  |
+|  [index](./alfa-selector.selector.nthoftype.json.index.md) |  |  |  |
 

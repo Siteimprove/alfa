@@ -4,10 +4,3 @@
 
 ## Gradient.Item type
 
-<b>Signature:</b>
-
-```typescript
-type Item = Stop | Hint;
-```
-<b>References:</b> [Stop](./alfa-css.gradient.stop.md)<!-- -->, [Hint](./alfa-css.gradient.hint.md)
-

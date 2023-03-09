@@ -4,12 +4,6 @@
 
 ## h.rule.style() function
 
-<b>Signature:</b>
-
-```typescript
-function style(selector: string, declarations: Array<Declaration> | Record<string, string>, hint?: boolean): StyleRule;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ function style(selector: string, declarations: Array<Declaration> | Record<strin
 |  selector | string |  |
 |  declarations | Array&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; \| Record&lt;string, string&gt; |  |
 |  hint | boolean | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[StyleRule](./alfa-dom.stylerule.md)
 

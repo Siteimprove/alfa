@@ -4,12 +4,3 @@
 
 ## Token.Dimension.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Dimension.JSON;
-```
-<b>Returns:</b>
-
-[Dimension.JSON](./alfa-css.token.dimension.json.md)
-

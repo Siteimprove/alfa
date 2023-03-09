@@ -4,18 +4,11 @@
 
 ## Requirement namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Requirement 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isRequirement(value)](./alfa-act.requirement.isrequirement.md) |  |
+|  [isRequirement](./alfa-act.requirement.isrequirement.md) |  |
 
 ## Interfaces
 

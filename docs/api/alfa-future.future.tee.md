@@ -4,19 +4,9 @@
 
 ## Future.tee() method
 
-<b>Signature:</b>
-
-```typescript
-tee(callback: Callback<T>): Future<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

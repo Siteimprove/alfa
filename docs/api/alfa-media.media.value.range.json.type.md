@@ -4,8 +4,3 @@
 
 ## Media.Value.Range.JSON.type property
 
-<b>Signature:</b>
-
-```typescript
-type: "range";
-```

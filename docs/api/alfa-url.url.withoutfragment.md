@@ -4,18 +4,3 @@
 
 ## URL.withoutFragment() method
 
-Remove the fragment portion of this URL.
-
-<b>Signature:</b>
-
-```typescript
-withoutFragment(): URL;
-```
-<b>Returns:</b>
-
-[URL](./alfa-url.url.md)
-
-## Remarks
-
-This method is useful for contexts in which the fragment portion of the URL, which isn't passed from client to server, is of no interest.
-

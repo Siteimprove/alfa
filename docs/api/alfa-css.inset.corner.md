@@ -4,10 +4,3 @@
 
 ## Inset.Corner type
 
-<b>Signature:</b>
-
-```typescript
-type Corner = Radius | readonly [Radius, Radius];
-```
-<b>References:</b> [Radius](./alfa-css.inset.radius.md)
-

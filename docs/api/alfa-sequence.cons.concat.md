@@ -4,19 +4,9 @@
 
 ## Cons.concat() method
 
-<b>Signature:</b>
-
-```typescript
-concat(iterable: Iterable<T>): Cons<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
-
-<b>Returns:</b>
-
-[Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
 

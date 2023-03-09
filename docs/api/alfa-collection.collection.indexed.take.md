@@ -4,19 +4,9 @@
 
 ## Collection.Indexed.take() method
 
-<b>Signature:</b>
-
-```typescript
-take(count: number): Indexed<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  count | number |  |
-
-<b>Returns:</b>
-
-[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

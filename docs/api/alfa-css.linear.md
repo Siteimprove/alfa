@@ -4,13 +4,6 @@
 
 ## Linear namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Linear 
-```
-
 ## Classes
 
 |  Class | Description |
@@ -37,7 +30,7 @@ export declare namespace Linear
 
 |  Variable | Description |
 |  --- | --- |
-|  [parse](./alfa-css.linear.parse.md) | [https://drafts.csswg.org/css-images/\#funcdef-linear-gradient](https://drafts.csswg.org/css-images/#funcdef-linear-gradient) |
+|  [parse](./alfa-css.linear.parse.md) |  |
 
 ## Type Aliases
 

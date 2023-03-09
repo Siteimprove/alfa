@@ -4,23 +4,9 @@
 
 ## Cookies.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(cookies: Iterable<Cookie>): Cookies;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  cookies | Iterable&lt;[Cookie](./alfa-http.cookie.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-[Cookies](./alfa-http.cookies.md)
-
-## Remarks
-
-If the iterable contains cookies with duplicate names, the last cookie with a given name will take precedence.
 

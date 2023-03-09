@@ -4,19 +4,9 @@
 
 ## Resource.isResource() function
 
-<b>Signature:</b>
-
-```typescript
-function isResource(value: unknown): value is Resource;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-
-<b>Returns:</b>
-
-value is [Resource](./alfa-web.resource.md)
 

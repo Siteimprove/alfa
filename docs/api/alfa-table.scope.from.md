@@ -4,21 +4,9 @@
 
 ## Scope.from() function
 
-[https://html.spec.whatwg.org/\#attr-th-scope](https://html.spec.whatwg.org/#attr-th-scope)
-
-<b>Signature:</b>
-
-```typescript
-function from(element: Element): Scope;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
-
-<b>Returns:</b>
-
-[Scope](./alfa-table.scope.md)
 

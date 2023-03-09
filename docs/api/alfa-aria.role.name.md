@@ -4,8 +4,3 @@
 
 ## Role.Name type
 
-<b>Signature:</b>
-
-```typescript
-type Name = keyof Roles;
-```

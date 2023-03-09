@@ -4,10 +4,3 @@
 
 ## Element.id property
 
-[https://dom.spec.whatwg.org/\#concept-id](https://dom.spec.whatwg.org/#concept-id)
-
-<b>Signature:</b>
-
-```typescript
-get id(): Option<string>;
-```

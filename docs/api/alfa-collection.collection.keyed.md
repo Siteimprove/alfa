@@ -4,12 +4,6 @@
 
 ## Collection.Keyed namespace
 
-<b>Signature:</b>
-
-```typescript
-namespace Keyed 
-```
-
 ## Type Aliases
 
 |  Type Alias | Description |

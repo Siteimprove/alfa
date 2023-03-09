@@ -4,13 +4,6 @@
 
 ## Inset namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Inset 
-```
-
 ## Interfaces
 
 |  Interface | Description |

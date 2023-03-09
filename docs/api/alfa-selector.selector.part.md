@@ -4,12 +4,6 @@
 
 ## Selector.Part namespace
 
-<b>Signature:</b>
-
-```typescript
-export namespace Part 
-```
-
 ## Interfaces
 
 |  Interface | Description |

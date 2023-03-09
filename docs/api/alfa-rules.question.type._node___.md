@@ -4,8 +4,3 @@
 
 ## Question.Type."node\[\]" property
 
-<b>Signature:</b>
-
-```typescript
-"node[]": Iterable<Node>;
-```

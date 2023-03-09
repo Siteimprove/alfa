@@ -4,19 +4,9 @@
 
 ## Color.system() function
 
-<b>Signature:</b>
-
-```typescript
-function system(keyword: System.Keyword): System;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  keyword | [System.Keyword](./alfa-css.system.keyword.md) |  |
-
-<b>Returns:</b>
-
-[System](./alfa-css.system.md)
 

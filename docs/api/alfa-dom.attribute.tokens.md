@@ -4,21 +4,9 @@
 
 ## Attribute.tokens() method
 
-[https://html.spec.whatwg.org/\#space-separated-tokens](https://html.spec.whatwg.org/#space-separated-tokens)
-
-<b>Signature:</b>
-
-```typescript
-tokens(separator?: string | RegExp): Sequence<string>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  separator | string \| RegExp | <i>(Optional)</i> |
-
-<b>Returns:</b>
-
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;string&gt;
 

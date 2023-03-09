@@ -4,12 +4,3 @@
 
 ## Media.Not.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Not.JSON;
-```
-<b>Returns:</b>
-
-[Not.JSON](./alfa-media.media.not.json.md)
-

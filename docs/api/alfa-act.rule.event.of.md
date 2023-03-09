@@ -4,12 +4,6 @@
 
 ## Rule.Event.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of<INPUT, TARGET extends Hashable, QUESTION, SUBJECT, TYPE extends Event.Type, NAME extends string>(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,8 +11,4 @@ static of<INPUT, TARGET extends Hashable, QUESTION, SUBJECT, TYPE extends Event.
 |  type | TYPE |  |
 |  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;INPUT, TARGET, QUESTION, SUBJECT&gt; |  |
 |  name | NAME |  |
-
-<b>Returns:</b>
-
-[Event](./alfa-act.rule.event.md)<!-- -->&lt;INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME&gt;
 

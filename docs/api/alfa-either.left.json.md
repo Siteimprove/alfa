@@ -4,16 +4,10 @@
 
 ## Left.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON<L> 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-either.left.json.type.md) |  | "left" |  |
-|  [value](./alfa-either.left.json.value.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;L&gt; |  |
+|  [type](./alfa-either.left.json.type.md) |  |  |  |
+|  [value](./alfa-either.left.json.value.md) |  |  |  |
 

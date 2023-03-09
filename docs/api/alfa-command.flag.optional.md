@@ -4,12 +4,3 @@
 
 ## Flag.optional() method
 
-<b>Signature:</b>
-
-```typescript
-optional(): Flag<Option<T>>;
-```
-<b>Returns:</b>
-
-[Flag](./alfa-command.flag.md)<!-- -->&lt;[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;&gt;
-

@@ -4,21 +4,9 @@
 
 ## Role.isAttributeSupported() method
 
-Check if this role supports the specified attribute.
-
-<b>Signature:</b>
-
-```typescript
-isAttributeSupported(name: Attribute.Name): boolean;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | [Attribute.Name](./alfa-aria.attribute.name.md) |  |
-
-<b>Returns:</b>
-
-boolean
 

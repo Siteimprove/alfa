@@ -4,20 +4,10 @@
 
 ## Thunk.map() function
 
-<b>Signature:</b>
-
-```typescript
-function map<T, U>(thunk: Thunk<T>, mapper: Mapper<T, U>): Thunk<U>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
-
-<b>Returns:</b>
-
-[Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;U&gt;
 

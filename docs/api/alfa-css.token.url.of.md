@@ -4,19 +4,9 @@
 
 ## Token.URL.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(value: string): URL;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
-
-<b>Returns:</b>
-
-[URL](./alfa-css.token.url.md)
 

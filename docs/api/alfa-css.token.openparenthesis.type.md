@@ -4,8 +4,3 @@
 
 ## Token.OpenParenthesis.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "open-parenthesis";
-```

@@ -4,12 +4,3 @@
 
 ## Network.sort() method
 
-<b>Signature:</b>
-
-```typescript
-sort(): Iterable<N>;
-```
-<b>Returns:</b>
-
-Iterable&lt;N&gt;
-

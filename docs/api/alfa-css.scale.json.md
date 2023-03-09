@@ -4,18 +4,11 @@
 
 ## Scale.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON extends Value.JSON<"transform"> 
-```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"transform"&gt;
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [kind](./alfa-css.scale.json.kind.md) |  | "scale" |  |
-|  [x](./alfa-css.scale.json.x.md) |  | Number.JSON |  |
-|  [y](./alfa-css.scale.json.y.md) |  | Number.JSON |  |
+|  [kind](./alfa-css.scale.json.kind.md) |  |  |  |
+|  [x](./alfa-css.scale.json.x.md) |  |  |  |
+|  [y](./alfa-css.scale.json.y.md) |  |  |  |
 

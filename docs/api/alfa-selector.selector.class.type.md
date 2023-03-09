@@ -4,8 +4,3 @@
 
 ## Selector.Class.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "class";
-```

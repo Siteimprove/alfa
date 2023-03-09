@@ -4,8 +4,3 @@
 
 ## Token.Dimension.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "dimension";
-```

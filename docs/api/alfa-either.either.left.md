@@ -4,19 +4,9 @@
 
 ## Either.left() function
 
-<b>Signature:</b>
-
-```typescript
-function left<L, R = never>(value: L): Either<L, R>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | L |  |
-
-<b>Returns:</b>
-
-[Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;
 

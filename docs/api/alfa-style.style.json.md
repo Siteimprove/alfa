@@ -4,17 +4,11 @@
 
 ## Style.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [device](./alfa-style.style.json.device.md) |  | [Device.JSON](./alfa-device.device.json.md) |  |
-|  [properties](./alfa-style.style.json.properties.md) |  | Array&lt;\[string, [Value.JSON](./alfa-style.value.json.md)<!-- -->\]&gt; |  |
-|  [variables](./alfa-style.style.json.variables.md) |  | Array&lt;\[string, [Value.JSON](./alfa-style.value.json.md)<!-- -->\]&gt; |  |
+|  [device](./alfa-style.style.json.device.md) |  |  |  |
+|  [properties](./alfa-style.style.json.properties.md) |  |  |  |
+|  [variables](./alfa-style.style.json.variables.md) |  |  |  |
 

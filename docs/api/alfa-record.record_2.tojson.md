@@ -4,12 +4,3 @@
 
 ## Record\_2.toJSON() method
 
-<b>Signature:</b>
-
-```typescript
-toJSON(): Record.JSON<T>;
-```
-<b>Returns:</b>
-
-Record.JSON&lt;T&gt;
-

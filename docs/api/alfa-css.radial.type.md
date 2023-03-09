@@ -4,8 +4,3 @@
 
 ## Radial.type property
 
-<b>Signature:</b>
-
-```typescript
-get type(): "gradient";
-```

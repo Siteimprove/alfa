@@ -4,8 +4,3 @@
 
 ## Numeric.\_value property
 
-<b>Signature:</b>
-
-```typescript
-protected readonly _value: number;
-```

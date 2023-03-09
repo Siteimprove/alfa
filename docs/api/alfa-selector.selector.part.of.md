@@ -4,19 +4,9 @@
 
 ## Selector.Part.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(idents: Iterable<Token.Ident>): Part;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  idents | Iterable&lt;[Token.Ident](./alfa-css.token.ident.md)<!-- -->&gt; |  |
-
-<b>Returns:</b>
-
-[Part](./alfa-selector.selector.part.md)
 

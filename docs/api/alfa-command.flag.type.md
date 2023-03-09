@@ -4,19 +4,9 @@
 
 ## Flag.type() method
 
-<b>Signature:</b>
-
-```typescript
-type(type: string): Flag<T>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  type | string |  |
-
-<b>Returns:</b>
-
-[Flag](./alfa-command.flag.md)<!-- -->&lt;T&gt;
 

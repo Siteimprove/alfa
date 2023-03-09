@@ -4,18 +4,11 @@
 
 ## Rotate namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Rotate 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isRotate(value)](./alfa-css.rotate.isrotate.md) |  |
+|  [isRotate](./alfa-css.rotate.isrotate.md) |  |
 
 ## Interfaces
 

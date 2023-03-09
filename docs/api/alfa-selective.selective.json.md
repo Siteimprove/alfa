@@ -4,10 +4,3 @@
 
 ## Selective.JSON type
 
-<b>Signature:</b>
-
-```typescript
-type JSON<S, T = never> = Either.JSON<S, T>;
-```
-<b>References:</b> [Either.JSON](./alfa-either.either.json.md)
-

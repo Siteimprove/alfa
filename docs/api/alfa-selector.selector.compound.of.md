@@ -4,20 +4,10 @@
 
 ## Selector.Compound.of() method
 
-<b>Signature:</b>
-
-```typescript
-static of(left: Simple, right: Simple | Compound): Compound;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  left | [Simple](./alfa-selector.selector.simple.md) |  |
 |  right | [Simple](./alfa-selector.selector.simple.md) \| [Compound](./alfa-selector.selector.compound.md) |  |
-
-<b>Returns:</b>
-
-[Compound](./alfa-selector.selector.compound.md)
 

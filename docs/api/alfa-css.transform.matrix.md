@@ -4,19 +4,9 @@
 
 ## Transform.matrix() function
 
-<b>Signature:</b>
-
-```typescript
-function matrix(...values: Matrix.Values<Number>): Matrix;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | [Matrix.Values](./alfa-css.matrix.values.md)<!-- -->&lt;Number&gt; |  |
-
-<b>Returns:</b>
-
-[Matrix](./alfa-css.matrix.md)
 

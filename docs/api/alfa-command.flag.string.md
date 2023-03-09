@@ -4,20 +4,10 @@
 
 ## Flag.string() function
 
-<b>Signature:</b>
-
-```typescript
-function string(name: string, description: string): Flag<string>;
-```
-
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  description | string |  |
-
-<b>Returns:</b>
-
-[Flag](./alfa-command.flag.md)<!-- -->&lt;string&gt;
 

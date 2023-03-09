@@ -4,16 +4,9 @@
 
 ## Outcome.Inapplicable.EARL interface
 
-<b>Signature:</b>
-
-```typescript
-interface EARL extends Outcome.EARL 
-```
-<b>Extends:</b> [Outcome.EARL](./alfa-act.outcome.earl.md)
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["earl:result"](./alfa-act.outcome.inapplicable.earl._earl_result_.md) |  | { "@type": "earl:TestResult"; "earl:outcome": { "@id": "earl:inapplicable"; }; } |  |
+|  ["earl:result"](./alfa-act.outcome.inapplicable.earl._earl_result_.md) |  |  |  |
 

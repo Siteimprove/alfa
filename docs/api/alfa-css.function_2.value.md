@@ -4,8 +4,3 @@
 
 ## Function\_2.value property
 
-<b>Signature:</b>
-
-```typescript
-get value(): Array<Token>;
-```

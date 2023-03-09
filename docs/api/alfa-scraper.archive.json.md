@@ -4,16 +4,10 @@
 
 ## Archive.JSON interface
 
-<b>Signature:</b>
-
-```typescript
-interface JSON 
-```
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [format](./alfa-scraper.archive.json.format.md) |  | \`${[Format](./alfa-scraper.archive.format.md)<!-- -->}\` |  |
-|  [path](./alfa-scraper.archive.json.path.md) |  | string |  |
+|  [format](./alfa-scraper.archive.json.format.md) |  |  |  |
+|  [path](./alfa-scraper.archive.json.path.md) |  |  |  |
 

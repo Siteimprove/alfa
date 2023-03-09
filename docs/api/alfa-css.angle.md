@@ -4,18 +4,11 @@
 
 ## Angle namespace
 
-
-<b>Signature:</b>
-
-```typescript
-export declare namespace Angle 
-```
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isAngle(value)](./alfa-css.angle.isangle.md) |  |
+|  [isAngle](./alfa-css.angle.isangle.md) |  |
 
 ## Interfaces
 
