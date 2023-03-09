@@ -542,9 +542,7 @@ function substitute(
   let substituted = false;
 
   while (tokens.length > 0) {
-    const next = tokens
-      .first()
-      .getUnsafe("No more tokens. This should not be possible."); // Safe, we just checked that `tokens` is not empty
+    const next = tokens.first().getUnsafe(); // Safe, we just checked that `tokens` is not empty
 
     if (next.type === "function" && next.value === "var") {
       // If the token is a "var(", process it.

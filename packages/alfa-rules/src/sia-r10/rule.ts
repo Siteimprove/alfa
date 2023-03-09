@@ -177,20 +177,19 @@ const webauthn = parserOf(["webauthn"]);
 function parserOf(
   tokens: Array<string>
 ): Parser<Slice<string>, string, string> {
-  return (input) => {
-    return input
+  return (input) =>
+    input
       .first()
       .filter((token) => tokens.includes(token))
       .map((token) =>
         Result.of<[Slice<string>, string], string>([input.rest(), token])
       )
       .getOr(Err.of(`Expected valid token, but got ${input.toJSON()}`));
-  };
 }
 
 function sectionParser(): Parser<Slice<string>, string, string> {
-  return (input) => {
-    return input
+  return (input) =>
+    input
       .first()
       .filter((token) => token.startsWith("section-"))
       .map((token) =>
@@ -199,7 +198,6 @@ function sectionParser(): Parser<Slice<string>, string, string> {
       .getOr(
         Err.of(`Expected token beginning with \`section-\`, but got ${input}`)
       );
-  };
 }
 
 export namespace Outcomes {
