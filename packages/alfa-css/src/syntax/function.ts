@@ -1,7 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Result, Err } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
@@ -18,7 +18,6 @@ const {
   left,
   pair,
   map,
-  zeroOrMore,
   takeUntil,
   either,
   end,

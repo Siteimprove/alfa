@@ -1,15 +1,14 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Option } from "@siteimprove/alfa-option";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Component } from "./component";
 import { Token } from "./token";
-import { Refinement } from "@siteimprove/alfa-refinement";
 
 const { isOpenParenthesis } = Token.OpenParenthesis;
 const { isOpenSquareBracket } = Token.OpenSquareBracket;
