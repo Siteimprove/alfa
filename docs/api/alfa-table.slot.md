@@ -4,11 +4,18 @@
 
 ## Slot namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Slot 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isSlot](./alfa-table.slot.isslot.md) |  |
+|  [isSlot(value)](./alfa-table.slot.isslot.md) |  |
 
 ## Interfaces
 

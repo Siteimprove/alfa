@@ -4,10 +4,20 @@
 
 ## Value.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<T>(value: T, source?: Option<Declaration>): Value<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
 |  source | [Option](./alfa-option.option.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Value](./alfa-style.value.md)<!-- -->&lt;T&gt;
 

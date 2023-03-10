@@ -4,13 +4,19 @@
 
 ## Device.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [display](./alfa-device.device.json.display.md) |  |  |  |
-|  [preferences](./alfa-device.device.json.preferences.md) |  |  |  |
-|  [scripting](./alfa-device.device.json.scripting.md) |  |  |  |
-|  [type](./alfa-device.device.json.type.md) |  |  |  |
-|  [viewport](./alfa-device.device.json.viewport.md) |  |  |  |
+|  [display](./alfa-device.device.json.display.md) |  | [Display.JSON](./alfa-device.display.json.md) |  |
+|  [preferences](./alfa-device.device.json.preferences.md) |  | Array&lt;[Preference.JSON](./alfa-device.preference.json.md)<!-- -->&gt; |  |
+|  [scripting](./alfa-device.device.json.scripting.md) |  | [Scripting.JSON](./alfa-device.scripting.json.md) |  |
+|  [type](./alfa-device.device.json.type.md) |  | \`${[Type](./alfa-device.device.type.md)<!-- -->}\` |  |
+|  [viewport](./alfa-device.device.json.viewport.md) |  | [Viewport.JSON](./alfa-device.viewport.json.md) |  |
 

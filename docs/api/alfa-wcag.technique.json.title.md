@@ -4,3 +4,8 @@
 
 ## Technique.JSON.title property
 
+<b>Signature:</b>
+
+```typescript
+title: Title;
+```

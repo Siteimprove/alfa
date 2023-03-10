@@ -4,9 +4,19 @@
 
 ## KeyframesRule.isKeyframesRule() function
 
+<b>Signature:</b>
+
+```typescript
+function isKeyframesRule(value: unknown): value is KeyframesRule;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [KeyframesRule](./alfa-dom.keyframesrule.md)
 

@@ -4,9 +4,19 @@
 
 ## Numeric.scale() method
 
+<b>Signature:</b>
+
+```typescript
+abstract scale(factor: number): Numeric<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  factor | number |  |
+
+<b>Returns:</b>
+
+[Numeric](./alfa-css.numeric.md)<!-- -->&lt;T&gt;
 

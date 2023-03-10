@@ -4,10 +4,20 @@
 
 ## Tuple.equals() function
 
+<b>Signature:</b>
+
+```typescript
+export function equals<T extends Tuple>(a: T, b: T): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | T |  |
 |  b | T |  |
+
+<b>Returns:</b>
+
+boolean
 

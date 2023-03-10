@@ -4,3 +4,12 @@
 
 ## Media.Value.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Value.JSON;
+```
+<b>Returns:</b>
+
+[Value.JSON](./alfa-media.media.value.json.md)
+

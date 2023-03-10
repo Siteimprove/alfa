@@ -4,3 +4,8 @@
 
 ## Token.CloseCurlyBracket.JSON.type property
 
+<b>Signature:</b>
+
+```typescript
+type: "close-curly-bracket";
+```

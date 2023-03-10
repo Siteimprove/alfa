@@ -4,6 +4,13 @@
 
 ## Polygon namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Polygon 
+```
+
 ## Interfaces
 
 |  Interface | Description |

@@ -4,3 +4,8 @@
 
 ## Expression.Path.right property
 
+<b>Signature:</b>
+
+```typescript
+get right(): Expression;
+```

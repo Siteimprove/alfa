@@ -4,6 +4,12 @@
 
 ## Expression.Test.Node namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Node 
+```
+
 ## Interfaces
 
 |  Interface | Description |

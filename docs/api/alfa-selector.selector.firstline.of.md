@@ -4,3 +4,12 @@
 
 ## Selector.FirstLine.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(): FirstLine;
+```
+<b>Returns:</b>
+
+[FirstLine](./alfa-selector.selector.firstline.md)
+

@@ -4,3 +4,8 @@
 
 ## Element.isReplaced variable
 
+<b>Signature:</b>
+
+```typescript
+isReplaced: typeof predicate.isReplaced
+```

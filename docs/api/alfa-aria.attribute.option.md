@@ -4,3 +4,16 @@
 
 ## Attribute.Option type
 
+The type of the options allowed by the specified attribute.
+
+<b>Signature:</b>
+
+```typescript
+type Option<N extends Name = Name> = Members<Attributes[N]["options"]>;
+```
+<b>References:</b> [Name](./alfa-aria.attribute.name.md)
+
+## Remarks
+
+Currently, this type is only defined for attributes with values that are tokens or lists of tokens.
+

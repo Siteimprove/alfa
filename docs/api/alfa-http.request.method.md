@@ -4,3 +4,10 @@
 
 ## Request.method property
 
+[https://fetch.spec.whatwg.org/\#dom-request-method](https://fetch.spec.whatwg.org/#dom-request-method)
+
+<b>Signature:</b>
+
+```typescript
+get method(): string;
+```

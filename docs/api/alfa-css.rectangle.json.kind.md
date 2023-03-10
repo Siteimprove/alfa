@@ -4,3 +4,8 @@
 
 ## Rectangle.JSON.kind property
 
+<b>Signature:</b>
+
+```typescript
+kind: "rectangle";
+```

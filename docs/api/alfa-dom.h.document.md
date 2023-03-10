@@ -4,10 +4,20 @@
 
 ## h.document() function
 
+<b>Signature:</b>
+
+```typescript
+function document(children: Array<Node | string>, style?: Array<Sheet>): Document;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  children | Array&lt;[Node](./alfa-dom.node.md) \| string&gt; |  |
 |  style | Array&lt;[Sheet](./alfa-dom.sheet.md)<!-- -->&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Document](./alfa-dom.document.md)
 

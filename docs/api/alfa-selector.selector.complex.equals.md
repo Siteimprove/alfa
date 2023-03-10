@@ -4,9 +4,19 @@
 
 ## Selector.Complex.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Complex): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Complex](./alfa-selector.selector.complex.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

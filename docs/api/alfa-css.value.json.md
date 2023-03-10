@@ -4,9 +4,15 @@
 
 ## Value.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<T extends string = string> 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.value.json.type.md) |  |  |  |
+|  [type](./alfa-css.value.json.type.md) |  | T |  |
 

@@ -4,9 +4,19 @@
 
 ## List.fromArray() function
 
+<b>Signature:</b>
+
+```typescript
+function fromArray<T>(array: ReadonlyArray<T>): List<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

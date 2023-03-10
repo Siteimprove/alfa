@@ -4,9 +4,16 @@
 
 ## Selector.Class.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Selector.JSON<"class"> 
+```
+<b>Extends:</b> [Selector.JSON](./alfa-selector.selector.json.md)<!-- -->&lt;"class"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-selector.selector.class.json.name.md) |  |  |  |
+|  [name](./alfa-selector.selector.class.json.name.md) |  | string |  |
 

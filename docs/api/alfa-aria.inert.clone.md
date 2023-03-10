@@ -4,3 +4,12 @@
 
 ## Inert.clone() method
 
+<b>Signature:</b>
+
+```typescript
+clone(): Inert;
+```
+<b>Returns:</b>
+
+[Inert](./alfa-aria.inert.md)
+

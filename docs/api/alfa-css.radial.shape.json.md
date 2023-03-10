@@ -4,3 +4,10 @@
 
 ## Radial.Shape.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON = Circle.JSON | Ellipse.JSON | Extent.JSON;
+```
+<b>References:</b> [Circle.JSON](./alfa-css.radial.circle.json.md)<!-- -->, [Ellipse.JSON](./alfa-css.radial.ellipse.json.md)<!-- -->, [Extent.JSON](./alfa-css.radial.extent.json.md)
+

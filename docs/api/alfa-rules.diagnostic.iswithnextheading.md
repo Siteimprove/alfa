@@ -4,3 +4,8 @@
 
 ## Diagnostic.isWithNextHeading variable
 
+<b>Signature:</b>
+
+```typescript
+isWithNextHeading: typeof WithNextHeading.isWithNextHeading
+```

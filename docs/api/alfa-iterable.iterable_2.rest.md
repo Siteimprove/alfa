@@ -4,9 +4,19 @@
 
 ## Iterable\_2.rest() function
 
+<b>Signature:</b>
+
+```typescript
+function rest<T>(iterable: Iterable<T>): Iterable<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+Iterable&lt;T&gt;
 

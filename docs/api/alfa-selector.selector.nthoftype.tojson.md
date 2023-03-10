@@ -4,3 +4,12 @@
 
 ## Selector.NthOfType.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): NthOfType.JSON;
+```
+<b>Returns:</b>
+
+[NthOfType.JSON](./alfa-selector.selector.nthoftype.json.md)
+

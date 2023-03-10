@@ -4,10 +4,16 @@
 
 ## Feature.Implementation interface
 
+<b>Signature:</b>
+
+```typescript
+interface Implementation<N extends Name = Name, I extends Implementer<N> = Implementer<N>> 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [added](./alfa-compatibility.feature.implementation.added.md) |  |  |  |
-|  [removed](./alfa-compatibility.feature.implementation.removed.md) |  |  |  |
+|  [added](./alfa-compatibility.feature.implementation.added.md) | <code>readonly</code> | [Browser.Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;I&gt; \| true |  |
+|  [removed?](./alfa-compatibility.feature.implementation.removed.md) | <code>readonly</code> | [Browser.Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;I&gt; | <i>(Optional)</i> |
 

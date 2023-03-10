@@ -4,9 +4,25 @@
 
 ## Selective.exhaust() method
 
+Ensure that this [Selective](./alfa-selective.selective.md) is exhaustively matched, returning its resulting value.
+
+<b>Signature:</b>
+
+```typescript
+exhaust<T>(this: Selective<never, T>): T;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Selective](./alfa-selective.selective.md)<!-- -->&lt;never, T&gt; |  |
+
+<b>Returns:</b>
+
+T
+
+## Remarks
+
+This method should only be used for cases where [Selective.get()](./alfa-selective.selective.get.md) is insufficient. If in doubt, assume that it isn't.
 

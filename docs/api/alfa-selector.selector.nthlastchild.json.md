@@ -4,9 +4,16 @@
 
 ## Selector.NthLastChild.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Pseudo.Class.JSON<"nth-last-child"> 
+```
+<b>Extends:</b> [Pseudo.Class.JSON](./alfa-selector.selector.pseudo.class.json.md)<!-- -->&lt;"nth-last-child"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [index](./alfa-selector.selector.nthlastchild.json.index.md) |  |  |  |
+|  [index](./alfa-selector.selector.nthlastchild.json.index.md) |  | [Nth.JSON](./alfa-css.nth.json.md) |  |
 

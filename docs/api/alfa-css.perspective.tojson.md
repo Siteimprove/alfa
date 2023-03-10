@@ -4,3 +4,12 @@
 
 ## Perspective.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Perspective.JSON;
+```
+<b>Returns:</b>
+
+[Perspective.JSON](./alfa-css.perspective.json.md)
+

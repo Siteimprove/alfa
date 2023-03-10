@@ -4,3 +4,8 @@
 
 ## Node.Traversal.Flag type
 
+<b>Signature:</b>
+
+```typescript
+type Flag = 0 | 1;
+```

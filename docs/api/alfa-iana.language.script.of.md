@@ -4,9 +4,19 @@
 
 ## Language.Script.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(name: Script.Name): Script;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | [Script.Name](./alfa-iana.language.script.name.md) |  |
+
+<b>Returns:</b>
+
+[Script](./alfa-iana.language.script.md)
 

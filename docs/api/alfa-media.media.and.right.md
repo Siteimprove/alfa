@@ -4,3 +4,8 @@
 
 ## Media.And.right property
 
+<b>Signature:</b>
+
+```typescript
+get right(): Feature | Condition;
+```

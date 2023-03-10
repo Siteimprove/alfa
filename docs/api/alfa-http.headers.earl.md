@@ -4,10 +4,17 @@
 
 ## Headers.EARL interface
 
+<b>Signature:</b>
+
+```typescript
+interface EARL extends earl.EARL 
+```
+<b>Extends:</b> earl.[EARL](./alfa-earl.earl.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@context"](./alfa-http.headers.earl.__context_.md) |  |  |  |
-|  ["@list"](./alfa-http.headers.earl.__list_.md) |  |  |  |
+|  ["@context"](./alfa-http.headers.earl.__context_.md) |  | { http: "http://www.w3.org/2011/http\#"; } |  |
+|  ["@list"](./alfa-http.headers.earl.__list_.md) |  | Array&lt;[Header.EARL](./alfa-http.header.earl.md)<!-- -->&gt; |  |
 

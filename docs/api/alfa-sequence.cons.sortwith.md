@@ -4,10 +4,19 @@
 
 ## Cons.sortWith() method
 
+<b>Signature:</b>
+
+```typescript
+sortWith(comparer: Comparer<T>): Sequence<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

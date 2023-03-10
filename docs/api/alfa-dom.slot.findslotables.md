@@ -4,9 +4,21 @@
 
 ## Slot.findSlotables() function
 
+[https://dom.spec.whatwg.org/\#find-slotables](https://dom.spec.whatwg.org/#find-slotables)
+
+<b>Signature:</b>
+
+```typescript
+function findSlotables(slot: Slot): Iterable<Slotable>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  slot | [Slot](./alfa-dom.slot.md) |  |
+
+<b>Returns:</b>
+
+Iterable&lt;[Slotable](./alfa-dom.slotable.md)<!-- -->&gt;
 

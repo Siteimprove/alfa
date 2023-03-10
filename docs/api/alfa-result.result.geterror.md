@@ -4,9 +4,19 @@
 
 ## Result.getErrOr() method
 
+<b>Signature:</b>
+
+```typescript
+getErrOr<F>(error: F): E | F;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  error | F |  |
+
+<b>Returns:</b>
+
+E \| F
 

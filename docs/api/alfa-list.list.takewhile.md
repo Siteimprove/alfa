@@ -4,9 +4,19 @@
 
 ## List.takeWhile() method
 
+<b>Signature:</b>
+
+```typescript
+takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): List<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[List](./alfa-list.list.md)<!-- -->&lt;U&gt;
 

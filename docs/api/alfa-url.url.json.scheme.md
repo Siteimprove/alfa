@@ -4,3 +4,8 @@
 
 ## URL.JSON.scheme property
 
+<b>Signature:</b>
+
+```typescript
+scheme: string;
+```

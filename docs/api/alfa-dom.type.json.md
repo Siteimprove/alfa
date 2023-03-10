@@ -4,11 +4,18 @@
 
 ## Type.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<N extends string = string> extends Node.JSON<"type"> 
+```
+<b>Extends:</b> [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"type"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-dom.type.json.name.md) |  |  |  |
-|  [publicId](./alfa-dom.type.json.publicid.md) |  |  |  |
-|  [systemId](./alfa-dom.type.json.systemid.md) |  |  |  |
+|  [name](./alfa-dom.type.json.name.md) |  | N |  |
+|  [publicId](./alfa-dom.type.json.publicid.md) |  | string \| null |  |
+|  [systemId](./alfa-dom.type.json.systemid.md) |  | string \| null |  |
 

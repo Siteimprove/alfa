@@ -4,3 +4,8 @@
 
 ## Expression.Path.JSON.left property
 
+<b>Signature:</b>
+
+```typescript
+left: Expression.JSON;
+```

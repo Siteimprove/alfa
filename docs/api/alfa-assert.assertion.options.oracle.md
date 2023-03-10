@@ -4,3 +4,10 @@
 
 ## Assertion.Options.oracle property
 
+Passing an oracle to the rules evaluation.
+
+<b>Signature:</b>
+
+```typescript
+readonly oracle?: Oracle<I, T, Q, S>;
+```

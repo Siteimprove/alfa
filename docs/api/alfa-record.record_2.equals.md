@@ -4,9 +4,19 @@
 
 ## Record\_2.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Record<T>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Record&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

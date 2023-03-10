@@ -4,3 +4,8 @@
 
 ## Token.closeComment variable
 
+<b>Signature:</b>
+
+```typescript
+closeComment: typeof CloseComment.of
+```

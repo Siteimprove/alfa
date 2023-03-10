@@ -4,10 +4,17 @@
 
 ## Position.Side.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Value.JSON<"side"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"side"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [offset](./alfa-css.position.side.json.offset.md) |  |  |  |
-|  [side](./alfa-css.position.side.json.side.md) |  |  |  |
+|  [offset](./alfa-css.position.side.json.offset.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Percentage.JSON](./alfa-css.percentage.json.md) \| null |  |
+|  [side](./alfa-css.position.side.json.side.md) |  | [Keyword.JSON](./alfa-css.keyword.json.md) |  |
 

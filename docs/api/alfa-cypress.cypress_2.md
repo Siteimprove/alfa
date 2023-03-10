@@ -4,12 +4,19 @@
 
 ## Cypress\_2 namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Cypress 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [createPlugin](./alfa-cypress.cypress_2.createplugin.md) |  |
-|  [toPage](./alfa-cypress.cypress_2.topage.md) |  |
+|  [createPlugin(rules, handlers, options)](./alfa-cypress.cypress_2.createplugin.md) |  |
+|  [toPage(value)](./alfa-cypress.cypress_2.topage.md) |  |
 
 ## Namespaces
 

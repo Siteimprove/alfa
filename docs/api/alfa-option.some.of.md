@@ -4,9 +4,19 @@
 
 ## Some.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<T>(value: T): Some<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
 

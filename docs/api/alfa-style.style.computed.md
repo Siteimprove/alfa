@@ -4,3 +4,8 @@
 
 ## Style.Computed type
 
+<b>Signature:</b>
+
+```typescript
+type Computed<N extends Name> = Property.Value.Computed<N>;
+```

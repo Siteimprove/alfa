@@ -4,3 +4,8 @@
 
 ## Linear.kind property
 
+<b>Signature:</b>
+
+```typescript
+get kind(): "linear";
+```

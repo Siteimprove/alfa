@@ -4,6 +4,14 @@
 
 ## Builder.(constructor)
 
+Constructs a new instance of the `Builder` class
+
+<b>Signature:</b>
+
+```typescript
+constructor(expression: T);
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |

@@ -4,3 +4,8 @@
 
 ## Element.hasUniqueId variable
 
+<b>Signature:</b>
+
+```typescript
+hasUniqueId: typeof predicate.hasUniqueId
+```

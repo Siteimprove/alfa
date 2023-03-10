@@ -4,9 +4,19 @@
 
 ## Branched.filter() method
 
+<b>Signature:</b>
+
+```typescript
+filter<U extends T>(refinement: Refinement<T, U, [Iterable<B>]>): Branched<U, B>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[Iterable&lt;B&gt;\]&gt; |  |
+
+<b>Returns:</b>
+
+[Branched](./alfa-branched.branched.md)<!-- -->&lt;U, B&gt;
 

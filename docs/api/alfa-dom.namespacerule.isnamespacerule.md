@@ -4,9 +4,19 @@
 
 ## NamespaceRule.isNamespaceRule() function
 
+<b>Signature:</b>
+
+```typescript
+function isNamespaceRule(value: unknown): value is NamespaceRule;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [NamespaceRule](./alfa-dom.namespacerule.md)
 

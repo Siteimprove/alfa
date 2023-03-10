@@ -4,3 +4,12 @@
 
 ## Unit.Length type
 
+[https://drafts.csswg.org/css-values/\#lengths](https://drafts.csswg.org/css-values/#lengths)
+
+<b>Signature:</b>
+
+```typescript
+type Length = Length.Relative | Length.Absolute;
+```
+<b>References:</b> [Length.Relative](./alfa-css.unit.length.relative.md)<!-- -->, [Length.Absolute](./alfa-css.unit.length.absolute.md)
+

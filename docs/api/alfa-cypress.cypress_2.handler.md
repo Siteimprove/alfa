@@ -4,9 +4,15 @@
 
 ## Cypress\_2.Handler namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Handler 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [persist](./alfa-cypress.cypress_2.handler.persist.md) |  |
+|  [persist(output, format)](./alfa-cypress.cypress_2.handler.persist.md) |  |
 

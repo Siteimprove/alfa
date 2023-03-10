@@ -4,3 +4,8 @@
 
 ## Language.JSON.region property
 
+<b>Signature:</b>
+
+```typescript
+region: Region.JSON | null;
+```

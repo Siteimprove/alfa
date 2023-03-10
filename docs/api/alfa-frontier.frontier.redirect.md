@@ -4,10 +4,22 @@
 
 ## Frontier.redirect() method
 
+Configure a redirect from one URL to another.
+
+<b>Signature:</b>
+
+```typescript
+redirect(from: string | URL, to: string | URL): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  from | string \| [URL](./alfa-url.url.md) |  |
 |  to | string \| [URL](./alfa-url.url.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

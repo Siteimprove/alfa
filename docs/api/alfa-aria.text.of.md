@@ -4,10 +4,20 @@
 
 ## Text.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(owner: dom.Node, name: Option<Name>): Text;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  owner | dom.[Node](./alfa-dom.node.md) |  |
 |  name | [Option](./alfa-option.option.md)<!-- -->&lt;[Name](./alfa-aria.name.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[Text](./alfa-aria.text.md)
 

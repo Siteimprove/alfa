@@ -4,3 +4,8 @@
 
 ## DOM.isProgrammaticallyHidden variable
 
+<b>Signature:</b>
+
+```typescript
+isProgrammaticallyHidden: typeof dom.isProgrammaticallyHidden
+```

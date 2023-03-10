@@ -4,9 +4,19 @@
 
 ## Err.includesErr() method
 
+<b>Signature:</b>
+
+```typescript
+includesErr(error: E): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  error | E |  |
+
+<b>Returns:</b>
+
+boolean
 

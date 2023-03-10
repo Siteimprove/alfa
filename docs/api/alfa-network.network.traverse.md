@@ -4,10 +4,20 @@
 
 ## Network.traverse() method
 
+<b>Signature:</b>
+
+```typescript
+traverse(root: N, traversal?: Network.Traversal): Sequence<[node: N, edges: Iterable<E>, parent: N]>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  root | N |  |
 |  traversal | [Network.Traversal](./alfa-network.network.traversal.md) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;\[node: N, edges: Iterable&lt;E&gt;, parent: N\]&gt;
 

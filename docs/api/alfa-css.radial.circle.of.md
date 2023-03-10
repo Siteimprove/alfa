@@ -4,9 +4,19 @@
 
 ## Radial.Circle.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<R extends Length>(radius: R): Circle<R>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  radius | R |  |
+
+<b>Returns:</b>
+
+[Circle](./alfa-css.radial.circle.md)<!-- -->&lt;R&gt;
 

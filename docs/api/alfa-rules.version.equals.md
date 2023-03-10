@@ -4,9 +4,19 @@
 
 ## Version.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Version): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Version](./alfa-rules.version.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

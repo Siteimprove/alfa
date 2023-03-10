@@ -4,3 +4,8 @@
 
 ## Page.JSON.response property
 
+<b>Signature:</b>
+
+```typescript
+response: Response.JSON;
+```

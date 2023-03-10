@@ -4,3 +4,12 @@
 
 ## Matrix.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Matrix.JSON;
+```
+<b>Returns:</b>
+
+[Matrix.JSON](./alfa-css.matrix.json.md)
+

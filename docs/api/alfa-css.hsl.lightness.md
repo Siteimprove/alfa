@@ -4,3 +4,8 @@
 
 ## HSL.lightness property
 
+<b>Signature:</b>
+
+```typescript
+get lightness(): Percentage;
+```

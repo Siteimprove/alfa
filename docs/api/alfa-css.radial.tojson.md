@@ -4,3 +4,12 @@
 
 ## Radial.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Radial.JSON;
+```
+<b>Returns:</b>
+
+[Radial.JSON](./alfa-css.radial.json.md)
+

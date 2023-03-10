@@ -4,9 +4,19 @@
 
 ## Set\_2.apply() method
 
+<b>Signature:</b>
+
+```typescript
+apply<U>(mapper: Set<Mapper<T, U>>): Set<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | Set&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+
+<b>Returns:</b>
+
+Set&lt;U&gt;
 

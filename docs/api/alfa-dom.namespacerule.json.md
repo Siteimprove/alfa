@@ -4,11 +4,18 @@
 
 ## NamespaceRule.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Rule.JSON 
+```
+<b>Extends:</b> [Rule.JSON](./alfa-dom.rule.json.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [namespace](./alfa-dom.namespacerule.json.namespace.md) |  |  |  |
-|  [prefix](./alfa-dom.namespacerule.json.prefix.md) |  |  |  |
-|  [type](./alfa-dom.namespacerule.json.type.md) |  |  |  |
+|  [namespace](./alfa-dom.namespacerule.json.namespace.md) |  | string |  |
+|  [prefix](./alfa-dom.namespacerule.json.prefix.md) |  | string \| null |  |
+|  [type](./alfa-dom.namespacerule.json.type.md) |  | "namespace" |  |
 

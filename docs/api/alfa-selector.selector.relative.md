@@ -4,6 +4,12 @@
 
 ## Selector.Relative namespace
 
+<b>Signature:</b>
+
+```typescript
+export namespace Relative 
+```
+
 ## Interfaces
 
 |  Interface | Description |

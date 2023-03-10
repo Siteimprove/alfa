@@ -4,3 +4,8 @@
 
 ## Question.\_context property
 
+<b>Signature:</b>
+
+```typescript
+protected readonly _context: CONTEXT;
+```

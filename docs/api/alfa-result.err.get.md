@@ -4,9 +4,19 @@
 
 ## Err.get() method
 
+<b>Signature:</b>
+
+```typescript
+get(message?: string): never;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  message | string | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+never
 

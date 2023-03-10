@@ -4,9 +4,19 @@
 
 ## Thenable.reject() function
 
+<b>Signature:</b>
+
+```typescript
+function reject<E>(error: E): Thenable<never, E>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  error | E |  |
+
+<b>Returns:</b>
+
+[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;never, E&gt;
 

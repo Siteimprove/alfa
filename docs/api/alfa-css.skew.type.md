@@ -4,3 +4,8 @@
 
 ## Skew.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "transform";
+```

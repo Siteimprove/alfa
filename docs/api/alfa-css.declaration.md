@@ -4,6 +4,13 @@
 
 ## Declaration namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Declaration 
+```
+
 ## Interfaces
 
 |  Interface | Description |
@@ -14,8 +21,8 @@
 
 |  Variable | Description |
 |  --- | --- |
-|  [consume](./alfa-css.declaration.consume.md) |  |
-|  [consumeList](./alfa-css.declaration.consumelist.md) |  |
-|  [parse](./alfa-css.declaration.parse.md) |  |
-|  [parseList](./alfa-css.declaration.parselist.md) |  |
+|  [consume](./alfa-css.declaration.consume.md) | [https://drafts.csswg.org/css-syntax/\#consume-a-declaration](https://drafts.csswg.org/css-syntax/#consume-a-declaration) |
+|  [consumeList](./alfa-css.declaration.consumelist.md) | [https://drafts.csswg.org/css-syntax/\#consume-a-list-of-declarations](https://drafts.csswg.org/css-syntax/#consume-a-list-of-declarations) |
+|  [parse](./alfa-css.declaration.parse.md) | [https://drafts.csswg.org/css-syntax/\#parse-a-declaration](https://drafts.csswg.org/css-syntax/#parse-a-declaration) |
+|  [parseList](./alfa-css.declaration.parselist.md) | [https://drafts.csswg.org/css-syntax/\#parse-a-list-of-declarations](https://drafts.csswg.org/css-syntax/#parse-a-list-of-declarations) |
 

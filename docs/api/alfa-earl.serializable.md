@@ -4,11 +4,18 @@
 
 ## Serializable namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Serializable 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isSerializable](./alfa-earl.serializable.isserializable.md) |  |
-|  [toEARL](./alfa-earl.serializable.toearl.md) |  |
-|  [toEARL](./alfa-earl.serializable.toearl.md) |  |
+|  [isSerializable(value)](./alfa-earl.serializable.isserializable.md) |  |
+|  [toEARL(value)](./alfa-earl.serializable.toearl.md) |  |
+|  [toEARL(value)](./alfa-earl.serializable.toearl_1.md) |  |
 

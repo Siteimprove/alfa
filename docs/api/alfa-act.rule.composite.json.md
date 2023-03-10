@@ -4,11 +4,18 @@
 
 ## Rule.Composite.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Rule.JSON 
+```
+<b>Extends:</b> [Rule.JSON](./alfa-act.rule.json.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [composes](./alfa-act.rule.composite.json.composes.md) |  |  |  |
-|  [type](./alfa-act.rule.composite.json.type.md) |  |  |  |
-|  [uri](./alfa-act.rule.composite.json.uri.md) |  |  |  |
+|  [composes](./alfa-act.rule.composite.json.composes.md) |  | Array&lt;[Rule.JSON](./alfa-act.rule.json.md)<!-- -->&gt; |  |
+|  [type](./alfa-act.rule.composite.json.type.md) |  | "composite" |  |
+|  [uri](./alfa-act.rule.composite.json.uri.md) |  | string |  |
 

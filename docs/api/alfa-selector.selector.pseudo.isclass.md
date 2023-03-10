@@ -4,9 +4,19 @@
 
 ## Selector.Pseudo.isClass() function
 
+<b>Signature:</b>
+
+```typescript
+function isClass(value: unknown): value is Class;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Class](./alfa-selector.selector.pseudo.class.md)
 

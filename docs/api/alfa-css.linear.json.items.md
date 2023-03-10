@@ -4,3 +4,8 @@
 
 ## Linear.JSON.items property
 
+<b>Signature:</b>
+
+```typescript
+items: Array<Gradient.Item.JSON>;
+```

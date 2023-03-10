@@ -4,10 +4,20 @@
 
 ## Future.traverse() function
 
+<b>Signature:</b>
+
+```typescript
+function traverse<T, U>(values: Iterable<T>, mapper: Mapper<T, Future<U>, [index: number]>): Future<Iterable<U>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | Iterable&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Future](./alfa-future.future.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Future](./alfa-future.future.md)<!-- -->&lt;Iterable&lt;U&gt;&gt;
 

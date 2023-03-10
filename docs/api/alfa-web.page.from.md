@@ -4,9 +4,19 @@
 
 ## Page.from() function
 
+<b>Signature:</b>
+
+```typescript
+function from(json: JSON): Page;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-web.page.json.md) |  |
+
+<b>Returns:</b>
+
+[Page](./alfa-web.page.md)
 

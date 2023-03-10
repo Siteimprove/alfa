@@ -4,9 +4,19 @@
 
 ## Sequence.join() method
 
+<b>Signature:</b>
+
+```typescript
+join(separator: string): string;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  separator | string |  |
+
+<b>Returns:</b>
+
+string
 

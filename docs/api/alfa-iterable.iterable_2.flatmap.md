@@ -4,10 +4,20 @@
 
 ## Iterable\_2.flatMap() function
 
+<b>Signature:</b>
+
+```typescript
+function flatMap<T, U = T>(iterable: Iterable<T>, mapper: Mapper<T, Iterable<U>, [index: number]>): Iterable<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Iterable&lt;U&gt;, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+Iterable&lt;U&gt;
 

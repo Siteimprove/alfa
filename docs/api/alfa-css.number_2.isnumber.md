@@ -4,9 +4,19 @@
 
 ## Number\_2.isNumber() function
 
+<b>Signature:</b>
+
+```typescript
+function isNumber(value: unknown): value is Number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is Number
 

@@ -4,9 +4,19 @@
 
 ## Technique.isTechnique() function
 
+<b>Signature:</b>
+
+```typescript
+function isTechnique(value: unknown): value is Technique;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Technique](./alfa-wcag.technique.md)
 

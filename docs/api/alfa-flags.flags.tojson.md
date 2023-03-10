@@ -4,3 +4,12 @@
 
 ## Flags.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Flags.JSON;
+```
+<b>Returns:</b>
+
+[Flags.JSON](./alfa-flags.flags.json.md)
+

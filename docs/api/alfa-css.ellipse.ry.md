@@ -4,3 +4,8 @@
 
 ## Ellipse.ry property
 
+<b>Signature:</b>
+
+```typescript
+get ry(): R;
+```

@@ -4,3 +4,8 @@
 
 ## Token.isFunction variable
 
+<b>Signature:</b>
+
+```typescript
+isFunction: typeof Function.isFunction
+```

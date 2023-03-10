@@ -4,10 +4,19 @@
 
 ## Selector.Link class
 
+[https://drafts.csswg.org/selectors/\#link-pseudo](https://drafts.csswg.org/selectors/#link-pseudo)
+
+<b>Signature:</b>
+
+```typescript
+export class Link extends Pseudo.Class<"link"> 
+```
+<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"link"&gt;
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches](./alfa-selector.selector.link.matches.md) |  |  |
-|  [of](./alfa-selector.selector.link.of.md) |  |  |
+|  [matches(element, context)](./alfa-selector.selector.link.matches.md) |  |  |
+|  [of()](./alfa-selector.selector.link.of.md) | <code>static</code> |  |
 

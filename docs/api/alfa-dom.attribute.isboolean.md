@@ -4,3 +4,14 @@
 
 ## Attribute.isBoolean() method
 
+[https://html.spec.whatwg.org/\#boolean-attribute](https://html.spec.whatwg.org/#boolean-attribute)
+
+<b>Signature:</b>
+
+```typescript
+isBoolean(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

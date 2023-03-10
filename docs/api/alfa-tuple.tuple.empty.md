@@ -4,3 +4,8 @@
 
 ## Tuple.Empty type
 
+<b>Signature:</b>
+
+```typescript
+export type Empty = [];
+```

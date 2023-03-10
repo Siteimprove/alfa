@@ -4,3 +4,8 @@
 
 ## Style.isVisible variable
 
+<b>Signature:</b>
+
+```typescript
+isVisible: typeof node.isVisible
+```

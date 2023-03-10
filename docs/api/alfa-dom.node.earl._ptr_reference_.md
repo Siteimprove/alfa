@@ -4,3 +4,10 @@
 
 ## Node.EARL."ptr:reference" property
 
+<b>Signature:</b>
+
+```typescript
+"ptr:reference"?: {
+            "@id": string;
+        };
+```

@@ -4,3 +4,8 @@
 
 ## Expression.Test.Document.kind property
 
+<b>Signature:</b>
+
+```typescript
+get kind(): "document";
+```

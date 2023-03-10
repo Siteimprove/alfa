@@ -4,9 +4,21 @@
 
 ## Role.isNamedBy() method
 
+Check if this role supports naming by the specified method.
+
+<b>Signature:</b>
+
+```typescript
+isNamedBy(method: Role.NamedBy): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  method | [Role.NamedBy](./alfa-aria.role.namedby.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

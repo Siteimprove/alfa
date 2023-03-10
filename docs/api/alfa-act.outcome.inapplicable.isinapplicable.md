@@ -4,9 +4,19 @@
 
 ## Outcome.Inapplicable.isInapplicable() function
 
+<b>Signature:</b>
+
+```typescript
+function isInapplicable<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Inapplicable<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+
+<b>Returns:</b>
+
+value is [Inapplicable](./alfa-act.outcome.inapplicable.md)<!-- -->&lt;I, T, Q, S&gt;
 

@@ -4,10 +4,17 @@
 
 ## Selector.Relative.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Selector.JSON<"relative"> 
+```
+<b>Extends:</b> [Selector.JSON](./alfa-selector.selector.json.md)<!-- -->&lt;"relative"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [combinator](./alfa-selector.selector.relative.json.combinator.md) |  |  |  |
-|  [selector](./alfa-selector.selector.relative.json.selector.md) |  |  |  |
+|  [combinator](./alfa-selector.selector.relative.json.combinator.md) |  | string |  |
+|  [selector](./alfa-selector.selector.relative.json.selector.md) |  | [Simple.JSON](./alfa-selector.selector.simple.json.md) \| [Compound.JSON](./alfa-selector.selector.compound.json.md) \| [Complex.JSON](./alfa-selector.selector.complex.json.md) |  |
 

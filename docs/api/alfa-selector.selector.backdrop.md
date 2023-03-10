@@ -4,9 +4,18 @@
 
 ## Selector.Backdrop class
 
+[https://fullscreen.spec.whatwg.org/\#::backdrop-pseudo-element](https://fullscreen.spec.whatwg.org/#::backdrop-pseudo-element)
+
+<b>Signature:</b>
+
+```typescript
+export class Backdrop extends Pseudo.Element<"backdrop"> 
+```
+<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"backdrop"&gt;
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [of](./alfa-selector.selector.backdrop.of.md) |  |  |
+|  [of()](./alfa-selector.selector.backdrop.of.md) | <code>static</code> |  |
 

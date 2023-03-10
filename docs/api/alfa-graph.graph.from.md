@@ -4,9 +4,19 @@
 
 ## Graph.from() function
 
+<b>Signature:</b>
+
+```typescript
+function from<T>(iterable: Iterable<readonly [T, Iterable<T>]>): Graph<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;readonly \[T, Iterable&lt;T&gt;\]&gt; |  |
+
+<b>Returns:</b>
+
+[Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

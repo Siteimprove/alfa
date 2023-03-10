@@ -4,3 +4,12 @@
 
 ## Collection.Unkeyed.isEmpty() method
 
+<b>Signature:</b>
+
+```typescript
+isEmpty(): this is Unkeyed<never>;
+```
+<b>Returns:</b>
+
+this is [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;never&gt;
+

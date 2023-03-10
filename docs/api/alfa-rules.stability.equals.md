@@ -4,9 +4,19 @@
 
 ## Stability.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Stability): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Stability](./alfa-rules.stability.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

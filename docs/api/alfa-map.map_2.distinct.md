@@ -4,3 +4,16 @@
 
 ## Map\_2.distinct() method
 
+<b>Signature:</b>
+
+```typescript
+distinct(): Map<K, V>;
+```
+<b>Returns:</b>
+
+Map&lt;K, V&gt;
+
+## Remarks
+
+As the order of maps is undefined, it is also undefined which keys are kept when duplicate values are encountered.
+

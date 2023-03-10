@@ -4,9 +4,19 @@
 
 ## Media.Feature.Height.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(value: Value<Length>): Height;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Value](./alfa-media.media.value.md)<!-- -->&lt;[Length](./alfa-css.length.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+Height
 

@@ -4,3 +4,8 @@
 
 ## Puppeteer.Type type
 
+<b>Signature:</b>
+
+```typescript
+type Type = JSHandle<globalThis.Node>;
+```

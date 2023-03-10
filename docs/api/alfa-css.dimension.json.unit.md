@@ -4,3 +4,8 @@
 
 ## Dimension.JSON.unit property
 
+<b>Signature:</b>
+
+```typescript
+unit: U;
+```

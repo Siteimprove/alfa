@@ -4,10 +4,20 @@
 
 ## Array\_2.reject() function
 
+<b>Signature:</b>
+
+```typescript
+function reject<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): Array<Exclude<T, U>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+Array&lt;Exclude&lt;T, U&gt;&gt;
 

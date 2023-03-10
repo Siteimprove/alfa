@@ -4,3 +4,12 @@
 
 ## Network.toArray() method
 
+<b>Signature:</b>
+
+```typescript
+toArray(): Array<[N, Array<[N, Array<E>]>]>;
+```
+<b>Returns:</b>
+
+Array&lt;\[N, Array&lt;\[N, Array&lt;E&gt;\]&gt;\]&gt;
+

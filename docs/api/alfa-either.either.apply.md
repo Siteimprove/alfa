@@ -4,9 +4,19 @@
 
 ## Either.apply() method
 
+<b>Signature:</b>
+
+```typescript
+apply<T>(mapper: Either<L, Mapper<R, T>>): Either<L, T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Either](./alfa-either.either.md)<!-- -->&lt;L, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Either](./alfa-either.either.md)<!-- -->&lt;L, T&gt;
 

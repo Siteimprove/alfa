@@ -4,9 +4,19 @@
 
 ## ImportRule.isImportRule() function
 
+<b>Signature:</b>
+
+```typescript
+function isImportRule(value: unknown): value is ImportRule;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [ImportRule](./alfa-dom.importrule.md)
 

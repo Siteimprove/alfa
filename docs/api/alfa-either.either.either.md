@@ -4,10 +4,20 @@
 
 ## Either.either() method
 
+<b>Signature:</b>
+
+```typescript
+either<T>(left: Mapper<L, T>, right: Mapper<R, T>): T;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  left | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;L, T&gt; |  |
 |  right | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt; |  |
+
+<b>Returns:</b>
+
+T
 

@@ -4,9 +4,19 @@
 
 ## Selective.else() method
 
+<b>Signature:</b>
+
+```typescript
+else<U>(mapper: Mapper<S, U>): Selective<never, T | U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S, U&gt; |  |
+
+<b>Returns:</b>
+
+[Selective](./alfa-selective.selective.md)<!-- -->&lt;never, T \| U&gt;
 

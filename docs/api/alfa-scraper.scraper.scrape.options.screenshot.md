@@ -4,3 +4,8 @@
 
 ## Scraper.scrape.Options.screenshot property
 
+<b>Signature:</b>
+
+```typescript
+readonly screenshot?: Screenshot;
+```

@@ -4,3 +4,8 @@
 
 ## Type.JSON.publicId property
 
+<b>Signature:</b>
+
+```typescript
+publicId: string | null;
+```

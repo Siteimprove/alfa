@@ -4,9 +4,21 @@
 
 ## Awaiter.any() function
 
+Wait for any of the given awaiters.
+
+<b>Signature:</b>
+
+```typescript
+function any(awaiters: Iterable<Awaiter>): Awaiter;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  awaiters | Iterable&lt;[Awaiter](./alfa-scraper.awaiter.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[Awaiter](./alfa-scraper.awaiter.md)
 

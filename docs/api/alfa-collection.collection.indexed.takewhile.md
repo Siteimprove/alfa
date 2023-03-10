@@ -4,9 +4,19 @@
 
 ## Collection.Indexed.takeWhile() method
 
+<b>Signature:</b>
+
+```typescript
+takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Indexed<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;
 

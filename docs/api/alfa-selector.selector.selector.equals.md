@@ -4,9 +4,19 @@
 
 ## Selector.Selector.equals() method
 
+<b>Signature:</b>
+
+```typescript
+abstract equals(value: Selector): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Selector |  |
+
+<b>Returns:</b>
+
+boolean
 

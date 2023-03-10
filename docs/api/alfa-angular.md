@@ -4,6 +4,8 @@
 
 ## alfa-angular package
 
+This package provides integrations and utilities for the [Angular](https://angular.io/) application framework.
+
 ## Namespaces
 
 |  Namespace | Description |

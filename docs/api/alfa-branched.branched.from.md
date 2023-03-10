@@ -4,9 +4,19 @@
 
 ## Branched.from() function
 
+<b>Signature:</b>
+
+```typescript
+function from<T, B = never>(values: Iterable<readonly [T, Iterable<B>]>): Branched<T, B>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | Iterable&lt;readonly \[T, Iterable&lt;B&gt;\]&gt; |  |
+
+<b>Returns:</b>
+
+[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;
 

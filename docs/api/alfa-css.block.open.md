@@ -4,3 +4,12 @@
 
 ## Block.Open type
 
+The tokens that are allowed to open a block.
+
+<b>Signature:</b>
+
+```typescript
+type Open = Token.OpenParenthesis | Token.OpenSquareBracket | Token.OpenCurlyBracket;
+```
+<b>References:</b> [Token.OpenParenthesis](./alfa-css.token.openparenthesis.md)<!-- -->, [Token.OpenSquareBracket](./alfa-css.token.opensquarebracket.md)<!-- -->, [Token.OpenCurlyBracket](./alfa-css.token.opencurlybracket.md)
+

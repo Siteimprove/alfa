@@ -4,3 +4,8 @@
 
 ## Media.list variable
 
+<b>Signature:</b>
+
+```typescript
+list: typeof List.of
+```

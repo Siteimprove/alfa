@@ -4,9 +4,19 @@
 
 ## Crawler.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(scraper?: Promise<Scraper>): Promise<Crawler>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  scraper | Promise&lt;[Scraper](./alfa-scraper.scraper.md)<!-- -->&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+Promise&lt;[Crawler](./alfa-crawler.crawler.md)<!-- -->&gt;
 

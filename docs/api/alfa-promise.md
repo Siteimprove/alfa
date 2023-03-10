@@ -4,6 +4,8 @@
 
 ## alfa-promise package
 
+This package provides functionality for working with promises.
+
 ## Namespaces
 
 |  Namespace | Description |

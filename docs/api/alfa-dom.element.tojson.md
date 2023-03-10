@@ -4,3 +4,12 @@
 
 ## Element.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Element.JSON<N>;
+```
+<b>Returns:</b>
+
+[Element.JSON](./alfa-dom.element.json.md)<!-- -->&lt;N&gt;
+

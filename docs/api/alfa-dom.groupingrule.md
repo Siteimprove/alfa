@@ -4,11 +4,18 @@
 
 ## GroupingRule namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace GroupingRule 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isGroupingRule](./alfa-dom.groupingrule.isgroupingrule.md) |  |
+|  [isGroupingRule(value)](./alfa-dom.groupingrule.isgroupingrule.md) |  |
 
 ## Interfaces
 

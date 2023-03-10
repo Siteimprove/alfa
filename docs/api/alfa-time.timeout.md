@@ -4,19 +4,26 @@
 
 ## Timeout class
 
+
+<b>Signature:</b>
+
+```typescript
+export declare class Timeout 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [time](./alfa-time.timeout.time.md) |  |  |  |
-|  [timeout](./alfa-time.timeout.timeout.md) |  |  |  |
+|  [time](./alfa-time.timeout.time.md) | <code>readonly</code> | [Time](./alfa-time.time.md) |  |
+|  [timeout](./alfa-time.timeout.timeout.md) | <code>readonly</code> | number |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [elapsed](./alfa-time.timeout.elapsed.md) |  |  |
-|  [of](./alfa-time.timeout.of.md) |  |  |
-|  [remaining](./alfa-time.timeout.remaining.md) |  |  |
-|  [reset](./alfa-time.timeout.reset.md) |  |  |
+|  [elapsed(now)](./alfa-time.timeout.elapsed.md) |  |  |
+|  [of(timeout, time)](./alfa-time.timeout.of.md) | <code>static</code> |  |
+|  [remaining(now)](./alfa-time.timeout.remaining.md) |  |  |
+|  [reset(time)](./alfa-time.timeout.reset.md) |  |  |
 

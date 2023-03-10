@@ -4,3 +4,8 @@
 
 ## Declaration.important property
 
+<b>Signature:</b>
+
+```typescript
+get important(): boolean;
+```

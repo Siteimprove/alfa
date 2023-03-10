@@ -4,11 +4,18 @@
 
 ## React\_2 namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace React 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [toPage](./alfa-react.react_2.topage.md) |  |
+|  [toPage(value)](./alfa-react.react_2.topage.md) |  |
 
 ## Type Aliases
 

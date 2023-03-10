@@ -4,3 +4,12 @@
 
 ## Name.Source.Reference.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Reference.JSON;
+```
+<b>Returns:</b>
+
+[Reference.JSON](./alfa-aria.name.source.reference.json.md)
+

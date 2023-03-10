@@ -4,9 +4,19 @@
 
 ## Row.isRow() function
 
+<b>Signature:</b>
+
+```typescript
+function isRow(value: unknown): value is Row;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Row](./alfa-table.row.md)
 

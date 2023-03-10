@@ -4,14 +4,21 @@
 
 ## axis namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace axis 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [ancestor](./alfa-xpath.axis.ancestor.md) |  |
-|  [attribute](./alfa-xpath.axis.attribute.md) |  |
-|  [child](./alfa-xpath.axis.child.md) |  |
-|  [descendant](./alfa-xpath.axis.descendant.md) |  |
-|  [parent](./alfa-xpath.axis.parent.md) |  |
-|  [self](./alfa-xpath.axis.self.md) |  |
+|  [ancestor(name)](./alfa-xpath.axis.ancestor.md) |  |
+|  [attribute(name)](./alfa-xpath.axis.attribute.md) |  |
+|  [child(name)](./alfa-xpath.axis.child.md) |  |
+|  [descendant(name)](./alfa-xpath.axis.descendant.md) |  |
+|  [parent(name)](./alfa-xpath.axis.parent.md) |  |
+|  [self(name)](./alfa-xpath.axis.self.md) |  |
 

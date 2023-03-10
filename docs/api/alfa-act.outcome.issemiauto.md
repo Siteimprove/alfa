@@ -4,3 +4,8 @@
 
 ## Outcome.isSemiAuto property
 
+<b>Signature:</b>
+
+```typescript
+get isSemiAuto(): boolean;
+```

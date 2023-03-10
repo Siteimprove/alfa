@@ -4,9 +4,19 @@
 
 ## Array\_2.last() function
 
+<b>Signature:</b>
+
+```typescript
+function last<T>(array: ReadonlyArray<T>): Option<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

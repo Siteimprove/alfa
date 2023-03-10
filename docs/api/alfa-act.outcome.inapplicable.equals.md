@@ -4,9 +4,19 @@
 
 ## Outcome.Inapplicable.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals<I, T extends Hashable, Q, S>(value: Inapplicable<I, T, Q, S>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Inapplicable](./alfa-act.outcome.inapplicable.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

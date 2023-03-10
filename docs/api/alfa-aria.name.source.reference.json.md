@@ -4,11 +4,17 @@
 
 ## Name.Source.Reference.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [attribute](./alfa-aria.name.source.reference.json.attribute.md) |  |  |  |
-|  [name](./alfa-aria.name.source.reference.json.name.md) |  |  |  |
-|  [type](./alfa-aria.name.source.reference.json.type.md) |  |  |  |
+|  [attribute](./alfa-aria.name.source.reference.json.attribute.md) |  | string |  |
+|  [name](./alfa-aria.name.source.reference.json.name.md) |  | [Name.JSON](./alfa-aria.name.json.md) |  |
+|  [type](./alfa-aria.name.source.reference.json.type.md) |  | "reference" |  |
 

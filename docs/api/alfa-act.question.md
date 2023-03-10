@@ -4,11 +4,18 @@
 
 ## Question namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Question 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isQuestion](./alfa-act.question.isquestion.md) |  |
+|  [isQuestion(value)](./alfa-act.question.isquestion.md) |  |
 
 ## Interfaces
 

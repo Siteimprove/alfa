@@ -4,6 +4,14 @@
 
 ## Assertions.notDeepEqual() method
 
+[https://nodejs.org/api/assert.html\#assert\_assert\_notdeepequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_notdeepequal_actual_expected_message)
+
+<b>Signature:</b>
+
+```typescript
+notDeepEqual<T>(actual: T, expected: T, message?: string): void;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +19,8 @@
 |  actual | T |  |
 |  expected | T |  |
 |  message | string | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
 

@@ -4,3 +4,8 @@
 
 ## Position.Side.offset property
 
+<b>Signature:</b>
+
+```typescript
+get offset(): Option<O>;
+```

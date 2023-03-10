@@ -4,9 +4,19 @@
 
 ## Token.AtKeyword.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(value: string): AtKeyword;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
+
+<b>Returns:</b>
+
+[AtKeyword](./alfa-css.token.atkeyword.md)
 

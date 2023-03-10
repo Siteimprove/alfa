@@ -4,3 +4,8 @@
 
 ## Selector.Relative.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "relative";
+```

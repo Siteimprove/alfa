@@ -4,3 +4,10 @@
 
 ## Node.Traversal.ignored variable
 
+When set, traverse both exposed and ignored nodes.
+
+<b>Signature:</b>
+
+```typescript
+ignored: Flag
+```

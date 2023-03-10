@@ -4,9 +4,19 @@
 
 ## Serializable.toEARL() function
 
+<b>Signature:</b>
+
+```typescript
+function toEARL<T extends EARL>(value: Serializable<T>): Some<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Serializable](./alfa-earl.serializable.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
 

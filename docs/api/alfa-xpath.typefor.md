@@ -4,3 +4,11 @@
 
 ## TypeFor type
 
+
+<b>Signature:</b>
+
+```typescript
+export declare type TypeFor<V extends Value> = Descriptor.For<V, Type>;
+```
+<b>References:</b> [Value](./alfa-xpath.value.md)<!-- -->, [Type](./alfa-xpath.type.md)
+

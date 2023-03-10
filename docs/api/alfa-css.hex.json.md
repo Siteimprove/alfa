@@ -4,10 +4,17 @@
 
 ## Hex.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Value.JSON<"color"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"color"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [format](./alfa-css.hex.json.format.md) |  |  |  |
-|  [value](./alfa-css.hex.json.value.md) |  |  |  |
+|  [format](./alfa-css.hex.json.format.md) |  | "hex" |  |
+|  [value](./alfa-css.hex.json.value.md) |  | number |  |
 

@@ -4,9 +4,19 @@
 
 ## Rule.isRule() function
 
+<b>Signature:</b>
+
+```typescript
+function isRule<I, T extends Hashable, Q, S>(value: unknown): value is Rule<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;
 

@@ -4,3 +4,8 @@
 
 ## ImportRule.href property
 
+<b>Signature:</b>
+
+```typescript
+get href(): string;
+```

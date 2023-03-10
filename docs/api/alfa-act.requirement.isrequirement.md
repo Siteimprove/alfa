@@ -4,9 +4,19 @@
 
 ## Requirement.isRequirement() function
 
+<b>Signature:</b>
+
+```typescript
+function isRequirement(value: unknown): value is Requirement;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Requirement](./alfa-act.requirement.md)
 

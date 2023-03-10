@@ -4,3 +4,8 @@
 
 ## Body.EARL."@type" property
 
+<b>Signature:</b>
+
+```typescript
+"@type": ["cnt:Content", "cnt:ContentAsText"];
+```

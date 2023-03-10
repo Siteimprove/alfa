@@ -4,9 +4,19 @@
 
 ## Slice.takeLast() method
 
+<b>Signature:</b>
+
+```typescript
+takeLast(count: number): Slice<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  count | number |  |
+
+<b>Returns:</b>
+
+[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

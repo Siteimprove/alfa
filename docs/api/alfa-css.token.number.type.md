@@ -4,3 +4,8 @@
 
 ## Token.Number.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "number";
+```

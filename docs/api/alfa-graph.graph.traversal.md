@@ -4,3 +4,8 @@
 
 ## Graph.Traversal interface
 
+<b>Signature:</b>
+
+```typescript
+interface Traversal 
+```

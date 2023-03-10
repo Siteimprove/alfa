@@ -4,6 +4,12 @@
 
 ## Hash.writeBigInt() method
 
+<b>Signature:</b>
+
+```typescript
+writeBigInt(data: bigint, size?: 64, signed?: boolean): this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  data | bigint |  |
 |  size | 64 | <i>(Optional)</i> |
 |  signed | boolean | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+this
 

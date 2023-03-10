@@ -4,6 +4,12 @@
 
 ## Name.Source.Label namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Label 
+```
+
 ## Interfaces
 
 |  Interface | Description |

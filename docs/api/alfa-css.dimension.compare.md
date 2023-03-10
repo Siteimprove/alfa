@@ -4,9 +4,19 @@
 
 ## Dimension.compare() method
 
+<b>Signature:</b>
+
+```typescript
+compare(value: Dimension<T, U>): Comparison;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Dimension](./alfa-css.dimension.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+[Comparison](./alfa-comparable.comparison.md)
 

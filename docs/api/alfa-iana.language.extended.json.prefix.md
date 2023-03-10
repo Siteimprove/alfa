@@ -4,3 +4,8 @@
 
 ## Language.Extended.JSON.prefix property
 
+<b>Signature:</b>
+
+```typescript
+prefix: Primary.Name;
+```

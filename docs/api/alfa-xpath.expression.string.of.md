@@ -4,9 +4,19 @@
 
 ## Expression.String.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(value: string): String;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
+
+<b>Returns:</b>
+
+[String](./alfa-xpath.expression.string.md)
 

@@ -4,10 +4,17 @@
 
 ## Cache class
 
+
+<b>Signature:</b>
+
+```typescript
+export declare class Cache 
+```
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [empty](./alfa-act.cache.empty.md) |  |  |
-|  [get](./alfa-act.cache.get.md) |  |  |
+|  [empty()](./alfa-act.cache.empty.md) | <code>static</code> |  |
+|  [get(rule, ifMissing)](./alfa-act.cache.get.md) |  |  |
 

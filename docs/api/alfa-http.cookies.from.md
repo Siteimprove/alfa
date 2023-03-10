@@ -4,9 +4,19 @@
 
 ## Cookies.from() function
 
+<b>Signature:</b>
+
+```typescript
+function from(json: JSON): Cookies;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-http.cookies.json.md) |  |
+
+<b>Returns:</b>
+
+[Cookies](./alfa-http.cookies.md)
 

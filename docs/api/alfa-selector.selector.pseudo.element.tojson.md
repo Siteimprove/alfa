@@ -4,3 +4,12 @@
 
 ## Selector.Pseudo.Element.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Element.JSON<N>;
+```
+<b>Returns:</b>
+
+[Element.JSON](./alfa-selector.selector.pseudo.element.json.md)<!-- -->&lt;N&gt;
+

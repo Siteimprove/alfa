@@ -4,3 +4,12 @@
 
 ## Token.BadURL.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(): BadURL;
+```
+<b>Returns:</b>
+
+[BadURL](./alfa-css.token.badurl.md)
+

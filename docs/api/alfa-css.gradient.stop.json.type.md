@@ -4,3 +4,8 @@
 
 ## Gradient.Stop.JSON.type property
 
+<b>Signature:</b>
+
+```typescript
+type: "stop";
+```

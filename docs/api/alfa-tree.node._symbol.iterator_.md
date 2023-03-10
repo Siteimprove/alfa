@@ -4,3 +4,12 @@
 
 ## Node.\[Symbol.iterator\]() method
 
+<b>Signature:</b>
+
+```typescript
+[Symbol.iterator](): Iterator<Node<F>>;
+```
+<b>Returns:</b>
+
+Iterator&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
+

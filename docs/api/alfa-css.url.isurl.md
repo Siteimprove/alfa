@@ -4,9 +4,19 @@
 
 ## URL.isURL() function
 
+<b>Signature:</b>
+
+```typescript
+function isURL(value: unknown): value is URL;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [URL](./alfa-css.url.md)
 

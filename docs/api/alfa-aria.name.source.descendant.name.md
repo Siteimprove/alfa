@@ -4,3 +4,8 @@
 
 ## Name.Source.Descendant.name property
 
+<b>Signature:</b>
+
+```typescript
+get name(): Name;
+```

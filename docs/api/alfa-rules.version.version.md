@@ -4,3 +4,8 @@
 
 ## Version.version property
 
+<b>Signature:</b>
+
+```typescript
+get version(): N;
+```

@@ -4,10 +4,20 @@
 
 ## Argument.string() function
 
+<b>Signature:</b>
+
+```typescript
+function string(name: string, description: string): Argument<string>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  description | string |  |
+
+<b>Returns:</b>
+
+[Argument](./alfa-command.argument.md)<!-- -->&lt;string&gt;
 

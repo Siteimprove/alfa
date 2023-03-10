@@ -4,9 +4,19 @@
 
 ## Criterion.isCriterion() function
 
+<b>Signature:</b>
+
+```typescript
+function isCriterion(value: unknown): value is Criterion;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Criterion](./alfa-wcag.criterion.md)
 

@@ -4,9 +4,19 @@
 
 ## Integer.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(value: number): Integer;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | number |  |
+
+<b>Returns:</b>
+
+[Integer](./alfa-css.integer.md)
 

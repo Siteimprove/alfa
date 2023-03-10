@@ -4,9 +4,19 @@
 
 ## Result.getErrOrElse() method
 
+<b>Signature:</b>
+
+```typescript
+getErrOrElse<F>(error: Thunk<F>): E | F;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  error | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;F&gt; |  |
+
+<b>Returns:</b>
+
+E \| F
 

@@ -4,3 +4,8 @@
 
 ## Token.parseDouble variable
 
+<b>Signature:</b>
+
+```typescript
+parseDouble: Parser<Slice<Token>, Double, string, []>
+```

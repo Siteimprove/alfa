@@ -4,6 +4,13 @@
 
 ## RuleTree namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace RuleTree 
+```
+
 ## Classes
 
 |  Class | Description |

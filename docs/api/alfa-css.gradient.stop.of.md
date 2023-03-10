@@ -4,10 +4,20 @@
 
 ## Gradient.Stop.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<C extends Color, P extends Length | Percentage>(color: C, position?: Option<P>): Stop<C, P>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  color | C |  |
 |  position | [Option](./alfa-option.option.md)<!-- -->&lt;P&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Stop](./alfa-css.gradient.stop.md)<!-- -->&lt;C, P&gt;
 

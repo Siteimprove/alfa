@@ -4,3 +4,10 @@
 
 ## Stability.Deprecated variable
 
+For deprecated rules. These rules are deprecated and will be removed permanently after some grace period.
+
+<b>Signature:</b>
+
+```typescript
+Deprecated: Stability<"deprecated">
+```

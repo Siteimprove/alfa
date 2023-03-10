@@ -4,6 +4,12 @@
 
 ## Audit.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<I, T extends Hashable, Q = never, S = T>(input: I, rules: Iterable<Rule<I, T, Q, S>>, oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  input | I |  |
 |  rules | Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;&gt; |  |
 |  oracle | [Oracle](./alfa-act.oracle.md)<!-- -->&lt;I, T, Q, S&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Audit](./alfa-act.audit.md)<!-- -->&lt;I, T, Q, S&gt;
 

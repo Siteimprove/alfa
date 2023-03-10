@@ -4,22 +4,29 @@
 
 ## Sequence namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Sequence 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [empty](./alfa-sequence.sequence.empty.md) |  |
-|  [from](./alfa-sequence.sequence.from.md) |  |
-|  [fromArray](./alfa-sequence.sequence.fromarray.md) |  |
-|  [fromIterable](./alfa-sequence.sequence.fromiterable.md) |  |
-|  [fromIterator](./alfa-sequence.sequence.fromiterator.md) |  |
-|  [isCons](./alfa-sequence.sequence.iscons.md) |  |
-|  [isCons](./alfa-sequence.sequence.iscons.md) |  |
-|  [isNil](./alfa-sequence.sequence.isnil.md) |  |
-|  [isNil](./alfa-sequence.sequence.isnil.md) |  |
-|  [isSequence](./alfa-sequence.sequence.issequence.md) |  |
-|  [isSequence](./alfa-sequence.sequence.issequence.md) |  |
-|  [of](./alfa-sequence.sequence.of.md) |  |
+|  [empty()](./alfa-sequence.sequence.empty.md) |  |
+|  [from(iterable)](./alfa-sequence.sequence.from.md) |  |
+|  [fromArray(array)](./alfa-sequence.sequence.fromarray.md) |  |
+|  [fromIterable(iterable)](./alfa-sequence.sequence.fromiterable.md) |  |
+|  [fromIterator(iterator)](./alfa-sequence.sequence.fromiterator.md) |  |
+|  [isCons(value)](./alfa-sequence.sequence.iscons.md) |  |
+|  [isCons(value)](./alfa-sequence.sequence.iscons_1.md) |  |
+|  [isNil(value)](./alfa-sequence.sequence.isnil.md) |  |
+|  [isNil(value)](./alfa-sequence.sequence.isnil_1.md) |  |
+|  [isSequence(value)](./alfa-sequence.sequence.issequence.md) |  |
+|  [isSequence(value)](./alfa-sequence.sequence.issequence_1.md) |  |
+|  [of(head, tail)](./alfa-sequence.sequence.of.md) |  |
 
 ## Type Aliases
 

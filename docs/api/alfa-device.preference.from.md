@@ -4,9 +4,19 @@
 
 ## Preference.from() function
 
+<b>Signature:</b>
+
+```typescript
+export function from<N extends Name>(json: JSON): Preference<N>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-device.preference.json.md) |  |
+
+<b>Returns:</b>
+
+[Preference](./alfa-device.preference.md)<!-- -->&lt;N&gt;
 

@@ -4,3 +4,12 @@
 
 ## Record\_2.toArray() method
 
+<b>Signature:</b>
+
+```typescript
+toArray(): Array<Record.Entry<T>>;
+```
+<b>Returns:</b>
+
+Array&lt;Record.Entry&lt;T&gt;&gt;
+

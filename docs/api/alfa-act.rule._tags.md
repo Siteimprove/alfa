@@ -4,3 +4,8 @@
 
 ## Rule.\_tags property
 
+<b>Signature:</b>
+
+```typescript
+protected readonly _tags: Array<Tag>;
+```

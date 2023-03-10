@@ -4,17 +4,26 @@
 
 ## Flag.Set class
 
+The `Set<T>` class, from the concept of "flag sets", acts as a container for parsed flag values. As flags can be specified multiple times, this class allows us to encapsulate the current value of a given flag and a parser to parse another instance of the flag value and determine how to combine the two.
+
+<b>Signature:</b>
+
+```typescript
+class Set<T> implements Functor<T> 
+```
+<b>Implements:</b> [Functor](./alfa-functor.functor.md)<!-- -->&lt;T&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [parse](./alfa-command.flag.set.parse.md) |  |  |  |
-|  [value](./alfa-command.flag.set.value.md) |  |  |  |
+|  [parse](./alfa-command.flag.set.parse.md) | <code>readonly</code> | [Flag.Parser](./alfa-command.flag.parser.md)<!-- -->&lt;T&gt; |  |
+|  [value](./alfa-command.flag.set.value.md) | <code>readonly</code> | T |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [map](./alfa-command.flag.set.map.md) |  |  |
-|  [of](./alfa-command.flag.set.of.md) |  |  |
+|  [map(mapper)](./alfa-command.flag.set.map.md) |  |  |
+|  [of(value, parse)](./alfa-command.flag.set.of.md) | <code>static</code> |  |
 

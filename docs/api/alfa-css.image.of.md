@@ -4,9 +4,19 @@
 
 ## Image.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<I extends URL | Gradient>(image: I): Image<I>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  image | I |  |
+
+<b>Returns:</b>
+
+[Image](./alfa-css.image.md)<!-- -->&lt;I&gt;
 

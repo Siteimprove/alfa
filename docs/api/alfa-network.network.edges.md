@@ -4,10 +4,20 @@
 
 ## Network.edges() method
 
+<b>Signature:</b>
+
+```typescript
+edges(from: N, to: N): Iterable<E>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  from | N |  |
 |  to | N |  |
+
+<b>Returns:</b>
+
+Iterable&lt;E&gt;
 

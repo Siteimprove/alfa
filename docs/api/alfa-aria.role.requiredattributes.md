@@ -4,3 +4,10 @@
 
 ## Role.requiredAttributes property
 
+Get all attributes required by this role and its inherited (ancestors) roles.
+
+<b>Signature:</b>
+
+```typescript
+get requiredAttributes(): ReadonlyArray<Attribute.Name>;
+```

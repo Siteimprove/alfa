@@ -4,6 +4,12 @@
 
 ## StyleRule.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(selector: string, declarations: Iterable<Declaration>, hint?: boolean): StyleRule;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  selector | string |  |
 |  declarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
 |  hint | boolean | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[StyleRule](./alfa-dom.stylerule.md)
 

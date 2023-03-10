@@ -4,9 +4,19 @@
 
 ## Hash.writeFloat32() method
 
+<b>Signature:</b>
+
+```typescript
+writeFloat32(data: number): this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | number |  |
+
+<b>Returns:</b>
+
+this
 

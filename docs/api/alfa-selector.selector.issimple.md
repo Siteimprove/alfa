@@ -4,9 +4,19 @@
 
 ## Selector.isSimple() function
 
+<b>Signature:</b>
+
+```typescript
+export function isSimple(value: unknown): value is Simple;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Simple](./alfa-selector.selector.simple.md)
 

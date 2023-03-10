@@ -4,3 +4,10 @@
 
 ## URL.username property
 
+[https://url.spec.whatwg.org/\#concept-url-username](https://url.spec.whatwg.org/#concept-url-username)
+
+<b>Signature:</b>
+
+```typescript
+get username(): Option<string>;
+```

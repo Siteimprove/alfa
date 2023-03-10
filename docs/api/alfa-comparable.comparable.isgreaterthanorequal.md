@@ -4,10 +4,22 @@
 
 ## Comparable.isGreaterThanOrEqual() function
 
+Check if one value is greater than or equal to another.
+
+<b>Signature:</b>
+
+```typescript
+function isGreaterThanOrEqual<T>(a: Comparable<T>, b: T): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | [Comparable](./alfa-comparable.comparable.md)<!-- -->&lt;T&gt; |  |
 |  b | T |  |
+
+<b>Returns:</b>
+
+boolean
 

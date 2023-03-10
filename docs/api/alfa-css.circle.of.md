@@ -4,10 +4,20 @@
 
 ## Circle.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<R extends Radius, P extends Position>(radius: R, center: P): Circle<R, P>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  radius | R |  |
 |  center | P |  |
+
+<b>Returns:</b>
+
+[Circle](./alfa-css.circle.md)<!-- -->&lt;R, P&gt;
 

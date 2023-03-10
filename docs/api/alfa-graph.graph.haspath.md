@@ -4,10 +4,20 @@
 
 ## Graph.hasPath() method
 
+<b>Signature:</b>
+
+```typescript
+hasPath(from: T, to: T): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  from | T |  |
 |  to | T |  |
+
+<b>Returns:</b>
+
+boolean
 

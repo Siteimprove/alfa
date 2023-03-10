@@ -4,20 +4,27 @@
 
 ## Future namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Future 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [defer](./alfa-future.future.defer.md) |  |
-|  [delay](./alfa-future.future.delay.md) |  |
-|  [empty](./alfa-future.future.empty.md) |  |
-|  [from](./alfa-future.future.from.md) |  |
-|  [isFuture](./alfa-future.future.isfuture.md) |  |
-|  [isFuture](./alfa-future.future.isfuture.md) |  |
-|  [now](./alfa-future.future.now.md) |  |
-|  [sequence](./alfa-future.future.sequence.md) |  |
-|  [suspend](./alfa-future.future.suspend.md) |  |
-|  [traverse](./alfa-future.future.traverse.md) |  |
+|  [defer(continuation)](./alfa-future.future.defer.md) |  |
+|  [delay(thunk)](./alfa-future.future.delay.md) |  |
+|  [empty()](./alfa-future.future.empty.md) |  |
+|  [from(promise)](./alfa-future.future.from.md) |  |
+|  [isFuture(value)](./alfa-future.future.isfuture.md) |  |
+|  [isFuture(value)](./alfa-future.future.isfuture_1.md) |  |
+|  [now(value)](./alfa-future.future.now.md) |  |
+|  [sequence(futures)](./alfa-future.future.sequence.md) |  |
+|  [suspend(thunk)](./alfa-future.future.suspend.md) |  |
+|  [traverse(values, mapper)](./alfa-future.future.traverse.md) |  |
 
 ## Type Aliases
 

@@ -4,6 +4,12 @@
 
 ## Radial.Extent namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Extent 
+```
+
 ## Enumerations
 
 |  Enumeration | Description |

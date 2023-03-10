@@ -4,6 +4,14 @@
 
 ## Real.clamp() function
 
+Clamp a real between a lower and an upper value.
+
+<b>Signature:</b>
+
+```typescript
+function clamp(p: number, l: number, u: number): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +19,8 @@
 |  p | number |  |
 |  l | number |  |
 |  u | number |  |
+
+<b>Returns:</b>
+
+number
 

@@ -4,10 +4,20 @@
 
 ## List.insert() method
 
+<b>Signature:</b>
+
+```typescript
+insert(index: number, value: T): List<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  index | number |  |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

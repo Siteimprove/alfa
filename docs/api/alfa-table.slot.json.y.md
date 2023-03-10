@@ -4,3 +4,8 @@
 
 ## Slot.JSON.y property
 
+<b>Signature:</b>
+
+```typescript
+y: number;
+```

@@ -4,9 +4,15 @@
 
 ## Scripting.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [enabled](./alfa-device.scripting.json.enabled.md) |  |  |  |
+|  [enabled](./alfa-device.scripting.json.enabled.md) |  | boolean |  |
 

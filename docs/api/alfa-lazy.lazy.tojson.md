@@ -4,3 +4,12 @@
 
 ## Lazy.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Lazy.JSON<T>;
+```
+<b>Returns:</b>
+
+[Lazy.JSON](./alfa-lazy.lazy.json.md)<!-- -->&lt;T&gt;
+

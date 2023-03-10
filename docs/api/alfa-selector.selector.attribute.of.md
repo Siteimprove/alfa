@@ -4,6 +4,12 @@
 
 ## Selector.Attribute.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(namespace: Option<string>, name: string, value?: Option<string>, matcher?: Option<Attribute.Matcher>, modifier?: Option<Attribute.Modifier>): Attribute;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -13,4 +19,8 @@
 |  value | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
 |  matcher | [Option](./alfa-option.option.md)<!-- -->&lt;[Attribute.Matcher](./alfa-selector.selector.attribute.matcher.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  modifier | [Option](./alfa-option.option.md)<!-- -->&lt;[Attribute.Modifier](./alfa-selector.selector.attribute.modifier.md)<!-- -->&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Attribute](./alfa-selector.selector.attribute.md)
 

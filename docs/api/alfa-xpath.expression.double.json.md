@@ -4,10 +4,16 @@
 
 ## Expression.Double.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-xpath.expression.double.json.type.md) |  |  |  |
-|  [value](./alfa-xpath.expression.double.json.value.md) |  |  |  |
+|  [type](./alfa-xpath.expression.double.json.type.md) |  | "double" |  |
+|  [value](./alfa-xpath.expression.double.json.value.md) |  | number |  |
 

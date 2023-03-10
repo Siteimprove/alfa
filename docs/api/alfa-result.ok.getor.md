@@ -4,3 +4,12 @@
 
 ## Ok.getOr() method
 
+<b>Signature:</b>
+
+```typescript
+getOr(): T;
+```
+<b>Returns:</b>
+
+T
+

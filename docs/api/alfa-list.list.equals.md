@@ -4,9 +4,19 @@
 
 ## List.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals<T>(value: List<T>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [List](./alfa-list.list.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

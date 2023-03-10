@@ -4,3 +4,10 @@
 
 ## Map\_2.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON<K, V> = Collection.Keyed.JSON<K, V>;
+```
+<b>References:</b> [Collection.Keyed.JSON](./alfa-collection.collection.keyed.json.md)
+

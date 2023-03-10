@@ -4,3 +4,8 @@
 
 ## Shadow.JSON.horizontal property
 
+<b>Signature:</b>
+
+```typescript
+horizontal: Length.JSON;
+```

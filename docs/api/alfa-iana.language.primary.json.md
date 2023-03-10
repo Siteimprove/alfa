@@ -4,9 +4,16 @@
 
 ## Language.Primary.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Subtag.JSON<"primary", Name> 
+```
+<b>Extends:</b> [Subtag.JSON](./alfa-iana.language.subtag.json.md)<!-- -->&lt;"primary", [Name](./alfa-iana.language.primary.name.md)<!-- -->&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [scope](./alfa-iana.language.primary.json.scope.md) |  |  |  |
+|  [scope](./alfa-iana.language.primary.json.scope.md) |  | [Scope](./alfa-iana.language.scope.md) \| null |  |
 

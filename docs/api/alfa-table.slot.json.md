@@ -4,10 +4,16 @@
 
 ## Slot.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [x](./alfa-table.slot.json.x.md) |  |  |  |
-|  [y](./alfa-table.slot.json.y.md) |  |  |  |
+|  [x](./alfa-table.slot.json.x.md) |  | number |  |
+|  [y](./alfa-table.slot.json.y.md) |  | number |  |
 

@@ -4,10 +4,20 @@
 
 ## Argument.integer() function
 
+<b>Signature:</b>
+
+```typescript
+function integer(name: string, description: string): Argument<number>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  description | string |  |
+
+<b>Returns:</b>
+
+[Argument](./alfa-command.argument.md)<!-- -->&lt;number&gt;
 

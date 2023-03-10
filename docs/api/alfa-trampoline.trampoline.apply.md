@@ -4,9 +4,19 @@
 
 ## Trampoline.apply() method
 
+<b>Signature:</b>
+
+```typescript
+apply<U>(mapper: Trampoline<Mapper<T, U>>): Trampoline<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;U&gt;
 

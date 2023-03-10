@@ -4,9 +4,19 @@
 
 ## Selector.Universal.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Universal): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Universal](./alfa-selector.selector.universal.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

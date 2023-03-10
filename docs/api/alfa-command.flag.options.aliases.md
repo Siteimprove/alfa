@@ -4,3 +4,8 @@
 
 ## Flag.Options.aliases property
 
+<b>Signature:</b>
+
+```typescript
+readonly aliases: Array<string>;
+```

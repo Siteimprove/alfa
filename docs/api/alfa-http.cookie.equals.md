@@ -4,9 +4,19 @@
 
 ## Cookie.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Cookie): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Cookie](./alfa-http.cookie.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

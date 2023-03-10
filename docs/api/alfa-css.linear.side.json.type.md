@@ -4,3 +4,8 @@
 
 ## Linear.Side.JSON.type property
 
+<b>Signature:</b>
+
+```typescript
+type: "side";
+```

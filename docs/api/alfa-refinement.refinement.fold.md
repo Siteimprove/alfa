@@ -4,3 +4,8 @@
 
 ## Refinement.fold variable
 
+<b>Signature:</b>
+
+```typescript
+fold: Fold
+```

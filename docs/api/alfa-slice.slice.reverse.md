@@ -4,3 +4,12 @@
 
 ## Slice.reverse() method
 
+<b>Signature:</b>
+
+```typescript
+reverse(): Slice<T>;
+```
+<b>Returns:</b>
+
+[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
+

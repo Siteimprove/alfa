@@ -4,9 +4,19 @@
 
 ## Transformation.apply() method
 
+<b>Signature:</b>
+
+```typescript
+apply(transformation: Transformation): Transformation;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  transformation | [Transformation](./alfa-affine.transformation.md) |  |
+
+<b>Returns:</b>
+
+[Transformation](./alfa-affine.transformation.md)
 

@@ -4,9 +4,19 @@
 
 ## Slice.flatMap() method
 
+<b>Signature:</b>
+
+```typescript
+flatMap<U>(mapper: Mapper<T, Slice<U>, [index: number]>): Slice<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;
 

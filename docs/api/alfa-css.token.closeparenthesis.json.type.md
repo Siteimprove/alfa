@@ -4,3 +4,8 @@
 
 ## Token.CloseParenthesis.JSON.type property
 
+<b>Signature:</b>
+
+```typescript
+type: "close-parenthesis";
+```

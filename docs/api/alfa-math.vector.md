@@ -4,3 +4,10 @@
 
 ## Vector type
 
+[https://en.wikipedia.org/wiki/Vector\_(mathematics\_and\_physics)](https://en.wikipedia.org/wiki/Vector_(mathematics_and_physics))
+
+<b>Signature:</b>
+
+```typescript
+export declare type Vector = Array<number>;
+```

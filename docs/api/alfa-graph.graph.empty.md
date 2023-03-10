@@ -4,3 +4,12 @@
 
 ## Graph.empty() method
 
+<b>Signature:</b>
+
+```typescript
+static empty<T>(): Graph<T>;
+```
+<b>Returns:</b>
+
+[Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
+

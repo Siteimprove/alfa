@@ -4,3 +4,8 @@
 
 ## Diagnostic.isWithFirstHeading variable
 
+<b>Signature:</b>
+
+```typescript
+isWithFirstHeading: typeof WithFirstHeading.isWithFirstHeading
+```

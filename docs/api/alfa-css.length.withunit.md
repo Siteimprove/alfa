@@ -4,9 +4,19 @@
 
 ## Length.withUnit() method
 
+<b>Signature:</b>
+
+```typescript
+withUnit<U extends Unit.Length>(unit: U): Length<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | U |  |
+
+<b>Returns:</b>
+
+[Length](./alfa-css.length.md)<!-- -->&lt;U&gt;
 

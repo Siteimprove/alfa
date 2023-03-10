@@ -4,3 +4,10 @@
 
 ## Unit.Length.Absolute type
 
+[https://drafts.csswg.org/css-values/\#absolute-lengths](https://drafts.csswg.org/css-values/#absolute-lengths)
+
+<b>Signature:</b>
+
+```typescript
+type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | "px";
+```

@@ -4,11 +4,18 @@
 
 ## Matrix namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Matrix 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isMatrix](./alfa-css.matrix.ismatrix.md) |  |
+|  [isMatrix(value)](./alfa-css.matrix.ismatrix.md) |  |
 
 ## Interfaces
 

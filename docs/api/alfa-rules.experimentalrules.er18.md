@@ -4,3 +4,8 @@
 
 ## experimentalRules.ER18 variable
 
+<b>Signature:</b>
+
+```typescript
+_default: Rule.Atomic<Page, Attribute<string>, never, Attribute<string>>
+```

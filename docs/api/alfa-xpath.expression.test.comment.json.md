@@ -4,10 +4,16 @@
 
 ## Expression.Test.Comment.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [kind](./alfa-xpath.expression.test.comment.json.kind.md) |  |  |  |
-|  [type](./alfa-xpath.expression.test.comment.json.type.md) |  |  |  |
+|  [kind](./alfa-xpath.expression.test.comment.json.kind.md) |  | "comment" |  |
+|  [type](./alfa-xpath.expression.test.comment.json.type.md) |  | "kind" |  |
 

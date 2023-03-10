@@ -4,3 +4,8 @@
 
 ## Selector.Attribute.value property
 
+<b>Signature:</b>
+
+```typescript
+get value(): Option<string>;
+```

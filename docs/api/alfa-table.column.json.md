@@ -4,9 +4,15 @@
 
 ## Column.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [x](./alfa-table.column.json.x.md) |  |  |  |
+|  [x](./alfa-table.column.json.x.md) |  | number |  |
 

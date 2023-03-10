@@ -4,9 +4,19 @@
 
 ## List.intersect() method
 
+<b>Signature:</b>
+
+```typescript
+intersect(iterable: Iterable<T>): List<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

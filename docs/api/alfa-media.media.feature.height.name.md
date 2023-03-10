@@ -4,3 +4,8 @@
 
 ## Media.Feature.Height.name property
 
+<b>Signature:</b>
+
+```typescript
+get name(): "height";
+```

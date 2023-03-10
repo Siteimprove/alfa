@@ -4,10 +4,24 @@
 
 ## Cypress\_2.Handler.persist() function
 
+<b>Signature:</b>
+
+```typescript
+function persist<I, T extends Hashable, Q, S>(output: Mapper<I, string>, format?: Formatter<I, T, Q, S>): Handler<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  output | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;I, string&gt; |  |
 |  format | [Formatter](./alfa-formatter.formatter.md)<!-- -->&lt;I, T, Q, S&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Handler](./alfa-assert.handler.md)<!-- -->&lt;I, T, Q, S&gt;
+
+## Remarks
+
+Cypress has this rather odd model of relying on synchronously enqueued hooks and commands to provide a feeling of using a synchronous API. As the handler will run \_as part of\_ a command, this means that we can't register any additional commands when the handler runs; this must instead be handled beforehand. The handler therefore starts by registering an `after()` hook that will write any files collected during the test run \_after\_ the tests are done.
 

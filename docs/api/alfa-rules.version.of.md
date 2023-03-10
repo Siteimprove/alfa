@@ -4,9 +4,19 @@
 
 ## Version.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<N extends number>(version: N): Version<N>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  version | N |  |
+
+<b>Returns:</b>
+
+[Version](./alfa-rules.version.md)<!-- -->&lt;N&gt;
 

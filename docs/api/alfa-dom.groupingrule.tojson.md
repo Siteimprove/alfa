@@ -4,3 +4,12 @@
 
 ## GroupingRule.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+abstract toJSON(): GroupingRule.JSON;
+```
+<b>Returns:</b>
+
+[GroupingRule.JSON](./alfa-dom.groupingrule.json.md)
+

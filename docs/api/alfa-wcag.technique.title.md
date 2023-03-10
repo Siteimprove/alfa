@@ -4,3 +4,12 @@
 
 ## Technique.Title type
 
+The title of the technique with the specified name.
+
+<b>Signature:</b>
+
+```typescript
+type Title<N extends Name = Name> = Techniques[N]["title"];
+```
+<b>References:</b> [Name](./alfa-wcag.technique.name.md)
+

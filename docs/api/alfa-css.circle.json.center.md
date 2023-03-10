@@ -4,3 +4,8 @@
 
 ## Circle.JSON.center property
 
+<b>Signature:</b>
+
+```typescript
+center: Position.JSON;
+```

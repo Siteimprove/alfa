@@ -4,9 +4,23 @@
 
 ## Vector.normalize() function
 
+Compute a unit vector corresponding to a vector.
+
+[https://en.wikipedia.org/wiki/Unit\_vector](https://en.wikipedia.org/wiki/Unit_vector)
+
+<b>Signature:</b>
+
+```typescript
+function normalize(v: Vector): Vector;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
+
+<b>Returns:</b>
+
+[Vector](./alfa-math.vector.md)
 

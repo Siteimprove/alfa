@@ -4,9 +4,16 @@
 
 ## Comment.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Node.JSON<"comment"> 
+```
+<b>Extends:</b> [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"comment"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [data](./alfa-dom.comment.json.data.md) |  |  |  |
+|  [data](./alfa-dom.comment.json.data.md) |  | string |  |
 

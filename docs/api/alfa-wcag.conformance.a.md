@@ -4,3 +4,12 @@
 
 ## Conformance.A type
 
+All criteria needed for conformance level A.
+
+<b>Signature:</b>
+
+```typescript
+type A<V extends Criterion.Version = Criterion.Version.Recommendation> = Criterion.Level.A<V>;
+```
+<b>References:</b> [Criterion.Version](./alfa-wcag.criterion.version.md)<!-- -->, [Criterion.Version.Recommendation](./alfa-wcag.criterion.version.recommendation.md)<!-- -->, [Criterion.Level.A](./alfa-wcag.criterion.level.a.md)
+

@@ -4,9 +4,19 @@
 
 ## Set\_2.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals<T>(value: Set<T>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Set&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

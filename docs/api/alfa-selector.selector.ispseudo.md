@@ -4,9 +4,19 @@
 
 ## Selector.isPseudo() function
 
+<b>Signature:</b>
+
+```typescript
+export function isPseudo(value: unknown): value is Pseudo;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Pseudo](./alfa-selector.selector.pseudo.md)
 

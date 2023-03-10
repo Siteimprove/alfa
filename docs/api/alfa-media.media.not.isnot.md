@@ -4,9 +4,19 @@
 
 ## Media.Not.isNot() function
 
+<b>Signature:</b>
+
+```typescript
+function isNot(value: unknown): value is Not;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Not](./alfa-media.media.not.md)
 

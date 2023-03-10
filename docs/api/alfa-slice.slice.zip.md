@@ -4,9 +4,19 @@
 
 ## Slice.zip() method
 
+<b>Signature:</b>
+
+```typescript
+zip<U>(iterable: Iterable<U>): Slice<[T, U]>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;U&gt; |  |
+
+<b>Returns:</b>
+
+[Slice](./alfa-slice.slice.md)<!-- -->&lt;\[T, U\]&gt;
 

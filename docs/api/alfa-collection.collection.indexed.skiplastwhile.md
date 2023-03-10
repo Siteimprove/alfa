@@ -4,9 +4,19 @@
 
 ## Collection.Indexed.skipLastWhile() method
 
+<b>Signature:</b>
+
+```typescript
+skipLastWhile(predicate: Predicate<T, [index: number]>): Indexed<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

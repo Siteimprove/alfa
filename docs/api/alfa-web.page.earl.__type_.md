@@ -4,3 +4,8 @@
 
 ## Page.EARL."@type" property
 
+<b>Signature:</b>
+
+```typescript
+"@type": ["earl:TestSubject"];
+```

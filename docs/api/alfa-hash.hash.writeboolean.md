@@ -4,9 +4,19 @@
 
 ## Hash.writeBoolean() method
 
+<b>Signature:</b>
+
+```typescript
+writeBoolean(data: boolean): this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | boolean |  |
+
+<b>Returns:</b>
+
+this
 

@@ -4,3 +4,8 @@
 
 ## Diagnostic.isTextSpacing variable
 
+<b>Signature:</b>
+
+```typescript
+isTextSpacing: typeof TextSpacing.isTextSpacing
+```

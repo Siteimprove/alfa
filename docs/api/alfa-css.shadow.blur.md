@@ -4,3 +4,8 @@
 
 ## Shadow.blur property
 
+<b>Signature:</b>
+
+```typescript
+get blur(): B;
+```

@@ -4,10 +4,16 @@
 
 ## Err.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<E> 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [error](./alfa-result.err.json.error.md) |  |  |  |
-|  [type](./alfa-result.err.json.type.md) |  |  |  |
+|  [error](./alfa-result.err.json.error.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;E&gt; |  |
+|  [type](./alfa-result.err.json.type.md) |  | "err" |  |
 

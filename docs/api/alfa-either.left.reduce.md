@@ -4,10 +4,20 @@
 
 ## Left.reduce() method
 
+<b>Signature:</b>
+
+```typescript
+reduce<T>(reducer: unknown, accumulator: T): T;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  reducer | unknown |  |
 |  accumulator | T |  |
+
+<b>Returns:</b>
+
+T
 

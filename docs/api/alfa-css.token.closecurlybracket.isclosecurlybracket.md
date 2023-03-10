@@ -4,9 +4,19 @@
 
 ## Token.CloseCurlyBracket.isCloseCurlyBracket() function
 
+<b>Signature:</b>
+
+```typescript
+function isCloseCurlyBracket(value: unknown): value is CloseCurlyBracket;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [CloseCurlyBracket](./alfa-css.token.closecurlybracket.md)
 

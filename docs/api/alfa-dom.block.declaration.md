@@ -4,9 +4,19 @@
 
 ## Block.declaration() method
 
+<b>Signature:</b>
+
+```typescript
+declaration(predicate: string | Predicate<Declaration>): Option<Declaration>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | string \| [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt;
 

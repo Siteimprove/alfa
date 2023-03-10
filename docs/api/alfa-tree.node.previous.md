@@ -4,9 +4,21 @@
 
 ## Node.previous() method
 
+[https://dom.spec.whatwg.org/\#concept-tree-previous-sibling](https://dom.spec.whatwg.org/#concept-tree-previous-sibling)
+
+<b>Signature:</b>
+
+```typescript
+previous(options?: Flags<F>): Option<Node<F>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
 

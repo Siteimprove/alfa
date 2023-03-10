@@ -4,3 +4,8 @@
 
 ## Command.Input.args property
 
+<b>Signature:</b>
+
+```typescript
+args: Arguments.Values<A>;
+```

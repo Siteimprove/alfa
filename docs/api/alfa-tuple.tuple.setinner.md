@@ -4,3 +4,10 @@
 
 ## Tuple.SetInner type
 
+<b>Signature:</b>
+
+```typescript
+type SetInner<T extends Tuple, I extends number, V, S extends Tuple> = T extends readonly [infer H, ...infer R] ? I extends Size<S> ? [V, ...R] : [H, ...SetInner<R, I, V, Append<S, H>>] : T;
+```
+<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Size](./alfa-tuple.tuple.size.md)<!-- -->, [Append](./alfa-tuple.tuple.append.md)
+

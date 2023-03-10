@@ -4,9 +4,19 @@
 
 ## Unit.isLength() function
 
+<b>Signature:</b>
+
+```typescript
+function isLength(unit: string): unit is Length;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | string |  |
+
+<b>Returns:</b>
+
+unit is [Length](./alfa-css.unit.length.md)
 

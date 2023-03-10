@@ -4,9 +4,19 @@
 
 ## Slice.apply() method
 
+<b>Signature:</b>
+
+```typescript
+apply<U>(mapper: Slice<Mapper<T, U>>): Slice<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Slice](./alfa-slice.slice.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;
 

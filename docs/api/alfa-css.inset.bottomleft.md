@@ -4,3 +4,8 @@
 
 ## Inset.bottomLeft property
 
+<b>Signature:</b>
+
+```typescript
+get bottomLeft(): Option<C>;
+```

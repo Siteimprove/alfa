@@ -4,3 +4,12 @@
 
 ## Media.Value.Discrete.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Discrete.JSON<T>;
+```
+<b>Returns:</b>
+
+[Discrete.JSON](./alfa-media.media.value.discrete.json.md)<!-- -->&lt;T&gt;
+

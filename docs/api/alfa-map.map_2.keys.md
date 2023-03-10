@@ -4,3 +4,12 @@
 
 ## Map\_2.keys() method
 
+<b>Signature:</b>
+
+```typescript
+keys(): Iterable<K>;
+```
+<b>Returns:</b>
+
+Iterable&lt;K&gt;
+

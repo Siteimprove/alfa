@@ -4,9 +4,19 @@
 
 ## Context.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(state: Iterable<[Element, Context.State]>): Context;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  state | Iterable&lt;\[[Element](./alfa-dom.element.md)<!-- -->, [Context.State](./alfa-selector.context.state.md)<!-- -->\]&gt; |  |
+
+<b>Returns:</b>
+
+[Context](./alfa-selector.context.md)
 

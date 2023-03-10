@@ -4,9 +4,19 @@
 
 ## Matrix.identity() function
 
+<b>Signature:</b>
+
+```typescript
+function identity(n: number): Matrix;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  n | number |  |
+
+<b>Returns:</b>
+
+[Matrix](./alfa-math.matrix.md)
 

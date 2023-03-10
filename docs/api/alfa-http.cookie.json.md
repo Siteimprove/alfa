@@ -4,10 +4,16 @@
 
 ## Cookie.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-http.cookie.json.name.md) |  |  |  |
-|  [value](./alfa-http.cookie.json.value.md) |  |  |  |
+|  [name](./alfa-http.cookie.json.name.md) |  | string |  |
+|  [value](./alfa-http.cookie.json.value.md) |  | string |  |
 

@@ -4,11 +4,17 @@
 
 ## Media.Or.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [left](./alfa-media.media.or.json.left.md) |  |  |  |
-|  [right](./alfa-media.media.or.json.right.md) |  |  |  |
-|  [type](./alfa-media.media.or.json.type.md) |  |  |  |
+|  [left](./alfa-media.media.or.json.left.md) |  | [Feature.JSON](./alfa-media.media.feature.json.md) \| [Condition.JSON](./alfa-media.media.condition.json.md) |  |
+|  [right](./alfa-media.media.or.json.right.md) |  | [Feature.JSON](./alfa-media.media.feature.json.md) \| [Condition.JSON](./alfa-media.media.condition.json.md) |  |
+|  [type](./alfa-media.media.or.json.type.md) |  | "or" |  |
 

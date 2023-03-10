@@ -4,9 +4,19 @@
 
 ## Attribute.isAttribute() function
 
+<b>Signature:</b>
+
+```typescript
+function isAttribute(value: unknown): value is Attribute;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Attribute](./alfa-dom.attribute.md)
 

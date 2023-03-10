@@ -4,10 +4,21 @@
 
 ## test() function
 
+
+<b>Signature:</b>
+
+```typescript
+export declare function test(name: string, assertion: (assert: Assertions) => void | Promise<void>): Promise<void>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  assertion | (assert: [Assertions](./alfa-test.assertions.md)<!-- -->) =&gt; void \| Promise&lt;void&gt; |  |
+
+<b>Returns:</b>
+
+Promise&lt;void&gt;
 

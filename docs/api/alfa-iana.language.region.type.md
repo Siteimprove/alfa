@@ -4,3 +4,8 @@
 
 ## Language.Region.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "region";
+```

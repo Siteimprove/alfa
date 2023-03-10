@@ -4,10 +4,20 @@
 
 ## Iterable\_2.has() function
 
+<b>Signature:</b>
+
+```typescript
+function has<T>(iterable: Iterable<T>, index: number): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  index | number |  |
+
+<b>Returns:</b>
+
+boolean
 

@@ -4,9 +4,21 @@
 
 ## Node.index() method
 
+[https://dom.spec.whatwg.org/\#concept-tree-index](https://dom.spec.whatwg.org/#concept-tree-index)
+
+<b>Signature:</b>
+
+```typescript
+index(options?: Flags<F>): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+number
 

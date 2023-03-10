@@ -4,3 +4,8 @@
 
 ## Sheet.disabled property
 
+<b>Signature:</b>
+
+```typescript
+get disabled(): boolean;
+```

@@ -4,3 +4,12 @@
 
 ## Sheet.descendants() method
 
+<b>Signature:</b>
+
+```typescript
+descendants(): Iterable<Rule>;
+```
+<b>Returns:</b>
+
+Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;
+

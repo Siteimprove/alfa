@@ -4,10 +4,20 @@
 
 ## Node.closest() method
 
+<b>Signature:</b>
+
+```typescript
+closest<T extends Node>(refinement: Refinement<Node, T>, options?: Node.Traversal): Option<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->, T&gt; |  |
 |  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

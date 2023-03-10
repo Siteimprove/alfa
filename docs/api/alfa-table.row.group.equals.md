@@ -4,9 +4,19 @@
 
 ## Row.Group.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(group: this): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  group | this |  |
+
+<b>Returns:</b>
+
+boolean
 

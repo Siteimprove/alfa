@@ -4,10 +4,19 @@
 
 ## Cache.get() method
 
+<b>Signature:</b>
+
+```typescript
+get(key: K): Option<V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K |  |
-|  ifMissing | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;this, U&gt; |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;V&gt;
 

@@ -4,9 +4,19 @@
 
 ## Node.inclusiveSiblings() method
 
+<b>Signature:</b>
+
+```typescript
+inclusiveSiblings(options?: Node.Traversal): Sequence<Node>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;
 

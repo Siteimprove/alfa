@@ -4,9 +4,19 @@
 
 ## Row.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(row: Row): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  row | [Row](./alfa-table.row.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

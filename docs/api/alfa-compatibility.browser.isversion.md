@@ -4,10 +4,20 @@
 
 ## Browser.isVersion() function
 
+<b>Signature:</b>
+
+```typescript
+function isVersion<N extends Name>(browser: N, version: string): version is Version<N>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  browser | N |  |
 |  version | string |  |
+
+<b>Returns:</b>
+
+version is [Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;N&gt;
 

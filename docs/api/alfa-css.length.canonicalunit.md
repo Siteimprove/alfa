@@ -4,3 +4,8 @@
 
 ## Length.canonicalUnit property
 
+<b>Signature:</b>
+
+```typescript
+get canonicalUnit(): "px";
+```

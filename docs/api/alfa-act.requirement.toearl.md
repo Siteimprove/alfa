@@ -4,3 +4,12 @@
 
 ## Requirement.toEARL() method
 
+<b>Signature:</b>
+
+```typescript
+toEARL(): Requirement.EARL;
+```
+<b>Returns:</b>
+
+[Requirement.EARL](./alfa-act.requirement.earl.md)
+

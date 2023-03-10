@@ -4,10 +4,20 @@
 
 ## Array\_2.flatMap() function
 
+<b>Signature:</b>
+
+```typescript
+function flatMap<T, U = T>(array: ReadonlyArray<T>, mapper: Mapper<T, ReadonlyArray<U>, [index: number]>): Array<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, ReadonlyArray&lt;U&gt;, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+Array&lt;U&gt;
 

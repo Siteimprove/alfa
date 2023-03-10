@@ -4,3 +4,12 @@
 
 ## RuleTree.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): RuleTree.JSON;
+```
+<b>Returns:</b>
+
+[RuleTree.JSON](./alfa-cascade.ruletree.json.md)
+

@@ -4,9 +4,19 @@
 
 ## Selector.Relative.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Relative): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Relative](./alfa-selector.selector.relative.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

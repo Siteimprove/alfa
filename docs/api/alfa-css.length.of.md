@@ -4,10 +4,20 @@
 
 ## Length.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<U extends Unit.Length>(value: number, unit: U): Length<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | number |  |
 |  unit | U |  |
+
+<b>Returns:</b>
+
+[Length](./alfa-css.length.md)<!-- -->&lt;U&gt;
 

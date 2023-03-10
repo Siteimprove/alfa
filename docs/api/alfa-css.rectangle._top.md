@@ -4,3 +4,8 @@
 
 ## Rectangle.\_top property
 
+<b>Signature:</b>
+
+```typescript
+readonly _top: O;
+```

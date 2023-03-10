@@ -4,6 +4,12 @@
 
 ## Selector.Has namespace
 
+<b>Signature:</b>
+
+```typescript
+export namespace Has 
+```
+
 ## Interfaces
 
 |  Interface | Description |

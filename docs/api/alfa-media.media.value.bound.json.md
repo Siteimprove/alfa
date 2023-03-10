@@ -4,10 +4,16 @@
 
 ## Media.Value.Bound.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<T> 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [isInclusive](./alfa-media.media.value.bound.json.isinclusive.md) |  |  |  |
-|  [value](./alfa-media.media.value.bound.json.value.md) |  |  |  |
+|  [isInclusive](./alfa-media.media.value.bound.json.isinclusive.md) |  | boolean |  |
+|  [value](./alfa-media.media.value.bound.json.value.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
 

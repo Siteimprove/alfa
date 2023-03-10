@@ -4,9 +4,19 @@
 
 ## Sheet.from() function
 
+<b>Signature:</b>
+
+```typescript
+function from(json: JSON): Sheet;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-dom.sheet.json.md) |  |
+
+<b>Returns:</b>
+
+[Sheet](./alfa-dom.sheet.md)
 

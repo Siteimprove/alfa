@@ -4,3 +4,12 @@
 
 ## Media.Feature.Height.boolean() method
 
+<b>Signature:</b>
+
+```typescript
+static boolean(): Height;
+```
+<b>Returns:</b>
+
+Height
+

@@ -4,3 +4,16 @@
 
 ## Criterion.Level.A type
 
+All criteria of level A.
+
+<b>Signature:</b>
+
+```typescript
+export type A<V extends Version = Version.Recommendation> = Of<"A", V>;
+```
+<b>References:</b> [Version](./alfa-wcag.criterion.version.md)<!-- -->, [Version.Recommendation](./alfa-wcag.criterion.version.recommendation.md)
+
+## Remarks
+
+Note that criteria levels are different from conformance levels! While criteria levels are disjoint, conformance levels stack.
+

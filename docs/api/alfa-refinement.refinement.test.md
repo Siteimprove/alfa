@@ -4,3 +4,8 @@
 
 ## Refinement.test variable
 
+<b>Signature:</b>
+
+```typescript
+test: Test
+```

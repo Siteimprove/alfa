@@ -4,11 +4,18 @@
 
 ## Value namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Value 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isValue](./alfa-css.value.isvalue.md) |  |
+|  [isValue(value, type)](./alfa-css.value.isvalue.md) |  |
 
 ## Interfaces
 

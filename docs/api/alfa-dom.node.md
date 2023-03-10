@@ -4,6 +4,13 @@
 
 ## Node namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Node 
+```
+
 ## Classes
 
 |  Class | Description |
@@ -14,15 +21,15 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [from](./alfa-dom.node.from.md) |  |
-|  [from](./alfa-dom.node.from.md) |  |
-|  [from](./alfa-dom.node.from.md) |  |
-|  [from](./alfa-dom.node.from.md) |  |
-|  [from](./alfa-dom.node.from.md) |  |
-|  [from](./alfa-dom.node.from.md) |  |
-|  [from](./alfa-dom.node.from.md) |  |
-|  [from](./alfa-dom.node.from.md) |  |
-|  [isNode](./alfa-dom.node.isnode.md) |  |
+|  [from(json)](./alfa-dom.node.from.md) |  |
+|  [from(json)](./alfa-dom.node.from_1.md) |  |
+|  [from(json)](./alfa-dom.node.from_2.md) |  |
+|  [from(json)](./alfa-dom.node.from_3.md) |  |
+|  [from(json)](./alfa-dom.node.from_4.md) |  |
+|  [from(json)](./alfa-dom.node.from_5.md) |  |
+|  [from(json)](./alfa-dom.node.from_6.md) |  |
+|  [from(json)](./alfa-dom.node.from_7.md) |  |
+|  [isNode(value)](./alfa-dom.node.isnode.md) |  |
 
 ## Interfaces
 
@@ -41,9 +48,9 @@
 
 |  Variable | Description |
 |  --- | --- |
-|  [composedNested](./alfa-dom.node.composednested.md) |  |
-|  [flatTree](./alfa-dom.node.flattree.md) |  |
-|  [fullTree](./alfa-dom.node.fulltree.md) |  |
+|  [composedNested](./alfa-dom.node.composednested.md) | Traversal options to traverse in shadow-including tree order and inside nested browsing context container, a common use case. |
+|  [flatTree](./alfa-dom.node.flattree.md) | <p>Traversal options to traverse the flat tree.</p><p>[https://drafts.csswg.org/css-scoping-1/\#flattening](https://drafts.csswg.org/css-scoping-1/#flattening)</p> |
+|  [fullTree](./alfa-dom.node.fulltree.md) | Traversal options to traverse all relevant nodes (flat tree and inside nested browsing container), a very frequent use case. |
 |  [getNodesBetween](./alfa-dom.node.getnodesbetween.md) |  |
 |  [hasChild](./alfa-dom.node.haschild.md) |  |
 |  [hasDescendant](./alfa-dom.node.hasdescendant.md) |  |

@@ -4,3 +4,12 @@
 
 ## Name.isEmpty() method
 
+<b>Signature:</b>
+
+```typescript
+isEmpty(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

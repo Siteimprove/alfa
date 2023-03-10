@@ -4,9 +4,21 @@
 
 ## Awaiter.all() function
 
+Wait for all of the given awaiters.
+
+<b>Signature:</b>
+
+```typescript
+function all(awaiters: Iterable<Awaiter>): Awaiter;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  awaiters | Iterable&lt;[Awaiter](./alfa-scraper.awaiter.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[Awaiter](./alfa-scraper.awaiter.md)
 

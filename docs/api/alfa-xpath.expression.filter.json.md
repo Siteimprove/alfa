@@ -4,11 +4,17 @@
 
 ## Expression.Filter.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [base](./alfa-xpath.expression.filter.json.base.md) |  |  |  |
-|  [predicates](./alfa-xpath.expression.filter.json.predicates.md) |  |  |  |
-|  [type](./alfa-xpath.expression.filter.json.type.md) |  |  |  |
+|  [base](./alfa-xpath.expression.filter.json.base.md) |  | [Expression.JSON](./alfa-xpath.expression.json.md) |  |
+|  [predicates](./alfa-xpath.expression.filter.json.predicates.md) |  | Array&lt;[Expression.JSON](./alfa-xpath.expression.json.md)<!-- -->&gt; |  |
+|  [type](./alfa-xpath.expression.filter.json.type.md) |  | "filter" |  |
 

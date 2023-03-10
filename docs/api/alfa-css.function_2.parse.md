@@ -4,3 +4,8 @@
 
 ## Function\_2.parse variable
 
+<b>Signature:</b>
+
+```typescript
+parse: <T>(name?: string, body?: Parser<Slice<Token>, T, string, []> | undefined) => Parser<Slice<Token>, readonly [Function, T], string, []>
+```

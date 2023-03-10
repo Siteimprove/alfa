@@ -4,9 +4,21 @@
 
 ## Conformance.isAA() function
 
+Check if a criterion is needed for level AA conformance under the specified version.
+
+<b>Signature:</b>
+
+```typescript
+function isAA<V extends Criterion.Version = Criterion.Version.Recommendation>(version?: V): Refinement<Criterion, Criterion<AA<V>>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  version | V | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;[Criterion](./alfa-wcag.criterion.md)<!-- -->, [Criterion](./alfa-wcag.criterion.md)<!-- -->&lt;[AA](./alfa-wcag.conformance.aa.md)<!-- -->&lt;V&gt;&gt;&gt;
 

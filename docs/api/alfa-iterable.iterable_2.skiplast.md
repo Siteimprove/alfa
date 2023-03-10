@@ -4,10 +4,20 @@
 
 ## Iterable\_2.skipLast() function
 
+<b>Signature:</b>
+
+```typescript
+function skipLast<T>(iterable: Iterable<T>, count?: number): Iterable<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  count | number | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+Iterable&lt;T&gt;
 

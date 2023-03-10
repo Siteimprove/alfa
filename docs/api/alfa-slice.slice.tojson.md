@@ -4,3 +4,12 @@
 
 ## Slice.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Slice.JSON<T>;
+```
+<b>Returns:</b>
+
+[Slice.JSON](./alfa-slice.slice.json.md)<!-- -->&lt;T&gt;
+

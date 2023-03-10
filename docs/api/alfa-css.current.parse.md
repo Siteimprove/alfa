@@ -4,3 +4,10 @@
 
 ## Current.parse variable
 
+[https://drafts.csswg.org/css-color/\#valdef-color-currentcolor](https://drafts.csswg.org/css-color/#valdef-color-currentcolor)
+
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, Current, string>
+```

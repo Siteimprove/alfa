@@ -4,3 +4,12 @@
 
 ## Nth.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Nth.JSON;
+```
+<b>Returns:</b>
+
+[Nth.JSON](./alfa-css.nth.json.md)
+

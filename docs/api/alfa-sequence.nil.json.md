@@ -4,3 +4,10 @@
 
 ## Nil.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON = Collection.Indexed.JSON<never>;
+```
+<b>References:</b> [Collection.Indexed.JSON](./alfa-collection.collection.indexed.json.md)
+

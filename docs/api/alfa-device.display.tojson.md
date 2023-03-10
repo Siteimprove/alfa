@@ -4,3 +4,12 @@
 
 ## Display.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Display.JSON;
+```
+<b>Returns:</b>
+
+[Display.JSON](./alfa-device.display.json.md)
+

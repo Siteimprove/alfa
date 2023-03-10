@@ -4,3 +4,12 @@
 
 ## Network.isEmpty() method
 
+<b>Signature:</b>
+
+```typescript
+isEmpty(): this is Network<N, never>;
+```
+<b>Returns:</b>
+
+this is [Network](./alfa-network.network.md)<!-- -->&lt;N, never&gt;
+

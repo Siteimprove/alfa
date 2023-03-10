@@ -4,3 +4,10 @@
 
 ## Position.Offset type
 
+<b>Signature:</b>
+
+```typescript
+type Offset<U extends Unit.Length = Unit.Length> = Length<U> | Percentage;
+```
+<b>References:</b> [Unit.Length](./alfa-css.unit.length.md)<!-- -->, [Length](./alfa-css.length.md)<!-- -->, [Percentage](./alfa-css.percentage.md)
+

@@ -4,3 +4,10 @@
 
 ## Rule.Target type
 
+<b>Signature:</b>
+
+```typescript
+type Target<R> = R extends Rule<any, infer T, any, any> ? T : never;
+```
+<b>References:</b> [Rule](./alfa-act.rule.md)
+

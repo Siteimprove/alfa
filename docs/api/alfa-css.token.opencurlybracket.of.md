@@ -4,3 +4,12 @@
 
 ## Token.OpenCurlyBracket.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(): OpenCurlyBracket;
+```
+<b>Returns:</b>
+
+[OpenCurlyBracket](./alfa-css.token.opencurlybracket.md)
+

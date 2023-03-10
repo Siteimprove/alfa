@@ -4,6 +4,12 @@
 
 ## Scraper.scrape namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace scrape 
+```
+
 ## Interfaces
 
 |  Interface | Description |

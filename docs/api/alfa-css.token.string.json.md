@@ -4,10 +4,16 @@
 
 ## Token.String.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.token.string.json.type.md) |  |  |  |
-|  [value](./alfa-css.token.string.json.value.md) |  |  |  |
+|  [type](./alfa-css.token.string.json.type.md) |  | "string" |  |
+|  [value](./alfa-css.token.string.json.value.md) |  | string |  |
 

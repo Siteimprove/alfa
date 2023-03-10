@@ -4,10 +4,16 @@
 
 ## Gradient.Hint.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [position](./alfa-css.gradient.hint.json.position.md) |  |  |  |
-|  [type](./alfa-css.gradient.hint.json.type.md) |  |  |  |
+|  [position](./alfa-css.gradient.hint.json.position.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
+|  [type](./alfa-css.gradient.hint.json.type.md) |  | "hint" |  |
 

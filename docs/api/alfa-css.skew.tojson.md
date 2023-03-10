@@ -4,3 +4,12 @@
 
 ## Skew.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Skew.JSON;
+```
+<b>Returns:</b>
+
+[Skew.JSON](./alfa-css.skew.json.md)
+

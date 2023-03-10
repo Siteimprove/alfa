@@ -4,9 +4,19 @@
 
 ## Token.parseString() function
 
+<b>Signature:</b>
+
+```typescript
+function parseString(predicate?: Predicate<String>): Parser<Slice<Token>, String, string, []>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[String](./alfa-css.token.string.md)<!-- -->&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [String](./alfa-css.token.string.md)<!-- -->, string, \[\]&gt;
 

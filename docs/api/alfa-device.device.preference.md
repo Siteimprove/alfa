@@ -4,9 +4,19 @@
 
 ## Device.preference() method
 
+<b>Signature:</b>
+
+```typescript
+preference<N extends Preference.Name>(name: N): Preference<N>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | N |  |
+
+<b>Returns:</b>
+
+[Preference](./alfa-device.preference.md)<!-- -->&lt;N&gt;
 

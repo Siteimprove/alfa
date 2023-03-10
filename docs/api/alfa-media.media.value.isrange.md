@@ -4,3 +4,8 @@
 
 ## Media.Value.isRange variable
 
+<b>Signature:</b>
+
+```typescript
+isRange: typeof Range.isRange
+```

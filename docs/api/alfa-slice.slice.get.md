@@ -4,9 +4,19 @@
 
 ## Slice.get() method
 
+<b>Signature:</b>
+
+```typescript
+get(index: number): Option<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  index | number |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

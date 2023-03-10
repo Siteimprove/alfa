@@ -4,3 +4,10 @@
 
 ## Position.Horizontal type
 
+<b>Signature:</b>
+
+```typescript
+export type Horizontal = Keyword<"left"> | Keyword<"right">;
+```
+<b>References:</b> [Keyword](./alfa-css.keyword.md)
+

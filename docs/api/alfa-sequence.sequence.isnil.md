@@ -4,9 +4,19 @@
 
 ## Sequence.isNil() function
 
+<b>Signature:</b>
+
+```typescript
+function isNil<T>(value: Iterable<T>): value is Nil;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+value is [Nil](./alfa-sequence.nil.md)
 

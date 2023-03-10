@@ -4,10 +4,20 @@
 
 ## Collection.Unkeyed.tee() method
 
+<b>Signature:</b>
+
+```typescript
+tee<A extends Array<unknown> = []>(callback: Callback<Unkeyed<T>, void, [...args: A]>, ...args: A): Unkeyed<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt; |  |
 |  args | A |  |
+
+<b>Returns:</b>
+
+[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

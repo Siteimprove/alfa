@@ -4,3 +4,10 @@
 
 ## Expression.Postfix.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON = Primary.JSON | Filter.JSON;
+```
+<b>References:</b> [Primary.JSON](./alfa-xpath.expression.primary.json.md)<!-- -->, [Filter.JSON](./alfa-xpath.expression.filter.json.md)
+

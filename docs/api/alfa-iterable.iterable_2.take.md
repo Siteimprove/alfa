@@ -4,10 +4,20 @@
 
 ## Iterable\_2.take() function
 
+<b>Signature:</b>
+
+```typescript
+function take<T>(iterable: Iterable<T>, count: number): Iterable<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  count | number |  |
+
+<b>Returns:</b>
+
+Iterable&lt;T&gt;
 

@@ -4,3 +4,10 @@
 
 ## System.parse variable
 
+[https://drafts.csswg.org/css-color/\#typedef-system-color](https://drafts.csswg.org/css-color/#typedef-system-color)
+
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, System, string>
+```

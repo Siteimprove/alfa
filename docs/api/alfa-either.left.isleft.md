@@ -4,9 +4,19 @@
 
 ## Left.isLeft() function
 
+<b>Signature:</b>
+
+```typescript
+function isLeft<L>(value: Iterable<L>): value is Left<L>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;L&gt; |  |
+
+<b>Returns:</b>
+
+value is [Left](./alfa-either.left.md)<!-- -->&lt;L&gt;
 

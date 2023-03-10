@@ -4,10 +4,20 @@
 
 ## Bits.test() function
 
+<b>Signature:</b>
+
+```typescript
+function test(bits: number, i: number): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  bits | number |  |
 |  i | number |  |
+
+<b>Returns:</b>
+
+boolean
 

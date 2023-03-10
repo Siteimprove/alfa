@@ -4,3 +4,10 @@
 
 ## Color.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
+```
+<b>References:</b> [Hex.JSON](./alfa-css.hex.json.md)<!-- -->, [Named.JSON](./alfa-css.named.json.md)<!-- -->, [HSL.JSON](./alfa-css.hsl.json.md)<!-- -->, [RGB.JSON](./alfa-css.rgb.json.md)<!-- -->, [Keyword.JSON](./alfa-css.keyword.json.md)
+

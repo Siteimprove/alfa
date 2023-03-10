@@ -4,9 +4,21 @@
 
 ## Node.preceding() method
 
+[https://dom.spec.whatwg.org/\#concept-tree-preceding](https://dom.spec.whatwg.org/#concept-tree-preceding)
+
+<b>Signature:</b>
+
+```typescript
+preceding(options?: Flags<F>): Sequence<Node<F>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
 

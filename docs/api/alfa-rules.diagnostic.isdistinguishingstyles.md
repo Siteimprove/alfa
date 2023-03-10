@@ -4,3 +4,8 @@
 
 ## Diagnostic.isDistinguishingStyles variable
 
+<b>Signature:</b>
+
+```typescript
+isDistinguishingStyles: typeof DistinguishingStyles.isDistinguishingStyles
+```

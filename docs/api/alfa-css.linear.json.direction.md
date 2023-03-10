@@ -4,3 +4,8 @@
 
 ## Linear.JSON.direction property
 
+<b>Signature:</b>
+
+```typescript
+direction: Direction.JSON;
+```

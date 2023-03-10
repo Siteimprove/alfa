@@ -4,3 +4,8 @@
 
 ## Criterion.JSON.chapter property
 
+<b>Signature:</b>
+
+```typescript
+chapter: Chapter;
+```

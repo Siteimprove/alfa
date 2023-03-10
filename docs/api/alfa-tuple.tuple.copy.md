@@ -4,3 +4,10 @@
 
 ## Tuple.Copy type
 
+<b>Signature:</b>
+
+```typescript
+export type Copy<T extends Tuple> = T extends readonly [...infer T] ? T : Empty;
+```
+<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
+

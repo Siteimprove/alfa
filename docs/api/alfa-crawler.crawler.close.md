@@ -4,3 +4,14 @@
 
 ## Crawler.close() method
 
+Close the crawler and its associated scraper.
+
+<b>Signature:</b>
+
+```typescript
+close(): Promise<void>;
+```
+<b>Returns:</b>
+
+Promise&lt;void&gt;
+

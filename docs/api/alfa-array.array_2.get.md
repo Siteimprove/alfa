@@ -4,10 +4,20 @@
 
 ## Array\_2.get() function
 
+<b>Signature:</b>
+
+```typescript
+function get<T>(array: ReadonlyArray<T>, index: number): Option<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  index | number |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

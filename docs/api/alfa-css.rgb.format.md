@@ -4,3 +4,8 @@
 
 ## RGB.format property
 
+<b>Signature:</b>
+
+```typescript
+get format(): "rgb";
+```

@@ -4,9 +4,18 @@
 
 ## Selector.Selection class
 
+[https://drafts.csswg.org/css-pseudo-4/\#selectordef-selection](https://drafts.csswg.org/css-pseudo-4/#selectordef-selection)
+
+<b>Signature:</b>
+
+```typescript
+export class Selection extends Pseudo.Element<"selection"> 
+```
+<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"selection"&gt;
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [of](./alfa-selector.selector.selection.of.md) |  |  |
+|  [of()](./alfa-selector.selector.selection.of.md) | <code>static</code> |  |
 

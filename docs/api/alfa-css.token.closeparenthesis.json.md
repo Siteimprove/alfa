@@ -4,9 +4,15 @@
 
 ## Token.CloseParenthesis.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.token.closeparenthesis.json.type.md) |  |  |  |
+|  [type](./alfa-css.token.closeparenthesis.json.type.md) |  | "close-parenthesis" |  |
 

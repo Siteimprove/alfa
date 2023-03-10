@@ -4,3 +4,8 @@
 
 ## Refinement.or variable
 
+<b>Signature:</b>
+
+```typescript
+or: Or
+```

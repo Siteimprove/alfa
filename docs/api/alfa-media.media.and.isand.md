@@ -4,9 +4,19 @@
 
 ## Media.And.isAnd() function
 
+<b>Signature:</b>
+
+```typescript
+function isAnd(value: unknown): value is And;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [And](./alfa-media.media.and.md)
 

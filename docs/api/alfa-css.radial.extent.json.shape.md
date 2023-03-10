@@ -4,3 +4,8 @@
 
 ## Radial.Extent.JSON.shape property
 
+<b>Signature:</b>
+
+```typescript
+shape: `${Shape}`;
+```

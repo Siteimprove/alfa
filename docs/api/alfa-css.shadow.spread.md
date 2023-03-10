@@ -4,3 +4,8 @@
 
 ## Shadow.spread property
 
+<b>Signature:</b>
+
+```typescript
+get spread(): S;
+```

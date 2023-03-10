@@ -12,14 +12,14 @@
 |  [Cookies](./alfa-http.cookies.md) |  |
 |  [Header](./alfa-http.header.md) |  |
 |  [Headers](./alfa-http.headers.md) |  |
-|  [Request](./alfa-http.request.md) |  |
-|  [Response](./alfa-http.response.md) |  |
+|  [Request](./alfa-http.request.md) | [https://fetch.spec.whatwg.org/\#request-class](https://fetch.spec.whatwg.org/#request-class) |
+|  [Response](./alfa-http.response.md) | [https://fetch.spec.whatwg.org/\#response-class](https://fetch.spec.whatwg.org/#response-class) |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Body](./alfa-http.body.md) |  |
+|  [Body](./alfa-http.body.md) | [https://fetch.spec.whatwg.org/\#body-mixin](https://fetch.spec.whatwg.org/#body-mixin) |
 
 ## Namespaces
 

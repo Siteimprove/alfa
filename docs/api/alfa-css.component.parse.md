@@ -4,3 +4,10 @@
 
 ## Component.parse variable
 
+[https://drafts.csswg.org/css-syntax/\#parse-component-value](https://drafts.csswg.org/css-syntax/#parse-component-value)
+
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, Component, string>
+```

@@ -4,3 +4,10 @@
 
 ## Numeric.Decimals property
 
+The number of decimals stored for every numeric value.
+
+<b>Signature:</b>
+
+```typescript
+static readonly Decimals = 7;
+```

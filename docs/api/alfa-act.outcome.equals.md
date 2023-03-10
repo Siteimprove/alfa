@@ -4,9 +4,19 @@
 
 ## Outcome.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals<I, T extends Hashable, Q, S, V extends Outcome.Value = Outcome.Value>(value: Outcome<I, T, Q, S, V>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S, V&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

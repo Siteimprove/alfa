@@ -4,3 +4,8 @@
 
 ## Diagnostic.isContrast variable
 
+<b>Signature:</b>
+
+```typescript
+isContrast: typeof Contrast.isContrast
+```

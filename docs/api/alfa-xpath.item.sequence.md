@@ -4,3 +4,10 @@
 
 ## Item.Sequence type
 
+<b>Signature:</b>
+
+```typescript
+type Sequence<T extends Type = Type> = Descriptors.Sequence<T>;
+```
+<b>References:</b> [Type](./alfa-xpath.item.type.md)
+

@@ -4,10 +4,20 @@
 
 ## Collection.Indexed.set() method
 
+<b>Signature:</b>
+
+```typescript
+set(index: number, value: T): Indexed<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  index | number |  |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

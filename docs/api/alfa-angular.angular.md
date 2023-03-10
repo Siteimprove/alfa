@@ -4,11 +4,18 @@
 
 ## Angular namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Angular 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [toPage](./alfa-angular.angular.topage.md) |  |
+|  [toPage(value)](./alfa-angular.angular.topage.md) |  |
 
 ## Type Aliases
 

@@ -4,3 +4,8 @@
 
 ## Selector.Compound.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "compound";
+```

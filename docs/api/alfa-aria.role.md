@@ -4,15 +4,22 @@
 
 ## Role namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Role 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from](./alfa-aria.role.from.md) |  |
-|  [fromExplicit](./alfa-aria.role.fromexplicit.md) |  |
-|  [fromImplicit](./alfa-aria.role.fromimplicit.md) |  |
-|  [isName](./alfa-aria.role.isname.md) |  |
-|  [isRole](./alfa-aria.role.isrole.md) |  |
+|  [from(element)](./alfa-aria.role.from.md) | Get the role assigned either explicitly or implicitly to an element, if any. |
+|  [fromExplicit(element)](./alfa-aria.role.fromexplicit.md) | Get the role explicitly assigned to an element, if any. |
+|  [fromImplicit(element)](./alfa-aria.role.fromimplicit.md) | Get the role implicitly assigned to an element, if any. |
+|  [isName(value)](./alfa-aria.role.isname.md) |  |
+|  [isRole(value, name)](./alfa-aria.role.isrole.md) |  |
 
 ## Interfaces
 
@@ -30,14 +37,14 @@
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Abstract](./alfa-aria.role.abstract.md) |  |
-|  [Concrete](./alfa-aria.role.concrete.md) |  |
-|  [Inherited](./alfa-aria.role.inherited.md) |  |
-|  [Landmark](./alfa-aria.role.landmark.md) |  |
+|  [Abstract](./alfa-aria.role.abstract.md) | The names of all abstract roles. |
+|  [Concrete](./alfa-aria.role.concrete.md) | The names of all non-abstract roles. |
+|  [Inherited](./alfa-aria.role.inherited.md) | The inherited roles for the specified role. |
+|  [Landmark](./alfa-aria.role.landmark.md) | The names of all landmark roles. |
 |  [Name](./alfa-aria.role.name.md) |  |
-|  [NamedBy](./alfa-aria.role.namedby.md) |  |
-|  [Presentational](./alfa-aria.role.presentational.md) |  |
-|  [SubclassOf](./alfa-aria.role.subclassof.md) |  |
-|  [SuperclassOf](./alfa-aria.role.superclassof.md) |  |
-|  [Widget](./alfa-aria.role.widget.md) |  |
+|  [NamedBy](./alfa-aria.role.namedby.md) | The methods by which the element assigned to the specified role may receive its name. |
+|  [Presentational](./alfa-aria.role.presentational.md) | The names of all presentational roles. |
+|  [SubclassOf](./alfa-aria.role.subclassof.md) | All roles that are subclasses of the specified role. |
+|  [SuperclassOf](./alfa-aria.role.superclassof.md) | All roles that are superclasses of the specified role. |
+|  [Widget](./alfa-aria.role.widget.md) | The names of all widget roles. |
 

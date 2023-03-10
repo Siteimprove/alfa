@@ -4,3 +4,8 @@
 
 ## Linear.Corner.JSON.horizontal property
 
+<b>Signature:</b>
+
+```typescript
+horizontal: Position.Horizontal;
+```

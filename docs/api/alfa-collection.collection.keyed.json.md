@@ -4,3 +4,13 @@
 
 ## Collection.Keyed.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON<K, V> = Array<[
+            Serializable.ToJSON<K>,
+            Serializable.ToJSON<V>
+        ]>;
+```
+<b>References:</b> [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
+

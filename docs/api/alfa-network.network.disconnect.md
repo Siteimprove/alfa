@@ -4,6 +4,12 @@
 
 ## Network.disconnect() method
 
+<b>Signature:</b>
+
+```typescript
+disconnect(from: N, to: N, ...edges: Array<E>): Network<N, E>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  from | N |  |
 |  to | N |  |
 |  edges | Array&lt;E&gt; |  |
+
+<b>Returns:</b>
+
+[Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

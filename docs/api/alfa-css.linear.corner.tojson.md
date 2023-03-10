@@ -4,3 +4,12 @@
 
 ## Linear.Corner.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Corner.JSON;
+```
+<b>Returns:</b>
+
+[Corner.JSON](./alfa-css.linear.corner.json.md)
+

@@ -4,10 +4,20 @@
 
 ## Thenable.then() method
 
+<b>Signature:</b>
+
+```typescript
+then(resolved: Callback<T>, rejected: Callback<E>): void;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  resolved | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
 |  rejected | [Callback](./alfa-callback.callback.md)<!-- -->&lt;E&gt; |  |
+
+<b>Returns:</b>
+
+void
 

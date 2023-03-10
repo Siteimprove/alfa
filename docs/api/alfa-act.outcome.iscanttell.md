@@ -4,3 +4,8 @@
 
 ## Outcome.isCantTell variable
 
+<b>Signature:</b>
+
+```typescript
+isCantTell: typeof CantTell.isCantTell
+```

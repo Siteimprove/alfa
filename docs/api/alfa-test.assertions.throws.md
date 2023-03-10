@@ -4,6 +4,14 @@
 
 ## Assertions.throws() method
 
+[https://nodejs.org/api/assert.html\#assert\_assert\_throws\_block\_error\_message](https://nodejs.org/api/assert.html#assert_assert_throws_block_error_message)
+
+<b>Signature:</b>
+
+```typescript
+throws(block: Function, error?: RegExp | Function | Object | Error, message?: string): void;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +19,8 @@
 |  block | Function |  |
 |  error | RegExp \| Function \| Object \| Error | <i>(Optional)</i> |
 |  message | string | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+void
 

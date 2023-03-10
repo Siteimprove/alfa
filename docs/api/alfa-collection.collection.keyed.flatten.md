@@ -4,9 +4,19 @@
 
 ## Collection.Keyed.flatten() method
 
+<b>Signature:</b>
+
+```typescript
+flatten<K, V>(this: Keyed<K, Keyed<K, V>>): Keyed<K, V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;
 

@@ -4,3 +4,8 @@
 
 ## Selector.Relative.JSON.selector property
 
+<b>Signature:</b>
+
+```typescript
+selector: Simple.JSON | Compound.JSON | Complex.JSON;
+```

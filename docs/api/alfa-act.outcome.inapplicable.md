@@ -4,3 +4,8 @@
 
 ## Outcome.inapplicable variable
 
+<b>Signature:</b>
+
+```typescript
+inapplicable: typeof Inapplicable.of
+```

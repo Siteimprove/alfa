@@ -4,9 +4,16 @@
 
 ## Selector.Cue.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Pseudo.Element.JSON<"cue"> 
+```
+<b>Extends:</b> [Pseudo.Element.JSON](./alfa-selector.selector.pseudo.element.json.md)<!-- -->&lt;"cue"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [selector](./alfa-selector.selector.cue.json.selector.md) |  |  |  |
+|  [selector](./alfa-selector.selector.cue.json.selector.md) |  | [Option.JSON](./alfa-option.option.json.md)<!-- -->&lt;Selector&gt; |  |
 

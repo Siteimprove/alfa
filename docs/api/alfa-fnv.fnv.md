@@ -4,13 +4,21 @@
 
 ## FNV class
 
+
+<b>Signature:</b>
+
+```typescript
+export declare class FNV extends Hash 
+```
+<b>Extends:</b> [Hash](./alfa-hash.hash.md)
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [empty](./alfa-fnv.fnv.empty.md) |  |  |
-|  [equals](./alfa-fnv.fnv.equals.md) |  |  |
-|  [equals](./alfa-fnv.fnv.equals.md) |  |  |
-|  [finish](./alfa-fnv.fnv.finish.md) |  |  |
-|  [write](./alfa-fnv.fnv.write.md) |  |  |
+|  [empty()](./alfa-fnv.fnv.empty.md) | <code>static</code> |  |
+|  [equals(value)](./alfa-fnv.fnv.equals.md) |  |  |
+|  [equals(value)](./alfa-fnv.fnv.equals_1.md) |  |  |
+|  [finish()](./alfa-fnv.fnv.finish.md) |  |  |
+|  [write(data)](./alfa-fnv.fnv.write.md) |  |  |
 

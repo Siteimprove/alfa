@@ -4,6 +4,12 @@
 
 ## Device.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(type: Device.Type, viewport: Viewport, display: Display, scripting?: Scripting, preferences?: Iterable<Preference>): Device;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -13,4 +19,12 @@
 |  display | [Display](./alfa-device.display.md) |  |
 |  scripting | [Scripting](./alfa-device.scripting.md) | <i>(Optional)</i> |
 |  preferences | Iterable&lt;[Preference](./alfa-device.preference.md)<!-- -->&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Device](./alfa-device.device.md)
+
+## Remarks
+
+If the iterable of preferences contains preferences with duplicate names, the last preference with a given name will take precedence.
 

@@ -4,11 +4,17 @@
 
 ## Token.Name.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [prefix](./alfa-xpath.token.name.json.prefix.md) |  |  |  |
-|  [type](./alfa-xpath.token.name.json.type.md) |  |  |  |
-|  [value](./alfa-xpath.token.name.json.value.md) |  |  |  |
+|  [prefix](./alfa-xpath.token.name.json.prefix.md) |  | string \| null |  |
+|  [type](./alfa-xpath.token.name.json.type.md) |  | "name" |  |
+|  [value](./alfa-xpath.token.name.json.value.md) |  | string |  |
 

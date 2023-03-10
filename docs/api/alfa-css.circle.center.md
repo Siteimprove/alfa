@@ -4,3 +4,8 @@
 
 ## Circle.center property
 
+<b>Signature:</b>
+
+```typescript
+get center(): P;
+```

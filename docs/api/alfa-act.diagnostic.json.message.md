@@ -4,3 +4,8 @@
 
 ## Diagnostic.JSON.message property
 
+<b>Signature:</b>
+
+```typescript
+message: string;
+```

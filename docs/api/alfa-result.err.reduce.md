@@ -4,10 +4,20 @@
 
 ## Err.reduce() method
 
+<b>Signature:</b>
+
+```typescript
+reduce<U>(reducer: unknown, accumulator: U): U;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  reducer | unknown |  |
 |  accumulator | U |  |
+
+<b>Returns:</b>
+
+U
 

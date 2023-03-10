@@ -4,9 +4,19 @@
 
 ## Value.equals() method
 
+<b>Signature:</b>
+
+```typescript
+abstract equals(value: unknown): value is this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is this
 

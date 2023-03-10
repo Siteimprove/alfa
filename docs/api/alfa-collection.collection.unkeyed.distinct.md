@@ -4,3 +4,12 @@
 
 ## Collection.Unkeyed.distinct() method
 
+<b>Signature:</b>
+
+```typescript
+distinct(): Unkeyed<T>;
+```
+<b>Returns:</b>
+
+[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
+

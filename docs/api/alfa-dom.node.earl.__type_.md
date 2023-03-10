@@ -4,3 +4,13 @@
 
 ## Node.EARL."@type" property
 
+<b>Signature:</b>
+
+```typescript
+"@type": [
+            "ptr:Pointer",
+            "ptr:SinglePointer",
+            "ptr:ExpressionPointer",
+            "ptr:XPathPointer"
+        ];
+```

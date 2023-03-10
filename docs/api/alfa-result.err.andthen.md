@@ -4,3 +4,12 @@
 
 ## Err.andThen() method
 
+<b>Signature:</b>
+
+```typescript
+andThen(): Err<E>;
+```
+<b>Returns:</b>
+
+[Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
+

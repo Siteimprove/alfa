@@ -4,3 +4,12 @@
 
 ## Ok.mapErr() method
 
+<b>Signature:</b>
+
+```typescript
+mapErr(): Ok<T>;
+```
+<b>Returns:</b>
+
+[Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
+

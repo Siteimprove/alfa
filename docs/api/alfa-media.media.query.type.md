@@ -4,3 +4,8 @@
 
 ## Media.Query.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): Option<Type>;
+```

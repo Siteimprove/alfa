@@ -4,9 +4,19 @@
 
 ## Outcome.Failed.isFailed() function
 
+<b>Signature:</b>
+
+```typescript
+function isFailed<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Failed<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+
+<b>Returns:</b>
+
+value is [Failed](./alfa-act.outcome.failed.md)<!-- -->&lt;I, T, Q, S&gt;
 

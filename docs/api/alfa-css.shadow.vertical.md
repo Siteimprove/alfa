@@ -4,3 +4,8 @@
 
 ## Shadow.vertical property
 
+<b>Signature:</b>
+
+```typescript
+get vertical(): V;
+```

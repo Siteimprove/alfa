@@ -4,9 +4,19 @@
 
 ## Functor.map() method
 
+<b>Signature:</b>
+
+```typescript
+map<U>(mapper: Mapper<T, U>): Functor<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+[Functor](./alfa-functor.functor.md)<!-- -->&lt;U&gt;
 

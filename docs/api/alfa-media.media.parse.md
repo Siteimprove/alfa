@@ -4,3 +4,8 @@
 
 ## Media.parse variable
 
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, List, string, []>
+```

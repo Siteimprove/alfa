@@ -4,3 +4,10 @@
 
 ## Technique.Name type
 
+The names of all techniques.
+
+<b>Signature:</b>
+
+```typescript
+type Name = keyof Techniques;
+```

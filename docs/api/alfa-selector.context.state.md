@@ -4,13 +4,19 @@
 
 ## Context.State enum
 
+<b>Signature:</b>
+
+```typescript
+enum State 
+```
+
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  Active |  |  |
-|  Focus |  |  |
-|  Hover |  |  |
-|  None |  |  |
-|  Visited |  |  |
+|  Active | <code>2</code> |  |
+|  Focus | <code>4</code> |  |
+|  Hover | <code>1</code> |  |
+|  None | <code>0</code> |  |
+|  Visited | <code>8</code> |  |
 

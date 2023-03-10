@@ -4,9 +4,19 @@
 
 ## Network.add() method
 
+<b>Signature:</b>
+
+```typescript
+add(node: N): Network<N, E>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | N |  |
+
+<b>Returns:</b>
+
+[Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

@@ -4,10 +4,20 @@
 
 ## h.rule.supports() function
 
+<b>Signature:</b>
+
+```typescript
+function supports(condition: string, rules: Array<Rule>): SupportsRule;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  condition | string |  |
 |  rules | Array&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[SupportsRule](./alfa-dom.supportsrule.md)
 

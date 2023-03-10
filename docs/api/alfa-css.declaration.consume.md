@@ -4,3 +4,10 @@
 
 ## Declaration.consume variable
 
+[https://drafts.csswg.org/css-syntax/\#consume-a-declaration](https://drafts.csswg.org/css-syntax/#consume-a-declaration)
+
+<b>Signature:</b>
+
+```typescript
+consume: Parser<Slice<Token>, Declaration, string>
+```

@@ -4,9 +4,19 @@
 
 ## Trampoline.flatMap() method
 
+<b>Signature:</b>
+
+```typescript
+abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;U&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;U&gt;
 

@@ -4,10 +4,16 @@
 
 ## Screenshot.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [path](./alfa-scraper.screenshot.json.path.md) |  |  |  |
-|  [type](./alfa-scraper.screenshot.json.type.md) |  |  |  |
+|  [path](./alfa-scraper.screenshot.json.path.md) |  | string |  |
+|  [type](./alfa-scraper.screenshot.json.type.md) |  | [Type.JSON](./alfa-scraper.screenshot.type.json.md) |  |
 

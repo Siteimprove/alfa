@@ -4,3 +4,16 @@
 
 ## Awaiter.ready() function
 
+Wait for the `DOMContentLoaded` event to fire.
+
+[https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded\_event](https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event)
+
+<b>Signature:</b>
+
+```typescript
+function ready(): Awaiter;
+```
+<b>Returns:</b>
+
+[Awaiter](./alfa-scraper.awaiter.md)
+

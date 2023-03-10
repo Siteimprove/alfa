@@ -4,3 +4,10 @@
 
 ## Declaration.parse variable
 
+[https://drafts.csswg.org/css-syntax/\#parse-a-declaration](https://drafts.csswg.org/css-syntax/#parse-a-declaration)
+
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, Declaration, string>
+```

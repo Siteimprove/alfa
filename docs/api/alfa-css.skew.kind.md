@@ -4,3 +4,8 @@
 
 ## Skew.kind property
 
+<b>Signature:</b>
+
+```typescript
+get kind(): "skew";
+```

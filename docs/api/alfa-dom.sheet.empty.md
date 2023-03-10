@@ -4,3 +4,12 @@
 
 ## Sheet.empty() method
 
+<b>Signature:</b>
+
+```typescript
+static empty(): Sheet;
+```
+<b>Returns:</b>
+
+[Sheet](./alfa-dom.sheet.md)
+

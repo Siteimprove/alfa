@@ -4,3 +4,10 @@
 
 ## Expression.Test.Kind type
 
+<b>Signature:</b>
+
+```typescript
+type Kind = Node | Document | Element | Attribute | Comment | Text;
+```
+<b>References:</b> [Node](./alfa-xpath.expression.test.node.md)<!-- -->, [Document](./alfa-xpath.expression.test.document.md)<!-- -->, [Element](./alfa-xpath.expression.test.element.md)<!-- -->, [Attribute](./alfa-xpath.expression.test.attribute.md)<!-- -->, [Comment](./alfa-xpath.expression.test.comment.md)<!-- -->, [Text](./alfa-xpath.expression.test.text.md)
+

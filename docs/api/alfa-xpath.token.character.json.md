@@ -4,10 +4,16 @@
 
 ## Token.Character.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-xpath.token.character.json.type.md) |  |  |  |
-|  [value](./alfa-xpath.token.character.json.value.md) |  |  |  |
+|  [type](./alfa-xpath.token.character.json.type.md) |  | "character" |  |
+|  [value](./alfa-xpath.token.character.json.value.md) |  | number |  |
 

@@ -4,9 +4,19 @@
 
 ## Percentage.isPercentage() function
 
+<b>Signature:</b>
+
+```typescript
+function isPercentage(value: unknown): value is Percentage;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Percentage](./alfa-css.percentage.md)
 

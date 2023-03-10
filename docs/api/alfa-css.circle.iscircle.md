@@ -4,9 +4,19 @@
 
 ## Circle.isCircle() function
 
+<b>Signature:</b>
+
+```typescript
+function isCircle(value: unknown): value is Circle;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Circle](./alfa-css.circle.md)
 

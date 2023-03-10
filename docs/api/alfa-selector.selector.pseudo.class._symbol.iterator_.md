@@ -4,3 +4,12 @@
 
 ## Selector.Pseudo.Class.\[Symbol.iterator\]() method
 
+<b>Signature:</b>
+
+```typescript
+[Symbol.iterator](): Iterator<Class>;
+```
+<b>Returns:</b>
+
+Iterator&lt;[Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&gt;
+

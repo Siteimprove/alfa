@@ -4,10 +4,19 @@
 
 ## Selector.Active class
 
+[https://drafts.csswg.org/selectors/\#active-pseudo](https://drafts.csswg.org/selectors/#active-pseudo)
+
+<b>Signature:</b>
+
+```typescript
+export class Active extends Pseudo.Class<"active"> 
+```
+<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"active"&gt;
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches](./alfa-selector.selector.active.matches.md) |  |  |
-|  [of](./alfa-selector.selector.active.of.md) |  |  |
+|  [matches(element, context)](./alfa-selector.selector.active.matches.md) |  |  |
+|  [of()](./alfa-selector.selector.active.of.md) | <code>static</code> |  |
 

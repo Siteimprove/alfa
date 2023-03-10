@@ -4,3 +4,12 @@
 
 ## Slice.toArray() method
 
+<b>Signature:</b>
+
+```typescript
+toArray(): Array<T>;
+```
+<b>Returns:</b>
+
+Array&lt;T&gt;
+

@@ -4,3 +4,12 @@
 
 ## Token.Ident.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Ident.JSON;
+```
+<b>Returns:</b>
+
+[Ident.JSON](./alfa-css.token.ident.json.md)
+

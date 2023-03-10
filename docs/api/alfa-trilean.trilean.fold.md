@@ -4,6 +4,12 @@
 
 ## Trilean.fold() function
 
+<b>Signature:</b>
+
+```typescript
+function fold<T, A extends Array<unknown> = [], V = T, W = T, X = T>(predicate: Predicate<T, A>, ifTrue: Mapper<T, V>, ifFalse: Mapper<T, W>, ifUndefined: Mapper<T, X>, value: T, ...args: A): V | W | X;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -14,4 +20,8 @@
 |  ifUndefined | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, X&gt; |  |
 |  value | T |  |
 |  args | A |  |
+
+<b>Returns:</b>
+
+V \| W \| X
 

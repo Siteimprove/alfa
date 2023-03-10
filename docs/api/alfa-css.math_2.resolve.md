@@ -4,10 +4,22 @@
 
 ## Math\_2.resolve() method
 
+Resolves a calculation typed as a length, length-percentage or number. Needs a resolver to handle relative lengths and percentages.
+
+<b>Signature:</b>
+
+```typescript
+resolve(this: Math<"length">, resolver: Expression.LengthResolver): Option<Length<"px">>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Math&lt;"number"&gt; |  |
-|  resolver | Expression.PercentageResolver |  |
+|  this | Math&lt;"length"&gt; |  |
+|  resolver | Expression.LengthResolver |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;[Length](./alfa-css.length.md)<!-- -->&lt;"px"&gt;&gt;
 

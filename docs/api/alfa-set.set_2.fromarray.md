@@ -4,9 +4,19 @@
 
 ## Set\_2.fromArray() function
 
+<b>Signature:</b>
+
+```typescript
+function fromArray<T>(array: ReadonlyArray<T>): Set<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+Set&lt;T&gt;
 

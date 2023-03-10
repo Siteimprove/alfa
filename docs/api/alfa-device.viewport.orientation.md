@@ -4,10 +4,16 @@
 
 ## Viewport.Orientation enum
 
+<b>Signature:</b>
+
+```typescript
+enum Orientation 
+```
+
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  Landscape |  |  |
-|  Portrait |  |  |
+|  Landscape | <code>&quot;landscape&quot;</code> |  |
+|  Portrait | <code>&quot;portrait&quot;</code> |  |
 

@@ -4,3 +4,12 @@
 
 ## Future.\[Symbol.asyncIterator\]() method
 
+<b>Signature:</b>
+
+```typescript
+[Symbol.asyncIterator](): AsyncIterator<T>;
+```
+<b>Returns:</b>
+
+AsyncIterator&lt;T&gt;
+

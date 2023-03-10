@@ -4,9 +4,19 @@
 
 ## Applicative.map() method
 
+<b>Signature:</b>
+
+```typescript
+map<U>(mapper: Mapper<T, U>): Applicative<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+[Applicative](./alfa-applicative.applicative.md)<!-- -->&lt;U&gt;
 

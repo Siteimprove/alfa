@@ -4,9 +4,19 @@
 
 ## Radial.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Radial): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Radial](./alfa-css.radial.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

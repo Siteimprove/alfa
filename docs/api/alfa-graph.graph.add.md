@@ -4,9 +4,19 @@
 
 ## Graph.add() method
 
+<b>Signature:</b>
+
+```typescript
+add(node: T): Graph<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | T |  |
+
+<b>Returns:</b>
+
+[Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

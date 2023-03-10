@@ -4,6 +4,12 @@
 
 ## Gradient.Stop namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Stop 
+```
+
 ## Interfaces
 
 |  Interface | Description |

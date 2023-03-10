@@ -4,10 +4,16 @@
 
 ## Command.Input interface
 
+<b>Signature:</b>
+
+```typescript
+interface Input<F extends Flags, A extends Arguments> 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [args](./alfa-command.command.input.args.md) |  |  |  |
-|  [flags](./alfa-command.command.input.flags.md) |  |  |  |
+|  [args](./alfa-command.command.input.args.md) |  | [Arguments.Values](./alfa-command.command.arguments.values.md)<!-- -->&lt;A&gt; |  |
+|  [flags](./alfa-command.command.input.flags.md) |  | [Flags.Values](./alfa-command.command.flags.values.md)<!-- -->&lt;F&gt; |  |
 

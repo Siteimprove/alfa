@@ -4,3 +4,8 @@
 
 ## Declaration.parent property
 
+<b>Signature:</b>
+
+```typescript
+get parent(): Option<Rule>;
+```

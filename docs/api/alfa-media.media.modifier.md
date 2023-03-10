@@ -4,10 +4,18 @@
 
 ## Media.Modifier enum
 
+[https://drafts.csswg.org/mediaqueries/\#media-query-modifier](https://drafts.csswg.org/mediaqueries/#media-query-modifier)
+
+<b>Signature:</b>
+
+```typescript
+export enum Modifier 
+```
+
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  Not |  |  |
-|  Only |  |  |
+|  Not | <code>&quot;not&quot;</code> |  |
+|  Only | <code>&quot;only&quot;</code> |  |
 

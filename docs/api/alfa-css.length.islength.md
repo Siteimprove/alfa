@@ -4,9 +4,19 @@
 
 ## Length.isLength() function
 
+<b>Signature:</b>
+
+```typescript
+function isLength(value: unknown): value is Length;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Length](./alfa-css.length.md)
 

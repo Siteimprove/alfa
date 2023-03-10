@@ -4,3 +4,8 @@
 
 ## Language.JSON.variants property
 
+<b>Signature:</b>
+
+```typescript
+variants: Array<Variant.JSON>;
+```

@@ -4,10 +4,20 @@
 
 ## Screenshot.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(path: string, type?: Screenshot.Type): Screenshot;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  path | string |  |
 |  type | [Screenshot.Type](./alfa-scraper.screenshot.type.md) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Screenshot](./alfa-scraper.screenshot.md)
 

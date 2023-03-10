@@ -4,3 +4,8 @@
 
 ## Node.hasDescendant variable
 
+<b>Signature:</b>
+
+```typescript
+hasDescendant: typeof predicate.hasDescendant
+```

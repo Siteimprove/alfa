@@ -4,3 +4,8 @@
 
 ## Column.group variable
 
+<b>Signature:</b>
+
+```typescript
+group: typeof Group.of
+```

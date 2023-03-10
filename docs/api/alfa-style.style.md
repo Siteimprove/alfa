@@ -4,11 +4,18 @@
 
 ## Style namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Style 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from](./alfa-style.style.from.md) |  |
+|  [from(element, device, context)](./alfa-style.style.from.md) |  |
 
 ## Interfaces
 

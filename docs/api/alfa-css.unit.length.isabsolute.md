@@ -4,9 +4,19 @@
 
 ## Unit.Length.isAbsolute() function
 
+<b>Signature:</b>
+
+```typescript
+function isAbsolute(unit: string): unit is Absolute;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | string |  |
+
+<b>Returns:</b>
+
+unit is [Absolute](./alfa-css.unit.length.absolute.md)
 

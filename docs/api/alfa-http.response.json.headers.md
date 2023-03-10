@@ -4,3 +4,8 @@
 
 ## Response.JSON.headers property
 
+<b>Signature:</b>
+
+```typescript
+headers: Headers.JSON;
+```

@@ -4,3 +4,14 @@
 
 ## Role.hasRequiredParent() method
 
+Check if this role has a required parent.
+
+<b>Signature:</b>
+
+```typescript
+hasRequiredParent(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

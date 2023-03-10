@@ -4,3 +4,8 @@
 
 ## Marker.bold variable
 
+<b>Signature:</b>
+
+```typescript
+bold: Marker
+```

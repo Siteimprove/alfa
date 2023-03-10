@@ -4,3 +4,12 @@
 
 ## Array\_2.empty() function
 
+<b>Signature:</b>
+
+```typescript
+function empty<T = never>(): Array<T>;
+```
+<b>Returns:</b>
+
+Array&lt;T&gt;
+

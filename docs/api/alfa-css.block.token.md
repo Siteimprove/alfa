@@ -4,3 +4,8 @@
 
 ## Block.token property
 
+<b>Signature:</b>
+
+```typescript
+get token(): Block.Open;
+```

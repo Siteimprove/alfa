@@ -4,3 +4,10 @@
 
 ## Expression.Step type
 
+<b>Signature:</b>
+
+```typescript
+type Step = Postfix | Axis;
+```
+<b>References:</b> [Postfix](./alfa-xpath.expression.postfix.md)<!-- -->, [Axis](./alfa-xpath.expression.axis.md)
+

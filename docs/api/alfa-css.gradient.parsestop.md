@@ -4,3 +4,10 @@
 
 ## Gradient.parseStop variable
 
+[https://drafts.csswg.org/css-images/\#typedef-linear-color-stop](https://drafts.csswg.org/css-images/#typedef-linear-color-stop)
+
+<b>Signature:</b>
+
+```typescript
+parseStop: Parser<Slice<Token>, Stop, string>
+```

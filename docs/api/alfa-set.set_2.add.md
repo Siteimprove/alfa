@@ -4,9 +4,19 @@
 
 ## Set\_2.add() method
 
+<b>Signature:</b>
+
+```typescript
+add(value: T): Set<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+Set&lt;T&gt;
 

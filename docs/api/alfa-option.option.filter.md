@@ -4,9 +4,19 @@
 
 ## Option.filter() method
 
+<b>Signature:</b>
+
+```typescript
+filter<U extends T>(refinement: Refinement<T, U>): Option<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

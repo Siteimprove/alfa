@@ -4,3 +4,9 @@
 
 ## Nil variable
 
+
+<b>Signature:</b>
+
+```typescript
+Nil: Nil
+```

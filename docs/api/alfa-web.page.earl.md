@@ -4,13 +4,20 @@
 
 ## Page.EARL interface
 
+<b>Signature:</b>
+
+```typescript
+interface EARL extends earl.EARL 
+```
+<b>Extends:</b> earl.[EARL](./alfa-earl.earl.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@context"](./alfa-web.page.earl.__context_.md) |  |  |  |
-|  ["@id"](./alfa-web.page.earl.__id_.md) |  |  |  |
-|  ["@type"](./alfa-web.page.earl.__type_.md) |  |  |  |
-|  ["dct:hasPart"](./alfa-web.page.earl._dct_haspart_.md) |  |  |  |
-|  ["dct:source"](./alfa-web.page.earl._dct_source_.md) |  |  |  |
+|  ["@context"](./alfa-web.page.earl.__context_.md) |  | { earl: "http://www.w3.org/ns/earl\#"; dct: "http://purl.org/dc/terms/"; } |  |
+|  ["@id"](./alfa-web.page.earl.__id_.md) |  | string |  |
+|  ["@type"](./alfa-web.page.earl.__type_.md) |  | \["earl:TestSubject"\] |  |
+|  ["dct:hasPart"](./alfa-web.page.earl._dct_haspart_.md) |  | \[[Request.EARL](./alfa-http.request.earl.md)<!-- -->, [Response.EARL](./alfa-http.response.earl.md)<!-- -->\] |  |
+|  ["dct:source"](./alfa-web.page.earl._dct_source_.md) |  | string |  |
 

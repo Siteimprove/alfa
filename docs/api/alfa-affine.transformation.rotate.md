@@ -4,10 +4,20 @@
 
 ## Transformation.rotate() function
 
+<b>Signature:</b>
+
+```typescript
+function rotate(a: number, u?: [number, number, number]): Transformation;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | number |  |
 |  u | \[number, number, number\] | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Transformation](./alfa-affine.transformation.md)
 

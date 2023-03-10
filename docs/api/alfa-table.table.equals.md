@@ -4,9 +4,19 @@
 
 ## Table.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(table: Table): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  table | [Table](./alfa-table.table.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

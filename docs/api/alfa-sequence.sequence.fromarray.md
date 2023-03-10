@@ -4,9 +4,19 @@
 
 ## Sequence.fromArray() function
 
+<b>Signature:</b>
+
+```typescript
+function fromArray<T>(array: ReadonlyArray<T>): Sequence<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

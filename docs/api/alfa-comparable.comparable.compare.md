@@ -4,10 +4,22 @@
 
 ## Comparable.compare() function
 
+Compare two strings.
+
+<b>Signature:</b>
+
+```typescript
+function compare(a: string, b: string): Comparison;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  a | T |  |
-|  b | U |  |
+|  a | string |  |
+|  b | string |  |
+
+<b>Returns:</b>
+
+[Comparison](./alfa-comparable.comparison.md)
 

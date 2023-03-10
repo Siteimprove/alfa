@@ -4,3 +4,8 @@
 
 ## Performance.Measure.JSON.type property
 
+<b>Signature:</b>
+
+```typescript
+type: "measure";
+```

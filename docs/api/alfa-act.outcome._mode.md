@@ -4,3 +4,10 @@
 
 ## Outcome.\_mode property
 
+[https://www.w3.org/TR/EARL10-Schema/\#mode](https://www.w3.org/TR/EARL10-Schema/#mode)
+
+<b>Signature:</b>
+
+```typescript
+protected readonly _mode: Outcome.Mode;
+```

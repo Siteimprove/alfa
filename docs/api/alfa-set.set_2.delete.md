@@ -4,9 +4,19 @@
 
 ## Set\_2.delete() method
 
+<b>Signature:</b>
+
+```typescript
+delete(value: T): Set<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+Set&lt;T&gt;
 

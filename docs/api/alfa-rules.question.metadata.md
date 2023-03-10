@@ -4,3 +4,12 @@
 
 ## Question.Metadata type
 
+Maps the `uri` parameter of questions to their `type` parameter and the expected type of answers.
+
+<b>Signature:</b>
+
+```typescript
+export type Metadata = {
+        [U in Uri]: [TypeName<U>, Typeof<U>];
+    };
+```

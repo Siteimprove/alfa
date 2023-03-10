@@ -4,3 +4,8 @@
 
 ## Rule.\_uri property
 
+<b>Signature:</b>
+
+```typescript
+protected readonly _uri: string;
+```

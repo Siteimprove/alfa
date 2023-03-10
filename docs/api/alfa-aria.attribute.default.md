@@ -4,3 +4,16 @@
 
 ## Attribute.Default type
 
+The default value, if any, of the specified attribute.
+
+<b>Signature:</b>
+
+```typescript
+type Default<N extends Name = Name> = Exclude<Attributes[N]["default"], null>;
+```
+<b>References:</b> [Name](./alfa-aria.attribute.name.md)
+
+## Remarks
+
+Attributes with no default are marked with `default: null`<!-- -->; we therefore exclude `null` from the type as it corresponds to `never`<!-- -->.
+

@@ -4,3 +4,12 @@
 
 ## Frontier.hasCompleted() method
 
+<b>Signature:</b>
+
+```typescript
+hasCompleted(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

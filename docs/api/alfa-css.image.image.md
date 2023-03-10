@@ -4,3 +4,8 @@
 
 ## Image.image property
 
+<b>Signature:</b>
+
+```typescript
+get image(): I;
+```

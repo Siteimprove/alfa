@@ -4,9 +4,21 @@
 
 ## Frontier.retry() method
 
+Retry an already completed or errored URL.
+
+<b>Signature:</b>
+
+```typescript
+retry(url: string | URL): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  url | string \| [URL](./alfa-url.url.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

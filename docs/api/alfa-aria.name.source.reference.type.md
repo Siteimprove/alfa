@@ -4,3 +4,8 @@
 
 ## Name.Source.Reference.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "reference";
+```

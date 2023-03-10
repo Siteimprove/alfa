@@ -4,9 +4,19 @@
 
 ## Branched.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals<T, B>(value: Branched<T, B>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

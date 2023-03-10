@@ -4,9 +4,19 @@
 
 ## Sequence.sort() method
 
+<b>Signature:</b>
+
+```typescript
+sort<T extends Comparable<T>>(this: Sequence<T>): Sequence<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

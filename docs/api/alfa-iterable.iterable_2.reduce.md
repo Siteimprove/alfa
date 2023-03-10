@@ -4,6 +4,12 @@
 
 ## Iterable\_2.reduce() function
 
+<b>Signature:</b>
+
+```typescript
+function reduce<T, U = T>(iterable: Iterable<T>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  iterable | Iterable&lt;T&gt; |  |
 |  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 |  accumulator | U |  |
+
+<b>Returns:</b>
+
+U
 

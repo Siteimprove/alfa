@@ -4,3 +4,12 @@
 
 ## Command.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Command.JSON;
+```
+<b>Returns:</b>
+
+[Command.JSON](./alfa-command.command.json.md)
+

@@ -4,6 +4,14 @@
 
 ## Media.Feature.(constructor)
 
+Constructs a new instance of the `Feature` class
+
+<b>Signature:</b>
+
+```typescript
+protected constructor(value: Option<Value<T>>);
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |

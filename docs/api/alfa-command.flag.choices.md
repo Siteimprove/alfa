@@ -4,9 +4,19 @@
 
 ## Flag.choices() method
 
+<b>Signature:</b>
+
+```typescript
+choices<U extends T>(...choices: Array<U>): Flag<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  choices | Array&lt;U&gt; |  |
+
+<b>Returns:</b>
+
+[Flag](./alfa-command.flag.md)<!-- -->&lt;U&gt;
 

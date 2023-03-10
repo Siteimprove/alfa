@@ -4,10 +4,17 @@
 
 ## Named.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Value.JSON<"color"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"color"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [color](./alfa-css.named.json.color.md) |  |  |  |
-|  [format](./alfa-css.named.json.format.md) |  |  |  |
+|  [color](./alfa-css.named.json.color.md) |  | string |  |
+|  [format](./alfa-css.named.json.format.md) |  | "named" |  |
 

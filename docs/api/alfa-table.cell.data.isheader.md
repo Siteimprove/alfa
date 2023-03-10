@@ -4,3 +4,12 @@
 
 ## Cell.Data.isHeader() method
 
+<b>Signature:</b>
+
+```typescript
+isHeader(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

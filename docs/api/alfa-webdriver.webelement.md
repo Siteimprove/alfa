@@ -4,9 +4,16 @@
 
 ## WebElement namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace WebElement 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [toPage](./alfa-webdriver.webelement.topage.md) |  |
+|  [toPage(webElement, browser)](./alfa-webdriver.webelement.topage.md) |  |
 

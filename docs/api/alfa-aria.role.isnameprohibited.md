@@ -4,3 +4,14 @@
 
 ## Role.isNameProhibited() method
 
+Check if this role prohibits naming.
+
+<b>Signature:</b>
+
+```typescript
+isNameProhibited(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

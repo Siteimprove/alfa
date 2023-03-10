@@ -4,9 +4,19 @@
 
 ## Lazy.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals<T>(value: Lazy<T>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

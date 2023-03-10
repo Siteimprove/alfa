@@ -4,3 +4,12 @@
 
 ## FNV.finish() method
 
+<b>Signature:</b>
+
+```typescript
+finish(): number;
+```
+<b>Returns:</b>
+
+number
+

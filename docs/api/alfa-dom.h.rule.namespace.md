@@ -4,10 +4,20 @@
 
 ## h.rule.namespace() function
 
+<b>Signature:</b>
+
+```typescript
+function namespace(namespace: string, prefix?: string): NamespaceRule;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  namespace | string |  |
 |  prefix | string | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[NamespaceRule](./alfa-dom.namespacerule.md)
 

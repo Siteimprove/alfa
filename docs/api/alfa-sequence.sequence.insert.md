@@ -4,10 +4,20 @@
 
 ## Sequence.insert() method
 
+<b>Signature:</b>
+
+```typescript
+insert(index: number, value: T): Sequence<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  index | number |  |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

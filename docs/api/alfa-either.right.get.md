@@ -4,3 +4,12 @@
 
 ## Right.get() method
 
+<b>Signature:</b>
+
+```typescript
+get(): R;
+```
+<b>Returns:</b>
+
+R
+

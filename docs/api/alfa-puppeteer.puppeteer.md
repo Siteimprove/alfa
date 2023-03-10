@@ -4,12 +4,19 @@
 
 ## Puppeteer namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Puppeteer 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [toNode](./alfa-puppeteer.puppeteer.tonode.md) |  |
-|  [toPage](./alfa-puppeteer.puppeteer.topage.md) |  |
+|  [toNode(value)](./alfa-puppeteer.puppeteer.tonode.md) |  |
+|  [toPage(value)](./alfa-puppeteer.puppeteer.topage.md) |  |
 
 ## Type Aliases
 

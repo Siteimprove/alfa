@@ -4,9 +4,19 @@
 
 ## Branched.map() method
 
+<b>Signature:</b>
+
+```typescript
+map<U>(mapper: Mapper<T, U, [Iterable<B>]>): Branched<U, B>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[Iterable&lt;B&gt;\]&gt; |  |
+
+<b>Returns:</b>
+
+[Branched](./alfa-branched.branched.md)<!-- -->&lt;U, B&gt;
 

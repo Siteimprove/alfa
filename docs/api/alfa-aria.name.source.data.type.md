@@ -4,3 +4,8 @@
 
 ## Name.Source.Data.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "data";
+```

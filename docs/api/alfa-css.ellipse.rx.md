@@ -4,3 +4,8 @@
 
 ## Ellipse.rx property
 
+<b>Signature:</b>
+
+```typescript
+get rx(): R;
+```

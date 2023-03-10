@@ -4,9 +4,19 @@
 
 ## Collection.Indexed.collect() method
 
+<b>Signature:</b>
+
+```typescript
+collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Indexed<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;
 

@@ -4,3 +4,8 @@
 
 ## Device.preferences property
 
+<b>Signature:</b>
+
+```typescript
+get preferences(): Iterable<Preference>;
+```

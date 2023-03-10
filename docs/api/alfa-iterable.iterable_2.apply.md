@@ -4,10 +4,20 @@
 
 ## Iterable\_2.apply() function
 
+<b>Signature:</b>
+
+```typescript
+function apply<T, U>(iterable: Iterable<T>, mapper: Iterable<Mapper<T, U>>): Iterable<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  mapper | Iterable&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+
+<b>Returns:</b>
+
+Iterable&lt;U&gt;
 

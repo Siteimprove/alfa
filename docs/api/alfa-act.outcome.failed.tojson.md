@@ -4,3 +4,12 @@
 
 ## Outcome.Failed.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Failed.JSON<T>;
+```
+<b>Returns:</b>
+
+[Failed.JSON](./alfa-act.outcome.failed.json.md)<!-- -->&lt;T&gt;
+

@@ -4,13 +4,20 @@
 
 ## Preference namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Preference 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from](./alfa-device.preference.from.md) |  |
-|  [isPreference](./alfa-device.preference.ispreference.md) |  |
-|  [unset](./alfa-device.preference.unset.md) |  |
+|  [from(json)](./alfa-device.preference.from.md) |  |
+|  [isPreference(value, name)](./alfa-device.preference.ispreference.md) |  |
+|  [unset(name)](./alfa-device.preference.unset.md) |  |
 
 ## Interfaces
 

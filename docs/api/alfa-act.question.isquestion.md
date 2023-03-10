@@ -4,9 +4,19 @@
 
 ## Question.isQuestion() function
 
+<b>Signature:</b>
+
+```typescript
+function isQuestion<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string>(value: unknown): value is Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;
 

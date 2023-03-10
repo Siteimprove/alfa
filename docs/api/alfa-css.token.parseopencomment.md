@@ -4,3 +4,8 @@
 
 ## Token.parseOpenComment variable
 
+<b>Signature:</b>
+
+```typescript
+parseOpenComment: Parser<Slice<Token>, OpenComment, string, []>
+```

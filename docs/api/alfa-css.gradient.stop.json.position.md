@@ -4,3 +4,8 @@
 
 ## Gradient.Stop.JSON.position property
 
+<b>Signature:</b>
+
+```typescript
+position: Length.JSON | Percentage.JSON | null;
+```

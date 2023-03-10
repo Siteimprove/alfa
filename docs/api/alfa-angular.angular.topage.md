@@ -4,9 +4,19 @@
 
 ## Angular.toPage() function
 
+<b>Signature:</b>
+
+```typescript
+function toPage(value: Type): Page;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Type](./alfa-angular.angular.type.md) |  |
+
+<b>Returns:</b>
+
+[Page](./alfa-web.page.md)
 

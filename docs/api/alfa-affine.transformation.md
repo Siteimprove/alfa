@@ -4,15 +4,22 @@
 
 ## Transformation namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Transformation 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [perspective](./alfa-affine.transformation.perspective.md) |  |
-|  [rotate](./alfa-affine.transformation.rotate.md) |  |
-|  [scale](./alfa-affine.transformation.scale.md) |  |
-|  [skew](./alfa-affine.transformation.skew.md) |  |
-|  [translate](./alfa-affine.transformation.translate.md) |  |
+|  [perspective(d)](./alfa-affine.transformation.perspective.md) |  |
+|  [rotate(a, u)](./alfa-affine.transformation.rotate.md) |  |
+|  [scale(sx, sy, sz)](./alfa-affine.transformation.scale.md) |  |
+|  [skew(a, b)](./alfa-affine.transformation.skew.md) |  |
+|  [translate(tx, ty, tz)](./alfa-affine.transformation.translate.md) |  |
 
 ## Interfaces
 

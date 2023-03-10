@@ -4,10 +4,16 @@
 
 ## Attribute.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-aria.attribute.json.name.md) |  |  |  |
-|  [value](./alfa-aria.attribute.json.value.md) |  |  |  |
+|  [name](./alfa-aria.attribute.json.name.md) |  | [Name](./alfa-aria.attribute.name.md) |  |
+|  [value](./alfa-aria.attribute.json.value.md) |  | string |  |
 

@@ -4,3 +4,12 @@
 
 ## Cascade.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Cascade.JSON;
+```
+<b>Returns:</b>
+
+[Cascade.JSON](./alfa-cascade.cascade.json.md)
+

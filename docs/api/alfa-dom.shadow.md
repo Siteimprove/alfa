@@ -4,6 +4,13 @@
 
 ## Shadow namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Shadow 
+```
+
 ## Enumerations
 
 |  Enumeration | Description |
@@ -14,7 +21,7 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [isShadow](./alfa-dom.shadow.isshadow.md) |  |
+|  [isShadow(value)](./alfa-dom.shadow.isshadow.md) |  |
 
 ## Interfaces
 

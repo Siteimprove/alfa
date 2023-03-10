@@ -4,10 +4,20 @@
 
 ## Expression.Path.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(left: Expression, right: Expression): Path;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  left | [Expression](./alfa-xpath.expression.md) |  |
 |  right | [Expression](./alfa-xpath.expression.md) |  |
+
+<b>Returns:</b>
+
+[Path](./alfa-xpath.expression.path.md)
 

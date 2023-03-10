@@ -4,3 +4,12 @@
 
 ## Name.Source.Ancestor.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Ancestor.JSON;
+```
+<b>Returns:</b>
+
+[Ancestor.JSON](./alfa-aria.name.source.ancestor.json.md)
+

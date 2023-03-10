@@ -4,3 +4,12 @@
 
 ## Some.toArray() method
 
+<b>Signature:</b>
+
+```typescript
+toArray(): [T];
+```
+<b>Returns:</b>
+
+\[T\]
+

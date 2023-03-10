@@ -4,3 +4,8 @@
 
 ## Media.Query.JSON.type property
 
+<b>Signature:</b>
+
+```typescript
+type: Type.JSON | null;
+```

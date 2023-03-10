@@ -4,3 +4,8 @@
 
 ## Media.isList variable
 
+<b>Signature:</b>
+
+```typescript
+isList: typeof List.isList
+```

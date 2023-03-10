@@ -4,6 +4,12 @@
 
 ## Linear.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<I extends Gradient.Item, D extends Linear.Direction>(direction: D, items: Iterable<I>, repeats: boolean): Linear<I, D>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  direction | D |  |
 |  items | Iterable&lt;I&gt; |  |
 |  repeats | boolean |  |
+
+<b>Returns:</b>
+
+[Linear](./alfa-css.linear.md)<!-- -->&lt;I, D&gt;
 

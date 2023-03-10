@@ -4,9 +4,19 @@
 
 ## Image.isImage() function
 
+<b>Signature:</b>
+
+```typescript
+function isImage<I extends URL | Gradient>(value: unknown): value is Image<I>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Image](./alfa-css.image.md)<!-- -->&lt;I&gt;
 

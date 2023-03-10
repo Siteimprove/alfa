@@ -4,3 +4,10 @@
 
 ## Scope.Component variable
 
+For rules that test failures at the component level. These rules only make sense to include in an audit if at least an entire component is available.
+
+<b>Signature:</b>
+
+```typescript
+Component: Scope<"component">
+```

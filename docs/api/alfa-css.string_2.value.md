@@ -4,3 +4,8 @@
 
 ## String\_2.value property
 
+<b>Signature:</b>
+
+```typescript
+get value(): string;
+```

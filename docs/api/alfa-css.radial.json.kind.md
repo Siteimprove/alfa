@@ -4,3 +4,8 @@
 
 ## Radial.JSON.kind property
 
+<b>Signature:</b>
+
+```typescript
+kind: "radial";
+```

@@ -4,12 +4,19 @@
 
 ## Rule.EARL interface
 
+<b>Signature:</b>
+
+```typescript
+interface EARL extends earl.EARL 
+```
+<b>Extends:</b> earl.[EARL](./alfa-earl.earl.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@context"](./alfa-act.rule.earl.__context_.md) |  |  |  |
-|  ["@id"](./alfa-act.rule.earl.__id_.md) |  |  |  |
-|  ["@type"](./alfa-act.rule.earl.__type_.md) |  |  |  |
-|  ["dct:isPartOf"](./alfa-act.rule.earl._dct_ispartof_.md) |  |  |  |
+|  ["@context"](./alfa-act.rule.earl.__context_.md) |  | { earl: "http://www.w3.org/ns/earl\#"; dct: "http://purl.org/dc/terms/"; } |  |
+|  ["@id"](./alfa-act.rule.earl.__id_.md) |  | string |  |
+|  ["@type"](./alfa-act.rule.earl.__type_.md) |  | \["earl:TestCriterion", "earl:TestCase"\] |  |
+|  ["dct:isPartOf"](./alfa-act.rule.earl._dct_ispartof_.md) |  | { "@set": Array&lt;[Requirement.EARL](./alfa-act.requirement.earl.md)<!-- -->&gt;; } |  |
 

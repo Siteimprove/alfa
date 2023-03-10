@@ -4,3 +4,8 @@
 
 ## Inset.left property
 
+<b>Signature:</b>
+
+```typescript
+get left(): O;
+```

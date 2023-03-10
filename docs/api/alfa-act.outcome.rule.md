@@ -4,3 +4,10 @@
 
 ## Outcome.rule property
 
+[https://www.w3.org/TR/EARL10-Schema/\#test](https://www.w3.org/TR/EARL10-Schema/#test) While this is called a "test" in EARL, in Alfa this is always a "rule".
+
+<b>Signature:</b>
+
+```typescript
+get rule(): Rule<I, T, Q, S>;
+```

@@ -4,3 +4,8 @@
 
 ## Token.openParenthesis variable
 
+<b>Signature:</b>
+
+```typescript
+openParenthesis: typeof OpenParenthesis.of
+```

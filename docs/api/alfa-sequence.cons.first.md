@@ -4,3 +4,12 @@
 
 ## Cons.first() method
 
+<b>Signature:</b>
+
+```typescript
+first(): Option<T>;
+```
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+

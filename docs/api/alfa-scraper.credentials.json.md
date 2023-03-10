@@ -4,10 +4,16 @@
 
 ## Credentials.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [password](./alfa-scraper.credentials.json.password.md) |  |  |  |
-|  [username](./alfa-scraper.credentials.json.username.md) |  |  |  |
+|  [password](./alfa-scraper.credentials.json.password.md) |  | string |  |
+|  [username](./alfa-scraper.credentials.json.username.md) |  | string |  |
 

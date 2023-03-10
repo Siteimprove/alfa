@@ -4,10 +4,16 @@
 
 ## Screenshot.Type.PNG.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [background](./alfa-scraper.screenshot.type.png.json.background.md) |  |  |  |
-|  [type](./alfa-scraper.screenshot.type.png.json.type.md) |  |  |  |
+|  [background](./alfa-scraper.screenshot.type.png.json.background.md) |  | boolean |  |
+|  [type](./alfa-scraper.screenshot.type.png.json.type.md) |  | "png" |  |
 

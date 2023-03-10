@@ -4,9 +4,19 @@
 
 ## Hashable.isHashable() function
 
+<b>Signature:</b>
+
+```typescript
+function isHashable(value: unknown): value is Hashable;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Hashable](./alfa-hash.hashable.md)
 

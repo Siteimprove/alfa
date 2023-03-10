@@ -4,3 +4,10 @@
 
 ## Result.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON<T, E = T> = Ok.JSON<T> | Err.JSON<E>;
+```
+<b>References:</b> [Ok.JSON](./alfa-result.ok.json.md)<!-- -->, [Err.JSON](./alfa-result.err.json.md)
+

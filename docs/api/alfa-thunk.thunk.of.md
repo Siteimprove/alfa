@@ -4,9 +4,19 @@
 
 ## Thunk.of() function
 
+<b>Signature:</b>
+
+```typescript
+function of<T>(value: T): Thunk<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt;
 

@@ -4,11 +4,18 @@
 
 ## Cheerio namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Cheerio 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [toPage](./alfa-cheerio.cheerio.topage.md) |  |
+|  [toPage(value)](./alfa-cheerio.cheerio.topage.md) |  |
 
 ## Type Aliases
 

@@ -4,10 +4,20 @@
 
 ## Slot.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(x: number, y: number): Slot;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  x | number |  |
 |  y | number |  |
+
+<b>Returns:</b>
+
+[Slot](./alfa-table.slot.md)
 

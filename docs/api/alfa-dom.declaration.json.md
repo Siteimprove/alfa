@@ -4,11 +4,17 @@
 
 ## Declaration.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [important](./alfa-dom.declaration.json.important.md) |  |  |  |
-|  [name](./alfa-dom.declaration.json.name.md) |  |  |  |
-|  [value](./alfa-dom.declaration.json.value.md) |  |  |  |
+|  [important](./alfa-dom.declaration.json.important.md) |  | boolean |  |
+|  [name](./alfa-dom.declaration.json.name.md) |  | string |  |
+|  [value](./alfa-dom.declaration.json.value.md) |  | string |  |
 

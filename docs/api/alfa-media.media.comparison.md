@@ -4,13 +4,19 @@
 
 ## Media.Comparison enum
 
+<b>Signature:</b>
+
+```typescript
+export enum Comparison 
+```
+
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  Equal |  |  |
-|  GreaterThan |  |  |
-|  GreaterThanOrEqual |  |  |
-|  LessThan |  |  |
-|  LessThanOrEqual |  |  |
+|  Equal | <code>&quot;=&quot;</code> |  |
+|  GreaterThan | <code>&quot;&gt;&quot;</code> |  |
+|  GreaterThanOrEqual | <code>&quot;&gt;=&quot;</code> |  |
+|  LessThan | <code>&quot;&lt;&quot;</code> |  |
+|  LessThanOrEqual | <code>&quot;&lt;=&quot;</code> |  |
 

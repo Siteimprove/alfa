@@ -4,9 +4,19 @@
 
 ## Number\_2.scale() method
 
+<b>Signature:</b>
+
+```typescript
+scale(factor: number): Number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  factor | number |  |
+
+<b>Returns:</b>
+
+Number
 

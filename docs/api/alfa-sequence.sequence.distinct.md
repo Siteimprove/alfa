@@ -4,3 +4,12 @@
 
 ## Sequence.distinct() method
 
+<b>Signature:</b>
+
+```typescript
+distinct(): Sequence<T>;
+```
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+

@@ -4,3 +4,8 @@
 
 ## Command.Subcommands interface
 
+<b>Signature:</b>
+
+```typescript
+interface Subcommands 
+```

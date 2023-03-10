@@ -4,9 +4,15 @@
 
 ## Media.Matchable interface
 
+<b>Signature:</b>
+
+```typescript
+interface Matchable 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [matches](./alfa-media.media.matchable.matches.md) |  |  |  |
+|  [matches](./alfa-media.media.matchable.matches.md) | <code>readonly</code> | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Device](./alfa-device.device.md)<!-- -->&gt; |  |
 

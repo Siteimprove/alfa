@@ -4,6 +4,12 @@
 
 ## Question.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(type: TYPE, uri: URI, message: string, subject: SUBJECT, context: CONTEXT, options?: Question.Options<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -14,4 +20,8 @@
 |  subject | SUBJECT |  |
 |  context | CONTEXT |  |
 |  options | [Question.Options](./alfa-act.question.options.md)<!-- -->&lt;ANSWER&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI&gt;
 

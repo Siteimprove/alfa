@@ -4,9 +4,19 @@
 
 ## Dimension.withUnit() method
 
+<b>Signature:</b>
+
+```typescript
+abstract withUnit<V extends U>(unit: V): Dimension<T, U, V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | V |  |
+
+<b>Returns:</b>
+
+[Dimension](./alfa-css.dimension.md)<!-- -->&lt;T, U, V&gt;
 

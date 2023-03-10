@@ -4,3 +4,8 @@
 
 ## Browser.Query.Comparator type
 
+<b>Signature:</b>
+
+```typescript
+type Comparator = ">" | "<" | ">=" | "<=";
+```

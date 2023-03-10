@@ -4,6 +4,12 @@
 
 ## RuleTree.Node.add() method
 
+<b>Signature:</b>
+
+```typescript
+static add(rule: Rule, selector: Selector, declarations: Iterable<Declaration>, children: Array<Node>, parent: Option<Node>): Node;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -13,4 +19,8 @@
 |  declarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
 |  children | Array&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt; |  |
 |  parent | [Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[Node](./alfa-cascade.ruletree.node.md)
 

@@ -4,9 +4,19 @@
 
 ## Node.index() method
 
+<b>Signature:</b>
+
+```typescript
+index(options?: Node.Traversal): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Node.Traversal](./alfa-dom.node.traversal.md) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+number
 

@@ -4,3 +4,10 @@
 
 ## Fragment.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Node.JSON<"fragment"> 
+```
+<b>Extends:</b> [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"fragment"&gt;
+

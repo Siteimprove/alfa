@@ -4,3 +4,12 @@
 
 ## Position.Side.isCenter() method
 
+<b>Signature:</b>
+
+```typescript
+isCenter(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

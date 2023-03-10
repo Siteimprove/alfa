@@ -4,3 +4,8 @@
 
 ## Cascade.JSON.selectors property
 
+<b>Signature:</b>
+
+```typescript
+selectors: SelectorMap.JSON;
+```

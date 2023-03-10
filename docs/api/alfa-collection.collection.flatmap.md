@@ -4,9 +4,19 @@
 
 ## Collection.flatMap() method
 
+<b>Signature:</b>
+
+```typescript
+flatMap<U>(mapper: Mapper<T, Collection<U>>): Collection<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Collection](./alfa-collection.collection.md)<!-- -->&lt;U&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Collection](./alfa-collection.collection.md)<!-- -->&lt;U&gt;
 

@@ -4,3 +4,8 @@
 
 ## Command.version property
 
+<b>Signature:</b>
+
+```typescript
+get version(): string;
+```

@@ -4,9 +4,19 @@
 
 ## Color.named() function
 
+<b>Signature:</b>
+
+```typescript
+function named<C extends Named.Color>(color: C): Named<C>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  color | C |  |
+
+<b>Returns:</b>
+
+[Named](./alfa-css.named.md)<!-- -->&lt;C&gt;
 

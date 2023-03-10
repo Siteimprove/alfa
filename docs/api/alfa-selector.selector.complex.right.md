@@ -4,3 +4,8 @@
 
 ## Selector.Complex.right property
 
+<b>Signature:</b>
+
+```typescript
+get right(): Simple | Compound;
+```

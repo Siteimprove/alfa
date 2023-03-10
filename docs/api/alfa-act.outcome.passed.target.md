@@ -4,3 +4,8 @@
 
 ## Outcome.Passed.target property
 
+<b>Signature:</b>
+
+```typescript
+get target(): T;
+```

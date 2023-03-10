@@ -4,9 +4,16 @@
 
 ## Selector.Not.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Pseudo.Class.JSON<"not"> 
+```
+<b>Extends:</b> [Pseudo.Class.JSON](./alfa-selector.selector.pseudo.class.json.md)<!-- -->&lt;"not"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [selector](./alfa-selector.selector.not.json.selector.md) |  |  |  |
+|  [selector](./alfa-selector.selector.not.json.selector.md) |  | [Simple.JSON](./alfa-selector.selector.simple.json.md) \| [Compound.JSON](./alfa-selector.selector.compound.json.md) \| [Complex.JSON](./alfa-selector.selector.complex.json.md) \| [List.JSON](./alfa-selector.selector.list.json.md) |  |
 

@@ -4,14 +4,21 @@
 
 ## Request.EARL interface
 
+<b>Signature:</b>
+
+```typescript
+interface EARL extends earl.EARL 
+```
+<b>Extends:</b> earl.[EARL](./alfa-earl.earl.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@context"](./alfa-http.request.earl.__context_.md) |  |  |  |
-|  ["@type"](./alfa-http.request.earl.__type_.md) |  |  |  |
-|  ["http:body"](./alfa-http.request.earl._http_body_.md) |  |  |  |
-|  ["http:headers"](./alfa-http.request.earl._http_headers_.md) |  |  |  |
-|  ["http:methodName"](./alfa-http.request.earl._http_methodname_.md) |  |  |  |
-|  ["http:requestURI"](./alfa-http.request.earl._http_requesturi_.md) |  |  |  |
+|  ["@context"](./alfa-http.request.earl.__context_.md) |  | { http: "http://www.w3.org/2011/http\#"; } |  |
+|  ["@type"](./alfa-http.request.earl.__type_.md) |  | \["http:Message", "http:Request"\] |  |
+|  ["http:body"](./alfa-http.request.earl._http_body_.md) |  | [Body.EARL](./alfa-http.body.earl.md) |  |
+|  ["http:headers"](./alfa-http.request.earl._http_headers_.md) |  | [Headers.EARL](./alfa-http.headers.earl.md) |  |
+|  ["http:methodName"](./alfa-http.request.earl._http_methodname_.md) |  | string |  |
+|  ["http:requestURI"](./alfa-http.request.earl._http_requesturi_.md) |  | string |  |
 

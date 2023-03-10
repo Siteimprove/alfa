@@ -4,3 +4,10 @@
 
 ## Performance.Entry type
 
+<b>Signature:</b>
+
+```typescript
+type Entry<T> = Mark<T> | Measure<T>;
+```
+<b>References:</b> [Mark](./alfa-performance.performance.mark.md)<!-- -->, [Measure](./alfa-performance.performance.measure.md)
+

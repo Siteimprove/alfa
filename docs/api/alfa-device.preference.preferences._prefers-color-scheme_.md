@@ -4,3 +4,15 @@
 
 ## Preference.Preferences."prefers-color-scheme" property
 
+[https://drafts.csswg.org/mediaqueries-5/\#prefers-color-scheme](https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme)
+
+<b>Signature:</b>
+
+```typescript
+"prefers-color-scheme": "no-preference" | "light" | "dark";
+```
+
+## Remarks
+
+For consistency, "no-preference" is also included.
+

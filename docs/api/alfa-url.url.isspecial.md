@@ -4,3 +4,14 @@
 
 ## URL.isSpecial() method
 
+[https://url.spec.whatwg.org/\#is-special](https://url.spec.whatwg.org/#is-special)
+
+<b>Signature:</b>
+
+```typescript
+isSpecial(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

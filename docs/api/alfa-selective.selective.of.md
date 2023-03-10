@@ -4,9 +4,19 @@
 
 ## Selective.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<T>(value: T): Selective<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Selective](./alfa-selective.selective.md)<!-- -->&lt;T&gt;
 

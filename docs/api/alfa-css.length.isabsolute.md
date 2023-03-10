@@ -4,3 +4,12 @@
 
 ## Length.isAbsolute() method
 
+<b>Signature:</b>
+
+```typescript
+isAbsolute(): this is Length<Unit.Length.Absolute>;
+```
+<b>Returns:</b>
+
+this is [Length](./alfa-css.length.md)<!-- -->&lt;[Unit.Length.Absolute](./alfa-css.unit.length.absolute.md)<!-- -->&gt;
+

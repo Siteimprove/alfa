@@ -4,9 +4,19 @@
 
 ## Flag.alias() method
 
+<b>Signature:</b>
+
+```typescript
+alias(alias: string): Flag<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  alias | string |  |
+
+<b>Returns:</b>
+
+[Flag](./alfa-command.flag.md)<!-- -->&lt;T&gt;
 

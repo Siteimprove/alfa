@@ -4,3 +4,8 @@
 
 ## Token.Delim.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "delim";
+```

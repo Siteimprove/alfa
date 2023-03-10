@@ -4,3 +4,12 @@
 
 ## Selective.\[Symbol.iterator\]() method
 
+<b>Signature:</b>
+
+```typescript
+[Symbol.iterator](): Iterator<S | T>;
+```
+<b>Returns:</b>
+
+Iterator&lt;S \| T&gt;
+

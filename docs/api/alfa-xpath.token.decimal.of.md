@@ -4,9 +4,19 @@
 
 ## Token.Decimal.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(value: number): Decimal;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | number |  |
+
+<b>Returns:</b>
+
+[Decimal](./alfa-xpath.token.decimal.md)
 

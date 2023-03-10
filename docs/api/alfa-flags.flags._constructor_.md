@@ -4,6 +4,14 @@
 
 ## Flags.(constructor)
 
+Constructs a new instance of the `Flags` class
+
+<b>Signature:</b>
+
+```typescript
+protected constructor(value: number);
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |

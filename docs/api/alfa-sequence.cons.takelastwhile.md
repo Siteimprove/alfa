@@ -4,9 +4,19 @@
 
 ## Cons.takeLastWhile() method
 
+<b>Signature:</b>
+
+```typescript
+takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;
 

@@ -4,10 +4,20 @@
 
 ## Array\_2.zip() function
 
+<b>Signature:</b>
+
+```typescript
+function zip<T, U = T>(array: ReadonlyArray<T>, iterable: Iterable<U>): Array<[T, U]>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  iterable | Iterable&lt;U&gt; |  |
+
+<b>Returns:</b>
+
+Array&lt;\[T, U\]&gt;
 

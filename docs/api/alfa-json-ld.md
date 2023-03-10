@@ -8,8 +8,8 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Context](./alfa-json-ld.context.md) |  |
-|  [Document](./alfa-json-ld.document.md) |  |
+|  [Context](./alfa-json-ld.context.md) | [https://www.w3.org/TR/json-ld/\#dfn-context-definition](https://www.w3.org/TR/json-ld/#dfn-context-definition) |
+|  [Document](./alfa-json-ld.document.md) | [https://www.w3.org/TR/json-ld/\#dfn-json-ld-document](https://www.w3.org/TR/json-ld/#dfn-json-ld-document) |
 
 ## Namespaces
 
@@ -21,5 +21,5 @@
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Keyword](./alfa-json-ld.keyword.md) |  |
+|  [Keyword](./alfa-json-ld.keyword.md) | [https://www.w3.org/TR/json-ld/\#dfn-keyword](https://www.w3.org/TR/json-ld/#dfn-keyword) |
 

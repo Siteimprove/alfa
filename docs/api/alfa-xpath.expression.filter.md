@@ -4,6 +4,12 @@
 
 ## Expression.Filter namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Filter 
+```
+
 ## Interfaces
 
 |  Interface | Description |

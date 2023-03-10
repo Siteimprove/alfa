@@ -4,11 +4,17 @@
 
 ## Radial.Ellipse.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [horizontal](./alfa-css.radial.ellipse.json.horizontal.md) |  |  |  |
-|  [type](./alfa-css.radial.ellipse.json.type.md) |  |  |  |
-|  [vertical](./alfa-css.radial.ellipse.json.vertical.md) |  |  |  |
+|  [horizontal](./alfa-css.radial.ellipse.json.horizontal.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
+|  [type](./alfa-css.radial.ellipse.json.type.md) |  | "ellipse" |  |
+|  [vertical](./alfa-css.radial.ellipse.json.vertical.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
 

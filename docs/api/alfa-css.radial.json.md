@@ -4,13 +4,20 @@
 
 ## Radial.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Value.JSON<"gradient"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"gradient"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [items](./alfa-css.radial.json.items.md) |  |  |  |
-|  [kind](./alfa-css.radial.json.kind.md) |  |  |  |
-|  [position](./alfa-css.radial.json.position.md) |  |  |  |
-|  [repeats](./alfa-css.radial.json.repeats.md) |  |  |  |
-|  [shape](./alfa-css.radial.json.shape.md) |  |  |  |
+|  [items](./alfa-css.radial.json.items.md) |  | Array&lt;[Gradient.Item.JSON](./alfa-css.gradient.item.json.md)<!-- -->&gt; |  |
+|  [kind](./alfa-css.radial.json.kind.md) |  | "radial" |  |
+|  [position](./alfa-css.radial.json.position.md) |  | [Position.JSON](./alfa-css.position.json.md) |  |
+|  [repeats](./alfa-css.radial.json.repeats.md) |  | boolean |  |
+|  [shape](./alfa-css.radial.json.shape.md) |  | [Shape.JSON](./alfa-css.radial.shape.json.md) |  |
 

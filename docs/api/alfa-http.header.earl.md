@@ -4,12 +4,19 @@
 
 ## Header.EARL interface
 
+<b>Signature:</b>
+
+```typescript
+interface EARL extends earl.EARL 
+```
+<b>Extends:</b> earl.[EARL](./alfa-earl.earl.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@context"](./alfa-http.header.earl.__context_.md) |  |  |  |
-|  ["@type"](./alfa-http.header.earl.__type_.md) |  |  |  |
-|  ["http:fieldName"](./alfa-http.header.earl._http_fieldname_.md) |  |  |  |
-|  ["http:fieldValue"](./alfa-http.header.earl._http_fieldvalue_.md) |  |  |  |
+|  ["@context"](./alfa-http.header.earl.__context_.md) |  | { http: "http://www.w3.org/2011/http\#"; } |  |
+|  ["@type"](./alfa-http.header.earl.__type_.md) |  | "http:MessageHeader" |  |
+|  ["http:fieldName"](./alfa-http.header.earl._http_fieldname_.md) |  | string |  |
+|  ["http:fieldValue"](./alfa-http.header.earl._http_fieldvalue_.md) |  | string |  |
 

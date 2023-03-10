@@ -4,9 +4,19 @@
 
 ## Record\_2.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<T>(properties: T): Record<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  properties | T |  |
+
+<b>Returns:</b>
+
+Record&lt;T&gt;
 

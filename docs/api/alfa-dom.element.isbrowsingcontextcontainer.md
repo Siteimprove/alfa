@@ -4,3 +4,8 @@
 
 ## Element.isBrowsingContextContainer variable
 
+<b>Signature:</b>
+
+```typescript
+isBrowsingContextContainer: typeof predicate.isBrowsingContextContainer
+```

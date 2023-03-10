@@ -4,3 +4,10 @@
 
 ## Transformation.Components.perspective property
 
+A quaternion representing \[x, y, z, w\] perspective.
+
+<b>Signature:</b>
+
+```typescript
+perspective: Vector;
+```

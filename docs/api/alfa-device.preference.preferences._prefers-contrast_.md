@@ -4,3 +4,15 @@
 
 ## Preference.Preferences."prefers-contrast" property
 
+[https://drafts.csswg.org/mediaqueries-5/\#prefers-contrast](https://drafts.csswg.org/mediaqueries-5/#prefers-contrast)
+
+<b>Signature:</b>
+
+```typescript
+"prefers-contrast": "no-preference" | "high" | "low";
+```
+
+## Remarks
+
+For consistency, "no-preference" is also included.
+

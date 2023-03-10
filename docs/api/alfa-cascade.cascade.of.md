@@ -4,10 +4,20 @@
 
 ## Cascade.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(node: Document | Shadow, device: Device): Cascade;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | [Document](./alfa-dom.document.md) \| [Shadow](./alfa-dom.shadow.md) |  |
 |  device | [Device](./alfa-device.device.md) |  |
+
+<b>Returns:</b>
+
+[Cascade](./alfa-cascade.cascade.md)
 

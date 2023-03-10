@@ -4,3 +4,13 @@
 
 ## Outcome.Inapplicable.EARL."earl:result" property
 
+<b>Signature:</b>
+
+```typescript
+"earl:result": {
+                "@type": "earl:TestResult";
+                "earl:outcome": {
+                    "@id": "earl:inapplicable";
+                };
+            };
+```

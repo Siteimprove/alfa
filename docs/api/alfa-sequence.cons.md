@@ -4,12 +4,19 @@
 
 ## Cons namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Cons 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isCons](./alfa-sequence.cons.iscons.md) |  |
-|  [isCons](./alfa-sequence.cons.iscons.md) |  |
+|  [isCons(value)](./alfa-sequence.cons.iscons.md) |  |
+|  [isCons(value)](./alfa-sequence.cons.iscons_1.md) |  |
 
 ## Type Aliases
 

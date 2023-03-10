@@ -4,3 +4,10 @@
 
 ## Converter.time variable
 
+[https://drafts.csswg.org/css-values/\#time](https://drafts.csswg.org/css-values/#time)
+
+<b>Signature:</b>
+
+```typescript
+time: Converter<Unit.Time>
+```

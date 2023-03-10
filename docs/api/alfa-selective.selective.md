@@ -4,6 +4,13 @@
 
 ## Selective namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Selective 
+```
+
 ## Type Aliases
 
 |  Type Alias | Description |

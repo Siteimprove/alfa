@@ -4,3 +4,12 @@
 
 ## Named.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Named.JSON;
+```
+<b>Returns:</b>
+
+[Named.JSON](./alfa-css.named.json.md)
+

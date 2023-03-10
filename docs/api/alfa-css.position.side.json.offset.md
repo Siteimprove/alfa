@@ -4,3 +4,8 @@
 
 ## Position.Side.JSON.offset property
 
+<b>Signature:</b>
+
+```typescript
+offset: Length.JSON | Percentage.JSON | null;
+```

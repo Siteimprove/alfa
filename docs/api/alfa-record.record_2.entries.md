@@ -4,3 +4,12 @@
 
 ## Record\_2.entries() method
 
+<b>Signature:</b>
+
+```typescript
+entries(): Iterable<Record.Entry<T>>;
+```
+<b>Returns:</b>
+
+Iterable&lt;Record.Entry&lt;T&gt;&gt;
+

@@ -4,6 +4,12 @@
 
 ## Radial.Circle namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Circle 
+```
+
 ## Interfaces
 
 |  Interface | Description |

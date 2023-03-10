@@ -4,3 +4,10 @@
 
 ## Numeric.Ratio type
 
+[https://drafts.csswg.org/css-values-4/\#numeric-types](https://drafts.csswg.org/css-values-4/#numeric-types)
+
+<b>Signature:</b>
+
+```typescript
+type Ratio = "percentage";
+```

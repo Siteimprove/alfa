@@ -4,3 +4,8 @@
 
 ## Diagnostic.isClippingAncestors variable
 
+<b>Signature:</b>
+
+```typescript
+isClippingAncestors: typeof ClippingAncestors.isClippingAncestors
+```

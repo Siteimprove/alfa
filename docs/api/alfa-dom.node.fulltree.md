@@ -4,3 +4,10 @@
 
 ## Node.fullTree variable
 
+Traversal options to traverse all relevant nodes (flat tree and inside nested browsing container), a very frequent use case.
+
+<b>Signature:</b>
+
+```typescript
+fullTree: Traversal
+```

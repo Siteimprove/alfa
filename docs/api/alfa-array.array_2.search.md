@@ -4,6 +4,12 @@
 
 ## Array\_2.search() function
 
+<b>Signature:</b>
+
+```typescript
+function search<T>(array: ReadonlyArray<T>, value: T, comparer: Comparer<T>): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  value | T |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+number
 

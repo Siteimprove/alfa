@@ -4,9 +4,19 @@
 
 ## Element.isElement() function
 
+<b>Signature:</b>
+
+```typescript
+function isElement(value: unknown): value is Element;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Element](./alfa-dom.element.md)
 

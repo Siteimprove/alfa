@@ -4,3 +4,11 @@
 
 ## Transform type
 
+
+<b>Signature:</b>
+
+```typescript
+export declare type Transform = Matrix | Perspective | Rotate | Scale | Skew | Translate;
+```
+<b>References:</b> [Matrix](./alfa-css.matrix.md)<!-- -->, [Perspective](./alfa-css.perspective.md)<!-- -->, [Rotate](./alfa-css.rotate.md)<!-- -->, [Scale](./alfa-css.scale.md)<!-- -->, [Skew](./alfa-css.skew.md)<!-- -->, [Translate](./alfa-css.translate.md)
+

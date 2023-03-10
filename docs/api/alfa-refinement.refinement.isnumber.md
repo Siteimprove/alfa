@@ -4,9 +4,19 @@
 
 ## Refinement.isNumber() function
 
+<b>Signature:</b>
+
+```typescript
+export function isNumber(value: unknown): value is number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is number
 

@@ -4,3 +4,8 @@
 
 ## Rule.Composite.composes property
 
+<b>Signature:</b>
+
+```typescript
+get composes(): ReadonlyArray<Rule<I, T, Q, S>>;
+```

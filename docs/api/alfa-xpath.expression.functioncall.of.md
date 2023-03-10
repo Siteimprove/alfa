@@ -4,6 +4,12 @@
 
 ## Expression.FunctionCall.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(prefix: Option<string>, name: string, arity: number, parameters: Array<Expression>): FunctionCall;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -12,4 +18,8 @@
 |  name | string |  |
 |  arity | number |  |
 |  parameters | Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[FunctionCall](./alfa-xpath.expression.functioncall.md)
 

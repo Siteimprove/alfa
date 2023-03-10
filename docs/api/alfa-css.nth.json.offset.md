@@ -4,3 +4,8 @@
 
 ## Nth.JSON.offset property
 
+<b>Signature:</b>
+
+```typescript
+offset: number;
+```

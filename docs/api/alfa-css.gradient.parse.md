@@ -4,3 +4,10 @@
 
 ## Gradient.parse variable
 
+[https://drafts.csswg.org/css-images/\#typedef-gradient](https://drafts.csswg.org/css-images/#typedef-gradient)
+
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, Gradient, string>
+```

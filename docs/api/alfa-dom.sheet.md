@@ -4,11 +4,18 @@
 
 ## Sheet namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Sheet 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from](./alfa-dom.sheet.from.md) |  |
+|  [from(json)](./alfa-dom.sheet.from.md) |  |
 
 ## Interfaces
 

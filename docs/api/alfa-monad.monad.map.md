@@ -4,9 +4,19 @@
 
 ## Monad.map() method
 
+<b>Signature:</b>
+
+```typescript
+map<U>(mapper: Mapper<T, U>): Monad<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+[Monad](./alfa-monad.monad.md)<!-- -->&lt;U&gt;
 

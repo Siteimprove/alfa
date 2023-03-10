@@ -4,9 +4,19 @@
 
 ## Named.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<C extends Named.Color>(color: C): Named<C>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  color | C |  |
+
+<b>Returns:</b>
+
+[Named](./alfa-css.named.md)<!-- -->&lt;C&gt;
 

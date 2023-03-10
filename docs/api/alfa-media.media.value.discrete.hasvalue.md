@@ -4,9 +4,19 @@
 
 ## Media.Value.Discrete.hasValue() method
 
+<b>Signature:</b>
+
+```typescript
+hasValue<U extends T>(refinement: Refinement<T, U>): this is Discrete<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+this is [Discrete](./alfa-media.media.value.discrete.md)<!-- -->&lt;U&gt;
 

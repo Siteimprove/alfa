@@ -4,3 +4,8 @@
 
 ## Token.isCloseCurlyBracket variable
 
+<b>Signature:</b>
+
+```typescript
+isCloseCurlyBracket: typeof CloseCurlyBracket.isCloseCurlyBracket
+```

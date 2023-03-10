@@ -4,3 +4,8 @@
 
 ## Node.\_children property
 
+<b>Signature:</b>
+
+```typescript
+protected readonly _children: Array<Node<F>>;
+```

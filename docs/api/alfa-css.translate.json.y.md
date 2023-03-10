@@ -4,3 +4,8 @@
 
 ## Translate.JSON.y property
 
+<b>Signature:</b>
+
+```typescript
+y: Length.JSON | Percentage.JSON;
+```

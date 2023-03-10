@@ -4,9 +4,19 @@
 
 ## Flags.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Flags): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Flags](./alfa-flags.flags.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

@@ -4,3 +4,8 @@
 
 ## Document."@context" property
 
+<b>Signature:</b>
+
+```typescript
+"@context"?: Context;
+```

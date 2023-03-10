@@ -4,3 +4,8 @@
 
 ## Left.JSON.type property
 
+<b>Signature:</b>
+
+```typescript
+type: "left";
+```

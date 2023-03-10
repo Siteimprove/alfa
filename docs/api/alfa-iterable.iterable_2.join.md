@@ -4,10 +4,20 @@
 
 ## Iterable\_2.join() function
 
+<b>Signature:</b>
+
+```typescript
+function join<T>(iterable: Iterable<T>, separator: string): string;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  separator | string |  |
+
+<b>Returns:</b>
+
+string
 

@@ -4,11 +4,17 @@
 
 ## Expression.Path.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [left](./alfa-xpath.expression.path.json.left.md) |  |  |  |
-|  [right](./alfa-xpath.expression.path.json.right.md) |  |  |  |
-|  [type](./alfa-xpath.expression.path.json.type.md) |  |  |  |
+|  [left](./alfa-xpath.expression.path.json.left.md) |  | [Expression.JSON](./alfa-xpath.expression.json.md) |  |
+|  [right](./alfa-xpath.expression.path.json.right.md) |  | [Expression.JSON](./alfa-xpath.expression.json.md) |  |
+|  [type](./alfa-xpath.expression.path.json.type.md) |  | "path" |  |
 

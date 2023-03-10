@@ -4,10 +4,20 @@
 
 ## Crawler.with() method
 
+<b>Signature:</b>
+
+```typescript
+static with<T>(mapper: Mapper<Crawler, Promise<T>>, scraper?: Promise<Scraper>): Promise<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;[Crawler](./alfa-crawler.crawler.md)<!-- -->, Promise&lt;T&gt;&gt; |  |
 |  scraper | Promise&lt;[Scraper](./alfa-scraper.scraper.md)<!-- -->&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+Promise&lt;T&gt;
 

@@ -4,9 +4,19 @@
 
 ## Tuple.of() function
 
+<b>Signature:</b>
+
+```typescript
+export function of<T extends Tuple>(...values: T): T;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | T |  |
+
+<b>Returns:</b>
+
+T
 

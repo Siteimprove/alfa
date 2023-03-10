@@ -4,3 +4,12 @@
 
 ## Table.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Table.JSON;
+```
+<b>Returns:</b>
+
+[Table.JSON](./alfa-table.table.json.md)
+

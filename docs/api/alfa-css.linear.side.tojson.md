@@ -4,3 +4,12 @@
 
 ## Linear.Side.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Side.JSON;
+```
+<b>Returns:</b>
+
+[Side.JSON](./alfa-css.linear.side.json.md)
+

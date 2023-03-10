@@ -4,9 +4,19 @@
 
 ## Shape.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Shape): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Shape](./alfa-css.shape.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

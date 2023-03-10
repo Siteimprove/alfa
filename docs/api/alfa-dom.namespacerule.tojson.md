@@ -4,3 +4,12 @@
 
 ## NamespaceRule.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): NamespaceRule.JSON;
+```
+<b>Returns:</b>
+
+[NamespaceRule.JSON](./alfa-dom.namespacerule.json.md)
+

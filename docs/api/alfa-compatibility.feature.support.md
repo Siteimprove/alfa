@@ -4,3 +4,12 @@
 
 ## Feature.Support type
 
+<b>Signature:</b>
+
+```typescript
+type Support<N extends Name = Name> = {
+        readonly [I in Implementer<N>]: Implementation<N, I>;
+    };
+```
+<b>References:</b> [Name](./alfa-compatibility.feature.name.md)<!-- -->, [Implementer](./alfa-compatibility.feature.implementer.md)<!-- -->, [Implementation](./alfa-compatibility.feature.implementation.md)
+

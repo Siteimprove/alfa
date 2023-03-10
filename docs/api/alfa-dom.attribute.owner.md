@@ -4,3 +4,8 @@
 
 ## Attribute.owner property
 
+<b>Signature:</b>
+
+```typescript
+get owner(): Option<Element>;
+```

@@ -4,10 +4,20 @@
 
 ## h.rule.keyframe() function
 
+<b>Signature:</b>
+
+```typescript
+function keyframe(key: string, declarations: Array<Declaration> | Record<string, string>): KeyframeRule;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | string |  |
 |  declarations | Array&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; \| Record&lt;string, string&gt; |  |
+
+<b>Returns:</b>
+
+[KeyframeRule](./alfa-dom.keyframerule.md)
 

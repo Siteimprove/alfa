@@ -4,9 +4,19 @@
 
 ## Ellipse.isEllipse() function
 
+<b>Signature:</b>
+
+```typescript
+function isEllipse(value: unknown): value is Ellipse;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Ellipse](./alfa-css.ellipse.md)
 

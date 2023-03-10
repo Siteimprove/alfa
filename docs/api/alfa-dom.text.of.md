@@ -4,9 +4,19 @@
 
 ## Text.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(data: string): Text;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | string |  |
+
+<b>Returns:</b>
+
+[Text](./alfa-dom.text.md)
 

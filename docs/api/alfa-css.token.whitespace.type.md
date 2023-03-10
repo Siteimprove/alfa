@@ -4,3 +4,8 @@
 
 ## Token.Whitespace.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "whitespace";
+```

@@ -4,9 +4,19 @@
 
 ## Result.isResult() function
 
+<b>Signature:</b>
+
+```typescript
+function isResult<T, E>(value: Iterable<T>): value is Result<T, E>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+value is [Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
 

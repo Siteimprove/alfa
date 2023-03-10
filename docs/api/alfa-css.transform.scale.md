@@ -4,10 +4,20 @@
 
 ## Transform.scale() function
 
+<b>Signature:</b>
+
+```typescript
+function scale(x: Number, y: Number): Scale;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  x | Number |  |
 |  y | Number |  |
+
+<b>Returns:</b>
+
+[Scale](./alfa-css.scale.md)
 

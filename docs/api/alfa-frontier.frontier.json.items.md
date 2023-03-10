@@ -4,3 +4,8 @@
 
 ## Frontier.JSON.items property
 
+<b>Signature:</b>
+
+```typescript
+items: Array<Item.JSON>;
+```

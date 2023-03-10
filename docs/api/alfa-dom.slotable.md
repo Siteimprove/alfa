@@ -4,11 +4,18 @@
 
 ## Slotable namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Slotable 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [findSlot](./alfa-dom.slotable.findslot.md) |  |
-|  [isSlotable](./alfa-dom.slotable.isslotable.md) |  |
-|  [name](./alfa-dom.slotable.name.md) |  |
+|  [findSlot(slotable)](./alfa-dom.slotable.findslot.md) | [https://dom.spec.whatwg.org/\#find-a-slot](https://dom.spec.whatwg.org/#find-a-slot) |
+|  [isSlotable(value)](./alfa-dom.slotable.isslotable.md) |  |
+|  [name(slotable)](./alfa-dom.slotable.name.md) | [https://dom.spec.whatwg.org/\#slotable-name](https://dom.spec.whatwg.org/#slotable-name) |
 

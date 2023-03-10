@@ -4,10 +4,20 @@
 
 ## Iterable\_2.collectFirst() function
 
+<b>Signature:</b>
+
+```typescript
+function collectFirst<T, U>(iterable: Iterable<T>, mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

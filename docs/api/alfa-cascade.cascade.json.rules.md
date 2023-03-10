@@ -4,3 +4,8 @@
 
 ## Cascade.JSON.rules property
 
+<b>Signature:</b>
+
+```typescript
+rules: RuleTree.JSON;
+```

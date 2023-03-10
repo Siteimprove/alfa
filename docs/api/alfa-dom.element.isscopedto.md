@@ -4,3 +4,8 @@
 
 ## Element.isScopedTo variable
 
+<b>Signature:</b>
+
+```typescript
+isScopedTo: typeof predicate.isScopedTo
+```

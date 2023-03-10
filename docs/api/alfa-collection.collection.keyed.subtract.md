@@ -4,9 +4,19 @@
 
 ## Collection.Keyed.subtract() method
 
+<b>Signature:</b>
+
+```typescript
+subtract(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;readonly \[K, V\]&gt; |  |
+
+<b>Returns:</b>
+
+[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;
 

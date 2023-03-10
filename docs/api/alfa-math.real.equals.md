@@ -4,6 +4,14 @@
 
 ## Real.equals() function
 
+Check if two reals are equal, accounting for floating-point precision errors according to a given epsilon.
+
+<b>Signature:</b>
+
+```typescript
+function equals(a: number, b: number, e?: number): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +19,8 @@
 |  a | number |  |
 |  b | number |  |
 |  e | number | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+boolean
 

@@ -4,3 +4,10 @@
 
 ## Linear.Position type
 
+<b>Signature:</b>
+
+```typescript
+type Position = Position.Vertical | Position.Horizontal;
+```
+<b>References:</b> [Position.Vertical](./alfa-css.linear.position.vertical.md)<!-- -->, [Position.Horizontal](./alfa-css.linear.position.horizontal.md)
+

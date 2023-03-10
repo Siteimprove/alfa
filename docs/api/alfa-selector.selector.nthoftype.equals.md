@@ -4,9 +4,19 @@
 
 ## Selector.NthOfType.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: NthOfType): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [NthOfType](./alfa-selector.selector.nthoftype.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

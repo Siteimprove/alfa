@@ -4,3 +4,10 @@
 
 ## Language.Script.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Subtag.JSON<"script", Name> 
+```
+<b>Extends:</b> [Subtag.JSON](./alfa-iana.language.subtag.json.md)<!-- -->&lt;"script", [Name](./alfa-iana.language.script.name.md)<!-- -->&gt;
+

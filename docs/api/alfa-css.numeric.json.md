@@ -4,10 +4,17 @@
 
 ## Numeric.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<T extends Type = Type> extends Value.JSON<T> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;T&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.numeric.json.type.md) |  |  |  |
-|  [value](./alfa-css.numeric.json.value.md) |  |  |  |
+|  [type](./alfa-css.numeric.json.type.md) |  | T |  |
+|  [value](./alfa-css.numeric.json.value.md) |  | number |  |
 

@@ -4,3 +4,8 @@
 
 ## Rotate.JSON.angle property
 
+<b>Signature:</b>
+
+```typescript
+angle: Angle.JSON;
+```

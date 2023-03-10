@@ -4,9 +4,12 @@
 
 ## Performance.once() method
 
-## Parameters
+<b>Signature:</b>
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  listener | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Performance.Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt;&gt; |  |
+```typescript
+once(): Promise<Performance.Entry<T>>;
+```
+<b>Returns:</b>
+
+Promise&lt;[Performance.Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt;&gt;
 

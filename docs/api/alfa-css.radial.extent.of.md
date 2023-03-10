@@ -4,10 +4,20 @@
 
 ## Radial.Extent.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(shape?: Extent.Shape, size?: Extent.Size): Extent;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  shape | [Extent.Shape](./alfa-css.radial.extent.shape.md) | <i>(Optional)</i> |
 |  size | [Extent.Size](./alfa-css.radial.extent.size.md) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Extent](./alfa-css.radial.extent.md)
 

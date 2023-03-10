@@ -4,3 +4,10 @@
 
 ## Response.status property
 
+[https://fetch.spec.whatwg.org/\#dom-response-status](https://fetch.spec.whatwg.org/#dom-response-status)
+
+<b>Signature:</b>
+
+```typescript
+get status(): number;
+```

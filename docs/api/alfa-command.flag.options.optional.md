@@ -4,3 +4,8 @@
 
 ## Flag.Options.optional property
 
+<b>Signature:</b>
+
+```typescript
+readonly optional: boolean;
+```

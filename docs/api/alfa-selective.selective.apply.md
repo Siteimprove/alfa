@@ -4,9 +4,19 @@
 
 ## Selective.apply() method
 
+<b>Signature:</b>
+
+```typescript
+apply<U>(mapper: Selective<S, Mapper<T, U>>): Selective<S, U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Selective](./alfa-selective.selective.md)<!-- -->&lt;S, U&gt;
 

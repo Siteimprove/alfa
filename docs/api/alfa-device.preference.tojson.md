@@ -4,3 +4,12 @@
 
 ## Preference.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Preference.JSON;
+```
+<b>Returns:</b>
+
+[Preference.JSON](./alfa-device.preference.json.md)
+

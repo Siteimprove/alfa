@@ -4,10 +4,20 @@
 
 ## Performance.Mark.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<T>(data: T, start: number): Mark<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | T |  |
 |  start | number |  |
+
+<b>Returns:</b>
+
+[Mark](./alfa-performance.performance.mark.md)<!-- -->&lt;T&gt;
 

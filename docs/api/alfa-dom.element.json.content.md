@@ -4,3 +4,8 @@
 
 ## Element.JSON.content property
 
+<b>Signature:</b>
+
+```typescript
+content: Document.JSON | null;
+```

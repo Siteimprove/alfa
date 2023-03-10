@@ -4,10 +4,20 @@
 
 ## Array\_2.every() function
 
+<b>Signature:</b>
+
+```typescript
+function every<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): array is Array<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+array is Array&lt;U&gt;
 

@@ -4,10 +4,20 @@
 
 ## Array\_2.map() function
 
+<b>Signature:</b>
+
+```typescript
+function map<T, U = T>(array: ReadonlyArray<T>, mapper: Mapper<T, U, [index: number]>): Array<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+Array&lt;U&gt;
 

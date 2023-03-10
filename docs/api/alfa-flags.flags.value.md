@@ -4,3 +4,10 @@
 
 ## Flags.value property
 
+A compact representation of the set of flags as a number
+
+<b>Signature:</b>
+
+```typescript
+get value(): number;
+```

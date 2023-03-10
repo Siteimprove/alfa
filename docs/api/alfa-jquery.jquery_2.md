@@ -4,11 +4,18 @@
 
 ## JQuery\_2 namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace JQuery 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [toPage](./alfa-jquery.jquery_2.topage.md) |  |
+|  [toPage(value)](./alfa-jquery.jquery_2.topage.md) |  |
 
 ## Type Aliases
 

@@ -4,3 +4,8 @@
 
 ## Selector.List.left property
 
+<b>Signature:</b>
+
+```typescript
+get left(): T;
+```

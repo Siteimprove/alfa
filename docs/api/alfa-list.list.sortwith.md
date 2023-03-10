@@ -4,10 +4,19 @@
 
 ## List.sortWith() method
 
+<b>Signature:</b>
+
+```typescript
+sortWith(comparer: Comparer<T>): List<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | [List](./alfa-list.list.md)<!-- -->&lt;U&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

@@ -4,10 +4,18 @@
 
 ## Audit class
 
+\* I: type of Input for rules \* T: possible types of test targets \* Q: questions' metadata type \* S: possible types of questions' subject.
+
+<b>Signature:</b>
+
+```typescript
+export declare class Audit<I, T extends Hashable, Q = never, S = T> 
+```
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [evaluate](./alfa-act.audit.evaluate.md) |  |  |
-|  [of](./alfa-act.audit.of.md) |  |  |
+|  [evaluate(performance)](./alfa-act.audit.evaluate.md) |  |  |
+|  [of(input, rules, oracle)](./alfa-act.audit.of.md) | <code>static</code> |  |
 

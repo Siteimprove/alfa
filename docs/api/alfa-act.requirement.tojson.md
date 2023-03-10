@@ -4,3 +4,12 @@
 
 ## Requirement.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Requirement.JSON;
+```
+<b>Returns:</b>
+
+[Requirement.JSON](./alfa-act.requirement.json.md)
+

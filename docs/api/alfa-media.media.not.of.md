@@ -4,9 +4,19 @@
 
 ## Media.Not.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(condition: Feature | Condition): Not;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  condition | [Feature](./alfa-media.media.feature.md) \| [Condition](./alfa-media.media.condition.md) |  |
+
+<b>Returns:</b>
+
+[Not](./alfa-media.media.not.md)
 

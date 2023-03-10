@@ -4,9 +4,19 @@
 
 ## Hex.isHex() function
 
+<b>Signature:</b>
+
+```typescript
+function isHex(value: unknown): value is Hex;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Hex](./alfa-css.hex.md)
 

@@ -4,14 +4,21 @@
 
 ## Argument namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Argument 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [boolean](./alfa-command.argument.boolean.md) |  |
-|  [integer](./alfa-command.argument.integer.md) |  |
-|  [number](./alfa-command.argument.number.md) |  |
-|  [string](./alfa-command.argument.string.md) |  |
+|  [boolean(name, description)](./alfa-command.argument.boolean.md) |  |
+|  [integer(name, description)](./alfa-command.argument.integer.md) |  |
+|  [number(name, description)](./alfa-command.argument.number.md) |  |
+|  [string(name, description)](./alfa-command.argument.string.md) |  |
 
 ## Interfaces
 

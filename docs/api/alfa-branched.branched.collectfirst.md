@@ -4,9 +4,19 @@
 
 ## Branched.collectFirst() method
 
+<b>Signature:</b>
+
+```typescript
+collectFirst<U>(mapper: Mapper<T, Option<U>, [Iterable<B>]>): Option<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[Iterable&lt;B&gt;\]&gt; |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

@@ -4,3 +4,8 @@
 
 ## Scraper.scrape.Options.device property
 
+<b>Signature:</b>
+
+```typescript
+readonly device?: Device;
+```

@@ -4,6 +4,12 @@
 
 ## Transformation.translate() function
 
+<b>Signature:</b>
+
+```typescript
+function translate(tx: number, ty?: number, tz?: number): Transformation;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  tx | number |  |
 |  ty | number | <i>(Optional)</i> |
 |  tz | number | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Transformation](./alfa-affine.transformation.md)
 

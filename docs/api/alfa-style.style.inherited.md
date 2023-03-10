@@ -4,3 +4,8 @@
 
 ## Style.Inherited type
 
+<b>Signature:</b>
+
+```typescript
+type Inherited<N extends Name> = Property.Value.Inherited<N>;
+```

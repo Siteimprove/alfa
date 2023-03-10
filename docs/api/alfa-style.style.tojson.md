@@ -4,3 +4,12 @@
 
 ## Style.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Style.JSON;
+```
+<b>Returns:</b>
+
+[Style.JSON](./alfa-style.style.json.md)
+

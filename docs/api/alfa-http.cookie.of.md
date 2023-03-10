@@ -4,10 +4,20 @@
 
 ## Cookie.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(name: string, value: string): Cookie;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  value | string |  |
+
+<b>Returns:</b>
+
+[Cookie](./alfa-http.cookie.md)
 

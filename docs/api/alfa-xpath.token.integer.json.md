@@ -4,10 +4,16 @@
 
 ## Token.Integer.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-xpath.token.integer.json.type.md) |  |  |  |
-|  [value](./alfa-xpath.token.integer.json.value.md) |  |  |  |
+|  [type](./alfa-xpath.token.integer.json.type.md) |  | "integer" |  |
+|  [value](./alfa-xpath.token.integer.json.value.md) |  | number |  |
 

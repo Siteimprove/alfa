@@ -4,11 +4,18 @@
 
 ## Outcome.EARL interface
 
+<b>Signature:</b>
+
+```typescript
+interface EARL extends earl.EARL 
+```
+<b>Extends:</b> earl.[EARL](./alfa-earl.earl.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@type"](./alfa-act.outcome.earl.__type_.md) |  |  |  |
-|  ["earl:mode"](./alfa-act.outcome.earl._earl_mode_.md) |  |  |  |
-|  ["earl:test"](./alfa-act.outcome.earl._earl_test_.md) |  |  |  |
+|  ["@type"](./alfa-act.outcome.earl.__type_.md) |  | "earl:Assertion" |  |
+|  ["earl:mode"](./alfa-act.outcome.earl._earl_mode_.md) |  | \`earl:${[Mode](./alfa-act.outcome.mode.md)<!-- -->}\` |  |
+|  ["earl:test"](./alfa-act.outcome.earl._earl_test_.md) |  | { "@id": string; } |  |
 

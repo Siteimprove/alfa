@@ -4,3 +4,12 @@
 
 ## Graph.sort() method
 
+<b>Signature:</b>
+
+```typescript
+sort(): Iterable<T>;
+```
+<b>Returns:</b>
+
+Iterable&lt;T&gt;
+

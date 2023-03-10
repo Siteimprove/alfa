@@ -4,9 +4,19 @@
 
 ## Time.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(epoch: number): Time;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  epoch | number |  |
+
+<b>Returns:</b>
+
+[Time](./alfa-time.time.md)
 

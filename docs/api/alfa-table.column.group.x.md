@@ -4,3 +4,8 @@
 
 ## Column.Group.x property
 
+<b>Signature:</b>
+
+```typescript
+get x(): number;
+```

@@ -4,9 +4,19 @@
 
 ## Value.flatten() method
 
+<b>Signature:</b>
+
+```typescript
+flatten<T>(this: Value<Value<T>>): Value<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Value](./alfa-style.value.md)<!-- -->&lt;[Value](./alfa-style.value.md)<!-- -->&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Value](./alfa-style.value.md)<!-- -->&lt;T&gt;
 

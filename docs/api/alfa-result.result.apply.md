@@ -4,9 +4,19 @@
 
 ## Result.apply() method
 
+<b>Signature:</b>
+
+```typescript
+apply<U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Result](./alfa-result.result.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;, E&gt; |  |
+
+<b>Returns:</b>
+
+[Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;
 

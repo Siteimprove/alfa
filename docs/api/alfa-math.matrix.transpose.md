@@ -4,9 +4,23 @@
 
 ## Matrix.transpose() function
 
+Compute the transpose of a matrix.
+
+[https://en.wikipedia.org/wiki/Transpose](https://en.wikipedia.org/wiki/Transpose)
+
+<b>Signature:</b>
+
+```typescript
+function transpose(m: Matrix): Matrix;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
+
+<b>Returns:</b>
+
+[Matrix](./alfa-math.matrix.md)
 

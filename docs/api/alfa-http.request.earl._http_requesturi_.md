@@ -4,3 +4,8 @@
 
 ## Request.EARL."http:requestURI" property
 
+<b>Signature:</b>
+
+```typescript
+"http:requestURI": string;
+```

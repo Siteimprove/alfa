@@ -4,11 +4,18 @@
 
 ## Version namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Version 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isVersion](./alfa-rules.version.isversion.md) |  |
+|  [isVersion(value)](./alfa-rules.version.isversion.md) |  |
 
 ## Interfaces
 

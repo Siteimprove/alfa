@@ -4,9 +4,19 @@
 
 ## Map\_2.isMap() function
 
+<b>Signature:</b>
+
+```typescript
+function isMap<K, V>(value: Iterable<readonly [K, V]>): value is Map<K, V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;readonly \[K, V\]&gt; |  |
+
+<b>Returns:</b>
+
+value is Map&lt;K, V&gt;
 

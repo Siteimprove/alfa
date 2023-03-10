@@ -4,3 +4,12 @@
 
 ## Role.NamedBy type
 
+The methods by which the element assigned to the specified role may receive its name.
+
+<b>Signature:</b>
+
+```typescript
+type NamedBy<N extends Name = Name> = Members<Roles[N]["name"]["from"]>;
+```
+<b>References:</b> [Name](./alfa-aria.role.name.md)
+

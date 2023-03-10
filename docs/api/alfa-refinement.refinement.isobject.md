@@ -4,9 +4,21 @@
 
 ## Refinement.isObject() function
 
+<b>Signature:</b>
+
+```typescript
+export function isObject(value: unknown): value is {
+        [key: string]: unknown;
+    };
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is { \[key: string\]: unknown; }
 

@@ -4,10 +4,20 @@
 
 ## Scraper.with() method
 
+<b>Signature:</b>
+
+```typescript
+static with<T>(mapper: Mapper<Scraper, Promise<T>>, browser?: Promise<puppeteer.Browser>): Promise<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;[Scraper](./alfa-scraper.scraper.md)<!-- -->, Promise&lt;T&gt;&gt; |  |
 |  browser | Promise&lt;puppeteer.Browser&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+Promise&lt;T&gt;
 

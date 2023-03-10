@@ -4,3 +4,8 @@
 
 ## Rule.\_owner property
 
+<b>Signature:</b>
+
+```typescript
+protected _owner: Option<Sheet>;
+```

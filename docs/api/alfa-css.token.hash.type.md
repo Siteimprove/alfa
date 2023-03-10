@@ -4,3 +4,8 @@
 
 ## Token.Hash.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "hash";
+```

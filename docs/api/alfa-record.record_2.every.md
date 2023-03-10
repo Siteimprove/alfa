@@ -4,9 +4,19 @@
 
 ## Record\_2.every() method
 
+<b>Signature:</b>
+
+```typescript
+every(predicate: Predicate<Record.Value<T>, [Record.Key<T>]>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;Record.Value&lt;T&gt;, \[Record.Key&lt;T&gt;\]&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

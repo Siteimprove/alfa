@@ -4,3 +4,12 @@
 
 ## Record\_2.keys() method
 
+<b>Signature:</b>
+
+```typescript
+keys(): Iterable<Record.Key<T>>;
+```
+<b>Returns:</b>
+
+Iterable&lt;Record.Key&lt;T&gt;&gt;
+

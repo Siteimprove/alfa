@@ -4,3 +4,8 @@
 
 ## Token.BadURL.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "bad-url";
+```

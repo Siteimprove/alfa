@@ -4,9 +4,19 @@
 
 ## Lazy.apply() method
 
+<b>Signature:</b>
+
+```typescript
+apply<U>(mapper: Lazy<Mapper<T, U>>): Lazy<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;U&gt;
 

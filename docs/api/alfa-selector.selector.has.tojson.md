@@ -4,3 +4,12 @@
 
 ## Selector.Has.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Has.JSON;
+```
+<b>Returns:</b>
+
+[Has.JSON](./alfa-selector.selector.has.json.md)
+

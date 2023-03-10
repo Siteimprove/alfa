@@ -4,3 +4,8 @@
 
 ## Media.Matchable.matches property
 
+<b>Signature:</b>
+
+```typescript
+readonly matches: Predicate<Device>;
+```

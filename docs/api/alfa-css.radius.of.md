@@ -4,9 +4,19 @@
 
 ## Radius.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<R extends Length | Percentage | Radius.Side>(value: R): Radius<R>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | R |  |
+
+<b>Returns:</b>
+
+[Radius](./alfa-css.radius.md)<!-- -->&lt;R&gt;
 

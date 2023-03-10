@@ -4,9 +4,19 @@
 
 ## Token.CloseSquareBracket.isCloseSquareBracket() function
 
+<b>Signature:</b>
+
+```typescript
+function isCloseSquareBracket(value: unknown): value is CloseSquareBracket;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [CloseSquareBracket](./alfa-css.token.closesquarebracket.md)
 

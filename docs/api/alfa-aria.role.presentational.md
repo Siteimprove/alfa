@@ -4,3 +4,15 @@
 
 ## Role.Presentational type
 
+The names of all presentational roles.
+
+<b>Signature:</b>
+
+```typescript
+type Presentational = "presentation" | "none";
+```
+
+## Remarks
+
+In WAI-ARIA, the role `none` is defined to be synonymous with the role `presentation`<!-- -->. We therefore refer collectively to the two roles as the presentational roles.
+

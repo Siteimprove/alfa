@@ -4,11 +4,18 @@
 
 ## Circle.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Value.JSON<"basic-shape"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"basic-shape"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [center](./alfa-css.circle.json.center.md) |  |  |  |
-|  [kind](./alfa-css.circle.json.kind.md) |  |  |  |
-|  [radius](./alfa-css.circle.json.radius.md) |  |  |  |
+|  [center](./alfa-css.circle.json.center.md) |  | [Position.JSON](./alfa-css.position.json.md) |  |
+|  [kind](./alfa-css.circle.json.kind.md) |  | "circle" |  |
+|  [radius](./alfa-css.circle.json.radius.md) |  | [Radius.JSON](./alfa-css.radius.json.md) |  |
 

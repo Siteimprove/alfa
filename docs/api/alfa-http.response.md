@@ -4,12 +4,19 @@
 
 ## Response namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Response 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from](./alfa-http.response.from.md) |  |
-|  [isResponse](./alfa-http.response.isresponse.md) |  |
+|  [from(json)](./alfa-http.response.from.md) |  |
+|  [isResponse(value)](./alfa-http.response.isresponse.md) |  |
 
 ## Interfaces
 

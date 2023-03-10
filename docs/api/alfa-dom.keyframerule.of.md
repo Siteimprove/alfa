@@ -4,10 +4,20 @@
 
 ## KeyframeRule.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(key: string, declarations: Iterable<Declaration>): KeyframeRule;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | string |  |
 |  declarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[KeyframeRule](./alfa-dom.keyframerule.md)
 

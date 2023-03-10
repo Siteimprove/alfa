@@ -4,10 +4,20 @@
 
 ## Array\_2.intersect() function
 
+<b>Signature:</b>
+
+```typescript
+function intersect<T>(array: ReadonlyArray<T>, ...iterables: Array<Iterable<T>>): Array<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  iterables | Array&lt;Iterable&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+Array&lt;T&gt;
 

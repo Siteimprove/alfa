@@ -4,10 +4,20 @@
 
 ## Iterable\_2.groupBy() function
 
+<b>Signature:</b>
+
+```typescript
+function groupBy<T, K>(iterable: Iterable<T>, grouper: Mapper<T, K, [index: number]>): Iterable<[K, Iterable<T>]>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  grouper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, K, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+Iterable&lt;\[K, Iterable&lt;T&gt;\]&gt;
 

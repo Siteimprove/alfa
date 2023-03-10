@@ -4,3 +4,12 @@
 
 ## jsx.Properties.style property
 
+An optional record of CSS property names and their associated values. This works similarly to the `style` property in React.
+
+[https://reactjs.org/docs/dom-elements.html\#style](https://reactjs.org/docs/dom-elements.html#style)
+
+<b>Signature:</b>
+
+```typescript
+style?: Record<string, string>;
+```

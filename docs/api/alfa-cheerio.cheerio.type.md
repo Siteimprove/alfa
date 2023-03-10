@@ -4,3 +4,8 @@
 
 ## Cheerio.Type type
 
+<b>Signature:</b>
+
+```typescript
+type Type = cheerio.Cheerio<dom.Node>;
+```

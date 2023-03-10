@@ -4,9 +4,19 @@
 
 ## Iterable\_2.size() function
 
+<b>Signature:</b>
+
+```typescript
+function size<T>(iterable: Iterable<T>): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+number
 

@@ -4,9 +4,15 @@
 
 ## Token.OpenCurlyBracket.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.token.opencurlybracket.json.type.md) |  |  |  |
+|  [type](./alfa-css.token.opencurlybracket.json.type.md) |  | "open-curly-bracket" |  |
 

@@ -4,6 +4,14 @@
 
 ## Selector.Pseudo.Element.(constructor)
 
+Constructs a new instance of the `Element` class
+
+<b>Signature:</b>
+
+```typescript
+protected constructor(name: N);
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |

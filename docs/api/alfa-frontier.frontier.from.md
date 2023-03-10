@@ -4,9 +4,19 @@
 
 ## Frontier.from() method
 
+<b>Signature:</b>
+
+```typescript
+static from(json: Frontier.JSON): Frontier;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [Frontier.JSON](./alfa-frontier.frontier.json.md) |  |
+
+<b>Returns:</b>
+
+[Frontier](./alfa-frontier.frontier.md)
 

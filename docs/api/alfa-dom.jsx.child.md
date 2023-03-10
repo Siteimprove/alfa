@@ -4,3 +4,10 @@
 
 ## jsx.Child type
 
+<b>Signature:</b>
+
+```typescript
+type Child = Node | string;
+```
+<b>References:</b> [Node](./alfa-dom.node.md)
+

@@ -4,10 +4,17 @@
 
 ## Selector.Compound.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Selector.JSON<"compound"> 
+```
+<b>Extends:</b> [Selector.JSON](./alfa-selector.selector.json.md)<!-- -->&lt;"compound"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [left](./alfa-selector.selector.compound.json.left.md) |  |  |  |
-|  [right](./alfa-selector.selector.compound.json.right.md) |  |  |  |
+|  [left](./alfa-selector.selector.compound.json.left.md) |  | [Simple.JSON](./alfa-selector.selector.simple.json.md) |  |
+|  [right](./alfa-selector.selector.compound.json.right.md) |  | [Simple.JSON](./alfa-selector.selector.simple.json.md) \| [JSON](./alfa-selector.selector.compound.json.md) |  |
 

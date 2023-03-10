@@ -4,6 +4,13 @@
 
 ## Archive namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Archive 
+```
+
 ## Enumerations
 
 |  Enumeration | Description |

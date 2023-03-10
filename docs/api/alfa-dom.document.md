@@ -4,11 +4,18 @@
 
 ## Document namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Document 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isDocument](./alfa-dom.document.isdocument.md) |  |
+|  [isDocument(value)](./alfa-dom.document.isdocument.md) |  |
 
 ## Interfaces
 

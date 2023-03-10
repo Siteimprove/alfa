@@ -4,10 +4,20 @@
 
 ## Real.subtract() function
 
+<b>Signature:</b>
+
+```typescript
+function subtract(p: number, q: number): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  p | number |  |
 |  q | number |  |
+
+<b>Returns:</b>
+
+number
 

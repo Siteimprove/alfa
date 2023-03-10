@@ -4,9 +4,19 @@
 
 ## Unit.Length.isFontRelative() function
 
+<b>Signature:</b>
+
+```typescript
+function isFontRelative(unit: string): unit is Relative.Font;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | string |  |
+
+<b>Returns:</b>
+
+unit is [Relative.Font](./alfa-css.unit.length.relative.font.md)
 

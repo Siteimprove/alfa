@@ -4,9 +4,19 @@
 
 ## Trampoline.isTrampoline() function
 
+<b>Signature:</b>
+
+```typescript
+function isTrampoline<T>(value: Iterable<T>): value is Trampoline<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+value is [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;
 

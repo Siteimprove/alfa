@@ -4,3 +4,8 @@
 
 ## Device.viewport property
 
+<b>Signature:</b>
+
+```typescript
+get viewport(): Viewport;
+```

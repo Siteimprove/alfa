@@ -4,3 +4,12 @@
 
 ## Question.isRhetorical() method
 
+<b>Signature:</b>
+
+```typescript
+isRhetorical(): this is Question.Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, T>;
+```
+<b>Returns:</b>
+
+this is Question.Rhetorical&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T&gt;
+

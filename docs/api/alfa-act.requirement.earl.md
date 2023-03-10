@@ -4,11 +4,18 @@
 
 ## Requirement.EARL interface
 
+<b>Signature:</b>
+
+```typescript
+interface EARL extends earl.EARL 
+```
+<b>Extends:</b> earl.[EARL](./alfa-earl.earl.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@context"](./alfa-act.requirement.earl.__context_.md) |  |  |  |
-|  ["@id"](./alfa-act.requirement.earl.__id_.md) |  |  |  |
-|  ["@type"](./alfa-act.requirement.earl.__type_.md) |  |  |  |
+|  ["@context"](./alfa-act.requirement.earl.__context_.md) |  | { earl: "http://www.w3.org/ns/earl\#"; } |  |
+|  ["@id"](./alfa-act.requirement.earl.__id_.md) |  | string |  |
+|  ["@type"](./alfa-act.requirement.earl.__type_.md) |  | \["earl:TestCriterion", "earl:TestRequirement"\] |  |
 

@@ -4,6 +4,12 @@
 
 ## Name.State namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace State 
+```
+
 ## Interfaces
 
 |  Interface | Description |

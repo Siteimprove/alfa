@@ -4,9 +4,19 @@
 
 ## Linear.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Linear): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Linear](./alfa-css.linear.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

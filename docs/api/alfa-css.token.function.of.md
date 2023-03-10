@@ -4,9 +4,19 @@
 
 ## Token.Function.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(value: string): Function;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
+
+<b>Returns:</b>
+
+[Function](./alfa-css.token.function.md)
 

@@ -4,10 +4,20 @@
 
 ## Flag.boolean() function
 
+<b>Signature:</b>
+
+```typescript
+function boolean(name: string, description: string): Flag<boolean>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  description | string |  |
+
+<b>Returns:</b>
+
+[Flag](./alfa-command.flag.md)<!-- -->&lt;boolean&gt;
 

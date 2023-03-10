@@ -4,3 +4,8 @@
 
 ## Outcome.EARL."@type" property
 
+<b>Signature:</b>
+
+```typescript
+"@type": "earl:Assertion";
+```

@@ -4,10 +4,20 @@
 
 ## Token.Percentage.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(value: number, isInteger: boolean): Percentage;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | number |  |
 |  isInteger | boolean |  |
+
+<b>Returns:</b>
+
+[Percentage](./alfa-css.token.percentage.md)
 

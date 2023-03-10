@@ -4,3 +4,10 @@
 
 ## Perspective.parse variable
 
+[https://drafts.csswg.org/css-transforms-2/\#funcdef-perspective](https://drafts.csswg.org/css-transforms-2/#funcdef-perspective)
+
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, Perspective, string>
+```

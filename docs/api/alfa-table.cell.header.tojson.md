@@ -4,3 +4,12 @@
 
 ## Cell.Header.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Header.JSON;
+```
+<b>Returns:</b>
+
+[Header.JSON](./alfa-table.cell.header.json.md)
+

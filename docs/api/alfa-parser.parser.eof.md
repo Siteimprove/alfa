@@ -4,3 +4,13 @@
 
 ## Parser.eof variable
 
+> Warning: This API is now obsolete.
+> 
+> Use `end()`
+> 
+
+<b>Signature:</b>
+
+```typescript
+eof: typeof end
+```

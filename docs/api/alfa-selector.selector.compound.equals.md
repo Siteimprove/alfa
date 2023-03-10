@@ -4,9 +4,19 @@
 
 ## Selector.Compound.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Compound): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Compound](./alfa-selector.selector.compound.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

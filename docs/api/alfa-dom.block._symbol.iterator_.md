@@ -4,3 +4,12 @@
 
 ## Block.\[Symbol.iterator\]() method
 
+<b>Signature:</b>
+
+```typescript
+[Symbol.iterator](): Iterator<Declaration>;
+```
+<b>Returns:</b>
+
+Iterator&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt;
+

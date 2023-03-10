@@ -4,3 +4,8 @@
 
 ## Shadow.JSON.style property
 
+<b>Signature:</b>
+
+```typescript
+style: Array<Sheet.JSON>;
+```

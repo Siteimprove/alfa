@@ -4,9 +4,19 @@
 
 ## Selector.Attribute.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Attribute): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Attribute](./alfa-selector.selector.attribute.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

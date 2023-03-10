@@ -4,3 +4,8 @@
 
 ## Token.Delim.value property
 
+<b>Signature:</b>
+
+```typescript
+get value(): number;
+```

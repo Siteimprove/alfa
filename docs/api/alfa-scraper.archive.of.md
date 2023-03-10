@@ -4,10 +4,20 @@
 
 ## Archive.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(path: string, format?: Archive.Format): Archive;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  path | string |  |
 |  format | [Archive.Format](./alfa-scraper.archive.format.md) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Archive](./alfa-scraper.archive.md)
 

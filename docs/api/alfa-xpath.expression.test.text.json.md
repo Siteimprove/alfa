@@ -4,10 +4,16 @@
 
 ## Expression.Test.Text.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [kind](./alfa-xpath.expression.test.text.json.kind.md) |  |  |  |
-|  [type](./alfa-xpath.expression.test.text.json.type.md) |  |  |  |
+|  [kind](./alfa-xpath.expression.test.text.json.kind.md) |  | "text" |  |
+|  [type](./alfa-xpath.expression.test.text.json.type.md) |  | "kind" |  |
 

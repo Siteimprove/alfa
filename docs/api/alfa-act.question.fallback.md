@@ -4,3 +4,8 @@
 
 ## Question.fallback property
 
+<b>Signature:</b>
+
+```typescript
+get fallback(): Option<ANSWER>;
+```

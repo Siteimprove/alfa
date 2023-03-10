@@ -4,3 +4,8 @@
 
 ## Shadow.JSON.blur property
 
+<b>Signature:</b>
+
+```typescript
+blur: Length.JSON;
+```

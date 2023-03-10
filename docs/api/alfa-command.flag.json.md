@@ -4,11 +4,17 @@
 
 ## Flag.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [description](./alfa-command.flag.json.description.md) |  |  |  |
-|  [name](./alfa-command.flag.json.name.md) |  |  |  |
-|  [options](./alfa-command.flag.json.options.md) |  |  |  |
+|  [description](./alfa-command.flag.json.description.md) |  | string |  |
+|  [name](./alfa-command.flag.json.name.md) |  | string |  |
+|  [options](./alfa-command.flag.json.options.md) |  | { \[key: string\]: json.JSON; type: string \| null; aliases: Array&lt;string&gt;; default: json.JSON \| null; optional: boolean; repeatable: boolean; } |  |
 

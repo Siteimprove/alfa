@@ -4,6 +4,13 @@
 
 ## Stability namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Stability 
+```
+
 ## Interfaces
 
 |  Interface | Description |
@@ -14,7 +21,7 @@
 
 |  Variable | Description |
 |  --- | --- |
-|  [Deprecated](./alfa-rules.stability.deprecated.md) |  |
-|  [Experimental](./alfa-rules.stability.experimental.md) |  |
-|  [Stable](./alfa-rules.stability.stable.md) |  |
+|  [Deprecated](./alfa-rules.stability.deprecated.md) | For deprecated rules. These rules are deprecated and will be removed permanently after some grace period. |
+|  [Experimental](./alfa-rules.stability.experimental.md) | For experimental rules. These rules are not necessarily compatible with downstream data processing, and are subject to breaking changes without notice |
+|  [Stable](./alfa-rules.stability.stable.md) | For stable rules. These rules follow the same basic principles and are reasonably stable; their changes are tracked by normal semver numbering. |
 

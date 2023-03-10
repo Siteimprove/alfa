@@ -4,9 +4,19 @@
 
 ## Map\_2.get() method
 
+<b>Signature:</b>
+
+```typescript
+get(key: K): Option<V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;V&gt;
 

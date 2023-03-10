@@ -4,14 +4,22 @@
 
 ## Question.Type interface
 
+Maps the `type` parameter of questions to the expected type of the answer.
+
+<b>Signature:</b>
+
+```typescript
+interface Type 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["color\[\]"](./alfa-rules.question.type._color___.md) |  |  |  |
-|  ["node\[\]"](./alfa-rules.question.type._node___.md) |  |  |  |
-|  ["string\[\]"](./alfa-rules.question.type._string___.md) |  |  |  |
-|  [boolean](./alfa-rules.question.type.boolean.md) |  |  |  |
-|  [node](./alfa-rules.question.type.node.md) |  |  |  |
-|  [string](./alfa-rules.question.type.string.md) |  |  |  |
+|  ["color\[\]"](./alfa-rules.question.type._color___.md) |  | Iterable&lt;[RGB](./alfa-css.rgb.md)<!-- -->&gt; |  |
+|  ["node\[\]"](./alfa-rules.question.type._node___.md) |  | Iterable&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; |  |
+|  ["string\[\]"](./alfa-rules.question.type._string___.md) |  | Iterable&lt;string&gt; |  |
+|  [boolean](./alfa-rules.question.type.boolean.md) |  | boolean |  |
+|  [node](./alfa-rules.question.type.node.md) |  | [Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; |  |
+|  [string](./alfa-rules.question.type.string.md) |  | string |  |
 

@@ -4,18 +4,26 @@
 
 ## Real namespace
 
+[https://en.wikipedia.org/wiki/Real\_number](https://en.wikipedia.org/wiki/Real_number)
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Real 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [add](./alfa-math.real.add.md) |  |
-|  [clamp](./alfa-math.real.clamp.md) |  |
-|  [divide](./alfa-math.real.divide.md) |  |
-|  [equals](./alfa-math.real.equals.md) |  |
-|  [isReal](./alfa-math.real.isreal.md) |  |
-|  [isReal](./alfa-math.real.isreal.md) |  |
-|  [modulo](./alfa-math.real.modulo.md) |  |
-|  [multiply](./alfa-math.real.multiply.md) |  |
-|  [round](./alfa-math.real.round.md) |  |
-|  [subtract](./alfa-math.real.subtract.md) |  |
+|  [add(p, q)](./alfa-math.real.add.md) |  |
+|  [clamp(p, l, u)](./alfa-math.real.clamp.md) | Clamp a real between a lower and an upper value. |
+|  [divide(p, d)](./alfa-math.real.divide.md) |  |
+|  [equals(a, b, e)](./alfa-math.real.equals.md) | Check if two reals are equal, accounting for floating-point precision errors according to a given epsilon. |
+|  [isReal(value)](./alfa-math.real.isreal.md) |  |
+|  [isReal(value)](./alfa-math.real.isreal_1.md) |  |
+|  [modulo(p, d)](./alfa-math.real.modulo.md) | <p>Compute the modulus of a division of two reals.</p><p>[https://en.wikipedia.org/wiki/Modulo\_operation](https://en.wikipedia.org/wiki/Modulo_operation)</p> |
+|  [multiply(p, q)](./alfa-math.real.multiply.md) |  |
+|  [round(p, n)](./alfa-math.real.round.md) | Round a real to a given number of decimals. |
+|  [subtract(p, q)](./alfa-math.real.subtract.md) |  |
 

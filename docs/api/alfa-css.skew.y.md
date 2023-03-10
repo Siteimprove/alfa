@@ -4,3 +4,8 @@
 
 ## Skew.y property
 
+<b>Signature:</b>
+
+```typescript
+get y(): Y;
+```

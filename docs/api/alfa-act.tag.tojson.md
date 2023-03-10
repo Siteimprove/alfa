@@ -4,3 +4,12 @@
 
 ## Tag.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Tag.JSON<T>;
+```
+<b>Returns:</b>
+
+[Tag.JSON](./alfa-act.tag.json.md)<!-- -->&lt;T&gt;
+

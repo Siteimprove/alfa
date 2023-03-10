@@ -4,3 +4,12 @@
 
 ## Length.isRelative() method
 
+<b>Signature:</b>
+
+```typescript
+isRelative(): this is Length<Unit.Length.Relative>;
+```
+<b>Returns:</b>
+
+this is [Length](./alfa-css.length.md)<!-- -->&lt;[Unit.Length.Relative](./alfa-css.unit.length.relative.md)<!-- -->&gt;
+

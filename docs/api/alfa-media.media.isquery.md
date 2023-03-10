@@ -4,3 +4,8 @@
 
 ## Media.isQuery variable
 
+<b>Signature:</b>
+
+```typescript
+isQuery: typeof Query.isQuery
+```

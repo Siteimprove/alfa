@@ -4,9 +4,19 @@
 
 ## Block.from() function
 
+<b>Signature:</b>
+
+```typescript
+function from(json: JSON): Block;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-dom.block.json.md) |  |
+
+<b>Returns:</b>
+
+[Block](./alfa-dom.block.md)
 

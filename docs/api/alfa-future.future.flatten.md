@@ -4,9 +4,19 @@
 
 ## Future.flatten() method
 
+<b>Signature:</b>
+
+```typescript
+flatten<T>(this: Future<Future<T>>): Future<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Future](./alfa-future.future.md)<!-- -->&lt;[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

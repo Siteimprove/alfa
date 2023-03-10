@@ -4,3 +4,8 @@
 
 ## Diagnostic.isLabelAndName variable
 
+<b>Signature:</b>
+
+```typescript
+isLabelAndName: typeof LabelAndName.isLabelAndName
+```

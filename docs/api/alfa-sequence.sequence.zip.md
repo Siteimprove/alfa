@@ -4,9 +4,19 @@
 
 ## Sequence.zip() method
 
+<b>Signature:</b>
+
+```typescript
+zip<U>(iterable: Iterable<U>): Sequence<[T, U]>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;U&gt; |  |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;\[T, U\]&gt;
 

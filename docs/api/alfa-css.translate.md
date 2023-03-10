@@ -4,11 +4,18 @@
 
 ## Translate namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Translate 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isTranslate](./alfa-css.translate.istranslate.md) |  |
+|  [isTranslate(value)](./alfa-css.translate.istranslate.md) |  |
 
 ## Interfaces
 

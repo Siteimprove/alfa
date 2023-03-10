@@ -4,9 +4,19 @@
 
 ## Archive.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Archive): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Archive](./alfa-scraper.archive.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

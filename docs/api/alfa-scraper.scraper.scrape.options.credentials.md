@@ -4,3 +4,8 @@
 
 ## Scraper.scrape.Options.credentials property
 
+<b>Signature:</b>
+
+```typescript
+readonly credentials?: Credentials;
+```

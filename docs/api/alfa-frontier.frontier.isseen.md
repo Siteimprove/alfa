@@ -4,9 +4,21 @@
 
 ## Frontier.isSeen() method
 
+Check if a URL has been seen by this frontier.
+
+<b>Signature:</b>
+
+```typescript
+isSeen(url: string | URL): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  url | string \| [URL](./alfa-url.url.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

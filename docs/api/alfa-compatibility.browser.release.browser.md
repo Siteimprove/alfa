@@ -4,3 +4,8 @@
 
 ## Browser.Release.browser property
 
+<b>Signature:</b>
+
+```typescript
+get browser(): N;
+```

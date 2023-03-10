@@ -4,3 +4,12 @@
 
 ## Node.Traversal.nested variable
 
+When set, traverse all nested browsing contexts encountered.
+
+[https://html.spec.whatwg.org/\#nested-browsing-context](https://html.spec.whatwg.org/#nested-browsing-context)
+
+<b>Signature:</b>
+
+```typescript
+nested: Flag
+```

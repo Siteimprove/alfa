@@ -4,3 +4,12 @@
 
 ## Headers.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Headers.JSON;
+```
+<b>Returns:</b>
+
+[Headers.JSON](./alfa-http.headers.json.md)
+

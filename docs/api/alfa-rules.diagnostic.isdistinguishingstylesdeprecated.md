@@ -4,3 +4,8 @@
 
 ## Diagnostic.isDistinguishingStylesDeprecated variable
 
+<b>Signature:</b>
+
+```typescript
+isDistinguishingStylesDeprecated: typeof DeprecatedDistinguishingStyles.isDistinguishingStyles
+```

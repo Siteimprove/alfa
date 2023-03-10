@@ -4,3 +4,12 @@
 
 ## Time.now() method
 
+<b>Signature:</b>
+
+```typescript
+static now(): Time;
+```
+<b>Returns:</b>
+
+[Time](./alfa-time.time.md)
+

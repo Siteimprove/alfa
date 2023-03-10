@@ -4,12 +4,18 @@
 
 ## Expression.Axis.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [axis](./alfa-xpath.expression.axis.json.axis.md) |  |  |  |
-|  [predicates](./alfa-xpath.expression.axis.json.predicates.md) |  |  |  |
-|  [test](./alfa-xpath.expression.axis.json.test.md) |  |  |  |
-|  [type](./alfa-xpath.expression.axis.json.type.md) |  |  |  |
+|  [axis](./alfa-xpath.expression.axis.json.axis.md) |  | string |  |
+|  [predicates](./alfa-xpath.expression.axis.json.predicates.md) |  | Array&lt;[Expression.JSON](./alfa-xpath.expression.json.md)<!-- -->&gt; |  |
+|  [test](./alfa-xpath.expression.axis.json.test.md) |  | [Test.JSON](./alfa-xpath.expression.test.json.md) \| null |  |
+|  [type](./alfa-xpath.expression.axis.json.type.md) |  | "axis" |  |
 

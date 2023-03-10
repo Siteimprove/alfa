@@ -4,3 +4,12 @@
 
 ## Archive.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Archive.JSON;
+```
+<b>Returns:</b>
+
+[Archive.JSON](./alfa-scraper.archive.json.md)
+

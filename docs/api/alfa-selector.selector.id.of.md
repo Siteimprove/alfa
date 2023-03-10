@@ -4,9 +4,19 @@
 
 ## Selector.Id.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(name: string): Id;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
+
+<b>Returns:</b>
+
+[Id](./alfa-selector.selector.id.md)
 

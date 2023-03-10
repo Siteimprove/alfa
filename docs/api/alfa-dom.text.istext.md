@@ -4,9 +4,19 @@
 
 ## Text.isText() function
 
+<b>Signature:</b>
+
+```typescript
+function isText(value: unknown): value is Text;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Text](./alfa-dom.text.md)
 

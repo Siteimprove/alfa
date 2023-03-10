@@ -4,9 +4,19 @@
 
 ## Unit.isResolution() function
 
+<b>Signature:</b>
+
+```typescript
+function isResolution(unit: string): unit is Resolution;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | string |  |
+
+<b>Returns:</b>
+
+unit is [Resolution](./alfa-css.unit.resolution.md)
 

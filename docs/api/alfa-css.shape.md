@@ -4,6 +4,13 @@
 
 ## Shape namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Shape 
+```
+
 ## Interfaces
 
 |  Interface | Description |
@@ -20,5 +27,5 @@
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Basic](./alfa-css.shape.basic.md) |  |
+|  [Basic](./alfa-css.shape.basic.md) | [https://drafts.csswg.org/css-shapes/\#typedef-basic-shape](https://drafts.csswg.org/css-shapes/#typedef-basic-shape) |
 

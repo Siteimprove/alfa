@@ -4,12 +4,18 @@
 
 ## Radial.Extent.Size enum
 
+<b>Signature:</b>
+
+```typescript
+enum Size 
+```
+
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  ClosestCorner |  |  |
-|  ClosestSide |  |  |
-|  FarthestCorner |  |  |
-|  FarthestSide |  |  |
+|  ClosestCorner | <code>&quot;closest-corner&quot;</code> |  |
+|  ClosestSide | <code>&quot;closest-side&quot;</code> |  |
+|  FarthestCorner | <code>&quot;farthest-corner&quot;</code> |  |
+|  FarthestSide | <code>&quot;farthest-side&quot;</code> |  |
 

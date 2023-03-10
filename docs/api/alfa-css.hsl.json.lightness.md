@@ -4,3 +4,8 @@
 
 ## HSL.JSON.lightness property
 
+<b>Signature:</b>
+
+```typescript
+lightness: Percentage.JSON;
+```

@@ -4,9 +4,19 @@
 
 ## Sequence.subtract() method
 
+<b>Signature:</b>
+
+```typescript
+subtract(iterable: Iterable<T>): Sequence<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

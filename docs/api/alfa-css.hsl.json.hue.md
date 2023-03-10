@@ -4,3 +4,8 @@
 
 ## HSL.JSON.hue property
 
+<b>Signature:</b>
+
+```typescript
+hue: Number.JSON | Angle.JSON;
+```

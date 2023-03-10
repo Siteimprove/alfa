@@ -4,10 +4,16 @@
 
 ## Right.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<R> 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-either.right.json.type.md) |  |  |  |
-|  [value](./alfa-either.right.json.value.md) |  |  |  |
+|  [type](./alfa-either.right.json.type.md) |  | "right" |  |
+|  [value](./alfa-either.right.json.value.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;R&gt; |  |
 

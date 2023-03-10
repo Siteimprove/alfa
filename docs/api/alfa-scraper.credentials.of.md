@@ -4,10 +4,20 @@
 
 ## Credentials.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(username: string, password: string): Credentials;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  username | string |  |
 |  password | string |  |
+
+<b>Returns:</b>
+
+[Credentials](./alfa-scraper.credentials.md)
 

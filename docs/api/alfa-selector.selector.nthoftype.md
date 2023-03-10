@@ -4,6 +4,12 @@
 
 ## Selector.NthOfType namespace
 
+<b>Signature:</b>
+
+```typescript
+export namespace NthOfType 
+```
+
 ## Interfaces
 
 |  Interface | Description |

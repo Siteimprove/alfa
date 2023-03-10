@@ -4,6 +4,12 @@
 
 ## Expression.Integer namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Integer 
+```
+
 ## Interfaces
 
 |  Interface | Description |

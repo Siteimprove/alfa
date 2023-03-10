@@ -4,11 +4,18 @@
 
 ## Integer namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Integer 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isInteger](./alfa-css.integer.isinteger.md) |  |
+|  [isInteger(value)](./alfa-css.integer.isinteger.md) |  |
 
 ## Interfaces
 

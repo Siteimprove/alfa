@@ -4,10 +4,19 @@
 
 ## Selector.Disabled class
 
+[https://drafts.csswg.org/selectors/\#enableddisabled](https://drafts.csswg.org/selectors/#enableddisabled) [https://html.spec.whatwg.org/multipage\#selector-disabled](https://html.spec.whatwg.org/multipage#selector-disabled)
+
+<b>Signature:</b>
+
+```typescript
+export class Disabled extends Pseudo.Class<"disabled"> 
+```
+<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"disabled"&gt;
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches](./alfa-selector.selector.disabled.matches.md) |  |  |
-|  [of](./alfa-selector.selector.disabled.of.md) |  |  |
+|  [matches(element, context)](./alfa-selector.selector.disabled.matches.md) |  |  |
+|  [of()](./alfa-selector.selector.disabled.of.md) | <code>static</code> |  |
 

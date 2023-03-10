@@ -4,9 +4,19 @@
 
 ## Radial.Ellipse.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Ellipse): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Ellipse](./alfa-css.radial.ellipse.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

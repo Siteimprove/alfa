@@ -4,3 +4,8 @@
 
 ## Rule.JSON.uri property
 
+<b>Signature:</b>
+
+```typescript
+uri: string;
+```

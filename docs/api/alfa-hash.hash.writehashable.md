@@ -4,9 +4,19 @@
 
 ## Hash.writeHashable() method
 
+<b>Signature:</b>
+
+```typescript
+writeHashable(data: Hashable): this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | [Hashable](./alfa-hash.hashable.md) |  |
+
+<b>Returns:</b>
+
+this
 

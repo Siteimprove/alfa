@@ -4,9 +4,19 @@
 
 ## Trampoline.suspend() function
 
+<b>Signature:</b>
+
+```typescript
+function suspend<T>(thunk: Thunk<Trampoline<T>>): Trampoline<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;
 

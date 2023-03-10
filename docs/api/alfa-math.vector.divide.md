@@ -4,10 +4,20 @@
 
 ## Vector.divide() function
 
+<b>Signature:</b>
+
+```typescript
+function divide(v: Vector, d: number): Vector;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
 |  d | number |  |
+
+<b>Returns:</b>
+
+[Vector](./alfa-math.vector.md)
 

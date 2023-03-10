@@ -4,6 +4,13 @@
 
 ## Shadow namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Shadow 
+```
+
 ## Interfaces
 
 |  Interface | Description |

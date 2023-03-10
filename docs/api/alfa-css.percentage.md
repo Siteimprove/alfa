@@ -4,11 +4,18 @@
 
 ## Percentage namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Percentage 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isPercentage](./alfa-css.percentage.ispercentage.md) |  |
+|  [isPercentage(value)](./alfa-css.percentage.ispercentage.md) |  |
 
 ## Interfaces
 

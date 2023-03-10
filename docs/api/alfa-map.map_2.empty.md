@@ -4,3 +4,12 @@
 
 ## Map\_2.empty() method
 
+<b>Signature:</b>
+
+```typescript
+static empty<K = never, V = never>(): Map<K, V>;
+```
+<b>Returns:</b>
+
+Map&lt;K, V&gt;
+

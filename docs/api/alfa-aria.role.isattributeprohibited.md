@@ -4,9 +4,21 @@
 
 ## Role.isAttributeProhibited() method
 
+Check if this role prohibits the specified attribute.
+
+<b>Signature:</b>
+
+```typescript
+isAttributeProhibited(name: Attribute.Name): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | [Attribute.Name](./alfa-aria.attribute.name.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

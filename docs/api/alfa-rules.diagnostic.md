@@ -4,6 +4,13 @@
 
 ## Diagnostic namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Diagnostic 
+```
+
 ## Variables
 
 |  Variable | Description |

@@ -4,9 +4,19 @@
 
 ## Response.from() function
 
+<b>Signature:</b>
+
+```typescript
+function from(json: JSON): Response;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-http.response.json.md) |  |
+
+<b>Returns:</b>
+
+[Response](./alfa-http.response.md)
 

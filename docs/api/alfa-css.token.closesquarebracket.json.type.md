@@ -4,3 +4,8 @@
 
 ## Token.CloseSquareBracket.JSON.type property
 
+<b>Signature:</b>
+
+```typescript
+type: "close-square-bracket";
+```

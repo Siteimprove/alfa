@@ -4,18 +4,25 @@
 
 ## Either namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Either 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isEither](./alfa-either.either.iseither.md) |  |
-|  [isEither](./alfa-either.either.iseither.md) |  |
-|  [isLeft](./alfa-either.either.isleft.md) |  |
-|  [isLeft](./alfa-either.either.isleft.md) |  |
-|  [isRight](./alfa-either.either.isright.md) |  |
-|  [isRight](./alfa-either.either.isright.md) |  |
-|  [left](./alfa-either.either.left.md) |  |
-|  [right](./alfa-either.either.right.md) |  |
+|  [isEither(value)](./alfa-either.either.iseither.md) |  |
+|  [isEither(value)](./alfa-either.either.iseither_1.md) |  |
+|  [isLeft(value)](./alfa-either.either.isleft.md) |  |
+|  [isLeft(value)](./alfa-either.either.isleft_1.md) |  |
+|  [isRight(value)](./alfa-either.either.isright.md) |  |
+|  [isRight(value)](./alfa-either.either.isright_1.md) |  |
+|  [left(value)](./alfa-either.either.left.md) |  |
+|  [right(value)](./alfa-either.either.right.md) |  |
 
 ## Type Aliases
 

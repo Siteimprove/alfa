@@ -4,3 +4,12 @@
 
 ## Record\_2.values() method
 
+<b>Signature:</b>
+
+```typescript
+values(): Iterable<Record.Value<T>>;
+```
+<b>Returns:</b>
+
+Iterable&lt;Record.Value&lt;T&gt;&gt;
+

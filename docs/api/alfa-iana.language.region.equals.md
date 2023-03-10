@@ -4,9 +4,19 @@
 
 ## Language.Region.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Region): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Region](./alfa-iana.language.region.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

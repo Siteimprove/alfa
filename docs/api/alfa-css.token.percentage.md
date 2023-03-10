@@ -4,3 +4,8 @@
 
 ## Token.percentage variable
 
+<b>Signature:</b>
+
+```typescript
+percentage: typeof Percentage.of
+```

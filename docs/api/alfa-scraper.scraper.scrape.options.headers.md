@@ -4,3 +4,8 @@
 
 ## Scraper.scrape.Options.headers property
 
+<b>Signature:</b>
+
+```typescript
+readonly headers?: Iterable<Header>;
+```

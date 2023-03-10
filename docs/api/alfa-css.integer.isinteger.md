@@ -4,9 +4,19 @@
 
 ## Integer.isInteger() function
 
+<b>Signature:</b>
+
+```typescript
+function isInteger(value: unknown): value is Integer;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Integer](./alfa-css.integer.md)
 

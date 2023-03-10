@@ -4,11 +4,18 @@
 
 ## Diagnostic namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Diagnostic 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isDiagnostic](./alfa-act.diagnostic.isdiagnostic.md) |  |
+|  [isDiagnostic(value)](./alfa-act.diagnostic.isdiagnostic.md) |  |
 
 ## Interfaces
 

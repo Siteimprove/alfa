@@ -4,9 +4,19 @@
 
 ## Cell.Data.isData() function
 
+<b>Signature:</b>
+
+```typescript
+function isData(value: unknown): value is Data;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Data](./alfa-table.cell.data.md)
 

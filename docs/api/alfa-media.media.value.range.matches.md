@@ -4,9 +4,19 @@
 
 ## Media.Value.Range.matches() method
 
+<b>Signature:</b>
+
+```typescript
+matches(value: T): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+boolean
 

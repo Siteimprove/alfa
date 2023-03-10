@@ -4,3 +4,8 @@
 
 ## Marker.strikethrough variable
 
+<b>Signature:</b>
+
+```typescript
+strikethrough: Marker
+```

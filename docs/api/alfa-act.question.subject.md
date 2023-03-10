@@ -4,3 +4,8 @@
 
 ## Question.subject property
 
+<b>Signature:</b>
+
+```typescript
+get subject(): SUBJECT;
+```

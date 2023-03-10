@@ -4,3 +4,10 @@
 
 ## Rule.EARL."dct:isPartOf" property
 
+<b>Signature:</b>
+
+```typescript
+"dct:isPartOf": {
+            "@set": Array<Requirement.EARL>;
+        };
+```

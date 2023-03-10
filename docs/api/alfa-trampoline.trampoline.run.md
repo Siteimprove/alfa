@@ -4,3 +4,12 @@
 
 ## Trampoline.run() method
 
+<b>Signature:</b>
+
+```typescript
+run(): T;
+```
+<b>Returns:</b>
+
+T
+

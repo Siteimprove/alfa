@@ -4,3 +4,8 @@
 
 ## Scraper.scrape.Options.timeout property
 
+<b>Signature:</b>
+
+```typescript
+readonly timeout?: Timeout;
+```

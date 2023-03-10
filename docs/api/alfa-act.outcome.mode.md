@@ -4,10 +4,18 @@
 
 ## Outcome.Mode enum
 
+[https://www.w3.org/TR/EARL10-Schema/\#TestMode](https://www.w3.org/TR/EARL10-Schema/#TestMode)
+
+<b>Signature:</b>
+
+```typescript
+enum Mode 
+```
+
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  Automatic |  |  |
-|  SemiAuto |  |  |
+|  Automatic | <code>&quot;automatic&quot;</code> |  |
+|  SemiAuto | <code>&quot;semiAuto&quot;</code> |  |
 

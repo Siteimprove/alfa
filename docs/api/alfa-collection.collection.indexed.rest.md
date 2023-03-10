@@ -4,3 +4,12 @@
 
 ## Collection.Indexed.rest() method
 
+<b>Signature:</b>
+
+```typescript
+rest(): Indexed<T>;
+```
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
+

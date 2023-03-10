@@ -4,6 +4,12 @@
 
 ## Expression.FunctionCall namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace FunctionCall 
+```
+
 ## Interfaces
 
 |  Interface | Description |

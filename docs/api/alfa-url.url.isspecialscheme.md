@@ -4,9 +4,21 @@
 
 ## URL.isSpecialScheme() function
 
+[https://url.spec.whatwg.org/\#special-scheme](https://url.spec.whatwg.org/#special-scheme)
+
+<b>Signature:</b>
+
+```typescript
+function isSpecialScheme(scheme: string): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  scheme | string |  |
+
+<b>Returns:</b>
+
+boolean
 

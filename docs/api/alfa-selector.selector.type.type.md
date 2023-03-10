@@ -4,3 +4,8 @@
 
 ## Selector.Type.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "type";
+```

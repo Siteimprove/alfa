@@ -4,9 +4,19 @@
 
 ## Outcome.CantTell.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals<I, T extends Hashable, Q, S>(value: CantTell<I, T, Q, S>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [CantTell](./alfa-act.outcome.canttell.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

@@ -4,10 +4,20 @@
 
 ## Shape.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry>(shape: S, box: B): Shape<S, B>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  shape | S |  |
 |  box | B |  |
+
+<b>Returns:</b>
+
+[Shape](./alfa-css.shape.md)<!-- -->&lt;S, B&gt;
 

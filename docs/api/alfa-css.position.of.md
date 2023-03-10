@@ -4,10 +4,20 @@
 
 ## Position.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<H extends Position.Component<Position.Horizontal>, V extends Position.Component<Position.Vertical>>(horizontal: H, vertical: V): Position<H, V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  horizontal | H |  |
 |  vertical | V |  |
+
+<b>Returns:</b>
+
+[Position](./alfa-css.position.md)<!-- -->&lt;H, V&gt;
 

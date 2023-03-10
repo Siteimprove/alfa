@@ -4,11 +4,18 @@
 
 ## Element.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Node.JSON<"element"> 
+```
+<b>Extends:</b> [Node.JSON](./alfa-aria.node.json.md)<!-- -->&lt;"element"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [attributes](./alfa-aria.element.json.attributes.md) |  |  |  |
-|  [name](./alfa-aria.element.json.name.md) |  |  |  |
-|  [role](./alfa-aria.element.json.role.md) |  |  |  |
+|  [attributes](./alfa-aria.element.json.attributes.md) |  | Array&lt;[Attribute.JSON](./alfa-aria.attribute.json.md)<!-- -->&gt; |  |
+|  [name](./alfa-aria.element.json.name.md) |  | string \| null |  |
+|  [role](./alfa-aria.element.json.role.md) |  | [Role.Name](./alfa-aria.role.name.md) \| null |  |
 

@@ -4,3 +4,8 @@
 
 ## Question.Type.node property
 
+<b>Signature:</b>
+
+```typescript
+node: Option<Node>;
+```

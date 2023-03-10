@@ -4,9 +4,19 @@
 
 ## Cookies.has() method
 
+<b>Signature:</b>
+
+```typescript
+has(name: string): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
+
+<b>Returns:</b>
+
+boolean
 

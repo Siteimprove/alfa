@@ -4,3 +4,10 @@
 
 ## Linear.Direction.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON = Angle.JSON | Side.JSON | Corner.JSON;
+```
+<b>References:</b> [Angle.JSON](./alfa-css.angle.json.md)<!-- -->, [Side.JSON](./alfa-css.linear.side.json.md)<!-- -->, [Corner.JSON](./alfa-css.linear.corner.json.md)
+

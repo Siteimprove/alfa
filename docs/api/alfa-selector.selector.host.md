@@ -4,9 +4,18 @@
 
 ## Selector.Host class
 
+[https://drafts.csswg.org/css-scoping-1/\#selectordef-host](https://drafts.csswg.org/css-scoping-1/#selectordef-host)
+
+<b>Signature:</b>
+
+```typescript
+export class Host extends Pseudo.Class<"host"> 
+```
+<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"host"&gt;
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [of](./alfa-selector.selector.host.of.md) |  |  |
+|  [of()](./alfa-selector.selector.host.of.md) | <code>static</code> |  |
 

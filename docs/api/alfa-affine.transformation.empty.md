@@ -4,3 +4,12 @@
 
 ## Transformation.empty() method
 
+<b>Signature:</b>
+
+```typescript
+static empty(): Transformation;
+```
+<b>Returns:</b>
+
+[Transformation](./alfa-affine.transformation.md)
+

@@ -4,3 +4,12 @@
 
 ## Either.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Either.JSON<L, R>;
+```
+<b>Returns:</b>
+
+[Either.JSON](./alfa-either.either.json.md)<!-- -->&lt;L, R&gt;
+

@@ -4,19 +4,26 @@
 
 ## Result namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Result 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from](./alfa-result.result.from.md) |  |
-|  [from](./alfa-result.result.from.md) |  |
-|  [isErr](./alfa-result.result.iserr.md) |  |
-|  [isErr](./alfa-result.result.iserr.md) |  |
-|  [isOk](./alfa-result.result.isok.md) |  |
-|  [isOk](./alfa-result.result.isok.md) |  |
-|  [isResult](./alfa-result.result.isresult.md) |  |
-|  [isResult](./alfa-result.result.isresult.md) |  |
-|  [of](./alfa-result.result.of.md) |  |
+|  [from(thunk)](./alfa-result.result.from.md) |  |
+|  [from(thunk)](./alfa-result.result.from_1.md) |  |
+|  [isErr(value)](./alfa-result.result.iserr.md) |  |
+|  [isErr(value)](./alfa-result.result.iserr_1.md) |  |
+|  [isOk(value)](./alfa-result.result.isok.md) |  |
+|  [isOk(value)](./alfa-result.result.isok_1.md) |  |
+|  [isResult(value)](./alfa-result.result.isresult.md) |  |
+|  [isResult(value)](./alfa-result.result.isresult_1.md) |  |
+|  [of(value)](./alfa-result.result.of.md) |  |
 
 ## Type Aliases
 

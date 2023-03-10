@@ -4,9 +4,19 @@
 
 ## Token.String.isString() function
 
+<b>Signature:</b>
+
+```typescript
+function isString(value: unknown): value is String;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [String](./alfa-css.token.string.md)
 

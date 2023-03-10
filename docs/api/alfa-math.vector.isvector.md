@@ -4,9 +4,19 @@
 
 ## Vector.isVector() function
 
+<b>Signature:</b>
+
+```typescript
+function isVector(value: unknown): value is Vector;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Vector](./alfa-math.vector.md)
 

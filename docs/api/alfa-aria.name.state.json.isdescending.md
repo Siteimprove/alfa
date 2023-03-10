@@ -4,3 +4,8 @@
 
 ## Name.State.JSON.isDescending property
 
+<b>Signature:</b>
+
+```typescript
+isDescending: boolean;
+```

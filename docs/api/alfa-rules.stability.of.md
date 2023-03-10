@@ -4,9 +4,19 @@
 
 ## Stability.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<S extends string>(stability: S): Stability<S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  stability | S |  |
+
+<b>Returns:</b>
+
+[Stability](./alfa-rules.stability.md)<!-- -->&lt;S&gt;
 

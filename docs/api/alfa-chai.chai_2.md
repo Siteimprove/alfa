@@ -4,9 +4,16 @@
 
 ## Chai\_2 namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Chai 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [createPlugin](./alfa-chai.chai_2.createplugin.md) |  |
+|  [createPlugin(transform, rules, handlers, options)](./alfa-chai.chai_2.createplugin.md) |  |
 

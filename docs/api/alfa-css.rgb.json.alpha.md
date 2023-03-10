@@ -4,3 +4,8 @@
 
 ## RGB.JSON.alpha property
 
+<b>Signature:</b>
+
+```typescript
+alpha: Number.JSON | Percentage.JSON;
+```

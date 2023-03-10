@@ -4,3 +4,12 @@
 
 ## Token.OpenComment.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): OpenComment.JSON;
+```
+<b>Returns:</b>
+
+[OpenComment.JSON](./alfa-css.token.opencomment.json.md)
+

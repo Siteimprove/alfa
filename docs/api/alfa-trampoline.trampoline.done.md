@@ -4,9 +4,19 @@
 
 ## Trampoline.done() function
 
+<b>Signature:</b>
+
+```typescript
+function done<T>(value: T): Trampoline<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;
 

@@ -4,3 +4,8 @@
 
 ## Marker.green variable
 
+<b>Signature:</b>
+
+```typescript
+green: Marker
+```

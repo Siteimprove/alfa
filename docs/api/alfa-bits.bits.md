@@ -4,15 +4,22 @@
 
 ## Bits namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Bits 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [bit](./alfa-bits.bits.bit.md) |  |
-|  [clear](./alfa-bits.bits.clear.md) |  |
-|  [popCount](./alfa-bits.bits.popcount.md) |  |
-|  [set](./alfa-bits.bits.set.md) |  |
-|  [skip](./alfa-bits.bits.skip.md) |  |
-|  [take](./alfa-bits.bits.take.md) |  |
-|  [test](./alfa-bits.bits.test.md) |  |
+|  [bit(i)](./alfa-bits.bits.bit.md) |  |
+|  [clear(bits, i)](./alfa-bits.bits.clear.md) |  |
+|  [popCount(bits)](./alfa-bits.bits.popcount.md) |  |
+|  [set(bits, i)](./alfa-bits.bits.set.md) |  |
+|  [skip(bits, n)](./alfa-bits.bits.skip.md) |  |
+|  [take(bits, n)](./alfa-bits.bits.take.md) |  |
+|  [test(bits, i)](./alfa-bits.bits.test.md) |  |
 

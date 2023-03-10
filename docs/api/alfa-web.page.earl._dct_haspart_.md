@@ -4,3 +4,8 @@
 
 ## Page.EARL."dct:hasPart" property
 
+<b>Signature:</b>
+
+```typescript
+"dct:hasPart": [Request.EARL, Response.EARL];
+```

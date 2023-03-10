@@ -4,10 +4,16 @@
 
 ## Display.Scan enum
 
+<b>Signature:</b>
+
+```typescript
+enum Scan 
+```
+
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  Interlace |  |  |
-|  Progressive |  |  |
+|  Interlace | <code>&quot;interlace&quot;</code> |  |
+|  Progressive | <code>&quot;progressive&quot;</code> |  |
 

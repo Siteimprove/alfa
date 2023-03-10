@@ -4,3 +4,12 @@
 
 ## Set\_2.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Set.JSON<T>;
+```
+<b>Returns:</b>
+
+Set.JSON&lt;T&gt;
+

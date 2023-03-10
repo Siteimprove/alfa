@@ -4,9 +4,16 @@
 
 ## Selector.Part.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Pseudo.Element.JSON<"part"> 
+```
+<b>Extends:</b> [Pseudo.Element.JSON](./alfa-selector.selector.pseudo.element.json.md)<!-- -->&lt;"part"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [idents](./alfa-selector.selector.part.json.idents.md) |  |  |  |
+|  [idents](./alfa-selector.selector.part.json.idents.md) |  | Array&lt;[Token.Ident.JSON](./alfa-css.token.ident.json.md)<!-- -->&gt; |  |
 

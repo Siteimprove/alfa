@@ -4,13 +4,19 @@
 
 ## Transformation.Components interface
 
+<b>Signature:</b>
+
+```typescript
+interface Components 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [perspective](./alfa-affine.transformation.components.perspective.md) |  |  |  |
-|  [rotate](./alfa-affine.transformation.components.rotate.md) |  |  |  |
-|  [scale](./alfa-affine.transformation.components.scale.md) |  |  |  |
-|  [skew](./alfa-affine.transformation.components.skew.md) |  |  |  |
-|  [translate](./alfa-affine.transformation.components.translate.md) |  |  |  |
+|  [perspective](./alfa-affine.transformation.components.perspective.md) |  | [Vector](./alfa-math.vector.md) | A quaternion representing \[x, y, z, w\] perspective. |
+|  [rotate](./alfa-affine.transformation.components.rotate.md) |  | [Vector](./alfa-math.vector.md) | A quaternion representing \[x, y, z, w\] rotation. |
+|  [scale](./alfa-affine.transformation.components.scale.md) |  | [Vector](./alfa-math.vector.md) | A vector representing \[x, y, z\] scaling. |
+|  [skew](./alfa-affine.transformation.components.skew.md) |  | [Vector](./alfa-math.vector.md) | A vector representing \[xy, xz, yz\] skewing. |
+|  [translate](./alfa-affine.transformation.components.translate.md) |  | [Vector](./alfa-math.vector.md) | A vector representing \[x, y, z\] translation. |
 

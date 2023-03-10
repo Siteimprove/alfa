@@ -4,3 +4,10 @@
 
 ## Outcome.Passed.expectations property
 
+<b>Signature:</b>
+
+```typescript
+get expectations(): Record<{
+            [key: string]: Result<Diagnostic>;
+        }>;
+```

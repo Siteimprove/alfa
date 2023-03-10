@@ -4,3 +4,8 @@
 
 ## Element.shadow property
 
+<b>Signature:</b>
+
+```typescript
+get shadow(): Option<Shadow>;
+```

@@ -4,3 +4,8 @@
 
 ## Polygon.kind property
 
+<b>Signature:</b>
+
+```typescript
+get kind(): "polygon";
+```

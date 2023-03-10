@@ -4,3 +4,8 @@
 
 ## Rectangle.JSON.top property
 
+<b>Signature:</b>
+
+```typescript
+top: Length.JSON | Keyword.JSON;
+```

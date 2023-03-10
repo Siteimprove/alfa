@@ -4,9 +4,19 @@
 
 ## Record\_2.get() method
 
+<b>Signature:</b>
+
+```typescript
+get<K extends Record.Key<T>>(key: K): Option<T[K]>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;T\[K\]&gt;
 

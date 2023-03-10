@@ -4,9 +4,27 @@
 
 ## Matrix.determinant() function
 
+Compute the determinant of a non-empty, square matrix.
+
+[https://en.wikipedia.org/wiki/Determinant](https://en.wikipedia.org/wiki/Determinant) [https://en.wikipedia.org/wiki/Laplace\_expansion](https://en.wikipedia.org/wiki/Laplace_expansion)
+
+<b>Signature:</b>
+
+```typescript
+function determinant(m: Matrix): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
+
+<b>Returns:</b>
+
+number
+
+## Remarks
+
+This function uses Laplace expansion for computing the determinant which has a time complexity of O(n!) and is therefore not practical for large matrices.
 

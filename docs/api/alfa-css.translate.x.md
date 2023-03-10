@@ -4,3 +4,8 @@
 
 ## Translate.x property
 
+<b>Signature:</b>
+
+```typescript
+get x(): X;
+```

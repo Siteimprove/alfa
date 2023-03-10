@@ -4,9 +4,19 @@
 
 ## Hash.writeJSON() method
 
+<b>Signature:</b>
+
+```typescript
+writeJSON(data: JSON): this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | JSON |  |
+
+<b>Returns:</b>
+
+this
 

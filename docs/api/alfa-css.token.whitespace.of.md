@@ -4,3 +4,12 @@
 
 ## Token.Whitespace.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(): Whitespace;
+```
+<b>Returns:</b>
+
+[Whitespace](./alfa-css.token.whitespace.md)
+

@@ -4,11 +4,17 @@
 
 ## Radial.Extent.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [shape](./alfa-css.radial.extent.json.shape.md) |  |  |  |
-|  [size](./alfa-css.radial.extent.json.size.md) |  |  |  |
-|  [type](./alfa-css.radial.extent.json.type.md) |  |  |  |
+|  [shape](./alfa-css.radial.extent.json.shape.md) |  | \`${[Shape](./alfa-css.radial.extent.shape.md)<!-- -->}\` |  |
+|  [size](./alfa-css.radial.extent.json.size.md) |  | \`${[Size](./alfa-css.radial.extent.size.md)<!-- -->}\` |  |
+|  [type](./alfa-css.radial.extent.json.type.md) |  | "extent" |  |
 

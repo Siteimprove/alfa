@@ -4,10 +4,20 @@
 
 ## Name.Source.Ancestor.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(element: Element, name: Name): Ancestor;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
 |  name | [Name](./alfa-aria.name.md) |  |
+
+<b>Returns:</b>
+
+[Ancestor](./alfa-aria.name.source.ancestor.md)
 

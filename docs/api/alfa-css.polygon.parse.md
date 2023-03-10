@@ -4,3 +4,8 @@
 
 ## Polygon.parse variable
 
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, Polygon, string>
+```

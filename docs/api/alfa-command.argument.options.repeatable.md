@@ -4,3 +4,8 @@
 
 ## Argument.Options.repeatable property
 
+<b>Signature:</b>
+
+```typescript
+repeatable: boolean;
+```

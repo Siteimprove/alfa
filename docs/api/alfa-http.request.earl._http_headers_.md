@@ -4,3 +4,8 @@
 
 ## Request.EARL."http:headers" property
 
+<b>Signature:</b>
+
+```typescript
+"http:headers": Headers.EARL;
+```

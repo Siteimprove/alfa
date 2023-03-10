@@ -4,9 +4,19 @@
 
 ## Selector.NthChild.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: NthChild): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [NthChild](./alfa-selector.selector.nthchild.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

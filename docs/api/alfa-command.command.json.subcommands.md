@@ -4,3 +4,8 @@
 
 ## Command.JSON.subcommands property
 
+<b>Signature:</b>
+
+```typescript
+subcommands: Array<Command.JSON>;
+```

@@ -4,6 +4,13 @@
 
 ## Named namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Named 
+```
+
 ## Interfaces
 
 |  Interface | Description |

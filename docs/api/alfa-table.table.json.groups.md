@@ -4,3 +4,8 @@
 
 ## Table.JSON.groups property
 
+<b>Signature:</b>
+
+```typescript
+groups: Array<Group.JSON>;
+```

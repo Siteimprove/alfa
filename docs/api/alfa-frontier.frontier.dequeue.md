@@ -4,3 +4,14 @@
 
 ## Frontier.dequeue() method
 
+Pop the next URL from this frontier, transitioning it to in progress.
+
+<b>Signature:</b>
+
+```typescript
+dequeue(): Option<URL>;
+```
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;[URL](./alfa-url.url.md)<!-- -->&gt;
+

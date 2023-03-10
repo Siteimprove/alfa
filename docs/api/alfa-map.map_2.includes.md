@@ -4,9 +4,19 @@
 
 ## Map\_2.includes() method
 
+<b>Signature:</b>
+
+```typescript
+includes(value: V): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | V |  |
+
+<b>Returns:</b>
+
+boolean
 

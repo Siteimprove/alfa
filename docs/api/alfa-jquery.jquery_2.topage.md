@@ -4,9 +4,19 @@
 
 ## JQuery\_2.toPage() function
 
+<b>Signature:</b>
+
+```typescript
+function toPage(value: Type): Page;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | Type |  |
+
+<b>Returns:</b>
+
+[Page](./alfa-web.page.md)
 

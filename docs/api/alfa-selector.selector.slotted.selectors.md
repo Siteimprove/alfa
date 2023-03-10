@@ -4,3 +4,8 @@
 
 ## Selector.Slotted.selectors property
 
+<b>Signature:</b>
+
+```typescript
+get selectors(): Iterable<Simple | Compound>;
+```

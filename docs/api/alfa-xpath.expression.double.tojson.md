@@ -4,3 +4,12 @@
 
 ## Expression.Double.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Double.JSON;
+```
+<b>Returns:</b>
+
+[Double.JSON](./alfa-xpath.expression.double.json.md)
+

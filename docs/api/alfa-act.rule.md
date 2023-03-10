@@ -4,6 +4,13 @@
 
 ## Rule namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Rule 
+```
+
 ## Classes
 
 |  Class | Description |
@@ -16,7 +23,7 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [isRule](./alfa-act.rule.isrule.md) |  |
+|  [isRule(value)](./alfa-act.rule.isrule.md) |  |
 
 ## Interfaces
 

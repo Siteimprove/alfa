@@ -4,3 +4,8 @@
 
 ## Media.Value.bound variable
 
+<b>Signature:</b>
+
+```typescript
+bound: typeof Bound.of
+```

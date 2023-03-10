@@ -4,3 +4,12 @@
 
 ## Selector.LastOfType.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(): LastOfType;
+```
+<b>Returns:</b>
+
+[LastOfType](./alfa-selector.selector.lastoftype.md)
+

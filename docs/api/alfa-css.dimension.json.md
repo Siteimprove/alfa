@@ -4,9 +4,16 @@
 
 ## Dimension.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<T extends Numeric.Dimension = Numeric.Dimension, U extends Unit = Unit> extends Numeric.JSON<T> 
+```
+<b>Extends:</b> [Numeric.JSON](./alfa-css.numeric.json.md)<!-- -->&lt;T&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [unit](./alfa-css.dimension.json.unit.md) |  |  |  |
+|  [unit](./alfa-css.dimension.json.unit.md) |  | U |  |
 

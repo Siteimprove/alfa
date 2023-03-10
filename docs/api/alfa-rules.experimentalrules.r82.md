@@ -4,3 +4,10 @@
 
 ## experimentalRules.R82 variable
 
+R82 ask questions whose subject is not the target of the rule. The context of the question is still the test target, but the subjects can be various other elements. This needs changes in Dory, Nemo, and likely databases to be stored; this needs changes in the Page Report to be able to highlight an element different from the test target.
+
+<b>Signature:</b>
+
+```typescript
+_default: Rule.Atomic<Page, Element<string>, Question.Metadata, Node<string> | Array<Node<string>>>
+```

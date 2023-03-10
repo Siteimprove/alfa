@@ -4,6 +4,14 @@
 
 ## DOM namespace
 
+Helpers and Predicates for accessibility aspects of DOM objects
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace DOM 
+```
+
 ## Variables
 
 |  Variable | Description |

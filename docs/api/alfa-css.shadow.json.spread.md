@@ -4,3 +4,8 @@
 
 ## Shadow.JSON.spread property
 
+<b>Signature:</b>
+
+```typescript
+spread: Length.JSON;
+```

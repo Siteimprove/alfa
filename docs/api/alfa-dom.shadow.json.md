@@ -4,11 +4,18 @@
 
 ## Shadow.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Node.JSON 
+```
+<b>Extends:</b> [Node.JSON](./alfa-dom.node.json.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [mode](./alfa-dom.shadow.json.mode.md) |  |  |  |
-|  [style](./alfa-dom.shadow.json.style.md) |  |  |  |
-|  [type](./alfa-dom.shadow.json.type.md) |  |  |  |
+|  [mode](./alfa-dom.shadow.json.mode.md) |  | string |  |
+|  [style](./alfa-dom.shadow.json.style.md) |  | Array&lt;[Sheet.JSON](./alfa-dom.sheet.json.md)<!-- -->&gt; |  |
+|  [type](./alfa-dom.shadow.json.type.md) |  | "shadow" |  |
 

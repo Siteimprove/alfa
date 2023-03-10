@@ -4,3 +4,12 @@
 
 ## Frontier.hasWaiting() method
 
+<b>Signature:</b>
+
+```typescript
+hasWaiting(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

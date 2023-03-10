@@ -4,9 +4,19 @@
 
 ## Branched.none() method
 
+<b>Signature:</b>
+
+```typescript
+none(predicate: Predicate<T, [Iterable<B>]>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

@@ -4,3 +4,13 @@
 
 ## Promise\_2 type
 
+<b>Signature:</b>
+
+```typescript
+export declare type Promise<T> = globalThis.Promise<T>;
+```
+
+## Remarks
+
+This is a re-export of the global `Promise` interface to ensure that it merges with the `Promise` namespace.
+

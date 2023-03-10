@@ -4,3 +4,8 @@
 
 ## Token.Number.isInteger property
 
+<b>Signature:</b>
+
+```typescript
+get isInteger(): boolean;
+```

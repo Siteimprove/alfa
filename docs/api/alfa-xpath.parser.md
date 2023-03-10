@@ -4,9 +4,16 @@
 
 ## Parser namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Parser 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [parse](./alfa-xpath.parser.parse.md) |  |
+|  [parse(input)](./alfa-xpath.parser.parse.md) |  |
 

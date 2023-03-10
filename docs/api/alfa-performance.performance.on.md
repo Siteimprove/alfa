@@ -4,9 +4,19 @@
 
 ## Performance.on() method
 
+<b>Signature:</b>
+
+```typescript
+on(listener: Callback<Performance.Entry<T>>): this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  listener | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Performance.Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+this
 

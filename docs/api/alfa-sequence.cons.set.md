@@ -4,10 +4,20 @@
 
 ## Cons.set() method
 
+<b>Signature:</b>
+
+```typescript
+set(index: number, value: T): Cons<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  index | number |  |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
 

@@ -4,10 +4,20 @@
 
 ## Tuple.collect() function
 
+<b>Signature:</b>
+
+```typescript
+export function collect<T extends Tuple, U>(tuple: T, mapper: Mapper<Item<T>, Option<U>, [index: number]>): Array<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+Array&lt;U&gt;
 

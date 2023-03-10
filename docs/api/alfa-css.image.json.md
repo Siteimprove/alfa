@@ -4,9 +4,16 @@
 
 ## Image.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Value.JSON<"image"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"image"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [image](./alfa-css.image.json.image.md) |  |  |  |
+|  [image](./alfa-css.image.json.image.md) |  | [URL.JSON](./alfa-css.url.json.md) \| [Gradient.JSON](./alfa-css.gradient.json.md) |  |
 

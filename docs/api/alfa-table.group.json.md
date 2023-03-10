@@ -4,3 +4,10 @@
 
 ## Group.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON = Column.Group.JSON | Row.Group.JSON;
+```
+<b>References:</b> [Column.Group.JSON](./alfa-table.column.group.json.md)<!-- -->, [Row.Group.JSON](./alfa-table.row.group.json.md)
+

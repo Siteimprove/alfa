@@ -4,10 +4,17 @@
 
 ## Perspective.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Value.JSON<"transform"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"transform"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [depth](./alfa-css.perspective.json.depth.md) |  |  |  |
-|  [kind](./alfa-css.perspective.json.kind.md) |  |  |  |
+|  [depth](./alfa-css.perspective.json.depth.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
+|  [kind](./alfa-css.perspective.json.kind.md) |  | "perspective" |  |
 

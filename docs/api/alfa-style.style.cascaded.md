@@ -4,3 +4,8 @@
 
 ## Style.Cascaded type
 
+<b>Signature:</b>
+
+```typescript
+type Cascaded<N extends Name> = Property.Value.Cascaded<N>;
+```

@@ -4,3 +4,8 @@
 
 ## Diagnostic.isMatchingClasses variable
 
+<b>Signature:</b>
+
+```typescript
+isMatchingClasses: typeof MatchingClasses.isMatchingClasses
+```

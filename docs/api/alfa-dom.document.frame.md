@@ -4,3 +4,8 @@
 
 ## Document.frame property
 
+<b>Signature:</b>
+
+```typescript
+get frame(): Option<Element>;
+```

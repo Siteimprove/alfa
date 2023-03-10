@@ -4,14 +4,20 @@
 
 ## Node.Traversal namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Traversal 
+```
+
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [composed](./alfa-dom.node.traversal.composed.md) |  |
+|  [composed](./alfa-dom.node.traversal.composed.md) | <p>When set, traverse the node in shadow-including tree order.</p><p>[https://dom.spec.whatwg.org/\#concept-shadow-including-tree-order](https://dom.spec.whatwg.org/#concept-shadow-including-tree-order)</p> |
 |  [empty](./alfa-dom.node.traversal.empty.md) |  |
-|  [flattened](./alfa-dom.node.traversal.flattened.md) |  |
-|  [nested](./alfa-dom.node.traversal.nested.md) |  |
+|  [flattened](./alfa-dom.node.traversal.flattened.md) | <p>When set, traverse the flattened element tree rooted at the node.</p><p>[https://drafts.csswg.org/css-scoping/\#flat-tree](https://drafts.csswg.org/css-scoping/#flat-tree)</p> |
+|  [nested](./alfa-dom.node.traversal.nested.md) | <p>When set, traverse all nested browsing contexts encountered.</p><p>[https://html.spec.whatwg.org/\#nested-browsing-context](https://html.spec.whatwg.org/#nested-browsing-context)</p> |
 |  [none](./alfa-dom.node.traversal.none.md) |  |
 
 ## Type Aliases

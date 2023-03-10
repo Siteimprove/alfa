@@ -4,6 +4,13 @@
 
 ## Cell namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Cell 
+```
+
 ## Classes
 
 |  Class | Description |
@@ -15,7 +22,7 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [isCell](./alfa-table.cell.iscell.md) |  |
+|  [isCell(value)](./alfa-table.cell.iscell.md) |  |
 
 ## Interfaces
 

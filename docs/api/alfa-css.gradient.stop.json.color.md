@@ -4,3 +4,8 @@
 
 ## Gradient.Stop.JSON.color property
 
+<b>Signature:</b>
+
+```typescript
+color: Color.JSON;
+```

@@ -4,3 +4,8 @@
 
 ## Inset.JSON.offsets property
 
+<b>Signature:</b>
+
+```typescript
+offsets: Serializable.ToJSON<readonly [O, O, O, O]>;
+```

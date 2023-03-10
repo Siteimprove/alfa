@@ -4,10 +4,17 @@
 
 ## Matrix.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Value.JSON<"transform"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"transform"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [kind](./alfa-css.matrix.json.kind.md) |  |  |  |
-|  [values](./alfa-css.matrix.json.values.md) |  |  |  |
+|  [kind](./alfa-css.matrix.json.kind.md) |  | "matrix" |  |
+|  [values](./alfa-css.matrix.json.values.md) |  | [Values](./alfa-css.matrix.values.md)<!-- -->&lt;Number.JSON&gt; |  |
 

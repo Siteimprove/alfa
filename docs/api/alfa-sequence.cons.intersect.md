@@ -4,9 +4,19 @@
 
 ## Cons.intersect() method
 
+<b>Signature:</b>
+
+```typescript
+intersect(iterable: Iterable<T>): Sequence<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

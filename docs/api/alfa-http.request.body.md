@@ -4,3 +4,10 @@
 
 ## Request.body property
 
+[https://fetch.spec.whatwg.org/\#dom-body-body](https://fetch.spec.whatwg.org/#dom-body-body)
+
+<b>Signature:</b>
+
+```typescript
+get body(): ArrayBuffer;
+```

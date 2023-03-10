@@ -4,3 +4,12 @@
 
 ## Outcome.Failed.toEARL() method
 
+<b>Signature:</b>
+
+```typescript
+toEARL(): Failed.EARL;
+```
+<b>Returns:</b>
+
+[Failed.EARL](./alfa-act.outcome.failed.earl.md)
+

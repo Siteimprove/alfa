@@ -4,10 +4,20 @@
 
 ## Tuple.includes() function
 
+<b>Signature:</b>
+
+```typescript
+export function includes<T extends Tuple>(tuple: T, value: Item<T>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
 |  value | [Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

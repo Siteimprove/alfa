@@ -4,9 +4,19 @@
 
 ## Result.none() method
 
+<b>Signature:</b>
+
+```typescript
+none<U extends T>(refinement: Refinement<T, U>): this is Result<Exclude<T, U>, E>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+this is [Result](./alfa-result.result.md)<!-- -->&lt;Exclude&lt;T, U&gt;, E&gt;
 

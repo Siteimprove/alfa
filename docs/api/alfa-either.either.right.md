@@ -4,9 +4,19 @@
 
 ## Either.right() function
 
+<b>Signature:</b>
+
+```typescript
+function right<R, L = never>(value: R): Either<L, R>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | R |  |
+
+<b>Returns:</b>
+
+[Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;
 

@@ -4,9 +4,19 @@
 
 ## Timeout.elapsed() method
 
+<b>Signature:</b>
+
+```typescript
+elapsed(now?: number): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  now | number | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+number
 

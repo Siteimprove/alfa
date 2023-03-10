@@ -4,3 +4,13 @@
 
 ## default\_2() function
 
+
+<b>Signature:</b>
+
+```typescript
+export default function <I, T extends Hashable, Q, S>(): Formatter<I, T, Q, S>;
+```
+<b>Returns:</b>
+
+[Formatter](./alfa-formatter.formatter.md)<!-- -->&lt;I, T, Q, S&gt;
+

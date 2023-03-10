@@ -4,3 +4,8 @@
 
 ## Selector.Pseudo.Class.name property
 
+<b>Signature:</b>
+
+```typescript
+get name(): N;
+```

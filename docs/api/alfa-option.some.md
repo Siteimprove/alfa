@@ -4,12 +4,19 @@
 
 ## Some namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Some 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isSome](./alfa-option.some.issome.md) |  |
-|  [isSome](./alfa-option.some.issome.md) |  |
+|  [isSome(value)](./alfa-option.some.issome.md) |  |
+|  [isSome(value)](./alfa-option.some.issome_1.md) |  |
 
 ## Interfaces
 

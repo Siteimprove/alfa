@@ -4,9 +4,19 @@
 
 ## Trampoline.flatten() method
 
+<b>Signature:</b>
+
+```typescript
+flatten<T>(this: Trampoline<Trampoline<T>>): Trampoline<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;
 

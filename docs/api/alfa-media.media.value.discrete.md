@@ -4,3 +4,8 @@
 
 ## Media.Value.discrete variable
 
+<b>Signature:</b>
+
+```typescript
+discrete: typeof Discrete.of
+```

@@ -4,3 +4,8 @@
 
 ## Element.hasTabIndex variable
 
+<b>Signature:</b>
+
+```typescript
+hasTabIndex: typeof predicate.hasTabIndex
+```

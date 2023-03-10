@@ -4,3 +4,8 @@
 
 ## Selector.Universal.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "universal";
+```

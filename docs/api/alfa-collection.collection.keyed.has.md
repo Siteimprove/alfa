@@ -4,9 +4,19 @@
 
 ## Collection.Keyed.has() method
 
+<b>Signature:</b>
+
+```typescript
+has(key: K): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K |  |
+
+<b>Returns:</b>
+
+boolean
 

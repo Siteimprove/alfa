@@ -4,9 +4,19 @@
 
 ## Media.Feature.Height.tryFrom() function
 
+<b>Signature:</b>
+
+```typescript
+function tryFrom(value: Option<Value>): Result<Height, string>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Option](./alfa-option.option.md)<!-- -->&lt;[Value](./alfa-media.media.value.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[Result](./alfa-result.result.md)<!-- -->&lt;Height, string&gt;
 

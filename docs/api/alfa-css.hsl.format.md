@@ -4,3 +4,8 @@
 
 ## HSL.format property
 
+<b>Signature:</b>
+
+```typescript
+get format(): "hsl";
+```

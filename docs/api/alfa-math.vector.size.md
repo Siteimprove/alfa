@@ -4,9 +4,19 @@
 
 ## Vector.size() function
 
+<b>Signature:</b>
+
+```typescript
+function size(v: Vector): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
+
+<b>Returns:</b>
+
+number
 

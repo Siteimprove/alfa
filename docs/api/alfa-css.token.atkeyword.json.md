@@ -4,10 +4,16 @@
 
 ## Token.AtKeyword.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.token.atkeyword.json.type.md) |  |  |  |
-|  [value](./alfa-css.token.atkeyword.json.value.md) |  |  |  |
+|  [type](./alfa-css.token.atkeyword.json.type.md) |  | "at-keyword" |  |
+|  [value](./alfa-css.token.atkeyword.json.value.md) |  | string |  |
 

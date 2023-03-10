@@ -4,9 +4,19 @@
 
 ## Collection.Unkeyed.flatten() method
 
+<b>Signature:</b>
+
+```typescript
+flatten<T>(this: Unkeyed<Unkeyed<T>>): Unkeyed<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

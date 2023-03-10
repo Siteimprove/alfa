@@ -4,3 +4,10 @@
 
 ## Function\_2.consume variable
 
+[https://drafts.csswg.org/css-syntax/\#consume-a-function](https://drafts.csswg.org/css-syntax/#consume-a-function)
+
+<b>Signature:</b>
+
+```typescript
+consume: Parser<Slice<Token>, Function>
+```

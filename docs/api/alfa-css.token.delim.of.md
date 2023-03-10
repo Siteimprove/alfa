@@ -4,9 +4,19 @@
 
 ## Token.Delim.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(value: number): Delim;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | number |  |
+
+<b>Returns:</b>
+
+[Delim](./alfa-css.token.delim.md)
 

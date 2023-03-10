@@ -4,3 +4,8 @@
 
 ## Token.Name.prefix property
 
+<b>Signature:</b>
+
+```typescript
+get prefix(): Option<string>;
+```

@@ -4,9 +4,16 @@
 
 ## MediaRule.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends ConditionRule.JSON 
+```
+<b>Extends:</b> [ConditionRule.JSON](./alfa-dom.conditionrule.json.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-dom.mediarule.json.type.md) |  |  |  |
+|  [type](./alfa-dom.mediarule.json.type.md) |  | "media" |  |
 

@@ -4,20 +4,27 @@
 
 ## h namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace h 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [attribute](./alfa-dom.h.attribute.md) |  |
-|  [block](./alfa-dom.h.block.md) |  |
-|  [declaration](./alfa-dom.h.declaration.md) |  |
-|  [document](./alfa-dom.h.document.md) |  |
-|  [element](./alfa-dom.h.element.md) |  |
-|  [fragment](./alfa-dom.h.fragment.md) |  |
-|  [shadow](./alfa-dom.h.shadow.md) |  |
-|  [sheet](./alfa-dom.h.sheet.md) |  |
-|  [text](./alfa-dom.h.text.md) |  |
-|  [type](./alfa-dom.h.type.md) |  |
+|  [attribute(name, value)](./alfa-dom.h.attribute.md) |  |
+|  [block(declarations)](./alfa-dom.h.block.md) |  |
+|  [declaration(name, value, important)](./alfa-dom.h.declaration.md) |  |
+|  [document(children, style)](./alfa-dom.h.document.md) |  |
+|  [element(name, attributes, children, style, namespace)](./alfa-dom.h.element.md) |  |
+|  [fragment(children)](./alfa-dom.h.fragment.md) |  |
+|  [shadow(children, style, mode)](./alfa-dom.h.shadow.md) |  |
+|  [sheet(rules, disabled, condition)](./alfa-dom.h.sheet.md) |  |
+|  [text(data)](./alfa-dom.h.text.md) |  |
+|  [type(name, publicId, systemId)](./alfa-dom.h.type.md) |  |
 
 ## Namespaces
 

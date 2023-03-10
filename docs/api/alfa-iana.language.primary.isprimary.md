@@ -4,9 +4,19 @@
 
 ## Language.Primary.isPrimary() function
 
+<b>Signature:</b>
+
+```typescript
+function isPrimary(value: unknown): value is Primary;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Primary](./alfa-iana.language.primary.md)
 

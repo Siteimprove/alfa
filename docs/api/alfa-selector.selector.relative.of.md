@@ -4,10 +4,20 @@
 
 ## Selector.Relative.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(combinator: Combinator, selector: Simple | Compound | Complex): Relative;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  combinator | [Combinator](./alfa-selector.selector.combinator.md) |  |
 |  selector | [Simple](./alfa-selector.selector.simple.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md) |  |
+
+<b>Returns:</b>
+
+[Relative](./alfa-selector.selector.relative.md)
 

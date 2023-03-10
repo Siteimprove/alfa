@@ -4,9 +4,19 @@
 
 ## Err.someErr() method
 
+<b>Signature:</b>
+
+```typescript
+someErr(predicate: Predicate<E>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;E&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

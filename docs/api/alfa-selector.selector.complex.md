@@ -4,6 +4,12 @@
 
 ## Selector.Complex namespace
 
+<b>Signature:</b>
+
+```typescript
+export namespace Complex 
+```
+
 ## Interfaces
 
 |  Interface | Description |

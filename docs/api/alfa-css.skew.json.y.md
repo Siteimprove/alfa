@@ -4,3 +4,8 @@
 
 ## Skew.JSON.y property
 
+<b>Signature:</b>
+
+```typescript
+y: Angle.JSON;
+```

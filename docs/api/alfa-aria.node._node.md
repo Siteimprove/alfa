@@ -4,3 +4,8 @@
 
 ## Node.\_node property
 
+<b>Signature:</b>
+
+```typescript
+protected readonly _node: dom.Node;
+```

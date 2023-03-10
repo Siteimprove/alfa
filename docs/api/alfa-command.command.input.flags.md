@@ -4,3 +4,8 @@
 
 ## Command.Input.flags property
 
+<b>Signature:</b>
+
+```typescript
+flags: Flags.Values<F>;
+```

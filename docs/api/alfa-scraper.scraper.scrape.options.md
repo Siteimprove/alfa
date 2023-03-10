@@ -4,17 +4,23 @@
 
 ## Scraper.scrape.Options interface
 
+<b>Signature:</b>
+
+```typescript
+interface Options 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [archive](./alfa-scraper.scraper.scrape.options.archive.md) |  |  |  |
-|  [awaiter](./alfa-scraper.scraper.scrape.options.awaiter.md) |  |  |  |
-|  [cookies](./alfa-scraper.scraper.scrape.options.cookies.md) |  |  |  |
-|  [credentials](./alfa-scraper.scraper.scrape.options.credentials.md) |  |  |  |
-|  [device](./alfa-scraper.scraper.scrape.options.device.md) |  |  |  |
-|  [fit](./alfa-scraper.scraper.scrape.options.fit.md) |  |  |  |
-|  [headers](./alfa-scraper.scraper.scrape.options.headers.md) |  |  |  |
-|  [screenshot](./alfa-scraper.scraper.scrape.options.screenshot.md) |  |  |  |
-|  [timeout](./alfa-scraper.scraper.scrape.options.timeout.md) |  |  |  |
+|  [archive?](./alfa-scraper.scraper.scrape.options.archive.md) | <code>readonly</code> | [Archive](./alfa-scraper.archive.md) | <i>(Optional)</i> |
+|  [awaiter?](./alfa-scraper.scraper.scrape.options.awaiter.md) | <code>readonly</code> | [Awaiter](./alfa-scraper.awaiter.md) | <i>(Optional)</i> |
+|  [cookies?](./alfa-scraper.scraper.scrape.options.cookies.md) | <code>readonly</code> | Iterable&lt;[Cookie](./alfa-http.cookie.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  [credentials?](./alfa-scraper.scraper.scrape.options.credentials.md) | <code>readonly</code> | [Credentials](./alfa-scraper.credentials.md) | <i>(Optional)</i> |
+|  [device?](./alfa-scraper.scraper.scrape.options.device.md) | <code>readonly</code> | [Device](./alfa-device.device.md) | <i>(Optional)</i> |
+|  [fit?](./alfa-scraper.scraper.scrape.options.fit.md) | <code>readonly</code> | boolean | <i>(Optional)</i> |
+|  [headers?](./alfa-scraper.scraper.scrape.options.headers.md) | <code>readonly</code> | Iterable&lt;[Header](./alfa-http.header.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  [screenshot?](./alfa-scraper.scraper.scrape.options.screenshot.md) | <code>readonly</code> | [Screenshot](./alfa-scraper.screenshot.md) | <i>(Optional)</i> |
+|  [timeout?](./alfa-scraper.scraper.scrape.options.timeout.md) | <code>readonly</code> | [Timeout](./alfa-time.timeout.md) | <i>(Optional)</i> |
 

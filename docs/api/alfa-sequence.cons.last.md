@@ -4,3 +4,12 @@
 
 ## Cons.last() method
 
+<b>Signature:</b>
+
+```typescript
+last(): Option<T>;
+```
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+

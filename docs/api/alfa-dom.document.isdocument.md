@@ -4,9 +4,19 @@
 
 ## Document.isDocument() function
 
+<b>Signature:</b>
+
+```typescript
+function isDocument(value: unknown): value is Document;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Document](./alfa-dom.document.md)
 

@@ -4,3 +4,8 @@
 
 ## Refinement.isPrimitive variable
 
+<b>Signature:</b>
+
+```typescript
+isPrimitive: Refinement<unknown, string | number | bigint | boolean | symbol | null | undefined, []>
+```

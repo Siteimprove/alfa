@@ -4,3 +4,8 @@
 
 ## Selector.Complex.combinator property
 
+<b>Signature:</b>
+
+```typescript
+get combinator(): Combinator;
+```

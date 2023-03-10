@@ -4,3 +4,8 @@
 
 ## Scraper.scrape.Options.fit property
 
+<b>Signature:</b>
+
+```typescript
+readonly fit?: boolean;
+```

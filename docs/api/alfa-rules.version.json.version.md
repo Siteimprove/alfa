@@ -4,3 +4,8 @@
 
 ## Version.JSON.version property
 
+<b>Signature:</b>
+
+```typescript
+version: N;
+```

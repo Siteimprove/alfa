@@ -4,6 +4,12 @@
 
 ## Rectangle.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(top: O, right: O, bottom: O, left: O): Rectangle<O>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -12,4 +18,8 @@
 |  right | O |  |
 |  bottom | O |  |
 |  left | O |  |
+
+<b>Returns:</b>
+
+[Rectangle](./alfa-css.rectangle.md)<!-- -->&lt;O&gt;
 

@@ -4,9 +4,19 @@
 
 ## Length.isZero() function
 
+<b>Signature:</b>
+
+```typescript
+function isZero(length: Length): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  length | [Length](./alfa-css.length.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

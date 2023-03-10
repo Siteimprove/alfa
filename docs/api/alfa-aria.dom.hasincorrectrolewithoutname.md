@@ -4,3 +4,8 @@
 
 ## DOM.hasIncorrectRoleWithoutName variable
 
+<b>Signature:</b>
+
+```typescript
+hasIncorrectRoleWithoutName: typeof dom.hasIncorrectRoleWithoutName
+```

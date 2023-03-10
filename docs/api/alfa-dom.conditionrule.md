@@ -4,11 +4,18 @@
 
 ## ConditionRule namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace ConditionRule 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isConditionRule](./alfa-dom.conditionrule.isconditionrule.md) |  |
+|  [isConditionRule(value)](./alfa-dom.conditionrule.isconditionrule.md) |  |
 
 ## Interfaces
 

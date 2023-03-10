@@ -4,6 +4,14 @@
 
 ## Outcome.from() function
 
+<b>Signature:</b>
+
+```typescript
+function from<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{
+        [key: string]: Option<Result<Diagnostic>>;
+    }>, mode: Mode): Outcome.Applicable<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -12,4 +20,8 @@
 |  target | T |  |
 |  expectations | Record&lt;{ \[key: string\]: [Option](./alfa-option.option.md)<!-- -->&lt;[Result](./alfa-result.result.md)<!-- -->&lt;[Diagnostic](./alfa-act.diagnostic.md)<!-- -->&gt;&gt;; }&gt; |  |
 |  mode | [Mode](./alfa-act.outcome.mode.md) |  |
+
+<b>Returns:</b>
+
+[Outcome.Applicable](./alfa-act.outcome.applicable.md)<!-- -->&lt;I, T, Q, S&gt;
 

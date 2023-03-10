@@ -4,3 +4,12 @@
 
 ## Function\_2.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Function.JSON;
+```
+<b>Returns:</b>
+
+Function.JSON
+

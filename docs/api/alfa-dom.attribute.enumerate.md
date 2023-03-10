@@ -4,10 +4,14 @@
 
 ## Attribute.enumerate() method
 
-## Parameters
+[https://html.spec.whatwg.org/\#enumerated-attribute](https://html.spec.whatwg.org/#enumerated-attribute)
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  valid | T |  |
-|  rest | Array&lt;T&gt; |  |
+<b>Signature:</b>
+
+```typescript
+enumerate(): Option<string>;
+```
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;string&gt;
 

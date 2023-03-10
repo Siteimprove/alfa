@@ -4,3 +4,10 @@
 
 ## Box.Shape.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON = Box.JSON | Keyword.JSON<"margin-box">;
+```
+<b>References:</b> [Box.JSON](./alfa-css.box.json.md)<!-- -->, [Keyword.JSON](./alfa-css.keyword.json.md)
+

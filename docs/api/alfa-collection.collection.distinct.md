@@ -4,3 +4,12 @@
 
 ## Collection.distinct() method
 
+<b>Signature:</b>
+
+```typescript
+distinct(): Collection<T>;
+```
+<b>Returns:</b>
+
+[Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;
+

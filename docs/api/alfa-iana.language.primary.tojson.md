@@ -4,3 +4,12 @@
 
 ## Language.Primary.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Primary.JSON;
+```
+<b>Returns:</b>
+
+[Primary.JSON](./alfa-iana.language.primary.json.md)
+

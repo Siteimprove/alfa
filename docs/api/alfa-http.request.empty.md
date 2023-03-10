@@ -4,3 +4,12 @@
 
 ## Request.empty() method
 
+<b>Signature:</b>
+
+```typescript
+static empty(): Request;
+```
+<b>Returns:</b>
+
+[Request](./alfa-http.request.md)
+

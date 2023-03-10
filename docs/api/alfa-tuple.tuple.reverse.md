@@ -4,3 +4,13 @@
 
 ## Tuple.Reverse type
 
+<b>Signature:</b>
+
+```typescript
+export type Reverse<T extends Tuple> = T extends readonly [
+        infer H,
+        ...infer R
+    ] ? [...Reverse<R>, H] : Empty;
+```
+<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Reverse](./alfa-tuple.tuple.reverse.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
+

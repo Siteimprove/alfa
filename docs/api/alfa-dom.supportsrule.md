@@ -4,11 +4,18 @@
 
 ## SupportsRule namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace SupportsRule 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isSupportsRue](./alfa-dom.supportsrule.issupportsrue.md) |  |
+|  [isSupportsRue(value)](./alfa-dom.supportsrule.issupportsrue.md) |  |
 
 ## Interfaces
 

@@ -4,3 +4,12 @@
 
 ## FontFaceRule.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): FontFaceRule.JSON;
+```
+<b>Returns:</b>
+
+[FontFaceRule.JSON](./alfa-dom.fontfacerule.json.md)
+

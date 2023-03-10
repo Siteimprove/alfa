@@ -4,3 +4,8 @@
 
 ## Rule.Composite.Evaluate interface
 
+<b>Signature:</b>
+
+```typescript
+interface Evaluate<I, T extends Hashable, Q, S> 
+```

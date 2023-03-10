@@ -4,9 +4,15 @@
 
 ## Token.Whitespace.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.token.whitespace.json.type.md) |  |  |  |
+|  [type](./alfa-css.token.whitespace.json.type.md) |  | "whitespace" |  |
 

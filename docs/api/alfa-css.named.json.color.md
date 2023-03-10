@@ -4,3 +4,8 @@
 
 ## Named.JSON.color property
 
+<b>Signature:</b>
+
+```typescript
+color: string;
+```

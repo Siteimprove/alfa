@@ -4,9 +4,19 @@
 
 ## SupportsRule.isSupportsRue() function
 
+<b>Signature:</b>
+
+```typescript
+function isSupportsRue(value: unknown): value is SupportsRule;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [SupportsRule](./alfa-dom.supportsrule.md)
 

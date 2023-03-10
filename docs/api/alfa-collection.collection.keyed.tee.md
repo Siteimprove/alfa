@@ -4,10 +4,20 @@
 
 ## Collection.Keyed.tee() method
 
+<b>Signature:</b>
+
+```typescript
+tee<A extends Array<unknown> = []>(callback: Callback<Keyed<K, V>, void, [...args: A]>, ...args: A): Keyed<K, V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;, void, \[...args: A\]&gt; |  |
 |  args | A |  |
+
+<b>Returns:</b>
+
+[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;
 

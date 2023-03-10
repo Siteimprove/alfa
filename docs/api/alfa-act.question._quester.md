@@ -4,3 +4,8 @@
 
 ## Question.\_quester property
 
+<b>Signature:</b>
+
+```typescript
+protected readonly _quester: Mapper<ANSWER, T>;
+```

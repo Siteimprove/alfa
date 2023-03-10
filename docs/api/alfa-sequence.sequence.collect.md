@@ -4,9 +4,19 @@
 
 ## Sequence.collect() method
 
+<b>Signature:</b>
+
+```typescript
+collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Sequence<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;
 

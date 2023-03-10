@@ -4,11 +4,17 @@
 
 ## Media.Feature.Width namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Width 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isWidth](./alfa-media.media.feature.width.iswidth.md) |  |
-|  [isWidth](./alfa-media.media.feature.width.iswidth.md) |  |
-|  [tryFrom](./alfa-media.media.feature.width.tryfrom.md) |  |
+|  [isWidth(value)](./alfa-media.media.feature.width.iswidth.md) |  |
+|  [isWidth(value)](./alfa-media.media.feature.width.iswidth_1.md) |  |
+|  [tryFrom(value)](./alfa-media.media.feature.width.tryfrom.md) |  |
 

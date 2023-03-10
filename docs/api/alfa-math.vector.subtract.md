@@ -4,10 +4,20 @@
 
 ## Vector.subtract() function
 
+<b>Signature:</b>
+
+```typescript
+function subtract(v: Vector, u: Vector): Vector;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
 |  u | [Vector](./alfa-math.vector.md) |  |
+
+<b>Returns:</b>
+
+[Vector](./alfa-math.vector.md)
 

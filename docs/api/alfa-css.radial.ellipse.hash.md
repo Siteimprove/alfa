@@ -4,9 +4,19 @@
 
 ## Radial.Ellipse.hash() method
 
+<b>Signature:</b>
+
+```typescript
+hash(hash: Hash): void;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  hash | [Hash](./alfa-hash.hash.md) |  |
+
+<b>Returns:</b>
+
+void
 

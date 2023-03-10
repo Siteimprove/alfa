@@ -4,3 +4,8 @@
 
 ## Box.parseShape variable
 
+<b>Signature:</b>
+
+```typescript
+parseShape: Parser<Slice<Token>, Shape, string>
+```

@@ -4,3 +4,11 @@
 
 ## Browser type
 
+
+<b>Signature:</b>
+
+```typescript
+export declare type Browser<N extends Browser.Name = Browser.Name, V extends Browser.Version<N> = Browser.Version<N>> = Browser.Release<N, V>;
+```
+<b>References:</b> [Browser.Name](./alfa-compatibility.browser.name.md)<!-- -->, [Browser.Version](./alfa-compatibility.browser.version.md)<!-- -->, [Browser.Release](./alfa-compatibility.browser.release.md)
+

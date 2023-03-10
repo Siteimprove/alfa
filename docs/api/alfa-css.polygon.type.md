@@ -4,3 +4,8 @@
 
 ## Polygon.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "basic-shape";
+```

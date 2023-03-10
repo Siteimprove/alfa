@@ -4,6 +4,12 @@
 
 ## Page.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(request: Request, response: Response, document: Document, device: Device): Page;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -12,4 +18,8 @@
 |  response | [Response](./alfa-http.response.md) |  |
 |  document | [Document](./alfa-dom.document.md) |  |
 |  device | [Device](./alfa-device.device.md) |  |
+
+<b>Returns:</b>
+
+[Page](./alfa-web.page.md)
 

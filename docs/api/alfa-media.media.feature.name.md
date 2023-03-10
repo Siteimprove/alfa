@@ -4,3 +4,8 @@
 
 ## Media.Feature.name property
 
+<b>Signature:</b>
+
+```typescript
+abstract get name(): string;
+```

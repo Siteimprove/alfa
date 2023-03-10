@@ -4,3 +4,8 @@
 
 ## Group.size property
 
+<b>Signature:</b>
+
+```typescript
+get size(): number;
+```

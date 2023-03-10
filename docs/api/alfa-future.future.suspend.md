@@ -4,9 +4,19 @@
 
 ## Future.suspend() function
 
+<b>Signature:</b>
+
+```typescript
+function suspend<T>(thunk: Thunk<Future<T>>): Future<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

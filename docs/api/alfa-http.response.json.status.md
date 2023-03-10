@@ -4,3 +4,8 @@
 
 ## Response.JSON.status property
 
+<b>Signature:</b>
+
+```typescript
+status: number;
+```

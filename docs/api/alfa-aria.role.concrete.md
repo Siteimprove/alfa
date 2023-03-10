@@ -4,3 +4,12 @@
 
 ## Role.Concrete type
 
+The names of all non-abstract roles.
+
+<b>Signature:</b>
+
+```typescript
+type Concrete = Exclude<Name, Abstract>;
+```
+<b>References:</b> [Name](./alfa-aria.role.name.md)<!-- -->, [Abstract](./alfa-aria.role.abstract.md)
+

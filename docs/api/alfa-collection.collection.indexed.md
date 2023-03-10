@@ -4,6 +4,12 @@
 
 ## Collection.Indexed namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Indexed 
+```
+
 ## Type Aliases
 
 |  Type Alias | Description |

@@ -4,9 +4,19 @@
 
 ## Media.Type.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(name: string): Type;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
+
+<b>Returns:</b>
+
+[Type](./alfa-media.media.type.md)
 

@@ -4,3 +4,8 @@
 
 ## Node.hasInclusiveDescendant variable
 
+<b>Signature:</b>
+
+```typescript
+hasInclusiveDescendant: typeof predicate.hasInclusiveDescendant
+```

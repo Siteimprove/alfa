@@ -4,9 +4,19 @@
 
 ## Cell.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(cell: Cell): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  cell | [Cell](./alfa-table.cell.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

@@ -4,3 +4,8 @@
 
 ## Token.isOpenCurlyBracket variable
 
+<b>Signature:</b>
+
+```typescript
+isOpenCurlyBracket: typeof OpenCurlyBracket.isOpenCurlyBracket
+```

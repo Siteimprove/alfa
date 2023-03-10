@@ -4,6 +4,12 @@
 
 ## Screenshot.Type.PNG namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace PNG 
+```
+
 ## Interfaces
 
 |  Interface | Description |

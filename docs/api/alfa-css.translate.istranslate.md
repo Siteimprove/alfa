@@ -4,9 +4,19 @@
 
 ## Translate.isTranslate() function
 
+<b>Signature:</b>
+
+```typescript
+function isTranslate<X extends Length | Percentage, Y extends Length | Percentage, Z extends Length>(value: unknown): value is Translate<X, Y, Z>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Translate](./alfa-css.translate.md)<!-- -->&lt;X, Y, Z&gt;
 

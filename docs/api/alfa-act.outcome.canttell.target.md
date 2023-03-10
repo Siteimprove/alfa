@@ -4,3 +4,8 @@
 
 ## Outcome.CantTell.target property
 
+<b>Signature:</b>
+
+```typescript
+get target(): T;
+```

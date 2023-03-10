@@ -4,13 +4,19 @@
 
 ## Token.Dimension.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [isInteger](./alfa-css.token.dimension.json.isinteger.md) |  |  |  |
-|  [isSigned](./alfa-css.token.dimension.json.issigned.md) |  |  |  |
-|  [type](./alfa-css.token.dimension.json.type.md) |  |  |  |
-|  [unit](./alfa-css.token.dimension.json.unit.md) |  |  |  |
-|  [value](./alfa-css.token.dimension.json.value.md) |  |  |  |
+|  [isInteger](./alfa-css.token.dimension.json.isinteger.md) |  | boolean |  |
+|  [isSigned](./alfa-css.token.dimension.json.issigned.md) |  | boolean |  |
+|  [type](./alfa-css.token.dimension.json.type.md) |  | "dimension" |  |
+|  [unit](./alfa-css.token.dimension.json.unit.md) |  | string |  |
+|  [value](./alfa-css.token.dimension.json.value.md) |  | number |  |
 

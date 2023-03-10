@@ -4,9 +4,19 @@
 
 ## Token.OpenComment.isOpenComment() function
 
+<b>Signature:</b>
+
+```typescript
+function isOpenComment(value: unknown): value is OpenComment;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [OpenComment](./alfa-css.token.opencomment.md)
 

@@ -4,3 +4,8 @@
 
 ## Token.parseSemicolon variable
 
+<b>Signature:</b>
+
+```typescript
+parseSemicolon: Parser<Slice<Token>, Semicolon, string, []>
+```

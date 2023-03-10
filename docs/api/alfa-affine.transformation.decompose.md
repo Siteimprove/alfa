@@ -4,3 +4,14 @@
 
 ## Transformation.decompose() method
 
+[https://drafts.csswg.org/css-transforms-2/\#decomposing-a-3d-matrix](https://drafts.csswg.org/css-transforms-2/#decomposing-a-3d-matrix)
+
+<b>Signature:</b>
+
+```typescript
+decompose(): Option<Transformation.Components>;
+```
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;[Transformation.Components](./alfa-affine.transformation.components.md)<!-- -->&gt;
+

@@ -4,3 +4,10 @@
 
 ## Expression.Literal.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON = Integer.JSON | Decimal.JSON | Double.JSON | String.JSON;
+```
+<b>References:</b> [Integer.JSON](./alfa-xpath.expression.integer.json.md)<!-- -->, [Decimal.JSON](./alfa-xpath.expression.decimal.json.md)<!-- -->, [Double.JSON](./alfa-xpath.expression.double.json.md)<!-- -->, [String.JSON](./alfa-xpath.expression.string.json.md)
+

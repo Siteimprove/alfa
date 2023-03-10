@@ -4,9 +4,19 @@
 
 ## Collection.Unkeyed.reject() method
 
+<b>Signature:</b>
+
+```typescript
+reject<U extends T>(refinement: Refinement<T, U>): Unkeyed<Exclude<T, U>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

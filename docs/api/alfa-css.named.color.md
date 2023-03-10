@@ -4,3 +4,8 @@
 
 ## Named.Color type
 
+<b>Signature:</b>
+
+```typescript
+type Color = keyof Colors;
+```

@@ -4,9 +4,19 @@
 
 ## Hash.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Hash): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Hash](./alfa-hash.hash.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

@@ -4,3 +4,12 @@
 
 ## Expression.Axis.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Axis.JSON;
+```
+<b>Returns:</b>
+
+[Axis.JSON](./alfa-xpath.expression.axis.json.md)
+

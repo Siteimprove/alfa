@@ -4,11 +4,18 @@
 
 ## Group namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Group 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isGroup](./alfa-rules.group.isgroup.md) |  |
+|  [isGroup(value)](./alfa-rules.group.isgroup.md) |  |
 
 ## Interfaces
 

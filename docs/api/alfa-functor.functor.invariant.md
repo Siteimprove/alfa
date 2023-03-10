@@ -4,9 +4,15 @@
 
 ## Functor.Invariant interface
 
+<b>Signature:</b>
+
+```typescript
+interface Invariant<T> 
+```
+
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [contraMap](./alfa-functor.functor.invariant.contramap.md) |  |
+|  [contraMap(mapper)](./alfa-functor.functor.invariant.contramap.md) |  |
 

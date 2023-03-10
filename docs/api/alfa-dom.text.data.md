@@ -4,3 +4,8 @@
 
 ## Text.data property
 
+<b>Signature:</b>
+
+```typescript
+get data(): string;
+```

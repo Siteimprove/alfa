@@ -4,3 +4,12 @@
 
 ## Ok.orElse() method
 
+<b>Signature:</b>
+
+```typescript
+orElse(): Ok<T>;
+```
+<b>Returns:</b>
+
+[Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
+

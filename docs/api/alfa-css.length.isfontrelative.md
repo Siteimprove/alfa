@@ -4,3 +4,12 @@
 
 ## Length.isFontRelative() method
 
+<b>Signature:</b>
+
+```typescript
+isFontRelative(): this is Length<Unit.Length.Relative.Font>;
+```
+<b>Returns:</b>
+
+this is [Length](./alfa-css.length.md)<!-- -->&lt;[Unit.Length.Relative.Font](./alfa-css.unit.length.relative.font.md)<!-- -->&gt;
+

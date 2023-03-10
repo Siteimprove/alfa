@@ -4,6 +4,12 @@
 
 ## Thunk.reduce() function
 
+<b>Signature:</b>
+
+```typescript
+function reduce<T, U>(thunk: Thunk<T>, reducer: Reducer<T, U>, accumulator: U): U;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt; |  |
 |  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U&gt; |  |
 |  accumulator | U |  |
+
+<b>Returns:</b>
+
+U
 

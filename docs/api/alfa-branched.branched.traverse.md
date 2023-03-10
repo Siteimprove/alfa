@@ -4,10 +4,20 @@
 
 ## Branched.traverse() function
 
+<b>Signature:</b>
+
+```typescript
+function traverse<T, U, B>(values: Iterable<T>, mapper: Mapper<T, Branched<U, B>, [index: number]>): Branched<Iterable<U>, B>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | Iterable&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Branched](./alfa-branched.branched.md)<!-- -->&lt;U, B&gt;, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Branched](./alfa-branched.branched.md)<!-- -->&lt;Iterable&lt;U&gt;, B&gt;
 

@@ -4,10 +4,16 @@
 
 ## Radial.Extent.Shape enum
 
+<b>Signature:</b>
+
+```typescript
+enum Shape 
+```
+
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  Circle |  |  |
-|  Ellipse |  |  |
+|  Circle | <code>&quot;circle&quot;</code> |  |
+|  Ellipse | <code>&quot;ellipse&quot;</code> |  |
 

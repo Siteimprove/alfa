@@ -4,9 +4,16 @@
 
 ## Selector.Slotted.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Pseudo.Element.JSON<"slotted"> 
+```
+<b>Extends:</b> [Pseudo.Element.JSON](./alfa-selector.selector.pseudo.element.json.md)<!-- -->&lt;"slotted"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [selectors](./alfa-selector.selector.slotted.json.selectors.md) |  |  |  |
+|  [selectors](./alfa-selector.selector.slotted.json.selectors.md) |  | Array&lt;[Simple.JSON](./alfa-selector.selector.simple.json.md) \| [Compound.JSON](./alfa-selector.selector.compound.json.md)<!-- -->&gt; |  |
 

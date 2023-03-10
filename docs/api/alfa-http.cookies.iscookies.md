@@ -4,9 +4,19 @@
 
 ## Cookies.isCookies() function
 
+<b>Signature:</b>
+
+```typescript
+function isCookies(value: unknown): value is Cookies;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Cookies](./alfa-http.cookies.md)
 

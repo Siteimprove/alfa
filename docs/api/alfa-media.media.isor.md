@@ -4,3 +4,8 @@
 
 ## Media.isOr variable
 
+<b>Signature:</b>
+
+```typescript
+isOr: typeof Or.isOr
+```

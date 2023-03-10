@@ -4,3 +4,8 @@
 
 ## Math\_2.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "math expression";
+```

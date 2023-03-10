@@ -4,3 +4,12 @@
 
 ## Sequence.reverse() method
 
+<b>Signature:</b>
+
+```typescript
+reverse(): Sequence<T>;
+```
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+

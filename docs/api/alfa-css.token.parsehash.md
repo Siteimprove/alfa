@@ -4,9 +4,19 @@
 
 ## Token.parseHash() function
 
+<b>Signature:</b>
+
+```typescript
+function parseHash(predicate?: Predicate<Hash>): Parser<Slice<Token>, Hash, string, []>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Hash](./alfa-css.token.hash.md)<!-- -->&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Hash](./alfa-css.token.hash.md)<!-- -->, string, \[\]&gt;
 

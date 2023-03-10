@@ -4,6 +4,12 @@
 
 ## Name.Source.Descendant namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Descendant 
+```
+
 ## Interfaces
 
 |  Interface | Description |

@@ -4,9 +4,19 @@
 
 ## Selector.isId() function
 
+<b>Signature:</b>
+
+```typescript
+export function isId(value: unknown): value is Id;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Id](./alfa-selector.selector.id.md)
 

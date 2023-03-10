@@ -4,9 +4,19 @@
 
 ## Serializable.toSARIF() function
 
+<b>Signature:</b>
+
+```typescript
+function toSARIF<T extends SARIF>(value: Serializable<T>): Some<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Serializable](./alfa-sarif.serializable.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
 

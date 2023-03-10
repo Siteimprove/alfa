@@ -4,3 +4,8 @@
 
 ## Gradient.Stop.position property
 
+<b>Signature:</b>
+
+```typescript
+get position(): Option<P>;
+```

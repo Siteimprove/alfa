@@ -4,11 +4,18 @@
 
 ## Circle namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Circle 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isCircle](./alfa-css.circle.iscircle.md) |  |
+|  [isCircle(value)](./alfa-css.circle.iscircle.md) |  |
 
 ## Interfaces
 

@@ -4,3 +4,8 @@
 
 ## URL.JSON.host property
 
+<b>Signature:</b>
+
+```typescript
+host: string | null;
+```

@@ -4,9 +4,19 @@
 
 ## Promise\_2.any() function
 
+<b>Signature:</b>
+
+```typescript
+function any<T>(...promises: Array<Promise<T>>): Promise<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  promises | Array&lt;Promise&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+Promise&lt;T&gt;
 

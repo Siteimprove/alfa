@@ -4,3 +4,8 @@
 
 ## Rectangle.kind property
 
+<b>Signature:</b>
+
+```typescript
+get kind(): "rectangle";
+```

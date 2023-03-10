@@ -4,3 +4,12 @@
 
 ## Comment.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Comment.JSON;
+```
+<b>Returns:</b>
+
+[Comment.JSON](./alfa-dom.comment.json.md)
+

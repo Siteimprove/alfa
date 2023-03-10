@@ -4,3 +4,14 @@
 
 ## Criterion.Level.Of type
 
+All criteria of the specified level under the specific version.
+
+<b>Signature:</b>
+
+```typescript
+type Of<L extends Level, V extends Version = Version.Recommendation> = {
+            [C in Chapter]: L extends Level<C, V> ? C : never;
+        }[Chapter];
+```
+<b>References:</b> [Level](./alfa-wcag.criterion.level.md)<!-- -->, [Version](./alfa-wcag.criterion.version.md)<!-- -->, [Version.Recommendation](./alfa-wcag.criterion.version.recommendation.md)<!-- -->, [Chapter](./alfa-wcag.criterion.chapter.md)
+

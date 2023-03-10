@@ -4,3 +4,8 @@
 
 ## Request.EARL."http:methodName" property
 
+<b>Signature:</b>
+
+```typescript
+"http:methodName": string;
+```

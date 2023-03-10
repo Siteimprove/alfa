@@ -4,3 +4,8 @@
 
 ## Scale.JSON.y property
 
+<b>Signature:</b>
+
+```typescript
+y: Number.JSON;
+```

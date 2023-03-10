@@ -4,3 +4,12 @@
 
 ## Function\_2.\[Symbol.iterator\]() method
 
+<b>Signature:</b>
+
+```typescript
+[Symbol.iterator](): Iterator<Token>;
+```
+<b>Returns:</b>
+
+Iterator&lt;[Token](./alfa-css.token.md)<!-- -->&gt;
+

@@ -4,9 +4,19 @@
 
 ## Lazy.force() method
 
+<b>Signature:</b>
+
+```typescript
+static force<T>(value: T): Lazy<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;
 

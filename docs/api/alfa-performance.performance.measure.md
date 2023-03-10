@@ -4,3 +4,8 @@
 
 ## Performance.measure variable
 
+<b>Signature:</b>
+
+```typescript
+measure: typeof Measure.of
+```

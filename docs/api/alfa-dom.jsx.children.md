@@ -4,3 +4,14 @@
 
 ## jsx.Children type
 
+<b>Signature:</b>
+
+```typescript
+type Children = (Child | Children)[];
+```
+<b>References:</b> [Child](./alfa-dom.jsx.child.md)<!-- -->, [Children](./alfa-dom.jsx.children.md)
+
+## Remarks
+
+This type is declared using the short array syntax (`[]`<!-- -->) to avoid issues with circular generic references.
+

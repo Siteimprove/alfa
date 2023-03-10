@@ -4,3 +4,8 @@
 
 ## Style.isTabbable variable
 
+<b>Signature:</b>
+
+```typescript
+isTabbable: typeof element.isTabbable
+```

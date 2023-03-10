@@ -4,3 +4,8 @@
 
 ## Element.isFallback variable
 
+<b>Signature:</b>
+
+```typescript
+isFallback: typeof predicate.isFallback
+```

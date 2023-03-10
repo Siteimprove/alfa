@@ -4,10 +4,20 @@
 
 ## Collection.Indexed.tee() method
 
+<b>Signature:</b>
+
+```typescript
+tee<A extends Array<unknown> = []>(callback: Callback<Indexed<T>, void, [...args: A]>, ...args: A): Indexed<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt; |  |
 |  args | A |  |
+
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

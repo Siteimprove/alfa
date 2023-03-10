@@ -4,9 +4,19 @@
 
 ## Rule.Atomic.isAtomic() function
 
+<b>Signature:</b>
+
+```typescript
+function isAtomic<I, T extends Hashable, Q, S>(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+
+<b>Returns:</b>
+
+value is [Atomic](./alfa-act.rule.atomic.md)<!-- -->&lt;I, T, Q, S&gt;
 

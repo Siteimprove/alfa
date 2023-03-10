@@ -4,11 +4,18 @@
 
 ## MediaRule namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace MediaRule 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isMediaRule](./alfa-dom.mediarule.ismediarule.md) |  |
+|  [isMediaRule(value)](./alfa-dom.mediarule.ismediarule.md) |  |
 
 ## Interfaces
 

@@ -4,9 +4,19 @@
 
 ## Language.parse() function
 
+<b>Signature:</b>
+
+```typescript
+function parse(input: string): Result<Language, string>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  input | string |  |
+
+<b>Returns:</b>
+
+[Result](./alfa-result.result.md)<!-- -->&lt;[Language](./alfa-iana.language.md)<!-- -->, string&gt;
 

@@ -4,9 +4,19 @@
 
 ## Thenable.defer() function
 
+<b>Signature:</b>
+
+```typescript
+function defer<T, E = unknown>(continuation: Continuation<T, void, [reject: Callback<E>]>): Thenable<T, E>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  continuation | [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;T, void, \[reject: [Callback](./alfa-callback.callback.md)<!-- -->&lt;E&gt;\]&gt; |  |
+
+<b>Returns:</b>
+
+[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;
 

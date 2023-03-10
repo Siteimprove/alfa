@@ -4,13 +4,19 @@
 
 ## Cell.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [anchor](./alfa-table.cell.json.anchor.md) |  |  |  |
-|  [element](./alfa-table.cell.json.element.md) |  |  |  |
-|  [headers](./alfa-table.cell.json.headers.md) |  |  |  |
-|  [height](./alfa-table.cell.json.height.md) |  |  |  |
-|  [width](./alfa-table.cell.json.width.md) |  |  |  |
+|  [anchor](./alfa-table.cell.json.anchor.md) |  | [Slot.JSON](./alfa-table.slot.json.md) |  |
+|  [element](./alfa-table.cell.json.element.md) |  | string |  |
+|  [headers](./alfa-table.cell.json.headers.md) |  | Array&lt;[Slot.JSON](./alfa-table.slot.json.md)<!-- -->&gt; |  |
+|  [height](./alfa-table.cell.json.height.md) |  | number |  |
+|  [width](./alfa-table.cell.json.width.md) |  | number |  |
 

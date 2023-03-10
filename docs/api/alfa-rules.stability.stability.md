@@ -4,3 +4,8 @@
 
 ## Stability.stability property
 
+<b>Signature:</b>
+
+```typescript
+get stability(): S;
+```

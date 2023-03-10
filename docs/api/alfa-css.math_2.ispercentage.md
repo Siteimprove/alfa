@@ -4,3 +4,14 @@
 
 ## Math\_2.isPercentage() method
 
+[https://drafts.css-houdini.org/css-typed-om/\#cssnumericvalue-match](https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match)
+
+<b>Signature:</b>
+
+```typescript
+isPercentage(): this is Math<"percentage">;
+```
+<b>Returns:</b>
+
+this is Math&lt;"percentage"&gt;
+

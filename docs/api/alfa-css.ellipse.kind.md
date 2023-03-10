@@ -4,3 +4,8 @@
 
 ## Ellipse.kind property
 
+<b>Signature:</b>
+
+```typescript
+get kind(): "ellipse";
+```

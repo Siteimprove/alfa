@@ -4,3 +4,8 @@
 
 ## Hex.blue property
 
+<b>Signature:</b>
+
+```typescript
+get blue(): Number;
+```

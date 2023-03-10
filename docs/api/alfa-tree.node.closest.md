@@ -4,10 +4,22 @@
 
 ## Node.closest() method
 
+[https://dom.spec.whatwg.org/\#dom-element-closest](https://dom.spec.whatwg.org/#dom-element-closest)
+
+<b>Signature:</b>
+
+```typescript
+closest<T extends Node<F>>(refinement: Refinement<Node<F>, T>, options?: Flags<F>): Option<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;, T&gt; |  |
 |  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

@@ -4,9 +4,16 @@
 
 ## Unexpected namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Unexpected 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [createPlugin](./alfa-unexpected.unexpected.createplugin.md) |  |
+|  [createPlugin(transform, rules, handlers, options)](./alfa-unexpected.unexpected.createplugin.md) |  |
 

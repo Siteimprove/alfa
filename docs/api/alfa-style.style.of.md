@@ -4,6 +4,12 @@
 
 ## Style.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(styleDeclarations: Iterable<Declaration>, device: Device, parent?: Option<Style>): Style;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  styleDeclarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
 |  device | [Device](./alfa-device.device.md) |  |
 |  parent | [Option](./alfa-option.option.md)<!-- -->&lt;[Style](./alfa-style.style.md)<!-- -->&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Style](./alfa-style.style.md)
 

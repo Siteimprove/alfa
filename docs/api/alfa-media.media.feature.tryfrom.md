@@ -4,10 +4,20 @@
 
 ## Media.Feature.tryFrom() function
 
+<b>Signature:</b>
+
+```typescript
+export function tryFrom(value: Option<Value<any>>, name: string): Result<Feature, string>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Option](./alfa-option.option.md)<!-- -->&lt;[Value](./alfa-media.media.value.md)<!-- -->&lt;any&gt;&gt; |  |
 |  name | string |  |
+
+<b>Returns:</b>
+
+[Result](./alfa-result.result.md)<!-- -->&lt;[Feature](./alfa-media.media.feature.md)<!-- -->, string&gt;
 

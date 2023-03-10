@@ -4,9 +4,19 @@
 
 ## Response.isResponse() function
 
+<b>Signature:</b>
+
+```typescript
+function isResponse(value: unknown): value is Response;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Response](./alfa-http.response.md)
 

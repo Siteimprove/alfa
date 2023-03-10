@@ -4,3 +4,8 @@
 
 ## Selector.Part.idents property
 
+<b>Signature:</b>
+
+```typescript
+get idents(): Iterable<Token.Ident>;
+```

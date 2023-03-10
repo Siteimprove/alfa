@@ -4,10 +4,22 @@
 
 ## Node.isChildOf() method
 
+[https://dom.spec.whatwg.org/\#concept-tree-child](https://dom.spec.whatwg.org/#concept-tree-child)
+
+<b>Signature:</b>
+
+```typescript
+isChildOf(node: Node<F>, options?: Flags<F>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | [Node](./alfa-tree.node.md)<!-- -->&lt;F&gt; |  |
 |  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+boolean
 

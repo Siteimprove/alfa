@@ -4,9 +4,19 @@
 
 ## Performance.isPerformance() function
 
+<b>Signature:</b>
+
+```typescript
+function isPerformance<T>(value: unknown): value is Performance<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Performance](./alfa-performance.performance.md)<!-- -->&lt;T&gt;
 

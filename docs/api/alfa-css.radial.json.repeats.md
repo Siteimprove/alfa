@@ -4,3 +4,8 @@
 
 ## Radial.JSON.repeats property
 
+<b>Signature:</b>
+
+```typescript
+repeats: boolean;
+```

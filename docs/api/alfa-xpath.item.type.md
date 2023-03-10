@@ -4,3 +4,8 @@
 
 ## Item.Type type
 
+<b>Signature:</b>
+
+```typescript
+type Type = Descriptors.String | Descriptors.Numeric | Descriptors.Integer | Descriptors.Decimal | Descriptors.Double | Descriptors.Boolean | Descriptors.Node | Descriptors.Element;
+```

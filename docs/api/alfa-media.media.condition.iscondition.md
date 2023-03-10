@@ -4,9 +4,19 @@
 
 ## Media.Condition.isCondition() function
 
+<b>Signature:</b>
+
+```typescript
+function isCondition(value: unknown): value is Condition;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Condition](./alfa-media.media.condition.md)
 

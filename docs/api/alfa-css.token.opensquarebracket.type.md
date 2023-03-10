@@ -4,3 +4,8 @@
 
 ## Token.OpenSquareBracket.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "open-square-bracket";
+```

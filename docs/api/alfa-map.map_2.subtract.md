@@ -4,9 +4,19 @@
 
 ## Map\_2.subtract() method
 
+<b>Signature:</b>
+
+```typescript
+subtract(iterable: Iterable<readonly [K, V]>): Map<K, V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;readonly \[K, V\]&gt; |  |
+
+<b>Returns:</b>
+
+Map&lt;K, V&gt;
 

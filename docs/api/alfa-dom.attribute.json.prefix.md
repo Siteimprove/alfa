@@ -4,3 +4,8 @@
 
 ## Attribute.JSON.prefix property
 
+<b>Signature:</b>
+
+```typescript
+prefix: string | null;
+```

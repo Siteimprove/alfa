@@ -4,13 +4,22 @@
 
 ## Question.of() function
 
+<b>Signature:</b>
+
+```typescript
+export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string, options?: act.Question.Options<Typeof<U>>): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  uri | U |  |
 |  subject | S |  |
-|  context | C |  |
 |  message | string | <i>(Optional)</i> |
 |  options | act.[Question.Options](./alfa-act.question.options.md)<!-- -->&lt;Typeof&lt;U&gt;&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+act.[Question](./alfa-act.question.md)<!-- -->&lt;TypeName&lt;U&gt;, S, S, Typeof&lt;U&gt;, Typeof&lt;U&gt;, U&gt;
 

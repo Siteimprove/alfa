@@ -4,10 +4,19 @@
 
 ## Selector.FirstOfType class
 
+[https://drafts.csswg.org/selectors/\#first-of-type-pseudo](https://drafts.csswg.org/selectors/#first-of-type-pseudo)
+
+<b>Signature:</b>
+
+```typescript
+export class FirstOfType extends Pseudo.Class<"first-of-type"> 
+```
+<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"first-of-type"&gt;
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [matches](./alfa-selector.selector.firstoftype.matches.md) |  |  |
-|  [of](./alfa-selector.selector.firstoftype.of.md) |  |  |
+|  [matches(element)](./alfa-selector.selector.firstoftype.matches.md) |  |  |
+|  [of()](./alfa-selector.selector.firstoftype.of.md) | <code>static</code> |  |
 

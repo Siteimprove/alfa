@@ -4,9 +4,19 @@
 
 ## Keyword.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<T extends string>(value: T): Keyword<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Keyword](./alfa-css.keyword.md)<!-- -->&lt;T&gt;
 

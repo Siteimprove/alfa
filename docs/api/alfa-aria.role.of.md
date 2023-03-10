@@ -4,9 +4,19 @@
 
 ## Role.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<N extends Role.Name>(name: N): Role<N>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | N |  |
+
+<b>Returns:</b>
+
+[Role](./alfa-aria.role.md)<!-- -->&lt;N&gt;
 

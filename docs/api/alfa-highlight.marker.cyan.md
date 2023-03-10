@@ -4,3 +4,8 @@
 
 ## Marker.cyan variable
 
+<b>Signature:</b>
+
+```typescript
+cyan: Marker
+```

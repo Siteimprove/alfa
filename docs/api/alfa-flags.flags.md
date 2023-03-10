@@ -4,6 +4,13 @@
 
 ## Flags namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Flags 
+```
+
 ## Interfaces
 
 |  Interface | Description |

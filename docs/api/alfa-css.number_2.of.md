@@ -4,9 +4,19 @@
 
 ## Number\_2.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(value: number): Number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | number |  |
+
+<b>Returns:</b>
+
+Number
 

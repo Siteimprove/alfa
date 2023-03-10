@@ -4,3 +4,12 @@
 
 ## Style.root() method
 
+<b>Signature:</b>
+
+```typescript
+root(): Style;
+```
+<b>Returns:</b>
+
+[Style](./alfa-style.style.md)
+

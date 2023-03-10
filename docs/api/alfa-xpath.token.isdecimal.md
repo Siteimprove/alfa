@@ -4,9 +4,19 @@
 
 ## Token.isDecimal() function
 
+<b>Signature:</b>
+
+```typescript
+function isDecimal(value: unknown): value is Decimal;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Decimal](./alfa-xpath.token.decimal.md)
 

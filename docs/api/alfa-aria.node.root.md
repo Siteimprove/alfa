@@ -4,9 +4,19 @@
 
 ## Node.root() method
 
+<b>Signature:</b>
+
+```typescript
+root(options?: Node.Traversal): Node;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Node](./alfa-aria.node.md)
 

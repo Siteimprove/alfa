@@ -4,10 +4,20 @@
 
 ## Cache.set() method
 
+<b>Signature:</b>
+
+```typescript
+set(key: K, value: V): this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K |  |
 |  value | V |  |
+
+<b>Returns:</b>
+
+this
 

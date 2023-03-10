@@ -4,3 +4,12 @@
 
 ## Trampoline.isDone() method
 
+<b>Signature:</b>
+
+```typescript
+abstract isDone(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

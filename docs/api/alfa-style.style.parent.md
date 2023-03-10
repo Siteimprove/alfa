@@ -4,3 +4,8 @@
 
 ## Style.parent property
 
+<b>Signature:</b>
+
+```typescript
+get parent(): Style;
+```

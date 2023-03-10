@@ -4,3 +4,14 @@
 
 ## Role.isLandmark() method
 
+Check if this role is a landmark.
+
+<b>Signature:</b>
+
+```typescript
+isLandmark(): this is Role<Role.Landmark>;
+```
+<b>Returns:</b>
+
+this is [Role](./alfa-aria.role.md)<!-- -->&lt;[Role.Landmark](./alfa-aria.role.landmark.md)<!-- -->&gt;
+

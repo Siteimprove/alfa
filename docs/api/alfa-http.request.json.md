@@ -4,12 +4,18 @@
 
 ## Request.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [body](./alfa-http.request.json.body.md) |  |  |  |
-|  [headers](./alfa-http.request.json.headers.md) |  |  |  |
-|  [method](./alfa-http.request.json.method.md) |  |  |  |
-|  [url](./alfa-http.request.json.url.md) |  |  |  |
+|  [body](./alfa-http.request.json.body.md) |  | string |  |
+|  [headers](./alfa-http.request.json.headers.md) |  | [Headers.JSON](./alfa-http.headers.json.md) |  |
+|  [method](./alfa-http.request.json.method.md) |  | string |  |
+|  [url](./alfa-http.request.json.url.md) |  | string |  |
 

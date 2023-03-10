@@ -4,3 +4,8 @@
 
 ## Inset.top property
 
+<b>Signature:</b>
+
+```typescript
+get top(): O;
+```

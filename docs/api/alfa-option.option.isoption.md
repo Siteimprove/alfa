@@ -4,9 +4,19 @@
 
 ## Option.isOption() function
 
+<b>Signature:</b>
+
+```typescript
+function isOption<T>(value: Iterable<T>): value is Option<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+value is [Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

@@ -4,9 +4,19 @@
 
 ## Outcome.CantTell.isCantTell() function
 
+<b>Signature:</b>
+
+```typescript
+function isCantTell<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is CantTell<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+
+<b>Returns:</b>
+
+value is [CantTell](./alfa-act.outcome.canttell.md)<!-- -->&lt;I, T, Q, S&gt;
 

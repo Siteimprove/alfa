@@ -4,9 +4,19 @@
 
 ## Promise\_2.isPromise() function
 
+<b>Signature:</b>
+
+```typescript
+function isPromise<T>(value: unknown): value is Promise<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is Promise&lt;T&gt;
 

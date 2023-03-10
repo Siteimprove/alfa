@@ -4,3 +4,8 @@
 
 ## Box.parseGeometry variable
 
+<b>Signature:</b>
+
+```typescript
+parseGeometry: Parser<Slice<Token>, Geometry, string>
+```

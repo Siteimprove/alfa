@@ -4,9 +4,19 @@
 
 ## Selector.Not.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Not): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Not](./alfa-selector.selector.not.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

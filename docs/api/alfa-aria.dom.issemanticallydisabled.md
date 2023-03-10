@@ -4,3 +4,8 @@
 
 ## DOM.isSemanticallyDisabled variable
 
+<b>Signature:</b>
+
+```typescript
+isSemanticallyDisabled: import("@siteimprove/alfa-predicate").Predicate<import("@siteimprove/alfa-dom").Element<string>, []>
+```

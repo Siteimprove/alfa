@@ -4,9 +4,19 @@
 
 ## Map\_2.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals<K, V>(value: Map<K, V>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | Map&lt;K, V&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

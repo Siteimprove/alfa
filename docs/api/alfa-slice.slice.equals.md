@@ -4,9 +4,19 @@
 
 ## Slice.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals<T>(value: Slice<T>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

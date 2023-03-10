@@ -4,3 +4,8 @@
 
 ## PageRule.JSON.selector property
 
+<b>Signature:</b>
+
+```typescript
+selector: string;
+```

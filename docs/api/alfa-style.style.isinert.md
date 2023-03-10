@@ -4,3 +4,8 @@
 
 ## Style.isInert variable
 
+<b>Signature:</b>
+
+```typescript
+isInert: typeof element.isInert
+```

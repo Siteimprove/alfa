@@ -4,3 +4,8 @@
 
 ## Token.semicolon variable
 
+<b>Signature:</b>
+
+```typescript
+semicolon: typeof Semicolon.of
+```

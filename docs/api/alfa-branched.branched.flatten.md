@@ -4,9 +4,19 @@
 
 ## Branched.flatten() method
 
+<b>Signature:</b>
+
+```typescript
+flatten<T, B>(this: Branched<Branched<T, B>, B>): Branched<T, B>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Branched](./alfa-branched.branched.md)<!-- -->&lt;[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;, B&gt; |  |
+
+<b>Returns:</b>
+
+[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;
 

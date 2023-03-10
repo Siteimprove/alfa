@@ -4,6 +4,14 @@
 
 ## GroupingRule.(constructor)
 
+Constructs a new instance of the `GroupingRule` class
+
+<b>Signature:</b>
+
+```typescript
+protected constructor(rules: Array<Rule>);
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |

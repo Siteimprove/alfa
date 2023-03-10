@@ -4,9 +4,19 @@
 
 ## Language.Extended.isExtended() function
 
+<b>Signature:</b>
+
+```typescript
+function isExtended(value: unknown): value is Extended;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Extended](./alfa-iana.language.extended.md)
 

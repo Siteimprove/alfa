@@ -4,10 +4,20 @@
 
 ## Array\_2.find() function
 
+<b>Signature:</b>
+
+```typescript
+function find<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): Option<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

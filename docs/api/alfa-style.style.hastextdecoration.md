@@ -4,3 +4,8 @@
 
 ## Style.hasTextDecoration variable
 
+<b>Signature:</b>
+
+```typescript
+hasTextDecoration: typeof element.hasTextDecoration
+```

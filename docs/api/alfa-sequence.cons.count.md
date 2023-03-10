@@ -4,9 +4,19 @@
 
 ## Cons.count() method
 
+<b>Signature:</b>
+
+```typescript
+count(predicate: Predicate<T, [index: number]>): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+number
 

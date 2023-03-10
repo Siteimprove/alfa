@@ -4,3 +4,10 @@
 
 ## Linear.Direction type
 
+<b>Signature:</b>
+
+```typescript
+type Direction = Angle | Side | Corner;
+```
+<b>References:</b> [Angle](./alfa-css.angle.md)<!-- -->, [Side](./alfa-css.linear.side.md)<!-- -->, [Corner](./alfa-css.linear.corner.md)
+

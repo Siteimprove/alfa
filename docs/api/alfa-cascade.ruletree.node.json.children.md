@@ -4,3 +4,8 @@
 
 ## RuleTree.Node.JSON.children property
 
+<b>Signature:</b>
+
+```typescript
+children: Array<Node.JSON>;
+```

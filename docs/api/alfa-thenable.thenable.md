@@ -4,20 +4,27 @@
 
 ## Thenable namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Thenable 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [all](./alfa-thenable.thenable.all.md) |  |
-|  [any](./alfa-thenable.thenable.any.md) |  |
-|  [apply](./alfa-thenable.thenable.apply.md) |  |
-|  [defer](./alfa-thenable.thenable.defer.md) |  |
-|  [empty](./alfa-thenable.thenable.empty.md) |  |
-|  [flatMap](./alfa-thenable.thenable.flatmap.md) |  |
-|  [flatten](./alfa-thenable.thenable.flatten.md) |  |
-|  [isThenable](./alfa-thenable.thenable.isthenable.md) |  |
-|  [map](./alfa-thenable.thenable.map.md) |  |
-|  [race](./alfa-thenable.thenable.race.md) |  |
-|  [reject](./alfa-thenable.thenable.reject.md) |  |
-|  [resolve](./alfa-thenable.thenable.resolve.md) |  |
+|  [all(thenables)](./alfa-thenable.thenable.all.md) |  |
+|  [any(thenables)](./alfa-thenable.thenable.any.md) |  |
+|  [apply(thenable, mapper)](./alfa-thenable.thenable.apply.md) |  |
+|  [defer(continuation)](./alfa-thenable.thenable.defer.md) |  |
+|  [empty()](./alfa-thenable.thenable.empty.md) |  |
+|  [flatMap(thenable, mapper)](./alfa-thenable.thenable.flatmap.md) |  |
+|  [flatten(thenable)](./alfa-thenable.thenable.flatten.md) |  |
+|  [isThenable(value)](./alfa-thenable.thenable.isthenable.md) | Check if an unknown value implements the [Thenable](./alfa-thenable.thenable.md) interface. |
+|  [map(thenable, mapper)](./alfa-thenable.thenable.map.md) |  |
+|  [race(thenables)](./alfa-thenable.thenable.race.md) |  |
+|  [reject(error)](./alfa-thenable.thenable.reject.md) |  |
+|  [resolve(value)](./alfa-thenable.thenable.resolve.md) |  |
 

@@ -4,6 +4,13 @@
 
 ## Marker namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Marker 
+```
+
 ## Variables
 
 |  Variable | Description |

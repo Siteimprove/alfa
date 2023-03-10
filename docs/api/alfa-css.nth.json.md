@@ -4,10 +4,16 @@
 
 ## Nth.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [offset](./alfa-css.nth.json.offset.md) |  |  |  |
-|  [step](./alfa-css.nth.json.step.md) |  |  |  |
+|  [offset](./alfa-css.nth.json.offset.md) |  | number |  |
+|  [step](./alfa-css.nth.json.step.md) |  | number |  |
 

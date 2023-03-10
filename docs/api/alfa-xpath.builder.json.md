@@ -4,9 +4,15 @@
 
 ## Builder.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+export interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [expression](./alfa-xpath.builder.json.expression.md) |  |  |  |
+|  [expression](./alfa-xpath.builder.json.expression.md) |  | [Expression.JSON](./alfa-xpath.expression.json.md) |  |
 

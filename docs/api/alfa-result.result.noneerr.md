@@ -4,9 +4,19 @@
 
 ## Result.noneErr() method
 
+<b>Signature:</b>
+
+```typescript
+noneErr<F extends E>(refinement: Refinement<E, F>): this is Result<T, Exclude<E, F>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;E&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;E, F&gt; |  |
+
+<b>Returns:</b>
+
+this is [Result](./alfa-result.result.md)<!-- -->&lt;T, Exclude&lt;E, F&gt;&gt;
 

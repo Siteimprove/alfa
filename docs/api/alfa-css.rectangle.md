@@ -4,11 +4,22 @@
 
 ## Rectangle namespace
 
+> Warning: This API is now obsolete.
+> 
+> Deprecated as of CSS Masking Module Level 1
+> 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Rectangle 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isRectangle](./alfa-css.rectangle.isrectangle.md) |  |
+|  [isRectangle(value)](./alfa-css.rectangle.isrectangle.md) |  |
 
 ## Interfaces
 

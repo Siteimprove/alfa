@@ -4,3 +4,8 @@
 
 ## Style.getOffsetParent variable
 
+<b>Signature:</b>
+
+```typescript
+getOffsetParent: typeof element.getOffsetParent
+```

@@ -4,9 +4,19 @@
 
 ## Transformation.perspective() function
 
+<b>Signature:</b>
+
+```typescript
+function perspective(d: number): Transformation;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  d | number |  |
+
+<b>Returns:</b>
+
+[Transformation](./alfa-affine.transformation.md)
 

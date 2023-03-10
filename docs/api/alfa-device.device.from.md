@@ -4,9 +4,19 @@
 
 ## Device.from() function
 
+<b>Signature:</b>
+
+```typescript
+function from(json: JSON): Device;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-device.device.json.md) |  |
+
+<b>Returns:</b>
+
+[Device](./alfa-device.device.md)
 

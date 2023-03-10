@@ -4,3 +4,8 @@
 
 ## Style.Declared type
 
+<b>Signature:</b>
+
+```typescript
+type Declared<N extends Name> = Property.Value.Declared<N>;
+```

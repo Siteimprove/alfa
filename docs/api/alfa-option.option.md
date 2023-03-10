@@ -4,19 +4,26 @@
 
 ## Option namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Option 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [empty](./alfa-option.option.empty.md) |  |
-|  [from](./alfa-option.option.from.md) |  |
-|  [isNone](./alfa-option.option.isnone.md) |  |
-|  [isNone](./alfa-option.option.isnone.md) |  |
-|  [isOption](./alfa-option.option.isoption.md) |  |
-|  [isOption](./alfa-option.option.isoption.md) |  |
-|  [isSome](./alfa-option.option.issome.md) |  |
-|  [isSome](./alfa-option.option.issome.md) |  |
-|  [of](./alfa-option.option.of.md) |  |
+|  [empty()](./alfa-option.option.empty.md) |  |
+|  [from(value)](./alfa-option.option.from.md) |  |
+|  [isNone(value)](./alfa-option.option.isnone.md) |  |
+|  [isNone(value)](./alfa-option.option.isnone_1.md) |  |
+|  [isOption(value)](./alfa-option.option.isoption.md) |  |
+|  [isOption(value)](./alfa-option.option.isoption_1.md) |  |
+|  [isSome(value)](./alfa-option.option.issome.md) |  |
+|  [isSome(value)](./alfa-option.option.issome_1.md) |  |
+|  [of(value)](./alfa-option.option.of.md) |  |
 
 ## Type Aliases
 

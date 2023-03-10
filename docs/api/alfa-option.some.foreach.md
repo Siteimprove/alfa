@@ -4,9 +4,19 @@
 
 ## Some.forEach() method
 
+<b>Signature:</b>
+
+```typescript
+forEach(mapper: Mapper<T, void>): void;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, void&gt; |  |
+
+<b>Returns:</b>
+
+void
 

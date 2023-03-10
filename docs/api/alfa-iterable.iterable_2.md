@@ -4,3 +4,13 @@
 
 ## Iterable\_2 type
 
+<b>Signature:</b>
+
+```typescript
+export declare type Iterable<T> = globalThis.Iterable<T>;
+```
+
+## Remarks
+
+This is a re-export of the global `Iterable` interface to ensure that it merges with the `Iterable` namespace.
+

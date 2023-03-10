@@ -4,3 +4,12 @@
 
 ## Flattened.Question type
 
+The type of the questions asked by rules
+
+<b>Signature:</b>
+
+```typescript
+export type Question = act.Rule.Question<RulesUnion>;
+```
+<b>References:</b> [Rule.Question](./alfa-act.rule.question.md)
+

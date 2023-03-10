@@ -4,9 +4,19 @@
 
 ## Language.Variant.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Variant): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Variant](./alfa-iana.language.variant.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

@@ -4,10 +4,20 @@
 
 ## List.compare() method
 
+<b>Signature:</b>
+
+```typescript
+compare<T>(this: List<Comparable<T>>, iterable: Iterable<T>): Comparison;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [List](./alfa-list.list.md)<!-- -->&lt;[Comparable](./alfa-comparable.comparable.md)<!-- -->&lt;T&gt;&gt; |  |
 |  iterable | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Comparison](./alfa-comparable.comparison.md)
 

@@ -4,3 +4,12 @@
 
 ## Map\_2.\[Symbol.iterator\]() method
 
+<b>Signature:</b>
+
+```typescript
+[Symbol.iterator](): Iterator<[K, V]>;
+```
+<b>Returns:</b>
+
+Iterator&lt;\[K, V\]&gt;
+

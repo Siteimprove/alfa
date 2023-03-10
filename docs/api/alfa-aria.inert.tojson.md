@@ -4,3 +4,12 @@
 
 ## Inert.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Node.JSON<"inert">;
+```
+<b>Returns:</b>
+
+[Node.JSON](./alfa-aria.node.json.md)<!-- -->&lt;"inert"&gt;
+

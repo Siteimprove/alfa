@@ -4,3 +4,8 @@
 
 ## Selector.List.right property
 
+<b>Signature:</b>
+
+```typescript
+get right(): T | List<T>;
+```

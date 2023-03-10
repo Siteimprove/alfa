@@ -4,9 +4,19 @@
 
 ## Collection.Unkeyed.filter() method
 
+<b>Signature:</b>
+
+```typescript
+filter<U extends T>(refinement: Refinement<T, U>): Unkeyed<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;U&gt;
 

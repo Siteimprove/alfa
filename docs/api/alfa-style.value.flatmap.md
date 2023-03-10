@@ -4,9 +4,19 @@
 
 ## Value.flatMap() method
 
+<b>Signature:</b>
+
+```typescript
+flatMap<U>(mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>): Value<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Value](./alfa-style.value.md)<!-- -->&lt;U&gt;, \[source: [Option](./alfa-option.option.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt;\]&gt; |  |
+
+<b>Returns:</b>
+
+[Value](./alfa-style.value.md)<!-- -->&lt;U&gt;
 

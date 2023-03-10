@@ -4,3 +4,11 @@
 
 ## Interviewer type
 
+
+<b>Signature:</b>
+
+```typescript
+export declare type Interviewer<I, T extends Hashable, Q = never, S = T> = (input: I, rules: Iterable<Rule<I, T, Q, S>>) => Oracle<I, T, Q, S>;
+```
+<b>References:</b> [Hashable](./alfa-hash.hashable.md)<!-- -->, [Rule](./alfa-act.rule.md)<!-- -->, [Oracle](./alfa-act.oracle.md)
+

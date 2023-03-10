@@ -4,3 +4,12 @@
 
 ## Ok.someErr() method
 
+<b>Signature:</b>
+
+```typescript
+someErr(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

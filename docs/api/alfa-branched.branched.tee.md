@@ -4,10 +4,20 @@
 
 ## Branched.tee() method
 
+<b>Signature:</b>
+
+```typescript
+tee<A extends Array<unknown> = []>(callback: Callback<this, void, [...args: A]>, ...args: A): this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;this, void, \[...args: A\]&gt; |  |
 |  args | A |  |
+
+<b>Returns:</b>
+
+this
 

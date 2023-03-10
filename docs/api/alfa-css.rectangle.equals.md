@@ -4,9 +4,19 @@
 
 ## Rectangle.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Rectangle): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Rectangle](./alfa-css.rectangle.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

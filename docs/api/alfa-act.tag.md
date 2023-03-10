@@ -4,11 +4,18 @@
 
 ## Tag namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Tag 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isTag](./alfa-act.tag.istag.md) |  |
+|  [isTag(value, type)](./alfa-act.tag.istag.md) |  |
 
 ## Interfaces
 

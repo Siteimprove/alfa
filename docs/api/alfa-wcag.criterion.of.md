@@ -4,9 +4,19 @@
 
 ## Criterion.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<C extends Criterion.Chapter>(chapter: C): Criterion<C>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  chapter | C |  |
+
+<b>Returns:</b>
+
+[Criterion](./alfa-wcag.criterion.md)<!-- -->&lt;C&gt;
 

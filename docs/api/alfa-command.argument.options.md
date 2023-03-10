@@ -4,11 +4,17 @@
 
 ## Argument.Options interface
 
+<b>Signature:</b>
+
+```typescript
+interface Options 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [default](./alfa-command.argument.options.default.md) |  |  |  |
-|  [optional](./alfa-command.argument.options.optional.md) |  |  |  |
-|  [repeatable](./alfa-command.argument.options.repeatable.md) |  |  |  |
+|  [default](./alfa-command.argument.options.default.md) |  | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  [optional](./alfa-command.argument.options.optional.md) |  | boolean |  |
+|  [repeatable](./alfa-command.argument.options.repeatable.md) |  | boolean |  |
 

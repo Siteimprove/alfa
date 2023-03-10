@@ -4,3 +4,8 @@
 
 ## Refinement.and variable
 
+<b>Signature:</b>
+
+```typescript
+and: And
+```

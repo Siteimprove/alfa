@@ -4,3 +4,8 @@
 
 ## Collection.size property
 
+<b>Signature:</b>
+
+```typescript
+readonly size: number;
+```

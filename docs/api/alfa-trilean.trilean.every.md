@@ -4,10 +4,20 @@
 
 ## Trilean.every() function
 
+<b>Signature:</b>
+
+```typescript
+function every<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): Trilean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  predicate | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Trilean](./alfa-trilean.trilean.md)
 

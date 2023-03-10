@@ -4,9 +4,19 @@
 
 ## Map\_2.fromArray() function
 
+<b>Signature:</b>
+
+```typescript
+function fromArray<K, V>(array: ReadonlyArray<readonly [K, V]>): Map<K, V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;readonly \[K, V\]&gt; |  |
+
+<b>Returns:</b>
+
+Map&lt;K, V&gt;
 

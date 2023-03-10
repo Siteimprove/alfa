@@ -4,3 +4,12 @@
 
 ## Language.Extended.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Extended.JSON;
+```
+<b>Returns:</b>
+
+[Extended.JSON](./alfa-iana.language.extended.json.md)
+

@@ -4,10 +4,20 @@
 
 ## Expression.Filter.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(base: Expression, predicates: Array<Expression>): Filter;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  base | [Expression](./alfa-xpath.expression.md) |  |
 |  predicates | Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[Filter](./alfa-xpath.expression.filter.md)
 

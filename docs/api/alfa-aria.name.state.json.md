@@ -4,13 +4,19 @@
 
 ## Name.State.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [isDescending](./alfa-aria.name.state.json.isdescending.md) |  |  |  |
-|  [isRecursing](./alfa-aria.name.state.json.isrecursing.md) |  |  |  |
-|  [referred](./alfa-aria.name.state.json.referred.md) |  |  |  |
-|  [referrer](./alfa-aria.name.state.json.referrer.md) |  |  |  |
-|  [visited](./alfa-aria.name.state.json.visited.md) |  |  |  |
+|  [isDescending](./alfa-aria.name.state.json.isdescending.md) |  | boolean |  |
+|  [isRecursing](./alfa-aria.name.state.json.isrecursing.md) |  | boolean |  |
+|  [referred](./alfa-aria.name.state.json.referred.md) |  | string \| null |  |
+|  [referrer](./alfa-aria.name.state.json.referrer.md) |  | string \| null |  |
+|  [visited](./alfa-aria.name.state.json.visited.md) |  | Array&lt;string&gt; |  |
 

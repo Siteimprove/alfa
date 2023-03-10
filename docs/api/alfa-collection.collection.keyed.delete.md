@@ -4,10 +4,20 @@
 
 ## Collection.Keyed.delete() method
 
+<b>Signature:</b>
+
+```typescript
+delete(key: K, value: V): Keyed<K, V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K |  |
 |  value | V |  |
+
+<b>Returns:</b>
+
+[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;
 

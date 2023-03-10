@@ -4,9 +4,19 @@
 
 ## Selective.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals<S, T>(value: Selective<S, T>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

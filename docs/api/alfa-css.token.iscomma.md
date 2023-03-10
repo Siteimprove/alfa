@@ -4,3 +4,8 @@
 
 ## Token.isComma variable
 
+<b>Signature:</b>
+
+```typescript
+isComma: typeof Comma.isComma
+```

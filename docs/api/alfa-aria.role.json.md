@@ -4,9 +4,15 @@
 
 ## Role.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-aria.role.json.name.md) |  |  |  |
+|  [name](./alfa-aria.role.json.name.md) |  | [Name](./alfa-aria.role.name.md) |  |
 

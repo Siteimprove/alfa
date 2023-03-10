@@ -4,3 +4,12 @@
 
 ## Viewport.isLandscape() method
 
+<b>Signature:</b>
+
+```typescript
+isLandscape(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

@@ -4,9 +4,16 @@
 
 ## Jest namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Jest 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [createPlugin](./alfa-jest.jest.createplugin.md) |  |
+|  [createPlugin(transform, rules, handlers, options)](./alfa-jest.jest.createplugin.md) |  |
 

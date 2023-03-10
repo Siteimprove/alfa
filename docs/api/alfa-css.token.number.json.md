@@ -4,12 +4,18 @@
 
 ## Token.Number.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [isInteger](./alfa-css.token.number.json.isinteger.md) |  |  |  |
-|  [isSigned](./alfa-css.token.number.json.issigned.md) |  |  |  |
-|  [type](./alfa-css.token.number.json.type.md) |  |  |  |
-|  [value](./alfa-css.token.number.json.value.md) |  |  |  |
+|  [isInteger](./alfa-css.token.number.json.isinteger.md) |  | boolean |  |
+|  [isSigned](./alfa-css.token.number.json.issigned.md) |  | boolean |  |
+|  [type](./alfa-css.token.number.json.type.md) |  | "number" |  |
+|  [value](./alfa-css.token.number.json.value.md) |  | number |  |
 

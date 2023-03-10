@@ -4,3 +4,12 @@
 
 ## Selector.Selection.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(): Selection;
+```
+<b>Returns:</b>
+
+[Selection](./alfa-selector.selector.selection.md)
+

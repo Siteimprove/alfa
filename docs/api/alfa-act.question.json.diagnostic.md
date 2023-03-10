@@ -4,3 +4,8 @@
 
 ## Question.JSON.diagnostic property
 
+<b>Signature:</b>
+
+```typescript
+diagnostic: Diagnostic.JSON;
+```

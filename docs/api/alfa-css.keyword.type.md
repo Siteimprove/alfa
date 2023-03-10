@@ -4,3 +4,8 @@
 
 ## Keyword.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "keyword";
+```

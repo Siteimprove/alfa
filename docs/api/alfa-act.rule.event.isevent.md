@@ -4,9 +4,19 @@
 
 ## Rule.Event.isEvent() function
 
+<b>Signature:</b>
+
+```typescript
+function isEvent<INPUT, TARGET extends Hashable, QUESTION, SUBJECT, TYPE extends Event.Type = Event.Type, NAME extends string = string>(value: unknown): value is Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Event](./alfa-act.rule.event.md)<!-- -->&lt;INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME&gt;
 

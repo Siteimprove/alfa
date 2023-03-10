@@ -4,10 +4,20 @@
 
 ## Selector.List.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<T extends Simple | Compound | Complex | Relative>(left: T, right: T | List<T>): List<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  left | T |  |
 |  right | T \| [List](./alfa-selector.selector.list.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[List](./alfa-selector.selector.list.md)<!-- -->&lt;T&gt;
 

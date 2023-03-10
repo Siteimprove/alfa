@@ -4,9 +4,19 @@
 
 ## Result.includesErr() method
 
+<b>Signature:</b>
+
+```typescript
+includesErr(error: E): this is Err<E>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  error | E |  |
+
+<b>Returns:</b>
+
+this is [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
 

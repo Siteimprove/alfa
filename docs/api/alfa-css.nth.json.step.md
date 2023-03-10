@@ -4,3 +4,8 @@
 
 ## Nth.JSON.step property
 
+<b>Signature:</b>
+
+```typescript
+step: number;
+```

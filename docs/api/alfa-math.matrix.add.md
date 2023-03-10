@@ -4,10 +4,20 @@
 
 ## Matrix.add() function
 
+<b>Signature:</b>
+
+```typescript
+function add(m: Matrix, n: Matrix): Matrix;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 |  n | [Matrix](./alfa-math.matrix.md) |  |
+
+<b>Returns:</b>
+
+[Matrix](./alfa-math.matrix.md)
 

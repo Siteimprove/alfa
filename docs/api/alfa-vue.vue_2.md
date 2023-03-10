@@ -4,11 +4,18 @@
 
 ## Vue\_2 namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Vue 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [toPage](./alfa-vue.vue_2.topage.md) |  |
+|  [toPage(value)](./alfa-vue.vue_2.topage.md) |  |
 
 ## Type Aliases
 

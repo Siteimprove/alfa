@@ -4,10 +4,20 @@
 
 ## Branched.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<T, B = never>(value: T, ...branches: Array<B>): Branched<T, B>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
 |  branches | Array&lt;B&gt; |  |
+
+<b>Returns:</b>
+
+[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;
 

@@ -4,3 +4,14 @@
 
 ## Role.SubclassOf type
 
+All roles that are subclasses of the specified role.
+
+<b>Signature:</b>
+
+```typescript
+type SubclassOf<N extends Name> = {
+        [M in Name]: N extends SuperclassOf<M> ? M : never;
+    }[Name];
+```
+<b>References:</b> [Name](./alfa-aria.role.name.md)<!-- -->, [SuperclassOf](./alfa-aria.role.superclassof.md)
+

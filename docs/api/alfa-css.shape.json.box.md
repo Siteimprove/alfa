@@ -4,3 +4,8 @@
 
 ## Shape.JSON.box property
 
+<b>Signature:</b>
+
+```typescript
+box: Box.Geometry.JSON;
+```

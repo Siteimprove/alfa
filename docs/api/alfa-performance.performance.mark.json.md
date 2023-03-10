@@ -4,11 +4,17 @@
 
 ## Performance.Mark.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<T> 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [data](./alfa-performance.performance.mark.json.data.md) |  |  |  |
-|  [start](./alfa-performance.performance.mark.json.start.md) |  |  |  |
-|  [type](./alfa-performance.performance.mark.json.type.md) |  |  |  |
+|  [data](./alfa-performance.performance.mark.json.data.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
+|  [start](./alfa-performance.performance.mark.json.start.md) |  | number |  |
+|  [type](./alfa-performance.performance.mark.json.type.md) |  | "mark" |  |
 

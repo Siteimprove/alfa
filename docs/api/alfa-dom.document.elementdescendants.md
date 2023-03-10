@@ -4,9 +4,21 @@
 
 ## Document.elementDescendants() method
 
+[https://dom.spec.whatwg.org/\#concept-tree-descendant](https://dom.spec.whatwg.org/#concept-tree-descendant)
+
+<b>Signature:</b>
+
+```typescript
+elementDescendants(options?: Node.Traversal): Sequence<Element>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Node.Traversal](./alfa-dom.node.traversal.md) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Element](./alfa-dom.element.md)<!-- -->&gt;
 

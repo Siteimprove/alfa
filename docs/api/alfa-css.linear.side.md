@@ -4,6 +4,12 @@
 
 ## Linear.Side namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Side 
+```
+
 ## Interfaces
 
 |  Interface | Description |

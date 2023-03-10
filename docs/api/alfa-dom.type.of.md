@@ -4,6 +4,12 @@
 
 ## Type.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<N extends string = string>(name: N, publicId?: Option<string>, systemId?: Option<string>): Type<N>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  name | N |  |
 |  publicId | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
 |  systemId | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Type](./alfa-dom.type.md)<!-- -->&lt;N&gt;
 

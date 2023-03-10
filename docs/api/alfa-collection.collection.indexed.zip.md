@@ -4,9 +4,19 @@
 
 ## Collection.Indexed.zip() method
 
+<b>Signature:</b>
+
+```typescript
+zip<U>(iterable: Iterable<U>): Indexed<[T, U]>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;U&gt; |  |
+
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;\[T, U\]&gt;
 

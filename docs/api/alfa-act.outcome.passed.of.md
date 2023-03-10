@@ -4,6 +4,14 @@
 
 ## Outcome.Passed.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{
+            [key: string]: Result<Diagnostic>;
+        }>, mode: Mode): Passed<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -12,4 +20,8 @@
 |  target | T |  |
 |  expectations | Record&lt;{ \[key: string\]: [Result](./alfa-result.result.md)<!-- -->&lt;[Diagnostic](./alfa-act.diagnostic.md)<!-- -->&gt;; }&gt; |  |
 |  mode | [Mode](./alfa-act.outcome.mode.md) |  |
+
+<b>Returns:</b>
+
+[Passed](./alfa-act.outcome.passed.md)<!-- -->&lt;I, T, Q, S&gt;
 

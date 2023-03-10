@@ -4,3 +4,12 @@
 
 ## RuleTree.empty() method
 
+<b>Signature:</b>
+
+```typescript
+static empty(): RuleTree;
+```
+<b>Returns:</b>
+
+[RuleTree](./alfa-cascade.ruletree.md)
+

@@ -4,10 +4,20 @@
 
 ## Array\_2.prepend() function
 
+<b>Signature:</b>
+
+```typescript
+function prepend<T>(array: Array<T>, value: T): [T, ...Array<T>];
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | Array&lt;T&gt; |  |
 |  value | T |  |
+
+<b>Returns:</b>
+
+\[T, ...Array&lt;T&gt;\]
 

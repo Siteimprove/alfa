@@ -4,9 +4,19 @@
 
 ## Flag.map() method
 
+<b>Signature:</b>
+
+```typescript
+map<U>(mapper: Mapper<T, U>): Flag<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+[Flag](./alfa-command.flag.md)<!-- -->&lt;U&gt;
 

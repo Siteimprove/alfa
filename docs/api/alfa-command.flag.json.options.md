@@ -4,3 +4,15 @@
 
 ## Flag.JSON.options property
 
+<b>Signature:</b>
+
+```typescript
+options: {
+            [key: string]: json.JSON;
+            type: string | null;
+            aliases: Array<string>;
+            default: json.JSON | null;
+            optional: boolean;
+            repeatable: boolean;
+        };
+```

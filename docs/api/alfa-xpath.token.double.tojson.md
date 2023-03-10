@@ -4,3 +4,12 @@
 
 ## Token.Double.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Double.JSON;
+```
+<b>Returns:</b>
+
+[Double.JSON](./alfa-xpath.token.double.json.md)
+

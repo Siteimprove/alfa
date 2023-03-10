@@ -4,3 +4,8 @@
 
 ## Flags.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```

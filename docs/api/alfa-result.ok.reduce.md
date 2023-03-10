@@ -4,10 +4,20 @@
 
 ## Ok.reduce() method
 
+<b>Signature:</b>
+
+```typescript
+reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U&gt; |  |
 |  accumulator | U |  |
+
+<b>Returns:</b>
+
+U
 

@@ -4,9 +4,19 @@
 
 ## Future.now() function
 
+<b>Signature:</b>
+
+```typescript
+function now<T>(value: T): Future<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

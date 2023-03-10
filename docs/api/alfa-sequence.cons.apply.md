@@ -4,9 +4,19 @@
 
 ## Cons.apply() method
 
+<b>Signature:</b>
+
+```typescript
+apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;
 

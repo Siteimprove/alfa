@@ -4,9 +4,19 @@
 
 ## Selector.isComplex() function
 
+<b>Signature:</b>
+
+```typescript
+export function isComplex(value: unknown): value is Complex;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Complex](./alfa-selector.selector.complex.md)
 

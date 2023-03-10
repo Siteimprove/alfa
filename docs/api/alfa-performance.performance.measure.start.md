@@ -4,3 +4,8 @@
 
 ## Performance.Measure.start property
 
+<b>Signature:</b>
+
+```typescript
+get start(): number;
+```

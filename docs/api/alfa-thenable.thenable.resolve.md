@@ -4,9 +4,19 @@
 
 ## Thenable.resolve() function
 
+<b>Signature:</b>
+
+```typescript
+function resolve<T>(value: T): Thenable<T, never>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, never&gt;
 

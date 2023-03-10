@@ -4,3 +4,8 @@
 
 ## Language.Variant.Name type
 
+<b>Signature:</b>
+
+```typescript
+type Name = keyof Languages["variant"];
+```

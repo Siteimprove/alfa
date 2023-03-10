@@ -4,11 +4,18 @@
 
 ## Serializable namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Serializable 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isSerializable](./alfa-sarif.serializable.isserializable.md) |  |
-|  [toSARIF](./alfa-sarif.serializable.tosarif.md) |  |
-|  [toSARIF](./alfa-sarif.serializable.tosarif.md) |  |
+|  [isSerializable(value)](./alfa-sarif.serializable.isserializable.md) |  |
+|  [toSARIF(value)](./alfa-sarif.serializable.tosarif.md) |  |
+|  [toSARIF(value)](./alfa-sarif.serializable.tosarif_1.md) |  |
 

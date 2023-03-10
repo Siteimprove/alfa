@@ -4,3 +4,8 @@
 
 ## Dimension.unit property
 
+<b>Signature:</b>
+
+```typescript
+get unit(): V;
+```

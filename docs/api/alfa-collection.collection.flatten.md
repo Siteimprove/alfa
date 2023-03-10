@@ -4,9 +4,19 @@
 
 ## Collection.flatten() method
 
+<b>Signature:</b>
+
+```typescript
+flatten<T>(this: Collection<Collection<T>>): Collection<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Collection](./alfa-collection.collection.md)<!-- -->&lt;[Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;
 

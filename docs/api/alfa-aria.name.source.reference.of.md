@@ -4,10 +4,20 @@
 
 ## Name.Source.Reference.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(attribute: Attribute, name: Name): Reference;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  attribute | [Attribute](./alfa-dom.attribute.md) |  |
 |  name | [Name](./alfa-aria.name.md) |  |
+
+<b>Returns:</b>
+
+[Reference](./alfa-aria.name.source.reference.md)
 

@@ -4,3 +4,8 @@
 
 ## Parser.Infallible type
 
+<b>Signature:</b>
+
+```typescript
+type Infallible<I, T, A extends Array<unknown> = []> = (input: I, ...args: A) => [I, T];
+```

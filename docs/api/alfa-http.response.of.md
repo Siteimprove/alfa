@@ -4,6 +4,12 @@
 
 ## Response.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(url: URL, status: number, headers?: Headers, body?: ArrayBuffer): Response;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -12,4 +18,8 @@
 |  status | number |  |
 |  headers | [Headers](./alfa-http.headers.md) | <i>(Optional)</i> |
 |  body | ArrayBuffer | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Response](./alfa-http.response.md)
 

@@ -4,10 +4,21 @@
 
 ## step() function
 
+
+<b>Signature:</b>
+
+```typescript
+export declare function step(left: Builder<Expression.Step | Expression.Path>, right: Builder<Expression.Step>): Builder.Path;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  left | [Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Step](./alfa-xpath.expression.step.md) \| [Expression.Path](./alfa-xpath.expression.path.md)<!-- -->&gt; |  |
 |  right | [Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Step](./alfa-xpath.expression.step.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[Builder.Path](./alfa-xpath.builder.path.md)
 

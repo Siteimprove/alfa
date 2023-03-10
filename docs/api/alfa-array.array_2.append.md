@@ -4,10 +4,20 @@
 
 ## Array\_2.append() function
 
+<b>Signature:</b>
+
+```typescript
+function append<T>(array: Array<T>, value: T): [...Array<T>, T];
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | Array&lt;T&gt; |  |
 |  value | T |  |
+
+<b>Returns:</b>
+
+\[...Array&lt;T&gt;, T\]
 

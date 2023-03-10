@@ -4,6 +4,12 @@
 
 ## Selector.Class namespace
 
+<b>Signature:</b>
+
+```typescript
+export namespace Class 
+```
+
 ## Interfaces
 
 |  Interface | Description |

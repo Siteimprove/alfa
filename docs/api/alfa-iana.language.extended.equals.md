@@ -4,9 +4,19 @@
 
 ## Language.Extended.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Extended): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Extended](./alfa-iana.language.extended.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

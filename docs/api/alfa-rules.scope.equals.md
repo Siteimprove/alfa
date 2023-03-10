@@ -4,9 +4,19 @@
 
 ## Scope.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Scope): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Scope](./alfa-rules.scope.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

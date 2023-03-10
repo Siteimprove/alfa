@@ -4,3 +4,8 @@
 
 ## Cell.element property
 
+<b>Signature:</b>
+
+```typescript
+get element(): Element;
+```

@@ -4,6 +4,12 @@
 
 ## HSL.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<H extends Number | Angle, A extends Number | Percentage>(hue: H, saturation: Percentage, lightness: Percentage, alpha: A): HSL<H, A>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -12,4 +18,8 @@
 |  saturation | [Percentage](./alfa-css.percentage.md) |  |
 |  lightness | [Percentage](./alfa-css.percentage.md) |  |
 |  alpha | A |  |
+
+<b>Returns:</b>
+
+[HSL](./alfa-css.hsl.md)<!-- -->&lt;H, A&gt;
 

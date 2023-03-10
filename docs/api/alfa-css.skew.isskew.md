@@ -4,9 +4,19 @@
 
 ## Skew.isSkew() function
 
+<b>Signature:</b>
+
+```typescript
+function isSkew<X extends Angle, Y extends Angle>(value: unknown): value is Skew<X, Y>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Skew](./alfa-css.skew.md)<!-- -->&lt;X, Y&gt;
 

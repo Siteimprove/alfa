@@ -4,3 +4,8 @@
 
 ## Shadow.JSON.mode property
 
+<b>Signature:</b>
+
+```typescript
+mode: string;
+```

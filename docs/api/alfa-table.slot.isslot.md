@@ -4,9 +4,19 @@
 
 ## Slot.isSlot() function
 
+<b>Signature:</b>
+
+```typescript
+function isSlot(value: unknown): value is Slot;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Slot](./alfa-table.slot.md)
 

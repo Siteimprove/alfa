@@ -4,9 +4,19 @@
 
 ## Token.Comma.isComma() function
 
+<b>Signature:</b>
+
+```typescript
+function isComma(value: unknown): value is Comma;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Comma](./alfa-css.token.comma.md)
 

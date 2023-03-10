@@ -4,3 +4,14 @@
 
 ## Role.isAbstract() method
 
+Check if this role is abstract.
+
+<b>Signature:</b>
+
+```typescript
+isAbstract(): this is Role<Role.Abstract>;
+```
+<b>Returns:</b>
+
+this is [Role](./alfa-aria.role.md)<!-- -->&lt;[Role.Abstract](./alfa-aria.role.abstract.md)<!-- -->&gt;
+

@@ -4,9 +4,19 @@
 
 ## Perspective.isPerspective() function
 
+<b>Signature:</b>
+
+```typescript
+function isPerspective<D extends Length>(value: unknown): value is Perspective<D>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Perspective](./alfa-css.perspective.md)<!-- -->&lt;D&gt;
 

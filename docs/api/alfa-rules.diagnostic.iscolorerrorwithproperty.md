@@ -4,3 +4,8 @@
 
 ## Diagnostic.isColorErrorWithProperty variable
 
+<b>Signature:</b>
+
+```typescript
+isColorErrorWithProperty: typeof ColorError.WithProperty.isWithProperty
+```

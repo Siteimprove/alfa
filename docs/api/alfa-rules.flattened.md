@@ -4,14 +4,21 @@
 
 ## Flattened namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Flattened 
+```
+
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Input](./alfa-rules.flattened.input.md) |  |
-|  [Question](./alfa-rules.flattened.question.md) |  |
-|  [Rule](./alfa-rules.flattened.rule.md) |  |
-|  [RulesUnion](./alfa-rules.flattened.rulesunion.md) |  |
-|  [Subject](./alfa-rules.flattened.subject.md) |  |
-|  [Target](./alfa-rules.flattened.target.md) |  |
+|  [Input](./alfa-rules.flattened.input.md) | The type of the input of rules |
+|  [Question](./alfa-rules.flattened.question.md) | The type of the questions asked by rules |
+|  [Rule](./alfa-rules.flattened.rule.md) | <p>The flattened type of all rules. Target, questions, … are a union of all the possible ones; that is this looks like Rule<!-- -->&lt;<!-- -->Page, Document \| Element \| …, …<!-- -->&gt;</p><p>This is a super-type of the individual type of each rule.</p> |
+|  [RulesUnion](./alfa-rules.flattened.rulesunion.md) | A union of all the possible types of rules |
+|  [Subject](./alfa-rules.flattened.subject.md) | The type of the subjects of questions asked by rules |
+|  [Target](./alfa-rules.flattened.target.md) | The type of the targets of rules |
 

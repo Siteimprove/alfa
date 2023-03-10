@@ -4,9 +4,19 @@
 
 ## Result.flatten() method
 
+<b>Signature:</b>
+
+```typescript
+flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Result](./alfa-result.result.md)<!-- -->&lt;[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;, E&gt; |  |
+
+<b>Returns:</b>
+
+[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
 

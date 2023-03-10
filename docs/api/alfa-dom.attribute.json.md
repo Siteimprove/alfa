@@ -4,12 +4,19 @@
 
 ## Attribute.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<N extends string = string> extends Node.JSON<"attribute"> 
+```
+<b>Extends:</b> [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"attribute"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-dom.attribute.json.name.md) |  |  |  |
-|  [namespace](./alfa-dom.attribute.json.namespace.md) |  |  |  |
-|  [prefix](./alfa-dom.attribute.json.prefix.md) |  |  |  |
-|  [value](./alfa-dom.attribute.json.value.md) |  |  |  |
+|  [name](./alfa-dom.attribute.json.name.md) |  | N |  |
+|  [namespace](./alfa-dom.attribute.json.namespace.md) |  | string \| null |  |
+|  [prefix](./alfa-dom.attribute.json.prefix.md) |  | string \| null |  |
+|  [value](./alfa-dom.attribute.json.value.md) |  | string |  |
 

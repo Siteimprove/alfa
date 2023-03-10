@@ -4,12 +4,19 @@
 
 ## Request namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Request 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from](./alfa-http.request.from.md) |  |
-|  [isRequest](./alfa-http.request.isrequest.md) |  |
+|  [from(json)](./alfa-http.request.from.md) |  |
+|  [isRequest(value)](./alfa-http.request.isrequest.md) |  |
 
 ## Interfaces
 

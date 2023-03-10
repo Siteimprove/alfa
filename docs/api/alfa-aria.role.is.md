@@ -4,9 +4,21 @@
 
 ## Role.is() method
 
+Check if this role either is, or is a subclass of, the role with the specified name.
+
+<b>Signature:</b>
+
+```typescript
+is<N extends Role.Name>(name: N): this is Role<N | Role.SubclassOf<N>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | N |  |
+
+<b>Returns:</b>
+
+this is [Role](./alfa-aria.role.md)<!-- -->&lt;N \| [Role.SubclassOf](./alfa-aria.role.subclassof.md)<!-- -->&lt;N&gt;&gt;
 

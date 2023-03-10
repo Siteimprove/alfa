@@ -4,3 +4,8 @@
 
 ## Unit.isRelativeLength variable
 
+<b>Signature:</b>
+
+```typescript
+isRelativeLength: typeof Length.isRelative
+```

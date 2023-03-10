@@ -4,3 +4,11 @@
 
 ## Formatter type
 
+
+<b>Signature:</b>
+
+```typescript
+export declare type Formatter<I, T extends Hashable, Q = never, S = T> = (input: I, rules: Iterable<Rule<I, T, Q, S>>, outcomes: Iterable<Outcome<I, T, Q, S>>) => Future.Maybe<string>;
+```
+<b>References:</b> [Hashable](./alfa-hash.hashable.md)<!-- -->, [Rule](./alfa-act.rule.md)<!-- -->, [Outcome](./alfa-act.outcome.md)<!-- -->, [Future.Maybe](./alfa-future.future.maybe.md)
+

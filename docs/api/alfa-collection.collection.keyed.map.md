@@ -4,9 +4,19 @@
 
 ## Collection.Keyed.map() method
 
+<b>Signature:</b>
+
+```typescript
+map<U>(mapper: Mapper<V, U, [key: K]>): Keyed<K, U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
+
+<b>Returns:</b>
+
+[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, U&gt;
 

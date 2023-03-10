@@ -4,9 +4,19 @@
 
 ## Map\_2.fromIterable() function
 
+<b>Signature:</b>
+
+```typescript
+function fromIterable<K, V>(iterable: Iterable<readonly [K, V]>): Map<K, V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;readonly \[K, V\]&gt; |  |
+
+<b>Returns:</b>
+
+Map&lt;K, V&gt;
 

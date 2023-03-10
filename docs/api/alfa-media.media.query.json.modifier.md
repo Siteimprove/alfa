@@ -4,3 +4,8 @@
 
 ## Media.Query.JSON.modifier property
 
+<b>Signature:</b>
+
+```typescript
+modifier: string | null;
+```

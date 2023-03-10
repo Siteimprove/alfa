@@ -4,11 +4,17 @@
 
 ## Rule.Event.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<T extends Type = Type, N extends string = string> 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-act.rule.event.json.name.md) |  |  |  |
-|  [rule](./alfa-act.rule.event.json.rule.md) |  |  |  |
-|  [type](./alfa-act.rule.event.json.type.md) |  |  |  |
+|  [name](./alfa-act.rule.event.json.name.md) |  | N |  |
+|  [rule](./alfa-act.rule.event.json.rule.md) |  | [Rule.JSON](./alfa-act.rule.json.md) |  |
+|  [type](./alfa-act.rule.event.json.type.md) |  | T |  |
 

@@ -4,9 +4,19 @@
 
 ## Media.Feature.Width.isWidth() function
 
+<b>Signature:</b>
+
+```typescript
+function isWidth(value: Feature): value is Width;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Feature](./alfa-media.media.feature.md) |  |
+
+<b>Returns:</b>
+
+value is Width
 

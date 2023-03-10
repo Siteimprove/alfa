@@ -4,3 +4,8 @@
 
 ## Cascade.JSON.root property
 
+<b>Signature:</b>
+
+```typescript
+root: Document.JSON | Shadow.JSON;
+```

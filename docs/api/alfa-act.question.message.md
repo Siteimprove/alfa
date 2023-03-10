@@ -4,3 +4,8 @@
 
 ## Question.message property
 
+<b>Signature:</b>
+
+```typescript
+get message(): string;
+```

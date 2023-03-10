@@ -4,3 +4,12 @@
 
 ## Text.empty() method
 
+<b>Signature:</b>
+
+```typescript
+static empty(): Text;
+```
+<b>Returns:</b>
+
+[Text](./alfa-dom.text.md)
+

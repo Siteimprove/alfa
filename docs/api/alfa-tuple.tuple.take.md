@@ -4,3 +4,10 @@
 
 ## Tuple.Take type
 
+<b>Signature:</b>
+
+```typescript
+export type Take<T extends Tuple, N extends number> = TakeInner<T, N, Empty>;
+```
+<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
+

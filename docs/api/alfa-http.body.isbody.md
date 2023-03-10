@@ -4,9 +4,19 @@
 
 ## Body.isBody() function
 
+<b>Signature:</b>
+
+```typescript
+function isBody(value: unknown): value is Body;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Body](./alfa-http.body.md)
 

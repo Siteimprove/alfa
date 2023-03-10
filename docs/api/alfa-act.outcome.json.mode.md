@@ -4,3 +4,8 @@
 
 ## Outcome.JSON.mode property
 
+<b>Signature:</b>
+
+```typescript
+mode: Mode;
+```

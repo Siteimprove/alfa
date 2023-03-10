@@ -4,3 +4,8 @@
 
 ## Page.request property
 
+<b>Signature:</b>
+
+```typescript
+get request(): Request;
+```

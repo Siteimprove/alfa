@@ -4,3 +4,10 @@
 
 ## Position.Center type
 
+<b>Signature:</b>
+
+```typescript
+export type Center = Keyword<"center">;
+```
+<b>References:</b> [Keyword](./alfa-css.keyword.md)
+

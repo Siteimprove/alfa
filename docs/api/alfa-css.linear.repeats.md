@@ -4,3 +4,8 @@
 
 ## Linear.repeats property
 
+<b>Signature:</b>
+
+```typescript
+get repeats(): boolean;
+```

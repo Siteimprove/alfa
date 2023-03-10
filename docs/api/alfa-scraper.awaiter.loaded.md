@@ -4,3 +4,16 @@
 
 ## Awaiter.loaded() function
 
+Wait for the `load` event.
+
+[https://developer.mozilla.org/en-US/docs/Web/API/Window/load\_event](https://developer.mozilla.org/en-US/docs/Web/API/Window/load_event)
+
+<b>Signature:</b>
+
+```typescript
+function loaded(): Awaiter;
+```
+<b>Returns:</b>
+
+[Awaiter](./alfa-scraper.awaiter.md)
+

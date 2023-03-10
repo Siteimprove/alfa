@@ -4,3 +4,8 @@
 
 ## Expression.FunctionCall.arity property
 
+<b>Signature:</b>
+
+```typescript
+get arity(): number;
+```

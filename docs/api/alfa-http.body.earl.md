@@ -4,12 +4,19 @@
 
 ## Body.EARL interface
 
+<b>Signature:</b>
+
+```typescript
+interface EARL extends earl.EARL 
+```
+<b>Extends:</b> earl.[EARL](./alfa-earl.earl.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@context"](./alfa-http.body.earl.__context_.md) |  |  |  |
-|  ["@type"](./alfa-http.body.earl.__type_.md) |  |  |  |
-|  ["cnt:characterEncoding"](./alfa-http.body.earl._cnt_characterencoding_.md) |  |  |  |
-|  ["cnt:chars"](./alfa-http.body.earl._cnt_chars_.md) |  |  |  |
+|  ["@context"](./alfa-http.body.earl.__context_.md) |  | { cnt: "http://www.w3.org/2011/content\#"; } |  |
+|  ["@type"](./alfa-http.body.earl.__type_.md) |  | \["cnt:Content", "cnt:ContentAsText"\] |  |
+|  ["cnt:characterEncoding"](./alfa-http.body.earl._cnt_characterencoding_.md) |  | "utf-8" |  |
+|  ["cnt:chars"](./alfa-http.body.earl._cnt_chars_.md) |  | string |  |
 

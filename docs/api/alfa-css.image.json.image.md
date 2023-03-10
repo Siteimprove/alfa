@@ -4,3 +4,8 @@
 
 ## Image.JSON.image property
 
+<b>Signature:</b>
+
+```typescript
+image: URL.JSON | Gradient.JSON;
+```

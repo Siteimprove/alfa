@@ -4,10 +4,20 @@
 
 ## Radial.Ellipse.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<R extends Length | Percentage>(horizontal: R, vertical: R): Ellipse<R>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  horizontal | R |  |
 |  vertical | R |  |
+
+<b>Returns:</b>
+
+[Ellipse](./alfa-css.radial.ellipse.md)<!-- -->&lt;R&gt;
 

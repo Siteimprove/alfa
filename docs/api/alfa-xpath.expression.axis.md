@@ -4,6 +4,12 @@
 
 ## Expression.Axis namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Axis 
+```
+
 ## Interfaces
 
 |  Interface | Description |

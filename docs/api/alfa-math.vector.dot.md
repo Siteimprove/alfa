@@ -4,10 +4,24 @@
 
 ## Vector.dot() function
 
+Compute the dot product of two non-empty, equal length vectors.
+
+[https://en.wikipedia.org/wiki/Dot\_product](https://en.wikipedia.org/wiki/Dot_product)
+
+<b>Signature:</b>
+
+```typescript
+function dot(v: Vector, u: Vector): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
 |  u | [Vector](./alfa-math.vector.md) |  |
+
+<b>Returns:</b>
+
+number
 

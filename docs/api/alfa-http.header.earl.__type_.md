@@ -4,3 +4,8 @@
 
 ## Header.EARL."@type" property
 
+<b>Signature:</b>
+
+```typescript
+"@type": "http:MessageHeader";
+```

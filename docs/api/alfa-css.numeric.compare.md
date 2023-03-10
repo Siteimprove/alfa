@@ -4,9 +4,19 @@
 
 ## Numeric.compare() method
 
+<b>Signature:</b>
+
+```typescript
+compare(value: Numeric<T>): Comparison;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Numeric](./alfa-css.numeric.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Comparison](./alfa-comparable.comparison.md)
 

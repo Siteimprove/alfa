@@ -4,11 +4,18 @@
 
 ## Block namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Block 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [from](./alfa-dom.block.from.md) |  |
+|  [from(json)](./alfa-dom.block.from.md) |  |
 
 ## Type Aliases
 

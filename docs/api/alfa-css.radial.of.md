@@ -4,6 +4,12 @@
 
 ## Radial.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<I extends Gradient.Item = Gradient.Item, S extends Radial.Shape = Radial.Shape, P extends Position = Position>(shape: S, position: P, items: Iterable<I>, repeats: boolean): Radial<I, S, P>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -12,4 +18,8 @@
 |  position | P |  |
 |  items | Iterable&lt;I&gt; |  |
 |  repeats | boolean |  |
+
+<b>Returns:</b>
+
+[Radial](./alfa-css.radial.md)<!-- -->&lt;I, S, P&gt;
 

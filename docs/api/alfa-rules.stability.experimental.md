@@ -4,3 +4,10 @@
 
 ## Stability.Experimental variable
 
+For experimental rules. These rules are not necessarily compatible with downstream data processing, and are subject to breaking changes without notice
+
+<b>Signature:</b>
+
+```typescript
+Experimental: Stability<"experimental">
+```

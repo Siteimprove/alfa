@@ -4,3 +4,8 @@
 
 ## Selector.Attribute.namespace property
 
+<b>Signature:</b>
+
+```typescript
+get namespace(): Option<string>;
+```

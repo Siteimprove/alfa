@@ -4,3 +4,8 @@
 
 ## Token.number variable
 
+<b>Signature:</b>
+
+```typescript
+number: typeof Number.of
+```

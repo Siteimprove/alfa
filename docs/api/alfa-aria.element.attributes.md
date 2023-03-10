@@ -4,3 +4,8 @@
 
 ## Element.attributes property
 
+<b>Signature:</b>
+
+```typescript
+get attributes(): ReadonlyArray<Attribute>;
+```

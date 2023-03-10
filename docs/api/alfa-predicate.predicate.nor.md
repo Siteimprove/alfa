@@ -4,9 +4,19 @@
 
 ## Predicate.nor() function
 
+<b>Signature:</b>
+
+```typescript
+function nor<T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicates | Array&lt;[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;
 

@@ -8,7 +8,7 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [test](./alfa-test.test.md) |  |
+|  [test(name, assertion)](./alfa-test.test.md) |  |
 
 ## Interfaces
 

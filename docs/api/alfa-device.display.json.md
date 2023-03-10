@@ -4,10 +4,16 @@
 
 ## Display.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [resolution](./alfa-device.display.json.resolution.md) |  |  |  |
-|  [scan](./alfa-device.display.json.scan.md) |  |  |  |
+|  [resolution](./alfa-device.display.json.resolution.md) |  | number |  |
+|  [scan](./alfa-device.display.json.scan.md) |  | \`${[Scan](./alfa-device.display.scan.md)<!-- -->}\` |  |
 

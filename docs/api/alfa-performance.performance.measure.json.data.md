@@ -4,3 +4,8 @@
 
 ## Performance.Measure.JSON.data property
 
+<b>Signature:</b>
+
+```typescript
+data: Serializable.ToJSON<T>;
+```

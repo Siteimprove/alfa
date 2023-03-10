@@ -4,13 +4,20 @@
 
 ## Rotate.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Value.JSON<"transform"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"transform"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [angle](./alfa-css.rotate.json.angle.md) |  |  |  |
-|  [kind](./alfa-css.rotate.json.kind.md) |  |  |  |
-|  [x](./alfa-css.rotate.json.x.md) |  |  |  |
-|  [y](./alfa-css.rotate.json.y.md) |  |  |  |
-|  [z](./alfa-css.rotate.json.z.md) |  |  |  |
+|  [angle](./alfa-css.rotate.json.angle.md) |  | [Angle.JSON](./alfa-css.angle.json.md) |  |
+|  [kind](./alfa-css.rotate.json.kind.md) |  | "rotate" |  |
+|  [x](./alfa-css.rotate.json.x.md) |  | Number.JSON |  |
+|  [y](./alfa-css.rotate.json.y.md) |  | Number.JSON |  |
+|  [z](./alfa-css.rotate.json.z.md) |  | Number.JSON |  |
 

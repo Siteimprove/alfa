@@ -4,6 +4,13 @@
 
 ## Block namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Block 
+```
+
 ## Interfaces
 
 |  Interface | Description |
@@ -14,12 +21,12 @@
 
 |  Variable | Description |
 |  --- | --- |
-|  [consume](./alfa-css.block.consume.md) |  |
+|  [consume](./alfa-css.block.consume.md) | [https://drafts.csswg.org/css-syntax/\#consume-a-simple-block](https://drafts.csswg.org/css-syntax/#consume-a-simple-block) |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Close](./alfa-css.block.close.md) |  |
-|  [Open](./alfa-css.block.open.md) |  |
+|  [Close](./alfa-css.block.close.md) | The tokens that are allowed to close a block. |
+|  [Open](./alfa-css.block.open.md) | The tokens that are allowed to open a block. |
 

@@ -4,3 +4,12 @@
 
 ## Collection.Indexed.distinct() method
 
+<b>Signature:</b>
+
+```typescript
+distinct(): Indexed<T>;
+```
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
+

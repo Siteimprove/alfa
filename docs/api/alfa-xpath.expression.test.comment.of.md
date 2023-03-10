@@ -4,3 +4,12 @@
 
 ## Expression.Test.Comment.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(): Comment;
+```
+<b>Returns:</b>
+
+[Comment](./alfa-xpath.expression.test.comment.md)
+

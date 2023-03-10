@@ -4,3 +4,8 @@
 
 ## experimentalRules.ER66 variable
 
+<b>Signature:</b>
+
+```typescript
+_default: Rule.Atomic<Page, Text, Question.Metadata, Text | Group<Element<string>>>
+```

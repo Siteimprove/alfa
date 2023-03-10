@@ -4,3 +4,8 @@
 
 ## Token.Hash.JSON.isIdentifier property
 
+<b>Signature:</b>
+
+```typescript
+isIdentifier: boolean;
+```

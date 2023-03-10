@@ -4,6 +4,14 @@
 
 ## Selector.Pseudo.Class.(constructor)
 
+Constructs a new instance of the `Class` class
+
+<b>Signature:</b>
+
+```typescript
+protected constructor(name: N);
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |

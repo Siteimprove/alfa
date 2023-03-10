@@ -4,9 +4,24 @@
 
 ## Rule.Atomic.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<I, T extends Hashable, Q = never, S = T>(properties: {
+            uri: string;
+            requirements?: Iterable<Requirement>;
+            tags?: Iterable<Tag>;
+            evaluate: Atomic.Evaluate<I, T, Q, S>;
+        }): Atomic<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  properties | { uri: string; requirements?: Iterable&lt;[Requirement](./alfa-act.requirement.md)<!-- -->&gt;; tags?: Iterable&lt;[Tag](./alfa-act.tag.md)<!-- -->&gt;; evaluate: [Atomic.Evaluate](./alfa-act.rule.atomic.evaluate.md)<!-- -->&lt;I, T, Q, S&gt;; } |  |
+
+<b>Returns:</b>
+
+[Atomic](./alfa-act.rule.atomic.md)<!-- -->&lt;I, T, Q, S&gt;
 

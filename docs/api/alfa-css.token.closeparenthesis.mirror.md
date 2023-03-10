@@ -4,3 +4,8 @@
 
 ## Token.CloseParenthesis.mirror property
 
+<b>Signature:</b>
+
+```typescript
+get mirror(): OpenParenthesis;
+```

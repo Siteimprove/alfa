@@ -4,10 +4,20 @@
 
 ## Iterable\_2.equals() function
 
+<b>Signature:</b>
+
+```typescript
+function equals<T>(a: Iterable<T>, b: Iterable<T>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | Iterable&lt;T&gt; |  |
 |  b | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

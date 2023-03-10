@@ -4,10 +4,20 @@
 
 ## Tuple.every() function
 
+<b>Signature:</b>
+
+```typescript
+export function every<T extends Tuple>(tuple: T, predicate: Predicate<Item<T>, [index: number]>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

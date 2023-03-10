@@ -4,10 +4,20 @@
 
 ## Err.mapOrElse() method
 
+<b>Signature:</b>
+
+```typescript
+mapOrElse<U>(ok: unknown, err: Mapper<E, U>): U;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  ok | unknown |  |
 |  err | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;E, U&gt; |  |
+
+<b>Returns:</b>
+
+U
 

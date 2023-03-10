@@ -4,10 +4,20 @@
 
 ## Sequence.compare() method
 
+<b>Signature:</b>
+
+```typescript
+compare<T>(this: Sequence<Comparable<T>>, iterable: Iterable<T>): Comparison;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Comparable](./alfa-comparable.comparable.md)<!-- -->&lt;T&gt;&gt; |  |
 |  iterable | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Comparison](./alfa-comparable.comparison.md)
 

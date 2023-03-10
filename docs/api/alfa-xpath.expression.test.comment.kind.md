@@ -4,3 +4,8 @@
 
 ## Expression.Test.Comment.kind property
 
+<b>Signature:</b>
+
+```typescript
+get kind(): "comment";
+```

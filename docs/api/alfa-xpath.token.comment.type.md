@@ -4,3 +4,8 @@
 
 ## Token.Comment.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "comment";
+```

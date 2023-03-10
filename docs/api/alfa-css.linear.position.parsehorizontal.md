@@ -4,3 +4,8 @@
 
 ## Linear.Position.parseHorizontal variable
 
+<b>Signature:</b>
+
+```typescript
+parseHorizontal: Parser<Slice<Token>, Horizontal, string, []>
+```

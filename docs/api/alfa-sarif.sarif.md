@@ -4,3 +4,9 @@
 
 ## SARIF type
 
+
+<b>Signature:</b>
+
+```typescript
+export declare type SARIF = sarif.Artifact | sarif.Location | sarif.Log | sarif.ReportingDescriptor | sarif.Result;
+```

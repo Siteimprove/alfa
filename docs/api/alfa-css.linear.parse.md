@@ -4,3 +4,10 @@
 
 ## Linear.parse variable
 
+[https://drafts.csswg.org/css-images/\#funcdef-linear-gradient](https://drafts.csswg.org/css-images/#funcdef-linear-gradient)
+
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, Linear, string>
+```

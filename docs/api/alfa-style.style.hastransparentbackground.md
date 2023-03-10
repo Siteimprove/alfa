@@ -4,3 +4,8 @@
 
 ## Style.hasTransparentBackground variable
 
+<b>Signature:</b>
+
+```typescript
+hasTransparentBackground: typeof element.hasTransparentBackground
+```

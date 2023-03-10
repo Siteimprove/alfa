@@ -4,3 +4,10 @@
 
 ## Unit.Angle type
 
+[https://drafts.csswg.org/css-values/\#angles](https://drafts.csswg.org/css-values/#angles)
+
+<b>Signature:</b>
+
+```typescript
+type Angle = "deg" | "grad" | "rad" | "turn";
+```

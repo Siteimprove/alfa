@@ -4,10 +4,16 @@
 
 ## Header.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [name](./alfa-http.header.json.name.md) |  |  |  |
-|  [value](./alfa-http.header.json.value.md) |  |  |  |
+|  [name](./alfa-http.header.json.name.md) |  | string |  |
+|  [value](./alfa-http.header.json.value.md) |  | string |  |
 

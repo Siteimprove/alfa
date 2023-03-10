@@ -4,9 +4,19 @@
 
 ## Option.every() method
 
+<b>Signature:</b>
+
+```typescript
+every<U extends T>(refinement: Refinement<T, U>): this is Option<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+this is [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

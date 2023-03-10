@@ -4,3 +4,8 @@
 
 ## Media.Query.JSON.condition property
 
+<b>Signature:</b>
+
+```typescript
+condition: Feature.JSON | Condition.JSON | Not.JSON | null;
+```

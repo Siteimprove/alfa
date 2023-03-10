@@ -4,9 +4,19 @@
 
 ## Left.either() method
 
+<b>Signature:</b>
+
+```typescript
+either<T>(left: Mapper<L, T>): T;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  left | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;L, T&gt; |  |
+
+<b>Returns:</b>
+
+T
 

@@ -4,10 +4,16 @@
 
 ## Selector.Attribute.Modifier enum
 
+<b>Signature:</b>
+
+```typescript
+enum Modifier 
+```
+
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  CaseInsensitive |  |  |
-|  CaseSensitive |  |  |
+|  CaseInsensitive | <code>&quot;i&quot;</code> |  |
+|  CaseSensitive | <code>&quot;s&quot;</code> |  |
 

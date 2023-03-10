@@ -4,3 +4,10 @@
 
 ## Box.Geometry.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON = Shape.JSON | Keyword.JSON<"fill-box"> | Keyword.JSON<"stroke-box"> | Keyword.JSON<"view-box">;
+```
+<b>References:</b> [Shape.JSON](./alfa-css.box.shape.json.md)<!-- -->, [Keyword.JSON](./alfa-css.keyword.json.md)
+

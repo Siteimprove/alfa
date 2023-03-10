@@ -4,9 +4,19 @@
 
 ## Scripting.from() function
 
+<b>Signature:</b>
+
+```typescript
+function from(json: JSON): Scripting;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [JSON](./alfa-device.scripting.json.md) |  |
+
+<b>Returns:</b>
+
+[Scripting](./alfa-device.scripting.md)
 

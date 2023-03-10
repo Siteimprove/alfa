@@ -4,3 +4,12 @@
 
 ## Selector.Class.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Class.JSON;
+```
+<b>Returns:</b>
+
+[Class.JSON](./alfa-selector.selector.class.json.md)
+

@@ -4,19 +4,25 @@
 
 ## Media.Feature namespace
 
+<b>Signature:</b>
+
+```typescript
+export namespace Feature 
+```
+
 ## Classes
 
 |  Class | Description |
 |  --- | --- |
-|  [Height](./alfa-media.media.feature.height.md) |  |
-|  [Width](./alfa-media.media.feature.width.md) |  |
+|  [Height](./alfa-media.media.feature.height.md) | [https://drafts.csswg.org/mediaqueries/\#height](https://drafts.csswg.org/mediaqueries/#height) |
+|  [Width](./alfa-media.media.feature.width.md) | [https://drafts.csswg.org/mediaqueries/\#width](https://drafts.csswg.org/mediaqueries/#width) |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isFeature](./alfa-media.media.feature.isfeature.md) |  |
-|  [tryFrom](./alfa-media.media.feature.tryfrom.md) |  |
+|  [isFeature(value)](./alfa-media.media.feature.isfeature.md) |  |
+|  [tryFrom(value, name)](./alfa-media.media.feature.tryfrom.md) |  |
 
 ## Interfaces
 

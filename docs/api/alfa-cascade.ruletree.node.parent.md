@@ -4,3 +4,8 @@
 
 ## RuleTree.Node.parent property
 
+<b>Signature:</b>
+
+```typescript
+get parent(): Option<Node>;
+```

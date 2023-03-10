@@ -4,6 +4,12 @@
 
 ## Cell.Data.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(element: Element, anchor: Slot, width: number, height: number, headers?: Iterable<Slot>): Data;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -13,4 +19,8 @@
 |  width | number |  |
 |  height | number |  |
 |  headers | Iterable&lt;[Slot](./alfa-table.slot.md)<!-- -->&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Data](./alfa-table.cell.data.md)
 

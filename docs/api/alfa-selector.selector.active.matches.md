@@ -4,10 +4,20 @@
 
 ## Selector.Active.matches() method
 
+<b>Signature:</b>
+
+```typescript
+matches(element: Element, context?: Context): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
 |  context | [Context](./alfa-selector.context.md) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+boolean
 

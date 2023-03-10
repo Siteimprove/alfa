@@ -4,9 +4,16 @@
 
 ## Container.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Node.JSON<"container"> 
+```
+<b>Extends:</b> [Node.JSON](./alfa-aria.node.json.md)<!-- -->&lt;"container"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [role](./alfa-aria.container.json.role.md) |  |  |  |
+|  [role](./alfa-aria.container.json.role.md) |  | [Role.Name](./alfa-aria.role.name.md) \| null |  |
 

@@ -4,3 +4,10 @@
 
 ## Inset.Radius type
 
+<b>Signature:</b>
+
+```typescript
+type Radius = Length | Percentage;
+```
+<b>References:</b> [Length](./alfa-css.length.md)<!-- -->, [Percentage](./alfa-css.percentage.md)
+

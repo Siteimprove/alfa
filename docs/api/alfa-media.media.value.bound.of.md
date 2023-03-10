@@ -4,10 +4,20 @@
 
 ## Media.Value.Bound.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<T>(value: T, isInclusive: boolean): Bound<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
 |  isInclusive | boolean |  |
+
+<b>Returns:</b>
+
+[Bound](./alfa-media.media.value.bound.md)<!-- -->&lt;T&gt;
 

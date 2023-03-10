@@ -4,3 +4,8 @@
 
 ## Performance.Measure.duration property
 
+<b>Signature:</b>
+
+```typescript
+get duration(): number;
+```

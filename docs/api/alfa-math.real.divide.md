@@ -4,10 +4,20 @@
 
 ## Real.divide() function
 
+<b>Signature:</b>
+
+```typescript
+function divide(p: number, d: number): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  p | number |  |
 |  d | number |  |
+
+<b>Returns:</b>
+
+number
 

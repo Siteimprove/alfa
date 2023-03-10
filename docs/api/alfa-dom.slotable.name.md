@@ -4,9 +4,21 @@
 
 ## Slotable.name() function
 
+[https://dom.spec.whatwg.org/\#slotable-name](https://dom.spec.whatwg.org/#slotable-name)
+
+<b>Signature:</b>
+
+```typescript
+function name(slotable: Slotable): string;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  slotable | [Slotable](./alfa-dom.slotable.md) |  |
+
+<b>Returns:</b>
+
+string
 

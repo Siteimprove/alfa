@@ -4,3 +4,10 @@
 
 ## RGB.parse variable
 
+[https://drafts.csswg.org/css-color/\#funcdef-rgb](https://drafts.csswg.org/css-color/#funcdef-rgb)
+
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, RGB, string>
+```

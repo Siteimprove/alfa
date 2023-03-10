@@ -4,3 +4,8 @@
 
 ## Element.hasDisplaySize variable
 
+<b>Signature:</b>
+
+```typescript
+hasDisplaySize: typeof predicate.hasDisplaySize
+```

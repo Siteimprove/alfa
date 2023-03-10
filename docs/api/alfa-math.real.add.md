@@ -4,10 +4,20 @@
 
 ## Real.add() function
 
+<b>Signature:</b>
+
+```typescript
+function add(p: number, q: number): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  p | number |  |
 |  q | number |  |
+
+<b>Returns:</b>
+
+number
 

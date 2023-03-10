@@ -4,3 +4,8 @@
 
 ## Page.response property
 
+<b>Signature:</b>
+
+```typescript
+get response(): Response;
+```

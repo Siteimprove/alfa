@@ -4,10 +4,20 @@
 
 ## Position.Side.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<S extends Vertical | Horizontal, O extends Offset>(side: S, offset?: Option<O>): Side<S, O>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  side | S |  |
 |  offset | [Option](./alfa-option.option.md)<!-- -->&lt;O&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Side](./alfa-css.position.side.md)<!-- -->&lt;S, O&gt;
 

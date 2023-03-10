@@ -4,9 +4,21 @@
 
 ## URL.equals() method
 
+[https://url.spec.whatwg.org/\#concept-url-equals](https://url.spec.whatwg.org/#concept-url-equals)
+
+<b>Signature:</b>
+
+```typescript
+equals(value: URL): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [URL](./alfa-url.url.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

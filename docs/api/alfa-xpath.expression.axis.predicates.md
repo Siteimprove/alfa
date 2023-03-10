@@ -4,3 +4,8 @@
 
 ## Expression.Axis.predicates property
 
+<b>Signature:</b>
+
+```typescript
+get predicates(): Iterable<Expression>;
+```

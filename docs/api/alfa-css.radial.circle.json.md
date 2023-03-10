@@ -4,10 +4,16 @@
 
 ## Radial.Circle.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [radius](./alfa-css.radial.circle.json.radius.md) |  |  |  |
-|  [type](./alfa-css.radial.circle.json.type.md) |  |  |  |
+|  [radius](./alfa-css.radial.circle.json.radius.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
+|  [type](./alfa-css.radial.circle.json.type.md) |  | "circle" |  |
 

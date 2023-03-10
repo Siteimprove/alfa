@@ -4,3 +4,10 @@
 
 ## Image.parse variable
 
+[https://drafts.csswg.org/css-images/\#typedef-image](https://drafts.csswg.org/css-images/#typedef-image)
+
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, Image, string>
+```

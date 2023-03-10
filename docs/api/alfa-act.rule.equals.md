@@ -4,9 +4,19 @@
 
 ## Rule.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals<I, T extends Hashable, Q, S>(value: Rule<I, T, Q, S>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

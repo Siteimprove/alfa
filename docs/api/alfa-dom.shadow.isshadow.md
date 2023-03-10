@@ -4,9 +4,19 @@
 
 ## Shadow.isShadow() function
 
+<b>Signature:</b>
+
+```typescript
+function isShadow(value: unknown): value is Shadow;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Shadow](./alfa-dom.shadow.md)
 

@@ -4,3 +4,8 @@
 
 ## Site.resources property
 
+<b>Signature:</b>
+
+```typescript
+get resources(): Graph<R>;
+```

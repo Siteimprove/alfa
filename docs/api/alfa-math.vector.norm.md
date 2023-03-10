@@ -4,9 +4,23 @@
 
 ## Vector.norm() function
 
+Compute the norm of a vector.
+
+[https://en.wikipedia.org/wiki/Norm\_(mathematics)](https://en.wikipedia.org/wiki/Norm_(mathematics))
+
+<b>Signature:</b>
+
+```typescript
+function norm(v: Vector): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
+
+<b>Returns:</b>
+
+number
 

@@ -4,9 +4,19 @@
 
 ## Radial.Extent.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Extent): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Extent](./alfa-css.radial.extent.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

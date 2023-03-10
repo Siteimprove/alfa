@@ -4,3 +4,12 @@
 
 ## System type
 
+[https://drafts.csswg.org/css-color/\#css-system-colors](https://drafts.csswg.org/css-color/#css-system-colors)
+
+<b>Signature:</b>
+
+```typescript
+export declare type System = Keyword<System.Keyword>;
+```
+<b>References:</b> [Keyword](./alfa-css.keyword.md)<!-- -->, [System.Keyword](./alfa-css.system.keyword.md)
+

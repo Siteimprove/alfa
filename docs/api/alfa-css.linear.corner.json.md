@@ -4,11 +4,17 @@
 
 ## Linear.Corner.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [horizontal](./alfa-css.linear.corner.json.horizontal.md) |  |  |  |
-|  [type](./alfa-css.linear.corner.json.type.md) |  |  |  |
-|  [vertical](./alfa-css.linear.corner.json.vertical.md) |  |  |  |
+|  [horizontal](./alfa-css.linear.corner.json.horizontal.md) |  | [Position.Horizontal](./alfa-css.linear.position.horizontal.md) |  |
+|  [type](./alfa-css.linear.corner.json.type.md) |  | "corner" |  |
+|  [vertical](./alfa-css.linear.corner.json.vertical.md) |  | [Position.Vertical](./alfa-css.linear.position.vertical.md) |  |
 

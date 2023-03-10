@@ -4,3 +4,12 @@
 
 ## Attribute.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Attribute.JSON;
+```
+<b>Returns:</b>
+
+[Attribute.JSON](./alfa-aria.attribute.json.md)
+

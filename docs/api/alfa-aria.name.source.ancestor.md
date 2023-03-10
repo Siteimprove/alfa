@@ -4,6 +4,12 @@
 
 ## Name.Source.Ancestor namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Ancestor 
+```
+
 ## Interfaces
 
 |  Interface | Description |

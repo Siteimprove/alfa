@@ -4,3 +4,14 @@
 
 ## Element.isVoid() method
 
+[https://html.spec.whatwg.org/\#void-elements](https://html.spec.whatwg.org/#void-elements)
+
+<b>Signature:</b>
+
+```typescript
+isVoid(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

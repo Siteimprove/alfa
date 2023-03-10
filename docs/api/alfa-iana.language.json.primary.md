@@ -4,3 +4,8 @@
 
 ## Language.JSON.primary property
 
+<b>Signature:</b>
+
+```typescript
+primary: Primary.JSON;
+```

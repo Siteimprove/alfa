@@ -4,23 +4,30 @@
 
 ## Flag namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Flag 
+```
+
 ## Classes
 
 |  Class | Description |
 |  --- | --- |
-|  [Set](./alfa-command.flag.set.md) |  |
+|  [Set](./alfa-command.flag.set.md) | The <code>Set&lt;T&gt;</code> class, from the concept of "flag sets", acts as a container for parsed flag values. As flags can be specified multiple times, this class allows us to encapsulate the current value of a given flag and a parser to parse another instance of the flag value and determine how to combine the two. |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [boolean](./alfa-command.flag.boolean.md) |  |
-|  [empty](./alfa-command.flag.empty.md) |  |
-|  [help](./alfa-command.flag.help.md) |  |
-|  [integer](./alfa-command.flag.integer.md) |  |
-|  [number](./alfa-command.flag.number.md) |  |
-|  [string](./alfa-command.flag.string.md) |  |
-|  [version](./alfa-command.flag.version.md) |  |
+|  [boolean(name, description)](./alfa-command.flag.boolean.md) |  |
+|  [empty(name, description)](./alfa-command.flag.empty.md) |  |
+|  [help(description)](./alfa-command.flag.help.md) |  |
+|  [integer(name, description)](./alfa-command.flag.integer.md) |  |
+|  [number(name, description)](./alfa-command.flag.number.md) |  |
+|  [string(name, description)](./alfa-command.flag.string.md) |  |
+|  [version(description)](./alfa-command.flag.version.md) |  |
 
 ## Interfaces
 

@@ -4,3 +4,8 @@
 
 ## DOM.hasRole variable
 
+<b>Signature:</b>
+
+```typescript
+hasRole: typeof dom.hasRole
+```

@@ -4,9 +4,19 @@
 
 ## Outcome.Passed.isPassed() function
 
+<b>Signature:</b>
+
+```typescript
+function isPassed<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Passed<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+
+<b>Returns:</b>
+
+value is [Passed](./alfa-act.outcome.passed.md)<!-- -->&lt;I, T, Q, S&gt;
 

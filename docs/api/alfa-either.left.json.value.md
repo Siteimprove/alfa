@@ -4,3 +4,8 @@
 
 ## Left.JSON.value property
 
+<b>Signature:</b>
+
+```typescript
+value: Serializable.ToJSON<L>;
+```

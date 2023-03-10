@@ -4,9 +4,21 @@
 
 ## Encoder.encode() function
 
+[https://encoding.spec.whatwg.org/\#dom-textencoder-encode](https://encoding.spec.whatwg.org/#dom-textencoder-encode) [https://encoding.spec.whatwg.org/\#utf-8-encoder](https://encoding.spec.whatwg.org/#utf-8-encoder)
+
+<b>Signature:</b>
+
+```typescript
+function encode(input: string): Uint8Array;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  input | string |  |
+
+<b>Returns:</b>
+
+Uint8Array
 

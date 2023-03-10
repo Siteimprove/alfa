@@ -4,3 +4,8 @@
 
 ## Linear.Side.side property
 
+<b>Signature:</b>
+
+```typescript
+get side(): Position.Vertical | Position.Horizontal;
+```

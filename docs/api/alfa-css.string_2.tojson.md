@@ -4,3 +4,12 @@
 
 ## String\_2.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): String.JSON;
+```
+<b>Returns:</b>
+
+String.JSON
+

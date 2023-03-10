@@ -4,3 +4,8 @@
 
 ## Position.parseCenter variable
 
+<b>Signature:</b>
+
+```typescript
+parseCenter: Parser<Slice<Token>, Keyword<"center">, string, []>
+```

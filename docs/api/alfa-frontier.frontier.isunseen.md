@@ -4,9 +4,21 @@
 
 ## Frontier.isUnseen() method
 
+Check if the URL has not yet been seen by the frontier.
+
+<b>Signature:</b>
+
+```typescript
+isUnseen(url: string | URL): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  url | string \| [URL](./alfa-url.url.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

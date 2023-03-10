@@ -4,3 +4,8 @@
 
 ## Token.Dimension.isSigned property
 
+<b>Signature:</b>
+
+```typescript
+get isSigned(): boolean;
+```

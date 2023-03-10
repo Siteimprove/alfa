@@ -4,9 +4,21 @@
 
 ## Node.root() method
 
+[https://dom.spec.whatwg.org/\#concept-tree-root](https://dom.spec.whatwg.org/#concept-tree-root)
+
+<b>Signature:</b>
+
+```typescript
+root(options?: Flags<F>): Node<F>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;
 

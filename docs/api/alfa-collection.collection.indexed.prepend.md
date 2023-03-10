@@ -4,9 +4,19 @@
 
 ## Collection.Indexed.prepend() method
 
+<b>Signature:</b>
+
+```typescript
+prepend(value: T): Indexed<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

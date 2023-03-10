@@ -4,3 +4,10 @@
 
 ## Token.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON = Ident.JSON | Function.JSON | AtKeyword.JSON | Hash.JSON | String.JSON | URL.JSON | BadURL.JSON | Delim.JSON | Number.JSON | Percentage.JSON | Dimension.JSON | Whitespace.JSON | Colon.JSON | Semicolon.JSON | Comma.JSON | OpenParenthesis.JSON | CloseParenthesis.JSON | OpenSquareBracket.JSON | CloseSquareBracket.JSON | OpenCurlyBracket.JSON | CloseCurlyBracket.JSON | OpenComment.JSON | CloseComment.JSON;
+```
+<b>References:</b> [Ident.JSON](./alfa-css.token.ident.json.md)<!-- -->, [Function.JSON](./alfa-css.token.function.json.md)<!-- -->, [AtKeyword.JSON](./alfa-css.token.atkeyword.json.md)<!-- -->, [Hash.JSON](./alfa-css.token.hash.json.md)<!-- -->, [String.JSON](./alfa-css.token.string.json.md)<!-- -->, [URL.JSON](./alfa-css.token.url.json.md)<!-- -->, [BadURL.JSON](./alfa-css.token.badurl.json.md)<!-- -->, [Delim.JSON](./alfa-css.token.delim.json.md)<!-- -->, [Number.JSON](./alfa-css.token.number.json.md)<!-- -->, [Percentage.JSON](./alfa-css.token.percentage.json.md)<!-- -->, [Dimension.JSON](./alfa-css.token.dimension.json.md)<!-- -->, [Whitespace.JSON](./alfa-css.token.whitespace.json.md)<!-- -->, [Colon.JSON](./alfa-css.token.colon.json.md)<!-- -->, [Semicolon.JSON](./alfa-css.token.semicolon.json.md)<!-- -->, [Comma.JSON](./alfa-css.token.comma.json.md)<!-- -->, [OpenParenthesis.JSON](./alfa-css.token.openparenthesis.json.md)<!-- -->, [CloseParenthesis.JSON](./alfa-css.token.closeparenthesis.json.md)<!-- -->, [OpenSquareBracket.JSON](./alfa-css.token.opensquarebracket.json.md)<!-- -->, [CloseSquareBracket.JSON](./alfa-css.token.closesquarebracket.json.md)<!-- -->, [OpenCurlyBracket.JSON](./alfa-css.token.opencurlybracket.json.md)<!-- -->, [CloseCurlyBracket.JSON](./alfa-css.token.closecurlybracket.json.md)<!-- -->, [OpenComment.JSON](./alfa-css.token.opencomment.json.md)<!-- -->, [CloseComment.JSON](./alfa-css.token.closecomment.json.md)
+

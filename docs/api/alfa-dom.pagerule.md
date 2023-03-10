@@ -4,11 +4,18 @@
 
 ## PageRule namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace PageRule 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isPageRule](./alfa-dom.pagerule.ispagerule.md) |  |
+|  [isPageRule(value)](./alfa-dom.pagerule.ispagerule.md) |  |
 
 ## Interfaces
 

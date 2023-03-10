@@ -4,3 +4,8 @@
 
 ## Cell.height property
 
+<b>Signature:</b>
+
+```typescript
+get height(): number;
+```

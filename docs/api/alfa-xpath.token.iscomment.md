@@ -4,9 +4,19 @@
 
 ## Token.isComment() function
 
+<b>Signature:</b>
+
+```typescript
+function isComment(value: unknown): value is Comment;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Comment](./alfa-xpath.token.comment.md)
 

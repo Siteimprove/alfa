@@ -4,10 +4,16 @@
 
 ## Token.Delim.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.token.delim.json.type.md) |  |  |  |
-|  [value](./alfa-css.token.delim.json.value.md) |  |  |  |
+|  [type](./alfa-css.token.delim.json.type.md) |  | "delim" |  |
+|  [value](./alfa-css.token.delim.json.value.md) |  | number |  |
 

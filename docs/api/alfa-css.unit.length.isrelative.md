@@ -4,9 +4,19 @@
 
 ## Unit.Length.isRelative() function
 
+<b>Signature:</b>
+
+```typescript
+function isRelative(unit: string): unit is Relative;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | string |  |
+
+<b>Returns:</b>
+
+unit is [Relative](./alfa-css.unit.length.relative.md)
 

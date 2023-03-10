@@ -4,17 +4,24 @@
 
 ## Row namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Row 
+```
+
 ## Classes
 
 |  Class | Description |
 |  --- | --- |
-|  [Group](./alfa-table.row.group.md) |  |
+|  [Group](./alfa-table.row.group.md) | [https://html.spec.whatwg.org/\#concept-row-group](https://html.spec.whatwg.org/#concept-row-group) |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isRow](./alfa-table.row.isrow.md) |  |
+|  [isRow(value)](./alfa-table.row.isrow.md) |  |
 
 ## Interfaces
 

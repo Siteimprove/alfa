@@ -4,3 +4,8 @@
 
 ## Diagnostic.isColorErrorInterposedDescendants variable
 
+<b>Signature:</b>
+
+```typescript
+isColorErrorInterposedDescendants: typeof ColorError.HasInterposedDescendants.isInterposedDescendants
+```

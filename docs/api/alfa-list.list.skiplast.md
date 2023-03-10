@@ -4,9 +4,19 @@
 
 ## List.skipLast() method
 
+<b>Signature:</b>
+
+```typescript
+skipLast(count?: number): List<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  count | number | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

@@ -4,3 +4,12 @@
 
 ## Sequence.rest() method
 
+<b>Signature:</b>
+
+```typescript
+rest(): Sequence<T>;
+```
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+

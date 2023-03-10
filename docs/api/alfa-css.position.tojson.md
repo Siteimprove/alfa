@@ -4,3 +4,12 @@
 
 ## Position.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Position.JSON;
+```
+<b>Returns:</b>
+
+[Position.JSON](./alfa-css.position.json.md)
+

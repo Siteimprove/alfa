@@ -4,9 +4,19 @@
 
 ## Dimension.hasUnit() method
 
+<b>Signature:</b>
+
+```typescript
+hasUnit<V extends U>(unit: V): this is Dimension<T, U, V>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  unit | V |  |
+
+<b>Returns:</b>
+
+this is [Dimension](./alfa-css.dimension.md)<!-- -->&lt;T, U, V&gt;
 

@@ -4,3 +4,10 @@
 
 ## Tuple.Map type
 
+<b>Signature:</b>
+
+```typescript
+export type Map<T extends Tuple, U> = T extends readonly [infer _, ...infer R] ? [U, ...Map<R, U>] : Empty;
+```
+<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Map](./alfa-tuple.tuple.map.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
+

@@ -4,3 +4,13 @@
 
 ## Shape.parse variable
 
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, Shape<Circle | Ellipse | Inset | Polygon>, string>
+```
+
+## Remarks
+
+This does not parse the deprecated `rect()` shape.
+

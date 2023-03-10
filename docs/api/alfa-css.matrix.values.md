@@ -4,3 +4,33 @@
 
 ## Matrix.Values type
 
+<b>Signature:</b>
+
+```typescript
+type Values<T> = [
+        [
+            T,
+            T,
+            T,
+            T
+        ],
+        [
+            T,
+            T,
+            T,
+            T
+        ],
+        [
+            T,
+            T,
+            T,
+            T
+        ],
+        [
+            T,
+            T,
+            T,
+            T
+        ]
+    ];
+```

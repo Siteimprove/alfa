@@ -4,6 +4,12 @@
 
 ## Radial.Ellipse namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Ellipse 
+```
+
 ## Interfaces
 
 |  Interface | Description |

@@ -4,9 +4,19 @@
 
 ## Iterable\_2.first() function
 
+<b>Signature:</b>
+
+```typescript
+function first<T>(iterable: Iterable<T>): Option<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

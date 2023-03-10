@@ -4,6 +4,12 @@
 
 ## Asserter.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<I, T extends Hashable, Q, S>(rules: Iterable<Rule<I, T, Q, S>>, handlers?: Iterable<Handler<I, T, Q, S>>, options?: Asserter.Options<I, T, Q, S>): Asserter<I, T, Q, S>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  rules | Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;&gt; |  |
 |  handlers | Iterable&lt;[Handler](./alfa-assert.handler.md)<!-- -->&lt;I, T, Q, S&gt;&gt; | <i>(Optional)</i> |
 |  options | [Asserter.Options](./alfa-assert.asserter.options.md)<!-- -->&lt;I, T, Q, S&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Asserter](./alfa-assert.asserter.md)<!-- -->&lt;I, T, Q, S&gt;
 

@@ -4,9 +4,19 @@
 
 ## Collection.Unkeyed.add() method
 
+<b>Signature:</b>
+
+```typescript
+add(value: T): Unkeyed<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

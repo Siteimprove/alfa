@@ -4,9 +4,19 @@
 
 ## Cookies.get() method
 
+<b>Signature:</b>
+
+```typescript
+get(name: string): Option<Cookie>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;[Cookie](./alfa-http.cookie.md)<!-- -->&gt;
 

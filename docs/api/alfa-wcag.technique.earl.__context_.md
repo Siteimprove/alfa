@@ -4,3 +4,11 @@
 
 ## Technique.EARL."@context" property
 
+<b>Signature:</b>
+
+```typescript
+"@context": {
+            earl: "http://www.w3.org/ns/earl#";
+            dct: "http://purl.org/dc/terms/";
+        };
+```

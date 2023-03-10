@@ -4,9 +4,19 @@
 
 ## h.block() function
 
+<b>Signature:</b>
+
+```typescript
+function block(declarations: Array<Declaration> | Record<string, string>): Block;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  declarations | Array&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; \| Record&lt;string, string&gt; |  |
+
+<b>Returns:</b>
+
+[Block](./alfa-dom.block.md)
 

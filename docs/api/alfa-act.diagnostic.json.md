@@ -4,9 +4,15 @@
 
 ## Diagnostic.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [message](./alfa-act.diagnostic.json.message.md) |  |  |  |
+|  [message](./alfa-act.diagnostic.json.message.md) |  | string |  |
 

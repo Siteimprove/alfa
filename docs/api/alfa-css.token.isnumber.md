@@ -4,3 +4,8 @@
 
 ## Token.isNumber variable
 
+<b>Signature:</b>
+
+```typescript
+isNumber: typeof Number.isNumber
+```

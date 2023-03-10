@@ -4,9 +4,19 @@
 
 ## Request.isRequest() function
 
+<b>Signature:</b>
+
+```typescript
+function isRequest(value: unknown): value is Request;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Request](./alfa-http.request.md)
 

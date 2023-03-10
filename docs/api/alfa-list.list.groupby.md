@@ -4,9 +4,19 @@
 
 ## List.groupBy() method
 
+<b>Signature:</b>
+
+```typescript
+groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  grouper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, K&gt; |  |
+
+<b>Returns:</b>
+
+Map&lt;K, [List](./alfa-list.list.md)<!-- -->&lt;T&gt;&gt;
 

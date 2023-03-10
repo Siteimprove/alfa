@@ -4,6 +4,12 @@
 
 ## Flag.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<T>(name: string, description: string, parse: Flag.Parser<T, [Predicate<string>]>): Flag<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  name | string |  |
 |  description | string |  |
 |  parse | [Flag.Parser](./alfa-command.flag.parser.md)<!-- -->&lt;T, \[[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;string&gt;\]&gt; |  |
+
+<b>Returns:</b>
+
+[Flag](./alfa-command.flag.md)<!-- -->&lt;T&gt;
 

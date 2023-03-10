@@ -4,9 +4,19 @@
 
 ## Some.reject() method
 
+<b>Signature:</b>
+
+```typescript
+reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

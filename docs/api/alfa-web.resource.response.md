@@ -4,3 +4,8 @@
 
 ## Resource.response property
 
+<b>Signature:</b>
+
+```typescript
+readonly response: Response;
+```

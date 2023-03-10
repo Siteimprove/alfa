@@ -4,3 +4,8 @@
 
 ## Media.Value.Bound.value property
 
+<b>Signature:</b>
+
+```typescript
+get value(): T;
+```

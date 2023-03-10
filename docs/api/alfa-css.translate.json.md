@@ -4,12 +4,19 @@
 
 ## Translate.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Value.JSON<"transform"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"transform"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [kind](./alfa-css.translate.json.kind.md) |  |  |  |
-|  [x](./alfa-css.translate.json.x.md) |  |  |  |
-|  [y](./alfa-css.translate.json.y.md) |  |  |  |
-|  [z](./alfa-css.translate.json.z.md) |  |  |  |
+|  [kind](./alfa-css.translate.json.kind.md) |  | "translate" |  |
+|  [x](./alfa-css.translate.json.x.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
+|  [y](./alfa-css.translate.json.y.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
+|  [z](./alfa-css.translate.json.z.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
 

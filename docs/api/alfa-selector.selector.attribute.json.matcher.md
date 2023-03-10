@@ -4,3 +4,8 @@
 
 ## Selector.Attribute.JSON.matcher property
 
+<b>Signature:</b>
+
+```typescript
+matcher: string | null;
+```

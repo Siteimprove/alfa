@@ -4,3 +4,10 @@
 
 ## Expression.Primary type
 
+<b>Signature:</b>
+
+```typescript
+type Primary = Literal | ContextItem | FunctionCall;
+```
+<b>References:</b> [Literal](./alfa-xpath.expression.literal.md)<!-- -->, [ContextItem](./alfa-xpath.expression.contextitem.md)<!-- -->, [FunctionCall](./alfa-xpath.expression.functioncall.md)
+

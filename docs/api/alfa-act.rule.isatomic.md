@@ -4,3 +4,8 @@
 
 ## Rule.isAtomic variable
 
+<b>Signature:</b>
+
+```typescript
+isAtomic: typeof Atomic.isAtomic
+```

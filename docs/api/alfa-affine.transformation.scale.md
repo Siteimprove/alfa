@@ -4,6 +4,12 @@
 
 ## Transformation.scale() function
 
+<b>Signature:</b>
+
+```typescript
+function scale(sx: number, sy?: number, sz?: number): Transformation;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  sx | number |  |
 |  sy | number | <i>(Optional)</i> |
 |  sz | number | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Transformation](./alfa-affine.transformation.md)
 

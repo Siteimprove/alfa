@@ -4,3 +4,8 @@
 
 ## Diagnostic.isWithRoleAndName variable
 
+<b>Signature:</b>
+
+```typescript
+isWithRoleAndName: typeof WithRoleAndName.isWithRoleAndName
+```

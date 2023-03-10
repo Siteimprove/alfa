@@ -4,3 +4,12 @@
 
 ## Selector.FirstLetter.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(): FirstLetter;
+```
+<b>Returns:</b>
+
+[FirstLetter](./alfa-selector.selector.firstletter.md)
+

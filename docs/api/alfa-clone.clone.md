@@ -4,9 +4,16 @@
 
 ## Clone namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Clone 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [clone](./alfa-clone.clone.clone.md) |  |
+|  [clone(value)](./alfa-clone.clone.clone.md) |  |
 

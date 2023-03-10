@@ -4,3 +4,8 @@
 
 ## Token.parseColon variable
 
+<b>Signature:</b>
+
+```typescript
+parseColon: Parser<Slice<Token>, Colon, string, []>
+```

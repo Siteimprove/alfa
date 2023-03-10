@@ -4,3 +4,8 @@
 
 ## RGB.blue property
 
+<b>Signature:</b>
+
+```typescript
+get blue(): C;
+```

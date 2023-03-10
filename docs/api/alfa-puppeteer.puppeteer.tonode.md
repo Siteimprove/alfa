@@ -4,9 +4,19 @@
 
 ## Puppeteer.toNode() function
 
+<b>Signature:</b>
+
+```typescript
+function toNode(value: Type): Promise<Node>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | [Type](./alfa-puppeteer.puppeteer.type.md) |  |
+
+<b>Returns:</b>
+
+Promise&lt;[Node](./alfa-dom.node.md)<!-- -->&gt;
 

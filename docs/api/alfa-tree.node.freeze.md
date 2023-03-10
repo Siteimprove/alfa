@@ -4,3 +4,14 @@
 
 ## Node.freeze() method
 
+Freeze the node. This prevents further expansion of the node hierarchy, meaning that the node can no longer be passed as a child to a parent node.
+
+<b>Signature:</b>
+
+```typescript
+freeze(): this;
+```
+<b>Returns:</b>
+
+this
+

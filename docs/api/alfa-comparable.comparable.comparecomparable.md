@@ -4,10 +4,24 @@
 
 ## Comparable.compareComparable() function
 
+<b>Signature:</b>
+
+```typescript
+function compareComparable<T extends Comparable<U>, U = T>(a: T, b: U): Comparison;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | T |  |
 |  b | U |  |
+
+<b>Returns:</b>
+
+[Comparison](./alfa-comparable.comparison.md)
+
+## Remarks
+
+This should only be used in cases where branch mispredictions caused by the more general [Comparable.compare()](./alfa-comparable.comparable.compare_4.md) are undesired.
 

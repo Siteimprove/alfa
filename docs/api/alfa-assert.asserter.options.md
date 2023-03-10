@@ -4,3 +4,10 @@
 
 ## Asserter.Options interface
 
+<b>Signature:</b>
+
+```typescript
+interface Options<I, T extends Hashable, Q, S> extends Assertion.Options<I, T, Q, S> 
+```
+<b>Extends:</b> [Assertion.Options](./alfa-assert.assertion.options.md)<!-- -->&lt;I, T, Q, S&gt;
+

@@ -4,6 +4,12 @@
 
 ## h.sheet() function
 
+<b>Signature:</b>
+
+```typescript
+function sheet(rules: Array<Rule>, disabled?: boolean, condition?: string): Sheet;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  rules | Array&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
 |  disabled | boolean | <i>(Optional)</i> |
 |  condition | string | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Sheet](./alfa-dom.sheet.md)
 

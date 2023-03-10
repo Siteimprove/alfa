@@ -4,12 +4,19 @@
 
 ## Ok namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Ok 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isOk](./alfa-result.ok.isok.md) |  |
-|  [isOk](./alfa-result.ok.isok.md) |  |
+|  [isOk(value)](./alfa-result.ok.isok.md) |  |
+|  [isOk(value)](./alfa-result.ok.isok_1.md) |  |
 
 ## Interfaces
 

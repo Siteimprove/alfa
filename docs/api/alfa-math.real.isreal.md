@@ -4,9 +4,19 @@
 
 ## Real.isReal() function
 
+<b>Signature:</b>
+
+```typescript
+function isReal(value: number): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | number |  |
+
+<b>Returns:</b>
+
+boolean
 

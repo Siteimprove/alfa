@@ -4,9 +4,19 @@
 
 ## Length.scale() method
 
+<b>Signature:</b>
+
+```typescript
+scale(factor: number): Length<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  factor | number |  |
+
+<b>Returns:</b>
+
+[Length](./alfa-css.length.md)<!-- -->&lt;U&gt;
 

@@ -4,10 +4,20 @@
 
 ## Record\_2.set() method
 
+<b>Signature:</b>
+
+```typescript
+set<K extends Record.Key<T>>(key: K, value: T[K]): Record<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  key | K |  |
 |  value | T\[K\] |  |
+
+<b>Returns:</b>
+
+Record&lt;T&gt;
 

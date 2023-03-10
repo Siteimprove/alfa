@@ -4,9 +4,19 @@
 
 ## Token.parsePercentage() function
 
+<b>Signature:</b>
+
+```typescript
+function parsePercentage(predicate?: Predicate<Percentage>): Parser<Slice<Token>, Percentage, string, []>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Percentage](./alfa-css.token.percentage.md)<!-- -->&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Percentage](./alfa-css.token.percentage.md)<!-- -->, string, \[\]&gt;
 

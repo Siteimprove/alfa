@@ -4,9 +4,18 @@
 
 ## Document interface
 
+[https://www.w3.org/TR/json-ld/\#dfn-json-ld-document](https://www.w3.org/TR/json-ld/#dfn-json-ld-document)
+
+<b>Signature:</b>
+
+```typescript
+export interface Document extends JSON.Object 
+```
+<b>Extends:</b> JSON.Object
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@context"](./alfa-json-ld.document.__context_.md) |  |  |  |
+|  ["@context"?](./alfa-json-ld.document.__context_.md) |  | [Context](./alfa-json-ld.context.md) | <i>(Optional)</i> |
 

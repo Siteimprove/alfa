@@ -4,3 +4,10 @@
 
 ## Token.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON = Integer.JSON | Decimal.JSON | Double.JSON | String.JSON | Comment.JSON | Name.JSON | Character.JSON;
+```
+<b>References:</b> [Integer.JSON](./alfa-xpath.token.integer.json.md)<!-- -->, [Decimal.JSON](./alfa-xpath.token.decimal.json.md)<!-- -->, [Double.JSON](./alfa-xpath.token.double.json.md)<!-- -->, [String.JSON](./alfa-xpath.token.string.json.md)<!-- -->, [Comment.JSON](./alfa-xpath.token.comment.json.md)<!-- -->, [Name.JSON](./alfa-xpath.token.name.json.md)<!-- -->, [Character.JSON](./alfa-xpath.token.character.json.md)
+

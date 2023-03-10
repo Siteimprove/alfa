@@ -4,3 +4,8 @@
 
 ## Screenshot.Type.PNG.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "png";
+```

@@ -4,9 +4,19 @@
 
 ## Math\_2.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(expression: Expression): Math;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  expression | Expression |  |
+
+<b>Returns:</b>
+
+Math
 

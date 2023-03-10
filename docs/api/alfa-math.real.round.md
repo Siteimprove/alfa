@@ -4,10 +4,22 @@
 
 ## Real.round() function
 
+Round a real to a given number of decimals.
+
+<b>Signature:</b>
+
+```typescript
+function round(p: number, n?: number): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  p | number |  |
 |  n | number | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+number
 

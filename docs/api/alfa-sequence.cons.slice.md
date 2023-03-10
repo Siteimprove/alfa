@@ -4,10 +4,20 @@
 
 ## Cons.slice() method
 
+<b>Signature:</b>
+
+```typescript
+slice(start: number, end?: number): Sequence<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  start | number |  |
 |  end | number | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

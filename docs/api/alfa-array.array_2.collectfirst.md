@@ -4,10 +4,20 @@
 
 ## Array\_2.collectFirst() function
 
+<b>Signature:</b>
+
+```typescript
+function collectFirst<T, U>(array: ReadonlyArray<T>, mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

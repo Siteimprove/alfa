@@ -4,9 +4,21 @@
 
 ## Keyword.parse() function
 
+<b>Signature:</b>
+
+```typescript
+function parse<T extends string>(...keywords: Array<T>): Parser<Slice<Token>, {
+        [K in T]: Keyword<K>;
+    }[T], string>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  keywords | Array&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, { \[K in T\]: [Keyword](./alfa-css.keyword.md)<!-- -->&lt;K&gt;; }\[T\], string&gt;
 

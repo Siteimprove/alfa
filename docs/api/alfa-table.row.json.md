@@ -4,9 +4,15 @@
 
 ## Row.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [y](./alfa-table.row.json.y.md) |  |  |  |
+|  [y](./alfa-table.row.json.y.md) |  | number |  |
 

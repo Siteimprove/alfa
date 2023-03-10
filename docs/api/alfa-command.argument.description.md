@@ -4,3 +4,8 @@
 
 ## Argument.description property
 
+<b>Signature:</b>
+
+```typescript
+get description(): string;
+```

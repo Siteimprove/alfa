@@ -4,3 +4,8 @@
 
 ## Request.JSON.body property
 
+<b>Signature:</b>
+
+```typescript
+body: string;
+```

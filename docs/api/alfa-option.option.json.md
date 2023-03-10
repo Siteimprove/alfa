@@ -4,3 +4,10 @@
 
 ## Option.JSON type
 
+<b>Signature:</b>
+
+```typescript
+type JSON<T> = Some.JSON<T> | None.JSON;
+```
+<b>References:</b> [Some.JSON](./alfa-option.some.json.md)<!-- -->, [None.JSON](./alfa-option.none.json.md)
+

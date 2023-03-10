@@ -4,9 +4,19 @@
 
 ## Collection.filter() method
 
+<b>Signature:</b>
+
+```typescript
+filter<U extends T>(refinement: Refinement<T, U>): Collection<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+[Collection](./alfa-collection.collection.md)<!-- -->&lt;U&gt;
 

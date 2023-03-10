@@ -4,9 +4,19 @@
 
 ## Selective.flatMap() method
 
+<b>Signature:</b>
+
+```typescript
+flatMap<U>(mapper: Mapper<T, Selective<S, U>>): Selective<S, U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, U&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Selective](./alfa-selective.selective.md)<!-- -->&lt;S, U&gt;
 

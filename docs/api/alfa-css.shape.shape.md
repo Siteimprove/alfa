@@ -4,3 +4,8 @@
 
 ## Shape.shape property
 
+<b>Signature:</b>
+
+```typescript
+get shape(): S;
+```

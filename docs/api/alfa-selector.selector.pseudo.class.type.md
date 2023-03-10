@@ -4,3 +4,8 @@
 
 ## Selector.Pseudo.Class.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "pseudo-class";
+```

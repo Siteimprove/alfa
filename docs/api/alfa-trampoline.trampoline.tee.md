@@ -4,9 +4,19 @@
 
 ## Trampoline.tee() method
 
+<b>Signature:</b>
+
+```typescript
+tee(callback: Callback<T>): Trampoline<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;
 

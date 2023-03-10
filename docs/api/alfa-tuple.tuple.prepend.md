@@ -4,3 +4,10 @@
 
 ## Tuple.Prepend type
 
+<b>Signature:</b>
+
+```typescript
+export type Prepend<T extends Tuple, V> = [V, ...T];
+```
+<b>References:</b> [Tuple](./alfa-tuple.tuple.md)
+

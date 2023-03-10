@@ -4,12 +4,20 @@
 
 ## Monad interface
 
+
+<b>Signature:</b>
+
+```typescript
+export interface Monad<T> extends Functor<T>, Applicative<T> 
+```
+<b>Extends:</b> [Functor](./alfa-functor.functor.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative.md)<!-- -->&lt;T&gt;
+
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [apply](./alfa-monad.monad.apply.md) |  |
-|  [flatMap](./alfa-monad.monad.flatmap.md) |  |
-|  [flatten](./alfa-monad.monad.flatten.md) |  |
-|  [map](./alfa-monad.monad.map.md) |  |
+|  [apply(mapper)](./alfa-monad.monad.apply.md) |  |
+|  [flatMap(mapper)](./alfa-monad.monad.flatmap.md) |  |
+|  [flatten(this)](./alfa-monad.monad.flatten.md) |  |
+|  [map(mapper)](./alfa-monad.monad.map.md) |  |
 

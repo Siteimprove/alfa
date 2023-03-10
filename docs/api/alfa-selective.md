@@ -8,7 +8,7 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Selective](./alfa-selective.selective.md) |  |
+|  [Selective](./alfa-selective.selective.md) | [https://www.staff.ncl.ac.uk/andrey.mokhov/selective-functors.pdf](https://www.staff.ncl.ac.uk/andrey.mokhov/selective-functors.pdf) |
 
 ## Namespaces
 

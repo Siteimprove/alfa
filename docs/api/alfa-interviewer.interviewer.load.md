@@ -4,10 +4,20 @@
 
 ## Interviewer.load() function
 
+<b>Signature:</b>
+
+```typescript
+function load<I, T extends Hashable, Q = never, S = T>(name: string, defaultScope?: string): Promise<Result<Interviewer<I, T, Q, S>, string>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  defaultScope | string | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+Promise&lt;[Result](./alfa-result.result.md)<!-- -->&lt;[Interviewer](./alfa-interviewer.interviewer.md)<!-- -->&lt;I, T, Q, S&gt;, string&gt;&gt;
 

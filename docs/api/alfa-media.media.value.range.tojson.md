@@ -4,3 +4,12 @@
 
 ## Media.Value.Range.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Range.JSON<T>;
+```
+<b>Returns:</b>
+
+[Range.JSON](./alfa-media.media.value.range.json.md)<!-- -->&lt;T&gt;
+

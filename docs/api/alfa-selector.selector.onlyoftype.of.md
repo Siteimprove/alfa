@@ -4,3 +4,12 @@
 
 ## Selector.OnlyOfType.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(): OnlyOfType;
+```
+<b>Returns:</b>
+
+[OnlyOfType](./alfa-selector.selector.onlyoftype.md)
+

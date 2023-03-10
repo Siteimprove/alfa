@@ -4,3 +4,8 @@
 
 ## Token.isPercentage variable
 
+<b>Signature:</b>
+
+```typescript
+isPercentage: typeof Percentage.isPercentage
+```

@@ -4,9 +4,16 @@
 
 ## ConditionRule.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends GroupingRule.JSON 
+```
+<b>Extends:</b> [GroupingRule.JSON](./alfa-dom.groupingrule.json.md)
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [condition](./alfa-dom.conditionrule.json.condition.md) |  |  |  |
+|  [condition](./alfa-dom.conditionrule.json.condition.md) |  | string |  |
 

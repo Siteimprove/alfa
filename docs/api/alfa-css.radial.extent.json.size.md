@@ -4,3 +4,8 @@
 
 ## Radial.Extent.JSON.size property
 
+<b>Signature:</b>
+
+```typescript
+size: `${Size}`;
+```

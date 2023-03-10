@@ -4,3 +4,8 @@
 
 ## Perspective.depth property
 
+<b>Signature:</b>
+
+```typescript
+get depth(): D;
+```

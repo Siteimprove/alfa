@@ -4,3 +4,12 @@
 
 ## Unit.Length.Relative type
 
+[https://drafts.csswg.org/css-values/\#relative-lengths](https://drafts.csswg.org/css-values/#relative-lengths)
+
+<b>Signature:</b>
+
+```typescript
+type Relative = Relative.Font | Relative.Viewport;
+```
+<b>References:</b> [Relative.Font](./alfa-css.unit.length.relative.font.md)<!-- -->, [Relative.Viewport](./alfa-css.unit.length.relative.viewport.md)
+

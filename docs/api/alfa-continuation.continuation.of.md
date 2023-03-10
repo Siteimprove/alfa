@@ -4,9 +4,19 @@
 
 ## Continuation.of() function
 
+<b>Signature:</b>
+
+```typescript
+function of<T, R = void, A extends Array<unknown> = []>(value: T): Continuation<T, R, A>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;T, R, A&gt;
 

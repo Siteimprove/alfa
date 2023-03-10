@@ -4,9 +4,15 @@
 
 ## Token.BadURL.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.token.badurl.json.type.md) |  |  |  |
+|  [type](./alfa-css.token.badurl.json.type.md) |  | "bad-url" |  |
 

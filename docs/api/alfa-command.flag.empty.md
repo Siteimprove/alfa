@@ -4,10 +4,20 @@
 
 ## Flag.empty() function
 
+<b>Signature:</b>
+
+```typescript
+function empty(name: string, description: string): Flag<void>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
 |  description | string |  |
+
+<b>Returns:</b>
+
+[Flag](./alfa-command.flag.md)<!-- -->&lt;void&gt;
 

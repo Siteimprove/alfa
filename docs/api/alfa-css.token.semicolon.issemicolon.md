@@ -4,9 +4,19 @@
 
 ## Token.Semicolon.isSemicolon() function
 
+<b>Signature:</b>
+
+```typescript
+function isSemicolon(value: unknown): value is Semicolon;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Semicolon](./alfa-css.token.semicolon.md)
 

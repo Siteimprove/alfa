@@ -4,12 +4,19 @@
 
 ## Length namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Length 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isLength](./alfa-css.length.islength.md) |  |
-|  [isZero](./alfa-css.length.iszero.md) |  |
+|  [isLength(value)](./alfa-css.length.islength.md) |  |
+|  [isZero(length)](./alfa-css.length.iszero.md) |  |
 
 ## Interfaces
 

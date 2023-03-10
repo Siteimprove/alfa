@@ -4,3 +4,8 @@
 
 ## Expression.Test.Name.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "name";
+```

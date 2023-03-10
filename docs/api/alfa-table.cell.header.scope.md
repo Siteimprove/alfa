@@ -4,3 +4,8 @@
 
 ## Cell.Header.scope property
 
+<b>Signature:</b>
+
+```typescript
+get scope(): Scope;
+```

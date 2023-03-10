@@ -4,3 +4,8 @@
 
 ## Asserter.expect property
 
+<b>Signature:</b>
+
+```typescript
+readonly expect: (input: I, options?: Assertion.Options<I, T, Q, S>) => Assertion<I, T, Q, S>;
+```

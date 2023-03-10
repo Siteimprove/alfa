@@ -4,9 +4,21 @@
 
 ## Frontier.error() method
 
+Mark a URL as errored.
+
+<b>Signature:</b>
+
+```typescript
+error(url: string | URL): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  url | string \| [URL](./alfa-url.url.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

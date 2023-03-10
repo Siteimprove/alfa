@@ -4,9 +4,19 @@
 
 ## Language.Script.isScript() function
 
+<b>Signature:</b>
+
+```typescript
+function isScript(value: unknown): value is Script;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Script](./alfa-iana.language.script.md)
 

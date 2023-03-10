@@ -4,10 +4,20 @@
 
 ## Record\_2.reduce() method
 
+<b>Signature:</b>
+
+```typescript
+reduce<R>(reducer: Reducer<Record.Value<T>, R, [Record.Key<T>]>, accumulator: R): R;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;Record.Value&lt;T&gt;, R, \[Record.Key&lt;T&gt;\]&gt; |  |
 |  accumulator | R |  |
+
+<b>Returns:</b>
+
+R
 

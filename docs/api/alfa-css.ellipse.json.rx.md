@@ -4,3 +4,8 @@
 
 ## Ellipse.JSON.rx property
 
+<b>Signature:</b>
+
+```typescript
+rx: Radius.JSON;
+```

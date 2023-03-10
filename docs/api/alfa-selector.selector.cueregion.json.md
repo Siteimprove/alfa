@@ -4,9 +4,16 @@
 
 ## Selector.CueRegion.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Pseudo.Element.JSON<"cue-region"> 
+```
+<b>Extends:</b> [Pseudo.Element.JSON](./alfa-selector.selector.pseudo.element.json.md)<!-- -->&lt;"cue-region"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [selector](./alfa-selector.selector.cueregion.json.selector.md) |  |  |  |
+|  [selector](./alfa-selector.selector.cueregion.json.selector.md) |  | [Option.JSON](./alfa-option.option.json.md)<!-- -->&lt;Selector&gt; |  |
 

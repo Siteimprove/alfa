@@ -4,3 +4,8 @@
 
 ## Scraper.scrape.Options.cookies property
 
+<b>Signature:</b>
+
+```typescript
+readonly cookies?: Iterable<Cookie>;
+```

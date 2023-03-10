@@ -4,3 +4,8 @@
 
 ## Name.Source.Descendant.JSON.type property
 
+<b>Signature:</b>
+
+```typescript
+type: "descendant";
+```

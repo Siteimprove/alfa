@@ -4,10 +4,20 @@
 
 ## Collection.Indexed.slice() method
 
+<b>Signature:</b>
+
+```typescript
+slice(start: number, end?: number): Indexed<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  start | number |  |
 |  end | number | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

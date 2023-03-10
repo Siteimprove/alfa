@@ -4,3 +4,8 @@
 
 ## Performance.Mark.start property
 
+<b>Signature:</b>
+
+```typescript
+get start(): number;
+```

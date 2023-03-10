@@ -4,9 +4,19 @@
 
 ## Collection.Keyed.reject() method
 
+<b>Signature:</b>
+
+```typescript
+reject<U extends V>(refinement: Refinement<V, U, [key: K]>): Keyed<K, Exclude<V, U>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
+
+<b>Returns:</b>
+
+[Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, Exclude&lt;V, U&gt;&gt;
 

@@ -4,10 +4,20 @@
 
 ## Iterable\_2.intersect() function
 
+<b>Signature:</b>
+
+```typescript
+function intersect<T>(iterable: Iterable<T>, ...iterables: Array<Iterable<T>>): Iterable<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  iterables | Array&lt;Iterable&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+Iterable&lt;T&gt;
 

@@ -4,3 +4,8 @@
 
 ## Scripting.JSON.enabled property
 
+<b>Signature:</b>
+
+```typescript
+enabled: boolean;
+```

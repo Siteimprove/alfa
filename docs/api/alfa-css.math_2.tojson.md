@@ -4,3 +4,12 @@
 
 ## Math\_2.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Math.JSON;
+```
+<b>Returns:</b>
+
+Math.JSON
+

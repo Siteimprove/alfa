@@ -4,3 +4,8 @@
 
 ## Rule.EARL."@id" property
 
+<b>Signature:</b>
+
+```typescript
+"@id": string;
+```

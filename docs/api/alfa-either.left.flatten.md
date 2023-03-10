@@ -4,9 +4,19 @@
 
 ## Left.flatten() method
 
+<b>Signature:</b>
+
+```typescript
+flatten<L, R>(this: Either<L, never>): Either<L, R>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Either](./alfa-either.either.md)<!-- -->&lt;L, never&gt; |  |
+
+<b>Returns:</b>
+
+[Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;
 

@@ -4,3 +4,8 @@
 
 ## Element.isSuggestedFocusable variable
 
+<b>Signature:</b>
+
+```typescript
+isSuggestedFocusable: typeof predicate.isSuggestedFocusable
+```

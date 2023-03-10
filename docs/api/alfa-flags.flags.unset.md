@@ -4,3 +4,10 @@
 
 ## Flags.unset property
 
+Removes a list of flags to the set (aka unsets the flags), and return a new one.
+
+<b>Signature:</b>
+
+```typescript
+unset: (...flags: Array<F>) => this;
+```

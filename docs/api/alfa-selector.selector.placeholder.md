@@ -4,9 +4,18 @@
 
 ## Selector.Placeholder class
 
+[https://drafts.csswg.org/css-pseudo-4/\#placeholder-pseudo](https://drafts.csswg.org/css-pseudo-4/#placeholder-pseudo)
+
+<b>Signature:</b>
+
+```typescript
+export class Placeholder extends Pseudo.Element<"placeholder"> 
+```
+<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"placeholder"&gt;
+
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [of](./alfa-selector.selector.placeholder.of.md) |  |  |
+|  [of()](./alfa-selector.selector.placeholder.of.md) | <code>static</code> |  |
 

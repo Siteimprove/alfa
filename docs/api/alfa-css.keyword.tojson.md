@@ -4,3 +4,12 @@
 
 ## Keyword.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Keyword.JSON<T>;
+```
+<b>Returns:</b>
+
+[Keyword.JSON](./alfa-css.keyword.json.md)<!-- -->&lt;T&gt;
+

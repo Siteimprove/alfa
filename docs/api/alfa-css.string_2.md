@@ -4,11 +4,18 @@
 
 ## String\_2 namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace String 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isString](./alfa-css.string_2.isstring.md) |  |
+|  [isString(value)](./alfa-css.string_2.isstring.md) |  |
 
 ## Interfaces
 

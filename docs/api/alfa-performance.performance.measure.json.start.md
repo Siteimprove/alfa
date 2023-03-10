@@ -4,3 +4,8 @@
 
 ## Performance.Measure.JSON.start property
 
+<b>Signature:</b>
+
+```typescript
+start: number;
+```

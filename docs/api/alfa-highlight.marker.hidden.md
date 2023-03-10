@@ -4,3 +4,8 @@
 
 ## Marker.hidden variable
 
+<b>Signature:</b>
+
+```typescript
+hidden: Marker
+```

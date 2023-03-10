@@ -4,9 +4,19 @@
 
 ## Array\_2.size() function
 
+<b>Signature:</b>
+
+```typescript
+function size<T>(array: ReadonlyArray<T>): number;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+number
 

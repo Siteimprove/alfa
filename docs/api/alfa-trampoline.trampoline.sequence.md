@@ -4,9 +4,19 @@
 
 ## Trampoline.sequence() function
 
+<b>Signature:</b>
+
+```typescript
+function sequence<T>(futures: Iterable<Trampoline<T>>): Trampoline<Iterable<T>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  futures | Iterable&lt;[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;Iterable&lt;T&gt;&gt;
 

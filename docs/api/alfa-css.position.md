@@ -4,6 +4,13 @@
 
 ## Position namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Position 
+```
+
 ## Classes
 
 |  Class | Description |
@@ -14,7 +21,7 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [parse](./alfa-css.position.parse.md) |  |
+|  [parse(legacySyntax)](./alfa-css.position.parse.md) |  |
 
 ## Interfaces
 

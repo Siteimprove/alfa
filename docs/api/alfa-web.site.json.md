@@ -4,9 +4,15 @@
 
 ## Site.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<R extends Resource = Resource> 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [resources](./alfa-web.site.json.resources.md) |  |  |  |
+|  [resources](./alfa-web.site.json.resources.md) |  | [Graph.JSON](./alfa-graph.graph.json.md)<!-- -->&lt;R&gt; |  |
 

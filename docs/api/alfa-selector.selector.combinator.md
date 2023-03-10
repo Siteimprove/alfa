@@ -4,12 +4,20 @@
 
 ## Selector.Combinator enum
 
+[https://drafts.csswg.org/selectors/\#selector-combinator](https://drafts.csswg.org/selectors/#selector-combinator)
+
+<b>Signature:</b>
+
+```typescript
+export enum Combinator 
+```
+
 ## Enumeration Members
 
 |  Member | Value | Description |
 |  --- | --- | --- |
-|  Descendant |  |  |
-|  DirectDescendant |  |  |
-|  DirectSibling |  |  |
-|  Sibling |  |  |
+|  Descendant | <code>&quot; &quot;</code> |  |
+|  DirectDescendant | <code>&quot;&gt;&quot;</code> |  |
+|  DirectSibling | <code>&quot;+&quot;</code> |  |
+|  Sibling | <code>&quot;~&quot;</code> |  |
 

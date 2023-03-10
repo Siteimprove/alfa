@@ -4,3 +4,8 @@
 
 ## Diagnostic.isColorErrorUnresolvableGradientStop variable
 
+<b>Signature:</b>
+
+```typescript
+isColorErrorUnresolvableGradientStop: typeof ColorError.HasUnresolvableGradientStop.isUnresolvableGradientStop
+```

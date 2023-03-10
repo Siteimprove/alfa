@@ -4,9 +4,19 @@
 
 ## Media.List.isList() function
 
+<b>Signature:</b>
+
+```typescript
+function isList(value: unknown): value is List;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [List](./alfa-media.media.list.md)
 

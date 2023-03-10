@@ -4,3 +4,8 @@
 
 ## Command.JSON.flags property
 
+<b>Signature:</b>
+
+```typescript
+flags: Array<Flag.JSON>;
+```

@@ -4,9 +4,19 @@
 
 ## Token.isName() function
 
+<b>Signature:</b>
+
+```typescript
+function isName(value: unknown): value is Name;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Name](./alfa-xpath.token.name.md)
 

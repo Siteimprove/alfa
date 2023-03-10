@@ -4,3 +4,8 @@
 
 ## Selector.Relative.JSON.combinator property
 
+<b>Signature:</b>
+
+```typescript
+combinator: string;
+```

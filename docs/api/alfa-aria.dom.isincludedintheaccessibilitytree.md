@@ -4,3 +4,8 @@
 
 ## DOM.isIncludedInTheAccessibilityTree variable
 
+<b>Signature:</b>
+
+```typescript
+isIncludedInTheAccessibilityTree: typeof dom.isIncludedInTheAccessibilityTree
+```

@@ -4,9 +4,19 @@
 
 ## Parser.end() function
 
+<b>Signature:</b>
+
+```typescript
+function end<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, void, E>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  ifError | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;I extends Iterable&lt;infer T&gt; ? T : unknown, E&gt; |  |
+
+<b>Returns:</b>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, void, E&gt;
 

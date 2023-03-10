@@ -4,9 +4,19 @@
 
 ## Hash.writeInt32() method
 
+<b>Signature:</b>
+
+```typescript
+writeInt32(data: number): this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | number |  |
+
+<b>Returns:</b>
+
+this
 

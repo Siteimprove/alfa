@@ -4,9 +4,19 @@
 
 ## Node.inclusiveAncestors() method
 
+<b>Signature:</b>
+
+```typescript
+inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Node.Traversal](./alfa-dom.node.traversal.md) | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Node](./alfa-dom.node.md)<!-- -->&gt;
 

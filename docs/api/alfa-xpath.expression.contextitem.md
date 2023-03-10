@@ -4,6 +4,12 @@
 
 ## Expression.ContextItem namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace ContextItem 
+```
+
 ## Interfaces
 
 |  Interface | Description |

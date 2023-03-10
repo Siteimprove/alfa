@@ -4,9 +4,19 @@
 
 ## Slot.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(slot: Slot): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  slot | [Slot](./alfa-table.slot.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

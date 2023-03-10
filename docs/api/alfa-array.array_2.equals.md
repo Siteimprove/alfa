@@ -4,10 +4,20 @@
 
 ## Array\_2.equals() function
 
+<b>Signature:</b>
+
+```typescript
+function equals<T>(a: ReadonlyArray<T>, b: ReadonlyArray<T>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | ReadonlyArray&lt;T&gt; |  |
 |  b | ReadonlyArray&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

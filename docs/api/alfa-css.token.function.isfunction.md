@@ -4,9 +4,19 @@
 
 ## Token.Function.isFunction() function
 
+<b>Signature:</b>
+
+```typescript
+function isFunction(value: unknown): value is Function;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Function](./alfa-css.token.function.md)
 

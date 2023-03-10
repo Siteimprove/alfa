@@ -4,3 +4,8 @@
 
 ## Diagnostic.isWithBadElements variable
 
+<b>Signature:</b>
+
+```typescript
+isWithBadElements: typeof WithBadElements.isWithBadElements
+```

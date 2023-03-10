@@ -4,3 +4,8 @@
 
 ## Language.variant variable
 
+<b>Signature:</b>
+
+```typescript
+variant: typeof Variant.of
+```

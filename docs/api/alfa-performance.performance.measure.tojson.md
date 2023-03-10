@@ -4,3 +4,12 @@
 
 ## Performance.Measure.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Measure.JSON<T>;
+```
+<b>Returns:</b>
+
+[Measure.JSON](./alfa-performance.performance.measure.json.md)<!-- -->&lt;T&gt;
+

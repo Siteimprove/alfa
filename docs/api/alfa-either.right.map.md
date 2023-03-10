@@ -4,9 +4,19 @@
 
 ## Right.map() method
 
+<b>Signature:</b>
+
+```typescript
+map<T>(mapper: Mapper<R, T>): Right<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt; |  |
+
+<b>Returns:</b>
+
+[Right](./alfa-either.right.md)<!-- -->&lt;T&gt;
 

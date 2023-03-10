@@ -4,3 +4,8 @@
 
 ## Cell.\_element property
 
+<b>Signature:</b>
+
+```typescript
+protected readonly _element: Element;
+```

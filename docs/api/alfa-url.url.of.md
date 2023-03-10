@@ -4,6 +4,12 @@
 
 ## URL.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(scheme: string, username?: Option<string>, password?: Option<string>, host?: Option<string>, port?: Option<number>, path?: Iterable<string>, query?: Option<string>, fragment?: Option<string>, cannotBeABase?: boolean): URL;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -17,4 +23,8 @@
 |  query | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
 |  fragment | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
 |  cannotBeABase | boolean | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[URL](./alfa-url.url.md)
 

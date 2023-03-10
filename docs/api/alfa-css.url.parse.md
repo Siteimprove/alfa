@@ -4,3 +4,10 @@
 
 ## URL.parse variable
 
+[https://drafts.csswg.org/css-values/\#url-value](https://drafts.csswg.org/css-values/#url-value)
+
+<b>Signature:</b>
+
+```typescript
+parse: Parser<Slice<Token>, URL, string>
+```

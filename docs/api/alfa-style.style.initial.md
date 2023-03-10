@@ -4,3 +4,8 @@
 
 ## Style.Initial type
 
+<b>Signature:</b>
+
+```typescript
+type Initial<N extends Name> = Property.Value.Initial<N>;
+```

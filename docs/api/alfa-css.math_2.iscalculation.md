@@ -4,9 +4,19 @@
 
 ## Math\_2.isCalculation() function
 
+<b>Signature:</b>
+
+```typescript
+function isCalculation(value: unknown): value is Math;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is Math
 

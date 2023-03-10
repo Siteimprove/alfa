@@ -4,9 +4,19 @@
 
 ## Node.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: Node): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [Node](./alfa-dom.node.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

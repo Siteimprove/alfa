@@ -4,3 +4,8 @@
 
 ## Polygon.JSON.vertices property
 
+<b>Signature:</b>
+
+```typescript
+vertices: Array<Serializable.ToJSON<Vertex<V>>>;
+```

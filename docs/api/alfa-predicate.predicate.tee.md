@@ -4,10 +4,20 @@
 
 ## Predicate.tee() function
 
+<b>Signature:</b>
+
+```typescript
+function tee<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, callback: Callback<T, void, [result: boolean, ...args: A]>): Predicate<T, A>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt; |  |
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, void, \[result: boolean, ...args: A\]&gt; |  |
+
+<b>Returns:</b>
+
+[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;
 

@@ -4,9 +4,16 @@
 
 ## Hashable namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Hashable 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [isHashable](./alfa-hash.hashable.ishashable.md) |  |
+|  [isHashable(value)](./alfa-hash.hashable.ishashable.md) |  |
 

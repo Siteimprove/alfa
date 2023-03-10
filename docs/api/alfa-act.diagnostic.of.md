@@ -4,9 +4,19 @@
 
 ## Diagnostic.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(message: string): Diagnostic;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  message | string |  |
+
+<b>Returns:</b>
+
+[Diagnostic](./alfa-act.diagnostic.md)
 

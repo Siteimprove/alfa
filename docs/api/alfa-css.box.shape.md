@@ -4,3 +4,12 @@
 
 ## Box.Shape type
 
+[https://drafts.csswg.org/css-shapes/\#typedef-shape-box](https://drafts.csswg.org/css-shapes/#typedef-shape-box)
+
+<b>Signature:</b>
+
+```typescript
+type Shape = Box | Keyword<"margin-box">;
+```
+<b>References:</b> [Box](./alfa-css.box.md)<!-- -->, [Keyword](./alfa-css.keyword.md)
+

@@ -4,3 +4,10 @@
 
 ## Browser.Query.Every type
 
+<b>Signature:</b>
+
+```typescript
+type Every<N extends Name> = readonly [N];
+```
+<b>References:</b> [Name](./alfa-compatibility.browser.name.md)
+

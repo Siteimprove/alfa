@@ -4,11 +4,18 @@
 
 ## Skew.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON extends Value.JSON<"transform"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"transform"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [kind](./alfa-css.skew.json.kind.md) |  |  |  |
-|  [x](./alfa-css.skew.json.x.md) |  |  |  |
-|  [y](./alfa-css.skew.json.y.md) |  |  |  |
+|  [kind](./alfa-css.skew.json.kind.md) |  | "skew" |  |
+|  [x](./alfa-css.skew.json.x.md) |  | [Angle.JSON](./alfa-css.angle.json.md) |  |
+|  [y](./alfa-css.skew.json.y.md) |  | [Angle.JSON](./alfa-css.angle.json.md) |  |
 

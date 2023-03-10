@@ -4,9 +4,19 @@
 
 ## Hash.writeSymbol() method
 
+<b>Signature:</b>
+
+```typescript
+writeSymbol(data: symbol): this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | symbol |  |
+
+<b>Returns:</b>
+
+this
 

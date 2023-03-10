@@ -4,3 +4,12 @@
 
 ## Flattened.Subject type
 
+The type of the subjects of questions asked by rules
+
+<b>Signature:</b>
+
+```typescript
+export type Subject = act.Rule.Subject<RulesUnion>;
+```
+<b>References:</b> [Rule.Subject](./alfa-act.rule.subject.md)
+

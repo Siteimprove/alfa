@@ -4,3 +4,10 @@
 
 ## Header.EARL."@context" property
 
+<b>Signature:</b>
+
+```typescript
+"@context": {
+            http: "http://www.w3.org/2011/http#";
+        };
+```

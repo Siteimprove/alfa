@@ -4,3 +4,8 @@
 
 ## HSL.JSON.saturation property
 
+<b>Signature:</b>
+
+```typescript
+saturation: Percentage.JSON;
+```

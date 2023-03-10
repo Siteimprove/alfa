@@ -4,9 +4,21 @@
 
 ## Role.fromImplicit() function
 
+Get the role implicitly assigned to an element, if any.
+
+<b>Signature:</b>
+
+```typescript
+function fromImplicit(element: Element): Option<Role>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  element | [Element](./alfa-dom.element.md) |  |
+
+<b>Returns:</b>
+
+[Option](./alfa-option.option.md)<!-- -->&lt;[Role](./alfa-aria.role.md)<!-- -->&gt;
 

@@ -4,9 +4,17 @@
 
 ## Decoder namespace
 
+[https://encoding.spec.whatwg.org/\#textdecoder](https://encoding.spec.whatwg.org/#textdecoder)
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Decoder 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [decode](./alfa-encoding.decoder.decode.md) |  |
+|  [decode(input)](./alfa-encoding.decoder.decode.md) | [https://encoding.spec.whatwg.org/\#dom-textdecoder-decode](https://encoding.spec.whatwg.org/#dom-textdecoder-decode) [https://encoding.spec.whatwg.org/\#utf-8-decoder](https://encoding.spec.whatwg.org/#utf-8-decoder) |
 

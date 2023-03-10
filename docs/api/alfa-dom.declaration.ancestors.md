@@ -4,3 +4,12 @@
 
 ## Declaration.ancestors() method
 
+<b>Signature:</b>
+
+```typescript
+ancestors(): Iterable<Rule>;
+```
+<b>Returns:</b>
+
+Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;
+

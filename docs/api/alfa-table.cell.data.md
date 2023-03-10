@@ -4,3 +4,8 @@
 
 ## Cell.data variable
 
+<b>Signature:</b>
+
+```typescript
+data: typeof Data.of
+```

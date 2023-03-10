@@ -4,3 +4,8 @@
 
 ## Response.EARL."http:statusCodeValue" property
 
+<b>Signature:</b>
+
+```typescript
+"http:statusCodeValue": number;
+```

@@ -4,3 +4,10 @@
 
 ## Trilean type
 
+[https://en.wikipedia.org/wiki/Three-valued\_logic](https://en.wikipedia.org/wiki/Three-valued_logic)
+
+<b>Signature:</b>
+
+```typescript
+export declare type Trilean = boolean | undefined;
+```

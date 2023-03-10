@@ -4,10 +4,20 @@
 
 ## Transformation.skew() function
 
+<b>Signature:</b>
+
+```typescript
+function skew(a: number, b: number): Transformation;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | number |  |
 |  b | number |  |
+
+<b>Returns:</b>
+
+[Transformation](./alfa-affine.transformation.md)
 

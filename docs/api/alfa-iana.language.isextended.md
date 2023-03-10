@@ -4,3 +4,8 @@
 
 ## Language.isExtended variable
 
+<b>Signature:</b>
+
+```typescript
+isExtended: typeof Extended.isExtended
+```

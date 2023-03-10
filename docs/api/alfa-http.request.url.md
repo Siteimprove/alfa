@@ -4,3 +4,10 @@
 
 ## Request.url property
 
+[https://fetch.spec.whatwg.org/\#dom-request-url](https://fetch.spec.whatwg.org/#dom-request-url)
+
+<b>Signature:</b>
+
+```typescript
+get url(): URL;
+```

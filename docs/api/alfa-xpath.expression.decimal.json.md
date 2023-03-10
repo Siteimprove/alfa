@@ -4,10 +4,16 @@
 
 ## Expression.Decimal.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-xpath.expression.decimal.json.type.md) |  |  |  |
-|  [value](./alfa-xpath.expression.decimal.json.value.md) |  |  |  |
+|  [type](./alfa-xpath.expression.decimal.json.type.md) |  | "decimal" |  |
+|  [value](./alfa-xpath.expression.decimal.json.value.md) |  | number |  |
 

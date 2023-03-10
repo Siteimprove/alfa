@@ -4,3 +4,12 @@
 
 ## Page.toSARIF() method
 
+<b>Signature:</b>
+
+```typescript
+toSARIF(): sarif.Artifact;
+```
+<b>Returns:</b>
+
+sarif.Artifact
+

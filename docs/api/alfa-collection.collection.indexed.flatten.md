@@ -4,9 +4,19 @@
 
 ## Collection.Indexed.flatten() method
 
+<b>Signature:</b>
+
+```typescript
+flatten<T>(this: Indexed<Indexed<T>>): Indexed<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

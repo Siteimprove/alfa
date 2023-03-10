@@ -4,6 +4,12 @@
 
 ## Name.Source.Reference namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Reference 
+```
+
 ## Interfaces
 
 |  Interface | Description |

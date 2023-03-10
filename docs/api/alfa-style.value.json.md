@@ -4,10 +4,16 @@
 
 ## Value.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<T = unknown> 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [source](./alfa-style.value.json.source.md) |  |  |  |
-|  [value](./alfa-style.value.json.value.md) |  |  |  |
+|  [source](./alfa-style.value.json.source.md) |  | [Declaration.JSON](./alfa-dom.declaration.json.md) \| null |  |
+|  [value](./alfa-style.value.json.value.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt; |  |
 

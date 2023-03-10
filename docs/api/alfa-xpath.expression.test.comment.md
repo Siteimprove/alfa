@@ -4,6 +4,12 @@
 
 ## Expression.Test.Comment namespace
 
+<b>Signature:</b>
+
+```typescript
+namespace Comment 
+```
+
 ## Interfaces
 
 |  Interface | Description |

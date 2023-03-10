@@ -4,9 +4,19 @@
 
 ## Sequence.every() method
 
+<b>Signature:</b>
+
+```typescript
+every(predicate: Predicate<T, [index: number]>): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+boolean
 

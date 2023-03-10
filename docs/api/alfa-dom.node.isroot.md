@@ -4,3 +4,8 @@
 
 ## Node.isRoot variable
 
+<b>Signature:</b>
+
+```typescript
+isRoot: typeof predicate.isRoot
+```

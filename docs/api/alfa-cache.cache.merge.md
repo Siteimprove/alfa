@@ -4,9 +4,19 @@
 
 ## Cache.merge() method
 
+<b>Signature:</b>
+
+```typescript
+merge(iterable: Iterable<readonly [K, V]>): this;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;readonly \[K, V\]&gt; |  |
+
+<b>Returns:</b>
+
+this
 

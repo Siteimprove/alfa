@@ -4,6 +4,14 @@
 
 ## ConditionRule.(constructor)
 
+Constructs a new instance of the `ConditionRule` class
+
+<b>Signature:</b>
+
+```typescript
+protected constructor(condition: string, rules: Array<Rule>);
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |

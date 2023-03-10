@@ -4,3 +4,12 @@
 
 ## Some.getOrElse() method
 
+<b>Signature:</b>
+
+```typescript
+getOrElse(): T;
+```
+<b>Returns:</b>
+
+T
+

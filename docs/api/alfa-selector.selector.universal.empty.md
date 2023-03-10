@@ -4,3 +4,12 @@
 
 ## Selector.Universal.empty() method
 
+<b>Signature:</b>
+
+```typescript
+static empty(): Universal;
+```
+<b>Returns:</b>
+
+[Universal](./alfa-selector.selector.universal.md)
+

@@ -4,3 +4,8 @@
 
 ## Selector.List.JSON.left property
 
+<b>Signature:</b>
+
+```typescript
+left: Simple.JSON | Compound.JSON | Complex.JSON | Relative.JSON;
+```

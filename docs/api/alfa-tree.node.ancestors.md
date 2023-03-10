@@ -4,9 +4,21 @@
 
 ## Node.ancestors() method
 
+[https://dom.spec.whatwg.org/\#concept-tree-ancestor](https://dom.spec.whatwg.org/#concept-tree-ancestor)
+
+<b>Signature:</b>
+
+```typescript
+ancestors(options?: Flags<F>): Sequence<Node<F>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
 

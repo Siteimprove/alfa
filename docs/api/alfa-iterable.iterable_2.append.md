@@ -4,10 +4,20 @@
 
 ## Iterable\_2.append() function
 
+<b>Signature:</b>
+
+```typescript
+function append<T>(iterable: Iterable<T>, value: T): Iterable<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  value | T |  |
+
+<b>Returns:</b>
+
+Iterable&lt;T&gt;
 

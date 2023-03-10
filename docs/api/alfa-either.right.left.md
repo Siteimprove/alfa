@@ -4,3 +4,12 @@
 
 ## Right.left() method
 
+<b>Signature:</b>
+
+```typescript
+left(): None;
+```
+<b>Returns:</b>
+
+[None](./alfa-option.none.md)
+

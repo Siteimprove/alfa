@@ -4,3 +4,12 @@
 
 ## Screenshot.Type.JPEG.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): JPEG.JSON;
+```
+<b>Returns:</b>
+
+[JPEG.JSON](./alfa-scraper.screenshot.type.jpeg.json.md)
+

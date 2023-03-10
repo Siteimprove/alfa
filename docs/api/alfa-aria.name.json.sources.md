@@ -4,3 +4,8 @@
 
 ## Name.JSON.sources property
 
+<b>Signature:</b>
+
+```typescript
+sources: Array<Source.JSON>;
+```

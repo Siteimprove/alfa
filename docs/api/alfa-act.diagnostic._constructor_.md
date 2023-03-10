@@ -4,6 +4,14 @@
 
 ## Diagnostic.(constructor)
 
+Constructs a new instance of the `Diagnostic` class
+
+<b>Signature:</b>
+
+```typescript
+protected constructor(message: string);
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |

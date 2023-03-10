@@ -4,9 +4,19 @@
 
 ## Expression.Double.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(value: number): Double;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | number |  |
+
+<b>Returns:</b>
+
+[Double](./alfa-xpath.expression.double.md)
 

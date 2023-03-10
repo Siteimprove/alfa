@@ -4,11 +4,20 @@
 
 ## Parser.delimited() function
 
+<b>Signature:</b>
+
+```typescript
+function delimited<I, T, E, A extends Array<unknown> = []>(delimiter: Parser<I, unknown, E, A>, parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  left | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt; |  |
+|  delimiter | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt; |  |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  right | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt; |  |
+
+<b>Returns:</b>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
 

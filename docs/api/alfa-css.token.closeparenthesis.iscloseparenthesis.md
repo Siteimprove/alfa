@@ -4,9 +4,19 @@
 
 ## Token.CloseParenthesis.isCloseParenthesis() function
 
+<b>Signature:</b>
+
+```typescript
+function isCloseParenthesis(value: unknown): value is CloseParenthesis;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [CloseParenthesis](./alfa-css.token.closeparenthesis.md)
 

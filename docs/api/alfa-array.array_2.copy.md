@@ -4,9 +4,19 @@
 
 ## Array\_2.copy() function
 
+<b>Signature:</b>
+
+```typescript
+function copy<T>(array: ReadonlyArray<T>): Array<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
+
+<b>Returns:</b>
+
+Array&lt;T&gt;
 

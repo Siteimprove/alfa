@@ -4,9 +4,19 @@
 
 ## Promise\_2.reject() function
 
+<b>Signature:</b>
+
+```typescript
+function reject<T>(error: unknown): Promise<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  error | unknown |  |
+
+<b>Returns:</b>
+
+Promise&lt;T&gt;
 

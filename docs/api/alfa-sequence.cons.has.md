@@ -4,9 +4,19 @@
 
 ## Cons.has() method
 
+<b>Signature:</b>
+
+```typescript
+has(index: number): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  index | number |  |
+
+<b>Returns:</b>
+
+boolean
 

@@ -4,10 +4,20 @@
 
 ## Generator\_2.map() function
 
+<b>Signature:</b>
+
+```typescript
+function map<T, U, R, N>(generator: Generator<T, R, N>, mapper: Mapper<T, U>): Generator<U, R, N>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  generator | Generator&lt;T, R, N&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
+
+<b>Returns:</b>
+
+Generator&lt;U, R, N&gt;
 

@@ -4,9 +4,15 @@
 
 ## Token.OpenSquareBracket.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-css.token.opensquarebracket.json.type.md) |  |  |  |
+|  [type](./alfa-css.token.opensquarebracket.json.type.md) |  | "open-square-bracket" |  |
 

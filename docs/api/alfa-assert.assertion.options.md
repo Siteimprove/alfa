@@ -4,12 +4,18 @@
 
 ## Assertion.Options interface
 
+<b>Signature:</b>
+
+```typescript
+interface Options<I, T extends Hashable, Q, S> 
+```
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [filter](./alfa-assert.assertion.options.filter.md) |  |  |  |
-|  [filterCantTell](./alfa-assert.assertion.options.filtercanttell.md) |  |  |  |
-|  [oracle](./alfa-assert.assertion.options.oracle.md) |  |  |  |
-|  [performance](./alfa-assert.assertion.options.performance.md) |  |  |  |
+|  [filter?](./alfa-assert.assertion.options.filter.md) | <code>readonly</code> | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Outcome.Failed](./alfa-act.outcome.failed.md)<!-- -->&lt;I, T, Q, S&gt;&gt; | <i>(Optional)</i> Predicate for filtering outcomes that should count towards an assertion failure.; only failed outcomes matching this filter will be reported. If left unset, all failed outcomes will be reported |
+|  [filterCantTell?](./alfa-assert.assertion.options.filtercanttell.md) | <code>readonly</code> | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Outcome.CantTell](./alfa-act.outcome.canttell.md)<!-- -->&lt;I, T, Q, S&gt;&gt; | <i>(Optional)</i> Predicate for filtering cantTell outcome. If left unset, no cantTell outcome will be reported. |
+|  [oracle?](./alfa-assert.assertion.options.oracle.md) | <code>readonly</code> | [Oracle](./alfa-act.oracle.md)<!-- -->&lt;I, T, Q, S&gt; | <i>(Optional)</i> Passing an oracle to the rules evaluation. |
+|  [performance?](./alfa-assert.assertion.options.performance.md) | <code>readonly</code> | [Performance](./alfa-performance.performance.md)<!-- -->&lt;[Rule.Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S&gt;&gt; | <i>(Optional)</i> Passing a performance listener. |
 

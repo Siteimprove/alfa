@@ -4,9 +4,23 @@
 
 ## Headers.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of(headers: Iterable<Header>): Headers;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  headers | Iterable&lt;[Header](./alfa-http.header.md)<!-- -->&gt; |  |
+
+<b>Returns:</b>
+
+[Headers](./alfa-http.headers.md)
+
+## Remarks
+
+If the iterable contains headers with duplicate names, the last header with a given name will take precedence.
 

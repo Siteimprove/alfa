@@ -4,3 +4,14 @@
 
 ## Awaiter.idle() function
 
+Wait for the network to be idle, i.e. have no requests inflight.
+
+<b>Signature:</b>
+
+```typescript
+function idle(): Awaiter;
+```
+<b>Returns:</b>
+
+[Awaiter](./alfa-scraper.awaiter.md)
+

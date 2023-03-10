@@ -4,3 +4,12 @@
 
 ## Row.Group.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Group.JSON;
+```
+<b>Returns:</b>
+
+[Group.JSON](./alfa-table.row.group.json.md)
+

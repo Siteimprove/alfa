@@ -4,3 +4,8 @@
 
 ## Slice.length property
 
+<b>Signature:</b>
+
+```typescript
+get length(): number;
+```

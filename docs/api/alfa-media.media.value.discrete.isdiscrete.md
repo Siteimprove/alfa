@@ -4,9 +4,19 @@
 
 ## Media.Value.Discrete.isDiscrete() function
 
+<b>Signature:</b>
+
+```typescript
+function isDiscrete<T>(value: unknown): value is Discrete<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Discrete](./alfa-media.media.value.discrete.md)<!-- -->&lt;T&gt;
 

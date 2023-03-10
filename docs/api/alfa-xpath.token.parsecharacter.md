@@ -4,3 +4,8 @@
 
 ## Token.parseCharacter variable
 
+<b>Signature:</b>
+
+```typescript
+parseCharacter: (query?: string | Predicate<Character>) => Parser<Slice<Token>, Character, string, []>
+```

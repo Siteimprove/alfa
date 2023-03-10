@@ -4,3 +4,10 @@
 
 ## Rule.Input type
 
+<b>Signature:</b>
+
+```typescript
+type Input<R> = R extends Rule<infer I, any, any, any> ? I : never;
+```
+<b>References:</b> [Rule](./alfa-act.rule.md)
+

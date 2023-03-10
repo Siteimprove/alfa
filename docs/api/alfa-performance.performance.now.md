@@ -4,3 +4,12 @@
 
 ## Performance.now() method
 
+<b>Signature:</b>
+
+```typescript
+now(): number;
+```
+<b>Returns:</b>
+
+number
+

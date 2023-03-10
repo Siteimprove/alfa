@@ -4,9 +4,16 @@
 
 ## Keyword.JSON interface
 
+<b>Signature:</b>
+
+```typescript
+interface JSON<T extends string = string> extends Value.JSON<"keyword"> 
+```
+<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"keyword"&gt;
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [value](./alfa-css.keyword.json.value.md) |  |  |  |
+|  [value](./alfa-css.keyword.json.value.md) |  | T |  |
 

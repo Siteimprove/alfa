@@ -4,3 +4,8 @@
 
 ## Token.URL.value property
 
+<b>Signature:</b>
+
+```typescript
+get value(): string;
+```

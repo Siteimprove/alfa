@@ -4,3 +4,10 @@
 
 ## experimentalRules.R109 variable
 
+This rule always asks for the language of the page, and compares it with the `lang` attribute. This is not a nice experience for the end user and shouldn't be used until backend can automatically determine the answer.
+
+<b>Signature:</b>
+
+```typescript
+_default: Rule.Atomic<Page, Document, Question.Metadata, Document>
+```

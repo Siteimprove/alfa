@@ -4,3 +4,12 @@
 
 ## Selective.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Selective.JSON<S, T>;
+```
+<b>Returns:</b>
+
+[Selective.JSON](./alfa-selective.selective.json.md)<!-- -->&lt;S, T&gt;
+

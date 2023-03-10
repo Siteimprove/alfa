@@ -4,9 +4,19 @@
 
 ## Predicate.not() function
 
+<b>Signature:</b>
+
+```typescript
+function not<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>): Predicate<T, A>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt; |  |
+
+<b>Returns:</b>
+
+[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;
 

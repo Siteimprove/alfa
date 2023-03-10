@@ -4,12 +4,19 @@
 
 ## Component namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Component 
+```
+
 ## Variables
 
 |  Variable | Description |
 |  --- | --- |
-|  [consume](./alfa-css.component.consume.md) |  |
-|  [parse](./alfa-css.component.parse.md) |  |
+|  [consume](./alfa-css.component.consume.md) | [https://drafts.csswg.org/css-syntax/\#consume-a-component-value](https://drafts.csswg.org/css-syntax/#consume-a-component-value) |
+|  [parse](./alfa-css.component.parse.md) | [https://drafts.csswg.org/css-syntax/\#parse-component-value](https://drafts.csswg.org/css-syntax/#parse-component-value) |
 
 ## Type Aliases
 

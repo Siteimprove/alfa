@@ -4,9 +4,16 @@
 
 ## Lexer namespace
 
+
+<b>Signature:</b>
+
+```typescript
+export declare namespace Lexer 
+```
+
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [lex](./alfa-css.lexer.lex.md) |  |
+|  [lex(input)](./alfa-css.lexer.lex.md) |  |
 

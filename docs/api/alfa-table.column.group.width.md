@@ -4,3 +4,8 @@
 
 ## Column.Group.width property
 
+<b>Signature:</b>
+
+```typescript
+get width(): number;
+```

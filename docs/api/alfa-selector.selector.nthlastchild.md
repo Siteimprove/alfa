@@ -4,6 +4,12 @@
 
 ## Selector.NthLastChild namespace
 
+<b>Signature:</b>
+
+```typescript
+export namespace NthLastChild 
+```
+
 ## Interfaces
 
 |  Interface | Description |

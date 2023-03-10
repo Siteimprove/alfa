@@ -4,9 +4,19 @@
 
 ## Promise\_2.resolve() function
 
+<b>Signature:</b>
+
+```typescript
+function resolve<T>(value: T): Promise<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+Promise&lt;T&gt;
 

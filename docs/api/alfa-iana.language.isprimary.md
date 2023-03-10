@@ -4,3 +4,8 @@
 
 ## Language.isPrimary variable
 
+<b>Signature:</b>
+
+```typescript
+isPrimary: typeof Primary.isPrimary
+```

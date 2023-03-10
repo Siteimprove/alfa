@@ -4,3 +4,12 @@
 
 ## Err.every() method
 
+<b>Signature:</b>
+
+```typescript
+every(): boolean;
+```
+<b>Returns:</b>
+
+boolean
+

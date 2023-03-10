@@ -4,9 +4,20 @@
 
 ## Question.answerIf() method
 
+<b>Signature:</b>
+
+```typescript
+answerIf(condition: boolean, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  answer | [Result](./alfa-result.result.md)<!-- -->&lt;ANSWER, unknown&gt; |  |
+|  condition | boolean |  |
+|  answer | ANSWER |  |
+
+<b>Returns:</b>
+
+[Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;
 

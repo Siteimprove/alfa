@@ -4,3 +4,12 @@
 
 ## Box type
 
+[https://drafts.csswg.org/css-backgrounds/\#typedef-box](https://drafts.csswg.org/css-backgrounds/#typedef-box)
+
+<b>Signature:</b>
+
+```typescript
+export declare type Box = Keyword<"border-box"> | Keyword<"padding-box"> | Keyword<"content-box">;
+```
+<b>References:</b> [Keyword](./alfa-css.keyword.md)
+

@@ -4,3 +4,8 @@
 
 ## RuleTree.Node.rule property
 
+<b>Signature:</b>
+
+```typescript
+get rule(): Rule;
+```

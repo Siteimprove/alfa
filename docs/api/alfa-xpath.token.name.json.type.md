@@ -4,3 +4,8 @@
 
 ## Token.Name.JSON.type property
 
+<b>Signature:</b>
+
+```typescript
+type: "name";
+```

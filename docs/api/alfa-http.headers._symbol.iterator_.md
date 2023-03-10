@@ -4,3 +4,12 @@
 
 ## Headers.\[Symbol.iterator\]() method
 
+<b>Signature:</b>
+
+```typescript
+[Symbol.iterator](): Iterator<Header>;
+```
+<b>Returns:</b>
+
+Iterator&lt;[Header](./alfa-http.header.md)<!-- -->&gt;
+

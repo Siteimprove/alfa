@@ -4,3 +4,8 @@
 
 ## Context."@base" property
 
+<b>Signature:</b>
+
+```typescript
+"@base"?: string;
+```

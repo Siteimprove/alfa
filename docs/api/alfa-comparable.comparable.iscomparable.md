@@ -4,9 +4,21 @@
 
 ## Comparable.isComparable() function
 
+Check if an unknown value implements the [Comparable](./alfa-comparable.comparable.md) interface.
+
+<b>Signature:</b>
+
+```typescript
+function isComparable<T>(value: unknown): value is Comparable<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Comparable](./alfa-comparable.comparable.md)<!-- -->&lt;T&gt;
 

@@ -4,9 +4,19 @@
 
 ## Either.flatMap() method
 
+<b>Signature:</b>
+
+```typescript
+flatMap<T>(mapper: Mapper<R, Either<L, T>>): Either<L, T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, [Either](./alfa-either.either.md)<!-- -->&lt;L, T&gt;&gt; |  |
+
+<b>Returns:</b>
+
+[Either](./alfa-either.either.md)<!-- -->&lt;L, T&gt;
 

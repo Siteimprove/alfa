@@ -4,3 +4,8 @@
 
 ## MediaRule.queries property
 
+<b>Signature:</b>
+
+```typescript
+get queries(): Media.List;
+```

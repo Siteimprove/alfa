@@ -4,9 +4,19 @@
 
 ## Slot.compare() method
 
+<b>Signature:</b>
+
+```typescript
+compare(slot: Slot): Comparison;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  slot | [Slot](./alfa-table.slot.md) |  |
+
+<b>Returns:</b>
+
+[Comparison](./alfa-comparable.comparison.md)
 

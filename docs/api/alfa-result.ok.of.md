@@ -4,9 +4,19 @@
 
 ## Ok.of() method
 
+<b>Signature:</b>
+
+```typescript
+static of<T>(value: T): Ok<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+
+<b>Returns:</b>
+
+[Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
 

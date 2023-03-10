@@ -4,3 +4,10 @@
 
 ## Group.EARL."ptr:groupPointer" property
 
+<b>Signature:</b>
+
+```typescript
+"ptr:groupPointer": {
+            "@list": Array<earl.EARL>;
+        };
+```

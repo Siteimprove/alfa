@@ -4,9 +4,19 @@
 
 ## FNV.equals() method
 
+<b>Signature:</b>
+
+```typescript
+equals(value: FNV): boolean;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | unknown |  |
+|  value | [FNV](./alfa-fnv.fnv.md) |  |
+
+<b>Returns:</b>
+
+boolean
 

@@ -4,3 +4,12 @@
 
 ## Block.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Block.JSON;
+```
+<b>Returns:</b>
+
+[Block.JSON](./alfa-dom.block.json.md)
+

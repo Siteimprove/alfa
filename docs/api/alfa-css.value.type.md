@@ -4,3 +4,8 @@
 
 ## Value.type property
 
+<b>Signature:</b>
+
+```typescript
+abstract get type(): T;
+```

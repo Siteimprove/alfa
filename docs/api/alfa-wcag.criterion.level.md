@@ -4,3 +4,14 @@
 
 ## Criterion.Level type
 
+The level of the specified criterion under the specified version.
+
+<b>Signature:</b>
+
+```typescript
+type Level<C extends Chapter = Chapter, V extends Version = Version> = Criteria[C]["versions"] extends Iterable<infer T> ? T extends readonly [V, {
+        readonly level: infer L;
+    }] ? L : never : never;
+```
+<b>References:</b> [Chapter](./alfa-wcag.criterion.chapter.md)<!-- -->, [Version](./alfa-wcag.criterion.version.md)
+

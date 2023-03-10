@@ -4,10 +4,20 @@
 
 ## Iterable\_2.map() function
 
+<b>Signature:</b>
+
+```typescript
+function map<T, U = T>(iterable: Iterable<T>, mapper: Mapper<T, U, [index: number]>): Iterable<U>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+Iterable&lt;U&gt;
 

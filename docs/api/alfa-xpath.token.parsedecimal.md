@@ -4,3 +4,8 @@
 
 ## Token.parseDecimal variable
 
+<b>Signature:</b>
+
+```typescript
+parseDecimal: Parser<Slice<Token>, Decimal, string, []>
+```

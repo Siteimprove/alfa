@@ -4,3 +4,8 @@
 
 ## Token.URL.type property
 
+<b>Signature:</b>
+
+```typescript
+get type(): "url";
+```

@@ -4,9 +4,19 @@
 
 ## Serializable.isSerializable() function
 
+<b>Signature:</b>
+
+```typescript
+function isSerializable<T extends EARL>(value: unknown): value is Serializable<T>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
+
+<b>Returns:</b>
+
+value is [Serializable](./alfa-earl.serializable.md)<!-- -->&lt;T&gt;
 

@@ -4,3 +4,12 @@
 
 ## Token.Comment.toJSON() method
 
+<b>Signature:</b>
+
+```typescript
+toJSON(): Comment.JSON;
+```
+<b>Returns:</b>
+
+[Comment.JSON](./alfa-xpath.token.comment.json.md)
+

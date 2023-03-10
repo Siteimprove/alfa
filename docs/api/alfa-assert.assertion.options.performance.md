@@ -4,3 +4,10 @@
 
 ## Assertion.Options.performance property
 
+Passing a performance listener.
+
+<b>Signature:</b>
+
+```typescript
+readonly performance?: Performance<Rule.Event<I, T, Q, S>>;
+```

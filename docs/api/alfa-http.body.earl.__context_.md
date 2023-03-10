@@ -4,3 +4,10 @@
 
 ## Body.EARL."@context" property
 
+<b>Signature:</b>
+
+```typescript
+"@context": {
+            cnt: "http://www.w3.org/2011/content#";
+        };
+```

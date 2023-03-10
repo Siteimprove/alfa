@@ -4,9 +4,19 @@
 
 ## Collection.Indexed.reject() method
 
+<b>Signature:</b>
+
+```typescript
+reject<U extends T>(refinement: Refinement<T, U, [index: number]>): Indexed<Exclude<T, U>>;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+
+<b>Returns:</b>
+
+[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

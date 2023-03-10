@@ -4,6 +4,12 @@
 
 ## Cypress\_2.createPlugin() function
 
+<b>Signature:</b>
+
+```typescript
+function createPlugin<T extends Hashable, Q = never, S = T>(rules: Iterable<act.Rule<Page, T, Q, S>>, handlers?: Iterable<Handler<Page, T, Q, S>>, options?: Asserter.Options<Page, T, Q, S>): globalThis.Chai.ChaiPlugin;
+```
+
 ## Parameters
 
 |  Parameter | Type | Description |
@@ -11,4 +17,8 @@
 |  rules | Iterable&lt;act.[Rule](./alfa-act.rule.md)<!-- -->&lt;[Page](./alfa-web.page.md)<!-- -->, T, Q, S&gt;&gt; |  |
 |  handlers | Iterable&lt;[Handler](./alfa-assert.handler.md)<!-- -->&lt;[Page](./alfa-web.page.md)<!-- -->, T, Q, S&gt;&gt; | <i>(Optional)</i> |
 |  options | [Asserter.Options](./alfa-assert.asserter.options.md)<!-- -->&lt;[Page](./alfa-web.page.md)<!-- -->, T, Q, S&gt; | <i>(Optional)</i> |
+
+<b>Returns:</b>
+
+globalThis.Chai.ChaiPlugin
 
