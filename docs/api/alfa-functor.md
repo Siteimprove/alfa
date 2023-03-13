@@ -8,11 +8,11 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Functor](./alfa-functor.functor_interface.md) |  |
+|  [Functor](./alfa-functor.functor.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Functor](./alfa-functor.functor_namespace.md) |  |
+|  [Functor](./alfa-functor.functor.md) |  |
 

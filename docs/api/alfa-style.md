@@ -8,13 +8,13 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Style](./alfa-style.style_class.md) |  |
-|  [Value](./alfa-style.value_class.md) |  |
+|  [Style](./alfa-style.style.md) |  |
+|  [Value](./alfa-style.value.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Style](./alfa-style.style_namespace.md) |  |
-|  [Value](./alfa-style.value_namespace.md) |  |
+|  [Style](./alfa-style.style.md) |  |
+|  [Value](./alfa-style.value.md) |  |
 

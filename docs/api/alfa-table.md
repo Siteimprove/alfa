@@ -8,28 +8,28 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Cell](./alfa-table.cell_class.md) | [https://html.spec.whatwg.org/\#concept-cell](https://html.spec.whatwg.org/#concept-cell) |
-|  [Column](./alfa-table.column_class.md) | [https://html.spec.whatwg.org/\#concept-column](https://html.spec.whatwg.org/#concept-column) |
-|  [Row](./alfa-table.row_class.md) | [https://html.spec.whatwg.org/\#concept-row](https://html.spec.whatwg.org/#concept-row) |
-|  [Slot](./alfa-table.slot_class.md) | [https://html.spec.whatwg.org/\#concept-slots](https://html.spec.whatwg.org/#concept-slots) |
-|  [Table](./alfa-table.table_class.md) | [https://html.spec.whatwg.org/\#concept-table](https://html.spec.whatwg.org/#concept-table) |
+|  [Cell](./alfa-table.cell.md) | [https://html.spec.whatwg.org/\#concept-cell](https://html.spec.whatwg.org/#concept-cell) |
+|  [Column](./alfa-table.column.md) | [https://html.spec.whatwg.org/\#concept-column](https://html.spec.whatwg.org/#concept-column) |
+|  [Row](./alfa-table.row.md) | [https://html.spec.whatwg.org/\#concept-row](https://html.spec.whatwg.org/#concept-row) |
+|  [Slot](./alfa-table.slot.md) | [https://html.spec.whatwg.org/\#concept-slots](https://html.spec.whatwg.org/#concept-slots) |
+|  [Table](./alfa-table.table.md) | [https://html.spec.whatwg.org/\#concept-table](https://html.spec.whatwg.org/#concept-table) |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Cell](./alfa-table.cell_namespace.md) |  |
-|  [Column](./alfa-table.column_namespace.md) |  |
-|  [Group](./alfa-table.group_namespace.md) |  |
-|  [Row](./alfa-table.row_namespace.md) |  |
-|  [Scope](./alfa-table.scope_namespace.md) |  |
-|  [Slot](./alfa-table.slot_namespace.md) |  |
-|  [Table](./alfa-table.table_namespace.md) |  |
+|  [Cell](./alfa-table.cell.md) |  |
+|  [Column](./alfa-table.column.md) |  |
+|  [Group](./alfa-table.group.md) |  |
+|  [Row](./alfa-table.row.md) |  |
+|  [Scope](./alfa-table.scope.md) |  |
+|  [Slot](./alfa-table.slot.md) |  |
+|  [Table](./alfa-table.table.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Group](./alfa-table.group_typealias.md) |  |
-|  [Scope](./alfa-table.scope_typealias.md) |  |
+|  [Group](./alfa-table.group.md) |  |
+|  [Scope](./alfa-table.scope.md) |  |
 

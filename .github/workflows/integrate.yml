@@ -32,4 +32,4 @@ jobs:
       - run: yarn dedupe --check
       - run: yarn build --quiet
       - run: yarn test
-      - run: yarn document --quiet
+      - run: yarn extract --quiet

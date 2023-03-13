@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Branched](./alfa-branched.branched_class.md) |  |
+|  [Branched](./alfa-branched.branched.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Branched](./alfa-branched.branched_namespace.md) |  |
+|  [Branched](./alfa-branched.branched.md) |  |
 

@@ -8,11 +8,11 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Slice](./alfa-slice.slice_class.md) |  |
+|  [Slice](./alfa-slice.slice.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Slice](./alfa-slice.slice_namespace.md) |  |
+|  [Slice](./alfa-slice.slice.md) |  |
 

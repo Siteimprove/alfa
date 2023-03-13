@@ -8,11 +8,11 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Clone](./alfa-clone.clone_interface.md) |  |
+|  [Clone](./alfa-clone.clone.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Clone](./alfa-clone.clone_namespace.md) |  |
+|  [Clone](./alfa-clone.clone.md) |  |
 
