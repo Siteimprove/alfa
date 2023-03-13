@@ -8,7 +8,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Component } from "./component";
 import { Token } from "./token";
 
-const { either, flatMap, zeroOrMore, delimited, pair, left, map, takeUntil } = Parser;
+const { either, pair, left, map, takeUntil } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#simple-block}
