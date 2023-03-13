@@ -11,6 +11,7 @@ import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import { Result } from '@siteimprove/alfa-result';
+import { Slice } from '@siteimprove/alfa-slice';
 
 // @public (undocumented)
 export type Parser<I, T, E = never, A extends Array_2<unknown> = []> = (input: I, ...args: A) => Result<[I, T], E>;
@@ -47,6 +48,7 @@ export namespace Parser {
     export function option<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Option<T>, E, A>;
     // (undocumented)
     export function pair<I, T, U, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, U, E, A>): Parser<I, [T, U], E, A>;
+    export function parseIf<I, T extends I>(refinement: Refinement<I, T>): Parser<Slice<I>, T, string>;
     // (undocumented)
     export function peek<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
     // (undocumented)
