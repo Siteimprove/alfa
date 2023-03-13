@@ -1,11 +1,9 @@
-import { Slice } from "@siteimprove/alfa-slice";
 import { test } from "@siteimprove/alfa-test";
 
-import { Block, Lexer, Token } from "../../src/";
+import { Block, Lexer } from "../../src/";
 
 const { lex } = Lexer;
 const { consume } = Block;
-const { whitespace, openParenthesis, closeParenthesis } = Token;
 
 test(".consume() of empty returns error", (t) => {
   t.deepEqual(consume(lex("")).toJSON(), {
