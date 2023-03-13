@@ -58,7 +58,7 @@ export namespace Browser {
         toString(): string;
         // (undocumented)
         get version(): V;
-        }
+    }
     // (undocumented)
     export namespace Release {
         // (undocumented)
@@ -106,7 +106,6 @@ export namespace Feature {
         readonly [I in Implementer<N>]: Implementation<N, I>;
     };
 }
-
 
 // (No @packageDocumentation comment for this package)
 

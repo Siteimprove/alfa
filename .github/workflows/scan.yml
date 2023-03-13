@@ -1,4 +1,5 @@
 name: Scan
+
 on:
   push:
     branches:
@@ -10,9 +11,11 @@ on:
     - cron: "0 21 * * 1"
   merge_group:
     types: [checks_requested]
+
 concurrency:
   group: scan-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
   analyze:
     name: Analyze

@@ -90,7 +90,6 @@ export namespace URL {
     export function parse(url: string, base?: string | URL): Result<URL, string>;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

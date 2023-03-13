@@ -85,7 +85,6 @@ export namespace Marker {
     gray: Marker;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

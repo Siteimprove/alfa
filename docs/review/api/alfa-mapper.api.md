@@ -7,7 +7,6 @@
 // @public (undocumented)
 export type Mapper<T, U = T, A extends Array<unknown> = []> = (value: T, ...args: A) => U;
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

@@ -53,7 +53,7 @@ export class Cookie implements Equatable, Serializable<Cookie.JSON> {
     toString(): string;
     // (undocumented)
     get value(): string;
-    }
+}
 
 // @public (undocumented)
 export namespace Cookie {
@@ -125,7 +125,7 @@ export class Header implements Equatable, json.Serializable<Header.JSON>, earl.S
     toString(): string;
     // (undocumented)
     get value(): string;
-    }
+}
 
 // @public (undocumented)
 export namespace Header {
@@ -223,7 +223,7 @@ export class Request implements Body, json.Serializable<Request.JSON>, earl.Seri
     toString(): string;
     // (undocumented)
     get url(): URL;
-    }
+}
 
 // @public (undocumented)
 export namespace Request {
@@ -283,7 +283,7 @@ export class Response implements Body, json.Serializable<Response.JSON>, earl.Se
     toString(): string;
     // (undocumented)
     get url(): URL;
-    }
+}
 
 // @public (undocumented)
 export namespace Response {
@@ -320,7 +320,6 @@ export namespace Response {
         url: string;
     }
 }
-
 
 // (No @packageDocumentation comment for this package)
 

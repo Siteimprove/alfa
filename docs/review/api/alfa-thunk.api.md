@@ -22,7 +22,6 @@ export namespace Thunk {
     export function reduce<T, U>(thunk: Thunk<T>, reducer: Reducer<T, U>, accumulator: U): U;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

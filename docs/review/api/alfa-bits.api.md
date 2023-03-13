@@ -22,7 +22,6 @@ export namespace Bits {
     export function test(bits: number, i: number): boolean;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

@@ -51,7 +51,6 @@ export function test(name: string, assertion: (assert: Assertions) => void | Pro
 // @internal (undocumented)
 export function test(name: string, assertion: (assert: Assertions) => void | Promise<void>, notifier: Notifier): Promise<void>;
 
-
 // (No @packageDocumentation comment for this package)
 
 ```
