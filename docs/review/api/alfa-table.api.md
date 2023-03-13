@@ -179,7 +179,7 @@ export class Column implements Anchored, Equatable, Serializable<Column.JSON> {
     toJSON(): Column.JSON;
     // (undocumented)
     get x(): number;
-    }
+}
 
 // @public (undocumented)
 export namespace Column {
@@ -205,7 +205,7 @@ export namespace Column {
         get width(): number;
         // (undocumented)
         get x(): number;
-        }
+    }
     // (undocumented)
     export namespace Group {
         // (undocumented)
@@ -275,7 +275,7 @@ export class Row implements Anchored, Equatable, Serializable<Row.JSON> {
     toJSON(): Row.JSON;
     // (undocumented)
     get y(): number;
-    }
+}
 
 // @public (undocumented)
 export namespace Row {
@@ -301,7 +301,7 @@ export namespace Row {
         toJSON(): Group.JSON;
         // (undocumented)
         get y(): number;
-        }
+    }
     // (undocumented)
     export namespace Group {
         // (undocumented)
@@ -357,7 +357,7 @@ export class Slot implements Comparable<Slot>, Equatable, Serializable<Slot.JSON
     get x(): number;
     // (undocumented)
     get y(): number;
-    }
+}
 
 // @public (undocumented)
 export namespace Slot {
@@ -412,7 +412,6 @@ export namespace Table {
         groups: Array_2<Group.JSON>;
     }
 }
-
 
 // (No @packageDocumentation comment for this package)
 

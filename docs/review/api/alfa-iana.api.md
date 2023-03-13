@@ -31,7 +31,7 @@ export class Language implements Equatable, Serializable {
     toString(): string;
     // (undocumented)
     get variants(): Iterable<Language.Variant>;
-    }
+}
 
 // @public (undocumented)
 export namespace Language {
@@ -250,7 +250,6 @@ export namespace Language {
     // (undocumented)
     export function parse(input: string): Result<Language, string>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

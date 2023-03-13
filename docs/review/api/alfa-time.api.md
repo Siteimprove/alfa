@@ -31,8 +31,7 @@ export class Timeout {
     get time(): Time;
     // (undocumented)
     get timeout(): number;
-    }
-
+}
 
 // (No @packageDocumentation comment for this package)
 

@@ -62,5 +62,4 @@ export namespace Transformation {
     export function translate(tx: number, ty?: number, tz?: number): Transformation;
 }
 
-
 ```

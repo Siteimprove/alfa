@@ -19,9 +19,7 @@ namespace Generator_2 {
     // (undocumented)
     function reduce<T, U, R, N>(generator: Generator_2<T, R, N>, reducer: Reducer<T, U>, accumulator: U): U;
 }
-
 export { Generator_2 as Generator }
-
 
 // (No @packageDocumentation comment for this package)
 

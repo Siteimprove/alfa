@@ -16,7 +16,6 @@ export namespace Encoder {
     export function encode(input: string): Uint8Array;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

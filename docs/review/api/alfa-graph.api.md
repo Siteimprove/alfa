@@ -75,8 +75,8 @@ export namespace Graph {
     export function isGraph<T>(value: unknown): value is Graph<T>;
     // (undocumented)
     export type JSON<T> = Array<[
-        Serializable.ToJSON<T>,
-        Array<Serializable.ToJSON<T>>
+    Serializable.ToJSON<T>,
+    Array<Serializable.ToJSON<T>>
     ]>;
     // (undocumented)
     export interface Traversal {
@@ -88,7 +88,6 @@ export namespace Graph {
     const // (undocumented)
     BreadthFirst: Traversal;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

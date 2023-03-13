@@ -10,15 +10,17 @@ Make sure that Alfa is installed. Follow the instructions from the [top-level RE
 
 When a problem has been spotted in the Siteimprove Intelligence Platform, the best way is to retrieve the exact data for the page that was fed to Alfa. Check with the Accessibility backend team for ways to do that (this requires access to Siteimprove internal systems).
 
-In order to grab a snapshot of a live page, for example to investigate a result seen in the browser extension, … use the Command Line Interface with the `scrape` command:
+In order to grab a snapshot of a live page, for example to investigate a result seen in the browser extension, … use the Command Line Interface. It lives in the [`alfa-integrations` repository](https://github.com/Siteimprove/alfa-integrations). Scrape a page with the `scrape` command:
 
 ```shell
+# run from the top-level of the alfa-integrations repository
 $ yarn alfa scrape -o my-page.json https://example.com
 ```
 
 > Remark: it is also possible to run a full audit directly with the CLI:
 >
 > ```shell
+> # run from the top-level of the alfa-integrations repository
 > $ yarn alfa audit -o json -f my-audit.json https://example.com
 > ```
 >

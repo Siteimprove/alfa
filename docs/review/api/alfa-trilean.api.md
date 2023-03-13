@@ -38,7 +38,6 @@ export namespace Trilean {
     export function xor<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

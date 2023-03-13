@@ -46,7 +46,7 @@ class Record_2<T> implements Foldable<Record_2.Value<T>>, Iterable_2<Record_2.En
     toString(): string;
     // (undocumented)
     values(): Iterable_2<Record_2.Value<T>>;
-    }
+}
 
 // @public (undocumented)
 namespace Record_2 {
@@ -67,9 +67,7 @@ namespace Record_2 {
     // (undocumented)
     type Value<T> = T[Key<T>];
 }
-
 export { Record_2 as Record }
-
 
 // (No @packageDocumentation comment for this package)
 
