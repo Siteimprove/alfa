@@ -22,7 +22,7 @@ test(".consume() of invalid input returns error", (t) => {
 test(".consume() of unclosed block returns error", (t) => {
   t.deepEqual(consume(lex("( ")).toJSON(), {
     type: "err",
-    error: "Expected closing delimiter",
+    error: "Mismatching token",
   });
 });
 
