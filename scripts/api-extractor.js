@@ -24,7 +24,9 @@ function extract(root = "packages") {
   for (const project of projects) {
     let file;
     try {
-      file = require.resolve(path.resolve(project, "config", "api.json"));
+      file = require.resolve(
+        path.resolve(project, "config", "api-extractor.json")
+      );
     } catch {
       continue;
     }
