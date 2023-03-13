@@ -8,11 +8,11 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Generator\_2](./alfa-generator.generator_2_namespace.md) |  |
+|  [Generator\_2](./alfa-generator.generator_2.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Generator\_2](./alfa-generator.generator_2_typealias.md) |  |
+|  [Generator\_2](./alfa-generator.generator_2.md) |  |
 

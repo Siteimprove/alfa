@@ -8,20 +8,20 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Left](./alfa-either.left_class.md) |  |
-|  [Right](./alfa-either.right_class.md) |  |
+|  [Left](./alfa-either.left.md) |  |
+|  [Right](./alfa-either.right.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [Either](./alfa-either.either_interface.md) |  |
+|  [Either](./alfa-either.either.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Either](./alfa-either.either_namespace.md) |  |
-|  [Left](./alfa-either.left_namespace.md) |  |
-|  [Right](./alfa-either.right_namespace.md) |  |
+|  [Either](./alfa-either.either.md) |  |
+|  [Left](./alfa-either.left.md) |  |
+|  [Right](./alfa-either.right.md) |  |
 

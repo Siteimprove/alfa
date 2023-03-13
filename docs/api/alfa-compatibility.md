@@ -8,13 +8,13 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Browser](./alfa-compatibility.browser_namespace.md) |  |
-|  [Feature](./alfa-compatibility.feature_namespace.md) |  |
+|  [Browser](./alfa-compatibility.browser.md) |  |
+|  [Feature](./alfa-compatibility.feature.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Browser](./alfa-compatibility.browser_typealias.md) |  |
-|  [Feature](./alfa-compatibility.feature_typealias.md) |  |
+|  [Browser](./alfa-compatibility.browser.md) |  |
+|  [Feature](./alfa-compatibility.feature.md) |  |
 

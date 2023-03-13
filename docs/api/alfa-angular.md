@@ -10,5 +10,5 @@ This package provides integrations and utilities for the [Angular](https://angul
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Angular](./alfa-angular.angular_namespace.md) |  |
+|  [Angular](./alfa-angular.angular.md) |  |
 

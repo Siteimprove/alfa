@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [React\_2](./alfa-react.react_2_namespace.md) |  |
+|  [React\_2](./alfa-react.react_2.md) |  |
 

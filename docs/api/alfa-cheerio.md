@@ -8,5 +8,5 @@
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Cheerio](./alfa-cheerio.cheerio_namespace.md) |  |
+|  [Cheerio](./alfa-cheerio.cheerio.md) |  |
 

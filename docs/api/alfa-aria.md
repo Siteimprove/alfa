@@ -10,25 +10,31 @@ This package provides functionality for working with [ARIA](https://www.w3.org/T
 
 |  Class | Description |
 |  --- | --- |
-|  [Attribute](./alfa-aria.attribute_class.md) |  |
-|  [Container](./alfa-aria.container_class.md) |  |
-|  [Element](./alfa-aria.element_class.md) |  |
-|  [Inert](./alfa-aria.inert_class.md) |  |
-|  [Name](./alfa-aria.name_class.md) |  |
-|  [Node](./alfa-aria.node_class.md) | [https://w3c.github.io/aria/\#accessibility\_tree](https://w3c.github.io/aria/#accessibility_tree) |
-|  [Role](./alfa-aria.role_class.md) |  |
-|  [Text](./alfa-aria.text_class.md) |  |
+|  [Attribute](./alfa-aria.attribute.md) |  |
+|  [Container](./alfa-aria.container.md) |  |
+|  [Element](./alfa-aria.element.md) |  |
+|  [Inert](./alfa-aria.inert.md) |  |
+|  [Name](./alfa-aria.name.md) |  |
+|  [Node](./alfa-aria.node.md) | [https://w3c.github.io/aria/\#accessibility\_tree](https://w3c.github.io/aria/#accessibility_tree) |
+|  [Role](./alfa-aria.role.md) |  |
+|  [Text](./alfa-aria.text.md) |  |
+
+## Interfaces
+
+|  Interface | Description |
+|  --- | --- |
+|  [Node](./alfa-aria.node.md) |  |
 
 ## Namespaces
 
 |  Namespace | Description |
 |  --- | --- |
-|  [Attribute](./alfa-aria.attribute_namespace.md) |  |
-|  [Container](./alfa-aria.container_namespace.md) |  |
-|  [Element](./alfa-aria.element_namespace.md) |  |
-|  [Inert](./alfa-aria.inert_namespace.md) |  |
-|  [Name](./alfa-aria.name_namespace.md) |  |
-|  [Node](./alfa-aria.node_namespace.md) |  |
-|  [Role](./alfa-aria.role_namespace.md) |  |
-|  [Text](./alfa-aria.text_namespace.md) |  |
+|  [Attribute](./alfa-aria.attribute.md) |  |
+|  [Container](./alfa-aria.container.md) |  |
+|  [DOM](./alfa-aria.dom.md) | Helpers and Predicates for accessibility aspects of DOM objects |
+|  [Element](./alfa-aria.element.md) |  |
+|  [Name](./alfa-aria.name.md) |  |
+|  [Node](./alfa-aria.node.md) |  |
+|  [Role](./alfa-aria.role.md) |  |
+|  [Text](./alfa-aria.text.md) |  |
 
