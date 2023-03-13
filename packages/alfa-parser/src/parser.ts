@@ -5,6 +5,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Refinement } from "@siteimprove/alfa-refinement";
+import { Slice } from "@siteimprove/alfa-slice";
 
 const { not } = Predicate;
 
@@ -341,6 +342,26 @@ export namespace Parser {
       pair(parser, zeroOrMore(right(separator, parser))),
       ([first, rest]) => Array.prepend(rest, first)
     );
+  }
+
+  /**
+   * Parse the first element in the input if it satisfies the given refinement.
+   *
+   * @remarks
+   * The function only works for scenarios where the input is of type `Slice`.
+   */
+  export function parseIf<I, T extends I>(
+    refinement: Refinement<I, T>
+  ): Parser<Slice<I>, T, string> {
+    return (input) =>
+      input
+        .first()
+        .map((token) =>
+          refinement(token)
+            ? Result.of<[Slice<I>, T], string>([input.rest(), token])
+            : Err.of("Mismatching token")
+        )
+        .getOr(Err.of("No token left"));
   }
 
   export function end<I extends Iterable<unknown>, E>(

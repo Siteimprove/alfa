@@ -21,7 +21,7 @@ const { hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;
 const { isTabbable } = Style;
-const { either, end, option, right } = Parser;
+const { either, end, option, right, parseIf } = Parser;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r10",
@@ -177,14 +177,7 @@ const webauthn = parserOf(["webauthn"]);
 function parserOf(
   tokens: Array<string>
 ): Parser<Slice<string>, string, string> {
-  return (input) =>
-    input
-      .first()
-      .filter((token) => tokens.includes(token))
-      .map((token) =>
-        Result.of<[Slice<string>, string], string>([input.rest(), token])
-      )
-      .getOr(Err.of(`Expected valid token, but got ${input.toJSON()}`));
+  return parseIf((token: string): token is string => tokens.includes(token));
 }
 
 function sectionParser(): Parser<Slice<string>, string, string> {

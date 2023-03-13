@@ -8,7 +8,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-const { map, oneOrMore } = Parser;
+const { map, oneOrMore, parseIf } = Parser;
 const { fromCharCode } = String;
 const { and } = Refinement;
 
@@ -1346,16 +1346,6 @@ export namespace Token {
   export const parseCloseComment = parseToken(isCloseComment);
 }
 
-function parseToken<T extends Token>(
-  refinement: Refinement<Token, T>
-): Parser<Slice<Token>, T, string> {
-  return (input) =>
-    input
-      .first()
-      .map((token) =>
-        refinement(token)
-          ? Ok.of<[Slice<Token>, T]>([input.rest(), token])
-          : Err.of("Mismatching token")
-      )
-      .getOr(Err.of("No token left"));
+function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
+  return parseIf<Token, T>(refinement);
 }
