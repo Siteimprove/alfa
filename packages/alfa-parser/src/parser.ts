@@ -3,9 +3,8 @@ import { Callback } from "@siteimprove/alfa-callback";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Result, Err } from "@siteimprove/alfa-result";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Slice } from "@siteimprove/alfa-slice";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 const { not } = Predicate;
 
@@ -345,23 +344,25 @@ export namespace Parser {
   }
 
   /**
-   * Parse the first element in the input if it satisfies the given refinement.
-   *
-   * @remarks
-   * The function only works for scenarios where the input is of type `Slice`.
+   * Parse if the result satisfies the refinement.
    */
-  export function parseIf<I, T extends I>(
-    refinement: Refinement<I, T>
-  ): Parser<Slice<I>, T, string> {
-    return (input) =>
-      input
-        .first()
-        .map((token) =>
-          refinement(token)
-            ? Result.of<[Slice<I>, T], string>([input.rest(), token])
-            : Err.of("Mismatching token")
-        )
-        .getOr(Err.of("No token left"));
+  export function parseIf<
+    I,
+    T,
+    E,
+    U extends T = T,
+    A extends Array<unknown> = []
+  >(
+    refinement: Refinement<T, U>,
+    parser: Parser<I, T, E, A>,
+    ifError: Mapper<T, E>
+  ): Parser<I, U, E, A> {
+    return (input, ...args) =>
+      parser(input, ...args).flatMap(([rest, result]) =>
+        refinement(result)
+          ? Ok.of<[I, U]>([rest, result])
+          : Err.of(ifError(result))
+      );
   }
 
   export function end<I extends Iterable<unknown>, E>(

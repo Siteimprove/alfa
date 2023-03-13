@@ -9,7 +9,6 @@
     { "path": "../alfa-option" },
     { "path": "../alfa-predicate" },
     { "path": "../alfa-result" },
-    { "path": "../alfa-refinement" },
-    { "path": "../alfa-slice" }
+    { "path": "../alfa-refinement" }
   ]
 }

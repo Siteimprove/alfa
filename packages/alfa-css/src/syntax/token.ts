@@ -1346,6 +1346,14 @@ export namespace Token {
   export const parseCloseComment = parseToken(isCloseComment);
 }
 
+function parseFirst(): Parser<Slice<Token>, Token, string> {
+  return (input: Slice<Token>) =>
+    input
+      .first()
+      .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))
+      .getOr(Err.of("No token left"));
+}
+
 function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
-  return parseIf<Token, T>(refinement);
+  return parseIf(refinement, parseFirst(), (_) => "Mismatching token");
 }

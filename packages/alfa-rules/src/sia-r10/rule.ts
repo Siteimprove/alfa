@@ -4,7 +4,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -174,15 +174,29 @@ const modifiable = parserOf(modifiables);
 const modifier = parserOf(modifiers);
 const webauthn = parserOf(["webauthn"]);
 
+function parseFirst(): Parser<Slice<string>, string, string> {
+  return (input: Slice<string>) =>
+    input
+      .first()
+      .map((token) => Ok.of<[Slice<string>, string]>([input.rest(), token]))
+      .getOr(Err.of("No token left"));
+}
+
 function parserOf(
   tokens: Array<string>
 ): Parser<Slice<string>, string, string> {
-  return parseIf((token: string): token is string => tokens.includes(token));
+  return parseIf(
+    (token): token is string => tokens.includes(token),
+    parseFirst(),
+    (token) => `Expected valid token, but got ${token}`
+  );
 }
 
 function sectionParser(): Parser<Slice<string>, string, string> {
-  return parseIf((token: string): token is string =>
-    token.startsWith("section-")
+  return parseIf(
+    (token): token is string => token.startsWith("section-"),
+    parseFirst(),
+    (token) => `Expected token beginning with \`section-\`, but got ${token}`
   );
 }
 

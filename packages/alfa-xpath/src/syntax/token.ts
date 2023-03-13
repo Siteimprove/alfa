@@ -4,13 +4,14 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Result, Err } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
 const { fromCharCode } = String;
 const { and } = Refinement;
+const { parseIf } = Parser;
 
 /**
  * {@link https://www.w3.org/TR/xpath-31/#terminal-symbols}
@@ -423,15 +424,14 @@ export namespace Token {
   };
 }
 
-function parseToken<T extends Token>(
-  refinement: Refinement<Token, T>
-): Parser<Slice<Token>, T, string> {
-  return (input) =>
+function parseFirst(): Parser<Slice<Token>, Token, string> {
+  return (input: Slice<Token>) =>
     input
       .first()
-      .filter(refinement)
-      .map((token) =>
-        Result.of<[Slice<Token>, T], string>([input.rest(), token])
-      )
-      .getOr(Err.of("Expected token"));
+      .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))
+      .getOr(Err.of("No token left"));
+}
+
+function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
+  return parseIf(refinement, parseFirst(), (_) => "Mismatching token");
 }
