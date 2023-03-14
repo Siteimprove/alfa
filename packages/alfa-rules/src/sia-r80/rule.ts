@@ -1,6 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Unit } from "@siteimprove/alfa-css";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -13,21 +14,22 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
-const { and } = Predicate;
+const { and, test } = Predicate;
 const { isVisible, hasCascadedStyle } = Style;
+
+const hasRelativeUnit = (device: Device) =>
+  hasCascadedStyle(
+    "line-height",
+    (lineHeight) =>
+      lineHeight.type !== "length" || Unit.Length.isRelative(lineHeight.unit),
+    device
+  );
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r80",
   requirements: [Criterion.of("1.4.8")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
-    const hasRelativeUnit = hasCascadedStyle(
-      "line-height",
-      (lineHeight) =>
-        lineHeight.type !== "length" || Unit.Length.isRelative(lineHeight.unit),
-      device
-    );
-
     return {
       applicability() {
         return document
@@ -46,7 +48,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasRelativeUnit(target),
+            test(hasRelativeUnit(device), target),
             () => Outcomes.HasRelativeUnit,
             () => Outcomes.HasAbsoluteUnit
           ),

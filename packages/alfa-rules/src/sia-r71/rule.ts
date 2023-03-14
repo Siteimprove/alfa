@@ -1,5 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -12,20 +13,17 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
-const { and } = Predicate;
+const { and, test } = Predicate;
 const { isVisible, hasComputedStyle } = Style;
+
+const isNotJustified = (device: Device) =>
+  hasComputedStyle("text-align", (align) => align.value !== "justify", device);
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r71",
   requirements: [Criterion.of("1.4.8")],
   tags: [Scope.Component],
   evaluate({ device, document }) {
-    const isNotJustified = hasComputedStyle(
-      "text-align",
-      (align) => align.value !== "justify",
-      device
-    );
-
     return {
       applicability() {
         return document
@@ -36,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            isNotJustified(target),
+            test(isNotJustified(device), target),
             () => Outcomes.IsNotJustified,
             () => Outcomes.IsJustified
           ),

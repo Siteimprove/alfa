@@ -1,5 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -11,19 +12,16 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
-const { and } = Predicate;
+const { and, test } = Predicate;
 const { isVisible, hasComputedStyle } = Style;
+
+const isNotItalic = (device: Device) =>
+  hasComputedStyle("font-style", (style) => style.value !== "italic", device);
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r85",
   tags: [Scope.Component],
   evaluate({ device, document }) {
-    const isNotItalic = hasComputedStyle(
-      "font-style",
-      (style) => style.value !== "italic",
-      device
-    );
-
     return {
       applicability() {
         return document
@@ -34,7 +32,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            isNotItalic(target),
+            test(isNotItalic(device), target),
             () => Outcomes.IsNotItalic,
             () => Outcomes.IsItalic
           ),
