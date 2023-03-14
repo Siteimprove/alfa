@@ -1,11 +1,11 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Color } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Text, Node } from "@siteimprove/alfa-dom";
+import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { Style } from "../../style";
+import { hasComputedStyle } from "../../element/predicate/has-computed-style";
 
 const { isElement } = Element;
 const { isText } = Text;
@@ -26,9 +26,12 @@ export function isTransparent(
       .get(node, () => {
         if (
           isElement(node) &&
-          Style.from(node, device, context)
-            .computed("opacity")
-            .some((opacity) => opacity.value === 0)
+          hasComputedStyle(
+            "opacity",
+            (opacity) => opacity.value === 0,
+            device,
+            context
+          )(node)
         ) {
           return true;
         }
@@ -37,11 +40,12 @@ export function isTransparent(
           if (
             isText(node) &&
             isElement(parent) &&
-            Style.from(parent, device, context)
-              .computed("color")
-              .some(
-                (color) => color.type === "color" && Color.isTransparent(color)
-              )
+            hasComputedStyle(
+              "color",
+              Color.isTransparent,
+              device,
+              context
+            )(parent)
           ) {
             return true;
           }

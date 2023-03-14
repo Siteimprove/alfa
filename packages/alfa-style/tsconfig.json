@@ -184,6 +184,7 @@
     "src/value.ts",
     "test/common.ts",
     "test/node/predicate/has-transparent-background.spec.tsx",
+    "test/node/predicate/is-transparent.spec.tsx",
     "test/node/predicate/is-visible.spec.tsx",
     "test/property/background.spec.tsx",
     "test/property/background-color.spec.tsx",
