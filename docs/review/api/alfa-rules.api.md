@@ -461,13 +461,22 @@ export { experimentalRules }
 
 // @public (undocumented)
 export namespace Flattened {
-    export type Input = act.Rule.Input<RulesUnion>;
-    export type Question = act.Rule.Question<RulesUnion>;
+    export type Input = {
+        [K in Keys]: act.Rule.Input<RulesObject[K]>;
+    }[Keys];
+    export type Keys = keyof RulesObject;
+    export type Question = {
+        [K in Keys]: act.Rule.Question<RulesObject[K]>;
+    }[Keys];
     export type Rule = act.Rule<Input, Target, Question, Subject>;
     // Warning: (ae-forgotten-export) The symbol "rules" needs to be exported by the entry point index.d.ts
-    export type RulesUnion = Record_2.Value<typeof rules>;
-    export type Subject = act.Rule.Subject<RulesUnion>;
-    export type Target = act.Rule.Target<RulesUnion>;
+    export type RulesObject = typeof rules;
+    export type Subject = {
+        [K in Keys]: act.Rule.Subject<RulesObject[K]>;
+    }[Keys];
+    export type Target = {
+        [K in Keys]: act.Rule.Target<RulesObject[K]>;
+    }[Keys];
         {};
 }
 
