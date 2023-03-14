@@ -69,6 +69,18 @@ export namespace Token {
     | OpenComment.JSON
     | CloseComment.JSON;
 
+  const parseFirst: Parser<Slice<Token>, Token, string> = (
+    input: Slice<Token>
+  ) =>
+    input
+      .first()
+      .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))
+      .getOr(Err.of("No token left"));
+
+  function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
+    return parseIf(refinement, parseFirst, () => "Mismatching token");
+  }
+
   export class Ident implements Equatable, Serializable<Ident.JSON> {
     public static of(value: string): Ident {
       return new Ident(value);
@@ -1344,16 +1356,4 @@ export namespace Token {
   export const { of: closeComment, isCloseComment } = CloseComment;
 
   export const parseCloseComment = parseToken(isCloseComment);
-}
-
-function parseFirst(): Parser<Slice<Token>, Token, string> {
-  return (input: Slice<Token>) =>
-    input
-      .first()
-      .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))
-      .getOr(Err.of("No token left"));
-}
-
-function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
-  return parseIf(refinement, parseFirst(), (_) => "Mismatching token");
 }

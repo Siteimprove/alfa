@@ -167,38 +167,34 @@ const modifiables = Array.from([
 
 const modifiers = Array.from(["home", "work", "mobile", "fax", "pager"]);
 
-const addressType = parserOf(["shipping", "billing"]);
-const section = sectionParser();
-const unmodifiable = parserOf(unmodifiables);
-const modifiable = parserOf(modifiables);
-const modifier = parserOf(modifiers);
-const webauthn = parserOf(["webauthn"]);
-
-function parseFirst(): Parser<Slice<string>, string, string> {
-  return (input: Slice<string>) =>
-    input
-      .first()
-      .map((token) => Ok.of<[Slice<string>, string]>([input.rest(), token]))
-      .getOr(Err.of("No token left"));
-}
+const parseFirst: Parser<Slice<string>, string, string> = (
+  input: Slice<string>
+) =>
+  input
+    .first()
+    .map((token) => Ok.of<[Slice<string>, string]>([input.rest(), token]))
+    .getOr(Err.of("No token left"));
 
 function parserOf(
   tokens: Array<string>
 ): Parser<Slice<string>, string, string> {
   return parseIf(
     (token): token is string => tokens.includes(token),
-    parseFirst(),
+    parseFirst,
     (token) => `Expected valid token, but got ${token}`
   );
 }
 
-function sectionParser(): Parser<Slice<string>, string, string> {
-  return parseIf(
-    (token): token is string => token.startsWith("section-"),
-    parseFirst(),
-    (token) => `Expected token beginning with \`section-\`, but got ${token}`
-  );
-}
+const addressType = parserOf(["shipping", "billing"]);
+const unmodifiable = parserOf(unmodifiables);
+const section: Parser<Slice<string>, string, string> = parseIf(
+  (token): token is string => token.startsWith("section-"),
+  parseFirst,
+  (token) => `Expected token beginning with \`section-\`, but got ${token}`
+);
+const modifiable = parserOf(modifiables);
+const modifier = parserOf(modifiers);
+const webauthn = parserOf(["webauthn"]);
 
 export namespace Outcomes {
   export const HasValidValue = Ok.of(

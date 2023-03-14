@@ -40,6 +40,18 @@ export namespace Token {
     | Name.JSON
     | Character.JSON;
 
+  const parseFirst: Parser<Slice<Token>, Token, string> = (
+    input: Slice<Token>
+  ) =>
+    input
+      .first()
+      .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))
+      .getOr(Err.of("No token left"));
+
+  function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
+    return parseIf(refinement, parseFirst, () => "Mismatching token");
+  }
+
   export class Integer implements Equatable, Serializable<Integer.JSON> {
     public static of(value: number): Integer {
       return new Integer(value);
@@ -422,16 +434,4 @@ export namespace Token {
 
     return parseToken(and(isCharacter, predicate));
   };
-}
-
-function parseFirst(): Parser<Slice<Token>, Token, string> {
-  return (input: Slice<Token>) =>
-    input
-      .first()
-      .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))
-      .getOr(Err.of("No token left"));
-}
-
-function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
-  return parseIf(refinement, parseFirst(), (_) => "Mismatching token");
 }
