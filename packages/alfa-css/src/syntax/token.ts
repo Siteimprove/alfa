@@ -8,7 +8,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-const { map, oneOrMore } = Parser;
+const { map, oneOrMore, parseIf } = Parser;
 const { fromCharCode } = String;
 const { and } = Refinement;
 
@@ -68,6 +68,18 @@ export namespace Token {
     | CloseCurlyBracket.JSON
     | OpenComment.JSON
     | CloseComment.JSON;
+
+  const parseFirst: Parser<Slice<Token>, Token, string> = (
+    input: Slice<Token>
+  ) =>
+    input
+      .first()
+      .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))
+      .getOr(Err.of("No token left"));
+
+  function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
+    return parseIf(refinement, parseFirst, () => "Mismatching token");
+  }
 
   export class Ident implements Equatable, Serializable<Ident.JSON> {
     public static of(value: string): Ident {
@@ -1344,18 +1356,4 @@ export namespace Token {
   export const { of: closeComment, isCloseComment } = CloseComment;
 
   export const parseCloseComment = parseToken(isCloseComment);
-}
-
-function parseToken<T extends Token>(
-  refinement: Refinement<Token, T>
-): Parser<Slice<Token>, T, string> {
-  return (input) =>
-    input
-      .first()
-      .map((token) =>
-        refinement(token)
-          ? Ok.of<[Slice<Token>, T]>([input.rest(), token])
-          : Err.of("Mismatching token")
-      )
-      .getOr(Err.of("No token left"));
 }

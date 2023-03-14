@@ -4,7 +4,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -21,7 +21,7 @@ const { hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;
 const { isTabbable } = Style;
-const { either, end, option, right } = Parser;
+const { either, end, option, right, parseIf } = Parser;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r10",
@@ -167,40 +167,34 @@ const modifiables = Array.from([
 
 const modifiers = Array.from(["home", "work", "mobile", "fax", "pager"]);
 
-const addressType = parserOf(["shipping", "billing"]);
-const section = sectionParser();
-const unmodifiable = parserOf(unmodifiables);
-const modifiable = parserOf(modifiables);
-const modifier = parserOf(modifiers);
-const webauthn = parserOf(["webauthn"]);
+const parseFirst: Parser<Slice<string>, string, string> = (
+  input: Slice<string>
+) =>
+  input
+    .first()
+    .map((token) => Ok.of<[Slice<string>, string]>([input.rest(), token]))
+    .getOr(Err.of("No token left"));
 
 function parserOf(
   tokens: Array<string>
 ): Parser<Slice<string>, string, string> {
-  return (input) => {
-    const token = input.array[input.offset];
-
-    if (token !== undefined && tokens.includes(token)) {
-      return Result.of([input.slice(1), token]);
-    }
-
-    return Err.of(`Expected valid token, but got ${input.toJSON()}`);
-  };
+  return parseIf(
+    (token): token is string => tokens.includes(token),
+    parseFirst,
+    (token) => `Expected valid token, but got ${token}`
+  );
 }
 
-function sectionParser(): Parser<Slice<string>, string, string> {
-  return (input) => {
-    const token = input.array[input.offset];
-
-    if (token !== undefined && token.startsWith("section-")) {
-      return Result.of([input.slice(1), token]);
-    }
-
-    return Err.of(
-      `Expected token beginning with \`section-\`, but got ${input}`
-    );
-  };
-}
+const addressType = parserOf(["shipping", "billing"]);
+const unmodifiable = parserOf(unmodifiables);
+const section: Parser<Slice<string>, string, string> = parseIf(
+  (token): token is string => token.startsWith("section-"),
+  parseFirst,
+  (token) => `Expected token beginning with \`section-\`, but got ${token}`
+);
+const modifiable = parserOf(modifiables);
+const modifier = parserOf(modifiers);
+const webauthn = parserOf(["webauthn"]);
 
 export namespace Outcomes {
   export const HasValidValue = Ok.of(
