@@ -31,9 +31,7 @@ export function jsx<N extends string = string>(
         continue;
 
       default:
-        // Due to https://github.com/microsoft/TypeScript/issues/50567
-        // we need the type assertion on value :-/
-        attributes[name] = value === true ? (value as true) : `${value}`;
+        attributes[name] = value === true ? value : `${value}`;
     }
   }
 
