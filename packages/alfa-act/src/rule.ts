@@ -168,13 +168,24 @@ export namespace Rule {
     };
   }
 
-  export type Input<R> = R extends Rule<infer I, any, any, any> ? I : never;
+  // While we only use one of the four inferred values in the result, we cannot
+  // simply replace them by `any` due to the default type of Q = never which
+  // does not extends `any` (nor unknown), thus breaking the full conditional type.
+  export type Input<R> = R extends Rule<infer I, infer T, infer Q, infer S>
+    ? I
+    : never;
 
-  export type Target<R> = R extends Rule<any, infer T, any, any> ? T : never;
+  export type Target<R> = R extends Rule<infer I, infer T, infer Q, infer S>
+    ? T
+    : never;
 
-  export type Question<R> = R extends Rule<any, any, infer Q, any> ? Q : never;
+  export type Question<R> = R extends Rule<infer I, infer T, infer Q, infer S>
+    ? Q
+    : never;
 
-  export type Subject<R> = R extends Rule<any, any, any, infer S> ? S : never;
+  export type Subject<R> = R extends Rule<infer I, infer T, infer Q, infer S>
+    ? S
+    : never;
 
   export function isRule<I, T extends Hashable, Q, S>(
     value: unknown
