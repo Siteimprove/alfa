@@ -20,7 +20,6 @@ export namespace Continuation {
     export function of<T, R = void, A extends Array<unknown> = []>(value: T): Continuation<T, R, A>;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

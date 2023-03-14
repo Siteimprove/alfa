@@ -15,7 +15,6 @@ export namespace Callback {
     export function contraMap<T, R, U, A extends Array<unknown> = []>(callback: Callback<T, R, A>, mapper: Mapper<U, T>): Callback<U, R, A>;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

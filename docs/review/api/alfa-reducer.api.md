@@ -15,7 +15,6 @@ export namespace Reducer {
     export function concat<T>(): Reducer<Iterable<T>, Iterable<T>>;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

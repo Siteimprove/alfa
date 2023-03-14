@@ -33,7 +33,7 @@ export class Device implements Equatable, Hashable, Serializable {
     get type(): Device.Type;
     // (undocumented)
     get viewport(): Viewport;
-    }
+}
 
 // @public (undocumented)
 export namespace Device {
@@ -121,7 +121,7 @@ export class Preference<N extends Preference.Name = Preference.Name> implements 
     toJSON(): Preference.JSON;
     // (undocumented)
     get value(): Preference.Value<N>;
-    }
+}
 
 // @public (undocumented)
 export namespace Preference {
@@ -159,7 +159,7 @@ export namespace Preference {
     export function unset<N extends Name>(name: N): Value<N>;
     // (undocumented)
     export type Value<N extends Name = Name> = Preferences[N];
-    {};
+        {};
 }
 
 // @public (undocumented)
@@ -211,7 +211,7 @@ export class Viewport implements Equatable, Hashable, Serializable {
     toJSON(): Viewport.JSON;
     // (undocumented)
     get width(): number;
-    }
+}
 
 // @public (undocumented)
 export namespace Viewport {
@@ -238,7 +238,6 @@ export namespace Viewport {
     // (undocumented)
     export function standard(): Viewport;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

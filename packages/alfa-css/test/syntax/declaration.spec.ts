@@ -104,3 +104,25 @@ test(".consume() consumes a declaration value with a function with a block", (t)
     important: false,
   });
 });
+
+test(".consume() consumes a declaration without values", (t) => {
+  consume(t, "foo: ", {
+    name: "foo",
+    value: [],
+    important: false,
+  });
+});
+
+test(".consume() returns error on empty input", (t) => {
+  t.deepEqual(Declaration.consume(Lexer.lex("")).toJSON(), {
+    type: "err",
+    error: "No token left",
+  });
+});
+
+test(".consume() returns error when first token is not identifier", (t) => {
+  t.deepEqual(Declaration.consume(Lexer.lex("(: do([bar])")).toJSON(), {
+    type: "err",
+    error: "Mismatching token",
+  });
+});

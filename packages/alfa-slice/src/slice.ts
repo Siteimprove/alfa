@@ -45,14 +45,6 @@ export class Slice<T> implements Collection.Indexed<T> {
     this._length = length;
   }
 
-  public get array(): ReadonlyArray<T> {
-    return this._array;
-  }
-
-  public get offset(): number {
-    return this._offset;
-  }
-
   public get length(): number {
     return this._length;
   }

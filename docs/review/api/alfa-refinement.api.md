@@ -135,9 +135,8 @@ export namespace Refinement {
     }
     const // (undocumented)
     isPrimitive: Refinement<unknown, string | number | bigint | boolean | symbol | null | undefined, []>;
-    {};
+        {};
 }
-
 
 // (No @packageDocumentation comment for this package)
 

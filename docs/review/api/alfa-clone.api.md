@@ -16,7 +16,6 @@ export namespace Clone {
     export function clone<T extends Clone<T>>(value: Clone<T>): T;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

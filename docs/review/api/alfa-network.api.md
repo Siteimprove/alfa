@@ -80,16 +80,16 @@ export namespace Network {
     export function isNetwork<N, E>(value: unknown): value is Network<N, E>;
     // (undocumented)
     export type JSON<N, E> = Array<[
-        Serializable.ToJSON<N>,
-        Array<[Serializable.ToJSON<N>, Array<Serializable.ToJSON<E>>]>
+    Serializable.ToJSON<N>,
+    Array<[Serializable.ToJSON<N>, Array<Serializable.ToJSON<E>>]>
     ]>;
     // (undocumented)
     export interface Traversal {
         // (undocumented)
         <N, E>(network: Network<N, E>, root: N): Iterable_2<[
-            node: N,
-            edges: Iterable_2<E>,
-            parent: N
+        node: N,
+        edges: Iterable_2<E>,
+        parent: N
         ]>;
     }
     const // (undocumented)
@@ -97,7 +97,6 @@ export namespace Network {
     const // (undocumented)
     BreadthFirst: Traversal;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

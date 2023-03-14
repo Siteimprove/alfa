@@ -21,7 +21,6 @@ namespace JSON_2 {
     // (undocumented)
     function stringify(value: JSON_2): string;
 }
-
 export { JSON_2 as JSON }
 
 // @public (undocumented)
@@ -41,7 +40,6 @@ export namespace Serializable {
     // (undocumented)
     export function toJSON<T>(value: T): ToJSON<T>;
 }
-
 
 // (No @packageDocumentation comment for this package)
 

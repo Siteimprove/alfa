@@ -20,7 +20,6 @@ export class FNV extends Hash {
     write(data: Uint8Array): this;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

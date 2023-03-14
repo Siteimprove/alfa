@@ -1,13 +1,14 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
-import { Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
+import { Slice } from "@siteimprove/alfa-slice";
 import { Component } from "./component";
 import { Token } from "./token";
+
+const { either, pair, left, map, takeUntil } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#simple-block}
@@ -98,29 +99,53 @@ export namespace Block {
     | Token.CloseCurlyBracket;
 
   /**
+   * Consumes components delimited by parentheses, square brackets or curly
+   * brackets.
+   *
+   * @remarks
+   * The compiler doesn't check if the delimiter types match, that needs to be
+   * ensured by the caller of the function.
+   */
+  function consumeDelimited(
+    open: Parser<Slice<Token>, Open, string>,
+    closed: Parser<Slice<Token>, Close, string>
+  ) {
+    return map(
+      left(
+        pair(
+          open,
+          // eta expansion is necessary for `this` binding to resolve correctly
+          takeUntil((input) => Component.consume(input), closed)
+        ),
+        closed
+      ),
+      ([open, components]) =>
+        Block.of(
+          open,
+          components.flatMap((component) => [...component])
+        )
+    );
+  }
+
+  const consumeParentheses = consumeDelimited(
+    Token.parseOpenParenthesis,
+    Token.parseCloseParenthesis
+  );
+  const consumeSquareBrackets = consumeDelimited(
+    Token.parseOpenSquareBracket,
+    Token.parseCloseSquareBracket
+  );
+  const consumeCurlyBracket = consumeDelimited(
+    Token.parseOpenCurlyBracket,
+    Token.parseCloseCurlyBracket
+  );
+
+  /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-simple-block}
    */
-  export const consume: Parser<Slice<Token>, Block> = (input) => {
-    const token = input.array[input.offset] as Open;
-
-    const value: Array<Token> = [];
-
-    input = input.slice(1);
-
-    while (input.length > 0) {
-      const next = input.array[input.offset];
-
-      if (next.type === token.mirror.type) {
-        input = input.slice(1);
-        break;
-      }
-
-      const [remainder, component] = Component.consume(input).get();
-
-      input = remainder;
-      value.push(...component);
-    }
-
-    return Result.of([input, Block.of(token, value)]);
-  };
+  export const consume: Parser<Slice<Token>, Block, string> = either(
+    consumeParentheses,
+    consumeSquareBrackets,
+    consumeCurlyBracket
+  );
 }

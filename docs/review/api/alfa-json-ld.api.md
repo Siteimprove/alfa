@@ -29,7 +29,6 @@ export namespace Keyword {
     export function isKeyword(key: string): key is Keyword;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

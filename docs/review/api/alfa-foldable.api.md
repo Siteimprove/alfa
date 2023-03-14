@@ -12,7 +12,6 @@ export interface Foldable<T> {
     reduce<U>(reducer: Reducer<T, U>, accumulator: U): U;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

@@ -542,7 +542,8 @@ function substitute(
   let substituted = false;
 
   while (tokens.length > 0) {
-    const next = tokens.array[tokens.offset];
+    // `tokens` is not empty due to the previous test.
+    const next = tokens.first().getUnsafe();
 
     if (next.type === "function" && next.value === "var") {
       // If the token is a "var(", process it.
@@ -575,7 +576,7 @@ function substitute(
     } else {
       // If the token is not a "var(", push it to the result, and move on.
       replaced.push(next);
-      tokens = tokens.slice(1);
+      tokens = tokens.rest();
     }
   }
 

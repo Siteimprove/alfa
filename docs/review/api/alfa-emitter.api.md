@@ -30,7 +30,6 @@ export class Emitter<T> implements Functor.Invariant<T>, AsyncIterable<T> {
     once(listener: Callback<T>): this;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```

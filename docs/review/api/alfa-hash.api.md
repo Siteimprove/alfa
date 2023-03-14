@@ -79,7 +79,6 @@ export namespace Hashable {
     export function isHashable(value: unknown): value is Hashable;
 }
 
-
 // (No @packageDocumentation comment for this package)
 
 ```
