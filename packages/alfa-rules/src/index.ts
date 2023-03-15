@@ -44,7 +44,7 @@ export namespace Flattened {
    * ("R1" | "R2" | …)
    * Next, for each extractor, we iterate it over the values of the object type
    * and only keep the resulting values. The unions are then automatically
-   * collapsed as we won them.
+   * collapsed as we want them.
    */
   type RulesObject = typeof rules;
 
