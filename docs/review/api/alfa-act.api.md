@@ -25,15 +25,15 @@ import { Result } from '@siteimprove/alfa-result';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
-import { Thunk } from '@siteimprove/alfa-thunk';
+import type { Thunk } from '@siteimprove/alfa-thunk';
 import { Tuple } from '@siteimprove/alfa-tuple';
 
 // @public
-export class Audit<I, T extends Hashable, Q = never, S = T> {
+export class Audit<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> {
     // (undocumented)
     evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
     // (undocumented)
-    static of<I, T extends Hashable, Q = never, S = T>(input: I, rules: Iterable_2<Rule<I, T, Q, S>>, oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
+    static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(input: I, rules: Iterable_2<Rule<I, T, Q, S>>, oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
 }
 
 // @public (undocumented)
@@ -41,7 +41,7 @@ export class Cache {
     // (undocumented)
     static empty(): Cache;
     // (undocumented)
-    get<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q, S>>>>): Future<Iterable<Outcome<I, T, Q, S>>>;
+    get<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q, S>>>>): Future<Iterable<Outcome<I, T, Q, S>>>;
 }
 
 // @public (undocumented)
@@ -81,27 +81,27 @@ export namespace Diagnostic {
 // Warning: (ae-forgotten-export) The symbol "Depths" needs to be exported by the entry point index.d.ts
 //
 // @public
-export type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = Interview.MaxDepth> = ANSWER | {
-    [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, CONTEXT, QUESTION[URI] extends [any, infer A] ? A : never, D extends -1 ? ANSWER : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>, URI extends string ? URI : never>;
+export type Interview<QUESTION extends Question.Metadata, SUBJECT, CONTEXT, ANSWER, D extends number = Interview.MaxDepth> = ANSWER | {
+    [URI in keyof QUESTION]: Question<QUESTION[URI][0], SUBJECT, CONTEXT, QUESTION[URI][1], D extends -1 ? ANSWER : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>, URI extends string ? URI : never>;
 }[keyof QUESTION];
 
 // @public (undocumented)
 export namespace Interview {
-    export function conduct<INPUT, TARGET extends Hashable, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>, oracleUsed?: boolean): Future<Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>>>;
+    export function conduct<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>, oracleUsed?: boolean): Future<Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>>>;
     // @internal (undocumented)
     export type MaxDepth = 3;
 }
 
 // @public
-export type Oracle<INPUT, TARGET extends Hashable, QUESTION, SUBJECT> = (rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, question: {
-    [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, TARGET, QUESTION[URI] extends [any, infer A] ? A : never, unknown, URI extends string ? URI : never>;
-}[keyof QUESTION]) => Future<Option<QUESTION[keyof QUESTION] extends [any, infer A] ? A : never>>;
+export type Oracle<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT> = (rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, question: {
+    [URI in keyof QUESTION]: Question<QUESTION[URI][0], SUBJECT, TARGET, QUESTION[URI][1], unknown, URI extends string ? URI : never>;
+}[keyof QUESTION]) => Future<Option<QUESTION[keyof QUESTION][1]>>;
 
 // @public
-export abstract class Outcome<I, T extends Hashable, Q = never, S = T, V extends Outcome.Value = Outcome.Value> implements Equatable, Hashable, json.Serializable<Outcome.JSON<V>>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
+export abstract class Outcome<I, T extends Hashable, Q extends Question.Metadata = {}, S = T, V extends Outcome.Value = Outcome.Value> implements Equatable, Hashable, json.Serializable<Outcome.JSON<V>>, earl.Serializable<Outcome.EARL>, sarif.Serializable<sarif.Result> {
     protected constructor(outcome: V, rule: Rule<I, T, Q, S>, mode: Outcome.Mode);
     // (undocumented)
-    equals<I, T extends Hashable, Q, S, V extends Outcome.Value = Outcome.Value>(value: Outcome<I, T, Q, S, V>): boolean;
+    equals<I, T extends Hashable, Q extends Question.Metadata, S, V extends Outcome.Value = Outcome.Value>(value: Outcome<I, T, Q, S, V>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -129,28 +129,28 @@ export abstract class Outcome<I, T extends Hashable, Q = never, S = T, V extends
 // @public (undocumented)
 export namespace Outcome {
     // (undocumented)
-    export type Applicable<I, T extends Hashable, Q = unknown, S = T> = Passed<I, T, Q, S> | Failed<I, T, Q, S> | CantTell<I, T, Q, S>;
+    export type Applicable<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> = Passed<I, T, Q, S> | Failed<I, T, Q, S> | CantTell<I, T, Q, S>;
     // (undocumented)
     export namespace Applicable {
         // (undocumented)
-        export function isApplicable<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Applicable<I, T, Q, S>;
+        export function isApplicable<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is Applicable<I, T, Q, S>;
         // (undocumented)
-        export function isApplicable<I, T extends Hashable, Q, S>(value: unknown): value is Applicable<I, T, Q, S>;
+        export function isApplicable<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Applicable<I, T, Q, S>;
     }
     // Warning: (ae-incompatible-release-tags) The symbol "CantTell" is marked as @public, but its signature references "Value" which is marked as @internal
     //
     // (undocumented)
-    export class CantTell<I, T extends Hashable, Q = never, S = T> extends Outcome<I, T, Q, S, Value.CantTell> {
+    export class CantTell<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.CantTell> {
         // (undocumented)
         get diagnostic(): Diagnostic;
         // (undocumented)
-        equals<I, T extends Hashable, Q, S>(value: CantTell<I, T, Q, S>): boolean;
+        equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: CantTell<I, T, Q, S>): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         hash(hash: Hash): void;
         // (undocumented)
-        static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic, mode: Mode): CantTell<I, T, Q, S>;
+        static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic, mode: Mode): CantTell<I, T, Q, S>;
         // (undocumented)
         get target(): T;
         // (undocumented)
@@ -174,9 +174,9 @@ export namespace Outcome {
             };
         }
         // (undocumented)
-        export function isCantTell<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is CantTell<I, T, Q, S>;
+        export function isCantTell<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is CantTell<I, T, Q, S>;
         // (undocumented)
-        export function isCantTell<I, T extends Hashable, Q, S>(value: unknown): value is CantTell<I, T, Q, S>;
+        export function isCantTell<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is CantTell<I, T, Q, S>;
         // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
         //
         // (undocumented)
@@ -203,9 +203,9 @@ export namespace Outcome {
     // Warning: (ae-incompatible-release-tags) The symbol "Failed" is marked as @public, but its signature references "Value" which is marked as @internal
     //
     // (undocumented)
-    export class Failed<I, T extends Hashable, Q = never, S = T> extends Outcome<I, T, Q, S, Value.Failed> {
+    export class Failed<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Failed> {
         // (undocumented)
-        equals<I, T extends Hashable, Q, S>(value: Failed<I, T, Q, S>): boolean;
+        equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Failed<I, T, Q, S>): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -215,7 +215,7 @@ export namespace Outcome {
         // (undocumented)
         hash(hash: Hash): void;
         // (undocumented)
-        static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record_2<{
+        static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record_2<{
             [key: string]: Result<Diagnostic>;
         }>, mode: Mode): Failed<I, T, Q, S>;
         // (undocumented)
@@ -245,9 +245,9 @@ export namespace Outcome {
             };
         }
         // (undocumented)
-        export function isFailed<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Failed<I, T, Q, S>;
+        export function isFailed<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is Failed<I, T, Q, S>;
         // (undocumented)
-        export function isFailed<I, T extends Hashable, Q, S>(value: unknown): value is Failed<I, T, Q, S>;
+        export function isFailed<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Failed<I, T, Q, S>;
         // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
         //
         // (undocumented)
@@ -261,7 +261,7 @@ export namespace Outcome {
         }
     }
     // (undocumented)
-    export function from<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record_2<{
+    export function from<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record_2<{
         [key: string]: Option<Result<Diagnostic>>;
     }>, mode: Mode): Outcome.Applicable<I, T, Q, S>;
     const // (undocumented)
@@ -270,13 +270,13 @@ export namespace Outcome {
     // Warning: (ae-incompatible-release-tags) The symbol "Inapplicable" is marked as @public, but its signature references "Value" which is marked as @internal
     //
     // (undocumented)
-    export class Inapplicable<I, T extends Hashable, Q = unknown, S = T> extends Outcome<I, T, Q, S, Value.Inapplicable> {
+    export class Inapplicable<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Inapplicable> {
         // (undocumented)
-        equals<I, T extends Hashable, Q, S>(value: Inapplicable<I, T, Q, S>): boolean;
+        equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Inapplicable<I, T, Q, S>): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
-        static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, mode: Mode): Inapplicable<I, T, Q, S>;
+        static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, mode: Mode): Inapplicable<I, T, Q, S>;
         // (undocumented)
         toEARL(): Inapplicable.EARL;
         // (undocumented)
@@ -297,9 +297,9 @@ export namespace Outcome {
             };
         }
         // (undocumented)
-        export function isInapplicable<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Inapplicable<I, T, Q, S>;
+        export function isInapplicable<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is Inapplicable<I, T, Q, S>;
         // (undocumented)
-        export function isInapplicable<I, T extends Hashable, Q, S>(value: unknown): value is Inapplicable<I, T, Q, S>;
+        export function isInapplicable<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Inapplicable<I, T, Q, S>;
         // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
         //
         // (undocumented)
@@ -334,9 +334,9 @@ export namespace Outcome {
     // Warning: (ae-incompatible-release-tags) The symbol "Passed" is marked as @public, but its signature references "Value" which is marked as @internal
     //
     // (undocumented)
-    export class Passed<I, T extends Hashable, Q = never, S = T> extends Outcome<I, T, Q, S, Value.Passed> {
+    export class Passed<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Passed> {
         // (undocumented)
-        equals<I, T extends Hashable, Q, S>(value: Passed<I, T, Q, S>): boolean;
+        equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Passed<I, T, Q, S>): boolean;
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -346,7 +346,7 @@ export namespace Outcome {
         // (undocumented)
         hash(hash: Hash): void;
         // (undocumented)
-        static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record_2<{
+        static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record_2<{
             [key: string]: Result<Diagnostic>;
         }>, mode: Mode): Passed<I, T, Q, S>;
         // (undocumented)
@@ -373,9 +373,9 @@ export namespace Outcome {
             };
         }
         // (undocumented)
-        export function isPassed<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Passed<I, T, Q, S>;
+        export function isPassed<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is Passed<I, T, Q, S>;
         // (undocumented)
-        export function isPassed<I, T extends Hashable, Q, S>(value: unknown): value is Passed<I, T, Q, S>;
+        export function isPassed<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Passed<I, T, Q, S>;
         // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
         //
         // (undocumented)
@@ -489,6 +489,10 @@ export namespace Question {
         uri: URI;
     }
     // (undocumented)
+    export type Metadata = {
+        [uri: string]: [unknown, unknown];
+    };
+    // (undocumented)
     export interface Options<A> {
         // (undocumented)
         readonly diagnostic?: Diagnostic;
@@ -545,14 +549,14 @@ export namespace Requirement {
 }
 
 // @public
-export abstract class Rule<I, T extends Hashable, Q = never, S = T> implements Equatable, Hashable, json.Serializable<Rule.JSON>, earl.Serializable<Rule.EARL>, sarif.Serializable<sarif.ReportingDescriptor> {
+export abstract class Rule<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> implements Equatable, Hashable, json.Serializable<Rule.JSON>, earl.Serializable<Rule.EARL>, sarif.Serializable<sarif.ReportingDescriptor> {
     protected constructor(uri: string, requirements: Array_2<Requirement>, tags: Array_2<Tag>, evaluator: Rule.Evaluate<I, T, Q, S>);
     // (undocumented)
-    equals<I, T extends Hashable, Q, S>(value: Rule<I, T, Q, S>): boolean;
+    equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Rule<I, T, Q, S>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    evaluate(input: I, oracle?: Oracle<I, T, Q, S>, outcomes?: Cache, performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
+    evaluate(input: I, oracle?: {} extends Q ? any : Oracle<I, T, Q, S>, outcomes?: Cache, performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
     // (undocumented)
     protected readonly _evaluate: Rule.Evaluate<I, T, Q, S>;
     // (undocumented)
@@ -588,9 +592,9 @@ export abstract class Rule<I, T extends Hashable, Q = never, S = T> implements E
 // @public (undocumented)
 export namespace Rule {
     // (undocumented)
-    export class Atomic<I, T extends Hashable, Q = never, S = T> extends Rule<I, T, Q, S> {
+    export class Atomic<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Rule<I, T, Q, S> {
         // (undocumented)
-        static of<I, T extends Hashable, Q = never, S = T>(properties: {
+        static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(properties: {
             uri: string;
             requirements?: Iterable_2<Requirement>;
             tags?: Iterable_2<Tag>;
@@ -602,7 +606,7 @@ export namespace Rule {
     // (undocumented)
     export namespace Atomic {
         // (undocumented)
-        export interface Evaluate<I, T extends Hashable, Q, S> {
+        export interface Evaluate<I, T extends Hashable, Q extends Question.Metadata, S> {
             // (undocumented)
             (input: I, performance?: {
                 mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
@@ -615,9 +619,9 @@ export namespace Rule {
             };
         }
         // (undocumented)
-        export function isAtomic<I, T extends Hashable, Q, S>(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
+        export function isAtomic<I, T extends Hashable, Q extends Question.Metadata, S>(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
         // (undocumented)
-        export function isAtomic<I, T extends Hashable, Q, S>(value: unknown): value is Atomic<I, T, Q, S>;
+        export function isAtomic<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Atomic<I, T, Q, S>;
         // (undocumented)
         export interface JSON extends Rule.JSON {
             // (undocumented)
@@ -625,11 +629,11 @@ export namespace Rule {
         }
     }
     // (undocumented)
-    export class Composite<I, T extends Hashable, Q = never, S = T> extends Rule<I, T, Q, S> {
+    export class Composite<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Rule<I, T, Q, S> {
         // (undocumented)
         get composes(): ReadonlyArray<Rule<I, T, Q, S>>;
         // (undocumented)
-        static of<I, T extends Hashable, Q = never, S = T>(properties: {
+        static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(properties: {
             uri: string;
             requirements?: Iterable_2<Requirement>;
             tags?: Iterable_2<Tag>;
@@ -642,7 +646,7 @@ export namespace Rule {
     // (undocumented)
     export namespace Composite {
         // (undocumented)
-        export interface Evaluate<I, T extends Hashable, Q, S> {
+        export interface Evaluate<I, T extends Hashable, Q extends Question.Metadata, S> {
             // (undocumented)
             (input: I, performance?: {
                 mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
@@ -654,9 +658,9 @@ export namespace Rule {
             };
         }
         // (undocumented)
-        export function isComposite<I, T extends Hashable, Q>(value: Rule<I, T, Q>): value is Composite<I, T, Q>;
+        export function isComposite<I, T extends Hashable, Q extends Question.Metadata>(value: Rule<I, T, Q>): value is Composite<I, T, Q>;
         // (undocumented)
-        export function isComposite<I, T extends Hashable, Q>(value: unknown): value is Composite<I, T, Q>;
+        export function isComposite<I, T extends Hashable, Q extends Question.Metadata>(value: unknown): value is Composite<I, T, Q>;
         // (undocumented)
         export interface JSON extends Rule.JSON {
             // (undocumented)
@@ -684,17 +688,17 @@ export namespace Rule {
         };
     }
     // (undocumented)
-    export interface Evaluate<I, T extends Hashable, Q, S> {
+    export interface Evaluate<I, T extends Hashable, Q extends Question.Metadata, S> {
         // (undocumented)
-        (input: Readonly<I>, oracle: Oracle<I, T, Q, S>, outcomes: Cache, performance?: Performance<Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
+        (input: Readonly<I>, oracle: {} extends Q ? any : Oracle<I, T, Q, S>, outcomes: Cache, performance?: Performance<Event<I, T, Q, S>>): Future<Iterable_2<Outcome<I, T, Q, S>>>;
     }
     // (undocumented)
-    export class Event<INPUT, TARGET extends Hashable, QUESTION, SUBJECT, TYPE extends Event.Type = Event.Type, NAME extends string = string> implements Serializable<Event.JSON<TYPE, NAME>> {
+    export class Event<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, TYPE extends Event.Type = Event.Type, NAME extends string = string> implements Serializable<Event.JSON<TYPE, NAME>> {
         constructor(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME);
         // (undocumented)
         get name(): NAME;
         // (undocumented)
-        static of<INPUT, TARGET extends Hashable, QUESTION, SUBJECT, TYPE extends Event.Type, NAME extends string>(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
+        static of<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, TYPE extends Event.Type, NAME extends string>(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
         // (undocumented)
         get rule(): Rule<INPUT, TARGET, QUESTION, SUBJECT>;
         // (undocumented)
@@ -705,15 +709,15 @@ export namespace Rule {
     // (undocumented)
     export namespace Event {
         // (undocumented)
-        export function end<I, T extends Hashable, Q, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "end", N>;
+        export function end<I, T extends Hashable, Q extends Question.Metadata, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "end", N>;
         // (undocumented)
-        export function end<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "total">;
+        export function end<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "total">;
         // (undocumented)
-        export function endApplicability<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "applicability">;
+        export function endApplicability<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "applicability">;
         // (undocumented)
-        export function endExpectation<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "expectation">;
+        export function endExpectation<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "expectation">;
         // (undocumented)
-        export function isEvent<INPUT, TARGET extends Hashable, QUESTION, SUBJECT, TYPE extends Event.Type = Event.Type, NAME extends string = string>(value: unknown): value is Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
+        export function isEvent<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, TYPE extends Event.Type = Event.Type, NAME extends string = string>(value: unknown): value is Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
         // (undocumented)
         export interface JSON<T extends Type = Type, N extends string = string> {
             // (undocumented)
@@ -726,20 +730,20 @@ export namespace Rule {
             type: T;
         }
         // (undocumented)
-        export function start<I, T extends Hashable, Q, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "start", N>;
+        export function start<I, T extends Hashable, Q extends Question.Metadata, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "start", N>;
         // (undocumented)
-        export function start<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "total">;
+        export function start<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "total">;
         // (undocumented)
-        export function startApplicability<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "applicability">;
+        export function startApplicability<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "applicability">;
         // (undocumented)
-        export function startExpectation<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "expectation">;
+        export function startExpectation<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "expectation">;
         // (undocumented)
         export type Type = "start" | "end";
     }
     // (undocumented)
     export type Input<R> = R extends Rule<infer I, infer T, infer Q, infer S> ? I : never;
     // (undocumented)
-    export function isRule<I, T extends Hashable, Q, S>(value: unknown): value is Rule<I, T, Q, S>;
+    export function isRule<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Rule<I, T, Q, S>;
     const // (undocumented)
     isAtomic: typeof Atomic.isAtomic;
     // (undocumented)

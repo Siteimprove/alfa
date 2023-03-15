@@ -104,6 +104,7 @@ export abstract class Rule<
 
   public evaluate(
     input: I,
+    // A rule asking no questions, never calls its oracle, so it can be anything
     oracle: {} extends Q ? any : Oracle<I, T, Q, S> = () => Future.now(None),
     outcomes: Cache = Cache.empty(),
     performance?: Performance<Rule.Event<I, T, Q, S>>
@@ -230,6 +231,7 @@ export namespace Rule {
   > {
     (
       input: Readonly<I>,
+      // A rule asking no questions, never calls its oracle, so it can be anything
       oracle: {} extends Q ? any : Oracle<I, T, Q, S>,
       outcomes: Cache,
       performance?: Performance<Event<I, T, Q, S>>
@@ -835,6 +837,7 @@ function resolve<I, T extends Hashable, Q extends Question.Metadata, S>(
     [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
   }>,
   rule: Rule<I, T, Q, S>,
+  // A rule asking no questions, never calls its oracle, so it can be anything
   oracle: {} extends Q ? any : Oracle<I, T, Q, S>,
   oracleUsedInApplicability: boolean
 ): Future<Outcome.Applicable<I, T, Q, S>> {
