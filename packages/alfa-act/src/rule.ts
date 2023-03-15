@@ -21,7 +21,8 @@ import * as sarif from "@siteimprove/alfa-sarif";
 import { Cache } from "./cache";
 import { Diagnostic } from "./diagnostic";
 import { Interview } from "./interview";
-import { Oracle } from "./oracle";
+import type { Oracle } from "./oracle";
+import type { Question } from "./question";
 import { Outcome } from "./outcome";
 import { Requirement } from "./requirement";
 import { Tag } from "./tag";
@@ -35,8 +36,12 @@ const { flatten, reduce } = Iterable;
  * * Q: questions' metadata type
  * * S: possible types of questions' subject.
  */
-export abstract class Rule<I, T extends Hashable, Q = never, S = T>
-  implements
+export abstract class Rule<
+  I,
+  T extends Hashable,
+  Q extends Question.Metadata = never,
+  S = T
+> implements
     Equatable,
     Hashable,
     json.Serializable<Rule.JSON>,
@@ -106,7 +111,9 @@ export abstract class Rule<I, T extends Hashable, Q = never, S = T>
     return this._evaluate(input, oracle, outcomes, performance);
   }
 
-  public equals<I, T extends Hashable, Q, S>(value: Rule<I, T, Q, S>): boolean;
+  public equals<I, T extends Hashable, Q extends Question.Metadata, S>(
+    value: Rule<I, T, Q, S>
+  ): boolean;
 
   public equals(value: unknown): value is this;
 
@@ -187,7 +194,7 @@ export namespace Rule {
     ? S
     : never;
 
-  export function isRule<I, T extends Hashable, Q, S>(
+  export function isRule<I, T extends Hashable, Q extends Question.Metadata, S>(
     value: unknown
   ): value is Rule<I, T, Q, S> {
     return value instanceof Rule;
@@ -215,7 +222,12 @@ export namespace Rule {
    * approach in combination with memoization to avoid the risk of repeating
    * rule evaluation procedures.
    */
-  export interface Evaluate<I, T extends Hashable, Q, S> {
+  export interface Evaluate<
+    I,
+    T extends Hashable,
+    Q extends Question.Metadata,
+    S
+  > {
     (
       input: Readonly<I>,
       oracle: Oracle<I, T, Q, S>,
@@ -224,13 +236,18 @@ export namespace Rule {
     ): Future<Iterable<Outcome<I, T, Q, S>>>;
   }
 
-  export class Atomic<I, T extends Hashable, Q = never, S = T> extends Rule<
+  export class Atomic<
     I,
-    T,
-    Q,
-    S
-  > {
-    public static of<I, T extends Hashable, Q = never, S = T>(properties: {
+    T extends Hashable,
+    Q extends Question.Metadata = never,
+    S = T
+  > extends Rule<I, T, Q, S> {
+    public static of<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata = never,
+      S = T
+    >(properties: {
       uri: string;
       requirements?: Iterable<Requirement>;
       tags?: Iterable<Tag>;
@@ -371,7 +388,12 @@ export namespace Rule {
       type: "atomic";
     }
 
-    export interface Evaluate<I, T extends Hashable, Q, S> {
+    export interface Evaluate<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    > {
       (
         input: I,
         performance?: {
@@ -389,30 +411,44 @@ export namespace Rule {
       };
     }
 
-    export function isAtomic<I, T extends Hashable, Q, S>(
-      value: Rule<I, T, Q, S>
-    ): value is Atomic<I, T, Q, S>;
+    export function isAtomic<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
 
-    export function isAtomic<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is Atomic<I, T, Q, S>;
+    export function isAtomic<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is Atomic<I, T, Q, S>;
 
-    export function isAtomic<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is Atomic<I, T, Q, S> {
+    export function isAtomic<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is Atomic<I, T, Q, S> {
       return value instanceof Atomic;
     }
   }
 
   export const { isAtomic } = Atomic;
 
-  export class Composite<I, T extends Hashable, Q = never, S = T> extends Rule<
+  export class Composite<
     I,
-    T,
-    Q,
-    S
-  > {
-    public static of<I, T extends Hashable, Q = never, S = T>(properties: {
+    T extends Hashable,
+    Q extends Question.Metadata = never,
+    S = T
+  > extends Rule<I, T, Q, S> {
+    public static of<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata = never,
+      S = T
+    >(properties: {
       uri: string;
       requirements?: Iterable<Requirement>;
       tags?: Iterable<Tag>;
@@ -536,7 +572,12 @@ export namespace Rule {
       composes: Array<Rule.JSON>;
     }
 
-    export interface Evaluate<I, T extends Hashable, Q, S> {
+    export interface Evaluate<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    > {
       (
         input: I,
         performance?: {
@@ -552,17 +593,23 @@ export namespace Rule {
         };
       };
     }
-    export function isComposite<I, T extends Hashable, Q>(
-      value: Rule<I, T, Q>
-    ): value is Composite<I, T, Q>;
+    export function isComposite<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata
+    >(value: Rule<I, T, Q>): value is Composite<I, T, Q>;
 
-    export function isComposite<I, T extends Hashable, Q>(
-      value: unknown
-    ): value is Composite<I, T, Q>;
+    export function isComposite<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata
+    >(value: unknown): value is Composite<I, T, Q>;
 
-    export function isComposite<I, T extends Hashable, Q>(
-      value: unknown
-    ): value is Composite<I, T, Q> {
+    export function isComposite<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata
+    >(value: unknown): value is Composite<I, T, Q> {
       return value instanceof Composite;
     }
   }
@@ -575,7 +622,7 @@ export namespace Rule {
   export class Event<
     INPUT,
     TARGET extends Hashable,
-    QUESTION,
+    QUESTION extends Question.Metadata,
     SUBJECT,
     TYPE extends Event.Type = Event.Type,
     NAME extends string = string
@@ -584,7 +631,7 @@ export namespace Rule {
     public static of<
       INPUT,
       TARGET extends Hashable,
-      QUESTION,
+      QUESTION extends Question.Metadata,
       SUBJECT,
       TYPE extends Event.Type,
       NAME extends string
@@ -647,7 +694,7 @@ export namespace Rule {
     export function isEvent<
       INPUT,
       TARGET extends Hashable,
-      QUESTION,
+      QUESTION extends Question.Metadata,
       SUBJECT,
       TYPE extends Event.Type = Event.Type,
       NAME extends string = string
@@ -660,59 +707,82 @@ export namespace Rule {
     export function start<
       I,
       T extends Hashable,
-      Q,
+      Q extends Question.Metadata,
       S,
       N extends string = string
     >(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "start", N>;
 
-    export function start<I, T extends Hashable, Q, S>(
-      rule: Rule<I, T, Q, S>
-    ): Event<I, T, Q, S, "start", "total">;
+    export function start<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "total">;
 
-    export function start<I, T extends Hashable, Q, S>(
+    export function start<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(
       rule: Rule<I, T, Q, S>,
       name: string = "total"
     ): Event<I, T, Q, S, "start"> {
       return Event.of("start", rule, name);
     }
 
-    export function end<I, T extends Hashable, Q, S, N extends string = string>(
-      rule: Rule<I, T, Q, S>,
-      name: N
-    ): Event<I, T, Q, S, "end", N>;
+    export function end<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S,
+      N extends string = string
+    >(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "end", N>;
 
-    export function end<I, T extends Hashable, Q, S>(
+    export function end<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>
     ): Event<I, T, Q, S, "end", "total">;
 
-    export function end<I, T extends Hashable, Q, S>(
+    export function end<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       name: string = "total"
     ): Event<I, T, Q, S, "end"> {
       return Event.of("end", rule, name);
     }
 
-    export function startApplicability<I, T extends Hashable, Q, S>(
-      rule: Rule<I, T, Q, S>
-    ): Event<I, T, Q, S, "start", "applicability"> {
+    export function startApplicability<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "applicability"> {
       return Event.of("start", rule, "applicability");
     }
 
-    export function endApplicability<I, T extends Hashable, Q, S>(
-      rule: Rule<I, T, Q, S>
-    ): Event<I, T, Q, S, "end", "applicability"> {
+    export function endApplicability<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "applicability"> {
       return Event.of("end", rule, "applicability");
     }
 
-    export function startExpectation<I, T extends Hashable, Q, S>(
-      rule: Rule<I, T, Q, S>
-    ): Event<I, T, Q, S, "start", "expectation"> {
+    export function startExpectation<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "expectation"> {
       return Event.of("start", rule, "expectation");
     }
 
-    export function endExpectation<I, T extends Hashable, Q, S>(
-      rule: Rule<I, T, Q, S>
-    ): Event<I, T, Q, S, "end", "expectation"> {
+    export function endExpectation<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "expectation"> {
       return Event.of("end", rule, "expectation");
     }
   }
@@ -759,7 +829,7 @@ function processExpectation(
   );
 }
 
-function resolve<I, T extends Hashable, Q, S>(
+function resolve<I, T extends Hashable, Q extends Question.Metadata, S>(
   target: T,
   expectations: Record<{
     [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;

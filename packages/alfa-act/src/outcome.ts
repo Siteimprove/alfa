@@ -11,6 +11,7 @@ import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
 import { Diagnostic } from "./diagnostic";
+import type { Question } from "./question";
 import { Rule } from "./rule";
 
 /**
@@ -23,7 +24,7 @@ import { Rule } from "./rule";
 export abstract class Outcome<
   I,
   T extends Hashable,
-  Q = never,
+  Q extends Question.Metadata = never,
   S = T,
   V extends Outcome.Value = Outcome.Value
 > implements
@@ -90,7 +91,7 @@ export abstract class Outcome<
   public equals<
     I,
     T extends Hashable,
-    Q,
+    Q extends Question.Metadata,
     S,
     V extends Outcome.Value = Outcome.Value
   >(value: Outcome<I, T, Q, S, V>): boolean;
@@ -175,14 +176,13 @@ export namespace Outcome {
     };
   }
 
-  export class Passed<I, T extends Hashable, Q = never, S = T> extends Outcome<
+  export class Passed<
     I,
-    T,
-    Q,
-    S,
-    Value.Passed
-  > {
-    public static of<I, T extends Hashable, Q, S>(
+    T extends Hashable,
+    Q extends Question.Metadata = never,
+    S = T
+  > extends Outcome<I, T, Q, S, Value.Passed> {
+    public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
@@ -222,7 +222,7 @@ export namespace Outcome {
       return this._expectations;
     }
 
-    public equals<I, T extends Hashable, Q, S>(
+    public equals<I, T extends Hashable, Q extends Question.Metadata, S>(
       value: Passed<I, T, Q, S>
     ): boolean;
 
@@ -327,31 +327,39 @@ export namespace Outcome {
       };
     }
 
-    export function isPassed<I, T extends Hashable, Q, S>(
-      value: Outcome<I, T, Q, S>
-    ): value is Passed<I, T, Q, S>;
+    export function isPassed<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: Outcome<I, T, Q, S>): value is Passed<I, T, Q, S>;
 
-    export function isPassed<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is Passed<I, T, Q, S>;
+    export function isPassed<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is Passed<I, T, Q, S>;
 
-    export function isPassed<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is Passed<I, T, Q, S> {
+    export function isPassed<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is Passed<I, T, Q, S> {
       return value instanceof Passed;
     }
   }
 
   export const { of: passed, isPassed } = Passed;
 
-  export class Failed<I, T extends Hashable, Q = never, S = T> extends Outcome<
+  export class Failed<
     I,
-    T,
-    Q,
-    S,
-    Value.Failed
-  > {
-    public static of<I, T extends Hashable, Q, S>(
+    T extends Hashable,
+    Q extends Question.Metadata = never,
+    S = T
+  > extends Outcome<I, T, Q, S, Value.Failed> {
+    public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
       expectations: Record<{
@@ -391,7 +399,7 @@ export namespace Outcome {
       return this._expectations;
     }
 
-    public equals<I, T extends Hashable, Q, S>(
+    public equals<I, T extends Hashable, Q extends Question.Metadata, S>(
       value: Failed<I, T, Q, S>
     ): boolean;
 
@@ -499,17 +507,26 @@ export namespace Outcome {
       };
     }
 
-    export function isFailed<I, T extends Hashable, Q, S>(
-      value: Outcome<I, T, Q, S>
-    ): value is Failed<I, T, Q, S>;
+    export function isFailed<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: Outcome<I, T, Q, S>): value is Failed<I, T, Q, S>;
 
-    export function isFailed<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is Failed<I, T, Q, S>;
+    export function isFailed<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is Failed<I, T, Q, S>;
 
-    export function isFailed<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is Failed<I, T, Q, S> {
+    export function isFailed<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is Failed<I, T, Q, S> {
       return value instanceof Failed;
     }
   }
@@ -519,10 +536,10 @@ export namespace Outcome {
   export class CantTell<
     I,
     T extends Hashable,
-    Q = never,
+    Q extends Question.Metadata = never,
     S = T
   > extends Outcome<I, T, Q, S, Value.CantTell> {
-    public static of<I, T extends Hashable, Q, S>(
+    public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
       diagnostic: Diagnostic,
@@ -554,7 +571,7 @@ export namespace Outcome {
       return this._diagnostic;
     }
 
-    public equals<I, T extends Hashable, Q, S>(
+    public equals<I, T extends Hashable, Q extends Question.Metadata, S>(
       value: CantTell<I, T, Q, S>
     ): boolean;
 
@@ -641,40 +658,60 @@ export namespace Outcome {
       };
     }
 
-    export function isCantTell<I, T extends Hashable, Q, S>(
-      value: Outcome<I, T, Q, S>
-    ): value is CantTell<I, T, Q, S>;
+    export function isCantTell<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: Outcome<I, T, Q, S>): value is CantTell<I, T, Q, S>;
 
-    export function isCantTell<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is CantTell<I, T, Q, S>;
+    export function isCantTell<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is CantTell<I, T, Q, S>;
 
-    export function isCantTell<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is CantTell<I, T, Q, S> {
+    export function isCantTell<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is CantTell<I, T, Q, S> {
       return value instanceof CantTell;
     }
   }
 
   export const { of: cantTell, isCantTell } = CantTell;
 
-  export type Applicable<I, T extends Hashable, Q = unknown, S = T> =
-    | Passed<I, T, Q, S>
-    | Failed<I, T, Q, S>
-    | CantTell<I, T, Q, S>;
+  export type Applicable<
+    I,
+    T extends Hashable,
+    Q extends Question.Metadata = never,
+    S = T
+  > = Passed<I, T, Q, S> | Failed<I, T, Q, S> | CantTell<I, T, Q, S>;
 
   export namespace Applicable {
-    export function isApplicable<I, T extends Hashable, Q, S>(
-      value: Outcome<I, T, Q, S>
-    ): value is Applicable<I, T, Q, S>;
+    export function isApplicable<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: Outcome<I, T, Q, S>): value is Applicable<I, T, Q, S>;
 
-    export function isApplicable<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is Applicable<I, T, Q, S>;
+    export function isApplicable<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is Applicable<I, T, Q, S>;
 
-    export function isApplicable<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is Applicable<I, T, Q, S> {
+    export function isApplicable<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is Applicable<I, T, Q, S> {
       return isPassed(value) || isFailed(value) || isCantTell(value);
     }
   }
@@ -684,10 +721,10 @@ export namespace Outcome {
   export class Inapplicable<
     I,
     T extends Hashable,
-    Q = unknown,
+    Q extends Question.Metadata = never,
     S = T
   > extends Outcome<I, T, Q, S, Value.Inapplicable> {
-    public static of<I, T extends Hashable, Q, S>(
+    public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       mode: Mode
     ): Inapplicable<I, T, Q, S> {
@@ -698,7 +735,7 @@ export namespace Outcome {
       super(Value.Inapplicable, rule, mode);
     }
 
-    public equals<I, T extends Hashable, Q, S>(
+    public equals<I, T extends Hashable, Q extends Question.Metadata, S>(
       value: Inapplicable<I, T, Q, S>
     ): boolean;
 
@@ -751,24 +788,33 @@ export namespace Outcome {
       };
     }
 
-    export function isInapplicable<I, T extends Hashable, Q, S>(
-      value: Outcome<I, T, Q, S>
-    ): value is Inapplicable<I, T, Q, S>;
+    export function isInapplicable<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: Outcome<I, T, Q, S>): value is Inapplicable<I, T, Q, S>;
 
-    export function isInapplicable<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is Inapplicable<I, T, Q, S>;
+    export function isInapplicable<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is Inapplicable<I, T, Q, S>;
 
-    export function isInapplicable<I, T extends Hashable, Q, S>(
-      value: unknown
-    ): value is Inapplicable<I, T, Q, S> {
+    export function isInapplicable<
+      I,
+      T extends Hashable,
+      Q extends Question.Metadata,
+      S
+    >(value: unknown): value is Inapplicable<I, T, Q, S> {
       return value instanceof Inapplicable;
     }
   }
 
   export const { of: inapplicable, isInapplicable } = Inapplicable;
 
-  export function from<I, T extends Hashable, Q, S>(
+  export function from<I, T extends Hashable, Q extends Question.Metadata, S>(
     rule: Rule<I, T, Q, S>,
     target: T,
     expectations: Record<{

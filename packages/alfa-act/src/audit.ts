@@ -1,14 +1,15 @@
 import { Future } from "@siteimprove/alfa-future";
-import { Hashable } from "@siteimprove/alfa-hash";
+import type { Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { None } from "@siteimprove/alfa-option";
-import { Performance } from "@siteimprove/alfa-performance";
+import type { Performance } from "@siteimprove/alfa-performance";
 
 import { Cache } from "./cache";
-import { Oracle } from "./oracle";
-import { Outcome } from "./outcome";
-import { Rule } from "./rule";
+import type { Oracle } from "./oracle";
+import type { Outcome } from "./outcome";
+import type { Question } from "./question";
+import type { Rule } from "./rule";
 
 /**
  * @public
@@ -17,8 +18,18 @@ import { Rule } from "./rule";
  * * Q: questions' metadata type
  * * S: possible types of questions' subject.
  */
-export class Audit<I, T extends Hashable, Q = never, S = T> {
-  public static of<I, T extends Hashable, Q = never, S = T>(
+export class Audit<
+  I,
+  T extends Hashable,
+  Q extends Question.Metadata = never,
+  S = T
+> {
+  public static of<
+    I,
+    T extends Hashable,
+    Q extends Question.Metadata = never,
+    S = T
+  >(
     input: I,
     rules: Iterable<Rule<I, T, Q, S>>,
     oracle: Oracle<I, T, Q, S> = () => Future.now(None)

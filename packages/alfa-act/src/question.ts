@@ -317,6 +317,8 @@ export namespace Question {
     context: Serializable.ToJSON<CONTEXT>;
   }
 
+  export type Metadata = { [uri: string]: [unknown, unknown] };
+
   export function isQuestion<
     TYPE,
     SUBJECT,
