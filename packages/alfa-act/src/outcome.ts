@@ -24,7 +24,7 @@ import { Rule } from "./rule";
 export abstract class Outcome<
   I,
   T extends Hashable,
-  Q extends Question.Metadata = never,
+  Q extends Question.Metadata = {},
   S = T,
   V extends Outcome.Value = Outcome.Value
 > implements
@@ -179,7 +179,7 @@ export namespace Outcome {
   export class Passed<
     I,
     T extends Hashable,
-    Q extends Question.Metadata = never,
+    Q extends Question.Metadata = {},
     S = T
   > extends Outcome<I, T, Q, S, Value.Passed> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
@@ -356,7 +356,7 @@ export namespace Outcome {
   export class Failed<
     I,
     T extends Hashable,
-    Q extends Question.Metadata = never,
+    Q extends Question.Metadata = {},
     S = T
   > extends Outcome<I, T, Q, S, Value.Failed> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
@@ -536,7 +536,7 @@ export namespace Outcome {
   export class CantTell<
     I,
     T extends Hashable,
-    Q extends Question.Metadata = never,
+    Q extends Question.Metadata = {},
     S = T
   > extends Outcome<I, T, Q, S, Value.CantTell> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
@@ -687,7 +687,7 @@ export namespace Outcome {
   export type Applicable<
     I,
     T extends Hashable,
-    Q extends Question.Metadata = never,
+    Q extends Question.Metadata = {},
     S = T
   > = Passed<I, T, Q, S> | Failed<I, T, Q, S> | CantTell<I, T, Q, S>;
 
@@ -721,7 +721,7 @@ export namespace Outcome {
   export class Inapplicable<
     I,
     T extends Hashable,
-    Q extends Question.Metadata = never,
+    Q extends Question.Metadata = {},
     S = T
   > extends Outcome<I, T, Q, S, Value.Inapplicable> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(

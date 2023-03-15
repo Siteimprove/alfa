@@ -39,7 +39,7 @@ const { flatten, reduce } = Iterable;
 export abstract class Rule<
   I,
   T extends Hashable,
-  Q extends Question.Metadata = never,
+  Q extends Question.Metadata = {},
   S = T
 > implements
     Equatable,
@@ -239,13 +239,13 @@ export namespace Rule {
   export class Atomic<
     I,
     T extends Hashable,
-    Q extends Question.Metadata = never,
+    Q extends Question.Metadata = {},
     S = T
   > extends Rule<I, T, Q, S> {
     public static of<
       I,
       T extends Hashable,
-      Q extends Question.Metadata = never,
+      Q extends Question.Metadata = {},
       S = T
     >(properties: {
       uri: string;
@@ -440,13 +440,13 @@ export namespace Rule {
   export class Composite<
     I,
     T extends Hashable,
-    Q extends Question.Metadata = never,
+    Q extends Question.Metadata = {},
     S = T
   > extends Rule<I, T, Q, S> {
     public static of<
       I,
       T extends Hashable,
-      Q extends Question.Metadata = never,
+      Q extends Question.Metadata = {},
       S = T
     >(properties: {
       uri: string;

@@ -111,3 +111,5 @@ export default FlattenedRules;
 export * from "./common/act/diagnostic";
 export * from "./common/act/group";
 export * from "./common/act/question";
+
+const foo: Flattened.Rule = rules.R1;

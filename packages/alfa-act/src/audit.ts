@@ -21,13 +21,13 @@ import type { Rule } from "./rule";
 export class Audit<
   I,
   T extends Hashable,
-  Q extends Question.Metadata = never,
+  Q extends Question.Metadata = {},
   S = T
 > {
   public static of<
     I,
     T extends Hashable,
-    Q extends Question.Metadata = never,
+    Q extends Question.Metadata = {},
     S = T
   >(
     input: I,
