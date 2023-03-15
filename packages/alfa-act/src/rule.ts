@@ -104,7 +104,7 @@ export abstract class Rule<
 
   public evaluate(
     input: I,
-    oracle: Oracle<I, T, Q, S> = () => Future.now(None),
+    oracle: {} extends Q ? any : Oracle<I, T, Q, S> = () => Future.now(None),
     outcomes: Cache = Cache.empty(),
     performance?: Performance<Rule.Event<I, T, Q, S>>
   ): Future<Iterable<Outcome<I, T, Q, S>>> {
@@ -230,7 +230,7 @@ export namespace Rule {
   > {
     (
       input: Readonly<I>,
-      oracle: Oracle<I, T, Q, S>,
+      oracle: {} extends Q ? any : Oracle<I, T, Q, S>,
       outcomes: Cache,
       performance?: Performance<Event<I, T, Q, S>>
     ): Future<Iterable<Outcome<I, T, Q, S>>>;
@@ -835,7 +835,7 @@ function resolve<I, T extends Hashable, Q extends Question.Metadata, S>(
     [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
   }>,
   rule: Rule<I, T, Q, S>,
-  oracle: Oracle<I, T, Q, S>,
+  oracle: {} extends Q ? any : Oracle<I, T, Q, S>,
   oracleUsedInApplicability: boolean
 ): Future<Outcome.Applicable<I, T, Q, S>> {
   return Future.traverse(expectations, ([id, interview]) =>

@@ -102,14 +102,10 @@ export namespace Flattened {
  *
  * @public
  */
-export const FlattenedRules = Sequence.from(
-  Rules.values()
-) as Sequence<Flattened.Rule>;
+export const FlattenedRules = Sequence.from<Flattened.Rule>(Rules.values());
 
 export default FlattenedRules;
 
 export * from "./common/act/diagnostic";
 export * from "./common/act/group";
 export * from "./common/act/question";
-
-const foo: Flattened.Rule = rules.R1;

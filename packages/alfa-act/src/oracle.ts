@@ -21,18 +21,16 @@ export type Oracle<
   TARGET extends Hashable,
   QUESTION extends Question.Metadata,
   SUBJECT
-> = {} extends QUESTION
-  ? any
-  : (
-      rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
-      question: {
-        [URI in keyof QUESTION]: Question<
-          QUESTION[URI][0],
-          SUBJECT,
-          TARGET,
-          QUESTION[URI][1],
-          unknown,
-          URI extends string ? URI : never
-        >;
-      }[keyof QUESTION]
-    ) => Future<Option<QUESTION[keyof QUESTION][1]>>;
+> = (
+  rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
+  question: {
+    [URI in keyof QUESTION]: Question<
+      QUESTION[URI][0],
+      SUBJECT,
+      TARGET,
+      QUESTION[URI][1],
+      unknown,
+      URI extends string ? URI : never
+    >;
+  }[keyof QUESTION]
+) => Future<Option<QUESTION[keyof QUESTION][1]>>;
