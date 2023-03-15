@@ -11,6 +11,7 @@ import { Component } from "./component";
 import { Token } from "./token";
 
 const { not } = Predicate;
+const { option, delimited, left, zeroOrMore, map, pair, flatMap } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-syntax/#declaration}
@@ -102,61 +103,49 @@ export namespace Declaration {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-declaration}
    */
-  export const consume: Parser<Slice<Token>, Declaration, string> = (input) => {
-    const { value: name } = input.array[input.offset] as Token.Ident;
+  export const consume: Parser<Slice<Token>, Declaration, string> = flatMap(
+    pair(
+      left(
+        Token.parseIdent(),
+        delimited(option(Token.parseWhitespace), Token.parseColon)
+      ),
+      map(zeroOrMore(Component.consume), (components) =>
+        components.flatMap((component) => [...component])
+      )
+    ),
+    ([{ value: name }, value]) =>
+      (input) => {
+        let important = false;
 
-    const value: Array<Token> = [];
+        if (value.length >= 2) {
+          const fst = value[value.length - 2];
+          const snd = value[value.length - 1];
 
-    input = input.slice(1);
+          if (
+            fst.type === "delim" &&
+            fst.value === 0x21 &&
+            snd.type === "ident" &&
+            snd.value.toLowerCase() === "important"
+          ) {
+            value.splice(value.length - 2, 2);
+            important = true;
+          }
+        }
 
-    while (Token.isWhitespace(input.array[input.offset])) {
-      input = input.slice(1);
-    }
+        if (value.length >= 1) {
+          const lst = value[value.length - 1];
 
-    if (!Token.isColon(input.array[input.offset])) {
-      return Err.of("Expected a colon");
-    }
+          if (lst.type === "whitespace") {
+            value.pop();
+          }
+        }
 
-    input = input.slice(1);
-
-    while (Token.isWhitespace(input.array[input.offset])) {
-      input = input.slice(1);
-    }
-
-    while (input.length > 0) {
-      const [remainder, component] = Component.consume(input).get();
-
-      input = remainder;
-      value.push(...component);
-    }
-
-    let important = false;
-
-    if (value.length >= 2) {
-      const fst = value[value.length - 2];
-      const snd = value[value.length - 1];
-
-      if (
-        fst.type === "delim" &&
-        fst.value === 0x21 &&
-        snd.type === "ident" &&
-        snd.value.toLowerCase() === "important"
-      ) {
-        value.splice(value.length - 2, 2);
-        important = true;
+        return Result.of<[Slice<Token>, Declaration], string>([
+          input,
+          Declaration.of(name, value, important),
+        ]);
       }
-    }
-
-    if (value.length >= 1) {
-      const lst = value[value.length - 1];
-
-      if (lst.type === "whitespace") {
-        value.pop();
-      }
-    }
-
-    return Result.of([input, Declaration.of(name, value, important)]);
-  };
+  );
 
   /**
    * {@link https://drafts.csswg.org/css-syntax/#parse-a-declaration}

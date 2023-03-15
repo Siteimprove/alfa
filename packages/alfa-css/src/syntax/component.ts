@@ -8,6 +8,8 @@ import { Block } from "./block";
 import { Function } from "./function";
 import { Token } from "./token";
 
+const { delimited, option, either, map } = Parser;
+
 /**
  * {@link https://drafts.csswg.org/css-syntax/#component-value}
  *
@@ -58,56 +60,25 @@ export namespace Component {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-component-value}
    */
-  export const consume: Parser<Slice<Token>, Component, string> = (input) => {
-    if (input.length === 0) {
-      return Err.of("Unexpected end of file");
-    }
-
-    const next = input.array[input.offset];
-
-    if (
-      Token.isOpenParenthesis(next) ||
-      Token.isOpenSquareBracket(next) ||
-      Token.isOpenCurlyBracket(next)
-    ) {
-      return Block.consume(input).map(([input, value]) => [
-        input,
-        Component.of(value),
-      ]);
-    }
-
-    if (Token.isFunction(next)) {
-      return Function.consume(input).map(([input, value]) => [
-        input,
-        Component.of(value),
-      ]);
-    }
-
-    return Result.of([input.slice(1), Component.of([next])]);
-  };
+  export const consume: Parser<Slice<Token>, Component, string> = (input) =>
+    // eta expansion is necessary for `this` binding to resolve correctly
+    either(
+      map(Block.consume, (value) => Component.of(value)),
+      map(Function.consume, (value) => Component.of(value)),
+      (input) =>
+        input
+          .first()
+          .map((token) =>
+            Result.of<[Slice<Token>, Component], string>([
+              input.rest(),
+              Component.of([token]),
+            ])
+          )
+          .getOr(Err.of("Unexpected end of file"))
+    )(input);
 
   /**
    * {@link https://drafts.csswg.org/css-syntax/#parse-component-value}
    */
-  export const parse: Parser<Slice<Token>, Component, string> = (input) => {
-    while (Token.isWhitespace(input.array[input.offset])) {
-      input = input.slice(1);
-    }
-
-    if (input.length === 0) {
-      return Err.of("Unexpected end of input");
-    }
-
-    const component = consume(input);
-
-    while (Token.isWhitespace(input.array[input.offset])) {
-      input = input.slice(1);
-    }
-
-    if (input.length !== 0) {
-      return Err.of("Expected end of input");
-    }
-
-    return component;
-  };
+  export const parse = delimited(option(Token.parseWhitespace), consume);
 }

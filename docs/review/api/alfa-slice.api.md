@@ -28,8 +28,6 @@ export class Slice<T> implements Collection.Indexed<T> {
     // (undocumented)
     apply<U>(mapper: Slice<Mapper<T, U>>): Slice<U>;
     // (undocumented)
-    get array(): ReadonlyArray<T>;
-    // (undocumented)
     collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Slice<U>;
     // (undocumented)
     collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
@@ -95,8 +93,6 @@ export class Slice<T> implements Collection.Indexed<T> {
     none(predicate: Predicate<T, [index: number]>): boolean;
     // (undocumented)
     static of<T>(array: ReadonlyArray<T>, start?: number, end?: number): Slice<T>;
-    // (undocumented)
-    get offset(): number;
     // (undocumented)
     prepend(value: T): Slice<T>;
     // (undocumented)

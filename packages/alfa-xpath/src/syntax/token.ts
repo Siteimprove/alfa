@@ -4,13 +4,14 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Result, Err } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
 const { fromCharCode } = String;
 const { and } = Refinement;
+const { parseIf } = Parser;
 
 /**
  * {@link https://www.w3.org/TR/xpath-31/#terminal-symbols}
@@ -38,6 +39,18 @@ export namespace Token {
     | Comment.JSON
     | Name.JSON
     | Character.JSON;
+
+  const parseFirst: Parser<Slice<Token>, Token, string> = (
+    input: Slice<Token>
+  ) =>
+    input
+      .first()
+      .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))
+      .getOr(Err.of("No token left"));
+
+  function parseToken<T extends Token>(refinement: Refinement<Token, T>) {
+    return parseIf(refinement, parseFirst, () => "Mismatching token");
+  }
 
   export class Integer implements Equatable, Serializable<Integer.JSON> {
     public static of(value: number): Integer {
@@ -420,19 +433,5 @@ export namespace Token {
     }
 
     return parseToken(and(isCharacter, predicate));
-  };
-}
-
-function parseToken<T extends Token>(
-  refinement: Refinement<Token, T>
-): Parser<Slice<Token>, T, string> {
-  return (input) => {
-    const token = input.array[input.offset];
-
-    if (token !== undefined && refinement(token)) {
-      return Result.of([input.slice(1), token]);
-    }
-
-    return Err.of("Expected token");
   };
 }
