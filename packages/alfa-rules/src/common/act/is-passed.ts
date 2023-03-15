@@ -1,5 +1,4 @@
-import { Outcome } from "@siteimprove/alfa-act";
-import type { Question } from "@siteimprove/alfa-act";
+import { Outcome, type Question } from "@siteimprove/alfa-act";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import type { Trilean } from "@siteimprove/alfa-trilean";
 

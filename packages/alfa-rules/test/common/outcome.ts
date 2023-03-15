@@ -1,5 +1,9 @@
-import { Diagnostic, Outcome } from "@siteimprove/alfa-act";
-import type { Question, Rule } from "@siteimprove/alfa-act";
+import {
+  Diagnostic,
+  Outcome,
+  type Question,
+  type Rule,
+} from "@siteimprove/alfa-act";
 import type { Hashable } from "@siteimprove/alfa-hash";
 import { Record } from "@siteimprove/alfa-record";
 import type { Result } from "@siteimprove/alfa-result";

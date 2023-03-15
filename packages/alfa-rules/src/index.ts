@@ -12,6 +12,8 @@ export { deprecatedRules };
 
 import * as rules from "./rules";
 
+import type { Question } from "./common/act/question";
+
 /**
  * @public
  */
@@ -73,9 +75,9 @@ export namespace Flattened {
    *
    * @public
    */
-  export type Question = {
-    [K in Keys]: act.Rule.Question<RulesObject[K]>;
-  }[Keys];
+  // Hard coding the type prevents rules from using questions that have not been
+  // declared.
+  export type Question = Question.Metadata;
 
   /**
    * The type of the subjects of questions asked by rules

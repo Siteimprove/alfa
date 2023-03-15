@@ -63,6 +63,7 @@ test(`evaluate() fails an <a> element that removes the default focus outline and
     await evaluate(
       R65,
       { document },
+      // @ts-ignore
       oracle({
         "has-focus-indicator": false,
       })
