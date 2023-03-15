@@ -465,9 +465,7 @@ export namespace Flattened {
         [K in Keys]: act.Rule.Input<RulesObject[K]>;
     }[Keys];
     export type Keys = keyof RulesObject;
-    export type Question = {
-        [K in Keys]: act.Rule.Question<RulesObject[K]>;
-    }[Keys];
+    export type Question = Question.Metadata;
     export type Rule = act.Rule<Input, Target, Question, Subject>;
     // Warning: (ae-forgotten-export) The symbol "rules" needs to be exported by the entry point index.d.ts
     export type RulesObject = typeof rules;

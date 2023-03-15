@@ -741,7 +741,7 @@ export namespace Rule {
         export type Type = "start" | "end";
     }
     // (undocumented)
-    export type Input<R> = R extends Rule<infer I, infer T, infer Q, infer S> ? I : never;
+    export type Input<R> = R extends Rule<infer I, any, any, any> ? I : never;
     // (undocumented)
     export function isRule<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Rule<I, T, Q, S>;
     const // (undocumented)
@@ -760,13 +760,13 @@ export namespace Rule {
         uri: string;
     }
     // (undocumented)
-    export type Question<R> = R extends Rule<infer I, infer T, infer Q, infer S> ? Q : never;
+    export type Question<R> = R extends Rule<any, any, infer Q, any> ? Q : never;
     const // (undocumented)
     isComposite: typeof Composite.isComposite;
     // (undocumented)
-    export type Subject<R> = R extends Rule<infer I, infer T, infer Q, infer S> ? S : never;
+    export type Subject<R> = R extends Rule<any, any, any, infer S> ? S : never;
     // (undocumented)
-    export type Target<R> = R extends Rule<infer I, infer T, infer Q, infer S> ? T : never;
+    export type Target<R> = R extends Rule<any, infer T, any, any> ? T : never;
 }
 
 // @public (undocumented)
