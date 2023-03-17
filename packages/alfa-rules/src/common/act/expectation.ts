@@ -1,8 +1,8 @@
-import { Diagnostic, Interview } from "@siteimprove/alfa-act";
+import type { Diagnostic, Interview, Question } from "@siteimprove/alfa-act";
 import { None, Option } from "@siteimprove/alfa-option";
-import { Result } from "@siteimprove/alfa-result";
+import type { Result } from "@siteimprove/alfa-result";
 import { Thunk } from "@siteimprove/alfa-thunk";
-import { Trilean } from "@siteimprove/alfa-trilean";
+import type { Trilean } from "@siteimprove/alfa-trilean";
 
 // In practice, Q is always Question.Metadata.
 // However, replacing it here causes TypeScript to fail and pretend
@@ -15,13 +15,12 @@ import { Trilean } from "@siteimprove/alfa-trilean";
 // This unfortunately forces us to add a Question.Metadata parameter all over
 // the place in callers that need to specify the depth of an interview :-(
 
-type Expectation<Q, S, C, D extends number = Interview.MaxDepth> = Interview<
-  Q,
+type Expectation<
+  Q extends Question.Metadata,
   S,
   C,
-  Option.Maybe<Result<Diagnostic>>,
-  D
->;
+  D extends number = Interview.MaxDepth
+> = Interview<Q, S, C, Option.Maybe<Result<Diagnostic>>, D>;
 
 export function expectation(
   test: Trilean,
@@ -30,14 +29,24 @@ export function expectation(
   ifUnknown?: Thunk<Option.Maybe<Result<Diagnostic>>>
 ): Option.Maybe<Result<Diagnostic>>;
 
-export function expectation<Q, S, C, D extends number>(
+export function expectation<
+  Q extends Question.Metadata,
+  S,
+  C,
+  D extends number
+>(
   test: Trilean,
   ifTrue: Thunk<Expectation<Q, S, C, D>>,
   ifFalse: Thunk<Expectation<Q, S, C, D>>,
   ifUnknown?: Thunk<Expectation<Q, S, C, D>>
 ): Expectation<Q, S, C, D>;
 
-export function expectation<Q, S, C, D extends number = Interview.MaxDepth>(
+export function expectation<
+  Q extends Question.Metadata,
+  S,
+  C,
+  D extends number = Interview.MaxDepth
+>(
   test: Trilean,
   ifTrue: Thunk<Expectation<Q, S, C, D>>,
   ifFalse: Thunk<Expectation<Q, S, C, D>>,

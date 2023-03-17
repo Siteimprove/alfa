@@ -1,9 +1,9 @@
-import { Future } from "@siteimprove/alfa-future";
-import { Hashable } from "@siteimprove/alfa-hash";
-import { Option } from "@siteimprove/alfa-option";
+import type { Future } from "@siteimprove/alfa-future";
+import type { Hashable } from "@siteimprove/alfa-hash";
+import type { Option } from "@siteimprove/alfa-option";
 
-import { Question } from "./question";
-import { Rule } from "./rule";
+import type { Question } from "./question";
+import type { Rule } from "./rule";
 
 /**
  * @public
@@ -16,18 +16,21 @@ import { Rule } from "./rule";
  *               "q2": ["number?", number | undefined],
  *             \}
  */
-export type Oracle<INPUT, TARGET extends Hashable, QUESTION, SUBJECT> = (
+export type Oracle<
+  INPUT,
+  TARGET extends Hashable,
+  QUESTION extends Question.Metadata,
+  SUBJECT
+> = (
   rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
   question: {
     [URI in keyof QUESTION]: Question<
-      QUESTION[URI] extends [infer T, any] ? T : never,
+      QUESTION[URI][0],
       SUBJECT,
       TARGET,
-      QUESTION[URI] extends [any, infer A] ? A : never,
+      QUESTION[URI][1],
       unknown,
       URI extends string ? URI : never
     >;
   }[keyof QUESTION]
-) => Future<
-  Option<QUESTION[keyof QUESTION] extends [any, infer A] ? A : never>
->;
+) => Future<Option<QUESTION[keyof QUESTION][1]>>;

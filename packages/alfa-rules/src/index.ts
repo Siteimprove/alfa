@@ -12,6 +12,8 @@ export { deprecatedRules };
 
 import * as rules from "./rules";
 
+import type { Question } from "./common/act/question";
+
 /**
  * @public
  */
@@ -30,37 +32,59 @@ export const Rules = Record.of(rules);
  */
 export namespace Flattened {
   /**
-   * A union of all the possible types of rules
+   * We want to export types for the possible inputs, targets, … of rules.
+   * However,
+   * Atomic\<I, T, Q, S\> | Atomic\<I', T', Q', S'\>
+   * does **not** extend Rule\<?, ?, ?, ?\> and act.Rule.Input will result
+   * in `never` rather than `I | I'`
+   *
+   * So, instead, we need to apply act.Rule.Input on each individual type of
+   * the union. This is not directly possible, but can be done through mapped
+   * types on an object type containing all the possibilities.
+   *
+   * We first construct the object type (\{R1: Atomic\<…\>, R2: …\}) and its keys
+   * ("R1" | "R2" | …)
+   * Next, for each extractor, we iterate it over the values of the object type
+   * and only keep the resulting values. The unions are then automatically
+   * collapsed as we want them.
    */
-  type RulesUnion = Record.Value<typeof rules>;
+  type RulesObject = typeof rules;
+
+  /**
+   * The keys of all rules
+   * This looks like: "R1" | "R2" | …
+   */
+  type Keys = keyof RulesObject;
 
   /**
    * The type of the input of rules
    *
    * @public
    */
-  export type Input = act.Rule.Input<RulesUnion>;
+  export type Input = { [K in Keys]: act.Rule.Input<RulesObject[K]> }[Keys];
 
   /**
    * The type of the targets of rules
    *
    * @public
    */
-  export type Target = act.Rule.Target<RulesUnion>;
+  export type Target = { [K in Keys]: act.Rule.Target<RulesObject[K]> }[Keys];
 
   /**
    * The type of the questions asked by rules
    *
    * @public
    */
-  export type Question = act.Rule.Question<RulesUnion>;
+  // Hard coding the type prevents rules from using questions that have not been
+  // declared.
+  export type Question = Question.Metadata;
 
   /**
    * The type of the subjects of questions asked by rules
    *
    * @public
    */
-  export type Subject = act.Rule.Subject<RulesUnion>;
+  export type Subject = { [K in Keys]: act.Rule.Subject<RulesObject[K]> }[Keys];
 
   /**
    * The flattened type of all rules. Target, questions, … are a union of
@@ -80,9 +104,7 @@ export namespace Flattened {
  *
  * @public
  */
-export const FlattenedRules: Sequence<Flattened.Rule> = Sequence.from(
-  Rules.values()
-);
+export const FlattenedRules = Sequence.from<Flattened.Rule>(Rules.values());
 
 export default FlattenedRules;
 

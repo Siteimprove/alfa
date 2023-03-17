@@ -1,10 +1,15 @@
-import { Diagnostic, Rule, Outcome } from "@siteimprove/alfa-act";
-import { Hashable } from "@siteimprove/alfa-hash";
+import {
+  Diagnostic,
+  Outcome,
+  type Question,
+  type Rule,
+} from "@siteimprove/alfa-act";
+import type { Hashable } from "@siteimprove/alfa-hash";
 import { Record } from "@siteimprove/alfa-record";
-import { Result } from "@siteimprove/alfa-result";
-import { Page } from "@siteimprove/alfa-web";
+import type { Result } from "@siteimprove/alfa-result";
+import type { Page } from "@siteimprove/alfa-web";
 
-export function passed<T extends Hashable, Q, S>(
+export function passed<T extends Hashable, Q extends Question.Metadata, S>(
   rule: Rule<Page, T, Q, S>,
   target: T,
   expectations: { [id: string]: Result<Diagnostic> },
@@ -18,7 +23,7 @@ export function passed<T extends Hashable, Q, S>(
   ).toJSON();
 }
 
-export function failed<T extends Hashable, Q, S>(
+export function failed<T extends Hashable, Q extends Question.Metadata, S>(
   rule: Rule<Page, T, Q, S>,
   target: T,
   expectations: { [id: string]: Result<Diagnostic> },
@@ -32,14 +37,18 @@ export function failed<T extends Hashable, Q, S>(
   ).toJSON();
 }
 
-export function inapplicable<T extends Hashable, Q, S>(
+export function inapplicable<
+  T extends Hashable,
+  Q extends Question.Metadata,
+  S
+>(
   rule: Rule<Page, T, Q, S>,
   mode: Outcome.Mode = Outcome.Mode.Automatic
 ): Outcome.Inapplicable.JSON {
   return Outcome.Inapplicable.of(rule, mode).toJSON();
 }
 
-export function cantTell<T extends Hashable, Q, S>(
+export function cantTell<T extends Hashable, Q extends Question.Metadata, S>(
   rule: Rule<Page, T, Q, S>,
   target: T,
   diagnostic: Diagnostic = Diagnostic.empty,

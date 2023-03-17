@@ -1,13 +1,13 @@
 import { Future } from "@siteimprove/alfa-future";
 import { Either } from "@siteimprove/alfa-either";
-import { Hashable } from "@siteimprove/alfa-hash";
+import type { Hashable } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
 import { Tuple } from "@siteimprove/alfa-tuple";
 
-import { Diagnostic } from "./diagnostic";
-import { Oracle } from "./oracle";
+import type { Diagnostic } from "./diagnostic";
+import type { Oracle } from "./oracle";
 import { Question } from "./question";
-import { Rule } from "./rule";
+import type { Rule } from "./rule";
 
 /**
  * As `Interview` is a recursive type that models nested chains of `Question`s,
@@ -30,7 +30,7 @@ type Depths = [-1, 0, 1, 2];
  * The SUBJECT and CONTEXT types are the subject and context of the question.
  */
 export type Interview<
-  QUESTION,
+  QUESTION extends Question.Metadata,
   SUBJECT,
   CONTEXT,
   ANSWER,
@@ -39,10 +39,10 @@ export type Interview<
   | ANSWER
   | {
       [URI in keyof QUESTION]: Question<
-        QUESTION[URI] extends [infer T, any] ? T : never,
+        QUESTION[URI][0],
         SUBJECT,
         CONTEXT,
-        QUESTION[URI] extends [any, infer A] ? A : never,
+        QUESTION[URI][1],
         D extends -1
           ? ANSWER
           : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>,
@@ -83,7 +83,7 @@ export namespace Interview {
   export function conduct<
     INPUT,
     TARGET extends Hashable,
-    QUESTION,
+    QUESTION extends Question.Metadata,
     SUBJECT,
     ANSWER
   >(
