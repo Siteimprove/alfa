@@ -71,8 +71,8 @@ function hasRequiredValues(
       // ones
       if (
         node.attribute(attribute).every(property("value", isEmpty)) &&
-        !isManagedAttribute(element, role.name, attribute) &&
-        !isAttributeOptional(node, role.name, attribute)
+        !isManagedAttribute(element, role.name)(attribute) &&
+        !isAttributeOptional(node, role.name)(attribute)
       ) {
         missing.push(attribute);
         result = false;
@@ -94,10 +94,9 @@ function hasRequiredValues(
 // See https://github.com/w3c/html-aam/issues/349
 function isManagedAttribute(
   element: Element,
-  role: aria.Role.Name,
-  attribute: aria.Attribute.Name
-): boolean {
-  if (
+  role: aria.Role.Name
+): Predicate<aria.Attribute.Name> {
+  return (attribute) =>
     role === "combobox" &&
     attribute === "aria-expanded" &&
     test(
@@ -107,28 +106,21 @@ function isManagedAttribute(
         hasAttribute("list")
       ),
       element
-    )
-  ) {
-    return true;
-  }
-
-  return false;
+    );
 }
 
 function isAttributeOptional(
   owner: aria.Node,
-  role: aria.Role.Name,
-  attribute: aria.Attribute.Name
-): boolean {
+  role: aria.Role.Name
+): Predicate<aria.Attribute.Name> {
   // `combobox` only requires `aria-controls` when it's opened, we rely on
   // `aria-expanded` being correctly set on the owner element.
-  return (
+  return (attribute) =>
     role === "combobox" &&
     attribute === "aria-controls" &&
     owner
       .attribute("aria-expanded")
-      .some((expanded) => expanded.value !== "true")
-  );
+      .some((expanded) => expanded.value !== "true");
 }
 
 /**
