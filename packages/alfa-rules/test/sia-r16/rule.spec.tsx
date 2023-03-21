@@ -72,7 +72,7 @@ test(`evaluate() fails a <div> element with a role of combobox,
       1: Outcomes.HasNotAllStates(
         "combobox",
         ["aria-controls", "aria-expanded"],
-        []
+        ["aria-controls"]
       ),
     }),
   ]);

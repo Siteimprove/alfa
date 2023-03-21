@@ -72,7 +72,7 @@ function hasRequiredValues(
       if (
         node.attribute(attribute).every(property("value", isEmpty)) &&
         !isManagedAttribute(element, role.name, attribute) &&
-        !isAttributeOptional(role.name, attribute)
+        !isAttributeOptional(node, role.name, attribute)
       ) {
         missing.push(attribute);
         result = false;
@@ -116,13 +116,19 @@ function isManagedAttribute(
 }
 
 function isAttributeOptional(
+  owner: aria.Node,
   role: aria.Role.Name,
   attribute: aria.Attribute.Name
-) {
-  // combobox only requires aria-controls when opened, which we can't detect
-  // same as for sia-r19, @see https://github.com/Siteimprove/alfa/pull/1313
-  // should be refined to look at `aria-expanded` at some point
-  return role === "combobox" && attribute === "aria-controls";
+): boolean {
+  // `combobox` only requires `aria-controls` when it's opened, we rely on
+  // `aria-expanded` being correctly set on the owner element.
+  return (
+    role === "combobox" &&
+    attribute === "aria-controls" &&
+    owner
+      .attribute("aria-expanded")
+      .some((expanded) => expanded.value !== "true")
+  );
 }
 
 /**
