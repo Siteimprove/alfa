@@ -200,6 +200,12 @@ function hasAccessibleName<T extends Element_2 | Text_2>(device: Device, predica
 function hasAccessibleName<T extends Element_2 | Text_2>(device: Device, name: string, ...rest: Array<string>): Predicate<T>;
 
 // @public (undocumented)
+function hasAttribute(predicate: Predicate<Attribute>): Predicate<Node>;
+
+// @public (undocumented)
+function hasAttribute(name: Attribute.Name, value?: Predicate<string>): Predicate<Node>;
+
+// @public (undocumented)
 function hasExplicitRole(predicate?: Predicate<Role>): Predicate<Element_2>;
 
 // @public (undocumented)
@@ -243,6 +249,12 @@ function hasRole(device: Device, predicate?: Predicate<Role>): Predicate<Element
 
 // @public (undocumented)
 function hasRole<N extends Role.Name>(device: Device, name: N, ...rest: Array<N>): Predicate<Element_2>;
+
+// @public (undocumented)
+function hasRole_2(predicate?: Predicate<Role>): Predicate<Node>;
+
+// @public (undocumented)
+function hasRole_2<N extends Role.Name>(name: N, ...rest: Array<N>): Predicate<Node>;
 
 // @public (undocumented)
 function hasValue(predicate: Predicate<string>): Predicate<Name>;
@@ -657,7 +669,9 @@ export namespace Node {
     const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    hasName: typeof predicate_3.hasName;
+    hasAttribute: typeof predicate_3.hasAttribute, // (undocumented)
+    hasName: typeof predicate_3.hasName, // (undocumented)
+    hasRole: typeof predicate_3.hasRole;
 }
 
 // @public (undocumented)
