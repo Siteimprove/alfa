@@ -12,6 +12,7 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
+import { isAriaControlsRequired } from "../common/predicate/is-aria-controls-required";
 
 import { Scope } from "../tags";
 
@@ -139,10 +140,11 @@ function isAttributeOptionalOrValid(
   owner: Element,
   device: Device
 ): boolean {
-  for (const role of aria.Node.from(owner, device).role) {
+  const node = aria.Node.from(owner, device);
+  for (const role of node.role) {
     const { name, type, value } = attribute;
 
-    if (role.name === "combobox" && name === "aria-controls") {
+    if (isAriaControlsRequired(node) && name === "aria-controls") {
       // combobox only require aria-controls when opened, which we can't really detect
       // aria-controls is no more required in ARIA 1.3 (and authoring practices)
       // but that hasn't made it to ARIA 1.2 :-(
