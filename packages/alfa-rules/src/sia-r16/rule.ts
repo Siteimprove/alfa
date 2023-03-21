@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { DOM, Node as ariaNode, Role } from "@siteimprove/alfa-aria";
+import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
@@ -12,14 +12,14 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
+import { isAriaControlsRequired } from "../common/predicate/is-aria-controls-required";
 
 import { Scope } from "../tags";
 
 const { hasNonDefaultRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { hasAttribute, hasRole } = ariaNode;
-const { and, property, test } = Predicate;
+const { and, property } = Predicate;
 const { isFocusable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -47,11 +47,6 @@ export default Rule.Atomic.of<Page, Element>({
     };
   },
 });
-
-const isAriaControlsRequired: Predicate<ariaNode> = and(
-  hasRole("combobox"),
-  hasAttribute("aria-expanded", (expanded) => expanded !== "true")
-);
 
 function hasRequiredValues(
   device: Device,
