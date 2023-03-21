@@ -1,5 +1,5 @@
 import { Rule, Diagnostic } from "@siteimprove/alfa-act";
-import { DOM, Role } from "@siteimprove/alfa-aria";
+import { DOM, Node as ariaNode, Role } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
@@ -16,8 +16,9 @@ import * as aria from "@siteimprove/alfa-aria";
 import { Scope } from "../tags";
 
 const { hasNonDefaultRole, isIncludedInTheAccessibilityTree } = DOM;
-const { hasAttribute, hasInputType, hasName, hasNamespace } = Element;
+const { hasNamespace } = Element;
 const { isEmpty } = Iterable;
+const { hasAttribute, hasRole } = ariaNode;
 const { and, property, test } = Predicate;
 const { isFocusable } = Style;
 
@@ -47,6 +48,11 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+const isAriaControlsRequired: Predicate<ariaNode> = and(
+  hasRole("combobox"),
+  hasAttribute("aria-expanded", (expanded) => expanded !== "true")
+);
+
 function hasRequiredValues(
   device: Device,
   element: Element
@@ -71,7 +77,7 @@ function hasRequiredValues(
       // ones
       if (
         node.attribute(attribute).every(property("value", isEmpty)) &&
-        !isAttributeOptional(node, role.name)(attribute)
+        !(isAriaControlsRequired(node) && attribute === "aria-controls")
       ) {
         missing.push(attribute);
         result = false;
@@ -86,20 +92,6 @@ function hasRequiredValues(
   // If there is no role for the node, we have a problem; applicability ensures
   // the presence of a role. Throwing a Failed result to trigger looking into it
   return Outcomes.RuleError;
-}
-
-function isAttributeOptional(
-  owner: aria.Node,
-  role: aria.Role.Name
-): Predicate<aria.Attribute.Name> {
-  // `combobox` only requires `aria-controls` when it's opened, we rely on
-  // `aria-expanded` being correctly set on the owner element.
-  return (attribute) =>
-    role === "combobox" &&
-    attribute === "aria-controls" &&
-    owner
-      .attribute("aria-expanded")
-      .some((expanded) => expanded.value !== "true");
 }
 
 /**

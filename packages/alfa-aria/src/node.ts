@@ -529,7 +529,7 @@ export namespace Node {
     });
   }
 
-  export const { hasName } = predicate;
+  export const { hasAttribute, hasName, hasRole } = predicate;
 }
 
 /**
