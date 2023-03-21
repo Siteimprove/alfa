@@ -71,7 +71,6 @@ function hasRequiredValues(
       // ones
       if (
         node.attribute(attribute).every(property("value", isEmpty)) &&
-        !isManagedAttribute(element, role.name)(attribute) &&
         !isAttributeOptional(node, role.name)(attribute)
       ) {
         missing.push(attribute);
@@ -87,26 +86,6 @@ function hasRequiredValues(
   // If there is no role for the node, we have a problem; applicability ensures
   // the presence of a role. Throwing a Failed result to trigger looking into it
   return Outcomes.RuleError;
-}
-
-// Some aria-* attributes are managed by UAs out of the HTML AAM and we
-// incorrectly flagged them as missing
-// See https://github.com/w3c/html-aam/issues/349
-function isManagedAttribute(
-  element: Element,
-  role: aria.Role.Name
-): Predicate<aria.Attribute.Name> {
-  return (attribute) =>
-    role === "combobox" &&
-    attribute === "aria-expanded" &&
-    test(
-      and(
-        hasName("input"),
-        hasInputType("email", "search", "tel", "text", "url"),
-        hasAttribute("list")
-      ),
-      element
-    );
 }
 
 function isAttributeOptional(
