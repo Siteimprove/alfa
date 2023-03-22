@@ -12,13 +12,14 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
+import { isAriaControlsRequired } from "../common/predicate/is-aria-controls-required";
 
 import { Scope } from "../tags";
 
 const { hasNonDefaultRole, isIncludedInTheAccessibilityTree } = DOM;
-const { hasAttribute, hasInputType, hasName, hasNamespace } = Element;
+const { hasNamespace } = Element;
 const { isEmpty } = Iterable;
-const { and, property, test } = Predicate;
+const { and, property } = Predicate;
 const { isFocusable } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -71,8 +72,7 @@ function hasRequiredValues(
       // ones
       if (
         node.attribute(attribute).every(property("value", isEmpty)) &&
-        !isManagedAttribute(element, role.name, attribute) &&
-        !isAttributeOptional(role.name, attribute)
+        !(isAriaControlsRequired(node) && attribute === "aria-controls")
       ) {
         missing.push(attribute);
         result = false;
@@ -240,40 +240,4 @@ export namespace Outcomes {
   export const RuleError = Err.of(
     RoleAndRequiredAttributes.of("", "generic", [], [])
   );
-}
-
-// Some aria-* attributes are managed by UAs out of the HTML AAM and we
-// incorrectly flagged them as missing
-// See https://github.com/w3c/html-aam/issues/349
-function isManagedAttribute(
-  element: Element,
-  role: aria.Role.Name,
-  attribute: aria.Attribute.Name
-): boolean {
-  if (
-    role === "combobox" &&
-    attribute === "aria-expanded" &&
-    test(
-      and(
-        hasName("input"),
-        hasInputType("email", "search", "tel", "text", "url"),
-        hasAttribute("list")
-      ),
-      element
-    )
-  ) {
-    return true;
-  }
-
-  return false;
-}
-
-function isAttributeOptional(
-  role: aria.Role.Name,
-  attribute: aria.Attribute.Name
-) {
-  // combobox only requires aria-controls when opened, which we can't detect
-  // same as for sia-r19, @see https://github.com/Siteimprove/alfa/pull/1313
-  // should be refined to look at `aria-expanded` at some point
-  return role === "combobox" && attribute === "aria-controls";
 }

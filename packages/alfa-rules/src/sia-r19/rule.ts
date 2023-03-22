@@ -12,6 +12,7 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
+import { isAriaControlsRequired } from "../common/predicate/is-aria-controls-required";
 
 import { Scope } from "../tags";
 
@@ -132,22 +133,18 @@ function treeHasId(id: string, node: Node): boolean {
  * * required on its owner's role; and
  * * of type id reference (list); and
  * * pointing to non-existing id; and
- * * not `aria-controls` on `combobox`, which is an exception.
+ * * not `aria-controls` on closed `combobox`, which is an exception.
  */
 function isAttributeOptionalOrValid(
   attribute: aria.Attribute,
   owner: Element,
   device: Device
 ): boolean {
-  for (const role of aria.Node.from(owner, device).role) {
+  const node = aria.Node.from(owner, device);
+  for (const role of node.role) {
     const { name, type, value } = attribute;
 
-    if (role.name === "combobox" && name === "aria-controls") {
-      // combobox only require aria-controls when opened, which we can't really detect
-      // aria-controls is no more required in ARIA 1.3 (and authoring practices)
-      // but that hasn't made it to ARIA 1.2 :-(
-      // @see https://github.com/w3c/aria/pull/1335
-      // We may want to beef up that bit at some point to look at `aria-expanded`.
+    if (isAriaControlsRequired(node) && name === "aria-controls") {
       return true;
     }
 
@@ -160,6 +157,7 @@ function isAttributeOptionalOrValid(
       // Note: as of ARIA 1.2, this is only aria-controls on scrollbar…
       return value.split(" ").some((token) => treeHasId(token.trim(), owner));
     }
+
     // The attribute either is not required, or does not have an ID ref (list) type,
     // so this is good
     return true;

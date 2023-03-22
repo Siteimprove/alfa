@@ -39,6 +39,7 @@
     "src/common/outcome/refresh-delay.ts",
     "src/common/predicate.ts",
     "src/common/predicate/has-interposed-descendant.ts",
+    "src/common/predicate/is-aria-controls-required.ts",
     "src/common/predicate/is-at-the-start.ts",
     "src/common/predicate/is-large-text.ts",
     "src/common/predicate/is-whitespace.ts",

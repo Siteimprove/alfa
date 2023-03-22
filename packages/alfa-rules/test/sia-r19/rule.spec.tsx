@@ -148,13 +148,35 @@ test("evaluate() passes an aria-setsize property with the value -1 when the tota
   ]);
 });
 
-test("evaluate() passes an aria-controls property on a combobox pointing to a non-existent ID", async (t) => {
-  const target = <div role="combobox" aria-controls="content"></div>;
+test("evaluate() passes `aria-controls` on a closed `combobox` pointing to a non-existent ID", async (t) => {
+  const target = (
+    <div role="combobox" aria-controls="content" aria-expanded="false"></div>
+  );
 
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R19, { document }), [
     passed(R19, target.attribute("aria-controls").getUnsafe(), {
+      1: Outcomes.HasValidValue,
+    }),
+    passed(R19, target.attribute("aria-expanded").getUnsafe(), {
+      1: Outcomes.HasValidValue,
+    }),
+  ]);
+});
+
+test("evaluate() fails `aria-controls` on an opened `combobox` pointing to a non-existent ID", async (t) => {
+  const target = (
+    <div role="combobox" aria-controls="content" aria-expanded="true"></div>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R19, { document }), [
+    failed(R19, target.attribute("aria-controls").getUnsafe(), {
+      1: Outcomes.HasNoValidValue,
+    }),
+    passed(R19, target.attribute("aria-expanded").getUnsafe(), {
       1: Outcomes.HasValidValue,
     }),
   ]);

@@ -61,18 +61,18 @@ test(`evaluate() passes a <div> element with a role of combobox,
   ]);
 });
 
-test(`evaluate() passes a <div> element with a role of combobox,
+test(`evaluate() fails a <div> element with a role of combobox,
       aria-expanded value of true and missing aria-controls attribute`, async (t) => {
   const target = <div role="combobox" aria-expanded="true"></div>;
 
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R16, { document }), [
-    passed(R16, target, {
-      1: Outcomes.HasAllStates(
+    failed(R16, target, {
+      1: Outcomes.HasNotAllStates(
         "combobox",
         ["aria-controls", "aria-expanded"],
-        []
+        ["aria-controls"]
       ),
     }),
   ]);
