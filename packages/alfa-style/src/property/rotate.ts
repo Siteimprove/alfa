@@ -1,10 +1,11 @@
 import { Angle, Keyword, Number, Rotate, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 
-const { either, left, map, option, pair } = Parser;
+const { either, left, map, mapResult, option, pair, separatedList } = Parser;
 
 declare module "../property" {
   interface Longhands {
@@ -22,18 +23,51 @@ export type Specified = Keyword<"none"> | Rotate;
  */
 export type Computed = Keyword<"none"> | Rotate<Angle<"deg">>;
 
+function takeThree<T>(array: Array<T>): Result<[T, T, T], string> {
+  return array.length === 3
+    ? Ok.of([...array] as [T, T, T])
+    : Err.of("Wrong number of coordinates in rotate axis");
+}
+
 // We cannot reuse Rotate.parse which includes the rotation function.
 // We'll probably need to refactor these a bit, together with adding translate
 // and scale properties.
 const parseAxis = either<
   Slice<Token>,
-  Keyword<"x"> | Keyword<"y"> | Keyword<"z">,
+  Keyword<"x"> | Keyword<"y"> | Keyword<"z"> | [Number, Number, Number],
   string
->(Keyword.parse("x"), Keyword.parse("y"), Keyword.parse("z"));
+>(
+  Keyword.parse("x"),
+  Keyword.parse("y"),
+  Keyword.parse("z"),
+  mapResult(separatedList(Number.parse, Token.parseWhitespace), takeThree)
+);
+
+/**
+ * {@link https://en.wikipedia.org/wiki/Kronecker_delta}
+ */
+function delta(keyword: Keyword, data: string): 0 | 1 {
+  return keyword.value === data ? 1 : 0;
+}
 
 const parseRotate = map(
   pair(option(left(parseAxis, Token.parseWhitespace)), Angle.parse),
-  ([axis, angle]) => Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
+  ([axis, angle]) => {
+    for (const value of axis) {
+      if (Keyword.isKeyword(value)) {
+        return Rotate.of(
+          Number.of(delta(value, "x")),
+          Number.of(delta(value, "y")),
+          Number.of(delta(value, "z")),
+          angle
+        );
+      }
+      return Rotate.of(value[0], value[1], value[2], angle);
+    }
+
+    // No axis was provided, default is to rotate around z axis.
+    return Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle);
+  }
 );
 
 /**
@@ -42,7 +76,7 @@ const parseRotate = map(
 export const parse = either(Keyword.parse("none"), parseRotate);
 
 /**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/transform}
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/rotate}
  * @internal
  */
 export default Property.register(
