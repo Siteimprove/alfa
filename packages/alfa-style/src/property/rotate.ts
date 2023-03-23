@@ -1,7 +1,7 @@
 import { Angle, Keyword, Number, Rotate, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
 
@@ -40,6 +40,8 @@ const parseAxis = either<
   Keyword.parse("x"),
   Keyword.parse("y"),
   Keyword.parse("z"),
+  // We need to not consume the last whitespace which is expected by parseRotate,
+  // so we can hardly use Parser.take.
   mapResult(separatedList(Number.parse, Token.parseWhitespace), takeThree)
 );
 
