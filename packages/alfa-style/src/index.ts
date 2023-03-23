@@ -130,6 +130,7 @@ import "./property/overflow-x";
 import "./property/overflow-y";
 import "./property/position";
 import "./property/right";
+import "./property/rotate";
 import "./property/text-align";
 import "./property/text-decoration";
 import "./property/text-decoration-color";
