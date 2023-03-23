@@ -96,20 +96,30 @@ export namespace Outcomes {
 }
 
 function hasConditionalRotation(device: Device): Predicate<Element> {
-  return hasComputedStyle(
-    "transform",
-    (value, source) => {
-      if (Keyword.isKeyword(value) || source.none(isOrientationConditional)) {
-        return false;
-      }
+  return or(
+    hasComputedStyle(
+      "transform",
+      (value, source) => {
+        // The only keyword value is "none", which is no rotation
+        if (Keyword.isKeyword(value) || source.none(isOrientationConditional)) {
+          return false;
+        }
 
-      return some(
-        value,
-        (transform) =>
-          transform.kind === "rotate" || transform.kind === "matrix"
-      );
-    },
-    device
+        return some(
+          value,
+          (transform) =>
+            transform.kind === "rotate" || transform.kind === "matrix"
+        );
+      },
+      device
+    ),
+    hasComputedStyle(
+      "rotate",
+      (value, source) =>
+        // The only keyword value is "none", which is no rotation
+        !Keyword.isKeyword(value) && source.some(isOrientationConditional),
+      device
+    )
   );
 }
 
@@ -151,7 +161,20 @@ function getRotation(element: Element, device: Device): Option<number> {
     : parent.flatMap((parent) => getRotation(parent, device));
 
   return rotation.flatMap((rotation) => {
-    const transform = Style.from(element, device).computed("transform").value;
+    const style = Style.from(element, device);
+    // rotate is applied before transform,
+    // see https://w3c.github.io/csswg-drafts/css-transforms-2/#ctm
+    const rotate = style.computed("rotate").value;
+
+    if (!Keyword.isKeyword(rotate)) {
+      const { x, y, angle } = rotate;
+
+      if (x.value === 0 && y.value === 0) {
+        rotation += angle.value;
+      }
+    }
+
+    const transform = style.computed("transform").value;
 
     if (Keyword.isKeyword(transform)) {
       return Option.of(rotation);
