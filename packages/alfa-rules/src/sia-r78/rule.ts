@@ -14,7 +14,7 @@ import { Scope } from "../tags";
 import isText = Text.isText;
 
 const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
-const { hasDescendant, hasNamespace, isContent, isElement } = Element;
+const { hasNamespace, isContent, isElement } = Element;
 const { not, tee } = Predicate;
 const { and } = Refinement;
 
