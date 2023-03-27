@@ -134,3 +134,16 @@ test(`evaluate() ignores headings not in the accessibility tree`, async (t) => {
 
   t.deepEqual(await evaluate(R78, { document }), [inapplicable(R78)]);
 });
+
+test(`evaluate() ignores headings containing button or links (accordions)`, async (t) => {
+  const document = h.document([
+    <h1>
+      <button aria-expanded="false">Is this an accordion?</button>
+    </h1>,
+    <h1>
+      <button aria-expanded="false">Can I do that?</button>
+    </h1>,
+  ]);
+
+  t.deepEqual(await evaluate(R78, { document }), [inapplicable(R78)]);
+});
