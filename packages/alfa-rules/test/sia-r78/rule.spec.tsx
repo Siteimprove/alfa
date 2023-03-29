@@ -141,7 +141,9 @@ test(`evaluate() ignores headings containing button or links (accordions)`, asyn
       <button aria-expanded="false">Is this an accordion?</button>
     </h1>,
     <h1>
-      <button aria-expanded="false">Can I do that?</button>
+      <a aria-expanded="false" href="#">
+        Can I do that?
+      </a>
     </h1>,
   ]);
 
