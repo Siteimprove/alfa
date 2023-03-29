@@ -11,8 +11,8 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
-const { hasName, hasNamespace } = Element;
-const { and } = Predicate;
+const { hasName, hasNamespace, hasTabIndex } = Element;
+const { and, not } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r13",
@@ -27,7 +27,8 @@ export default Rule.Atomic.of<Page, Element>({
             and(
               hasNamespace(Namespace.HTML),
               hasName("iframe"),
-              isIncludedInTheAccessibilityTree(device)
+              isIncludedInTheAccessibilityTree(device),
+              not(hasTabIndex((n) => n < 0))
             )
           );
       },
