@@ -25,7 +25,7 @@ export type Computed = Keyword<"none"> | Rotate<Angle<"deg">>;
 
 function takeThree<T>(array: Array<T>): Result<[T, T, T], string> {
   return array.length === 3
-    ? Ok.of([...array] as [T, T, T])
+    ? Ok.of(array as [T, T, T])
     : Err.of("Wrong number of coordinates in rotate axis");
 }
 
