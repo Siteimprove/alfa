@@ -9,7 +9,9 @@ The type of the targets of rules
 <b>Signature:</b>
 
 ```typescript
-export type Target = act.Rule.Target<RulesUnion>;
+export type Target = {
+        [K in Keys]: act.Rule.Target<RulesObject[K]>;
+    }[Keys];
 ```
 <b>References:</b> [Rule.Target](./alfa-act.rule.target.md)
 

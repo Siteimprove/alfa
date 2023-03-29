@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isPassed<I, T extends Hashable, Q, S>(value: unknown): value is Passed<I, T, Q, S>;
+function isPassed<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Passed<I, T, Q, S>;
 ```
 
 ## Parameters

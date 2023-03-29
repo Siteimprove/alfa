@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isAtomic<I, T extends Hashable, Q, S>(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
+function isAtomic<I, T extends Hashable, Q extends Question.Metadata, S>(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
 ```
 
 ## Parameters

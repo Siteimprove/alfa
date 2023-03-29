@@ -19,6 +19,30 @@ Items that are related, such as breaking changes, new features, or changes to ex
 
 </details>
 
+## [0.62.0](../../compare/v0.61.0...v0.62.0) (2023-03-29)
+
+### Breaking
+
+- [@packages/alfa-slice](packages/alfa-slice): `Slice#array` and `Slice#offset` have been made private as direct access to these could result in invalid slices. Use of `Slice#first`, `Slice#get`, or the predefined parsers combinators from [@siteimprove/alfa-parser](packages/alfa-parser) should replace these. ([#1367](../../pull/1367))
+
+- [@siteimprove/alfa-act](packages/alfa-act): The `Q` type parameter, containing questions' metadata, is now enforced to have a meaningful shape everywhere; this should now break most usages since incorrect shape would result in `never` oracles. Rules that ask no questions now accept `any` as their oracle (since they never call it). ([#1376](../../pull/1376)) 
+
+### Changed
+
+- The various integrations and CLI packages have been moved to the [Siteimprove/alfa-integrations repository](https://github.com/Siteimprove/alfa-integrations). The packages will still be published on the Github registry and installed the same way. Version numbers will differ between the main packages and the integration packages. ([#1370](../../pull/1370))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): The `Flattened` type has been reworked to produce the expected union. It should not default to `never` anymore. ([#1376](../../pull/1376)) 
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R16 and SIA-R19 now consider `aria-controls` as a required attribute on opened `combobox`. ([#1379](../../issues/1379), [#1381](../../pull/1381))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R13 now doesn't apply to `<iframe>` with negative `tabindex`, following the latest ACT rules changes. ([#1380](../../issues/1380), [#1386](../../pull/1386))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R44 now also checks the `rotate` property. ([#1378](../../issues/1378), [#1383](../../pull/1383))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules): SIA-R78 now accepts accordions headers (detected as containing a `button` or `link`, matching ARIA practices). ([#1363](../../issues/1363), [#1387](../../pull/1387))
+
 ## [0.61.0](../../compare/v0.60.0...v0.61.0) (2023-03-06)
 
 In addition to the following changes, this release also contains caching of several frequently used methods, which should result in increased time performance for most cases (at the cost of extra memory usage).

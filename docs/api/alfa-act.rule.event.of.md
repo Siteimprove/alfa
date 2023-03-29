@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<INPUT, TARGET extends Hashable, QUESTION, SUBJECT, TYPE extends Event.Type, NAME extends string>(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
+static of<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, TYPE extends Event.Type, NAME extends string>(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME>;
 ```
 
 ## Parameters

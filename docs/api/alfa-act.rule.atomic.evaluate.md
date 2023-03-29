@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-interface Evaluate<I, T extends Hashable, Q, S> 
+interface Evaluate<I, T extends Hashable, Q extends Question.Metadata, S> 
 ```

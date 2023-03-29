@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isApplicable<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Applicable<I, T, Q, S>;
+function isApplicable<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is Applicable<I, T, Q, S>;
 ```
 
 ## Parameters

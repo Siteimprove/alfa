@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isFailed<I, T extends Hashable, Q, S>(value: Outcome<I, T, Q, S>): value is Failed<I, T, Q, S>;
+function isFailed<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is Failed<I, T, Q, S>;
 ```
 
 ## Parameters

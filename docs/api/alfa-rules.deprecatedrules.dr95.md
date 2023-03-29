@@ -12,5 +12,5 @@
 <b>Signature:</b>
 
 ```typescript
-_default: Rule.Atomic<Page, Element<string>, never, Element<string>>
+_default: Rule.Atomic<Page, Element<string>, {}, Element<string>>
 ```

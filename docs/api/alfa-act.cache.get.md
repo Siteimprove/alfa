@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-get<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q, S>>>>): Future<Iterable<Outcome<I, T, Q, S>>>;
+get<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q, S>>>>): Future<Iterable<Outcome<I, T, Q, S>>>;
 ```
 
 ## Parameters

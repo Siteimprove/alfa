@@ -39,6 +39,8 @@ export declare namespace Node
 
 |  Variable | Description |
 |  --- | --- |
+|  [hasAttribute](./alfa-aria.node.hasattribute.md) |  |
 |  [hasName](./alfa-aria.node.hasname.md) |  |
+|  [hasRole](./alfa-aria.node.hasrole.md) |  |
 |  [includeIgnored](./alfa-aria.node.includeignored.md) | Traversal options to include ignored nodes in the traversal. |
 

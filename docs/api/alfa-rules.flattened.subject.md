@@ -9,7 +9,9 @@ The type of the subjects of questions asked by rules
 <b>Signature:</b>
 
 ```typescript
-export type Subject = act.Rule.Subject<RulesUnion>;
+export type Subject = {
+        [K in Keys]: act.Rule.Subject<RulesObject[K]>;
+    }[Keys];
 ```
 <b>References:</b> [Rule.Subject](./alfa-act.rule.subject.md)
 

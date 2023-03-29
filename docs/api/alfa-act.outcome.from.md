@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function from<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{
+function from<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{
         [key: string]: Option<Result<Diagnostic>>;
     }>, mode: Mode): Outcome.Applicable<I, T, Q, S>;
 ```

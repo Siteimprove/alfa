@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isInapplicable<I, T extends Hashable, Q, S>(value: unknown): value is Inapplicable<I, T, Q, S>;
+function isInapplicable<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Inapplicable<I, T, Q, S>;
 ```
 
 ## Parameters

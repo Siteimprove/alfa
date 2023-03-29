@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{
+static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{
             [key: string]: Result<Diagnostic>;
         }>, mode: Mode): Failed<I, T, Q, S>;
 ```

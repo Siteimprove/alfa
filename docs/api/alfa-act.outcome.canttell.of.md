@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic, mode: Mode): CantTell<I, T, Q, S>;
+static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic, mode: Mode): CantTell<I, T, Q, S>;
 ```
 
 ## Parameters

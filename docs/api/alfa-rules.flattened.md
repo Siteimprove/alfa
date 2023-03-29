@@ -16,9 +16,10 @@ export declare namespace Flattened
 |  Type Alias | Description |
 |  --- | --- |
 |  [Input](./alfa-rules.flattened.input.md) | The type of the input of rules |
+|  [Keys](./alfa-rules.flattened.keys.md) | The keys of all rules This looks like: "R1" \| "R2" \| … |
 |  [Question](./alfa-rules.flattened.question.md) | The type of the questions asked by rules |
 |  [Rule](./alfa-rules.flattened.rule.md) | <p>The flattened type of all rules. Target, questions, … are a union of all the possible ones; that is this looks like Rule<!-- -->&lt;<!-- -->Page, Document \| Element \| …, …<!-- -->&gt;</p><p>This is a super-type of the individual type of each rule.</p> |
-|  [RulesUnion](./alfa-rules.flattened.rulesunion.md) | A union of all the possible types of rules |
+|  [RulesObject](./alfa-rules.flattened.rulesobject.md) | <p>We want to export types for the possible inputs, targets, … of rules. However, Atomic<!-- -->&lt;<!-- -->I, T, Q, S<!-- -->&gt; \| Atomic<!-- -->&lt;<!-- -->I', T', Q', S'<!-- -->&gt; does \*\*not\*\* extend Rule<!-- -->&lt;<!-- -->?, ?, ?, ?<!-- -->&gt; and act.Rule.Input will result in <code>never</code> rather than <code>I &#124; I'</code></p><p>So, instead, we need to apply act.Rule.Input on each individual type of the union. This is not directly possible, but can be done through mapped types on an object type containing all the possibilities.</p><p>We first construct the object type (<!-- -->{<!-- -->R1: Atomic<!-- -->&lt;<!-- -->…<!-- -->&gt;<!-- -->, R2: …<!-- -->}<!-- -->) and its keys ("R1" \| "R2" \| …) Next, for each extractor, we iterate it over the values of the object type and only keep the resulting values. The unions are then automatically collapsed as we want them.</p> |
 |  [Subject](./alfa-rules.flattened.subject.md) | The type of the subjects of questions asked by rules |
 |  [Target](./alfa-rules.flattened.target.md) | The type of the targets of rules |
 

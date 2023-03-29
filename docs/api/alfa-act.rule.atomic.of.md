@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<I, T extends Hashable, Q = never, S = T>(properties: {
+static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(properties: {
             uri: string;
             requirements?: Iterable<Requirement>;
             tags?: Iterable<Tag>;

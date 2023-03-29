@@ -9,7 +9,9 @@ The type of the input of rules
 <b>Signature:</b>
 
 ```typescript
-export type Input = act.Rule.Input<RulesUnion>;
+export type Input = {
+        [K in Keys]: act.Rule.Input<RulesObject[K]>;
+    }[Keys];
 ```
 <b>References:</b> [Rule.Input](./alfa-act.rule.input.md)
 

@@ -11,9 +11,9 @@ The QUESTION type maps questions' URI to the expected type of answer, both as a 
 <b>Signature:</b>
 
 ```typescript
-export declare type Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, D extends number = Interview.MaxDepth> = ANSWER | {
-    [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, CONTEXT, QUESTION[URI] extends [any, infer A] ? A : never, D extends -1 ? ANSWER : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>, URI extends string ? URI : never>;
+export declare type Interview<QUESTION extends Question.Metadata, SUBJECT, CONTEXT, ANSWER, D extends number = Interview.MaxDepth> = ANSWER | {
+    [URI in keyof QUESTION]: Question<QUESTION[URI][0], SUBJECT, CONTEXT, QUESTION[URI][1], D extends -1 ? ANSWER : Interview<QUESTION, SUBJECT, CONTEXT, ANSWER, Depths[D]>, URI extends string ? URI : never>;
 }[keyof QUESTION];
 ```
-<b>References:</b> [Question](./alfa-act.question.md)<!-- -->, [Interview](./alfa-act.interview.md)
+<b>References:</b> [Question.Metadata](./alfa-act.question.metadata.md)<!-- -->, [Question](./alfa-act.question.md)<!-- -->, [Interview](./alfa-act.interview.md)
 

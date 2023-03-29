@@ -9,9 +9,9 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Oracle<INPUT, TARGET extends Hashable, QUESTION, SUBJECT> = (rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, question: {
-    [URI in keyof QUESTION]: Question<QUESTION[URI] extends [infer T, any] ? T : never, SUBJECT, TARGET, QUESTION[URI] extends [any, infer A] ? A : never, unknown, URI extends string ? URI : never>;
-}[keyof QUESTION]) => Future<Option<QUESTION[keyof QUESTION] extends [any, infer A] ? A : never>>;
+export declare type Oracle<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT> = (rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, question: {
+    [URI in keyof QUESTION]: Question<QUESTION[URI][0], SUBJECT, TARGET, QUESTION[URI][1], unknown, URI extends string ? URI : never>;
+}[keyof QUESTION]) => Future<Option<QUESTION[keyof QUESTION][1]>>;
 ```
-<b>References:</b> [Hashable](./alfa-hash.hashable.md)<!-- -->, [Rule](./alfa-act.rule.md)<!-- -->, [Question](./alfa-act.question.md)<!-- -->, [Future](./alfa-future.future.md)<!-- -->, [Option](./alfa-option.option.md)
+<b>References:</b> [Hashable](./alfa-hash.hashable.md)<!-- -->, [Question.Metadata](./alfa-act.question.metadata.md)<!-- -->, [Rule](./alfa-act.rule.md)<!-- -->, [Question](./alfa-act.question.md)<!-- -->, [Future](./alfa-future.future.md)<!-- -->, [Option](./alfa-option.option.md)
 

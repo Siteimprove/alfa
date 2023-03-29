@@ -9,7 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare class Audit<I, T extends Hashable, Q = never, S = T> 
+export declare class Audit<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> 
 ```
 
 ## Methods

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isCantTell<I, T extends Hashable, Q, S>(value: unknown): value is CantTell<I, T, Q, S>;
+function isCantTell<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is CantTell<I, T, Q, S>;
 ```
 
 ## Parameters

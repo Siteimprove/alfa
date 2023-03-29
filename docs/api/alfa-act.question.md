@@ -24,3 +24,9 @@ export declare namespace Question
 |  [JSON](./alfa-act.question.json.md) |  |
 |  [Options](./alfa-act.question.options.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Metadata](./alfa-act.question.metadata.md) |  |
+

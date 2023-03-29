@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function startExpectation<I, T extends Hashable, Q, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "expectation">;
+function startExpectation<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "expectation">;
 ```
 
 ## Parameters

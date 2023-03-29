@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-consume: Parser<Slice<Token>, Function>
+consume: Parser<Slice<Token>, Function, string>
 ```

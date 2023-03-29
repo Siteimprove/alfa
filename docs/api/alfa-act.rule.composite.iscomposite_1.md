@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isComposite<I, T extends Hashable, Q>(value: unknown): value is Composite<I, T, Q>;
+function isComposite<I, T extends Hashable, Q extends Question.Metadata>(value: unknown): value is Composite<I, T, Q>;
 ```
 
 ## Parameters

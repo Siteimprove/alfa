@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-equals<I, T extends Hashable, Q, S>(value: Inapplicable<I, T, Q, S>): boolean;
+equals<I, T extends Hashable, Q extends Question.Metadata, S>(value: Inapplicable<I, T, Q, S>): boolean;
 ```
 
 ## Parameters

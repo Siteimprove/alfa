@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-equals<I, T extends Hashable, Q, S, V extends Outcome.Value = Outcome.Value>(value: Outcome<I, T, Q, S, V>): boolean;
+equals<I, T extends Hashable, Q extends Question.Metadata, S, V extends Outcome.Value = Outcome.Value>(value: Outcome<I, T, Q, S, V>): boolean;
 ```
 
 ## Parameters

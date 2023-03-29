@@ -15,7 +15,7 @@ In both cases, we also record whether the oracle was actually used; this is usef
 <b>Signature:</b>
 
 ```typescript
-function conduct<INPUT, TARGET extends Hashable, QUESTION, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>, oracleUsed?: boolean): Future<Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>>>;
+function conduct<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>, oracleUsed?: boolean): Future<Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>>>;
 ```
 
 ## Parameters

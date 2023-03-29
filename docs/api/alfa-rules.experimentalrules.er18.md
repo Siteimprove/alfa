@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-_default: Rule.Atomic<Page, Attribute<string>, never, Attribute<string>>
+_default: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>
 ```

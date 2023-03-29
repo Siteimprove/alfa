@@ -9,7 +9,7 @@ The type of the questions asked by rules
 <b>Signature:</b>
 
 ```typescript
-export type Question = act.Rule.Question<RulesUnion>;
+export type Question = Question.Metadata;
 ```
-<b>References:</b> [Rule.Question](./alfa-act.rule.question.md)
+<b>References:</b> [Question.Metadata](./alfa-rules.question.metadata.md)
 
