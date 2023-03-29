@@ -26,18 +26,24 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       applicability() {
-        headings = document
-          .descendants(Node.fullTree)
-          .filter(
+        headings = document.descendants(Node.fullTree).filter(
+          and(
+            isElement,
             and(
-              isElement,
-              and(
-                hasNamespace(Namespace.HTML),
-                isIncludedInTheAccessibilityTree(device),
-                hasRole(device, "heading")
+              hasNamespace(Namespace.HTML),
+              isIncludedInTheAccessibilityTree(device),
+              hasRole(device, "heading"),
+              // Headings containing a button is the ARIA pattern for accordions.
+              // Headings containing a link is frequently misused instead.
+              // Headings containing a link is also used for, e.g., list of news.
+              not((heading) =>
+                heading
+                  .elementDescendants()
+                  .some(hasRole(device, "button", "link"))
               )
             )
-          );
+          )
+        );
 
         return headings;
       },
