@@ -23,19 +23,13 @@ function isNotOpaque(device: Device, context: Context) {
   );
 }
 
-function hasTransparentParent(device: Device, context: Context) {
-  return (node: Node<string>) =>
-    node
-      .parent(Node.flatTree)
-      .some(
-        or(
-          and(
-            isElement,
-            hasComputedStyle("color", Color.isTransparent, device, context)
-          ),
-          isTransparent(device, context)
-        )
-      );
+function hasTransparentTextColor(device: Device, context: Context) {
+  return hasComputedStyle(
+    "color",
+    Color.isTransparent,
+    device,
+    context
+  ) as Predicate<Text>;
 }
 
 /**
@@ -52,7 +46,8 @@ export function isTransparent(
       .get(node, () =>
         or(
           and(isElement, isNotOpaque(device, context)),
-          and(isText, hasTransparentParent(device, context))
+          and(isText, hasTransparentTextColor(device, context)),
+          (node: Node<string>) => node.parent(Node.flatTree).some(isTransparent)
         )(node)
       );
   };

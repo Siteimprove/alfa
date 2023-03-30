@@ -19,6 +19,14 @@ test("isTransparent() returns false for element with opacity not zero", (t) => {
   t.equal(isTransparent(element), false);
 });
 
+test("isTransparant() returns true for element with transparent parent", (t) => {
+  const span = <span>Hello world</span>;
+  const parent = <div style={{ opacity: "0" }}>{span}</div>;
+
+  h.document([parent]);
+  t.equal(isTransparent(span), true);
+});
+
 test("isTransparent() returns true for text node with parent with alpha zero", (t) => {
   const text = h.text("Hello world");
   const element = <div style={{ color: "rgba(255, 255, 255, 0)" }}>{text}</div>;
