@@ -10,7 +10,7 @@ import { hasComputedStyle } from "../../element/predicate/has-computed-style";
 
 const { isElement } = Element;
 const { isText } = Text;
-const { or, and } = Refinement;
+const { or, and, test } = Refinement;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
@@ -44,11 +44,14 @@ export function isTransparent(
       .get(device, Cache.empty)
       .get(context, Cache.empty)
       .get(node, () =>
-        or(
-          and(isElement, isNotOpaque(device, context)),
-          and(isText, hasTransparentTextColor(device, context)),
-          (node: Node<string>) => node.parent(Node.flatTree).some(isTransparent)
-        )(node)
+        test(
+          or(
+            and(isElement, isNotOpaque(device, context)),
+            and(isText, hasTransparentTextColor(device, context)),
+            (node: Node) => node.parent(Node.flatTree).some(isTransparent)
+          ),
+          node
+        )
       );
   };
 }
