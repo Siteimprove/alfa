@@ -28,10 +28,15 @@ export default Rule.Atomic.of<Page, Element>({
             hasRole(device, "paragraph"),
             hasCascadedStyle(
               "font-size",
-              (fontSize) =>
-                (fontSize.type === "length" ||
-                  fontSize.type === "percentage") &&
-                fontSize.value > 0,
+              (fontSize) => {
+                switch (fontSize.type) {
+                  case "length":
+                  case "percentage":
+                    return fontSize.value > 0;
+                  default:
+                    return true;
+                }
+              },
               device
             ),
             Node.hasTextContent(),
