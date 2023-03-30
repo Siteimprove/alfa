@@ -15,9 +15,6 @@ const { hasRole } = DOM;
 const { and, test } = Predicate;
 const { isVisible, hasComputedStyle } = Style;
 
-const isNotItalic = (device: Device) =>
-  hasComputedStyle("font-style", (style) => style.value !== "italic", device);
-
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r85",
   tags: [Scope.Component],
@@ -49,5 +46,13 @@ export namespace Outcomes {
 
   export const IsItalic = Err.of(
     Diagnostic.of(`The text of the paragraph is all italic`)
+  );
+}
+
+function isNotItalic(device: Device) {
+  return hasComputedStyle(
+    "font-style",
+    (style) => style.value !== "italic",
+    device
   );
 }

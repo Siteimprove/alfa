@@ -17,14 +17,6 @@ const { hasRole } = DOM;
 const { and, test } = Predicate;
 const { isVisible, hasCascadedStyle } = Style;
 
-const hasRelativeUnit = (device: Device) =>
-  hasCascadedStyle(
-    "line-height",
-    (lineHeight) =>
-      lineHeight.type !== "length" || Unit.Length.isRelative(lineHeight.unit),
-    device
-  );
-
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r80",
   requirements: [Criterion.of("1.4.8")],
@@ -65,5 +57,14 @@ export namespace Outcomes {
 
   export const HasAbsoluteUnit = Err.of(
     Diagnostic.of(`The line height is specified using an absolute unit`)
+  );
+}
+
+function hasRelativeUnit(device: Device) {
+  return hasCascadedStyle(
+    "line-height",
+    (lineHeight) =>
+      lineHeight.type !== "length" || Unit.Length.isRelative(lineHeight.unit),
+    device
   );
 }

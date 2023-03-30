@@ -15,13 +15,6 @@ const { hasRole } = DOM;
 const { and, test } = Predicate;
 const { isVisible, hasComputedStyle } = Style;
 
-const isNotUpperCased = (device: Device) =>
-  hasComputedStyle(
-    "text-transform",
-    (transform) => transform.value !== "uppercase",
-    device
-  );
-
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r72",
   tags: [Scope.Component],
@@ -53,5 +46,13 @@ export namespace Outcomes {
 
   export const IsUppercased = Err.of(
     Diagnostic.of(`The text of the paragraph is uppercased`)
+  );
+}
+
+function isNotUpperCased(device: Device) {
+  return hasComputedStyle(
+    "text-transform",
+    (transform) => transform.value !== "uppercase",
+    device
   );
 }

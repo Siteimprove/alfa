@@ -16,9 +16,6 @@ const { hasRole } = DOM;
 const { and, test } = Predicate;
 const { isVisible, hasComputedStyle } = Style;
 
-const isNotJustified = (device: Device) =>
-  hasComputedStyle("text-align", (align) => align.value !== "justify", device);
-
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r71",
   requirements: [Criterion.of("1.4.8")],
@@ -51,5 +48,13 @@ export namespace Outcomes {
 
   export const IsJustified = Err.of(
     Diagnostic.of(`The text of the paragraph is justified`)
+  );
+}
+
+function isNotJustified(device: Device) {
+  return hasComputedStyle(
+    "text-align",
+    (align) => align.value !== "justify",
+    device
   );
 }
