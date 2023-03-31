@@ -1,8 +1,9 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -11,8 +12,8 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
-const { and } = Predicate;
-const { isVisible } = Style;
+const { and, test } = Predicate;
+const { isVisible, hasComputedStyle } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r72",
@@ -26,13 +27,9 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const { value: transform } = Style.from(target, device).computed(
-          "text-transform"
-        );
-
         return {
           1: expectation(
-            transform.value !== "uppercase",
+            test(isNotUpperCased(device), target),
             () => Outcomes.IsNotUppercased,
             () => Outcomes.IsUppercased
           ),
@@ -49,5 +46,13 @@ export namespace Outcomes {
 
   export const IsUppercased = Err.of(
     Diagnostic.of(`The text of the paragraph is uppercased`)
+  );
+}
+
+function isNotUpperCased(device: Device) {
+  return hasComputedStyle(
+    "text-transform",
+    (transform) => transform.value !== "uppercase",
+    device
   );
 }

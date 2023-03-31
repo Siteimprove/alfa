@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 import R74, { Outcomes } from "../../src/sia-r74/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { failed, inapplicable, passed } from "../common/outcome";
 
 test(`evaluate() passes a paragraph with a font size specified using a relative
       length`, async (t) => {
@@ -16,6 +16,24 @@ test(`evaluate() passes a paragraph with a font size specified using a relative
     passed(R74, target, {
       1: Outcomes.HasRelativeUnit,
     }),
+  ]);
+});
+
+test("evaluate() passes a paragraph with a font size specified using an absolute-size keyword", async (t) => {
+  const target = <p style={{ fontSize: "large" }}>Hello world</p>;
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R74, { document }), [
+    passed(R74, target, { 1: Outcomes.HasRelativeUnit }),
+  ]);
+});
+
+test("evaluate() passes a paragraph with a font size specified using an relative-size keyword", async (t) => {
+  const target = <p style={{ fontSize: "larger" }}>Hello world</p>;
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R74, { document }), [
+    passed(R74, target, { 1: Outcomes.HasRelativeUnit }),
   ]);
 });
 

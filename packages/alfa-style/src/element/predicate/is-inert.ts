@@ -10,16 +10,10 @@ import { Style } from "../../style";
  * @public
  */
 export function isInert(device: Device): Predicate<Element> {
-  return (element) => {
-    const visibility = Style.from(element, device).computed("visibility").value;
-
-    switch (visibility.value) {
-      case "hidden":
-      case "collapse":
-        return true;
-
-      default:
-        return false;
-    }
-  };
+  return Style.hasComputedStyle(
+    "visibility",
+    (specified) =>
+      specified.value === "hidden" || specified.value === "collapse",
+    device
+  );
 }

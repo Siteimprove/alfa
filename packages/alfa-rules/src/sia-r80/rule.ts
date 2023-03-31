@@ -1,9 +1,10 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Unit } from "@siteimprove/alfa-css";
+import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -13,8 +14,8 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { hasRole } = DOM;
-const { and } = Predicate;
-const { isVisible } = Style;
+const { and, test } = Predicate;
+const { isVisible, hasCascadedStyle } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r80",
@@ -37,15 +38,9 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        const { value: lineHeight } = Style.from(target, device)
-          .cascaded("line-height")
-          // Presence of a cascaded value is guaranteed by filter in applicability
-          .getUnsafe();
-
         return {
           1: expectation(
-            lineHeight.type !== "length" ||
-              Unit.Length.isRelative(lineHeight.unit),
+            test(hasRelativeUnit(device), target),
             () => Outcomes.HasRelativeUnit,
             () => Outcomes.HasAbsoluteUnit
           ),
@@ -62,5 +57,14 @@ export namespace Outcomes {
 
   export const HasAbsoluteUnit = Err.of(
     Diagnostic.of(`The line height is specified using an absolute unit`)
+  );
+}
+
+function hasRelativeUnit(device: Device) {
+  return hasCascadedStyle(
+    "line-height",
+    (lineHeight) =>
+      lineHeight.type !== "length" || Unit.Length.isRelative(lineHeight.unit),
+    device
   );
 }
