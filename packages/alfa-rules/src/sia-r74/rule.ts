@@ -1,9 +1,9 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Unit } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -14,7 +14,7 @@ import { Scope } from "../tags";
 
 const { hasRole } = DOM;
 const { and } = Predicate;
-const { isVisible } = Style;
+const { isVisible, hasCascadedStyle } = Style;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r74",
@@ -26,19 +26,19 @@ export default Rule.Atomic.of<Page, Element>({
         return document.elementDescendants(Node.fullTree).filter(
           and(
             hasRole(device, "paragraph"),
-            (element) =>
-              Style.from(element, device)
-                .cascaded("font-size")
-                .some(({ value: fontSize }) => {
-                  switch (fontSize.type) {
-                    case "length":
-                    case "percentage":
-                      return fontSize.value > 0;
-
-                    default:
-                      return true;
-                  }
-                }),
+            hasCascadedStyle(
+              "font-size",
+              (fontSize) => {
+                switch (fontSize.type) {
+                  case "length":
+                  case "percentage":
+                    return fontSize.value > 0;
+                  default:
+                    return true;
+                }
+              },
+              device
+            ),
             Node.hasTextContent(),
             isVisible(device)
           )
