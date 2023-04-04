@@ -12,6 +12,7 @@ name: Create a new release (generic workflow)
 # This workflow is intended to work on Alfa repos sharing the same structure for code and release.
 # Namely:
 # * TypeScript (or ECMAScript) mono-repo, with yarn workspaces in `packages/alfa-*`
+# * Default branch on `main`
 # * Relying on the `yarn install` / `yarn build` / `yarn test` cycle.
 # * Using either yarn PnP or usual node_modules for dependencies.
 # * Using changeset for storing local changes as they happen.
@@ -49,6 +50,12 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
+      - name: Are we called from `main`?
+        # New releases should only be created from the main branch of the repo.
+        # If this workflow is somehow called from another branch, crash.
+        if: ${{ github.ref_name }} != 'main'
+        run: exit 1
+
       - uses: actions/checkout@v3
         with:
           # Only this step needs to be done with the upgraded token, all other actions steps can be done
@@ -94,7 +101,7 @@ jobs:
         #
         # If not unique, this exits and the workflow fails, which is good as it raises an alert for the caller.
         run: |
-          [[ "$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u | wc -l)" == 1 ]] || exit 1
+          [[ "$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u | wc -l)" == 1 ]] || exit 2
 
       - name: Get current version
         id: current
