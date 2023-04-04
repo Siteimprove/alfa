@@ -98,8 +98,6 @@ jobs:
 
       - name: Get current version
         id: current
-        # Grepping through all package.json ensure this stays correct even if some packages are moved elsewhere.
-        # Other solution would be to hook on a given package, this may become incorrect if that package moves.
         run: |
           echo "version=v$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
       - name: Get list of changed packages
@@ -121,7 +119,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Get new version
         id: new
-        run: echo "version=v$(grep version packages/alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
+        run: |
+          echo "version=v$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
 
       - name: Preparing new section for global changelog
         id: changelog
