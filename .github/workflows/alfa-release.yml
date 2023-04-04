@@ -94,13 +94,14 @@ jobs:
         #
         # If not unique, this exits and the workflow fails, which is good as it raises an alert for the caller.
         run: |
-          [[ "$(grep version packages/alfa-*/package.json | cut -d\" -f 4 | sort -u | wc -l)" == 1 ]] || exit 1
+          [[ "$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u | wc -l)" == 1 ]] || exit 1
 
       - name: Get current version
         id: current
         # Grepping through all package.json ensure this stays correct even if some packages are moved elsewhere.
         # Other solution would be to hook on a given package, this may become incorrect if that package moves.
-        run: echo "version=v$(grep version packages/alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
+        run: |
+          echo "version=v$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
       - name: Get list of changed packages
         id: changed
         run: |
@@ -173,9 +174,9 @@ jobs:
 
       - name: Make Github release
         run: >
-          gh release create ${VERSION} 
-          --prerelease 
-          --verify-tag 
+          gh release create ${VERSION}
+          --prerelease
+          --verify-tag
           --title ${VERSION}
           --notes "[Changelog for this release](CHANGELOG.md)"
         env:
