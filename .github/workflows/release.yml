@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  alfa-release:
+  release:
     uses: siteimprove/alfa-companion/.github/workflows/alfa-release.yml@main
     with:
       # See https://api.github.com/users/siteimprove-builduser
