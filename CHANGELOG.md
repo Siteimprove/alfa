@@ -1,3 +1,8 @@
+# [v0.62.1](../../compare/v0.62.0...v0.62.1) (2023-04-04)
+
+Packages changed:
+- [@siteimprove/alfa-test](packages/alfa-test/CHANGELOG.md)
+
 # Older changes
 
 These changes were made with an older release flow.
