@@ -8,7 +8,7 @@ on:
 jobs:
   release:
     name: Release
-    uses: siteimprove/alfa-companion/.github/workflows/alfa-release.yml@main
+    uses: ./.github/workflows/alfa-release.yml
     with:
       # See https://api.github.com/users/siteimprove-builduser
       user-name: siteimprove-builduser
