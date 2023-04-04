@@ -23,6 +23,8 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.1",
     "@microsoft/api-documenter": "^7.19.9",
     "@microsoft/api-extractor": "^7.29.5",
     "@types/async": "^3.2.5",

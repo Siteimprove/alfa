@@ -4,7 +4,9 @@ This section is intended to be a place where developers can add guides on differ
 
 ## Adding code
 
-* [Writing a parser](writing-a-parser.md)
+Remember to [Add a change set](changeset.md) to your pull requests if needed.
+
+- [Writing a parser](writing-a-parser.md)
 
 ## Investigating
 
