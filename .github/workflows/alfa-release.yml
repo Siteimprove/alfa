@@ -151,8 +151,10 @@ jobs:
         # Bash reads the file first, so we don't need a temp storage.
         run: echo "${{ steps.changelog.outputs.changelog }}$(cat CHANGELOG.md)" > CHANGELOG.md
 
+      - name: Update lockfile
+        # Cross-workspaces references need to be updated.
+        run: yarn install && yarn dedupe
       - name: Verify changes
-        # Install was already done early in the workflow
         run: yarn build && yarn test
 
       - name: Set up git config
@@ -165,8 +167,8 @@ jobs:
         # If we made it thus far, we can commit the changes
         # We need to take care to **not** commit .yarnrc.yml which has been updated with a token.
         run: |
-          # Removed individual changesets, all changelog (global and local), all package.json (new version number)
-          git add .changeset/ CHANGELOG.md **/CHANGELOG.md package.json **/package.json
+          # Removed individual changesets, all changelog (global and local), all package.json (new version number), lockfile
+          git add .changeset/ CHANGELOG.md **/CHANGELOG.md package.json **/package.json yarn.lock
           git commit -m ${{ steps.new.outputs.version }}
           git tag --annotate ${{ steps.new.outputs.version }} --message=${{ steps.new.outputs.version }}
           git push --follow-tags
