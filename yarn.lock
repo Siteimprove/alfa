@@ -92,17 +92,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/changelog-github@npm:^0.4.8":
-  version: 0.4.8
-  resolution: "@changesets/changelog-github@npm:0.4.8"
-  dependencies:
-    "@changesets/get-github-info": ^0.5.2
-    "@changesets/types": ^5.2.1
-    dotenv: ^8.1.0
-  checksum: 8a357cc08757e0eeca267ee05141f68bef936582abef8b78a5d30d99f5a86e41b7d3debba70992b73b2f57b0fc6201ec1cc3c65116930167ee3197b427b865c5
-  languageName: node
-  linkType: hard
-
 "@changesets/cli@npm:^2.26.1":
   version: 2.26.1
   resolution: "@changesets/cli@npm:2.26.1"
@@ -1649,10 +1638,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
-    "@changesets/changelog-github": ^0.4.8
     "@changesets/cli": ^2.26.1
     "@microsoft/api-documenter": ^7.19.9
     "@microsoft/api-extractor": ^7.29.5
+    "@svitejs/changesets-changelog-github-compact": ^1.1.0
     "@types/async": ^3.2.5
     "@types/jsonld": ^1.5.6
     "@types/node": ^14.14.31
@@ -1665,6 +1654,16 @@ __metadata:
     typescript: =4.8.4
   languageName: unknown
   linkType: soft
+
+"@svitejs/changesets-changelog-github-compact@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@svitejs/changesets-changelog-github-compact@npm:1.1.0"
+  dependencies:
+    "@changesets/get-github-info": ^0.5.2
+    dotenv: ^16.0.3
+  checksum: 51a8727f6ee5d0eddc48c24ef1b809d714d1d1b04cbb4bbb33f39e3096708e7f5957274a2fcaa8eeb273a16295f0f612ca4d7e5e672dfce558e1f3d7faeb1815
+  languageName: node
+  linkType: hard
 
 "@tootallnate/once@npm:1":
   version: 1.1.2
@@ -2604,10 +2603,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^8.1.0":
-  version: 8.6.0
-  resolution: "dotenv@npm:8.6.0"
-  checksum: 38e902c80b0666ab59e9310a3d24ed237029a7ce34d976796349765ac96b8d769f6df19090f1f471b77a25ca391971efde8a1ea63bb83111bd8bec8e5cc9b2cd
+"dotenv@npm:^16.0.3":
+  version: 16.0.3
+  resolution: "dotenv@npm:16.0.3"
+  checksum: afcf03f373d7a6d62c7e9afea6328e62851d627a4e73f2e12d0a8deae1cd375892004f3021883f8aec85932cd2834b091f568ced92b4774625b321db83b827f8
   languageName: node
   linkType: hard
 
