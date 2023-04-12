@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "Siteimprove/alfa" }],
+  "changelog": ["@svitejs/changesets-changelog-github-compact", { "repo": "Siteimprove/alfa" }],
   "commit": false,
   "fixed": [["@siteimprove/alfa-*"]],
   "linked": [],

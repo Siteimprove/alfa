@@ -1,5 +1,16 @@
 # @siteimprove/alfa-test
 
+## 0.62.2
+
+### Patch Changes
+
+- Test release flow ([`50cba6a0d`](https://github.com/Siteimprove/alfa/commit/50cba6a0d5183a30c15fea88e3beb034b9592390))
+
+  No functional change
+
+- Updated dependencies []:
+  - @siteimprove/alfa-highlight@0.62.2
+
 ## 0.62.1
 
 ### Patch Changes
