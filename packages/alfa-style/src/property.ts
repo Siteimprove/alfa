@@ -15,15 +15,15 @@ const parseDefaults = Keyword.parse("initial", "inherit", "unset");
 /**
  * @internal
  */
-export class Property<T = unknown, U = T> {
-  public static of<T, U>(
-    initial: U,
-    parse: Property.Parser<T>,
-    compute: Mapper<Value<T>, Value<U>, [style: Style]>,
+export class Property<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
+  public static of<SPECIFIED, COMPUTED>(
+    initial: COMPUTED,
+    parse: Property.Parser<SPECIFIED>,
+    compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
     options: Property.Options = {
       inherits: false,
     }
-  ): Property<T, U> {
+  ): Property<SPECIFIED, COMPUTED> {
     return new Property(
       initial,
       left(
@@ -35,15 +35,15 @@ export class Property<T = unknown, U = T> {
     );
   }
 
-  public static extend<T, U>(
-    property: Property<T, U>,
+  public static extend<SPECIFIED, COMPUTED>(
+    property: Property<SPECIFIED, COMPUTED>,
     overrides: {
-      initial?: U;
-      parse?: Property.Parser<T>;
-      compute?: Mapper<Value<T>, Value<U>, [style: Style]>;
+      initial?: COMPUTED;
+      parse?: Property.Parser<SPECIFIED>;
+      compute?: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
       options?: Property.Options;
     } = {}
-  ): Property<T, U> {
+  ): Property<SPECIFIED, COMPUTED> {
     const {
       initial = property._initial,
       parse,
@@ -67,15 +67,19 @@ export class Property<T = unknown, U = T> {
     );
   }
 
-  private readonly _initial: U;
-  private readonly _parse: Property.Parser<T>;
-  private readonly _compute: Mapper<Value<T>, Value<U>, [style: Style]>;
+  private readonly _initial: COMPUTED;
+  private readonly _parse: Property.Parser<SPECIFIED>;
+  private readonly _compute: Mapper<
+    Value<SPECIFIED>,
+    Value<COMPUTED>,
+    [style: Style]
+  >;
   private readonly _options: Property.Options;
 
   private constructor(
-    initial: U,
-    parse: Property.Parser<T>,
-    compute: Mapper<Value<T>, Value<U>, [style: Style]>,
+    initial: COMPUTED,
+    parse: Property.Parser<SPECIFIED>,
+    compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
     options: Property.Options
   ) {
     this._initial = initial;
@@ -84,15 +88,15 @@ export class Property<T = unknown, U = T> {
     this._options = options;
   }
 
-  get initial(): U {
+  get initial(): COMPUTED {
     return this._initial;
   }
 
-  get parse(): Property.Parser<T> {
+  get parse(): Property.Parser<SPECIFIED> {
     return this._parse;
   }
 
-  get compute(): Mapper<Value<T>, Value<U>, [style: Style]> {
+  get compute(): Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]> {
     return this._compute;
   }
 
@@ -109,9 +113,9 @@ export namespace Property {
     readonly inherits: boolean;
   }
 
-  export type Parser<T = Value.Parsed> = parser.Parser<
+  export type Parser<SPECIFIED = Value.Parsed> = parser.Parser<
     Slice<Token>,
-    Value.Default | T,
+    Value.Default | SPECIFIED,
     string
   >;
 
@@ -133,10 +137,10 @@ export namespace Property {
      * rather than individually.
      */
     export type Parsed<N extends Name = Name> = WithName<N> extends Property<
-      infer T,
-      infer U
+      infer SPECIFIED,
+      infer COMPUTED
     >
-      ? T
+      ? SPECIFIED
       : never;
 
     /**
@@ -170,10 +174,10 @@ export namespace Property {
      * {@link https://drafts.csswg.org/css-cascade/#computed}
      */
     export type Computed<N extends Name> = WithName<N> extends Property<
-      infer T,
-      infer U
+      infer SPECIFIED,
+      infer COMPUTED
     >
-      ? U
+      ? COMPUTED
       : never;
 
     /**
