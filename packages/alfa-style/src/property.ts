@@ -1,12 +1,12 @@
-import { Token, Keyword } from "@siteimprove/alfa-css";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Slice } from "@siteimprove/alfa-slice";
+import { type Token, Keyword } from "@siteimprove/alfa-css";
+import type { Mapper } from "@siteimprove/alfa-mapper";
+import type { Slice } from "@siteimprove/alfa-slice";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import * as parser from "@siteimprove/alfa-parser";
 
-import { Style } from "./style";
-import { Value } from "./value";
+import type { Style } from "./style";
+import type { Value } from "./value";
 
 const { left, either, end } = Parser;
 
