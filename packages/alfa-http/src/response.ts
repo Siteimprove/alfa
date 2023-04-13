@@ -4,6 +4,7 @@ import { URL } from "@siteimprove/alfa-url";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
+import { Result } from "@siteimprove/alfa-result";
 import { Body } from "./body";
 import { Headers } from "./headers";
 
@@ -16,7 +17,8 @@ export class Response
   implements
     Body,
     json.Serializable<Response.JSON>,
-    earl.Serializable<Response.EARL> {
+    earl.Serializable<Response.EARL>
+{
   public static of(
     url: URL,
     status: number,
@@ -26,7 +28,11 @@ export class Response
     return new Response(url, status, headers, body);
   }
 
-  private static _empty = Response.of(URL.parse("about:blank").get(), 200);
+  private static _empty = Response.of(
+    // this is a valid URL
+    URL.parse("about:blank").getUnsafe(),
+    200
+  );
 
   public static empty(): Response {
     return this._empty;
@@ -138,12 +144,14 @@ export namespace Response {
     "http:body": Body.EARL;
   }
 
-  export function from(json: JSON): Response {
-    return Response.of(
-      URL.parse(json.url).get(),
-      json.status,
-      Headers.from(json.headers),
-      Encoder.encode(json.body)
+  export function from(json: JSON): Result<Response, string> {
+    return URL.parse(json.url).map((url) =>
+      Response.of(
+        url,
+        json.status,
+        Headers.from(json.headers),
+        Encoder.encode(json.body)
+      )
     );
   }
 

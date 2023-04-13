@@ -10,7 +10,7 @@ import {
   Token,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Result, Err } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Property } from "../property";
@@ -82,7 +82,8 @@ export const parse: Parser<Slice<Token>, Shadow, string> = (input) => {
             return result;
           }
 
-          [input, vertical] = result.get();
+          // the previous check ensure that the result is Ok
+          [input, vertical] = result.getUnsafe();
           skipWhitespace();
 
           {

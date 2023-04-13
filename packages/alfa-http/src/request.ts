@@ -4,6 +4,7 @@ import { URL } from "@siteimprove/alfa-url";
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 
+import { Result } from "@siteimprove/alfa-result";
 import { Body } from "./body";
 import { Headers } from "./headers";
 
@@ -16,7 +17,8 @@ export class Request
   implements
     Body,
     json.Serializable<Request.JSON>,
-    earl.Serializable<Request.EARL> {
+    earl.Serializable<Request.EARL>
+{
   public static of(
     method: string,
     url: URL,
@@ -26,7 +28,11 @@ export class Request
     return new Request(method, url, headers, body);
   }
 
-  private static _empty = Request.of("GET", URL.parse("about:blank").get());
+  private static _empty = Request.of(
+    "GET",
+    // this is a valid URL
+    URL.parse("about:blank").getUnsafe()
+  );
 
   public static empty(): Request {
     return this._empty;
@@ -140,12 +146,14 @@ export namespace Request {
     "http:body": Body.EARL;
   }
 
-  export function from(json: JSON): Request {
-    return Request.of(
-      json.method,
-      URL.parse(json.url).get(),
-      Headers.from(json.headers),
-      Encoder.encode(json.body)
+  export function from(json: JSON): Result<Request, string> {
+    return URL.parse(json.url).map((url) =>
+      Request.of(
+        json.method,
+        url,
+        Headers.from(json.headers),
+        Encoder.encode(json.body)
+      )
     );
   }
 

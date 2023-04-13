@@ -1,7 +1,7 @@
-import { Option, None } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Result, Err } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "./token";
@@ -238,6 +238,7 @@ const lexString: Parser<Slice<number>, Token> = (input) => {
   return Result.of([input, Token.String.of(value)]);
 };
 
+// TODO: Should this be of type Parser.Infallible since it always succeeds?
 const lexCommentContents: Parser<Slice<number>, string> = (input) => {
   let value = "";
   let next = input.get(0);
@@ -253,7 +254,8 @@ const lexCommentContents: Parser<Slice<number>, string> = (input) => {
           input = input.slice(1);
           value += ":";
 
-          const [remainder, result] = lexCommentContents(input).get();
+          // this function never returns Err
+          const [remainder, result] = lexCommentContents(input).getUnsafe();
 
           value += result;
 

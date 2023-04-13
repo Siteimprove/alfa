@@ -1,19 +1,19 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
-import { Lexer, Keyword, Component, Token } from "@siteimprove/alfa-css";
+import { Component, Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
-  Element,
   Declaration,
   Document,
-  Shadow,
+  Element,
   Node,
+  Shadow,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
-import { Option, None } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
@@ -556,7 +556,8 @@ function substitute(
       let name: string;
       let fallback: Option<Slice<Token>>;
 
-      [tokens, [name, fallback]] = result.get();
+      // the check above ensures the result is Ok
+      [tokens, [name, fallback]] = result.getUnsafe();
 
       // If we've already seen this variable, bail out (circular reference).
       if (visited.has(name)) {

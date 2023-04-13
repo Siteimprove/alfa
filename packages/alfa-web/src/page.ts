@@ -1,12 +1,13 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Decoder } from "@siteimprove/alfa-encoding";
-import { Response, Request } from "@siteimprove/alfa-http";
+import { Request, Response } from "@siteimprove/alfa-http";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
 import * as sarif from "@siteimprove/alfa-sarif";
 
+import { Result } from "@siteimprove/alfa-result";
 import { Resource } from "./resource";
 
 /**
@@ -19,7 +20,8 @@ export class Page
     Resource,
     json.Serializable<Page.JSON>,
     earl.Serializable<Page.EARL>,
-    sarif.Serializable<sarif.Artifact> {
+    sarif.Serializable<sarif.Artifact>
+{
   public static of(
     request: Request,
     response: Response,
@@ -119,12 +121,18 @@ export namespace Page {
     "dct:hasPart": [Request.EARL, Response.EARL];
   }
 
-  export function from(json: JSON): Page {
-    return Page.of(
-      Request.from(json.request),
-      Response.from(json.response),
-      Document.from(json.document),
-      Device.from(json.device)
+  export function from(json: JSON): Result<Page, string> {
+    return Request.from(json.request).andThen((request) =>
+      Response.from(json.response).andThen((response) =>
+        Result.of(
+          Page.of(
+            request,
+            response,
+            Document.from(json.document),
+            Device.from(json.device)
+          )
+        )
+      )
     );
   }
 

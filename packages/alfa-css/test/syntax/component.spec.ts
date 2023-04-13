@@ -18,7 +18,7 @@ test(".consume() parses whitespace", (t) => {
   t.deepEqual(
     consume(lex(" "))
       .map(([, component]) => component.toJSON())
-      .get(),
+      .getUnsafe(),
     [{ type: "whitespace" }]
   );
 });
@@ -27,7 +27,7 @@ test(".consume() parses empty parenthesis block", (t) => {
   t.deepEqual(
     consume(lex("()"))
       .map(([, component]) => component.toJSON())
-      .get(),
+      .getUnsafe(),
     [
       {
         type: "open-parenthesis",
@@ -43,7 +43,7 @@ test(".consume() parses function", (t) => {
   t.deepEqual(
     consume(lex("var(--foo)"))
       .map(([, component]) => component.toJSON())
-      .get(),
+      .getUnsafe(),
     [
       {
         type: "function",
@@ -65,7 +65,7 @@ test(".parse() parses leading whitespaces", (t) => {
   t.deepEqual(
     parse(spaces.concat(lex("var(--foo)")))
       .map(([, component]) => component.toJSON())
-      .get(),
+      .getUnsafe(),
     [
       {
         type: "function",

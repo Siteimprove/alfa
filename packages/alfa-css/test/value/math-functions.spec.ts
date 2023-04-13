@@ -16,7 +16,7 @@ test(".parse() parses a max of one or more numbers or calculation", (t) => {
     ["1 + 2, 5, 2 * 3", 6],
     ["2, max(1, 4)", 4],
   ]) {
-    const calculation = parse(`max(${list})`).get();
+    const calculation = parse(`max(${list})`).getUnsafe();
 
     t(calculation.isNumber());
 
@@ -40,7 +40,7 @@ test(".parse() parses a max of absolute dimensions", (t) => {
     ["2px, 1cm", 37.7952756, "length"],
     ["1rad, 90deg", 90, "angle"],
   ] as const) {
-    const calculation = parse(`max(${list})`).get();
+    const calculation = parse(`max(${list})`).getUnsafe();
 
     t.deepEqual(calculation.toJSON(), {
       type: "math expression",
@@ -57,7 +57,7 @@ test(".parse() parses a max of absolute dimensions", (t) => {
 });
 
 test(".parse() does not reduce relative dimensions", (t) => {
-  const calculation = parse("max(1em, 20px, 2*4px, 1vh + 20%)").get();
+  const calculation = parse("max(1em, 20px, 2*4px, 1vh + 20%)").getUnsafe();
 
   t.deepEqual(calculation.toJSON(), {
     type: "math expression",
@@ -114,7 +114,7 @@ test(".parse() does not reduce relative dimensions", (t) => {
 });
 
 test(".parse() does not resolve percentages", (t) => {
-  const calculation = parse("max(5%, 10%)").get();
+  const calculation = parse("max(5%, 10%)").getUnsafe();
 
   t.deepEqual(calculation.toJSON(), {
     type: "math expression",
@@ -131,7 +131,7 @@ test(".parse() does not resolve percentages", (t) => {
 test("parse() accept mixed max if they can combine", (t) => {
   for (const list of ["1px, 10%", "10%, 1px"]) {
     const calculation = parse(`max(${list})`)
-      .get()
+      .getUnsafe()
       .reduce({
         length: () => Length.of(0, "px"),
         percentage: (percent) => Length.of(percent.value * 16, "px"),

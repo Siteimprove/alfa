@@ -8,7 +8,7 @@ function parse(input: string) {
 }
 
 test("parse() parses a circle with just a radius", (t) => {
-  t.deepEqual(parse("circle(farthest-side)").get(), {
+  t.deepEqual(parse("circle(farthest-side)").getUnsafe(), {
     type: "basic-shape",
     kind: "circle",
     radius: {
@@ -34,7 +34,7 @@ test("parse() parses a circle with just a radius", (t) => {
 });
 
 test("parse() parses a circle with just a center", (t) => {
-  t.deepEqual(parse("circle(at left)").get(), {
+  t.deepEqual(parse("circle(at left)").getUnsafe(), {
     type: "basic-shape",
     kind: "circle",
     radius: {
@@ -64,7 +64,7 @@ test("parse() parses a circle with just a center", (t) => {
 });
 
 test("parse() parses a circle with both radius and center", (t) => {
-  t.deepEqual(parse("circle(10px at left)").get(), {
+  t.deepEqual(parse("circle(10px at left)").getUnsafe(), {
     type: "basic-shape",
     kind: "circle",
     radius: {

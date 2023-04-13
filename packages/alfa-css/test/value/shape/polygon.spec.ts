@@ -8,7 +8,7 @@ function parse(input: string) {
 }
 
 test(".parse() parses a polygon with no fill rule", (t) => {
-  t.deepEqual(parse("polygon(1px 0px 1px 1px 0px 1px)").get(), {
+  t.deepEqual(parse("polygon(1px 0px 1px 1px 0px 1px)").getUnsafe(), {
     type: "basic-shape",
     kind: "polygon",
     fill: {
@@ -32,7 +32,7 @@ test(".parse() parses a polygon with no fill rule", (t) => {
 });
 
 test(".parse() parses a polygon with a fill rule", (t) => {
-  t.deepEqual(parse("polygon(evenodd, 1px 0px 1px 1px 0px 1px)").get(), {
+  t.deepEqual(parse("polygon(evenodd, 1px 0px 1px 1px 0px 1px)").getUnsafe(), {
     type: "basic-shape",
     kind: "polygon",
     fill: {

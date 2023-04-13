@@ -2,8 +2,8 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option, None } from "@siteimprove/alfa-option";
-import { Result, Err } from "@siteimprove/alfa-result";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 
 import * as json from "@siteimprove/alfa-json";
@@ -46,14 +46,16 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
    * {@link https://tools.ietf.org/html/rfc2606#section-3}
    */
   public static example(): URL {
-    return URL.parse("https://example.com").get();
+    // this is a valid URL
+    return URL.parse("https://example.com").getUnsafe();
   }
 
   /**
    * {@link https://tools.ietf.org/html/rfc6694#section-3}
    */
   public static blank(): URL {
-    return URL.parse("about:blank").get();
+    // this is a valid URL
+    return URL.parse("about:blank").getUnsafe();
   }
 
   private readonly _scheme: string;
@@ -344,7 +346,8 @@ export namespace URL {
         return result;
       }
 
-      base = result.get();
+      // The previous check ensures that the result is Ok
+      base = result.getUnsafe();
     }
 
     try {
