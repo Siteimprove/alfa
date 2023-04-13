@@ -183,6 +183,7 @@
     "src/resolver.ts",
     "src/style.ts",
     "src/value.ts",
+    "src/variable.ts",
     "test/common.ts",
     "test/node/predicate/has-transparent-background.spec.tsx",
     "test/node/predicate/is-transparent.spec.tsx",
