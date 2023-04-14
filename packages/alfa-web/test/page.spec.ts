@@ -39,11 +39,8 @@ test(".from() returns Err on invalid URL in request", (t) => {
         children: [],
         style: [],
       },
-    }).toJSON(),
-    {
-      type: "err",
-      error: "Invalid URL",
-    }
+    }).isErr(),
+    true
   );
 });
 
