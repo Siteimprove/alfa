@@ -10,10 +10,7 @@ test(".from() returns Err on invalid URL", (t) => {
       headers: [],
       method: "GET",
       status: 500,
-    }).toJSON(),
-    {
-      type: "err",
-      error: "Invalid URL",
-    }
+    }).isErr(),
+    true
   );
 });

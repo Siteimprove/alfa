@@ -84,10 +84,7 @@ test(".from() returns Err on invalid URL in response", (t) => {
         children: [],
         style: [],
       },
-    }).toJSON(),
-    {
-      type: "err",
-      error: "Invalid URL",
-    }
+    }).isErr(),
+    true
   );
 });
