@@ -22,21 +22,22 @@ import * as diagnostic from "../../common/diagnostic";
  * @public
  */
 export namespace Diagnostic {
-  export const { DistinguishingStyles: DeprecatedDistinguishingStyles } =
-    deprecatedDistinguishingStyles;
-  export const { Languages } = languages;
-  export const { LabelAndName } = labelAndName;
-  export const { RoleAndRequiredAttributes } = roleAndRequiredAttributes;
-  export const { WithPreviousHeading } = withPreviousHeading;
-  export const { WithRoleAndName } = withRoleAndName;
-  export const { SameNames } = sameNames;
-  export const { WithFirstHeading } = withFirstHeading;
-  export const { DistinguishingStyles } = distinguishingStyles;
-  export const { ColorError } = colorError;
-  export const { MatchingClasses } = matchingClasses;
-  export const { WithDeclaration } = withDeclaration;
-  export const { WithNextHeading } = withNextHeading;
-  export const { ClippingAncestors } = clippingAncestors;
-  export const { Contrast, TextSpacing, WithBadElements, WithRole } =
-    diagnostic;
+  export import DeprecatedDistinguishingStyles = deprecatedDistinguishingStyles.DistinguishingStyles;
+  export import Languages = languages.Languages;
+  export import LabelAndName = labelAndName.LabelAndName;
+  export import RoleAndRequiredAttributes = roleAndRequiredAttributes.RoleAndRequiredAttributes;
+  export import WithPreviousHeading = withPreviousHeading.WithPreviousHeading;
+  export import WithRoleAndName = withRoleAndName.WithRoleAndName;
+  export import SameNames = sameNames.SameNames;
+  export import WithFirstHeading = withFirstHeading.WithFirstHeading;
+  export import DistinguishingStyles = distinguishingStyles.DistinguishingStyles;
+  export import ColorErrors = colorError.ColorErrors;
+  export import MatchingClasses = matchingClasses.MatchingClasses;
+  export import WithDeclaration = withDeclaration.WithDeclaration;
+  export import WithNextHeading = withNextHeading.WithNextHeading;
+  export import ClippingAncestors = clippingAncestors.ClippingAncestors;
+  export import Constrast = diagnostic.Contrast;
+  export import TextSpacing = diagnostic.TextSpacing;
+  export import WithBadElements = diagnostic.WithBadElements;
+  export import WithRole = diagnostic.WithRole;
 }
