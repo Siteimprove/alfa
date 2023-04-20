@@ -13,6 +13,9 @@ import { getBackground } from "./get-background";
 
 const { isElement } = Element;
 
+/**
+ * @public
+ */
 export type Foreground = ReadonlyArray<Color.Resolved>;
 
 const foregroundCache = Cache.empty<

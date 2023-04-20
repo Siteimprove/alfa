@@ -24,6 +24,7 @@ import { Document } from '@siteimprove/alfa-dom';
 import * as earl from '@siteimprove/alfa-earl';
 import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
+import { Err } from '@siteimprove/alfa-result';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
@@ -33,6 +34,7 @@ import { Length } from '@siteimprove/alfa-css';
 import { List } from '@siteimprove/alfa-list';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Node } from '@siteimprove/alfa-dom';
+import { Ok } from '@siteimprove/alfa-result';
 import { Option } from '@siteimprove/alfa-option';
 import { Page } from '@siteimprove/alfa-web';
 import { Percentage } from '@siteimprove/alfa-css';
@@ -45,11 +47,382 @@ import { Rule } from '@siteimprove/alfa-act';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
 import { Serializable } from '@siteimprove/alfa-json';
+import { Set as Set_2 } from '@siteimprove/alfa-set';
 import { Specified } from '@siteimprove/alfa-style/src/property/position';
 import { Style } from '@siteimprove/alfa-style';
 import { System } from '@siteimprove/alfa-css';
 import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
+
+// Warning: (ae-incompatible-release-tags) The symbol "Background" is marked as @public, but its signature references "Color" which is marked as @internal
+//
+// @public (undocumented)
+type Background = ReadonlyArray<Color.Resolved>;
+
+// @internal (undocumented)
+class ClippingAncestors extends Diagnostic_2 {
+    // (undocumented)
+    equals(value: ClippingAncestors): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get horizontal(): Option<Element>;
+    // (undocumented)
+    static of(message: string, horizontal?: Option<Element>, vertical?: Option<Element>): ClippingAncestors;
+    // (undocumented)
+    toJSON(): ClippingAncestors.JSON;
+    // (undocumented)
+    get vertical(): Option<Element>;
+}
+
+// @internal (undocumented)
+namespace ClippingAncestors {
+    // (undocumented)
+    function isClippingAncestors(value: Diagnostic_2): value is ClippingAncestors;
+    // (undocumented)
+    function isClippingAncestors(value: unknown): value is ClippingAncestors;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        horizontal: Option.JSON<Element>;
+        // (undocumented)
+        vertical: Option.JSON<Element>;
+    }
+}
+
+// @internal (undocumented)
+namespace Color {
+    // (undocumented)
+    function composite(foreground: Resolved, background: Resolved, opacity: number): Resolved;
+    // (undocumented)
+    type Computed = RGB<Percentage, Percentage> | Current | System;
+    // (undocumented)
+    function resolve(color: Computed, style: Style): Option<Resolved>;
+    // (undocumented)
+    type Resolved = RGB<Percentage, Percentage>;
+}
+
+// Warning: (ae-forgotten-export) The symbol "ErrorName" needs to be exported by the entry point index.d.ts
+//
+// @internal (undocumented)
+abstract class ColorError<out T extends keyof ErrorName = keyof ErrorName, out K extends ErrorName[T] = ErrorName[T]> extends Diagnostic_2 {
+    protected constructor(message: string, element: Element, type: T, kind: K);
+    // (undocumented)
+    get element(): Element;
+    // (undocumented)
+    protected readonly _element: Element;
+    // (undocumented)
+    equals(value: ColorError): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get kind(): K;
+    // (undocumented)
+    protected readonly _kind: K;
+    // (undocumented)
+    toJSON(): ColorError.JSON<T, K>;
+    // (undocumented)
+    get type(): T;
+    // (undocumented)
+    protected readonly _type: T;
+}
+
+// @internal (undocumented)
+namespace ColorError {
+    class HasInterposedDescendants extends ColorError<"layer", "interposed-descendant"> {
+        // (undocumented)
+        equals(value: HasInterposedDescendants): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        static of(message: string): Diagnostic_2;
+        // (undocumented)
+        static of(message: string, element: Element, positionedDescendants: Iterable<Element>): HasInterposedDescendants;
+        // (undocumented)
+        get positionedDescendants(): Iterable<Element>;
+        // (undocumented)
+        toJSON(): HasInterposedDescendants.JSON;
+    }
+    // (undocumented)
+    namespace HasInterposedDescendants {
+        // (undocumented)
+        function from(offsetParent: Element, positionedDescendants: Iterable<Element>): HasInterposedDescendants;
+        // (undocumented)
+        function isInterposedDescendants(value: Diagnostic_2): value is HasInterposedDescendants;
+        // (undocumented)
+        function isInterposedDescendants(value: unknown): value is HasInterposedDescendants;
+        // (undocumented)
+        interface JSON extends ColorError.JSON<"layer", "interposed-descendant"> {
+            // (undocumented)
+            positionedDescendants: Sequence.JSON<Element>;
+        }
+    }
+    class HasUnresolvableGradientStop extends WithProperty<"layer", "unresolvable-gradient", "background-image"> {
+        // (undocumented)
+        get color(): Color.Computed;
+        // (undocumented)
+        static create(element: Element, value: Style.Computed<"background-image">, color: Color.Computed): HasUnresolvableGradientStop;
+        // (undocumented)
+        equals(value: HasUnresolvableGradientStop): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        toJSON(): HasUnresolvableGradientStop.JSON;
+    }
+    // (undocumented)
+    namespace HasUnresolvableGradientStop {
+        // (undocumented)
+        function isUnresolvableGradientStop(value: Diagnostic_2): value is HasUnresolvableGradientStop;
+        // (undocumented)
+        function isUnresolvableGradientStop(value: unknown): value is HasUnresolvableGradientStop;
+        // (undocumented)
+        interface JSON extends WithProperty.JSON<"layer", "unresolvable-gradient", "background-image"> {
+            // (undocumented)
+            color: Serializable.ToJSON<Color.Computed>;
+        }
+    }
+    // (undocumented)
+    function isColorError<T extends keyof ErrorName = keyof ErrorName, K extends ErrorName[T] = ErrorName[T]>(value: Diagnostic_2): value is ColorError<T, K>;
+    const // (undocumented)
+    isWithProperty: typeof WithProperty.isWithProperty;
+    const // (undocumented)
+    unresolvableBackgroundColor: (element: Element, value: Computed) => WithProperty<"layer", "unresolvable-background-color", "background-color">;
+    const // (undocumented)
+    backgroundSize: (element: Element, value: Computed_2) => WithProperty<"layer", "background-size", "background-size">;
+    const // (undocumented)
+    externalBackgroundImage: (element: Element, value: Computed_3) => WithProperty<"layer", "background-image", "background-image">;
+    const // (undocumented)
+    nonStaticPosition: (element: Element, value: Specified) => WithProperty<"layer", "non-static", "position">;
+    const // (undocumented)
+    unresolvableForegroundColor: (element: Element, value: Computed_4) => WithProperty<"foreground", "unresolvable-foreground-color", "color">;
+    const // (undocumented)
+    textShadow: (element: Element, value: Computed_5) => WithProperty<"background", "text-shadow", "text-shadow">;
+    // (undocumented)
+    function isColorError<T extends keyof ErrorName = keyof ErrorName, K extends ErrorName[T] = ErrorName[T]>(value: unknown): value is ColorError<T, K>;
+    // (undocumented)
+    interface JSON<T extends keyof ErrorName = keyof ErrorName, K extends ErrorName[T] = ErrorName[T]> extends Diagnostic_2.JSON {
+        // (undocumented)
+        element: Element.JSON;
+        // (undocumented)
+        kind: K;
+        // (undocumented)
+        type: T;
+    }
+    const // (undocumented)
+    unresolvableGradientStop: typeof HasUnresolvableGradientStop.create, // (undocumented)
+    isUnresolvableGradientStop: typeof HasUnresolvableGradientStop.isUnresolvableGradientStop;
+    class WithProperty<T extends keyof ErrorName, K extends ErrorName[T], N extends "background-color" | "background-image" | "background-size" | "color" | "position" | "text-shadow"> extends ColorError<T, K> {
+        protected constructor(message: string, type: T, kind: K, element: Element, proprety: N, value: Style.Computed<N>);
+        // (undocumented)
+        equals(value: WithProperty<T, K, N>): boolean;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        static of(message: string): Diagnostic_2;
+        // (undocumented)
+        static of<T extends keyof ErrorName, K extends ErrorName[T], N extends "background-color" | "background-image" | "background-size" | "color" | "position" | "text-shadow">(message: string, diagnostic: {
+            type: T;
+            kind: K;
+            element: Element;
+            property: N;
+            value: Style.Computed<N>;
+        }): WithProperty<T, K, N>;
+        // (undocumented)
+        get property(): N;
+        // (undocumented)
+        toJSON(): WithProperty.JSON<T, K, N>;
+        // (undocumented)
+        get value(): Style.Computed<N>;
+    }
+    // (undocumented)
+    namespace WithProperty {
+        // (undocumented)
+        function from<T extends keyof ErrorName, K extends ErrorName[T], N extends "background-color" | "background-image" | "background-size" | "color" | "position" | "text-shadow">(type: T, kind: K, property: N, message: string): (element: Element, value: Style.Computed<N>) => WithProperty<T, K, N>;
+        // (undocumented)
+        function isWithProperty<T extends keyof ErrorName, K extends ErrorName[T], N extends "background-color" | "background-image" | "background-size" | "color" | "position" | "text-shadow">(value: Diagnostic_2): value is WithProperty<T, K, N>;
+        // (undocumented)
+        function isWithProperty<T extends keyof ErrorName, K extends ErrorName[T], N extends "background-color" | "background-image" | "background-size" | "color" | "position" | "text-shadow">(value: unknown): value is WithProperty<T, K, N>;
+        // (undocumented)
+        interface JSON<T extends keyof ErrorName, K extends ErrorName[T], N extends "background-color" | "background-image" | "background-size" | "color" | "position" | "text-shadow"> extends ColorError.JSON<T, K> {
+            // (undocumented)
+            property: N;
+            // (undocumented)
+            value: Serializable.ToJSON<Style.Computed<N>>;
+        }
+    }
+    const // (undocumented)
+    interposedDescendants: typeof HasInterposedDescendants.from, // (undocumented)
+    isInterposedDescendants: typeof HasInterposedDescendants.isInterposedDescendants;
+}
+
+// @internal (undocumented)
+class ColorErrors<out T extends keyof ErrorName = keyof ErrorName> extends Diagnostic_2 {
+    // (undocumented)
+    equals(value: ColorErrors): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get errors(): ReadonlyArray<ColorError<T>>;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(message: string): Diagnostic_2;
+    // (undocumented)
+    static of<T extends keyof ErrorName = keyof ErrorName>(errors: ReadonlyArray<ColorError<T>>): ColorErrors<T>;
+    // (undocumented)
+    toJSON(): ColorErrors.JSON<T>;
+}
+
+// @internal (undocumented)
+namespace ColorErrors {
+    // (undocumented)
+    function isColorErrors<T extends keyof ErrorName = keyof ErrorName>(value: Diagnostic_2): value is ColorErrors<T>;
+    // (undocumented)
+    function isColorErrors<T extends keyof ErrorName = keyof ErrorName>(value: unknown): value is ColorErrors<T>;
+    // (undocumented)
+    interface JSON<T extends keyof ErrorName = keyof ErrorName> extends Diagnostic_2.JSON {
+        // (undocumented)
+        errors: Array_2<ColorError.JSON<T>>;
+    }
+    // (undocumented)
+    function prepend<T extends keyof ErrorName = keyof ErrorName, T1 extends T = T, T2 extends T = T>(old: Result<unknown, ColorErrors<T1>>, cur: Iterable<ColorError<T2>>): ColorErrors<T>;
+}
+
+// @public (undocumented)
+class ComputedStyles implements Equatable, Hashable, Serializable {
+    // (undocumented)
+    equals(value: ComputedStyles): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    static of(style?: Iterable<readonly [Name, string]>): ComputedStyles;
+    // (undocumented)
+    get style(): Map_2<Name, string>;
+    // (undocumented)
+    toJSON(): ComputedStyles.JSON;
+}
+
+// @public (undocumented)
+namespace ComputedStyles {
+    // (undocumented)
+    function from(element: Element, device: Device, context?: Context): ComputedStyles;
+    // (undocumented)
+    function isComputedStyles(value: unknown): value is ComputedStyles;
+    // (undocumented)
+    interface JSON {
+        // (undocumented)
+        [key: string]: json.JSON;
+        // (undocumented)
+        style: Map_2.JSON<Name, string>;
+    }
+}
+
+// Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+class Contrast<N extends Name_3 = Name_3> extends Diagnostic_2 {
+    // (undocumented)
+    equals(value: Contrast): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of<N extends Name_3 = Name_3>(message: string, threshold?: number, pairings?: Iterable<Contrast.Pairing<N>>): Contrast<N>;
+    // (undocumented)
+    get pairings(): Iterable<Contrast.Pairing<N>>;
+    // (undocumented)
+    get threshold(): number;
+    // (undocumented)
+    toJSON(): Contrast.JSON<N>;
+}
+
+// @public (undocumented)
+namespace Contrast {
+    // (undocumented)
+    class Color<N extends FirstColor<Name_3> | SecondColor<Name_3>> implements Equatable, Serializable, Hashable {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // (undocumented)
+        get name(): N;
+        // (undocumented)
+        static of<N extends FirstColor<Name_3> | SecondColor<Name_3>>(name: N, value: RGB): Color<N>;
+        // (undocumented)
+        toJSON(): Color.JSON<N>;
+        // (undocumented)
+        get value(): RGB;
+    }
+    // (undocumented)
+    namespace Color {
+        // (undocumented)
+        interface JSON<N extends FirstColor<Name_3> | SecondColor<Name_3>> {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            name: N;
+            // (undocumented)
+            value: RGB.JSON;
+        }
+    }
+    // (undocumented)
+    function isContrast<N extends Name_3>(value: Diagnostic_2): value is Contrast<N>;
+    // (undocumented)
+    function isContrast<N extends Name_3>(value: unknown): value is Contrast<N>;
+    // (undocumented)
+    interface JSON<N extends Name_3> extends Diagnostic_2.JSON {
+        // (undocumented)
+        pairings: Array<Pairing.JSON<N>>;
+        // (undocumented)
+        threshold: number;
+    }
+    // (undocumented)
+    class Pairing<N extends Name_3 = Name_3> implements Equatable, Serializable, Hashable, Comparable<Pairing<N>> {
+        // (undocumented)
+        get color1(): Color<FirstColor<N>>;
+        // (undocumented)
+        get color2(): Color<SecondColor<N>>;
+        // (undocumented)
+        compare(value: Pairing<N>): Comparison;
+        // (undocumented)
+        get contrast(): number;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // Warning: (ae-forgotten-export) The symbol "FirstColor" needs to be exported by the entry point index.d.ts
+        // Warning: (ae-forgotten-export) The symbol "SecondColor" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        static of<N extends Name_3 = Name_3>(color1: [FirstColor<N>, RGB], color2: [SecondColor<N>, RGB], contrast: number): Pairing<N>;
+        // (undocumented)
+        toJSON(): Pairing.JSON<N>;
+    }
+    // (undocumented)
+    namespace Pairing {
+        // (undocumented)
+        interface JSON<N extends Name_3> {
+            // (undocumented)
+            [key: string]: json.JSON;
+            // (undocumented)
+            color1: Color.JSON<FirstColor<N>>;
+            // (undocumented)
+            color2: Color.JSON<SecondColor<N>>;
+            // (undocumented)
+            contrast: number;
+        }
+    }
+        {};
+}
 
 // @public (undocumented)
 const _default: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
@@ -370,81 +743,232 @@ export { deprecatedRules }
 
 // @public (undocumented)
 export namespace Diagnostic {
-    const // Warning: (ae-forgotten-export) The symbol "ClippingAncestors" needs to be exported by the entry point index.d.ts
+    const // Warning: (ae-forgotten-export) The symbol "deprecatedDistinguishingStyles" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isClippingAncestors: typeof ClippingAncestors.isClippingAncestors;
-    const // Warning: (ae-forgotten-export) The symbol "ColorError" needs to be exported by the entry point index.d.ts
+    DeprecatedDistinguishingStyles: typeof deprecatedDistinguishingStyles.DistinguishingStyles;
+    const // Warning: (ae-forgotten-export) The symbol "languages" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isColorError: typeof ColorError.isColorError, // (undocumented)
-    isColorErrorInterposedDescendants: typeof ColorError.HasInterposedDescendants.isInterposedDescendants, // (undocumented)
-    isColorErrorUnresolvableGradientStop: typeof ColorError.HasUnresolvableGradientStop.isUnresolvableGradientStop, // (undocumented)
-    isColorErrorWithProperty: typeof ColorError.WithProperty.isWithProperty;
-    const // Warning: (ae-forgotten-export) The symbol "Contrast" needs to be exported by the entry point index.d.ts
+    Languages: typeof languages.Languages;
+    const // Warning: (ae-forgotten-export) The symbol "labelAndName" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isContrast: typeof Contrast.isContrast;
-    const // Warning: (ae-forgotten-export) The symbol "DistinguishingStyles" needs to be exported by the entry point index.d.ts
+    LabelAndName: typeof labelAndName.LabelAndName;
+    const // Warning: (ae-forgotten-export) The symbol "roleAndRequiredAttributes" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isDistinguishingStyles: typeof DistinguishingStyles.isDistinguishingStyles;
-    const // Warning: (ae-forgotten-export) The symbol "DistinguishingStyles" needs to be exported by the entry point index.d.ts
+    RoleAndRequiredAttributes: typeof roleAndRequiredAttributes.RoleAndRequiredAttributes;
+    const // Warning: (ae-forgotten-export) The symbol "withPreviousHeading" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isDistinguishingStylesDeprecated: typeof DistinguishingStyles_2.isDistinguishingStyles;
-    const // Warning: (ae-forgotten-export) The symbol "MatchingClasses" needs to be exported by the entry point index.d.ts
+    WithPreviousHeading: typeof withPreviousHeading.WithPreviousHeading;
+    const // Warning: (ae-forgotten-export) The symbol "withRoleAndName" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isMatchingClasses: typeof MatchingClasses.isMatchingClasses;
-    const // Warning: (ae-forgotten-export) The symbol "LabelAndName" needs to be exported by the entry point index.d.ts
+    WithRoleAndName: typeof withRoleAndName.WithRoleAndName;
+    const // Warning: (ae-forgotten-export) The symbol "sameNames" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isLabelAndName: typeof LabelAndName.isLabelAndName;
-    const // Warning: (ae-forgotten-export) The symbol "Languages" needs to be exported by the entry point index.d.ts
+    SameNames: typeof sameNames.SameNames;
+    const // Warning: (ae-forgotten-export) The symbol "withFirstHeading" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isLanguages: typeof Languages.isLanguages;
-    const // Warning: (ae-forgotten-export) The symbol "RoleAndRequiredAttributes" needs to be exported by the entry point index.d.ts
+    WithFirstHeading: typeof withFirstHeading.WithFirstHeading;
+    const // Warning: (ae-forgotten-export) The symbol "distinguishingStyles" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isRoleAndRequiredAttributes: typeof RoleAndRequiredAttributes.isRoleAndRequiredAttributes;
-    const // Warning: (ae-forgotten-export) The symbol "SameNames" needs to be exported by the entry point index.d.ts
+    DistinguishingStyles: typeof distinguishingStyles.DistinguishingStyles;
+    const // Warning: (ae-forgotten-export) The symbol "colorError" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isSameNames: typeof SameNames.isSameNames;
-    const // Warning: (ae-forgotten-export) The symbol "TextSpacing" needs to be exported by the entry point index.d.ts
+    ColorError: typeof colorError.ColorError;
+    const // Warning: (ae-forgotten-export) The symbol "matchingClasses" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isTextSpacing: typeof TextSpacing.isTextSpacing;
-    const // Warning: (ae-forgotten-export) The symbol "WithBadElements" needs to be exported by the entry point index.d.ts
+    MatchingClasses: typeof matchingClasses.MatchingClasses;
+    const // Warning: (ae-forgotten-export) The symbol "withDeclaration" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isWithBadElements: typeof WithBadElements.isWithBadElements;
-    const // Warning: (ae-forgotten-export) The symbol "WithDeclaration" needs to be exported by the entry point index.d.ts
+    WithDeclaration: typeof withDeclaration.WithDeclaration;
+    const // Warning: (ae-forgotten-export) The symbol "withNextHeading" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isWithDeclaration: typeof WithDeclaration.isWithDeclaration;
-    const // Warning: (ae-forgotten-export) The symbol "WithFirstHeading" needs to be exported by the entry point index.d.ts
+    WithNextHeading: typeof withNextHeading.WithNextHeading;
+    const // Warning: (ae-forgotten-export) The symbol "clippingAncestors" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isWithFirstHeading: typeof WithFirstHeading.isWithFirstHeading;
-    const // Warning: (ae-forgotten-export) The symbol "WithNextHeading" needs to be exported by the entry point index.d.ts
+    ClippingAncestors: typeof clippingAncestors.ClippingAncestors;
+    const // Warning: (ae-forgotten-export) The symbol "diagnostic" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    isWithNextHeading: typeof WithNextHeading.isWithNextHeading;
-    const // Warning: (ae-forgotten-export) The symbol "WithPreviousHeading" needs to be exported by the entry point index.d.ts
+    Contrast: typeof diagnostic.Contrast, // (undocumented)
+    TextSpacing: typeof diagnostic.TextSpacing, // (undocumented)
+    WithBadElements: typeof diagnostic.WithBadElements, // (undocumented)
+    WithRole: typeof diagnostic.WithRole;
+    const // (undocumented)
+    isDistinguishingStylesDeprecated: typeof distinguishingStyles.DistinguishingStyles.isDistinguishingStyles;
+    const // (undocumented)
+    isLanguages: typeof languages.Languages.isLanguages;
+    const // (undocumented)
+    isLabelAndName: typeof labelAndName.LabelAndName.isLabelAndName;
+    const // (undocumented)
+    isRoleAndRequiredAttributes: typeof roleAndRequiredAttributes.RoleAndRequiredAttributes.isRoleAndRequiredAttributes;
+    const // (undocumented)
+    isWithPreviousHeading: typeof withPreviousHeading.WithPreviousHeading.isWithPreviousHeading;
+    const // (undocumented)
+    isWithRoleAndName: typeof withRoleAndName.WithRoleAndName.isWithRoleAndName;
+    const // (undocumented)
+    isSameNames: typeof sameNames.SameNames.isSameNames;
+    const // (undocumented)
+    isWithFirstHeading: typeof withFirstHeading.WithFirstHeading.isWithFirstHeading;
+    const // (undocumented)
+    isDistinguishingStyles: typeof distinguishingStyles.DistinguishingStyles.isDistinguishingStyles;
+    const // (undocumented)
+    isColorError: typeof colorError.ColorError.isColorError, // (undocumented)
+    isColorErrorInterposedDescendants: typeof colorError.ColorError.HasInterposedDescendants.isInterposedDescendants, // (undocumented)
+    isColorErrorUnresolvableGradientStop: typeof colorError.ColorError.HasUnresolvableGradientStop.isUnresolvableGradientStop, // (undocumented)
+    isColorErrorWithProperty: typeof colorError.ColorError.WithProperty.isWithProperty;
+    const // (undocumented)
+    isMatchingClasses: typeof matchingClasses.MatchingClasses.isMatchingClasses;
+    const // (undocumented)
+    isWithDeclaration: typeof withDeclaration.WithDeclaration.isWithDeclaration;
+    const // (undocumented)
+    isWithNextHeading: typeof withNextHeading.WithNextHeading.isWithNextHeading;
+    const // (undocumented)
+    isClippingAncestors: typeof clippingAncestors.ClippingAncestors.isClippingAncestors;
+    const // (undocumented)
+    isContrast: typeof diagnostic.Contrast.isContrast;
+    const // (undocumented)
+    isTextSpacing: typeof diagnostic.TextSpacing.isTextSpacing;
+    const // (undocumented)
+    isWithBadElements: typeof diagnostic.WithBadElements.isWithBadElements;
+    const // (undocumented)
+    isWithRole: typeof diagnostic.WithRole.isWithRole;
+}
+
+// Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
+//
+// @internal (undocumented)
+type DistinguishingProperty = Name_2 | "contrast";
+
+// @internal (undocumented)
+class DistinguishingStyles extends Diagnostic_2 {
+    // (undocumented)
+    get defaultStyles(): Iterable<Result<ComputedStyles>>;
+    // (undocumented)
+    equals(value: DistinguishingStyles): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get focusStyles(): Iterable<Result<ComputedStyles>>;
+    // (undocumented)
+    get hoverStyles(): Iterable<Result<ComputedStyles>>;
+    // (undocumented)
+    static of(message: string, defaultStyles?: Iterable<Result<ComputedStyles>>, hoverStyles?: Iterable<Result<ComputedStyles>>, focusStyles?: Iterable<Result<ComputedStyles>>): DistinguishingStyles;
+    // (undocumented)
+    toJSON(): DistinguishingStyles.JSON;
+}
+
+// @internal (undocumented)
+namespace DistinguishingStyles {
+    // (undocumented)
+    function isDistinguishingStyles(value: Diagnostic_2): value is DistinguishingStyles;
+    // (undocumented)
+    function isDistinguishingStyles(value: unknown): value is DistinguishingStyles;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        defaultStyle: Sequence.JSON<Result<ComputedStyles>>;
+        // (undocumented)
+        focusStyle: Sequence.JSON<Result<ComputedStyles>>;
+        // (undocumented)
+        hoverStyle: Sequence.JSON<Result<ComputedStyles>>;
+    }
+}
+
+// @internal (undocumented)
+class DistinguishingStyles_2 extends Diagnostic_2 {
+    // (undocumented)
+    get defaultStyles(): Iterable<Result<ElementDistinguishable>>;
+    // (undocumented)
+    equals(value: DistinguishingStyles_2): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get focusStyles(): Iterable<Result<ElementDistinguishable>>;
+    // (undocumented)
+    get hoverStyles(): Iterable<Result<ElementDistinguishable>>;
+    // (undocumented)
+    static of(message: string, defaultStyles?: Iterable<Result<ElementDistinguishable>>, hoverStyles?: Iterable<Result<ElementDistinguishable>>, focusStyles?: Iterable<Result<ElementDistinguishable>>): DistinguishingStyles_2;
+    // (undocumented)
+    toJSON(): DistinguishingStyles_2.JSON;
+}
+
+// @internal (undocumented)
+namespace DistinguishingStyles_2 {
+    // (undocumented)
+    function isDistinguishingStyles(value: Diagnostic_2): value is DistinguishingStyles_2;
+    // (undocumented)
+    function isDistinguishingStyles(value: unknown): value is DistinguishingStyles_2;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        defaultStyle: Sequence.JSON<Result<ElementDistinguishable>>;
+        // (undocumented)
+        focusStyle: Sequence.JSON<Result<ElementDistinguishable>>;
+        // (undocumented)
+        hoverStyle: Sequence.JSON<Result<ElementDistinguishable>>;
+    }
+}
+
+// Warning: (ae-internal-mixed-release-tag) Mixed release tags are not allowed for "ElementDistinguishable" because one of its declarations is marked as @internal
+//
+// @internal (undocumented)
+class ElementDistinguishable implements Equatable, Hashable, Serializable {
+    // (undocumented)
+    get distinguishingProperties(): ReadonlyArray<DistinguishingProperty>;
+    // (undocumented)
+    equals(value: ElementDistinguishable): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(distinguishingProperties?: Iterable<DistinguishingProperty>, style?: Iterable<readonly [Name_2, string]>, pairings?: Iterable<Contrast.Pairing<["container", "link"]>>): ElementDistinguishable;
+    // (undocumented)
+    get pairings(): ReadonlyArray<Contrast.Pairing<["container", "link"]>>;
+    // (undocumented)
+    get style(): Map_2<Name_2, string>;
+    // (undocumented)
+    toJSON(): ElementDistinguishable.JSON;
+    // (undocumented)
+    withDistinguishingProperties(distinguishingProperties: ReadonlyArray<DistinguishingProperty>): ElementDistinguishable;
+    // (undocumented)
+    withPairings(pairings: ReadonlyArray<Contrast.Pairing<["container", "link"]>>): ElementDistinguishable;
+    // (undocumented)
+    withStyle(...styles: ReadonlyArray<readonly [Name_2, string]>): ElementDistinguishable;
+}
+
+// @public (undocumented)
+namespace ElementDistinguishable {
+    // Warning: (ae-incompatible-release-tags) The symbol "from" is marked as @public, but its signature references "DistinguishingProperty" which is marked as @internal
     //
     // (undocumented)
-    isWithPreviousHeading: typeof WithPreviousHeading.isWithPreviousHeading;
-    const // Warning: (ae-forgotten-export) The symbol "WithRole" needs to be exported by the entry point index.d.ts
-    //
+    function from(element: Element, device: Device, target: Element, context: Context | undefined, distinguishingProperties: Iterable<DistinguishingProperty>, pairings: Iterable<Contrast.Pairing<["container", "link"]>>): ElementDistinguishable;
     // (undocumented)
-    isWithRole: typeof WithRole.isWithRole;
-    const // Warning: (ae-forgotten-export) The symbol "WithRoleAndName" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    isWithRoleAndName: typeof WithRoleAndName.isWithRoleAndName;
+    interface JSON {
+        // (undocumented)
+        [key: string]: json.JSON;
+        // Warning: (ae-incompatible-release-tags) The symbol "distinguishingProperties" is marked as @public, but its signature references "DistinguishingProperty" which is marked as @internal
+        //
+        // (undocumented)
+        distinguishingProperties: Array_2<DistinguishingProperty>;
+        // (undocumented)
+        pairings: Array_2<Contrast.Pairing.JSON<["container", "link"]>>;
+        // (undocumented)
+        style: Map_2.JSON<Name_2, string>;
+    }
 }
 
 declare namespace experimentalRules {
@@ -482,6 +1006,17 @@ export namespace Flattened {
 const FlattenedRules: Sequence<Flattened.Rule>;
 export { FlattenedRules }
 export default FlattenedRules;
+
+// Warning: (ae-incompatible-release-tags) The symbol "Foreground" is marked as @public, but its signature references "Color" which is marked as @internal
+//
+// @public (undocumented)
+type Foreground = ReadonlyArray<Color.Resolved>;
+
+// @internal
+function getBackground(element: Element, device: Device, context?: Context, opacity?: number, ignoredInterposedDescendants?: Set_2<Element>): Result<Background, ColorErrors<"background" | "layer">>;
+
+// @internal
+function getForeground(element: Element, device: Device, context?: Context, ignoredInterposedDescendants?: Set_2<Element>): Result<Foreground, ColorErrors>;
 
 // @public (undocumented)
 export class Group<T extends Hashable> implements Iterable<T>, Equatable, Hashable, json.Serializable<Group.JSON<T>>, earl.Serializable<Group.EARL>, sarif.Serializable<sarif.Location> {
@@ -522,6 +1057,259 @@ export namespace Group {
     export function isGroup<T extends Hashable>(value: unknown): value is Group<T>;
     // (undocumented)
     export type JSON<T> = Array_2<json.Serializable.ToJSON<T>>;
+}
+
+// @internal (undocumented)
+class LabelAndName extends Diagnostic_2 {
+    // (undocumented)
+    equals(value: LabelAndName): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get name(): string;
+    // (undocumented)
+    static of(message: string, textContent?: string, name?: string): LabelAndName;
+    // (undocumented)
+    get textContent(): string;
+    // (undocumented)
+    toJSON(): LabelAndName.JSON;
+}
+
+// @internal (undocumented)
+namespace LabelAndName {
+    // (undocumented)
+    function isLabelAndName(value: Diagnostic_2): value is LabelAndName;
+    // (undocumented)
+    function isLabelAndName(value: unknown): value is LabelAndName;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        name: string;
+        // (undocumented)
+        textContent: string;
+    }
+}
+
+// @internal (undocumented)
+class Languages extends Diagnostic_2 {
+    // (undocumented)
+    equals(value: Diagnostic_2): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get natural(): Option<Language>;
+    // (undocumented)
+    static of(message: string, programmatic?: Language, natural?: Language): Languages;
+    // (undocumented)
+    get programmatic(): Language;
+    // (undocumented)
+    toJSON(): Languages.JSON;
+}
+
+// @internal (undocumented)
+namespace Languages {
+    // (undocumented)
+    function isLanguages(value: Diagnostic_2): value is Languages;
+    // (undocumented)
+    function isLanguages(value: unknown): value is Languages;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        natural: Option.JSON<Language>;
+        // (undocumented)
+        programmatic: Language.JSON;
+    }
+}
+
+// @internal (undocumented)
+class Layer {
+    // (undocumented)
+    get colors(): ReadonlyArray<Color.Resolved>;
+    // (undocumented)
+    static of(colors: Iterable<Color.Resolved>, opacity: number): Layer;
+    // (undocumented)
+    get opacity(): number;
+}
+
+// @internal (undocumented)
+namespace Layer {
+    function getLayers(element: Element, device: Device, context?: Context, opacity?: number, ignoredInterposedDescendants?: Set_2<Element>): Result<Array_2<Layer>, ColorErrors<"layer">>;
+    function merge(backdrops: Array_2<Color.Resolved>, layer: Layer): Array_2<Color.Resolved>;
+}
+
+// Warning: (ae-internal-mixed-release-tag) Mixed release tags are not allowed for "MatchingClasses" because one of its declarations is marked as @internal
+//
+// @public (undocumented)
+class MatchingClasses extends Diagnostic_2 {
+    // (undocumented)
+    equals(value: MatchingClasses): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get matchingNonTargets(): Map_2<string, number>;
+    // (undocumented)
+    get matchingTargets(): Map_2<string, number>;
+    // (undocumented)
+    static of(message: string, matchingTargets?: Map_2<string, number>, matchingNonTargets?: Map_2<string, number>): Diagnostic_2;
+    // (undocumented)
+    toJSON(): MatchingClasses.JSON;
+}
+
+// @internal (undocumented)
+namespace MatchingClasses {
+    // (undocumented)
+    function isMatchingClasses(value: Diagnostic_2): value is MatchingClasses;
+    // (undocumented)
+    function isMatchingClasses(value: unknown): value is MatchingClasses;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        matchingNonTargets: Map_2.JSON<string, number>;
+        // (undocumented)
+        matchingTargets: Map_2.JSON<string, number>;
+    }
+}
+
+// @public (undocumented)
+namespace Outcomes {
+    const // Warning: (ae-incompatible-release-tags) The symbol "IsDistinguishable" is marked as @public, but its signature references "DistinguishingStyles" which is marked as @internal
+    //
+    // (undocumented)
+    IsDistinguishable: (defaultStyles: Iterable<Result<ComputedStyles>>, hoverStyles: Iterable<Result<ComputedStyles>>, focusStyles: Iterable<Result<ComputedStyles>>) => Ok<DistinguishingStyles>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "IsNotDistinguishable" is marked as @public, but its signature references "DistinguishingStyles" which is marked as @internal
+    //
+    // (undocumented)
+    IsNotDistinguishable: (defaultStyles: Iterable<Result<ComputedStyles>>, hoverStyles: Iterable<Result<ComputedStyles>>, focusStyles: Iterable<Result<ComputedStyles>>) => Err<DistinguishingStyles>;
+}
+
+// @public (undocumented)
+namespace Outcomes_10 {
+    const // Warning: (ae-incompatible-release-tags) The symbol "hasContent" is marked as @public, but its signature references "WithNextHeading" which is marked as @internal
+    //
+    // (undocumented)
+    hasContent: (nextHeading: Option<Element>, currentLevel: number, nextLevel: number) => Ok<WithNextHeading>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "hasNoContent" is marked as @public, but its signature references "WithNextHeading" which is marked as @internal
+    //
+    // (undocumented)
+    hasNoContent: (nextHeading: Option<Element>, currentLevel: number, nextLevel: number) => Err<WithNextHeading>;
+}
+
+// @public (undocumented)
+namespace Outcomes_11 {
+    const // Warning: (ae-incompatible-release-tags) The symbol "WrapsText" is marked as @public, but its signature references "ClippingAncestors" which is marked as @internal
+    //
+    // (undocumented)
+    WrapsText: Ok<ClippingAncestors>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "ClipsText" is marked as @public, but its signature references "ClippingAncestors" which is marked as @internal
+    //
+    // (undocumented)
+    ClipsText: (horizontal: Option<Element>, vertical: Option<Element>) => Err<ClippingAncestors>;
+}
+
+// @public (undocumented)
+namespace Outcomes_2 {
+    const // Warning: (ae-incompatible-release-tags) The symbol "HasCorrectLang" is marked as @public, but its signature references "Languages" which is marked as @internal
+    //
+    // (undocumented)
+    HasCorrectLang: (programmatic: Language, natural: Language) => Ok<Languages>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "HasIncorrectLang" is marked as @public, but its signature references "Languages" which is marked as @internal
+    //
+    // (undocumented)
+    HasIncorrectLang: (programmatic: Language, natural: Language) => Err<Languages>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "HasNoLanguage" is marked as @public, but its signature references "Languages" which is marked as @internal
+    //
+    // (undocumented)
+    HasNoLanguage: (programmatic: Language) => Err<Languages>;
+}
+
+// @public (undocumented)
+namespace Outcomes_3 {
+    const // Warning: (ae-incompatible-release-tags) The symbol "VisibleIsInName" is marked as @public, but its signature references "LabelAndName" which is marked as @internal
+    //
+    // (undocumented)
+    VisibleIsInName: (textContent: string, name: string) => Ok<LabelAndName>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "VisibleIsNotInName" is marked as @public, but its signature references "LabelAndName" which is marked as @internal
+    //
+    // (undocumented)
+    VisibleIsNotInName: (textContent: string, name: string) => Err<LabelAndName>;
+}
+
+// @public (undocumented)
+namespace Outcomes_4 {
+    const // Warning: (ae-incompatible-release-tags) The symbol "HasAllStates" is marked as @public, but its signature references "RoleAndRequiredAttributes" which is marked as @internal
+    //
+    // (undocumented)
+    HasAllStates: (role: Role.Name, required: ReadonlyArray<aria.Attribute.Name>, missing: ReadonlyArray<aria.Attribute.Name>) => Ok<RoleAndRequiredAttributes>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "HasNotAllStates" is marked as @public, but its signature references "RoleAndRequiredAttributes" which is marked as @internal
+    //
+    // (undocumented)
+    HasNotAllStates: (role: Role.Name, required: ReadonlyArray<aria.Attribute.Name>, missing: ReadonlyArray<aria.Attribute.Name>) => Err<RoleAndRequiredAttributes>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "RuleError" is marked as @public, but its signature references "RoleAndRequiredAttributes" which is marked as @internal
+    //
+    // (undocumented)
+    RuleError: Err<RoleAndRequiredAttributes>;
+}
+
+// @public (undocumented)
+namespace Outcomes_5 {
+    const // (undocumented)
+    IsStructured: (previous: Element) => Ok<WithPreviousHeading>;
+    const // (undocumented)
+    IsNotStructured: (previous: Element) => Err<WithPreviousHeading>;
+}
+
+// @public (undocumented)
+namespace Outcomes_6 {
+    const // Warning: (ae-incompatible-release-tags) The symbol "SameResource" is marked as @public, but its signature references "WithRoleAndName" which is marked as @internal
+    //
+    // (undocumented)
+    SameResource: (role: Role.Name, name: string) => Ok<WithRoleAndName>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "DifferentResources" is marked as @public, but its signature references "WithRoleAndName" which is marked as @internal
+    //
+    // (undocumented)
+    DifferentResources: (role: Role.Name, name: string) => Err<WithRoleAndName>;
+}
+
+// @public (undocumented)
+namespace Outcomes_7 {
+    const // Warning: (ae-incompatible-release-tags) The symbol "differentNames" is marked as @public, but its signature references "SameNames" which is marked as @internal
+    //
+    // (undocumented)
+    differentNames: (role: Role.Name) => Ok<SameNames>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "sameNames" is marked as @public, but its signature references "SameNames" which is marked as @internal
+    //
+    // (undocumented)
+    sameNames: (role: Role.Name, errors: Iterable_2<Iterable_2<Element>>) => Err<SameNames>;
+}
+
+// @public (undocumented)
+namespace Outcomes_8 {
+    const // Warning: (ae-incompatible-release-tags) The symbol "StartWithLevel1Heading" is marked as @public, but its signature references "WithFirstHeading" which is marked as @internal
+    //
+    // (undocumented)
+    StartWithLevel1Heading: (heading: Element, level: number) => Ok<WithFirstHeading>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "StartWithHigherLevelHeading" is marked as @public, but its signature references "WithFirstHeading" which is marked as @internal
+    //
+    // (undocumented)
+    StartWithHigherLevelHeading: (heading: Element, level: number) => Err<WithFirstHeading>;
+}
+
+// @public (undocumented)
+namespace Outcomes_9 {
+    const // Warning: (ae-incompatible-release-tags) The symbol "IsSufficient" is marked as @public, but its signature references "WithDeclaration" which is marked as @internal
+    //
+    // (undocumented)
+    IsSufficient: (declaration: Option<Declaration>) => Ok<WithDeclaration>;
+    const // Warning: (ae-incompatible-release-tags) The symbol "IsInsufficient" is marked as @public, but its signature references "WithDeclaration" which is marked as @internal
+    //
+    // (undocumented)
+    IsInsufficient: (declaration: Option<Declaration>) => Err<WithDeclaration>;
 }
 
 // @public (undocumented)
@@ -704,11 +1492,84 @@ export namespace Question {
         {};
 }
 
+// @internal (undocumented)
+class RoleAndRequiredAttributes extends Diagnostic_2 {
+    // (undocumented)
+    equals(value: RoleAndRequiredAttributes): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get missingAttributes(): ReadonlyArray<aria.Attribute.Name>;
+    // (undocumented)
+    static of(message: string): Diagnostic_2;
+    // (undocumented)
+    static of(message: string, role: Role.Name, requiredAttributes: ReadonlyArray<aria.Attribute.Name>, missingAttributes: ReadonlyArray<aria.Attribute.Name>): RoleAndRequiredAttributes;
+    // (undocumented)
+    get requiredAttributes(): ReadonlyArray<aria.Attribute.Name>;
+    // (undocumented)
+    get role(): Role.Name;
+    // (undocumented)
+    toJSON(): RoleAndRequiredAttributes.JSON;
+}
+
+// @internal (undocumented)
+namespace RoleAndRequiredAttributes {
+    // (undocumented)
+    function isRoleAndRequiredAttributes(value: Diagnostic_2): value is RoleAndRequiredAttributes;
+    // (undocumented)
+    function isRoleAndRequiredAttributes(value: unknown): value is RoleAndRequiredAttributes;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        attributes: {
+            required: Array_2<aria.Attribute.Name>;
+            missing: Array_2<aria.Attribute.Name>;
+        };
+        // (undocumented)
+        role: string;
+    }
+}
+
 // @public (undocumented)
 export type Rules = typeof Rules;
 
 // @public
 export const Rules: Record_2<typeof rules>;
+
+// @internal (undocumented)
+class SameNames extends Diagnostic_2 implements Iterable_2<List<Element>> {
+    // (undocumented)
+    [Symbol.iterator](): Iterator<List<Element>>;
+    // (undocumented)
+    equals(value: SameNames): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(message: string, role?: Role.Name, errors?: Iterable_2<Iterable_2<Element>>): SameNames;
+    // (undocumented)
+    get role(): Role.Name;
+    // (undocumented)
+    toJSON(): SameNames.JSON;
+}
+
+// @internal (undocumented)
+namespace SameNames {
+    // (undocumented)
+    function isSameNames(value: Diagnostic_2): value is SameNames;
+    // (undocumented)
+    function isSameNames(value: unknown): value is SameNames;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        errors: Array_2<List.JSON<Element>>;
+        // (undocumented)
+        role: string;
+    }
+}
 
 // @public (undocumented)
 export class Scope<S extends string = string> extends Tag<"scope"> {
@@ -765,6 +1626,61 @@ export namespace Stability {
     const Deprecated: Stability<"deprecated">;
 }
 
+// @internal (undocumented)
+class TextSpacing<N extends Property.Name> extends Diagnostic_2 {
+    // (undocumented)
+    get declaration(): Declaration;
+    // (undocumented)
+    equals(value: TextSpacing<N>): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get fontSize(): Style.Computed<"font-size">;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(message: string): Diagnostic_2;
+    // (undocumented)
+    static of<N extends Property.Name>(message: string, property: N, value: Length<"px">, fontSize: Style.Computed<"font-size">, ratio: number, threshold: number, declaration: Declaration, owner: Element): TextSpacing<N>;
+    // (undocumented)
+    get owner(): Element;
+    // (undocumented)
+    get property(): N;
+    // (undocumented)
+    get ratio(): number;
+    // (undocumented)
+    get threshold(): number;
+    // (undocumented)
+    toJSON(): TextSpacing.JSON<N>;
+    // (undocumented)
+    get value(): Length<"px">;
+}
+
+// @internal (undocumented)
+namespace TextSpacing {
+    // (undocumented)
+    function isTextSpacing(value: Diagnostic_2): value is TextSpacing<Property.Name>;
+    // (undocumented)
+    function isTextSpacing(value: unknown): value is TextSpacing<Property.Name>;
+    // (undocumented)
+    interface JSON<N extends Property.Name> extends Diagnostic_2.JSON {
+        // (undocumented)
+        "font-size": Serializable.ToJSON<Style.Computed<"font-size">>;
+        // (undocumented)
+        declaration: Declaration.JSON;
+        // (undocumented)
+        owner: Element.JSON;
+        // (undocumented)
+        property: N;
+        // (undocumented)
+        ratio: number;
+        // (undocumented)
+        threshold: number;
+        // (undocumented)
+        value: Length.JSON<"px">;
+    }
+}
+
 // @public (undocumented)
 export class Version<N extends number = number> extends Tag<"version"> {
     // (undocumented)
@@ -789,6 +1705,236 @@ export namespace Version {
     export interface JSON<N extends number = number> extends Tag.JSON<"version"> {
         // (undocumented)
         version: N;
+    }
+}
+
+// @internal (undocumented)
+class WithBadElements extends Diagnostic_2 implements Iterable_2<Element> {
+    // (undocumented)
+    [Symbol.iterator](): Iterator<Element>;
+    // (undocumented)
+    equals(value: WithBadElements): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get errors(): ReadonlyArray<Element>;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(message: string, errors?: Iterable_2<Element>): WithBadElements;
+    // (undocumented)
+    toJSON(): WithBadElements.JSON;
+}
+
+// @internal (undocumented)
+namespace WithBadElements {
+    // (undocumented)
+    function isWithBadElements(value: Diagnostic_2): value is WithBadElements;
+    // (undocumented)
+    function isWithBadElements(value: unknown): value is WithBadElements;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        errors: Array_2<string>;
+    }
+}
+
+// @internal (undocumented)
+class WithDeclaration extends Diagnostic_2 {
+    constructor(message: string, declaration: Option<Declaration>);
+    // (undocumented)
+    get declaration(): Option<Declaration>;
+    // (undocumented)
+    equals(value: WithDeclaration): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    static of(message: string, declaration?: Option<Declaration>): WithDeclaration;
+    // (undocumented)
+    toJSON(): WithDeclaration.JSON;
+}
+
+// @internal (undocumented)
+namespace WithDeclaration {
+    // (undocumented)
+    function isWithDeclaration(value: Diagnostic_2): value is WithDeclaration;
+    // (undocumented)
+    function isWithDeclaration(value: unknown): value is WithDeclaration;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        declaration: Option.JSON<Declaration>;
+    }
+}
+
+// @internal (undocumented)
+class WithFirstHeading extends Diagnostic_2 {
+    // (undocumented)
+    equals(value: WithFirstHeading): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get firstHeading(): Element;
+    // (undocumented)
+    get firstHeadingLevel(): number;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(message: string): Diagnostic_2;
+    // (undocumented)
+    static of(message: string, firstHeading: Element, level: number): WithFirstHeading;
+    // (undocumented)
+    toJSON(): WithFirstHeading.JSON;
+}
+
+// @internal (undocumented)
+namespace WithFirstHeading {
+    // (undocumented)
+    function isWithFirstHeading(value: Diagnostic_2): value is WithFirstHeading;
+    // (undocumented)
+    function isWithFirstHeading(value: unknown): value is WithFirstHeading;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        firstHeading: Element.JSON;
+        // (undocumented)
+        firstHeadingLevel: number;
+    }
+}
+
+// @internal (undocumented)
+class WithNextHeading extends Diagnostic_2 {
+    // (undocumented)
+    get currentHeadingLevel(): number;
+    // (undocumented)
+    equals(value: WithNextHeading): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    get nextHeading(): Option<Element>;
+    // (undocumented)
+    get nextHeadingLevel(): number;
+    // (undocumented)
+    static of(message: string): Diagnostic_2;
+    // (undocumented)
+    static of(message: string, nextHeading: Option<Element>, currentLevel: number, nextLevel: number): WithNextHeading;
+    // (undocumented)
+    toJSON(): WithNextHeading.JSON;
+}
+
+// @internal (undocumented)
+namespace WithNextHeading {
+    // (undocumented)
+    function isWithNextHeading(value: Diagnostic_2): value is WithNextHeading;
+    // (undocumented)
+    function isWithNextHeading(value: unknown): value is WithNextHeading;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        currentHeadingLevel: number;
+        // (undocumented)
+        nextHeading: Option.JSON<Element>;
+        // (undocumented)
+        nextHeadingLevel: number;
+    }
+}
+
+// @public (undocumented)
+class WithPreviousHeading extends Diagnostic_2 {
+    constructor(message: string, previous: Element);
+    // (undocumented)
+    equals(value: WithPreviousHeading): value is this;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(message: string): Diagnostic_2;
+    // (undocumented)
+    static of(message: string, previous: Element): WithPreviousHeading;
+    // (undocumented)
+    get previous(): Element;
+    // (undocumented)
+    toJSON(): WithPreviousHeading.JSON;
+}
+
+// @public (undocumented)
+namespace WithPreviousHeading {
+    // (undocumented)
+    function isWithPreviousHeading(value: unknown): value is WithPreviousHeading;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        previous: Element.JSON;
+    }
+}
+
+// @internal (undocumented)
+class WithRole extends Diagnostic_2 {
+    protected constructor(message: string, role: Role.Name);
+    // (undocumented)
+    equals(value: WithRole): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of(message: string): Diagnostic_2;
+    // (undocumented)
+    static of(message: string, role: Role.Name): WithRole;
+    // (undocumented)
+    get role(): Role.Name;
+    // (undocumented)
+    protected readonly _role: Role.Name;
+    // (undocumented)
+    toJSON(): WithRole.JSON;
+}
+
+// @internal (undocumented)
+namespace WithRole {
+    // (undocumented)
+    function getRoleName(element: Element, device: Device): Role.Name;
+    // (undocumented)
+    function isWithRole(value: Diagnostic_2): value is WithRole;
+    // (undocumented)
+    function isWithRole(value: unknown): value is WithRole;
+    // (undocumented)
+    interface JSON extends Diagnostic_2.JSON {
+        // (undocumented)
+        role: string;
+    }
+}
+
+// @internal (undocumented)
+class WithRoleAndName extends WithRole {
+    // (undocumented)
+    equals(value: WithRoleAndName): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    get name(): string;
+    // (undocumented)
+    static of(message: string): Diagnostic_2;
+    // (undocumented)
+    static of(message: string, role: Role.Name): WithRole;
+    // (undocumented)
+    static of(message: string, role: Role.Name, name: string): WithRoleAndName;
+    // (undocumented)
+    toJSON(): WithRoleAndName.JSON;
+}
+
+// @internal (undocumented)
+namespace WithRoleAndName {
+    // (undocumented)
+    function isWithRoleAndName(value: Diagnostic_2): value is WithRoleAndName;
+    // (undocumented)
+    function isWithRoleAndName(value: unknown): value is WithRoleAndName;
+    // (undocumented)
+    interface JSON extends WithRole.JSON {
+        // (undocumented)
+        name: string;
     }
 }
 
