@@ -196,7 +196,6 @@ export namespace Declaration {
           const result = consume(Slice.of(value));
 
           if (result.isOk()) {
-            // the check ensures the result is Ok
             declarations.push(result.get()[1]);
           }
         } else {
