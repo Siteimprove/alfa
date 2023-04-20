@@ -1,14 +1,14 @@
-import { Option, None } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Result, Err } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "./token";
 
 const { pow } = Math;
 const { fromCharCode } = String;
-const { map } = Parser;
+const { map, toParser } = Parser;
 const { and, or, not, equals } = Predicate;
 
 /**
@@ -238,7 +238,9 @@ const lexString: Parser<Slice<number>, Token> = (input) => {
   return Result.of([input, Token.String.of(value)]);
 };
 
-const lexCommentContents: Parser<Slice<number>, string> = (input) => {
+const lexCommentContents: Parser.Infallible<Slice<number>, string> = (
+  input
+) => {
   let value = "";
   let next = input.get(0);
 
@@ -253,7 +255,7 @@ const lexCommentContents: Parser<Slice<number>, string> = (input) => {
           input = input.slice(1);
           value += ":";
 
-          const [remainder, result] = lexCommentContents(input).get();
+          const [remainder, result] = lexCommentContents(input);
 
           value += result;
 
@@ -269,7 +271,7 @@ const lexCommentContents: Parser<Slice<number>, string> = (input) => {
         next = input.get(0);
 
         if (next.includes(0x29)) {
-          return Result.of([input.slice(1), value + ")"]);
+          return [input.slice(1), value + ")"];
         }
         break;
 
@@ -280,10 +282,10 @@ const lexCommentContents: Parser<Slice<number>, string> = (input) => {
     }
   }
 
-  return Result.of([input, value]);
+  return [input, value];
 };
 
-const lexComment = map(lexCommentContents, (value) => {
+const lexComment = map(toParser(lexCommentContents), (value) => {
   const n = value.length;
 
   if (value.charCodeAt(n - 2) === 0x3a && value.charCodeAt(n - 1) === 0x29) {

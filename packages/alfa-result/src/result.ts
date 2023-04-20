@@ -7,8 +7,8 @@ import { Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Monad } from "@siteimprove/alfa-monad";
-import { Predicate } from "@siteimprove/alfa-predicate";
 import { Option } from "@siteimprove/alfa-option";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Reducer } from "@siteimprove/alfa-reducer";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Thunk } from "@siteimprove/alfa-thunk";
@@ -59,8 +59,22 @@ export interface Result<T, E = T>
   andThen<U, F>(result: Mapper<T, Result<U, F>>): Result<U, E | F>;
   or<U, F>(result: Result<U, F>): Result<T | U, F>;
   orElse<U, F>(result: Thunk<Result<U, F>>): Result<T | U, F>;
-  get(message?: string): T;
-  getErr(message?: string): E;
+  /**
+   * This may throw an exception. Use only when you can provide an external
+   * guarantee that it won't be used on Err. E.g. in tests, or when some
+   * condition exists that TypeScript cannot see (document it!)
+   *
+   * @internal
+   */
+  getUnsafe(message?: string): T;
+  /**
+   * This may throw an exception. Use only when you can provide an external
+   * guarantee that it won't be used on Ok. E.g. in tests, or when some
+   * condition exists that TypeScript cannot see (document it!)
+   *
+   * @internal
+   */
+  getErrUnsafe(message?: string): E;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
   getErrOr<F>(error: F): E | F;

@@ -186,7 +186,8 @@ export namespace Declaration {
           const value: Array<Token> = [next];
 
           while (input.get(0).some(not(Token.isSemicolon))) {
-            const [remainder, component] = Component.consume(input).get();
+            // Component.consume returns Ok while input is non-empty
+            const [remainder, component] = Component.consume(input).getUnsafe();
 
             input = remainder;
             value.push(...component);
@@ -199,7 +200,8 @@ export namespace Declaration {
           }
         } else {
           while (input.get(0).some(not(Token.isSemicolon))) {
-            const [remainder] = Component.consume(input).get();
+            // Component.consume returns Ok while input is non-empty
+            const [remainder] = Component.consume(input).getUnsafe();
 
             input = remainder;
           }

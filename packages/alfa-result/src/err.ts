@@ -112,8 +112,18 @@ export class Err<E> implements Result<never, E> {
     return result();
   }
 
-  public get(message = "Attempted to .get() from Err"): never {
+  /**
+   * @internal
+   */
+  public getUnsafe(message = "Attempted to .getUnsafe() from Err"): never {
     throw new Error(message);
+  }
+
+  /**
+   * @internal
+   */
+  public getErrUnsafe(): E {
+    return this._error;
   }
 
   public getErr(): E {

@@ -45,17 +45,19 @@ export class Err<E> implements Result<never, E> {
     // (undocumented)
     flatten<T, E>(this: Result<never, E>): Result<T, E>;
     // (undocumented)
-    get(message?: string): never;
-    // (undocumented)
     getErr(): E;
     // (undocumented)
     getErrOr(): E;
     // (undocumented)
     getErrOrElse(): E;
+    // @internal (undocumented)
+    getErrUnsafe(): E;
     // (undocumented)
     getOr<U>(value: U): U;
     // (undocumented)
     getOrElse<U>(value: Thunk<U>): U;
+    // @internal (undocumented)
+    getUnsafe(message?: string): never;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
@@ -142,15 +144,17 @@ export class Ok<T> implements Result<T, never> {
     // (undocumented)
     get(): T;
     // (undocumented)
-    getErr(message?: string): never;
-    // (undocumented)
     getErrOr<F>(error: F): F;
     // (undocumented)
     getErrOrElse<F>(error: Thunk<F>): F;
+    // @internal (undocumented)
+    getErrUnsafe(message?: string): never;
     // (undocumented)
     getOr(): T;
     // (undocumented)
     getOrElse(): T;
+    // @internal (undocumented)
+    getUnsafe(): T;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
@@ -235,17 +239,17 @@ export interface Result<T, E = T> extends Functor<T>, Applicative<T>, Monad<T>, 
     // (undocumented)
     flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
     // (undocumented)
-    get(message?: string): T;
-    // (undocumented)
-    getErr(message?: string): E;
-    // (undocumented)
     getErrOr<F>(error: F): E | F;
     // (undocumented)
     getErrOrElse<F>(error: Thunk<F>): E | F;
+    // @internal
+    getErrUnsafe(message?: string): E;
     // (undocumented)
     getOr<U>(value: U): T | U;
     // (undocumented)
     getOrElse<U>(value: Thunk<U>): T | U;
+    // @internal
+    getUnsafe(message?: string): T;
     // (undocumented)
     includes(value: T): this is Ok<T>;
     // (undocumented)

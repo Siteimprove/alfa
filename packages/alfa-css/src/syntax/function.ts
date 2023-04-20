@@ -144,7 +144,8 @@ export namespace Function {
           return result;
         }
 
-        const [remainder, value] = result.get();
+        // the previous check ensures the result is Ok
+        const [remainder, value] = result.getUnsafe();
 
         if (remainder.length > 0) {
           // remainder is not empty, so remainder.get(0) is Some.

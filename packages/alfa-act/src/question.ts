@@ -188,9 +188,11 @@ export class Question<
       condition = conditionOrPredicateOrAnswer.isOk();
 
       if (condition) {
-        answer = conditionOrPredicateOrAnswer.get();
+        // the check ensures that the result is Ok
+        answer = conditionOrPredicateOrAnswer.getUnsafe();
       } else {
-        const error = conditionOrPredicateOrAnswer.getErr();
+        // since the condition is false, we know the result is an Err
+        const error = conditionOrPredicateOrAnswer.getErrUnsafe();
 
         if (Diagnostic.isDiagnostic(error)) {
           // Type is enforced by overload.

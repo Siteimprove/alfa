@@ -10,7 +10,7 @@ function parse(input: string) {
 }
 
 test("parse() parses an ellipse", (t) => {
-  t.deepEqual(parse("ellipse(1px 3px at right)").get(), {
+  t.deepEqual(parse("ellipse(1px 3px at right)").getUnsafe(), {
     type: "basic-shape",
     kind: "ellipse",
     rx: {

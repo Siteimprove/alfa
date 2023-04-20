@@ -10,10 +10,10 @@ import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
 import { cantTell, failed, inapplicable, passed } from "../common/outcome";
 
-const english = Language.parse("en").get();
-const french = Language.parse("fr").get();
-const british = Language.parse("en-gb").get();
-const american = Language.parse("en-us").get();
+const english = Language.parse("en").getUnsafe();
+const french = Language.parse("fr").getUnsafe();
+const british = Language.parse("en-gb").getUnsafe();
+const american = Language.parse("en-us").getUnsafe();
 
 test("evaluate() passes documents whose lang attribute matches the main language", async (t) => {
   const document = h.document([

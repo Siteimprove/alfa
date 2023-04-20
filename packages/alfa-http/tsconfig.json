@@ -9,7 +9,9 @@
     "src/headers.ts",
     "src/index.ts",
     "src/request.ts",
-    "src/response.ts"
+    "src/response.ts",
+    "test/request.spec.ts",
+    "test/response.spec.ts"
   ],
   "references": [
     { "path": "../alfa-earl" },

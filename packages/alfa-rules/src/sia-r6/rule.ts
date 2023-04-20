@@ -35,9 +35,10 @@ export default Rule.Atomic.of<Page, Element>({
 
       expectations(target) {
         // The last filter in applicability ensures that lang exists
+        // The applicability ensures it can be parsed
         const lang = Language.parse(
           target.attribute("lang").getUnsafe().value
-        ).get();
+        ).getUnsafe();
         // The last filter in applicability ensures that xml:lang exists
         const xmlLang = Language.parse(
           target.attribute("xml:lang").getUnsafe().value

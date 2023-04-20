@@ -25,6 +25,12 @@ export namespace Parser {
     ...args: A
   ) => [I, T];
 
+  export function toParser<I, T, A extends Array<unknown> = []>(
+    infallible: Parser.Infallible<I, T, A>
+  ): Parser<I, T, never, A> {
+    return (input, ...args) => Result.of(infallible(input, ...args));
+  }
+
   export function map<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     mapper: Mapper<T, U>
