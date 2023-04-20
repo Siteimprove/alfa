@@ -7,7 +7,8 @@
     "src/native.ts",
     "src/page.ts",
     "src/resource.ts",
-    "src/site.ts"
+    "src/site.ts",
+    "test/page.spec.ts"
   ],
   "references": [
     { "path": "../alfa-device" },

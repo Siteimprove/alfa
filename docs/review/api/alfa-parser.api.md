@@ -76,6 +76,8 @@ export namespace Parser {
     // (undocumented)
     export function teeErr<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, callback: Callback<E, void, A>): Parser<I, T, E, A>;
     // (undocumented)
+    export function toParser<I, T, A extends Array_2<unknown> = []>(infallible: Parser.Infallible<I, T, A>): Parser<I, T, never, A>;
+    // (undocumented)
     export function zeroOrMore<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Array_2<T>, E, A>;
     const // @deprecated (undocumented)
     eof: typeof end;

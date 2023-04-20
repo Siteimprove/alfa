@@ -9,6 +9,7 @@ import { Equatable } from '@siteimprove/alfa-equatable';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Option } from '@siteimprove/alfa-option';
+import { Result } from '@siteimprove/alfa-result';
 import { Serializable } from '@siteimprove/alfa-json';
 import { URL } from '@siteimprove/alfa-url';
 
@@ -245,7 +246,7 @@ export namespace Request {
         "http:requestURI": string;
     }
     // (undocumented)
-    export function from(json: JSON): Request;
+    export function from(json: JSON): Result<Request, string>;
     // (undocumented)
     export function isRequest(value: unknown): value is Request;
     // (undocumented)
@@ -303,7 +304,7 @@ export namespace Response {
         "http:statusCodeValue": number;
     }
     // (undocumented)
-    export function from(json: JSON): Response;
+    export function from(json: JSON): Result<Response, string>;
     // (undocumented)
     export function isResponse(value: unknown): value is Response;
     // (undocumented)

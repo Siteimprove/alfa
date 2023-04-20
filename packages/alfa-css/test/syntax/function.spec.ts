@@ -16,7 +16,7 @@ test(".consume() parses valid function declaration", (t) => {
   t.deepEqual(
     consume(lex("var(--foo)"))
       .map(([, func]) => func.toJSON())
-      .get(),
+      .getUnsafe(),
     {
       name: "var",
       value: [
@@ -33,7 +33,7 @@ test(".consume() parses function without closing parenthesis", (t) => {
   t.deepEqual(
     consume(lex("var(--foo"))
       .map(([, func]) => func.toJSON())
-      .get(),
+      .getUnsafe(),
     {
       name: "var",
       value: [

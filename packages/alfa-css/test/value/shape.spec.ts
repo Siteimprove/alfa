@@ -8,7 +8,7 @@ function parse(input: string) {
 }
 
 test(".parse() parses <basic-shape> <geometry-box>", (t) => {
-  t.deepEqual(parse("inset(1px) padding-box").get(), {
+  t.deepEqual(parse("inset(1px) padding-box").getUnsafe(), {
     type: "shape",
     box: {
       type: "keyword",
@@ -31,7 +31,7 @@ test(".parse() parses <basic-shape> <geometry-box>", (t) => {
 });
 
 test(".parse() parses <geometry-box> <basic-shape>", (t) => {
-  t.deepEqual(parse("margin-box inset(1px)").get(), {
+  t.deepEqual(parse("margin-box inset(1px)").getUnsafe(), {
     type: "shape",
     box: {
       type: "keyword",
@@ -54,7 +54,7 @@ test(".parse() parses <geometry-box> <basic-shape>", (t) => {
 });
 
 test(".parse() parses <basic-shape>", (t) => {
-  t.deepEqual(parse("inset(1px)").get(), {
+  t.deepEqual(parse("inset(1px)").getUnsafe(), {
     type: "shape",
     box: {
       type: "keyword",

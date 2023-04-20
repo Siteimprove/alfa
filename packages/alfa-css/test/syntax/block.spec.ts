@@ -30,7 +30,7 @@ test(".consume() parses empty parenthesis block", (t) => {
   t.deepEqual(
     consume(lex("()"))
       .map(([, block]) => block.toJSON())
-      .get(),
+      .getUnsafe(),
     {
       token: {
         type: "open-parenthesis",
@@ -44,7 +44,7 @@ test(".consume() parses nested blocks", (t) => {
   t.deepEqual(
     consume(lex("(())"))
       .map(([, block]) => block.toJSON())
-      .get(),
+      .getUnsafe(),
     {
       token: {
         type: "open-parenthesis",

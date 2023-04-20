@@ -7,7 +7,7 @@ function consume(t: Assertions, input: string, expected: Declaration.JSON) {
   t.deepEqual(
     Declaration.consume(Lexer.lex(input))
       .map(([, declaration]) => declaration)
-      .get()
+      .getUnsafe()
       .toJSON(),
     expected,
     input

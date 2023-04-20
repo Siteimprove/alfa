@@ -178,7 +178,7 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
     await evaluate(R15, {
       document,
       response: Response.of(
-        URL.parse("https://somewhere.com/path/to/bar.html").get(),
+        URL.parse("https://somewhere.com/path/to/bar.html").getUnsafe(),
         200
       ),
     }),

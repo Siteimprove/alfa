@@ -22,10 +22,10 @@ test("parse() parses consecutive whitespace", (t) => {
     number(1, true, false),
     closeParenthesis(),
   ]);
-    
+
   const result = parse(tokens).map(([_, color]) => color.toJSON());
 
-  t.deepEqual(result.get(), {
+  t.deepEqual(result.getUnsafe(), {
     type: "color",
     format: "rgb",
     red: {
