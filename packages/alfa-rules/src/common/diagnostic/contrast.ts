@@ -74,6 +74,9 @@ export class Contrast<N extends Name = Name> extends Diagnostic {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Contrast {
   export interface JSON<N extends Name> extends Diagnostic.JSON {
     threshold: number;

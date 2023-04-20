@@ -31,7 +31,7 @@ const foregroundCache = Cache.empty<
  * 1. get the color property
  * 2. merge it with the background colors, according to opacity.
  *
- * @internal
+ * @public
  */
 export function getForeground(
   element: Element,

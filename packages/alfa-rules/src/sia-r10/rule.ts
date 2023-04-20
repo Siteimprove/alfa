@@ -196,6 +196,9 @@ const modifiable = parserOf(modifiables);
 const modifier = parserOf(modifiers);
 const webauthn = parserOf(["webauthn"]);
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasValidValue = Ok.of(
     Diagnostic.of(`The \`autocomplete\` attribute has a valid value`)

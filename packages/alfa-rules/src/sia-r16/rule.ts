@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
@@ -6,7 +6,7 @@ import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err, Result } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -90,7 +90,7 @@ function hasRequiredValues(
 }
 
 /**
- * @internal
+ * @public
  */
 export class RoleAndRequiredAttributes extends Diagnostic {
   public static of(message: string): Diagnostic;
@@ -181,7 +181,7 @@ export class RoleAndRequiredAttributes extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace RoleAndRequiredAttributes {
   export interface JSON extends Diagnostic.JSON {
@@ -207,6 +207,9 @@ export namespace RoleAndRequiredAttributes {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasAllStates = (
     role: Role.Name,

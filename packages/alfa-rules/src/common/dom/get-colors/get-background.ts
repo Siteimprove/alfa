@@ -46,7 +46,7 @@ const backgroundCacheWithDefaultOpacity = Cache.empty<
  * 1. gathering all layers, until a fully opaque one is found.
  * 2. merging them into one composite color
  *
- * @internal
+ * @public
  */
 export function getBackground(
   element: Element,

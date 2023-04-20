@@ -124,6 +124,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const hasContent = (
     nextHeading: Option<Element>,
@@ -155,7 +158,7 @@ export namespace Outcomes {
 }
 
 /**
- * @internal
+ * @public
  */
 export class WithNextHeading extends Diagnostic {
   public static of(message: string): Diagnostic;
@@ -240,7 +243,7 @@ export class WithNextHeading extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace WithNextHeading {
   export interface JSON extends Diagnostic.JSON {

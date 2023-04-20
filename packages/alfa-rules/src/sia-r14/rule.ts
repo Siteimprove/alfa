@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
@@ -150,6 +150,10 @@ function childrenPerceivableText(node: Node, device: Device): string {
   //Returning the whole text from its children
   return result;
 }
+
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const VisibleIsInName = (textContent: string, name: string) =>
     Ok.of(
@@ -171,7 +175,7 @@ export namespace Outcomes {
 }
 
 /**
- * @internal
+ * @public
  */
 export class LabelAndName extends Diagnostic {
   public static of(
@@ -228,7 +232,7 @@ export class LabelAndName extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace LabelAndName {
   export interface JSON extends Diagnostic.JSON {

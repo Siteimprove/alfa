@@ -1,9 +1,9 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
-import { Element, MediaRule, Node } from "@siteimprove/alfa-dom";
 import type { Declaration } from "@siteimprove/alfa-dom";
+import { Element, MediaRule, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
 import { Media } from "@siteimprove/alfa-media";
@@ -86,6 +86,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const RotationNotLocked = Ok.of(
     Diagnostic.of(`The element is not locked in orientation`)

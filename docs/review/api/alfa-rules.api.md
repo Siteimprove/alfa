@@ -54,12 +54,10 @@ import { System } from '@siteimprove/alfa-css';
 import { Tag } from '@siteimprove/alfa-act';
 import { Text } from '@siteimprove/alfa-dom';
 
-// Warning: (ae-incompatible-release-tags) The symbol "Background" is marked as @public, but its signature references "Color" which is marked as @internal
-//
 // @public (undocumented)
 type Background = ReadonlyArray<Color.Resolved>;
 
-// @internal (undocumented)
+// @public (undocumented)
 class ClippingAncestors extends Diagnostic_2 {
     // (undocumented)
     equals(value: ClippingAncestors): boolean;
@@ -77,7 +75,7 @@ class ClippingAncestors extends Diagnostic_2 {
     get vertical(): Option<Element>;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace ClippingAncestors {
     // (undocumented)
     function isClippingAncestors(value: Diagnostic_2): value is ClippingAncestors;
@@ -92,7 +90,7 @@ namespace ClippingAncestors {
     }
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace Color {
     // (undocumented)
     function composite(foreground: Resolved, background: Resolved, opacity: number): Resolved;
@@ -106,7 +104,7 @@ namespace Color {
 
 // Warning: (ae-forgotten-export) The symbol "ErrorName" needs to be exported by the entry point index.d.ts
 //
-// @internal (undocumented)
+// @public (undocumented)
 abstract class ColorError<out T extends keyof ErrorName = keyof ErrorName, out K extends ErrorName[T] = ErrorName[T]> extends Diagnostic_2 {
     protected constructor(message: string, element: Element, type: T, kind: K);
     // (undocumented)
@@ -131,7 +129,7 @@ abstract class ColorError<out T extends keyof ErrorName = keyof ErrorName, out K
     protected readonly _type: T;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace ColorError {
     class HasInterposedDescendants extends ColorError<"layer", "interposed-descendant"> {
         // (undocumented)
@@ -215,6 +213,7 @@ namespace ColorError {
     const // (undocumented)
     unresolvableGradientStop: typeof HasUnresolvableGradientStop.create, // (undocumented)
     isUnresolvableGradientStop: typeof HasUnresolvableGradientStop.isUnresolvableGradientStop;
+    // @internal
     class WithProperty<T extends keyof ErrorName, K extends ErrorName[T], N extends "background-color" | "background-image" | "background-size" | "color" | "position" | "text-shadow"> extends ColorError<T, K> {
         protected constructor(message: string, type: T, kind: K, element: Element, proprety: N, value: Style.Computed<N>);
         // (undocumented)
@@ -259,7 +258,7 @@ namespace ColorError {
     isInterposedDescendants: typeof HasInterposedDescendants.isInterposedDescendants;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class ColorErrors<out T extends keyof ErrorName = keyof ErrorName> extends Diagnostic_2 {
     // (undocumented)
     equals(value: ColorErrors): boolean;
@@ -277,7 +276,7 @@ class ColorErrors<out T extends keyof ErrorName = keyof ErrorName> extends Diagn
     toJSON(): ColorErrors.JSON<T>;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace ColorErrors {
     // (undocumented)
     function isColorErrors<T extends keyof ErrorName = keyof ErrorName>(value: Diagnostic_2): value is ColorErrors<T>;
@@ -806,53 +805,14 @@ export namespace Diagnostic {
     TextSpacing: typeof diagnostic.TextSpacing, // (undocumented)
     WithBadElements: typeof diagnostic.WithBadElements, // (undocumented)
     WithRole: typeof diagnostic.WithRole;
-    const // (undocumented)
-    isDistinguishingStylesDeprecated: typeof distinguishingStyles.DistinguishingStyles.isDistinguishingStyles;
-    const // (undocumented)
-    isLanguages: typeof languages.Languages.isLanguages;
-    const // (undocumented)
-    isLabelAndName: typeof labelAndName.LabelAndName.isLabelAndName;
-    const // (undocumented)
-    isRoleAndRequiredAttributes: typeof roleAndRequiredAttributes.RoleAndRequiredAttributes.isRoleAndRequiredAttributes;
-    const // (undocumented)
-    isWithPreviousHeading: typeof withPreviousHeading.WithPreviousHeading.isWithPreviousHeading;
-    const // (undocumented)
-    isWithRoleAndName: typeof withRoleAndName.WithRoleAndName.isWithRoleAndName;
-    const // (undocumented)
-    isSameNames: typeof sameNames.SameNames.isSameNames;
-    const // (undocumented)
-    isWithFirstHeading: typeof withFirstHeading.WithFirstHeading.isWithFirstHeading;
-    const // (undocumented)
-    isDistinguishingStyles: typeof distinguishingStyles.DistinguishingStyles.isDistinguishingStyles;
-    const // (undocumented)
-    isColorError: typeof colorError.ColorError.isColorError, // (undocumented)
-    isColorErrorInterposedDescendants: typeof colorError.ColorError.HasInterposedDescendants.isInterposedDescendants, // (undocumented)
-    isColorErrorUnresolvableGradientStop: typeof colorError.ColorError.HasUnresolvableGradientStop.isUnresolvableGradientStop, // (undocumented)
-    isColorErrorWithProperty: typeof colorError.ColorError.WithProperty.isWithProperty;
-    const // (undocumented)
-    isMatchingClasses: typeof matchingClasses.MatchingClasses.isMatchingClasses;
-    const // (undocumented)
-    isWithDeclaration: typeof withDeclaration.WithDeclaration.isWithDeclaration;
-    const // (undocumented)
-    isWithNextHeading: typeof withNextHeading.WithNextHeading.isWithNextHeading;
-    const // (undocumented)
-    isClippingAncestors: typeof clippingAncestors.ClippingAncestors.isClippingAncestors;
-    const // (undocumented)
-    isContrast: typeof diagnostic.Contrast.isContrast;
-    const // (undocumented)
-    isTextSpacing: typeof diagnostic.TextSpacing.isTextSpacing;
-    const // (undocumented)
-    isWithBadElements: typeof diagnostic.WithBadElements.isWithBadElements;
-    const // (undocumented)
-    isWithRole: typeof diagnostic.WithRole.isWithRole;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
 //
-// @internal (undocumented)
+// @public (undocumented)
 type DistinguishingProperty = Name_2 | "contrast";
 
-// @internal (undocumented)
+// @public (undocumented)
 class DistinguishingStyles extends Diagnostic_2 {
     // (undocumented)
     get defaultStyles(): Iterable<Result<ComputedStyles>>;
@@ -870,7 +830,7 @@ class DistinguishingStyles extends Diagnostic_2 {
     toJSON(): DistinguishingStyles.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace DistinguishingStyles {
     // (undocumented)
     function isDistinguishingStyles(value: Diagnostic_2): value is DistinguishingStyles;
@@ -887,7 +847,7 @@ namespace DistinguishingStyles {
     }
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class DistinguishingStyles_2 extends Diagnostic_2 {
     // (undocumented)
     get defaultStyles(): Iterable<Result<ElementDistinguishable>>;
@@ -905,7 +865,7 @@ class DistinguishingStyles_2 extends Diagnostic_2 {
     toJSON(): DistinguishingStyles_2.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace DistinguishingStyles_2 {
     // (undocumented)
     function isDistinguishingStyles(value: Diagnostic_2): value is DistinguishingStyles_2;
@@ -922,9 +882,7 @@ namespace DistinguishingStyles_2 {
     }
 }
 
-// Warning: (ae-internal-mixed-release-tag) Mixed release tags are not allowed for "ElementDistinguishable" because one of its declarations is marked as @internal
-//
-// @internal (undocumented)
+// @public (undocumented)
 class ElementDistinguishable implements Equatable, Hashable, Serializable {
     // (undocumented)
     get distinguishingProperties(): ReadonlyArray<DistinguishingProperty>;
@@ -952,16 +910,12 @@ class ElementDistinguishable implements Equatable, Hashable, Serializable {
 
 // @public (undocumented)
 namespace ElementDistinguishable {
-    // Warning: (ae-incompatible-release-tags) The symbol "from" is marked as @public, but its signature references "DistinguishingProperty" which is marked as @internal
-    //
     // (undocumented)
     function from(element: Element, device: Device, target: Element, context: Context | undefined, distinguishingProperties: Iterable<DistinguishingProperty>, pairings: Iterable<Contrast.Pairing<["container", "link"]>>): ElementDistinguishable;
     // (undocumented)
     interface JSON {
         // (undocumented)
         [key: string]: json.JSON;
-        // Warning: (ae-incompatible-release-tags) The symbol "distinguishingProperties" is marked as @public, but its signature references "DistinguishingProperty" which is marked as @internal
-        //
         // (undocumented)
         distinguishingProperties: Array_2<DistinguishingProperty>;
         // (undocumented)
@@ -1007,15 +961,13 @@ const FlattenedRules: Sequence<Flattened.Rule>;
 export { FlattenedRules }
 export default FlattenedRules;
 
-// Warning: (ae-incompatible-release-tags) The symbol "Foreground" is marked as @public, but its signature references "Color" which is marked as @internal
-//
 // @public (undocumented)
 type Foreground = ReadonlyArray<Color.Resolved>;
 
-// @internal
+// @public
 function getBackground(element: Element, device: Device, context?: Context, opacity?: number, ignoredInterposedDescendants?: Set_2<Element>): Result<Background, ColorErrors<"background" | "layer">>;
 
-// @internal
+// @public
 function getForeground(element: Element, device: Device, context?: Context, ignoredInterposedDescendants?: Set_2<Element>): Result<Foreground, ColorErrors>;
 
 // @public (undocumented)
@@ -1059,7 +1011,7 @@ export namespace Group {
     export type JSON<T> = Array_2<json.Serializable.ToJSON<T>>;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class LabelAndName extends Diagnostic_2 {
     // (undocumented)
     equals(value: LabelAndName): boolean;
@@ -1077,7 +1029,7 @@ class LabelAndName extends Diagnostic_2 {
     toJSON(): LabelAndName.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace LabelAndName {
     // (undocumented)
     function isLabelAndName(value: Diagnostic_2): value is LabelAndName;
@@ -1092,7 +1044,7 @@ namespace LabelAndName {
     }
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class Languages extends Diagnostic_2 {
     // (undocumented)
     equals(value: Diagnostic_2): boolean;
@@ -1110,7 +1062,7 @@ class Languages extends Diagnostic_2 {
     toJSON(): Languages.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace Languages {
     // (undocumented)
     function isLanguages(value: Diagnostic_2): value is Languages;
@@ -1125,7 +1077,7 @@ namespace Languages {
     }
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class Layer {
     // (undocumented)
     get colors(): ReadonlyArray<Color.Resolved>;
@@ -1135,14 +1087,12 @@ class Layer {
     get opacity(): number;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace Layer {
     function getLayers(element: Element, device: Device, context?: Context, opacity?: number, ignoredInterposedDescendants?: Set_2<Element>): Result<Array_2<Layer>, ColorErrors<"layer">>;
     function merge(backdrops: Array_2<Color.Resolved>, layer: Layer): Array_2<Color.Resolved>;
 }
 
-// Warning: (ae-internal-mixed-release-tag) Mixed release tags are not allowed for "MatchingClasses" because one of its declarations is marked as @internal
-//
 // @public (undocumented)
 class MatchingClasses extends Diagnostic_2 {
     // (undocumented)
@@ -1161,7 +1111,7 @@ class MatchingClasses extends Diagnostic_2 {
     toJSON(): MatchingClasses.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace MatchingClasses {
     // (undocumented)
     function isMatchingClasses(value: Diagnostic_2): value is MatchingClasses;
@@ -1178,81 +1128,53 @@ namespace MatchingClasses {
 
 // @public (undocumented)
 namespace Outcomes {
-    const // Warning: (ae-incompatible-release-tags) The symbol "IsDistinguishable" is marked as @public, but its signature references "DistinguishingStyles" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     IsDistinguishable: (defaultStyles: Iterable<Result<ComputedStyles>>, hoverStyles: Iterable<Result<ComputedStyles>>, focusStyles: Iterable<Result<ComputedStyles>>) => Ok<DistinguishingStyles>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "IsNotDistinguishable" is marked as @public, but its signature references "DistinguishingStyles" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     IsNotDistinguishable: (defaultStyles: Iterable<Result<ComputedStyles>>, hoverStyles: Iterable<Result<ComputedStyles>>, focusStyles: Iterable<Result<ComputedStyles>>) => Err<DistinguishingStyles>;
 }
 
 // @public (undocumented)
 namespace Outcomes_10 {
-    const // Warning: (ae-incompatible-release-tags) The symbol "hasContent" is marked as @public, but its signature references "WithNextHeading" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     hasContent: (nextHeading: Option<Element>, currentLevel: number, nextLevel: number) => Ok<WithNextHeading>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "hasNoContent" is marked as @public, but its signature references "WithNextHeading" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     hasNoContent: (nextHeading: Option<Element>, currentLevel: number, nextLevel: number) => Err<WithNextHeading>;
 }
 
 // @public (undocumented)
 namespace Outcomes_11 {
-    const // Warning: (ae-incompatible-release-tags) The symbol "WrapsText" is marked as @public, but its signature references "ClippingAncestors" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     WrapsText: Ok<ClippingAncestors>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "ClipsText" is marked as @public, but its signature references "ClippingAncestors" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     ClipsText: (horizontal: Option<Element>, vertical: Option<Element>) => Err<ClippingAncestors>;
 }
 
 // @public (undocumented)
 namespace Outcomes_2 {
-    const // Warning: (ae-incompatible-release-tags) The symbol "HasCorrectLang" is marked as @public, but its signature references "Languages" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     HasCorrectLang: (programmatic: Language, natural: Language) => Ok<Languages>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "HasIncorrectLang" is marked as @public, but its signature references "Languages" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     HasIncorrectLang: (programmatic: Language, natural: Language) => Err<Languages>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "HasNoLanguage" is marked as @public, but its signature references "Languages" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     HasNoLanguage: (programmatic: Language) => Err<Languages>;
 }
 
 // @public (undocumented)
 namespace Outcomes_3 {
-    const // Warning: (ae-incompatible-release-tags) The symbol "VisibleIsInName" is marked as @public, but its signature references "LabelAndName" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     VisibleIsInName: (textContent: string, name: string) => Ok<LabelAndName>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "VisibleIsNotInName" is marked as @public, but its signature references "LabelAndName" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     VisibleIsNotInName: (textContent: string, name: string) => Err<LabelAndName>;
 }
 
 // @public (undocumented)
 namespace Outcomes_4 {
-    const // Warning: (ae-incompatible-release-tags) The symbol "HasAllStates" is marked as @public, but its signature references "RoleAndRequiredAttributes" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     HasAllStates: (role: Role.Name, required: ReadonlyArray<aria.Attribute.Name>, missing: ReadonlyArray<aria.Attribute.Name>) => Ok<RoleAndRequiredAttributes>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "HasNotAllStates" is marked as @public, but its signature references "RoleAndRequiredAttributes" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     HasNotAllStates: (role: Role.Name, required: ReadonlyArray<aria.Attribute.Name>, missing: ReadonlyArray<aria.Attribute.Name>) => Err<RoleAndRequiredAttributes>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "RuleError" is marked as @public, but its signature references "RoleAndRequiredAttributes" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     RuleError: Err<RoleAndRequiredAttributes>;
 }
 
@@ -1266,49 +1188,33 @@ namespace Outcomes_5 {
 
 // @public (undocumented)
 namespace Outcomes_6 {
-    const // Warning: (ae-incompatible-release-tags) The symbol "SameResource" is marked as @public, but its signature references "WithRoleAndName" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     SameResource: (role: Role.Name, name: string) => Ok<WithRoleAndName>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "DifferentResources" is marked as @public, but its signature references "WithRoleAndName" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     DifferentResources: (role: Role.Name, name: string) => Err<WithRoleAndName>;
 }
 
 // @public (undocumented)
 namespace Outcomes_7 {
-    const // Warning: (ae-incompatible-release-tags) The symbol "differentNames" is marked as @public, but its signature references "SameNames" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     differentNames: (role: Role.Name) => Ok<SameNames>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "sameNames" is marked as @public, but its signature references "SameNames" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     sameNames: (role: Role.Name, errors: Iterable_2<Iterable_2<Element>>) => Err<SameNames>;
 }
 
 // @public (undocumented)
 namespace Outcomes_8 {
-    const // Warning: (ae-incompatible-release-tags) The symbol "StartWithLevel1Heading" is marked as @public, but its signature references "WithFirstHeading" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     StartWithLevel1Heading: (heading: Element, level: number) => Ok<WithFirstHeading>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "StartWithHigherLevelHeading" is marked as @public, but its signature references "WithFirstHeading" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     StartWithHigherLevelHeading: (heading: Element, level: number) => Err<WithFirstHeading>;
 }
 
 // @public (undocumented)
 namespace Outcomes_9 {
-    const // Warning: (ae-incompatible-release-tags) The symbol "IsSufficient" is marked as @public, but its signature references "WithDeclaration" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     IsSufficient: (declaration: Option<Declaration>) => Ok<WithDeclaration>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "IsInsufficient" is marked as @public, but its signature references "WithDeclaration" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     IsInsufficient: (declaration: Option<Declaration>) => Err<WithDeclaration>;
 }
 
@@ -1492,7 +1398,7 @@ export namespace Question {
         {};
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class RoleAndRequiredAttributes extends Diagnostic_2 {
     // (undocumented)
     equals(value: RoleAndRequiredAttributes): boolean;
@@ -1514,7 +1420,7 @@ class RoleAndRequiredAttributes extends Diagnostic_2 {
     toJSON(): RoleAndRequiredAttributes.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace RoleAndRequiredAttributes {
     // (undocumented)
     function isRoleAndRequiredAttributes(value: Diagnostic_2): value is RoleAndRequiredAttributes;
@@ -1538,7 +1444,7 @@ export type Rules = typeof Rules;
 // @public
 export const Rules: Record_2<typeof rules>;
 
-// @internal (undocumented)
+// @public (undocumented)
 class SameNames extends Diagnostic_2 implements Iterable_2<List<Element>> {
     // (undocumented)
     [Symbol.iterator](): Iterator<List<Element>>;
@@ -1556,7 +1462,7 @@ class SameNames extends Diagnostic_2 implements Iterable_2<List<Element>> {
     toJSON(): SameNames.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace SameNames {
     // (undocumented)
     function isSameNames(value: Diagnostic_2): value is SameNames;
@@ -1626,7 +1532,7 @@ export namespace Stability {
     const Deprecated: Stability<"deprecated">;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class TextSpacing<N extends Property.Name> extends Diagnostic_2 {
     // (undocumented)
     get declaration(): Declaration;
@@ -1656,7 +1562,7 @@ class TextSpacing<N extends Property.Name> extends Diagnostic_2 {
     get value(): Length<"px">;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace TextSpacing {
     // (undocumented)
     function isTextSpacing(value: Diagnostic_2): value is TextSpacing<Property.Name>;
@@ -1708,7 +1614,7 @@ export namespace Version {
     }
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class WithBadElements extends Diagnostic_2 implements Iterable_2<Element> {
     // (undocumented)
     [Symbol.iterator](): Iterator<Element>;
@@ -1726,7 +1632,7 @@ class WithBadElements extends Diagnostic_2 implements Iterable_2<Element> {
     toJSON(): WithBadElements.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace WithBadElements {
     // (undocumented)
     function isWithBadElements(value: Diagnostic_2): value is WithBadElements;
@@ -1739,7 +1645,7 @@ namespace WithBadElements {
     }
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class WithDeclaration extends Diagnostic_2 {
     constructor(message: string, declaration: Option<Declaration>);
     // (undocumented)
@@ -1754,7 +1660,7 @@ class WithDeclaration extends Diagnostic_2 {
     toJSON(): WithDeclaration.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace WithDeclaration {
     // (undocumented)
     function isWithDeclaration(value: Diagnostic_2): value is WithDeclaration;
@@ -1767,7 +1673,7 @@ namespace WithDeclaration {
     }
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class WithFirstHeading extends Diagnostic_2 {
     // (undocumented)
     equals(value: WithFirstHeading): boolean;
@@ -1787,7 +1693,7 @@ class WithFirstHeading extends Diagnostic_2 {
     toJSON(): WithFirstHeading.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace WithFirstHeading {
     // (undocumented)
     function isWithFirstHeading(value: Diagnostic_2): value is WithFirstHeading;
@@ -1802,7 +1708,7 @@ namespace WithFirstHeading {
     }
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class WithNextHeading extends Diagnostic_2 {
     // (undocumented)
     get currentHeadingLevel(): number;
@@ -1824,7 +1730,7 @@ class WithNextHeading extends Diagnostic_2 {
     toJSON(): WithNextHeading.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace WithNextHeading {
     // (undocumented)
     function isWithNextHeading(value: Diagnostic_2): value is WithNextHeading;
@@ -1871,7 +1777,7 @@ namespace WithPreviousHeading {
     }
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class WithRole extends Diagnostic_2 {
     protected constructor(message: string, role: Role.Name);
     // (undocumented)
@@ -1892,7 +1798,7 @@ class WithRole extends Diagnostic_2 {
     toJSON(): WithRole.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace WithRole {
     // (undocumented)
     function getRoleName(element: Element, device: Device): Role.Name;
@@ -1907,7 +1813,7 @@ namespace WithRole {
     }
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 class WithRoleAndName extends WithRole {
     // (undocumented)
     equals(value: WithRoleAndName): boolean;
@@ -1925,7 +1831,7 @@ class WithRoleAndName extends WithRole {
     toJSON(): WithRoleAndName.JSON;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 namespace WithRoleAndName {
     // (undocumented)
     function isWithRoleAndName(value: Diagnostic_2): value is WithRoleAndName;

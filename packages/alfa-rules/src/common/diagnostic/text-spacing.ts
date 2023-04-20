@@ -6,7 +6,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Property, Style } from "@siteimprove/alfa-style";
 
 /**
- * @internal
+ * @public
  */
 export class TextSpacing<N extends Property.Name> extends Diagnostic {
   public static of(message: string): Diagnostic;
@@ -146,7 +146,7 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace TextSpacing {
   export interface JSON<N extends Property.Name> extends Diagnostic.JSON {

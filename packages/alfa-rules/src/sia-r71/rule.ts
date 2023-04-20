@@ -41,6 +41,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const IsNotJustified = Ok.of(
     Diagnostic.of(`The text of the paragraph is not justified`)

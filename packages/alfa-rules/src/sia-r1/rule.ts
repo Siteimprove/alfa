@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Document, Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -55,6 +55,9 @@ export default Rule.Atomic.of<Page, Document>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasTitle = Ok.of(
     Diagnostic.of(`The document has at least one \`<title>\` element`)

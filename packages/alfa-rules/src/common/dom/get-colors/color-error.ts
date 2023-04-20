@@ -25,7 +25,7 @@ interface ErrorName {
 }
 
 /**
- * @internal
+ * @public
  */
 export class ColorErrors<
   out T extends keyof ErrorName = keyof ErrorName
@@ -81,7 +81,7 @@ export class ColorErrors<
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace ColorErrors {
   export interface JSON<T extends keyof ErrorName = keyof ErrorName>
@@ -122,7 +122,7 @@ export namespace ColorErrors {
 }
 
 /**
- * @internal
+ * @public
  */
 export abstract class ColorError<
   out T extends keyof ErrorName = keyof ErrorName,
@@ -183,7 +183,7 @@ export abstract class ColorError<
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace ColorError {
   export interface JSON<
@@ -329,7 +329,7 @@ export namespace ColorError {
   }
 
   /**
-   * @internal
+   * @public
    */
   export namespace WithProperty {
     export interface JSON<
@@ -451,7 +451,7 @@ export namespace ColorError {
   );
 
   /**
-   * @internal
+   * @public
    * We want both the value of background-image and the unresolvable stop
    */
   export class HasUnresolvableGradientStop extends WithProperty<
@@ -510,7 +510,7 @@ export namespace ColorError {
   }
 
   /**
-   * @internal
+   * @public
    */
   export namespace HasUnresolvableGradientStop {
     export interface JSON
@@ -543,7 +543,7 @@ export namespace ColorError {
   } = HasUnresolvableGradientStop;
 
   /**
-   * @internal
+   * @public
    * This one does not depend on a CSS property, but on some other elements
    */
   export class HasInterposedDescendants extends ColorError<
@@ -608,7 +608,7 @@ export namespace ColorError {
   }
 
   /**
-   * @internal
+   * @public
    */
   export namespace HasInterposedDescendants {
     export interface JSON

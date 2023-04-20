@@ -5,7 +5,7 @@ import { Element } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 
 /**
- * @internal
+ * @public
  */
 export class WithRole extends Diagnostic {
   public static of(message: string): Diagnostic;
@@ -55,7 +55,7 @@ export class WithRole extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace WithRole {
   export interface JSON extends Diagnostic.JSON {

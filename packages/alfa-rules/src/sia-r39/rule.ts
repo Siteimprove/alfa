@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -79,6 +79,9 @@ function getFilename(path: string): string {
   return base.trim();
 }
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const NameIsDescriptive = (name: string) =>
     Ok.of(

@@ -385,6 +385,9 @@ function hasDistinguishableVerticalAlign(
 
 type Name = Property.Name | Property.Shorthand.Name;
 
+/**
+ * @public
+ */
 export class ComputedStyles implements Equatable, Hashable, Serializable {
   public static of(
     style: Iterable<readonly [Name, string]> = []
@@ -421,6 +424,9 @@ export class ComputedStyles implements Equatable, Hashable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace ComputedStyles {
   export interface JSON {
     [key: string]: json.JSON;
@@ -461,7 +467,7 @@ export namespace ComputedStyles {
 }
 
 /**
- * @internal
+ * @public
  */
 export class DistinguishingStyles extends Diagnostic {
   public static of(
@@ -530,7 +536,7 @@ export class DistinguishingStyles extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace DistinguishingStyles {
   export interface JSON extends Diagnostic.JSON {

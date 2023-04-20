@@ -1,13 +1,13 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { DOM, Node as ariaNode, Role } from "@siteimprove/alfa-aria";
+import { DOM, Role, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Map } from "@siteimprove/alfa-map";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
-import { Option, None } from "@siteimprove/alfa-option";
-import { Map } from "@siteimprove/alfa-map";
 
 import { expectation } from "../common/act/expectation";
 import { WithRole } from "../common/diagnostic/with-role";
@@ -79,6 +79,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasAccessibleName = (role: Role.Name) =>
     Ok.of(WithRole.of(`The grouping element has an accessible name`, role));

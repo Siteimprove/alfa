@@ -39,29 +39,4 @@ export namespace Diagnostic {
   export const { ClippingAncestors } = clippingAncestors;
   export const { Contrast, TextSpacing, WithBadElements, WithRole } =
     diagnostic;
-
-  export const { isDistinguishingStyles: isDistinguishingStylesDeprecated } =
-    DistinguishingStyles;
-  export const { isLanguages } = Languages;
-  export const { isLabelAndName } = LabelAndName;
-  export const { isRoleAndRequiredAttributes } = RoleAndRequiredAttributes;
-  export const { isWithPreviousHeading } = WithPreviousHeading;
-  export const { isWithRoleAndName } = WithRoleAndName;
-  export const { isSameNames } = SameNames;
-  export const { isWithFirstHeading } = WithFirstHeading;
-  export const { isDistinguishingStyles } = DistinguishingStyles;
-  export const {
-    isColorError,
-    isInterposedDescendants: isColorErrorInterposedDescendants,
-    isUnresolvableGradientStop: isColorErrorUnresolvableGradientStop,
-    isWithProperty: isColorErrorWithProperty,
-  } = ColorError;
-  export const { isMatchingClasses } = MatchingClasses;
-  export const { isWithDeclaration } = WithDeclaration;
-  export const { isWithNextHeading } = WithNextHeading;
-  export const { isClippingAncestors } = ClippingAncestors;
-  export const { isContrast } = Contrast;
-  export const { isTextSpacing } = TextSpacing;
-  export const { isWithBadElements } = WithBadElements;
-  export const { isWithRole } = WithRole;
 }
