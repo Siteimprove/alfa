@@ -9,7 +9,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Set } from "@siteimprove/alfa-set";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import type { Style } from "./style";
 import { Value } from "./value";
 
 const { delimited, left, map, option, pair, right, takeUntil } = Parser;
@@ -60,6 +59,12 @@ export namespace Variable {
     return currentVariables;
   }
 
+  /**
+   * "Flatten" a variable definition map by pre-substituting variables that are
+   * defined in the map.
+   * That is, take a "name => slice" map, search for all the "var(--foo)" in
+   * the slice, and replace them by their value in the map. Recursively.
+   */
   export function flatten(variables: DefinitionMap) {
     for (const [name, variable] of variables) {
       const substitution = substitute(variable.value, variables);
@@ -78,34 +83,6 @@ export namespace Variable {
     return variables;
   }
 
-  /**
-   * First pass, substitute all variable by their definition
-   */
-  export function foo(
-    declarations: Array<Declaration>,
-    parent: Option<Style>,
-    shouldOverride: <T>(
-      previous: Option<Value<T>>,
-      next: Declaration
-    ) => boolean
-  ): Map<string, Value<Slice<Token>>> {
-    const currentVariables = gather(declarations, shouldOverride);
-
-    // Second step: since CSS variables are always inherited, and inheritance
-    // takes precedence over fallback, we can merge the current variables with
-    // the parent ones, this will effectively resolve variable inheritance.
-    const variables = parent
-      .map((parent) => parent.variables)
-      .getOr(Map.empty<string, Value<Slice<Token>>>())
-      .concat(currentVariables);
-
-    // Third step: pre-substitute the resolved cascading variables from above,
-    // replacing any `var()` function references with their substituted tokens.
-    // This effectively takes care of deleting variables with syntactically
-    // invalid values, circular references, too many substitutions, …
-    return flatten(variables);
-  }
-
   const parseInitial = Keyword.parse("initial");
 
   /**
@@ -120,14 +97,12 @@ export namespace Variable {
    */
   function resolve(
     name: string,
-    variables: Map<string, Value<Slice<Token>>>,
+    variables: DefinitionMap,
     fallback: Option<Slice<Token>> = None,
     visited = Set.empty<string>()
   ): Option<Slice<Token>> {
     return (
-      // If the variable is defined on the current style, get its value
-      // If it is defined on an ancestor, this will also gets its value since
-      // variables maps have been pre-merged.
+      // If the variable is defined on the current definition map, get its value
       variables
         .get(name)
         .map((value) => value.value)
@@ -176,7 +151,7 @@ export namespace Variable {
    */
   export function substitute(
     tokens: Slice<Token>,
-    variables: Map<string, Value<Slice<Token>>>,
+    variables: DefinitionMap,
     visited = Set.empty<string>()
   ): Option<[tokens: Slice<Token>, substituted: boolean]> {
     const replaced: Array<Token> = [];

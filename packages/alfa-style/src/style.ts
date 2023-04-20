@@ -49,7 +49,24 @@ export class Style implements Serializable<Style.JSON> {
     // is already sending an Array, so this is inexpensive
     const declarations = Array.from(styleDeclarations);
 
-    const variables = Variable.foo(declarations, parent, shouldOverride);
+    /**
+     * First pass, substitute all variable by their definition
+     */
+    const declaredVariables = Variable.gather(declarations, shouldOverride);
+
+    // Second step: since CSS variables are always inherited, and inheritance
+    // takes precedence over fallback, we can merge the current variables with
+    // the parent ones, this will effectively resolve variable inheritance.
+    const cascadedVariables = parent
+      .map((parent) => parent.variables)
+      .getOr(Map.empty<string, Value<Slice<Token>>>())
+      .concat(declaredVariables);
+
+    // Third step: pre-substitute the resolved cascading variables from above,
+    // replacing any `var()` function references with their substituted tokens.
+    // This effectively takes care of deleting variables with syntactically
+    // invalid values, circular references, too many substitutions, …
+    const variables = Variable.flatten(cascadedVariables);
 
     /**
      * Second pass: Resolve cascading properties using the cascading variables
