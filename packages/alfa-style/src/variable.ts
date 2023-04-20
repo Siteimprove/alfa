@@ -172,7 +172,7 @@ export namespace Variable {
         // If the token is a "var(", process it.
         const result = parseVar(tokens);
 
-        if (result.isErr()) {
+        if (!result.isOk()) {
           return None;
         }
 
