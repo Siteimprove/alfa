@@ -255,7 +255,6 @@ const lexCommentContents: Parser.Infallible<Slice<number>, string> = (
           input = input.slice(1);
           value += ":";
 
-          // this function never returns Err
           const [remainder, result] = lexCommentContents(input);
 
           value += result;
