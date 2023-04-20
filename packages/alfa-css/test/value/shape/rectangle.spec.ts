@@ -10,7 +10,7 @@ function parse(input: string) {
 }
 
 test(".parse() parses comma separated rectangles", (t) => {
-  t.deepEqual(parse("rect(1px, auto, 2em, auto)").get(), {
+  t.deepEqual(parse("rect(1px, auto, 2em, auto)").getUnsafe(), {
     type: "basic-shape",
     kind: "rectangle",
     bottom: {
@@ -33,7 +33,7 @@ test(".parse() parses comma separated rectangles", (t) => {
     },
   });
 
-  t.deepEqual(parse("rect(1px , auto , 2em,auto)").get(), {
+  t.deepEqual(parse("rect(1px , auto , 2em,auto)").getUnsafe(), {
     type: "basic-shape",
     kind: "rectangle",
     bottom: {
@@ -58,7 +58,7 @@ test(".parse() parses comma separated rectangles", (t) => {
 });
 
 test(".parse() parses space separated rectangles", (t) => {
-  t.deepEqual(parse("rect(1px auto 2em auto)").get(), {
+  t.deepEqual(parse("rect(1px auto 2em auto)").getUnsafe(), {
     type: "basic-shape",
     kind: "rectangle",
     bottom: {

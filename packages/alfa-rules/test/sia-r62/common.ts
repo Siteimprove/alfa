@@ -6,7 +6,7 @@ import { ElementDistinguishable } from "../../src/sia-r62/diagnostics";
 export function addCursor(
   style: Result<ElementDistinguishable>
 ): Result<ElementDistinguishable> {
-  return (style.isOk() ? style : Ok.of(style.getErr())).map((props) =>
+  return (style.isErr() ? Ok.of(style.getErr()) : style).map((props) =>
     props
       .withStyle(["cursor", "pointer"])
       .withDistinguishingProperties(["cursor"])
@@ -15,7 +15,7 @@ export function addCursor(
 export function addOutline(
   style: Result<ElementDistinguishable>
 ): Result<ElementDistinguishable> {
-  return (style.isOk() ? style : Ok.of(style.getErr())).map((props) =>
+  return (style.isErr() ? Ok.of(style.getErr()) : style).map((props) =>
     props
       .withStyle(["outline", "auto"])
       .withDistinguishingProperties(["outline"])

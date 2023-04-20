@@ -6,11 +6,11 @@ import R41, { Outcomes } from "../../src/sia-r41/rule";
 
 import { Group } from "../../src/common/act/group";
 
-import { evaluate } from "../common/evaluate";
-import { oracle } from "../common/oracle";
-import { passed, failed, inapplicable } from "../common/outcome";
 import { Response } from "@siteimprove/alfa-http";
 import { URL } from "@siteimprove/alfa-url";
+import { evaluate } from "../common/evaluate";
+import { oracle } from "../common/oracle";
+import { failed, inapplicable, passed } from "../common/outcome";
 
 test(`evaluate() passes two links that have the same name and reference the same
       resource`, async (t) => {
@@ -104,7 +104,7 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
     await evaluate(R41, {
       document,
       response: Response.of(
-        URL.parse("https://somewhere.com/path/to/bar.html").get(),
+        URL.parse("https://somewhere.com/path/to/bar.html").getUnsafe(),
         200
       ),
     }),

@@ -117,7 +117,17 @@ export class Ok<T> implements Result<T, never> {
     return this._value;
   }
 
-  public getErr(message = "Attempted to .getErr() from Ok"): never {
+  /**
+   * @internal
+   */
+  public getUnsafe(): T {
+    return this._value;
+  }
+
+  /**
+   * @internal
+   */
+  public getErrUnsafe(message = "Attempted to .getErrUnsafe() from Ok"): never {
     throw new Error(message);
   }
 

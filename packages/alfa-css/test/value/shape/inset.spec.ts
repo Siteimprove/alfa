@@ -8,7 +8,7 @@ function parse(input: string) {
 }
 
 test("parse() parses an inset with square corners", (t) => {
-  t.deepEqual(parse("inset(1px 2px 3px 4px)").get(), {
+  t.deepEqual(parse("inset(1px 2px 3px 4px)").getUnsafe(), {
     type: "basic-shape",
     kind: "inset",
     offsets: [
@@ -22,7 +22,7 @@ test("parse() parses an inset with square corners", (t) => {
 });
 
 test("parse() parses an inset with evenly rounded corners", (t) => {
-  t.deepEqual(parse("inset(1px 2px 3px 4px round 1px 1px 1px 1px)").get(), {
+  t.deepEqual(parse("inset(1px 2px 3px 4px round 1px 1px 1px 1px)").getUnsafe(), {
     type: "basic-shape",
     kind: "inset",
     offsets: [
@@ -47,7 +47,7 @@ test("parse() parses an inset with unevenly rounded corners", (t) => {
   t.deepEqual(
     parse(
       "inset(1px 2px 3px 4px round 1px 1px 1px 1px / 2px 2px 2px 2px)"
-    ).get(),
+    ).getUnsafe(),
     {
       type: "basic-shape",
       kind: "inset",
@@ -83,7 +83,7 @@ test("parse() parses an inset with unevenly rounded corners", (t) => {
 });
 
 test("parse() parses a partially specified inset", (t) => {
-  t.deepEqual(parse("inset(1px 2px 3px round 1px 1px/2px)").get(), {
+  t.deepEqual(parse("inset(1px 2px 3px round 1px 1px/2px)").getUnsafe(), {
     type: "basic-shape",
     kind: "inset",
     offsets: [

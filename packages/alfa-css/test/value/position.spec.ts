@@ -10,7 +10,7 @@ function parse(input: string, legacySyntax: boolean = false) {
 }
 
 test(".parse() parses 1-token positions", (t) => {
-  t.deepEqual(parse("center").get(), {
+  t.deepEqual(parse("center").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "keyword",
@@ -22,7 +22,7 @@ test(".parse() parses 1-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("right").get(), {
+  t.deepEqual(parse("right").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -38,7 +38,7 @@ test(".parse() parses 1-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("top").get(), {
+  t.deepEqual(parse("top").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "keyword",
@@ -54,7 +54,7 @@ test(".parse() parses 1-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("10px").get(), {
+  t.deepEqual(parse("10px").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "length",
@@ -68,7 +68,7 @@ test(".parse() parses 1-token positions", (t) => {
   });
 
   // "10px" is not consumed
-  t.deepEqual(parse("top 10px").get(), {
+  t.deepEqual(parse("top 10px").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "keyword",
@@ -85,7 +85,7 @@ test(".parse() parses 1-token positions", (t) => {
   });
 
   // "left" is not consumed
-  t.deepEqual(parse("10px left").get(), {
+  t.deepEqual(parse("10px left").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "length",
@@ -100,7 +100,7 @@ test(".parse() parses 1-token positions", (t) => {
 });
 
 test(".parse() parses 2-token positions", (t) => {
-  t.deepEqual(parse("left bottom").get(), {
+  t.deepEqual(parse("left bottom").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -120,7 +120,7 @@ test(".parse() parses 2-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("bottom left").get(), {
+  t.deepEqual(parse("bottom left").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -140,7 +140,7 @@ test(".parse() parses 2-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("left center").get(), {
+  t.deepEqual(parse("left center").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -156,7 +156,7 @@ test(".parse() parses 2-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("center left").get(), {
+  t.deepEqual(parse("center left").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -172,7 +172,7 @@ test(".parse() parses 2-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("left 10px").get(), {
+  t.deepEqual(parse("left 10px").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "side",
@@ -189,7 +189,7 @@ test(".parse() parses 2-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("10px top").get(), {
+  t.deepEqual(parse("10px top").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "length",
@@ -206,7 +206,7 @@ test(".parse() parses 2-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("10px 20%").get(), {
+  t.deepEqual(parse("10px 20%").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "length",
@@ -220,7 +220,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "20%" is not consumed
-  t.deepEqual(parse("10px top 20%", true).get(), {
+  t.deepEqual(parse("10px top 20%", true).getUnsafe(), {
     type: "position",
     horizontal: {
       type: "length",
@@ -238,7 +238,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "20%" is not consumed
-  t.deepEqual(parse("left 10px 20%", true).get(), {
+  t.deepEqual(parse("left 10px 20%", true).getUnsafe(), {
     type: "position",
     horizontal: {
       offset: null,
@@ -256,7 +256,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "10px" not consumed
-  t.deepEqual(parse("left top 10px").get(), {
+  t.deepEqual(parse("left top 10px").getUnsafe(), {
     type: "position",
     horizontal: {
       offset: null,
@@ -277,7 +277,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "left" not consumed
-  t.deepEqual(parse("top 10px left").get(), {
+  t.deepEqual(parse("top 10px left").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "keyword",
@@ -294,7 +294,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "10px" not consumed
-  t.deepEqual(parse("top left 10px").get(), {
+  t.deepEqual(parse("top left 10px").getUnsafe(), {
     type: "position",
     horizontal: {
       offset: null,
@@ -315,7 +315,7 @@ test(".parse() parses 2-token positions", (t) => {
   });
 
   // "right 10px" not consumed
-  t.deepEqual(parse("center 20% right 10px").get(), {
+  t.deepEqual(parse("center 20% right 10px").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "keyword",
@@ -329,7 +329,7 @@ test(".parse() parses 2-token positions", (t) => {
 });
 
 test(".parse() parses 3-token positions", (t) => {
-  t.deepEqual(parse("left 10px center", true).get(), {
+  t.deepEqual(parse("left 10px center", true).getUnsafe(), {
     type: "position",
     horizontal: {
       offset: {
@@ -349,7 +349,7 @@ test(".parse() parses 3-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("left top 10px", true).get(), {
+  t.deepEqual(parse("left top 10px", true).getUnsafe(), {
     type: "position",
     horizontal: {
       offset: null,
@@ -373,7 +373,7 @@ test(".parse() parses 3-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("top 10px left", true).get(), {
+  t.deepEqual(parse("top 10px left", true).getUnsafe(), {
     type: "position",
     horizontal: {
       offset: null,
@@ -397,7 +397,7 @@ test(".parse() parses 3-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("top left 10px", true).get(), {
+  t.deepEqual(parse("top left 10px", true).getUnsafe(), {
     type: "position",
     horizontal: {
       offset: {
@@ -423,7 +423,7 @@ test(".parse() parses 3-token positions", (t) => {
 });
 
 test(".parse() parses 4-token positions", (t) => {
-  t.deepEqual(parse("right 10px bottom 20%").get(), {
+  t.deepEqual(parse("right 10px bottom 20%").getUnsafe(), {
     type: "position",
     horizontal: {
       offset: {
@@ -450,7 +450,7 @@ test(".parse() parses 4-token positions", (t) => {
     },
   });
 
-  t.deepEqual(parse("bottom 20% right 10px").get(), {
+  t.deepEqual(parse("bottom 20% right 10px").getUnsafe(), {
     type: "position",
     horizontal: {
       offset: {

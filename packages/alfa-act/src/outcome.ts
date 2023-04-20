@@ -268,7 +268,8 @@ export namespace Outcome {
             .toArray()
             .reduce(
               (message, [, expectation]) =>
-                message + "\n" + expectation.get().message,
+                // the outcome is passed, so all expectations should be Ok
+                message + "\n" + expectation.getUnsafe().message,
               ""
             )
             .trim(),
@@ -287,7 +288,8 @@ export namespace Outcome {
         "The test target passes all requirements:\n\n" +
         this._expectations
           .toArray()
-          .map(([, expectation]) => `- ${expectation.get().message}`)
+          // the outcome is passed, so all expectations should be Ok
+          .map(([, expectation]) => `- ${expectation.getUnsafe().message}`)
           .join("\n");
 
       const locations: Array<sarif.Location> = [];
@@ -464,11 +466,19 @@ export namespace Outcome {
     public toSARIF(): sarif.Result {
       const message =
         "The test target fails the following requirements:\n\n" +
-        this._expectations
-          .toArray()
-          .filter(([, expectation]) => expectation.isErr())
-          .map(([, expectation]) => `- ${expectation.getErr().message}`)
-          .join("\n");
+        Iterable.join(
+          Iterable.map(
+            Iterable.filter(
+              Iterable.map(
+                this._expectations.entries(),
+                ([, expectation]) => expectation
+              ),
+              Err.isErr<Diagnostic>
+            ),
+            (expectation) => `- ${expectation.getErr().message}`
+          ),
+          "\n"
+        );
 
       const locations: Array<sarif.Location> = [];
 

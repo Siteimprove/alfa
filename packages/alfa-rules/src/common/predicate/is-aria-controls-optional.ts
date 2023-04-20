@@ -14,7 +14,7 @@ const { and } = Predicate;
  *
  * @internal
  */
-export const isAriaControlsRequired = and(
+export const isAriaControlsOptional = and(
   hasRole("combobox"),
   hasAttribute("aria-expanded", (expanded) => expanded !== "true")
 );

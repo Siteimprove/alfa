@@ -1,19 +1,19 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade } from "@siteimprove/alfa-cascade";
-import { Lexer, Keyword, Token } from "@siteimprove/alfa-css";
+import { Component, Keyword, Lexer, Token } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
-  Element,
   Declaration,
   Document,
-  Shadow,
+  Element,
   Node,
+  Shadow,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
-import { Option, None } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Slice } from "@siteimprove/alfa-slice";

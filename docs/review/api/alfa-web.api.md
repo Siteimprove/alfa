@@ -11,6 +11,7 @@ import { Graph } from '@siteimprove/alfa-graph';
 import * as json from '@siteimprove/alfa-json';
 import { Request } from '@siteimprove/alfa-http';
 import { Response } from '@siteimprove/alfa-http';
+import { Result } from '@siteimprove/alfa-result';
 import * as sarif from '@siteimprove/alfa-sarif';
 
 // @public (undocumented)
@@ -52,7 +53,7 @@ export namespace Page {
         "dct:source": string;
     }
     // (undocumented)
-    export function from(json: JSON): Page;
+    export function from(json: JSON): Result<Page, string>;
     // (undocumented)
     export function isPage(value: unknown): value is Page;
     // (undocumented)

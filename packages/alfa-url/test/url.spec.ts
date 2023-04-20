@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 import { URL } from "../src/url";
 
 test(".parse() parses an absolute URL", (t) => {
-  t.deepEqual(URL.parse("https://example.com/page.html").get().toJSON(), {
+  t.deepEqual(URL.parse("https://example.com/page.html").getUnsafe().toJSON(), {
     scheme: "https",
     username: null,
     password: null,
@@ -17,7 +17,7 @@ test(".parse() parses an absolute URL", (t) => {
 });
 
 test(".parse() parses a relative URL against a base URL", (t) => {
-  t.deepEqual(URL.parse("/page.html", "https://example.com/").get().toJSON(), {
+  t.deepEqual(URL.parse("/page.html", "https://example.com/").getUnsafe().toJSON(), {
     scheme: "https",
     username: null,
     password: null,
@@ -31,7 +31,7 @@ test(".parse() parses a relative URL against a base URL", (t) => {
 });
 
 test(".parse() parses the about:blank URL", (t) => {
-  t.deepEqual(URL.parse("about:blank").get().toJSON(), {
+  t.deepEqual(URL.parse("about:blank").getUnsafe().toJSON(), {
     scheme: "about",
     username: null,
     password: null,
@@ -45,7 +45,7 @@ test(".parse() parses the about:blank URL", (t) => {
 });
 
 test(".parse() parses the about:/blank URL", (t) => {
-  t.deepEqual(URL.parse("about:/blank").get().toJSON(), {
+  t.deepEqual(URL.parse("about:/blank").getUnsafe().toJSON(), {
     scheme: "about",
     username: null,
     password: null,
@@ -59,7 +59,7 @@ test(".parse() parses the about:/blank URL", (t) => {
 });
 
 test(".parse() parses a file: URL", (t) => {
-  t.deepEqual(URL.parse("file:///foo").get().toJSON(), {
+  t.deepEqual(URL.parse("file:///foo").getUnsafe().toJSON(), {
     scheme: "file",
     username: null,
     password: null,
@@ -73,21 +73,21 @@ test(".parse() parses a file: URL", (t) => {
 });
 
 test("#toString() stringifies the about:blank URL", (t) => {
-  t.equal(URL.parse("about:blank").get().toString(), "about:blank");
+  t.equal(URL.parse("about:blank").getUnsafe().toString(), "about:blank");
 });
 
 test("#toString() stringifies the about:/blank URL", (t) => {
-  t.equal(URL.parse("about:/blank").get().toString(), "about:/blank");
+  t.equal(URL.parse("about:/blank").getUnsafe().toString(), "about:/blank");
 });
 
 test("#toString() stringifies a file: URL", (t) => {
-  t.equal(URL.parse("file:///foo").get().toString(), "file:///foo");
+  t.equal(URL.parse("file:///foo").getUnsafe().toString(), "file:///foo");
 });
 
 test("#equals() checks if two URLs are equal", (t) => {
-  const a = URL.parse("foo", "file:").get();
-  const b = URL.parse("foo", "file:").get();
-  const c = URL.parse("bar", "file:").get();
+  const a = URL.parse("foo", "file:").getUnsafe();
+  const b = URL.parse("foo", "file:").getUnsafe();
+  const c = URL.parse("bar", "file:").getUnsafe();
 
   t.equal(a.equals(a), true);
   t.equal(a.equals(b), true);

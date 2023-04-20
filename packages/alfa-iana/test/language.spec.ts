@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 import { Language } from "../src/language";
 
 test(".parse() parses a primary language tag", (t) => {
-  t.deepEqual(Language.parse("da").get().toJSON(), {
+  t.deepEqual(Language.parse("da").getUnsafe().toJSON(), {
     type: "language",
     primary: {
       type: "primary",
@@ -18,7 +18,7 @@ test(".parse() parses a primary language tag", (t) => {
 });
 
 test(".parse() parses a primary language tag with a region", (t) => {
-  t.deepEqual(Language.parse("da-DK").get().toJSON(), {
+  t.deepEqual(Language.parse("da-DK").getUnsafe().toJSON(), {
     type: "language",
     primary: {
       type: "primary",
