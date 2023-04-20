@@ -94,6 +94,12 @@ export namespace Variable {
    * between cascading variables. The set is local to each `Style` instance as
    * cyclic references can only occur between cascading variables defined on the
    * same element.
+   *
+   * @remarks
+   * The fallback isn't pre-resolved/substituted until needed.
+   * This is not only a performance optimisation but also ensure that we don't
+   * need to handle invalid fallback that wouldn't be needed if the variable
+   * resolves successfully.
    */
   function resolve(
     name: string,
@@ -170,10 +176,8 @@ export namespace Variable {
           return None;
         }
 
-        let name: string;
-        let fallback: Option<Slice<Token>>;
-
-        [tokens, [name, fallback]] = result.get();
+        const [remaining, [name, fallback]] = result.get();
+        tokens = remaining;
 
         // If we've already seen this variable, bail out (circular reference).
         if (visited.has(name)) {

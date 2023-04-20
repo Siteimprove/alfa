@@ -349,7 +349,16 @@ export namespace Style {
   export const { isRendered, isVisible } = node;
 }
 
-function shouldOverride<T>(
+/**
+ * The "next" declaration should override the previous if:
+ * - either there is no previous; or
+ * - next is important and previous isn't.
+ * This suppose that the declarations have been pre--ordered in decreasing
+ * specificity.
+ *
+ * @internal
+ */
+export function shouldOverride<T>(
   previous: Option<Value<T>>,
   next: Declaration
 ): boolean {
