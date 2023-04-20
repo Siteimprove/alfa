@@ -12,7 +12,7 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
-import { isAriaControlsRequired } from "../common/predicate/is-aria-controls-required";
+import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional";
 
 import { Scope } from "../tags";
 
@@ -147,7 +147,7 @@ function isAttributeOptionalOrValid(
   for (const role of node.role) {
     const { name, type, value } = attribute;
 
-    if (isAriaControlsRequired(node) && name === "aria-controls") {
+    if (isAriaControlsOptional(node) && name === "aria-controls") {
       return true;
     }
 

@@ -12,7 +12,7 @@ import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
-import { isAriaControlsRequired } from "../common/predicate/is-aria-controls-required";
+import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional";
 
 import { Scope } from "../tags";
 
@@ -72,7 +72,7 @@ function hasRequiredValues(
       // ones
       if (
         node.attribute(attribute).every(property("value", isEmpty)) &&
-        !(isAriaControlsRequired(node) && attribute === "aria-controls")
+        !(isAriaControlsOptional(node) && attribute === "aria-controls")
       ) {
         missing.push(attribute);
         result = false;
