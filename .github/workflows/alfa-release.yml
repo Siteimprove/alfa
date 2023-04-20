@@ -87,8 +87,9 @@ jobs:
           fi
       - name: Verify dependencies (yarn PnP)
         if: steps.yarn.outputs.is-pnp == 'true'
+        # We currently only use yarn PnP in private repos and do not need to check cache
         # https://yarnpkg.com/features/zero-installs#does-it-have-security-implications
-        run: yarn install --immutable --immutable-cache --check-cache
+        run: yarn install --immutable --immutable-cache
       - name: Install dependencies (yarn + node_modules)
         if: steps.yarn.outputs.is-pnp != 'true'
         run: yarn install --immutable
