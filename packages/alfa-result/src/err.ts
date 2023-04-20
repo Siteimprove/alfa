@@ -119,6 +119,13 @@ export class Err<E> implements Result<never, E> {
     throw new Error(message);
   }
 
+  /**
+   * @internal
+   */
+  public getErrUnsafe(): E {
+    return this._error;
+  }
+
   public getErr(): E {
     return this._error;
   }

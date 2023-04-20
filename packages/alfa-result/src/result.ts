@@ -67,6 +67,14 @@ export interface Result<T, E = T>
    * @internal
    */
   getUnsafe(message?: string): T;
+  /**
+   * This may throw an exception. Use only when you can provide an external
+   * guarantee that it won't be used on Ok. E.g. in tests, or when some
+   * condition exists that TypeScript cannot see (document it!)
+   *
+   * @internal
+   */
+  getErrUnsafe(message?: string): E;
   getOr<U>(value: U): T | U;
   getOrElse<U>(value: Thunk<U>): T | U;
   getErrOr<F>(error: F): E | F;

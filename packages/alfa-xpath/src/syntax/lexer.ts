@@ -8,7 +8,7 @@ import { Token } from "./token";
 
 const { pow } = Math;
 const { fromCharCode } = String;
-const { map } = Parser;
+const { map, toParser } = Parser;
 const { and, or, not, equals } = Predicate;
 
 /**
@@ -238,8 +238,9 @@ const lexString: Parser<Slice<number>, Token> = (input) => {
   return Result.of([input, Token.String.of(value)]);
 };
 
-// TODO: Should this be of type Parser.Infallible since it always succeeds?
-const lexCommentContents: Parser<Slice<number>, string> = (input) => {
+const lexCommentContents: Parser.Infallible<Slice<number>, string> = (
+  input
+) => {
   let value = "";
   let next = input.get(0);
 
@@ -255,7 +256,7 @@ const lexCommentContents: Parser<Slice<number>, string> = (input) => {
           value += ":";
 
           // this function never returns Err
-          const [remainder, result] = lexCommentContents(input).getUnsafe();
+          const [remainder, result] = lexCommentContents(input);
 
           value += result;
 
@@ -271,7 +272,7 @@ const lexCommentContents: Parser<Slice<number>, string> = (input) => {
         next = input.get(0);
 
         if (next.includes(0x29)) {
-          return Result.of([input.slice(1), value + ")"]);
+          return [input.slice(1), value + ")"];
         }
         break;
 
@@ -282,10 +283,10 @@ const lexCommentContents: Parser<Slice<number>, string> = (input) => {
     }
   }
 
-  return Result.of([input, value]);
+  return [input, value];
 };
 
-const lexComment = map(lexCommentContents, (value) => {
+const lexComment = map(toParser(lexCommentContents), (value) => {
   const n = value.length;
 
   if (value.charCodeAt(n - 2) === 0x3a && value.charCodeAt(n - 1) === 0x29) {

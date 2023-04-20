@@ -225,12 +225,12 @@ const consumeEscapedCodePoint: Parser.Infallible<
     for (const n = i + 5; i < n; i++) {
       const result = hexDigit([input, i]);
 
-      if (result.isErr()) {
+      if (!result.isOk()) {
         break;
       }
 
       // the previous check ensure the result is Ok
-      const [, byte] = result.getUnsafe();
+      const [, byte] = result.get();
 
       bytes.push(byte);
     }

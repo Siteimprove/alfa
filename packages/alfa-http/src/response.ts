@@ -28,11 +28,7 @@ export class Response
     return new Response(url, status, headers, body);
   }
 
-  private static _empty = Response.of(
-    // this is a valid URL
-    URL.parse("about:blank").getUnsafe(),
-    200
-  );
+  private static _empty = Response.of(URL.blank(), 200);
 
   public static empty(): Response {
     return this._empty;

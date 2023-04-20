@@ -197,7 +197,7 @@ export namespace Declaration {
 
           if (result.isOk()) {
             // the check ensures the result is Ok
-            declarations.push(result.getUnsafe()[1]);
+            declarations.push(result.get()[1]);
           }
         } else {
           while (input.get(0).some(not(Token.isSemicolon))) {

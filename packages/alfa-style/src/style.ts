@@ -549,7 +549,7 @@ function substitute(
       // If the token is a "var(", process it.
       const result = parseVar(tokens);
 
-      if (result.isErr()) {
+      if (!result.isOk()) {
         return None;
       }
 
@@ -557,7 +557,7 @@ function substitute(
       let fallback: Option<Slice<Token>>;
 
       // the check above ensures the result is Ok
-      [tokens, [name, fallback]] = result.getUnsafe();
+      [tokens, [name, fallback]] = result.get();
 
       // If we've already seen this variable, bail out (circular reference).
       if (visited.has(name)) {

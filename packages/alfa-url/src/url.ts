@@ -342,12 +342,11 @@ export namespace URL {
     if (typeof base === "string") {
       const result = parse(base);
 
-      if (result.isErr()) {
+      if (!result.isOk()) {
         return result;
       }
 
-      // The previous check ensures that the result is Ok
-      base = result.getUnsafe();
+      base = result.get();
     }
 
     try {

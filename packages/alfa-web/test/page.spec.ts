@@ -1,5 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
 
+import { Device } from "@siteimprove/alfa-device";
+import { Document } from "@siteimprove/alfa-dom";
+import { Request, Response } from "@siteimprove/alfa-http";
+
 import { Page } from "../src/page";
 
 test(".from() returns Err on invalid URL in request", (t) => {
@@ -11,34 +15,9 @@ test(".from() returns Err on invalid URL in request", (t) => {
         headers: [],
         method: "GET",
       },
-      response: {
-        url: "about:blank",
-        body: "",
-        headers: [],
-        method: "GET",
-        status: 500,
-      },
-      device: {
-        type: "screen",
-        viewport: {
-          width: 1280,
-          height: 720,
-          orientation: "landscape",
-        },
-        display: {
-          resolution: 1,
-          scan: "progressive",
-        },
-        scripting: {
-          enabled: true,
-        },
-        preferences: [],
-      },
-      document: {
-        type: "document",
-        children: [],
-        style: [],
-      },
+      response: Response.empty().toJSON(),
+      device: Device.standard().toJSON(),
+      document: Document.empty().toJSON(),
     }).isErr(),
     true
   );
@@ -47,12 +26,7 @@ test(".from() returns Err on invalid URL in request", (t) => {
 test(".from() returns Err on invalid URL in response", (t) => {
   t.deepEqual(
     Page.from({
-      request: {
-        url: "about:blank",
-        body: "",
-        headers: [],
-        method: "GET",
-      },
+      request: Request.empty().toJSON(),
       response: {
         url: "foo",
         body: "",
@@ -60,27 +34,8 @@ test(".from() returns Err on invalid URL in response", (t) => {
         method: "GET",
         status: 500,
       },
-      device: {
-        type: "screen",
-        viewport: {
-          width: 1280,
-          height: 720,
-          orientation: "landscape",
-        },
-        display: {
-          resolution: 1,
-          scan: "progressive",
-        },
-        scripting: {
-          enabled: true,
-        },
-        preferences: [],
-      },
-      document: {
-        type: "document",
-        children: [],
-        style: [],
-      },
+      device: Device.standard().toJSON(),
+      document: Document.empty().toJSON(),
     }).isErr(),
     true
   );

@@ -6,7 +6,7 @@ import { Monad } from "@siteimprove/alfa-monad";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Err, Result } from "@siteimprove/alfa-result";
+import { Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 import { Diagnostic } from "./diagnostic";
@@ -192,7 +192,7 @@ export class Question<
         answer = conditionOrPredicateOrAnswer.getUnsafe();
       } else {
         // since the condition is false, we know the result is an Err
-        const error = (conditionOrPredicateOrAnswer as Err<unknown>).getErr();
+        const error = conditionOrPredicateOrAnswer.getErrUnsafe();
 
         if (Diagnostic.isDiagnostic(error)) {
           // Type is enforced by overload.

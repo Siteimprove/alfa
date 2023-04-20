@@ -28,11 +28,7 @@ export class Request
     return new Request(method, url, headers, body);
   }
 
-  private static _empty = Request.of(
-    "GET",
-    // this is a valid URL
-    URL.parse("about:blank").getUnsafe()
-  );
+  private static _empty = Request.of("GET", URL.blank());
 
   public static empty(): Request {
     return this._empty;

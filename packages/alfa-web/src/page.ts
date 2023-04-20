@@ -123,14 +123,12 @@ export namespace Page {
 
   export function from(json: JSON): Result<Page, string> {
     return Request.from(json.request).andThen((request) =>
-      Response.from(json.response).andThen((response) =>
-        Result.of(
-          Page.of(
-            request,
-            response,
-            Document.from(json.document),
-            Device.from(json.device)
-          )
+      Response.from(json.response).map((response) =>
+        Page.of(
+          request,
+          response,
+          Document.from(json.document),
+          Device.from(json.device)
         )
       )
     );
