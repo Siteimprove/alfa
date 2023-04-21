@@ -39,6 +39,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const IsNotItalic = Ok.of(
     Diagnostic.of(`The text of the paragraph is not all italic`)

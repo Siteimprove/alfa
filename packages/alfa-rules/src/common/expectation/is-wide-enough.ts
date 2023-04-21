@@ -79,6 +79,9 @@ export function isWideEnough<N extends Name>(
   };
 }
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const IsWideEnough = (
     prop: Name,

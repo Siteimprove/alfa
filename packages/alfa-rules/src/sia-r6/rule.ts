@@ -56,6 +56,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasMatchingLanguages = Ok.of(
     Diagnostic.of(

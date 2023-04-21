@@ -2,8 +2,8 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Percentage, RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
-import { Option, None } from "@siteimprove/alfa-option";
-import { Result, Err } from "@siteimprove/alfa-result";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Err, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Set } from "@siteimprove/alfa-set";
 import { Style } from "@siteimprove/alfa-style";
@@ -14,6 +14,9 @@ import { Layer } from "./get-layers";
 
 const { isVisibleShadow } = Style;
 
+/**
+ * @public
+ */
 export type Background = ReadonlyArray<Color.Resolved>;
 
 const backgroundCacheWithFakeOpacity = Cache.empty<
@@ -43,7 +46,7 @@ const backgroundCacheWithDefaultOpacity = Cache.empty<
  * 1. gathering all layers, until a fully opaque one is found.
  * 2. merging them into one composite color
  *
- * @internal
+ * @public
  */
 export function getBackground(
   element: Element,

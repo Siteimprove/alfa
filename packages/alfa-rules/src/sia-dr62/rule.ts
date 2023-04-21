@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Color } from "@siteimprove/alfa-css";
@@ -8,7 +8,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
-import { Option, None } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -171,6 +171,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   // We could tweak typing to ensure that isDistinguishable only accepts Ok and
   // that isNotDistinguishable has at least one Err.
@@ -382,6 +385,9 @@ function hasDistinguishableVerticalAlign(
 
 type Name = Property.Name | Property.Shorthand.Name;
 
+/**
+ * @public
+ */
 export class ComputedStyles implements Equatable, Hashable, Serializable {
   public static of(
     style: Iterable<readonly [Name, string]> = []
@@ -418,6 +424,9 @@ export class ComputedStyles implements Equatable, Hashable, Serializable {
   }
 }
 
+/**
+ * @public
+ */
 export namespace ComputedStyles {
   export interface JSON {
     [key: string]: json.JSON;
@@ -458,7 +467,7 @@ export namespace ComputedStyles {
 }
 
 /**
- * @internal
+ * @public
  */
 export class DistinguishingStyles extends Diagnostic {
   public static of(
@@ -527,7 +536,7 @@ export class DistinguishingStyles extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace DistinguishingStyles {
   export interface JSON extends Diagnostic.JSON {

@@ -1,10 +1,10 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Table, Cell } from "@siteimprove/alfa-table";
+import { Cell, Table } from "@siteimprove/alfa-table";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -82,6 +82,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const IsAssignedToDataCell = Ok.of(
     Diagnostic.of(`The header cell is assigned to a cell`)

@@ -13,6 +13,9 @@ import { getBackground } from "./get-background";
 
 const { isElement } = Element;
 
+/**
+ * @public
+ */
 export type Foreground = ReadonlyArray<Color.Resolved>;
 
 const foregroundCache = Cache.empty<
@@ -28,7 +31,7 @@ const foregroundCache = Cache.empty<
  * 1. get the color property
  * 2. merge it with the background colors, according to opacity.
  *
- * @internal
+ * @public
  */
 export function getForeground(
   element: Element,

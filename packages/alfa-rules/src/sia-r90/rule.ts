@@ -52,6 +52,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasNoTabbableDescendants = Ok.of(
     Diagnostic.of(`The element has no tabbable descendants`)

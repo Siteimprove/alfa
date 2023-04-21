@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Document, Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -76,6 +76,9 @@ export default Rule.Atomic.of<Page, Document>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasNoDeprecatedElement = Ok.of(
     Diagnostic.of(`The document doesn't contain any deprecated elements`)

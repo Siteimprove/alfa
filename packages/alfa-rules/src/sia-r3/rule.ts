@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -39,6 +39,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasUniqueId = Ok.of(
     Diagnostic.of(`The element has a unique ID`)

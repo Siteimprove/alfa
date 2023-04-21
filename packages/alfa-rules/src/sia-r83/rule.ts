@@ -1,16 +1,16 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Cascade, RuleTree } from "@siteimprove/alfa-cascade";
 import { Length } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import {
+  Rule as CSSRule,
   Document,
   Element,
-  Text,
   MediaRule,
   Namespace,
   Node,
-  Rule as CSSRule,
+  Text,
 } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -18,7 +18,7 @@ import { Media } from "@siteimprove/alfa-media";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
@@ -474,7 +474,7 @@ function usesFontRelativeMediaRule<F extends Media.Feature>(
 }
 
 /**
- * @internal
+ * @public
  */
 export class ClippingAncestors extends Diagnostic {
   public static of(
@@ -535,7 +535,7 @@ export class ClippingAncestors extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace ClippingAncestors {
   export interface JSON extends Diagnostic.JSON {
@@ -558,6 +558,9 @@ export namespace ClippingAncestors {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const WrapsText = Ok.of(
     ClippingAncestors.of(`The text is wrapped without being clipped`)

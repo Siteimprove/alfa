@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Real } from "@siteimprove/alfa-math";
@@ -87,6 +87,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const MetaDoesNotPreventZoom = Ok.of(
     Diagnostic.of(

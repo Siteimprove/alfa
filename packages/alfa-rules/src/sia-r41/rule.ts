@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -82,6 +82,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const ResolveSameResource = Ok.of(
     Diagnostic.of(`The links resolve to the same resource`)

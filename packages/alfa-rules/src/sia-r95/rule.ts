@@ -72,6 +72,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const IsTabbable = (tabbables: Iterable<Element>) =>
     Ok.of(WithBadElements.of(`The iframe has no negative tabindex`, tabbables));

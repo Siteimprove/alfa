@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -34,6 +34,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const IsNotExposed = Ok.of(
     Diagnostic.of(`The element is marked as decorative and is not exposed`)

@@ -78,6 +78,9 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasCorrectLang = (programmatic: Language, natural: Language) =>
     Ok.of(
@@ -107,7 +110,7 @@ export namespace Outcomes {
 }
 
 /**
- * @internal
+ * @public
  */
 export class Languages extends Diagnostic {
   public static of(
@@ -168,7 +171,7 @@ export class Languages extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace Languages {
   export interface JSON extends Diagnostic.JSON {

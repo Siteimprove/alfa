@@ -60,6 +60,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasNoInteractiveElement = Ok.of(
     Diagnostic.of(`The iframe contains no interactive element`)

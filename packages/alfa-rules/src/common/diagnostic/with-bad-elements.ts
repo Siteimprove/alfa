@@ -5,7 +5,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 
 /**
- * @internal
+ * @public
  */
 export class WithBadElements extends Diagnostic implements Iterable<Element> {
   public static of(
@@ -56,7 +56,7 @@ export class WithBadElements extends Diagnostic implements Iterable<Element> {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace WithBadElements {
   export interface JSON extends Diagnostic.JSON {

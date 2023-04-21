@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
@@ -53,6 +53,9 @@ export default Rule.Atomic.of<Page, Document>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const StartWithLevel1Heading = (heading: Element, level: number) =>
     Ok.of(
@@ -77,7 +80,7 @@ export namespace Outcomes {
 }
 
 /**
- * @internal
+ * @public
  */
 export class WithFirstHeading extends Diagnostic {
   public static of(message: string): Diagnostic;
@@ -144,7 +147,7 @@ export class WithFirstHeading extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace WithFirstHeading {
   export interface JSON extends Diagnostic.JSON {
