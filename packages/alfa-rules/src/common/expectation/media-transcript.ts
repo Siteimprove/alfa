@@ -96,6 +96,9 @@ export function videoTranscript(target: Element, device: Device) {
   return mediaTranscript(alt, label, device, "<video>");
 }
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasPerceivableTranscript = (kind: "<audio>" | "<video>") =>
     Ok.of(

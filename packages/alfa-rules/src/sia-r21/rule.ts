@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Role } from "@siteimprove/alfa-aria";
 import { Attribute } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -37,6 +37,9 @@ export default Rule.Atomic.of<Page, Attribute>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasValidRole = Ok.of(
     Diagnostic.of(`The element has only valid roles`)

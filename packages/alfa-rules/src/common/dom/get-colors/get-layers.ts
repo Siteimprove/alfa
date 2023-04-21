@@ -16,7 +16,7 @@ const { isElement } = Element;
 const { hasTransparentBackground, isPositioned } = Style;
 
 /**
- * @internal
+ * @public
  */
 export class Layer {
   public static of(colors: Iterable<Color.Resolved>, opacity: number): Layer {
@@ -41,7 +41,7 @@ export class Layer {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace Layer {
   const layersCacheWithFakeOpacity = Cache.empty<

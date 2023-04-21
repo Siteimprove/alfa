@@ -63,6 +63,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasRelativeUnit = Ok.of(
     Diagnostic.of(`The font size is specified using a relative unit`)

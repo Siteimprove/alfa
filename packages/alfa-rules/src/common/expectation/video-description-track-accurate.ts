@@ -17,6 +17,9 @@ export function videoDescriptionTrackAccurate(target: Element) {
   };
 }
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasDescriptionTrack = Ok.of(
     Diagnostic.of(

@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
@@ -88,6 +88,9 @@ export default Rule.Atomic.of<Page, Attribute>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HeadersRefersToCellInTable = Ok.of(
     Diagnostic.of(

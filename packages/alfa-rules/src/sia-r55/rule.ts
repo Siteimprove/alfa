@@ -99,6 +99,9 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const SameResource = (role: Role.Name, name: string) =>
     Ok.of(
@@ -120,7 +123,7 @@ export namespace Outcomes {
 }
 
 /**
- * @internal
+ * @public
  */
 export class WithRoleAndName extends WithRole {
   public static of(message: string): Diagnostic;
@@ -178,7 +181,7 @@ export class WithRoleAndName extends WithRole {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace WithRoleAndName {
   export interface JSON extends WithRole.JSON {

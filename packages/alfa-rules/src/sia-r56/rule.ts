@@ -79,6 +79,9 @@ export default Rule.Atomic.of<Page, Group<Element>>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const differentNames = (role: Role.Name) =>
     Ok.of(SameNames.of(`No two \`${role}\` have the same name.`, role, []));
@@ -91,7 +94,7 @@ export namespace Outcomes {
 }
 
 /**
- * @internal
+ * @public
  */
 export class SameNames extends Diagnostic implements Iterable<List<Element>> {
   public static of(
@@ -152,7 +155,7 @@ export class SameNames extends Diagnostic implements Iterable<List<Element>> {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace SameNames {
   export interface JSON extends Diagnostic.JSON {

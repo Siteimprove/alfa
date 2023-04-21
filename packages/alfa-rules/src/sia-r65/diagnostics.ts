@@ -2,6 +2,9 @@ import { Diagnostic } from "@siteimprove/alfa-act";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Map } from "@siteimprove/alfa-map";
 
+/**
+ * @public
+ */
 export class MatchingClasses extends Diagnostic {
   public static of(
     message: string,
@@ -60,7 +63,7 @@ export class MatchingClasses extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace MatchingClasses {
   export interface JSON extends Diagnostic.JSON {

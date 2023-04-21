@@ -81,6 +81,9 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasFocusIndicator = (
     matchingTargets: Map<string, number>,

@@ -1,8 +1,8 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Attribute, Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
 import { Technique } from "@siteimprove/alfa-wcag";
@@ -92,6 +92,9 @@ function ariaHtmlAllowed(target: Attribute): boolean {
   return false;
 }
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const IsAllowed = Ok.of(
     Diagnostic.of(

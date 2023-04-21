@@ -3,14 +3,17 @@ import { RGB } from "@siteimprove/alfa-css";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 
-import * as json from "@siteimprove/alfa-json";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import * as json from "@siteimprove/alfa-json";
 
 type Name = ["container", "link"] | ["foreground", "background"];
 type FirstColor<N extends Name> = N[0];
 type SecondColor<N extends Name> = N[1];
 
+/**
+ * @public
+ */
 export class Contrast<N extends Name = Name> extends Diagnostic {
   public static of<N extends Name = Name>(
     message: string,
@@ -71,6 +74,9 @@ export class Contrast<N extends Name = Name> extends Diagnostic {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Contrast {
   export interface JSON<N extends Name> extends Diagnostic.JSON {
     threshold: number;
