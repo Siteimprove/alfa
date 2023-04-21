@@ -36,6 +36,9 @@ on:
       user-email:
         required: true
         type: string
+      generate-documentation:
+        required: false
+        type: boolean
     secrets:
       # A PAT for the user who will commit. Need to have the repo:write permission.
       token:
@@ -164,6 +167,14 @@ jobs:
           git config --local core.filemode false
           git config --local user.name "${{ inputs.user-name }}"
           git config --local user.email "${{ inputs.user-email }}"
+
+      - name: Generate documentation
+        if: inputs.generate-documentation
+        run: |
+          yarn extract
+          yarn document
+          git add docs/api
+
       - name: Commit and push changes
         # If we made it thus far, we can commit the changes
         # We need to take care to **not** commit .yarnrc.yml which has been updated with a token.
