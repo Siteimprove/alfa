@@ -1,6 +1,6 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
 import { Callback } from "@siteimprove/alfa-callback";
-import { Comparable, Comparison, Comparer } from "@siteimprove/alfa-comparable";
+import { Comparable, Comparer, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Foldable } from "@siteimprove/alfa-foldable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -74,8 +74,6 @@ export interface Option<T>
  * @public
  */
 export namespace Option {
-  export type Maybe<T> = T | Option<T>;
-
   export type JSON<T> = Some.JSON<T> | None.JSON;
 
   export function isOption<T>(value: Iterable<T>): value is Option<T>;
