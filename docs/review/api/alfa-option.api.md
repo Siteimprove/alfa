@@ -23,6 +23,17 @@ import { Refinement } from '@siteimprove/alfa-refinement';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Thunk } from '@siteimprove/alfa-thunk';
 
+// Warning: (ae-internal-missing-underscore) The name "Maybe" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export type Maybe<T> = T | Option<T>;
+
+// @internal (undocumented)
+export namespace Maybe {
+    // (undocumented)
+    export function toOption<T>(maybe: Maybe<T>): Option<T>;
+}
+
 // @public (undocumented)
 export interface None extends Option<never> {
 }
@@ -127,8 +138,6 @@ export namespace Option {
     export function isSome<T>(value: unknown): value is Some<T>;
     // (undocumented)
     export type JSON<T> = Some.JSON<T> | None.JSON;
-    // (undocumented)
-    export type Maybe<T> = T | Option<T>;
     // (undocumented)
     export function of<T>(value: T): Some<T>;
 }
