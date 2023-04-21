@@ -9,40 +9,52 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
+import { Map } from "@siteimprove/alfa-map";
 import { Scope } from "../tags";
 
 const { hasAttribute, isDocumentElement } = Element;
 const { isEmpty } = Iterable;
-const { and, not } = Predicate;
+const { and, not, tee, test } = Predicate;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r6",
   requirements: [Criterion.of("3.1.1")],
   tags: [Scope.Page],
   evaluate({ document }) {
+    let langMap = Map.empty<Element<string>, Language>();
+    let xmlLangMap = Map.empty<Element<string>, string>();
+
     return {
       applicability() {
         return document
           .children()
           .filter(isDocumentElement)
-          .filter(
-            and(
-              hasAttribute("lang", (value) => Language.parse(value).isOk()),
-              hasAttribute("xml:lang", not(isEmpty))
+          .filter((element) =>
+            test(
+              and(
+                hasAttribute("lang", (value) =>
+                  Language.parse(value)
+                    .tee((lang) => {
+                      langMap = langMap.set(element, lang);
+                    })
+                    .isOk()
+                ),
+                hasAttribute(
+                  "xml:lang",
+                  tee(not(isEmpty), (xmlLang: string) => {
+                    xmlLangMap = xmlLangMap.set(element, xmlLang);
+                  })
+                )
+              ),
+              element
             )
           );
       },
 
       expectations(target) {
-        // The last filter in applicability ensures that lang exists
-        // The applicability ensures it can be parsed
-        const lang = Language.parse(
-          target.attribute("lang").getUnsafe().value
-        ).getUnsafe();
-        // The last filter in applicability ensures that xml:lang exists
-        const xmlLang = Language.parse(
-          target.attribute("xml:lang").getUnsafe().value
-        );
+        // The last filter in applicability ensures that map entries exists
+        const lang = langMap.get(target).getUnsafe();
+        const xmlLang = Language.parse(xmlLangMap.get(target).getUnsafe());
 
         return {
           1: expectation(
