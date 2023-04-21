@@ -126,24 +126,24 @@ export interface Longhands {
 // Warning: (ae-internal-missing-underscore) The name "Property" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export class Property<T = unknown, U = T> {
+export class Property<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     // (undocumented)
-    get compute(): Mapper<Value<T>, Value<U>, [style: Style]>;
+    get compute(): Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
     // (undocumented)
-    static extend<T, U>(property: Property<T, U>, overrides?: {
-        initial?: U;
-        parse?: Property.Parser<T>;
-        compute?: Mapper<Value<T>, Value<U>, [style: Style]>;
+    static extend<SPECIFIED, COMPUTED>(property: Property<SPECIFIED, COMPUTED>, overrides?: {
+        initial?: COMPUTED;
+        parse?: Property.Parser<SPECIFIED>;
+        compute?: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
         options?: Property.Options;
-    }): Property<T, U>;
+    }): Property<SPECIFIED, COMPUTED>;
     // (undocumented)
-    get initial(): U;
+    get initial(): COMPUTED;
     // (undocumented)
-    static of<T, U>(initial: U, parse: Property.Parser<T>, compute: Mapper<Value<T>, Value<U>, [style: Style]>, options?: Property.Options): Property<T, U>;
+    static of<SPECIFIED, COMPUTED>(initial: COMPUTED, parse: Property.Parser<SPECIFIED>, compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>, options?: Property.Options): Property<SPECIFIED, COMPUTED>;
     // (undocumented)
     get options(): Property.Options;
     // (undocumented)
-    get parse(): Property.Parser<T>;
+    get parse(): Property.Parser<SPECIFIED>;
 }
 
 // @internal (undocumented)
@@ -160,7 +160,7 @@ export namespace Property {
         readonly inherits: boolean;
     }
     // (undocumented)
-    export type Parser<T = Value.Parsed> = parser.Parser<Slice<Token>, Value.Default | T, string>;
+    export type Parser<SPECIFIED = Value.Parsed> = parser.Parser<Slice<Token>, Value.Default | SPECIFIED, string>;
     const // (undocumented)
     longhands: Map<keyof Longhands, Property<unknown, unknown>>;
     // (undocumented)
@@ -194,12 +194,12 @@ export namespace Property {
     // (undocumented)
     export namespace Value {
         export type Cascaded<N extends Name> = Declared<N>;
-        export type Computed<N extends Name> = WithName<N> extends Property<infer T, infer U> ? U : never;
+        export type Computed<N extends Name> = WithName<N> extends Property<infer SPECIFIED, infer COMPUTED> ? COMPUTED : never;
         export type Declared<N extends Name> = Parsed<N> | Default;
         export type Default = Keyword<"initial"> | Keyword<"inherit"> | Keyword<"unset">;
         export type Inherited<N extends Name> = Computed<N>;
         export type Initial<N extends Name> = Computed<N>;
-        export type Parsed<N extends Name = Name> = WithName<N> extends Property<infer T, infer U> ? T : never;
+        export type Parsed<N extends Name = Name> = WithName<N> extends Property<infer SPECIFIED, infer COMPUTED> ? SPECIFIED : never;
         export type Specified<N extends Name> = Parsed<N> | Computed<N>;
     }
     // (undocumented)
@@ -232,6 +232,11 @@ export namespace Resolver {
 // @internal (undocumented)
 export interface Shorthands {
 }
+
+// Warning: (ae-internal-missing-underscore) The name "shouldOverride" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export function shouldOverride<T>(previous: Option<Value<T>>, next: Declaration): boolean;
 
 // @public (undocumented)
 export class Style implements Serializable<Style.JSON> {

@@ -183,6 +183,7 @@
     "src/resolver.ts",
     "src/style.ts",
     "src/value.ts",
+    "src/variable.ts",
     "test/common.ts",
     "test/node/predicate/has-transparent-background.spec.tsx",
     "test/node/predicate/is-transparent.spec.tsx",
@@ -227,7 +228,8 @@
     "test/property/text-decoration.spec.tsx",
     "test/property/text-indent.spec.tsx",
     "test/property/text-shadow.spec.tsx",
-    "test/style.spec.tsx"
+    "test/style.spec.tsx",
+    "test/variable.spec.ts"
   ],
   "references": [
     { "path": "../alfa-applicative" },
