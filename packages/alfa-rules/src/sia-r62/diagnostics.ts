@@ -18,13 +18,14 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 import { Serialise } from "./serialise";
 
 type Name = Property.Name | Property.Shorthand.Name;
+
 /**
- * @internal
+ * @public
  */
 export type DistinguishingProperty = Name | "contrast";
 
 /**
- * @internal
+ * @public
  */
 export class ElementDistinguishable
   implements Equatable, Hashable, Serializable
@@ -132,6 +133,9 @@ export class ElementDistinguishable
   }
 }
 
+/**
+ * @public
+ */
 export namespace ElementDistinguishable {
   export interface JSON {
     [key: string]: json.JSON;
@@ -180,7 +184,7 @@ export namespace ElementDistinguishable {
 }
 
 /**
- * @internal
+ * @public
  */
 export class DistinguishingStyles extends Diagnostic {
   public static of(
@@ -249,7 +253,7 @@ export class DistinguishingStyles extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace DistinguishingStyles {
   export interface JSON extends Diagnostic.JSON {

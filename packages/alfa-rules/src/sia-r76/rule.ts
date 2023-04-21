@@ -60,6 +60,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasHeaderRole = (role: Role.Name) =>
     Ok.of(WithRole.of(`The header element is a semantic header`, role));

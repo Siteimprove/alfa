@@ -1,10 +1,10 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
-import { Text, Element } from "@siteimprove/alfa-dom";
+import { Element, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Refinement } from "@siteimprove/alfa-refinement";
-import { Ok, Err } from "@siteimprove/alfa-result";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -106,6 +106,9 @@ export default Rule.Atomic.of<Page, Text>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const IsIncludedInLandmark = Ok.of(
     Diagnostic.of(`The text is included in a landmark region`)

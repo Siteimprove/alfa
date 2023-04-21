@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import {
   Declaration,
   Element,
@@ -8,7 +8,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -94,6 +94,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const IsSufficient = (declaration: Option<Declaration>) =>
     Ok.of(
@@ -107,7 +110,7 @@ export namespace Outcomes {
 }
 
 /**
- * @internal
+ * @public
  */
 export class WithDeclaration extends Diagnostic {
   public static of(message: string, declaration: Option<Declaration> = None) {
@@ -146,7 +149,7 @@ export class WithDeclaration extends Diagnostic {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace WithDeclaration {
   export interface JSON extends Diagnostic.JSON {

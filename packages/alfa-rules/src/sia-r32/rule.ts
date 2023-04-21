@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Element } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Technique } from "@siteimprove/alfa-wcag";
@@ -36,6 +36,9 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasDescriptiveAudio = Ok.of(
     Diagnostic.of(

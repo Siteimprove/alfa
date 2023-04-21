@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
@@ -116,6 +116,9 @@ export namespace WithPreviousHeading {
   }
 }
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const IsStructured = (previous: Element) =>
     Ok.of(WithPreviousHeading.of(`The heading is correctly ordered`, previous));

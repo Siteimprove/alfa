@@ -20,6 +20,7 @@
     "src/common/diagnostic/text-spacing.ts",
     "src/common/diagnostic/with-bad-elements.ts",
     "src/common/diagnostic/with-role.ts",
+    "src/common/diagnostic.ts",
     "src/common/dom/get-colors.ts",
     "src/common/dom/get-colors/color.ts",
     "src/common/dom/get-colors/color-error.ts",

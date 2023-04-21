@@ -1,9 +1,9 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Ok, Err } from "@siteimprove/alfa-result";
+import { Err, Ok } from "@siteimprove/alfa-result";
 import { Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -77,6 +77,9 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const DurationBelowThreshold = (name: string) =>
     Ok.of(

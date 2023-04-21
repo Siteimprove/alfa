@@ -1,4 +1,4 @@
-import { Rule, Diagnostic } from "@siteimprove/alfa-act";
+import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Document, Element, Node } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -139,6 +139,9 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasNoTabbable = Err.of(
     Diagnostic.of(`The document has no tabbable descendants`)

@@ -8,7 +8,7 @@ import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { List } from "@siteimprove/alfa-list";
 import { Map } from "@siteimprove/alfa-map";
-import { Option, None } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -30,9 +30,9 @@ import { isWhitespace } from "../common/predicate";
 import { Scope, Version } from "../tags";
 
 import {
+  DistinguishingProperty,
   DistinguishingStyles,
   ElementDistinguishable,
-  DistinguishingProperty,
 } from "./diagnostics";
 
 const { hasRole } = DOM;
@@ -313,6 +313,9 @@ export default Rule.Atomic.of<Page, Element>({
   },
 });
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   // We could tweak typing to ensure that isDistinguishable only accepts Ok and
   // that isNotDistinguishable has at least one Err.

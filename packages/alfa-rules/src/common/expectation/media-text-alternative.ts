@@ -93,6 +93,9 @@ export function videoTextAlternative(target: Element, device: Device) {
   return mediaTextAlternative(alt, label, device, "<video>");
 }
 
+/**
+ * @public
+ */
 export namespace Outcomes {
   export const HasPerceivableAlternative = (kind: "<audio>" | "<video>") =>
     Ok.of(

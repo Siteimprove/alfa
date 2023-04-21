@@ -3,7 +3,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Style } from "@siteimprove/alfa-style";
 
 /**
- * @internal
+ * @public
  */
 export namespace Color {
   export type Computed = RGB<Percentage, Percentage> | Current | System;
