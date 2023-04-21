@@ -25,7 +25,7 @@ import { Thunk } from '@siteimprove/alfa-thunk';
 
 // Warning: (ae-internal-missing-underscore) The name "Maybe" should be prefixed with an underscore because the declaration is marked as @internal
 //
-// @internal
+// @internal (undocumented)
 export type Maybe<T> = T | Option<T>;
 
 // @internal (undocumented)
