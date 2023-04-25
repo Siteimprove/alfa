@@ -28,6 +28,8 @@
     "src/element/predicate/is-visible-shadow.ts",
     "src/foo-all-props.ts",
     "src/foo-prop-class.ts",
+    "src/foo-shorthand-class.ts",
+    "src/foo-all-shorthands.ts",
     "src/index.ts",
     "src/node/node.ts",
     "src/node/predicate/has-same-foreground-as-background.ts",
