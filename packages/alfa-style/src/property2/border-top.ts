@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import * as Color from "./border-top-color";
 import * as Style from "./border-top-style";
@@ -93,5 +93,4 @@ export default Property.registerShorthand(
       ["border-top-style", style],
       ["border-top-width", width],
     ])
-  )
 );

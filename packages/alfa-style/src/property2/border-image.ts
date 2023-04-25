@@ -4,7 +4,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import * as slice from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import * as Outset from "./border-image-outset";
 import * as Repeat from "./border-image-repeat";
@@ -149,5 +149,4 @@ export default Property.registerShorthand(
       ["border-image-outset", outset],
       ["border-image-repeat", repeat],
     ])
-  )
 );

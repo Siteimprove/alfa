@@ -1,17 +1,11 @@
 import { Token, Keyword, String } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import { List } from "./value/list";
 
 const { delimited, either, map, option, separatedList } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "font-family": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -54,14 +48,11 @@ export const parse = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-family}
  * @internal
  */
-export default Property.register(
-  "font-family",
-  Property.of<Specified, Computed>(
-    List.of([Keyword.of("serif")], ", "),
-    parse,
-    (fontFamily) => fontFamily,
-    {
-      inherits: true,
-    }
-  )
+export default Longhand.of<Specified, Computed>(
+  List.of([Keyword.of("serif")], ", "),
+  parse,
+  (fontFamily) => fontFamily,
+  {
+    inherits: true,
+  }
 );

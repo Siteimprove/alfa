@@ -1,7 +1,7 @@
 import { Token, Position } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import { List } from "./value/list";
 
@@ -56,5 +56,4 @@ export default Property.registerShorthand(
         ["background-position-y", List.of(ys, ", ")],
       ];
     })
-  )
 );

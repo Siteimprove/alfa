@@ -1,16 +1,10 @@
 import { Length, Math } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { Resolver } from "../resolver";
 
 const { either } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "outline-offset": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -30,9 +24,10 @@ export const parse = either(Length.parse, Math.parseLength);
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset}
  */
-export default Property.register(
-  "outline-offset",
-  Property.of<Specified, Computed>(Length.of(0, "px"), parse, (value, style) =>
+export default Longhand.of<Specified, Computed>(
+  Length.of(0, "px"),
+  parse,
+  (value, style) =>
     value.map((offset) => {
       const length = Resolver.length(style);
 
@@ -49,5 +44,4 @@ export default Property.register(
           );
       }
     })
-  )
 );

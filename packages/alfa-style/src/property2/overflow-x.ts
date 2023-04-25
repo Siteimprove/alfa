@@ -1,12 +1,6 @@
 import { Keyword } from "@siteimprove/alfa-css";
 
-import { Property } from "../property";
-
-declare module "../property" {
-  interface Longhands {
-    "overflow-x": Property<Specified, Computed>;
-  }
-}
+import { Longhand } from "../foo-prop-class";
 
 /**
  * @internal
@@ -38,26 +32,21 @@ export const parse = Keyword.parse(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-x}
  * @internal
  */
-export default Property.register(
-  "overflow-x",
-  Property.of<Specified, Computed>(
-    Keyword.of("visible"),
-    parse,
-    (overflowX, style) =>
-      overflowX.map((x) => {
-        if (x.value !== "visible" && x.value !== "clip") {
-          return x;
-        }
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("visible"),
+  parse,
+  (overflowX, style) =>
+    overflowX.map((x) => {
+      if (x.value !== "visible" && x.value !== "clip") {
+        return x;
+      }
 
-        const y = style.specified("overflow-y").value;
+      const y = style.specified("overflow-y").value;
 
-        if (y.value === "visible" || y.value === "clip") {
-          return x;
-        }
+      if (y.value === "visible" || y.value === "clip") {
+        return x;
+      }
 
-        return x.value === "visible"
-          ? Keyword.of("auto")
-          : Keyword.of("hidden");
-      })
-  )
+      return x.value === "visible" ? Keyword.of("auto") : Keyword.of("hidden");
+    })
 );

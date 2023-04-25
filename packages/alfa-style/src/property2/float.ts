@@ -1,12 +1,6 @@
 import { Keyword } from "@siteimprove/alfa-css";
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { Value } from "../value";
-
-declare module "../property" {
-  interface Longhands {
-    float: Property<Specified, Computed>;
-  }
-}
 
 type keywords = Keyword<"none"> | Keyword<"left"> | Keyword<"right">;
 
@@ -30,12 +24,12 @@ export const parse = Keyword.parse("none", "left", "right");
  * @internal
  */
 
-export default Property.register(
-  "float",
-  Property.of<Specified, Computed>(Keyword.of("none"), parse, (value, style) =>
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("none"),
+  parse,
+  (value, style) =>
     style.computed("position").value.equals(Keyword.of("absolute")) ||
     style.computed("position").value.equals(Keyword.of("fixed"))
       ? Value.of(Keyword.of("none"))
       : value
-  )
 );

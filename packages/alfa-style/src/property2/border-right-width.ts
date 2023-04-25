@@ -1,15 +1,9 @@
 import { Length } from "@siteimprove/alfa-css";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { Resolver } from "../resolver";
 
 import Base, { Specified, Computed } from "./border-top-width";
-
-declare module "../property" {
-  interface Longhands {
-    "border-right-width": Property<Specified, Computed>;
-  }
-}
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-right-width}

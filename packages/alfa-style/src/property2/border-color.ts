@@ -1,7 +1,7 @@
 import { Color, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 const { delimited, map, option, takeBetween } = Parser;
 
@@ -38,5 +38,4 @@ export default Property.registerShorthand(
         ["border-left-color", left],
       ]
     )
-  )
 );

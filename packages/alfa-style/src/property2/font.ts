@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import * as LineHeight from "./line-height";
 import * as Family from "./font-family";
@@ -127,9 +127,7 @@ export const parse = pair(
       ),
       delimited(option(Token.parseWhitespace), Family.parse)
     )
-  )
 );
-
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font}
  * @internal
@@ -156,5 +154,4 @@ export default Property.registerShorthand(
       ["line-height", lineHeight.getOr(Keyword.of("initial"))],
       ["font-family", family],
     ])
-  )
 );

@@ -2,18 +2,12 @@ import { Length, Percentage, Token, Position } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { Resolver } from "../resolver";
 
 import { List } from "./value/list";
 
 const { map, either, delimited, option, separatedList } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "background-position-x": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -67,19 +61,16 @@ export const initialItem = Percentage.of(0);
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}
  * @internal
  */
-export default Property.register(
-  "background-position-x",
-  Property.of<Specified, Computed>(
-    List.of([initialItem]),
-    parseList,
-    (value, style) =>
-      value.map((positions) =>
-        List.of(
-          Iterable.map(positions, (position) =>
-            Resolver.positionComponent(position, style)
-          ),
-          ", "
-        )
+export default Longhand.of<Specified, Computed>(
+  List.of([initialItem]),
+  parseList,
+  (value, style) =>
+    value.map((positions) =>
+      List.of(
+        Iterable.map(positions, (position) =>
+          Resolver.positionComponent(position, style)
+        ),
+        ", "
       )
-  )
+    )
 );

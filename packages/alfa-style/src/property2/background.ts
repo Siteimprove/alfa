@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import { List } from "./value/list";
 
@@ -274,5 +274,4 @@ export default Property.registerShorthand(
         ["background-clip", List.of(clip, ", ")],
       ];
     })
-  )
 );

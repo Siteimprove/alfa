@@ -1,15 +1,9 @@
 import { Keyword, Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 const { either } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "font-stretch": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -57,48 +51,45 @@ export const parse = either(Percentage.parse, parseAbsolute);
  * {@link https://drafts.csswg.org/css-fonts/#font-stretch-prop}
  * @internal
  */
-export default Property.register(
-  "font-stretch",
-  Property.of<Specified, Computed>(
-    Percentage.of(1),
-    parse,
-    (fontStretch) =>
-      fontStretch.map((fontStretch) => {
-        if (fontStretch.type === "percentage") {
-          return fontStretch;
-        }
+export default Longhand.of<Specified, Computed>(
+  Percentage.of(1),
+  parse,
+  (fontStretch) =>
+    fontStretch.map((fontStretch) => {
+      if (fontStretch.type === "percentage") {
+        return fontStretch;
+      }
 
-        switch (fontStretch.value) {
-          case "ultra-condensed":
-            return Percentage.of(0.5);
+      switch (fontStretch.value) {
+        case "ultra-condensed":
+          return Percentage.of(0.5);
 
-          case "extra-condensed":
-            return Percentage.of(0.625);
+        case "extra-condensed":
+          return Percentage.of(0.625);
 
-          case "condensed":
-            return Percentage.of(0.75);
+        case "condensed":
+          return Percentage.of(0.75);
 
-          case "semi-condensed":
-            return Percentage.of(0.875);
+        case "semi-condensed":
+          return Percentage.of(0.875);
 
-          case "normal":
-            return Percentage.of(1);
+        case "normal":
+          return Percentage.of(1);
 
-          case "semi-expanded":
-            return Percentage.of(1.125);
+        case "semi-expanded":
+          return Percentage.of(1.125);
 
-          case "expanded":
-            return Percentage.of(1.25);
+        case "expanded":
+          return Percentage.of(1.25);
 
-          case "extra-expanded":
-            return Percentage.of(1.5);
+        case "extra-expanded":
+          return Percentage.of(1.5);
 
-          case "ultra-expanded":
-            return Percentage.of(2);
-        }
-      }),
-    {
-      inherits: true,
-    }
-  )
+        case "ultra-expanded":
+          return Percentage.of(2);
+      }
+    }),
+  {
+    inherits: true,
+  }
 );

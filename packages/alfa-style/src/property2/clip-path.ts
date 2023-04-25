@@ -1,15 +1,10 @@
 import { Shape, Keyword, URL } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 const { either } = Parser;
 
-declare module "../property" {
-  interface Longhands {
-    "clip-path": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -33,7 +28,5 @@ export const parse = either(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path}
  * @internal
  */
-export default Property.register(
-  "clip-path",
-  Property.of<Specified, Computed>(Keyword.of("none"), parse, (value) => value)
+export default Longhand.of<Specified, Computed>(Keyword.of("none"), parse, (value) => value)
 );

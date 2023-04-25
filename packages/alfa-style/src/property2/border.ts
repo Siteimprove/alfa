@@ -1,6 +1,6 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import { parse } from "./border-top";
 
@@ -60,5 +60,4 @@ export default Property.registerShorthand(
       ["border-left-style", style],
       ["border-left-width", width],
     ])
-  )
 );

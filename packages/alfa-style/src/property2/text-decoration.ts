@@ -1,7 +1,7 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import * as Color from "./text-decoration-color";
 import * as Line from "./text-decoration-line";
@@ -101,5 +101,4 @@ export default Property.registerShorthand(
         ],
       ]);
     }
-  )
 );

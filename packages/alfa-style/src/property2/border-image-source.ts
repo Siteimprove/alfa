@@ -15,16 +15,10 @@ import {
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { Resolver } from "../resolver";
 
 const { either } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "border-image-source": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -71,9 +65,10 @@ export const parse = either(Keyword.parse("none"), Image.parse);
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-source}
  * @internal
  */
-export default Property.register(
-  "border-image-source",
-  Property.of<Specified, Computed>(Keyword.of("none"), parse, (value, style) =>
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("none"),
+  parse,
+  (value, style) =>
     value.map((image) => {
       switch (image.type) {
         case "keyword":
@@ -83,5 +78,4 @@ export default Property.register(
           return Resolver.image(image, style);
       }
     })
-  )
 );

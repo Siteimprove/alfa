@@ -1,12 +1,6 @@
 import { Keyword } from "@siteimprove/alfa-css";
 
-import { Property } from "../property";
-
-declare module "../property" {
-  interface Longhands {
-    "border-top-style": Property<Specified, Computed>;
-  }
-}
+import { Longhand } from "../foo-prop-class";
 
 /**
  * @internal
@@ -49,11 +43,8 @@ export const parse = Keyword.parse(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-style}
  * @internal
  */
-export default Property.register(
-  "border-top-style",
-  Property.of<Specified, Computed>(
-    Keyword.of("none"),
-    parse,
-    (borderStyle) => borderStyle
-  )
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("none"),
+  parse,
+  (borderStyle) => borderStyle
 );

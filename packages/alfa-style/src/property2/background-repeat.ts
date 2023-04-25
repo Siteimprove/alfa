@@ -1,7 +1,7 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import { List } from "./value/list";
 
@@ -35,9 +35,7 @@ export const parse = either(
       Keyword.parse("repeat-y"),
       () => [Keyword.of("no-repeat"), Keyword.of("repeat")] as const
     )
-  )
 );
-
 /**
  * @internal
  */
@@ -73,5 +71,4 @@ export default Property.registerShorthand(
         ["background-repeat-y", List.of(ys, ", ")],
       ];
     })
-  )
 );

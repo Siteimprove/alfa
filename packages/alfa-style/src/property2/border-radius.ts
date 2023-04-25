@@ -1,6 +1,6 @@
 import { Token, Length, Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import { Tuple } from "./value/tuple";
 
@@ -82,5 +82,4 @@ export default Property.registerShorthand(
       ["border-bottom-right-radius", bottomRight],
       ["border-bottom-left-radius", bottomLeft],
     ])
-  )
 );

@@ -1,18 +1,12 @@
 import { Token, Length, Number } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { Resolver } from "../resolver";
 
 import { Tuple } from "./value/tuple";
 
 const { takeBetween, either, map, filter, delimited, option } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "border-image-outset": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -76,19 +70,16 @@ export const parse = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-outset}
  * @internal
  */
-export default Property.register(
-  "border-image-outset",
-  Property.of<Specified, Computed>(
-    Tuple.of(Number.of(0), Number.of(0), Number.of(0), Number.of(0)),
-    parse,
-    (value, style) =>
-      value.map(({ values: [t, r, b, l] }) =>
-        Tuple.of(
-          t.type === "length" ? Resolver.length(t, style) : t,
-          r.type === "length" ? Resolver.length(r, style) : r,
-          b.type === "length" ? Resolver.length(b, style) : b,
-          l.type === "length" ? Resolver.length(l, style) : l
-        )
+export default Longhand.of<Specified, Computed>(
+  Tuple.of(Number.of(0), Number.of(0), Number.of(0), Number.of(0)),
+  parse,
+  (value, style) =>
+    value.map(({ values: [t, r, b, l] }) =>
+      Tuple.of(
+        t.type === "length" ? Resolver.length(t, style) : t,
+        r.type === "length" ? Resolver.length(r, style) : r,
+        b.type === "length" ? Resolver.length(b, style) : b,
+        l.type === "length" ? Resolver.length(l, style) : l
       )
-  )
+    )
 );

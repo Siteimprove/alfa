@@ -1,13 +1,7 @@
 import { Color, Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { Resolver } from "../resolver";
-
-declare module "../property" {
-  interface Longhands {
-    color: Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -28,14 +22,11 @@ export const parse = Color.parse;
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/color}
  * @internal
  */
-export default Property.register(
-  "color",
-  Property.of<Specified, Computed>(
-    Color.system("canvastext"),
-    parse,
-    (value) => value.map((color) => Resolver.color(color)),
-    {
-      inherits: true,
-    }
-  )
+export default Longhand.of<Specified, Computed>(
+  Color.system("canvastext"),
+  parse,
+  (value) => value.map((color) => Resolver.color(color)),
+  {
+    inherits: true,
+  }
 );

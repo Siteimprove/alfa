@@ -3,16 +3,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { Tuple } from "./value/tuple";
 
 const { map, either } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    display: Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -255,21 +249,18 @@ export const parse = either<Slice<Token>, Specified, string>(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/display}
  * @internal
  */
-export default Property.register(
-  "display",
-  Property.of<Specified, Computed>(
-    Tuple.of(Keyword.of("inline"), Keyword.of("flow")),
-    parse,
-    (value, style) =>
-      style.computed("position").value.equals(Keyword.of("absolute")) ||
-      style.computed("position").value.equals(Keyword.of("fixed")) ||
-      !style.computed("float").value.equals(Keyword.of("none"))
-        ? // 4th condition of https://drafts.csswg.org/css2/#dis-pos-flo needs
-          // to know whether the element is the root element, which is not
-          // currently doable at that level.
-          value.map(displayTable)
-        : value
-  )
+export default Longhand.of<Specified, Computed>(
+  Tuple.of(Keyword.of("inline"), Keyword.of("flow")),
+  parse,
+  (value, style) =>
+    style.computed("position").value.equals(Keyword.of("absolute")) ||
+    style.computed("position").value.equals(Keyword.of("fixed")) ||
+    !style.computed("float").value.equals(Keyword.of("none"))
+      ? // 4th condition of https://drafts.csswg.org/css2/#dis-pos-flo needs
+        // to know whether the element is the root element, which is not
+        // currently doable at that level.
+        value.map(displayTable)
+      : value
 );
 /**
  * {@link https://drafts.csswg.org/css2/#dis-pos-flo}

@@ -1,18 +1,12 @@
 import { Token, Length, Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { Resolver } from "../resolver";
 
 import { Tuple } from "./value/tuple";
 
 const { takeBetween, either, map, delimited, option } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "border-top-left-radius": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -47,17 +41,14 @@ export const parse = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-left-radius}
  * @internal
  */
-export default Property.register(
-  "border-top-left-radius",
-  Property.of<Specified, Computed>(
-    Tuple.of(Length.of(0, "px"), Length.of(0, "px")),
-    parse,
-    (value, style) =>
-      value.map(({ values: [h, v] }) => {
-        return Tuple.of(
-          h.type === "length" ? Resolver.length(h, style) : h,
-          v.type === "length" ? Resolver.length(v, style) : v
-        );
-      })
-  )
+export default Longhand.of<Specified, Computed>(
+  Tuple.of(Length.of(0, "px"), Length.of(0, "px")),
+  parse,
+  (value, style) =>
+    value.map(({ values: [h, v] }) => {
+      return Tuple.of(
+        h.type === "length" ? Resolver.length(h, style) : h,
+        v.type === "length" ? Resolver.length(v, style) : v
+      );
+    })
 );

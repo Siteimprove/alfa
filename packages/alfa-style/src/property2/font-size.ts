@@ -8,16 +8,10 @@ import {
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { Resolver } from "../resolver";
 
 const { either } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "font-size": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -104,61 +98,58 @@ const factors = {
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-size}
  * @internal
  */
-export default Property.register(
-  "font-size",
-  Property.of<Specified, Computed>(
-    Length.of(16, "px"),
-    parse,
-    (fontSize, style) =>
-      fontSize.map((fontSize) => {
-        const percentage = Resolver.percentage(
-          style.parent.computed("font-size").value
-        );
-        const length = Resolver.length(style.parent);
+export default Longhand.of<Specified, Computed>(
+  Length.of(16, "px"),
+  parse,
+  (fontSize, style) =>
+    fontSize.map((fontSize) => {
+      const percentage = Resolver.percentage(
+        style.parent.computed("font-size").value
+      );
+      const length = Resolver.length(style.parent);
 
-        switch (fontSize.type) {
-          case "math expression":
-            return (
-              fontSize
-                .resolve({ length, percentage })
-                // Since the calculation has been parsed and typed, there should
-                // always be something to get.
-                .getUnsafe()
-            );
+      switch (fontSize.type) {
+        case "math expression":
+          return (
+            fontSize
+              .resolve({ length, percentage })
+              // Since the calculation has been parsed and typed, there should
+              // always be something to get.
+              .getUnsafe()
+          );
 
-          case "length":
-            return length(fontSize);
+        case "length":
+          return length(fontSize);
 
-          case "percentage": {
-            return percentage(fontSize);
-          }
+        case "percentage": {
+          return percentage(fontSize);
+        }
 
-          case "keyword": {
-            const parent = style.parent.computed("font-size").value;
+        case "keyword": {
+          const parent = style.parent.computed("font-size").value;
 
-            switch (fontSize.value) {
-              case "larger":
-                return parent.scale(1.2);
+          switch (fontSize.value) {
+            case "larger":
+              return parent.scale(1.2);
 
-              case "smaller":
-                return parent.scale(0.85);
+            case "smaller":
+              return parent.scale(0.85);
 
-              default: {
-                const factor = factors[fontSize.value];
+            default: {
+              const factor = factors[fontSize.value];
 
-                const [family] = style.computed("font-family").value;
+              const [family] = style.computed("font-family").value;
 
-                const base =
-                  family.type === "keyword" ? bases[family.value] : bases.serif;
+              const base =
+                family.type === "keyword" ? bases[family.value] : bases.serif;
 
-                return Length.of(factor * base, "px");
-              }
+              return Length.of(factor * base, "px");
             }
           }
         }
-      }),
-    {
-      inherits: true,
-    }
-  )
+      }
+    }),
+  {
+    inherits: true,
+  }
 );

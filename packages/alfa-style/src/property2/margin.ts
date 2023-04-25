@@ -1,7 +1,7 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import * as Top from "./margin-top";
 
@@ -38,5 +38,4 @@ export default Property.registerShorthand(
       ["margin-bottom", bottom],
       ["margin-left", left],
     ])
-  )
 );

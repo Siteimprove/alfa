@@ -3,16 +3,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { List } from "./value/list";
 
 const { either } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "font-variant-numeric": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -157,12 +151,9 @@ export const parse = either(Keyword.parse("normal"), parseNumeric);
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric}
  * @internal
  */
-export default Property.register(
-  "font-variant-numeric",
-  Property.of<Specified, Computed>(
-    Keyword.of("normal"),
-    parse,
-    (numeric) => numeric,
-    { inherits: true }
-  )
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("normal"),
+  parse,
+  (numeric) => numeric,
+  { inherits: true }
 );

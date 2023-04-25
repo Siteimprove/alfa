@@ -12,17 +12,12 @@ import {
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 import { Resolver } from "../resolver";
 
 const { isKeyword } = Keyword;
 const { either, left, map, option, pair, right, separated } = Parser;
 
-declare module "../property" {
-  interface Longhands {
-    "text-shadow": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -48,9 +43,7 @@ const parseLengths = pair(
   parseOffset,
   map(option(right(Token.parseWhitespace, Length.parse)), (blur) =>
     blur.getOr(Length.of(0, "px"))
-  )
 );
-
 /**
  * @internal
  */
@@ -79,16 +72,12 @@ export const parse = either<Slice<Token>, Specified, string>(
         color.getOr(Color.current),
         false
       )
-  )
 );
-
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow}
  * @internal
  */
-export default Property.register(
-  "text-shadow",
-  Property.of<Specified, Computed>(
+export default Longhand.of<Specified, Computed>(
     Keyword.of("none"),
     parse,
     (shadow, style) =>
@@ -107,5 +96,4 @@ export default Property.register(
         );
       }),
     { inherits: true }
-  )
 );

@@ -1,7 +1,7 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import * as X from "./overflow-x";
 import * as Y from "./overflow-y";
@@ -38,5 +38,4 @@ export default Property.registerShorthand(
         ["overflow-y", y.getOr(x)],
       ];
     })
-  )
 );

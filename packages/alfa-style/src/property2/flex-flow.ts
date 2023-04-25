@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../foo-prop-class";
 
 import * as Direction from "./flex-direction";
 import * as Wrap from "./flex-wrap";
@@ -73,5 +73,4 @@ export default Property.registerShorthand(
       ["flex-direction", direction],
       ["flex-wrap", wrap],
     ])
-  )
 );
