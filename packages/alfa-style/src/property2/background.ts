@@ -5,6 +5,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { List } from "./value/list";
 
+import { Shorthand } from "../foo-shorthand-class";
+
 import * as Attachment from "./background-attachment";
 import * as Clip from "./background-clip";
 import * as Color from "./background-color";
@@ -202,7 +204,7 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
     [
       "background-color",
       "background-image",
