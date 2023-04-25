@@ -2,7 +2,7 @@ import { Number, Percentage } from "@siteimprove/alfa-css";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../foo-prop-class";
+import { Longhand } from "../longhand";
 
 const { either } = Parser;
 

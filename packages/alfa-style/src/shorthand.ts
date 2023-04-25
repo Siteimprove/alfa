@@ -3,12 +3,12 @@ import { Token } from "@siteimprove/alfa-css";
 
 import * as parser from "@siteimprove/alfa-parser";
 
-import { Foo } from "./foo-all-props";
-import { Longhand } from "./foo-prop-class";
+import { Longhands } from "./longhands";
+import { Longhand } from "./longhand";
 
 const { either, end, left } = parser.Parser;
 
-type Name = Foo.Name;
+type Name = Longhands.Name;
 
 export class Shorthand<N extends Name = never> {
   public static of<N extends Name>(
@@ -45,7 +45,7 @@ export namespace Shorthand {
   export type Parser<N extends Name = Name> = parser.Parser<
     Slice<Token>,
     | Longhand.Value.Default
-    | Iterable<{ [M in N]: readonly [M, Foo.Declared<M>] }[N]>,
+    | Iterable<{ [M in N]: readonly [M, Longhands.Declared<M>] }[N]>,
     string
   >;
 }

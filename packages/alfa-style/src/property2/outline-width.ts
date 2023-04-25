@@ -2,7 +2,7 @@ import { Keyword, Length, Math, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../foo-prop-class";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 import { Value } from "../value";
 

@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Shorthand } from "../foo-shorthand-class";
+import { Shorthand } from "../shorthand";
 
 import * as Caps from "./font-variant-caps";
 import * as EastAsian from "./font-variant-east-asian";

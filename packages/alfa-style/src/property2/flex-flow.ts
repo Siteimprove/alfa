@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Shorthand } from "../foo-shorthand-class";
+import { Shorthand } from "../shorthand";
 
 import * as Direction from "./flex-direction";
 import * as Wrap from "./flex-wrap";

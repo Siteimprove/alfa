@@ -2,7 +2,7 @@ import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 
-import { Longhand } from "../foo-prop-class";
+import { Longhand } from "../longhand";
 
 import { List } from "./value/list";
 

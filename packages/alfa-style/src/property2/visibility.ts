@@ -1,6 +1,6 @@
 import { Keyword } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../foo-prop-class";
+import { Longhand } from "../longhand";
 
 /**
  * @internal

@@ -5,8 +5,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { List } from "./value/list";
 
-import { Bar } from "../foo-all-props";
-import { Shorthand } from "../foo-shorthand-class";
+import { Longhands } from "../longhands";
+import { Shorthand } from "../shorthand";
 
 import * as Attachment from "./background-attachment";
 import * as Clip from "./background-clip";
@@ -244,7 +244,7 @@ export default Shorthand.of(
     }
 
     return [
-      ["background-color", color ?? Bar.get("background-color").initial],
+      ["background-color", color ?? Longhands.get("background-color").initial],
       ["background-image", List.of(image, ", ")],
       ["background-position-x", List.of(positionX, ", ")],
       ["background-position-y", List.of(positionY, ", ")],

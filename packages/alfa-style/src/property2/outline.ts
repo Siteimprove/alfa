@@ -1,7 +1,7 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-import { Shorthand } from "../foo-shorthand-class";
+import { Shorthand } from "../shorthand";
 
 import * as Color from "./outline-color";
 import * as Style from "./outline-style";

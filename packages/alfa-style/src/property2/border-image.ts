@@ -5,7 +5,7 @@ import { Result } from "@siteimprove/alfa-result";
 
 import * as slice from "@siteimprove/alfa-slice";
 
-import { Shorthand } from "../foo-shorthand-class";
+import { Shorthand } from "../shorthand";
 
 import * as Outset from "./border-image-outset";
 import * as Repeat from "./border-image-repeat";

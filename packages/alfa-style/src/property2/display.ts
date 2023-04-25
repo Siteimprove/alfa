@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../foo-prop-class";
+import { Longhand } from "../longhand";
 import { Tuple } from "./value/tuple";
 
 const { map, either } = Parser;

@@ -1,4 +1,4 @@
-import { Longhand } from "../foo-prop-class";
+import { Longhand } from "../longhand";
 
 import Base from "./border-top-style";
 

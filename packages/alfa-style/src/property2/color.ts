@@ -1,6 +1,6 @@
 import { Color, Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../foo-prop-class";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
 /**

@@ -1,5 +1,5 @@
 import { Keyword } from "@siteimprove/alfa-css";
-import { Longhand } from "../foo-prop-class";
+import { Longhand } from "../longhand";
 import { Value } from "../value";
 
 type keywords = Keyword<"none"> | Keyword<"left"> | Keyword<"right">;

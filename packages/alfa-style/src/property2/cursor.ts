@@ -1,7 +1,7 @@
 import { Keyword, Number, Token, URL } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../foo-prop-class";
+import { Longhand } from "../longhand";
 import { List } from "./value/list";
 import { Tuple } from "./value/tuple";
 

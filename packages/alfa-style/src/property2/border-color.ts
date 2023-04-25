@@ -1,7 +1,7 @@
 import { Color, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Shorthand } from "../foo-shorthand-class";
+import { Shorthand } from "../shorthand";
 
 const { delimited, map, option, takeBetween } = Parser;
 

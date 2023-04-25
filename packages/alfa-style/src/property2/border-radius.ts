@@ -1,7 +1,7 @@
 import { Token, Length, Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Shorthand } from "../foo-shorthand-class";
+import { Shorthand } from "../shorthand";
 import { Tuple } from "./value/tuple";
 
 const { delimited, either, map, option, pair, right, takeBetween } = Parser;

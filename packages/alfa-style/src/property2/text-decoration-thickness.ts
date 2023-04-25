@@ -2,7 +2,7 @@ import { Keyword, Length, Percentage, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../foo-prop-class";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
 const { either } = Parser;

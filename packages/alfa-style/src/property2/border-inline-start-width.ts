@@ -1,6 +1,6 @@
 import { Length } from "@siteimprove/alfa-css";
 
-import { Longhand } from "../foo-prop-class";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
 import Base from "./border-top-width";
