@@ -11,9 +11,9 @@ To avoid circular dependencies, the package is organised as follow (from bottom 
 - `longhand.ts`: defines the basic class to model longhand properties;
 - `property2/*.ts` (part of): individual longhand properties, one per file;
 - `longhands.ts`: wraps all longhand properties in a nice bundle and export convenient types;
-- `???`: defines the basic class to model shorthand properties, depends on the names of longhands as defined in previous file.
+- `shorthand.ts`: defines the basic class to model shorthand properties, depends on the names of longhands as defined in previous file;
 - `property2/*.ts` (part of): individual shorthand properties, one per file;
-- `???`: wraps all shorthand properties in a nice bundle and export convenient types;
+- `shorthands.ts`: wraps all shorthand properties in a nice bundle and export convenient types;
 - `style.ts`: expose the actual API to manipulate the properties.
 
 ## Development
