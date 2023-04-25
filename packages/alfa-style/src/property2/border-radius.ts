@@ -1,21 +1,9 @@
 import { Token, Length, Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Longhand } from "../foo-prop-class";
 
 import { Tuple } from "./value/tuple";
 
 const { delimited, either, map, option, pair, right, takeBetween } = Parser;
-
-declare module "../property" {
-  interface Shorthands {
-    "border-radius": Property.Shorthand<
-      | "border-top-left-radius"
-      | "border-top-right-radius"
-      | "border-bottom-right-radius"
-      | "border-bottom-left-radius"
-    >;
-  }
-}
 
 /**
  * @internal
@@ -67,9 +55,7 @@ const parse = map(
   }
 );
 
-export default Property.registerShorthand(
-  "border-radius",
-  Property.shorthand(
+export default Property.shorthand(
     [
       "border-top-left-radius",
       "border-top-right-radius",

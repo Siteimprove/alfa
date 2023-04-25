@@ -1,26 +1,15 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../foo-prop-class";
 import { parse } from "./border-top-style";
 
 const { delimited, map, option, takeBetween } = Parser;
-
-declare module "../property" {
-  interface Shorthands {
-    "border-block-style": Property.Shorthand<
-      "border-block-start-style" | "border-block-end-style"
-    >;
-  }
-}
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-block-style}
  * @internal
  */
-export default Property.registerShorthand(
-  "border-block-style",
-  Property.shorthand(
+export default Property.shorthand(
     ["border-block-start-style", "border-block-end-style"],
     map(
       takeBetween(delimited(option(Token.parseWhitespace), parse), 1, 2),

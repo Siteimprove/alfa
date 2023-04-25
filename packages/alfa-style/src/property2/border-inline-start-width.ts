@@ -3,7 +3,7 @@ import { Length } from "@siteimprove/alfa-css";
 import { Longhand } from "../foo-prop-class";
 import { Resolver } from "../resolver";
 
-import Base, { Specified, Computed } from "./border-top-width";
+import Base from "./border-top-width";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-width}

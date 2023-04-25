@@ -3,18 +3,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../foo-prop-class";
-
 import * as Direction from "./flex-direction";
 import * as Wrap from "./flex-wrap";
 
 const { map } = Parser;
-
-declare module "../property" {
-  interface Shorthands {
-    "flex-flow": Property.Shorthand<"flex-direction" | "flex-wrap">;
-  }
-}
 
 export const parse: Parser<
   Slice<Token>,
@@ -65,9 +57,7 @@ export const parse: Parser<
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-flow}
  * @internal
  */
-export default Property.registerShorthand(
-  "flex-flow",
-  Property.shorthand(
+export default Property.shorthand(
     ["flex-direction", "flex-wrap"],
     map(parse, ([direction, wrap]) => [
       ["flex-direction", direction],

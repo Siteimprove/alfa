@@ -18,7 +18,6 @@ import { Resolver } from "../resolver";
 const { isKeyword } = Keyword;
 const { either, left, map, option, pair, right, separated } = Parser;
 
-
 /**
  * @internal
  */
@@ -43,7 +42,9 @@ const parseLengths = pair(
   parseOffset,
   map(option(right(Token.parseWhitespace, Length.parse)), (blur) =>
     blur.getOr(Length.of(0, "px"))
+  )
 );
+
 /**
  * @internal
  */
@@ -72,28 +73,30 @@ export const parse = either<Slice<Token>, Specified, string>(
         color.getOr(Color.current),
         false
       )
+  )
 );
+
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow}
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-    Keyword.of("none"),
-    parse,
-    (shadow, style) =>
-      shadow.map((shadow) => {
-        if (isKeyword(shadow)) {
-          return shadow;
-        }
+  Keyword.of("none"),
+  parse,
+  (shadow, style) =>
+    shadow.map((shadow) => {
+      if (isKeyword(shadow)) {
+        return shadow;
+      }
 
-        return Shadow.of(
-          Resolver.length(shadow.vertical, style),
-          Resolver.length(shadow.horizontal, style),
-          Resolver.length(shadow.blur, style),
-          Resolver.length(shadow.spread, style),
-          Resolver.color(shadow.color),
-          false
-        );
-      }),
-    { inherits: true }
+      return Shadow.of(
+        Resolver.length(shadow.vertical, style),
+        Resolver.length(shadow.horizontal, style),
+        Resolver.length(shadow.blur, style),
+        Resolver.length(shadow.spread, style),
+        Resolver.color(shadow.color),
+        false
+      );
+    }),
+  { inherits: true }
 );

@@ -1,22 +1,12 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../foo-prop-class";
-
 import { List } from "./value/list";
 
 import * as X from "./background-repeat-x";
 import * as Y from "./background-repeat-y";
 
 const { map, either, delimited, option, pair, separatedList } = Parser;
-
-declare module "../property" {
-  interface Shorthands {
-    "background-repeat": Property.Shorthand<
-      "background-repeat-x" | "background-repeat-y"
-    >;
-  }
-}
 
 /**
  * @internal
@@ -35,7 +25,9 @@ export const parse = either(
       Keyword.parse("repeat-y"),
       () => [Keyword.of("no-repeat"), Keyword.of("repeat")] as const
     )
+  )
 );
+
 /**
  * @internal
  */
@@ -51,24 +43,22 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat}
  * @internal
  */
-export default Property.registerShorthand(
-  "background-repeat",
-  Property.shorthand(
-    ["background-repeat-x", "background-repeat-y"],
-    map(parseList, (repeats) => {
-      const xs: Array<X.Specified.Item> = [];
-      const ys: Array<Y.Specified.Item> = [];
+export default Property.shorthand(
+  ["background-repeat-x", "background-repeat-y"],
+  map(parseList, (repeats) => {
+    const xs: Array<X.Specified.Item> = [];
+    const ys: Array<Y.Specified.Item> = [];
 
-      for (const repeat of repeats) {
-        const [x, y] = repeat;
+    for (const repeat of repeats) {
+      const [x, y] = repeat;
 
-        xs.push(x);
-        ys.push(y);
-      }
+      xs.push(x);
+      ys.push(y);
+    }
 
-      return [
-        ["background-repeat-x", List.of(xs, ", ")],
-        ["background-repeat-y", List.of(ys, ", ")],
-      ];
-    })
+    return [
+      ["background-repeat-x", List.of(xs, ", ")],
+      ["background-repeat-y", List.of(ys, ", ")],
+    ];
+  })
 );

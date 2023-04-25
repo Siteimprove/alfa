@@ -1,26 +1,14 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../foo-prop-class";
-
 import { parse } from "./border-top";
 
 const { map } = Parser;
-
-declare module "../property" {
-  interface Shorthands {
-    "border-left": Property.Shorthand<
-      "border-left-color" | "border-left-style" | "border-left-width"
-    >;
-  }
-}
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-left}
  * @internal
  */
-export default Property.registerShorthand(
-  "border-left",
-  Property.shorthand(
+export default Property.shorthand(
     ["border-left-color", "border-left-style", "border-left-width"],
     map(parse, ([color, style, width]) => [
       ["border-left-color", color],

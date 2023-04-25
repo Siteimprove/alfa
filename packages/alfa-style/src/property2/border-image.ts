@@ -4,8 +4,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import * as slice from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../foo-prop-class";
-
 import * as Outset from "./border-image-outset";
 import * as Repeat from "./border-image-repeat";
 import * as Source from "./border-image-source";
@@ -13,18 +11,6 @@ import * as Slice from "./border-image-slice";
 import * as Width from "./border-image-width";
 
 const { delimited, either, map, option, pair, right } = Parser;
-
-declare module "../property" {
-  interface Shorthands {
-    "border-image": Property.Shorthand<
-      | "border-image-source"
-      | "border-image-slice"
-      | "border-image-width"
-      | "border-image-outset"
-      | "border-image-repeat"
-    >;
-  }
-}
 
 const parseSlash = delimited(
   option(Token.parseWhitespace),
@@ -132,9 +118,7 @@ const parse: Parser<
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image}
  * @internal
  */
-export default Property.registerShorthand(
-  "border-image",
-  Property.shorthand(
+export default Property.shorthand(
     [
       "border-image-source",
       "border-image-slice",

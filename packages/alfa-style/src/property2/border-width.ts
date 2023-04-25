@@ -1,29 +1,15 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../foo-prop-class";
 import { parse } from "./border-top-width";
 
 const { delimited, map, option, takeBetween } = Parser;
-
-declare module "../property" {
-  interface Shorthands {
-    "border-width": Property.Shorthand<
-      | "border-top-width"
-      | "border-right-width"
-      | "border-bottom-width"
-      | "border-left-width"
-    >;
-  }
-}
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-width}
  * @internal
  */
-export default Property.registerShorthand(
-  "border-width",
-  Property.shorthand(
+export default Property.shorthand(
     [
       "border-top-width",
       "border-right-width",

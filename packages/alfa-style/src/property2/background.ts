@@ -3,8 +3,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../foo-prop-class";
-
 import { List } from "./value/list";
 
 import * as Attachment from "./background-attachment";
@@ -21,23 +19,6 @@ import * as RepeatY from "./background-repeat-y";
 import * as Size from "./background-size";
 
 const { map, filter, delimited, option, right, separatedList } = Parser;
-
-declare module "../property" {
-  interface Shorthands {
-    background: Property.Shorthand<
-      | "background-color"
-      | "background-image"
-      | "background-position-x"
-      | "background-position-y"
-      | "background-size"
-      | "background-repeat-x"
-      | "background-repeat-y"
-      | "background-attachment"
-      | "background-origin"
-      | "background-clip"
-    >;
-  }
-}
 
 /**
  * @internal
@@ -221,9 +202,7 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background}
  * @internal
  */
-export default Property.registerShorthand(
-  "background",
-  Property.shorthand(
+export default Property.shorthand(
     [
       "background-color",
       "background-image",

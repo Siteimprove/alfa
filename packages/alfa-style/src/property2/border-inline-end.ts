@@ -1,28 +1,14 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../foo-prop-class";
-
 import { parse } from "./border-top";
 
 const { map } = Parser;
-
-declare module "../property" {
-  interface Shorthands {
-    "border-inline-end": Property.Shorthand<
-      | "border-inline-end-color"
-      | "border-inline-end-style"
-      | "border-inline-end-width"
-    >;
-  }
-}
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end}
  * @internal
  */
-export default Property.registerShorthand(
-  "border-inline-end",
-  Property.shorthand(
+export default Property.shorthand(
     [
       "border-inline-end-color",
       "border-inline-end-style",

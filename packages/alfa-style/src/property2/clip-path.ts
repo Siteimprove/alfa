@@ -5,7 +5,6 @@ import { Longhand } from "../foo-prop-class";
 
 const { either } = Parser;
 
-
 /**
  * @internal
  */
@@ -28,5 +27,8 @@ export const parse = either(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path}
  * @internal
  */
-export default Longhand.of<Specified, Computed>(Keyword.of("none"), parse, (value) => value)
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("none"),
+  parse,
+  (value) => value
 );

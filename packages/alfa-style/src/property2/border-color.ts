@@ -1,28 +1,13 @@
 import { Color, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Longhand } from "../foo-prop-class";
-
 const { delimited, map, option, takeBetween } = Parser;
-
-declare module "../property" {
-  interface Shorthands {
-    "border-color": Property.Shorthand<
-      | "border-top-color"
-      | "border-right-color"
-      | "border-bottom-color"
-      | "border-left-color"
-    >;
-  }
-}
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-color}
  * @internal
  */
-export default Property.registerShorthand(
-  "border-color",
-  Property.shorthand(
+export default Property.shorthand(
     [
       "border-top-color",
       "border-right-color",

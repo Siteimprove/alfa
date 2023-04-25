@@ -1,6 +1,6 @@
 import { Longhand } from "../foo-prop-class";
 
-import Base, { Specified, Computed } from "./border-top-style";
+import Base from "./border-top-style";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-style}

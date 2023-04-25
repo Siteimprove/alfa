@@ -3,25 +3,12 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Longhand } from "../foo-prop-class";
-
 import * as Caps from "./font-variant-caps";
 import * as EastAsian from "./font-variant-east-asian";
 import * as Ligatures from "./font-variant-ligatures";
 import * as Numeric from "./font-variant-numeric";
 
 import { List } from "./value/list";
-
-declare module "../property" {
-  interface Shorthands {
-    "font-variant": Property.Shorthand<
-      | "font-variant-caps"
-      | "font-variant-east-asian"
-      | "font-variant-ligatures"
-      | "font-variant-numeric"
-    >;
-  }
-}
 
 /**
  * @internal
@@ -248,14 +235,12 @@ export const parse: Parser<
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant}
  * @internal
  */
-export default Property.registerShorthand(
-  "font-variant",
-  Property.shorthand(
-    [
-      "font-variant-caps",
-      "font-variant-east-asian",
-      "font-variant-ligatures",
-      "font-variant-numeric",
-    ],
-    parse
+export default Property.shorthand(
+  [
+    "font-variant-caps",
+    "font-variant-east-asian",
+    "font-variant-ligatures",
+    "font-variant-numeric",
+  ],
+  parse
 );
