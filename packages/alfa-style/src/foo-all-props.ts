@@ -1,4 +1,4 @@
-import { Property } from "./foo-prop-class";
+import { Longhand } from "./foo-prop-class";
 
 export namespace Foo {
   export type LongHands = typeof Bar.longHands;
@@ -17,7 +17,7 @@ export namespace Foo {
    * The parsed type doesn't really exist in CSS. It is an artefact on how we
    * handle the default keywords.
    */
-  export type Parsed<N extends Name> = LongHands[N] extends Property<
+  export type Parsed<N extends Name> = LongHands[N] extends Longhand<
     infer S,
     unknown
   >
@@ -34,7 +34,7 @@ export namespace Foo {
    * keywords recognised by all properties. It is the type of what can actually
    * be written as the value of the property.
    */
-  export type Declared<N extends Name> = Parsed<N> | Property.Value.Default;
+  export type Declared<N extends Name> = Parsed<N> | Longhand.Value.Default;
 
   /**
    * Extract the cascaded type of a named property.
@@ -55,7 +55,7 @@ export namespace Foo {
    *
    * {@link https://drafts.csswg.org/css-cascade/#computed}
    */
-  export type Computed<N extends Name> = LongHands[N] extends Property<
+  export type Computed<N extends Name> = LongHands[N] extends Longhand<
     unknown,
     infer C
   >
@@ -73,7 +73,7 @@ export namespace Foo {
   export type Inherited<N extends Name> = Computed<N>;
 }
 
-import Height from "./property/height";
+import Height from "./property2/height";
 
 export namespace Bar {
   export const longHands = {

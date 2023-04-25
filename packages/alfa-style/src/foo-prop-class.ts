@@ -17,19 +17,19 @@ const { left, either, end } = parser.Parser;
  * contain the default keywords that are handled globally. The actual type of
  * specified values does include them.
  */
-export class Property<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
+export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
   public static of<SPECIFIED, COMPUTED>(
     initial: COMPUTED,
-    parse: Property.Parser<SPECIFIED>,
+    parse: Longhand.Parser<SPECIFIED>,
     compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
-    options: Property.Options = {
+    options: Longhand.Options = {
       inherits: false,
     }
-  ): Property<SPECIFIED, COMPUTED> {
-    return new Property(
+  ): Longhand<SPECIFIED, COMPUTED> {
+    return new Longhand(
       initial,
       left(
-        either(Property.Value.parseDefaults, parse),
+        either(Longhand.Value.parseDefaults, parse),
         end(() => "Expected end of input")
       ),
       compute,
@@ -38,14 +38,14 @@ export class Property<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
   }
 
   public static extend<SPECIFIED, COMPUTED>(
-    property: Property<SPECIFIED, COMPUTED>,
+    property: Longhand<SPECIFIED, COMPUTED>,
     overrides: {
       initial?: COMPUTED;
-      parse?: Property.Parser<SPECIFIED>;
+      parse?: Longhand.Parser<SPECIFIED>;
       compute?: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
-      options?: Property.Options;
+      options?: Longhand.Options;
     } = {}
-  ): Property<SPECIFIED, COMPUTED> {
+  ): Longhand<SPECIFIED, COMPUTED> {
     const {
       initial = property._initial,
       parse,
@@ -53,12 +53,12 @@ export class Property<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
       options = {},
     } = overrides;
 
-    return new Property(
+    return new Longhand(
       initial,
       parse === undefined
         ? property._parse
         : left(
-            either(Property.Value.parseDefaults, parse),
+            either(Longhand.Value.parseDefaults, parse),
             end(() => "Expected end of input")
           ),
       compute,
@@ -70,19 +70,19 @@ export class Property<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
   }
 
   private readonly _initial: COMPUTED;
-  private readonly _parse: Property.Parser<SPECIFIED>;
+  private readonly _parse: Longhand.Parser<SPECIFIED>;
   private readonly _compute: Mapper<
     Value<SPECIFIED>,
     Value<COMPUTED>,
     [style: Style]
   >;
-  private readonly _options: Property.Options;
+  private readonly _options: Longhand.Options;
 
   private constructor(
     initial: COMPUTED,
-    parse: Property.Parser<SPECIFIED>,
+    parse: Longhand.Parser<SPECIFIED>,
     compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
-    options: Property.Options
+    options: Longhand.Options
   ) {
     this._initial = initial;
     this._parse = parse;
@@ -94,7 +94,7 @@ export class Property<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     return this._initial;
   }
 
-  get parse(): Property.Parser<SPECIFIED> {
+  get parse(): Longhand.Parser<SPECIFIED> {
     return this._parse;
   }
 
@@ -102,12 +102,12 @@ export class Property<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     return this._compute;
   }
 
-  get options(): Property.Options {
+  get options(): Longhand.Options {
     return this._options;
   }
 }
 
-export namespace Property {
+export namespace Longhand {
   export interface Options {
     readonly inherits: boolean;
   }
