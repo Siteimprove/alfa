@@ -9,9 +9,7 @@ import Base from "./border-top-width";
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-end-width}
  * @internal
  */
-export default Property.register(
-  "border-inline-end-width",
-  Property.extend(Base, {
+export default Longhand.extend(Base, {
     compute: (borderWidth, style) =>
       borderWidth.map((value) => {
         if (
@@ -40,4 +38,3 @@ export default Property.register(
         }
       }),
   })
-);
