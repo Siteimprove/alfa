@@ -30,13 +30,10 @@ export const parse = either(
   either(Length.parse, Percentage.parse)
 );
 
-/**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/height}
- * @internal
- */
-export default Property.register(
-  "height",
-  Property.of<Specified, Computed>(Keyword.of("auto"), parse, (value, style) =>
+const property = Property.of<Specified, Computed>(
+  Keyword.of("auto"),
+  parse,
+  (value, style) =>
     value.map((height) => {
       switch (height.type) {
         case "keyword":
@@ -47,5 +44,9 @@ export default Property.register(
           return Resolver.length(height, style);
       }
     })
-  )
 );
+/**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/height}
+ * @internal
+ */
+export default Property.register("height", property);
