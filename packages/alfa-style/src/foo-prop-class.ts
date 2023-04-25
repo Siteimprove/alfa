@@ -9,10 +9,13 @@ import type { Value } from "./value";
 
 const { left, either, end } = parser.Parser;
 
-const parseDefaults = Keyword.parse("initial", "inherit", "unset");
-
 /**
  * @internal
+ *
+ * @remarks
+ * The parameter name SPECIFIED is somewhat ill-named. This type does not
+ * contain the default keywords that are handled globally. The actual type of
+ * specified values does include them.
  */
 export class Property<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
   public static of<SPECIFIED, COMPUTED>(
@@ -26,7 +29,7 @@ export class Property<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     return new Property(
       initial,
       left(
-        either(parseDefaults, parse),
+        either(Property.Value.parseDefaults, parse),
         end(() => "Expected end of input")
       ),
       compute,
@@ -55,7 +58,7 @@ export class Property<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
       parse === undefined
         ? property._parse
         : left(
-            either(parseDefaults, parse),
+            either(Property.Value.parseDefaults, parse),
             end(() => "Expected end of input")
           ),
       compute,
@@ -123,5 +126,7 @@ export namespace Property {
       | Keyword<"initial">
       | Keyword<"inherit">
       | Keyword<"unset">;
+
+    export const parseDefaults = Keyword.parse("initial", "inherit", "unset");
   }
 }
