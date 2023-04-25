@@ -29,7 +29,7 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     return new Longhand(
       initial,
       left(
-        either(Longhand.Value.parseDefaults, parse),
+        either(Longhand.parseDefaults, parse),
         end(() => "Expected end of input")
       ),
       compute,
@@ -58,7 +58,7 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
       parse === undefined
         ? property._parse
         : left(
-            either(Longhand.Value.parseDefaults, parse),
+            either(Longhand.parseDefaults, parse),
             end(() => "Expected end of input")
           ),
       compute,
@@ -114,19 +114,17 @@ export namespace Longhand {
 
   export type Parser<SPECIFIED> = parser.Parser<
     Slice<Token>,
-    Value.Default | SPECIFIED,
+    Default | SPECIFIED,
     string
   >;
 
-  export namespace Value {
-    /**
-     * The default keywords recognised by all properties.
-     */
-    export type Default =
-      | Keyword<"initial">
-      | Keyword<"inherit">
-      | Keyword<"unset">;
+  /**
+   * The default keywords recognised by all properties.
+   */
+  export type Default =
+    | Keyword<"initial">
+    | Keyword<"inherit">
+    | Keyword<"unset">;
 
-    export const parseDefaults = Keyword.parse("initial", "inherit", "unset");
-  }
+  export const parseDefaults = Keyword.parse("initial", "inherit", "unset");
 }

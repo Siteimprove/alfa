@@ -18,7 +18,7 @@ export class Shorthand<N extends Name = never> {
     return new Shorthand(
       properties,
       left(
-        either(Longhand.Value.parseDefaults, parse),
+        either(Longhand.parseDefaults, parse),
         end(() => "Expected end of input")
       )
     );
@@ -44,7 +44,7 @@ export class Shorthand<N extends Name = never> {
 export namespace Shorthand {
   export type Parser<N extends Name = Name> = parser.Parser<
     Slice<Token>,
-    | Longhand.Value.Default
+    | Longhand.Default
     | Iterable<{ [M in N]: readonly [M, Longhands.Declared<M>] }[N]>,
     string
   >;

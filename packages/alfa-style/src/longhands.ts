@@ -143,7 +143,7 @@ export namespace Longhands {
    * keywords recognised by all properties. It is the type of what can actually
    * be written as the value of the property.
    */
-  export type Declared<N extends Name> = Parsed<N> | Longhand.Value.Default;
+  export type Declared<N extends Name> = Parsed<N> | Longhand.Default;
 
   /**
    * Extract the cascaded type of a named property.
