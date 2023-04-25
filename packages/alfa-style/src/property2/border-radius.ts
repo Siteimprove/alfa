@@ -1,6 +1,7 @@
 import { Token, Length, Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Shorthand } from "../foo-shorthand-class";
 import { Tuple } from "./value/tuple";
 
 const { delimited, either, map, option, pair, right, takeBetween } = Parser;
@@ -55,7 +56,7 @@ const parse = map(
   }
 );
 
-export default Property.shorthand(
+export default Shorthand.of(
     [
       "border-top-left-radius",
       "border-top-right-radius",

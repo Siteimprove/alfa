@@ -1,6 +1,8 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Err, Result } from "@siteimprove/alfa-result";
 
+import { Shorthand } from "../foo-shorthand-class";
+
 import * as Color from "./outline-color";
 import * as Style from "./outline-style";
 import * as Width from "./outline-width";
@@ -9,7 +11,7 @@ import * as Width from "./outline-width";
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
   ["outline-width", "outline-style", "outline-color"],
   (input) => {
     let width: Width.Specified | undefined;

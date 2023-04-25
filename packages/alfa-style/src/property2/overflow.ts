@@ -1,6 +1,8 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Shorthand } from "../foo-shorthand-class";
+
 import * as X from "./overflow-x";
 import * as Y from "./overflow-y";
 
@@ -18,7 +20,7 @@ export const parse = pair(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/overflow}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
   ["overflow-x", "overflow-y"],
   map(parse, (result) => {
     const [x, y] = result;

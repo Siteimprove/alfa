@@ -1,6 +1,8 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Err, Result } from "@siteimprove/alfa-result";
 
+import { Shorthand } from "../foo-shorthand-class";
+
 import * as Color from "./text-decoration-color";
 import * as Line from "./text-decoration-line";
 import * as Style from "./text-decoration-style";
@@ -10,7 +12,7 @@ import * as Thickness from "./text-decoration-thickness";
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
   [
     "text-decoration-line",
     "text-decoration-style",

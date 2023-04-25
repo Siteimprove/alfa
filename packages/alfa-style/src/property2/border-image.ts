@@ -2,7 +2,10 @@ import { Keyword, Token } from "@siteimprove/alfa-css";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
+
 import * as slice from "@siteimprove/alfa-slice";
+
+import { Shorthand } from "../foo-shorthand-class";
 
 import * as Outset from "./border-image-outset";
 import * as Repeat from "./border-image-repeat";
@@ -118,7 +121,7 @@ const parse: Parser<
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
     [
       "border-image-source",
       "border-image-slice",

@@ -1,6 +1,7 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Shorthand } from "../foo-shorthand-class";
 import * as Top from "./margin-top";
 
 const { map, option, delimited, takeBetween } = Parser;
@@ -18,7 +19,7 @@ export const parse = takeBetween(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/margin}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
   ["margin-top", "margin-right", "margin-bottom", "margin-left"],
   map(parse, ([top, right = top, bottom = top, left = right]) => [
     ["margin-top", top],

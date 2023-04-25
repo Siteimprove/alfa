@@ -3,6 +3,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import { Shorthand } from "../foo-shorthand-class";
+
 import * as Color from "./border-top-color";
 import * as Style from "./border-top-style";
 import * as Width from "./border-top-width";
@@ -74,7 +76,7 @@ export const parse: Parser<
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-top}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
     ["border-top-color", "border-top-style", "border-top-width"],
     map(parse, ([color, style, width]) => [
       ["border-top-color", color],

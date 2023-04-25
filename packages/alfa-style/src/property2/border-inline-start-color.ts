@@ -6,7 +6,4 @@ import Base from "./border-top-color";
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-start-color}
  * @internal
  */
-export default Property.register(
-  "border-inline-start-color",
-  Property.extend(Base)
-);
+export default Longhand.extend(Base);

@@ -1,5 +1,6 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Shorthand } from "../foo-shorthand-class";
 import { parse } from "./border-top";
 
 const { map } = Parser;
@@ -8,7 +9,7 @@ const { map } = Parser;
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-left}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
     ["border-left-color", "border-left-style", "border-left-width"],
     map(parse, ([color, style, width]) => [
       ["border-left-color", color],

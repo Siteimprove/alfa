@@ -3,6 +3,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import { Shorthand } from "../foo-shorthand-class";
+
 import * as LineHeight from "./line-height";
 import * as Family from "./font-family";
 import * as Size from "./font-size";
@@ -114,7 +116,7 @@ export const parse = pair(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
   [
     "font-family",
     "font-size",

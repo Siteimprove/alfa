@@ -1,6 +1,7 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Shorthand } from "../foo-shorthand-class";
 import { parse } from "./border-top-width";
 
 const { delimited, map, option, takeBetween } = Parser;
@@ -9,7 +10,7 @@ const { delimited, map, option, takeBetween } = Parser;
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-inline-width}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
     ["border-inline-start-width", "border-inline-end-width"],
     map(
       takeBetween(delimited(option(Token.parseWhitespace), parse), 1, 2),

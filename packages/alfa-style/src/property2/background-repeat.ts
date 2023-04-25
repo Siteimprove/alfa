@@ -1,6 +1,8 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Shorthand } from "../foo-shorthand-class";
+
 import { List } from "./value/list";
 
 import * as X from "./background-repeat-x";
@@ -43,7 +45,7 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
   ["background-repeat-x", "background-repeat-y"],
   map(parseList, (repeats) => {
     const xs: Array<X.Specified.Item> = [];

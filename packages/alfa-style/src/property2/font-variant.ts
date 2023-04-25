@@ -3,11 +3,13 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import { Shorthand } from "../foo-shorthand-class";
+
 import * as Caps from "./font-variant-caps";
 import * as EastAsian from "./font-variant-east-asian";
 import * as Ligatures from "./font-variant-ligatures";
-import * as Numeric from "./font-variant-numeric";
 
+import * as Numeric from "./font-variant-numeric";
 import { List } from "./value/list";
 
 /**
@@ -235,7 +237,7 @@ export const parse: Parser<
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
   [
     "font-variant-caps",
     "font-variant-east-asian",

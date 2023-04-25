@@ -3,6 +3,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import { Shorthand } from "../foo-shorthand-class";
+
 import * as Direction from "./flex-direction";
 import * as Wrap from "./flex-wrap";
 
@@ -57,7 +59,7 @@ export const parse: Parser<
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-flow}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
     ["flex-direction", "flex-wrap"],
     map(parse, ([direction, wrap]) => [
       ["flex-direction", direction],

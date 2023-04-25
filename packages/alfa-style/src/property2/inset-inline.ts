@@ -1,6 +1,7 @@
 import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
+import { Shorthand } from "../foo-shorthand-class";
 import * as Top from "./top";
 
 const { takeBetween, map, delimited, option } = Parser;
@@ -9,7 +10,7 @@ const { takeBetween, map, delimited, option } = Parser;
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline}
  * @internal
  */
-export default Property.shorthand(
+export default Shorthand.of(
   ["inset-inline-start", "inset-inline-end"],
   map(
     takeBetween(delimited(option(Token.parseWhitespace), Top.parse), 1, 2),
