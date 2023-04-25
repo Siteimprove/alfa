@@ -10,14 +10,14 @@ const { map } = Parser;
  * @internal
  */
 export default Shorthand.of(
-    [
-      "border-inline-start-color",
-      "border-inline-start-style",
-      "border-inline-start-width",
-    ],
-    map(parse, ([color, style, width]) => [
-      ["border-inline-start-color", color],
-      ["border-inline-start-style", style],
-      ["border-inline-start-width", width],
-    ])
+  [
+    "border-inline-start-color",
+    "border-inline-start-style",
+    "border-inline-start-width",
+  ],
+  map(parse, ([color, style, width]) => [
+    ["border-inline-start-color", color],
+    ["border-inline-start-style", style],
+    ["border-inline-start-width", width],
+  ])
 );

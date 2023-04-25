@@ -122,18 +122,18 @@ const parse: Parser<
  * @internal
  */
 export default Shorthand.of(
-    [
-      "border-image-source",
-      "border-image-slice",
-      "border-image-width",
-      "border-image-outset",
-      "border-image-repeat",
-    ],
-    map(parse, ([source, slice, width, outset, repeat]) => [
-      ["border-image-source", source],
-      ["border-image-slice", slice],
-      ["border-image-width", width],
-      ["border-image-outset", outset],
-      ["border-image-repeat", repeat],
-    ])
+  [
+    "border-image-source",
+    "border-image-slice",
+    "border-image-width",
+    "border-image-outset",
+    "border-image-repeat",
+  ],
+  map(parse, ([source, slice, width, outset, repeat]) => [
+    ["border-image-source", source],
+    ["border-image-slice", slice],
+    ["border-image-width", width],
+    ["border-image-outset", outset],
+    ["border-image-repeat", repeat],
+  ])
 );

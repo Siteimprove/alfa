@@ -11,12 +11,12 @@ const { delimited, map, option, takeBetween } = Parser;
  * @internal
  */
 export default Shorthand.of(
-    ["border-inline-start-width", "border-inline-end-width"],
-    map(
-      takeBetween(delimited(option(Token.parseWhitespace), parse), 1, 2),
-      ([start, end = start]) => [
-        ["border-inline-start-width", start],
-        ["border-inline-end-width", end],
-      ]
-    )
+  ["border-inline-start-width", "border-inline-end-width"],
+  map(
+    takeBetween(delimited(option(Token.parseWhitespace), parse), 1, 2),
+    ([start, end = start]) => [
+      ["border-inline-start-width", start],
+      ["border-inline-end-width", end],
+    ]
+  )
 );

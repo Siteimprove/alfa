@@ -10,10 +10,10 @@ const { map } = Parser;
  * @internal
  */
 export default Shorthand.of(
-    ["border-bottom-color", "border-bottom-style", "border-bottom-width"],
-    map(parse, ([color, style, width]) => [
-      ["border-bottom-color", color],
-      ["border-bottom-style", style],
-      ["border-bottom-width", width],
-    ])
+  ["border-bottom-color", "border-bottom-style", "border-bottom-width"],
+  map(parse, ([color, style, width]) => [
+    ["border-bottom-color", color],
+    ["border-bottom-style", style],
+    ["border-bottom-width", width],
+  ])
 );

@@ -77,10 +77,10 @@ export const parse: Parser<
  * @internal
  */
 export default Shorthand.of(
-    ["border-top-color", "border-top-style", "border-top-width"],
-    map(parse, ([color, style, width]) => [
-      ["border-top-color", color],
-      ["border-top-style", style],
-      ["border-top-width", width],
-    ])
+  ["border-top-color", "border-top-style", "border-top-width"],
+  map(parse, ([color, style, width]) => [
+    ["border-top-color", color],
+    ["border-top-style", style],
+    ["border-top-width", width],
+  ])
 );

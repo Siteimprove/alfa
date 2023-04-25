@@ -57,16 +57,16 @@ const parse = map(
 );
 
 export default Shorthand.of(
-    [
-      "border-top-left-radius",
-      "border-top-right-radius",
-      "border-bottom-right-radius",
-      "border-bottom-left-radius",
-    ],
-    map(parse, ([topLeft, topRight, bottomRight, bottomLeft]) => [
-      ["border-top-left-radius", topLeft],
-      ["border-top-right-radius", topRight],
-      ["border-bottom-right-radius", bottomRight],
-      ["border-bottom-left-radius", bottomLeft],
-    ])
+  [
+    "border-top-left-radius",
+    "border-top-right-radius",
+    "border-bottom-right-radius",
+    "border-bottom-left-radius",
+  ],
+  map(parse, ([topLeft, topRight, bottomRight, bottomLeft]) => [
+    ["border-top-left-radius", topLeft],
+    ["border-top-right-radius", topRight],
+    ["border-bottom-right-radius", bottomRight],
+    ["border-bottom-left-radius", bottomLeft],
+  ])
 );

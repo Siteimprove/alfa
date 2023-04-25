@@ -60,9 +60,9 @@ export const parse: Parser<
  * @internal
  */
 export default Shorthand.of(
-    ["flex-direction", "flex-wrap"],
-    map(parse, ([direction, wrap]) => [
-      ["flex-direction", direction],
-      ["flex-wrap", wrap],
-    ])
+  ["flex-direction", "flex-wrap"],
+  map(parse, ([direction, wrap]) => [
+    ["flex-direction", direction],
+    ["flex-wrap", wrap],
+  ])
 );
