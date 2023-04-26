@@ -5,6 +5,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
+import type { Computed as FontSize } from "./font-size";
+
 const { either } = Parser;
 
 /**
@@ -45,10 +47,11 @@ export default Longhand.of<Specified, Computed>(
         case "length":
           return Resolver.length(value, style);
         case "percentage":
-          return Length.of(
-            style.computed("font-size").value.value * value.value,
-            "px"
-          );
+          // We need the type assertion to help TS break a circular type reference:
+          // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+          const fontSize = style.computed("font-size").value as FontSize;
+
+          return Length.of(fontSize.value * value.value, "px");
       }
     })
 );

@@ -4,6 +4,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Longhand } from "../longhand";
 import { Value } from "../value";
 
+import type { Computed as Position } from "./position";
+
 const { either, map } = Parser;
 
 /**
@@ -39,9 +41,14 @@ export const parse = either(
 export default Longhand.of<Specified, Computed>(
   Keyword.of("auto"),
   parse,
-  (value, style) =>
-    style.computed("position").value.equals(Keyword.of("absolute")) ||
-    style.computed("position").value.equals(Keyword.of("fixed"))
+  (value, style) => {
+    // We need the type assertion to help TS break a circular type reference:
+    // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+    const position = style.computed("position").value as Position;
+
+    return position.equals(Keyword.of("absolute")) ||
+      position.equals(Keyword.of("fixed"))
       ? value
-      : Value.of(Keyword.of("auto"))
+      : Value.of(Keyword.of("auto"));
+  }
 );

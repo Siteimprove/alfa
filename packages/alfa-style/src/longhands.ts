@@ -110,7 +110,7 @@ import Width from "./property2/width";
 import WordSpacing from "./property2/word-spacing";
 
 export namespace Longhands {
-  type Property = typeof longHands;
+  export type Property = typeof longHands;
 
   export type Name = keyof Property;
 
@@ -128,7 +128,7 @@ export namespace Longhands {
    */
   export type Parsed<N extends Name> = Property[N] extends Longhand<
     infer S,
-    unknown
+    infer C
   >
     ? S
     : never;
@@ -165,7 +165,7 @@ export namespace Longhands {
    * {@link https://drafts.csswg.org/css-cascade/#computed}
    */
   export type Computed<N extends Name> = Property[N] extends Longhand<
-    unknown,
+    infer S,
     infer C
   >
     ? C
@@ -181,7 +181,7 @@ export namespace Longhands {
    */
   export type Inherited<N extends Name> = Computed<N>;
 
-  export const longHands = {
+  const longHands = {
     "background-attachment": BackgroundAttachment,
     "background-clip": BackgroundClip,
     "background-color": BackgroundColor,

@@ -32,7 +32,7 @@ import Overflow from "./property2/overflow";
 import TextDecoration from "./property2/text-decoration";
 
 export namespace Shorthands {
-  type Property = typeof shortHands;
+  export type Property = typeof shortHands;
 
   export type Name = keyof Property;
   export const shortHands = {

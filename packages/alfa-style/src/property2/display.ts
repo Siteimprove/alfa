@@ -6,6 +6,9 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Longhand } from "../longhand";
 import { Tuple } from "./value/tuple";
 
+import type { Computed as Position } from "./position";
+import type { Computed as Float } from "./float";
+
 const { map, either } = Parser;
 
 /**
@@ -252,15 +255,21 @@ export const parse = either<Slice<Token>, Specified, string>(
 export default Longhand.of<Specified, Computed>(
   Tuple.of(Keyword.of("inline"), Keyword.of("flow")),
   parse,
-  (value, style) =>
-    style.computed("position").value.equals(Keyword.of("absolute")) ||
-    style.computed("position").value.equals(Keyword.of("fixed")) ||
-    !style.computed("float").value.equals(Keyword.of("none"))
+  (value, style) => {
+    // We need the type assertion to help TS break a circular type reference:
+    // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+    const position = style.computed("position").value as Position;
+    const float = style.computed("float").value as Float;
+
+    return position.equals(Keyword.of("absolute")) ||
+      position.equals(Keyword.of("fixed")) ||
+      !float.equals(Keyword.of("none"))
       ? // 4th condition of https://drafts.csswg.org/css2/#dis-pos-flo needs
         // to know whether the element is the root element, which is not
         // currently doable at that level.
         value.map(displayTable)
-      : value
+      : value;
+  }
 );
 /**
  * {@link https://drafts.csswg.org/css2/#dis-pos-flo}

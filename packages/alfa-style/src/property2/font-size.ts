@@ -11,6 +11,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
+import type { Computed as FontFamily } from "./font-family";
+
 const { either } = Parser;
 
 /**
@@ -98,14 +100,23 @@ const factors = {
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-size}
  * @internal
  */
-export default Longhand.of<Specified, Computed>(
+// We need a type hint to help TS break the circular type reference.
+// this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+// This one depends on itself (same property), so we also need the type
+// hint on the property itself
+const property: Longhand<Specified, Computed> = Longhand.of<
+  Specified,
+  Computed
+>(
   Length.of(16, "px"),
   parse,
   (fontSize, style) =>
     fontSize.map((fontSize) => {
-      const percentage = Resolver.percentage(
-        style.parent.computed("font-size").value
-      );
+      // We need the type assertion to help TS break a circular type reference:
+      // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+      const parent = style.parent.computed("font-size").value as Computed;
+
+      const percentage = Resolver.percentage(parent);
       const length = Resolver.length(style.parent);
 
       switch (fontSize.type) {
@@ -126,8 +137,6 @@ export default Longhand.of<Specified, Computed>(
         }
 
         case "keyword": {
-          const parent = style.parent.computed("font-size").value;
-
           switch (fontSize.value) {
             case "larger":
               return parent.scale(1.2);
@@ -138,7 +147,11 @@ export default Longhand.of<Specified, Computed>(
             default: {
               const factor = factors[fontSize.value];
 
-              const [family] = style.computed("font-family").value;
+              // We need the type assertion to help TS break a circular type reference:
+              // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+              const [family] = (
+                style.computed("font-family").value as FontFamily
+              ).values;
 
               const base =
                 family.type === "keyword" ? bases[family.value] : bases.serif;
@@ -153,3 +166,5 @@ export default Longhand.of<Specified, Computed>(
     inherits: true,
   }
 );
+
+export default property;

@@ -4,6 +4,9 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
+import type { Computed as FontSize } from "./font-size";
+import type { Computed as LineHeight } from "./line-height";
+
 const { either } = Parser;
 
 type keywords =
@@ -56,22 +59,22 @@ export default Longhand.of<Specified, Computed>(
         case "keyword":
           return verticalAlign;
         case "percentage": {
-          const lineHeight = style.computed("line-height").value;
+          // We need the type assertion to help TS break a circular type reference:
+          // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+          const lineHeight = style.computed("line-height").value as LineHeight;
+          const fontSize = style.computed("font-size").value as FontSize;
+
           switch (lineHeight.type) {
             case "keyword": // "normal", used of 1.2
               return Length.of(
-                1.2 *
-                  style.computed("font-size").value.value *
-                  verticalAlign.value,
+                1.2 * fontSize.value * verticalAlign.value,
                 "px"
               );
             case "length":
               return Length.of(lineHeight.value * verticalAlign.value, "px");
             case "number":
               return Length.of(
-                lineHeight.value *
-                  style.computed("font-size").value.value *
-                  verticalAlign.value,
+                lineHeight.value * fontSize.value * verticalAlign.value,
                 "px"
               );
           }
