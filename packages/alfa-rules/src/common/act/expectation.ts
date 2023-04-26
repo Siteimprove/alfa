@@ -1,5 +1,5 @@
 import type { Diagnostic, Interview, Question } from "@siteimprove/alfa-act";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Maybe, None } from "@siteimprove/alfa-option";
 import type { Result } from "@siteimprove/alfa-result";
 import { Thunk } from "@siteimprove/alfa-thunk";
 import type { Trilean } from "@siteimprove/alfa-trilean";
@@ -20,14 +20,14 @@ type Expectation<
   S,
   C,
   D extends number = Interview.MaxDepth
-> = Interview<Q, S, C, Option.Maybe<Result<Diagnostic>>, D>;
+> = Interview<Q, S, C, Maybe<Result<Diagnostic>>, D>;
 
 export function expectation(
   test: Trilean,
-  ifTrue: Thunk<Option.Maybe<Result<Diagnostic>>>,
-  ifFalse: Thunk<Option.Maybe<Result<Diagnostic>>>,
-  ifUnknown?: Thunk<Option.Maybe<Result<Diagnostic>>>
-): Option.Maybe<Result<Diagnostic>>;
+  ifTrue: Thunk<Maybe<Result<Diagnostic>>>,
+  ifFalse: Thunk<Maybe<Result<Diagnostic>>>,
+  ifUnknown?: Thunk<Maybe<Result<Diagnostic>>>
+): Maybe<Result<Diagnostic>>;
 
 export function expectation<
   Q extends Question.Metadata,

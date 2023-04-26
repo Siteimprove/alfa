@@ -3,10 +3,12 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/index.ts",
+    "src/maybe.ts",
     "src/none.ts",
     "src/option.ts",
     "src/some.ts",
-    "test/option.spec.ts"
+    "test/option.spec.ts",
+    "test/maybe.spec.ts"
   ],
   "references": [
     { "path": "../alfa-applicative" },
