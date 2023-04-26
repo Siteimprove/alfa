@@ -9,7 +9,7 @@ import type { Computed as Position } from "./position";
 const { either, map } = Parser;
 
 /**
- * @deprecated
+ * @deprecated The clip property is deprecated in CSS but still used by some sites.
  * @internal
  */
 export type Specified =
@@ -17,13 +17,13 @@ export type Specified =
   | Shape<Rectangle, Keyword<"border-box">>;
 
 /**
- * @deprecated
+ * @deprecated The clip property is deprecated in CSS but still used by some sites.
  * @internal
  */
 export type Computed = Specified;
 
 /**
- * @deprecated
+ * @deprecated The clip property is deprecated in CSS but still used by some sites.
  * @internal
  */
 export const parse = either(
@@ -35,7 +35,7 @@ export const parse = either(
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/clip}
- * @deprecated
+ * @deprecated The clip property is deprecated in CSS but still used by some sites.
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
