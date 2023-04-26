@@ -3,15 +3,15 @@ import { Length } from "@siteimprove/alfa-css";
 import { Declaration, Element } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Property, Style } from "@siteimprove/alfa-style";
+import { Longhands, Style } from "@siteimprove/alfa-style";
 
 /**
  * @public
  */
-export class TextSpacing<N extends Property.Name> extends Diagnostic {
+export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
   public static of(message: string): Diagnostic;
 
-  public static of<N extends Property.Name>(
+  public static of<N extends Longhands.Name>(
     message: string,
     property: N,
     value: Length<"px">,
@@ -22,7 +22,7 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
     owner: Element
   ): TextSpacing<N>;
 
-  public static of<N extends Property.Name>(
+  public static of<N extends Longhands.Name>(
     message: string,
     property?: N,
     value?: Length<"px">,
@@ -149,7 +149,7 @@ export class TextSpacing<N extends Property.Name> extends Diagnostic {
  * @public
  */
 export namespace TextSpacing {
-  export interface JSON<N extends Property.Name> extends Diagnostic.JSON {
+  export interface JSON<N extends Longhands.Name> extends Diagnostic.JSON {
     property: N;
     value: Length.JSON<"px">;
     "font-size": Serializable.ToJSON<Style.Computed<"font-size">>;
@@ -161,15 +161,15 @@ export namespace TextSpacing {
 
   export function isTextSpacing(
     value: Diagnostic
-  ): value is TextSpacing<Property.Name>;
+  ): value is TextSpacing<Longhands.Name>;
 
   export function isTextSpacing(
     value: unknown
-  ): value is TextSpacing<Property.Name>;
+  ): value is TextSpacing<Longhands.Name>;
 
   export function isTextSpacing(
     value: unknown
-  ): value is TextSpacing<Property.Name> {
+  ): value is TextSpacing<Longhands.Name> {
     return value instanceof TextSpacing;
   }
 }

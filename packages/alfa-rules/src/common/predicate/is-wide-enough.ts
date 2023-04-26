@@ -1,7 +1,7 @@
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Property, Style } from "@siteimprove/alfa-style";
+import { Longhands, Style } from "@siteimprove/alfa-style";
 
 const { hasComputedStyle } = Style;
 
@@ -9,7 +9,7 @@ const { hasComputedStyle } = Style;
  * @deprecated
  * Used by R91/R92/R93 version 1
  */
-export function isWideEnough<N extends Property.Name>(
+export function isWideEnough<N extends Longhands.Name>(
   device: Device,
   property: N,
   predicate: (

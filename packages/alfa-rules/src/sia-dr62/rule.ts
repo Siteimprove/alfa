@@ -15,7 +15,7 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Set } from "@siteimprove/alfa-set";
-import { Property, Style } from "@siteimprove/alfa-style";
+import { Longhands, Shorthands, Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -383,7 +383,7 @@ function hasDistinguishableVerticalAlign(
   );
 }
 
-type Name = Property.Name | Property.Shorthand.Name;
+type Name = Longhands.Name | Shorthands.Name;
 
 /**
  * @public
