@@ -367,7 +367,7 @@ export namespace Shorthands {
         readonly "font-variant": Shorthand<"font-variant-caps" | "font-variant-east-asian" | "font-variant-ligatures" | "font-variant-numeric">;
         readonly "inset-block": Shorthand<"inset-block-end" | "inset-block-start">;
         readonly "inset-inline": Shorthand<"inset-inline-end" | "inset-inline-start">;
-        readonly inset: Shorthand<"top" | "right" | "bottom" | "left">;
+        readonly inset: Shorthand<"top" | "bottom" | "left" | "right">;
         readonly margin: Shorthand<"margin-bottom" | "margin-left" | "margin-right" | "margin-top">;
         readonly outline: Shorthand<"outline-color" | "outline-style" | "outline-width">;
         readonly overflow: Shorthand<"overflow-x" | "overflow-y">;
