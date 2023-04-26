@@ -2,7 +2,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Property } from "../../property";
+import type { Longhands } from "../../longhands";
 
 import { hasCascadedStyle } from "./has-cascaded-style";
 
@@ -15,7 +15,7 @@ import { hasCascadedStyle } from "./has-cascaded-style";
 export function hasCascadedValueDeclaredInInlineStyleOf(
   context: Element,
   device: Device,
-  name: Property.Name
+  name: Longhands.Name
 ): Predicate<Element> {
   return hasCascadedStyle(
     name,

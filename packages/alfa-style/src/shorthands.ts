@@ -1,6 +1,8 @@
+import Background from "./property/background";
 import BackgroundPosition from "./property/background-position";
 import BackgroundRepeat from "./property/background-repeat";
 import BorderBlockColor from "./property/border-block-color";
+import BorderBlockEnd from "./property/border-block-end";
 import BorderBlockStart from "./property/border-block-start";
 import BorderBlockStyle from "./property/border-block-style";
 import BorderBlock from "./property/border-block";
@@ -9,6 +11,7 @@ import BorderBottom from "./property/border-bottom";
 import BorderColor from "./property/border-color";
 import BorderImage from "./property/border-image";
 import BorderInlineColor from "./property/border-inline-color";
+import BorderInlineEnd from "./property/border-inline-end";
 import BorderInlineStart from "./property/border-inline-start";
 import BorderInlineStyle from "./property/border-inline-style";
 import BorderInline from "./property/border-inline";
@@ -36,9 +39,11 @@ export namespace Shorthands {
 
   export type Name = keyof Property;
   export const shortHands = {
+    background: Background,
     "background-position": BackgroundPosition,
     "background-repeat": BackgroundRepeat,
     "border-block-color": BorderBlockColor,
+    "border-block-end": BorderBlockEnd,
     "border-block-start": BorderBlockStart,
     "border-block-style": BorderBlockStyle,
     "border-block": BorderBlock,
@@ -47,6 +52,7 @@ export namespace Shorthands {
     "border-color": BorderColor,
     "border-image": BorderImage,
     "border-inline-color": BorderInlineColor,
+    "border-inline-end": BorderInlineEnd,
     "border-inline-start": BorderInlineStart,
     "border-inline-style": BorderInlineStyle,
     "border-inline": BorderInline,
