@@ -1,13 +1,7 @@
 import { Current, Color, Percentage, RGB, System } from "@siteimprove/alfa-css";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-
-declare module "../property" {
-  interface Longhands {
-    "background-color": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -28,16 +22,13 @@ export const parse = Color.parse;
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-color}
  * @internal
  */
-export default Property.register(
-  "background-color",
-  Property.of<Specified, Computed>(
-    Color.rgb(
-      Percentage.of(0),
-      Percentage.of(0),
-      Percentage.of(0),
-      Percentage.of(0)
-    ),
-    parse,
-    (value) => value.map((color) => Resolver.color(color))
-  )
+export default Longhand.of<Specified, Computed>(
+  Color.rgb(
+    Percentage.of(0),
+    Percentage.of(0),
+    Percentage.of(0),
+    Percentage.of(0)
+  ),
+  parse,
+  (value) => value.map((color) => Resolver.color(color))
 );

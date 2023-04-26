@@ -1,16 +1,12 @@
 import { Shape, Keyword, Rectangle } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Value } from "../value";
 
-const { either, map } = Parser;
+import type { Computed as Position } from "./position";
 
-declare module "../property" {
-  interface Longhands {
-    clip: Property<Specified, Computed>;
-  }
-}
+const { either, map } = Parser;
 
 /**
  * @deprecated
@@ -42,12 +38,17 @@ export const parse = either(
  * @deprecated
  * @internal
  */
-export default Property.register(
-  "clip",
-  Property.of<Specified, Computed>(Keyword.of("auto"), parse, (value, style) =>
-    style.computed("position").value.equals(Keyword.of("absolute")) ||
-    style.computed("position").value.equals(Keyword.of("fixed"))
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("auto"),
+  parse,
+  (value, style) => {
+    // We need the type assertion to help TS break a circular type reference:
+    // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+    const position = style.computed("position").value as Position;
+
+    return position.equals(Keyword.of("absolute")) ||
+      position.equals(Keyword.of("fixed"))
       ? value
-      : Value.of(Keyword.of("auto"))
-  )
+      : Value.of(Keyword.of("auto"));
+  }
 );

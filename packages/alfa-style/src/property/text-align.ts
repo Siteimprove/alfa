@@ -1,12 +1,6 @@
 import { Keyword } from "@siteimprove/alfa-css";
 
-import { Property } from "../property";
-
-declare module "../property" {
-  interface Longhands {
-    "text-align": Property<Specified, Computed>;
-  }
-}
+import { Longhand } from "../longhand";
 
 /**
  * @internal
@@ -40,14 +34,11 @@ export const parse = Keyword.parse(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-align}
  * @internal
  */
-export default Property.register(
-  "text-align",
-  Property.of<Specified, Computed>(
-    Keyword.of("start"),
-    parse,
-    (textAlign) => textAlign,
-    {
-      inherits: true,
-    }
-  )
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("start"),
+  parse,
+  (textAlign) => textAlign,
+  {
+    inherits: true,
+  }
 );

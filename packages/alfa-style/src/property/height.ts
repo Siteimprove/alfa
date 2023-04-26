@@ -1,16 +1,10 @@
 import { Keyword, Length, Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
 const { either } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    height: Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -30,7 +24,11 @@ export const parse = either(
   either(Length.parse, Percentage.parse)
 );
 
-const property = Property.of<Specified, Computed>(
+/**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/height}
+ * @internal
+ */
+export default Longhand.of<Specified, Computed>(
   Keyword.of("auto"),
   parse,
   (value, style) =>
@@ -45,8 +43,3 @@ const property = Property.of<Specified, Computed>(
       }
     })
 );
-/**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/height}
- * @internal
- */
-export default Property.register("height", property);

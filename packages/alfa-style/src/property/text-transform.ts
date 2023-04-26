@@ -1,12 +1,6 @@
 import { Keyword } from "@siteimprove/alfa-css";
 
-import { Property } from "../property";
-
-declare module "../property" {
-  interface Longhands {
-    "text-transform": Property<Specified, Computed>;
-  }
-}
+import { Longhand } from "../longhand";
 
 /**
  * @internal
@@ -35,14 +29,11 @@ export const parse = Keyword.parse(
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-transform}
  */
-export default Property.register(
-  "text-transform",
-  Property.of<Specified, Computed>(
-    Keyword.of("none"),
-    parse,
-    (textTransform) => textTransform,
-    {
-      inherits: true,
-    }
-  )
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("none"),
+  parse,
+  (textTransform) => textTransform,
+  {
+    inherits: true,
+  }
 );
