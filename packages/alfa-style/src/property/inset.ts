@@ -20,7 +20,7 @@ export const parse = takeBetween(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/inset}
  * @internal
  */
-export default Shorthand.of(
+export default Shorthand.of<"top" | "right" | "bottom" | "left">(
   ["top", "right", "bottom", "left"],
   map(parse, ([top, right = top, bottom = top, left = right]) => [
     ["top", top],
