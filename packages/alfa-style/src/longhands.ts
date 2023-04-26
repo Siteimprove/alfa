@@ -109,6 +109,9 @@ import WhiteSpace from "./property/white-space";
 import Width from "./property/width";
 import WordSpacing from "./property/word-spacing";
 
+/**
+ * @public
+ */
 export namespace Longhands {
   export type Property = typeof longHands;
 

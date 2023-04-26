@@ -10,6 +10,9 @@ const { either, end, left } = parser.Parser;
 
 type Name = Longhands.Name;
 
+/**
+ * @internal
+ */
 export class Shorthand<N extends Name = never> {
   public static of<N extends Name>(
     properties: Array<N>,
@@ -41,6 +44,9 @@ export class Shorthand<N extends Name = never> {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace Shorthand {
   export type Parser<N extends Name = Name> = parser.Parser<
     Slice<Token>,

@@ -2,7 +2,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { Longhands, Style, Value } from "../src";
+import { type Longhands, Style, type Value } from "../src";
 
 const device = Device.standard();
 

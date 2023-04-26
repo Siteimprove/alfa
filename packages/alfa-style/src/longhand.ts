@@ -107,6 +107,9 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
   }
 }
 
+/**
+ * @internal
+ */
 export namespace Longhand {
   export interface Options {
     readonly inherits: boolean;

@@ -34,10 +34,14 @@ import Outline from "./property/outline";
 import Overflow from "./property/overflow";
 import TextDecoration from "./property/text-decoration";
 
+/**
+ * @public
+ */
 export namespace Shorthands {
   export type Property = typeof shortHands;
 
   export type Name = keyof Property;
+
   export const shortHands = {
     background: Background,
     "background-position": BackgroundPosition,
