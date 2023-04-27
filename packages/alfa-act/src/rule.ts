@@ -6,7 +6,7 @@ import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { List } from "@siteimprove/alfa-list";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Maybe, None, Option } from "@siteimprove/alfa-option";
 import { Performance } from "@siteimprove/alfa-performance";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Record } from "@siteimprove/alfa-record";
@@ -22,8 +22,8 @@ import { Cache } from "./cache";
 import { Diagnostic } from "./diagnostic";
 import { Interview } from "./interview";
 import type { Oracle } from "./oracle";
-import type { Question } from "./question";
 import { Outcome } from "./outcome";
+import type { Question } from "./question";
 import { Requirement } from "./requirement";
 import { Tag } from "./tag";
 
@@ -290,7 +290,7 @@ export namespace Rule {
                 // We have a target, wrap it properly and return it.
                 ([target, oracleUsed]) =>
                   Tuple.of(
-                    Option.isOption(target) ? target : Option.of(target),
+                    Maybe.toOption(target),
                     oracleUsed
                   ),
                 // We have an unanswered question and return None
@@ -395,9 +395,9 @@ export namespace Rule {
           ) => Performance.Measure<Event<I, T, Q, S>>;
         }
       ): {
-        applicability(): Iterable<Interview<Q, S, T, Option.Maybe<T>>>;
+        applicability(): Iterable<Interview<Q, S, T, Maybe<T>>>;
         expectations(target: T): {
-          [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
+          [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic>>>;
         };
       };
     }
@@ -580,7 +580,7 @@ export namespace Rule {
         }
       ): {
         expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
-          [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
+          [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic>>>;
         };
       };
     }
@@ -787,10 +787,7 @@ type Expectation<T> = Either<Tuple<[T, boolean]>, Tuple<[Diagnostic, boolean]>>;
 // the processing stops and later it is passed to the cantTell Outcome.
 function processExpectation(
   acc: Expectation<List<[string, Option<Result<Diagnostic>>]>>,
-  [id, expectation]: readonly [
-    string,
-    Expectation<Option.Maybe<Result<Diagnostic>>>
-  ]
+  [id, expectation]: readonly [string, Expectation<Maybe<Result<Diagnostic>>>]
 ): Expectation<List<[string, Option<Result<Diagnostic>>]>> {
   return acc.either(
     // The accumulator only contains true result, keep going.
@@ -802,10 +799,7 @@ function processExpectation(
         ([result, oracleUsed]) =>
           Left.of(
             Tuple.of(
-              accumulator.append([
-                id,
-                Option.isOption(result) ? result : Option.of(result),
-              ]),
+              accumulator.append([id, Maybe.toOption(result)]),
               oracleUsedAccumulator || oracleUsed
             )
           ),
@@ -823,7 +817,7 @@ function processExpectation(
 function resolve<I, T extends Hashable, Q extends Question.Metadata, S>(
   target: T,
   expectations: Record<{
-    [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
+    [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic>>>;
   }>,
   rule: Rule<I, T, Q, S>,
   // A rule asking no questions, never calls its oracle, so it can be anything

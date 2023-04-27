@@ -16,6 +16,7 @@ import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
+import { Maybe } from '@siteimprove/alfa-option';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Option } from '@siteimprove/alfa-option';
 import { Performance } from '@siteimprove/alfa-performance';
@@ -612,9 +613,9 @@ export namespace Rule {
                 mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
                 measure: (name: string, start?: number) => Performance.Measure<Event<I, T, Q, S>>;
             }): {
-                applicability(): Iterable_2<Interview<Q, S, T, Option.Maybe<T>>>;
+                applicability(): Iterable_2<Interview<Q, S, T, Maybe<T>>>;
                 expectations(target: T): {
-                    [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
+                    [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic>>>;
                 };
             };
         }
@@ -653,7 +654,7 @@ export namespace Rule {
                 measure: (name: string, start?: number) => Performance.Measure<Event<I, T, Q, S>>;
             }): {
                 expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
-                    [key: string]: Interview<Q, S, T, Option.Maybe<Result<Diagnostic>>>;
+                    [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic>>>;
                 };
             };
         }
