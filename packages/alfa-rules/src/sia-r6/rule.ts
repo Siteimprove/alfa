@@ -9,7 +9,6 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Map } from "@siteimprove/alfa-map";
 import { Scope } from "../tags";
 
 const { hasAttribute, isDocumentElement } = Element;
@@ -21,8 +20,9 @@ export default Rule.Atomic.of<Page, Element>({
   requirements: [Criterion.of("3.1.1")],
   tags: [Scope.Page],
   evaluate({ document }) {
-    let langMap = Map.empty<Element<string>, Language>();
-    let xmlLangMap = Map.empty<Element<string>, string>();
+    // These will be set at most once since the rule only applies to the document element
+    let cachedLang: Language;
+    let cachedXmlLang: string;
 
     return {
       applicability() {
@@ -35,14 +35,14 @@ export default Rule.Atomic.of<Page, Element>({
                 hasAttribute("lang", (value) =>
                   Language.parse(value)
                     .tee((lang) => {
-                      langMap = langMap.set(element, lang);
+                      cachedLang = lang;
                     })
                     .isOk()
                 ),
                 hasAttribute(
                   "xml:lang",
                   tee(not(isEmpty), (xmlLang: string) => {
-                    xmlLangMap = xmlLangMap.set(element, xmlLang);
+                    cachedXmlLang = xmlLang;
                   })
                 )
               ),
@@ -52,13 +52,12 @@ export default Rule.Atomic.of<Page, Element>({
       },
 
       expectations(target) {
-        // The last filter in applicability ensures that map entries exists
-        const lang = langMap.get(target).getUnsafe();
-        const xmlLang = Language.parse(xmlLangMap.get(target).getUnsafe());
-
+        // `cachedLang` and `cachedXmlLang` are set by the applicability
         return {
           1: expectation(
-            xmlLang.every((xmlLang) => xmlLang.primary.equals(lang.primary)),
+            Language.parse(cachedXmlLang).every((xmlLang) =>
+              xmlLang.primary.equals(cachedLang.primary)
+            ),
             () => Outcomes.HasMatchingLanguages,
             () => Outcomes.HasNonMatchingLanguages
           ),
