@@ -1,15 +1,9 @@
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 
-import Base, { Specified, Computed } from "./top";
-
-declare module "../property" {
-  interface Longhands {
-    "inset-inline-start": Property<Specified, Computed>;
-  }
-}
+import Base from "./top";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/inset-inline-start}
  * @internal
  */
-export default Property.register("inset-inline-start", Property.extend(Base));
+export default Longhand.extend(Base);

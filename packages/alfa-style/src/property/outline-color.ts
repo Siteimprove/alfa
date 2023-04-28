@@ -7,14 +7,8 @@ import {
   System,
 } from "@siteimprove/alfa-css";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-
-declare module "../property" {
-  interface Longhands {
-    "outline-color": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -39,18 +33,15 @@ export const parse = Color.parse;
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-color}
  * @internal
  */
-export default Property.register(
-  "outline-color",
-  Property.of<Specified, Computed>(
-    Keyword.of("invert"),
-    parse,
-    (outlineColor) =>
-      outlineColor.map((color) => {
-        if (color.type === "keyword" && color.value === "invert") {
-          return color;
-        }
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("invert"),
+  parse,
+  (outlineColor) =>
+    outlineColor.map((color) => {
+      if (color.type === "keyword" && color.value === "invert") {
+        return color;
+      }
 
-        return Resolver.color(color);
-      })
-  )
+      return Resolver.color(color);
+    })
 );

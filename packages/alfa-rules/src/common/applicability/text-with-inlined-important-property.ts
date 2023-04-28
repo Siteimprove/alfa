@@ -7,7 +7,7 @@ import {
   Text,
 } from "@siteimprove/alfa-dom";
 import { Refinement } from "@siteimprove/alfa-refinement";
-import { Property, Style } from "@siteimprove/alfa-style";
+import { Longhands, Style } from "@siteimprove/alfa-style";
 
 const { hasNamespace, isElement } = Element;
 const { and } = Refinement;
@@ -20,7 +20,7 @@ const { isText } = Text;
 export function textWithInlinedImportantProperty(
   document: Document,
   device: Device,
-  property: Property.Name
+  property: Longhands.Name
 ): Iterable<Element> {
   return (
     document

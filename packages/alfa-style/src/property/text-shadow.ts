@@ -12,17 +12,11 @@ import {
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
 const { isKeyword } = Keyword;
 const { either, left, map, option, pair, right, separated } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "text-shadow": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -86,26 +80,23 @@ export const parse = either<Slice<Token>, Specified, string>(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-shadow}
  * @internal
  */
-export default Property.register(
-  "text-shadow",
-  Property.of<Specified, Computed>(
-    Keyword.of("none"),
-    parse,
-    (shadow, style) =>
-      shadow.map((shadow) => {
-        if (isKeyword(shadow)) {
-          return shadow;
-        }
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("none"),
+  parse,
+  (shadow, style) =>
+    shadow.map((shadow) => {
+      if (isKeyword(shadow)) {
+        return shadow;
+      }
 
-        return Shadow.of(
-          Resolver.length(shadow.vertical, style),
-          Resolver.length(shadow.horizontal, style),
-          Resolver.length(shadow.blur, style),
-          Resolver.length(shadow.spread, style),
-          Resolver.color(shadow.color),
-          false
-        );
-      }),
-    { inherits: true }
-  )
+      return Shadow.of(
+        Resolver.length(shadow.vertical, style),
+        Resolver.length(shadow.horizontal, style),
+        Resolver.length(shadow.blur, style),
+        Resolver.length(shadow.spread, style),
+        Resolver.color(shadow.color),
+        false
+      );
+    }),
+  { inherits: true }
 );

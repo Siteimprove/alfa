@@ -7,7 +7,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 
 import { hasComputedStyle } from "../../element/predicate/has-computed-style";
-import { Property } from "../../property";
+import { Longhands } from "../../longhands";
 import { Style } from "../../style";
 
 const { or, test } = Predicate;
@@ -84,7 +84,7 @@ function hasNonColorBackgroundProperty(
       if (
         Equatable.equals(
           style.computed(`background-${property}`).value,
-          Property.get(`background-${property}`).initial
+          Longhands.get(`background-${property}`).initial
         )
       ) {
         continue;

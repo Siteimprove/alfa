@@ -2,9 +2,10 @@ import { Keyword, Token } from "@siteimprove/alfa-css";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
+
 import * as slice from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Shorthand } from "../shorthand";
 
 import * as Outset from "./border-image-outset";
 import * as Repeat from "./border-image-repeat";
@@ -13,18 +14,6 @@ import * as Slice from "./border-image-slice";
 import * as Width from "./border-image-width";
 
 const { delimited, either, map, option, pair, right } = Parser;
-
-declare module "../property" {
-  interface Shorthands {
-    "border-image": Property.Shorthand<
-      | "border-image-source"
-      | "border-image-slice"
-      | "border-image-width"
-      | "border-image-outset"
-      | "border-image-repeat"
-    >;
-  }
-}
 
 const parseSlash = delimited(
   option(Token.parseWhitespace),
@@ -132,22 +121,19 @@ const parse: Parser<
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image}
  * @internal
  */
-export default Property.registerShorthand(
-  "border-image",
-  Property.shorthand(
-    [
-      "border-image-source",
-      "border-image-slice",
-      "border-image-width",
-      "border-image-outset",
-      "border-image-repeat",
-    ],
-    map(parse, ([source, slice, width, outset, repeat]) => [
-      ["border-image-source", source],
-      ["border-image-slice", slice],
-      ["border-image-width", width],
-      ["border-image-outset", outset],
-      ["border-image-repeat", repeat],
-    ])
-  )
+export default Shorthand.of(
+  [
+    "border-image-source",
+    "border-image-slice",
+    "border-image-width",
+    "border-image-outset",
+    "border-image-repeat",
+  ],
+  map(parse, ([source, slice, width, outset, repeat]) => [
+    ["border-image-source", source],
+    ["border-image-slice", slice],
+    ["border-image-width", width],
+    ["border-image-outset", outset],
+    ["border-image-repeat", repeat],
+  ])
 );

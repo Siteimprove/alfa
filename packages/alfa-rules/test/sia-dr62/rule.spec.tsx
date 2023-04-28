@@ -1,6 +1,6 @@
 import { h } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
-import { Property } from "@siteimprove/alfa-style";
+import { Longhands, Shorthands } from "@siteimprove/alfa-style";
 import { test } from "@siteimprove/alfa-test";
 
 import DR62, { ComputedStyles, Outcomes } from "../../src/sia-dr62/rule";
@@ -18,7 +18,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 // initial value. As a consequence, we cannot just override properties since
 // in this case we need to actually *remove* outline-width from the diagnostic!
 const defaultProperties: Array<
-  [Property.Name | Property.Shorthand.Name, string]
+  [Longhands.Name | Shorthands.Name, string]
 > = [
   ["border-width", "0px"],
   ["color", "rgb(0% 0% 93.33333%)"],
@@ -26,7 +26,7 @@ const defaultProperties: Array<
   ["outline", "0px"],
 ];
 const focusProperties: Array<
-  [Property.Name | Property.Shorthand.Name, string]
+  [Longhands.Name | Shorthands.Name, string]
 > = [
   ["border-width", "0px"],
   ["color", "rgb(0% 0% 93.33333%)"],
@@ -34,7 +34,7 @@ const focusProperties: Array<
   ["text-decoration", "underline"],
 ];
 const noDistinguishingProperties: Array<
-  [Property.Name | Property.Shorthand.Name, string]
+  [Longhands.Name | Shorthands.Name, string]
 > = [
   ["border-width", "0px"],
   ["color", "rgb(0% 0% 93.33333%)"],

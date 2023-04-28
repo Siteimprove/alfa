@@ -3,15 +3,9 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 
 const { either, left, map, mapResult, option, pair, separatedList } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    rotate: Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -81,13 +75,13 @@ export const parse = either(Keyword.parse("none"), parseRotate);
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/rotate}
  * @internal
  */
-export default Property.register(
-  "rotate",
-  Property.of<Specified, Computed>(Keyword.of("none"), parse, (rotate) =>
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("none"),
+  parse,
+  (rotate) =>
     rotate.map((rotate) =>
       Keyword.isKeyword(rotate)
         ? rotate
         : Rotate.of(rotate.x, rotate.y, rotate.z, rotate.angle.withUnit("deg"))
     )
-  )
 );

@@ -1,8 +1,8 @@
 import { Keyword, Length } from "@siteimprove/alfa-css";
-import { Property, Style } from "@siteimprove/alfa-style";
+import { Longhands, Shorthands, Style } from "@siteimprove/alfa-style";
 import { normalize } from "../common/normalize";
 
-type Name = Property.Name | Property.Shorthand.Name;
+type Name = Longhands.Name | Shorthands.Name;
 
 /**
  * @internal
@@ -36,7 +36,7 @@ export namespace Serialise {
         if (right === top) {
           right = "";
           if (
-            top === Property.get(`border-top-${property}`).initial.toString()
+            top === Longhands.get(`border-top-${property}`).initial.toString()
           ) {
             top = "";
           }
@@ -47,10 +47,10 @@ export namespace Serialise {
     return [shorthand, `${top} ${right} ${bottom} ${left}`.trim()];
   }
 
-  export function getLonghand(style: Style, name: Property.Name): string {
+  export function getLonghand(style: Style, name: Longhands.Name): string {
     const property = style.computed(name).toString();
 
-    return property === Property.get(name).initial.toString() ? "" : property;
+    return property === Longhands.get(name).initial.toString() ? "" : property;
   }
 
   export function outline(style: Style): string {
@@ -112,9 +112,9 @@ export namespace Serialise {
     }
 
     if (
-      size.value.equals(Property.get("font-size").initial.value) &&
+      size.value.equals(Longhands.get("font-size").initial.value) &&
       family.value.values[0].equals(
-        Property.get("font-family").initial.values[0]
+        Longhands.get("font-family").initial.values[0]
       )
     ) {
       // Both mandatory properties are set to their initial values.
@@ -144,12 +144,12 @@ export namespace Serialise {
     function getValue<T>(
       array: ReadonlyArray<T>,
       n: number,
-      property?: Property.Name
+      property?: Longhands.Name
     ): string {
       // Longhands with missing layers use the same value as their first layer
       const value = `${array?.[n] ?? array[0]}`;
       return property !== undefined &&
-        value === Property.get(property).initial.toString()
+        value === Longhands.get(property).initial.toString()
         ? ""
         : value;
     }
@@ -204,8 +204,8 @@ export namespace Serialise {
         ? // Since they have different initial value, they can't be both at their
           // initial value and therefore we need to output something
           originBox
-        : originBox === Property.get("background-origin").initial.toString() &&
-          clipBox === Property.get("background-clip").initial.toString()
+        : originBox === Longhands.get("background-origin").initial.toString() &&
+          clipBox === Longhands.get("background-clip").initial.toString()
         ? // They are both at their initial value and nothing is needed
           ""
         : // They are different and at least one is not initial, hence needed;

@@ -8,16 +8,12 @@ import {
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
-const { either } = Parser;
+import type { Computed as FontFamily } from "./font-family";
 
-declare module "../property" {
-  interface Longhands {
-    "font-size": Property<Specified, Computed>;
-  }
-}
+const { either } = Parser;
 
 /**
  * @internal
@@ -104,61 +100,71 @@ const factors = {
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-size}
  * @internal
  */
-export default Property.register(
-  "font-size",
-  Property.of<Specified, Computed>(
-    Length.of(16, "px"),
-    parse,
-    (fontSize, style) =>
-      fontSize.map((fontSize) => {
-        const percentage = Resolver.percentage(
-          style.parent.computed("font-size").value
-        );
-        const length = Resolver.length(style.parent);
+// We need a type hint to help TS break the circular type reference.
+// this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+// This one depends on itself (same property), so we also need the type
+// hint on the property itself
+const property: Longhand<Specified, Computed> = Longhand.of<
+  Specified,
+  Computed
+>(
+  Length.of(16, "px"),
+  parse,
+  (fontSize, style) =>
+    fontSize.map((fontSize) => {
+      // We need the type assertion to help TS break a circular type reference:
+      // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+      const parent = style.parent.computed("font-size").value as Computed;
 
-        switch (fontSize.type) {
-          case "math expression":
-            return (
-              fontSize
-                .resolve({ length, percentage })
-                // Since the calculation has been parsed and typed, there should
-                // always be something to get.
-                .getUnsafe()
-            );
+      const percentage = Resolver.percentage(parent);
+      const length = Resolver.length(style.parent);
 
-          case "length":
-            return length(fontSize);
+      switch (fontSize.type) {
+        case "math expression":
+          return (
+            fontSize
+              .resolve({ length, percentage })
+              // Since the calculation has been parsed and typed, there should
+              // always be something to get.
+              .getUnsafe()
+          );
 
-          case "percentage": {
-            return percentage(fontSize);
-          }
+        case "length":
+          return length(fontSize);
 
-          case "keyword": {
-            const parent = style.parent.computed("font-size").value;
+        case "percentage": {
+          return percentage(fontSize);
+        }
 
-            switch (fontSize.value) {
-              case "larger":
-                return parent.scale(1.2);
+        case "keyword": {
+          switch (fontSize.value) {
+            case "larger":
+              return parent.scale(1.2);
 
-              case "smaller":
-                return parent.scale(0.85);
+            case "smaller":
+              return parent.scale(0.85);
 
-              default: {
-                const factor = factors[fontSize.value];
+            default: {
+              const factor = factors[fontSize.value];
 
-                const [family] = style.computed("font-family").value;
+              // We need the type assertion to help TS break a circular type reference:
+              // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+              const [family] = (
+                style.computed("font-family").value as FontFamily
+              ).values;
 
-                const base =
-                  family.type === "keyword" ? bases[family.value] : bases.serif;
+              const base =
+                family.type === "keyword" ? bases[family.value] : bases.serif;
 
-                return Length.of(factor * base, "px");
-              }
+              return Length.of(factor * base, "px");
             }
           }
         }
-      }),
-    {
-      inherits: true,
-    }
-  )
+      }
+    }),
+  {
+    inherits: true,
+  }
 );
+
+export default property;

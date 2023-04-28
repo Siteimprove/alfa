@@ -1,12 +1,6 @@
 import { Keyword } from "@siteimprove/alfa-css";
 
-import { Property } from "../property";
-
-declare module "../property" {
-  interface Longhands {
-    "flex-direction": Property<Specified, Computed>;
-  }
-}
+import { Longhand } from "../longhand";
 
 /**
  * @internal
@@ -36,11 +30,8 @@ export const parse = Keyword.parse(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/flex-direction}
  * @internal
  */
-export default Property.register(
-  "flex-direction",
-  Property.of<Specified, Computed>(
-    Keyword.of("row"),
-    parse,
-    (position) => position
-  )
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("row"),
+  parse,
+  (position) => position
 );

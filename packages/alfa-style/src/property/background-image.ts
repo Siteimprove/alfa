@@ -17,18 +17,12 @@ import {
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
 import { List } from "./value/list";
 
 const { map, either, delimited, option, separatedList } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "background-image": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -99,25 +93,22 @@ export const initialItem = Keyword.of("none");
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-image}
  * @internal
  */
-export default Property.register(
-  "background-image",
-  Property.of<Specified, Computed>(
-    List.of([initialItem], ", "),
-    parseList,
-    (value, style) =>
-      value.map((images) =>
-        List.of(
-          Iterable.map(images, (image) => {
-            switch (image.type) {
-              case "keyword":
-                return image;
+export default Longhand.of<Specified, Computed>(
+  List.of([initialItem], ", "),
+  parseList,
+  (value, style) =>
+    value.map((images) =>
+      List.of(
+        Iterable.map(images, (image) => {
+          switch (image.type) {
+            case "keyword":
+              return image;
 
-              case "image":
-                return Resolver.image(image, style);
-            }
-          }),
-          ", "
-        )
+            case "image":
+              return Resolver.image(image, style);
+          }
+        }),
+        ", "
       )
-  )
+    )
 );

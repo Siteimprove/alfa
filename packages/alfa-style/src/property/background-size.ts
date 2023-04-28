@@ -3,19 +3,13 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
 import { List } from "./value/list";
 import { Tuple } from "./value/tuple";
 
 const { map, either, delimited, option, pair, right, separatedList } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "background-size": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -96,28 +90,25 @@ export const initialItem = Tuple.of(Keyword.of("auto"), Keyword.of("auto"));
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-size}
  * @internal
  */
-export default Property.register(
-  "background-size",
-  Property.of<Specified, Computed>(
-    List.of([initialItem], ", "),
-    parseList,
-    (value, style) =>
-      value.map((sizes) =>
-        List.of(
-          Iterable.map(sizes, (size) => {
-            if (Keyword.isKeyword(size)) {
-              return size;
-            }
+export default Longhand.of<Specified, Computed>(
+  List.of([initialItem], ", "),
+  parseList,
+  (value, style) =>
+    value.map((sizes) =>
+      List.of(
+        Iterable.map(sizes, (size) => {
+          if (Keyword.isKeyword(size)) {
+            return size;
+          }
 
-            const [x, y] = size.values;
+          const [x, y] = size.values;
 
-            return Tuple.of(
-              x.type === "length" ? Resolver.length(x, style) : x,
-              y.type === "length" ? Resolver.length(y, style) : y
-            );
-          }),
-          ", "
-        )
+          return Tuple.of(
+            x.type === "length" ? Resolver.length(x, style) : x,
+            y.type === "length" ? Resolver.length(y, style) : y
+          );
+        }),
+        ", "
       )
-  )
+    )
 );

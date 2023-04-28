@@ -1,19 +1,15 @@
 import { Shape, Keyword, Rectangle } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Value } from "../value";
+
+import type { Computed as Position } from "./position";
 
 const { either, map } = Parser;
 
-declare module "../property" {
-  interface Longhands {
-    clip: Property<Specified, Computed>;
-  }
-}
-
 /**
- * @deprecated
+ * @deprecated The clip property is deprecated in CSS but still used by some sites.
  * @internal
  */
 export type Specified =
@@ -21,13 +17,13 @@ export type Specified =
   | Shape<Rectangle, Keyword<"border-box">>;
 
 /**
- * @deprecated
+ * @deprecated The clip property is deprecated in CSS but still used by some sites.
  * @internal
  */
 export type Computed = Specified;
 
 /**
- * @deprecated
+ * @deprecated The clip property is deprecated in CSS but still used by some sites.
  * @internal
  */
 export const parse = either(
@@ -39,15 +35,20 @@ export const parse = either(
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/clip}
- * @deprecated
+ * @deprecated The clip property is deprecated in CSS but still used by some sites.
  * @internal
  */
-export default Property.register(
-  "clip",
-  Property.of<Specified, Computed>(Keyword.of("auto"), parse, (value, style) =>
-    style.computed("position").value.equals(Keyword.of("absolute")) ||
-    style.computed("position").value.equals(Keyword.of("fixed"))
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("auto"),
+  parse,
+  (value, style) => {
+    // We need the type assertion to help TS break a circular type reference:
+    // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+    const position = style.computed("position").value as Position;
+
+    return position.equals(Keyword.of("absolute")) ||
+      position.equals(Keyword.of("fixed"))
       ? value
-      : Value.of(Keyword.of("auto"))
-  )
+      : Value.of(Keyword.of("auto"));
+  }
 );

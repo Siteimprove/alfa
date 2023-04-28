@@ -13,18 +13,12 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
 import { List } from "./value/list";
 
 const { map, either, option, separatedList, delimited } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "box-shadow": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -166,31 +160,28 @@ export const parseList = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow}
  * @internal
  */
-export default Property.register(
-  "box-shadow",
-  Property.of<Specified, Computed>(
-    Keyword.of("none"),
-    either(Keyword.parse("none"), parseList),
-    (boxShadow, style) =>
-      boxShadow.map((value) => {
-        switch (value.type) {
-          case "keyword":
-            return value;
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("none"),
+  either(Keyword.parse("none"), parseList),
+  (boxShadow, style) =>
+    boxShadow.map((value) => {
+      switch (value.type) {
+        case "keyword":
+          return value;
 
-          case "list":
-            return List.of(
-              [...value].map((shadow) =>
-                Shadow.of(
-                  Resolver.length(shadow.horizontal, style),
-                  Resolver.length(shadow.vertical, style),
-                  Resolver.length(shadow.blur, style),
-                  Resolver.length(shadow.spread, style),
-                  Resolver.color(shadow.color),
-                  shadow.isInset
-                )
+        case "list":
+          return List.of(
+            [...value].map((shadow) =>
+              Shadow.of(
+                Resolver.length(shadow.horizontal, style),
+                Resolver.length(shadow.vertical, style),
+                Resolver.length(shadow.blur, style),
+                Resolver.length(shadow.spread, style),
+                Resolver.color(shadow.color),
+                shadow.isInset
               )
-            );
-        }
-      })
-  )
+            )
+          );
+      }
+    })
 );

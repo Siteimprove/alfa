@@ -9,7 +9,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Property, Style } from "@siteimprove/alfa-style";
+import { Longhands, Shorthands, Style } from "@siteimprove/alfa-style";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -17,7 +17,7 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 
 import { Serialise } from "./serialise";
 
-type Name = Property.Name | Property.Shorthand.Name;
+type Name = Longhands.Name | Shorthands.Name;
 
 /**
  * @public

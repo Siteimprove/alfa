@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Shorthand } from "../shorthand";
 
 import * as LineHeight from "./line-height";
 import * as Family from "./font-family";
@@ -16,24 +16,6 @@ const { map, option, pair, right, delimited } = Parser;
 
 // font may only set font-variant-caps to small-caps, but setting font
 // does reset all font-variant-* longhand to initial value (this is good!)
-declare module "../property" {
-  interface Shorthands {
-    font: Property.Shorthand<
-      | "font-family"
-      | "font-size"
-      | "font-stretch"
-      | "font-style"
-      | "font-variant-caps"
-      | "font-variant-east-asian"
-      | "font-variant-ligatures"
-      | "font-variant-numeric"
-      | "font-variant-position"
-      | "font-weight"
-      | "line-height"
-    >;
-  }
-}
-
 /**
  * @internal
  */
@@ -134,27 +116,24 @@ export const parse = pair(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font}
  * @internal
  */
-export default Property.registerShorthand(
-  "font",
-  Property.shorthand(
-    [
-      "font-family",
-      "font-size",
-      "font-stretch",
-      "font-style",
-      "font-variant-caps",
-      "font-variant-east-asian",
-      "font-variant-ligatures",
-      "font-variant-numeric",
-      "font-variant-position",
-      "font-weight",
-      "line-height",
-    ],
-    map(parse, ([prelude, [size, [lineHeight, family]]]) => [
-      ...prelude,
-      ["font-size", size],
-      ["line-height", lineHeight.getOr(Keyword.of("initial"))],
-      ["font-family", family],
-    ])
-  )
+export default Shorthand.of(
+  [
+    "font-family",
+    "font-size",
+    "font-stretch",
+    "font-style",
+    "font-variant-caps",
+    "font-variant-east-asian",
+    "font-variant-ligatures",
+    "font-variant-numeric",
+    "font-variant-position",
+    "font-weight",
+    "line-height",
+  ],
+  map(parse, ([prelude, [size, [lineHeight, family]]]) => [
+    ...prelude,
+    ["font-size", size],
+    ["line-height", lineHeight.getOr(Keyword.of("initial"))],
+    ["font-family", family],
+  ])
 );

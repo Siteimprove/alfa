@@ -9,16 +9,12 @@ import {
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
-const { either } = Parser;
+import type {Computed as FontSize} from "./font-size"
 
-declare module "../property" {
-  interface Longhands {
-    "line-height": Property<Specified, Computed>;
-  }
-}
+const { either } = Parser;
 
 /**
  * @internal
@@ -51,44 +47,43 @@ export const parse = either<Slice<Token>, Specified, string>(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/line-height}
  * @internal
  */
-export default Property.register(
-  "line-height",
-  Property.of<Specified, Computed>(
-    Keyword.of("normal"),
-    parse,
-    (value, style) =>
-      value.map((height) => {
-        const percentage = Resolver.percentage(
-          style.computed("font-size").value
-        );
-        const length = Resolver.length(style);
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("normal"),
+  parse,
+  (value, style) =>
+    value.map((height) => {
+      // We need the type assertion to help TS break a circular type reference:
+      // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+      const fontSize = style.computed("font-size").value as FontSize;
 
-        switch (height.type) {
-          case "keyword":
-          case "number":
-            return height;
+      const percentage = Resolver.percentage(fontSize);
+      const length = Resolver.length(style);
 
-          case "length":
-            return length(height);
+      switch (height.type) {
+        case "keyword":
+        case "number":
+          return height;
 
-          case "percentage":
-            return percentage(height);
+        case "length":
+          return length(height);
 
-          case "math expression":
-            return (
-              (
-                height.isNumber()
-                  ? height.resolve({ percentage })
-                  : height.resolve({ length, percentage })
-              )
-                // Since the calculation has been parsed and typed, there should
-                // always be something to get.
-                .getUnsafe()
-            );
-        }
-      }),
-    {
-      inherits: true,
-    }
-  )
+        case "percentage":
+          return percentage(height);
+
+        case "math expression":
+          return (
+            (
+              height.isNumber()
+                ? height.resolve({ percentage })
+                : height.resolve({ length, percentage })
+            )
+              // Since the calculation has been parsed and typed, there should
+              // always be something to get.
+              .getUnsafe()
+          );
+      }
+    }),
+  {
+    inherits: true,
+  }
 );
