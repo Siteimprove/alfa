@@ -131,7 +131,11 @@ export namespace Longhands {
    */
   export type Parsed<N extends Name> = Property[N] extends Longhand<
     infer S,
-    infer C
+    // Computed is only used in a covariant position in Longhand (as output of
+    // compute). Therefore, it does not need to be inferred exactly.
+    // C extends C' => Longhand<S, C> extends Longhand<S, C'>
+    // Especially, Longhand<S, C> extends Longhand<S, unknown> for all C.
+    unknown
   >
     ? S
     : never;
@@ -168,6 +172,9 @@ export namespace Longhands {
    * {@link https://drafts.csswg.org/css-cascade/#computed}
    */
   export type Computed<N extends Name> = Property[N] extends Longhand<
+    // Specified is used both in a covariant (output of the parser) and
+    // contravariant (input of compute) position in Longhand. Therefore,
+    // it needs to be exactly inferred for the subtyping to exist.
     infer S,
     infer C
   >
