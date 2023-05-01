@@ -1,5 +1,5 @@
 ---
-"@siteimprove/alfa-rules": minor
+"@siteimprove/alfa-rules": patch
 ---
 
 **Added:** `withDocumentElement` helper
