@@ -9,9 +9,10 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
+import { withDocumentElement } from "../common/applicability/with-document-element";
 
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
-const { isDocumentElement, isElement } = Element;
+const { isElement } = Element;
 const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document>({
@@ -25,10 +26,7 @@ export default Rule.Atomic.of<Page, Document>({
 
     return {
       applicability() {
-        return Node.hasChild(isDocumentElement)(document) &&
-          firstHeading.isSome()
-          ? [document]
-          : [];
+        return withDocumentElement(document, () => firstHeading.isSome());
       },
 
       expectations(target) {

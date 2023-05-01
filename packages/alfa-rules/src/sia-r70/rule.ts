@@ -10,9 +10,10 @@ import { expectation } from "../common/act/expectation";
 import { WithBadElements } from "../common/diagnostic/with-bad-elements";
 
 import { Scope } from "../tags";
+import { withDocumentElement } from "../common/applicability/with-document-element";
 
-const { hasName, hasNamespace, isDocumentElement } = Element;
-const { and, test } = Predicate;
+const { hasName, hasNamespace } = Element;
+const { and} = Predicate;
 const { isRendered } = Style;
 
 const isDeprecated = hasName(
@@ -52,9 +53,7 @@ export default Rule.Atomic.of<Page, Document>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return test(Node.hasChild(isDocumentElement), document)
-          ? [document]
-          : [];
+        return withDocumentElement(document);
       },
 
       expectations(target) {
