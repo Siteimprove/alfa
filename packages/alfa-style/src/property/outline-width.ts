@@ -51,6 +51,7 @@ export default Longhand.of<Specified, Computed>(
         return Length.resolve(style)(width);
       }
 
+      // Must be a Keyword
       switch (width.value) {
         case "thin":
           return CSSLength.of(1, "px");

@@ -56,6 +56,7 @@ export default Longhand.of<Specified, Computed>(
           LengthPercentage.resolve(fontSize, style)
         )
         .if(Number.isNumber, Number.resolve)
+        // Keywords are left untouched
         .get();
     }),
   {
