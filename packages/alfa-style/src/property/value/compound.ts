@@ -135,10 +135,7 @@ export namespace Number {
     );
   }
 
-  export const parse = either<Slice<Token>, Number, string>(
-    CSSNumber.parse,
-    Math.parseNumber
-  );
+  export const parse = either(CSSNumber.parse, Math.parseNumber);
 
   /**
    * Resolve a Number .
@@ -151,7 +148,7 @@ export namespace Number {
         // Since the calculation has been parsed and typed, there should
         // always be something to get.
         return value.resolve().getUnsafe();
-      default:
+      case "number":
         return value;
     }
   }
