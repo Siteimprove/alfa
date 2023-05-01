@@ -960,8 +960,6 @@ namespace Math_2 {
     const // (undocumented)
     parseLengthPercentage: Parser<Slice<Token>, Math_2<"length-percentage">, string, []>;
     const // (undocumented)
-    parseLengthNumberPercentage: Parser<Slice<Token>, Math_2<"number"> | Math_2<"length-percentage">, string, []>;
-    const // (undocumented)
     parseNumber: Parser<Slice<Token>, Math_2<"number">, string, []>;
 }
 export { Math_2 as Math }

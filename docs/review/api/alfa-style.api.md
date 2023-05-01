@@ -234,7 +234,7 @@ export namespace Longhands {
         readonly display: Longhand<Specified_25, Specified_25>;
         readonly "flex-direction": Longhand<Specified_26, Specified_26>;
         readonly "flex-wrap": Longhand<Specified_27, Specified_27>;
-        readonly float: Longhand<Keyword<"none"> | Keyword<"left"> | Keyword<"right">, Keyword<"none"> | Keyword<"left"> | Keyword<"right">>;
+        readonly float: Longhand<Keyword<"left"> | Keyword<"right"> | Keyword<"none">, Keyword<"left"> | Keyword<"right"> | Keyword<"none">>;
         readonly "font-family": Longhand<Specified_28, Specified_28>;
         readonly "font-size": Longhand<Specified_29, Computed_15>;
         readonly "font-stretch": Longhand<Specified_30, Percentage>;
@@ -369,7 +369,7 @@ export namespace Shorthands {
         readonly "font-variant": Shorthand<"font-variant-caps" | "font-variant-east-asian" | "font-variant-ligatures" | "font-variant-numeric">;
         readonly "inset-block": Shorthand<"inset-block-end" | "inset-block-start">;
         readonly "inset-inline": Shorthand<"inset-inline-end" | "inset-inline-start">;
-        readonly inset: Shorthand<"left" | "right" | "top" | "bottom">;
+        readonly inset: Shorthand<"top" | "bottom" | "left" | "right">;
         readonly margin: Shorthand<"margin-bottom" | "margin-left" | "margin-right" | "margin-top">;
         readonly outline: Shorthand<"outline-color" | "outline-style" | "outline-width">;
         readonly overflow: Shorthand<"overflow-x" | "overflow-y">;
