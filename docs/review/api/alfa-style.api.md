@@ -33,6 +33,7 @@ import { Node } from '@siteimprove/alfa-dom';
 import { Number as Number_2 } from '@siteimprove/alfa-css';
 import { Numeric } from '@siteimprove/alfa-css';
 import { Option } from '@siteimprove/alfa-option';
+import { Parser } from '@siteimprove/alfa-parser';
 import * as parser from '@siteimprove/alfa-parser';
 import { Percentage } from '@siteimprove/alfa-css';
 import { Perspective } from '@siteimprove/alfa-css';
@@ -53,6 +54,7 @@ import { System } from '@siteimprove/alfa-css';
 import { Text } from '@siteimprove/alfa-dom';
 import { Token } from '@siteimprove/alfa-css';
 import { Translate } from '@siteimprove/alfa-css';
+import { Unit } from '@siteimprove/alfa-css';
 import { URL } from '@siteimprove/alfa-css';
 import { Value as Value_2 } from '@siteimprove/alfa-css';
 
@@ -232,7 +234,7 @@ export namespace Longhands {
         readonly display: Longhand<Specified_25, Specified_25>;
         readonly "flex-direction": Longhand<Specified_26, Specified_26>;
         readonly "flex-wrap": Longhand<Specified_27, Specified_27>;
-        readonly float: Longhand<Keyword<"left"> | Keyword<"right"> | Keyword<"none">, Keyword<"left"> | Keyword<"right"> | Keyword<"none">>;
+        readonly float: Longhand<Keyword<"none"> | Keyword<"left"> | Keyword<"right">, Keyword<"none"> | Keyword<"left"> | Keyword<"right">>;
         readonly "font-family": Longhand<Specified_28, Specified_28>;
         readonly "font-size": Longhand<Specified_29, Computed_15>;
         readonly "font-stretch": Longhand<Specified_30, Percentage>;
@@ -259,30 +261,30 @@ export namespace Longhands {
         readonly "min-width": Longhand<Specified_43, Computed_21>;
         readonly opacity: Longhand<Specified_44, Number_2>;
         readonly "outline-color": Longhand<Specified_45, Computed_22>;
-        readonly "outline-offset": Longhand<Specified_46, Computed_23>;
-        readonly "outline-style": Longhand<Specified_47, Specified_47>;
-        readonly "outline-width": Longhand<Specified_48, Computed_24>;
-        readonly "overflow-x": Longhand<Specified_49, Specified_49>;
-        readonly "overflow-y": Longhand<Specified_50, Specified_50>;
-        readonly position: Longhand<Specified_51, Specified_51>;
+        readonly "outline-offset": Longhand<import("./property/value/compound").Length.Length, Computed_23>;
+        readonly "outline-style": Longhand<Specified_46, Specified_46>;
+        readonly "outline-width": Longhand<Specified_47, Computed_24>;
+        readonly "overflow-x": Longhand<Specified_48, Specified_48>;
+        readonly "overflow-y": Longhand<Specified_49, Specified_49>;
+        readonly position: Longhand<Specified_50, Specified_50>;
         readonly right: Longhand<Specified_19, Computed_12>;
-        readonly rotate: Longhand<Specified_52, Computed_25>;
-        readonly "text-align": Longhand<Specified_53, Specified_53>;
+        readonly rotate: Longhand<Specified_51, Computed_25>;
+        readonly "text-align": Longhand<Specified_52, Specified_52>;
         readonly "text-decoration-color": Longhand<Color, Computed_26>;
-        readonly "text-decoration-line": Longhand<Specified_54, Specified_54>;
-        readonly "text-decoration-style": Longhand<Specified_55, Specified_55>;
-        readonly "text-decoration-thickness": Longhand<Specified_56, Computed_27>;
-        readonly "text-indent": Longhand<Specified_57, Computed_28>;
-        readonly "text-overflow": Longhand<Specified_58, Specified_58>;
-        readonly "text-shadow": Longhand<Specified_59, Computed_29>;
-        readonly "text-transform": Longhand<Specified_60, Specified_60>;
+        readonly "text-decoration-line": Longhand<Specified_53, Specified_53>;
+        readonly "text-decoration-style": Longhand<Specified_54, Specified_54>;
+        readonly "text-decoration-thickness": Longhand<Specified_55, Computed_27>;
+        readonly "text-indent": Longhand<Specified_56, Computed_28>;
+        readonly "text-overflow": Longhand<Specified_57, Specified_57>;
+        readonly "text-shadow": Longhand<Specified_58, Computed_29>;
+        readonly "text-transform": Longhand<Specified_59, Specified_59>;
         readonly top: Longhand<Specified_19, Computed_12>;
-        readonly transform: Longhand<Specified_61, Computed_30>;
-        readonly "vertical-align": Longhand<Specified_62, Computed_31>;
-        readonly visibility: Longhand<Specified_63, Specified_63>;
-        readonly "white-space": Longhand<Specified_64, Specified_64>;
-        readonly width: Longhand<Specified_65, Computed_32>;
-        readonly "word-spacing": Longhand<Specified_66, Computed_33>;
+        readonly transform: Longhand<Specified_60, Computed_30>;
+        readonly "vertical-align": Longhand<Specified_61, Computed_31>;
+        readonly visibility: Longhand<Specified_62, Specified_62>;
+        readonly "white-space": Longhand<Specified_63, Specified_63>;
+        readonly width: Longhand<Specified_64, Computed_32>;
+        readonly "word-spacing": Longhand<Specified_65, Computed_33>;
     };
     // (undocumented)
     export type Property = typeof longHands;
@@ -367,9 +369,9 @@ export namespace Shorthands {
         readonly "font-variant": Shorthand<"font-variant-caps" | "font-variant-east-asian" | "font-variant-ligatures" | "font-variant-numeric">;
         readonly "inset-block": Shorthand<"inset-block-end" | "inset-block-start">;
         readonly "inset-inline": Shorthand<"inset-inline-end" | "inset-inline-start">;
-        readonly inset: Shorthand<"top" | "bottom" | "left" | "right">;
+        readonly inset: Shorthand<"left" | "right" | "top" | "bottom">;
         readonly margin: Shorthand<"margin-bottom" | "margin-left" | "margin-right" | "margin-top">;
-        readonly outline: Shorthand<"outline-color" | "outline-style" | "outline-width">;
+        readonly outline: Shorthand<"outline-style" | "outline-color" | "outline-width">;
         readonly overflow: Shorthand<"overflow-x" | "overflow-y">;
         readonly "text-decoration": Shorthand<"text-decoration-color" | "text-decoration-line" | "text-decoration-style" | "text-decoration-thickness">;
     };
@@ -671,7 +673,7 @@ export namespace Value {
 // src/longhands.ts:278:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:278:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:278:7 - (ae-incompatible-release-tags) The symbol ""outline-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:279:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:279:7 - (ae-forgotten-export) The symbol "Length" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:279:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:279:7 - (ae-incompatible-release-tags) The symbol ""outline-offset"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:280:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
