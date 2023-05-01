@@ -217,8 +217,7 @@ export class Style implements Serializable<Style.JSON> {
       const specified = this.specified(name);
       // Typescript is completely struggling on this one.
       // Essentially, N has to be assumed as Name at this point. TS lost the fact
-      // that specified and compute refer to the same property, because we're
-      // not really creating that link.
+      // that specified and compute refer to the same property.
       // So, it has specified of type S1 | S2 | …, and compute of type
       // S1 -> C1 | S2 -> C2 | …, but no link to the fact that the same should
       // be used in both.
@@ -228,7 +227,7 @@ export class Style implements Serializable<Style.JSON> {
       // its union size limit of 100,000 term (!)
       // So, we just skip type checking here…
       //
-      // See https://github.com/microsoft/TypeScript/issues/53234#issuecomment-1497872142
+      // See https://github.com/microsoft/TypeScript/issues/53234
       const computed = compute(specified as any, this) as Value<
         Style.Computed<N>
       >;
