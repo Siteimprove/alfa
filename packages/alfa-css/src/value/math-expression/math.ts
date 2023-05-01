@@ -328,13 +328,6 @@ export namespace Math {
     () => `calc() expression must be of type "length" or "percentage"`
   );
 
-  export const parseLengthNumberPercentage = filter(
-    parse,
-    (calculation): calculation is Math<"length-percentage"> | Math<"number"> =>
-      calculation.isDimensionPercentage("length") || calculation.isNumber(),
-    () => `calc() expression must be of type "length" or "percentage"`
-  );
-
   export const parseNumber = filter(
     parse,
     (calculation): calculation is Math<"number"> => calculation.isNumber(),
