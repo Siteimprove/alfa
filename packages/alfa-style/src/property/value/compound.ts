@@ -53,32 +53,32 @@ export namespace LengthPercentage {
   /**
    * Resolve a LengthPercentage into an absolute Length in pixels.
    *
-   * @param value the LengthPercentage to resolve
    * @param percentageBase the absolute Length to resolve percentages against
    * @param lengthBase the style whose font-size serves as base for resolving
    * relative lengths (usually the element's own style, or its parent's style).
    */
   export function resolve(
-    value: LengthPercentage,
     percentageBase: CSSLength<"px">,
     lengthBase: Style
-  ): CSSLength<"px"> {
-    const percentage = Resolver.percentage(percentageBase);
-    const length = Resolver.length(lengthBase);
+  ): (value: LengthPercentage) => CSSLength<"px"> {
+    return (value) => {
+      const percentage = Resolver.percentage(percentageBase);
+      const length = Resolver.length(lengthBase);
 
-    switch (value.type) {
-      case "math expression":
-        // Since the calculation has been parsed and typed, there should
-        // always be something to get.
-        return value.resolve({ length, percentage }).getUnsafe();
+      switch (value.type) {
+        case "math expression":
+          // Since the calculation has been parsed and typed, there should
+          // always be something to get.
+          return value.resolve({ length, percentage }).getUnsafe();
 
-      case "length":
-        return length(value);
+        case "length":
+          return length(value);
 
-      case "percentage": {
-        return percentage(value);
+        case "percentage": {
+          return percentage(value);
+        }
       }
-    }
+    };
   }
 }
 
@@ -103,22 +103,25 @@ export namespace Length {
   /**
    * Resolve a Length into an absolute Length in pixels.
    *
-   * @param value the LengthPercentage to resolve
    * @param lengthBase the style whose font-size serves as base for resolving
    * relative lengths (usually the element's own style, or its parent's style).
    */
-  export function resolve(value: Length, lengthBase: Style): CSSLength<"px"> {
-    const length = Resolver.length(lengthBase);
+  export function resolve(
+    lengthBase: Style
+  ): (value: Length) => CSSLength<"px"> {
+    return (value) => {
+      const length = Resolver.length(lengthBase);
 
-    switch (value.type) {
-      case "math expression":
-        // Since the calculation has been parsed and typed, there should
-        // always be something to get.
-        return value.resolve({ length }).getUnsafe();
+      switch (value.type) {
+        case "math expression":
+          // Since the calculation has been parsed and typed, there should
+          // always be something to get.
+          return value.resolve({ length }).getUnsafe();
 
-      case "length":
-        return length(value);
-    }
+        case "length":
+          return length(value);
+      }
+    };
   }
 }
 

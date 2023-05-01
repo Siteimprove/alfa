@@ -107,9 +107,10 @@ const property: Longhand<Specified, Computed> = Longhand.of<
       const parent = style.parent.computed("font-size").value as Computed;
 
       if (LengthPercentage.isLengthPercentage(fontSize)) {
-        return LengthPercentage.resolve(fontSize, parent, style.parent);
+        return LengthPercentage.resolve(parent, style.parent)(fontSize);
       }
 
+      // Must be a keyword
       switch (fontSize.value) {
         case "larger":
           return parent.scale(1.2);

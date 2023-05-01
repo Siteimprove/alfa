@@ -19,5 +19,5 @@ export type Computed = CSSLength<"px">;
 export default Longhand.of<Specified, Computed>(
   CSSLength.of(0, "px"),
   Length.parse,
-  (value, style) => value.map((offset) => Length.resolve(offset, style))
+  (value, style) => value.map(Length.resolve(style))
 );

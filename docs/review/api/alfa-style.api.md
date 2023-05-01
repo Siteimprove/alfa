@@ -371,7 +371,7 @@ export namespace Shorthands {
         readonly "inset-inline": Shorthand<"inset-inline-end" | "inset-inline-start">;
         readonly inset: Shorthand<"left" | "right" | "top" | "bottom">;
         readonly margin: Shorthand<"margin-bottom" | "margin-left" | "margin-right" | "margin-top">;
-        readonly outline: Shorthand<"outline-style" | "outline-color" | "outline-width">;
+        readonly outline: Shorthand<"outline-color" | "outline-style" | "outline-width">;
         readonly overflow: Shorthand<"overflow-x" | "overflow-y">;
         readonly "text-decoration": Shorthand<"text-decoration-color" | "text-decoration-line" | "text-decoration-style" | "text-decoration-thickness">;
     };

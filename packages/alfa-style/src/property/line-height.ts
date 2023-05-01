@@ -8,10 +8,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
 import { LengthPercentage, Number } from "./value/compound";
 
 import type { Computed as FontSize } from "./font-size";
+import { Selective } from "@siteimprove/alfa-selective";
 
 const { either } = Parser;
 
@@ -50,15 +50,13 @@ export default Longhand.of<Specified, Computed>(
       // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
       const fontSize = style.computed("font-size").value as FontSize;
 
-      if (LengthPercentage.isLengthPercentage(height)) {
-        return LengthPercentage.resolve(height, fontSize, style);
-      }
-
-      if (Number.isNumber(height)) {
-        return Number.resolve(height);
-      }
-
-      return height;
+      return Selective.of(height)
+        .if(
+          LengthPercentage.isLengthPercentage,
+          LengthPercentage.resolve(fontSize, style)
+        )
+        .if(Number.isNumber, Number.resolve)
+        .get();
     }),
   {
     inherits: true,

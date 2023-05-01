@@ -48,7 +48,7 @@ export default Longhand.of<Specified, Computed>(
 
     return value.map((width) => {
       if (Length.isLength(width)) {
-        return Length.resolve(width, style);
+        return Length.resolve(style)(width);
       }
 
       switch (width.value) {
