@@ -118,10 +118,10 @@ export namespace DOM {
     hasRole: typeof dom.hasRole, // (undocumented)
     isIgnored: typeof dom.isIgnored, // (undocumented)
     isIncludedInTheAccessibilityTree: typeof dom.isIncludedInTheAccessibilityTree, // (undocumented)
-    isMarkedDecorative: Predicate<Element_2<string>, []>, // (undocumented)
+    isMarkedDecorative: Predicate<Element_2<string>>, // (undocumented)
     isPerceivableForAll: typeof dom.isPerceivableForAll, // (undocumented)
     isProgrammaticallyHidden: typeof dom.isProgrammaticallyHidden, // (undocumented)
-    isSemanticallyDisabled: Predicate<Element_2<string>, []>;
+    isSemanticallyDisabled: Predicate<Element_2<string>>;
 }
 
 // @public (undocumented)

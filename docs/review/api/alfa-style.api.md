@@ -153,7 +153,7 @@ export namespace Longhand {
     // (undocumented)
     export type Parser<SPECIFIED> = parser.Parser<Slice<Token>, Default | SPECIFIED, string>;
     const // (undocumented)
-    parseDefaults: parser.Parser<Slice<Token>, Keyword<"initial"> | Keyword<"inherit"> | Keyword<"unset">, string, []>;
+    parseDefaults: parser.Parser<Slice<Token>, Keyword<"initial"> | Keyword<"inherit"> | Keyword<"unset">, string>;
 }
 
 // @public (undocumented)

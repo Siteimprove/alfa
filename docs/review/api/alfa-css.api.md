@@ -389,7 +389,7 @@ namespace Function_2 {
     const // (undocumented)
     consume: Parser<Slice<Token>, Function_2, string>;
     const // (undocumented)
-    parse: <T>(name?: string, body?: Parser<Slice<Token>, T, string, []> | undefined) => Parser<Slice<Token>, readonly [Function_2, T], string, []>;
+    parse: <T>(name?: string, body?: Parser<Slice<Token>, T, string> | undefined) => Parser<Slice<Token>, readonly [Function_2, T], string, []>;
 }
 export { Function_2 as Function }
 
@@ -1314,7 +1314,7 @@ export namespace Position {
     // (undocumented)
     export type Component<S extends Horizontal | Vertical = Horizontal | Vertical, U extends Unit.Length = Unit.Length> = Center | Offset<U> | Side<S, Offset<U>>;
     const // (undocumented)
-    parseCenter: Parser<Slice<Token>, Keyword<"center">, string, []>;
+    parseCenter: Parser<Slice<Token>, Keyword<"center">, string>;
     // (undocumented)
     export namespace Component {
         // (undocumented)
