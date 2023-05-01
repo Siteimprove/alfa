@@ -69,7 +69,7 @@ export namespace h {
 
     const block = h.block(style);
 
-    if (style.length > 0) {
+    if (block.size > 0) {
       attributes = [...attributes, h.attribute("style", block.toString())];
     }
 

@@ -303,7 +303,7 @@ export namespace Tuple {
   export type Append<T extends Tuple, V> = [...T, V];
 
   export function append<T extends Tuple, V>(tuple: T, value: V): Append<T, V> {
-    return Array.append(copy(tuple), value) as Append<T, V>;
+    return Array.append(copy(tuple), value) as unknown as Append<T, V>;
   }
 
   export type Prepend<T extends Tuple, V> = [V, ...T];
@@ -312,7 +312,7 @@ export namespace Tuple {
     tuple: T,
     value: V
   ): Prepend<T, V> {
-    return Array.prepend(copy(tuple), value) as Prepend<T, V>;
+    return Array.prepend(copy(tuple), value) as unknown as Prepend<T, V>;
   }
 
   export type First<T extends Tuple> = T extends readonly [infer H, ...infer _]

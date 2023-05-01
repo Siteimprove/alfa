@@ -11,14 +11,13 @@ import {
   Shadow,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Slice } from "@siteimprove/alfa-slice";
-
-import * as json from "@siteimprove/alfa-json";
 
 import * as element from "./element/element";
 import * as node from "./node/node";
@@ -213,13 +212,27 @@ export class Style implements Serializable<Style.JSON> {
     }
 
     if (!this._computed.has(name)) {
-      this._computed = this._computed.set(
-        name,
-        Longhands.get(name).compute(
-          this.specified(name) as Value<Style.Specified<Name>>,
-          this
-        )
-      );
+      // Keeping semi-useless variables to reduce the any-pollution to a single call
+      const compute = Longhands.get(name).compute;
+      const specified = this.specified(name);
+      // Typescript is completely struggling on this one.
+      // Essentially, N has to be assumed as Name at this point. TS lost the fact
+      // that specified and compute refer to the same property.
+      // So, it has specified of type S1 | S2 | …, and compute of type
+      // S1 -> C1 | S2 -> C2 | …, but no link to the fact that the same should
+      // be used in both.
+      // The union of functions is exploded as (S1 & S2 & …) -> (C1 | C2 | …)
+      // due to contravariance. But the Si tend to be unions, and the
+      // intersection of union is expanded a bit too greedily by TS and reaches
+      // its union size limit of 100,000 term (!)
+      // So, we just skip type checking here…
+      //
+      // See https://github.com/microsoft/TypeScript/issues/53234
+      const computed = compute(specified as any, this) as Value<
+        Style.Computed<N>
+      >;
+
+      this._computed = this._computed.set(name, computed);
     }
 
     return (
