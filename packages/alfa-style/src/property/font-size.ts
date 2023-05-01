@@ -1,6 +1,6 @@
-import { Length, Keyword, Token } from "@siteimprove/alfa-css";
+import { Length, Keyword, type Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import { LengthPercentage } from "./value/compound";
 import { Longhand } from "../longhand";
@@ -110,30 +110,25 @@ const property: Longhand<Specified, Computed> = Longhand.of<
         return LengthPercentage.resolve(fontSize, parent, style.parent);
       }
 
-      switch (fontSize.type) {
-        case "keyword": {
-          switch (fontSize.value) {
-            case "larger":
-              return parent.scale(1.2);
+      switch (fontSize.value) {
+        case "larger":
+          return parent.scale(1.2);
 
-            case "smaller":
-              return parent.scale(0.85);
+        case "smaller":
+          return parent.scale(0.85);
 
-            default: {
-              const factor = factors[fontSize.value];
+        default: {
+          const factor = factors[fontSize.value];
 
-              // We need the type assertion to help TS break a circular type reference:
-              // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
-              const [family] = (
-                style.computed("font-family").value as FontFamily
-              ).values;
+          // We need the type assertion to help TS break a circular type reference:
+          // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+          const [family] = (style.computed("font-family").value as FontFamily)
+            .values;
 
-              const base =
-                family.type === "keyword" ? bases[family.value] : bases.serif;
+          const base =
+            family.type === "keyword" ? bases[family.value] : bases.serif;
 
-              return Length.of(factor * base, "px");
-            }
-          }
+          return Length.of(factor * base, "px");
         }
       }
     }),

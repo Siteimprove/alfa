@@ -11,6 +11,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
+import {LengthPercentage} from "./value/compound";
 
 import type {Computed as FontSize} from "./font-size"
 
@@ -22,9 +23,7 @@ const { either } = Parser;
 export type Specified =
   | Keyword<"normal">
   | Number
-  | Length
-  | Percentage
-  | Math<"length-percentage">
+  | LengthPercentage.LengthPercentage
   | Math<"number">;
 
 /**
@@ -38,7 +37,7 @@ export type Computed = Keyword<"normal"> | Number | Length<"px">;
 export const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("normal"),
   Number.parse,
-  Length.parse,
+  LengthPercentage.parse,
   Percentage.parse,
   Math.parseLengthNumberPercentage
 );
