@@ -1,17 +1,9 @@
-import {
-  Length,
-  Keyword,
-  Math,
-  Percentage,
-  Token,
-} from "@siteimprove/alfa-css";
+import { Length, Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Compound } from "./value/compound";
-import LengthPercentage = Compound.LengthPercentage;
+import { LengthPercentage } from "./value/compound";
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
 
 import type { Computed as FontFamily } from "./font-family";
 
