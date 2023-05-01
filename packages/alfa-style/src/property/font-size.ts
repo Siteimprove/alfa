@@ -8,6 +8,8 @@ import {
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import { Compound } from "./value/compound";
+import LengthPercentage = Compound.LengthPercentage;
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
@@ -19,9 +21,7 @@ const { either } = Parser;
  * @internal
  */
 export type Specified =
-  | Length
-  | Percentage
-  | Math<"length-percentage">
+  | LengthPercentage.LengthPercentage
 
   // Absolute
   | Keyword<"xx-small">
@@ -57,9 +57,7 @@ export const parse = either<Slice<Token>, Specified, string>(
     "xxx-large"
   ),
   Keyword.parse("larger", "smaller"),
-  Percentage.parse,
-  Length.parse,
-  Math.parseLengthPercentage
+  LengthPercentage.parse
 );
 
 /**
@@ -116,26 +114,11 @@ const property: Longhand<Specified, Computed> = Longhand.of<
       // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
       const parent = style.parent.computed("font-size").value as Computed;
 
-      const percentage = Resolver.percentage(parent);
-      const length = Resolver.length(style.parent);
+      if (LengthPercentage.isLengthPercentage(fontSize)) {
+        return LengthPercentage.resolve(fontSize, parent, style.parent);
+      }
 
       switch (fontSize.type) {
-        case "math expression":
-          return (
-            fontSize
-              .resolve({ length, percentage })
-              // Since the calculation has been parsed and typed, there should
-              // always be something to get.
-              .getUnsafe()
-          );
-
-        case "length":
-          return length(fontSize);
-
-        case "percentage": {
-          return percentage(fontSize);
-        }
-
         case "keyword": {
           switch (fontSize.value) {
             case "larger":
