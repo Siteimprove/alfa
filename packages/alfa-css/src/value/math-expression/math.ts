@@ -2,7 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
-import { Result } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
@@ -113,34 +113,61 @@ export class Math<
   public resolve(
     this: Math<"length">,
     resolver: Expression.LengthResolver
-  ): Option<Length<"px">>;
+  ): Result<Length<"px">, string>;
 
   public resolve(
     this: Math<"length-percentage">,
     resolver: Expression.Resolver<"px", Length<"px">>
-  ): Option<Length<"px">>;
+  ): Result<Length<"px">, string>;
 
-  public resolve(
-    this: Math<"number">,
-    resolver: Expression.PercentageResolver
-  ): Option<Number>;
+  public resolve(this: Math<"number">): Result<Number, string>;
 
   public resolve(
     this: Math,
-    resolver: Expression.Resolver<"px", Length<"px">>
-  ): Option<Numeric> {
+    resolver?:
+      | Expression.LengthResolver
+      | Expression.Resolver<"px", Length<"px">>
+  ): Result<Numeric, string> {
     // Since the expressions can theoretically contain arbitrarily units in them,
     // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
     // they seem to be more restricted), we can't easily type Expression itself
     // (other than with its Kind).
-    const expression = this._expression.reduce(resolver);
+    try {
+      const expression = this._expression.reduce({
+        length: () => {
+          throw new Error(`Missing length resolver for ${this}`);
+        },
+        percentage: () => {
+          throw new Error(`Missing percentage resolver for ${this}`);
+        },
+        ...resolver,
+      });
 
-    return this.isDimensionPercentage("length")
-      ? // length are also length-percentage, so this catches both.
-        expression.toLength()
-      : this.isNumber()
-      ? expression.toNumber()
-      : None;
+      return this.isDimensionPercentage("length")
+        ? // length are also length-percentage, so this catches both.
+          expression
+            .toLength()
+            .reduce<Result<Numeric, string>>(
+              (_, value) => Ok.of(value),
+              Err.of(`${this} does not resolve to a valid length-percentage`)
+            )
+        : this.isNumber()
+        ? expression
+            .toNumber()
+            .reduce<Result<Numeric, string>>(
+              (_, value) => Ok.of(value),
+              Err.of(`${this} does not resolve to a valid number`)
+            )
+        : Err.of(`${this} does not resolve to a valid expression`);
+    } catch (e) {
+      if (e instanceof Error) {
+        return Err.of(e.message);
+      } else {
+        return Err.of(
+          `Unexpected error while resolving math expression ${this}`
+        );
+      }
+    }
   }
 
   public hash(hash: Hash): void {}
@@ -307,5 +334,11 @@ export namespace Math {
     (calculation): calculation is Math<"length-percentage"> | Math<"number"> =>
       calculation.isDimensionPercentage("length") || calculation.isNumber(),
     () => `calc() expression must be of type "length" or "percentage"`
+  );
+
+  export const parseNumber = filter(
+    parse,
+    (calculation): calculation is Math<"number"> => calculation.isNumber(),
+    () => `calc() expression must be of type "number"`
   );
 }

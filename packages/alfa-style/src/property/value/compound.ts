@@ -10,6 +10,7 @@
 import {
   Length as CSSLength,
   Math,
+  Number as CSSNumber,
   Percentage,
   type Token,
 } from "@siteimprove/alfa-css";
@@ -67,13 +68,9 @@ export namespace LengthPercentage {
 
     switch (value.type) {
       case "math expression":
-        return (
-          value
-            .resolve({ length, percentage })
-            // Since the calculation has been parsed and typed, there should
-            // always be something to get.
-            .getUnsafe()
-        );
+        // Since the calculation has been parsed and typed, there should
+        // always be something to get.
+        return value.resolve({ length, percentage }).getUnsafe();
 
       case "length":
         return length(value);
@@ -115,16 +112,47 @@ export namespace Length {
 
     switch (value.type) {
       case "math expression":
-        return (
-          value
-            .resolve({ length })
-            // Since the calculation has been parsed and typed, there should
-            // always be something to get.
-            .getUnsafe()
-        );
+        // Since the calculation has been parsed and typed, there should
+        // always be something to get.
+        return value.resolve({ length }).getUnsafe();
 
       case "length":
         return length(value);
+    }
+  }
+}
+
+/**
+ * @internal
+ */
+export namespace Number {
+  export type Number = CSSNumber | Math<"number">;
+
+  export function isNumber(value: unknown): value is Number {
+    return (
+      CSSNumber.isNumber(value) ||
+      (Math.isCalculation(value) && value.isNumber())
+    );
+  }
+
+  export const parse = either<Slice<Token>, Number, string>(
+    CSSNumber.parse,
+    Math.parseNumber
+  );
+
+  /**
+   * Resolve a Number .
+   *
+   * @param value the Number to resolve
+   */
+  export function resolve(value: Number): CSSNumber {
+    switch (value.type) {
+      case "math expression":
+        // Since the calculation has been parsed and typed, there should
+        // always be something to get.
+        return value.resolve().getUnsafe();
+      default:
+        return value;
     }
   }
 }

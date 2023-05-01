@@ -11,9 +11,9 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-import {LengthPercentage} from "./value/compound";
+import { LengthPercentage } from "./value/compound";
 
-import type {Computed as FontSize} from "./font-size"
+import type { Computed as FontSize } from "./font-size";
 
 const { either } = Parser;
 
@@ -73,7 +73,7 @@ export default Longhand.of<Specified, Computed>(
           return (
             (
               height.isNumber()
-                ? height.resolve({ percentage })
+                ? height.resolve()
                 : height.resolve({ length, percentage })
             )
               // Since the calculation has been parsed and typed, there should
