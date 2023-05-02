@@ -25,7 +25,7 @@ export function hasTabIndex(
 ): Predicate<Element> {
   const predicate =
     typeof predicateOrNumber === "number"
-      ? (n: number) => Array.prepend(rest, predicateOrNumber).includes(n)
+      ? (n: number) => Array.append(rest, predicateOrNumber).includes(n)
       : predicateOrNumber;
 
   return (element) => element.tabIndex().some(predicate);
