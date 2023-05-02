@@ -11,7 +11,7 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { isEmpty } = Iterable;
-const { not } = Predicate;
+const { not, test } = Predicate;
 const { hasId, hasUniqueId } = Element;
 
 export default Rule.Atomic.of<Page, Element>({
@@ -29,7 +29,7 @@ export default Rule.Atomic.of<Page, Element>({
       expectations(target) {
         return {
           1: expectation(
-            hasUniqueId()(target),
+            test(hasUniqueId, target),
             () => Outcomes.HasUniqueId,
             () => Outcomes.HasNonUniqueId
           ),

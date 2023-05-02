@@ -1,10 +1,8 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import { Document, Element } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Language } from "@siteimprove/alfa-iana";
 import { Option } from "@siteimprove/alfa-option";
-import { Predicate } from "@siteimprove/alfa-predicate";
-import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -13,10 +11,9 @@ import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
 import { Scope, Stability } from "../tags";
+import { withDocumentElement } from "../common/applicability/with-document-element";
 
-const { hasAttribute, isDocumentElement } = Element;
-const { fold } = Predicate;
-const { and } = Refinement;
+const { hasAttribute } = Element;
 
 /**
  * This rule always asks for the language of the page, and compares it with
@@ -32,22 +29,15 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
 
     return {
       applicability() {
-        return fold(
-          Node.hasChild(
-            and(
-              isDocumentElement,
-              hasAttribute("lang", (lang) =>
-                Language.parse(lang)
-                  .tee((lang) => {
-                    programmaticLanguage = lang;
-                  })
-                  .isOk()
-              )
-            )
-          ),
-          () => [document],
-          () => [],
-          document
+        return withDocumentElement(
+          document,
+          hasAttribute("lang", (lang) =>
+            Language.parse(lang)
+              .tee((lang) => {
+                programmaticLanguage = lang;
+              })
+              .isOk()
+          )
         );
       },
 
