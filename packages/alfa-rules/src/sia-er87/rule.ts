@@ -17,10 +17,10 @@ import { Question } from "../common/act/question";
 import { isAtTheStart } from "../common/predicate";
 
 import { Scope, Stability, Version } from "../tags";
+import { withDocumentElement } from "../common/applicability/with-document-element";
 
 const { hasRole, isIgnored } = DOM;
-const { hasName, isDocumentElement, isElement } = Element;
-const { fold } = Predicate;
+const { hasName, isElement } = Element;
 const { and } = Refinement;
 const { isTabbable, isVisible } = Style;
 
@@ -40,12 +40,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
   evaluate({ device, document, response }) {
     return {
       applicability() {
-        return fold(
-          Node.hasChild(isDocumentElement),
-          () => [document],
-          () => [],
-          document
-        );
+        return withDocumentElement(document);
       },
 
       expectations(target) {
