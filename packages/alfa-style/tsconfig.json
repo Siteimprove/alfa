@@ -227,6 +227,7 @@
     "test/property/inset-block.spec.tsx",
     "test/property/line-height.spec.tsx",
     "test/property/margin.spec.tsx",
+    "test/property/opacity.spec.tsx",
     "test/property/outline.spec.tsx",
     "test/property/rotate.spec.tsx",
     "test/property/text-decoration.spec.tsx",
