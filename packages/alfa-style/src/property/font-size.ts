@@ -1,15 +1,9 @@
-import {
-  Length,
-  Keyword,
-  Math,
-  Percentage,
-  Token,
-} from "@siteimprove/alfa-css";
+import { Length, Keyword, type Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
+import { LengthPercentage } from "./value/compound";
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
 
 import type { Computed as FontFamily } from "./font-family";
 
@@ -19,9 +13,7 @@ const { either } = Parser;
  * @internal
  */
 export type Specified =
-  | Length
-  | Percentage
-  | Math<"length-percentage">
+  | LengthPercentage.LengthPercentage
 
   // Absolute
   | Keyword<"xx-small">
@@ -57,9 +49,7 @@ export const parse = either<Slice<Token>, Specified, string>(
     "xxx-large"
   ),
   Keyword.parse("larger", "smaller"),
-  Percentage.parse,
-  Length.parse,
-  Math.parseLengthPercentage
+  LengthPercentage.parse
 );
 
 /**
@@ -116,49 +106,30 @@ const property: Longhand<Specified, Computed> = Longhand.of<
       // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
       const parent = style.parent.computed("font-size").value as Computed;
 
-      const percentage = Resolver.percentage(parent);
-      const length = Resolver.length(style.parent);
+      if (LengthPercentage.isLengthPercentage(fontSize)) {
+        return LengthPercentage.resolve(parent, style.parent)(fontSize);
+      }
 
-      switch (fontSize.type) {
-        case "math expression":
-          return (
-            fontSize
-              .resolve({ length, percentage })
-              // Since the calculation has been parsed and typed, there should
-              // always be something to get.
-              .getUnsafe()
-          );
+      // Must be a keyword
+      switch (fontSize.value) {
+        case "larger":
+          return parent.scale(1.2);
 
-        case "length":
-          return length(fontSize);
+        case "smaller":
+          return parent.scale(0.85);
 
-        case "percentage": {
-          return percentage(fontSize);
-        }
+        default: {
+          const factor = factors[fontSize.value];
 
-        case "keyword": {
-          switch (fontSize.value) {
-            case "larger":
-              return parent.scale(1.2);
+          // We need the type assertion to help TS break a circular type reference:
+          // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+          const [family] = (style.computed("font-family").value as FontFamily)
+            .values;
 
-            case "smaller":
-              return parent.scale(0.85);
+          const base =
+            family.type === "keyword" ? bases[family.value] : bases.serif;
 
-            default: {
-              const factor = factors[fontSize.value];
-
-              // We need the type assertion to help TS break a circular type reference:
-              // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
-              const [family] = (
-                style.computed("font-family").value as FontFamily
-              ).values;
-
-              const base =
-                family.type === "keyword" ? bases[family.value] : bases.serif;
-
-              return Length.of(factor * base, "px");
-            }
-          }
+          return Length.of(factor * base, "px");
         }
       }
     }),

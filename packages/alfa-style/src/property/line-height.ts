@@ -1,18 +1,17 @@
 import {
   Keyword,
   Length,
-  Math,
-  Number,
-  Percentage,
-  Token,
+  Number as CSSNumber,
+  type Token,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
+import { LengthPercentage, Number } from "./value/compound";
 
-import type {Computed as FontSize} from "./font-size"
+import type { Computed as FontSize } from "./font-size";
+import { Selective } from "@siteimprove/alfa-selective";
 
 const { either } = Parser;
 
@@ -21,16 +20,13 @@ const { either } = Parser;
  */
 export type Specified =
   | Keyword<"normal">
-  | Number
-  | Length
-  | Percentage
-  | Math<"length-percentage">
-  | Math<"number">;
+  | LengthPercentage.LengthPercentage
+  | Number.Number;
 
 /**
  * @internal
  */
-export type Computed = Keyword<"normal"> | Number | Length<"px">;
+export type Computed = Keyword<"normal"> | CSSNumber | Length<"px">;
 
 /**
  * @internal
@@ -38,9 +34,7 @@ export type Computed = Keyword<"normal"> | Number | Length<"px">;
 export const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("normal"),
   Number.parse,
-  Length.parse,
-  Percentage.parse,
-  Math.parseLengthNumberPercentage
+  LengthPercentage.parse
 );
 
 /**
@@ -56,32 +50,14 @@ export default Longhand.of<Specified, Computed>(
       // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
       const fontSize = style.computed("font-size").value as FontSize;
 
-      const percentage = Resolver.percentage(fontSize);
-      const length = Resolver.length(style);
-
-      switch (height.type) {
-        case "keyword":
-        case "number":
-          return height;
-
-        case "length":
-          return length(height);
-
-        case "percentage":
-          return percentage(height);
-
-        case "math expression":
-          return (
-            (
-              height.isNumber()
-                ? height.resolve({ percentage })
-                : height.resolve({ length, percentage })
-            )
-              // Since the calculation has been parsed and typed, there should
-              // always be something to get.
-              .getUnsafe()
-          );
-      }
+      return Selective.of(height)
+        .if(
+          LengthPercentage.isLengthPercentage,
+          LengthPercentage.resolve(fontSize, style)
+        )
+        .if(Number.isNumber, Number.resolve)
+        // Keywords are left untouched
+        .get();
     }),
   {
     inherits: true,
