@@ -330,7 +330,7 @@ export namespace Element {
     hasName: typeof predicate_3.hasName, // (undocumented)
     hasNamespace: typeof predicate_3.hasNamespace, // (undocumented)
     hasTabIndex: typeof predicate_3.hasTabIndex, // (undocumented)
-    hasUniqueId: typeof predicate_3.hasUniqueId, // (undocumented)
+    hasUniqueId: Predicate<Element<string>>, // (undocumented)
     isBrowsingContextContainer: typeof predicate_3.isBrowsingContextContainer, // (undocumented)
     isContent: typeof predicate_3.isContent, // (undocumented)
     isActuallyDisabled: typeof predicate_3.isActuallyDisabled, // (undocumented)
@@ -538,7 +538,7 @@ function hasTabIndex(predicate?: Predicate<number>): Predicate<Element>;
 function hasTextContent(predicate?: Predicate<string>, options?: Node.Traversal): Predicate<Node>;
 
 // @public (undocumented)
-function hasUniqueId(): Predicate<Element>;
+const hasUniqueId: Predicate<Element>;
 
 // @public (undocumented)
 export class ImportRule extends ConditionRule {
