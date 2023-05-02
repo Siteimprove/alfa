@@ -2,12 +2,11 @@ import { Token, Length, type Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
 
 import { LengthPercentage } from "./value/compound";
 import { Tuple } from "./value/tuple";
 
-const { takeBetween, either, map, delimited, option } = Parser;
+const { takeBetween, map, delimited, option } = Parser;
 
 /**
  * @internal
@@ -46,14 +45,16 @@ export default Longhand.of<Specified, Computed>(
   Tuple.of(Length.of(0, "px"), Length.of(0, "px")),
   parse,
   (value, style) =>
-    value.map(({ values: [h, v] }) => {
-      return Tuple.of(
+    value.map(({ values: [h, v] }) =>
+      // Percentages are relative to the size of the border box, which we don't
+      // really handle currently.
+      Tuple.of(
         h.type === "length" || h.type === "math expression"
           ? LengthPercentage.resolve(Length.of(0, "px"), style)(h)
           : h,
         v.type === "length" || v.type === "math expression"
           ? LengthPercentage.resolve(Length.of(0, "px"), style)(v)
           : v
-      );
-    })
+      )
+    )
 );
