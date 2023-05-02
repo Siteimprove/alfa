@@ -921,11 +921,11 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"m
     static of(expression: Expression): Math_2;
     // (undocumented)
     reduce(resolver: Expression.Resolver): Math_2;
-    resolve(this: Math_2<"length">, resolver: Expression.LengthResolver): Option<Length<"px">>;
+    resolve(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length<"px">, string>;
     // (undocumented)
-    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Option<Length<"px">>;
+    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Result<Length<"px">, string>;
     // (undocumented)
-    resolve(this: Math_2<"number">, resolver: Expression.PercentageResolver): Option<Number_2>;
+    resolve(this: Math_2<"number">): Result<Number_2, string>;
     // (undocumented)
     toJSON(): Math_2.JSON;
     // (undocumented)
@@ -960,7 +960,7 @@ namespace Math_2 {
     const // (undocumented)
     parseLengthPercentage: Parser<Slice<Token>, Math_2<"length-percentage">, string, []>;
     const // (undocumented)
-    parseLengthNumberPercentage: Parser<Slice<Token>, Math_2<"number"> | Math_2<"length-percentage">, string, []>;
+    parseNumber: Parser<Slice<Token>, Math_2<"number">, string, []>;
 }
 export { Math_2 as Math }
 
