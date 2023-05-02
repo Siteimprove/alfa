@@ -1,9 +1,10 @@
-import { Token, Length, Percentage } from "@siteimprove/alfa-css";
+import { Token, Length, type Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
+import { LengthPercentage } from "./value/compound";
 import { Tuple } from "./value/tuple";
 
 const { takeBetween, either, map, delimited, option } = Parser;
@@ -12,7 +13,10 @@ const { takeBetween, either, map, delimited, option } = Parser;
  * @internal
  */
 export type Specified = Tuple<
-  [horizontal: Length | Percentage, vertical: Length | Percentage]
+  [
+    horizontal: LengthPercentage.LengthPercentage,
+    vertical: LengthPercentage.LengthPercentage
+  ]
 >;
 
 /**
@@ -27,10 +31,7 @@ export type Computed = Tuple<
  */
 export const parse = map(
   takeBetween(
-    delimited(
-      option(Token.parseWhitespace),
-      either(Length.parse, Percentage.parse)
-    ),
+    delimited(option(Token.parseWhitespace), LengthPercentage.parse),
     1,
     2
   ),
@@ -47,8 +48,12 @@ export default Longhand.of<Specified, Computed>(
   (value, style) =>
     value.map(({ values: [h, v] }) => {
       return Tuple.of(
-        h.type === "length" ? Resolver.length(h, style) : h,
-        v.type === "length" ? Resolver.length(v, style) : v
+        h.type === "length" || h.type === "math expression"
+          ? LengthPercentage.resolve(Length.of(0, "px"), style)(h)
+          : h,
+        v.type === "length" || v.type === "math expression"
+          ? LengthPercentage.resolve(Length.of(0, "px"), style)(v)
+          : v
       );
     })
 );
