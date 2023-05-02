@@ -798,6 +798,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-dom@workspace:packages/alfa-dom"
   dependencies:
+    "@siteimprove/alfa-array": "workspace:^0.62.2"
     "@siteimprove/alfa-cache": "workspace:^0.62.2"
     "@siteimprove/alfa-css": "workspace:^0.62.2"
     "@siteimprove/alfa-earl": "workspace:^0.62.2"
