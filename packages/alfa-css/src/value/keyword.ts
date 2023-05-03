@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax/token";
+import { Token } from "../syntax";
 import { Value } from "../value";
 
 const { map } = Parser;

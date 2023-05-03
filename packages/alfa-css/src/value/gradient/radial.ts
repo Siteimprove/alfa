@@ -8,7 +8,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Token } from "../../syntax/token";
+import { Token } from "../../syntax";
 import { Value } from "../../value";
 
 import { Length, Percentage } from "../numeric";
