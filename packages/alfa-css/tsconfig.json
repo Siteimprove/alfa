@@ -30,6 +30,7 @@
     "src/value/gradient/linear.ts",
     "src/value/gradient/radial.ts",
     "src/value/image.ts",
+    "src/value/index.ts",
     "src/value/keyword.ts",
     "src/value/numeric.ts",
     "src/value/numeric/angle.ts",
