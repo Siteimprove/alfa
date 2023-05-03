@@ -3,11 +3,11 @@
   "extends": "../tsconfig.json",
   "files": [
     "src/index.ts",
-    "src/syntax.ts",
     "src/syntax/block.ts",
     "src/syntax/component.ts",
     "src/syntax/declaration.ts",
     "src/syntax/function.ts",
+    "src/syntax/index.ts",
     "src/syntax/lexer.ts",
     "src/syntax/nth.ts",
     "src/syntax/token.ts",
