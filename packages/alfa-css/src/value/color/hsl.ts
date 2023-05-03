@@ -4,7 +4,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax";
-import { Value } from "../../value";
+import { Value } from "../value";
 
 import { Angle, Number, Percentage } from "../numeric";
 

@@ -6,7 +6,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Function, Token } from "../../syntax";
-import { Value } from "../../value";
+import { Value } from "../value";
 
 import { Keyword } from "../keyword";
 import { Length, Percentage } from "../numeric";

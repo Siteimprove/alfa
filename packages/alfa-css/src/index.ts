@@ -1,5 +1,5 @@
 export * from "./syntax";
-export * from "./value";
+export * from "./value/value";
 export * from "./value/box";
 export * from "./value/math-expression";
 export * from "./value/color";

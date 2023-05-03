@@ -5,7 +5,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Err } from "@siteimprove/alfa-result";
 
 import { Token } from "../syntax";
-import { Value } from "../value";
+import { Value } from "./value";
 import { Keyword } from "./keyword";
 import { Length, Percentage } from "./numeric";
 import { Unit } from "./unit";
