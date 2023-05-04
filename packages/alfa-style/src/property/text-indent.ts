@@ -1,15 +1,16 @@
-import { Length, Percentage } from "@siteimprove/alfa-css";
+import { Length, type Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
+
+import { LengthPercentage } from "./value/compound";
 
 const { either } = Parser;
 
 /**
  * @internal
  */
-export type Specified = Length | Percentage;
+export type Specified = LengthPercentage.LengthPercentage;
 
 /**
  * @internal
@@ -17,20 +18,18 @@ export type Specified = Length | Percentage;
 export type Computed = Length<"px"> | Percentage;
 
 /**
- * @internal
- */
-export const parse = either(Length.parse, Percentage.parse);
-
-/**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent}
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
   Length.of(0, "px"),
-  parse,
+  LengthPercentage.parse,
   (textIndent, style) =>
     textIndent.map((indent) =>
-      indent.type === "percentage" ? indent : Resolver.length(indent, style)
+      // Percentages resolve relative to the width, which we do not really handle.
+      indent.type === "percentage"
+        ? indent
+        : LengthPercentage.resolve(Length.of(0, "px"), style)(indent)
     ),
   {
     inherits: true,

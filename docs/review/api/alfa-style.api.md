@@ -189,42 +189,42 @@ export namespace Longhands {
         readonly "background-size": Longhand<Specified_9, Computed_5>;
         readonly "border-block-end-color": Longhand<Color, Computed_6>;
         readonly "border-block-end-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-block-end-width": Longhand<Specified_11, Length<"px">>;
+        readonly "border-block-end-width": Longhand<Specified_11, Computed_7>;
         readonly "border-block-start-color": Longhand<Color, Computed_6>;
         readonly "border-block-start-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-block-start-width": Longhand<Specified_11, Length<"px">>;
+        readonly "border-block-start-width": Longhand<Specified_11, Computed_7>;
         readonly "border-bottom-color": Longhand<Color, Computed_6>;
-        readonly "border-bottom-left-radius": Longhand<Specified_12, Computed_7>;
-        readonly "border-bottom-right-radius": Longhand<Specified_12, Computed_7>;
+        readonly "border-bottom-left-radius": Longhand<Specified_12, Computed_8>;
+        readonly "border-bottom-right-radius": Longhand<Specified_12, Computed_8>;
         readonly "border-bottom-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-bottom-width": Longhand<Specified_11, Length<"px">>;
+        readonly "border-bottom-width": Longhand<Specified_11, Computed_7>;
         readonly "border-collapse": Longhand<Specified_13, Specified_13>;
-        readonly "border-end-end-radius": Longhand<Specified_12, Computed_7>;
-        readonly "border-end-start-radius": Longhand<Specified_12, Computed_7>;
-        readonly "border-image-outset": Longhand<Specified_14, Computed_8>;
+        readonly "border-end-end-radius": Longhand<Specified_12, Computed_8>;
+        readonly "border-end-start-radius": Longhand<Specified_12, Computed_8>;
+        readonly "border-image-outset": Longhand<Specified_14, Computed_9>;
         readonly "border-image-repeat": Longhand<Specified_15, Specified_15>;
         readonly "border-image-slice": Longhand<Specified_16, Specified_16>;
-        readonly "border-image-source": Longhand<Specified_17, Computed_9>;
-        readonly "border-image-width": Longhand<Specified_18, Computed_10>;
+        readonly "border-image-source": Longhand<Specified_17, Computed_10>;
+        readonly "border-image-width": Longhand<Specified_18, Computed_11>;
         readonly "border-inline-end-color": Longhand<Color, Computed_6>;
         readonly "border-inline-end-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-inline-end-width": Longhand<Specified_11, Length<"px">>;
+        readonly "border-inline-end-width": Longhand<Specified_11, Computed_7>;
         readonly "border-inline-start-color": Longhand<Color, Computed_6>;
         readonly "border-inline-start-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-inline-start-width": Longhand<Specified_11, Length<"px">>;
+        readonly "border-inline-start-width": Longhand<Specified_11, Computed_7>;
         readonly "border-left-color": Longhand<Color, Computed_6>;
         readonly "border-left-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-left-width": Longhand<Specified_11, Length<"px">>;
+        readonly "border-left-width": Longhand<Specified_11, Computed_7>;
         readonly "border-right-color": Longhand<Color, Computed_6>;
         readonly "border-right-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-right-width": Longhand<Specified_11, Length<"px">>;
-        readonly "border-start-end-radius": Longhand<Specified_12, Computed_7>;
-        readonly "border-start-start-radius": Longhand<Specified_12, Computed_7>;
+        readonly "border-right-width": Longhand<Specified_11, Computed_7>;
+        readonly "border-start-end-radius": Longhand<Specified_12, Computed_8>;
+        readonly "border-start-start-radius": Longhand<Specified_12, Computed_8>;
         readonly "border-top-color": Longhand<Color, Computed_6>;
-        readonly "border-top-left-radius": Longhand<Specified_12, Computed_7>;
-        readonly "border-top-right-radius": Longhand<Specified_12, Computed_7>;
+        readonly "border-top-left-radius": Longhand<Specified_12, Computed_8>;
+        readonly "border-top-right-radius": Longhand<Specified_12, Computed_8>;
         readonly "border-top-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-top-width": Longhand<Specified_11, Computed_11>;
+        readonly "border-top-width": Longhand<Specified_11, Computed_7>;
         readonly bottom: Longhand<Specified_19, Computed_12>;
         readonly "box-shadow": Longhand<Specified_20, Computed_13>;
         readonly "clip-path": Longhand<Specified_21, Specified_21>;
@@ -259,32 +259,32 @@ export namespace Longhands {
         readonly "margin-top": Longhand<Specified_41, Computed_19>;
         readonly "min-height": Longhand<Specified_42, Computed_20>;
         readonly "min-width": Longhand<Specified_43, Computed_21>;
-        readonly opacity: Longhand<Specified_44, Number_2>;
-        readonly "outline-color": Longhand<Specified_45, Computed_22>;
+        readonly opacity: Longhand<import("./property/value/compound").NumberPercentage.NumberPercentage, Number_2>;
+        readonly "outline-color": Longhand<Specified_44, Computed_22>;
         readonly "outline-offset": Longhand<import("./property/value/compound").Length.Length, Computed_23>;
-        readonly "outline-style": Longhand<Specified_46, Specified_46>;
-        readonly "outline-width": Longhand<Specified_47, Computed_24>;
-        readonly "overflow-x": Longhand<Specified_48, Specified_48>;
-        readonly "overflow-y": Longhand<Specified_49, Specified_49>;
-        readonly position: Longhand<Specified_50, Specified_50>;
+        readonly "outline-style": Longhand<Specified_45, Specified_45>;
+        readonly "outline-width": Longhand<Specified_46, Computed_24>;
+        readonly "overflow-x": Longhand<Specified_47, Specified_47>;
+        readonly "overflow-y": Longhand<Specified_48, Specified_48>;
+        readonly position: Longhand<Specified_49, Specified_49>;
         readonly right: Longhand<Specified_19, Computed_12>;
-        readonly rotate: Longhand<Specified_51, Computed_25>;
-        readonly "text-align": Longhand<Specified_52, Specified_52>;
+        readonly rotate: Longhand<Specified_50, Computed_25>;
+        readonly "text-align": Longhand<Specified_51, Specified_51>;
         readonly "text-decoration-color": Longhand<Color, Computed_26>;
-        readonly "text-decoration-line": Longhand<Specified_53, Specified_53>;
-        readonly "text-decoration-style": Longhand<Specified_54, Specified_54>;
-        readonly "text-decoration-thickness": Longhand<Specified_55, Computed_27>;
-        readonly "text-indent": Longhand<Specified_56, Computed_28>;
-        readonly "text-overflow": Longhand<Specified_57, Specified_57>;
-        readonly "text-shadow": Longhand<Specified_58, Computed_29>;
-        readonly "text-transform": Longhand<Specified_59, Specified_59>;
+        readonly "text-decoration-line": Longhand<Specified_52, Specified_52>;
+        readonly "text-decoration-style": Longhand<Specified_53, Specified_53>;
+        readonly "text-decoration-thickness": Longhand<Specified_54, Computed_27>;
+        readonly "text-indent": Longhand<import("./property/value/compound").LengthPercentage.LengthPercentage, Computed_28>;
+        readonly "text-overflow": Longhand<Specified_55, Specified_55>;
+        readonly "text-shadow": Longhand<Specified_56, Computed_29>;
+        readonly "text-transform": Longhand<Specified_57, Specified_57>;
         readonly top: Longhand<Specified_19, Computed_12>;
-        readonly transform: Longhand<Specified_60, Computed_30>;
-        readonly "vertical-align": Longhand<Specified_61, Computed_31>;
-        readonly visibility: Longhand<Specified_62, Specified_62>;
-        readonly "white-space": Longhand<Specified_63, Specified_63>;
-        readonly width: Longhand<Specified_64, Computed_32>;
-        readonly "word-spacing": Longhand<Specified_65, Computed_33>;
+        readonly transform: Longhand<Specified_58, Computed_30>;
+        readonly "vertical-align": Longhand<Specified_59, Computed_31>;
+        readonly visibility: Longhand<Specified_60, Specified_60>;
+        readonly "white-space": Longhand<Specified_61, Specified_61>;
+        readonly width: Longhand<Specified_62, Computed_32>;
+        readonly "word-spacing": Longhand<Specified_63, Computed_33>;
     };
     // (undocumented)
     export type Property = typeof longHands;
@@ -552,6 +552,7 @@ export namespace Value {
 // src/longhands.ts:206:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:206:7 - (ae-incompatible-release-tags) The symbol ""border-block-end-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:207:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:207:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:207:7 - (ae-incompatible-release-tags) The symbol ""border-block-end-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:208:7 - (ae-incompatible-release-tags) The symbol ""border-block-start-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:209:7 - (ae-incompatible-release-tags) The symbol ""border-block-start-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
@@ -598,7 +599,6 @@ export namespace Value {
 // src/longhands.ts:239:7 - (ae-incompatible-release-tags) The symbol ""border-top-left-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:240:7 - (ae-incompatible-release-tags) The symbol ""border-top-right-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:241:7 - (ae-incompatible-release-tags) The symbol ""border-top-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:242:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:242:7 - (ae-incompatible-release-tags) The symbol ""border-top-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:243:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:243:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
@@ -668,7 +668,7 @@ export namespace Value {
 // src/longhands.ts:276:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:276:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:276:7 - (ae-incompatible-release-tags) The symbol ""min-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:277:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:277:7 - (ae-forgotten-export) The symbol "NumberPercentage" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:277:7 - (ae-incompatible-release-tags) The symbol "opacity" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:278:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:278:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
@@ -702,7 +702,7 @@ export namespace Value {
 // src/longhands.ts:291:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:291:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:291:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-thickness"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:292:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:292:7 - (ae-forgotten-export) The symbol "LengthPercentage" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:292:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:292:7 - (ae-incompatible-release-tags) The symbol ""text-indent"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:293:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts

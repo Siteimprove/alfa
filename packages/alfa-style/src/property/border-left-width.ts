@@ -1,40 +1,16 @@
-import { Length } from "@siteimprove/alfa-css";
-
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
+import type { Value } from "../value";
+import type { Computed as StyleProp } from "./border-top-style";
 
-import Base from "./border-top-width";
+import Base, { compute } from "./border-top-width";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-left-width}
  * @internal
  */
 export default Longhand.extend(Base, {
-  compute: (borderWidth, style) =>
-    borderWidth.map((value) => {
-      if (
-        style
-          .computed("border-left-style")
-          .some(({ value }) => value === "none" || value === "hidden")
-      ) {
-        return Length.of(0, "px");
-      }
-
-      switch (value.type) {
-        case "keyword":
-          switch (value.value) {
-            case "thin":
-              return Length.of(1, "px");
-
-            case "medium":
-              return Length.of(3, "px");
-
-            case "thick":
-              return Length.of(5, "px");
-          }
-
-        case "length":
-          return Resolver.length(value, style);
-      }
-    }),
+  compute: (borderWidth, style) => {
+    const borderStyle = style.computed("border-left-style") as Value<StyleProp>;
+    return compute(borderStyle, borderWidth, style);
+  },
 });

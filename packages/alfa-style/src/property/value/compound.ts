@@ -128,6 +128,44 @@ export namespace Length {
 /**
  * @internal
  */
+export namespace NumberPercentage {
+  export type NumberPercentage = CSSNumber | Percentage | Math<"number">;
+
+  export function isNumber(value: unknown): value is NumberPercentage {
+    return (
+      CSSNumber.isNumber(value) ||
+      Percentage.isPercentage(value) ||
+      (Math.isCalculation(value) && value.isNumber())
+    );
+  }
+
+  export const parse = either<Slice<Token>, NumberPercentage, string>(
+    CSSNumber.parse,
+    Percentage.parse,
+    Math.parseNumber
+  );
+
+  /**
+   * Resolve a Number .
+   *
+   * @param value the Number to resolve
+   */
+  export function resolve(value: NumberPercentage): CSSNumber | Percentage {
+    switch (value.type) {
+      case "math expression":
+        // Since the calculation has been parsed and typed, there should
+        // always be something to get.
+        return value.resolve().getUnsafe();
+      case "number":
+      case "percentage":
+        return value;
+    }
+  }
+}
+
+/**
+ * @internal
+ */
 export namespace Number {
   export type Number = CSSNumber | Math<"number">;
 
