@@ -7,12 +7,12 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Token } from "../syntax";
+import { Token } from "../../syntax/index";
 
-import { Color } from "./color";
-import { Length, Percentage } from "./numeric";
+import { Color } from "../color/index";
+import { Length, Percentage } from "../numeric/index";
 
-import { Linear, Radial } from "..";
+import { Linear, Radial } from "../../index";
 
 const { either, pair, map, option, oneOrMore, delimited, left, right } = Parser;
 

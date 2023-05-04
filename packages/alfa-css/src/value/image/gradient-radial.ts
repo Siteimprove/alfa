@@ -8,12 +8,12 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Token } from "../../syntax";
+import { Token } from "../../syntax/index";
 import { Value } from "../value";
 
-import { Length, Percentage } from "../numeric";
+import { Length, Percentage } from "../numeric/index";
 import { Position } from "../position";
-import { Gradient } from "../gradient";
+import { Gradient } from "./gradient";
 import { Keyword } from "../keyword";
 
 const { map, either, pair, option, left, right, delimited, take } = Parser;

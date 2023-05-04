@@ -2,8 +2,8 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax";
-import { Value } from "./value";
+import { Token } from "../../syntax/index";
+import { Value } from "../value";
 
 const { map, right, either, left, delimited, option } = Parser;
 
