@@ -58,6 +58,9 @@
     "src/node/traversal/lowest-common-ancestor.ts",
     "src/node/traversal.ts",
     "src/node/type.ts",
+    "src/node/query/element-descendants.ts",
+    "src/node/query/element-id-map.ts",
+    "src/node/query/index.ts",
     "src/style/block.ts",
     "src/style/declaration.ts",
     "src/style/rule.ts",
@@ -78,25 +81,60 @@
     "test/node/attribute.spec.ts",
     "test/node/element.spec.tsx",
     "test/node/traversal/get-nodes-between.spec.tsx",
-    "test/node/traversal/lowest-common-ancestor.spec.tsx"
+    "test/node/traversal/lowest-common-ancestor.spec.tsx",
+    "test/node/query/element-id-map.spec.tsx"
   ],
   "references": [
-    { "path": "../alfa-cache" },
-    { "path": "../alfa-css" },
-    { "path": "../alfa-earl" },
-    { "path": "../alfa-equatable" },
-    { "path": "../alfa-flags" },
-    { "path": "../alfa-iterable" },
-    { "path": "../alfa-json" },
-    { "path": "../alfa-lazy" },
-    { "path": "../alfa-media" },
-    { "path": "../alfa-option" },
-    { "path": "../alfa-predicate" },
-    { "path": "../alfa-refinement" },
-    { "path": "../alfa-sarif" },
-    { "path": "../alfa-sequence" },
-    { "path": "../alfa-test" },
-    { "path": "../alfa-trampoline" },
-    { "path": "../alfa-tree" }
+    {
+      "path": "../alfa-cache"
+    },
+    {
+      "path": "../alfa-css"
+    },
+    {
+      "path": "../alfa-earl"
+    },
+    {
+      "path": "../alfa-equatable"
+    },
+    {
+      "path": "../alfa-flags"
+    },
+    {
+      "path": "../alfa-iterable"
+    },
+    {
+      "path": "../alfa-json"
+    },
+    {
+      "path": "../alfa-lazy"
+    },
+    {
+      "path": "../alfa-media"
+    },
+    {
+      "path": "../alfa-option"
+    },
+    {
+      "path": "../alfa-predicate"
+    },
+    {
+      "path": "../alfa-refinement"
+    },
+    {
+      "path": "../alfa-sarif"
+    },
+    {
+      "path": "../alfa-sequence"
+    },
+    {
+      "path": "../alfa-test"
+    },
+    {
+      "path": "../alfa-trampoline"
+    },
+    {
+      "path": "../alfa-tree"
+    }
   ]
 }

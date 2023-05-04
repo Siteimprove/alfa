@@ -209,15 +209,7 @@ export namespace Node {
     // references, it cannot cross shadow or document boundaries.
     const elements = root.inclusiveDescendants().filter(dom.Element.isElement);
 
-    // Build a map from ID -> element to allow fast resolution of ID references.
-    // The collected references are added to the map in reverse order to ensure
-    // that the first occurrence of a given ID is what ends up in the map in
-    // event of duplicates.
-    const ids = Map.from(
-      elements
-        .collect((element) => element.id.map((id) => [id, element] as const))
-        .reverse()
-    );
+    const ids = dom.Query.getElementIdMap(root);
 
     // Do a first pass over `aria-owns` attributes and collect the referenced
     // elements.

@@ -2,11 +2,11 @@ import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
-import { Attribute, Element, Node, Text } from "@siteimprove/alfa-dom";
+import { Attribute, Element, Node, Query, Text } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Option, None } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -27,6 +27,7 @@ const { isText } = Text;
 const { equals, test } = Predicate;
 const { or } = Refinement;
 const { hasComputedStyle } = Style;
+const { getElementDescendants } = Query;
 
 /**
  * @public
@@ -891,8 +892,7 @@ export namespace Name {
     // aria-labelledby, it is more efficient to grab them in DOM order (in a
     // single traversal) and then sort by tokens order rather than grab the ids
     // one by one in the correct order.
-    const references = root
-      .elementDescendants()
+    const references = getElementDescendants(root)
       .filter(hasId(equals(...ids)))
       .sortWith((a, b) =>
         Comparable.compareNumber(

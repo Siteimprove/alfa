@@ -33,5 +33,7 @@ export * from "./node/shadow";
 export * from "./node/text";
 export * from "./node/type";
 
+export * from "./node/query";
+
 export * from "./h";
 export * from "./jsx";
