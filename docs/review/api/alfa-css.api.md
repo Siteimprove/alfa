@@ -852,6 +852,8 @@ export namespace Linear {
         repeats: boolean;
     }
     // (undocumented)
+    export function parse(parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>): Parser<Slice<Token>, Linear, string>;
+    // (undocumented)
     export type Position = Position.Vertical | Position.Horizontal;
     // (undocumented)
     export namespace Position {
@@ -895,8 +897,6 @@ export namespace Linear {
             type: "side";
         }
     }
-    const // (undocumented)
-    parse: Parser<Slice<Token>, Linear, string>;
 }
 
 // @public (undocumented)
@@ -1532,14 +1532,14 @@ export namespace Radial {
         shape: Shape.JSON;
     }
     // (undocumented)
+    export function parse(parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>): Parser<Slice<Token>, Radial, string>;
+    // (undocumented)
     export type Shape = Circle | Ellipse | Extent;
     // (undocumented)
     export namespace Shape {
         // (undocumented)
         export type JSON = Circle.JSON | Ellipse.JSON | Extent.JSON;
     }
-    const // (undocumented)
-    parse: Parser<Slice<Token>, Radial, string>;
 }
 
 // @public (undocumented)
