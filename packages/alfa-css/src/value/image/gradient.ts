@@ -12,7 +12,7 @@ import { Token } from "../../syntax";
 import { Color } from "../color";
 import { Length, Percentage } from "../../calculation";
 
-import { Linear, Radial } from "../../index";
+import { Linear, Radial } from "./index";
 
 const { either, pair, map, option, oneOrMore, delimited, left, right } = Parser;
 
