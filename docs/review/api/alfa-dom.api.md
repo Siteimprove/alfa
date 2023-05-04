@@ -4,6 +4,7 @@
 
 ```ts
 
+import { Array as Array_2 } from '@siteimprove/alfa-array';
 import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Flags } from '@siteimprove/alfa-flags';
@@ -533,6 +534,9 @@ function hasNamespace(namespace: Namespace, ...rest: Array<Namespace>): Predicat
 
 // @public (undocumented)
 function hasTabIndex(predicate?: Predicate<number>): Predicate<Element>;
+
+// @public (undocumented)
+function hasTabIndex(value: number, ...rest: Array_2<number>): Predicate<Element>;
 
 // @public (undocumented)
 function hasTextContent(predicate?: Predicate<string>, options?: Node.Traversal): Predicate<Node>;
