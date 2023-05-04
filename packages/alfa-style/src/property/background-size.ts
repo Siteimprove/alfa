@@ -4,10 +4,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
 
 import { List } from "./value/list";
 import { Tuple } from "./value/tuple";
+
+import { LengthPercentage } from "./value/compound";
 
 const { map, either, delimited, option, pair, right, separatedList } = Parser;
 
@@ -20,7 +21,7 @@ export type Specified = List<Specified.Item>;
  * @internal
  */
 export namespace Specified {
-  export type Dimension = Length | Percentage | Keyword<"auto">;
+  export type Dimension = LengthPercentage.LengthPercentage | Keyword<"auto">;
 
   export type Item =
     | Tuple<[Dimension, Dimension]>
@@ -49,8 +50,7 @@ export namespace Computed {
  * @internal
  */
 const parseDimension = either<Slice<Token>, Specified.Dimension, string>(
-  Length.parse,
-  Percentage.parse,
+  LengthPercentage.parse,
   Keyword.parse("auto")
 );
 
@@ -103,9 +103,15 @@ export default Longhand.of<Specified, Computed>(
 
           const [x, y] = size.values;
 
+          // Percentages are relative to the size of the background positioning
+          // area, which we don't really handle currently.
           return Tuple.of(
-            x.type === "length" ? Resolver.length(x, style) : x,
-            y.type === "length" ? Resolver.length(y, style) : y
+            x.type === "length" || x.type === "math expression"
+              ? LengthPercentage.resolve(Length.of(0, "px"), style)(x)
+              : x,
+            y.type === "length" || y.type === "math expression"
+              ? LengthPercentage.resolve(Length.of(0, "px"), style)(y)
+              : y
           );
         }),
         ", "

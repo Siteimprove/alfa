@@ -1,9 +1,10 @@
-import { Keyword, Length, Percentage, Token } from "@siteimprove/alfa-css";
+import { Keyword, type Length, type Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import { Selective } from "@siteimprove/alfa-selective";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
+import { LengthPercentage } from "./value/compound";
 
 import type { Computed as FontSize } from "./font-size";
 
@@ -13,8 +14,7 @@ const { either } = Parser;
  * @internal
  */
 export type Specified =
-  | Length
-  | Percentage
+  | LengthPercentage.LengthPercentage
   | Keyword<"auto">
   | Keyword<"from-font">;
 
@@ -28,8 +28,7 @@ export type Computed = Length<"px"> | Keyword<"auto"> | Keyword<"from-font">;
  */
 export const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("auto", "from-font"),
-  Length.parse,
-  Percentage.parse
+  LengthPercentage.parse
 );
 
 /**
@@ -41,17 +40,15 @@ export default Longhand.of<Specified, Computed>(
   parse,
   (thickness, style) =>
     thickness.map((value) => {
-      switch (value.type) {
-        case "keyword":
-          return value;
-        case "length":
-          return Resolver.length(value, style);
-        case "percentage":
-          // We need the type assertion to help TS break a circular type reference:
-          // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
-          const fontSize = style.computed("font-size").value as FontSize;
+      // We need the type assertion to help TS break a circular type reference:
+      // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+      const fontSize = style.computed("font-size").value as FontSize;
 
-          return Length.of(fontSize.value * value.value, "px");
-      }
+      return Selective.of(value)
+        .if(
+          LengthPercentage.isLengthPercentage,
+          LengthPercentage.resolve(fontSize, style)
+        )
+        .get();
     })
 );
