@@ -13,7 +13,7 @@ import { Value } from "../value";
 
 import { Length, Percentage } from "../../calculation";
 import { Position } from "../position";
-import { Gradient } from "./gradient";
+import type { Gradient } from "./gradient";
 import { Keyword } from "../keyword";
 
 const { map, either, pair, option, left, right, delimited, take } = Parser;
@@ -501,59 +501,63 @@ export namespace Radial {
   /**
    * {@link https://drafts.csswg.org/css-images/#funcdef-radial-gradient}
    */
-  export const parse: Parser<Slice<Token>, Radial, string> = map(
-    pair(
-      Token.parseFunction(
-        (fn) =>
-          fn.value === "radial-gradient" ||
-          fn.value === "repeating-radial-gradient"
-      ),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            option(
-              left(
-                either(
-                  pair(
-                    map(parseShape, (shape) => Option.of(shape)),
-                    option(
-                      delimited(option(Token.parseWhitespace), parsePosition)
+  export function parse(
+    parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>
+  ): Parser<Slice<Token>, Radial, string> {
+    return map(
+      pair(
+        Token.parseFunction(
+          (fn) =>
+            fn.value === "radial-gradient" ||
+            fn.value === "repeating-radial-gradient"
+        ),
+        left(
+          delimited(
+            option(Token.parseWhitespace),
+            pair(
+              option(
+                left(
+                  either(
+                    pair(
+                      map(parseShape, (shape) => Option.of(shape)),
+                      option(
+                        delimited(option(Token.parseWhitespace), parsePosition)
+                      )
+                    ),
+                    map(
+                      parsePosition,
+                      (position) => [None, Option.of(position)] as const
                     )
                   ),
-                  map(
-                    parsePosition,
-                    (position) => [None, Option.of(position)] as const
-                  )
-                ),
-                delimited(option(Token.parseWhitespace), Token.parseComma)
-              )
-            ),
-            Gradient.parseItemList
-          )
-        ),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (result) => {
-      const [fn, [shapeAndPosition, items]] = result;
+                  delimited(option(Token.parseWhitespace), Token.parseComma)
+                )
+              ),
+              parseItemList
+            )
+          ),
+          Token.parseCloseParenthesis
+        )
+      ),
+      (result) => {
+        const [fn, [shapeAndPosition, items]] = result;
 
-      const shape = shapeAndPosition
-        .flatMap(([shape]) => shape)
-        .getOrElse(() => Extent.of());
+        const shape = shapeAndPosition
+          .flatMap(([shape]) => shape)
+          .getOrElse(() => Extent.of());
 
-      const position = shapeAndPosition
-        .flatMap(([, position]) => position)
-        .getOrElse(() =>
-          Position.of(Keyword.of("center"), Keyword.of("center"))
+        const position = shapeAndPosition
+          .flatMap(([, position]) => position)
+          .getOrElse(() =>
+            Position.of(Keyword.of("center"), Keyword.of("center"))
+          );
+
+        return Radial.of(
+          shape,
+          position,
+          items,
+          fn.value.startsWith("repeating")
         );
-
-      return Radial.of(
-        shape,
-        position,
-        items,
-        fn.value.startsWith("repeating")
-      );
-    }
-  );
+      }
+    );
+  }
 }

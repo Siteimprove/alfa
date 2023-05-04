@@ -10,7 +10,7 @@ import { Token } from "../../syntax";
 import { Value } from "../value";
 
 import { Angle } from "../../calculation";
-import { Gradient } from "./gradient";
+import type { Gradient } from "./gradient";
 
 const { map, either, pair, option, left, right, delimited } = Parser;
 
@@ -303,37 +303,41 @@ export namespace Linear {
   /**
    * {@link https://drafts.csswg.org/css-images/#funcdef-linear-gradient}
    */
-  export const parse: Parser<Slice<Token>, Linear, string> = map(
-    pair(
-      Token.parseFunction(
-        (fn) =>
-          fn.value === "linear-gradient" ||
-          fn.value === "repeating-linear-gradient"
-      ),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            option(
-              left(
-                parseDirection,
-                delimited(option(Token.parseWhitespace), Token.parseComma)
-              )
-            ),
-            Gradient.parseItemList
-          )
+  export function parse(
+    parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>
+  ): Parser<Slice<Token>, Linear, string> {
+    return map(
+      pair(
+        Token.parseFunction(
+          (fn) =>
+            fn.value === "linear-gradient" ||
+            fn.value === "repeating-linear-gradient"
         ),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (result) => {
-      const [fn, [direction, items]] = result;
+        left(
+          delimited(
+            option(Token.parseWhitespace),
+            pair(
+              option(
+                left(
+                  parseDirection,
+                  delimited(option(Token.parseWhitespace), Token.parseComma)
+                )
+              ),
+              parseItemList
+            )
+          ),
+          Token.parseCloseParenthesis
+        )
+      ),
+      (result) => {
+        const [fn, [direction, items]] = result;
 
-      return Linear.of(
-        direction.getOrElse(() => Side.of("bottom")),
-        items,
-        fn.value.startsWith("repeating")
-      );
-    }
-  );
+        return Linear.of(
+          direction.getOrElse(() => Side.of("bottom")),
+          items,
+          fn.value.startsWith("repeating")
+        );
+      }
+    );
+  }
 }

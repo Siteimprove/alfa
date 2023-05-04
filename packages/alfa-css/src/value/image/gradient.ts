@@ -12,7 +12,8 @@ import { Token } from "../../syntax";
 import { Color } from "../color";
 import { Length, Percentage } from "../../calculation";
 
-import { Linear, Radial } from "./index";
+import { Linear } from "./gradient-linear";
+import { Radial } from "./gradient-radial";
 
 const { either, pair, map, option, oneOrMore, delimited, left, right } = Parser;
 
@@ -236,5 +237,5 @@ export namespace Gradient {
    * {@link https://drafts.csswg.org/css-images/#typedef-gradient}
    */
   export const parse: Parser<Slice<Token>, Gradient, string> = (input) =>
-    either(Linear.parse, Radial.parse)(input);
+    either(Linear.parse(parseItemList), Radial.parse(parseItemList))(input);
 }
