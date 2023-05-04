@@ -1,17 +1,17 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax";
+import { Token } from "../../syntax/index";
 
-import { Angle, Number, Percentage } from "./numeric";
-import { Keyword } from "./keyword";
+import { Angle, Number, Percentage } from "../numeric/index";
+import { Keyword } from "../keyword";
 
-import { Current } from "./color/current";
-import { Hex } from "./color/hex";
-import { HSL } from "./color/hsl";
-import { Named } from "./color/named";
-import { RGB } from "./color/rgb";
-import { System } from "./color/system";
+import { Current } from "./current";
+import { Hex } from "./hex";
+import { HSL } from "./hsl";
+import { Named } from "./named";
+import { RGB } from "./rgb";
+import { System } from "./system";
 
 const { either } = Parser;
 
