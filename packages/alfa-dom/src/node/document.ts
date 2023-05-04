@@ -1,3 +1,5 @@
+import { Cache } from "@siteimprove/alfa-cache";
+import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Sequence } from "@siteimprove/alfa-sequence/src/sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
@@ -118,6 +120,28 @@ export class Document extends Node<"document"> {
  * @public
  */
 export namespace Document {
+  export namespace Query {
+    const elementCache = Cache.empty<Document, Map<string, Element>>();
+
+    export function getElementById(
+      document: Document,
+      id: string
+    ): Option<Element> {
+      return elementCache
+        .get(document, () => {
+          const elements = document.elementDescendants();
+          return Map.from(
+            elements
+              .collect((element) =>
+                element.id.map((id) => [id, element] as const)
+              )
+              .reverse()
+          );
+        })
+        .get(id);
+    }
+  }
+
   export interface JSON extends Node.JSON<"document"> {
     style: Array<Sheet.JSON>;
   }

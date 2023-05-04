@@ -1,5 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
+import { Document } from "../src";
+
 import { h } from "../h";
 
 test("#tabOrder() returns the tab order of a node", (t) => {
@@ -60,4 +62,13 @@ test(`#tabOrder() correctly handles shadow roots with slotted elements after the
   );
 
   t.deepEqual([...div.tabOrder()], [b, a]);
+});
+
+test("#getElementById() gets element by id", (t) => {
+  const foo = <div id="foo" />;
+  const bar = <div id="bar" />;
+
+  const doc = h.document([foo, bar]);
+
+  t.equal(Document.Query.getElementById(doc, "foo").getUnsafe(), foo);
 });
