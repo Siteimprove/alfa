@@ -3,16 +3,16 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Value } from "./value";
-import { Token } from "../syntax";
+import { Value } from "../value";
+import { Token } from "../../syntax";
 
-import { Box } from "./box";
-import { Keyword } from "./keyword";
-import { Circle } from "./shape/circle";
-import { Inset } from "./shape/inset";
-import { Rectangle } from "./shape/rectangle";
-import { Ellipse } from "./shape/ellipse";
-import { Polygon } from "./shape/polygon";
+import { Box } from "../box";
+import { Keyword } from "../keyword";
+import { Circle } from "./circle";
+import { Inset } from "./inset";
+import { Rectangle } from "./rectangle";
+import { Ellipse } from "./ellipse";
+import { Polygon } from "./polygon";
 
 const { either } = Parser;
 

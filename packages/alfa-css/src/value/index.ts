@@ -1,4 +1,5 @@
 export * from "./value";
+
 export * from "./box";
 export * from "./math-expression";
 export * from "./color";
@@ -12,12 +13,6 @@ export * from "./numeric";
 export * from "./position";
 export * from "./shadow";
 export * from "./shape";
-export * from "./shape/circle";
-export * from "./shape/ellipse";
-export * from "./shape/inset";
-export * from "./shape/polygon";
-export * from "./shape/radius";
-export * from "./shape/rectangle";
 export * from "./string";
 export * from "./transform";
 export * from "./url";
