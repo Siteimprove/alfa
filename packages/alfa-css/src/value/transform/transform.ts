@@ -1,16 +1,16 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax";
+import { Token } from "../../syntax";
 
-import { Angle, Length, Number, Percentage } from "./numeric";
+import { Angle, Length, Number, Percentage } from "../numeric";
 
-import { Matrix } from "./transform/matrix";
-import { Perspective } from "./transform/perspective";
-import { Rotate } from "./transform/rotate";
-import { Scale } from "./transform/scale";
-import { Skew } from "./transform/skew";
-import { Translate } from "./transform/translate";
+import { Matrix } from "./matrix";
+import { Perspective } from "./perspective";
+import { Rotate } from "./rotate";
+import { Scale } from "./scale";
+import { Skew } from "./skew";
+import { Translate } from "./translate";
 
 const { either, oneOrMore, delimited, option } = Parser;
 
