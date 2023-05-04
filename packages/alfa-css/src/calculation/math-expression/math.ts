@@ -5,10 +5,10 @@ import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Token, Function as CSSFunction } from "../../syntax";
+import { Token, Function as CSSFunction } from "../../syntax/index";
 
-import { Value as CSSValue } from "../value";
-import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
+import { Value as CSSValue } from "../../value/value";
+import { Angle, Length, Number, Numeric, Percentage } from "../numeric/index";
 
 import { Expression } from "./expression";
 import { Function } from "./function";

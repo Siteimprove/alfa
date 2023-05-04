@@ -2,8 +2,8 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
-import { Converter, Unit } from "../unit";
+import { Token } from "../../syntax/index";
+import { Converter, Unit } from "../unit/index";
 import { Dimension } from "./dimension";
 
 const { map } = Parser;

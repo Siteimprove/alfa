@@ -1,9 +1,9 @@
 import { Hash } from "@siteimprove/alfa-hash";
 
-import { Value } from "./value";
+import { Length } from "../calculation";
 
+import { Value } from "./value";
 import { Color } from "./color";
-import { Length } from "./numeric";
 
 /**
  * @public

@@ -6,7 +6,7 @@ import { Function, Token } from "../../syntax";
 import { Value } from "../value";
 
 import { Keyword } from "../keyword";
-import { Length } from "../numeric";
+import { Length } from "../../calculation";
 
 const { either, map, option, pair, take, right, delimited } = Parser;
 

@@ -6,10 +6,10 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Token } from "../../syntax/index";
+import { Token } from "../../syntax";
 import { Value } from "../value";
 
-import { Angle } from "../numeric/index";
+import { Angle } from "../../calculation";
 import { Gradient } from "./gradient";
 
 const { map, either, pair, option, left, right, delimited } = Parser;

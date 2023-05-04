@@ -1,7 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { Token } from "../../syntax/index";
 import { Numeric } from "./numeric";
 
 const { map } = Parser;

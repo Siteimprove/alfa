@@ -1,9 +1,8 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import { Angle, Length, Number, Percentage } from "../../calculation";
 import { Token } from "../../syntax";
-
-import { Angle, Length, Number, Percentage } from "../numeric";
 
 import { Matrix } from "./matrix";
 import { Perspective } from "./perspective";

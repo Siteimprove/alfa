@@ -5,7 +5,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Token } from "../../syntax";
 import { Value } from "../value";
 
-import { Number } from "../numeric";
+import { Number } from "../../calculation";
 
 const { map } = Parser;
 

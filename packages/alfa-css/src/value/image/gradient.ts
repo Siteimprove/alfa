@@ -7,10 +7,10 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Token } from "../../syntax/index";
+import { Token } from "../../syntax";
 
-import { Color } from "../color/index";
-import { Length, Percentage } from "../numeric/index";
+import { Color } from "../color";
+import { Length, Percentage } from "../../calculation";
 
 import { Linear, Radial } from "../../index";
 

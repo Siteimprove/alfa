@@ -5,7 +5,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Token } from "../../syntax";
 import { Value } from "../value";
 
-import { Length, Percentage } from "../numeric";
+import { Length, Percentage } from "../../calculation";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 

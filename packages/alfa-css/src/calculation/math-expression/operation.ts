@@ -8,7 +8,7 @@ import {
   Number,
   Numeric,
   Percentage,
-} from "../numeric";
+} from "../numeric/index";
 import { Unit } from "../unit/unit";
 
 import { Expression } from "./expression";

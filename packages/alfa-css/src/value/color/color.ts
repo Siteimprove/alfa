@@ -1,9 +1,9 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax/index";
+import { Token } from "../../syntax";
 
-import { Angle, Number, Percentage } from "../numeric/index";
+import { Angle, Number, Percentage } from "../../calculation";
 import { Keyword } from "../keyword";
 
 import { Current } from "./current";

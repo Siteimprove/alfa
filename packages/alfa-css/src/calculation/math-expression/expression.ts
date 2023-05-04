@@ -4,7 +4,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Unit } from "../unit/unit";
-import { Length, Number, Numeric, Percentage } from "../numeric";
+import { Length, Number, Numeric, Percentage } from "../numeric/index";
 
 import { Kind } from "./kind";
 

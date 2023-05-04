@@ -1,12 +1,9 @@
 export * from "./value";
 
 export * from "./box";
-export * from "./math-expression";
 export * from "./color";
-export * from "./unit";
 export * from "./image";
 export * from "./keyword";
-export * from "./numeric";
 export * from "./position";
 export * from "./shadow";
 export * from "./shape";
