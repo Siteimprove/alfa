@@ -4,10 +4,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Err } from "@siteimprove/alfa-result";
 
-import { Length, Percentage, Unit } from "../calculation";
-import { Token } from "../syntax";
-
+import { Length, Percentage,  } from "../calculation";
 import { Keyword } from "./keyword";
+import { Token } from "../syntax";
+import { Unit } from "../unit";
 import { Value } from "../value";
 
 const { map, either, pair, right } = Parser;
