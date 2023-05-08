@@ -4,7 +4,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
 
-import R66 from "../../src/sia-er66/rule";
+import R66 from "../../src/sia-dr66/rule";
 import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast";
 import { Contrast as Outcomes } from "../../src/common/outcome/contrast";
 

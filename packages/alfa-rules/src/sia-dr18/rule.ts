@@ -12,16 +12,19 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope, Version } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasDisplaySize, hasInputType } = Element;
 const { test, property } = Predicate;
 
+/**
+ * @deprecated Use SIA-R18 version 2 instead
+ */
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r18",
   requirements: [Technique.of("ARIA5")],
-  tags: [Scope.Component, Version.of(2)],
+  tags: [Scope.Component, Stability.Deprecated],
   evaluate({ device, document }) {
     const global = Set.from(Role.of("roletype").supportedAttributes);
 
@@ -38,9 +41,6 @@ export default Rule.Atomic.of<Page, Attribute>({
       },
 
       expectations(target) {
-        // Since the attribute was found on a element, it has a owner.
-        const owner = target.owner.getUnsafe();
-
         return {
           1: expectation(
             global.has(target.name as aria.Attribute.Name) ||
@@ -48,21 +48,12 @@ export default Rule.Atomic.of<Page, Attribute>({
                 hasRole(device, (role) =>
                   role.isAttributeSupported(target.name as aria.Attribute.Name)
                 ),
-                owner
+                // Since the attribute was found on a element, it has a owner.
+                target.owner.getUnsafe()
               ) ||
               ariaHtmlAllowed(target),
             () => Outcomes.IsAllowed,
             () => Outcomes.IsNotAllowed
-          ),
-          2: expectation(
-            test(
-              hasRole(device, (role) =>
-                role.isAttributeProhibited(target.name as aria.Attribute.Name)
-              ),
-              owner
-            ),
-            () => Outcomes.IsProhibited,
-            () => Outcomes.IsNotProhibited
           ),
         };
       },
@@ -117,18 +108,6 @@ export namespace Outcomes {
   export const IsNotAllowed = Err.of(
     Diagnostic.of(
       `The attribute is not allowed for the element on which it is specified`
-    )
-  );
-
-  export const IsProhibited = Err.of(
-    Diagnostic.of(
-      `The attribute is prohibited for the element on which it is specified`
-    )
-  );
-
-  export const IsNotProhibited = Ok.of(
-    Diagnostic.of(
-      `The attribute is not prohibited for the element on which it is specified`
     )
   );
 }
