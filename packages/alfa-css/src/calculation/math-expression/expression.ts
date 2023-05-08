@@ -3,8 +3,8 @@ import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 
-import { Unit } from "../unit/unit";
-import { Length, Number, Numeric, Percentage } from "../numeric/index";
+import { Unit } from "../unit";
+import { Length, Number, Numeric, Percentage } from "../numeric";
 
 import { Kind } from "./kind";
 

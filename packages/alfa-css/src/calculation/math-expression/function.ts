@@ -1,11 +1,8 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Result } from "@siteimprove/alfa-result";
 
-import { Angle } from "../numeric/angle";
-import { Length } from "../numeric/length";
-import { Number } from "../numeric/number";
-import { Numeric } from "../numeric/numeric";
-import { Unit } from "../unit/unit";
+import { Angle, Length, Number, Numeric } from "../numeric";
+import { Unit } from "../unit";
 
 import { Expression } from "./expression";
 import { Kind } from "./kind";

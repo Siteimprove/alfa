@@ -3,8 +3,8 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Some } from "@siteimprove/alfa-option/src/some";
 import { Selective } from "@siteimprove/alfa-selective";
 
-import { Angle, Length, Number, Numeric, Percentage } from "../numeric/index";
-import { Unit } from "../unit/unit";
+import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
+import { Unit } from "../unit";
 
 import { Expression } from "./expression";
 import { Kind } from "./kind";

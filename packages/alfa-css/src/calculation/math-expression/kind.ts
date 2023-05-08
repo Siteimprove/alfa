@@ -5,7 +5,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Record } from "@siteimprove/alfa-record";
 import { Err, Result } from "@siteimprove/alfa-result";
 
-import { Numeric } from "../numeric/index";
+import { Numeric } from "../numeric";
 
 /**
  * {@link https://drafts.css-houdini.org/css-typed-om/#numeric-typing}
