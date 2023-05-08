@@ -7,7 +7,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Token, Function as CSSFunction } from "../../syntax";
 
-import { Value as CSSValue } from "../../value/value";
+import { Value as CSSValue } from "../../value";
 import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
 import { Expression } from "./expression";

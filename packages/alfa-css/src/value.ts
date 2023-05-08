@@ -7,8 +7,11 @@ import * as json from "@siteimprove/alfa-json";
 /**
  * @public
  */
+// This is the main Value class that is implemented by all CSS values, with or
+// without calculations.
 export abstract class Value<T extends string = string>
-  implements Equatable, Hashable, Serializable<Value.JSON<T>> {
+  implements Equatable, Hashable, Serializable<Value.JSON<T>>
+{
   protected constructor() {}
 
   public abstract get type(): T;

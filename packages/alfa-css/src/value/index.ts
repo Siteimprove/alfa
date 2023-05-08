@@ -1,4 +1,4 @@
-export * from "./value";
+export * from "../value";
 
 export * from "./box";
 export * from "./color";

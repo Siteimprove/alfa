@@ -1,7 +1,7 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
 import { Numeric } from "./numeric";
-import { Convertible, Unit } from "../unit";
+import { Convertible, Unit } from "../../unit";
 
 /**
  * {@link https://drafts.csswg.org/css-values/#dimensions}

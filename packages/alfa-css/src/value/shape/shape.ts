@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Value } from "../value";
+import { Value } from "../../value";
 import { Token } from "../../syntax";
 
 import { Box } from "../box";

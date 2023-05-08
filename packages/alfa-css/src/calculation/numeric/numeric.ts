@@ -4,7 +4,7 @@ import { Real } from "@siteimprove/alfa-math";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Value } from "../../value/value";
+import { Value } from "../../value";
 
 /**
  * @public

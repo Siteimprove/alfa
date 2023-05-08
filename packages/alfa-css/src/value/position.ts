@@ -8,7 +8,7 @@ import { Length, Percentage, Unit } from "../calculation";
 import { Token } from "../syntax";
 
 import { Keyword } from "./keyword";
-import { Value } from "./value";
+import { Value } from "../value";
 
 const { map, either, pair, right } = Parser;
 

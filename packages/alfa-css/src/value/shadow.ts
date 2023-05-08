@@ -2,7 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 
 import { Length } from "../calculation";
 
-import { Value } from "./value";
+import { Value } from "../value";
 import { Color } from "./color";
 
 /**

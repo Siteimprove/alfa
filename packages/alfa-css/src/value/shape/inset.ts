@@ -8,7 +8,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Length, Percentage } from "../../calculation";
 import { Function, Token } from "../../syntax";
 
-import { Value } from "../value";
+import { Value } from "../../value";
 import { Keyword } from "../keyword";
 
 const { either, map, filter, option, pair, right, takeAtMost } = Parser;

@@ -9,7 +9,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Length, Percentage } from "../../calculation";
 import { Function, Token } from "../../syntax";
 import { Keyword } from "../keyword";
-import { Value } from "../value";
+import { Value } from "../../value";
 
 const { either, left, map, option, pair, right, separated, separatedList } =
   Parser;
