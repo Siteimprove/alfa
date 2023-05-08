@@ -5,13 +5,11 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax/token";
-import { Function } from "../../syntax/function";
-import { Value } from "../../value";
+import { Length, Percentage } from "../../calculation";
+import { Function, Token } from "../../syntax";
 
+import { Value } from "../value";
 import { Keyword } from "../keyword";
-import { Length } from "../numeric/length";
-import { Percentage } from "../numeric/percentage";
 
 const { either, map, filter, option, pair, right, takeAtMost } = Parser;
 const { parseDelim, parseWhitespace } = Token;

@@ -1,9 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer, Radial } from "../../../src";
+import { Gradient, Lexer, Radial } from "../../../src";
 
 function parse(input: string) {
-  return Radial.parse(Lexer.lex(input)).map(([_, circle]) => circle.toJSON());
+  return Radial.parse(Gradient.parseItemList)(Lexer.lex(input)).map(
+    ([_, circle]) => circle.toJSON()
+  );
 }
 
 test("parse() parses a radial gradient with no shape or position", (t) => {
@@ -96,7 +98,9 @@ test("parse() parses a radial gradient with an extent", (t) => {
 
 test("parse() parses a radial gradient with an extent and a position", (t) => {
   t.deepEqual(
-    parse("radial-gradient(closest-side at bottom left, red, blue)").getUnsafe(),
+    parse(
+      "radial-gradient(closest-side at bottom left, red, blue)"
+    ).getUnsafe(),
     {
       type: "gradient",
       kind: "radial",
