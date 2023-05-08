@@ -6,7 +6,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { Question } from "../common/act/question";
 import { nonDisabledTexts } from "../common/applicability/non-disabled-texts";
 
-import { hasSufficientContrast } from "../common/expectation/contrast";
+import { hasSufficientContrastDeprecated } from "../common/expectation/contrast";
 
 import { Scope, Stability } from "../tags";
 
@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Text, Question.Metadata>({
       },
 
       expectations(target) {
-        return hasSufficientContrast(target, device, 4.5, 7);
+        return hasSufficientContrastDeprecated(target, device, 4.5, 7);
       },
     };
   },

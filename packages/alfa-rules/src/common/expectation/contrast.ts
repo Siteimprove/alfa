@@ -18,9 +18,9 @@ const { flatMap, map, takeWhile } = Iterable;
 const { min, max, round } = Math;
 
 /**
- * @internal
+ * @deprecated This is only used in the deprecated R66v1 and R69v1.
  */
-export function hasSufficientContrast(
+export function hasSufficientContrastDeprecated(
   target: Text,
   device: Device,
   largeTextThreshold: number,
@@ -61,7 +61,7 @@ export function hasSufficientContrast(
 /**
  * @internal
  */
-export function hasSufficientContrastExperimental(
+export function hasSufficientContrast(
   target: Text,
   device: Device,
   largeTextThreshold: number,

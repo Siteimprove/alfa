@@ -83,7 +83,7 @@ const _default_25: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
 const _default_26: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
 
 // @public (undocumented)
-const _default_27: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_27: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
 
 // @public (undocumented)
 const _default_28: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
@@ -101,19 +101,19 @@ const _default_30: Rule.Atomic<Page, Element<string>, Question.Metadata, Element
 const _default_31: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_32: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_32: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_33: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_33: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_34: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_34: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_35: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_35: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_36: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_36: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
 const _default_37: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
@@ -128,28 +128,28 @@ const _default_39: Rule.Atomic<Page, Element<string>, Question.Metadata, Element
 const _default_4: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
 
 // @public (undocumented)
-const _default_40: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_40: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_41: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_41: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_42: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_42: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
 const _default_43: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_44: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_44: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_45: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_45: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_46: Rule.Atomic<Page, Group<Element<string>>, Question.Metadata, Group<Element<string>>>;
+const _default_46: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_47: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_47: Rule.Atomic<Page, Group<Element<string>>, Question.Metadata, Group<Element<string>>>;
 
 // @public (undocumented)
 const _default_48: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
@@ -161,82 +161,82 @@ const _default_49: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 const _default_5: Rule.Atomic<Page, Text, Question.Metadata, Text>;
 
 // @public (undocumented)
-const _default_50: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
+const _default_50: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_51: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_51: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
 
 // @public (undocumented)
 const _default_52: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_53: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_53: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
 const _default_54: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_55: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_55: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_56: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_56: Rule.Composite<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
 const _default_57: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_58: Rule.Atomic<Page, Group<Element<string>>, Question.Metadata, Group<Element<string>>>;
+const _default_58: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_59: Rule.Atomic<Page, Group<Element<string>>, {}, Group<Element<string>>>;
+const _default_59: Rule.Atomic<Page, Group<Element<string>>, Question.Metadata, Group<Element<string>>>;
 
 // @public @deprecated (undocumented)
 const _default_6: Rule.Atomic<Page, Text, Question.Metadata, Text>;
 
 // @public (undocumented)
-const _default_60: Rule.Atomic<Page, Text, {}, Text>;
+const _default_60: Rule.Atomic<Page, Group<Element<string>>, {}, Group<Element<string>>>;
 
 // @public (undocumented)
-const _default_61: Rule.Atomic<Page, Document, {}, Document>;
+const _default_61: Rule.Atomic<Page, Text, {}, Text>;
 
 // @public (undocumented)
-const _default_62: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_62: Rule.Atomic<Page, Document, {}, Document>;
 
 // @public (undocumented)
-const _default_63: Rule.Atomic<Page, Document, {}, Document>;
+const _default_63: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+
+// @public (undocumented)
+const _default_64: Rule.Atomic<Page, Document, {}, Document>;
 
 // @public
-const _default_64: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
-
-// @public (undocumented)
 const _default_65: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
 const _default_66: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_67: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
+const _default_67: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_68: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_68: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>;
 
 // @public (undocumented)
-const _default_69: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_69: Rule.Atomic<Page, Text, Question.Metadata, Text | Group<Element<string>>>;
 
 // @public (undocumented)
 const _default_7: Rule.Atomic<Page, Document, {}, Document>;
 
 // @public (undocumented)
-const _default_70: Rule.Atomic<Page, Document, {}, Document>;
+const _default_70: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
 const _default_71: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_72: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_72: Rule.Atomic<Page, Text, Question.Metadata, Text | Group<Element<string>>>;
 
 // @public (undocumented)
-const _default_73: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_73: Rule.Atomic<Page, Document, {}, Document>;
 
 // @public (undocumented)
 const _default_74: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
@@ -263,22 +263,22 @@ const _default_8: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 const _default_80: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_81: Rule.Atomic<Page, Group<Element<string>>, Question.Metadata, Group<Element<string>>>;
+const _default_81: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_82: Rule.Atomic<Page, Text, {}, Text>;
+const _default_82: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
 const _default_83: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_84: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_84: Rule.Atomic<Page, Group<Element<string>>, Question.Metadata, Group<Element<string>>>;
 
 // @public (undocumented)
-const _default_85: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_85: Rule.Atomic<Page, Text, {}, Text>;
 
 // @public (undocumented)
-const _default_86: Rule.Atomic<Page, Document, Question.Metadata, Document>;
+const _default_86: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
 const _default_87: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
@@ -287,7 +287,7 @@ const _default_87: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 const _default_88: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_89: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+const _default_89: Rule.Atomic<Page, Document, Question.Metadata, Document>;
 
 // @public (undocumented)
 const _default_9: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
@@ -305,7 +305,16 @@ const _default_92: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 const _default_93: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
-const _default_94: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
+const _default_94: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+
+// @public (undocumented)
+const _default_95: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+
+// @public (undocumented)
+const _default_96: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
+
+// @public (undocumented)
+const _default_97: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>;
 
 declare namespace deprecatedRules {
     export {

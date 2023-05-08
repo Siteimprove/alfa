@@ -7,7 +7,7 @@ import { Group } from "../common/act/group";
 import { Question } from "../common/act/question";
 import { nonDisabledTexts } from "../common/applicability/non-disabled-texts";
 
-import { hasSufficientContrastExperimental } from "../common/expectation/contrast";
+import { hasSufficientContrast } from "../common/expectation/contrast";
 
 import { Scope, Version } from "../tags";
 
@@ -27,7 +27,7 @@ export default Rule.Atomic.of<
       },
 
       expectations(target) {
-        return hasSufficientContrastExperimental(target, device, 3, 4.5);
+        return hasSufficientContrast(target, device, 3, 4.5);
       },
     };
   },
