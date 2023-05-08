@@ -1,14 +1,10 @@
 import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
-import { Future } from "@siteimprove/alfa-future";
-import { None } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
 import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
-import { Device } from "@siteimprove/alfa-device";
-import { Style } from "@siteimprove/alfa-style";
 
-import R69 from "../../src/sia-er69/rule";
+import R69 from "../../src/sia-dr69/rule";
 import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast";
 import { Contrast as Outcomes } from "../../src/common/outcome/contrast";
 
@@ -17,6 +13,8 @@ import { passed, failed, cantTell, inapplicable } from "../common/outcome";
 
 import { oracle } from "../common/oracle";
 import { ColorError, ColorErrors } from "../../src/common/dom/get-colors";
+import { Style } from "@siteimprove/alfa-style";
+import { Device } from "@siteimprove/alfa-device";
 
 const rgb = (r: number, g: number, b: number, a: number = 1) =>
   RGB.of(
@@ -617,14 +615,14 @@ test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
   ]);
 });
 
-test(`evaluate() cannot tell when encountering a non-ignored interposed
-      ancestor's sibling before encountering an opaque background`, async (t) => {
+test(`evaluate() cannot tell when encountering an interposed parent before
+      encountering an opaque background`, async (t) => {
   const target = h.text("Hello World");
   const interposed = (
     <span
       style={{
         position: "absolute",
-        backgroundColor: "red",
+        backgroundColor: "#000",
         width: "100%",
         height: "100%",
       }}
@@ -640,47 +638,13 @@ test(`evaluate() cannot tell when encountering a non-ignored interposed
 
   const document = h.document([body]);
 
-  // Ask if it should be ignored
-  t.deepEqual(await evaluate(R69, { document }), [cantTell(R69, target)]);
-
   const diagnostic = ColorErrors.of([
     ColorError.interposedDescendants(body, [interposed]),
   ]);
 
-  // It shouldn't be ignored, ask for color.
-  t.deepEqual(
-    await evaluate(
-      R69,
-      { document },
-      oracle({ "ignored-interposed-elements": [] })
-    ),
-    [cantTell(R69, target, diagnostic, Outcome.Mode.SemiAuto)]
-  );
-
-  // It should be ignored, resolve automatically.
-  t.deepEqual(
-    await evaluate(
-      R69,
-      { document },
-      oracle({ "ignored-interposed-elements": [interposed] })
-    ),
-    [
-      passed(
-        R69,
-        target,
-        {
-          1: Outcomes.HasSufficientContrast(21, 4.5, [
-            Diagnostic.Pairing.of(
-              ["foreground", rgb(0, 0, 0)],
-              ["background", rgb(1, 1, 1)],
-              21
-            ),
-          ]),
-        },
-        Outcome.Mode.SemiAuto
-      ),
-    ]
-  );
+  t.deepEqual(await evaluate(R69, { document }), [
+    cantTell(R69, target, diagnostic),
+  ]);
 });
 
 test(`evaluate() ignores transparent interposed element before
@@ -715,90 +679,6 @@ test(`evaluate() ignores transparent interposed element before
           ["foreground", rgb(0, 0, 0)],
           ["background", rgb(1, 1, 1)],
           21
-        ),
-      ]),
-    }),
-  ]);
-});
-
-test(`evaluate() does not consider ancestors as interposed elements`, async (t) => {
-  const target1 = h.text("Hello World");
-  const target2 = h.text("Lorem ipsum");
-  const interposed = (
-    <div
-      style={{
-        background: "url('foo.jpg')",
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      {target1}
-    </div>
-  );
-
-  // interposed is interposed inside the <body>.
-  // target1 is inside interposed, therefore it does not consider it as an
-  // "interposed element", but as an absolutely positioned ancestor.
-  // target2 is outside interposed and considers it as an "interposed element",
-  // it may be interposed between the offset parent (body) and itself.
-  const body = (
-    <body>
-      {interposed}
-      {target2}
-    </body>
-  );
-
-  const document = h.document([body]);
-
-  await evaluate(R69, { document }, (_, question) => {
-    let expected = "Unexpected question";
-    if (question.context === target1) {
-      expected = "background-colors";
-    }
-
-    if (question.context === target2) {
-      expected = "ignored-interposed-elements";
-    }
-
-    t.deepEqual(question.uri, expected);
-    return Future.now(None);
-  });
-});
-
-test(`evaluate() ignore interposed descendants if it can resolve colors
-      before seeing any`, async (t) => {
-  const target = h.text("Hello World");
-  const div = <div style={{ backgroundColor: "yellow" }}>{target}</div>;
-  const interposed = (
-    <div
-      style={{
-        position: "absolute",
-        backgroundColor: "red",
-        width: "100%",
-        height: "100%",
-      }}
-    ></div>
-  );
-
-  // target is inside the div with solid color, so it doesn't care about the
-  // interposed element and can fully resolve its colors before encountering it.
-  const body = (
-    <body>
-      {interposed}
-      {div}
-    </body>
-  );
-
-  const document = h.document([body]);
-
-  t.deepEqual(await evaluate(R69, { document }), [
-    passed(R69, target, {
-      1: Outcomes.HasSufficientContrast(19.56, 4.5, [
-        Diagnostic.Pairing.of(
-          ["foreground", rgb(0, 0, 0)],
-          ["background", rgb(1, 1, 0)],
-          19.56
         ),
       ]),
     }),

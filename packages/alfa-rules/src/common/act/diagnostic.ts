@@ -1,4 +1,3 @@
-import * as deprecatedDistinguishingStyles from "../../sia-dr62/rule";
 import * as languages from "../../sia-r109/rule";
 import * as labelAndName from "../../sia-r14/rule";
 import * as roleAndRequiredAttributes from "../../sia-r16/rule";
@@ -22,7 +21,6 @@ import * as diagnostic from "../../common/diagnostic";
  * @public
  */
 export namespace Diagnostic {
-  export import DeprecatedDistinguishingStyles = deprecatedDistinguishingStyles.DistinguishingStyles;
   export import Languages = languages.Languages;
   export import LabelAndName = labelAndName.LabelAndName;
   export import RoleAndRequiredAttributes = roleAndRequiredAttributes.RoleAndRequiredAttributes;
