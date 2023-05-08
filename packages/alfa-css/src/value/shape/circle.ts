@@ -1,14 +1,13 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax/token";
-import { Function } from "../../syntax/function";
-import { Value } from "../../value";
+import { Function, Token } from "../../syntax";
+import { Value } from "../value";
 
 import { Keyword } from "../keyword";
 import { Position } from "../position";
 import { Radius } from "./radius";
-import { Slice } from "@siteimprove/alfa-slice";
 
 const { map, option, pair, right } = Parser;
 

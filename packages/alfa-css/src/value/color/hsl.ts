@@ -3,10 +3,10 @@ import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax/token";
-import { Value } from "../../value";
+import { Token } from "../../syntax";
+import { Value } from "../value";
 
-import { Angle, Number, Percentage } from "../numeric";
+import { Angle, Number, Percentage } from "../../calculation";
 
 const { pair, map, either, option, left, right, take, delimited } = Parser;
 

@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../src/syntax/lexer";
-import { Shape } from "../../src/value/shape";
+import { Shape } from "../../src/value/shape/shape";
 
 function parse(input: string) {
   return Shape.parse(Lexer.lex(input)).map(([_, shape]) => shape.toJSON());
