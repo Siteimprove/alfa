@@ -1,25 +1,22 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, Text } from "@siteimprove/alfa-dom";
+import { Text } from "@siteimprove/alfa-dom";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { Group } from "../common/act/group";
 import { Question } from "../common/act/question";
 import { nonDisabledTexts } from "../common/applicability/non-disabled-texts";
 
-import { hasSufficientContrastExperimental } from "../common/expectation/contrast";
+import { hasSufficientContrastDeprecated } from "../common/expectation/contrast";
 
-import { Scope, Version } from "../tags";
+import { Scope, Stability } from "../tags";
 
-export default Rule.Atomic.of<
-  Page,
-  Text,
-  Question.Metadata,
-  Text | Group<Element>
->({
+/**
+ * @deprecated Use SIA-R69 version 2 instead
+ */
+export default Rule.Atomic.of<Page, Text, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r69",
   requirements: [Criterion.of("1.4.3"), Criterion.of("1.4.6")],
-  tags: [Scope.Component, Version.of(2)],
+  tags: [Scope.Component, Stability.Deprecated],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -27,7 +24,7 @@ export default Rule.Atomic.of<
       },
 
       expectations(target) {
-        return hasSufficientContrastExperimental(target, device, 3, 4.5);
+        return hasSufficientContrastDeprecated(target, device, 3, 4.5);
       },
     };
   },

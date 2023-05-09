@@ -1,7 +1,7 @@
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R18, { Outcomes } from "../../src/sia-er18/rule";
+import R18, { Outcomes } from "../../src/sia-dr18/rule";
 
 import { evaluate } from "../common/evaluate";
 import { passed, failed, inapplicable } from "../common/outcome";
@@ -18,7 +18,6 @@ test(`evaluate() passes input with type password field and aria-required state`,
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-required").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
   ]);
 });
@@ -31,7 +30,6 @@ test(`evaluate() passes a button with aria-pressed state`, async (t) => {
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-pressed").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
   ]);
 });
@@ -48,7 +46,6 @@ test(`evaluate() passes a div element with button role, and an aria-pressed stat
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-pressed").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
   ]);
 });
@@ -61,7 +58,6 @@ test(`evaluate() passes a div element with aria busy state`, async (t) => {
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-busy").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
   ]);
 });
@@ -78,7 +74,6 @@ test(`evaluate() passes a div element with button role, and an aria-label attrib
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-label").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
   ]);
 });
@@ -95,7 +90,6 @@ test(`evaluate() passes a div element with checkbox role, and an aria-checked st
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-checked").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
   ]);
 });
@@ -112,11 +106,9 @@ test(`evaluate() passes a div element with checkbox role, and an aria-controls s
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-controls").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
     passed(R18, target.attribute("aria-expanded").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
   ]);
 });
@@ -134,11 +126,9 @@ test(`evaluate() passes a div element with checkbox role, and both
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-controls").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
     passed(R18, target.attribute("aria-expanded").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
   ]);
 });
@@ -156,11 +146,9 @@ test(`evaluate() passes a div element with checkbox role, with both
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-expanded").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
     passed(R18, target.attribute("aria-controls").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
   ]);
 });
@@ -177,7 +165,6 @@ test(`evaluate() passes a button element with none role and aria-pressed`, async
   t.deepEqual(await evaluate(R18, { document }), [
     passed(R18, target.attribute("aria-pressed").getUnsafe(), {
       1: Outcomes.IsAllowed,
-      2: Outcomes.IsNotProhibited,
     }),
   ]);
 });
@@ -190,20 +177,6 @@ test(`evaluate() fails a button with aria-sort state, and no property`, async (t
   t.deepEqual(await evaluate(R18, { document }), [
     failed(R18, target.attribute("aria-sort").getUnsafe(), {
       1: Outcomes.IsNotAllowed,
-      2: Outcomes.IsNotProhibited,
-    }),
-  ]);
-});
-
-test(`evaluate() fails a prohibited attribute`, async (t) => {
-  const target = <div aria-label="foo">bar</div>;
-
-  const document = h.document([target]);
-
-  t.deepEqual(await evaluate(R18, { document }), [
-    failed(R18, target.attribute("aria-label").getUnsafe(), {
-      1: Outcomes.IsAllowed,
-      2: Outcomes.IsProhibited,
     }),
   ]);
 });
