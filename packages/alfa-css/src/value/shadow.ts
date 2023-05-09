@@ -47,7 +47,7 @@ export class Shadow<
     color: C,
     isInset: boolean
   ) {
-    super("shadow",false);
+    super("shadow", false);
     this._horizontal = horizontal;
     this._vertical = vertical;
     this._blur = blur;

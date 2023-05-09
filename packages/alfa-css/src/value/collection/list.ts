@@ -5,7 +5,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Value } from "../../value";
 
 /**
- * @internal
+ * @public
  */
 export class List<T> extends Value<"list", false> implements Iterable<T> {
   public static of<T>(values: Iterable<T>, separator = " "): List<T> {
@@ -69,7 +69,7 @@ export class List<T> extends Value<"list", false> implements Iterable<T> {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace List {
   export interface JSON<T> extends Value.JSON<"list"> {

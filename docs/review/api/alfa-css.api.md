@@ -883,9 +883,7 @@ export namespace Linear {
     }
 }
 
-// Warning: (ae-internal-missing-underscore) The name "List" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @public (undocumented)
 export class List<T> extends Value<"list", false> implements Iterable<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
@@ -907,7 +905,7 @@ export class List<T> extends Value<"list", false> implements Iterable<T> {
     get values(): ReadonlyArray<T>;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 export namespace List {
     // (undocumented)
     export function isList<T>(value: Iterable<T>): value is List<T>;
@@ -2762,9 +2760,7 @@ export namespace Translate {
     parse: Parser<Slice<Token>, Translate, string>;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "Tuple" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @public (undocumented)
 export class Tuple<T extends Array<unknown>> extends Value<"tuple", false> {
     // (undocumented)
     equals<T extends Array<unknown>>(value: Tuple<T>): boolean;
@@ -2784,7 +2780,7 @@ export class Tuple<T extends Array<unknown>> extends Value<"tuple", false> {
     get values(): Readonly<T>;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 export namespace Tuple {
     // (undocumented)
     export function isTuple<T extends Array<unknown>>(value: unknown): value is Tuple<T>;

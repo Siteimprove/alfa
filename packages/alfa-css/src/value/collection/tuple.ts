@@ -5,7 +5,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Value } from "../../value";
 
 /**
- * @internal
+ * @public
  */
 export class Tuple<T extends Array<unknown>> extends Value<"tuple", false> {
   public static of<T extends Array<unknown>>(...values: Readonly<T>): Tuple<T> {
@@ -64,7 +64,7 @@ export class Tuple<T extends Array<unknown>> extends Value<"tuple", false> {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace Tuple {
   export interface JSON<T extends Array<unknown>> extends Value.JSON<"tuple"> {
