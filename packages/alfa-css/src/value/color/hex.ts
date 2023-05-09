@@ -2,17 +2,17 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
-import { Value } from "../../value";
-
 import { Number } from "../../calculation";
+import { Token } from "../../syntax";
+
+import { Format } from "./format";
 
 const { map } = Parser;
 
 /**
  * @public
  */
-export class Hex extends Value<"color", false> {
+export class Hex extends Format<"hex"> {
   public static of(value: number): Hex {
     return new Hex(value);
   }
@@ -20,14 +20,10 @@ export class Hex extends Value<"color", false> {
   private readonly _value: number;
 
   private constructor(value: number) {
-    super("color", false);
+    super("hex", false);
 
     // Make sure that only the lower 4 bytes are stored.
     this._value = value & 0xff_ff_ff_ff;
-  }
-
-  public get format(): "hex" {
-    return "hex";
   }
 
   public get value(): number {
@@ -64,8 +60,7 @@ export class Hex extends Value<"color", false> {
 
   public toJSON(): Hex.JSON {
     return {
-      type: "color",
-      format: "hex",
+      ...super.toJSON(),
       value: this._value,
     };
   }
@@ -79,8 +74,7 @@ export class Hex extends Value<"color", false> {
  * @public
  */
 export namespace Hex {
-  export interface JSON extends Value.JSON<"color"> {
-    format: "hex";
+  export interface JSON extends Format.JSON<"hex"> {
     value: number;
   }
 

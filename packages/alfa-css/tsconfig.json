@@ -36,6 +36,7 @@
     "src/value/collection/tuple.ts",
     "src/value/color/color.ts",
     "src/value/color/current.ts",
+    "src/value/color/format.ts",
     "src/value/color/hex.ts",
     "src/value/color/hsl.ts",
     "src/value/color/index.ts",

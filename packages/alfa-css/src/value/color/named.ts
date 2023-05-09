@@ -2,20 +2,19 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
-import { Value } from "../../value";
-
 import { Number } from "../../calculation";
+import { Token } from "../../syntax";
+
+import { Format } from "./format";
 
 const { map } = Parser;
 
 /**
  * @public
  */
-export class Named<C extends Named.Color = Named.Color> extends Value<
-  "color",
-  false
-> {
+export class Named<
+  C extends Named.Color = Named.Color
+> extends Format<"named"> {
   public static of<C extends Named.Color>(color: C): Named<C> {
     return new Named(color);
   }
@@ -23,12 +22,8 @@ export class Named<C extends Named.Color = Named.Color> extends Value<
   private readonly _color: C;
 
   private constructor(color: C) {
-    super("color", false);
+    super("named", false);
     this._color = color;
-  }
-
-  public get format(): "named" {
-    return "named";
   }
 
   public get color(): C {
@@ -72,7 +67,6 @@ export class Named<C extends Named.Color = Named.Color> extends Value<
   public toJSON(): Named.JSON {
     return {
       ...super.toJSON(),
-      format: "named",
       color: this._color,
     };
   }
@@ -86,8 +80,7 @@ export class Named<C extends Named.Color = Named.Color> extends Value<
  * @public
  */
 export namespace Named {
-  export interface JSON extends Value.JSON<"color"> {
-    format: "named";
+  export interface JSON extends Format.JSON<"named"> {
     color: string;
   }
 

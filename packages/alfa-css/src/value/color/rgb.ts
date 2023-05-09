@@ -2,10 +2,9 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
-import { Value } from "../../value";
-
 import { Number, Percentage } from "../../calculation";
+import { Token } from "../../syntax";
+import { Format } from "./format";
 
 const { pair, map, either, option, left, right, take, delimited } = Parser;
 
@@ -15,7 +14,7 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
 export class RGB<
   C extends Number | Percentage = Number | Percentage,
   A extends Number | Percentage = Number | Percentage
-> extends Value<"color", false> {
+> extends Format<"rgb"> {
   public static of<
     C extends Number | Percentage,
     A extends Number | Percentage
@@ -29,15 +28,11 @@ export class RGB<
   private readonly _alpha: A;
 
   private constructor(red: C, green: C, blue: C, alpha: A) {
-    super("color", false);
+    super("rgb", false);
     this._red = red;
     this._green = green;
     this._blue = blue;
     this._alpha = alpha;
-  }
-
-  public get format(): "rgb" {
-    return "rgb";
   }
 
   public get red(): C {
@@ -81,7 +76,6 @@ export class RGB<
   public toJSON(): RGB.JSON {
     return {
       ...super.toJSON(),
-      format: "rgb",
       red: this._red.toJSON(),
       green: this._green.toJSON(),
       blue: this._blue.toJSON(),
@@ -100,8 +94,7 @@ export class RGB<
  * @public
  */
 export namespace RGB {
-  export interface JSON extends Value.JSON<"color"> {
-    format: "rgb";
+  export interface JSON extends Format.JSON<"rgb"> {
     red: Number.JSON | Percentage.JSON;
     green: Number.JSON | Percentage.JSON;
     blue: Number.JSON | Percentage.JSON;
