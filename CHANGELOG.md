@@ -82,7 +82,7 @@ In addition to the following changes, this release also contains caching of seve
 
 ### Fixed
 
-- [@siteimprove/alfa-style](packages/alfa-style): Percentage2 `line-height` is now correctly computed according to the `font-size` of the element, not its parent. ([#1323](../../issues/1323), [#1334](../../pull/1334))
+- [@siteimprove/alfa-style](packages/alfa-style): Percentage `line-height` is now correctly computed according to the `font-size` of the element, not its parent. ([#1323](../../issues/1323), [#1334](../../pull/1334))
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): The text of the `has-caption`, `transcript`, and `transcript-link` questions has been improved to explicit that captions or transcript only matter if they are descriptive enough. ([#1329](../../issues/1329), [#1336](../../pull/1336))
 
@@ -332,7 +332,7 @@ Only internal changes to the release pipeline.
 
 ### Breaking
 
-- [@siteimprove/alfa-css](packages/alfa-css): Easier support for `calc` expression is added, which require the type of the expression to be passed as a parameter of the `Calculation` type; the type hierarchy for `Numeric2` types has been reworked. Check the pull request for details. ([#980](../../issues/980), [#1201](../../pull/1201))
+- [@siteimprove/alfa-css](packages/alfa-css): Easier support for `calc` expression is added, which require the type of the expression to be passed as a parameter of the `Calculation` type; the type hierarchy for `Numeric` types has been reworked. Check the pull request for details. ([#980](../../issues/980), [#1201](../../pull/1201))
 
 ### Added
 
@@ -359,9 +359,9 @@ Only internal changes to the release pipeline.
 
 - [@siteimprove/alfa-rules](packages/alfa-rules): The diagnostic of SIA-R53 now correctly exposes the `previous` heading. ([#1199](../../pull/1199))
 
-- [@siteimprove/alfa-css](packages/alfa-css): `Numeric2` CSS types now have a `.scale` method, keeping the underlying type and unit. ([#1195](../../pull/1195)) 
+- [@siteimprove/alfa-css](packages/alfa-css): `Numeric` CSS types now have a `.scale` method, keeping the underlying type and unit. ([#1195](../../pull/1195)) 
 
-- [@siteimprove/alfa-style](packages/alfa-style): A `Percentage2` resolver is added. `Length2` and `Percentage2` resolvers can be curryfied. ([#1195](../../pull/1195))
+- [@siteimprove/alfa-style](packages/alfa-style): A `Percentage` resolver is added. `Length2` and `Percentage` resolvers can be curryfied. ([#1195](../../pull/1195))
 
 ### Changed
 
@@ -1104,7 +1104,7 @@ This release contains only internal API changes.
 
 - [@siteimprove/alfa-selective](packages/alfa-selective): `Selective.exhaust()` is now available in addition to an implementation of `Monad<T>` for `Selective<S, T>`.
 
-- [@siteimprove/alfa-css](packages/alfa-css): `Unit.Length2.Relative.Font` and `Unit.Length2.Relative.Viewport` are now available for distinguishing between font and viewport relative lengths. In addition, `Unit.isFontRelativeLength()`, `Unit.isViewportRelativeLength()`, `Length2#isFontRelative()`, and `Length2#isViewportRelative()` are now also available. ([#734](../../pull/734))
+- [@siteimprove/alfa-css](packages/alfa-css): `Unit.Length.Relative.Font` and `Unit.Length.Relative.Viewport` are now available for distinguishing between font and viewport relative lengths. In addition, `Unit.isFontRelativeLength()`, `Unit.isViewportRelativeLength()`, `Length#isFontRelative()`, and `Length#isViewportRelative()` are now also available. ([#734](../../pull/734))
 
 - [@siteimprove/alfa-selector](packages/alfa-selector): `Selector` subclasses now have type guard functions, and `Selector#type` is now available. ([#732](../../pull/732))
 
@@ -1146,7 +1146,7 @@ This release contains only internal API changes.
 
 - [@siteimprove/alfa-media](packages/alfa-media): The new range syntax for media features, such as `100px < width <= 900px`, is now supported. ([#109](../../issue/109), [#722](../../pull/722))
 
-- [@siteimprove/alfa-css](packages/alfa-css): The `Dimension2` and `Numeric2` types now provide implementations of `Comparable`. The `Dimension2#canonicalUnit` property is now also available to facilitate comparisons between units of same dimensional type. ([#722](../../pull/722))
+- [@siteimprove/alfa-css](packages/alfa-css): The `Dimension2` and `Numeric` types now provide implementations of `Comparable`. The `Dimension2#canonicalUnit` property is now also available to facilitate comparisons between units of same dimensional type. ([#722](../../pull/722))
 
 - [@siteimprove/alfa-interviewer](packages/alfa-interviewer): A new package has been added with types for modelling ACT rule interviewers and functionality for loading these from external and local modules. ([#699](../../pull/699))
 
@@ -1426,7 +1426,7 @@ In addition to the changes listed below, this release adjusts the compile target
 
 - [@siteimprove/alfa-dom](packages/alfa-dom): `Node#tabOrder()` is now available. ([#468](../../pull/468))
 
-- [@siteimprove/alfa-css](packages/alfa-css): `Color.isTransparent()` and `Length2.isZero()` are now available.
+- [@siteimprove/alfa-css](packages/alfa-css): `Color.isTransparent()` and `Length.isZero()` are now available.
 
 ### Changed
 
