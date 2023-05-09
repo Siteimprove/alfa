@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { List } from "./value/list";
+import { List } from "../../../alfa-css/src/value/collection/list";
 
 import { Longhands } from "../longhands";
 import { Shorthand } from "../shorthand";

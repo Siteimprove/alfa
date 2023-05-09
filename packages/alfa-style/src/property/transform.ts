@@ -2,6 +2,7 @@ import {
   Angle,
   Keyword,
   Length,
+  List,
   Matrix,
   Percentage,
   Perspective,
@@ -16,8 +17,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-
-import { List } from "./value/list";
 
 const { map, either } = Parser;
 
