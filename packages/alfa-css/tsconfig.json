@@ -63,6 +63,7 @@
     "src/value/shape/rectangle.ts",
     "src/value/shape/shape.ts",
     "src/value/string.ts",
+    "src/value/transform/function.ts",
     "src/value/transform/index.ts",
     "src/value/transform/matrix.ts",
     "src/value/transform/perspective.ts",

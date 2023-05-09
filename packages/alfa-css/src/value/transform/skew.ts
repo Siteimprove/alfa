@@ -5,7 +5,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Angle, Number } from "../../calculation";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
-import { Value } from "../../value";
+
+import { Function } from "./function";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
@@ -15,7 +16,7 @@ const { map, left, right, pair, either, delimited, option } = Parser;
 export class Skew<
   X extends Angle = Angle,
   Y extends Angle = Angle
-> extends Value<"transform", false> {
+> extends Function<"skew"> {
   public static of<X extends Angle, Y extends Angle>(x: X, y: Y): Skew<X, Y> {
     return new Skew(x, y);
   }
@@ -24,13 +25,9 @@ export class Skew<
   private readonly _y: Y;
 
   private constructor(x: X, y: Y) {
-    super("transform", false);
+    super("skew", false);
     this._x = x;
     this._y = y;
-  }
-
-  public get kind(): "skew" {
-    return "skew";
   }
 
   public get x(): X {
@@ -60,7 +57,6 @@ export class Skew<
   public toJSON(): Skew.JSON {
     return {
       ...super.toJSON(),
-      kind: "skew",
       x: this._x.toJSON(),
       y: this._y.toJSON(),
     };
@@ -83,8 +79,7 @@ export class Skew<
  * @public
  */
 export namespace Skew {
-  export interface JSON extends Value.JSON<"transform"> {
-    kind: "skew";
+  export interface JSON extends Function.JSON<"skew"> {
     x: Angle.JSON;
     y: Angle.JSON;
   }
