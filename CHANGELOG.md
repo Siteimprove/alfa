@@ -361,7 +361,7 @@ Only internal changes to the release pipeline.
 
 - [@siteimprove/alfa-css](packages/alfa-css): `Numeric` CSS types now have a `.scale` method, keeping the underlying type and unit. ([#1195](../../pull/1195)) 
 
-- [@siteimprove/alfa-style](packages/alfa-style): A `Percentage` resolver is added. `Length2` and `Percentage` resolvers can be curryfied. ([#1195](../../pull/1195))
+- [@siteimprove/alfa-style](packages/alfa-style): A `Percentage` resolver is added. `Length` and `Percentage` resolvers can be curryfied. ([#1195](../../pull/1195))
 
 ### Changed
 
@@ -1146,7 +1146,7 @@ This release contains only internal API changes.
 
 - [@siteimprove/alfa-media](packages/alfa-media): The new range syntax for media features, such as `100px < width <= 900px`, is now supported. ([#109](../../issue/109), [#722](../../pull/722))
 
-- [@siteimprove/alfa-css](packages/alfa-css): The `Dimension2` and `Numeric` types now provide implementations of `Comparable`. The `Dimension2#canonicalUnit` property is now also available to facilitate comparisons between units of same dimensional type. ([#722](../../pull/722))
+- [@siteimprove/alfa-css](packages/alfa-css): The `Dimension` and `Numeric` types now provide implementations of `Comparable`. The `Dimension#canonicalUnit` property is now also available to facilitate comparisons between units of same dimensional type. ([#722](../../pull/722))
 
 - [@siteimprove/alfa-interviewer](packages/alfa-interviewer): A new package has been added with types for modelling ACT rule interviewers and functionality for loading these from external and local modules. ([#699](../../pull/699))
 
