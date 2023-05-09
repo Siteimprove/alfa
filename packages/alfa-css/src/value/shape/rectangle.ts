@@ -2,11 +2,12 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import { Length } from "../../calculation";
 import { Function, Token } from "../../syntax";
-import { Value } from "../../value";
 
 import { Keyword } from "../keyword";
-import { Length } from "../../calculation";
+
+import { BasicShape } from "./basic-shape";
 
 const { either, map, option, pair, take, right, delimited } = Parser;
 
@@ -18,7 +19,7 @@ const { either, map, option, pair, take, right, delimited } = Parser;
  */
 export class Rectangle<
   O extends Length | Rectangle.Auto = Length | Rectangle.Auto
-> extends Value<"basic-shape", false> {
+> extends BasicShape<"rectangle"> {
   public static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(
     top: O,
     right: O,
@@ -34,15 +35,11 @@ export class Rectangle<
   public readonly _left: O;
 
   private constructor(top: O, right: O, bottom: O, left: O) {
-    super("basic-shape", false);
+    super("rectangle", false);
     this._top = top;
     this._right = right;
     this._bottom = bottom;
     this._left = left;
-  }
-
-  public get kind(): "rectangle" {
-    return "rectangle";
   }
 
   public get top(): O {
@@ -90,7 +87,6 @@ export class Rectangle<
   public toJSON(): Rectangle.JSON {
     return {
       ...super.toJSON(),
-      kind: "rectangle",
       top: this._top.toJSON(),
       right: this._right.toJSON(),
       bottom: this._bottom.toJSON(),
@@ -110,8 +106,7 @@ export class Rectangle<
 export namespace Rectangle {
   export type Auto = Keyword<"auto">;
 
-  export interface JSON extends Value.JSON<"basic-shape"> {
-    kind: "rectangle";
+  export interface JSON extends BasicShape.JSON<"rectangle"> {
     top: Length.JSON | Keyword.JSON;
     right: Length.JSON | Keyword.JSON;
     bottom: Length.JSON | Keyword.JSON;

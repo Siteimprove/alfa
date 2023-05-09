@@ -3,10 +3,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Function, Token } from "../../syntax";
-import { Value } from "../../value";
 
 import { Keyword } from "../keyword";
 import { Position } from "../position";
+
+import { BasicShape } from "./basic-shape";
 import { Radius } from "./radius";
 
 const { map, option, pair, right } = Parser;
@@ -19,7 +20,7 @@ const { map, option, pair, right } = Parser;
 export class Circle<
   R extends Radius = Radius,
   P extends Position = Position
-> extends Value<"basic-shape", false> {
+> extends BasicShape<"circle"> {
   public static of<R extends Radius, P extends Position>(
     radius: R,
     center: P
@@ -31,13 +32,9 @@ export class Circle<
   private readonly _center: P;
 
   private constructor(radius: R, center: P) {
-    super("basic-shape", false);
+    super("circle", false);
     this._radius = radius;
     this._center = center;
-  }
-
-  public get kind(): "circle" {
-    return "circle";
   }
 
   public get radius(): R {
@@ -71,7 +68,6 @@ export class Circle<
   public toJSON(): Circle.JSON {
     return {
       ...super.toJSON(),
-      kind: "circle",
       radius: this._radius.toJSON(),
       center: this._center.toJSON(),
     };
@@ -86,8 +82,7 @@ export class Circle<
  * @public
  */
 export namespace Circle {
-  export interface JSON extends Value.JSON<"basic-shape"> {
-    kind: "circle";
+  export interface JSON extends BasicShape.JSON<"circle"> {
     radius: Radius.JSON;
     center: Position.JSON;
   }

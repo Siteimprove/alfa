@@ -8,8 +8,9 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Length, Percentage } from "../../calculation";
 import { Function, Token } from "../../syntax";
 
-import { Value } from "../../value";
 import { Keyword } from "../keyword";
+
+import { BasicShape } from "./basic-shape";
 
 const { either, map, filter, option, pair, right, takeAtMost } = Parser;
 const { parseDelim, parseWhitespace } = Token;
@@ -22,7 +23,7 @@ const { parseDelim, parseWhitespace } = Token;
 export class Inset<
   O extends Inset.Offset = Inset.Offset,
   C extends Inset.Corner = Inset.Corner
-> extends Value<"basic-shape", false> {
+> extends BasicShape<"inset"> {
   public static of<
     O extends Inset.Offset = Inset.Offset,
     C extends Inset.Corner = Inset.Corner
@@ -40,13 +41,9 @@ export class Inset<
     offsets: readonly [O, O, O, O],
     corners: Option<readonly [C, C, C, C]>
   ) {
-    super("basic-shape", false);
+    super("inset", false);
     this._offsets = offsets;
     this._corners = corners;
-  }
-
-  public get kind(): "inset" {
-    return "inset";
   }
 
   public get offsets(): readonly [O, O, O, O] {
@@ -113,7 +110,6 @@ export class Inset<
   public toJSON(): Inset.JSON<O, C> {
     return {
       ...super.toJSON(),
-      kind: "inset",
       offsets: Array.toJSON(this._offsets),
       corners: this._corners.toJSON(),
     };
@@ -168,8 +164,7 @@ export namespace Inset {
   export type Corner = Radius | readonly [Radius, Radius];
 
   export interface JSON<O extends Offset = Offset, C extends Corner = Corner>
-    extends Value.JSON<"basic-shape"> {
-    kind: "inset";
+    extends BasicShape.JSON<"inset"> {
     offsets: Serializable.ToJSON<readonly [O, O, O, O]>;
     corners: Option.JSON<readonly [C, C, C, C]>;
   }
