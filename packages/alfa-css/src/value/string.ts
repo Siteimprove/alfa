@@ -4,6 +4,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax";
 import { Value } from "../value";
+import { Numeric } from "../calculation";
 
 const { map } = Parser;
 
@@ -12,7 +13,7 @@ const { map } = Parser;
  *
  * @public
  */
-export class String extends Value<"string"> {
+export class String extends Value<"string", false> {
   public static of(value: string): String {
     return new String(value);
   }
@@ -20,16 +21,16 @@ export class String extends Value<"string"> {
   private readonly _value: string;
 
   private constructor(value: string) {
-    super();
+    super("string", false);
     this._value = value;
-  }
-
-  public get type(): "string" {
-    return "string";
   }
 
   public get value(): string {
     return this._value;
+  }
+
+  public resolve(): String {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -42,7 +43,7 @@ export class String extends Value<"string"> {
 
   public toJSON(): String.JSON {
     return {
-      type: "string",
+      ...super.toJSON(),
       value: this._value,
     };
   }
@@ -64,9 +65,8 @@ export namespace String {
     return value instanceof String;
   }
 
-  export const parse: Parser<
-    Slice<Token>,
-    String,
-    string
-  > = map(Token.parseString(), (string) => String.of(string.value));
+  export const parse: Parser<Slice<Token>, String, string> = map(
+    Token.parseString(),
+    (string) => String.of(string.value)
+  );
 }

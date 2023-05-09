@@ -12,7 +12,10 @@ const { map } = Parser;
 /**
  * @public
  */
-export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
+export class Named<C extends Named.Color = Named.Color> extends Value<
+  "color",
+  false
+> {
   public static of<C extends Named.Color>(color: C): Named<C> {
     return new Named(color);
   }
@@ -20,12 +23,8 @@ export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
   private readonly _color: C;
 
   private constructor(color: C) {
-    super();
+    super("color", false);
     this._color = color;
-  }
-
-  public get type(): "color" {
-    return "color";
   }
 
   public get format(): "named" {
@@ -58,6 +57,10 @@ export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
     return Number.of(this._color === "transparent" ? 0 : 1);
   }
 
+  public resolve(): Named<C> {
+    return this;
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Named && value._color === this._color;
   }
@@ -68,7 +71,7 @@ export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
 
   public toJSON(): Named.JSON {
     return {
-      type: "color",
+      ...super.toJSON(),
       format: "named",
       color: this._color,
     };

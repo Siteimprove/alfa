@@ -12,7 +12,10 @@ const { map, left, right, filter, delimited, option } = Parser;
 /**
  * @public
  */
-export class Perspective<D extends Length = Length> extends Value<"transform"> {
+export class Perspective<D extends Length = Length> extends Value<
+  "transform",
+  false
+> {
   public static of<D extends Length>(depth: D): Perspective<D> {
     return new Perspective(depth);
   }
@@ -20,12 +23,8 @@ export class Perspective<D extends Length = Length> extends Value<"transform"> {
   private readonly _depth: D;
 
   private constructor(depth: D) {
-    super();
+    super("transform", false);
     this._depth = depth;
-  }
-
-  public get type(): "transform" {
-    return "transform";
   }
 
   public get kind(): "perspective" {
@@ -34,6 +33,10 @@ export class Perspective<D extends Length = Length> extends Value<"transform"> {
 
   public get depth(): D {
     return this._depth;
+  }
+
+  public resolve(): Perspective<D> {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -46,7 +49,7 @@ export class Perspective<D extends Length = Length> extends Value<"transform"> {
 
   public toJSON(): Perspective.JSON {
     return {
-      type: "transform",
+      ...super.toJSON(),
       kind: "perspective",
       depth: this._depth.toJSON(),
     };

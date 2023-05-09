@@ -22,7 +22,7 @@ const { parseDelim, parseWhitespace } = Token;
 export class Inset<
   O extends Inset.Offset = Inset.Offset,
   C extends Inset.Corner = Inset.Corner
-> extends Value<"basic-shape"> {
+> extends Value<"basic-shape", false> {
   public static of<
     O extends Inset.Offset = Inset.Offset,
     C extends Inset.Corner = Inset.Corner
@@ -40,13 +40,9 @@ export class Inset<
     offsets: readonly [O, O, O, O],
     corners: Option<readonly [C, C, C, C]>
   ) {
-    super();
+    super("basic-shape", false);
     this._offsets = offsets;
     this._corners = corners;
-  }
-
-  public get type(): "basic-shape" {
-    return "basic-shape";
   }
 
   public get kind(): "inset" {
@@ -93,6 +89,10 @@ export class Inset<
     return this._corners.map((corners) => corners[3]);
   }
 
+  public resolve(): Inset<O, C> {
+    return this;
+  }
+
   public equals(value: Inset): boolean;
 
   public equals(value: unknown): value is this;
@@ -112,7 +112,7 @@ export class Inset<
 
   public toJSON(): Inset.JSON<O, C> {
     return {
-      type: "basic-shape",
+      ...super.toJSON(),
       kind: "inset",
       offsets: Array.toJSON(this._offsets),
       corners: this._corners.toJSON(),

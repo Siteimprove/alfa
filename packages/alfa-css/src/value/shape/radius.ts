@@ -20,7 +20,7 @@ export class Radius<
     | Length
     | Percentage
     | Radius.Side
-> extends Value<"basic-shape"> {
+> extends Value<"basic-shape", false> {
   public static of<R extends Length | Percentage | Radius.Side>(
     value: R
   ): Radius<R> {
@@ -30,12 +30,8 @@ export class Radius<
   private readonly _value: R;
 
   private constructor(value: R) {
-    super();
+    super("basic-shape", false);
     this._value = value;
-  }
-
-  public get type(): "basic-shape" {
-    return "basic-shape";
   }
 
   public get kind(): "radius" {
@@ -44,6 +40,10 @@ export class Radius<
 
   public get value(): R {
     return this._value;
+  }
+
+  public resolve(): Radius<R> {
+    return this;
   }
 
   public equals(value: Radius): boolean;
@@ -60,7 +60,7 @@ export class Radius<
 
   public toJSON(): Radius.JSON {
     return {
-      type: "basic-shape",
+      ...super.toJSON(),
       kind: "radius",
       value: this.value.toJSON(),
     };

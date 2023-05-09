@@ -19,7 +19,7 @@ const { map, option, pair, right } = Parser;
 export class Circle<
   R extends Radius = Radius,
   P extends Position = Position
-> extends Value<"basic-shape"> {
+> extends Value<"basic-shape", false> {
   public static of<R extends Radius, P extends Position>(
     radius: R,
     center: P
@@ -31,13 +31,9 @@ export class Circle<
   private readonly _center: P;
 
   private constructor(radius: R, center: P) {
-    super();
+    super("basic-shape", false);
     this._radius = radius;
     this._center = center;
-  }
-
-  public get type(): "basic-shape" {
-    return "basic-shape";
   }
 
   public get kind(): "circle" {
@@ -50,6 +46,10 @@ export class Circle<
 
   public get center(): P {
     return this._center;
+  }
+
+  public resolve(): Circle<R, P> {
+    return this;
   }
 
   public equals(value: Circle): boolean;
@@ -70,7 +70,7 @@ export class Circle<
 
   public toJSON(): Circle.JSON {
     return {
-      type: "basic-shape",
+      ...super.toJSON(),
       kind: "circle",
       radius: this._radius.toJSON(),
       center: this._center.toJSON(),

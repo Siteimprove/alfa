@@ -12,7 +12,7 @@ const { map, left, right, pair, either, delimited, option } = Parser;
 /**
  * @public
  */
-export class Scale extends Value<"transform"> {
+export class Scale extends Value<"transform", false> {
   public static of(x: Number, y: Number): Scale {
     return new Scale(x, y);
   }
@@ -21,13 +21,9 @@ export class Scale extends Value<"transform"> {
   private readonly _y: Number;
 
   private constructor(x: Number, y: Number) {
-    super();
+    super("transform", false);
     this._x = x;
     this._y = y;
-  }
-
-  public get type(): "transform" {
-    return "transform";
   }
 
   public get kind(): "scale" {
@@ -40,6 +36,10 @@ export class Scale extends Value<"transform"> {
 
   public get y(): Number {
     return this._y;
+  }
+
+  public resolve(): Scale {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -56,7 +56,7 @@ export class Scale extends Value<"transform"> {
 
   public toJSON(): Scale.JSON {
     return {
-      type: "transform",
+      ...super.toJSON(),
       kind: "scale",
       x: this._x.toJSON(),
       y: this._y.toJSON(),

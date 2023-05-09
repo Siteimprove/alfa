@@ -16,7 +16,7 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
 export class HSL<
   H extends Number | Angle = Number | Angle,
   A extends Number | Percentage = Number | Percentage
-> extends Value<"color"> {
+> extends Value<"color", false> {
   public static of<H extends Number | Angle, A extends Number | Percentage>(
     hue: H,
     saturation: Percentage,
@@ -40,7 +40,7 @@ export class HSL<
     lightness: Percentage,
     alpha: A
   ) {
-    super();
+    super("color", false);
     this._hue = hue;
     this._saturation = saturation;
     this._lightness = lightness;
@@ -57,10 +57,6 @@ export class HSL<
     this._red = Percentage.of(red);
     this._green = Percentage.of(green);
     this._blue = Percentage.of(blue);
-  }
-
-  public get type(): "color" {
-    return "color";
   }
 
   public get format(): "hsl" {
@@ -95,6 +91,10 @@ export class HSL<
     return this._alpha;
   }
 
+  public resolve(): HSL<H, A> {
+    return this;
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof HSL &&
@@ -115,7 +115,7 @@ export class HSL<
 
   public toJSON(): HSL.JSON {
     return {
-      type: "color",
+      ...super.toJSON(),
       format: "hsl",
       hue: this._hue.toJSON(),
       saturation: this._saturation.toJSON(),

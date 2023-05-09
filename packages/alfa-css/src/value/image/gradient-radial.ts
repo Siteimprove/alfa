@@ -27,7 +27,7 @@ export class Radial<
   I extends Gradient.Item = Gradient.Item,
   S extends Radial.Shape = Radial.Shape,
   P extends Position = Position
-> extends Value<"gradient"> {
+> extends Value<"gradient", false> {
   public static of<
     I extends Gradient.Item = Gradient.Item,
     S extends Radial.Shape = Radial.Shape,
@@ -52,15 +52,11 @@ export class Radial<
     items: Iterable<I>,
     repeats: boolean
   ) {
-    super();
+    super("gradient", false);
     this._shape = shape;
     this._position = position;
     this._items = [...items];
     this._repeats = repeats;
-  }
-
-  public get type(): "gradient" {
-    return "gradient";
   }
 
   public get kind(): "radial" {
@@ -81,6 +77,10 @@ export class Radial<
 
   public get repeats(): boolean {
     return this._repeats;
+  }
+
+  public resolve(): Radial<I, S, P> {
+    return this;
   }
 
   public equals(value: Radial): boolean;
@@ -110,7 +110,7 @@ export class Radial<
 
   public toJSON(): Radial.JSON {
     return {
-      type: "gradient",
+      ...super.toJSON(),
       kind: "radial",
       shape: this._shape.toJSON(),
       position: this._position.toJSON(),

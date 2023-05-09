@@ -18,7 +18,7 @@ const { either, map, option, pair, take, right, delimited } = Parser;
  */
 export class Rectangle<
   O extends Length | Rectangle.Auto = Length | Rectangle.Auto
-> extends Value<"basic-shape"> {
+> extends Value<"basic-shape", false> {
   public static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(
     top: O,
     right: O,
@@ -34,15 +34,11 @@ export class Rectangle<
   public readonly _left: O;
 
   private constructor(top: O, right: O, bottom: O, left: O) {
-    super();
+    super("basic-shape", false);
     this._top = top;
     this._right = right;
     this._bottom = bottom;
     this._left = left;
-  }
-
-  public get type(): "basic-shape" {
-    return "basic-shape";
   }
 
   public get kind(): "rectangle" {
@@ -63,6 +59,10 @@ export class Rectangle<
 
   public get left(): O {
     return this._left;
+  }
+
+  public resolve(): Rectangle<O> {
+    return this;
   }
 
   public equals(value: Rectangle): boolean;
@@ -89,7 +89,7 @@ export class Rectangle<
 
   public toJSON(): Rectangle.JSON {
     return {
-      type: "basic-shape",
+      ...super.toJSON(),
       kind: "rectangle",
       top: this._top.toJSON(),
       right: this._right.toJSON(),

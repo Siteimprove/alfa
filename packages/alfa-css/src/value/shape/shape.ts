@@ -22,7 +22,7 @@ const { either } = Parser;
 export class Shape<
   S extends Shape.Basic = Shape.Basic,
   B extends Box.Geometry = Box.Geometry
-> extends Value<"shape"> {
+> extends Value<"shape", false> {
   public static of<
     S extends Shape.Basic = Shape.Basic,
     B extends Box.Geometry = Box.Geometry
@@ -34,13 +34,9 @@ export class Shape<
   private readonly _box: B;
 
   private constructor(shape: S, box: B) {
-    super();
+    super("shape", false);
     this._shape = shape;
     this._box = box;
-  }
-
-  public get type(): "shape" {
-    return "shape";
   }
 
   public get shape(): S {
@@ -49,6 +45,10 @@ export class Shape<
 
   public get box(): B {
     return this._box;
+  }
+
+  public resolve(): Shape<S, B> {
+    return this;
   }
 
   public equals(value: Shape): boolean;
@@ -69,7 +69,7 @@ export class Shape<
 
   public toJSON(): Shape.JSON {
     return {
-      type: "shape",
+      ...super.toJSON(),
       shape: this._shape.toJSON(),
       box: this._box.toJSON(),
     };

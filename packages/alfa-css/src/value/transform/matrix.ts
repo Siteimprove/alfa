@@ -12,7 +12,7 @@ const { map, left, right, pair, either, take, delimited, option } = Parser;
 /**
  * @public
  */
-export class Matrix extends Value<"transform"> {
+export class Matrix extends Value<"transform", false> {
   public static of(...values: Matrix.Values<Number>): Matrix {
     return new Matrix(values);
   }
@@ -20,12 +20,8 @@ export class Matrix extends Value<"transform"> {
   private readonly _values: Matrix.Values<Number>;
 
   private constructor(values: Matrix.Values<Number>) {
-    super();
+    super("transform", false);
     this._values = values;
-  }
-
-  public get type(): "transform" {
-    return "transform";
   }
 
   public get kind(): "matrix" {
@@ -34,6 +30,10 @@ export class Matrix extends Value<"transform"> {
 
   public get values(): Matrix.Values<Number> {
     return this._values;
+  }
+
+  public resolve(): Matrix {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -55,7 +55,7 @@ export class Matrix extends Value<"transform"> {
 
   public toJSON(): Matrix.JSON {
     return {
-      type: "transform",
+      ...super.toJSON(),
       kind: "matrix",
       values: this._values.map((row) =>
         row.map((value) => value.toJSON())

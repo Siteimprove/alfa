@@ -4,7 +4,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Angle, Number } from "../../calculation";
 import { Token } from "../../syntax";
-import {Unit} from "../../unit";
+import { Unit } from "../../unit";
 import { Value } from "../../value";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
@@ -12,7 +12,7 @@ const { map, left, right, pair, either, delimited, option } = Parser;
 /**
  * @public
  */
-export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
+export class Rotate<A extends Angle = Angle> extends Value<"transform", false> {
   public static of<A extends Angle>(
     x: Number,
     y: Number,
@@ -28,15 +28,11 @@ export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
   private readonly _angle: A;
 
   private constructor(x: Number, y: Number, z: Number, angle: A) {
-    super();
+    super("transform", false);
     this._x = x;
     this._y = y;
     this._z = z;
     this._angle = angle;
-  }
-
-  public get type(): "transform" {
-    return "transform";
   }
 
   public get kind(): "rotate" {
@@ -59,6 +55,10 @@ export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
     return this._angle;
   }
 
+  public resolve(): Rotate<A> {
+    return this;
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof Rotate &&
@@ -79,7 +79,7 @@ export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
 
   public toJSON(): Rotate.JSON {
     return {
-      type: "transform",
+      ...super.toJSON(),
       kind: "rotate",
       x: this._x.toJSON(),
       y: this._y.toJSON(),

@@ -6,7 +6,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 /**
  * @internal
  */
-export class Tuple<T extends Array<unknown>> extends Value<"tuple"> {
+export class Tuple<T extends Array<unknown>> extends Value<"tuple", false> {
   public static of<T extends Array<unknown>>(...values: Readonly<T>): Tuple<T> {
     return new Tuple(values);
   }
@@ -14,16 +14,16 @@ export class Tuple<T extends Array<unknown>> extends Value<"tuple"> {
   private readonly _values: Readonly<T>;
 
   private constructor(values: Readonly<T>) {
-    super();
+    super("tuple", false);
     this._values = values;
-  }
-
-  public get type(): "tuple" {
-    return "tuple";
   }
 
   public get values(): Readonly<T> {
     return this._values;
+  }
+
+  public resolve(): Tuple<T> {
+    return this;
   }
 
   public equals<T extends Array<unknown>>(value: Tuple<T>): boolean;
@@ -50,7 +50,7 @@ export class Tuple<T extends Array<unknown>> extends Value<"tuple"> {
 
   public toJSON(): Tuple.JSON<T> {
     return {
-      type: "tuple",
+      ...super.toJSON(),
       values: this._values.map((value) =>
         Serializable.toJSON(value)
       ) as Serializable.ToJSON<T>,

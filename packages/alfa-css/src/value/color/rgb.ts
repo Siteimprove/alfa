@@ -15,7 +15,7 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
 export class RGB<
   C extends Number | Percentage = Number | Percentage,
   A extends Number | Percentage = Number | Percentage
-> extends Value<"color"> {
+> extends Value<"color", false> {
   public static of<
     C extends Number | Percentage,
     A extends Number | Percentage
@@ -29,15 +29,11 @@ export class RGB<
   private readonly _alpha: A;
 
   private constructor(red: C, green: C, blue: C, alpha: A) {
-    super();
+    super("color", false);
     this._red = red;
     this._green = green;
     this._blue = blue;
     this._alpha = alpha;
-  }
-
-  public get type(): "color" {
-    return "color";
   }
 
   public get format(): "rgb" {
@@ -60,6 +56,10 @@ export class RGB<
     return this._alpha;
   }
 
+  public resolve(): RGB<C, A> {
+    return this;
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof RGB &&
@@ -80,7 +80,7 @@ export class RGB<
 
   public toJSON(): RGB.JSON {
     return {
-      type: "color",
+      ...super.toJSON(),
       format: "rgb",
       red: this._red.toJSON(),
       green: this._green.toJSON(),

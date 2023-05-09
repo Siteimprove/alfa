@@ -12,7 +12,7 @@ const { map } = Parser;
 /**
  * @public
  */
-export class Hex extends Value<"color"> {
+export class Hex extends Value<"color", false> {
   public static of(value: number): Hex {
     return new Hex(value);
   }
@@ -20,14 +20,10 @@ export class Hex extends Value<"color"> {
   private readonly _value: number;
 
   private constructor(value: number) {
-    super();
+    super("color", false);
 
     // Make sure that only the lower 4 bytes are stored.
     this._value = value & 0xff_ff_ff_ff;
-  }
-
-  public get type(): "color" {
-    return "color";
   }
 
   public get format(): "hex" {
@@ -52,6 +48,10 @@ export class Hex extends Value<"color"> {
 
   public get alpha(): Number {
     return Number.of(this._value & 0xff);
+  }
+
+  public resolve(): Hex {
+    return this;
   }
 
   public equals(value: unknown): value is this {

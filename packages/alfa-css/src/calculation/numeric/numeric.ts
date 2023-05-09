@@ -10,7 +10,7 @@ import { Value } from "../../value";
  * @public
  */
 export abstract class Numeric<T extends Numeric.Type = Numeric.Type>
-  extends Value<T>
+  extends Value<T, false>
   implements Comparable<Numeric<T>>
 {
   /**
@@ -19,23 +19,21 @@ export abstract class Numeric<T extends Numeric.Type = Numeric.Type>
   public static readonly Decimals = 7;
 
   protected readonly _value: number;
-  protected readonly _type: T;
 
   protected constructor(value: number, type: T) {
-    super();
+    super(type, false);
     this._value = Real.round(value, Numeric.Decimals);
-    this._type = type;
   }
 
   public get value(): number {
     return this._value;
   }
 
-  public get type(): T {
-    return this._type;
-  }
-
   public abstract scale(factor: number): Numeric<T>;
+
+  public resolve<N extends Numeric<T>>(this: N): N {
+    return this;
+  }
 
   public equals(value: unknown): value is this {
     return value instanceof Numeric && value._value === this._value;
@@ -51,8 +49,8 @@ export abstract class Numeric<T extends Numeric.Type = Numeric.Type>
 
   public toJSON(): Numeric.JSON<T> {
     return {
+      ...super.toJSON(),
       value: this._value,
-      type: this._type,
     };
   }
 
@@ -68,7 +66,6 @@ export namespace Numeric {
   export interface JSON<T extends Type = Type> extends Value.JSON<T> {
     [key: string]: json.JSON;
     value: number;
-    type: T;
   }
 
   export function isNumeric(value: unknown): value is Numeric {

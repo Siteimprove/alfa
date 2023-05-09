@@ -16,7 +16,7 @@ export class Translate<
   X extends Length | Percentage = Length | Percentage,
   Y extends Length | Percentage = Length | Percentage,
   Z extends Length = Length
-> extends Value<"transform"> {
+> extends Value<"transform", false> {
   public static of<
     X extends Length | Percentage,
     Y extends Length | Percentage,
@@ -30,14 +30,10 @@ export class Translate<
   private readonly _z: Z;
 
   private constructor(x: X, y: Y, z: Z) {
-    super();
+    super("transform", false);
     this._x = x;
     this._y = y;
     this._z = z;
-  }
-
-  public get type(): "transform" {
-    return "transform";
   }
 
   public get kind(): "translate" {
@@ -56,6 +52,10 @@ export class Translate<
     return this._z;
   }
 
+  public resolve(): Translate<X, Y, Z> {
+    return this;
+  }
+
   public equals(value: unknown): value is this {
     return (
       value instanceof Translate &&
@@ -71,7 +71,7 @@ export class Translate<
 
   public toJSON(): Translate.JSON {
     return {
-      type: "transform",
+      ...super.toJSON(),
       kind: "translate",
       x: this._x.toJSON(),
       y: this._y.toJSON(),
