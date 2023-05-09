@@ -115,8 +115,10 @@ export namespace Box {
     parseGeometry: Parser<Slice<Token>, Geometry, string>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "BasicShape" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export class Circle<R extends Radius = Radius, P extends Position = Position> extends Value<"basic-shape"> {
+export class Circle<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"circle"> {
     // (undocumented)
     get center(): P;
     // (undocumented)
@@ -126,17 +128,15 @@ export class Circle<R extends Radius = Radius, P extends Position = Position> ex
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get kind(): "circle";
-    // (undocumented)
     static of<R extends Radius, P extends Position>(radius: R, center: P): Circle<R, P>;
     // (undocumented)
     get radius(): R;
     // (undocumented)
+    resolve(): Circle<R, P>;
+    // (undocumented)
     toJSON(): Circle.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "basic-shape";
 }
 
 // @public (undocumented)
@@ -144,11 +144,9 @@ export namespace Circle {
     // (undocumented)
     export function isCircle(value: unknown): value is Circle;
     // (undocumented)
-    export interface JSON extends Value.JSON<"basic-shape"> {
+    export interface JSON extends BasicShape.JSON<"circle"> {
         // (undocumented)
         center: Position.JSON;
-        // (undocumented)
-        kind: "circle";
         // (undocumented)
         radius: Radius.JSON;
     }
@@ -313,7 +311,7 @@ export namespace Dimension {
 }
 
 // @public (undocumented)
-export class Ellipse<R extends Radius = Radius, P extends Position = Position> extends Value<"basic-shape"> {
+export class Ellipse<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"ellipse"> {
     // (undocumented)
     get center(): P;
     // (undocumented)
@@ -323,9 +321,9 @@ export class Ellipse<R extends Radius = Radius, P extends Position = Position> e
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get kind(): "ellipse";
-    // (undocumented)
     static of<R extends Radius = Radius, P extends Position = Position>(rx: R, ry: R, center: P): Ellipse<R, P>;
+    // (undocumented)
+    resolve(): Ellipse<R, P>;
     // (undocumented)
     get rx(): R;
     // (undocumented)
@@ -334,8 +332,6 @@ export class Ellipse<R extends Radius = Radius, P extends Position = Position> e
     toJSON(): Ellipse.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "basic-shape";
 }
 
 // @public (undocumented)
@@ -343,11 +339,9 @@ export namespace Ellipse {
     // (undocumented)
     export function isEllipse(value: unknown): value is Ellipse;
     // (undocumented)
-    export interface JSON extends Value.JSON<"basic-shape"> {
+    export interface JSON extends BasicShape.JSON<"ellipse"> {
         // (undocumented)
         center: Position.JSON;
-        // (undocumented)
-        kind: "ellipse";
         // (undocumented)
         rx: Radius.JSON;
         // (undocumented)
@@ -481,16 +475,16 @@ export namespace Gradient {
     parse: Parser<Slice<Token>, Gradient, string>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "Format" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export class Hex extends Value<"color"> {
+export class Hex extends Format<"hex"> {
     // (undocumented)
     get alpha(): Number_2;
     // (undocumented)
     get blue(): Number_2;
     // (undocumented)
     equals(value: unknown): value is this;
-    // (undocumented)
-    get format(): "hex";
     // (undocumented)
     get green(): Number_2;
     // (undocumented)
@@ -500,11 +494,11 @@ export class Hex extends Value<"color"> {
     // (undocumented)
     get red(): Number_2;
     // (undocumented)
+    resolve(): Hex;
+    // (undocumented)
     toJSON(): Hex.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "color";
     // (undocumented)
     get value(): number;
 }
@@ -514,9 +508,7 @@ export namespace Hex {
     // (undocumented)
     export function isHex(value: unknown): value is Hex;
     // (undocumented)
-    export interface JSON extends Value.JSON<"color"> {
-        // (undocumented)
-        format: "hex";
+    export interface JSON extends Format.JSON<"hex"> {
         // (undocumented)
         value: number;
     }
@@ -525,15 +517,13 @@ export namespace Hex {
 }
 
 // @public (undocumented)
-export class HSL<H extends Number_2 | Angle = Number_2 | Angle, A extends Number_2 | Percentage = Number_2 | Percentage> extends Value<"color"> {
+export class HSL<H extends Number_2 | Angle = Number_2 | Angle, A extends Number_2 | Percentage = Number_2 | Percentage> extends Format<"hsl"> {
     // (undocumented)
     get alpha(): A;
     // (undocumented)
     get blue(): Percentage;
     // (undocumented)
     equals(value: unknown): value is this;
-    // (undocumented)
-    get format(): "hsl";
     // (undocumented)
     get green(): Percentage;
     // (undocumented)
@@ -547,13 +537,13 @@ export class HSL<H extends Number_2 | Angle = Number_2 | Angle, A extends Number
     // (undocumented)
     get red(): Percentage;
     // (undocumented)
+    resolve(): HSL<H, A>;
+    // (undocumented)
     get saturation(): Percentage;
     // (undocumented)
     toJSON(): HSL.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "color";
 }
 
 // @public (undocumented)
@@ -561,11 +551,9 @@ export namespace HSL {
     // (undocumented)
     export function isHSL<H extends Number_2 | Angle, A extends Number_2 | Percentage>(value: unknown): value is HSL<H, A>;
     // (undocumented)
-    export interface JSON extends Value.JSON<"color"> {
+    export interface JSON extends Format.JSON<"hsl"> {
         // (undocumented)
         alpha: Number_2.JSON | Percentage.JSON;
-        // (undocumented)
-        format: "hsl";
         // (undocumented)
         hue: Number_2.JSON | Angle.JSON;
         // (undocumented)
@@ -578,7 +566,7 @@ export namespace HSL {
 }
 
 // @public (undocumented)
-export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"image"> {
+export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"image", false> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -588,11 +576,11 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"ima
     // (undocumented)
     static of<I extends URL | Gradient>(image: I): Image<I>;
     // (undocumented)
+    resolve(): Image<I>;
+    // (undocumented)
     toJSON(): Image.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "image";
 }
 
 // @public (undocumented)
@@ -609,7 +597,7 @@ export namespace Image {
 }
 
 // @public (undocumented)
-export class Inset<O extends Inset.Offset = Inset.Offset, C extends Inset.Corner = Inset.Corner> extends Value<"basic-shape"> {
+export class Inset<O extends Inset.Offset = Inset.Offset, C extends Inset.Corner = Inset.Corner> extends BasicShape<"inset"> {
     // (undocumented)
     get bottom(): O;
     // (undocumented)
@@ -625,13 +613,13 @@ export class Inset<O extends Inset.Offset = Inset.Offset, C extends Inset.Corner
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get kind(): "inset";
-    // (undocumented)
     get left(): O;
     // (undocumented)
     static of<O extends Inset.Offset = Inset.Offset, C extends Inset.Corner = Inset.Corner>(offsets: readonly [O, O, O, O], corners: Option<readonly [C, C, C, C]>): Inset<O, C>;
     // (undocumented)
     get offsets(): readonly [O, O, O, O];
+    // (undocumented)
+    resolve(): Inset<O, C>;
     // (undocumented)
     get right(): O;
     // (undocumented)
@@ -644,8 +632,6 @@ export class Inset<O extends Inset.Offset = Inset.Offset, C extends Inset.Corner
     get topRight(): Option<C>;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "basic-shape";
 }
 
 // @public (undocumented)
@@ -653,11 +639,9 @@ export namespace Inset {
     // (undocumented)
     export type Corner = Radius | readonly [Radius, Radius];
     // (undocumented)
-    export interface JSON<O extends Offset = Offset, C extends Corner = Corner> extends Value.JSON<"basic-shape"> {
+    export interface JSON<O extends Offset = Offset, C extends Corner = Corner> extends BasicShape.JSON<"inset"> {
         // (undocumented)
         corners: Option.JSON<readonly [C, C, C, C]>;
-        // (undocumented)
-        kind: "inset";
         // (undocumented)
         offsets: Serializable.ToJSON<readonly [O, O, O, O]>;
     }
@@ -693,7 +677,7 @@ export namespace Integer {
 }
 
 // @public (undocumented)
-export class Keyword<T extends string = string> extends Value<"keyword"> {
+export class Keyword<T extends string = string> extends Value<"keyword", false> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -701,11 +685,11 @@ export class Keyword<T extends string = string> extends Value<"keyword"> {
     // (undocumented)
     static of<T extends string>(value: T): Keyword<T>;
     // (undocumented)
+    resolve(): Keyword<T>;
+    // (undocumented)
     toJSON(): Keyword.JSON<T>;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "keyword";
     // (undocumented)
     get value(): T;
 }
@@ -773,7 +757,7 @@ export namespace Lexer {
 }
 
 // @public (undocumented)
-export class Linear<I extends Gradient.Item = Gradient.Item, D extends Linear.Direction = Linear.Direction> extends Value<"gradient"> {
+export class Linear<I extends Gradient.Item = Gradient.Item, D extends Linear.Direction = Linear.Direction> extends Value<"gradient", false> {
     // (undocumented)
     get direction(): D;
     // (undocumented)
@@ -791,11 +775,11 @@ export class Linear<I extends Gradient.Item = Gradient.Item, D extends Linear.Di
     // (undocumented)
     get repeats(): boolean;
     // (undocumented)
+    resolve(): Linear<I, D>;
+    // (undocumented)
     toJSON(): Linear.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "gradient";
 }
 
 // @public (undocumented)
@@ -899,8 +883,47 @@ export namespace Linear {
     }
 }
 
+// Warning: (ae-internal-missing-underscore) The name "List" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export class List<T> extends Value<"list", false> implements Iterable<T> {
+    // (undocumented)
+    [Symbol.iterator](): Iterator<T>;
+    // (undocumented)
+    equals<T>(value: List<T>): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of<T>(values: Iterable<T>, separator?: string): List<T>;
+    // (undocumented)
+    resolve(): List<T>;
+    // (undocumented)
+    toJSON(): List.JSON<T>;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    get values(): ReadonlyArray<T>;
+}
+
+// @internal (undocumented)
+export namespace List {
+    // (undocumented)
+    export function isList<T>(value: Iterable<T>): value is List<T>;
+    // (undocumented)
+    export function isList<T>(value: unknown): value is List<T>;
+    // (undocumented)
+    export interface JSON<T> extends Value.JSON<"list"> {
+        // (undocumented)
+        separator: string;
+        // (undocumented)
+        values: Array<Serializable.ToJSON<T>>;
+    }
+}
+
 // @public (undocumented)
-class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"math expression"> {
+class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"math expression", true> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -921,17 +944,17 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"m
     static of(expression: Expression): Math_2;
     // (undocumented)
     reduce(resolver: Expression.Resolver): Math_2;
-    resolve(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length<"px">, string>;
     // (undocumented)
-    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Result<Length<"px">, string>;
+    resolve(): any;
+    resolve2(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length<"px">, string>;
     // (undocumented)
-    resolve(this: Math_2<"number">): Result<Number_2, string>;
+    resolve2(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Result<Length<"px">, string>;
+    // (undocumented)
+    resolve2(this: Math_2<"number">): Result<Number_2, string>;
     // (undocumented)
     toJSON(): Math_2.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "math expression";
 }
 
 // @public (undocumented)
@@ -964,22 +987,22 @@ namespace Math_2 {
 }
 export { Math_2 as Math }
 
+// Warning: (ae-forgotten-export) The symbol "Function" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export class Matrix extends Value<"transform"> {
+export class Matrix extends Function_3<"matrix"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get kind(): "matrix";
-    // (undocumented)
     static of(...values: Matrix.Values<Number_2>): Matrix;
+    // (undocumented)
+    resolve(): Matrix;
     // (undocumented)
     toJSON(): Matrix.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "transform";
     // (undocumented)
     get values(): Matrix.Values<Number_2>;
 }
@@ -989,9 +1012,7 @@ export namespace Matrix {
     // (undocumented)
     export function isMatrix(value: unknown): value is Matrix;
     // (undocumented)
-    export interface JSON extends Value.JSON<"transform"> {
-        // (undocumented)
-        kind: "matrix";
+    export interface JSON extends Function_3.JSON<"matrix"> {
         // (undocumented)
         values: Values<Number_2.JSON>;
     }
@@ -1027,7 +1048,7 @@ export namespace Matrix {
 }
 
 // @public (undocumented)
-export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
+export class Named<C extends Named.Color = Named.Color> extends Format<"named"> {
     // (undocumented)
     get alpha(): Number_2;
     // (undocumented)
@@ -1037,8 +1058,6 @@ export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get format(): "named";
-    // (undocumented)
     get green(): Number_2;
     // (undocumented)
     hash(hash: Hash): void;
@@ -1047,11 +1066,11 @@ export class Named<C extends Named.Color = Named.Color> extends Value<"color"> {
     // (undocumented)
     get red(): Number_2;
     // (undocumented)
+    resolve(): Named<C>;
+    // (undocumented)
     toJSON(): Named.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "color";
     // (undocumented)
     get value(): number;
 }
@@ -1063,11 +1082,9 @@ export namespace Named {
     // (undocumented)
     export type Color = keyof Colors;
     // (undocumented)
-    export interface JSON extends Value.JSON<"color"> {
+    export interface JSON extends Format.JSON<"named"> {
         // (undocumented)
         color: string;
-        // (undocumented)
-        format: "named";
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Named, string>;
@@ -1136,7 +1153,7 @@ namespace Number_2 {
 export { Number_2 as Number }
 
 // @public (undocumented)
-export abstract class Numeric<T extends Numeric.Type = Numeric.Type> extends Value<T> implements Comparable<Numeric<T>> {
+export abstract class Numeric<T extends Numeric.Type = Numeric.Type> extends Value<T, false> implements Comparable<Numeric<T>> {
     protected constructor(value: number, type: T);
     // (undocumented)
     compare(value: Numeric<T>): Comparison;
@@ -1146,15 +1163,13 @@ export abstract class Numeric<T extends Numeric.Type = Numeric.Type> extends Val
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
+    resolve<N extends Numeric<T>>(this: N): N;
+    // (undocumented)
     abstract scale(factor: number): Numeric<T>;
     // (undocumented)
     toJSON(): Numeric.JSON<T>;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): T;
-    // (undocumented)
-    protected readonly _type: T;
     // (undocumented)
     get value(): number;
     // (undocumented)
@@ -1173,8 +1188,6 @@ export namespace Numeric {
     export interface JSON<T extends Type = Type> extends Value.JSON<T> {
         // (undocumented)
         [key: string]: json.JSON;
-        // (undocumented)
-        type: T;
         // (undocumented)
         value: number;
     }
@@ -1210,7 +1223,7 @@ export namespace Percentage {
 }
 
 // @public (undocumented)
-export class Perspective<D extends Length = Length> extends Value<"transform"> {
+export class Perspective<D extends Length = Length> extends Function_3<"perspective"> {
     // (undocumented)
     get depth(): D;
     // (undocumented)
@@ -1218,15 +1231,13 @@ export class Perspective<D extends Length = Length> extends Value<"transform"> {
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get kind(): "perspective";
-    // (undocumented)
     static of<D extends Length>(depth: D): Perspective<D>;
+    // (undocumented)
+    resolve(): Perspective<D>;
     // (undocumented)
     toJSON(): Perspective.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "transform";
 }
 
 // @public (undocumented)
@@ -1234,18 +1245,16 @@ export namespace Perspective {
     // (undocumented)
     export function isPerspective<D extends Length>(value: unknown): value is Perspective<D>;
     // (undocumented)
-    export interface JSON extends Value.JSON<"transform"> {
+    export interface JSON extends Function_3.JSON<"perspective"> {
         // (undocumented)
         depth: Length.JSON;
-        // (undocumented)
-        kind: "perspective";
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Perspective, string>;
 }
 
 // @public (undocumented)
-export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length | Percentage = Length | Percentage> extends Value<"basic-shape"> {
+export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length | Percentage = Length | Percentage> extends BasicShape<"polygon"> {
     // (undocumented)
     equals(value: Polygon): boolean;
     // (undocumented)
@@ -1255,15 +1264,13 @@ export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length | P
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get kind(): "polygon";
-    // (undocumented)
     static of<F extends Polygon.Fill = Polygon.Fill, V extends Length | Percentage = Length | Percentage>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
+    // (undocumented)
+    resolve(): Polygon<F, V>;
     // (undocumented)
     toJSON(): Polygon.JSON<F, V>;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "basic-shape";
     // (undocumented)
     get vertices(): ReadonlyArray<Polygon.Vertex<V>>;
 }
@@ -1273,11 +1280,9 @@ export namespace Polygon {
     // (undocumented)
     export type Fill = Keyword<"nonzero"> | Keyword<"evenodd">;
     // (undocumented)
-    export interface JSON<F extends Fill = Fill, V extends Length | Percentage = Length | Percentage> extends Value.JSON<"basic-shape"> {
+    export interface JSON<F extends Fill = Fill, V extends Length | Percentage = Length | Percentage> extends BasicShape.JSON<"polygon"> {
         // (undocumented)
         fill: Option.JSON<F>;
-        // (undocumented)
-        kind: "polygon";
         // (undocumented)
         vertices: Array_2<Serializable.ToJSON<Vertex<V>>>;
     }
@@ -1288,7 +1293,7 @@ export namespace Polygon {
 }
 
 // @public (undocumented)
-export class Position<H extends Position.Component<Position.Horizontal> = Position.Component<Position.Horizontal>, V extends Position.Component<Position.Vertical> = Position.Component<Position.Vertical>> extends Value<"position"> {
+export class Position<H extends Position.Component<Position.Horizontal> = Position.Component<Position.Horizontal>, V extends Position.Component<Position.Vertical> = Position.Component<Position.Vertical>> extends Value<"position", false> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1298,11 +1303,11 @@ export class Position<H extends Position.Component<Position.Horizontal> = Positi
     // (undocumented)
     static of<H extends Position.Component<Position.Horizontal>, V extends Position.Component<Position.Vertical>>(horizontal: H, vertical: V): Position<H, V>;
     // (undocumented)
+    resolve(): Position<H, V>;
+    // (undocumented)
     toJSON(): Position.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "position";
     // (undocumented)
     get vertical(): V;
 }
@@ -1334,7 +1339,7 @@ export namespace Position {
     // (undocumented)
     export function parse(legacySyntax?: boolean): Parser<Slice<Token>, Position, string>;
     // (undocumented)
-    export class Side<S extends Vertical | Horizontal = Vertical | Horizontal, O extends Offset = Offset> extends Value<"side"> {
+    export class Side<S extends Vertical | Horizontal = Vertical | Horizontal, O extends Offset = Offset> extends Value<"side", false> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1346,13 +1351,13 @@ export namespace Position {
         // (undocumented)
         get offset(): Option<O>;
         // (undocumented)
+        resolve(): Side<S, O>;
+        // (undocumented)
         get side(): S;
         // (undocumented)
         toJSON(): Side.JSON;
         // (undocumented)
         toString(): string;
-        // (undocumented)
-        get type(): "side";
     }
     // (undocumented)
     export namespace Side {
@@ -1370,7 +1375,7 @@ export namespace Position {
 }
 
 // @public (undocumented)
-export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Shape = Radial.Shape, P extends Position = Position> extends Value<"gradient"> {
+export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Shape = Radial.Shape, P extends Position = Position> extends Value<"gradient", false> {
     // (undocumented)
     equals(value: Radial): boolean;
     // (undocumented)
@@ -1388,13 +1393,13 @@ export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Sh
     // (undocumented)
     get repeats(): boolean;
     // (undocumented)
+    resolve(): Radial<I, S, P>;
+    // (undocumented)
     get shape(): S;
     // (undocumented)
     toJSON(): Radial.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "gradient";
 }
 
 // @public (undocumented)
@@ -1543,7 +1548,7 @@ export namespace Radial {
 }
 
 // @public (undocumented)
-export class Radius<R extends Length | Percentage | Radius.Side = Length | Percentage | Radius.Side> extends Value<"basic-shape"> {
+export class Radius<R extends Length | Percentage | Radius.Side = Length | Percentage | Radius.Side> extends BasicShape<"radius"> {
     // (undocumented)
     equals(value: Radius): boolean;
     // (undocumented)
@@ -1551,15 +1556,13 @@ export class Radius<R extends Length | Percentage | Radius.Side = Length | Perce
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get kind(): "radius";
-    // (undocumented)
     static of<R extends Length | Percentage | Radius.Side>(value: R): Radius<R>;
+    // (undocumented)
+    resolve(): Radius<R>;
     // (undocumented)
     toJSON(): Radius.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "basic-shape";
     // (undocumented)
     get value(): R;
 }
@@ -1569,9 +1572,7 @@ export namespace Radius {
     // (undocumented)
     export function isRadius(value: unknown): value is Radius;
     // (undocumented)
-    export interface JSON extends Value.JSON<"basic-shape"> {
-        // (undocumented)
-        kind: "radius";
+    export interface JSON extends BasicShape.JSON<"radius"> {
         // (undocumented)
         value: Length.JSON | Percentage.JSON | Keyword.JSON;
     }
@@ -1589,7 +1590,7 @@ export namespace Radius {
 }
 
 // @public @deprecated (undocumented)
-export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Auto> extends Value<"basic-shape"> {
+export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Auto> extends BasicShape<"rectangle"> {
     // (undocumented)
     get bottom(): O;
     // (undocumented)
@@ -1601,13 +1602,13 @@ export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Au
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get kind(): "rectangle";
-    // (undocumented)
     get left(): O;
     // (undocumented)
     readonly _left: O;
     // (undocumented)
     static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(top: O, right: O, bottom: O, left: O): Rectangle<O>;
+    // (undocumented)
+    resolve(): Rectangle<O>;
     // (undocumented)
     get right(): O;
     // (undocumented)
@@ -1620,8 +1621,6 @@ export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Au
     readonly _top: O;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "basic-shape";
 }
 
 // @public @deprecated (undocumented)
@@ -1631,11 +1630,9 @@ export namespace Rectangle {
     // (undocumented)
     export function isRectangle(value: unknown): value is Rectangle;
     // (undocumented)
-    export interface JSON extends Value.JSON<"basic-shape"> {
+    export interface JSON extends BasicShape.JSON<"rectangle"> {
         // (undocumented)
         bottom: Length.JSON | Keyword.JSON;
-        // (undocumented)
-        kind: "rectangle";
         // (undocumented)
         left: Length.JSON | Keyword.JSON;
         // (undocumented)
@@ -1648,15 +1645,13 @@ export namespace Rectangle {
 }
 
 // @public (undocumented)
-export class RGB<C extends Number_2 | Percentage = Number_2 | Percentage, A extends Number_2 | Percentage = Number_2 | Percentage> extends Value<"color"> {
+export class RGB<C extends Number_2 | Percentage = Number_2 | Percentage, A extends Number_2 | Percentage = Number_2 | Percentage> extends Format<"rgb"> {
     // (undocumented)
     get alpha(): A;
     // (undocumented)
     get blue(): C;
     // (undocumented)
     equals(value: unknown): value is this;
-    // (undocumented)
-    get format(): "rgb";
     // (undocumented)
     get green(): C;
     // (undocumented)
@@ -1666,11 +1661,11 @@ export class RGB<C extends Number_2 | Percentage = Number_2 | Percentage, A exte
     // (undocumented)
     get red(): C;
     // (undocumented)
+    resolve(): RGB<C, A>;
+    // (undocumented)
     toJSON(): RGB.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "color";
 }
 
 // @public (undocumented)
@@ -1678,13 +1673,11 @@ export namespace RGB {
     // (undocumented)
     export function isRGB<C extends Number_2 | Percentage, A extends Number_2 | Percentage>(value: unknown): value is RGB<C, A>;
     // (undocumented)
-    export interface JSON extends Value.JSON<"color"> {
+    export interface JSON extends Format.JSON<"rgb"> {
         // (undocumented)
         alpha: Number_2.JSON | Percentage.JSON;
         // (undocumented)
         blue: Number_2.JSON | Percentage.JSON;
-        // (undocumented)
-        format: "rgb";
         // (undocumented)
         green: Number_2.JSON | Percentage.JSON;
         // (undocumented)
@@ -1695,7 +1688,7 @@ export namespace RGB {
 }
 
 // @public (undocumented)
-export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
+export class Rotate<A extends Angle = Angle> extends Function_3<"rotate"> {
     // (undocumented)
     get angle(): A;
     // (undocumented)
@@ -1703,15 +1696,13 @@ export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get kind(): "rotate";
-    // (undocumented)
     static of<A extends Angle>(x: Number_2, y: Number_2, z: Number_2, angle: A): Rotate<A>;
+    // (undocumented)
+    resolve(): Rotate<A>;
     // (undocumented)
     toJSON(): Rotate.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "transform";
     // (undocumented)
     get x(): Number_2;
     // (undocumented)
@@ -1725,11 +1716,9 @@ export namespace Rotate {
     // (undocumented)
     export function isRotate<A extends Angle>(value: unknown): value is Rotate<A>;
     // (undocumented)
-    export interface JSON extends Value.JSON<"transform"> {
+    export interface JSON extends Function_3.JSON<"rotate"> {
         // (undocumented)
         angle: Angle.JSON;
-        // (undocumented)
-        kind: "rotate";
         // (undocumented)
         x: Number_2.JSON;
         // (undocumented)
@@ -1742,7 +1731,7 @@ export namespace Rotate {
 }
 
 // @public (undocumented)
-export class Scale extends Value<"transform"> {
+export class Scale extends Function_3<"scale"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1752,11 +1741,11 @@ export class Scale extends Value<"transform"> {
     // (undocumented)
     static of(x: Number_2, y: Number_2): Scale;
     // (undocumented)
+    resolve(): Scale;
+    // (undocumented)
     toJSON(): Scale.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "transform";
     // (undocumented)
     get x(): Number_2;
     // (undocumented)
@@ -1768,9 +1757,7 @@ export namespace Scale {
     // (undocumented)
     export function isScale(value: unknown): value is Scale;
     // (undocumented)
-    export interface JSON extends Value.JSON<"transform"> {
-        // (undocumented)
-        kind: "scale";
+    export interface JSON extends Function_3.JSON<"scale"> {
         // (undocumented)
         x: Number_2.JSON;
         // (undocumented)
@@ -1781,7 +1768,7 @@ export namespace Scale {
 }
 
 // @public (undocumented)
-export class Shadow<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color> extends Value<"shadow"> {
+export class Shadow<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color> extends Value<"shadow", false> {
     // (undocumented)
     get blur(): B;
     // (undocumented)
@@ -1797,13 +1784,13 @@ export class Shadow<H extends Length = Length, V extends Length = H, B extends L
     // (undocumented)
     static of<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color>(horizontal: H, vertical: V, blur: B, spread: S, color: C, isInset: boolean): Shadow<H, V, B, S, C>;
     // (undocumented)
+    resolve(): Shadow<H, V, B, S, C>;
+    // (undocumented)
     get spread(): S;
     // (undocumented)
     toJSON(): Shadow.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "shadow";
     // (undocumented)
     get vertical(): V;
 }
@@ -1828,7 +1815,7 @@ export namespace Shadow {
 }
 
 // @public (undocumented)
-export class Shape<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry> extends Value<"shape"> {
+export class Shape<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry> extends Value<"shape", false> {
     // (undocumented)
     get box(): B;
     // (undocumented)
@@ -1840,13 +1827,13 @@ export class Shape<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry =
     // (undocumented)
     static of<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry>(shape: S, box: B): Shape<S, B>;
     // (undocumented)
+    resolve(): Shape<S, B>;
+    // (undocumented)
     get shape(): S;
     // (undocumented)
     toJSON(): Shape.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "shape";
 }
 
 // @public (undocumented)
@@ -1865,21 +1852,19 @@ export namespace Shape {
 }
 
 // @public (undocumented)
-export class Skew<X extends Angle = Angle, Y extends Angle = Angle> extends Value<"transform"> {
+export class Skew<X extends Angle = Angle, Y extends Angle = Angle> extends Function_3<"skew"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get kind(): "skew";
-    // (undocumented)
     static of<X extends Angle, Y extends Angle>(x: X, y: Y): Skew<X, Y>;
+    // (undocumented)
+    resolve(): Skew<X, Y>;
     // (undocumented)
     toJSON(): Skew.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "transform";
     // (undocumented)
     get x(): X;
     // (undocumented)
@@ -1891,9 +1876,7 @@ export namespace Skew {
     // (undocumented)
     export function isSkew<X extends Angle, Y extends Angle>(value: unknown): value is Skew<X, Y>;
     // (undocumented)
-    export interface JSON extends Value.JSON<"transform"> {
-        // (undocumented)
-        kind: "skew";
+    export interface JSON extends Function_3.JSON<"skew"> {
         // (undocumented)
         x: Angle.JSON;
         // (undocumented)
@@ -1904,7 +1887,7 @@ export namespace Skew {
 }
 
 // @public (undocumented)
-class String_2 extends Value<"string"> {
+class String_2 extends Value<"string", false> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1912,11 +1895,11 @@ class String_2 extends Value<"string"> {
     // (undocumented)
     static of(value: string): String_2;
     // (undocumented)
+    resolve(): String_2;
+    // (undocumented)
     toJSON(): String_2.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "string";
     // (undocumented)
     get value(): string;
 }
@@ -2741,21 +2724,19 @@ export namespace Transform {
 }
 
 // @public (undocumented)
-export class Translate<X extends Length | Percentage = Length | Percentage, Y extends Length | Percentage = Length | Percentage, Z extends Length = Length> extends Value<"transform"> {
+export class Translate<X extends Length | Percentage = Length | Percentage, Y extends Length | Percentage = Length | Percentage, Z extends Length = Length> extends Function_3<"translate"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get kind(): "translate";
-    // (undocumented)
     static of<X extends Length | Percentage, Y extends Length | Percentage, Z extends Length>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
+    // (undocumented)
+    resolve(): Translate<X, Y, Z>;
     // (undocumented)
     toJSON(): Translate.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "transform";
     // (undocumented)
     get x(): X;
     // (undocumented)
@@ -2769,9 +2750,7 @@ export namespace Translate {
     // (undocumented)
     export function isTranslate<X extends Length | Percentage, Y extends Length | Percentage, Z extends Length>(value: unknown): value is Translate<X, Y, Z>;
     // (undocumented)
-    export interface JSON extends Value.JSON<"transform"> {
-        // (undocumented)
-        kind: "translate";
+    export interface JSON extends Function_3.JSON<"translate"> {
         // (undocumented)
         x: Length.JSON | Percentage.JSON;
         // (undocumented)
@@ -2781,6 +2760,39 @@ export namespace Translate {
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Translate, string>;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "Tuple" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export class Tuple<T extends Array<unknown>> extends Value<"tuple", false> {
+    // (undocumented)
+    equals<T extends Array<unknown>>(value: Tuple<T>): boolean;
+    // (undocumented)
+    equals(value: unknown): value is this;
+    // (undocumented)
+    hash(hash: Hash): void;
+    // (undocumented)
+    static of<T extends Array<unknown>>(...values: Readonly<T>): Tuple<T>;
+    // (undocumented)
+    resolve(): Tuple<T>;
+    // (undocumented)
+    toJSON(): Tuple.JSON<T>;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    get values(): Readonly<T>;
+}
+
+// @internal (undocumented)
+export namespace Tuple {
+    // (undocumented)
+    export function isTuple<T extends Array<unknown>>(value: unknown): value is Tuple<T>;
+    // (undocumented)
+    export interface JSON<T extends Array<unknown>> extends Value.JSON<"tuple"> {
+        // (undocumented)
+        values: Serializable.ToJSON<T>;
+    }
 }
 
 // @public (undocumented)
@@ -2838,7 +2850,7 @@ export namespace Unit {
 }
 
 // @public (undocumented)
-export class URL extends Value<"url"> {
+export class URL extends Value<"url", false> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -2846,11 +2858,11 @@ export class URL extends Value<"url"> {
     // (undocumented)
     static of(url: string): URL;
     // (undocumented)
+    resolve(): URL;
+    // (undocumented)
     toJSON(): URL.JSON;
     // (undocumented)
     toString(): string;
-    // (undocumented)
-    get type(): "url";
     // (undocumented)
     get url(): string;
 }
@@ -2868,19 +2880,25 @@ export namespace URL {
     parse: Parser<Slice<Token>, URL, string>;
 }
 
-// @public (undocumented)
-export abstract class Value<T extends string = string> implements Equatable, Hashable, Serializable<Value.JSON<T>> {
-    protected constructor();
+// @public
+export abstract class Value<T extends string = string, CALC extends boolean = false> implements Equatable, Hashable, Serializable<Value.JSON<T>> {
+    protected constructor(type: T, hasCalculation: CALC);
     // (undocumented)
     abstract equals(value: unknown): value is this;
     // (undocumented)
+    get hasCalculation(): CALC;
+    // (undocumented)
+    protected readonly _hasCalculation: CALC;
+    // (undocumented)
     abstract hash(hash: Hash): void;
     // (undocumented)
-    abstract toJSON(): Value.JSON<T>;
+    abstract resolve<R extends Value.Resolver>(resolver?: R): Value<T, false>;
+    // (undocumented)
+    toJSON(): Value.JSON<T>;
     // (undocumented)
     abstract toString(): string;
     // (undocumented)
-    abstract get type(): T;
+    get type(): T;
 }
 
 // @public (undocumented)
@@ -2893,6 +2911,9 @@ export namespace Value {
         [key: string]: json.JSON;
         // (undocumented)
         type: T;
+    }
+    // (undocumented)
+    export interface Resolver {
     }
 }
 

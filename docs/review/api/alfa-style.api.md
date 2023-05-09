@@ -17,13 +17,13 @@ import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
 import { Gradient } from '@siteimprove/alfa-css';
-import { Hash } from '@siteimprove/alfa-hash';
 import { Image } from '@siteimprove/alfa-css';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Keyword } from '@siteimprove/alfa-css';
 import { Length } from '@siteimprove/alfa-css';
 import { Linear } from '@siteimprove/alfa-css';
+import { List } from '@siteimprove/alfa-css';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Math as Math_2 } from '@siteimprove/alfa-css';
@@ -54,9 +54,9 @@ import { System } from '@siteimprove/alfa-css';
 import { Text } from '@siteimprove/alfa-dom';
 import { Token } from '@siteimprove/alfa-css';
 import { Translate } from '@siteimprove/alfa-css';
+import { Tuple } from '@siteimprove/alfa-css';
 import { Unit } from '@siteimprove/alfa-css';
 import { URL } from '@siteimprove/alfa-css';
-import { Value as Value_2 } from '@siteimprove/alfa-css';
 
 // @public (undocumented)
 function getOffsetParent(element: Element, device: Device): Option<Element>;
