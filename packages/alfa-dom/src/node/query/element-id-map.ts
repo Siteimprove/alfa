@@ -1,15 +1,19 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Map } from "@siteimprove/alfa-map";
 
-import { Query } from ".";
 import { Node } from "../../node";
 import { Document } from "../document";
 import { Element } from "../element";
+
+import { getElementDescendants } from "./element-descendants";
 
 const elementMapCache = Cache.empty<Document, Map<string, Element>>();
 
 /**
  * @public
+ *
+ * @remarks Since `id` are scoped to trees, and do not cross shadow or content boundaries,
+ * we never need traversal options.
  */
 export function getElementIdMap(node: Node): Map<string, Element> {
   if (Document.isDocument(node)) {
@@ -25,7 +29,7 @@ function buildElementIdMap(node: Node): Map<string, Element> {
   // that the first occurrence of a given ID is what ends up in the map in
   // event of duplicates.
   return Map.from(
-    Query.getElementDescendants(node)
+    getElementDescendants(node)
       .collect((element) => element.id.map((id) => [id, element] as const))
       .reverse()
   );
