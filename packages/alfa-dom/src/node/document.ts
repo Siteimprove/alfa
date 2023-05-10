@@ -1,7 +1,6 @@
 import { None, Option } from "@siteimprove/alfa-option";
-import { Trampoline } from "@siteimprove/alfa-trampoline";
-
 import { Sequence } from "@siteimprove/alfa-sequence";
+import { Trampoline } from "@siteimprove/alfa-trampoline";
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";

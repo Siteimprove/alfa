@@ -21,6 +21,7 @@ import { Role } from "./role";
 
 import { Container, Element, Inert, Text } from ".";
 
+import { Lazy } from "@siteimprove/alfa-lazy";
 import * as predicate from "./node/predicate";
 
 const { and, equals, not, test } = Predicate;
@@ -209,7 +210,11 @@ export namespace Node {
     // Find all elements in the tree. As explicit ownership is specified via ID
     // references, it cannot cross shadow or document boundaries.
 
-    const elements = getElementDescendants(root);
+    const exclusiveDescendants = getElementDescendants(root);
+    const elements = dom.Element.isElement(root)
+      ? Sequence.of(root, Lazy.force(exclusiveDescendants))
+      : exclusiveDescendants;
+
     const ids = getElementIdMap(root);
 
     // Do a first pass over `aria-owns` attributes and collect the referenced
