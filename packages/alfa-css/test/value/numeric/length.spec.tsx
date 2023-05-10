@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Length as BaseLength } from "../../../src/calculation";
 
-import { Length } from "../../../src/value/numeric/length";
+import { Length } from "../../../src/value/numeric";
 import { Lexer } from "../../../src";
 
 function parse(input: string) {
@@ -12,18 +12,18 @@ function parse(input: string) {
 test("parse() accepts length", (t) => {
   t.deepEqual(parse("2em").getUnsafe().toJSON(), {
     type: "length",
-    value: {
-      type: "length",
-      value: 2,
-      unit: "em",
-    },
+    value: 2,
+    unit: "em",
+    math: null,
   });
 });
 
 test("parse() accepts math expression reducing to lengths", (t) => {
   t.deepEqual(parse("calc(2px + 1vh)").getUnsafe().toJSON(), {
     type: "length",
-    value: {
+    value: null,
+    unit: null,
+    math: {
       type: "math expression",
       expression: {
         type: "calculation",
@@ -63,15 +63,13 @@ test("resolve() absolutize lengths", (t) => {
   t.deepEqual(
     parse("calc(1em + 2px)")
       .getUnsafe()
-      .resolve({ length: () => BaseLength.of(16, "px") })
+      .resolve(() => BaseLength.of(16, "px"))
       .toJSON(),
     {
       type: "length",
-      value: {
-        type: "length",
-        value: 18,
-        unit: "px",
-      },
+      value: 18,
+      unit: "px",
+      math: null,
     }
   );
 });
