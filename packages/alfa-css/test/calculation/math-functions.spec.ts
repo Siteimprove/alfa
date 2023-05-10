@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../src/syntax/lexer";
-import { Math } from "../../src/calculation/math-expression";
+import { Math } from "../../src/calculation/math-expression/index";
 import { Length } from "../../src/calculation/numeric/length";
 
 function parse(input: string) {

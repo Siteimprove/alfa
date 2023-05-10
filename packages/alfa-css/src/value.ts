@@ -35,9 +35,7 @@ export abstract class Value<
     return this._hasCalculation;
   }
 
-  public abstract resolve<R extends Value.Resolver>(
-    resolver?: R
-  ): Value<T, false>;
+  public abstract resolve(resolver?: unknown): Value<T, false>;
 
   public abstract equals(value: unknown): value is this;
 
@@ -60,8 +58,6 @@ export namespace Value {
     [key: string]: json.JSON;
     type: T;
   }
-
-  export interface Resolver {}
 
   export function isValue<T extends string>(
     value: unknown,
