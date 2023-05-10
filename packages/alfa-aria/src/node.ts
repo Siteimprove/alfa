@@ -15,9 +15,9 @@ import * as dom from "@siteimprove/alfa-dom";
 import * as tree from "@siteimprove/alfa-tree";
 
 import { Attribute } from "./attribute";
+import { Feature } from "./feature";
 import { Name } from "./name";
 import { Role } from "./role";
-import { Feature } from "./feature";
 
 import { Container, Element, Inert, Text } from ".";
 
@@ -25,6 +25,7 @@ import * as predicate from "./node/predicate";
 
 const { and, equals, not, test } = Predicate;
 const { isRendered } = Style;
+const { getElementIdMap, getElementDescendants } = dom.Query;
 
 /**
  * {@link https://w3c.github.io/aria/#accessibility_tree}
@@ -207,9 +208,9 @@ export namespace Node {
 
     // Find all elements in the tree. As explicit ownership is specified via ID
     // references, it cannot cross shadow or document boundaries.
-    const elements = root.inclusiveDescendants().filter(dom.Element.isElement);
 
-    const ids = dom.Query.getElementIdMap(root);
+    const elements = getElementDescendants(root);
+    const ids = getElementIdMap(root);
 
     // Do a first pass over `aria-owns` attributes and collect the referenced
     // elements.

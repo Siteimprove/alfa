@@ -82,6 +82,7 @@
     "test/node/element.spec.tsx",
     "test/node/traversal/get-nodes-between.spec.tsx",
     "test/node/traversal/lowest-common-ancestor.spec.tsx",
+    "test/node/query/element-descendants.spec.tsx",
     "test/node/query/element-id-map.spec.tsx"
   ],
   "references": [

@@ -6,8 +6,6 @@ import { Node } from "../../node";
 import { Document } from "../document";
 import { Element } from "../element";
 
-const { getElementDescendants } = Query;
-
 const elementMapCache = Cache.empty<Document, Map<string, Element>>();
 
 // Build a map from ID -> element to allow fast resolution of ID references.
@@ -15,18 +13,16 @@ const elementMapCache = Cache.empty<Document, Map<string, Element>>();
 // that the first occurrence of a given ID is what ends up in the map in
 // event of duplicates.
 export function getElementIdMap(node: Node): Map<string, Element> {
-  const root = node.root();
-
-  if (Document.isDocument(root)) {
-    return elementMapCache.get(root, () => buildElementIdMap(root));
+  if (Document.isDocument(node)) {
+    return elementMapCache.get(node, () => buildElementIdMap(node));
   }
 
-  return buildElementIdMap(root);
+  return buildElementIdMap(node);
 }
 
 function buildElementIdMap(node: Node): Map<string, Element> {
   return Map.from(
-    getElementDescendants(node)
+    Query.getElementDescendants(node)
       .collect((element) => element.id.map((id) => [id, element] as const))
       .reverse()
   );

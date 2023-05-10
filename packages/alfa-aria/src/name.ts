@@ -892,7 +892,8 @@ export namespace Name {
     // aria-labelledby, it is more efficient to grab them in DOM order (in a
     // single traversal) and then sort by tokens order rather than grab the ids
     // one by one in the correct order.
-    const references = getElementDescendants(root)
+    const references = root
+      .elementDescendants()
       .filter(hasId(equals(...ids)))
       .sortWith((a, b) =>
         Comparable.compareNumber(

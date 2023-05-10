@@ -1,8 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
+import { h } from "../../../h";
 
 import { Query } from "../../../src";
 
-import { h } from "../../../h";
+const { getElementIdMap } = Query;
 
 test("#getElementIdMap() returns map from ids to elements", (t) => {
   const foo = <div id="foo" />;
