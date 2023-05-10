@@ -5,6 +5,9 @@ import { Element } from "../element";
 
 const _elementDescendantsCache = Cache.empty<Node, Array<Sequence<Element>>>();
 
+/**
+ * @public
+ */
 export function getElementDescendants(
   node: Node,
   options: Node.Traversal = Node.Traversal.empty
