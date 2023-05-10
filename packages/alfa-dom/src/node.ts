@@ -18,13 +18,13 @@ import {
   Document,
   Element,
   Fragment,
-  Slot,
   Text,
   Type,
+  Slot,
 } from ".";
 
-import * as predicate from "./node/predicate";
 import * as traversal from "./node/traversal";
+import * as predicate from "./node/predicate";
 
 /**
  * @public

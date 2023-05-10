@@ -2,7 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Comparable } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
-import { Attribute, Element, Node, Query, Text } from "@siteimprove/alfa-dom";
+import { Attribute, Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -27,7 +27,6 @@ const { isText } = Text;
 const { equals, test } = Predicate;
 const { or } = Refinement;
 const { hasComputedStyle } = Style;
-const { getElementDescendants } = Query;
 
 /**
  * @public

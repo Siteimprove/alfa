@@ -1,6 +1,6 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import { Node, Element, Namespace, Query } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -24,7 +24,6 @@ const {
 } = Element;
 const { or, test } = Predicate;
 const { and } = Refinement;
-const { getElementDescendants } = Query;
 
 /**
  * @internal
