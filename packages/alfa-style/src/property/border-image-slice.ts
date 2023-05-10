@@ -3,17 +3,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 
 import { Tuple } from "./value/tuple";
 
 const { either, filter } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "border-image-slice": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -116,16 +110,13 @@ export const parse: Parser<Slice<Token>, Specified, string> = (input) => {
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-image-slice}
  * @internal
  */
-export default Property.register(
-  "border-image-slice",
-  Property.of<Specified, Computed>(
-    Tuple.of(
-      Percentage.of(1),
-      Percentage.of(1),
-      Percentage.of(1),
-      Percentage.of(1)
-    ),
-    parse,
-    (value) => value
-  )
+export default Longhand.of<Specified, Computed>(
+  Tuple.of(
+    Percentage.of(1),
+    Percentage.of(1),
+    Percentage.of(1),
+    Percentage.of(1)
+  ),
+  parse,
+  (value) => value
 );

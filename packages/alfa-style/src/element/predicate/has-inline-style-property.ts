@@ -1,7 +1,7 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
-import { Property } from "../../property";
+import type { Longhands } from "../../longhands";
 
 /**
  * @deprecated
@@ -10,7 +10,7 @@ import { Property } from "../../property";
  * @public
  */
 export function hasInlineStyleProperty(
-  name: Property.Name
+  name: Longhands.Name
 ): Predicate<Element> {
   return (element) =>
     element.style.some((block) => block.declaration(name).isSome());

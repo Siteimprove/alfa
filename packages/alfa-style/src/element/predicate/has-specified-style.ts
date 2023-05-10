@@ -4,7 +4,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { Property } from "../../property";
+import type { Longhands } from "../../longhands";
 import { Style } from "../../style";
 
 const { isElement } = Element;
@@ -12,7 +12,7 @@ const { isElement } = Element;
 /**
  * @public
  */
-export function hasSpecifiedStyle<N extends Property.Name>(
+export function hasSpecifiedStyle<N extends Longhands.Name>(
   name: N,
   predicate: Predicate<Style.Specified<N>, [source: Option<Declaration>]>,
   device: Device,

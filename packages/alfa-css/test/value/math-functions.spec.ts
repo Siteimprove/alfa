@@ -1,8 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "../../src/syntax/lexer";
-import { Math } from "../../src/value/math-expression";
-import { Length } from "../../src/value/numeric/length";
+import { Math } from "../../src/calculation/math-expression";
+import { Length } from "../../src/calculation/numeric/length";
 
 function parse(input: string) {
   return Math.parse(Lexer.lex(input)).map(([, expr]) => expr);

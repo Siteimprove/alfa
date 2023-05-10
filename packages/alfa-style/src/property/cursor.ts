@@ -1,18 +1,12 @@
 import { Keyword, Number, Token, URL } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { List } from "./value/list";
 import { Tuple } from "./value/tuple";
 
 const { left, map, option, pair, right, separated, zeroOrMore } = Parser;
 const { parseComma, parseWhitespace } = Token;
-
-declare module "../property" {
-  interface Longhands {
-    cursor: Property<Specified, Computed>;
-  }
-}
 
 namespace Specified {
   export type Builtin =
@@ -131,12 +125,9 @@ export const parse = map(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor}
  * @internal
  */
-export default Property.register(
-  "cursor",
-  Property.of<Specified, Computed>(
-    Tuple.of(List.of([], ","), Keyword.of("auto")),
-    parse,
-    (value) => value,
-    { inherits: true }
-  )
+export default Longhand.of<Specified, Computed>(
+  Tuple.of(List.of([], ","), Keyword.of("auto")),
+  parse,
+  (value) => value,
+  { inherits: true }
 );

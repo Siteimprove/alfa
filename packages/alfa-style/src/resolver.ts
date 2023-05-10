@@ -39,8 +39,19 @@ export namespace Resolver {
 
   /**
    * Resolve a length in an arbitrary unit to a length in pixels.
+   * Absolute lengths are left untouched, and normalised into "px".
+   * Relative lengths resolution depends on another length which is passed as
+   * part of a Style:
+   * * viewport dimensions are fetch from style.device;
+   * * root relative depend on style.root().computed("font-size");
+   * * other relative unit depend on style.conputed("font-size");
    *
-   * {@link https://drafts.csswg.org/css-values/#lengths}
+   * In nearly all cases, the style is the element's own style, except for
+   * resolving font-size itself, in which case the parent's style is used.
+   * Since the resolver doesn't know which property is resolved, the onus of
+   * providing the correct style is left on the caller.
+   *
+   * {@link https://drafts.csswg.org/css-values/#relative-lengths}
    */
   export function length(style: Style): Mapper<Length, Length<"px">>;
 

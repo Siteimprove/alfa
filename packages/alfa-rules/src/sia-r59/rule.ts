@@ -8,10 +8,11 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
+import { withDocumentElement } from "../common/applicability/with-document-element";
 
 const { hasRole } = DOM;
-const { hasNamespace, isDocumentElement } = Element;
-const { and, test } = Predicate;
+const { hasNamespace } = Element;
+const { and } = Predicate;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r59",
@@ -19,9 +20,7 @@ export default Rule.Atomic.of<Page, Document>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return test(Node.hasChild(isDocumentElement), document)
-          ? [document]
-          : [];
+        return withDocumentElement(document);
       },
 
       expectations(target) {

@@ -1,40 +1,32 @@
 import {
   Keyword,
   Length,
-  Math,
-  Number,
-  Percentage,
-  Token,
+  Number as CSSNumber,
+  type Token,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
-import { Resolver } from "../resolver";
+import { Longhand } from "../longhand";
+import { LengthPercentage, Number } from "./value/compound";
+
+import type { Computed as FontSize } from "./font-size";
+import { Selective } from "@siteimprove/alfa-selective";
 
 const { either } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "line-height": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
  */
 export type Specified =
   | Keyword<"normal">
-  | Number
-  | Length
-  | Percentage
-  | Math<"length-percentage">
-  | Math<"number">;
+  | LengthPercentage.LengthPercentage
+  | Number.Number;
 
 /**
  * @internal
  */
-export type Computed = Keyword<"normal"> | Number | Length<"px">;
+export type Computed = Keyword<"normal"> | CSSNumber | Length<"px">;
 
 /**
  * @internal
@@ -42,53 +34,32 @@ export type Computed = Keyword<"normal"> | Number | Length<"px">;
 export const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("normal"),
   Number.parse,
-  Length.parse,
-  Percentage.parse,
-  Math.parseLengthNumberPercentage
+  LengthPercentage.parse
 );
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/line-height}
  * @internal
  */
-export default Property.register(
-  "line-height",
-  Property.of<Specified, Computed>(
-    Keyword.of("normal"),
-    parse,
-    (value, style) =>
-      value.map((height) => {
-        const percentage = Resolver.percentage(
-          style.computed("font-size").value
-        );
-        const length = Resolver.length(style);
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("normal"),
+  parse,
+  (value, style) =>
+    value.map((height) => {
+      // We need the type assertion to help TS break a circular type reference:
+      // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+      const fontSize = style.computed("font-size").value as FontSize;
 
-        switch (height.type) {
-          case "keyword":
-          case "number":
-            return height;
-
-          case "length":
-            return length(height);
-
-          case "percentage":
-            return percentage(height);
-
-          case "math expression":
-            return (
-              (
-                height.isNumber()
-                  ? height.resolve({ percentage })
-                  : height.resolve({ length, percentage })
-              )
-                // Since the calculation has been parsed and typed, there should
-                // always be something to get.
-                .getUnsafe()
-            );
-        }
-      }),
-    {
-      inherits: true,
-    }
-  )
+      return Selective.of(height)
+        .if(
+          LengthPercentage.isLengthPercentage,
+          LengthPercentage.resolve(fontSize, style)
+        )
+        .if(Number.isNumber, Number.resolve)
+        // Keywords are left untouched
+        .get();
+    }),
+  {
+    inherits: true,
+  }
 );

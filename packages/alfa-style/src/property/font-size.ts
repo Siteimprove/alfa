@@ -1,31 +1,19 @@
-import {
-  Length,
-  Keyword,
-  Math,
-  Percentage,
-  Token,
-} from "@siteimprove/alfa-css";
+import { Length, Keyword, type Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
-import { Resolver } from "../resolver";
+import { LengthPercentage } from "./value/compound";
+import { Longhand } from "../longhand";
+
+import type { Computed as FontFamily } from "./font-family";
 
 const { either } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "font-size": Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
  */
 export type Specified =
-  | Length
-  | Percentage
-  | Math<"length-percentage">
+  | LengthPercentage.LengthPercentage
 
   // Absolute
   | Keyword<"xx-small">
@@ -61,9 +49,7 @@ export const parse = either<Slice<Token>, Specified, string>(
     "xxx-large"
   ),
   Keyword.parse("larger", "smaller"),
-  Percentage.parse,
-  Length.parse,
-  Math.parseLengthPercentage
+  LengthPercentage.parse
 );
 
 /**
@@ -104,61 +90,52 @@ const factors = {
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-size}
  * @internal
  */
-export default Property.register(
-  "font-size",
-  Property.of<Specified, Computed>(
-    Length.of(16, "px"),
-    parse,
-    (fontSize, style) =>
-      fontSize.map((fontSize) => {
-        const percentage = Resolver.percentage(
-          style.parent.computed("font-size").value
-        );
-        const length = Resolver.length(style.parent);
+// We need a type hint to help TS break the circular type reference.
+// this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+// This one depends on itself (same property), so we also need the type
+// hint on the property itself
+const property: Longhand<Specified, Computed> = Longhand.of<
+  Specified,
+  Computed
+>(
+  Length.of(16, "px"),
+  parse,
+  (fontSize, style) =>
+    fontSize.map((fontSize) => {
+      // We need the type assertion to help TS break a circular type reference:
+      // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+      const parent = style.parent.computed("font-size").value as Computed;
 
-        switch (fontSize.type) {
-          case "math expression":
-            return (
-              fontSize
-                .resolve({ length, percentage })
-                // Since the calculation has been parsed and typed, there should
-                // always be something to get.
-                .getUnsafe()
-            );
+      if (LengthPercentage.isLengthPercentage(fontSize)) {
+        return LengthPercentage.resolve(parent, style.parent)(fontSize);
+      }
 
-          case "length":
-            return length(fontSize);
+      // Must be a keyword
+      switch (fontSize.value) {
+        case "larger":
+          return parent.scale(1.2);
 
-          case "percentage": {
-            return percentage(fontSize);
-          }
+        case "smaller":
+          return parent.scale(0.85);
 
-          case "keyword": {
-            const parent = style.parent.computed("font-size").value;
+        default: {
+          const factor = factors[fontSize.value];
 
-            switch (fontSize.value) {
-              case "larger":
-                return parent.scale(1.2);
+          // We need the type assertion to help TS break a circular type reference:
+          // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+          const [family] = (style.computed("font-family").value as FontFamily)
+            .values;
 
-              case "smaller":
-                return parent.scale(0.85);
+          const base =
+            family.type === "keyword" ? bases[family.value] : bases.serif;
 
-              default: {
-                const factor = factors[fontSize.value];
-
-                const [family] = style.computed("font-family").value;
-
-                const base =
-                  family.type === "keyword" ? bases[family.value] : bases.serif;
-
-                return Length.of(factor * base, "px");
-              }
-            }
-          }
+          return Length.of(factor * base, "px");
         }
-      }),
-    {
-      inherits: true,
-    }
-  )
+      }
+    }),
+  {
+    inherits: true,
+  }
 );
+
+export default property;

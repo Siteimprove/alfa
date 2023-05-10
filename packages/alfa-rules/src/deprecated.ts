@@ -1,5 +1,3 @@
-export { default as DR62 } from "./sia-dr62/rule";
-export { default as DR91 } from "./sia-dr91/rule";
-export { default as DR92 } from "./sia-dr92/rule";
-export { default as DR93 } from "./sia-dr93/rule";
-export { default as DR95 } from "./sia-dr95/rule";
+export { default as DR18 } from "./sia-dr18/rule";
+export { default as DR66 } from "./sia-dr66/rule";
+export { default as DR69 } from "./sia-dr69/rule";

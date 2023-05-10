@@ -80,6 +80,7 @@
     "test/node.spec.tsx",
     "test/node/attribute.spec.ts",
     "test/node/element.spec.tsx",
+    "test/node/predicate/has-tab-index.spec.tsx",
     "test/node/traversal/get-nodes-between.spec.tsx",
     "test/node/traversal/lowest-common-ancestor.spec.tsx",
     "test/node/query/element-descendants.spec.tsx",

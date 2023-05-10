@@ -1,26 +1,21 @@
-import { Keyword, Length } from "@siteimprove/alfa-css";
+import { Keyword, Length as CSSLength } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
-import { Resolver } from "../resolver";
+import { Longhand } from "../longhand";
+import { Length } from "./value/compound";
+import { Selective } from "@siteimprove/alfa-selective";
 
 const { either } = Parser;
 
-declare module "../property" {
-  interface Longhands {
-    "word-spacing": Property<Specified, Computed>;
-  }
-}
+/**
+ * @internal
+ */
+export type Specified = Keyword<"normal"> | Length.Length;
 
 /**
  * @internal
  */
-export type Specified = Keyword<"normal"> | Length;
-
-/**
- * @internal
- */
-export type Computed = Length<"px">;
+export type Computed = CSSLength<"px">;
 
 /**
  * @internal
@@ -31,23 +26,17 @@ export const parse = either(Keyword.parse("normal"), Length.parse);
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/word-spacing}
  * @internal
  */
-export default Property.register(
-  "word-spacing",
-  Property.of<Specified, Computed>(
-    Length.of(0, "px"),
-    parse,
-    (wordSpacing, style) =>
-      wordSpacing.map((wordSpacing) => {
-        switch (wordSpacing.type) {
-          case "keyword":
-            return Length.of(0, "px");
-
-          case "length":
-            return Resolver.length(wordSpacing, style);
-        }
-      }),
-    {
-      inherits: true,
-    }
-  )
+export default Longhand.of<Specified, Computed>(
+  CSSLength.of(0, "px"),
+  parse,
+  (wordSpacing, style) =>
+    wordSpacing.map((wordSpacing) =>
+      Selective.of(wordSpacing)
+        .if(Length.isLength, Length.resolve(style))
+        .else(() => CSSLength.of(0, "px"))
+        .get()
+    ),
+  {
+    inherits: true,
+  }
 );

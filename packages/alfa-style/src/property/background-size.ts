@@ -3,19 +3,14 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Property } from "../property";
-import { Resolver } from "../resolver";
+import { Longhand } from "../longhand";
 
 import { List } from "./value/list";
 import { Tuple } from "./value/tuple";
 
-const { map, either, delimited, option, pair, right, separatedList } = Parser;
+import { LengthPercentage } from "./value/compound";
 
-declare module "../property" {
-  interface Longhands {
-    "background-size": Property<Specified, Computed>;
-  }
-}
+const { map, either, delimited, option, pair, right, separatedList } = Parser;
 
 /**
  * @internal
@@ -26,7 +21,7 @@ export type Specified = List<Specified.Item>;
  * @internal
  */
 export namespace Specified {
-  export type Dimension = Length | Percentage | Keyword<"auto">;
+  export type Dimension = LengthPercentage.LengthPercentage | Keyword<"auto">;
 
   export type Item =
     | Tuple<[Dimension, Dimension]>
@@ -55,8 +50,7 @@ export namespace Computed {
  * @internal
  */
 const parseDimension = either<Slice<Token>, Specified.Dimension, string>(
-  Length.parse,
-  Percentage.parse,
+  LengthPercentage.parse,
   Keyword.parse("auto")
 );
 
@@ -96,28 +90,31 @@ export const initialItem = Tuple.of(Keyword.of("auto"), Keyword.of("auto"));
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-size}
  * @internal
  */
-export default Property.register(
-  "background-size",
-  Property.of<Specified, Computed>(
-    List.of([initialItem], ", "),
-    parseList,
-    (value, style) =>
-      value.map((sizes) =>
-        List.of(
-          Iterable.map(sizes, (size) => {
-            if (Keyword.isKeyword(size)) {
-              return size;
-            }
+export default Longhand.of<Specified, Computed>(
+  List.of([initialItem], ", "),
+  parseList,
+  (value, style) =>
+    value.map((sizes) =>
+      List.of(
+        Iterable.map(sizes, (size) => {
+          if (Keyword.isKeyword(size)) {
+            return size;
+          }
 
-            const [x, y] = size.values;
+          const [x, y] = size.values;
 
-            return Tuple.of(
-              x.type === "length" ? Resolver.length(x, style) : x,
-              y.type === "length" ? Resolver.length(y, style) : y
-            );
-          }),
-          ", "
-        )
+          // Percentages are relative to the size of the background positioning
+          // area, which we don't really handle currently.
+          return Tuple.of(
+            x.type === "length" || x.type === "math expression"
+              ? LengthPercentage.resolve(Length.of(0, "px"), style)(x)
+              : x,
+            y.type === "length" || y.type === "math expression"
+              ? LengthPercentage.resolve(Length.of(0, "px"), style)(y)
+              : y
+          );
+        }),
+        ", "
       )
-  )
+    )
 );

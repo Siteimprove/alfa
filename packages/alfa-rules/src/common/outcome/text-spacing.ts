@@ -1,12 +1,12 @@
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Diagnostic } from "@siteimprove/alfa-act";
-import { Property } from "@siteimprove/alfa-style";
+import { Longhands } from "@siteimprove/alfa-style";
 
 /**
  * @deprecated
  * Used by R91/R92/R93 version 1
  */
-export function TextSpacing(name: Property.Name) {
+export function TextSpacing(name: Longhands.Name) {
   return {
     NotImportant: Ok.of(
       Diagnostic.of(`The \`${name}\` property is not !important`)

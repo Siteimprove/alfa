@@ -1,16 +1,14 @@
-import { Keyword, Length, Percentage } from "@siteimprove/alfa-css";
+import { Keyword, Length, Number } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 
-import { Property } from "../property";
-import { Resolver } from "../resolver";
+import { Longhand } from "../longhand";
+import { LengthPercentage } from "./value/compound";
+
+import type { Computed as FontSize } from "./font-size";
+import type { Computed as LineHeight } from "./line-height";
 
 const { either } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    "vertical-align": Property<Specified, Computed>;
-  }
-}
 
 type keywords =
   | Keyword<"baseline">
@@ -25,7 +23,7 @@ type keywords =
 /**
  * @internal
  */
-export type Specified = keywords | Length | Percentage;
+export type Specified = keywords | LengthPercentage.LengthPercentage;
 /**
  * @internal
  */
@@ -46,47 +44,40 @@ export const parse = either(
     "top",
     "bottom"
   ),
-  either(Length.parse, Percentage.parse)
+  LengthPercentage.parse
 );
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/vertical-align}
  * @internal
  */
-export default Property.register(
-  "vertical-align",
-  Property.of<Specified, Computed>(
-    Keyword.of("baseline"),
-    parse,
-    (value, style) =>
-      value.map((verticalAlign) => {
-        switch (verticalAlign.type) {
-          case "keyword":
-            return verticalAlign;
-          case "percentage": {
-            const lineHeight = style.computed("line-height").value;
-            switch (lineHeight.type) {
-              case "keyword": // "normal", used of 1.2
-                return Length.of(
-                  1.2 *
-                    style.computed("font-size").value.value *
-                    verticalAlign.value,
-                  "px"
-                );
-              case "length":
-                return Length.of(lineHeight.value * verticalAlign.value, "px");
-              case "number":
-                return Length.of(
-                  lineHeight.value *
-                    style.computed("font-size").value.value *
-                    verticalAlign.value,
-                  "px"
-                );
-            }
-          }
-          case "length":
-            return Resolver.length(verticalAlign, style);
-        }
-      })
-  )
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("baseline"),
+  parse,
+  (value, style) =>
+    value.map((verticalAlign) => {
+      // We need the type assertion to help TS break a circular type reference:
+      // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
+      const lineHeight = style.computed("line-height").value as LineHeight;
+      const fontSize = style.computed("font-size").value as FontSize;
+
+      const base = Selective.of(lineHeight)
+        .if(isNormal, () => fontSize.scale(1.2))
+        .if(Number.isNumber, ({ value }) => fontSize.scale(value))
+        .get();
+
+      return Selective.of(verticalAlign)
+        .if(
+          LengthPercentage.isLengthPercentage,
+          LengthPercentage.resolve(base, style)
+        )
+        .get();
+    })
 );
+
+/**
+ * isKeyword doesn't refine the type enough since it doesn't look at the value.
+ */
+function isNormal(value: unknown): value is Keyword<"normal"> {
+  return Keyword.isKeyword(value) && value.value === "normal";
+}

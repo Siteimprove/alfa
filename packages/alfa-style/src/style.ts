@@ -11,6 +11,7 @@ import {
   Shadow,
 } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Map } from "@siteimprove/alfa-map";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -18,22 +19,18 @@ import { Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import * as json from "@siteimprove/alfa-json";
-
 import * as element from "./element/element";
 import * as node from "./node/node";
 
-import { Property } from "./property";
+import { Longhand } from "./longhand";
+import { Longhands } from "./longhands";
+import { Shorthand } from "./shorthand";
+import { Shorthands } from "./shorthands";
+
 import { Value } from "./value";
 import { Variable } from "./variable";
 
-// Properties are registered by means of a side effect that is executed when the
-// properties are imported. To ensure that all properties are registered when
-// this module is imported, we import the index module which in turn imports the
-// individual properties.
-import ".";
-
-type Name = Property.Name;
+type Name = Longhands.Name;
 
 /**
  * @public
@@ -77,12 +74,12 @@ export class Style implements Serializable<Style.JSON> {
     for (const declaration of declarations) {
       const { name, value } = declaration;
 
-      if (Property.isName(name)) {
+      if (Longhands.isName(name)) {
         const previous = properties.get(name);
 
         if (shouldOverride(previous, declaration)) {
           for (const result of parseLonghand(
-            Property.get(name),
+            Longhands.get(name),
             value,
             variables
           )) {
@@ -92,9 +89,9 @@ export class Style implements Serializable<Style.JSON> {
             );
           }
         }
-      } else if (Property.Shorthand.isName(name)) {
+      } else if (Shorthands.isName(name)) {
         for (const result of parseShorthand(
-          Property.Shorthand.get(name),
+          Shorthands.get(name),
           value,
           variables
         )) {
@@ -174,7 +171,7 @@ export class Style implements Serializable<Style.JSON> {
   public specified<N extends Name>(name: N): Value<Style.Specified<N>> {
     const {
       options: { inherits },
-    } = Property.get(name);
+    } = Longhands.get(name);
 
     return this.cascaded(name)
       .map((cascaded) => {
@@ -215,13 +212,27 @@ export class Style implements Serializable<Style.JSON> {
     }
 
     if (!this._computed.has(name)) {
-      this._computed = this._computed.set(
-        name,
-        Property.get(name).compute(
-          this.specified(name) as Value<Style.Specified<Name>>,
-          this
-        )
-      );
+      // Keeping semi-useless variables to reduce the any-pollution to a single call
+      const compute = Longhands.get(name).compute;
+      const specified = this.specified(name);
+      // Typescript is completely struggling on this one.
+      // Essentially, N has to be assumed as Name at this point. TS lost the fact
+      // that specified and compute refer to the same property.
+      // So, it has specified of type S1 | S2 | …, and compute of type
+      // S1 -> C1 | S2 -> C2 | …, but no link to the fact that the same should
+      // be used in both.
+      // The union of functions is exploded as (S1 & S2 & …) -> (C1 | C2 | …)
+      // due to contravariance. But the Si tend to be unions, and the
+      // intersection of union is expanded a bit too greedily by TS and reaches
+      // its union size limit of 100,000 term (!)
+      // So, we just skip type checking here…
+      //
+      // See https://github.com/microsoft/TypeScript/issues/53234
+      const computed = compute(specified as any, this) as Value<
+        Style.Computed<N>
+      >;
+
+      this._computed = this._computed.set(name, computed);
     }
 
     return (
@@ -238,7 +249,7 @@ export class Style implements Serializable<Style.JSON> {
     name: N,
     source: Option<Declaration> = None
   ): Value<Style.Initial<N>> {
-    return Value.of(Property.get(name).initial as Style.Computed<N>, source);
+    return Value.of(Longhands.get(name).initial as Style.Computed<N>, source);
   }
 
   public inherited<N extends Name>(name: N): Value<Style.Inherited<N>> {
@@ -312,17 +323,17 @@ export namespace Style {
       });
   }
 
-  export type Declared<N extends Name> = Property.Value.Declared<N>;
+  export type Declared<N extends Name> = Longhands.Declared<N>;
 
-  export type Cascaded<N extends Name> = Property.Value.Cascaded<N>;
+  export type Cascaded<N extends Name> = Longhands.Cascaded<N>;
 
-  export type Specified<N extends Name> = Property.Value.Specified<N>;
+  export type Specified<N extends Name> = Longhands.Specified<N>;
 
-  export type Computed<N extends Name> = Property.Value.Computed<N>;
+  export type Computed<N extends Name> = Longhands.Computed<N>;
 
-  export type Initial<N extends Name> = Property.Value.Initial<N>;
+  export type Initial<N extends Name> = Longhands.Initial<N>;
 
-  export type Inherited<N extends Name> = Property.Value.Inherited<N>;
+  export type Inherited<N extends Name> = Longhands.Inherited<N>;
 
   export const {
     getOffsetParent,
@@ -369,8 +380,8 @@ export function shouldOverride<T>(
   );
 }
 
-function parseLonghand<N extends Property.Name>(
-  property: Property.WithName<N>,
+function parseLonghand<N extends Longhands.Name>(
+  property: Longhands.Property[N],
   value: string,
   variables: Map<string, Value<Slice<Token>>>
 ) {
@@ -382,7 +393,7 @@ function parseLonghand<N extends Property.Name>(
 
   const [tokens, substituted] = substitution.get();
 
-  const parse = property.parse as Property.Parser;
+  const parse = property.parse as unknown as Longhand.Parser<N>;
 
   const result = parse(trim(tokens)).map(([, value]) => value);
 
@@ -393,8 +404,8 @@ function parseLonghand<N extends Property.Name>(
   return result;
 }
 
-function parseShorthand<N extends Property.Shorthand.Name>(
-  shorthand: Property.Shorthand.WithName<N>,
+function parseShorthand<N extends Shorthands.Name>(
+  shorthand: Shorthands.Property[N],
   value: string,
   variables: Map<string, Value<Slice<Token>>>
 ) {
@@ -411,7 +422,7 @@ function parseShorthand<N extends Property.Shorthand.Name>(
 
   const [tokens, substituted] = substitution.get();
 
-  const parse = shorthand.parse as Property.Shorthand.Parser;
+  const parse = shorthand.parse as Shorthand.Parser;
 
   const result = parse(trim(tokens)).map(([, value]) => {
     if (Keyword.isKeyword(value)) {

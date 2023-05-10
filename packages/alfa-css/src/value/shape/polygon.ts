@@ -6,13 +6,10 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax/token";
-import { Function } from "../../syntax/function";
-import { Value } from "../../value";
-
-import { Length } from "../numeric/length";
-import { Percentage } from "../numeric/percentage";
+import { Length, Percentage } from "../../calculation";
+import { Function, Token } from "../../syntax";
 import { Keyword } from "../keyword";
+import { Value } from "../value";
 
 const { either, left, map, option, pair, right, separated, separatedList } =
   Parser;

@@ -2,14 +2,14 @@ import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Context } from "@siteimprove/alfa-selector";
 
-import { Property, Style, Value } from "../src";
+import { type Longhands, Style, type Value } from "../src";
 
 const device = Device.standard();
 
 /**
  * @internal
  */
-export function cascaded<N extends Property.Name>(
+export function cascaded<N extends Longhands.Name>(
   element: Element,
   name: N,
   context: Context = Context.empty()

@@ -389,7 +389,7 @@ namespace Function_2 {
     const // (undocumented)
     consume: Parser<Slice<Token>, Function_2, string>;
     const // (undocumented)
-    parse: <T>(name?: string, body?: Parser<Slice<Token>, T, string, []> | undefined) => Parser<Slice<Token>, readonly [Function_2, T], string, []>;
+    parse: <T>(name?: string, body?: Parser<Slice<Token>, T, string> | undefined) => Parser<Slice<Token>, readonly [Function_2, T], string, []>;
 }
 export { Function_2 as Function }
 
@@ -852,6 +852,8 @@ export namespace Linear {
         repeats: boolean;
     }
     // (undocumented)
+    export function parse(parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>): Parser<Slice<Token>, Linear, string>;
+    // (undocumented)
     export type Position = Position.Vertical | Position.Horizontal;
     // (undocumented)
     export namespace Position {
@@ -895,8 +897,6 @@ export namespace Linear {
             type: "side";
         }
     }
-    const // (undocumented)
-    parse: Parser<Slice<Token>, Linear, string>;
 }
 
 // @public (undocumented)
@@ -921,11 +921,11 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"m
     static of(expression: Expression): Math_2;
     // (undocumented)
     reduce(resolver: Expression.Resolver): Math_2;
-    resolve(this: Math_2<"length">, resolver: Expression.LengthResolver): Option<Length<"px">>;
+    resolve(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length<"px">, string>;
     // (undocumented)
-    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Option<Length<"px">>;
+    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Result<Length<"px">, string>;
     // (undocumented)
-    resolve(this: Math_2<"number">, resolver: Expression.PercentageResolver): Option<Number_2>;
+    resolve(this: Math_2<"number">): Result<Number_2, string>;
     // (undocumented)
     toJSON(): Math_2.JSON;
     // (undocumented)
@@ -960,7 +960,7 @@ namespace Math_2 {
     const // (undocumented)
     parseLengthPercentage: Parser<Slice<Token>, Math_2<"length-percentage">, string, []>;
     const // (undocumented)
-    parseLengthNumberPercentage: Parser<Slice<Token>, Math_2<"number"> | Math_2<"length-percentage">, string, []>;
+    parseNumber: Parser<Slice<Token>, Math_2<"number">, string, []>;
 }
 export { Math_2 as Math }
 
@@ -1314,7 +1314,7 @@ export namespace Position {
     // (undocumented)
     export type Component<S extends Horizontal | Vertical = Horizontal | Vertical, U extends Unit.Length = Unit.Length> = Center | Offset<U> | Side<S, Offset<U>>;
     const // (undocumented)
-    parseCenter: Parser<Slice<Token>, Keyword<"center">, string, []>;
+    parseCenter: Parser<Slice<Token>, Keyword<"center">, string>;
     // (undocumented)
     export namespace Component {
         // (undocumented)
@@ -1532,14 +1532,14 @@ export namespace Radial {
         shape: Shape.JSON;
     }
     // (undocumented)
+    export function parse(parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>): Parser<Slice<Token>, Radial, string>;
+    // (undocumented)
     export type Shape = Circle | Ellipse | Extent;
     // (undocumented)
     export namespace Shape {
         // (undocumented)
         export type JSON = Circle.JSON | Ellipse.JSON | Extent.JSON;
     }
-    const // (undocumented)
-    parse: Parser<Slice<Token>, Radial, string>;
 }
 
 // @public (undocumented)

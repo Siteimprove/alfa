@@ -1,16 +1,10 @@
 import { Keyword, Length, Percentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Property } from "../property";
+import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
 const { either } = Parser;
-
-declare module "../property" {
-  interface Longhands {
-    width: Property<Specified, Computed>;
-  }
-}
 
 /**
  * @internal
@@ -34,9 +28,10 @@ export const parse = either(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/width}
  * @internal
  */
-export default Property.register(
-  "width",
-  Property.of<Specified, Computed>(Keyword.of("auto"), parse, (width, style) =>
+export default Longhand.of<Specified, Computed>(
+  Keyword.of("auto"),
+  parse,
+  (width, style) =>
     width.map((width) => {
       switch (width.type) {
         case "keyword":
@@ -47,5 +42,4 @@ export default Property.register(
           return Resolver.length(width, style);
       }
     })
-  )
 );
