@@ -148,6 +148,10 @@ export namespace Length {
     math: Math.JSON | null;
   }
 
+  // TODO: we'll want to totally hide BaseLength, hence this resolver should
+  // work on Length instead. This will require a wrapper in `resolve` since
+  // math expressions can only work with BaseLength. We can't do that right now
+  // because the resolver in `alfa-style` is still only aware of BaseLength…
   export type Resolver = Mapper<
     BaseLength<Unit.Length.Relative>,
     BaseLength<"px">
