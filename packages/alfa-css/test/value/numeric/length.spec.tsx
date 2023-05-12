@@ -1,9 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length as BaseLength } from "../../../src/calculation";
-
+import { Length as BaseLength, Lexer } from "../../../src";
 import { Length } from "../../../src/value/numeric";
-import { Lexer } from "../../../src";
 
 function parse(input: string) {
   return Length.parse(Lexer.lex(input)).map(([, length]) => length);

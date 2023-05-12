@@ -157,12 +157,6 @@ export namespace Length {
     return value instanceof Length;
   }
 
-  // export function isZero<U extends Unit.Length>(
-  //   length: Length<U, false>
-  // ): boolean {
-  //   return length.value === 0;
-  // }
-
   export const parse: Parser<
     Slice<Token>,
     Length<Unit.Length, boolean>,
