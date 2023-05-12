@@ -2888,7 +2888,7 @@ export abstract class Value<T extends string = string, CALC extends boolean = fa
     // (undocumented)
     abstract hash(hash: Hash): void;
     // (undocumented)
-    abstract resolve<R extends Value.Resolver>(resolver?: R): Value<T, false>;
+    abstract resolve(resolver?: unknown): Value<T, false>;
     // (undocumented)
     toJSON(): Value.JSON<T>;
     // (undocumented)
@@ -2907,9 +2907,6 @@ export namespace Value {
         [key: string]: json.JSON;
         // (undocumented)
         type: T;
-    }
-    // (undocumented)
-    export interface Resolver {
     }
 }
 

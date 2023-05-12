@@ -22,6 +22,7 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Keyword } from '@siteimprove/alfa-css';
 import { Length } from '@siteimprove/alfa-css';
+import { Length as Length_3 } from '@siteimprove/alfa-css/src/value/numeric';
 import { Linear } from '@siteimprove/alfa-css';
 import { List } from '@siteimprove/alfa-css';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
