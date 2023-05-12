@@ -1,5 +1,6 @@
+import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -7,9 +8,6 @@ import { Length as BaseLength, Math } from "../../calculation";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
 import { Value } from "../../value";
-import { Expression } from "../../calculation/math-expression/expression";
-import { Mapper } from "@siteimprove/alfa-mapper";
-import { Equatable } from "@siteimprove/alfa-equatable";
 
 const { either, map } = Parser;
 
