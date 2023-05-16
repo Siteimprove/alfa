@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Linear](./alfa-css.linear.md) &gt; [parse](./alfa-css.linear.parse.md)
 
-## Linear.parse variable
+## Linear.parse() function
 
 [https://drafts.csswg.org/css-images/\#funcdef-linear-gradient](https://drafts.csswg.org/css-images/#funcdef-linear-gradient)
 
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, Linear, string>
+function parse(parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>): Parser<Slice<Token>, Linear, string>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  parseItemList | [Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, Array&lt;[Gradient.Item](./alfa-css.gradient.item.md)<!-- -->&gt;, string&gt; |  |
+
+<b>Returns:</b>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Linear](./alfa-css.linear.md)<!-- -->, string&gt;
+

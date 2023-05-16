@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Promise<T> = globalThis.Promise<T>;
+export type Promise<T> = globalThis.Promise<T>;
 ```
 
 ## Remarks

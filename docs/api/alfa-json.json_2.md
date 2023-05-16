@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type JSON = string | number | boolean | null | JSON.Array | JSON.Object;
+export type JSON = string | number | boolean | null | JSON.Array | JSON.Object;
 ```

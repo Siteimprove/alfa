@@ -7,5 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Cascaded<N extends Name> = Property.Value.Cascaded<N>;
+type Cascaded<N extends Name> = Longhands.Cascaded<N>;
 ```
+<b>References:</b> [Longhands.Cascaded](./alfa-style.longhands.cascaded.md)
+

@@ -1,5 +1,13 @@
 # @siteimprove/alfa-refinement
 
+## 0.63.0
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-mapper@0.63.0
+  - @siteimprove/alfa-predicate@0.63.0
+
 ## 0.62.2
 
 ### Patch Changes

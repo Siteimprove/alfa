@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Feature<N extends Feature.Name = Feature.Name, I extends Feature.Implementer<N> = Feature.Implementer<N>> = Feature.Implementation<N, I>;
+export type Feature<N extends Feature.Name = Feature.Name, I extends Feature.Implementer<N> = Feature.Implementer<N>> = Feature.Implementation<N, I>;
 ```
 <b>References:</b> [Feature.Name](./alfa-compatibility.feature.name.md)<!-- -->, [Feature.Implementer](./alfa-compatibility.feature.implementer.md)<!-- -->, [Feature.Implementation](./alfa-compatibility.feature.implementation.md)
 

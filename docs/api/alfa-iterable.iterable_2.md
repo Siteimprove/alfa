@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Iterable<T> = globalThis.Iterable<T>;
+export type Iterable<T> = globalThis.Iterable<T>;
 ```
 
 ## Remarks

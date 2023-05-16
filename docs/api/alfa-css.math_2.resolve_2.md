@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(this: Math<"number">, resolver: Expression.PercentageResolver): Option<Number>;
+resolve(this: Math<"number">): Result<Number, string>;
 ```
 
 ## Parameters
@@ -15,9 +15,8 @@ resolve(this: Math<"number">, resolver: Expression.PercentageResolver): Option<N
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  this | Math&lt;"number"&gt; |  |
-|  resolver | Expression.PercentageResolver |  |
 
 <b>Returns:</b>
 
-[Option](./alfa-option.option.md)<!-- -->&lt;Number&gt;
+[Result](./alfa-result.result.md)<!-- -->&lt;Number, string&gt;
 

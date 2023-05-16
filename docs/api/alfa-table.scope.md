@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Scope = "row" | "row-group" | "column" | "column-group" | "auto";
+export type Scope = "row" | "row-group" | "column" | "column-group" | "auto";
 ```

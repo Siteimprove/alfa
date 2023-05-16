@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Matrix = Array<Array<number>>;
+export type Matrix = Array<Array<number>>;
 ```

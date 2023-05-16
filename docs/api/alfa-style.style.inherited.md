@@ -7,5 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Inherited<N extends Name> = Property.Value.Inherited<N>;
+type Inherited<N extends Name> = Longhands.Inherited<N>;
 ```
+<b>References:</b> [Longhands.Inherited](./alfa-style.longhands.inherited.md)
+

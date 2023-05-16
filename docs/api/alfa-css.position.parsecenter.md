@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseCenter: Parser<Slice<Token>, Keyword<"center">, string, []>
+parseCenter: Parser<Slice<Token>, Keyword<"center">, string>
 ```

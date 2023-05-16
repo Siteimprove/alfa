@@ -18,6 +18,12 @@ export declare namespace Linear
 |  [Corner](./alfa-css.linear.corner.md) |  |
 |  [Side](./alfa-css.linear.side.md) |  |
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [parse(parseItemList)](./alfa-css.linear.parse.md) | [https://drafts.csswg.org/css-images/\#funcdef-linear-gradient](https://drafts.csswg.org/css-images/#funcdef-linear-gradient) |
+
 ## Interfaces
 
 |  Interface | Description |
@@ -32,12 +38,6 @@ export declare namespace Linear
 |  [Direction](./alfa-css.linear.direction.md) |  |
 |  [Position](./alfa-css.linear.position.md) |  |
 |  [Side](./alfa-css.linear.side.md) |  |
-
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.linear.parse.md) | [https://drafts.csswg.org/css-images/\#funcdef-linear-gradient](https://drafts.csswg.org/css-images/#funcdef-linear-gradient) |
 
 ## Type Aliases
 

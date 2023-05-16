@@ -15,6 +15,8 @@
 
 |  Namespace | Description |
 |  --- | --- |
+|  [Longhands](./alfa-style.longhands.md) |  |
+|  [Shorthands](./alfa-style.shorthands.md) |  |
 |  [Style](./alfa-style.style.md) |  |
 |  [Value](./alfa-style.value.md) |  |
 

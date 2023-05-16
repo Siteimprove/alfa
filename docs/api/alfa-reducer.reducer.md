@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Reducer<T, U = T, A extends Array<unknown> = []> = (accumulator: U, value: T, ...args: A) => U;
+export type Reducer<T, U = T, A extends Array<unknown> = []> = (accumulator: U, value: T, ...args: A) => U;
 ```

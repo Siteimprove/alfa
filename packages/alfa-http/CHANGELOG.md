@@ -1,5 +1,20 @@
 # @siteimprove/alfa-http
 
+## 0.63.0
+
+### Patch Changes
+
+- Updated dependencies [[`abc7b9744`](https://github.com/Siteimprove/alfa/commit/abc7b9744985d9935a079e82fddfa668463442c0)]:
+  - @siteimprove/alfa-option@0.63.0
+  - @siteimprove/alfa-earl@0.63.0
+  - @siteimprove/alfa-iterable@0.63.0
+  - @siteimprove/alfa-map@0.63.0
+  - @siteimprove/alfa-url@0.63.0
+  - @siteimprove/alfa-encoding@0.63.0
+  - @siteimprove/alfa-equatable@0.63.0
+  - @siteimprove/alfa-json@0.63.0
+  - @siteimprove/alfa-refinement@0.63.0
+
 ## 0.62.2
 
 ### Patch Changes
