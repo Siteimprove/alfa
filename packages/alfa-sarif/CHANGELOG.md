@@ -1,5 +1,13 @@
 # @siteimprove/alfa-sarif
 
+## 0.63.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-option@0.63.1
+  - @siteimprove/alfa-refinement@0.63.1
+
 ## 0.63.0
 
 ### Patch Changes

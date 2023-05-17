@@ -1,5 +1,25 @@
 # @siteimprove/alfa-web
 
+## 0.63.1
+
+### Patch Changes
+
+- **Fixed:** Added missing dependencies ([#1418](https://github.com/Siteimprove/alfa/pull/1418))
+
+  Some internal dependencies were missimg, causing build failure in projects that use PnP strategies.
+
+- Updated dependencies [[`3e8c3379f`](https://github.com/Siteimprove/alfa/commit/3e8c3379f47b0520dbe9a4f8938c4b5752feda6d)]:
+  - @siteimprove/alfa-http@0.63.1
+  - @siteimprove/alfa-device@0.63.1
+  - @siteimprove/alfa-dom@0.63.1
+  - @siteimprove/alfa-earl@0.63.1
+  - @siteimprove/alfa-encoding@0.63.1
+  - @siteimprove/alfa-graph@0.63.1
+  - @siteimprove/alfa-json@0.63.1
+  - @siteimprove/alfa-refinement@0.63.1
+  - @siteimprove/alfa-result@0.63.1
+  - @siteimprove/alfa-sarif@0.63.1
+
 ## 0.63.0
 
 ### Minor Changes

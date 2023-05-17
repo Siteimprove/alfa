@@ -1,5 +1,19 @@
 # @siteimprove/alfa-record
 
+## 0.63.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-equatable@0.63.1
+  - @siteimprove/alfa-foldable@0.63.1
+  - @siteimprove/alfa-iterable@0.63.1
+  - @siteimprove/alfa-json@0.63.1
+  - @siteimprove/alfa-list@0.63.1
+  - @siteimprove/alfa-option@0.63.1
+  - @siteimprove/alfa-predicate@0.63.1
+  - @siteimprove/alfa-reducer@0.63.1
+
 ## 0.63.0
 
 ### Patch Changes

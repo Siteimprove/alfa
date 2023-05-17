@@ -1,5 +1,49 @@
 # @siteimprove/alfa-rules
 
+## 0.63.1
+
+### Patch Changes
+
+- Updated dependencies [[`3e8c3379f`](https://github.com/Siteimprove/alfa/commit/3e8c3379f47b0520dbe9a4f8938c4b5752feda6d)]:
+  - @siteimprove/alfa-http@0.63.1
+  - @siteimprove/alfa-web@0.63.1
+  - @siteimprove/alfa-act@0.63.1
+  - @siteimprove/alfa-affine@0.63.1
+  - @siteimprove/alfa-aria@0.63.1
+  - @siteimprove/alfa-array@0.63.1
+  - @siteimprove/alfa-cache@0.63.1
+  - @siteimprove/alfa-cascade@0.63.1
+  - @siteimprove/alfa-comparable@0.63.1
+  - @siteimprove/alfa-css@0.63.1
+  - @siteimprove/alfa-device@0.63.1
+  - @siteimprove/alfa-dom@0.63.1
+  - @siteimprove/alfa-earl@0.63.1
+  - @siteimprove/alfa-equatable@0.63.1
+  - @siteimprove/alfa-future@0.63.1
+  - @siteimprove/alfa-hash@0.63.1
+  - @siteimprove/alfa-iana@0.63.1
+  - @siteimprove/alfa-iterable@0.63.1
+  - @siteimprove/alfa-json@0.63.1
+  - @siteimprove/alfa-list@0.63.1
+  - @siteimprove/alfa-map@0.63.1
+  - @siteimprove/alfa-math@0.63.1
+  - @siteimprove/alfa-media@0.63.1
+  - @siteimprove/alfa-option@0.63.1
+  - @siteimprove/alfa-predicate@0.63.1
+  - @siteimprove/alfa-record@0.63.1
+  - @siteimprove/alfa-refinement@0.63.1
+  - @siteimprove/alfa-result@0.63.1
+  - @siteimprove/alfa-sarif@0.63.1
+  - @siteimprove/alfa-selector@0.63.1
+  - @siteimprove/alfa-sequence@0.63.1
+  - @siteimprove/alfa-set@0.63.1
+  - @siteimprove/alfa-style@0.63.1
+  - @siteimprove/alfa-table@0.63.1
+  - @siteimprove/alfa-thunk@0.63.1
+  - @siteimprove/alfa-trilean@0.63.1
+  - @siteimprove/alfa-url@0.63.1
+  - @siteimprove/alfa-wcag@0.63.1
+
 ## 0.63.0
 
 ### Minor Changes

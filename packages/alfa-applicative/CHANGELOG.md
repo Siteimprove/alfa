@@ -1,5 +1,13 @@
 # @siteimprove/alfa-applicative
 
+## 0.63.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-functor@0.63.1
+  - @siteimprove/alfa-mapper@0.63.1
+
 ## 0.63.0
 
 ### Patch Changes

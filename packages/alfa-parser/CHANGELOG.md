@@ -1,5 +1,18 @@
 # @siteimprove/alfa-parser
 
+## 0.63.1
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-array@0.63.1
+  - @siteimprove/alfa-callback@0.63.1
+  - @siteimprove/alfa-mapper@0.63.1
+  - @siteimprove/alfa-option@0.63.1
+  - @siteimprove/alfa-predicate@0.63.1
+  - @siteimprove/alfa-refinement@0.63.1
+  - @siteimprove/alfa-result@0.63.1
+
 ## 0.63.0
 
 ### Patch Changes
