@@ -19,6 +19,7 @@
     { "path": "../alfa-http" },
     { "path": "../alfa-json" },
     { "path": "../alfa-refinement" },
+    { "path": "../alfa-result" },
     { "path": "../alfa-sarif" }
   ]
 }

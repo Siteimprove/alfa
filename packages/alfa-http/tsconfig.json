@@ -22,6 +22,7 @@
     { "path": "../alfa-map" },
     { "path": "../alfa-option" },
     { "path": "../alfa-refinement" },
+    { "path": "../alfa-result" },
     { "path": "../alfa-url" }
   ]
 }
