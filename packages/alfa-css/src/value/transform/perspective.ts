@@ -5,14 +5,16 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Length } from "../../calculation";
 import { Token } from "../../syntax";
 
-import { Value } from "../value";
+import { Function } from "./function";
 
 const { map, left, right, filter, delimited, option } = Parser;
 
 /**
  * @public
  */
-export class Perspective<D extends Length = Length> extends Value<"transform"> {
+export class Perspective<
+  D extends Length = Length
+> extends Function<"perspective"> {
   public static of<D extends Length>(depth: D): Perspective<D> {
     return new Perspective(depth);
   }
@@ -20,20 +22,16 @@ export class Perspective<D extends Length = Length> extends Value<"transform"> {
   private readonly _depth: D;
 
   private constructor(depth: D) {
-    super();
+    super("perspective", false);
     this._depth = depth;
-  }
-
-  public get type(): "transform" {
-    return "transform";
-  }
-
-  public get kind(): "perspective" {
-    return "perspective";
   }
 
   public get depth(): D {
     return this._depth;
+  }
+
+  public resolve(): Perspective<D> {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -46,8 +44,7 @@ export class Perspective<D extends Length = Length> extends Value<"transform"> {
 
   public toJSON(): Perspective.JSON {
     return {
-      type: "transform",
-      kind: "perspective",
+      ...super.toJSON(),
       depth: this._depth.toJSON(),
     };
   }
@@ -61,8 +58,7 @@ export class Perspective<D extends Length = Length> extends Value<"transform"> {
  * @public
  */
 export namespace Perspective {
-  export interface JSON extends Value.JSON<"transform"> {
-    kind: "perspective";
+  export interface JSON extends Function.JSON<"perspective"> {
     depth: Length.JSON;
   }
 

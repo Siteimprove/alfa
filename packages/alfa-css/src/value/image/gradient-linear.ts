@@ -7,7 +7,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import * as json from "@siteimprove/alfa-json";
 
 import { Token } from "../../syntax";
-import { Value } from "../value";
+import { Value } from "../../value";
 
 import { Angle } from "../../calculation";
 import type { Gradient } from "./gradient";
@@ -22,7 +22,7 @@ const { map, either, pair, option, left, right, delimited } = Parser;
 export class Linear<
   I extends Gradient.Item = Gradient.Item,
   D extends Linear.Direction = Linear.Direction
-> extends Value<"gradient"> {
+> extends Value<"gradient", false> {
   public static of<I extends Gradient.Item, D extends Linear.Direction>(
     direction: D,
     items: Iterable<I>,
@@ -36,14 +36,10 @@ export class Linear<
   private readonly _repeats: boolean;
 
   private constructor(direction: D, items: Array<I>, repeats: boolean) {
-    super();
+    super("gradient", false);
     this._direction = direction;
     this._items = items;
     this._repeats = repeats;
-  }
-
-  public get type(): "gradient" {
-    return "gradient";
   }
 
   public get kind(): "linear" {
@@ -60,6 +56,10 @@ export class Linear<
 
   public get repeats(): boolean {
     return this._repeats;
+  }
+
+  public resolve(): Linear<I, D> {
+    return this;
   }
 
   public equals(value: Linear): boolean;
@@ -88,7 +88,7 @@ export class Linear<
 
   public toJSON(): Linear.JSON {
     return {
-      type: "gradient",
+      ...super.toJSON(),
       kind: "linear",
       direction: this._direction.toJSON(),
       items: this._items.map((item) => item.toJSON()),

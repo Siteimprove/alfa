@@ -4,7 +4,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax";
 
-import { Converter, Convertible, Unit } from "../unit";
+import { Converter, Convertible, Unit } from "../../unit";
 import { Dimension } from "./dimension";
 
 const { map, either } = Parser;

@@ -1,4 +1,4 @@
-import { Token, Keyword } from "@siteimprove/alfa-css";
+import { Keyword, List, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -10,7 +10,6 @@ import * as EastAsian from "./font-variant-east-asian";
 import * as Ligatures from "./font-variant-ligatures";
 
 import * as Numeric from "./font-variant-numeric";
-import { List } from "./value/list";
 
 /**
  * @internal

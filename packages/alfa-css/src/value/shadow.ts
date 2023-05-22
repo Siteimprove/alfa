@@ -2,7 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 
 import { Length } from "../calculation";
 
-import { Value } from "./value";
+import { Value } from "../value";
 import { Color } from "./color";
 
 /**
@@ -14,7 +14,7 @@ export class Shadow<
   B extends Length = Length,
   S extends Length = Length,
   C extends Color = Color
-> extends Value<"shadow"> {
+> extends Value<"shadow", false> {
   public static of<
     H extends Length = Length,
     V extends Length = H,
@@ -47,17 +47,13 @@ export class Shadow<
     color: C,
     isInset: boolean
   ) {
-    super();
+    super("shadow", false);
     this._horizontal = horizontal;
     this._vertical = vertical;
     this._blur = blur;
     this._spread = spread;
     this._color = color;
     this._isInset = isInset;
-  }
-
-  public get type(): "shadow" {
-    return "shadow";
   }
 
   public get horizontal(): H {
@@ -84,6 +80,9 @@ export class Shadow<
     return this._isInset;
   }
 
+  public resolve(): Shadow<H, V, B, S, C> {
+    return this;
+  }
   public equals(value: unknown): value is this {
     return (
       value instanceof Shadow &&
@@ -108,7 +107,7 @@ export class Shadow<
 
   public toJSON(): Shadow.JSON {
     return {
-      type: "shadow",
+      ...super.toJSON(),
       horizontal: this._horizontal.toJSON(),
       vertical: this._vertical.toJSON(),
       blur: this._blur.toJSON(),

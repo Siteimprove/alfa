@@ -1,11 +1,15 @@
-import { Token, Number, Percentage, Keyword } from "@siteimprove/alfa-css";
+import {
+  Keyword,
+  Number,
+  Percentage,
+  Token,
+  Tuple,
+} from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
-
-import { Tuple } from "./value/tuple";
 
 const { either, filter } = Parser;
 

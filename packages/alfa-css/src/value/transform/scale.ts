@@ -5,14 +5,14 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Number } from "../../calculation";
 import { Token } from "../../syntax";
 
-import { Value } from "../value";
+import { Function } from "./function";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
 /**
  * @public
  */
-export class Scale extends Value<"transform"> {
+export class Scale extends Function<"scale"> {
   public static of(x: Number, y: Number): Scale {
     return new Scale(x, y);
   }
@@ -21,13 +21,9 @@ export class Scale extends Value<"transform"> {
   private readonly _y: Number;
 
   private constructor(x: Number, y: Number) {
-    super();
+    super("scale", false);
     this._x = x;
     this._y = y;
-  }
-
-  public get type(): "transform" {
-    return "transform";
   }
 
   public get kind(): "scale" {
@@ -40,6 +36,10 @@ export class Scale extends Value<"transform"> {
 
   public get y(): Number {
     return this._y;
+  }
+
+  public resolve(): Scale {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -56,8 +56,7 @@ export class Scale extends Value<"transform"> {
 
   public toJSON(): Scale.JSON {
     return {
-      type: "transform",
-      kind: "scale",
+      ...super.toJSON(),
       x: this._x.toJSON(),
       y: this._y.toJSON(),
     };
@@ -84,8 +83,7 @@ export class Scale extends Value<"transform"> {
  * @public
  */
 export namespace Scale {
-  export interface JSON extends Value.JSON<"transform"> {
-    kind: "scale";
+  export interface JSON extends Function.JSON<"scale"> {
     x: Number.JSON;
     y: Number.JSON;
   }

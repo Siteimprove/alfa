@@ -1,9 +1,7 @@
-import { Token } from "@siteimprove/alfa-css";
+import { List, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
-
-import { List } from "./value/list";
 
 import { Longhands } from "../longhands";
 import { Shorthand } from "../shorthand";

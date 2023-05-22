@@ -1,10 +1,8 @@
-import { Token, Length, Number } from "@siteimprove/alfa-css";
+import { Length, Number, Token, Tuple } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-
-import { Tuple } from "./value/tuple";
 
 const { takeBetween, either, map, filter, delimited, option } = Parser;
 

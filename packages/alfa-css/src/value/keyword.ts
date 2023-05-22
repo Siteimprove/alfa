@@ -4,7 +4,7 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax";
-import { Value } from "./value";
+import { Value } from "../value";
 
 const { map } = Parser;
 const { equals } = Predicate;
@@ -14,7 +14,10 @@ const { equals } = Predicate;
  *
  * @public
  */
-export class Keyword<T extends string = string> extends Value<"keyword"> {
+export class Keyword<T extends string = string> extends Value<
+  "keyword",
+  false
+> {
   public static of<T extends string>(value: T): Keyword<T> {
     return new Keyword(value);
   }
@@ -22,16 +25,16 @@ export class Keyword<T extends string = string> extends Value<"keyword"> {
   private readonly _value: T;
 
   private constructor(value: T) {
-    super();
+    super("keyword", false);
     this._value = value;
-  }
-
-  public get type(): "keyword" {
-    return "keyword";
   }
 
   public get value(): T {
     return this._value;
+  }
+
+  public resolve(): Keyword<T> {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -44,7 +47,7 @@ export class Keyword<T extends string = string> extends Value<"keyword"> {
 
   public toJSON(): Keyword.JSON<T> {
     return {
-      type: "keyword",
+      ...super.toJSON(),
       value: this._value,
     };
   }

@@ -2,11 +2,12 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import { Length, Percentage } from "../../calculation";
 import { Token } from "../../syntax";
-import { Value } from "../value";
 
 import { Keyword } from "../keyword";
-import { Length, Percentage } from "../../calculation";
+
+import { BasicShape } from "./basic-shape";
 
 const { either, map, filter } = Parser;
 
@@ -20,7 +21,7 @@ export class Radius<
     | Length
     | Percentage
     | Radius.Side
-> extends Value<"basic-shape"> {
+> extends BasicShape<"radius"> {
   public static of<R extends Length | Percentage | Radius.Side>(
     value: R
   ): Radius<R> {
@@ -30,20 +31,16 @@ export class Radius<
   private readonly _value: R;
 
   private constructor(value: R) {
-    super();
+    super("radius", false);
     this._value = value;
-  }
-
-  public get type(): "basic-shape" {
-    return "basic-shape";
-  }
-
-  public get kind(): "radius" {
-    return "radius";
   }
 
   public get value(): R {
     return this._value;
+  }
+
+  public resolve(): Radius<R> {
+    return this;
   }
 
   public equals(value: Radius): boolean;
@@ -60,8 +57,7 @@ export class Radius<
 
   public toJSON(): Radius.JSON {
     return {
-      type: "basic-shape",
-      kind: "radius",
+      ...super.toJSON(),
       value: this.value.toJSON(),
     };
   }
@@ -75,8 +71,7 @@ export class Radius<
  * @public
  */
 export namespace Radius {
-  export interface JSON extends Value.JSON<"basic-shape"> {
-    kind: "radius";
+  export interface JSON extends BasicShape.JSON<"radius"> {
     value: Length.JSON | Percentage.JSON | Keyword.JSON;
   }
 

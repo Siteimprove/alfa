@@ -2,17 +2,17 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
-import { Value } from "../value";
-
 import { Number } from "../../calculation";
+import { Token } from "../../syntax";
+
+import { Format } from "./format";
 
 const { map } = Parser;
 
 /**
  * @public
  */
-export class Hex extends Value<"color"> {
+export class Hex extends Format<"hex"> {
   public static of(value: number): Hex {
     return new Hex(value);
   }
@@ -20,18 +20,10 @@ export class Hex extends Value<"color"> {
   private readonly _value: number;
 
   private constructor(value: number) {
-    super();
+    super("hex", false);
 
     // Make sure that only the lower 4 bytes are stored.
     this._value = value & 0xff_ff_ff_ff;
-  }
-
-  public get type(): "color" {
-    return "color";
-  }
-
-  public get format(): "hex" {
-    return "hex";
   }
 
   public get value(): number {
@@ -54,6 +46,10 @@ export class Hex extends Value<"color"> {
     return Number.of(this._value & 0xff);
   }
 
+  public resolve(): Hex {
+    return this;
+  }
+
   public equals(value: unknown): value is this {
     return value instanceof Hex && value._value === this._value;
   }
@@ -64,8 +60,7 @@ export class Hex extends Value<"color"> {
 
   public toJSON(): Hex.JSON {
     return {
-      type: "color",
-      format: "hex",
+      ...super.toJSON(),
       value: this._value,
     };
   }
@@ -79,8 +74,7 @@ export class Hex extends Value<"color"> {
  * @public
  */
 export namespace Hex {
-  export interface JSON extends Value.JSON<"color"> {
-    format: "hex";
+  export interface JSON extends Format.JSON<"hex"> {
     value: number;
   }
 

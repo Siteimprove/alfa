@@ -69,7 +69,7 @@ export namespace LengthPercentage {
         case "math expression":
           // Since the calculation has been parsed and typed, there should
           // always be something to get.
-          return value.resolve({ length, percentage }).getUnsafe();
+          return value.resolve2({ length, percentage }).getUnsafe();
 
         case "length":
           return length(value);
@@ -116,7 +116,7 @@ export namespace Length {
         case "math expression":
           // Since the calculation has been parsed and typed, there should
           // always be something to get.
-          return value.resolve({ length }).getUnsafe();
+          return value.resolve2({ length }).getUnsafe();
 
         case "length":
           return length(value);
@@ -155,7 +155,7 @@ export namespace NumberPercentage {
       case "math expression":
         // Since the calculation has been parsed and typed, there should
         // always be something to get.
-        return value.resolve().getUnsafe();
+        return value.resolve2().getUnsafe();
       case "number":
       case "percentage":
         return value;
@@ -188,7 +188,7 @@ export namespace Number {
       case "math expression":
         // Since the calculation has been parsed and typed, there should
         // always be something to get.
-        return value.resolve().getUnsafe();
+        return value.resolve2().getUnsafe();
       case "number":
         return value;
     }
