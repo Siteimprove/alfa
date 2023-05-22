@@ -1,5 +1,21 @@
 # @siteimprove/alfa-iterable
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-callback@0.63.3
+  - @siteimprove/alfa-comparable@0.63.3
+  - @siteimprove/alfa-equatable@0.63.3
+  - @siteimprove/alfa-hash@0.63.3
+  - @siteimprove/alfa-json@0.63.3
+  - @siteimprove/alfa-mapper@0.63.3
+  - @siteimprove/alfa-option@0.63.3
+  - @siteimprove/alfa-predicate@0.63.3
+  - @siteimprove/alfa-reducer@0.63.3
+  - @siteimprove/alfa-refinement@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

@@ -1,5 +1,27 @@
 # @siteimprove/alfa-css
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-array@0.63.3
+  - @siteimprove/alfa-comparable@0.63.3
+  - @siteimprove/alfa-equatable@0.63.3
+  - @siteimprove/alfa-hash@0.63.3
+  - @siteimprove/alfa-iterable@0.63.3
+  - @siteimprove/alfa-json@0.63.3
+  - @siteimprove/alfa-mapper@0.63.3
+  - @siteimprove/alfa-math@0.63.3
+  - @siteimprove/alfa-option@0.63.3
+  - @siteimprove/alfa-parser@0.63.3
+  - @siteimprove/alfa-predicate@0.63.3
+  - @siteimprove/alfa-record@0.63.3
+  - @siteimprove/alfa-refinement@0.63.3
+  - @siteimprove/alfa-result@0.63.3
+  - @siteimprove/alfa-selective@0.63.3
+  - @siteimprove/alfa-slice@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

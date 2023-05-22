@@ -1,5 +1,55 @@
 # @siteimprove/alfa-rules
 
+## 0.63.3
+
+### Patch Changes
+
+- **Fixed:** a typo in `Diagnostic.Contrast` export was fixed. ([#1420](https://github.com/Siteimprove/alfa/pull/1420))
+
+- **Added:** `Diagnostic.ElementDistsinguishable` is not exported. ([#1420](https://github.com/Siteimprove/alfa/pull/1420))
+
+  **Added:** Correctly export `DistinguishingProperty` as `Diagnostic.ElementDistinguishable.Property`
+
+- Updated dependencies []:
+  - @siteimprove/alfa-act@0.63.3
+  - @siteimprove/alfa-affine@0.63.3
+  - @siteimprove/alfa-aria@0.63.3
+  - @siteimprove/alfa-array@0.63.3
+  - @siteimprove/alfa-cache@0.63.3
+  - @siteimprove/alfa-cascade@0.63.3
+  - @siteimprove/alfa-comparable@0.63.3
+  - @siteimprove/alfa-css@0.63.3
+  - @siteimprove/alfa-device@0.63.3
+  - @siteimprove/alfa-dom@0.63.3
+  - @siteimprove/alfa-earl@0.63.3
+  - @siteimprove/alfa-equatable@0.63.3
+  - @siteimprove/alfa-future@0.63.3
+  - @siteimprove/alfa-hash@0.63.3
+  - @siteimprove/alfa-http@0.63.3
+  - @siteimprove/alfa-iana@0.63.3
+  - @siteimprove/alfa-iterable@0.63.3
+  - @siteimprove/alfa-json@0.63.3
+  - @siteimprove/alfa-list@0.63.3
+  - @siteimprove/alfa-map@0.63.3
+  - @siteimprove/alfa-math@0.63.3
+  - @siteimprove/alfa-media@0.63.3
+  - @siteimprove/alfa-option@0.63.3
+  - @siteimprove/alfa-predicate@0.63.3
+  - @siteimprove/alfa-record@0.63.3
+  - @siteimprove/alfa-refinement@0.63.3
+  - @siteimprove/alfa-result@0.63.3
+  - @siteimprove/alfa-sarif@0.63.3
+  - @siteimprove/alfa-selector@0.63.3
+  - @siteimprove/alfa-sequence@0.63.3
+  - @siteimprove/alfa-set@0.63.3
+  - @siteimprove/alfa-style@0.63.3
+  - @siteimprove/alfa-table@0.63.3
+  - @siteimprove/alfa-thunk@0.63.3
+  - @siteimprove/alfa-trilean@0.63.3
+  - @siteimprove/alfa-url@0.63.3
+  - @siteimprove/alfa-wcag@0.63.3
+  - @siteimprove/alfa-web@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

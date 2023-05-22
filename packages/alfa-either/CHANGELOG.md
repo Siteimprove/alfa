@@ -1,5 +1,22 @@
 # @siteimprove/alfa-either
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-applicative@0.63.3
+  - @siteimprove/alfa-callback@0.63.3
+  - @siteimprove/alfa-equatable@0.63.3
+  - @siteimprove/alfa-foldable@0.63.3
+  - @siteimprove/alfa-functor@0.63.3
+  - @siteimprove/alfa-hash@0.63.3
+  - @siteimprove/alfa-json@0.63.3
+  - @siteimprove/alfa-mapper@0.63.3
+  - @siteimprove/alfa-monad@0.63.3
+  - @siteimprove/alfa-option@0.63.3
+  - @siteimprove/alfa-reducer@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

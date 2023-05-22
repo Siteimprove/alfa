@@ -1,5 +1,12 @@
 # @siteimprove/alfa-test
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-highlight@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes
