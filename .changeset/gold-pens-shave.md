@@ -8,4 +8,4 @@ This is a temporary change to accommodate for the new `resolve` method on parent
 **Breaking:** `Math.resolve2` now returns a `Result<Numeric, string>` instead of an `Option`.
 Invalid expressions return an error message.
 
-**Breaking:** No resolver is for needed `Math.resolve2` on `Number` expressions.
+**Breaking:** No resolver is needed for `Math.resolve2` on `Number` expressions.
