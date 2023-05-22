@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Group = Column.Group | Row.Group;
+export type Group = Column.Group | Row.Group;
 ```
 <b>References:</b> [Column.Group](./alfa-table.column.group.md)<!-- -->, [Row.Group](./alfa-table.row.group.md)
 

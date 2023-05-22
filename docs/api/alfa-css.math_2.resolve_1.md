@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(this: Math<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Option<Length<"px">>;
+resolve(this: Math<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Result<Length<"px">, string>;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ resolve(this: Math<"length-percentage">, resolver: Expression.Resolver<"px", Len
 
 <b>Returns:</b>
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Length](./alfa-css.length.md)<!-- -->&lt;"px"&gt;&gt;
+[Result](./alfa-result.result.md)<!-- -->&lt;[Length](./alfa-css.length.md)<!-- -->&lt;"px"&gt;, string&gt;
 

@@ -8,9 +8,7 @@
 
 |  Variable | Description |
 |  --- | --- |
-|  [DR62](./alfa-rules.deprecatedrules.dr62.md) |  |
-|  [DR91](./alfa-rules.deprecatedrules.dr91.md) |  |
-|  [DR92](./alfa-rules.deprecatedrules.dr92.md) |  |
-|  [DR93](./alfa-rules.deprecatedrules.dr93.md) |  |
-|  [DR95](./alfa-rules.deprecatedrules.dr95.md) |  |
+|  [DR18](./alfa-rules.deprecatedrules.dr18.md) |  |
+|  [DR66](./alfa-rules.deprecatedrules.dr66.md) |  |
+|  [DR69](./alfa-rules.deprecatedrules.dr69.md) |  |
 

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-isMarkedDecorative: import("@siteimprove/alfa-predicate").Predicate<import("@siteimprove/alfa-dom").Element<string>, []>
+isMarkedDecorative: import("@siteimprove/alfa-predicate").Predicate<import("@siteimprove/alfa-dom").Element<string>>
 ```

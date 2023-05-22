@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Generator<T, R = void, N = undefined> = globalThis.Generator<T, R, N>;
+export type Generator<T, R = void, N = undefined> = globalThis.Generator<T, R, N>;
 ```
 
 ## Remarks

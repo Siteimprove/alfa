@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Unit = Unit.Length | Unit.Angle | Unit.Time | Unit.Frequency | Unit.Resolution;
+export type Unit = Unit.Length | Unit.Angle | Unit.Time | Unit.Frequency | Unit.Resolution;
 ```
 <b>References:</b> [Unit.Length](./alfa-css.unit.length.md)<!-- -->, [Unit.Angle](./alfa-css.unit.angle.md)<!-- -->, [Unit.Time](./alfa-css.unit.time.md)<!-- -->, [Unit.Frequency](./alfa-css.unit.frequency.md)<!-- -->, [Unit.Resolution](./alfa-css.unit.resolution.md)
 

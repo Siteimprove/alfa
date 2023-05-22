@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Array<T> = globalThis.Array<T>;
+export type Array<T> = globalThis.Array<T>;
 ```
 
 ## Remarks

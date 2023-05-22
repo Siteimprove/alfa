@@ -9,7 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type System = Keyword<System.Keyword>;
+export type System = Keyword<System.Keyword>;
 ```
 <b>References:</b> [Keyword](./alfa-css.keyword.md)<!-- -->, [System.Keyword](./alfa-css.system.keyword.md)
 

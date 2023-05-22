@@ -30,5 +30,4 @@ export declare namespace Option
 |  Type Alias | Description |
 |  --- | --- |
 |  [JSON](./alfa-option.option.json.md) |  |
-|  [Maybe](./alfa-option.option.maybe.md) |  |
 

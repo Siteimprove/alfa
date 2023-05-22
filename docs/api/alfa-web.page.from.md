@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function from(json: JSON): Page;
+function from(json: JSON): Result<Page, string>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function from(json: JSON): Page;
 
 <b>Returns:</b>
 
-[Page](./alfa-web.page.md)
+[Result](./alfa-result.result.md)<!-- -->&lt;[Page](./alfa-web.page.md)<!-- -->, string&gt;
 

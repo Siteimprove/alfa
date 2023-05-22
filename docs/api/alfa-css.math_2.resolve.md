@@ -9,7 +9,7 @@ Resolves a calculation typed as a length, length-percentage or number. Needs a r
 <b>Signature:</b>
 
 ```typescript
-resolve(this: Math<"length">, resolver: Expression.LengthResolver): Option<Length<"px">>;
+resolve(this: Math<"length">, resolver: Expression.LengthResolver): Result<Length<"px">, string>;
 ```
 
 ## Parameters
@@ -21,5 +21,5 @@ resolve(this: Math<"length">, resolver: Expression.LengthResolver): Option<Lengt
 
 <b>Returns:</b>
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Length](./alfa-css.length.md)<!-- -->&lt;"px"&gt;&gt;
+[Result](./alfa-result.result.md)<!-- -->&lt;[Length](./alfa-css.length.md)<!-- -->&lt;"px"&gt;, string&gt;
 

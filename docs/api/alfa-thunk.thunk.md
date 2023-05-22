@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Thunk<T = void> = () => T;
+export type Thunk<T = void> = () => T;
 ```

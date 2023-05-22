@@ -7,5 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Initial<N extends Name> = Property.Value.Initial<N>;
+type Initial<N extends Name> = Longhands.Initial<N>;
 ```
+<b>References:</b> [Longhands.Initial](./alfa-style.longhands.initial.md)
+

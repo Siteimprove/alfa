@@ -2,12 +2,23 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Radial](./alfa-css.radial.md) &gt; [parse](./alfa-css.radial.parse.md)
 
-## Radial.parse variable
+## Radial.parse() function
 
 [https://drafts.csswg.org/css-images/\#funcdef-radial-gradient](https://drafts.csswg.org/css-images/#funcdef-radial-gradient)
 
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, Radial, string>
+function parse(parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>): Parser<Slice<Token>, Radial, string>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  parseItemList | [Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, Array&lt;[Gradient.Item](./alfa-css.gradient.item.md)<!-- -->&gt;, string&gt; |  |
+
+<b>Returns:</b>
+
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Radial](./alfa-css.radial.md)<!-- -->, string&gt;
+

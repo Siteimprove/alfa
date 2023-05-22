@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-hasUniqueId: typeof predicate.hasUniqueId
+hasUniqueId: Predicate<Element<string>>
 ```

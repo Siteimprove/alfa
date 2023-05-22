@@ -10,30 +10,3 @@
 ```typescript
 export declare namespace Diagnostic 
 ```
-
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [isClippingAncestors](./alfa-rules.diagnostic.isclippingancestors.md) |  |
-|  [isColorError](./alfa-rules.diagnostic.iscolorerror.md) |  |
-|  [isColorErrorInterposedDescendants](./alfa-rules.diagnostic.iscolorerrorinterposeddescendants.md) |  |
-|  [isColorErrorUnresolvableGradientStop](./alfa-rules.diagnostic.iscolorerrorunresolvablegradientstop.md) |  |
-|  [isColorErrorWithProperty](./alfa-rules.diagnostic.iscolorerrorwithproperty.md) |  |
-|  [isContrast](./alfa-rules.diagnostic.iscontrast.md) |  |
-|  [isDistinguishingStyles](./alfa-rules.diagnostic.isdistinguishingstyles.md) |  |
-|  [isDistinguishingStylesDeprecated](./alfa-rules.diagnostic.isdistinguishingstylesdeprecated.md) |  |
-|  [isLabelAndName](./alfa-rules.diagnostic.islabelandname.md) |  |
-|  [isLanguages](./alfa-rules.diagnostic.islanguages.md) |  |
-|  [isMatchingClasses](./alfa-rules.diagnostic.ismatchingclasses.md) |  |
-|  [isRoleAndRequiredAttributes](./alfa-rules.diagnostic.isroleandrequiredattributes.md) |  |
-|  [isSameNames](./alfa-rules.diagnostic.issamenames.md) |  |
-|  [isTextSpacing](./alfa-rules.diagnostic.istextspacing.md) |  |
-|  [isWithBadElements](./alfa-rules.diagnostic.iswithbadelements.md) |  |
-|  [isWithDeclaration](./alfa-rules.diagnostic.iswithdeclaration.md) |  |
-|  [isWithFirstHeading](./alfa-rules.diagnostic.iswithfirstheading.md) |  |
-|  [isWithNextHeading](./alfa-rules.diagnostic.iswithnextheading.md) |  |
-|  [isWithPreviousHeading](./alfa-rules.diagnostic.iswithpreviousheading.md) |  |
-|  [isWithRole](./alfa-rules.diagnostic.iswithrole.md) |  |
-|  [isWithRoleAndName](./alfa-rules.diagnostic.iswithroleandname.md) |  |
-

@@ -19,6 +19,12 @@ export declare namespace Radial
 |  [Ellipse](./alfa-css.radial.ellipse.md) | [https://drafts.csswg.org/css-images/\#valdef-ending-shape-ellipse](https://drafts.csswg.org/css-images/#valdef-ending-shape-ellipse) |
 |  [Extent](./alfa-css.radial.extent.md) |  |
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [parse(parseItemList)](./alfa-css.radial.parse.md) | [https://drafts.csswg.org/css-images/\#funcdef-radial-gradient](https://drafts.csswg.org/css-images/#funcdef-radial-gradient) |
+
 ## Interfaces
 
 |  Interface | Description |
@@ -33,12 +39,6 @@ export declare namespace Radial
 |  [Ellipse](./alfa-css.radial.ellipse.md) |  |
 |  [Extent](./alfa-css.radial.extent.md) |  |
 |  [Shape](./alfa-css.radial.shape.md) |  |
-
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.radial.parse.md) | [https://drafts.csswg.org/css-images/\#funcdef-radial-gradient](https://drafts.csswg.org/css-images/#funcdef-radial-gradient) |
 
 ## Type Aliases
 

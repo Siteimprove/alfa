@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Trilean = boolean | undefined;
+export type Trilean = boolean | undefined;
 ```

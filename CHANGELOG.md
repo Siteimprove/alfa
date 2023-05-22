@@ -1,3 +1,25 @@
+# [v0.63.2](../../compare/v0.63.1...v0.63.2) (2023-05-22)
+
+Packages changed:
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
+
+# [v0.63.1](../../compare/v0.63.0...v0.63.1) (2023-05-17)
+
+Packages changed:
+- [@siteimprove/alfa-http](packages/alfa-http/CHANGELOG.md)
+- [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md)
+
+# [v0.63.0](../../compare/v0.62.2...v0.63.0) (2023-05-16)
+
+Packages changed:
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md)
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md)
+- [@siteimprove/alfa-option](packages/alfa-option/CHANGELOG.md)
+- [@siteimprove/alfa-result](packages/alfa-result/CHANGELOG.md)
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md)
+- [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md)
+
 # [v0.62.2](../../compare/v0.62.1...v0.62.2) (2023-04-05)
 
 Packages changed:
