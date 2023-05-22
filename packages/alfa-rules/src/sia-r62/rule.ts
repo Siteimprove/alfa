@@ -29,11 +29,7 @@ import { isWhitespace } from "../common/predicate";
 
 import { Scope, Version } from "../tags";
 
-import {
-  DistinguishingProperty,
-  DistinguishingStyles,
-  ElementDistinguishable,
-} from "./diagnostics";
+import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics";
 
 const { hasRole } = DOM;
 const { isElement } = Element;
@@ -51,7 +47,7 @@ const { isText } = Text;
 
 let distinguishingProperties: Map<
   Context,
-  Map<Element, List<DistinguishingProperty>>
+  Map<Element, List<ElementDistinguishable.Property>>
 > = Map.empty();
 
 /**
@@ -242,7 +238,7 @@ export default Rule.Atomic.of<Page, Element>({
                 )
               );
 
-              const properties: List<DistinguishingProperty> =
+              const properties: List<ElementDistinguishable.Property> =
                 distinguishingProperties
                   .get(context)
                   .flatMap((elementMap) => elementMap.get(link))
@@ -405,7 +401,7 @@ namespace Distinguishable {
     context: Context = Context.empty()
   ): Array<Predicate<Element>> {
     let predicates: Array<
-      readonly [DistinguishingProperty, Predicate<Element>]
+      readonly [ElementDistinguishable.Property, Predicate<Element>]
     > = [
       // Things like text decoration and backgrounds risk blending with the
       // container element. We therefore need to check if these can be distinguished
@@ -446,11 +442,11 @@ namespace Distinguishable {
         if (result) {
           let linkToProperties = distinguishingProperties
             .get(context)
-            .getOr(Map.empty<Element, List<DistinguishingProperty>>());
+            .getOr(Map.empty<Element, List<ElementDistinguishable.Property>>());
 
           const properties = linkToProperties
             .get(link)
-            .getOr(List.empty<DistinguishingProperty>())
+            .getOr(List.empty<ElementDistinguishable.Property>())
             .append(name);
 
           distinguishingProperties = distinguishingProperties.set(

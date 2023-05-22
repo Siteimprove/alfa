@@ -335,13 +335,14 @@ export namespace Diagnostic {
     import SameNames = sameNames.SameNames;
     import WithFirstHeading = withFirstHeading.WithFirstHeading;
     import DistinguishingStyles = distinguishingStyles.DistinguishingStyles;
+    import ElementDistinguishable = distinguishingStyles.ElementDistinguishable;
     import ColorError = colorError.ColorError;
     import ColorErrors = colorError.ColorErrors;
     import MatchingClasses = matchingClasses.MatchingClasses;
     import WithDeclaration = withDeclaration.WithDeclaration;
     import WithNextHeading = withNextHeading.WithNextHeading;
     import ClippingAncestors = clippingAncestors.ClippingAncestors;
-    import Constrast = diagnostic.Contrast;
+    import Contrast = diagnostic.Contrast;
     import TextSpacing = diagnostic.TextSpacing;
     import WithBadElements = diagnostic.WithBadElements;
     import WithRole = diagnostic.WithRole;
