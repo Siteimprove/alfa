@@ -7,5 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Specified<N extends Name> = Property.Value.Specified<N>;
+type Specified<N extends Name> = Longhands.Specified<N>;
 ```
+<b>References:</b> [Longhands.Specified](./alfa-style.longhands.specified.md)
+

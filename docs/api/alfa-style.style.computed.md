@@ -7,5 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Computed<N extends Name> = Property.Value.Computed<N>;
+type Computed<N extends Name> = Longhands.Computed<N>;
 ```
+<b>References:</b> [Longhands.Computed](./alfa-style.longhands.computed.md)
+

@@ -9,7 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Current = Keyword<"currentcolor">;
+export type Current = Keyword<"currentcolor">;
 ```
 <b>References:</b> [Keyword](./alfa-css.keyword.md)
 

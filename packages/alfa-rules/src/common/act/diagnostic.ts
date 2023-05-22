@@ -29,6 +29,7 @@ export namespace Diagnostic {
   export import SameNames = sameNames.SameNames;
   export import WithFirstHeading = withFirstHeading.WithFirstHeading;
   export import DistinguishingStyles = distinguishingStyles.DistinguishingStyles;
+  export import ColorError = colorError.ColorError;
   export import ColorErrors = colorError.ColorErrors;
   export import MatchingClasses = matchingClasses.MatchingClasses;
   export import WithDeclaration = withDeclaration.WithDeclaration;

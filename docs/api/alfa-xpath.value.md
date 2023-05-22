@@ -8,7 +8,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Value<T extends Type = Type> = Descriptor.Value<T>;
+export type Value<T extends Type = Type> = Descriptor.Value<T>;
 ```
 <b>References:</b> [Type](./alfa-xpath.type.md)
 

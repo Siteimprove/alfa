@@ -9,7 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Gradient = Linear | Radial;
+export type Gradient = Linear | Radial;
 ```
 <b>References:</b> [Linear](./alfa-css.linear.md)<!-- -->, [Radial](./alfa-css.radial.md)
 

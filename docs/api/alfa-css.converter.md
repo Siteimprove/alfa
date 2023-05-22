@@ -9,5 +9,5 @@ Converters are functions that convert an input value from one unit within a set 
 <b>Signature:</b>
 
 ```typescript
-export declare type Converter<U extends string> = (value: number, from: U, to: U) => number;
+export type Converter<U extends string> = (value: number, from: U, to: U) => number;
 ```

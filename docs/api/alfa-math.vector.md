@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Vector = Array<number>;
+export type Vector = Array<number>;
 ```

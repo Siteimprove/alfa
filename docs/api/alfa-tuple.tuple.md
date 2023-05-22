@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Tuple<T extends ReadonlyArray<unknown> = ReadonlyArray<unknown>> = T;
+export type Tuple<T extends ReadonlyArray<unknown> = ReadonlyArray<unknown>> = T;
 ```

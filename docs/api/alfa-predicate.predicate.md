@@ -8,5 +8,5 @@
 <b>Signature:</b>
 
 ```typescript
-export declare type Predicate<T, A extends Array<unknown> = []> = (value: T, ...args: A) => boolean;
+export type Predicate<T, A extends Array<unknown> = []> = (value: T, ...args: A) => boolean;
 ```
