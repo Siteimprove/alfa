@@ -35,7 +35,7 @@ export namespace Diagnostic {
   export import WithDeclaration = withDeclaration.WithDeclaration;
   export import WithNextHeading = withNextHeading.WithNextHeading;
   export import ClippingAncestors = clippingAncestors.ClippingAncestors;
-  export import Constrast = diagnostic.Contrast;
+  export import Contrast = diagnostic.Contrast;
   export import TextSpacing = diagnostic.TextSpacing;
   export import WithBadElements = diagnostic.WithBadElements;
   export import WithRole = diagnostic.WithRole;

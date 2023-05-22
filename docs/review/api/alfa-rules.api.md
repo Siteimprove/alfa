@@ -341,7 +341,7 @@ export namespace Diagnostic {
     import WithDeclaration = withDeclaration.WithDeclaration;
     import WithNextHeading = withNextHeading.WithNextHeading;
     import ClippingAncestors = clippingAncestors.ClippingAncestors;
-    import Constrast = diagnostic.Contrast;
+    import Contrast = diagnostic.Contrast;
     import TextSpacing = diagnostic.TextSpacing;
     import WithBadElements = diagnostic.WithBadElements;
     import WithRole = diagnostic.WithRole;
