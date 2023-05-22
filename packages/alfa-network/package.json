@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-network",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.63.1",
+  "version": "0.63.2",
   "license": "MIT",
   "description": "An implementation of an immutable, directed graph that allows for multiple, unique edges",
   "repository": {
@@ -18,17 +18,17 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@siteimprove/alfa-equatable": "workspace:^0.63.1",
-    "@siteimprove/alfa-graph": "workspace:^0.63.1",
-    "@siteimprove/alfa-hash": "workspace:^0.63.1",
-    "@siteimprove/alfa-iterable": "workspace:^0.63.1",
-    "@siteimprove/alfa-json": "workspace:^0.63.1",
-    "@siteimprove/alfa-map": "workspace:^0.63.1",
-    "@siteimprove/alfa-sequence": "workspace:^0.63.1",
-    "@siteimprove/alfa-set": "workspace:^0.63.1"
+    "@siteimprove/alfa-equatable": "workspace:^0.63.2",
+    "@siteimprove/alfa-graph": "workspace:^0.63.2",
+    "@siteimprove/alfa-hash": "workspace:^0.63.2",
+    "@siteimprove/alfa-iterable": "workspace:^0.63.2",
+    "@siteimprove/alfa-json": "workspace:^0.63.2",
+    "@siteimprove/alfa-map": "workspace:^0.63.2",
+    "@siteimprove/alfa-sequence": "workspace:^0.63.2",
+    "@siteimprove/alfa-set": "workspace:^0.63.2"
   },
   "devDependencies": {
-    "@siteimprove/alfa-test": "workspace:^0.63.1"
+    "@siteimprove/alfa-test": "workspace:^0.63.2"
   },
   "publishConfig": {
     "access": "public",

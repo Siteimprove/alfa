@@ -1,5 +1,12 @@
 # @siteimprove/alfa-callback
 
+## 0.63.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-mapper@0.63.2
+
 ## 0.63.1
 
 ### Patch Changes

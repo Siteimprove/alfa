@@ -1,5 +1,21 @@
 # @siteimprove/alfa-web
 
+## 0.63.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-device@0.63.2
+  - @siteimprove/alfa-dom@0.63.2
+  - @siteimprove/alfa-earl@0.63.2
+  - @siteimprove/alfa-encoding@0.63.2
+  - @siteimprove/alfa-graph@0.63.2
+  - @siteimprove/alfa-http@0.63.2
+  - @siteimprove/alfa-json@0.63.2
+  - @siteimprove/alfa-refinement@0.63.2
+  - @siteimprove/alfa-result@0.63.2
+  - @siteimprove/alfa-sarif@0.63.2
+
 ## 0.63.1
 
 ### Patch Changes

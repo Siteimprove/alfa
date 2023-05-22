@@ -1,5 +1,14 @@
 # @siteimprove/alfa-promise
 
+## 0.63.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-array@0.63.2
+  - @siteimprove/alfa-callback@0.63.2
+  - @siteimprove/alfa-continuation@0.63.2
+
 ## 0.63.1
 
 ### Patch Changes

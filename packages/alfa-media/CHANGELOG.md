@@ -1,5 +1,25 @@
 # @siteimprove/alfa-media
 
+## 0.63.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-comparable@0.63.2
+  - @siteimprove/alfa-css@0.63.2
+  - @siteimprove/alfa-device@0.63.2
+  - @siteimprove/alfa-equatable@0.63.2
+  - @siteimprove/alfa-functor@0.63.2
+  - @siteimprove/alfa-iterable@0.63.2
+  - @siteimprove/alfa-json@0.63.2
+  - @siteimprove/alfa-mapper@0.63.2
+  - @siteimprove/alfa-option@0.63.2
+  - @siteimprove/alfa-parser@0.63.2
+  - @siteimprove/alfa-predicate@0.63.2
+  - @siteimprove/alfa-refinement@0.63.2
+  - @siteimprove/alfa-result@0.63.2
+  - @siteimprove/alfa-slice@0.63.2
+
 ## 0.63.1
 
 ### Patch Changes
