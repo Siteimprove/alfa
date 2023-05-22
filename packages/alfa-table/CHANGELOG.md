@@ -1,5 +1,22 @@
 # @siteimprove/alfa-table
 
+## 0.63.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-array@0.63.2
+  - @siteimprove/alfa-cache@0.63.2
+  - @siteimprove/alfa-comparable@0.63.2
+  - @siteimprove/alfa-dom@0.63.2
+  - @siteimprove/alfa-equatable@0.63.2
+  - @siteimprove/alfa-json@0.63.2
+  - @siteimprove/alfa-math@0.63.2
+  - @siteimprove/alfa-option@0.63.2
+  - @siteimprove/alfa-predicate@0.63.2
+  - @siteimprove/alfa-refinement@0.63.2
+  - @siteimprove/alfa-sequence@0.63.2
+
 ## 0.63.1
 
 ### Patch Changes

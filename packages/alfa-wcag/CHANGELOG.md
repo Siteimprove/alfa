@@ -1,5 +1,16 @@
 # @siteimprove/alfa-wcag
 
+## 0.63.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-act@0.63.2
+  - @siteimprove/alfa-branched@0.63.2
+  - @siteimprove/alfa-option@0.63.2
+  - @siteimprove/alfa-predicate@0.63.2
+  - @siteimprove/alfa-refinement@0.63.2
+
 ## 0.63.1
 
 ### Patch Changes

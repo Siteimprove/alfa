@@ -1,5 +1,20 @@
 # @siteimprove/alfa-xpath
 
+## 0.63.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-dom@0.63.2
+  - @siteimprove/alfa-equatable@0.63.2
+  - @siteimprove/alfa-json@0.63.2
+  - @siteimprove/alfa-option@0.63.2
+  - @siteimprove/alfa-parser@0.63.2
+  - @siteimprove/alfa-predicate@0.63.2
+  - @siteimprove/alfa-refinement@0.63.2
+  - @siteimprove/alfa-result@0.63.2
+  - @siteimprove/alfa-slice@0.63.2
+
 ## 0.63.1
 
 ### Patch Changes

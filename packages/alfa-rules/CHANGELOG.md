@@ -1,5 +1,51 @@
 # @siteimprove/alfa-rules
 
+## 0.63.2
+
+### Patch Changes
+
+- **Fixed:** Correctly exported the `ColorError` diagnostic. ([#1419](https://github.com/Siteimprove/alfa/pull/1419))
+
+- Updated dependencies []:
+  - @siteimprove/alfa-act@0.63.2
+  - @siteimprove/alfa-affine@0.63.2
+  - @siteimprove/alfa-aria@0.63.2
+  - @siteimprove/alfa-array@0.63.2
+  - @siteimprove/alfa-cache@0.63.2
+  - @siteimprove/alfa-cascade@0.63.2
+  - @siteimprove/alfa-comparable@0.63.2
+  - @siteimprove/alfa-css@0.63.2
+  - @siteimprove/alfa-device@0.63.2
+  - @siteimprove/alfa-dom@0.63.2
+  - @siteimprove/alfa-earl@0.63.2
+  - @siteimprove/alfa-equatable@0.63.2
+  - @siteimprove/alfa-future@0.63.2
+  - @siteimprove/alfa-hash@0.63.2
+  - @siteimprove/alfa-http@0.63.2
+  - @siteimprove/alfa-iana@0.63.2
+  - @siteimprove/alfa-iterable@0.63.2
+  - @siteimprove/alfa-json@0.63.2
+  - @siteimprove/alfa-list@0.63.2
+  - @siteimprove/alfa-map@0.63.2
+  - @siteimprove/alfa-math@0.63.2
+  - @siteimprove/alfa-media@0.63.2
+  - @siteimprove/alfa-option@0.63.2
+  - @siteimprove/alfa-predicate@0.63.2
+  - @siteimprove/alfa-record@0.63.2
+  - @siteimprove/alfa-refinement@0.63.2
+  - @siteimprove/alfa-result@0.63.2
+  - @siteimprove/alfa-sarif@0.63.2
+  - @siteimprove/alfa-selector@0.63.2
+  - @siteimprove/alfa-sequence@0.63.2
+  - @siteimprove/alfa-set@0.63.2
+  - @siteimprove/alfa-style@0.63.2
+  - @siteimprove/alfa-table@0.63.2
+  - @siteimprove/alfa-thunk@0.63.2
+  - @siteimprove/alfa-trilean@0.63.2
+  - @siteimprove/alfa-url@0.63.2
+  - @siteimprove/alfa-wcag@0.63.2
+  - @siteimprove/alfa-web@0.63.2
+
 ## 0.63.1
 
 ### Patch Changes
