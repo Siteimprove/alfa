@@ -22,16 +22,11 @@ type Name = Longhands.Name | Shorthands.Name;
 /**
  * @public
  */
-export type DistinguishingProperty = Name | "contrast";
-
-/**
- * @public
- */
 export class ElementDistinguishable
   implements Equatable, Hashable, Serializable
 {
   public static of(
-    distinguishingProperties: Iterable<DistinguishingProperty> = [],
+    distinguishingProperties: Iterable<ElementDistinguishable.Property> = [],
     style: Iterable<readonly [Name, string]> = [],
     pairings: Iterable<Contrast.Pairing<["container", "link"]>> = []
   ): ElementDistinguishable {
@@ -42,14 +37,14 @@ export class ElementDistinguishable
     );
   }
 
-  private readonly _distinguishingProperties: ReadonlyArray<DistinguishingProperty>;
+  private readonly _distinguishingProperties: ReadonlyArray<ElementDistinguishable.Property>;
   private readonly _style: Map<Name, string>;
   private readonly _pairings: ReadonlyArray<
     Contrast.Pairing<["container", "link"]>
   >;
 
   private constructor(
-    distinguishingProperties: ReadonlyArray<DistinguishingProperty>,
+    distinguishingProperties: ReadonlyArray<ElementDistinguishable.Property>,
     style: Map<Name, string>,
     pairings: ReadonlyArray<Contrast.Pairing<["container", "link"]>>
   ) {
@@ -58,7 +53,7 @@ export class ElementDistinguishable
     this._pairings = pairings;
   }
 
-  public get distinguishingProperties(): ReadonlyArray<DistinguishingProperty> {
+  public get distinguishingProperties(): ReadonlyArray<ElementDistinguishable.Property> {
     return this._distinguishingProperties;
   }
 
@@ -73,7 +68,7 @@ export class ElementDistinguishable
   }
 
   public withDistinguishingProperties(
-    distinguishingProperties: ReadonlyArray<DistinguishingProperty>
+    distinguishingProperties: ReadonlyArray<ElementDistinguishable.Property>
   ): ElementDistinguishable {
     return ElementDistinguishable.of(
       [...this._distinguishingProperties, ...distinguishingProperties],
@@ -139,17 +134,19 @@ export class ElementDistinguishable
 export namespace ElementDistinguishable {
   export interface JSON {
     [key: string]: json.JSON;
-    distinguishingProperties: Array<DistinguishingProperty>;
+    distinguishingProperties: Array<ElementDistinguishable.Property>;
     style: Map.JSON<Name, string>;
     pairings: Array<Contrast.Pairing.JSON<["container", "link"]>>;
   }
+
+  export type Property = Name | "contrast";
 
   export function from(
     element: Element,
     device: Device,
     target: Element,
     context: Context = Context.empty(),
-    distinguishingProperties: Iterable<DistinguishingProperty>,
+    distinguishingProperties: Iterable<ElementDistinguishable.Property>,
     pairings: Iterable<Contrast.Pairing<["container", "link"]>>
   ): ElementDistinguishable {
     const style = Style.from(element, device, context);

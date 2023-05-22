@@ -29,13 +29,14 @@ export namespace Diagnostic {
   export import SameNames = sameNames.SameNames;
   export import WithFirstHeading = withFirstHeading.WithFirstHeading;
   export import DistinguishingStyles = distinguishingStyles.DistinguishingStyles;
+  export import ElementDistinguishable = distinguishingStyles.ElementDistinguishable;
   export import ColorError = colorError.ColorError;
   export import ColorErrors = colorError.ColorErrors;
   export import MatchingClasses = matchingClasses.MatchingClasses;
   export import WithDeclaration = withDeclaration.WithDeclaration;
   export import WithNextHeading = withNextHeading.WithNextHeading;
   export import ClippingAncestors = clippingAncestors.ClippingAncestors;
-  export import Constrast = diagnostic.Contrast;
+  export import Contrast = diagnostic.Contrast;
   export import TextSpacing = diagnostic.TextSpacing;
   export import WithBadElements = diagnostic.WithBadElements;
   export import WithRole = diagnostic.WithRole;
