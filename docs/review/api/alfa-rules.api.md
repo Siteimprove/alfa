@@ -335,6 +335,7 @@ export namespace Diagnostic {
     import SameNames = sameNames.SameNames;
     import WithFirstHeading = withFirstHeading.WithFirstHeading;
     import DistinguishingStyles = distinguishingStyles.DistinguishingStyles;
+    import ElementDistinguishable = distinguishingStyles.ElementDistinguishable;
     import ColorError = colorError.ColorError;
     import ColorErrors = colorError.ColorErrors;
     import MatchingClasses = matchingClasses.MatchingClasses;
