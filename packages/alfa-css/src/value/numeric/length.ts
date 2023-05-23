@@ -132,7 +132,7 @@ export class Length<
     return { ...base, value: this._value, unit: this._unit };
   }
 
-  public toString(this: Length<U, true> | Length<U, false>): string {
+  public toString(this: Length.Mixed<U>): string {
     if (this.hasCalculation()) {
       return this._math.toString();
     }
