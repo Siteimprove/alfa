@@ -21,7 +21,6 @@ import { Role } from "./role";
 
 import { Container, Element, Inert, Text } from ".";
 
-import { Lazy } from "@siteimprove/alfa-lazy";
 import * as predicate from "./node/predicate";
 
 const { and, equals, not, test } = Predicate;
@@ -212,7 +211,7 @@ export namespace Node {
 
     const exclusiveDescendants = getElementDescendants(root);
     const elements = dom.Element.isElement(root)
-      ? Sequence.of(root, Lazy.force(exclusiveDescendants))
+      ? exclusiveDescendants.prepend(root)
       : exclusiveDescendants;
 
     const ids = getElementIdMap(root);
