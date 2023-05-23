@@ -173,14 +173,6 @@ export namespace Length {
       math: Math.JSON;
     }
   }
-  // export interface JSON<
-  //   CALC extends boolean,
-  //   U extends Unit.Length = Unit.Length
-  // > extends Value.JSON<"length"> {
-  //   value: number | null;
-  //   unit: string | null;
-  //   math: Math.JSON | null;
-  // }
 
   // TODO: we'll want to totally hide BaseLength, hence this resolver should
   // work on Length instead. This will require a wrapper in `resolve` since
@@ -201,7 +193,7 @@ export namespace Length {
   );
 
   export function isZero<U extends Unit.Length = Unit.Length>(
-    length: Length<U, false>
+    length: Fixed<U>
   ): boolean {
     return length.value === 0;
   }
