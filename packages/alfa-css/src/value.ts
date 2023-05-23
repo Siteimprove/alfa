@@ -31,7 +31,7 @@ export abstract class Value<
     return this._type;
   }
 
-  public get hasCalculation(): CALC {
+  public hasCalculation(): this is Value<T, true> {
     return this._hasCalculation;
   }
 
@@ -54,7 +54,7 @@ export abstract class Value<
  * @public
  */
 export namespace Value {
-  export interface JSON<T extends string = string> {
+  export interface JSON<T extends string = string, CALC extends boolean = boolean> {
     [key: string]: json.JSON;
     type: T;
   }

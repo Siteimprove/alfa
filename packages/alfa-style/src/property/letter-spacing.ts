@@ -11,12 +11,12 @@ const { either } = Parser;
 /**
  * @internal
  */
-export type Specified = Keyword<"normal"> | Length;
+export type Specified = Keyword<"normal"> | Length.Mixed;
 
 /**
  * @internal
  */
-export type Computed = Length<"px", false>;
+export type Computed = Length.Fixed<"px">;
 
 /**
  * @internal

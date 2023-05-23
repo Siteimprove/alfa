@@ -12,15 +12,12 @@ test("parse() accepts length", (t) => {
     type: "length",
     value: 2,
     unit: "em",
-    math: null,
   });
 });
 
 test("parse() accepts math expression reducing to lengths", (t) => {
   t.deepEqual(parse("calc(2px + 1vh)").getUnsafe().toJSON(), {
     type: "length",
-    value: null,
-    unit: null,
     math: {
       type: "math expression",
       expression: {
@@ -67,7 +64,6 @@ test("resolve() absolutize lengths", (t) => {
       type: "length",
       value: 18,
       unit: "px",
-      math: null,
     }
   );
 });
