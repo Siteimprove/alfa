@@ -1,23 +1,24 @@
-import { Length as CSSLength } from "@siteimprove/alfa-css";
+import { Length } from "@siteimprove/alfa-css/src/value/numeric";
 
 import { Longhand } from "../longhand";
-import { Length } from "./value/compound";
+import { Resolver } from "../resolver";
 
 /**
  * @internal
  */
-export type Specified = Length.Length;
+export type Specified = Length.Mixed;
 
 /**
  * @internal
  */
-export type Computed = CSSLength<"px">;
+export type Computed = Length.Fixed<"px">;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset}
  */
 export default Longhand.of<Specified, Computed>(
-  CSSLength.of(0, "px"),
+  Length.of(0, "px"),
   Length.parse,
-  (value, style) => value.map(Length.resolve(style))
+  (value, style) =>
+    value.map((offset) => offset.resolve(Resolver.length(style)))
 );

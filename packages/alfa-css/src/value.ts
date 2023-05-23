@@ -54,7 +54,7 @@ export abstract class Value<
  * @public
  */
 export namespace Value {
-  export interface JSON<T extends string = string, CALC extends boolean = boolean> {
+  export interface JSON<T extends string = string> {
     [key: string]: json.JSON;
     type: T;
   }

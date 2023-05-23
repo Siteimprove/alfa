@@ -132,12 +132,12 @@ export class Length<
     return { ...base, value: this._value, unit: this._unit };
   }
 
-  public toString(): string {
-    if (this._hasCalculation) {
-      return this._math!.toString();
+  public toString(this: Length<U, true> | Length<U, false>): string {
+    if (this.hasCalculation()) {
+      return this._math.toString();
     }
 
-    return BaseLength.of(this._value!, this._unit!).toString();
+    return BaseLength.of(this._value, this._unit).toString();
   }
 }
 
@@ -199,4 +199,10 @@ export namespace Length {
     map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, Length.of),
     map(Math.parseLength, Length.of)
   );
+
+  export function isZero<U extends Unit.Length = Unit.Length>(
+    length: Length<U, false>
+  ): boolean {
+    return length.value === 0;
+  }
 }
