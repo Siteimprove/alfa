@@ -2882,7 +2882,7 @@ export abstract class Value<T extends string = string, CALC extends boolean = fa
     // (undocumented)
     abstract equals(value: unknown): value is this;
     // (undocumented)
-    get hasCalculation(): CALC;
+    hasCalculation(): this is Value<T, true>;
     // (undocumented)
     protected readonly _hasCalculation: CALC;
     // (undocumented)
