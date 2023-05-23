@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: "Should pr command run?"
         id: should-run
-        uses: siteimprove/pr-command/check-run/check@v2.2
+        uses: siteimprove/pr-command/check-run/check@v2.3
         with:
           # Personal access token (PAT) used to fetch the repository and add reaction on comment.
           token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
@@ -35,7 +35,7 @@ jobs:
         run: yarn install --immutable
 
       - name: "React to command"
-        uses: siteimprove/pr-command/check-run/run@v2.2
+        uses: siteimprove/pr-command/check-run/run@v2.3
         with:
           # Personal access token (PAT) used to fetch the repository and add reaction on comment.
           token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
