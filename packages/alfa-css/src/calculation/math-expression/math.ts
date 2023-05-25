@@ -7,7 +7,7 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Token, Function as CSSFunction } from "../../syntax";
 
-import { Value as CSSValue } from "../../value/value";
+import { Value as CSSValue } from "../../value";
 import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
 import { Expression } from "./expression";
@@ -35,7 +35,7 @@ const {
  */
 export class Math<
   out D extends Math.Dimension = Math.Dimension
-> extends CSSValue<"math expression"> {
+> extends CSSValue<"math expression", true> {
   public static of(expression: Expression): Math {
     return new Math(
       expression.reduce({
@@ -48,13 +48,9 @@ export class Math<
   private readonly _expression: Expression;
 
   private constructor(expression: Expression) {
-    super();
+    super("math expression", true);
 
     this._expression = expression;
-  }
-
-  public get type(): "math expression" {
-    return "math expression";
   }
 
   public get expression(): Expression {
@@ -103,24 +99,28 @@ export class Math<
     return this._expression.kind.is("percentage");
   }
 
+  public resolve(): any {
+    throw new Error("temporarily failing");
+  }
+
   // Other resolvers should be added when needed.
   /**
    * Resolves a calculation typed as a length, length-percentage or number.
    * Needs a resolver to handle relative lengths and percentages.
    */
-  public resolve(
+  public resolve2(
     this: Math<"length">,
     resolver: Expression.LengthResolver
   ): Result<Length<"px">, string>;
 
-  public resolve(
+  public resolve2(
     this: Math<"length-percentage">,
     resolver: Expression.Resolver<"px", Length<"px">>
   ): Result<Length<"px">, string>;
 
-  public resolve(this: Math<"number">): Result<Number, string>;
+  public resolve2(this: Math<"number">): Result<Number, string>;
 
-  public resolve(
+  public resolve2(
     this: Math,
     resolver?:
       | Expression.LengthResolver

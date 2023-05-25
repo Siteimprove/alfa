@@ -1,9 +1,7 @@
-import { Box, Keyword, Token } from "@siteimprove/alfa-css";
+import { Box, List, Keyword, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
-
-import { List } from "./value/list";
 
 const { map, delimited, option, separatedList } = Parser;
 

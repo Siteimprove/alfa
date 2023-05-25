@@ -1,5 +1,13 @@
 # @siteimprove/alfa-trilean
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-iterable@0.63.3
+  - @siteimprove/alfa-mapper@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @siteimprove/alfa-performance
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-callback@0.63.3
+  - @siteimprove/alfa-emitter@0.63.3
+  - @siteimprove/alfa-json@0.63.3
+  - @siteimprove/alfa-thunk@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

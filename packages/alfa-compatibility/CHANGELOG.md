@@ -1,5 +1,13 @@
 # @siteimprove/alfa-compatibility
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-iterable@0.63.3
+  - @siteimprove/alfa-json@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

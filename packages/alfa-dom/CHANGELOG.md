@@ -1,5 +1,28 @@
 # @siteimprove/alfa-dom
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-array@0.63.3
+  - @siteimprove/alfa-cache@0.63.3
+  - @siteimprove/alfa-css@0.63.3
+  - @siteimprove/alfa-earl@0.63.3
+  - @siteimprove/alfa-equatable@0.63.3
+  - @siteimprove/alfa-flags@0.63.3
+  - @siteimprove/alfa-iterable@0.63.3
+  - @siteimprove/alfa-json@0.63.3
+  - @siteimprove/alfa-lazy@0.63.3
+  - @siteimprove/alfa-media@0.63.3
+  - @siteimprove/alfa-option@0.63.3
+  - @siteimprove/alfa-predicate@0.63.3
+  - @siteimprove/alfa-refinement@0.63.3
+  - @siteimprove/alfa-sarif@0.63.3
+  - @siteimprove/alfa-sequence@0.63.3
+  - @siteimprove/alfa-trampoline@0.63.3
+  - @siteimprove/alfa-tree@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

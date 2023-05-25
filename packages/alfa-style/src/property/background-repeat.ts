@@ -1,9 +1,7 @@
-import { Keyword, Token } from "@siteimprove/alfa-css";
+import { Keyword, List, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Shorthand } from "../shorthand";
-
-import { List } from "./value/list";
 
 import * as X from "./background-repeat-x";
 import * as Y from "./background-repeat-y";

@@ -4,11 +4,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Err } from "@siteimprove/alfa-result";
 
-import { Length, Percentage, Unit } from "../calculation";
-import { Token } from "../syntax";
-
+import { Length, Percentage } from "../calculation";
 import { Keyword } from "./keyword";
-import { Value } from "./value";
+import { Token } from "../syntax";
+import { Unit } from "../unit";
+import { Value } from "../value";
 
 const { map, either, pair, right } = Parser;
 
@@ -20,7 +20,7 @@ const { map, either, pair, right } = Parser;
 export class Position<
   H extends Position.Component<Position.Horizontal> = Position.Component<Position.Horizontal>,
   V extends Position.Component<Position.Vertical> = Position.Component<Position.Vertical>
-> extends Value<"position"> {
+> extends Value<"position", false> {
   public static of<
     H extends Position.Component<Position.Horizontal>,
     V extends Position.Component<Position.Vertical>
@@ -32,13 +32,9 @@ export class Position<
   private readonly _vertical: V;
 
   private constructor(horizontal: H, vertical: V) {
-    super();
+    super("position", false);
     this._horizontal = horizontal;
     this._vertical = vertical;
-  }
-
-  public get type(): "position" {
-    return "position";
   }
 
   public get horizontal(): H {
@@ -47,6 +43,10 @@ export class Position<
 
   public get vertical(): V {
     return this._vertical;
+  }
+
+  public resolve(): Position<H, V> {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -63,7 +63,7 @@ export class Position<
 
   public toJSON(): Position.JSON {
     return {
-      type: "position",
+      ...super.toJSON(),
       horizontal: this._horizontal.toJSON(),
       vertical: this._vertical.toJSON(),
     };
@@ -100,7 +100,7 @@ export namespace Position {
   export class Side<
     S extends Vertical | Horizontal = Vertical | Horizontal,
     O extends Offset = Offset
-  > extends Value<"side"> {
+  > extends Value<"side", false> {
     public static of<S extends Vertical | Horizontal, O extends Offset>(
       side: S,
       offset: Option<O> = None
@@ -112,13 +112,9 @@ export namespace Position {
     private readonly _offset: Option<O>;
 
     private constructor(side: S, offset: Option<O>) {
-      super();
+      super("side", false);
       this._side = side;
       this._offset = offset;
-    }
-
-    public get type(): "side" {
-      return "side";
     }
 
     public get side(): S {
@@ -135,6 +131,10 @@ export namespace Position {
       );
     }
 
+    public resolve(): Side<S, O> {
+      return this;
+    }
+
     public equals(value: unknown): value is this {
       return (
         value instanceof Side &&
@@ -149,7 +149,7 @@ export namespace Position {
 
     public toJSON(): Side.JSON {
       return {
-        type: "side",
+        ...super.toJSON(),
         side: this._side.toJSON(),
         offset: this._offset.map((offset) => offset.toJSON()).getOr(null),
       };

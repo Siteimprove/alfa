@@ -1,12 +1,16 @@
-import { Keyword, Length, Percentage, Token } from "@siteimprove/alfa-css";
+import {
+  Keyword,
+  Length,
+  List,
+  Percentage,
+  Token,
+  Tuple,
+} from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
-
-import { List } from "./value/list";
-import { Tuple } from "./value/tuple";
 
 import { LengthPercentage } from "./value/compound";
 

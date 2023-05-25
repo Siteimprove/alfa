@@ -35,7 +35,10 @@ export function isWideEnough<N extends Name>(
 
   switch (value.type) {
     case "length":
-      used = value;
+      // TODO: This is still mixing new Length (letter-spacing) and old ones :-(
+      used = Length.isLength(value)
+        ? value
+        : Length.of(value.value, value.unit);
       ratio = value.value / fontSize.value;
       break;
     case "number":

@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax";
-import { Value } from "../value";
+import { Value } from "../../value";
 
 import { URL } from "./url";
 import { Gradient } from "./gradient";
@@ -15,9 +15,10 @@ const { map, either } = Parser;
  *
  * @public
  */
-export class Image<
-  I extends URL | Gradient = URL | Gradient
-> extends Value<"image"> {
+export class Image<I extends URL | Gradient = URL | Gradient> extends Value<
+  "image",
+  false
+> {
   public static of<I extends URL | Gradient>(image: I): Image<I> {
     return new Image(image);
   }
@@ -25,16 +26,16 @@ export class Image<
   private readonly _image: I;
 
   private constructor(image: I) {
-    super();
+    super("image", false);
     this._image = image;
-  }
-
-  public get type(): "image" {
-    return "image";
   }
 
   public get image(): I {
     return this._image;
+  }
+
+  public resolve(): Image<I> {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -47,7 +48,7 @@ export class Image<
 
   public toJSON(): Image.JSON {
     return {
-      type: "image",
+      ...super.toJSON(),
       image: this._image.toJSON(),
     };
   }

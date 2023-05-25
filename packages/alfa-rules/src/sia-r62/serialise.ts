@@ -1,5 +1,7 @@
-import { Keyword, Length } from "@siteimprove/alfa-css";
+import { Keyword, Length as CSSLength } from "@siteimprove/alfa-css";
+import { Length } from "@siteimprove/alfa-css/src/value/numeric";
 import { Longhands, Shorthands, Style } from "@siteimprove/alfa-style";
+
 import { normalize } from "../common/normalize";
 
 type Name = Longhands.Name | Shorthands.Name;
@@ -35,9 +37,13 @@ export namespace Serialise {
         bottom = "";
         if (right === top) {
           right = "";
-          if (
-            top === Longhands.get(`border-top-${property}`).initial.toString()
-          ) {
+          // TODO: temporary workaround to help TS during migration from non-calculated to calculated properties
+          const initial = Longhands.get(`border-top-${property}`).initial;
+          const str = Length.isLength(initial)
+            ? initial.toString()
+            : initial.toString();
+          // TODO: end workaround, inline variables and remove redudant test.
+          if (top === str) {
             top = "";
           }
         }
@@ -50,7 +56,14 @@ export namespace Serialise {
   export function getLonghand(style: Style, name: Longhands.Name): string {
     const property = style.computed(name).toString();
 
-    return property === Longhands.get(name).initial.toString() ? "" : property;
+    // TODO: temporary workaround to help TS during migration from non-calculated to calculated properties
+    const initial = Longhands.get(name).initial;
+    const str = Length.isLength(initial)
+      ? initial.toString()
+      : initial.toString();
+    // TODO: end workaround, inline variables and remove redudant test.
+
+    return property === str ? "" : property;
   }
 
   export function outline(style: Style): string {
@@ -83,8 +96,8 @@ export namespace Serialise {
 
     for (const shadow of boxShadow) {
       const { vertical, horizontal, blur, spread, isInset, color } = shadow;
-      const omitBlur = Length.isZero(spread) && Length.isZero(blur);
-      const omitSpread = Length.isZero(spread);
+      const omitBlur = CSSLength.isZero(spread) && CSSLength.isZero(blur);
+      const omitSpread = CSSLength.isZero(spread);
       const blurToString = omitBlur ? "" : blur.toString();
       const spreadToString = omitSpread ? "" : spread.toString();
       const insetToString = isInset ? "inset" : "";
@@ -148,10 +161,19 @@ export namespace Serialise {
     ): string {
       // Longhands with missing layers use the same value as their first layer
       const value = `${array?.[n] ?? array[0]}`;
-      return property !== undefined &&
-        value === Longhands.get(property).initial.toString()
-        ? ""
-        : value;
+
+      // TODO: temporary workaround to help TS during migration from non-calculated to calculated properties
+      if (property === undefined) {
+        return value;
+      }
+
+      const initial = Longhands.get(property).initial;
+      const str = Length.isLength(initial)
+        ? initial.toString()
+        : initial.toString();
+      // TODO: end workaround, inline variables and remove redudant test.
+
+      return property !== undefined && value === str ? "" : value;
     }
 
     function getSize(n: number): string {

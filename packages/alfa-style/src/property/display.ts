@@ -1,10 +1,9 @@
-import { Keyword, Token } from "@siteimprove/alfa-css";
+import { Keyword, Token, Tuple } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
-import { Tuple } from "./value/tuple";
 
 import type { Computed as Position } from "./position";
 import type { Computed as Float } from "./float";

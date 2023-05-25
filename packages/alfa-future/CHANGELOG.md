@@ -1,5 +1,21 @@
 # @siteimprove/alfa-future
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-applicative@0.63.3
+  - @siteimprove/alfa-array@0.63.3
+  - @siteimprove/alfa-callback@0.63.3
+  - @siteimprove/alfa-continuation@0.63.3
+  - @siteimprove/alfa-functor@0.63.3
+  - @siteimprove/alfa-iterable@0.63.3
+  - @siteimprove/alfa-mapper@0.63.3
+  - @siteimprove/alfa-monad@0.63.3
+  - @siteimprove/alfa-thenable@0.63.3
+  - @siteimprove/alfa-thunk@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

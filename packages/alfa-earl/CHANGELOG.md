@@ -1,5 +1,14 @@
 # @siteimprove/alfa-earl
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-json-ld@0.63.3
+  - @siteimprove/alfa-option@0.63.3
+  - @siteimprove/alfa-refinement@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

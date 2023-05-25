@@ -1,5 +1,16 @@
 # @siteimprove/alfa-thenable
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-array@0.63.3
+  - @siteimprove/alfa-callback@0.63.3
+  - @siteimprove/alfa-continuation@0.63.3
+  - @siteimprove/alfa-mapper@0.63.3
+  - @siteimprove/alfa-refinement@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

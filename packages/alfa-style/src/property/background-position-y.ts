@@ -1,11 +1,15 @@
-import { Length, Percentage, Token, Position } from "@siteimprove/alfa-css";
+import {
+  Length,
+  List,
+  Percentage,
+  Token,
+  Position,
+} from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-
-import { List } from "./value/list";
 
 const { map, either, delimited, option, separatedList } = Parser;
 

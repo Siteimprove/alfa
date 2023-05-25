@@ -3,10 +3,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Function, Token } from "../../syntax";
-import { Value } from "../value";
 
 import { Keyword } from "../keyword";
 import { Position } from "../position";
+
+import { BasicShape } from "./basic-shape";
 import { Radius } from "./radius";
 
 const { map, option, pair, right } = Parser;
@@ -19,7 +20,7 @@ const { map, option, pair, right } = Parser;
 export class Ellipse<
   R extends Radius = Radius,
   P extends Position = Position
-> extends Value<"basic-shape"> {
+> extends BasicShape<"ellipse"> {
   public static of<R extends Radius = Radius, P extends Position = Position>(
     rx: R,
     ry: R,
@@ -33,18 +34,10 @@ export class Ellipse<
   private readonly _center: P;
 
   private constructor(rx: R, ry: R, center: P) {
-    super();
+    super("ellipse", false);
     this._rx = rx;
     this._ry = ry;
     this._center = center;
-  }
-
-  public get type(): "basic-shape" {
-    return "basic-shape";
-  }
-
-  public get kind(): "ellipse" {
-    return "ellipse";
   }
 
   public get rx(): R {
@@ -57,6 +50,10 @@ export class Ellipse<
 
   public get center(): P {
     return this._center;
+  }
+
+  public resolve(): Ellipse<R, P> {
+    return this;
   }
 
   public equals(value: Ellipse): boolean;
@@ -81,8 +78,7 @@ export class Ellipse<
 
   public toJSON(): Ellipse.JSON {
     return {
-      type: "basic-shape",
-      kind: "ellipse",
+      ...super.toJSON(),
       rx: this._rx.toJSON(),
       ry: this._ry.toJSON(),
       center: this._center.toJSON(),
@@ -98,8 +94,7 @@ export class Ellipse<
  * @public
  */
 export namespace Ellipse {
-  export interface JSON extends Value.JSON<"basic-shape"> {
-    kind: "ellipse";
+  export interface JSON extends BasicShape.JSON<"ellipse"> {
     rx: Radius.JSON;
     ry: Radius.JSON;
     center: Position.JSON;

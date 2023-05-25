@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax";
-import { Value } from "../value";
+import { Value } from "../../value";
 
 const { map, right, either, left, delimited, option } = Parser;
 
@@ -12,7 +12,7 @@ const { map, right, either, left, delimited, option } = Parser;
  *
  * @public
  */
-export class URL extends Value<"url"> {
+export class URL extends Value<"url", false> {
   public static of(url: string): URL {
     return new URL(url);
   }
@@ -20,16 +20,16 @@ export class URL extends Value<"url"> {
   private readonly _url: string;
 
   private constructor(url: string) {
-    super();
+    super("url", false);
     this._url = url;
-  }
-
-  public get type(): "url" {
-    return "url";
   }
 
   public get url(): string {
     return this._url;
+  }
+
+  public resolve(): URL {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -42,7 +42,7 @@ export class URL extends Value<"url"> {
 
   public toJSON(): URL.JSON {
     return {
-      type: "url",
+      ...super.toJSON(),
       url: this._url,
     };
   }
