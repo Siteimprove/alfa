@@ -164,7 +164,7 @@ export namespace Length {
     export interface JSON<U extends Unit.Length = Unit.Length>
       extends Value.JSON<"length"> {
       value: number;
-      unit: string;
+      unit: U;
     }
   }
 
