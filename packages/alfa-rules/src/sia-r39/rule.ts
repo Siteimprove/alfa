@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
@@ -14,6 +14,7 @@ import { Scope } from "../tags";
 const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasInputType, hasName, hasNamespace } = Element;
 const { and, or, test } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r39",
@@ -26,7 +27,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document.elementDescendants(Node.fullTree).filter(
+        return getElementDescendants(document, Node.fullTree).filter(
           and(
             hasNamespace(Namespace.HTML),
             or(hasName("img"), and(hasName("input"), hasInputType("image"))),

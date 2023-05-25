@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -13,6 +13,7 @@ import { Scope } from "../tags";
 const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasName, hasNamespace, hasTabIndex } = Element;
 const { and, not } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r13",
@@ -21,16 +22,14 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasName("iframe"),
-              isIncludedInTheAccessibilityTree(device),
-              not(hasTabIndex((n) => n < 0))
-            )
-          );
+        return getElementDescendants(document, Node.fullTree).filter(
+          and(
+            hasNamespace(Namespace.HTML),
+            hasName("iframe"),
+            isIncludedInTheAccessibilityTree(device),
+            not(hasTabIndex((n) => n < 0))
+          )
+        );
       },
 
       expectations(target) {

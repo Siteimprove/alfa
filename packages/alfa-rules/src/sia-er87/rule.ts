@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import { Document, Element, Node, Query } from "@siteimprove/alfa-dom";
 import { None } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -16,13 +16,14 @@ import { Question } from "../common/act/question";
 
 import { isAtTheStart } from "../common/predicate";
 
-import { Scope, Stability, Version } from "../tags";
 import { withDocumentElement } from "../common/applicability/with-document-element";
+import { Scope, Stability, Version } from "../tags";
 
 const { hasRole, isIgnored } = DOM;
 const { hasName, isElement } = Element;
 const { and } = Refinement;
 const { isTabbable, isVisible } = Style;
+const { getElementDescendants } = Query;
 
 /**
  * This version of R87 ask questions whose subject is not the target of the rule.
@@ -100,10 +101,9 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
           .filter(isInternalURL(response.url))
           .flatMap((url) =>
             url.fragment.flatMap((fragment) =>
-              element
-                .root()
-                .elementDescendants()
-                .find((element) => element.id.includes(fragment))
+              getElementDescendants(element.root()).find((element) =>
+                element.id.includes(fragment)
+              )
             )
           );
 

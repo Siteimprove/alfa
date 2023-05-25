@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -16,6 +16,7 @@ const { hasAttribute, isElement } = Element;
 const { equals } = Predicate;
 const { and } = Refinement;
 const { isTabbable } = Style;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r17",
@@ -24,9 +25,9 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
-          .filter(hasAttribute("aria-hidden", equals("true")));
+        return getElementDescendants(document, Node.fullTree).filter(
+          hasAttribute("aria-hidden", equals("true"))
+        );
       },
 
       expectations(target) {

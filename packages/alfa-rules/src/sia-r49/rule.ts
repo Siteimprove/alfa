@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -17,6 +17,7 @@ const { hasNonEmptyAccessibleName, isPerceivableForAll } = DOM;
 const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { or, nor, equals } = Predicate;
 const { and } = Refinement;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r49",
@@ -25,8 +26,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   evaluate({ document, device }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.composedNested)
+        return getElementDescendants(document, Node.composedNested)
           .filter(
             and(
               hasNamespace(Namespace.HTML),

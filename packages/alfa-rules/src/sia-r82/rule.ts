@@ -2,7 +2,7 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -16,6 +16,7 @@ import { Scope, Stability } from "../tags";
 const { hasRole, isPerceivableForAll } = DOM;
 const { hasNamespace } = Element;
 const { and, test } = Predicate;
+const { getElementDescendants } = Query;
 
 /**
  * R82 ask questions whose subject is not the target of the rule.
@@ -37,27 +38,25 @@ export default Rule.Atomic.of<
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasRole(
-                device,
-                "checkbox",
-                "combobox",
-                "listbox",
-                "menuitemcheckbox",
-                "menuitemradio",
-                "radio",
-                "searchbox",
-                "slider",
-                "spinbutton",
-                "switch",
-                "textbox"
-              )
+        return getElementDescendants(document, Node.fullTree).filter(
+          and(
+            hasNamespace(Namespace.HTML),
+            hasRole(
+              device,
+              "checkbox",
+              "combobox",
+              "listbox",
+              "menuitemcheckbox",
+              "menuitemradio",
+              "radio",
+              "searchbox",
+              "slider",
+              "spinbutton",
+              "switch",
+              "textbox"
             )
-          );
+          )
+        );
       },
 
       expectations(target) {

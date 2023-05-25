@@ -1,7 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Attribute, Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -16,6 +16,7 @@ import { Scope } from "../tags";
 const { hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasId, hasName, hasNamespace } = Element;
 const { and, equals } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r45",
@@ -24,8 +25,7 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ device, document }) {
     const cellsCache = Cache.empty<Element, Sequence<Element>>();
 
-    const headers = document
-      .elementDescendants()
+    const headers = getElementDescendants(document)
       .filter(
         and(
           hasNamespace(Namespace.HTML),
@@ -37,9 +37,9 @@ export default Rule.Atomic.of<Page, Attribute>({
       .reduce((headers, table) => {
         const cells = cellsCache
           .get(table, () =>
-            table
-              .elementDescendants()
-              .filter(and(hasNamespace(Namespace.HTML), hasName("td", "th")))
+            getElementDescendants(table).filter(
+              and(hasNamespace(Namespace.HTML), hasName("td", "th"))
+            )
           )
           .filter(hasAttribute("headers"));
         for (const cell of cells) {
@@ -63,9 +63,9 @@ export default Rule.Atomic.of<Page, Attribute>({
 
         const cells = cellsCache
           .get(table, () =>
-            table
-              .elementDescendants()
-              .filter(and(hasNamespace(Namespace.HTML), hasName("td", "th")))
+            getElementDescendants(table).filter(
+              and(hasNamespace(Namespace.HTML), hasName("td", "th"))
+            )
           )
           .filter(hasId(equals(...ids)));
 

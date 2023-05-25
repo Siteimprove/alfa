@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -17,6 +17,7 @@ const {
 } = DOM;
 const { hasNamespace } = Element;
 const { and } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r43",
@@ -25,15 +26,13 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ document, device }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
-          .filter(
-            and(
-              hasNamespace(Namespace.SVG),
-              hasExplicitRole("img", "graphics-document", "graphics-symbol"),
-              isIncludedInTheAccessibilityTree(device)
-            )
-          );
+        return getElementDescendants(document, Node.fullTree).filter(
+          and(
+            hasNamespace(Namespace.SVG),
+            hasExplicitRole("img", "graphics-document", "graphics-symbol"),
+            isIncludedInTheAccessibilityTree(device)
+          )
+        );
       },
 
       expectations(target) {

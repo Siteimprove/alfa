@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Real } from "@siteimprove/alfa-math";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -15,6 +15,7 @@ import { Scope } from "../tags";
 
 const { hasAttribute, hasName, hasNamespace } = Element;
 const { and, equals } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r47",
@@ -34,8 +35,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return (
-          document
-            .elementDescendants()
+          getElementDescendants(document)
             .filter(
               and(
                 hasNamespace(Namespace.HTML),

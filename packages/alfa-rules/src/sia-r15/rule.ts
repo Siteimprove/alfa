@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -20,6 +20,7 @@ import { normalize } from "../common/normalize";
 const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasName, hasNamespace } = Element;
 const { and } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r15",
@@ -28,8 +29,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   evaluate({ device, document, response }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(dom.Node.fullTree)
+        return getElementDescendants(document, dom.Node.fullTree)
           .filter(
             and(
               hasName("iframe"),

@@ -1,18 +1,25 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Document, Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import {
+  Document,
+  Element,
+  Namespace,
+  Node,
+  Query,
+} from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
 import { withDocumentElement } from "../common/applicability/with-document-element";
+import { Scope } from "../tags";
 
 const { hasRole } = DOM;
 const { hasNamespace } = Element;
 const { and } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r59",
@@ -24,9 +31,9 @@ export default Rule.Atomic.of<Page, Document>({
       },
 
       expectations(target) {
-        const hasHeadings = target
-          .elementDescendants(Node.flatTree)
-          .some(and(hasNamespace(Namespace.HTML), hasRole(device, "heading")));
+        const hasHeadings = getElementDescendants(target, Node.flatTree).some(
+          and(hasNamespace(Namespace.HTML), hasRole(device, "heading"))
+        );
 
         return {
           1: expectation(
