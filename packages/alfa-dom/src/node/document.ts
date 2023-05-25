@@ -1,10 +1,12 @@
 import { None, Option } from "@siteimprove/alfa-option";
-import { Sequence } from "@siteimprove/alfa-sequence/src/sequence";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
-
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
+import { Query } from "./query";
+
+const { getElementDescendants } = Query;
 
 /**
  * @public
@@ -38,22 +40,13 @@ export class Document extends Node<"document"> {
     return this._frame;
   }
 
-  private _elementDescendants: Array<Sequence<Element>> = [];
   /**
    * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
    */
-  // We very often need all elements in a document, typically at the start of
-  // a rule Applicability. Caching the filtering saves a lot of time.
   public elementDescendants(
     options: Node.Traversal = Node.Traversal.empty
   ): Sequence<Element> {
-    if (this._elementDescendants[options.value] === undefined) {
-      this._elementDescendants[options.value] = this.descendants(
-        options
-      ).filter(Element.isElement);
-    }
-
-    return this._elementDescendants[options.value];
+    return getElementDescendants(this, options);
   }
 
   public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {

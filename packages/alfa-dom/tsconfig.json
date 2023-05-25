@@ -58,6 +58,9 @@
     "src/node/traversal/lowest-common-ancestor.ts",
     "src/node/traversal.ts",
     "src/node/type.ts",
+    "src/node/query/element-descendants.ts",
+    "src/node/query/element-id-map.ts",
+    "src/node/query/index.ts",
     "src/style/block.ts",
     "src/style/declaration.ts",
     "src/style/rule.ts",
@@ -79,7 +82,9 @@
     "test/node/element.spec.tsx",
     "test/node/predicate/has-tab-index.spec.tsx",
     "test/node/traversal/get-nodes-between.spec.tsx",
-    "test/node/traversal/lowest-common-ancestor.spec.tsx"
+    "test/node/traversal/lowest-common-ancestor.spec.tsx",
+    "test/node/query/element-descendants.spec.tsx",
+    "test/node/query/element-id-map.spec.tsx"
   ],
   "references": [
     { "path": "../alfa-cache" },
