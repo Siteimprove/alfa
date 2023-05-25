@@ -1,21 +1,22 @@
-import { Keyword, Length as CSSLength } from "@siteimprove/alfa-css";
+import { Keyword } from "@siteimprove/alfa-css";
+import { Length } from "@siteimprove/alfa-css/src/value/numeric";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import { Longhand } from "../longhand";
-import { Length } from "./value/compound";
-import { Selective } from "@siteimprove/alfa-selective";
+import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
 /**
  * @internal
  */
-export type Specified = Keyword<"normal"> | Length.Length;
+export type Specified = Keyword<"normal"> | Length.Mixed;
 
 /**
  * @internal
  */
-export type Computed = CSSLength<"px">;
+export type Computed = Length.Fixed<"px">;
 
 /**
  * @internal
@@ -27,13 +28,15 @@ export const parse = either(Keyword.parse("normal"), Length.parse);
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  CSSLength.of(0, "px"),
+  Length.of(0, "px"),
   parse,
   (wordSpacing, style) =>
     wordSpacing.map((wordSpacing) =>
       Selective.of(wordSpacing)
-        .if(Length.isLength, Length.resolve(style))
-        .else(() => CSSLength.of(0, "px"))
+        .if(Length.isLength, (spacing) =>
+          spacing.resolve(Resolver.length(style))
+        )
+        .else(() => Length.of(0, "px"))
         .get()
     ),
   {

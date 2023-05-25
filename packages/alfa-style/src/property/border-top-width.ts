@@ -1,13 +1,14 @@
-import { Keyword, Length as CSSLength } from "@siteimprove/alfa-css";
+import { Keyword } from "@siteimprove/alfa-css";
+import { Length } from "@siteimprove/alfa-css/src/value/numeric";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 
-import { Length } from "./value/compound";
 import type { Style } from "../style";
 import type { Value } from "../value";
 
 import type { Computed as StyleProp } from "./border-top-style";
+import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
@@ -15,7 +16,7 @@ const { either } = Parser;
  * @internal
  */
 export type Specified =
-  | Length.Length
+  | Length.Mixed
   | Keyword<"thin">
   | Keyword<"medium">
   | Keyword<"thick">;
@@ -23,7 +24,7 @@ export type Specified =
 /**
  * @internal
  */
-export type Computed = CSSLength<"px">;
+export type Computed = Length.Fixed<"px">;
 
 /**
  * @internal
@@ -38,7 +39,7 @@ export const parse = either(
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  CSSLength.of(3, "px"),
+  Length.of(3, "px"),
   parse,
   (borderWidth, style) => {
     const borderStyle = style.computed("border-top-style") as Value<StyleProp>;
@@ -58,23 +59,23 @@ export function compute(
     if (
       styleProperty.some(({ value }) => value === "none" || value === "hidden")
     ) {
-      return CSSLength.of(0, "px");
+      return Length.of(0, "px");
     }
 
     if (Length.isLength(value)) {
-      return Length.resolve(style)(value);
+      return value.resolve(Resolver.length(style));
     }
 
     // Only keywords are left
     switch (value.value) {
       case "thin":
-        return CSSLength.of(1, "px");
+        return Length.of(1, "px");
 
       case "medium":
-        return CSSLength.of(3, "px");
+        return Length.of(3, "px");
 
       case "thick":
-        return CSSLength.of(5, "px");
+        return Length.of(5, "px");
     }
   });
 }

@@ -31,7 +31,7 @@ export abstract class Value<
     return this._type;
   }
 
-  public get hasCalculation(): CALC {
+  public hasCalculation(): this is Value<T, true> {
     return this._hasCalculation;
   }
 

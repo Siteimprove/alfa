@@ -1,4 +1,5 @@
-import { Color, Length } from "@siteimprove/alfa-css";
+import { Color } from "@siteimprove/alfa-css";
+import { Length } from "@siteimprove/alfa-css/src/value/numeric";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";

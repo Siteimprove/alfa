@@ -26,18 +26,18 @@ export class Length<
   public static of<U extends Unit.Length>(
     value: number,
     unit: U
-  ): Length<U, false>;
+  ): Length.Fixed<U>;
 
   public static of<U extends Unit.Length>(
     value: BaseLength<U>
-  ): Length<U, false>;
+  ): Length.Fixed<U>;
 
-  public static of(value: Math<"length">): Length<Unit.Length, true>;
+  public static of(value: Math<"length">): Length.Calculated;
 
   public static of<U extends Unit.Length>(
     value: number | BaseLength<U> | Math<"length">,
     unit?: U
-  ) {
+  ): Length.Mixed<U> {
     if (typeof value === "number") {
       // The overloads ensure that unit is not undefined
       return new Length(false, value, unit!, undefined);
@@ -47,7 +47,7 @@ export class Length<
       return new Length(false, value.value, value.unit, undefined);
     }
 
-    return new Length(true, undefined, undefined, value);
+    return new Length<U, true>(true, undefined, undefined, value);
   }
 
   private readonly _value: NotCalc<CALC, number>;
@@ -78,10 +78,14 @@ export class Length<
     return this._math;
   }
 
+  public hasCalculation(this: Length.Mixed<U>): this is Length.Calculated {
+    return super.hasCalculation();
+  }
+
   /**
    * Resolve a Length into an absolute Length in pixels.
    */
-  public resolve(resolver: Length.Resolver): Length<"px", false> {
+  public resolve(resolver: Length.Resolver): Length.Fixed<"px"> {
     // The type constraint on CALC is not carried on the actual value
     // hasCalculation, so we need to assert types instead.
     if (this._hasCalculation) {
@@ -117,21 +121,23 @@ export class Length<
     hash.writeUnknown(this._math);
   }
 
-  public toJSON(): Length.JSON<CALC, U> {
-    return {
-      ...super.toJSON(),
-      value: this._value ?? null,
-      unit: this._unit ?? null,
-      math: this._math?.toJSON() ?? null,
-    };
-  }
-
-  public toString(): string {
-    if (this._hasCalculation) {
-      return this._math!.toString();
+  public toJSON(
+    this: Length.Mixed<U>
+  ): Length.Fixed.JSON<U> | Length.Calculated.JSON {
+    const base = super.toJSON();
+    if (this.hasCalculation()) {
+      return { ...base, math: this._math.toJSON() };
     }
 
-    return BaseLength.of(this._value!, this._unit!).toString();
+    return { ...base, value: this._value, unit: this._unit };
+  }
+
+  public toString(this: Length.Mixed<U>): string {
+    if (this.hasCalculation()) {
+      return this._math.toString();
+    }
+
+    return BaseLength.of(this._value, this._unit).toString();
   }
 }
 
@@ -139,13 +145,33 @@ export class Length<
  * @public
  */
 export namespace Length {
-  export interface JSON<
-    CALC extends boolean,
-    U extends Unit.Length = Unit.Length
-  > extends Value.JSON<"length"> {
-    value: number | null;
-    unit: string | null;
-    math: Math.JSON | null;
+  /**
+   * Convenience type for Length that contain calculation
+   */
+  export type Calculated = Length<Unit.Length, true>;
+  /**
+   * Convenience type for Length that do not  contain calculation
+   */
+  export type Fixed<U extends Unit.Length = Unit.Length> = Length<U, false>;
+  /**
+   * Convenience type for Length that may or not contain calculation
+   */
+  export type Mixed<U extends Unit.Length = Unit.Length> =
+    | Calculated
+    | Fixed<U>;
+
+  export namespace Fixed {
+    export interface JSON<U extends Unit.Length = Unit.Length>
+      extends Value.JSON<"length"> {
+      value: number;
+      unit: U;
+    }
+  }
+
+  export namespace Calculated {
+    export interface JSON extends Value.JSON<"length"> {
+      math: Math.JSON;
+    }
   }
 
   // TODO: we'll want to totally hide BaseLength, hence this resolver should
@@ -157,16 +183,18 @@ export namespace Length {
     BaseLength<"px">
   >;
 
-  export function isLength(value: unknown): value is Length {
+  export function isLength(value: unknown): value is Mixed {
     return value instanceof Length;
   }
 
-  export const parse: Parser<
-    Slice<Token>,
-    Length<Unit.Length, boolean>,
-    string
-  > = either(
-    map<Slice<Token>, BaseLength, Length, string>(BaseLength.parse, Length.of),
+  export const parse: Parser<Slice<Token>, Mixed, string> = either(
+    map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, Length.of),
     map(Math.parseLength, Length.of)
   );
+
+  export function isZero<U extends Unit.Length = Unit.Length>(
+    length: Fixed<U>
+  ): boolean {
+    return length.value === 0;
+  }
 }
