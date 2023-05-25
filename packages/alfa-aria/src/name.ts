@@ -1,8 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Comparable } from "@siteimprove/alfa-comparable";
 import { Device } from "@siteimprove/alfa-device";
-import { Attribute, Element, Node, Text } from "@siteimprove/alfa-dom";
+import { Attribute, Element, Node, Query, Text } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
@@ -27,6 +26,7 @@ const { isText } = Text;
 const { equals, test } = Predicate;
 const { or } = Refinement;
 const { hasComputedStyle } = Style;
+const { getElementIdMap } = Query;
 
 /**
  * @public
@@ -885,30 +885,16 @@ export namespace Name {
       return None;
     }
     const root = attribute.owner.get().root();
-    const ids = attribute.tokens().toArray();
-
-    // Since there are a lot of elements in the document, but very few in the
-    // aria-labelledby, it is more efficient to grab them in DOM order (in a
-    // single traversal) and then sort by tokens order rather than grab the ids
-    // one by one in the correct order.
-    const references = root
-      .elementDescendants()
-      .filter(hasId(equals(...ids)))
-      .sortWith((a, b) =>
-        Comparable.compareNumber(
-          // the previous filter ensure that the id exists
-          ids.indexOf(a.id.getUnsafe()),
-          ids.indexOf(b.id.getUnsafe())
+    const names = attribute
+      .tokens()
+      .collect((id) => getElementIdMap(root).get(id))
+      .collect((element) =>
+        fromNode(
+          element,
+          device,
+          state.reference(referrer, element).recurse(true).descend(false)
         )
       );
-
-    const names = references.collect((element) =>
-      fromNode(
-        element,
-        device,
-        state.reference(referrer, element).recurse(true).descend(false)
-      )
-    );
 
     const name = flatten(names.map((name) => name.value).join(" "));
 

@@ -178,7 +178,13 @@ export namespace Collection {
     find<U extends T>(refinement: Refinement<T, U, [index: number]>): Option<U>;
     find(predicate: Predicate<T, [index: number]>): Option<T>;
     includes(value: T): boolean;
+    /**
+     * Applies {@link mapper} to each item in the collection, dropping the `None`s and unwrapping the `Some`s
+     */
     collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Indexed<U>;
+    /**
+     * Applies {@link mapper} to each item in the collection, returning and unwrapping the first `Some`
+     */
     collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
     some(predicate: Predicate<T, [index: number]>): boolean;
     none(predicate: Predicate<T, [index: number]>): boolean;
