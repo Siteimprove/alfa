@@ -3,6 +3,7 @@ import {
   Current,
   Keyword,
   Length,
+  List,
   Percentage,
   RGB,
   Shadow,
@@ -15,8 +16,6 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-
-import { List } from "./value/list";
 
 const { map, either, option, separatedList, delimited } = Parser;
 

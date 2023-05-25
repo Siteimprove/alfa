@@ -8,8 +8,10 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Length, Percentage } from "../../calculation";
 import { Function, Token } from "../../syntax";
+
 import { Keyword } from "../keyword";
-import { Value } from "../value";
+
+import { BasicShape } from "./basic-shape";
 
 const { either, left, map, option, pair, right, separated, separatedList } =
   Parser;
@@ -23,7 +25,7 @@ const { parseComma, parseWhitespace } = Token;
 export class Polygon<
   F extends Polygon.Fill = Polygon.Fill,
   V extends Length | Percentage = Length | Percentage
-> extends Value<"basic-shape"> {
+> extends BasicShape<"polygon"> {
   public static of<
     F extends Polygon.Fill = Polygon.Fill,
     V extends Length | Percentage = Length | Percentage
@@ -35,17 +37,9 @@ export class Polygon<
   private readonly _vertices: Array<Polygon.Vertex<V>>;
 
   private constructor(fill: Option<F>, vertices: Array<Polygon.Vertex<V>>) {
-    super();
+    super("polygon", false);
     this._fill = fill;
     this._vertices = vertices;
-  }
-
-  public get type(): "basic-shape" {
-    return "basic-shape";
-  }
-
-  public get kind(): "polygon" {
-    return "polygon";
   }
 
   public get fill(): Option<F> {
@@ -54,6 +48,10 @@ export class Polygon<
 
   public get vertices(): ReadonlyArray<Polygon.Vertex<V>> {
     return this._vertices;
+  }
+
+  public resolve(): Polygon<F, V> {
+    return this;
   }
 
   public equals(value: Polygon): boolean;
@@ -75,8 +73,7 @@ export class Polygon<
 
   public toJSON(): Polygon.JSON<F, V> {
     return {
-      type: "basic-shape",
-      kind: "polygon",
+      ...super.toJSON(),
       fill: this._fill.toJSON(),
       vertices: Array.toJSON(this._vertices),
     };
@@ -102,8 +99,7 @@ export namespace Polygon {
   export interface JSON<
     F extends Fill = Fill,
     V extends Length | Percentage = Length | Percentage
-  > extends Value.JSON<"basic-shape"> {
-    kind: "polygon";
+  > extends BasicShape.JSON<"polygon"> {
     fill: Option.JSON<F>;
     vertices: Array<Serializable.ToJSON<Vertex<V>>>;
   }

@@ -1,5 +1,12 @@
 # @siteimprove/alfa-fnv
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-hash@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

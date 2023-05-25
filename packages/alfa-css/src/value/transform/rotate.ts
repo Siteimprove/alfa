@@ -2,17 +2,18 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Angle, Number, Unit } from "../../calculation";
+import { Angle, Number } from "../../calculation";
 import { Token } from "../../syntax";
+import { Unit } from "../../unit";
 
-import { Value } from "../value";
+import { Function } from "./function";
 
 const { map, left, right, pair, either, delimited, option } = Parser;
 
 /**
  * @public
  */
-export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
+export class Rotate<A extends Angle = Angle> extends Function<"rotate"> {
   public static of<A extends Angle>(
     x: Number,
     y: Number,
@@ -28,19 +29,11 @@ export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
   private readonly _angle: A;
 
   private constructor(x: Number, y: Number, z: Number, angle: A) {
-    super();
+    super("rotate", false);
     this._x = x;
     this._y = y;
     this._z = z;
     this._angle = angle;
-  }
-
-  public get type(): "transform" {
-    return "transform";
-  }
-
-  public get kind(): "rotate" {
-    return "rotate";
   }
 
   public get x(): Number {
@@ -57,6 +50,10 @@ export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
 
   public get angle(): A {
     return this._angle;
+  }
+
+  public resolve(): Rotate<A> {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -79,8 +76,7 @@ export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
 
   public toJSON(): Rotate.JSON {
     return {
-      type: "transform",
-      kind: "rotate",
+      ...super.toJSON(),
       x: this._x.toJSON(),
       y: this._y.toJSON(),
       z: this._z.toJSON(),
@@ -101,8 +97,7 @@ export class Rotate<A extends Angle = Angle> extends Value<"transform"> {
  * @public
  */
 export namespace Rotate {
-  export interface JSON extends Value.JSON<"transform"> {
-    kind: "rotate";
+  export interface JSON extends Function.JSON<"rotate"> {
     x: Number.JSON;
     y: Number.JSON;
     z: Number.JSON;

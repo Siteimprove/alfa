@@ -5,14 +5,14 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Number } from "../../calculation";
 import { Token } from "../../syntax";
 
-import { Value } from "../value";
+import { Function } from "./function";
 
 const { map, left, right, pair, either, take, delimited, option } = Parser;
 
 /**
  * @public
  */
-export class Matrix extends Value<"transform"> {
+export class Matrix extends Function<"matrix"> {
   public static of(...values: Matrix.Values<Number>): Matrix {
     return new Matrix(values);
   }
@@ -20,20 +20,16 @@ export class Matrix extends Value<"transform"> {
   private readonly _values: Matrix.Values<Number>;
 
   private constructor(values: Matrix.Values<Number>) {
-    super();
+    super("matrix", false);
     this._values = values;
-  }
-
-  public get type(): "transform" {
-    return "transform";
-  }
-
-  public get kind(): "matrix" {
-    return "matrix";
   }
 
   public get values(): Matrix.Values<Number> {
     return this._values;
+  }
+
+  public resolve(): Matrix {
+    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -55,8 +51,7 @@ export class Matrix extends Value<"transform"> {
 
   public toJSON(): Matrix.JSON {
     return {
-      type: "transform",
-      kind: "matrix",
+      ...super.toJSON(),
       values: this._values.map((row) =>
         row.map((value) => value.toJSON())
       ) as Matrix.Values<Number.JSON>,
@@ -92,8 +87,7 @@ export class Matrix extends Value<"transform"> {
  * @public
  */
 export namespace Matrix {
-  export interface JSON extends Value.JSON<"transform"> {
-    kind: "matrix";
+  export interface JSON extends Function.JSON<"matrix"> {
     values: Values<Number.JSON>;
   }
 

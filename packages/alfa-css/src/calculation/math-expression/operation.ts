@@ -9,7 +9,7 @@ import {
   Numeric,
   Percentage,
 } from "../numeric";
-import { Unit } from "../unit";
+import { Unit } from "../../unit";
 
 import { Expression } from "./expression";
 import { Kind } from "./kind";

@@ -2,7 +2,7 @@ import { Array } from "@siteimprove/alfa-array";
 import { Result } from "@siteimprove/alfa-result";
 
 import { Angle, Length, Number, Numeric } from "../numeric";
-import { Unit } from "../unit";
+import { Unit } from "../../unit";
 
 import { Expression } from "./expression";
 import { Kind } from "./kind";

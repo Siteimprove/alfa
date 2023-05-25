@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax";
-import { Converter, Unit } from "../unit";
+import { Converter, Unit } from "../../unit";
 import { Dimension } from "./dimension";
 
 const { map } = Parser;

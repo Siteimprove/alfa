@@ -1,5 +1,18 @@
 # @siteimprove/alfa-url
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-equatable@0.63.3
+  - @siteimprove/alfa-hash@0.63.3
+  - @siteimprove/alfa-iterable@0.63.3
+  - @siteimprove/alfa-json@0.63.3
+  - @siteimprove/alfa-option@0.63.3
+  - @siteimprove/alfa-result@0.63.3
+  - @siteimprove/alfa-sequence@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

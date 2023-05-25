@@ -1,12 +1,13 @@
-import { Value } from "@siteimprove/alfa-css";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
+import { Value } from "../../value";
+
 /**
- * @internal
+ * @public
  */
-export class List<T> extends Value<"list"> implements Iterable<T> {
+export class List<T> extends Value<"list", false> implements Iterable<T> {
   public static of<T>(values: Iterable<T>, separator = " "): List<T> {
     return new List(Array.from(values), separator);
   }
@@ -15,17 +16,17 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
   private readonly _separator: string;
 
   private constructor(values: Array<T>, separator: string) {
-    super();
+    super("list", false);
     this._values = values;
     this._separator = separator;
   }
 
-  public get type(): "list" {
-    return "list";
-  }
-
   public get values(): ReadonlyArray<T> {
     return this._values;
+  }
+
+  public resolve(): List<T> {
+    return this;
   }
 
   public equals<T>(value: List<T>): boolean;
@@ -56,7 +57,7 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
 
   public toJSON(): List.JSON<T> {
     return {
-      type: "list",
+      ...super.toJSON(),
       values: this._values.map((value) => Serializable.toJSON(value)),
       separator: this._separator,
     };
@@ -68,7 +69,7 @@ export class List<T> extends Value<"list"> implements Iterable<T> {
 }
 
 /**
- * @internal
+ * @public
  */
 export namespace List {
   export interface JSON<T> extends Value.JSON<"list"> {

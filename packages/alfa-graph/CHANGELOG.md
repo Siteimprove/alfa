@@ -1,5 +1,18 @@
 # @siteimprove/alfa-graph
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-equatable@0.63.3
+  - @siteimprove/alfa-hash@0.63.3
+  - @siteimprove/alfa-iterable@0.63.3
+  - @siteimprove/alfa-json@0.63.3
+  - @siteimprove/alfa-map@0.63.3
+  - @siteimprove/alfa-sequence@0.63.3
+  - @siteimprove/alfa-set@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

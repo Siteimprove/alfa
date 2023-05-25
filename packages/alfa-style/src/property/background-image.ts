@@ -6,6 +6,7 @@ import {
   Keyword,
   Length,
   Linear,
+  List,
   Percentage,
   Position,
   Radial,
@@ -19,8 +20,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-
-import { List } from "./value/list";
 
 const { map, either, delimited, option, separatedList } = Parser;
 

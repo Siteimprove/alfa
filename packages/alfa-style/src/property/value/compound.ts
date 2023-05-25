@@ -69,7 +69,7 @@ export namespace LengthPercentage {
         case "math expression":
           // Since the calculation has been parsed and typed, there should
           // always be something to get.
-          return value.resolve({ length, percentage }).getUnsafe();
+          return value.resolve2({ length, percentage }).getUnsafe();
 
         case "length":
           return length(value);
@@ -77,49 +77,6 @@ export namespace LengthPercentage {
         case "percentage": {
           return percentage(value);
         }
-      }
-    };
-  }
-}
-
-/**
- * @internal
- */
-export namespace Length {
-  /**
-   * {@link https://drafts.csswg.org/css-values/#lengths}
-   */
-  export type Length = CSSLength | Math<"length">;
-
-  export function isLength(value: unknown): value is Length {
-    return (
-      CSSLength.isLength(value) ||
-      (Math.isCalculation(value) && value.isDimension("length"))
-    );
-  }
-
-  export const parse = either(CSSLength.parse, Math.parseLength);
-
-  /**
-   * Resolve a Length into an absolute Length in pixels.
-   *
-   * @param lengthBase the style whose font-size serves as base for resolving
-   * relative lengths (usually the element's own style, or its parent's style).
-   */
-  export function resolve(
-    lengthBase: Style
-  ): (value: Length) => CSSLength<"px"> {
-    return (value) => {
-      const length = Resolver.length(lengthBase);
-
-      switch (value.type) {
-        case "math expression":
-          // Since the calculation has been parsed and typed, there should
-          // always be something to get.
-          return value.resolve({ length }).getUnsafe();
-
-        case "length":
-          return length(value);
       }
     };
   }
@@ -155,7 +112,7 @@ export namespace NumberPercentage {
       case "math expression":
         // Since the calculation has been parsed and typed, there should
         // always be something to get.
-        return value.resolve().getUnsafe();
+        return value.resolve2().getUnsafe();
       case "number":
       case "percentage":
         return value;
@@ -188,7 +145,7 @@ export namespace Number {
       case "math expression":
         // Since the calculation has been parsed and typed, there should
         // always be something to get.
-        return value.resolve().getUnsafe();
+        return value.resolve2().getUnsafe();
       case "number":
         return value;
     }

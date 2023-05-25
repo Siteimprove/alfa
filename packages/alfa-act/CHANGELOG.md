@@ -1,5 +1,35 @@
 # @siteimprove/alfa-act
 
+## 0.63.3
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @siteimprove/alfa-applicative@0.63.3
+  - @siteimprove/alfa-array@0.63.3
+  - @siteimprove/alfa-earl@0.63.3
+  - @siteimprove/alfa-either@0.63.3
+  - @siteimprove/alfa-equatable@0.63.3
+  - @siteimprove/alfa-functor@0.63.3
+  - @siteimprove/alfa-future@0.63.3
+  - @siteimprove/alfa-hash@0.63.3
+  - @siteimprove/alfa-iterable@0.63.3
+  - @siteimprove/alfa-json@0.63.3
+  - @siteimprove/alfa-list@0.63.3
+  - @siteimprove/alfa-mapper@0.63.3
+  - @siteimprove/alfa-monad@0.63.3
+  - @siteimprove/alfa-option@0.63.3
+  - @siteimprove/alfa-performance@0.63.3
+  - @siteimprove/alfa-predicate@0.63.3
+  - @siteimprove/alfa-record@0.63.3
+  - @siteimprove/alfa-refinement@0.63.3
+  - @siteimprove/alfa-result@0.63.3
+  - @siteimprove/alfa-sarif@0.63.3
+  - @siteimprove/alfa-sequence@0.63.3
+  - @siteimprove/alfa-thunk@0.63.3
+  - @siteimprove/alfa-trilean@0.63.3
+  - @siteimprove/alfa-tuple@0.63.3
+
 ## 0.63.2
 
 ### Patch Changes

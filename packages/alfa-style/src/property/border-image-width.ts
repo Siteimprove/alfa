@@ -1,16 +1,15 @@
 import {
-  Token,
+  Keyword,
   Length,
   Number,
   Percentage,
-  Keyword,
+  Token,
+  Tuple,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-
-import { Tuple } from "./value/tuple";
 
 const { takeBetween, either, map, filter, delimited, option } = Parser;
 

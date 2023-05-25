@@ -1,9 +1,7 @@
-import { Token, Position } from "@siteimprove/alfa-css";
+import { List, Token, Position } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Shorthand } from "../shorthand";
-
-import { List } from "./value/list";
 
 import * as X from "./background-position-x";
 import * as Y from "./background-position-y";

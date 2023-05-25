@@ -1,9 +1,14 @@
-import { Keyword, Number, Token, URL } from "@siteimprove/alfa-css";
+import {
+  Keyword,
+  List,
+  Number,
+  Token,
+  Tuple,
+  URL,
+} from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
-import { List } from "./value/list";
-import { Tuple } from "./value/tuple";
 
 const { left, map, option, pair, right, separated, zeroOrMore } = Parser;
 const { parseComma, parseWhitespace } = Token;

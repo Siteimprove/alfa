@@ -1,6 +1,5 @@
-export * from "./value";
-
 export * from "./box";
+export * from "./collection";
 export * from "./color";
 export * from "./image";
 export * from "./keyword";
