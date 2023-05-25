@@ -81,9 +81,7 @@ export namespace Collection {
         append(value: T): Indexed<T>;
         // (undocumented)
         apply<U>(mapper: Indexed<Mapper<T, U>>): Indexed<U>;
-        // (undocumented)
         collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Indexed<U>;
-        // (undocumented)
         collectFirst<U>(mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
         // (undocumented)
         compare<T>(this: Indexed<Comparable<T>>, iterable: Iterable_2<T>): Comparison;

@@ -21,9 +21,9 @@ import * as predicate from "./name/predicate";
 
 import { isProgrammaticallyHidden } from "./dom/predicate/is-programmatically-hidden";
 
-const { hasId, isElement } = Element;
+const { isElement } = Element;
 const { isText } = Text;
-const { equals, test } = Predicate;
+const { test } = Predicate;
 const { or } = Refinement;
 const { hasComputedStyle } = Style;
 const { getElementIdMap } = Query;
