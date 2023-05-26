@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Attribute, Node } from "@siteimprove/alfa-dom";
+import { Attribute, Node, Query } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
@@ -8,19 +8,21 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
+
+const { getElementDescendants } = Query;
+
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r20",
   tags: [Scope.Component],
   evaluate({ document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.composedNested)
-          .flatMap((element) =>
+        return getElementDescendants(document, Node.composedNested).flatMap(
+          (element) =>
             Sequence.from(element.attributes).filter((attribute) =>
               attribute.name.startsWith("aria-")
             )
-          );
+        );
       },
 
       expectations(target) {

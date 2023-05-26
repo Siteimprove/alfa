@@ -1,5 +1,4 @@
 import { None, Option } from "@siteimprove/alfa-option";
-import { Sequence } from "@siteimprove/alfa-sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
@@ -38,15 +37,6 @@ export class Document extends Node<"document"> {
 
   public get frame(): Option<Element> {
     return this._frame;
-  }
-
-  /**
-   * {@link https://dom.spec.whatwg.org/#concept-tree-descendant}
-   */
-  public elementDescendants(
-    options: Node.Traversal = Node.Traversal.empty
-  ): Sequence<Element> {
-    return getElementDescendants(this, options);
   }
 
   public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {

@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -15,6 +15,7 @@ import { Scope } from "../tags";
 const { hasAttribute, hasName, hasNamespace, isElement } = Element;
 const { or, nor } = Predicate;
 const { and } = Refinement;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r48",
@@ -23,8 +24,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   evaluate({ document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.composedNested)
+        return getElementDescendants(document, Node.composedNested)
           .filter(
             and(
               hasNamespace(Namespace.HTML),

@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -16,6 +16,7 @@ const { hasNamespace, isBrowsingContextContainer, isElement } = Element;
 const { not } = Predicate;
 const { and } = Refinement;
 const { isTabbable, isVisible } = Style;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r84",
@@ -28,16 +29,14 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              isVisible(device),
-              isPossiblyScrollable(device),
-              not(isBrowsingContextContainer)
-            )
-          );
+        return getElementDescendants(document, Node.fullTree).filter(
+          and(
+            hasNamespace(Namespace.HTML),
+            isVisible(device),
+            isPossiblyScrollable(device),
+            not(isBrowsingContextContainer)
+          )
+        );
       },
 
       expectations(target) {

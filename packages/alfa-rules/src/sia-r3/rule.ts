@@ -1,5 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -13,6 +13,7 @@ import { Scope } from "../tags";
 const { isEmpty } = Iterable;
 const { not, test } = Predicate;
 const { hasId, hasUniqueId } = Element;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r3",
@@ -21,9 +22,9 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.composedNested)
-          .filter(hasId(not(isEmpty)));
+        return getElementDescendants(document, Node.composedNested).filter(
+          hasId(not(isEmpty))
+        );
       },
 
       expectations(target) {

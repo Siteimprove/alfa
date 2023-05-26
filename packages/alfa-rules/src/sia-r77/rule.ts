@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -15,6 +15,7 @@ import { Scope } from "../tags";
 const { hasRole, isIncludedInTheAccessibilityTree, isPerceivableForAll } = DOM;
 const { hasName, hasNamespace } = Element;
 const { and } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r77",
@@ -25,15 +26,13 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       *applicability() {
-        const tables = document
-          .elementDescendants()
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasName("table"),
-              isIncludedInTheAccessibilityTree(device)
-            )
-          );
+        const tables = getElementDescendants(document).filter(
+          and(
+            hasNamespace(Namespace.HTML),
+            hasName("table"),
+            isIncludedInTheAccessibilityTree(device)
+          )
+        );
 
         for (const table of tables) {
           const model = Table.from(table);
@@ -42,16 +41,14 @@ export default Rule.Atomic.of<Page, Element>({
             continue;
           }
 
-          const dataCells = table
-            .elementDescendants()
-            .filter(
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("td"),
-                hasRole(device, "cell", "gridcell"),
-                isPerceivableForAll(device)
-              )
-            );
+          const dataCells = getElementDescendants(table).filter(
+            and(
+              hasNamespace(Namespace.HTML),
+              hasName("td"),
+              hasRole(device, "cell", "gridcell"),
+              isPerceivableForAll(device)
+            )
+          );
 
           for (const dataCell of dataCells) {
             for (const cell of model.cells.find((cell) =>

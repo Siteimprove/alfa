@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -15,6 +15,7 @@ import { Scope } from "../tags";
 const { hasRole, isIncludedInTheAccessibilityTree, isPerceivableForAll } = DOM;
 const { hasName, hasNamespace } = Element;
 const { and } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r46",
@@ -25,29 +26,25 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       *applicability() {
-        const tables = document
-          .elementDescendants()
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasName("table"),
-              isIncludedInTheAccessibilityTree(device)
-            )
-          );
+        const tables = getElementDescendants(document).filter(
+          and(
+            hasNamespace(Namespace.HTML),
+            hasName("table"),
+            isIncludedInTheAccessibilityTree(device)
+          )
+        );
 
         for (const table of tables) {
           const model = Table.from(table);
 
-          const headers = table
-            .elementDescendants()
-            .filter(
-              and(
-                hasNamespace(Namespace.HTML),
-                hasName("th"),
-                hasRole(device, "rowheader", "columnheader"),
-                isPerceivableForAll(device)
-              )
-            );
+          const headers = getElementDescendants(table).filter(
+            and(
+              hasNamespace(Namespace.HTML),
+              hasName("th"),
+              hasRole(device, "rowheader", "columnheader"),
+              isPerceivableForAll(device)
+            )
+          );
 
           for (const header of headers) {
             for (const cell of model.cells.find((cell) =>

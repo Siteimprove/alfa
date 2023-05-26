@@ -1,7 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -21,6 +21,7 @@ const { isText } = Text;
 const { hasDescendant } = Node;
 const { and, test, not } = Predicate;
 const { isFocusable, isRendered } = Style;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r14",
@@ -29,7 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document.elementDescendants(Node.fullTree).filter(
+        return getElementDescendants(document, Node.fullTree).filter(
           and(
             hasNamespace(Namespace.HTML, Namespace.SVG),
             hasAttribute(

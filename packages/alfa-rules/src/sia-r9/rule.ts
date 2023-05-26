@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Criterion, Technique } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
@@ -13,6 +13,7 @@ import { RefreshDelay as Outcomes } from "../common/outcome/refresh-delay";
 
 const { hasAttribute, hasName, hasNamespace } = Element;
 const { and } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r9",
@@ -30,8 +31,7 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       applicability() {
-        return document
-          .elementDescendants()
+        return getElementDescendants(document)
           .find(
             and(
               hasNamespace(Namespace.HTML),

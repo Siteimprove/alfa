@@ -1,7 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
-import { Attribute, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Attribute, Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -22,6 +22,7 @@ const { hasAttribute, hasInputType, hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;
 const { isTabbable } = Style;
 const { either, end, option, right, parseIf } = Parser;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r10",
@@ -31,8 +32,7 @@ export default Rule.Atomic.of<Page, Attribute>({
     return {
       applicability() {
         return (
-          document
-            .elementDescendants(dom.Node.fullTree)
+          getElementDescendants(document, dom.Node.fullTree)
             .filter(
               and(
                 hasNamespace(Namespace.HTML),

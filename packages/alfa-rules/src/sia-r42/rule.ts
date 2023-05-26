@@ -1,7 +1,7 @@
 import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -17,6 +17,7 @@ import { Scope } from "../tags";
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { isElement, hasNamespace } = Element;
 const { and } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r42",
@@ -25,7 +26,7 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document.elementDescendants(Node.fullTree).filter(
+        return getElementDescendants(document, Node.fullTree).filter(
           and(
             hasNamespace(Namespace.HTML, Namespace.SVG),
             isIncludedInTheAccessibilityTree(device),

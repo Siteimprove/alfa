@@ -2,7 +2,7 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Role } from "@siteimprove/alfa-aria";
 import { Array } from "@siteimprove/alfa-array";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -21,6 +21,7 @@ const { hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, property } = Predicate;
 const { isFocusable } = Style;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r16",
@@ -33,8 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.composedNested)
+        return getElementDescendants(document, Node.composedNested)
           .filter(
             and(hasNamespace(Namespace.HTML, Namespace.SVG), hasNonDefaultRole)
           )

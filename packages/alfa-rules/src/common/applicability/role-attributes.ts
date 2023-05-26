@@ -7,6 +7,7 @@ import {
   Element,
   Namespace,
   Node,
+  Query,
 } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -14,6 +15,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 const { isProgrammaticallyHidden } = DOM;
 const { hasAttribute, hasNamespace } = Element;
 const { and, not } = Predicate;
+const { getElementDescendants } = Query;
 
 const cache = Cache.empty<
   Document,
@@ -28,8 +30,7 @@ export function roleAttributes(
   device: Device
 ): Sequence<Attribute<"role">> {
   return cache.get(document, Cache.empty).get(device, () =>
-    document
-      .elementDescendants(Node.fullTree)
+    getElementDescendants(document, Node.fullTree)
       .filter(
         and(
           hasNamespace(Namespace.HTML, Namespace.SVG),

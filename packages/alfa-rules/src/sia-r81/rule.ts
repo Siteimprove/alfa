@@ -1,7 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -24,8 +24,9 @@ import { Scope } from "../tags";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;
-const { isElement, hasName, hasNamespace, hasId } = Element;
-const { and, equals } = Predicate;
+const { isElement, hasName, hasNamespace } = Element;
+const { and } = Predicate;
+const { getElementDescendants, getElementIdMap } = Query;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r81",
@@ -37,8 +38,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
         // Links with identical names may appear in different contexts.
         // This creates two separate targets and we must take care of not
         // colliding them.
-        const map = document
-          .elementDescendants(dom.Node.fullTree)
+        const map = getElementDescendants(document, dom.Node.fullTree)
           .filter(
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
@@ -142,11 +142,11 @@ function linkContext(element: Element, device: Device): Set<dom.Node> {
     context = context.add(cell);
   }
 
+  const idMap = getElementIdMap(element.root());
   for (const describedby of element.attribute("aria-describedby")) {
-    for (const reference of element
-      .root()
-      .elementDescendants()
-      .filter(hasId(equals(...describedby.tokens())))) {
+    for (const reference of describedby
+      .tokens()
+      .collect((id) => idMap.get(id))) {
       context = context.add(reference);
     }
   }

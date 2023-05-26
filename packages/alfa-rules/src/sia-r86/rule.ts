@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -9,6 +9,7 @@ import { expectation } from "../common/act/expectation";
 import { Scope } from "../tags";
 
 const { isIncludedInTheAccessibilityTree, isMarkedDecorative } = DOM;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r86",
@@ -16,9 +17,9 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
-          .filter(isMarkedDecorative);
+        return getElementDescendants(document, Node.fullTree).filter(
+          isMarkedDecorative
+        );
       },
 
       expectations(target) {

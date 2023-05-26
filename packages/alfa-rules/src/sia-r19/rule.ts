@@ -1,5 +1,4 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import {
   Attribute,
@@ -12,7 +11,6 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
@@ -25,6 +23,7 @@ import { Scope } from "../tags";
 const { hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not, equals, property } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r19",
@@ -32,8 +31,7 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.composedNested)
+        return getElementDescendants(document, Node.composedNested)
           .filter(hasNamespace(Namespace.HTML, Namespace.SVG))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(

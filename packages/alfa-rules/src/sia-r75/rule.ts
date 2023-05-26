@@ -4,6 +4,7 @@ import {
   Element,
   Namespace,
   Node,
+  Query,
   Text,
 } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
@@ -21,6 +22,7 @@ const { isText } = Text;
 const { and, or, not } = Predicate;
 const { hasCascadedStyle, hasComputedStyle, hasSpecifiedStyle, isVisible } =
   Style;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r75",
@@ -28,7 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document.elementDescendants(Node.fullTree).filter(
+        return getElementDescendants(document, Node.fullTree).filter(
           and(
             hasNamespace(Namespace.HTML),
             not(hasName("sup", "sub")),

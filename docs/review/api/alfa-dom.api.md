@@ -214,8 +214,6 @@ export class Document extends Node<"document"> {
     // @internal (undocumented)
     _attachParent(): boolean;
     // (undocumented)
-    elementDescendants(options?: Node.Traversal): Sequence<Element>;
-    // (undocumented)
     static empty(): Document;
     // (undocumented)
     get frame(): Option<Element>;
@@ -792,8 +790,6 @@ export namespace NamespaceRule {
 // @public (undocumented)
 export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
     protected constructor(children: Array<Node>, type: T);
-    // (undocumented)
-    elementDescendants(options?: Node.Traversal): Sequence<Element>;
     // (undocumented)
     equals(value: Node): boolean;
     // (undocumented)

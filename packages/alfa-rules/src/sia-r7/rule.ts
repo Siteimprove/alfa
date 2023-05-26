@@ -5,6 +5,7 @@ import {
   Element,
   Namespace,
   Node,
+  Query,
   Text,
 } from "@siteimprove/alfa-dom";
 import { Language } from "@siteimprove/alfa-iana";
@@ -30,6 +31,7 @@ const { not, or } = Predicate;
 const { and, test } = Refinement;
 const { isVisible } = Style;
 const { isText } = Text;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r7",
@@ -72,8 +74,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           }
         }
 
-        return document
-          .elementDescendants(Node.fullTree)
+        return getElementDescendants(document, Node.fullTree)
           .filter(and(hasNamespace(Namespace.HTML), hasName("body")))
           .flatMap((element) => Sequence.from(visit(element, None)))
           .distinct();

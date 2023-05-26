@@ -1,7 +1,7 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
@@ -14,6 +14,7 @@ import { Scope } from "../tags";
 const { hasRole } = DOM;
 const { and, test } = Predicate;
 const { isVisible, hasComputedStyle } = Style;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r72",
@@ -21,9 +22,9 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
-          .filter(and(hasRole(device, "paragraph"), isVisible(device)));
+        return getElementDescendants(document, Node.fullTree).filter(
+          and(hasRole(device, "paragraph"), isVisible(device))
+        );
       },
 
       expectations(target) {

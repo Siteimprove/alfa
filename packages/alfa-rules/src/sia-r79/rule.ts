@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Node, Text } from "@siteimprove/alfa-dom";
+import { Element, Node, Query, Text } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -15,6 +15,7 @@ const { hasAttribute, hasName, isElement } = Element;
 const { and } = Refinement;
 const { isRendered, isVisible } = Style;
 const { isText } = Text;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r79",
@@ -22,9 +23,9 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
-          .filter(and(hasName("pre"), isRendered(device)));
+        return getElementDescendants(document, Node.fullTree).filter(
+          and(hasName("pre"), isRendered(device))
+        );
       },
 
       expectations(target) {

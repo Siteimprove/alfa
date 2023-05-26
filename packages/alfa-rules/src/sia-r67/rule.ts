@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
-import { Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -14,6 +14,7 @@ import { Scope } from "../tags";
 const { isMarkedDecorative } = DOM;
 const { hasName, hasNamespace } = Element;
 const { and, or, not } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r67",
@@ -22,17 +23,15 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(dom.Node.fullTree)
-          .filter(
-            and(
-              or(
-                and(hasNamespace(Namespace.HTML), hasName("img")),
-                and(hasNamespace(Namespace.SVG), hasName("svg"))
-              ),
-              isMarkedDecorative
-            )
-          );
+        return getElementDescendants(document, dom.Node.fullTree).filter(
+          and(
+            or(
+              and(hasNamespace(Namespace.HTML), hasName("img")),
+              and(hasNamespace(Namespace.SVG), hasName("svg"))
+            ),
+            isMarkedDecorative
+          )
+        );
       },
 
       expectations(target) {
