@@ -14,6 +14,7 @@ import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Media } from '@siteimprove/alfa-media';
 import { Option } from '@siteimprove/alfa-option';
 import { Predicate } from '@siteimprove/alfa-predicate';
+import { Rectangle } from '@siteimprove/alfa-rectangle';
 import { Refinement } from '@siteimprove/alfa-refinement';
 import * as sarif from '@siteimprove/alfa-sarif';
 import { Sequence } from '@siteimprove/alfa-sequence';
@@ -277,13 +278,15 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>): Element<N>;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, rectangle?: Option<Rectangle>): Element<N>;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
     get prefix(): Option<string>;
     // (undocumented)
     get qualifiedName(): string;
+    // (undocumented)
+    get rectangle(): Option<Rectangle>;
     // (undocumented)
     get shadow(): Option<Shadow>;
     // (undocumented)
