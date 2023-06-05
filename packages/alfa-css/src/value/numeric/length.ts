@@ -116,9 +116,10 @@ export class Length<
   }
 
   public hash(hash: Hash): void {
-    hash.writeUnknown(this._value);
-    hash.writeUnknown(this._unit);
-    hash.writeUnknown(this._math);
+    hash
+      .writeUnknown(this._value)
+      .writeUnknown(this._unit)
+      .writeUnknown(this._math);
   }
 
   public toJSON(
