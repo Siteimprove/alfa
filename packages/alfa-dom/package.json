@@ -49,6 +49,7 @@
     "@siteimprove/alfa-media": "workspace:^0.63.3",
     "@siteimprove/alfa-option": "workspace:^0.63.3",
     "@siteimprove/alfa-predicate": "workspace:^0.63.3",
+    "@siteimprove/alfa-rectangle": "workspace:^0.63.3",
     "@siteimprove/alfa-refinement": "workspace:^0.63.3",
     "@siteimprove/alfa-sarif": "workspace:^0.63.3",
     "@siteimprove/alfa-sequence": "workspace:^0.63.3",
