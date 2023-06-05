@@ -220,7 +220,7 @@ export namespace Length {
 
   export type JSON = Calculated.JSON | Fixed2.JSON;
 
-  export type Mixed<U extends Unit.Length = Unit.Length> =
+  export type Length<U extends Unit.Length = Unit.Length> =
     | Calculated
     | Fixed2<U>;
 
@@ -231,11 +231,11 @@ export namespace Length {
   // a relative length.
   export type Resolver = Mapper<Fixed2<Unit.Length.Relative>, Fixed2<"px">>;
 
-  export function isLength(value: unknown): value is Mixed {
+  export function isLength(value: unknown): value is Length {
     return value instanceof Calculated || value instanceof Fixed2;
   }
 
-  export const parse: Parser<Slice<Token>, Mixed, string> = either(
+  export const parse: Parser<Slice<Token>, Length, string> = either(
     map<Slice<Token>, BaseLength, Fixed2, string>(BaseLength.parse, Fixed2.of),
     map(Math.parseLength, Calculated.of)
   );
@@ -257,7 +257,7 @@ export namespace Length {
   export function of<U extends Unit.Length>(
     value: number | BaseLength<U> | Math<"length">,
     unit?: U
-  ): Mixed<U> {
+  ): Length<U> {
     if (typeof value === "number") {
       // The overloads ensure that unit is not undefined
       return Fixed2.of(value, unit!);
