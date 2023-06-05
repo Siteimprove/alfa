@@ -1,28 +1,13 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Result } from "@siteimprove/alfa-result";
-
 import { Length, Lexer } from "../../../src";
 
-function parse(input: string, calc?: true): Result<Length.Calculated, string>;
-function parse(input: string, calc: false): Result<Length.Fixed, string>;
-function parse(
-  input: string,
-  calc: boolean = true
-): Result<Length.Mixed, string> {
-  return Length.parse(Lexer.lex(input)).map(([, length]) => {
-    if (
-      (length.hasCalculation() && calc) ||
-      (!length.hasCalculation() && !calc)
-    ) {
-      return length;
-    }
-    throw new Error("Incorrect calculation hint");
-  });
+function parse(input: string) {
+  return Length.parse(Lexer.lex(input)).map(([, length]) => length);
 }
 
 test("parse() accepts length", (t) => {
-  t.deepEqual(parse("2em", false).getUnsafe().toJSON(), {
+  t.deepEqual(parse("2em").getUnsafe().toJSON(), {
     type: "length",
     value: 2,
     unit: "em",

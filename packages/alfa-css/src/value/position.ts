@@ -70,7 +70,7 @@ export class Position<
       horizontal: Length.isLength(this._horizontal)
         ? this._horizontal.toJSON()
         : this._horizontal.toJSON(),
-      vertical: Position.Component.toJSON(this._vertical),
+      vertical: this._vertical.toJSON(),
     };
   }
 
@@ -103,22 +103,6 @@ export namespace Position {
   type Offset<U extends Unit.Length = Unit.Length> =
     | Length.Fixed<U>
     | Percentage;
-
-  /**
-   * TODO remove this namespace
-   * The `this` constraint in Length is throwing TypeScript off guard and causing
-   * build errors. This is likely a TS problem that will hopefully be solved.
-   *
-   * {@link https://github.com/microsoft/TypeScript/issues/54407}
-   * {@link https://github.com/Siteimprove/alfa/issues/1426}
-   */
-  namespace Offset {
-    export function toJSON<U extends Unit.Length>(
-      offset: Offset<U>
-    ): Length.Fixed.JSON | Percentage.JSON {
-      return Length.isLength(offset) ? offset.toJSON() : offset.toJSON();
-    }
-  }
 
   export class Side<
     S extends Vertical | Horizontal = Vertical | Horizontal,
@@ -174,7 +158,7 @@ export namespace Position {
       return {
         ...super.toJSON(),
         side: this._side.toJSON(),
-        offset: this._offset.map((offset) => Offset.toJSON(offset)).getOr(null),
+        offset: this._offset.map((offset) => offset.toJSON()).getOr(null),
       };
     }
 
@@ -203,25 +187,6 @@ export namespace Position {
       | Length.Fixed.JSON
       | Percentage.JSON
       | Side.JSON;
-
-    /**
-     * TODO remove this function
-     * The `this` constraint in Length is throwing TypeScript off guard and causing
-     * build errors. This is likely a TS problem that will hopefully be solved.
-     *
-     * {@link https://github.com/microsoft/TypeScript/issues/54407}
-     * {@link https://github.com/Siteimprove/alfa/issues/1426}
-     *
-     * @internal
-     */
-    export function toJSON<
-      S extends Horizontal | Vertical,
-      U extends Unit.Length
-    >(component: Component<S, U>): JSON {
-      return Length.isLength(component)
-        ? component.toJSON()
-        : component.toJSON();
-    }
   }
 
   const parseValue = either(Length.parseBase, Percentage.parse);

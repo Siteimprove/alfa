@@ -59,7 +59,7 @@ export class Radius<
   public toJSON(): Radius.JSON {
     return {
       ...super.toJSON(),
-      value: Radius.toJSON(this.value),
+      value: this._value.toJSON(),
     };
   }
 
@@ -74,22 +74,6 @@ export class Radius<
 export namespace Radius {
   export interface JSON extends BasicShape.JSON<"radius"> {
     value: Length.Fixed.JSON | Percentage.JSON | Keyword.JSON;
-  }
-
-  /**
-   * TODO remove this function
-   * The `this` constraint in Length is throwing TypeScript off guard and causing
-   * build errors. This is likely a TS problem that will hopefully be solved.
-   *
-   * {@link https://github.com/microsoft/TypeScript/issues/54407}
-   * {@link https://github.com/Siteimprove/alfa/issues/1426}
-   *
-   * @internal
-   */
-  export function toJSON(
-    radius: Length.Fixed | Percentage | Keyword
-  ): Length.Fixed.JSON | Percentage.JSON | Keyword.JSON {
-    return Length.isLength(radius) ? radius.toJSON() : radius.toJSON();
   }
 
   export type Side = Side.Closest | Side.Farthest;

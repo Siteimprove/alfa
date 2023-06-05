@@ -83,7 +83,7 @@ export namespace Gradient {
         type: "stop",
         color: this._color.toJSON(),
         position: this._position
-          .map((position) => Stop.toJSON(position))
+          .map((position) => position.toJSON())
           .getOr(null),
       };
     }
@@ -101,22 +101,6 @@ export namespace Gradient {
       type: "stop";
       color: Color.JSON;
       position: Length.Fixed.JSON | Percentage.JSON | null;
-    }
-
-    /**
-     * TODO remove this function
-     * The `this` constraint in Length is throwing TypeScript off guard and causing
-     * build errors. This is likely a TS problem that will hopefully be solved.
-     *
-     * {@link https://github.com/microsoft/TypeScript/issues/54407}
-     * {@link https://github.com/Siteimprove/alfa/issues/1426}
-     *
-     * @internal
-     */
-    export function toJSON(
-      position: Length.Fixed | Percentage
-    ): Length.Fixed.JSON | Percentage.JSON {
-      return Length.isLength(position) ? position.toJSON() : position.toJSON();
     }
   }
 
@@ -185,7 +169,7 @@ export namespace Gradient {
     public toJSON(): Hint.JSON {
       return {
         type: "hint",
-        position: Stop.toJSON(this._position),
+        position: this._position.toJSON(),
       };
     }
 

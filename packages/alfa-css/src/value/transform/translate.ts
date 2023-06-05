@@ -70,8 +70,8 @@ export class Translate<
   public toJSON(): Translate.JSON {
     return {
       ...super.toJSON(),
-      x: Translate.toJSON(this._x),
-      y: Translate.toJSON(this._y),
+      x: this._x.toJSON(),
+      y: this._y.toJSON(),
       z: this._z.toJSON(),
     };
   }
@@ -95,22 +95,6 @@ export namespace Translate {
     x: Length.Fixed.JSON | Percentage.JSON;
     y: Length.Fixed.JSON | Percentage.JSON;
     z: Length.Fixed.JSON;
-  }
-
-  /**
-   * TODO remove this function
-   * The `this` constraint in Length is throwing TypeScript off guard and causing
-   * build errors. This is likely a TS problem that will hopefully be solved.
-   *
-   * {@link https://github.com/microsoft/TypeScript/issues/54407}
-   * {@link https://github.com/Siteimprove/alfa/issues/1426}
-   *
-   * @internal
-   */
-  export function toJSON(
-    dimension: Length.Fixed | Percentage
-  ): Length.Fixed.JSON | Percentage.JSON {
-    return Length.isLength(dimension) ? dimension.toJSON() : dimension.toJSON();
   }
 
   export function isTranslate<

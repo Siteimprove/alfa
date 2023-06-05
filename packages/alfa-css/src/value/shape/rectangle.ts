@@ -84,10 +84,10 @@ export class Rectangle<
   public toJSON(): Rectangle.JSON {
     return {
       ...super.toJSON(),
-      top: Rectangle.toJSON(this._top),
-      right: Rectangle.toJSON(this._right),
-      bottom: Rectangle.toJSON(this._bottom),
-      left: Rectangle.toJSON(this._left),
+      top: this._top.toJSON(),
+      right: this._right.toJSON(),
+      bottom: this._bottom.toJSON(),
+      left: this._left.toJSON(),
     };
   }
 
@@ -108,22 +108,6 @@ export namespace Rectangle {
     right: Length.Fixed.JSON | Keyword.JSON;
     bottom: Length.Fixed.JSON | Keyword.JSON;
     left: Length.Fixed.JSON | Keyword.JSON;
-  }
-
-  /**
-   * TODO remove this function
-   * The `this` constraint in Length is throwing TypeScript off guard and causing
-   * build errors. This is likely a TS problem that will hopefully be solved.
-   *
-   * {@link https://github.com/microsoft/TypeScript/issues/54407}
-   * {@link https://github.com/Siteimprove/alfa/issues/1426}
-   *
-   * @internal
-   */
-  export function toJSON<O extends Length.Fixed | Auto>(
-    offset: O
-  ): Length.Fixed.JSON | Keyword.JSON {
-    return Length.isLength(offset) ? offset.toJSON() : offset.toJSON();
   }
 
   export function isRectangle(value: unknown): value is Rectangle {
