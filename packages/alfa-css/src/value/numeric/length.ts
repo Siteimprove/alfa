@@ -4,7 +4,8 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Length as BaseLength, Math } from "../../calculation";
+import { Math } from "../../calculation";
+import { Length as BaseLength } from "../../calculation/numeric/length";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
 import { Value } from "../../value";
@@ -122,15 +123,25 @@ export class Length<
       .writeUnknown(this._math);
   }
 
-  public toJSON(
-    this: Length.Mixed<U>
-  ): Length.Fixed.JSON<U> | Length.Calculated.JSON {
+  public toJSON(this: Length.Fixed<U>): Length.Fixed.JSON<U>;
+  public toJSON(this: Length.Calculated): Length.Calculated.JSON;
+  // public toJSON(
+  //   this: Length.Mixed<U>
+  // ): Length.Fixed.JSON<U> | Length.Calculated.JSON;
+  public toJSON(): Length.Fixed.JSON<U> | Length.Calculated.JSON;
+
+  public toJSON(): // this: Length.Mixed<U>
+  Length.Fixed.JSON<U> | Length.Calculated.JSON {
     const base = super.toJSON();
-    if (this.hasCalculation()) {
-      return { ...base, math: this._math.toJSON() };
+    if (Length.isLength(this)) {
+      if (this.hasCalculation()) {
+        return { ...base, math: this._math.toJSON() };
+      }
+
+      return { ...base, value: this._value, unit: this._unit };
     }
 
-    return { ...base, value: this._value, unit: this._unit };
+    throw new Error("`this` should always be a Length.");
   }
 
   public toString(this: Length.Mixed<U>): string {
@@ -192,6 +203,14 @@ export namespace Length {
     map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, Length.of),
     map(Math.parseLength, Length.of)
   );
+
+  // TODO: temporary helper needed during migration to calculated values.
+  export const parseBase: Parser<Slice<Token>, Fixed, string> = map<
+    Slice<Token>,
+    BaseLength,
+    Fixed,
+    string
+  >(BaseLength.parse, Length.of);
 
   export function isZero<U extends Unit.Length = Unit.Length>(
     length: Fixed<U>

@@ -4,7 +4,10 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 
 import { Unit } from "../../unit";
-import { Length, Number, Numeric, Percentage } from "../numeric";
+// TODO: the imports will need to be re-shortened once migration is done and
+// numeric re-exports them for internal use.
+import { Number, Numeric, Percentage } from "../numeric";
+import { Length } from "../numeric/index-new";
 
 import { Kind } from "./kind";
 

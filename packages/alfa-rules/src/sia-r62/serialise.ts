@@ -38,6 +38,8 @@ export namespace Serialise {
         if (right === top) {
           right = "";
           // TODO: temporary workaround to help TS during migration from non-calculated to calculated properties
+          // {@link https://github.com/microsoft/TypeScript/issues/54407}
+          // {@link https://github.com/Siteimprove/alfa/issues/1426}
           const initial = Longhands.get(`border-top-${property}`).initial;
           const str = Length.isLength(initial)
             ? initial.toString()
@@ -57,6 +59,8 @@ export namespace Serialise {
     const property = style.computed(name).toString();
 
     // TODO: temporary workaround to help TS during migration from non-calculated to calculated properties
+    // {@link https://github.com/microsoft/TypeScript/issues/54407}
+    // {@link https://github.com/Siteimprove/alfa/issues/1426}
     const initial = Longhands.get(name).initial;
     const str = Length.isLength(initial)
       ? initial.toString()
@@ -163,6 +167,8 @@ export namespace Serialise {
       const value = `${array?.[n] ?? array[0]}`;
 
       // TODO: temporary workaround to help TS during migration from non-calculated to calculated properties
+      // {@link https://github.com/microsoft/TypeScript/issues/54407}
+      // {@link https://github.com/Siteimprove/alfa/issues/1426}
       if (property === undefined) {
         return value;
       }

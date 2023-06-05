@@ -36,6 +36,8 @@ export function isWideEnough<N extends Name>(
   switch (value.type) {
     case "length":
       // TODO: This is still mixing new Length (letter-spacing) and old ones :-(
+      // {@link https://github.com/microsoft/TypeScript/issues/54407}
+      // {@link https://github.com/Siteimprove/alfa/issues/1426}
       used = Length.isLength(value)
         ? value
         : Length.of(value.value, value.unit);

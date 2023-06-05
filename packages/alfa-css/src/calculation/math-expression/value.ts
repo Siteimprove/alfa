@@ -3,7 +3,10 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Some } from "@siteimprove/alfa-option/src/some";
 import { Selective } from "@siteimprove/alfa-selective";
 
-import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
+// TODO: resimplify
+import { Angle, Number, Numeric, Percentage } from "../numeric";
+import { Length } from "../numeric/index-new";
+
 import { Unit } from "../../unit";
 
 import { Expression } from "./expression";
