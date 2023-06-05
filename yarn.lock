@@ -1253,6 +1253,7 @@ __metadata:
   resolution: "@siteimprove/alfa-rectangle@workspace:packages/alfa-rectangle"
   dependencies:
     "@siteimprove/alfa-equatable": "workspace:^0.63.3"
+    "@siteimprove/alfa-fnv": "workspace:^0.63.3"
     "@siteimprove/alfa-hash": "workspace:^0.63.3"
     "@siteimprove/alfa-json": "workspace:^0.63.3"
     "@siteimprove/alfa-test": "workspace:^0.63.3"
