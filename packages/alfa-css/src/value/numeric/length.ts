@@ -7,176 +7,76 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Math } from "../../calculation";
 import { Length as BaseLength } from "../../calculation/numeric/length";
 import { Token } from "../../syntax";
-import { Unit } from "../../unit";
+import { Converter, Unit } from "../../unit";
 import { Value } from "../../value";
 
 const { either, map } = Parser;
 
-type Calc<CALC extends boolean> = CALC extends true
-  ? Math<"length">
-  : undefined;
-type NotCalc<CALC extends boolean, T> = CALC extends true ? undefined : T;
-
 /**
  * @public
  */
-export class Length<
+export interface Length<
   U extends Unit.Length = Unit.Length,
   CALC extends boolean = boolean
 > extends Value<"length", CALC> {
-  public static of<U extends Unit.Length>(
-    value: number,
-    unit: U
-  ): Length.Fixed<U>;
-
-  public static of<U extends Unit.Length>(
-    value: BaseLength<U>
-  ): Length.Fixed<U>;
-
-  public static of(value: Math<"length">): Length.Calculated;
-
-  public static of<U extends Unit.Length>(
-    value: number | BaseLength<U> | Math<"length">,
-    unit?: U
-  ): Length.Mixed<U> {
-    if (typeof value === "number") {
-      // The overloads ensure that unit is not undefined
-      return new Length(false, value, unit!, undefined);
-    }
-
-    if (BaseLength.isLength(value)) {
-      return new Length(false, value.value, value.unit, undefined);
-    }
-
-    return new Length<U, true>(true, undefined, undefined, value);
-  }
-
-  private readonly _value: NotCalc<CALC, number>;
-  private readonly _unit: NotCalc<CALC, U>;
-  private readonly _math: Calc<CALC>;
-
-  private constructor(
-    hasCalculation: CALC,
-    value: NotCalc<CALC, number>,
-    unit: NotCalc<CALC, U>,
-    math: Calc<CALC>
-  ) {
-    super("length", hasCalculation);
-    this._value = value;
-    this._unit = unit;
-    this._math = math;
-  }
-
-  public get value(): NotCalc<CALC, number> {
-    return this._value;
-  }
-
-  public get unit(): NotCalc<CALC, U> {
-    return this._unit;
-  }
-
-  public get math(): Calc<CALC> {
-    return this._math;
-  }
-
-  public hasCalculation(this: Length.Mixed<U>): this is Length.Calculated {
-    return super.hasCalculation();
-  }
-
-  /**
-   * Resolve a Length into an absolute Length in pixels.
-   */
-  public resolve(resolver: Length.Resolver): Length.Fixed<"px"> {
-    // The type constraint on CALC is not carried on the actual value
-    // hasCalculation, so we need to assert types instead.
-    if (this._hasCalculation) {
-      return Length.of(
-        this._math!.resolve2({ length: resolver })
-          // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not resolve ${this._math!} as a length`)
-      );
-    } else {
-      if (Unit.isRelativeLength(this._unit!)) {
-        return Length.of(resolver(BaseLength.of(this._value!, this._unit!)));
-      } else {
-        return Length.of(
-          BaseLength.of(this._value!, this._unit!).withUnit("px")
-        );
-      }
-    }
-  }
-
-  public equals(value: unknown): value is this {
-    return (
-      value instanceof Length &&
-      value._hasCalculation === this._hasCalculation &&
-      Equatable.equals(value._value, this._value) &&
-      Equatable.equals(value._unit, this._unit) &&
-      Equatable.equals(value._math, this._math)
-    );
-  }
-
-  public hash(hash: Hash): void {
-    hash
-      .writeUnknown(this._value)
-      .writeUnknown(this._unit)
-      .writeUnknown(this._math);
-  }
-
-  public toJSON(this: Length.Fixed<U>): Length.Fixed.JSON<U>;
-  public toJSON(this: Length.Calculated): Length.Calculated.JSON;
-  // public toJSON(
-  //   this: Length.Mixed<U>
-  // ): Length.Fixed.JSON<U> | Length.Calculated.JSON;
-  public toJSON(): Length.Fixed.JSON<U> | Length.Calculated.JSON;
-
-  public toJSON(): // this: Length.Mixed<U>
-  Length.Fixed.JSON<U> | Length.Calculated.JSON {
-    const base = super.toJSON();
-    if (Length.isLength(this)) {
-      if (this.hasCalculation()) {
-        return { ...base, math: this._math.toJSON() };
-      }
-
-      return { ...base, value: this._value, unit: this._unit };
-    }
-
-    throw new Error("`this` should always be a Length.");
-  }
-
-  public toString(this: Length.Mixed<U>): string {
-    if (this.hasCalculation()) {
-      return this._math.toString();
-    }
-
-    return BaseLength.of(this._value, this._unit).toString();
-  }
+  hasCalculation(): this is Length.Calculated;
+  resolve(resolver: Length.Resolver): Length.Fixed<"px">;
 }
 
 /**
  * @public
  */
 export namespace Length {
-  /**
-   * Convenience type for Length that contain calculation
-   */
-  export type Calculated = Length<Unit.Length, true>;
-  /**
-   * Convenience type for Length that do not  contain calculation
-   */
-  export type Fixed<U extends Unit.Length = Unit.Length> = Length<U, false>;
-  /**
-   * Convenience type for Length that may or not contain calculation
-   */
-  export type Mixed<U extends Unit.Length = Unit.Length> =
-    | Calculated
-    | Fixed<U>;
+  export class Calculated
+    extends Value<"length", true>
+    implements Length<Unit.Length, true>
+  {
+    public static of(value: Math<"length">): Calculated {
+      return new Calculated(value);
+    }
 
-  export namespace Fixed {
-    export interface JSON<U extends Unit.Length = Unit.Length>
-      extends Value.JSON<"length"> {
-      value: number;
-      unit: U;
+    private readonly _math: Math<"length">;
+
+    private constructor(math: Math<"length">) {
+      super("length", true);
+      this._math = math;
+    }
+
+    public get math(): Math<"length"> {
+      return this._math;
+    }
+
+    public hasCalculation(): this is Calculated {
+      return true;
+    }
+
+    public resolve(resolver: Resolver): Fixed<"px"> {
+      return Fixed.of(
+        this._math!.resolve2({
+          length: (length) => {
+            const resolved = resolver(Fixed.of(length));
+            return BaseLength.of(resolved.value, resolved.unit);
+          },
+        })
+          // Since the expression has been correctly typed, it should always resolve.
+          .getUnsafe(`Could not resolve ${this._math!} as a length`)
+      );
+    }
+
+    public equals(value: unknown): value is this {
+      return value instanceof Calculated && value._math.equals(this._math);
+    }
+
+    public hash(hash: Hash): void {
+      this._math.hash(hash);
+    }
+
+    public toJSON(): Calculated.JSON {
+      return { ...super.toJSON(), math: this._math.toJSON() };
+    }
+
+    public toString(): string {
+      return this._math.toString();
     }
   }
 
@@ -186,22 +86,119 @@ export namespace Length {
     }
   }
 
-  // TODO: we'll want to totally hide BaseLength, hence this resolver should
-  // work on Length instead. This will require a wrapper in `resolve` since
-  // math expressions can only work with BaseLength. We can't do that right now
-  // because the resolver in `alfa-style` is still only aware of BaseLength…
+  export class Fixed<U extends Unit.Length = Unit.Length> extends Value<
+    "length",
+    false
+  > {
+    public static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
+
+    public static of<U extends Unit.Length>(value: BaseLength<U>): Fixed<U>;
+
+    public static of<U extends Unit.Length>(
+      value: number | BaseLength<U>,
+      unit?: U
+    ): Fixed<U> {
+      if (typeof value === "number") {
+        // The overloads ensure that unit is not undefined
+        return new Fixed(value, unit!);
+      }
+
+      return new Fixed(value.value, value.unit);
+    }
+
+    private readonly _value: number;
+    private readonly _unit: U;
+
+    private constructor(value: number, unit: U) {
+      super("length", false);
+      this._value = value;
+      this._unit = unit;
+    }
+
+    public get value(): number {
+      return this._value;
+    }
+
+    public get unit(): U {
+      return this._unit;
+    }
+
+    public hasCalculation(): this is Calculated {
+      return false;
+    }
+
+    public hasUnit<U extends Unit.Length>(unit: U): this is Fixed<U> {
+      return (this._unit as Unit.Length) === unit;
+    }
+
+    public withUnit<U extends Unit.Length>(unit: U): Fixed<U> {
+      if (this.hasUnit(unit)) {
+        return this;
+      }
+
+      if (Unit.isAbsoluteLength(unit) && Unit.isAbsoluteLength(this._unit)) {
+        return Fixed.of(Converter.length(this._value, this._unit, unit), unit);
+      }
+
+      throw new Error(`Cannot convert ${this._unit} to ${unit}`);
+    }
+
+    public isRelative(): this is Fixed<Unit.Length.Relative> {
+      return Unit.isRelativeLength(this._unit);
+    }
+
+    /**
+     * Resolve a Length into an absolute Length in pixels.
+     */
+    public resolve(resolver: Resolver): Fixed<"px"> {
+      return this.isRelative() ? resolver(this) : this.withUnit("px");
+    }
+
+    public equals(value: unknown): value is this {
+      return (
+        value instanceof Fixed &&
+        Equatable.equals(value._value, this._value) &&
+        Equatable.equals(value._unit, this._unit)
+      );
+    }
+
+    public hash(hash: Hash): void {
+      hash.writeNumber(this._value).writeString(this._unit);
+    }
+
+    public toJSON(): Fixed.JSON<U> {
+      return { ...super.toJSON(), value: this._value, unit: this._unit };
+    }
+
+    public toString(): string {
+      return BaseLength.of(this._value, this._unit).toString();
+    }
+  }
+
+  export namespace Fixed {
+    export interface JSON<U extends Unit.Length = Unit.Length>
+      extends Value.JSON<"length"> {
+      value: number;
+      unit: U;
+    }
+  }
+
+  export type Mixed<U extends Unit.Length = Unit.Length> =
+    | Calculated
+    | Fixed<U>;
+
   export type Resolver = Mapper<
-    BaseLength<Unit.Length.Relative>,
-    BaseLength<"px">
+    Length<Unit.Length.Relative>,
+    Length.Fixed<"px">
   >;
 
   export function isLength(value: unknown): value is Mixed {
-    return value instanceof Length;
+    return value instanceof Calculated || value instanceof Fixed;
   }
 
   export const parse: Parser<Slice<Token>, Mixed, string> = either(
-    map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, Length.of),
-    map(Math.parseLength, Length.of)
+    map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, Fixed.of),
+    map(Math.parseLength, Calculated.of)
   );
 
   // TODO: temporary helper needed during migration to calculated values.
@@ -210,11 +207,33 @@ export namespace Length {
     BaseLength,
     Fixed,
     string
-  >(BaseLength.parse, Length.of);
+  >(BaseLength.parse, Fixed.of);
 
   export function isZero<U extends Unit.Length = Unit.Length>(
     length: Fixed<U>
   ): boolean {
     return length.value === 0;
+  }
+
+  export function of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
+
+  export function of<U extends Unit.Length>(value: BaseLength<U>): Fixed<U>;
+
+  export function of(value: Math<"length">): Calculated;
+
+  export function of<U extends Unit.Length>(
+    value: number | BaseLength<U> | Math<"length">,
+    unit?: U
+  ): Length.Mixed<U> {
+    if (typeof value === "number") {
+      // The overloads ensure that unit is not undefined
+      return Fixed.of(value, unit!);
+    }
+
+    if (BaseLength.isLength(value)) {
+      return Fixed.of(value.value, value.unit);
+    }
+
+    return Calculated.of(value);
   }
 }

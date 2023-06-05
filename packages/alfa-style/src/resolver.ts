@@ -63,7 +63,7 @@ export namespace Resolver {
   ): Mapper<Length, Length<"px">> | Length<"px"> {
     return Length.isLength(lengthOrStyle)
       ? lengthUncurry(lengthOrStyle, style!)
-      : lengthCurry(lengthOrStyle);
+      : lengthCurry(lengthOrStyle as Style);
   }
 
   function lengthCurry(style: Style): Mapper<Length, Length<"px">> {

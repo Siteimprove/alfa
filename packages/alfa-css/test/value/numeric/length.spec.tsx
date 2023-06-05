@@ -1,9 +1,8 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length as BaseLength } from "../../../src/calculation/numeric/length";
+import { Result } from "@siteimprove/alfa-result";
 
 import { Length, Lexer } from "../../../src";
-import { Result } from "@siteimprove/alfa-result";
 
 function parse(input: string, calc?: true): Result<Length.Calculated, string>;
 function parse(input: string, calc: false): Result<Length.Fixed, string>;
@@ -73,7 +72,7 @@ test("resolve() absolutize lengths", (t) => {
   t.deepEqual(
     parse("calc(1em + 2px)")
       .getUnsafe()
-      .resolve(() => BaseLength.of(16, "px"))
+      .resolve(() => Length.of(16, "px"))
       .toJSON(),
     {
       type: "length",

@@ -8,7 +8,7 @@
  */
 
 import {
-  Length as CSSLength,
+  Length,
   Math,
   Number as CSSNumber,
   Percentage,
@@ -30,7 +30,7 @@ export namespace LengthPercentage {
    * {@link https://drafts.csswg.org/css-values/#mixed-percentages}
    */
   export type LengthPercentage =
-    | CSSLength
+    | Length
     | Percentage
     | Math<"length-percentage">;
 
@@ -38,7 +38,7 @@ export namespace LengthPercentage {
     value: unknown
   ): value is LengthPercentage {
     return (
-      CSSLength.isLength(value) ||
+      Length.isLength(value) ||
       Percentage.isPercentage(value) ||
       (Math.isCalculation(value) && value.isDimensionPercentage("length"))
     );
@@ -46,7 +46,7 @@ export namespace LengthPercentage {
 
   export const parse = either<Slice<Token>, LengthPercentage, string>(
     Percentage.parse,
-    CSSLength.parse,
+    Length.parse,
     Math.parseLengthPercentage
   );
 
@@ -58,9 +58,9 @@ export namespace LengthPercentage {
    * relative lengths (usually the element's own style, or its parent's style).
    */
   export function resolve(
-    percentageBase: CSSLength<"px">,
+    percentageBase: Length<"px">,
     lengthBase: Style
-  ): (value: LengthPercentage) => CSSLength<"px"> {
+  ): (value: LengthPercentage) => Length<"px"> {
     return (value) => {
       const percentage = Resolver.percentage(percentageBase);
       const length = Resolver.length(lengthBase);
