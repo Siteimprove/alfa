@@ -25,7 +25,6 @@ export default Rule.Composite.of<Page, Element, Question.Metadata>({
     Technique.of("G69"),
     Technique.of("G78"),
     Technique.of("G173"),
-    Technique.of("H96"),
   ],
   tags: [Scope.Component],
   composes: [R24, R25, R31],
