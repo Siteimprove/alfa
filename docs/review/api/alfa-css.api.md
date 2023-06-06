@@ -12,6 +12,7 @@ import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
+import { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
 import { Predicate } from '@siteimprove/alfa-predicate';
@@ -393,13 +394,13 @@ export type Gradient = Linear | Radial;
 // @public (undocumented)
 export namespace Gradient {
     // (undocumented)
-    export class Hint<P extends Length | Percentage = Length | Percentage> implements Equatable, Hashable, Serializable {
+    export class Hint<P extends Length.Fixed | Percentage = Length.Fixed | Percentage> implements Equatable, Hashable, Serializable {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         hash(hash: Hash): void;
         // (undocumented)
-        static of<P extends Length | Percentage>(position: P): Hint<P>;
+        static of<P extends Length.Fixed | Percentage>(position: P): Hint<P>;
         // (undocumented)
         get position(): P;
         // (undocumented)
@@ -416,7 +417,7 @@ export namespace Gradient {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
-            position: Length.JSON | Percentage.JSON;
+            position: Length.Fixed.JSON | Percentage.JSON;
             // (undocumented)
             type: "hint";
         }
@@ -435,7 +436,7 @@ export namespace Gradient {
     const // (undocumented)
     parseHint: Parser<Slice<Token>, Hint, string>;
     // (undocumented)
-    export class Stop<C extends Color = Color, P extends Length | Percentage = Length | Percentage> implements Equatable, Hashable, Serializable {
+    export class Stop<C extends Color = Color, P extends Length.Fixed | Percentage = Length.Fixed | Percentage> implements Equatable, Hashable, Serializable {
         // (undocumented)
         get color(): C;
         // (undocumented)
@@ -443,7 +444,7 @@ export namespace Gradient {
         // (undocumented)
         hash(hash: Hash): void;
         // (undocumented)
-        static of<C extends Color, P extends Length | Percentage>(color: C, position?: Option<P>): Stop<C, P>;
+        static of<C extends Color, P extends Length.Fixed | Percentage>(color: C, position?: Option<P>): Stop<C, P>;
         // (undocumented)
         get position(): Option<P>;
         // (undocumented)
@@ -462,7 +463,7 @@ export namespace Gradient {
             // (undocumented)
             color: Color.JSON;
             // (undocumented)
-            position: Length.JSON | Percentage.JSON | null;
+            position: Length.Fixed.JSON | Percentage.JSON | null;
             // (undocumented)
             type: "stop";
         }
@@ -646,9 +647,9 @@ export namespace Inset {
         offsets: Serializable.ToJSON<readonly [O, O, O, O]>;
     }
     // (undocumented)
-    export type Offset = Length | Percentage;
+    export type Offset = Length.Fixed | Percentage;
     // (undocumented)
-    export type Radius = Length | Percentage;
+    export type Radius = Length.Fixed | Percentage;
     const // (undocumented)
     parse: Parser<Slice<Token>, Inset, string>;
 }
@@ -710,44 +711,115 @@ export namespace Keyword {
 }
 
 // @public (undocumented)
-export class Length<U extends Unit.Length = Unit.Length> extends Dimension<"length", Unit.Length, U> implements Convertible<Unit.Length.Absolute> {
-    // (undocumented)
-    get canonicalUnit(): "px";
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    hasUnit<U extends Unit.Length>(unit: U): this is Length<U>;
-    // (undocumented)
-    isAbsolute(): this is Length<Unit.Length.Absolute>;
-    // (undocumented)
-    isFontRelative(): this is Length<Unit.Length.Relative.Font>;
-    // (undocumented)
-    isRelative(): this is Length<Unit.Length.Relative>;
-    // (undocumented)
-    isViewportRelative(): this is Length<Unit.Length.Relative.Viewport>;
-    // (undocumented)
-    static of<U extends Unit.Length>(value: number, unit: U): Length<U>;
-    // (undocumented)
-    scale(factor: number): Length<U>;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    withUnit<U extends Unit.Length>(unit: U): Length<U>;
-}
+export type Length<U extends Unit.Length = Unit.Length> = Length.Calculated | Length.Fixed<U>;
 
 // @public (undocumented)
 export namespace Length {
+    // @internal
+    export class Calculated extends Value<"length", true> implements ILength<Unit.Length, true> {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hasCalculation(): this is Calculated;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // (undocumented)
+        get math(): Math_2<"length">;
+        // (undocumented)
+        static of(value: Math_2<"length">): Calculated;
+        // (undocumented)
+        resolve(resolver: Length.Resolver): Fixed<"px">;
+        // (undocumented)
+        toJSON(): Calculated.JSON;
+        // (undocumented)
+        toString(): string;
+    }
+    // (undocumented)
+    export namespace Calculated {
+        // (undocumented)
+        export interface JSON extends Value.JSON<"length"> {
+            // (undocumented)
+            math: Math_2.JSON;
+        }
+    }
+    export class Fixed<U extends Unit.Length = Unit.Length> extends Value<"length", false> implements ILength<U>, Comparable<Fixed<U>> {
+        // (undocumented)
+        get canonicalUnit(): "px";
+        // (undocumented)
+        compare(value: Fixed<U>): Comparison;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hasCalculation(): this is Calculated;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // (undocumented)
+        hasUnit<U extends Unit.Length>(unit: U): this is Fixed<U>;
+        // (undocumented)
+        isFontRelative(): this is Length<Unit.Length.Relative.Font>;
+        // (undocumented)
+        isRelative(): this is Fixed<Unit.Length.Relative>;
+        // (undocumented)
+        isZero(): boolean;
+        // (undocumented)
+        static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
+        // Warning: (ae-forgotten-export) The symbol "Length" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        static of<U extends Unit.Length>(value: Length_2<U>): Fixed<U>;
+        resolve(resolver: Length.Resolver): Fixed<"px">;
+        // (undocumented)
+        scale(factor: number): Fixed<U>;
+        // (undocumented)
+        toJSON(): Fixed.JSON<U>;
+        // (undocumented)
+        toString(): string;
+        // (undocumented)
+        get unit(): U;
+        // (undocumented)
+        get value(): number;
+        // (undocumented)
+        withUnit<U extends Unit.Length>(unit: U): Fixed<U>;
+    }
+    // (undocumented)
+    export namespace Fixed {
+        // (undocumented)
+        export interface JSON<U extends Unit.Length = Unit.Length> extends Value.JSON<"length"> {
+            // (undocumented)
+            unit: U;
+            // (undocumented)
+            value: number;
+        }
+    }
+    // (undocumented)
+    export interface ILength<U extends Unit.Length = Unit.Length, CALC extends boolean = boolean> extends Value<"length", CALC> {
+        // (undocumented)
+        hasCalculation(): this is Calculated;
+        // (undocumented)
+        resolve(resolver: Length.Resolver): Fixed<"px">;
+    }
+    // (undocumented)
+    export function isFixed(value: unknown): value is Fixed;
     // (undocumented)
     export function isLength(value: unknown): value is Length;
     // (undocumented)
-    export function isZero(length: Length): boolean;
+    export function isZero(length: Length.Fixed): boolean;
+    // (undocumented)
+    export type JSON = Calculated.JSON | Fixed.JSON;
+    // (undocumented)
+    export function of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
+    // (undocumented)
+    export function of<U extends Unit.Length>(value: Length_2<U>): Fixed<U>;
+    // (undocumented)
+    export function of(value: Math_2<"length">): Calculated;
+    // (undocumented)
+    export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Fixed<"px">>;
+    export function resolver(emBase: Fixed<"px">, remBase: Fixed<"px">, vwBase: Fixed<"px">, vhBase: Fixed<"px">): Resolver;
     const // (undocumented)
     parse: Parser<Slice<Token>, Length, string>;
-    // (undocumented)
-    export interface JSON<U extends Unit.Length = Unit.Length> extends Dimension.JSON<"length", U> {
-    }
+    const // (undocumented)
+    parseBase: Parser<Slice<Token>, Fixed, string>;
+        {};
 }
 
 // @public (undocumented)
@@ -944,9 +1016,9 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"m
     reduce(resolver: Expression.Resolver): Math_2;
     // (undocumented)
     resolve(): any;
-    resolve2(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length<"px">, string>;
+    resolve2(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length_2<"px">, string>;
     // (undocumented)
-    resolve2(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Result<Length<"px">, string>;
+    resolve2(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length_2<"px">>): Result<Length_2<"px">, string>;
     // (undocumented)
     resolve2(this: Math_2<"number">): Result<Number_2, string>;
     // (undocumented)
@@ -1221,7 +1293,7 @@ export namespace Percentage {
 }
 
 // @public (undocumented)
-export class Perspective<D extends Length = Length> extends Function_3<"perspective"> {
+export class Perspective<D extends Length.Fixed = Length.Fixed> extends Function_3<"perspective"> {
     // (undocumented)
     get depth(): D;
     // (undocumented)
@@ -1229,7 +1301,7 @@ export class Perspective<D extends Length = Length> extends Function_3<"perspect
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<D extends Length>(depth: D): Perspective<D>;
+    static of<D extends Length.Fixed>(depth: D): Perspective<D>;
     // (undocumented)
     resolve(): Perspective<D>;
     // (undocumented)
@@ -1241,18 +1313,18 @@ export class Perspective<D extends Length = Length> extends Function_3<"perspect
 // @public (undocumented)
 export namespace Perspective {
     // (undocumented)
-    export function isPerspective<D extends Length>(value: unknown): value is Perspective<D>;
+    export function isPerspective<D extends Length.Fixed>(value: unknown): value is Perspective<D>;
     // (undocumented)
     export interface JSON extends Function_3.JSON<"perspective"> {
         // (undocumented)
-        depth: Length.JSON;
+        depth: Length.Fixed.JSON;
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Perspective, string>;
 }
 
 // @public (undocumented)
-export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length | Percentage = Length | Percentage> extends BasicShape<"polygon"> {
+export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage = Length.Fixed | Percentage> extends BasicShape<"polygon"> {
     // (undocumented)
     equals(value: Polygon): boolean;
     // (undocumented)
@@ -1262,7 +1334,7 @@ export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length | P
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<F extends Polygon.Fill = Polygon.Fill, V extends Length | Percentage = Length | Percentage>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
+    static of<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage = Length.Fixed | Percentage>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
     // (undocumented)
     resolve(): Polygon<F, V>;
     // (undocumented)
@@ -1321,7 +1393,7 @@ export namespace Position {
     // (undocumented)
     export namespace Component {
         // (undocumented)
-        export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
+        export type JSON = Keyword.JSON | Length.Fixed.JSON | Percentage.JSON | Side.JSON;
     }
     // (undocumented)
     export type Horizontal = Keyword<"left"> | Keyword<"right">;
@@ -1333,7 +1405,7 @@ export namespace Position {
         vertical: Component.JSON;
     }
     // (undocumented)
-    export type Offset<U extends Unit.Length = Unit.Length> = Length<U> | Percentage;
+    export type Offset<U extends Unit.Length = Unit.Length> = Length.Fixed<U> | Percentage;
     // (undocumented)
     export function parse(legacySyntax?: boolean): Parser<Slice<Token>, Position, string>;
     // (undocumented)
@@ -1362,7 +1434,7 @@ export namespace Position {
         // (undocumented)
         export interface JSON extends Value.JSON<"side"> {
             // (undocumented)
-            offset: Length.JSON | Percentage.JSON | null;
+            offset: Length.Fixed.JSON | Percentage.JSON | null;
             // (undocumented)
             side: Keyword.JSON;
         }
@@ -1403,7 +1475,7 @@ export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Sh
 // @public (undocumented)
 export namespace Radial {
     // (undocumented)
-    export class Circle<R extends Length = Length> implements Equatable, Hashable, Serializable<Circle.JSON> {
+    export class Circle<R extends Length.Fixed = Length.Fixed> implements Equatable, Hashable, Serializable<Circle.JSON> {
         // (undocumented)
         equals(value: Circle): boolean;
         // (undocumented)
@@ -1411,7 +1483,7 @@ export namespace Radial {
         // (undocumented)
         hash(hash: Hash): void;
         // (undocumented)
-        static of<R extends Length>(radius: R): Circle<R>;
+        static of<R extends Length.Fixed>(radius: R): Circle<R>;
         // (undocumented)
         get radius(): R;
         // (undocumented)
@@ -1428,13 +1500,13 @@ export namespace Radial {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
-            radius: Length.JSON;
+            radius: Length.Fixed.JSON;
             // (undocumented)
             type: "circle";
         }
     }
     // (undocumented)
-    export class Ellipse<R extends Length | Percentage = Length | Percentage> implements Equatable, Hashable, Serializable<Ellipse.JSON> {
+    export class Ellipse<R extends Length.Fixed | Percentage = Length.Fixed | Percentage> implements Equatable, Hashable, Serializable<Ellipse.JSON> {
         // (undocumented)
         equals(value: Ellipse): boolean;
         // (undocumented)
@@ -1444,7 +1516,7 @@ export namespace Radial {
         // (undocumented)
         get horizontal(): R;
         // (undocumented)
-        static of<R extends Length | Percentage>(horizontal: R, vertical: R): Ellipse<R>;
+        static of<R extends Length.Fixed | Percentage>(horizontal: R, vertical: R): Ellipse<R>;
         // (undocumented)
         toJSON(): Ellipse.JSON;
         // (undocumented)
@@ -1461,11 +1533,11 @@ export namespace Radial {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
-            horizontal: Length.JSON | Percentage.JSON;
+            horizontal: Length.Fixed.JSON | Percentage.JSON;
             // (undocumented)
             type: "ellipse";
             // (undocumented)
-            vertical: Length.JSON | Percentage.JSON;
+            vertical: Length.Fixed.JSON | Percentage.JSON;
         }
     }
     // (undocumented)
@@ -1546,7 +1618,7 @@ export namespace Radial {
 }
 
 // @public (undocumented)
-export class Radius<R extends Length | Percentage | Radius.Side = Length | Percentage | Radius.Side> extends BasicShape<"radius"> {
+export class Radius<R extends Length.Fixed | Percentage | Radius.Side = Length.Fixed | Percentage | Radius.Side> extends BasicShape<"radius"> {
     // (undocumented)
     equals(value: Radius): boolean;
     // (undocumented)
@@ -1554,7 +1626,7 @@ export class Radius<R extends Length | Percentage | Radius.Side = Length | Perce
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<R extends Length | Percentage | Radius.Side>(value: R): Radius<R>;
+    static of<R extends Length.Fixed | Percentage | Radius.Side>(value: R): Radius<R>;
     // (undocumented)
     resolve(): Radius<R>;
     // (undocumented)
@@ -1572,7 +1644,7 @@ export namespace Radius {
     // (undocumented)
     export interface JSON extends BasicShape.JSON<"radius"> {
         // (undocumented)
-        value: Length.JSON | Percentage.JSON | Keyword.JSON;
+        value: Length.Fixed.JSON | Percentage.JSON | Keyword.JSON;
     }
     // (undocumented)
     export type Side = Side.Closest | Side.Farthest;
@@ -1588,7 +1660,7 @@ export namespace Radius {
 }
 
 // @public @deprecated (undocumented)
-export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Auto> extends BasicShape<"rectangle"> {
+export class Rectangle<O extends Length.Fixed | Rectangle.Auto = Length.Fixed | Rectangle.Auto> extends BasicShape<"rectangle"> {
     // (undocumented)
     get bottom(): O;
     // (undocumented)
@@ -1604,7 +1676,7 @@ export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Au
     // (undocumented)
     readonly _left: O;
     // (undocumented)
-    static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(top: O, right: O, bottom: O, left: O): Rectangle<O>;
+    static of<O extends Length.Fixed | Rectangle.Auto = Length.Fixed | Rectangle.Auto>(top: O, right: O, bottom: O, left: O): Rectangle<O>;
     // (undocumented)
     resolve(): Rectangle<O>;
     // (undocumented)
@@ -1630,13 +1702,13 @@ export namespace Rectangle {
     // (undocumented)
     export interface JSON extends BasicShape.JSON<"rectangle"> {
         // (undocumented)
-        bottom: Length.JSON | Keyword.JSON;
+        bottom: Length.Fixed.JSON | Keyword.JSON;
         // (undocumented)
-        left: Length.JSON | Keyword.JSON;
+        left: Length.Fixed.JSON | Keyword.JSON;
         // (undocumented)
-        right: Length.JSON | Keyword.JSON;
+        right: Length.Fixed.JSON | Keyword.JSON;
         // (undocumented)
-        top: Length.JSON | Keyword.JSON;
+        top: Length.Fixed.JSON | Keyword.JSON;
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Rectangle, string>;
@@ -1766,7 +1838,7 @@ export namespace Scale {
 }
 
 // @public (undocumented)
-export class Shadow<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color> extends Value<"shadow", false> {
+export class Shadow<H extends Length.Fixed = Length.Fixed, V extends Length.Fixed = H, B extends Length.Fixed = Length.Fixed, S extends Length.Fixed = Length.Fixed, C extends Color = Color> extends Value<"shadow", false> {
     // (undocumented)
     get blur(): B;
     // (undocumented)
@@ -1780,7 +1852,7 @@ export class Shadow<H extends Length = Length, V extends Length = H, B extends L
     // (undocumented)
     get isInset(): boolean;
     // (undocumented)
-    static of<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color>(horizontal: H, vertical: V, blur: B, spread: S, color: C, isInset: boolean): Shadow<H, V, B, S, C>;
+    static of<H extends Length.Fixed = Length.Fixed, V extends Length.Fixed = H, B extends Length.Fixed = Length.Fixed, S extends Length.Fixed = Length.Fixed, C extends Color = Color>(horizontal: H, vertical: V, blur: B, spread: S, color: C, isInset: boolean): Shadow<H, V, B, S, C>;
     // (undocumented)
     resolve(): Shadow<H, V, B, S, C>;
     // (undocumented)
@@ -1798,17 +1870,17 @@ export namespace Shadow {
     // (undocumented)
     export interface JSON extends Value.JSON<"shadow"> {
         // (undocumented)
-        blur: Length.JSON;
+        blur: Length.Fixed.JSON;
         // (undocumented)
         color: Color.JSON;
         // (undocumented)
-        horizontal: Length.JSON;
+        horizontal: Length.Fixed.JSON;
         // (undocumented)
         isInset: boolean;
         // (undocumented)
-        spread: Length.JSON;
+        spread: Length.Fixed.JSON;
         // (undocumented)
-        vertical: Length.JSON;
+        vertical: Length.Fixed.JSON;
     }
 }
 
@@ -2706,7 +2778,7 @@ export namespace Transform {
     // (undocumented)
     export function matrix(...values: Matrix.Values<Number_2>): Matrix;
     // (undocumented)
-    export function perspective<D extends Length>(depth: D): Perspective<D>;
+    export function perspective<D extends Length.Fixed>(depth: D): Perspective<D>;
     // (undocumented)
     export function rotate<A extends Angle>(x: Number_2, y: Number_2, z: Number_2, angle: A): Rotate<A>;
     // (undocumented)
@@ -2714,7 +2786,7 @@ export namespace Transform {
     // (undocumented)
     export function skew<X extends Angle, Y extends Angle>(x: X, y: Y): Skew<X, Y>;
     // (undocumented)
-    export function translate<X extends Length | Percentage, Y extends Length | Percentage, Z extends Length>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
+    export function translate<X extends Length.Fixed | Percentage, Y extends Length.Fixed | Percentage, Z extends Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
     const // (undocumented)
     parse: Parser<Slice<Token>, Transform, string, []>;
     const // (undocumented)
@@ -2722,13 +2794,13 @@ export namespace Transform {
 }
 
 // @public (undocumented)
-export class Translate<X extends Length | Percentage = Length | Percentage, Y extends Length | Percentage = Length | Percentage, Z extends Length = Length> extends Function_3<"translate"> {
+export class Translate<X extends Length.Fixed | Percentage = Length.Fixed | Percentage, Y extends Length.Fixed | Percentage = Length.Fixed | Percentage, Z extends Length.Fixed = Length.Fixed> extends Function_3<"translate"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<X extends Length | Percentage, Y extends Length | Percentage, Z extends Length>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
+    static of<X extends Length.Fixed | Percentage = Length.Fixed | Percentage, Y extends Length.Fixed | Percentage = Length.Fixed | Percentage, Z extends Length.Fixed = Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
     // (undocumented)
     resolve(): Translate<X, Y, Z>;
     // (undocumented)
@@ -2746,15 +2818,15 @@ export class Translate<X extends Length | Percentage = Length | Percentage, Y ex
 // @public (undocumented)
 export namespace Translate {
     // (undocumented)
-    export function isTranslate<X extends Length | Percentage, Y extends Length | Percentage, Z extends Length>(value: unknown): value is Translate<X, Y, Z>;
+    export function isTranslate<X extends Length.Fixed | Percentage, Y extends Length.Fixed | Percentage, Z extends Length.Fixed>(value: unknown): value is Translate<X, Y, Z>;
     // (undocumented)
     export interface JSON extends Function_3.JSON<"translate"> {
         // (undocumented)
-        x: Length.JSON | Percentage.JSON;
+        x: Length.Fixed.JSON | Percentage.JSON;
         // (undocumented)
-        y: Length.JSON | Percentage.JSON;
+        y: Length.Fixed.JSON | Percentage.JSON;
         // (undocumented)
-        z: Length.JSON;
+        z: Length.Fixed.JSON;
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Translate, string>;
