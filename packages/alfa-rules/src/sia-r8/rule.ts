@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
@@ -14,6 +14,7 @@ const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;
 const { hasNamespace } = Element;
 const { and } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r8",
@@ -22,28 +23,26 @@ export default Rule.Atomic.of<Page, Element>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
-          .filter(
-            and(
-              hasNamespace(Namespace.HTML),
-              hasRole(
-                device,
-                "checkbox",
-                "combobox",
-                "listbox",
-                "menuitemcheckbox",
-                "menuitemradio",
-                "radio",
-                "searchbox",
-                "slider",
-                "spinbutton",
-                "switch",
-                "textbox"
-              ),
-              isIncludedInTheAccessibilityTree(device)
-            )
-          );
+        return getElementDescendants(document, Node.fullTree).filter(
+          and(
+            hasNamespace(Namespace.HTML),
+            hasRole(
+              device,
+              "checkbox",
+              "combobox",
+              "listbox",
+              "menuitemcheckbox",
+              "menuitemradio",
+              "radio",
+              "searchbox",
+              "slider",
+              "spinbutton",
+              "switch",
+              "textbox"
+            ),
+            isIncludedInTheAccessibilityTree(device)
+          )
+        );
       },
 
       expectations(target) {

@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Document, Element, Node } from "@siteimprove/alfa-dom";
+import { Document, Element, Node, Query } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -16,13 +16,14 @@ import { expectation } from "../common/act/expectation";
 import { isAtTheStart } from "../common/predicate";
 
 import { Question } from "../common/act/question";
-import { Scope } from "../tags";
 import { withDocumentElement } from "../common/applicability/with-document-element";
+import { Scope } from "../tags";
 
 const { hasRole, isIgnored } = DOM;
 const { hasName, isElement } = Element;
 const { and } = Refinement;
 const { isTabbable, isVisible } = Style;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87",
@@ -31,7 +32,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   evaluate({ device, document, response }) {
     return {
       applicability() {
-        return withDocumentElement(document)
+        return withDocumentElement(document);
       },
 
       expectations(target) {
@@ -55,10 +56,9 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
           .filter(isInternalURL(response.url))
           .flatMap((url) =>
             url.fragment.flatMap((fragment) =>
-              element
-                .root()
-                .elementDescendants()
-                .find((element) => element.id.includes(fragment))
+              getElementDescendants(element.root()).find((element) =>
+                element.id.includes(fragment)
+              )
             )
           );
 

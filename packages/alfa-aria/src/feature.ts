@@ -1,6 +1,6 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import { Node, Element, Namespace } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Map } from "@siteimprove/alfa-map";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -24,6 +24,7 @@ const {
 } = Element;
 const { or, test } = Predicate;
 const { and } = Refinement;
+const { getElementDescendants } = Query;
 
 /**
  * @internal
@@ -160,7 +161,7 @@ const labels = Cache.empty<Node, Sequence<Element>>();
 const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
   const root = element.root();
 
-  const elements = root.elementDescendants();
+  const elements = getElementDescendants(root);
 
   const isFirstReference = element.id.some((id) =>
     ids

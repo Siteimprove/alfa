@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node as ariaNode } from "@siteimprove/alfa-aria";
-import { Element, Namespace, Node, Text } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query, Text } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -17,6 +17,7 @@ const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasNamespace, isContent, isElement } = Element;
 const { not, tee } = Predicate;
 const { and } = Refinement;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r78",
@@ -37,9 +38,9 @@ export default Rule.Atomic.of<Page, Element>({
               // Headings containing a link is frequently misused instead.
               // Headings containing a link is also used for, e.g., list of news.
               not((heading) =>
-                heading
-                  .elementDescendants()
-                  .some(hasRole(device, "button", "link"))
+                getElementDescendants(heading).some(
+                  hasRole(device, "button", "link")
+                )
               )
             )
           )

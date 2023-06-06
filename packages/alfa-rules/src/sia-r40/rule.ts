@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Page } from "@siteimprove/alfa-web";
@@ -16,6 +16,7 @@ const {
   isIncludedInTheAccessibilityTree,
 } = DOM;
 const { and } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r40",
@@ -24,8 +25,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return (
-          document
-            .elementDescendants(Node.fullTree)
+          getElementDescendants(document, Node.fullTree)
             .filter(
               and(
                 hasRole(device, (role) => role.is("region")),

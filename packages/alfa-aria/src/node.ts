@@ -15,9 +15,9 @@ import * as dom from "@siteimprove/alfa-dom";
 import * as tree from "@siteimprove/alfa-tree";
 
 import { Attribute } from "./attribute";
+import { Feature } from "./feature";
 import { Name } from "./name";
 import { Role } from "./role";
-import { Feature } from "./feature";
 
 import { Container, Element, Inert, Text } from ".";
 
@@ -25,6 +25,7 @@ import * as predicate from "./node/predicate";
 
 const { and, equals, not, test } = Predicate;
 const { isRendered } = Style;
+const { getElementIdMap, getElementDescendants } = dom.Query;
 
 /**
  * {@link https://w3c.github.io/aria/#accessibility_tree}
@@ -207,17 +208,13 @@ export namespace Node {
 
     // Find all elements in the tree. As explicit ownership is specified via ID
     // references, it cannot cross shadow or document boundaries.
-    const elements = root.inclusiveDescendants().filter(dom.Element.isElement);
 
-    // Build a map from ID -> element to allow fast resolution of ID references.
-    // The collected references are added to the map in reverse order to ensure
-    // that the first occurrence of a given ID is what ends up in the map in
-    // event of duplicates.
-    const ids = Map.from(
-      elements
-        .collect((element) => element.id.map((id) => [id, element] as const))
-        .reverse()
-    );
+    const exclusiveDescendants = getElementDescendants(root);
+    const elements = dom.Element.isElement(root)
+      ? exclusiveDescendants.prepend(root)
+      : exclusiveDescendants;
+
+    const ids = getElementIdMap(root);
 
     // Do a first pass over `aria-owns` attributes and collect the referenced
     // elements.

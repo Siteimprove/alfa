@@ -1,5 +1,11 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Document, Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import {
+  Document,
+  Element,
+  Namespace,
+  Node,
+  Query,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -9,12 +15,13 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { WithBadElements } from "../common/diagnostic/with-bad-elements";
 
-import { Scope } from "../tags";
 import { withDocumentElement } from "../common/applicability/with-document-element";
+import { Scope } from "../tags";
 
 const { hasName, hasNamespace } = Element;
-const { and} = Predicate;
+const { and } = Predicate;
 const { isRendered } = Style;
+const { getElementDescendants } = Query;
 
 const isDeprecated = hasName(
   "acronym",
@@ -57,11 +64,12 @@ export default Rule.Atomic.of<Page, Document>({
       },
 
       expectations(target) {
-        const deprecatedElements = target
-          .elementDescendants(Node.fullTree)
-          .filter(
-            and(hasNamespace(Namespace.HTML), isDeprecated, isRendered(device))
-          );
+        const deprecatedElements = getElementDescendants(
+          target,
+          Node.fullTree
+        ).filter(
+          and(hasNamespace(Namespace.HTML), isDeprecated, isRendered(device))
+        );
 
         return {
           1: expectation(

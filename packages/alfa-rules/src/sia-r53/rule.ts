@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -12,19 +12,15 @@ import { Scope } from "../tags";
 
 const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { and, equals } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r53",
   tags: [Scope.Component],
   evaluate({ device, document }) {
-    const headings = document
-      .elementDescendants(Node.flatTree)
-      .filter(
-        and(
-          hasRole(device, "heading"),
-          isIncludedInTheAccessibilityTree(device)
-        )
-      );
+    const headings = getElementDescendants(document, Node.flatTree).filter(
+      and(hasRole(device, "heading"), isIncludedInTheAccessibilityTree(device))
+    );
 
     return {
       applicability() {

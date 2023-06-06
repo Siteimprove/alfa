@@ -18,13 +18,13 @@ import {
   Document,
   Element,
   Fragment,
+  Slot,
   Text,
   Type,
-  Slot,
 } from ".";
 
-import * as traversal from "./node/traversal";
 import * as predicate from "./node/predicate";
+import * as traversal from "./node/traversal";
 
 /**
  * @public
@@ -163,14 +163,6 @@ export abstract class Node<T extends string = string>
 
       return this._internalPath(options);
     }
-  }
-
-  // This does almost nothing but can be overwritten by inherited classes for
-  // specific optimisations.
-  public elementDescendants(
-    options: Node.Traversal = Node.Traversal.empty
-  ): Sequence<Element> {
-    return this.descendants(options).filter(Element.isElement);
   }
 
   public equals(value: Node): boolean;

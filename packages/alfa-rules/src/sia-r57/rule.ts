@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
-import { Element, Text } from "@siteimprove/alfa-dom";
+import { Element, Query, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -26,6 +26,7 @@ const { nor, not, or, property, test } = Predicate;
 const { and } = Refinement;
 const { isTabbable } = Style;
 const { isText } = Text;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r57",
@@ -39,7 +40,7 @@ export default Rule.Atomic.of<Page, Text>({
     return {
       *applicability() {
         if (
-          document.elementDescendants(dom.Node.fullTree).some(
+          getElementDescendants(document, dom.Node.fullTree).some(
             and(
               hasRole(device, (role) => role.isLandmark()),
               // Circumventing https://github.com/Siteimprove/alfa/issues/298

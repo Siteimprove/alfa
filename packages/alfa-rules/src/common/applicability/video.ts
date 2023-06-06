@@ -1,7 +1,13 @@
 import { Interview } from "@siteimprove/alfa-act";
 import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import {
+  Document,
+  Element,
+  Namespace,
+  Node,
+  Query,
+} from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Sequence } from "@siteimprove/alfa-sequence/src/sequence";
@@ -12,6 +18,7 @@ import { Question } from "../act/question";
 const { isElement, hasName, hasNamespace } = Element;
 const { and } = Predicate;
 const { isVisible } = Style;
+const { getElementDescendants } = Query;
 
 const visibleVideos = Cache.empty<Document, Cache<Device, Sequence<Element>>>();
 
@@ -25,11 +32,9 @@ export function video(
   const videos = visibleVideos
     .get(document, Cache.empty)
     .get(device, () =>
-      document
-        .elementDescendants(Node.fullTree)
-        .filter(
-          and(hasNamespace(Namespace.HTML), hasName("video"), isVisible(device))
-        )
+      getElementDescendants(document, Node.fullTree).filter(
+        and(hasNamespace(Namespace.HTML), hasName("video"), isVisible(device))
+      )
     );
 
   return (

@@ -9,12 +9,12 @@ import { videoDescriptionTrackAccurate } from "../common/expectation/video-descr
 
 import { Question } from "../common/act/question";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r36",
   requirements: [Technique.of("G78"), Technique.of("H96")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Deprecated],
   evaluate({ device, document }) {
     return {
       applicability() {

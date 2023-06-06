@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM, Role } from "@siteimprove/alfa-aria";
-import { Attribute, Element, Node } from "@siteimprove/alfa-dom";
+import { Attribute, Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
@@ -17,6 +17,7 @@ import { Scope, Stability } from "../tags";
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasDisplaySize, hasInputType } = Element;
 const { test, property } = Predicate;
+const { getElementDescendants } = Query;
 
 /**
  * @deprecated Use SIA-R18 version 2 instead
@@ -30,8 +31,7 @@ export default Rule.Atomic.of<Page, Attribute>({
 
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
+        return getElementDescendants(document, Node.fullTree)
           .filter(isIncludedInTheAccessibilityTree(device))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(

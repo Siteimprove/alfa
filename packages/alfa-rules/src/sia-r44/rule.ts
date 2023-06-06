@@ -2,8 +2,13 @@ import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { Transformation } from "@siteimprove/alfa-affine";
 import { Keyword } from "@siteimprove/alfa-css";
 import { Device, Viewport } from "@siteimprove/alfa-device";
-import type { Declaration } from "@siteimprove/alfa-dom";
-import { Element, MediaRule, Node } from "@siteimprove/alfa-dom";
+import {
+  Declaration,
+  Element,
+  MediaRule,
+  Node,
+  Query,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Real } from "@siteimprove/alfa-math";
 import { Media } from "@siteimprove/alfa-media";
@@ -23,6 +28,7 @@ const { some } = Iterable;
 const { abs, acos, PI } = Math;
 const { or } = Predicate;
 const { hasComputedStyle, isVisible } = Style;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r44",
@@ -58,8 +64,7 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
+        return getElementDescendants(document, Node.fullTree)
           .filter(isVisible(device))
           .filter(
             or(

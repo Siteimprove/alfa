@@ -1,5 +1,5 @@
 import { Rule } from "@siteimprove/alfa-act";
-import { Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Map } from "@siteimprove/alfa-map";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -16,6 +16,7 @@ import { Scope, Version } from "../tags";
 const { hasName, hasNamespace, hasTabIndex } = Element;
 const { and, test } = Predicate;
 const { isTabbable, isVisible } = Style;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r95",
@@ -33,15 +34,14 @@ export default Rule.Atomic.of<Page, Element>({
 
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.fullTree)
+        return getElementDescendants(document, Node.fullTree)
           .filter(and(hasNamespace(Namespace.HTML), hasName("iframe")))
           .filter((iframe) =>
             iframe.content
               .map((contentDocument) =>
-                contentDocument
-                  .elementDescendants(Node.flatTree)
-                  .filter(and(isVisible(device), isTabbable(device)))
+                getElementDescendants(contentDocument, Node.flatTree).filter(
+                  and(isVisible(device), isTabbable(device))
+                )
               )
               .some((sequence) => {
                 tabbables = tabbables.set(iframe, sequence);

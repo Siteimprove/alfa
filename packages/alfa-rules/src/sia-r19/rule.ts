@@ -1,12 +1,16 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
-import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
-import { Attribute, Element, Namespace, Node } from "@siteimprove/alfa-dom";
+import {
+  Attribute,
+  Element,
+  Namespace,
+  Node,
+  Query,
+} from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Sequence } from "@siteimprove/alfa-sequence";
-import { Set } from "@siteimprove/alfa-set";
 import { Page } from "@siteimprove/alfa-web";
 
 import * as aria from "@siteimprove/alfa-aria";
@@ -19,6 +23,7 @@ import { Scope } from "../tags";
 const { hasNamespace } = Element;
 const { isEmpty } = Iterable;
 const { and, not, equals, property } = Predicate;
+const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r19",
@@ -26,8 +31,7 @@ export default Rule.Atomic.of<Page, Attribute>({
   evaluate({ device, document }) {
     return {
       applicability() {
-        return document
-          .elementDescendants(Node.composedNested)
+        return getElementDescendants(document, Node.composedNested)
           .filter(hasNamespace(Namespace.HTML, Namespace.SVG))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
@@ -110,25 +114,8 @@ function isValid(attribute: aria.Attribute): boolean {
   }
 }
 
-/**
- * All ids that exist in the tree of a given root.
- */
-const idsCache = Cache.empty<Node, Set<string>>();
-
 function treeHasId(id: string, node: Node): boolean {
-  // We absolutely need no traversal options here, because `id` are scoped to
-  // trees, so we do not want to cross shadow or content boundaries.
-  return idsCache
-    .get(node.root(), () =>
-      // Turning it into a Set for faster lookup.
-      Set.from(
-        node
-          .root()
-          .elementDescendants()
-          .collect((element) => element.id)
-      )
-    )
-    .has(id);
+  return Query.getElementIdMap(node).has(id);
 }
 
 /**
