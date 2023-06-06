@@ -166,7 +166,7 @@ export namespace Length {
      * Resolve a Length into an absolute Length in pixels.
      */
     public resolve(resolver: Length.Resolver): Fixed<"px"> {
-      return resolver(this);
+      return this.isRelative() ? resolver(this) : this.withUnit("px");
     }
 
     public isZero(): boolean {
@@ -215,8 +215,8 @@ export namespace Length {
     U extends Unit.Length = Unit.Length,
     CALC extends boolean = boolean
   > extends Value<"length", CALC> {
-    hasCalculation(): this is Length.Calculated;
-    resolve(resolver: Length.Resolver): Length.Fixed<"px">;
+    hasCalculation(): this is Calculated;
+    resolve(resolver: Length.Resolver): Fixed<"px">;
   }
 
   // In order to resolve a length, we need to know how to resolve relative
@@ -224,7 +224,7 @@ export namespace Length {
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export type Resolver = Mapper<Fixed, Fixed<"px">>;
+  export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Fixed<"px">>;
 
   /**
    * Build a (fixed) length resolver, using basis for the relative units
@@ -273,7 +273,7 @@ export namespace Length {
           return max.scale(value / 100);
       }
 
-      return Fixed.of(Converter.length(value, unit, "px"), "px");
+      // return Fixed.of(Converter.length(value, unit, "px"), "px");
     };
   }
 
