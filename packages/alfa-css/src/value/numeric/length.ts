@@ -281,6 +281,10 @@ export namespace Length {
     return value instanceof Calculated || value instanceof Fixed;
   }
 
+  export function isFixed(value: unknown): value is Fixed {
+    return value instanceof Fixed;
+  }
+
   export function of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
 
   export function of<U extends Unit.Length>(value: BaseLength<U>): Fixed<U>;
@@ -301,6 +305,11 @@ export namespace Length {
     }
 
     return Calculated.of(value);
+  }
+
+  // Curryfied version is more convenient for monadic call sites.
+  export function isZero(length: Length.Fixed): boolean {
+    return length.isZero();
   }
 
   export const parse: Parser<Slice<Token>, Length, string> = either(

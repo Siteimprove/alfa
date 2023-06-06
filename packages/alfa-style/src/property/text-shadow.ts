@@ -29,18 +29,18 @@ export type Specified = Keyword<"none"> | Shadow;
 export type Computed =
   | Keyword<"none">
   | Shadow<
-      Length<"px">,
-      Length<"px">,
-      Length<"px">,
-      Length<"px">,
+      Length.Fixed<"px">,
+      Length.Fixed<"px">,
+      Length.Fixed<"px">,
+      Length.Fixed<"px">,
       RGB<Percentage, Percentage> | Current | System
     >;
 
-const parseOffset = separated(Length.parse, Token.parseWhitespace);
+const parseOffset = separated(Length.parseBase, Token.parseWhitespace);
 
 const parseLengths = pair(
   parseOffset,
-  map(option(right(Token.parseWhitespace, Length.parse)), (blur) =>
+  map(option(right(Token.parseWhitespace, Length.parseBase)), (blur) =>
     blur.getOr(Length.of(0, "px"))
   )
 );
@@ -89,11 +89,13 @@ export default Longhand.of<Specified, Computed>(
         return shadow;
       }
 
+      const resolver = Resolver.length(style);
+
       return Shadow.of(
-        Resolver.length(shadow.vertical, style),
-        Resolver.length(shadow.horizontal, style),
-        Resolver.length(shadow.blur, style),
-        Resolver.length(shadow.spread, style),
+        shadow.vertical.resolve(resolver),
+        shadow.horizontal.resolve(resolver),
+        shadow.blur.resolve(resolver),
+        shadow.spread.resolve(resolver),
         Resolver.color(shadow.color),
         false
       );

@@ -15,7 +15,7 @@ export type Specified = LengthPercentage.LengthPercentage;
 /**
  * @internal
  */
-export type Computed = Length<"px"> | Percentage;
+export type Computed = Length.Fixed<"px"> | Percentage;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent}

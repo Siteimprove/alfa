@@ -15,7 +15,7 @@ export type Specified = Keyword<"auto"> | Length | Percentage;
 /**
  * @internal
  */
-export type Computed = Keyword<"auto"> | Length<"px"> | Percentage;
+export type Computed = Keyword<"auto"> | Length.Fixed<"px"> | Percentage;
 
 /**
  * @internal
@@ -41,7 +41,7 @@ export default Longhand.of<Specified, Computed>(
           return top;
 
         case "length":
-          return Resolver.length(top, style);
+          return top.resolve(Resolver.length(style));
       }
     })
 );

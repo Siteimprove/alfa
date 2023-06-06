@@ -10,6 +10,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
+import type { Style } from "../style";
 
 const { takeBetween, either, map, filter, delimited, option } = Parser;
 
@@ -29,7 +30,7 @@ export type Specified = Tuple<
  * @internal
  */
 export namespace Specified {
-  export type Item = Length | Percentage | Number | Keyword<"auto">;
+  export type Item = Length.Fixed | Percentage | Number | Keyword<"auto">;
 }
 
 /**
@@ -48,7 +49,7 @@ export type Computed = Tuple<
  * @internal
  */
 export namespace Computed {
-  export type Item = Length<"px"> | Percentage | Number | Keyword<"auto">;
+  export type Item = Length.Fixed<"px"> | Percentage | Number | Keyword<"auto">;
 }
 
 /**
@@ -60,7 +61,7 @@ export const parse = map(
       option(Token.parseWhitespace),
       either(
         filter(
-          either(Length.parse, either(Percentage.parse, Number.parse)),
+          either(Length.parseBase, either(Percentage.parse, Number.parse)),
           (size) => size.value >= 0,
           () => `Negative sizes are not allowed`
         ),
@@ -82,12 +83,14 @@ export default Longhand.of<Specified, Computed>(
   Tuple.of(Number.of(1), Number.of(1), Number.of(1), Number.of(1)),
   parse,
   (value, style) =>
-    value.map(({ values: [t, r, b, l] }) =>
-      Tuple.of(
-        t.type === "length" ? Resolver.length(t, style) : t,
-        r.type === "length" ? Resolver.length(r, style) : r,
-        b.type === "length" ? Resolver.length(b, style) : b,
-        l.type === "length" ? Resolver.length(l, style) : l
-      )
-    )
+    value.map(({ values: [t, r, b, l] }) => {
+      const resolver = resolve(style);
+      return Tuple.of(resolver(t), resolver(r), resolver(b), resolver(l));
+    })
 );
+
+function resolve(style: Style): (specified: Specified.Item) => Computed.Item {
+  const resolver = Resolver.length(style);
+  return (specified) =>
+    Length.isLength(specified) ? specified.resolve(resolver) : specified;
+}

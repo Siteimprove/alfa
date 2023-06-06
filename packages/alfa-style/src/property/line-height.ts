@@ -26,7 +26,7 @@ export type Specified =
 /**
  * @internal
  */
-export type Computed = Keyword<"normal"> | CSSNumber | Length<"px">;
+export type Computed = Keyword<"normal"> | CSSNumber | Length.Fixed<"px">;
 
 /**
  * @internal

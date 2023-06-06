@@ -13,24 +13,27 @@ test("#cascaded() parses `font-size: calc(1em + 2px)`", (t) => {
 
   t.deepEqual(cascaded(element, "font-size"), {
     value: {
-      type: "math expression",
-      expression: {
-        type: "calculation",
-        arguments: [
-          {
-            type: "sum",
-            operands: [
-              {
-                type: "value",
-                value: { type: "length", value: 1, unit: "em" },
-              },
-              {
-                type: "value",
-                value: { type: "length", value: 2, unit: "px" },
-              },
-            ],
-          },
-        ],
+      type: "length",
+      math: {
+        type: "math expression",
+        expression: {
+          type: "calculation",
+          arguments: [
+            {
+              type: "sum",
+              operands: [
+                {
+                  type: "value",
+                  value: { type: "length", value: 1, unit: "em" },
+                },
+                {
+                  type: "value",
+                  value: { type: "length", value: 2, unit: "px" },
+                },
+              ],
+            },
+          ],
+        },
       },
     },
     source: h.declaration("font-size", "calc(1em + 2px)").toJSON(),

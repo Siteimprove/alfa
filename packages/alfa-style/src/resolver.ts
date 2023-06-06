@@ -104,31 +104,31 @@ export namespace Resolver {
   ): Image<
     | URL
     | Linear<
-        | Gradient.Hint<Percentage | Length<"px">>
+        | Gradient.Hint<Percentage | Length.Fixed<"px">>
         | Gradient.Stop<
             Current | System | RGB<Percentage, Percentage>,
-            Percentage | Length<"px">
+            Percentage | Length.Fixed<"px">
           >,
         Angle<"deg"> | Linear.Side | Linear.Corner
       >
     | Radial<
-        | Gradient.Hint<Percentage | Length<"px">>
+        | Gradient.Hint<Percentage | Length.Fixed<"px">>
         | Gradient.Stop<
             Current | System | RGB<Percentage, Percentage>,
-            Percentage | Length<"px">
+            Percentage | Length.Fixed<"px">
           >,
-        | Radial.Circle<Length<"px">>
-        | Radial.Ellipse<Percentage | Length<"px">>
+        | Radial.Circle<Length.Fixed<"px">>
+        | Radial.Ellipse<Percentage | Length.Fixed<"px">>
         | Radial.Extent,
         Position<
           | Percentage
           | Position.Center
-          | Length<"px">
-          | Position.Side<Position.Horizontal, Percentage | Length<"px">>,
+          | Length.Fixed<"px">
+          | Position.Side<Position.Horizontal, Percentage | Length.Fixed<"px">>,
           | Percentage
           | Position.Center
-          | Length<"px">
-          | Position.Side<Position.Vertical, Percentage | Length<"px">>
+          | Length.Fixed<"px">
+          | Position.Side<Position.Vertical, Percentage | Length.Fixed<"px">>
         >
       >
   > {
@@ -172,14 +172,16 @@ export namespace Resolver {
         return Gradient.Stop.of(
           Resolver.color(item.color),
           item.position.map((position) =>
-            position.type === "length" ? length(position, style) : position
+            position.type === "length"
+              ? position.resolve(length(style))
+              : position
           )
         );
 
       case "hint": {
         return Gradient.Hint.of(
           item.position.type === "length"
-            ? length(item.position, style)
+            ? item.position.resolve(length(style))
             : item.position
         );
       }
@@ -189,15 +191,15 @@ export namespace Resolver {
   function gradientShape(shape: Radial.Shape, style: Style) {
     switch (shape.type) {
       case "circle":
-        return Radial.Circle.of(length(shape.radius, style));
+        return Radial.Circle.of(shape.radius.resolve(length(style)));
 
       case "ellipse":
         return Radial.Ellipse.of(
           shape.horizontal.type === "length"
-            ? length(shape.horizontal, style)
+            ? shape.horizontal.resolve(length(style))
             : shape.horizontal,
           shape.vertical.type === "length"
-            ? length(shape.vertical, style)
+            ? shape.vertical.resolve(length(style))
             : shape.vertical
         );
 
@@ -212,12 +214,12 @@ export namespace Resolver {
   ): Position<
     | Percentage
     | Position.Center
-    | Length<"px">
-    | Position.Side<Position.Horizontal, Percentage | Length<"px">>,
+    | Length.Fixed<"px">
+    | Position.Side<Position.Horizontal, Percentage | Length.Fixed<"px">>,
     | Percentage
     | Position.Center
-    | Length<"px">
-    | Position.Side<Position.Vertical, Percentage | Length<"px">>
+    | Length.Fixed<"px">
+    | Position.Side<Position.Vertical, Percentage | Length.Fixed<"px">>
   > {
     return Position.of(
       positionComponent(position.horizontal, style),
@@ -233,15 +235,15 @@ export namespace Resolver {
   ):
     | Percentage
     | Position.Center
-    | Length<"px">
-    | Position.Side<S, Percentage | Length<"px">> {
+    | Length.Fixed<"px">
+    | Position.Side<S, Percentage | Length.Fixed<"px">> {
     switch (position.type) {
       case "keyword":
       case "percentage":
         return position;
 
       case "length":
-        return Resolver.length(position, style);
+        return position.resolve(Resolver.length(style));
 
       case "side":
         return Position.Side.of(
@@ -252,7 +254,7 @@ export namespace Resolver {
                 return offset;
 
               case "length":
-                return Resolver.length(offset, style);
+                return offset.resolve(Resolver.length(style));
             }
           })
         );

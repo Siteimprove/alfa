@@ -6,7 +6,7 @@ import { Resolver } from "../resolver";
 /**
  * @internal
  */
-export type Specified = Length.Length;
+export type Specified = Length;
 
 /**
  * @internal
