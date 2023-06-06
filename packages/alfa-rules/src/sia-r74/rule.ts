@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Length, Unit } from "@siteimprove/alfa-css";
+import { Length } from "@siteimprove/alfa-css";
 import { Element, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -34,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
                   case "length":
                     // Calculated lengths cannot be resolved at cascade time,
                     // so we just ignore them.
-                    return !fontSize.hasCalculation() && fontSize.value > 0
+                    return !fontSize.hasCalculation() && fontSize.value > 0;
                   case "percentage":
                     return fontSize.value > 0;
                   default:

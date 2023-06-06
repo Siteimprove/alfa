@@ -67,9 +67,7 @@ export class Position<
   public toJSON(): Position.JSON {
     return {
       ...super.toJSON(),
-      horizontal: Length.isLength(this._horizontal)
-        ? this._horizontal.toJSON()
-        : this._horizontal.toJSON(),
+      horizontal: this._horizontal.toJSON(),
       vertical: this._vertical.toJSON(),
     };
   }

@@ -54,7 +54,7 @@ export namespace Length {
         this._math
           .resolve2({
             // The math expression resolver is only aware of BaseLength and thus
-            // wonk with these, but we want to abstract them from further layers,
+            // work with these, but we want to abstract them from further layers,
             // so the resolver here is only aware of Length, and we need to
             // translate back and forth.
             length: (length) => {
@@ -63,7 +63,7 @@ export namespace Length {
             },
           })
           // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not resolve ${this._math!} as a length`)
+          .getUnsafe(`Could not resolve ${this._math} as a length`)
       );
     }
 
@@ -95,7 +95,7 @@ export namespace Length {
    */
   export class Fixed<U extends Unit.Length = Unit.Length>
     extends Value<"length", false>
-    implements ILength<U>, Comparable<Fixed<U>>
+    implements ILength<U, false>, Comparable<Fixed<U>>
   {
     public static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
 
@@ -276,8 +276,6 @@ export namespace Length {
         case "vmax":
           return max.scale(value / 100);
       }
-
-      // return Fixed.of(Converter.length(value, unit, "px"), "px");
     };
   }
 
@@ -317,15 +315,13 @@ export namespace Length {
   }
 
   export const parse: Parser<Slice<Token>, Length, string> = either(
-    map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, Fixed.of),
-    map(Math.parseLength, Calculated.of)
+    map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, of),
+    map(Math.parseLength, of)
   );
 
   // TODO: temporary helper needed during migration to calculated values.
-  export const parseBase: Parser<Slice<Token>, Fixed, string> = map<
-    Slice<Token>,
-    BaseLength,
-    Fixed,
-    string
-  >(BaseLength.parse, Fixed.of);
+  export const parseBase = map<Slice<Token>, BaseLength, Fixed, string>(
+    BaseLength.parse,
+    of
+  );
 }

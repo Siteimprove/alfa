@@ -19,7 +19,7 @@ import { isTransparent } from "./is-transparent";
 
 const { hasName, isElement, isReplaced } = Element;
 const { isNumeric } = Numeric;
-const { nor, not, test, tee } = Predicate;
+const { nor, not, test } = Predicate;
 const { and, or } = Refinement;
 const { isText } = Text;
 
