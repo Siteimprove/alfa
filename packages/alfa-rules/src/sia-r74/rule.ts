@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Unit } from "@siteimprove/alfa-css";
+import { Length, Unit } from "@siteimprove/alfa-css";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
@@ -31,6 +31,9 @@ export default Rule.Atomic.of<Page, Element>({
               (fontSize) => {
                 switch (fontSize.type) {
                   case "length":
+                    // Calculated lengths cannot be resolved at cascade time,
+                    // so we just ignore them.
+                    return !fontSize.hasCalculation() && fontSize.value > 0
                   case "percentage":
                     return fontSize.value > 0;
                   default:
@@ -53,7 +56,12 @@ export default Rule.Atomic.of<Page, Element>({
 
         return {
           1: expectation(
-            fontSize.type !== "length" || Unit.Length.isRelative(fontSize.unit),
+            // Keyword, percentage, number
+            !Length.isLength(fontSize) ||
+              // Calculated length
+              fontSize.hasCalculation() ||
+              // Fixed length in relative units
+              fontSize.isRelative(),
             () => Outcomes.HasRelativeUnit,
             () => Outcomes.HasAbsoluteUnit
           ),

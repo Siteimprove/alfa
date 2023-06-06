@@ -39,6 +39,10 @@ export default Rule.Atomic.of<Page, Element>({
               (fontSize) => {
                 switch (fontSize.type) {
                   case "length":
+                    // We cannot resolve calculation at cascaded time, so we simply
+                    // discard elements with calculated font-size to avoid
+                    // false positives.
+                    return !fontSize.hasCalculation() && fontSize.value > 0;
                   case "percentage":
                     return fontSize.value > 0;
 

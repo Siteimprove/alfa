@@ -31,7 +31,7 @@ export function isWideEnough<N extends Name>(
   const declaration = style.computed(property).source.getUnsafe();
 
   let ratio: number;
-  let used: Length<"px">;
+  let used: Length.Fixed<"px">;
 
   switch (value.type) {
     case "length":
@@ -85,7 +85,7 @@ export function isWideEnough<N extends Name>(
 export namespace Outcomes {
   export const IsWideEnough = (
     prop: Name,
-    value: Length<"px">,
+    value: Length.Fixed<"px">,
     fontSize: Style.Computed<"font-size">,
     ratio: number,
     threshold: number,
@@ -107,7 +107,7 @@ export namespace Outcomes {
 
   export const IsNotWideEnough = (
     prop: Name,
-    value: Length<"px">,
+    value: Length.Fixed<"px">,
     fontSize: Style.Computed<"font-size">,
     ratio: number,
     threshold: number,

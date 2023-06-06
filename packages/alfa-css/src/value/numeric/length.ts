@@ -158,6 +158,10 @@ export namespace Length {
       return Unit.isRelativeLength(this._unit);
     }
 
+    public isFontRelative(): this is Length<Unit.Length.Relative.Font> {
+      return Unit.isFontRelativeLength(this._unit);
+    }
+
     public scale(factor: number): Fixed<U> {
       return new Fixed(this._value * factor, this._unit);
     }

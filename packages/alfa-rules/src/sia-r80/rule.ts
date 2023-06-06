@@ -1,6 +1,6 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
-import { Unit } from "@siteimprove/alfa-css";
+import { Length, Unit } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -63,11 +63,23 @@ export namespace Outcomes {
   );
 }
 
+/**
+ * @remarks
+ * We consider that calculated lengths have a relative unit (and pass the rule)
+ * since we cannot easily detect it here. We should instead dig into the
+ * calculation to see if relative units are used, but that could be made difficult
+ * with hings like "2em * 0" which is **not** a relative length…
+ */
 function hasRelativeUnit(device: Device) {
   return hasCascadedStyle(
     "line-height",
     (lineHeight) =>
-      lineHeight.type !== "length" || Unit.Length.isRelative(lineHeight.unit),
+      // Keyword, percentage, number
+      !Length.isLength(lineHeight) ||
+      // Calculated length
+      lineHeight.hasCalculation() ||
+      // Fixed length in relative units
+      lineHeight.isRelative(),
     device
   );
 }
