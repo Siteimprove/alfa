@@ -742,7 +742,7 @@ export namespace Length {
             math: Math_2.JSON;
         }
     }
-    export class Fixed<U extends Unit.Length = Unit.Length> extends Value<"length", false> implements ILength<U>, Comparable<Fixed<U>> {
+    export class Fixed<U extends Unit.Length = Unit.Length> extends Value<"length", false> implements ILength<U, false>, Comparable<Fixed<U>> {
         // (undocumented)
         get canonicalUnit(): "px";
         // (undocumented)
@@ -818,7 +818,7 @@ export namespace Length {
     const // (undocumented)
     parse: Parser<Slice<Token>, Length, string>;
     const // (undocumented)
-    parseBase: Parser<Slice<Token>, Fixed, string>;
+    parseBase: Parser<Slice<Token>, Fixed<Unit.Length>, string, []>;
         {};
 }
 
