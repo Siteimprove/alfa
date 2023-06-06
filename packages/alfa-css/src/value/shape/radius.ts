@@ -64,7 +64,7 @@ export class Radius<
   }
 
   public toString(): string {
-    return `${this.value}`;
+    return this.value.toString();
   }
 }
 

@@ -13,6 +13,9 @@ import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
 const { either, map } = Parser;
 
+/**
+ * @public
+ */
 export type Length<U extends Unit.Length = Unit.Length> =
   | Length.Calculated
   | Length.Fixed<U>;

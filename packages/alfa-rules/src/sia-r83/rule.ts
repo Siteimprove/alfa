@@ -467,8 +467,8 @@ function usesMediaRule(
  * is a font-relative one. Only checks feature matching the refinement.
  *
  * @remarks
- * We do not want to resolve the feature now since it would absolutize to px,
- * so we accept features with calculated lengths as being font-relative.
+ * We currently do not support calculated media queries. But this is lost in the
+ * typing of Media.Feature. Here, we simply consider them as "good" (font relative).
  */
 function isFontRelativeMediaRule<F extends Media.Feature>(
   refinement: Refinement<Media.Feature, F>
