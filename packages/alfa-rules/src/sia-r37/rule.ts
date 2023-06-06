@@ -11,7 +11,6 @@ import { Question } from "../common/act/question";
 
 import R25 from "../sia-r25/rule";
 import R31 from "../sia-r31/rule";
-import R36 from "../sia-r36/rule";
 
 import { Scope } from "../tags";
 
@@ -25,7 +24,7 @@ export default Rule.Composite.of<Page, Element, Question.Metadata>({
     Technique.of("H96"),
   ],
   tags: [Scope.Component],
-  composes: [R25, R31, R36],
+  composes: [R25, R31],
   evaluate() {
     return {
       expectations(outcomes) {

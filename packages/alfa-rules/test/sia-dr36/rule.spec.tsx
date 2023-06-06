@@ -2,8 +2,8 @@ import { Outcome } from "@siteimprove/alfa-act";
 import { h } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
-import R36 from "../../src/sia-r36/rule";
 import { Outcomes } from "../../src/common/expectation/video-description-track-accurate";
+import R36 from "../../src/sia-dr36/rule";
 
 import { evaluate } from "../common/evaluate";
 import { oracle } from "../common/oracle";
