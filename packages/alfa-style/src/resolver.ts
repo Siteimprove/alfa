@@ -53,71 +53,15 @@ export namespace Resolver {
    *
    * {@link https://drafts.csswg.org/css-values/#relative-lengths}
    */
-  export function length(style: Style): Mapper<Length, Length<"px">>;
-
-  export function length(length: Length, style: Style): Length<"px">;
-
-  export function length(
-    lengthOrStyle: Length | Style,
-    style?: Style
-  ): Mapper<Length, Length<"px">> | Length<"px"> {
-    return Length.isLength(lengthOrStyle)
-      ? lengthUncurry(lengthOrStyle, style!)
-      : lengthCurry(lengthOrStyle as Style);
-  }
-
-  function lengthCurry(style: Style): Mapper<Length, Length<"px">> {
-    return (value) => lengthUncurry(value, style);
-  }
-
-  function lengthUncurry(length: Length, style: Style): Length<"px"> {
-    const { unit, value } = length;
+  export function length(style: Style): Length.Resolver {
     const { viewport } = style.device;
+    const width = Length.of(viewport.width, "px");
+    const height = Length.of(viewport.height, "px");
 
     const fontSize = style.computed("font-size").value;
+    const rootFontSize = style.root().computed("font-size").value;
 
-    switch (unit) {
-      // https://www.w3.org/TR/css-values/#em
-      case "em":
-        return fontSize.scale(value);
-
-      // https://www.w3.org/TR/css-values/#rem
-      case "rem": {
-        const rootFontSize = style.root().computed("font-size").value;
-
-        return rootFontSize.scale(value);
-      }
-
-      // https://www.w3.org/TR/css-values/#ex
-      case "ex":
-      // https://www.w3.org/TR/css-values/#ch
-      case "ch":
-        return fontSize.scale(value * 0.5);
-
-      // https://www.w3.org/TR/css-values/#vh
-      case "vh":
-        return Length.of((viewport.height * value) / 100, "px");
-
-      // https://www.w3.org/TR/css-values/#vw
-      case "vw":
-        return Length.of((viewport.width * value) / 100, "px");
-
-      // https://www.w3.org/TR/css-values/#vmin
-      case "vmin":
-        return Length.of(
-          (Math.min(viewport.width, viewport.height) * value) / 100,
-          "px"
-        );
-
-      // https://www.w3.org/TR/css-values/#vmax
-      case "vmax":
-        return Length.of(
-          (Math.max(viewport.width, viewport.height) * value) / 100,
-          "px"
-        );
-    }
-
-    return Length.of(Converter.length(value, unit, "px"), "px");
+    return Length.resolver(fontSize, rootFontSize, width, height);
   }
 
   /**

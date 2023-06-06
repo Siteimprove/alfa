@@ -257,7 +257,7 @@ export namespace Media {
         } = device;
 
         const value = this._value.map((value) =>
-          value.map((length) => Resolver.length(length, device))
+          value.map(Resolver.length(device))
         );
 
         return width > 0
@@ -322,7 +322,7 @@ export namespace Media {
         } = device;
 
         const value = this._value.map((value) =>
-          value.map((length) => Resolver.length(length, device))
+          value.map(Resolver.length(device))
         );
 
         return height > 0
