@@ -12,7 +12,6 @@ import { Question } from "../common/act/question";
 import R26 from "../sia-r26/rule";
 import R32 from "../sia-r32/rule";
 import R33 from "../sia-r33/rule";
-import R34 from "../sia-r34/rule";
 import { Scope } from "../tags";
 
 export default Rule.Composite.of<Page, Element, Question.Metadata>({
@@ -21,10 +20,9 @@ export default Rule.Composite.of<Page, Element, Question.Metadata>({
     Criterion.of("1.2.1"),
     Technique.of("G159"),
     Technique.of("G166"),
-    Technique.of("H96"),
   ],
   tags: [Scope.Component],
-  composes: [R26, R32, R33, R34],
+  composes: [R26, R32, R33],
   evaluate() {
     return {
       expectations(outcomes) {
