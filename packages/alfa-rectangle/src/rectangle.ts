@@ -33,42 +33,42 @@ export class Rectangle
     this._height = height;
   }
 
-  get width() {
+  public get width(): number {
     return this._width;
   }
 
-  get height() {
+  public get height(): number {
     return this._height;
   }
 
-  get top() {
+  public get top(): number {
     return this._y;
   }
 
-  get left() {
+  public get left(): number {
     return this._x;
   }
 
-  get right() {
+  public get right(): number {
     return this._x + this._width;
   }
 
-  get bottom() {
+  public get bottom(): number {
     return this._y + this._height;
   }
 
-  get center(): { x: number; y: number } {
+  public get center(): { x: number; y: number } {
     return {
       x: this._x + this._width / 2,
       y: this._y + this._height / 2,
     };
   }
 
-  get area() {
+  public get area(): number {
     return this._width * this._height;
   }
 
-  contains(other: Rectangle): boolean {
+  public contains(other: Rectangle): boolean {
     return (
       this.left <= other.left &&
       this.top <= other.top &&
@@ -77,7 +77,7 @@ export class Rectangle
     );
   }
 
-  intersects(other: Rectangle) {
+  public intersects(other: Rectangle) {
     return (
       other.left <= this.right &&
       other.top <= this.bottom &&
@@ -86,9 +86,9 @@ export class Rectangle
     );
   }
 
-  equals(value: this): boolean;
-  equals(value: unknown): value is this;
-  equals(value: unknown): boolean {
+  public equals(value: this): boolean;
+  public equals(value: unknown): value is this;
+  public equals(value: unknown): boolean {
     return (
       value === this ||
       (value instanceof Rectangle &&
@@ -99,7 +99,7 @@ export class Rectangle
     );
   }
 
-  hash(hash: Hash): void {
+  public hash(hash: Hash): void {
     hash
       .writeFloat32(this._x)
       .writeFloat32(this._y)
@@ -107,7 +107,7 @@ export class Rectangle
       .writeFloat32(this._height);
   }
 
-  toJSON(): Rectangle.JSON {
+  public toJSON(): Rectangle.JSON {
     return {
       type: "rectangle",
       x: this._x,
