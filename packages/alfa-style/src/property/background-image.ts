@@ -60,8 +60,8 @@ export type Computed = List<
           | Radial.Ellipse<Length.Fixed<"px"> | Percentage>
           | Radial.Extent,
           Position<
-            Position.Component<Position.Horizontal, "px">,
-            Position.Component<Position.Vertical, "px">
+            Position.Component<Position.Keywords.Horizontal, "px">,
+            Position.Component<Position.Keywords.Vertical, "px">
           >
         >
     >

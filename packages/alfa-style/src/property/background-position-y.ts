@@ -22,7 +22,7 @@ export type Specified = List<Specified.Item>;
  * @internal
  */
 export namespace Specified {
-  export type Item = Position.Component<Position.Vertical>;
+  export type Item = Position.Component<Position.Keywords.Vertical>;
 }
 
 /**
@@ -34,14 +34,14 @@ export type Computed = List<Computed.Item>;
  * @internal
  */
 export namespace Computed {
-  export type Item = Position.Component<Position.Vertical, "px">;
+  export type Item = Position.Component<Position.Keywords.Vertical, "px">;
 }
 
 /**
  * @internal
  */
 export const parse = either(
-  Position.parseCenter,
+  Position.Keywords.parseCenter,
   either(Length.parseBase, Percentage.parse)
 );
 
