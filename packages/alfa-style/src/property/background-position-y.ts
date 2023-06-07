@@ -1,5 +1,4 @@
 import {
-  Length,
   List,
   Percentage,
   Token,
@@ -40,10 +39,7 @@ export namespace Computed {
 /**
  * @internal
  */
-export const parse = either(
-  Position.Keywords.parseCenter,
-  either(Length.parseBase, Percentage.parse)
-);
+export const parse = Position.Component.parseVertical;
 
 /**
  * @internal

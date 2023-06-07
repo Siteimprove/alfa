@@ -252,6 +252,7 @@ export namespace Position {
       | Percentage.JSON
       | Side.JSON;
 
+    // "center" is included in Side.parse[Horizontal, Vertical]
     export const parseHorizontal = either(Offset.parse, Side.parseHorizontal);
     export const parseVertical = either(Offset.parse, Side.parseVertical);
   }

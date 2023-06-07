@@ -1,10 +1,4 @@
-import {
-  Length,
-  List,
-  Percentage,
-  Token,
-  Position,
-} from "@siteimprove/alfa-css";
+import { List, Percentage, Token, Position } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
@@ -40,10 +34,7 @@ export namespace Computed {
 /**
  * @internal
  */
-export const parse = either(
-  Position.Keywords.parseCenter,
-  either(Length.parseBase, Percentage.parse)
-);
+export const parse = Position.Component.parseHorizontal;
 
 /**
  * @internal
