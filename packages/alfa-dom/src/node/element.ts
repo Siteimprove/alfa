@@ -52,7 +52,7 @@ export class Element<N extends string = string>
   private readonly _name: N;
   private readonly _attributes: Map<string, Attribute>;
   private readonly _style: Option<Block>;
-  private readonly _rectangle: Option<Rectangle>;
+  private readonly _box: Option<Rectangle>;
   private _shadow: Option<Shadow> = None;
   private _content: Option<Document> = None;
   private readonly _id: Option<string>;
@@ -65,7 +65,7 @@ export class Element<N extends string = string>
     attributes: Array<Attribute>,
     children: Array<Node>,
     style: Option<Block>,
-    rectangle: Option<Rectangle>
+    box: Option<Rectangle>
   ) {
     super(children, "element");
 
@@ -89,7 +89,7 @@ export class Element<N extends string = string>
       .map((attr) => attr.value.trim().split(/\s+/))
       .getOr([]);
 
-    this._rectangle = rectangle;
+    this._box = box;
   }
 
   public get namespace(): Option<Namespace> {
@@ -142,7 +142,7 @@ export class Element<N extends string = string>
   }
 
   public get rectangle(): Option<Rectangle> {
-    return this._rectangle;
+    return this._box;
   }
 
   public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
