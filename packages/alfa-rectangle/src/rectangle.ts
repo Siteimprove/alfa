@@ -101,10 +101,10 @@ export class Rectangle
 
   public hash(hash: Hash): void {
     hash
-      .writeFloat32(this._x)
-      .writeFloat32(this._y)
-      .writeFloat32(this._width)
-      .writeFloat32(this._height);
+      .writeNumber(this._x)
+      .writeNumber(this._y)
+      .writeNumber(this._width)
+      .writeNumber(this._height);
   }
 
   public toJSON(): Rectangle.JSON {
