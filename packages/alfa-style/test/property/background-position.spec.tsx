@@ -74,3 +74,47 @@ test("#cascaded() parses `background-position: top`", (t) => {
     source: h.declaration("background-position", "top").toJSON(),
   });
 });
+
+test("#cascaded() parses `background-position-x: left`", (t) => {
+  const element = <div style={{ backgroundPositionX: `left` }} />;
+
+  t.deepEqual(cascaded(element, "background-position-x"), {
+    value: {
+      type: "list",
+      values: [
+        {
+          type: "side",
+          side: {
+            type: "keyword",
+            value: "left",
+          },
+          offset: null,
+        },
+      ],
+      separator: ", ",
+    },
+    source: h.declaration("background-position-x", "left").toJSON(),
+  });
+});
+
+test("#cascaded() parses `background-position-y: top`", (t) => {
+  const element = <div style={{ backgroundPositionY: `top` }} />;
+
+  t.deepEqual(cascaded(element, "background-position-y"), {
+    value: {
+      type: "list",
+      values: [
+        {
+          type: "side",
+          side: {
+            type: "keyword",
+            value: "top",
+          },
+          offset: null,
+        },
+      ],
+      separator: ", ",
+    },
+    source: h.declaration("background-position-y", "top").toJSON(),
+  });
+});
