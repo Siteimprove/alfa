@@ -5,6 +5,13 @@
         "src/index.ts",
         "src/rectangle.ts",
         "test/rectangle.spec.ts"
+    ],
+    "references": [
+        { "path": "../alfa-equatable" },
+        { "path": "../alfa-hash" },
+        { "path": "../alfa-json" },
+        { "path": "../alfa-fnv" },
+        { "path": "../alfa-test" }
     ]
-  }
+}
   
