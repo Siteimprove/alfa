@@ -1,7 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length as BaseLength, Lexer } from "../../../src";
-import { Length } from "../../../src/value/numeric";
+import { Length, Lexer } from "../../../src";
 
 function parse(input: string) {
   return Length.parse(Lexer.lex(input)).map(([, length]) => length);
@@ -58,7 +57,7 @@ test("resolve() absolutize lengths", (t) => {
   t.deepEqual(
     parse("calc(1em + 2px)")
       .getUnsafe()
-      .resolve(() => BaseLength.of(16, "px"))
+      .resolve(() => Length.of(16, "px"))
       .toJSON(),
     {
       type: "length",

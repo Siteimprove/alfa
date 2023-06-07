@@ -34,14 +34,14 @@ export type Computed =
   | Keyword<"none">
   | List<
       | Matrix
-      | Perspective<Length<"px">>
+      | Perspective<Length.Fixed<"px">>
       | Rotate<Angle<"deg">>
       | Scale
       | Skew<Angle<"deg">, Angle<"deg">>
       | Translate<
-          Length<"px"> | Percentage,
-          Length<"px"> | Percentage,
-          Length<"px">
+          Length.Fixed<"px"> | Percentage,
+          Length.Fixed<"px"> | Percentage,
+          Length.Fixed<"px">
         >
     >;
 
@@ -75,7 +75,7 @@ export default Longhand.of<Specified, Computed>(
 
                 case "perspective":
                   return Perspective.of(
-                    Resolver.length(transform.depth, style)
+                    transform.depth.resolve(Resolver.length(style))
                   );
 
                 case "rotate":
@@ -99,13 +99,13 @@ export default Longhand.of<Specified, Computed>(
                   return Translate.of(
                     transform.x.type === "percentage"
                       ? transform.x
-                      : Resolver.length(transform.x, style),
+                      : transform.x.resolve(Resolver.length(style)),
 
                     transform.y.type === "percentage"
                       ? transform.y
-                      : Resolver.length(transform.y, style),
+                      : transform.y.resolve(Resolver.length(style)),
 
-                    Resolver.length(transform.z, style)
+                    transform.z.resolve(Resolver.length(style))
                   );
               }
             }),

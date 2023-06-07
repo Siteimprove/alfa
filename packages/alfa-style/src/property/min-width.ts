@@ -26,7 +26,7 @@ export type Computed =
   | Keyword<"fit-content">
   | Keyword<"max-content">
   | Keyword<"min-content">
-  | Length<"px">
+  | Length.Fixed<"px">
   | Percentage;
 
 /**
@@ -52,7 +52,7 @@ export default Longhand.of<Specified, Computed>(
           return height;
 
         case "length":
-          return Resolver.length(height, style);
+          return height.resolve(Resolver.length(style));
       }
     })
 );

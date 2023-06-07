@@ -11,7 +11,7 @@ const { either } = Parser;
 /**
  * @internal
  */
-export type Specified = Keyword<"normal"> | Length.Mixed;
+export type Specified = Keyword<"normal"> | Length;
 
 /**
  * @internal

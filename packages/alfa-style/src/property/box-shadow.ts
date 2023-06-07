@@ -31,10 +31,10 @@ export type Computed =
   | Keyword<"none">
   | List<
       Shadow<
-        Length<"px">,
-        Length<"px">,
-        Length<"px">,
-        Length<"px">,
+        Length.Fixed<"px">,
+        Length.Fixed<"px">,
+        Length.Fixed<"px">,
+        Length.Fixed<"px">,
         RGB<Percentage, Percentage> | Current | System
       >
     >;
@@ -43,10 +43,10 @@ export type Computed =
  * @internal
  */
 export const parse: Parser<Slice<Token>, Shadow, string> = (input) => {
-  let horizontal: Length | undefined;
-  let vertical: Length | undefined;
-  let blur: Length | undefined;
-  let spread: Length | undefined;
+  let horizontal: Length.Fixed | undefined;
+  let vertical: Length.Fixed | undefined;
+  let blur: Length.Fixed | undefined;
+  let spread: Length.Fixed | undefined;
   let color: Color | undefined;
   let isInset: boolean | undefined;
 
@@ -61,7 +61,7 @@ export const parse: Parser<Slice<Token>, Shadow, string> = (input) => {
 
     if (horizontal === undefined) {
       // horizontal: <length>
-      const result = Length.parse(input);
+      const result = Length.parseBase(input);
 
       if (result.isOk()) {
         [input, horizontal] = result.get();
@@ -69,7 +69,7 @@ export const parse: Parser<Slice<Token>, Shadow, string> = (input) => {
 
         {
           // vertical: <length>
-          const result = Length.parse(input);
+          const result = Length.parseBase(input);
 
           if (result.isErr()) {
             return result;
@@ -81,7 +81,7 @@ export const parse: Parser<Slice<Token>, Shadow, string> = (input) => {
 
           {
             // blur: <length>?
-            const result = Length.parse(input);
+            const result = Length.parseBase(input);
 
             if (result.isOk()) {
               [input, blur] = result.get();
@@ -89,7 +89,7 @@ export const parse: Parser<Slice<Token>, Shadow, string> = (input) => {
 
               {
                 // spread: <length>?
-                const result = Length.parse(input);
+                const result = Length.parseBase(input);
 
                 if (result.isOk()) {
                   [input, spread] = result.get();
@@ -169,13 +169,15 @@ export default Longhand.of<Specified, Computed>(
           return value;
 
         case "list":
+          const resolver = Resolver.length(style);
+
           return List.of(
             [...value].map((shadow) =>
               Shadow.of(
-                Resolver.length(shadow.horizontal, style),
-                Resolver.length(shadow.vertical, style),
-                Resolver.length(shadow.blur, style),
-                Resolver.length(shadow.spread, style),
+                shadow.horizontal.resolve(resolver),
+                shadow.vertical.resolve(resolver),
+                shadow.blur.resolve(resolver),
+                shadow.spread.resolve(resolver),
                 Resolver.color(shadow.color),
                 shadow.isInset
               )

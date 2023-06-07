@@ -1,6 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 
-import { Length } from "../calculation";
+import { Length } from "./numeric";
 
 import { Value } from "../value";
 import { Color } from "./color";
@@ -9,17 +9,17 @@ import { Color } from "./color";
  * @public
  */
 export class Shadow<
-  H extends Length = Length,
-  V extends Length = H,
-  B extends Length = Length,
-  S extends Length = Length,
+  H extends Length.Fixed = Length.Fixed,
+  V extends Length.Fixed = H,
+  B extends Length.Fixed = Length.Fixed,
+  S extends Length.Fixed = Length.Fixed,
   C extends Color = Color
 > extends Value<"shadow", false> {
   public static of<
-    H extends Length = Length,
-    V extends Length = H,
-    B extends Length = Length,
-    S extends Length = Length,
+    H extends Length.Fixed = Length.Fixed,
+    V extends Length.Fixed = H,
+    B extends Length.Fixed = Length.Fixed,
+    S extends Length.Fixed = Length.Fixed,
     C extends Color = Color
   >(
     horizontal: H,
@@ -129,10 +129,10 @@ export class Shadow<
  */
 export namespace Shadow {
   export interface JSON extends Value.JSON<"shadow"> {
-    horizontal: Length.JSON;
-    vertical: Length.JSON;
-    blur: Length.JSON;
-    spread: Length.JSON;
+    horizontal: Length.Fixed.JSON;
+    vertical: Length.Fixed.JSON;
+    blur: Length.Fixed.JSON;
+    spread: Length.Fixed.JSON;
     color: Color.JSON;
     isInset: boolean;
   }

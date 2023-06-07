@@ -53,71 +53,15 @@ export namespace Resolver {
    *
    * {@link https://drafts.csswg.org/css-values/#relative-lengths}
    */
-  export function length(style: Style): Mapper<Length, Length<"px">>;
-
-  export function length(length: Length, style: Style): Length<"px">;
-
-  export function length(
-    lengthOrStyle: Length | Style,
-    style?: Style
-  ): Mapper<Length, Length<"px">> | Length<"px"> {
-    return Length.isLength(lengthOrStyle)
-      ? lengthUncurry(lengthOrStyle, style!)
-      : lengthCurry(lengthOrStyle);
-  }
-
-  function lengthCurry(style: Style): Mapper<Length, Length<"px">> {
-    return (value) => lengthUncurry(value, style);
-  }
-
-  function lengthUncurry(length: Length, style: Style): Length<"px"> {
-    const { unit, value } = length;
+  export function length(style: Style): Length.Resolver {
     const { viewport } = style.device;
+    const width = Length.of(viewport.width, "px");
+    const height = Length.of(viewport.height, "px");
 
     const fontSize = style.computed("font-size").value;
+    const rootFontSize = style.root().computed("font-size").value;
 
-    switch (unit) {
-      // https://www.w3.org/TR/css-values/#em
-      case "em":
-        return fontSize.scale(value);
-
-      // https://www.w3.org/TR/css-values/#rem
-      case "rem": {
-        const rootFontSize = style.root().computed("font-size").value;
-
-        return rootFontSize.scale(value);
-      }
-
-      // https://www.w3.org/TR/css-values/#ex
-      case "ex":
-      // https://www.w3.org/TR/css-values/#ch
-      case "ch":
-        return fontSize.scale(value * 0.5);
-
-      // https://www.w3.org/TR/css-values/#vh
-      case "vh":
-        return Length.of((viewport.height * value) / 100, "px");
-
-      // https://www.w3.org/TR/css-values/#vw
-      case "vw":
-        return Length.of((viewport.width * value) / 100, "px");
-
-      // https://www.w3.org/TR/css-values/#vmin
-      case "vmin":
-        return Length.of(
-          (Math.min(viewport.width, viewport.height) * value) / 100,
-          "px"
-        );
-
-      // https://www.w3.org/TR/css-values/#vmax
-      case "vmax":
-        return Length.of(
-          (Math.max(viewport.width, viewport.height) * value) / 100,
-          "px"
-        );
-    }
-
-    return Length.of(Converter.length(value, unit, "px"), "px");
+    return Length.resolver(fontSize, rootFontSize, width, height);
   }
 
   /**
@@ -160,31 +104,31 @@ export namespace Resolver {
   ): Image<
     | URL
     | Linear<
-        | Gradient.Hint<Percentage | Length<"px">>
+        | Gradient.Hint<Percentage | Length.Fixed<"px">>
         | Gradient.Stop<
             Current | System | RGB<Percentage, Percentage>,
-            Percentage | Length<"px">
+            Percentage | Length.Fixed<"px">
           >,
         Angle<"deg"> | Linear.Side | Linear.Corner
       >
     | Radial<
-        | Gradient.Hint<Percentage | Length<"px">>
+        | Gradient.Hint<Percentage | Length.Fixed<"px">>
         | Gradient.Stop<
             Current | System | RGB<Percentage, Percentage>,
-            Percentage | Length<"px">
+            Percentage | Length.Fixed<"px">
           >,
-        | Radial.Circle<Length<"px">>
-        | Radial.Ellipse<Percentage | Length<"px">>
+        | Radial.Circle<Length.Fixed<"px">>
+        | Radial.Ellipse<Percentage | Length.Fixed<"px">>
         | Radial.Extent,
         Position<
           | Percentage
           | Position.Center
-          | Length<"px">
-          | Position.Side<Position.Horizontal, Percentage | Length<"px">>,
+          | Length.Fixed<"px">
+          | Position.Side<Position.Horizontal, Percentage | Length.Fixed<"px">>,
           | Percentage
           | Position.Center
-          | Length<"px">
-          | Position.Side<Position.Vertical, Percentage | Length<"px">>
+          | Length.Fixed<"px">
+          | Position.Side<Position.Vertical, Percentage | Length.Fixed<"px">>
         >
       >
   > {
@@ -228,14 +172,16 @@ export namespace Resolver {
         return Gradient.Stop.of(
           Resolver.color(item.color),
           item.position.map((position) =>
-            position.type === "length" ? length(position, style) : position
+            position.type === "length"
+              ? position.resolve(length(style))
+              : position
           )
         );
 
       case "hint": {
         return Gradient.Hint.of(
           item.position.type === "length"
-            ? length(item.position, style)
+            ? item.position.resolve(length(style))
             : item.position
         );
       }
@@ -245,15 +191,15 @@ export namespace Resolver {
   function gradientShape(shape: Radial.Shape, style: Style) {
     switch (shape.type) {
       case "circle":
-        return Radial.Circle.of(length(shape.radius, style));
+        return Radial.Circle.of(shape.radius.resolve(length(style)));
 
       case "ellipse":
         return Radial.Ellipse.of(
           shape.horizontal.type === "length"
-            ? length(shape.horizontal, style)
+            ? shape.horizontal.resolve(length(style))
             : shape.horizontal,
           shape.vertical.type === "length"
-            ? length(shape.vertical, style)
+            ? shape.vertical.resolve(length(style))
             : shape.vertical
         );
 
@@ -268,12 +214,12 @@ export namespace Resolver {
   ): Position<
     | Percentage
     | Position.Center
-    | Length<"px">
-    | Position.Side<Position.Horizontal, Percentage | Length<"px">>,
+    | Length.Fixed<"px">
+    | Position.Side<Position.Horizontal, Percentage | Length.Fixed<"px">>,
     | Percentage
     | Position.Center
-    | Length<"px">
-    | Position.Side<Position.Vertical, Percentage | Length<"px">>
+    | Length.Fixed<"px">
+    | Position.Side<Position.Vertical, Percentage | Length.Fixed<"px">>
   > {
     return Position.of(
       positionComponent(position.horizontal, style),
@@ -289,15 +235,15 @@ export namespace Resolver {
   ):
     | Percentage
     | Position.Center
-    | Length<"px">
-    | Position.Side<S, Percentage | Length<"px">> {
+    | Length.Fixed<"px">
+    | Position.Side<S, Percentage | Length.Fixed<"px">> {
     switch (position.type) {
       case "keyword":
       case "percentage":
         return position;
 
       case "length":
-        return Resolver.length(position, style);
+        return position.resolve(Resolver.length(style));
 
       case "side":
         return Position.Side.of(
@@ -308,7 +254,7 @@ export namespace Resolver {
                 return offset;
 
               case "length":
-                return Resolver.length(offset, style);
+                return offset.resolve(Resolver.length(style));
             }
           })
         );

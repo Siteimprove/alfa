@@ -4,8 +4,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Err } from "@siteimprove/alfa-result";
 
-import { Length, Percentage } from "../calculation";
+import { Percentage } from "../calculation";
+
 import { Keyword } from "./keyword";
+import { Length } from "./numeric";
+
 import { Token } from "../syntax";
 import { Unit } from "../unit";
 import { Value } from "../value";
@@ -70,7 +73,7 @@ export class Position<
   }
 
   public toString(): string {
-    return `${this._horizontal.toString()} ${this._vertical.toString()}`;
+    return `${this._horizontal} ${this._vertical}`;
   }
 }
 
@@ -95,7 +98,9 @@ export namespace Position {
 
   const parseHorizontal = Keyword.parse("left", "right");
 
-  type Offset<U extends Unit.Length = Unit.Length> = Length<U> | Percentage;
+  type Offset<U extends Unit.Length = Unit.Length> =
+    | Length.Fixed<U>
+    | Percentage;
 
   export class Side<
     S extends Vertical | Horizontal = Vertical | Horizontal,
@@ -156,8 +161,8 @@ export namespace Position {
     }
 
     public toString(): string {
-      return `${this._side.toString()}${this._offset
-        .map((offset) => ` ${offset.toString()}`)
+      return `${this._side}${this._offset
+        .map((offset) => ` ${offset}`)
         .getOr("")}`;
     }
   }
@@ -165,7 +170,7 @@ export namespace Position {
   export namespace Side {
     export interface JSON extends Value.JSON<"side"> {
       side: Keyword.JSON;
-      offset: Length.JSON | Percentage.JSON | null;
+      offset: Length.Fixed.JSON | Percentage.JSON | null;
     }
   }
 
@@ -175,10 +180,14 @@ export namespace Position {
   > = Center | Offset<U> | Side<S, Offset<U>>;
 
   export namespace Component {
-    export type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
+    export type JSON =
+      | Keyword.JSON
+      | Length.Fixed.JSON
+      | Percentage.JSON
+      | Side.JSON;
   }
 
-  const parseValue = either(Length.parse, Percentage.parse);
+  const parseValue = either(Length.parseBase, Percentage.parse);
 
   /**
    * Parse a side keyword (top/bottom/let/right) or "center"

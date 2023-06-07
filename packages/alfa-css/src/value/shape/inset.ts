@@ -5,10 +5,11 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Length, Percentage } from "../../calculation";
+import { Percentage } from "../../calculation";
 import { Function, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
+import { Length } from "../numeric";
 
 import { BasicShape } from "./basic-shape";
 
@@ -157,9 +158,9 @@ export class Inset<
  * @public
  */
 export namespace Inset {
-  export type Offset = Length | Percentage;
+  export type Offset = Length.Fixed | Percentage;
 
-  export type Radius = Length | Percentage;
+  export type Radius = Length.Fixed | Percentage;
 
   export type Corner = Radius | readonly [Radius, Radius];
 
@@ -169,7 +170,7 @@ export namespace Inset {
     corners: Option.JSON<readonly [C, C, C, C]>;
   }
 
-  const parseLengthPercentage = either(Length.parse, Percentage.parse);
+  const parseLengthPercentage = either(Length.parseBase, Percentage.parse);
 
   const parseOffsets = map(
     pair(

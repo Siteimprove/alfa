@@ -1,8 +1,10 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Angle, Length, Number, Percentage } from "../../calculation";
+import { Angle, Number, Percentage } from "../../calculation";
 import { Token } from "../../syntax";
+
+import { Length } from "../numeric";
 
 import { Matrix } from "./matrix";
 import { Perspective } from "./perspective";
@@ -32,7 +34,9 @@ export namespace Transform {
     return Matrix.of(...values);
   }
 
-  export function perspective<D extends Length>(depth: D): Perspective<D> {
+  export function perspective<D extends Length.Fixed>(
+    depth: D
+  ): Perspective<D> {
     return Perspective.of(depth);
   }
 
@@ -57,9 +61,9 @@ export namespace Transform {
   }
 
   export function translate<
-    X extends Length | Percentage,
-    Y extends Length | Percentage,
-    Z extends Length
+    X extends Length.Fixed | Percentage,
+    Y extends Length.Fixed | Percentage,
+    Z extends Length.Fixed
   >(x: X, y: Y, z: Z): Translate<X, Y, Z> {
     return Translate.of(x, y, z);
   }

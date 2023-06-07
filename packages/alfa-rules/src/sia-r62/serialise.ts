@@ -37,13 +37,9 @@ export namespace Serialise {
         bottom = "";
         if (right === top) {
           right = "";
-          // TODO: temporary workaround to help TS during migration from non-calculated to calculated properties
-          const initial = Longhands.get(`border-top-${property}`).initial;
-          const str = Length.isLength(initial)
-            ? initial.toString()
-            : initial.toString();
-          // TODO: end workaround, inline variables and remove redudant test.
-          if (top === str) {
+          if (
+            top === Longhands.get(`border-top-${property}`).initial.toString()
+          ) {
             top = "";
           }
         }
@@ -56,14 +52,7 @@ export namespace Serialise {
   export function getLonghand(style: Style, name: Longhands.Name): string {
     const property = style.computed(name).toString();
 
-    // TODO: temporary workaround to help TS during migration from non-calculated to calculated properties
-    const initial = Longhands.get(name).initial;
-    const str = Length.isLength(initial)
-      ? initial.toString()
-      : initial.toString();
-    // TODO: end workaround, inline variables and remove redudant test.
-
-    return property === str ? "" : property;
+    return property === Longhands.get(name).initial.toString() ? "" : property;
   }
 
   export function outline(style: Style): string {
@@ -162,18 +151,11 @@ export namespace Serialise {
       // Longhands with missing layers use the same value as their first layer
       const value = `${array?.[n] ?? array[0]}`;
 
-      // TODO: temporary workaround to help TS during migration from non-calculated to calculated properties
       if (property === undefined) {
         return value;
       }
 
-      const initial = Longhands.get(property).initial;
-      const str = Length.isLength(initial)
-        ? initial.toString()
-        : initial.toString();
-      // TODO: end workaround, inline variables and remove redudant test.
-
-      return property !== undefined && value === str ? "" : value;
+      return value === Longhands.get(property).initial.toString() ? "" : value;
     }
 
     function getSize(n: number): string {

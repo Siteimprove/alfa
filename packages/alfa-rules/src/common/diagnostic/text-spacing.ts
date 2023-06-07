@@ -14,7 +14,7 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
   public static of<N extends Longhands.Name>(
     message: string,
     property: N,
-    value: Length<"px">,
+    value: Length.Fixed<"px">,
     fontSize: Style.Computed<"font-size">,
     ratio: number,
     threshold: number,
@@ -25,7 +25,7 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
   public static of<N extends Longhands.Name>(
     message: string,
     property?: N,
-    value?: Length<"px">,
+    value?: Length.Fixed<"px">,
     fontSize?: Style.Computed<"font-size">,
     ratio?: number,
     threshold?: number,
@@ -47,7 +47,7 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
   }
 
   private readonly _property: N;
-  private readonly _value: Length<"px">;
+  private readonly _value: Length.Fixed<"px">;
   private readonly _fontSize: Style.Computed<"font-size">;
   private readonly _ratio: number;
   private readonly _threshold: number;
@@ -59,7 +59,7 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
   private constructor(
     message: string,
     property: N,
-    value: Length<"px">,
+    value: Length.Fixed<"px">,
     fontSize: Style.Computed<"font-size">,
     ratio: number,
     threshold: number,
@@ -80,7 +80,7 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
     return this._property;
   }
 
-  public get value(): Length<"px"> {
+  public get value(): Length.Fixed<"px"> {
     return this._value;
   }
 
@@ -151,7 +151,7 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
 export namespace TextSpacing {
   export interface JSON<N extends Longhands.Name> extends Diagnostic.JSON {
     property: N;
-    value: Length.JSON<"px">;
+    value: Length.Fixed.JSON<"px">;
     "font-size": Serializable.ToJSON<Style.Computed<"font-size">>;
     ratio: number;
     threshold: number;

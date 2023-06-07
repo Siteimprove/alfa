@@ -23,6 +23,7 @@
     "src/calculation/numeric/angle.ts",
     "src/calculation/numeric/dimension.ts",
     "src/calculation/numeric/index.ts",
+    "src/calculation/numeric/index-new.ts",
     "src/calculation/numeric/integer.ts",
     "src/calculation/numeric/length.ts",
     "src/calculation/numeric/number.ts",

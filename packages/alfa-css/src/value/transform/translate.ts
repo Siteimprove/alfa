@@ -2,8 +2,10 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Length, Percentage } from "../../calculation";
+import { Percentage } from "../../calculation";
 import { Token } from "../../syntax";
+
+import { Length } from "../numeric";
 
 import { Function } from "./function";
 
@@ -13,14 +15,14 @@ const { map, left, right, pair, either, delimited, option } = Parser;
  * @public
  */
 export class Translate<
-  X extends Length | Percentage = Length | Percentage,
-  Y extends Length | Percentage = Length | Percentage,
-  Z extends Length = Length
+  X extends Length.Fixed | Percentage = Length.Fixed | Percentage,
+  Y extends Length.Fixed | Percentage = Length.Fixed | Percentage,
+  Z extends Length.Fixed = Length.Fixed
 > extends Function<"translate"> {
   public static of<
-    X extends Length | Percentage,
-    Y extends Length | Percentage,
-    Z extends Length
+    X extends Length.Fixed | Percentage = Length.Fixed | Percentage,
+    Y extends Length.Fixed | Percentage = Length.Fixed | Percentage,
+    Z extends Length.Fixed = Length.Fixed
   >(x: X, y: Y, z: Z): Translate<X, Y, Z> {
     return new Translate(x, y, z);
   }
@@ -90,15 +92,15 @@ export class Translate<
  */
 export namespace Translate {
   export interface JSON extends Function.JSON<"translate"> {
-    x: Length.JSON | Percentage.JSON;
-    y: Length.JSON | Percentage.JSON;
-    z: Length.JSON;
+    x: Length.Fixed.JSON | Percentage.JSON;
+    y: Length.Fixed.JSON | Percentage.JSON;
+    z: Length.Fixed.JSON;
   }
 
   export function isTranslate<
-    X extends Length | Percentage,
-    Y extends Length | Percentage,
-    Z extends Length
+    X extends Length.Fixed | Percentage,
+    Y extends Length.Fixed | Percentage,
+    Z extends Length.Fixed
   >(value: unknown): value is Translate<X, Y, Z> {
     return value instanceof Translate;
   }
@@ -113,11 +115,11 @@ export namespace Translate {
         delimited(
           option(Token.parseWhitespace),
           pair(
-            either(Length.parse, Percentage.parse),
+            either(Length.parseBase, Percentage.parse),
             option(
               right(
                 delimited(option(Token.parseWhitespace), Token.parseComma),
-                either(Length.parse, Percentage.parse)
+                either(Length.parseBase, Percentage.parse)
               )
             )
           )
@@ -128,7 +130,7 @@ export namespace Translate {
     (result) => {
       const [x, y] = result;
 
-      return Translate.of<Length | Percentage, Length | Percentage, Length>(
+      return Translate.of(
         x,
         y.getOrElse(() => Length.of(0, "px")),
         Length.of(0, "px")
@@ -145,17 +147,12 @@ export namespace Translate {
       left(
         delimited(
           option(Token.parseWhitespace),
-          either(Length.parse, Percentage.parse)
+          either(Length.parseBase, Percentage.parse)
         ),
         Token.parseCloseParenthesis
       )
     ),
-    (x) =>
-      Translate.of<Length | Percentage, Length | Percentage, Length>(
-        x,
-        Length.of(0, "px"),
-        Length.of(0, "px")
-      )
+    (x) => Translate.of(x, Length.of(0, "px"), Length.of(0, "px"))
   );
 
   /**
@@ -167,17 +164,12 @@ export namespace Translate {
       left(
         delimited(
           option(Token.parseWhitespace),
-          either(Length.parse, Percentage.parse)
+          either(Length.parseBase, Percentage.parse)
         ),
         Token.parseCloseParenthesis
       )
     ),
-    (y) =>
-      Translate.of<Length | Percentage, Length | Percentage, Length>(
-        Length.of(0, "px"),
-        y,
-        Length.of(0, "px")
-      )
+    (y) => Translate.of(Length.of(0, "px"), y, Length.of(0, "px"))
   );
 
   /**
@@ -187,16 +179,11 @@ export namespace Translate {
     right(
       Token.parseFunction("translateZ"),
       left(
-        delimited(option(Token.parseWhitespace), Length.parse),
+        delimited(option(Token.parseWhitespace), Length.parseBase),
         Token.parseCloseParenthesis
       )
     ),
-    (z) =>
-      Translate.of<Length | Percentage, Length | Percentage, Length>(
-        Length.of(0, "px"),
-        Length.of(0, "px"),
-        z
-      )
+    (z) => Translate.of(Length.of(0, "px"), Length.of(0, "px"), z)
   );
 
   /**
@@ -209,15 +196,15 @@ export namespace Translate {
         delimited(
           option(Token.parseWhitespace),
           pair(
-            either(Length.parse, Percentage.parse),
+            either(Length.parseBase, Percentage.parse),
             pair(
               right(
                 delimited(option(Token.parseWhitespace), Token.parseComma),
-                either(Length.parse, Percentage.parse)
+                either(Length.parseBase, Percentage.parse)
               ),
               right(
                 delimited(option(Token.parseWhitespace), Token.parseComma),
-                Length.parse
+                Length.parseBase
               )
             )
           )

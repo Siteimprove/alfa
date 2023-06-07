@@ -236,8 +236,8 @@ export namespace Media {
     /**
      * {@link https://drafts.csswg.org/mediaqueries/#width}
      */
-    class Width extends Feature<Length> {
-      public static of(value: Value<Length>): Width {
+    class Width extends Feature<Length.Fixed> {
+      public static of(value: Value<Length.Fixed>): Width {
         return new Width(Option.of(value));
       }
 
@@ -257,7 +257,7 @@ export namespace Media {
         } = device;
 
         const value = this._value.map((value) =>
-          value.map((length) => Resolver.length(length, device))
+          value.map((length) => length.resolve(Resolver.length(device)))
         );
 
         return width > 0
@@ -273,7 +273,12 @@ export namespace Media {
             Value.Range.isRange(value) ? value.toLength() : value
           )
           .map((value) => {
-            if (value.hasValue(Length.isLength)) {
+            if (
+              value.hasValue(Length.isLength) &&
+              value.hasValue(
+                (value): value is Length.Fixed => !value.hasCalculation()
+              )
+            ) {
               return Ok.of(Width.of(value));
             }
 
@@ -296,8 +301,8 @@ export namespace Media {
     /**
      * {@link https://drafts.csswg.org/mediaqueries/#height}
      */
-    class Height extends Feature<Length> {
-      public static of(value: Value<Length>): Height {
+    class Height extends Feature<Length.Fixed> {
+      public static of(value: Value<Length.Fixed>): Height {
         return new Height(Option.of(value));
       }
 
@@ -317,7 +322,7 @@ export namespace Media {
         } = device;
 
         const value = this._value.map((value) =>
-          value.map((length) => Resolver.length(length, device))
+          value.map((length) => length.resolve(Resolver.length(device)))
         );
 
         return height > 0
@@ -333,7 +338,12 @@ export namespace Media {
             Value.Range.isRange(value) ? value.toLength() : value
           )
           .map((value) => {
-            if (value.hasValue(Length.isLength)) {
+            if (
+              value.hasValue(Length.isLength) &&
+              value.hasValue(
+                (value): value is Length.Fixed => !value.hasCalculation()
+              )
+            ) {
               return Ok.of(Height.of(value));
             }
 
@@ -490,7 +500,7 @@ export namespace Media {
         ),
         ([left, right]) => Percentage.of(left.value / right.value)
       ),
-      Length.parse
+      Length.parseBase
     )
   );
 

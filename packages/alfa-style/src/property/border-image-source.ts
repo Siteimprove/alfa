@@ -35,19 +35,19 @@ export type Computed =
       | Linear<
           | Gradient.Stop<
               RGB<Percentage, Percentage> | Current | System,
-              Length<"px"> | Percentage
+              Length.Fixed<"px"> | Percentage
             >
-          | Gradient.Hint<Length<"px"> | Percentage>,
+          | Gradient.Hint<Length.Fixed<"px"> | Percentage>,
           Angle<"deg"> | Linear.Side | Linear.Corner
         >
       | Radial<
           | Gradient.Stop<
               RGB<Percentage, Percentage> | Current | System,
-              Length<"px"> | Percentage
+              Length.Fixed<"px"> | Percentage
             >
-          | Gradient.Hint<Length<"px"> | Percentage>,
-          | Radial.Circle<Length<"px">>
-          | Radial.Ellipse<Length<"px"> | Percentage>
+          | Gradient.Hint<Length.Fixed<"px"> | Percentage>,
+          | Radial.Circle<Length.Fixed<"px">>
+          | Radial.Ellipse<Length.Fixed<"px"> | Percentage>
           | Radial.Extent,
           Position<
             Position.Component<Position.Horizontal, "px">,

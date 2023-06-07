@@ -317,41 +317,66 @@ function horizontalTextOverflow(element: Element, device: Device): Overflow {
   }
 }
 
+/**
+ * Checks if an element has fixed (not font relative) height.
+ *
+ * @remarks
+ * We use the cascaded value to avoid lengths being resolved to pixels.
+ * Otherwise, we won't be able to tell if a font relative length was
+ * used.
+ *
+ * @remarks
+ * Calculated values cannot be resolved at cascade time. So we just accept them
+ * (consider they are font relative) to avoid more false positives.
+ *
+ * @remarks
+ * For heights set via the `style` attribute (the style has no parent),
+ * we assume that its value is controlled by JavaScript and is adjusted
+ * as the content scales.
+ *
+ */
 function hasFixedHeight(device: Device): Predicate<Element> {
-  // Use the cascaded value to avoid lengths being resolved to pixels.
-  // Otherwise, we won't be able to tell if a font relative length was
-  // used.
   return hasCascadedStyle(
     "height",
     (height, source) =>
-      height.type === "length" &&
+      Length.isLength(height) &&
+      !height.hasCalculation() &&
       height.value > 0 &&
-      // !height.isFontRelative() &&
-      // For heights set via the `style` attribute we assume that its value is
-      // controlled by JavaScript and is adjusted as the content scales.
+      !height.isFontRelative() &&
       source.some((declaration) => declaration.parent.isSome()),
     device
   );
 }
 
+/**
+ * Checks if a style property has font relative or calculated value.
+ *
+ * @remarks
+ * We use the cascaded value to avoid lengths being resolved to pixels.
+ * Otherwise, we won't be able to tell if a font relative length was
+ * used.
+ *
+ * @remarks
+ * Calculated values cannot be resolved at cascad time. So we just accept them
+ * (consider they are font relative) to avoid more false positives.
+ */
 function hasFontRelativeValue(
   device: Device,
   property: "height" | "width"
 ): Predicate<Element> {
-  // Use the cascaded value to avoid lengths being resolved to pixels.
-  // Otherwise, we won't be able to tell if a font relative length was
-  // used.
   return or(
     hasCascadedStyle(
       property,
       (value) =>
-        value.type === "length" && value.value > 0 && value.isFontRelative(),
+        Length.isLength(value) &&
+        (value.hasCalculation() || (value.value > 0 && value.isFontRelative())),
       device
     ),
     hasCascadedStyle(
       `min-${property}`,
       (value) =>
-        value.type === "length" && value.value > 0 && value.isFontRelative(),
+        Length.isLength(value) &&
+        (value.hasCalculation() || (value.value > 0 && value.isFontRelative())),
       device
     )
   );
@@ -440,6 +465,10 @@ function usesMediaRule(
 /**
  * Checks whether at least one feature in one of the queries of the media rule
  * is a font-relative one. Only checks feature matching the refinement.
+ *
+ * @remarks
+ * We currently do not support calculated media queries. But this is lost in the
+ * typing of Media.Feature. Here, we simply consider them as "good" (font relative).
  */
 function isFontRelativeMediaRule<F extends Media.Feature>(
   refinement: Refinement<Media.Feature, F>
@@ -455,10 +484,11 @@ function isFontRelativeMediaRule<F extends Media.Feature>(
               Range.isRange(value)
                 ? value.minimum.some(
                     (min) =>
-                      Length.isLength(min.value) && min.value.isFontRelative()
+                      Length.isLength(min.value) &&
+                      (min.value.hasCalculation() || min.value.isFontRelative())
                   )
                 : Discrete.isDiscrete<Length>(value) &&
-                  value.value.isFontRelative()
+                  (value.value.hasCalculation() || value.value.isFontRelative())
             )
         )
       )

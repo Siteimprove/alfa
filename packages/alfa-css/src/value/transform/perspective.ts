@@ -2,8 +2,9 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Length } from "../../calculation";
 import { Token } from "../../syntax";
+
+import { Length } from "../numeric";
 
 import { Function } from "./function";
 
@@ -13,9 +14,9 @@ const { map, left, right, filter, delimited, option } = Parser;
  * @public
  */
 export class Perspective<
-  D extends Length = Length
+  D extends Length.Fixed = Length.Fixed
 > extends Function<"perspective"> {
-  public static of<D extends Length>(depth: D): Perspective<D> {
+  public static of<D extends Length.Fixed>(depth: D): Perspective<D> {
     return new Perspective(depth);
   }
 
@@ -59,10 +60,10 @@ export class Perspective<
  */
 export namespace Perspective {
   export interface JSON extends Function.JSON<"perspective"> {
-    depth: Length.JSON;
+    depth: Length.Fixed.JSON;
   }
 
-  export function isPerspective<D extends Length>(
+  export function isPerspective<D extends Length.Fixed>(
     value: unknown
   ): value is Perspective<D> {
     return value instanceof Perspective;
@@ -78,7 +79,7 @@ export namespace Perspective {
         delimited(
           option(Token.parseWhitespace),
           filter(
-            Length.parse,
+            Length.parseBase,
             (length) => length.value >= 0,
             () => "Depth cannot be less than 0"
           )

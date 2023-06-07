@@ -42,7 +42,7 @@ export namespace Computed {
  */
 export const parse = either(
   Position.parseCenter,
-  either(Length.parse, Percentage.parse)
+  either(Length.parseBase, Percentage.parse)
 );
 
 /**

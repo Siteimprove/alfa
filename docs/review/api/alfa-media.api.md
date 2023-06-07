@@ -111,7 +111,7 @@ export namespace Media {
     // (undocumented)
     export namespace Feature {
         // (undocumented)
-        export class Height extends Feature<Length> {
+        export class Height extends Feature<Length.Fixed> {
             // (undocumented)
             static boolean(): Height;
             // (undocumented)
@@ -119,7 +119,7 @@ export namespace Media {
             // (undocumented)
             get name(): "height";
             // (undocumented)
-            static of(value: Value<Length>): Height;
+            static of(value: Value<Length.Fixed>): Height;
         }
         // (undocumented)
         export namespace Height {
@@ -148,7 +148,7 @@ export namespace Media {
         // (undocumented)
         export function tryFrom(value: Option<Value<any>>, name: string): Result<Feature, string>;
         // (undocumented)
-        export class Width extends Feature<Length> {
+        export class Width extends Feature<Length.Fixed> {
             // (undocumented)
             static boolean(): Width;
             // (undocumented)
@@ -156,7 +156,7 @@ export namespace Media {
             // (undocumented)
             get name(): "width";
             // (undocumented)
-            static of(value: Value<Length>): Width;
+            static of(value: Value<Length.Fixed>): Width;
         }
         const // (undocumented)
         isHeight: typeof Height.isHeight;

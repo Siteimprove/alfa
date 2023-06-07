@@ -29,7 +29,6 @@ test(".parse() parses a simple query for an orientation feature", (t) => {
   ]);
 });
 
-
 test(".parse() parses a simple query for a length feature", (t) => {
   t.deepEqual(parse("(min-width: 0)").getUnsafe().toJSON(), [
     {
@@ -177,25 +176,28 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
 });
 
 test(".parse() does not create a modifier in the absence of a type", (t) => {
-  t.deepEqual(parse("not screen and (orientation: landscape)").getUnsafe().toJSON(), [
-    {
-      modifier: "not",
-      type: {
-        name: "screen",
-      },
-      condition: {
-        type: "feature",
-        name: "orientation",
-        value: {
-          type: "discrete",
+  t.deepEqual(
+    parse("not screen and (orientation: landscape)").getUnsafe().toJSON(),
+    [
+      {
+        modifier: "not",
+        type: {
+          name: "screen",
+        },
+        condition: {
+          type: "feature",
+          name: "orientation",
           value: {
-            type: "keyword",
-            value: "landscape",
+            type: "discrete",
+            value: {
+              type: "keyword",
+              value: "landscape",
+            },
           },
         },
       },
-    },
-  ]);
+    ]
+  );
 
   t.deepEqual(parse("not (orientation: landscape)").getUnsafe().toJSON(), [
     {
@@ -472,9 +474,13 @@ test("#matches() matches negation query", (t) => {
 });
 
 test("#matches() matches query with a media type", (t) => {
-  const isScreenPortrait = parse("screen and (orientation: portrait)").getUnsafe();
+  const isScreenPortrait = parse(
+    "screen and (orientation: portrait)"
+  ).getUnsafe();
 
-  const isPrintPortrait = parse("print and (orientation: portrait)").getUnsafe();
+  const isPrintPortrait = parse(
+    "print and (orientation: portrait)"
+  ).getUnsafe();
 
   t.deepEqual(isScreenPortrait.matches(smallPortrait), true);
   t.deepEqual(isPrintPortrait.matches(smallPortrait), false);
@@ -487,7 +493,9 @@ test("#matches() disregards 'only' modifier", (t) => {
     "only screen and (orientation: portrait)"
   ).getUnsafe();
 
-  const isPrintPortrait = parse("only print and (orientation: portrait)").getUnsafe();
+  const isPrintPortrait = parse(
+    "only print and (orientation: portrait)"
+  ).getUnsafe();
 
   t.deepEqual(isScreenPortrait.matches(smallPortrait), true);
   t.deepEqual(isPrintPortrait.matches(smallPortrait), false);

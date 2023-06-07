@@ -32,7 +32,7 @@ export type Specified =
 /**
  * @internal
  */
-export type Computed = Length<"px">;
+export type Computed = Length.Fixed<"px">;
 
 /**
  * @internal

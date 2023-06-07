@@ -6,10 +6,11 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Length, Percentage } from "../../calculation";
+import { Percentage } from "../../calculation";
 import { Function, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
+import { Length } from "../numeric";
 
 import { BasicShape } from "./basic-shape";
 
@@ -24,11 +25,11 @@ const { parseComma, parseWhitespace } = Token;
  */
 export class Polygon<
   F extends Polygon.Fill = Polygon.Fill,
-  V extends Length | Percentage = Length | Percentage
+  V extends Length.Fixed | Percentage = Length.Fixed | Percentage
 > extends BasicShape<"polygon"> {
   public static of<
     F extends Polygon.Fill = Polygon.Fill,
-    V extends Length | Percentage = Length | Percentage
+    V extends Length.Fixed | Percentage = Length.Fixed | Percentage
   >(fill: Option<F>, vertices: Iterable<Polygon.Vertex<V>>): Polygon<F, V> {
     return new Polygon(fill, Array.from(vertices));
   }
@@ -104,7 +105,7 @@ export namespace Polygon {
     vertices: Array<Serializable.ToJSON<Vertex<V>>>;
   }
 
-  const parseLengthPercentage = either(Length.parse, Percentage.parse);
+  const parseLengthPercentage = either(Length.parseBase, Percentage.parse);
 
   const parseVertex = separated(
     parseLengthPercentage,

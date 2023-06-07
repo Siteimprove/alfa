@@ -8,16 +8,19 @@
  */
 
 import {
-  Length as CSSLength,
+  Length,
   Math,
   Number as CSSNumber,
   Percentage,
   type Token,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
-import { Resolver } from "../../resolver";
 
+import { Length as BaseLength } from "@siteimprove/alfa-css/src/calculation/numeric/length";
+
+import { Resolver } from "../../resolver";
 import type { Style } from "../../style";
 
 const { either } = Parser;
@@ -30,7 +33,7 @@ export namespace LengthPercentage {
    * {@link https://drafts.csswg.org/css-values/#mixed-percentages}
    */
   export type LengthPercentage =
-    | CSSLength
+    | Length
     | Percentage
     | Math<"length-percentage">;
 
@@ -38,7 +41,7 @@ export namespace LengthPercentage {
     value: unknown
   ): value is LengthPercentage {
     return (
-      CSSLength.isLength(value) ||
+      Length.isLength(value) ||
       Percentage.isPercentage(value) ||
       (Math.isCalculation(value) && value.isDimensionPercentage("length"))
     );
@@ -46,7 +49,7 @@ export namespace LengthPercentage {
 
   export const parse = either<Slice<Token>, LengthPercentage, string>(
     Percentage.parse,
-    CSSLength.parse,
+    Length.parse,
     Math.parseLengthPercentage
   );
 
@@ -58,26 +61,26 @@ export namespace LengthPercentage {
    * relative lengths (usually the element's own style, or its parent's style).
    */
   export function resolve(
-    percentageBase: CSSLength<"px">,
+    percentageBase: Length.Fixed<"px">,
     lengthBase: Style
-  ): (value: LengthPercentage) => CSSLength<"px"> {
+  ): (value: LengthPercentage) => Length.Fixed<"px"> {
     return (value) => {
-      const percentage = Resolver.percentage(percentageBase);
-      const length = Resolver.length(lengthBase);
+      const percentage: (p: Percentage) => BaseLength<"px"> = (p) =>
+        BaseLength.of(percentageBase.value, percentageBase.unit).scale(p.value);
+      const length: (l: BaseLength) => BaseLength<"px"> = (l) => {
+        const resolved = Length.of(l).resolve(Resolver.length(lengthBase));
+        return BaseLength.of(resolved.value, resolved.unit);
+      };
 
-      switch (value.type) {
-        case "math expression":
-          // Since the calculation has been parsed and typed, there should
-          // always be something to get.
-          return value.resolve2({ length, percentage }).getUnsafe();
-
-        case "length":
-          return length(value);
-
-        case "percentage": {
-          return percentage(value);
-        }
-      }
+      return Selective.of(value)
+        .if(Length.isLength, (value) =>
+          value.resolve(Resolver.length(lengthBase))
+        )
+        .if(Percentage.isPercentage, (value) => Length.of(percentage(value)))
+        .else((value) =>
+          Length.of(value.resolve2({ length, percentage }).getUnsafe())
+        )
+        .get();
     };
   }
 }

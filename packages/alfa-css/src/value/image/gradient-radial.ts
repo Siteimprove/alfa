@@ -11,8 +11,11 @@ import * as json from "@siteimprove/alfa-json";
 import { Token } from "../../syntax";
 import { Value } from "../../value";
 
-import { Length, Percentage } from "../../calculation";
+import { Percentage } from "../../calculation";
+
+import { Length } from "../numeric";
 import { Position } from "../position";
+
 import type { Gradient } from "./gradient";
 import { Keyword } from "../keyword";
 
@@ -149,10 +152,10 @@ export namespace Radial {
   /**
    * {@link https://drafts.csswg.org/css-images/#valdef-ending-shape-circle}
    */
-  export class Circle<R extends Length = Length>
+  export class Circle<R extends Length.Fixed = Length.Fixed>
     implements Equatable, Hashable, Serializable<Circle.JSON>
   {
-    public static of<R extends Length>(radius: R): Circle<R> {
+    public static of<R extends Length.Fixed>(radius: R): Circle<R> {
       return new Circle(radius);
     }
 
@@ -198,17 +201,18 @@ export namespace Radial {
     export interface JSON {
       [key: string]: json.JSON;
       type: "circle";
-      radius: Length.JSON;
+      radius: Length.Fixed.JSON;
     }
   }
 
   /**
    * {@link https://drafts.csswg.org/css-images/#valdef-ending-shape-ellipse}
    */
-  export class Ellipse<R extends Length | Percentage = Length | Percentage>
-    implements Equatable, Hashable, Serializable<Ellipse.JSON>
+  export class Ellipse<
+    R extends Length.Fixed | Percentage = Length.Fixed | Percentage
+  > implements Equatable, Hashable, Serializable<Ellipse.JSON>
   {
-    public static of<R extends Length | Percentage>(
+    public static of<R extends Length.Fixed | Percentage>(
       horizontal: R,
       vertical: R
     ): Ellipse<R> {
@@ -268,8 +272,8 @@ export namespace Radial {
     export interface JSON {
       [key: string]: json.JSON;
       type: "ellipse";
-      horizontal: Length.JSON | Percentage.JSON;
-      vertical: Length.JSON | Percentage.JSON;
+      horizontal: Length.Fixed.JSON | Percentage.JSON;
+      vertical: Length.Fixed.JSON | Percentage.JSON;
     }
   }
 
@@ -360,11 +364,11 @@ export namespace Radial {
 
   const parseCircleShape = Keyword.parse("circle");
 
-  const parseCircleRadius = Length.parse;
+  const parseCircleRadius = Length.parseBase;
 
   const parseCircle: Parser<Slice<Token>, Circle, string> = (input) => {
     let shape: Keyword<"circle"> | undefined;
-    let radius: Length | undefined;
+    let radius: Length.Fixed | undefined;
 
     while (true) {
       for ([input] of Token.parseWhitespace(input)) {
@@ -403,15 +407,15 @@ export namespace Radial {
   const parseEllipseSize = take(
     delimited(
       option(Token.parseWhitespace),
-      either(Length.parse, Percentage.parse)
+      either(Length.parseBase, Percentage.parse)
     ),
     2
   );
 
   const parseEllipse: Parser<Slice<Token>, Ellipse, string> = (input) => {
     let shape: Keyword<"ellipse"> | undefined;
-    let horizontal: Length | Percentage | undefined;
-    let vertical: Length | Percentage | undefined;
+    let horizontal: Length.Fixed | Percentage | undefined;
+    let vertical: Length.Fixed | Percentage | undefined;
 
     while (true) {
       for ([input] of Token.parseWhitespace(input)) {

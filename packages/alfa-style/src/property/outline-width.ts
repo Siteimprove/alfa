@@ -13,7 +13,7 @@ const { either } = Parser;
  * @internal
  */
 export type Specified =
-  | Length.Mixed
+  | Length
   | Keyword<"thin">
   | Keyword<"medium">
   | Keyword<"thick">;

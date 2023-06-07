@@ -8,7 +8,10 @@ import * as json from "@siteimprove/alfa-json";
 import { Token, Function as CSSFunction } from "../../syntax";
 
 import { Value as CSSValue } from "../../value";
-import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
+
+// TODO: resimplify
+import { Angle, Number, Numeric, Percentage } from "../numeric";
+import { Length } from "../numeric/index-new";
 
 import { Expression } from "./expression";
 import { Function } from "./function";
