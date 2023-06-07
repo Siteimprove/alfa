@@ -34,7 +34,7 @@
     "axios": "^0.27.2",
     "execa": "^5.1.1",
     "minimist": "^1.2.6",
-    "package-dependency-graph": "^1.14.3",
+    "package-dependency-graph": "^1.14.4",
     "prettier": "^2.7.1",
     "typescript": "^5.0.4"
   },
