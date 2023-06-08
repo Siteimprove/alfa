@@ -4,29 +4,54 @@ import { test } from "@siteimprove/alfa-test";
 import { Rectangle } from "../src";
 
 const rect = Rectangle.of(28, 62, 54, 81);
+const rectNeq = Rectangle.of(28, 62, -54, -81);
 
-test("#width gets the width of a rectangle", (t) => {
+test("#x gets the x coordinate of the rectangles origin", (t) => {
+  t.equal(rect.x, 28);
+});
+
+test("#y gets the y coordinate of the rectangles origin", (t) => {
+  t.equal(rect.y, 62);
+});
+
+test("#width gets the width of the rectangle", (t) => {
   t.equal(rect.width, 54);
 });
 
-test("#height gets the height of a rectangle", (t) => {
+test("#height gets the height of the rectangle", (t) => {
   t.equal(rect.height, 81);
 });
 
-test("#top gets the y-coordinate of the top left corner of a rectangle", (t) => {
-  t.equal(rect.top, 62);
+test("#top is equal to `y` if `height` is positive", (t) => {
+  t.equal(rect.top, rect.y);
 });
 
-test("#left gets the x-coordinate of the top left corner of a rectangle", (t) => {
-  t.equal(rect.left, 28);
+test("#top is equal to `y + height` if `height` is negative", (t) => {
+  t.equal(rectNeq.top, rectNeq.y + rectNeq.height);
 });
 
-test("#right gets the x-coordinate of the top right corner of a rectangle", (t) => {
-  t.equal(rect.right, 82);
+test("#right is equal to `x + width` if `width` is positive", (t) => {
+  t.equal(rect.right, rect.x + rect.width);
 });
 
-test("#bottom gets the y-coordinate of the bottom left corner of a rectangle", (t) => {
-  t.equal(rect.bottom, 143);
+test("#right is equal to `x` if `width` is negative", (t) => {
+  t.equal(rectNeq.right, rectNeq.x);
+});
+
+test("#bottom is equal to `y + height` if `height` is positive", (t) => {
+  t.equal(rect.bottom, rect.y + rect.height);
+});
+
+test("#bottom is equal to `y` if `height` is negative", (t) => {
+  t.equal(rectNeq.bottom, rectNeq.y);
+});
+
+test("#left is equal to `x` if `width` is positive", (t) => {
+  t.equal(rect.left, rect.x);
+});
+
+test("#left is equal to `x + width` if `width` is negative", (t) => {
+  t.equal(rectNeq.left, rectNeq.x + rectNeq.width);
 });
 
 test("#center calculates the center point of a rectangle", (t) => {

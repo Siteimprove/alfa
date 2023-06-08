@@ -7,6 +7,8 @@ import * as json from "@siteimprove/alfa-json";
 const { max, min } = Math;
 
 /**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/DOMRect}
+ *
  * @public
  */
 export class Rectangle
@@ -33,6 +35,14 @@ export class Rectangle
     this._height = height;
   }
 
+  public get x(): number {
+    return this._x;
+  }
+
+  public get y(): number {
+    return this._y;
+  }
+
   public get width(): number {
     return this._width;
   }
@@ -42,19 +52,19 @@ export class Rectangle
   }
 
   public get top(): number {
-    return this._y;
-  }
-
-  public get left(): number {
-    return this._x;
+    return this._height > 0 ? this._y : this._y + this._height;
   }
 
   public get right(): number {
-    return this._x + this._width;
+    return this._width > 0 ? this._x + this._width : this._x;
   }
 
   public get bottom(): number {
-    return this._y + this._height;
+    return this._height > 0 ? this._y + this._height : this._y;
+  }
+
+  public get left(): number {
+    return this._width > 0 ? this._x : this._x + this._width;
   }
 
   public get center(): { x: number; y: number } {
