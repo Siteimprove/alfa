@@ -7,13 +7,17 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Token } from "../../syntax";
+import { Functor } from "@siteimprove/alfa-functor";
 
 const { delimited, option, map, separatedList } = Parser;
 
 /**
  * @public
  */
-export class List<T> extends Value<"list", false> implements Iterable<T> {
+export class List<T>
+  extends Value<"list", false>
+  implements Iterable<T>, Functor<T>
+{
   public static of<T>(values: Iterable<T>, separator = " "): List<T> {
     return new List(Array.from(values), separator);
   }
@@ -31,8 +35,12 @@ export class List<T> extends Value<"list", false> implements Iterable<T> {
     return this._values;
   }
 
-  public resolve<U>(valueResolver: Mapper<T, U>): List<U> {
-    return new List(this._values.map(valueResolver), this._separator);
+  public resolve<U>(valueResolver: List.Resolver<T, U>): List<U> {
+    return this.map(valueResolver);
+  }
+
+  public map<U>(mapper: Mapper<T, U>): List<U> {
+    return new List(this._values.map(mapper), this._separator);
   }
 
   public equals<T>(value: List<T>): boolean;
@@ -82,6 +90,8 @@ export namespace List {
     values: Array<Serializable.ToJSON<T>>;
     separator: string;
   }
+
+  export type Resolver<T, U> = Mapper<T, U>;
 
   export function isList<T>(value: Iterable<T>): value is List<T>;
 

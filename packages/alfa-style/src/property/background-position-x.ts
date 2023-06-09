@@ -49,11 +49,6 @@ export default Longhand.of<Specified, Computed>(
   parse,
   (value, style) =>
     value.map((positions) =>
-      List.of(
-        Iterable.map(positions, (position) =>
-          Resolver.positionComponent(position, style)
-        ),
-        ", "
-      )
+      positions.map((position) => Resolver.positionComponent(position, style))
     )
 );
