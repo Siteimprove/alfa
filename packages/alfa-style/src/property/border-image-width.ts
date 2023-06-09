@@ -30,7 +30,7 @@ export type Specified = Tuple<
  * @internal
  */
 export namespace Specified {
-  export type Item = Length.Fixed | Percentage | Number | Keyword<"auto">;
+  export type Item = Length | Percentage | Number | Keyword<"auto">;
 }
 
 /**
@@ -61,8 +61,8 @@ export const parse = map(
       option(Token.parseWhitespace),
       either(
         filter(
-          either(Length.parseBase, either(Percentage.parse, Number.parse)),
-          (size) => size.value >= 0,
+          either(Length.parse, either(Percentage.parse, Number.parse)),
+          (size) => size.hasCalculation() || size.value >= 0,
           () => `Negative sizes are not allowed`
         ),
         Keyword.parse("auto")
