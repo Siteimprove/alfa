@@ -6,15 +6,13 @@ import {
   Token,
   Tuple,
 } from "@siteimprove/alfa-css";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
 
 import { LengthPercentage } from "./value/compound";
 
-const { map, either, delimited, option, pair, right, separatedList } = Parser;
+const { map, either, option, pair, right } = Parser;
 
 /**
  * @internal
@@ -53,10 +51,7 @@ export namespace Computed {
 /**
  * @internal
  */
-const parseDimension = either<Slice<Token>, Specified.Dimension, string>(
-  LengthPercentage.parse,
-  Keyword.parse("auto")
-);
+const parseDimension = either(LengthPercentage.parse, Keyword.parse("auto"));
 
 /**
  * @internal
@@ -77,13 +72,7 @@ export const parse = either(
 /**
  * @internal
  */
-export const parseList = map(
-  separatedList(
-    parse,
-    delimited(option(Token.parseWhitespace), Token.parseComma)
-  ),
-  (sizes) => List.of(sizes, ", ")
-);
+export const parseList = List.parseCommaSeparated(parse);
 
 /**
  * @internal
@@ -99,26 +88,23 @@ export default Longhand.of<Specified, Computed>(
   parseList,
   (value, style) =>
     value.map((sizes) =>
-      List.of(
-        Iterable.map(sizes, (size) => {
-          if (Keyword.isKeyword(size)) {
-            return size;
-          }
+      sizes.map((size) => {
+        if (Keyword.isKeyword(size)) {
+          return size;
+        }
 
-          const [x, y] = size.values;
+        const [x, y] = size.values;
 
-          // Percentages are relative to the size of the background positioning
-          // area, which we don't really handle currently.
-          return Tuple.of(
-            x.type === "length" || x.type === "math expression"
-              ? LengthPercentage.resolve(Length.of(0, "px"), style)(x)
-              : x,
-            y.type === "length" || y.type === "math expression"
-              ? LengthPercentage.resolve(Length.of(0, "px"), style)(y)
-              : y
-          );
-        }),
-        ", "
-      )
+        // Percentages are relative to the size of the background positioning
+        // area, which we don't really handle currently.
+        return Tuple.of(
+          x.type === "length" || x.type === "math expression"
+            ? LengthPercentage.resolve(Length.of(0, "px"), style)(x)
+            : x,
+          y.type === "length" || y.type === "math expression"
+            ? LengthPercentage.resolve(Length.of(0, "px"), style)(y)
+            : y
+        );
+      })
     )
 );

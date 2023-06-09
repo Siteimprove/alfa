@@ -1,5 +1,4 @@
 import { List, Percentage, Position } from "@siteimprove/alfa-css";
-import { Iterable } from "@siteimprove/alfa-iterable";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";

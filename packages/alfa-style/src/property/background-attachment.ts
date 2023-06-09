@@ -1,9 +1,6 @@
-import { Keyword, List, Token } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
+import { Keyword, List } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
-
-const { map, delimited, option, separatedList } = Parser;
 
 /**
  * @internal
@@ -30,13 +27,7 @@ export const parse = Keyword.parse("fixed", "local", "scroll");
 /**
  * @internal
  */
-export const parseList = map(
-  separatedList(
-    parse,
-    delimited(option(Token.parseWhitespace), Token.parseComma)
-  ),
-  (repeats) => List.of(repeats, ", ")
-);
+export const parseList = List.parseCommaSeparated(parse);
 
 /**
  * @internal

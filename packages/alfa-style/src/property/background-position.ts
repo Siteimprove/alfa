@@ -1,4 +1,4 @@
-import { List, Token, Position } from "@siteimprove/alfa-css";
+import { List, Position } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Shorthand } from "../shorthand";
@@ -16,13 +16,7 @@ export const parse = Position.parse(/* legacySyntax */ true);
 /**
  * @internal
  */
-export const parseList = map(
-  separatedList(
-    parse,
-    delimited(option(Token.parseWhitespace), Token.parseComma)
-  ),
-  (positions) => List.of(positions, ", ")
-);
+export const parseList = List.parseCommaSeparated(parse);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}

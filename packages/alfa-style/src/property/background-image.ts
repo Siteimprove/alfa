@@ -12,16 +12,15 @@ import {
   Radial,
   RGB,
   System,
-  Token,
   URL,
 } from "@siteimprove/alfa-css";
-import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
+import { Selective } from "@siteimprove/alfa-selective";
 
-const { map, either, delimited, option, separatedList } = Parser;
+const { either } = Parser;
 
 /**
  * @internal
@@ -75,13 +74,7 @@ export const parse = either(Keyword.parse("none"), Image.parse);
 /**
  * @internal
  */
-export const parseList = map(
-  separatedList(
-    parse,
-    delimited(option(Token.parseWhitespace), Token.parseComma)
-  ),
-  (images) => List.of(images, ", ")
-);
+export const parseList = List.parseCommaSeparated(parse);
 
 /**
  * @internal
@@ -97,17 +90,11 @@ export default Longhand.of<Specified, Computed>(
   parseList,
   (value, style) =>
     value.map((images) =>
-      List.of(
-        Iterable.map(images, (image) => {
-          switch (image.type) {
-            case "keyword":
-              return image;
-
-            case "image":
-              return Resolver.image(image, style);
-          }
-        }),
-        ", "
+      images.map((image) =>
+        Selective.of(image)
+          .if(Image.isImage, (image) => Resolver.image(image, style))
+          .else((image) => image)
+          .get()
       )
     )
 );
