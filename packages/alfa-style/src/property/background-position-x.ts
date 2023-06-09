@@ -1,11 +1,8 @@
-import { List, Percentage, Token, Position } from "@siteimprove/alfa-css";
+import { List, Percentage, Position } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
-
-const { map, either, delimited, option, separatedList } = Parser;
 
 /**
  * @internal
@@ -34,17 +31,8 @@ export namespace Computed {
 /**
  * @internal
  */
-export const parse = Position.Component.parseHorizontal;
-
-/**
- * @internal
- */
-export const parseList = map(
-  separatedList(
-    parse,
-    delimited(option(Token.parseWhitespace), Token.parseComma)
-  ),
-  (positions) => List.of(positions, ", ")
+export const parse = List.parseCommaSeparated(
+  Position.Component.parseHorizontal
 );
 
 /**
@@ -58,7 +46,7 @@ export const initialItem = Percentage.of(0);
  */
 export default Longhand.of<Specified, Computed>(
   List.of([initialItem]),
-  parseList,
+  parse,
   (value, style) =>
     value.map((positions) =>
       List.of(

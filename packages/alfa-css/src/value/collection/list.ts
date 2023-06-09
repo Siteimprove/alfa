@@ -3,6 +3,12 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import { Value } from "../../value";
+import { Mapper } from "@siteimprove/alfa-mapper";
+import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
+import { Token } from "../../syntax";
+
+const { delimited, option, map, separatedList } = Parser;
 
 /**
  * @public
@@ -25,8 +31,8 @@ export class List<T> extends Value<"list", false> implements Iterable<T> {
     return this._values;
   }
 
-  public resolve(): List<T> {
-    return this;
+  public resolve<U>(valueResolver: Mapper<T, U>): List<U> {
+    return new List(this._values.map(valueResolver), this._separator);
   }
 
   public equals<T>(value: List<T>): boolean;
@@ -84,4 +90,20 @@ export namespace List {
   export function isList<T>(value: unknown): value is List<T> {
     return value instanceof List;
   }
+
+  function parse(
+    separator: string,
+    parseSeparator: Parser<Slice<Token>, any, string>
+  ): <T>(
+    parseValue: Parser<Slice<Token>, T, string>
+  ) => Parser<Slice<Token>, List<T>, string> {
+    return (parseValue) =>
+      map(separatedList(parseValue, parseSeparator), (values) =>
+        List.of(values, separator)
+      );
+  }
+
+  const parseComma = delimited(option(Token.parseWhitespace), Token.parseComma);
+
+  export const parseCommaSeparated = parse(", ", parseComma);
 }
