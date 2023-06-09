@@ -116,4 +116,5 @@ export namespace List {
   const parseComma = delimited(option(Token.parseWhitespace), Token.parseComma);
 
   export const parseCommaSeparated = parse(", ", parseComma);
+  export const parseSpaceSeparated = parse(" ", Token.parseWhitespace);
 }

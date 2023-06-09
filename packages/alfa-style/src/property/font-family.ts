@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 
-const { delimited, either, map, option, separatedList } = Parser;
+const { either, map, separatedList } = Parser;
 
 /**
  * @internal
@@ -25,21 +25,16 @@ export type Computed = Specified;
 /**
  * @internal
  */
-export const parse = map(
-  separatedList(
+export const parse = List.parseCommaSeparated(
+  either(
+    Keyword.parse("serif", "sans-serif", "cursive", "fantasy", "monospace"),
     either(
-      Keyword.parse("serif", "sans-serif", "cursive", "fantasy", "monospace"),
-      either(
-        String.parse,
-        map(
-          separatedList(Token.parseIdent(), Token.parseWhitespace),
-          (idents) => String.of(idents.map((ident) => ident.value).join(" "))
-        )
+      String.parse,
+      map(separatedList(Token.parseIdent(), Token.parseWhitespace), (idents) =>
+        String.of(idents.map((ident) => ident.value).join(" "))
       )
-    ),
-    delimited(option(Token.parseWhitespace), Token.parseComma)
-  ),
-  (families) => List.of(families, ", ")
+    )
+  )
 );
 
 /**
