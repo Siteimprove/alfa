@@ -130,39 +130,43 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     // (undocumented)
     static extend<SPECIFIED, COMPUTED>(property: Longhand<SPECIFIED, COMPUTED>, overrides?: {
         initial?: COMPUTED;
-        parse?: Longhand.Parser<SPECIFIED>;
+        parse?: parser.Parser<Slice<Token>, SPECIFIED, string>;
         compute?: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
         options?: Longhand.Options;
     }): Longhand<SPECIFIED, COMPUTED>;
     // (undocumented)
     get initial(): COMPUTED;
     // (undocumented)
-    static of<SPECIFIED, COMPUTED>(initial: COMPUTED, parse: Longhand.Parser<SPECIFIED>, compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>, options?: Longhand.Options): Longhand<SPECIFIED, COMPUTED>;
+    static of<SPECIFIED, COMPUTED>(initial: COMPUTED, parse: parser.Parser<Slice<Token>, SPECIFIED, string>, compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>, options?: Longhand.Options): Longhand<SPECIFIED, COMPUTED>;
     // (undocumented)
     get options(): Longhand.Options;
     // (undocumented)
     get parse(): Longhand.Parser<SPECIFIED>;
+    get parseBase(): parser.Parser<Slice<Token>, SPECIFIED, string>;
 }
 
 // @internal (undocumented)
 export namespace Longhand {
+    export type Computed<T> = T extends Longhand<infer S, infer C> ? C : never;
     export type Default = Keyword<"initial"> | Keyword<"inherit"> | Keyword<"unset">;
+    export function fromKeywords<K extends string>(options: Options, initial: K, ...other: Array<K>): Longhand<Keyword.ToKeywords<K>>;
     // (undocumented)
     export interface Options {
         // (undocumented)
         readonly inherits: boolean;
     }
+    export type Parsed<T> = T extends Longhand<infer S, unknown> ? S : never;
+    const // (undocumented)
+    parseDefaults: parser.Parser<Slice<Token>, Keyword.ToKeywords<"initial" | "inherit" | "unset">, string>;
     // (undocumented)
     export type Parser<SPECIFIED> = parser.Parser<Slice<Token>, Default | SPECIFIED, string>;
-    const // (undocumented)
-    parseDefaults: parser.Parser<Slice<Token>, Keyword<"initial"> | Keyword<"inherit"> | Keyword<"unset">, string>;
 }
 
 // @public (undocumented)
 export namespace Longhands {
     export type Cascaded<N extends Name> = Declared<N>;
     // Warning: (ae-incompatible-release-tags) The symbol "Computed" is marked as @public, but its signature references "Longhand" which is marked as @internal
-    export type Computed<N extends Name> = Property[N] extends Longhand<infer S, infer C> ? C : never;
+    export type Computed<N extends Name> = Longhand.Computed<Property[N]>;
     // Warning: (ae-incompatible-release-tags) The symbol "Declared" is marked as @public, but its signature references "Longhand" which is marked as @internal
     export type Declared<N extends Name> = Parsed<N> | Longhand.Default;
     // (undocumented)
@@ -174,7 +178,7 @@ export namespace Longhands {
     // (undocumented)
     export type Name = keyof Property;
     // Warning: (ae-incompatible-release-tags) The symbol "Parsed" is marked as @public, but its signature references "Longhand" which is marked as @internal
-    export type Parsed<N extends Name> = Property[N] extends Longhand<infer S, unknown> ? S : never;
+    export type Parsed<N extends Name> = Longhand.Parsed<Property[N]>;
     const // (undocumented)
     longHands: {
         readonly "background-attachment": Longhand<Specified, Specified>;
@@ -185,106 +189,106 @@ export namespace Longhands {
         readonly "background-position-x": Longhand<Specified_5, Computed_3>;
         readonly "background-position-y": Longhand<Specified_6, Computed_4>;
         readonly "background-repeat-x": Longhand<Specified_7, Specified_7>;
-        readonly "background-repeat-y": Longhand<Specified_8, Specified_8>;
-        readonly "background-size": Longhand<Specified_9, Computed_5>;
+        readonly "background-repeat-y": Longhand<Specified_7, Specified_7>;
+        readonly "background-size": Longhand<Specified_8, Computed_5>;
         readonly "border-block-end-color": Longhand<Color, Computed_6>;
-        readonly "border-block-end-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-block-end-width": Longhand<Specified_11, Computed_7>;
+        readonly "border-block-end-style": Longhand<Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-block-end-width": Longhand<Specified_9, Computed_7>;
         readonly "border-block-start-color": Longhand<Color, Computed_6>;
-        readonly "border-block-start-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-block-start-width": Longhand<Specified_11, Computed_7>;
+        readonly "border-block-start-style": Longhand<Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-block-start-width": Longhand<Specified_9, Computed_7>;
         readonly "border-bottom-color": Longhand<Color, Computed_6>;
-        readonly "border-bottom-left-radius": Longhand<Specified_12, Computed_8>;
-        readonly "border-bottom-right-radius": Longhand<Specified_12, Computed_8>;
-        readonly "border-bottom-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-bottom-width": Longhand<Specified_11, Computed_7>;
-        readonly "border-collapse": Longhand<Specified_13, Specified_13>;
-        readonly "border-end-end-radius": Longhand<Specified_12, Computed_8>;
-        readonly "border-end-start-radius": Longhand<Specified_12, Computed_8>;
-        readonly "border-image-outset": Longhand<Specified_14, Computed_9>;
-        readonly "border-image-repeat": Longhand<Specified_15, Specified_15>;
-        readonly "border-image-slice": Longhand<Specified_16, Specified_16>;
-        readonly "border-image-source": Longhand<Specified_17, Computed_10>;
-        readonly "border-image-width": Longhand<Specified_18, Computed_11>;
+        readonly "border-bottom-left-radius": Longhand<Specified_10, Computed_8>;
+        readonly "border-bottom-right-radius": Longhand<Specified_10, Computed_8>;
+        readonly "border-bottom-style": Longhand<Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-bottom-width": Longhand<Specified_9, Computed_7>;
+        readonly "border-collapse": Longhand<Keyword.ToKeywords<"separate" | "collapse">, Keyword.ToKeywords<"separate" | "collapse">>;
+        readonly "border-end-end-radius": Longhand<Specified_10, Computed_8>;
+        readonly "border-end-start-radius": Longhand<Specified_10, Computed_8>;
+        readonly "border-image-outset": Longhand<Specified_11, Computed_9>;
+        readonly "border-image-repeat": Longhand<Specified_12, Specified_12>;
+        readonly "border-image-slice": Longhand<Specified_13, Specified_13>;
+        readonly "border-image-source": Longhand<Specified_14, Computed_10>;
+        readonly "border-image-width": Longhand<Specified_15, Computed_11>;
         readonly "border-inline-end-color": Longhand<Color, Computed_6>;
-        readonly "border-inline-end-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-inline-end-width": Longhand<Specified_11, Computed_7>;
+        readonly "border-inline-end-style": Longhand<Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-inline-end-width": Longhand<Specified_9, Computed_7>;
         readonly "border-inline-start-color": Longhand<Color, Computed_6>;
-        readonly "border-inline-start-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-inline-start-width": Longhand<Specified_11, Computed_7>;
+        readonly "border-inline-start-style": Longhand<Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-inline-start-width": Longhand<Specified_9, Computed_7>;
         readonly "border-left-color": Longhand<Color, Computed_6>;
-        readonly "border-left-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-left-width": Longhand<Specified_11, Computed_7>;
+        readonly "border-left-style": Longhand<Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-left-width": Longhand<Specified_9, Computed_7>;
         readonly "border-right-color": Longhand<Color, Computed_6>;
-        readonly "border-right-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-right-width": Longhand<Specified_11, Computed_7>;
-        readonly "border-start-end-radius": Longhand<Specified_12, Computed_8>;
-        readonly "border-start-start-radius": Longhand<Specified_12, Computed_8>;
+        readonly "border-right-style": Longhand<Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-right-width": Longhand<Specified_9, Computed_7>;
+        readonly "border-start-end-radius": Longhand<Specified_10, Computed_8>;
+        readonly "border-start-start-radius": Longhand<Specified_10, Computed_8>;
         readonly "border-top-color": Longhand<Color, Computed_6>;
-        readonly "border-top-left-radius": Longhand<Specified_12, Computed_8>;
-        readonly "border-top-right-radius": Longhand<Specified_12, Computed_8>;
-        readonly "border-top-style": Longhand<Specified_10, Specified_10>;
-        readonly "border-top-width": Longhand<Specified_11, Computed_7>;
-        readonly bottom: Longhand<Specified_19, Computed_12>;
-        readonly "box-shadow": Longhand<Specified_20, Computed_13>;
-        readonly "clip-path": Longhand<Specified_21, Specified_21>;
-        readonly clip: Longhand<Specified_22, Specified_22>;
+        readonly "border-top-left-radius": Longhand<Specified_10, Computed_8>;
+        readonly "border-top-right-radius": Longhand<Specified_10, Computed_8>;
+        readonly "border-top-style": Longhand<Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"hidden" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-top-width": Longhand<Specified_9, Computed_7>;
+        readonly bottom: Longhand<Specified_16, Computed_12>;
+        readonly "box-shadow": Longhand<Specified_17, Computed_13>;
+        readonly "clip-path": Longhand<Specified_18, Specified_18>;
+        readonly clip: Longhand<Specified_19, Specified_19>;
         readonly color: Longhand<Color, Computed_14>;
-        readonly cursor: Longhand<Specified_23, Specified_23>;
-        readonly display: Longhand<Specified_25, Specified_25>;
-        readonly "flex-direction": Longhand<Specified_26, Specified_26>;
-        readonly "flex-wrap": Longhand<Specified_27, Specified_27>;
-        readonly float: Longhand<Keyword<"left"> | Keyword<"right"> | Keyword<"none">, Keyword<"left"> | Keyword<"right"> | Keyword<"none">>;
-        readonly "font-family": Longhand<Specified_28, Specified_28>;
-        readonly "font-size": Longhand<Specified_29, Computed_15>;
-        readonly "font-stretch": Longhand<Specified_30, Percentage>;
-        readonly "font-style": Longhand<Specified_31, Specified_31>;
-        readonly "font-variant-caps": Longhand<Specified_32, Specified_32>;
-        readonly "font-variant-east-asian": Longhand<Specified_33, Specified_33>;
-        readonly "font-variant-ligatures": Longhand<Specified_34, Specified_34>;
-        readonly "font-variant-numeric": Longhand<Specified_35, Specified_35>;
-        readonly "font-variant-position": Longhand<Specified_36, Specified_36>;
-        readonly "font-weight": Longhand<Specified_37, Number_2>;
-        readonly height: Longhand<Specified_38, Computed_16>;
-        readonly "inset-block-end": Longhand<Specified_19, Computed_12>;
-        readonly "inset-block-start": Longhand<Specified_19, Computed_12>;
-        readonly "inset-inline-end": Longhand<Specified_19, Computed_12>;
-        readonly "inset-inline-start": Longhand<Specified_19, Computed_12>;
-        readonly left: Longhand<Specified_19, Computed_12>;
-        readonly "letter-spacing": Longhand<Specified_39, Computed_17>;
-        readonly "line-height": Longhand<Specified_40, Computed_18>;
-        readonly "margin-bottom": Longhand<Specified_41, Computed_19>;
-        readonly "margin-left": Longhand<Specified_41, Computed_19>;
-        readonly "margin-right": Longhand<Specified_41, Computed_19>;
-        readonly "margin-top": Longhand<Specified_41, Computed_19>;
-        readonly "min-height": Longhand<Specified_42, Computed_20>;
-        readonly "min-width": Longhand<Specified_43, Computed_21>;
+        readonly cursor: Longhand<Specified_20, Specified_20>;
+        readonly display: Longhand<Specified_22, Specified_22>;
+        readonly "flex-direction": Longhand<Keyword.ToKeywords<"row" | "row-reverse" | "column" | "column-reverse">, Keyword.ToKeywords<"row" | "row-reverse" | "column" | "column-reverse">>;
+        readonly "flex-wrap": Longhand<Keyword.ToKeywords<"nowrap" | "wrap" | "wrap-reverse">, Keyword.ToKeywords<"nowrap" | "wrap" | "wrap-reverse">>;
+        readonly float: Longhand<Keyword.ToKeywords<"right" | "left" | "none">, Keyword.ToKeywords<"right" | "left" | "none">>;
+        readonly "font-family": Longhand<Specified_23, Specified_23>;
+        readonly "font-size": Longhand<Specified_24, Computed_15>;
+        readonly "font-stretch": Longhand<Specified_25, Percentage>;
+        readonly "font-style": Longhand<Keyword.ToKeywords<"normal" | "italic" | "oblique">, Keyword.ToKeywords<"normal" | "italic" | "oblique">>;
+        readonly "font-variant-caps": Longhand<Keyword.ToKeywords<"normal" | "small-caps" | "all-small-caps" | "petite-caps" | "all-petite-caps" | "unicase" | "titling-caps">, Keyword.ToKeywords<"normal" | "small-caps" | "all-small-caps" | "petite-caps" | "all-petite-caps" | "unicase" | "titling-caps">>;
+        readonly "font-variant-east-asian": Longhand<Specified_26, Specified_26>;
+        readonly "font-variant-ligatures": Longhand<Specified_27, Specified_27>;
+        readonly "font-variant-numeric": Longhand<Specified_28, Specified_28>;
+        readonly "font-variant-position": Longhand<Keyword.ToKeywords<"normal" | "sub" | "super">, Keyword.ToKeywords<"normal" | "sub" | "super">>;
+        readonly "font-weight": Longhand<Specified_29, Number_2>;
+        readonly height: Longhand<Specified_30, Computed_16>;
+        readonly "inset-block-end": Longhand<Specified_16, Computed_12>;
+        readonly "inset-block-start": Longhand<Specified_16, Computed_12>;
+        readonly "inset-inline-end": Longhand<Specified_16, Computed_12>;
+        readonly "inset-inline-start": Longhand<Specified_16, Computed_12>;
+        readonly left: Longhand<Specified_16, Computed_12>;
+        readonly "letter-spacing": Longhand<Specified_31, Computed_17>;
+        readonly "line-height": Longhand<Specified_32, Computed_18>;
+        readonly "margin-bottom": Longhand<Specified_33, Computed_19>;
+        readonly "margin-left": Longhand<Specified_33, Computed_19>;
+        readonly "margin-right": Longhand<Specified_33, Computed_19>;
+        readonly "margin-top": Longhand<Specified_33, Computed_19>;
+        readonly "min-height": Longhand<Specified_34, Computed_20>;
+        readonly "min-width": Longhand<Specified_34, Computed_20>;
         readonly opacity: Longhand<import("./property/value/compound").NumberPercentage.NumberPercentage, Number_2>;
-        readonly "outline-color": Longhand<Specified_44, Computed_22>;
-        readonly "outline-offset": Longhand<Specified_45, Computed_23>;
-        readonly "outline-style": Longhand<Specified_46, Specified_46>;
-        readonly "outline-width": Longhand<Specified_47, Computed_24>;
-        readonly "overflow-x": Longhand<Specified_48, Specified_48>;
-        readonly "overflow-y": Longhand<Specified_49, Specified_49>;
-        readonly position: Longhand<Specified_50, Specified_50>;
-        readonly right: Longhand<Specified_19, Computed_12>;
-        readonly rotate: Longhand<Specified_51, Computed_25>;
-        readonly "text-align": Longhand<Specified_52, Specified_52>;
-        readonly "text-decoration-color": Longhand<Color, Computed_26>;
-        readonly "text-decoration-line": Longhand<Specified_53, Specified_53>;
-        readonly "text-decoration-style": Longhand<Specified_54, Specified_54>;
-        readonly "text-decoration-thickness": Longhand<Specified_55, Computed_27>;
-        readonly "text-indent": Longhand<import("./property/value/compound").LengthPercentage.LengthPercentage, Computed_28>;
-        readonly "text-overflow": Longhand<Specified_56, Specified_56>;
-        readonly "text-shadow": Longhand<Specified_57, Computed_29>;
-        readonly "text-transform": Longhand<Specified_58, Specified_58>;
-        readonly top: Longhand<Specified_19, Computed_12>;
-        readonly transform: Longhand<Specified_59, Computed_30>;
-        readonly "vertical-align": Longhand<Specified_60, Computed_31>;
-        readonly visibility: Longhand<Specified_61, Specified_61>;
-        readonly "white-space": Longhand<Specified_62, Specified_62>;
-        readonly width: Longhand<Specified_63, Computed_32>;
-        readonly "word-spacing": Longhand<Specified_64, Computed_33>;
+        readonly "outline-color": Longhand<Specified_35, Computed_21>;
+        readonly "outline-offset": Longhand<Specified_36, Computed_22>;
+        readonly "outline-style": Longhand<Keyword.ToKeywords<"auto" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"auto" | "inset" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "outline-width": Longhand<Specified_37, Computed_23>;
+        readonly "overflow-x": Longhand<Keyword.ToKeywords<"auto" | "hidden" | "scroll" | "visible" | "clip">, Keyword<"scroll"> | Keyword<"auto"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
+        readonly "overflow-y": Longhand<Keyword.ToKeywords<"auto" | "hidden" | "scroll" | "visible" | "clip">, Keyword<"scroll"> | Keyword<"auto"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
+        readonly position: Longhand<Keyword.ToKeywords<"relative" | "fixed" | "static" | "absolute" | "sticky">, Keyword.ToKeywords<"relative" | "fixed" | "static" | "absolute" | "sticky">>;
+        readonly right: Longhand<Specified_16, Computed_12>;
+        readonly rotate: Longhand<Specified_38, Computed_24>;
+        readonly "text-align": Longhand<Keyword.ToKeywords<"right" | "left" | "center" | "start" | "end" | "justify">, Keyword.ToKeywords<"right" | "left" | "center" | "start" | "end" | "justify">>;
+        readonly "text-decoration-color": Longhand<Color, Computed_25>;
+        readonly "text-decoration-line": Longhand<Specified_39, Specified_39>;
+        readonly "text-decoration-style": Longhand<Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">, Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">>;
+        readonly "text-decoration-thickness": Longhand<Specified_40, Computed_26>;
+        readonly "text-indent": Longhand<import("./property/value/compound").LengthPercentage.LengthPercentage, Computed_27>;
+        readonly "text-overflow": Longhand<Keyword.ToKeywords<"clip" | "ellipsis">, Keyword.ToKeywords<"clip" | "ellipsis">>;
+        readonly "text-shadow": Longhand<Specified_41, Computed_28>;
+        readonly "text-transform": Longhand<Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">, Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">>;
+        readonly top: Longhand<Specified_16, Computed_12>;
+        readonly transform: Longhand<Specified_42, Computed_29>;
+        readonly "vertical-align": Longhand<Specified_43, Computed_30>;
+        readonly visibility: Longhand<Keyword.ToKeywords<"hidden" | "collapse" | "visible">, Keyword.ToKeywords<"hidden" | "collapse" | "visible">>;
+        readonly "white-space": Longhand<Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">, Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">>;
+        readonly width: Longhand<Specified_44, Computed_31>;
+        readonly "word-spacing": Longhand<Specified_45, Computed_32>;
     };
     // (undocumented)
     export type Property = typeof longHands;
@@ -299,13 +303,13 @@ export namespace Resolver {
     // (undocumented)
     export function color(color: Color): Current | System | RGB<Percentage, Percentage>;
     // (undocumented)
-    export function image(image: Image, style: Style): Image<URL | Linear<Gradient.Hint<Percentage | Length.Fixed<"px">> | Gradient.Stop<Current | System | RGB<Percentage, Percentage>, Percentage | Length.Fixed<"px">>, Angle<"deg"> | Linear.Side | Linear.Corner> | Radial<Gradient.Hint<Percentage | Length.Fixed<"px">> | Gradient.Stop<Current | System | RGB<Percentage, Percentage>, Percentage | Length.Fixed<"px">>, Radial.Circle<Length.Fixed<"px">> | Radial.Ellipse<Percentage | Length.Fixed<"px">> | Radial.Extent, Position<Percentage | Position.Center | Length.Fixed<"px"> | Position.Side<Position.Horizontal, Percentage | Length.Fixed<"px">>, Percentage | Position.Center | Length.Fixed<"px"> | Position.Side<Position.Vertical, Percentage | Length.Fixed<"px">>>>>;
+    export function image(image: Image, style: Style): Image<URL | Linear<Gradient.Hint<Percentage | Length.Fixed<"px">> | Gradient.Stop<Current | System | RGB<Percentage, Percentage>, Percentage | Length.Fixed<"px">>, Angle<"deg"> | Linear.Side | Linear.Corner> | Radial<Gradient.Hint<Percentage | Length.Fixed<"px">> | Gradient.Stop<Current | System | RGB<Percentage, Percentage>, Percentage | Length.Fixed<"px">>, Radial.Circle<Length.Fixed<"px">> | Radial.Ellipse<Percentage | Length.Fixed<"px">> | Radial.Extent, Position<Percentage | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Horizontal, Percentage | Length.Fixed<"px">>, Percentage | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Vertical, Percentage | Length.Fixed<"px">>>>>;
     export function length(style: Style): Length.Resolver;
     export function percentage<N extends Numeric = Numeric>(base: N): Mapper<Percentage, N>;
     // (undocumented)
-    export function position(position: Position, style: Style): Position<Percentage | Position.Center | Length.Fixed<"px"> | Position.Side<Position.Horizontal, Percentage | Length.Fixed<"px">>, Percentage | Position.Center | Length.Fixed<"px"> | Position.Side<Position.Vertical, Percentage | Length.Fixed<"px">>>;
+    export function position(position: Position, style: Style): Position<Percentage | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Horizontal, Percentage | Length.Fixed<"px">>, Percentage | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Vertical, Percentage | Length.Fixed<"px">>>;
     // (undocumented)
-    export function positionComponent<S extends Position.Horizontal | Position.Vertical>(position: Position.Component<S>, style: Style): Percentage | Position.Center | Length.Fixed<"px"> | Position.Side<S, Percentage | Length.Fixed<"px">>;
+    export function positionComponent<S extends Position.Keywords.Horizontal | Position.Keywords.Vertical>(position: Position.Component<S>, style: Style): Percentage | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<S, Percentage | Length.Fixed<"px">>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
@@ -367,7 +371,7 @@ export namespace Shorthands {
         readonly "font-variant": Shorthand<"font-variant-caps" | "font-variant-east-asian" | "font-variant-ligatures" | "font-variant-numeric">;
         readonly "inset-block": Shorthand<"inset-block-end" | "inset-block-start">;
         readonly "inset-inline": Shorthand<"inset-inline-end" | "inset-inline-start">;
-        readonly inset: Shorthand<"top" | "bottom" | "left" | "right">;
+        readonly inset: Shorthand<"top" | "right" | "bottom" | "left">;
         readonly margin: Shorthand<"margin-bottom" | "margin-left" | "margin-right" | "margin-top">;
         readonly outline: Shorthand<"outline-color" | "outline-style" | "outline-width">;
         readonly overflow: Shorthand<"overflow-x" | "overflow-y">;
@@ -521,212 +525,192 @@ export namespace Value {
 
 // Warnings were encountered during analysis:
 //
+// src/longhands.ts:178:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:178:7 - (ae-incompatible-release-tags) The symbol ""background-attachment"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:179:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:179:7 - (ae-incompatible-release-tags) The symbol ""background-clip"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:180:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:180:7 - (ae-incompatible-release-tags) The symbol ""background-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:181:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:181:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:181:7 - (ae-incompatible-release-tags) The symbol ""background-image"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:182:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:182:7 - (ae-incompatible-release-tags) The symbol ""background-origin"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:183:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:183:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:183:7 - (ae-incompatible-release-tags) The symbol ""background-position-x"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:184:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:184:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:184:7 - (ae-incompatible-release-tags) The symbol ""background-position-y"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:185:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:185:7 - (ae-incompatible-release-tags) The symbol ""background-repeat-x"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:186:7 - (ae-incompatible-release-tags) The symbol ""background-repeat-y"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:187:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:187:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:187:7 - (ae-incompatible-release-tags) The symbol ""background-size"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:188:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:188:7 - (ae-incompatible-release-tags) The symbol ""border-block-end-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:189:7 - (ae-incompatible-release-tags) The symbol ""border-block-end-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:190:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:190:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:190:7 - (ae-incompatible-release-tags) The symbol ""border-block-end-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:191:7 - (ae-incompatible-release-tags) The symbol ""border-block-start-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:192:7 - (ae-incompatible-release-tags) The symbol ""border-block-start-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:193:7 - (ae-incompatible-release-tags) The symbol ""border-block-start-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:194:7 - (ae-incompatible-release-tags) The symbol ""border-bottom-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:195:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:195:7 - (ae-incompatible-release-tags) The symbol ""background-attachment"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:196:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:196:7 - (ae-incompatible-release-tags) The symbol ""background-clip"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:197:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:197:7 - (ae-incompatible-release-tags) The symbol ""background-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:198:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:198:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:198:7 - (ae-incompatible-release-tags) The symbol ""background-image"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:199:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:199:7 - (ae-incompatible-release-tags) The symbol ""background-origin"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:200:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:200:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:200:7 - (ae-incompatible-release-tags) The symbol ""background-position-x"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:201:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:201:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:201:7 - (ae-incompatible-release-tags) The symbol ""background-position-y"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:195:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:195:7 - (ae-incompatible-release-tags) The symbol ""border-bottom-left-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:196:7 - (ae-incompatible-release-tags) The symbol ""border-bottom-right-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:197:7 - (ae-incompatible-release-tags) The symbol ""border-bottom-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:198:7 - (ae-incompatible-release-tags) The symbol ""border-bottom-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:199:7 - (ae-incompatible-release-tags) The symbol ""border-collapse"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:200:7 - (ae-incompatible-release-tags) The symbol ""border-end-end-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:201:7 - (ae-incompatible-release-tags) The symbol ""border-end-start-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:202:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:202:7 - (ae-incompatible-release-tags) The symbol ""background-repeat-x"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:202:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:202:7 - (ae-incompatible-release-tags) The symbol ""border-image-outset"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:203:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:203:7 - (ae-incompatible-release-tags) The symbol ""background-repeat-y"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:203:7 - (ae-incompatible-release-tags) The symbol ""border-image-repeat"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:204:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:204:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:204:7 - (ae-incompatible-release-tags) The symbol ""background-size"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:204:7 - (ae-incompatible-release-tags) The symbol ""border-image-slice"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:205:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:205:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:205:7 - (ae-incompatible-release-tags) The symbol ""border-block-end-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:205:7 - (ae-incompatible-release-tags) The symbol ""border-image-source"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:206:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:206:7 - (ae-incompatible-release-tags) The symbol ""border-block-end-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:207:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:207:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:207:7 - (ae-incompatible-release-tags) The symbol ""border-block-end-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:208:7 - (ae-incompatible-release-tags) The symbol ""border-block-start-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:209:7 - (ae-incompatible-release-tags) The symbol ""border-block-start-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:210:7 - (ae-incompatible-release-tags) The symbol ""border-block-start-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:211:7 - (ae-incompatible-release-tags) The symbol ""border-bottom-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:212:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:212:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:212:7 - (ae-incompatible-release-tags) The symbol ""border-bottom-left-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:213:7 - (ae-incompatible-release-tags) The symbol ""border-bottom-right-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:214:7 - (ae-incompatible-release-tags) The symbol ""border-bottom-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:215:7 - (ae-incompatible-release-tags) The symbol ""border-bottom-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:216:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:216:7 - (ae-incompatible-release-tags) The symbol ""border-collapse"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:217:7 - (ae-incompatible-release-tags) The symbol ""border-end-end-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:218:7 - (ae-incompatible-release-tags) The symbol ""border-end-start-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:219:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:219:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:219:7 - (ae-incompatible-release-tags) The symbol ""border-image-outset"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:220:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:220:7 - (ae-incompatible-release-tags) The symbol ""border-image-repeat"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:221:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:221:7 - (ae-incompatible-release-tags) The symbol ""border-image-slice"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:222:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:222:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:222:7 - (ae-incompatible-release-tags) The symbol ""border-image-source"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:223:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:223:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:223:7 - (ae-incompatible-release-tags) The symbol ""border-image-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:224:7 - (ae-incompatible-release-tags) The symbol ""border-inline-end-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:225:7 - (ae-incompatible-release-tags) The symbol ""border-inline-end-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:226:7 - (ae-incompatible-release-tags) The symbol ""border-inline-end-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:227:7 - (ae-incompatible-release-tags) The symbol ""border-inline-start-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:228:7 - (ae-incompatible-release-tags) The symbol ""border-inline-start-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:229:7 - (ae-incompatible-release-tags) The symbol ""border-inline-start-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:230:7 - (ae-incompatible-release-tags) The symbol ""border-left-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:231:7 - (ae-incompatible-release-tags) The symbol ""border-left-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:232:7 - (ae-incompatible-release-tags) The symbol ""border-left-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:233:7 - (ae-incompatible-release-tags) The symbol ""border-right-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:234:7 - (ae-incompatible-release-tags) The symbol ""border-right-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:235:7 - (ae-incompatible-release-tags) The symbol ""border-right-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:236:7 - (ae-incompatible-release-tags) The symbol ""border-start-end-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:237:7 - (ae-incompatible-release-tags) The symbol ""border-start-start-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:238:7 - (ae-incompatible-release-tags) The symbol ""border-top-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:239:7 - (ae-incompatible-release-tags) The symbol ""border-top-left-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:240:7 - (ae-incompatible-release-tags) The symbol ""border-top-right-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:241:7 - (ae-incompatible-release-tags) The symbol ""border-top-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:242:7 - (ae-incompatible-release-tags) The symbol ""border-top-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:206:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:206:7 - (ae-incompatible-release-tags) The symbol ""border-image-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:207:7 - (ae-incompatible-release-tags) The symbol ""border-inline-end-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:208:7 - (ae-incompatible-release-tags) The symbol ""border-inline-end-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:209:7 - (ae-incompatible-release-tags) The symbol ""border-inline-end-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:210:7 - (ae-incompatible-release-tags) The symbol ""border-inline-start-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:211:7 - (ae-incompatible-release-tags) The symbol ""border-inline-start-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:212:7 - (ae-incompatible-release-tags) The symbol ""border-inline-start-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:213:7 - (ae-incompatible-release-tags) The symbol ""border-left-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:214:7 - (ae-incompatible-release-tags) The symbol ""border-left-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:215:7 - (ae-incompatible-release-tags) The symbol ""border-left-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:216:7 - (ae-incompatible-release-tags) The symbol ""border-right-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:217:7 - (ae-incompatible-release-tags) The symbol ""border-right-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:218:7 - (ae-incompatible-release-tags) The symbol ""border-right-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:219:7 - (ae-incompatible-release-tags) The symbol ""border-start-end-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:220:7 - (ae-incompatible-release-tags) The symbol ""border-start-start-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:221:7 - (ae-incompatible-release-tags) The symbol ""border-top-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:222:7 - (ae-incompatible-release-tags) The symbol ""border-top-left-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:223:7 - (ae-incompatible-release-tags) The symbol ""border-top-right-radius"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:224:7 - (ae-incompatible-release-tags) The symbol ""border-top-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:225:7 - (ae-incompatible-release-tags) The symbol ""border-top-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:226:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:226:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:226:7 - (ae-incompatible-release-tags) The symbol "bottom" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:227:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:227:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:227:7 - (ae-incompatible-release-tags) The symbol ""box-shadow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:228:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:228:7 - (ae-incompatible-release-tags) The symbol ""clip-path"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:229:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:229:7 - (ae-incompatible-release-tags) The symbol "clip" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:230:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:230:7 - (ae-incompatible-release-tags) The symbol "color" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:231:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:231:7 - (ae-incompatible-release-tags) The symbol "cursor" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:232:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:232:7 - (ae-incompatible-release-tags) The symbol "display" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:233:7 - (ae-incompatible-release-tags) The symbol ""flex-direction"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:234:7 - (ae-incompatible-release-tags) The symbol ""flex-wrap"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:235:7 - (ae-incompatible-release-tags) The symbol "float" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:236:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:236:7 - (ae-incompatible-release-tags) The symbol ""font-family"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:237:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:237:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:237:7 - (ae-incompatible-release-tags) The symbol ""font-size"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:238:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:238:7 - (ae-incompatible-release-tags) The symbol ""font-stretch"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:239:7 - (ae-incompatible-release-tags) The symbol ""font-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:240:7 - (ae-incompatible-release-tags) The symbol ""font-variant-caps"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:241:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:241:7 - (ae-incompatible-release-tags) The symbol ""font-variant-east-asian"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:242:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:242:7 - (ae-incompatible-release-tags) The symbol ""font-variant-ligatures"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:243:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:243:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:243:7 - (ae-incompatible-release-tags) The symbol "bottom" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:244:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:244:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:244:7 - (ae-incompatible-release-tags) The symbol ""box-shadow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:243:7 - (ae-incompatible-release-tags) The symbol ""font-variant-numeric"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:244:7 - (ae-incompatible-release-tags) The symbol ""font-variant-position"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:245:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:245:7 - (ae-incompatible-release-tags) The symbol ""clip-path"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:245:7 - (ae-incompatible-release-tags) The symbol ""font-weight"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:246:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:246:7 - (ae-incompatible-release-tags) The symbol "clip" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:247:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:247:7 - (ae-incompatible-release-tags) The symbol "color" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:248:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:248:7 - (ae-incompatible-release-tags) The symbol "cursor" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:249:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:249:7 - (ae-incompatible-release-tags) The symbol "display" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:250:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:250:7 - (ae-incompatible-release-tags) The symbol ""flex-direction"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:251:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:251:7 - (ae-incompatible-release-tags) The symbol ""flex-wrap"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:252:7 - (ae-incompatible-release-tags) The symbol "float" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:246:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:246:7 - (ae-incompatible-release-tags) The symbol "height" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:247:7 - (ae-incompatible-release-tags) The symbol ""inset-block-end"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:248:7 - (ae-incompatible-release-tags) The symbol ""inset-block-start"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:249:7 - (ae-incompatible-release-tags) The symbol ""inset-inline-end"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:250:7 - (ae-incompatible-release-tags) The symbol ""inset-inline-start"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:251:7 - (ae-incompatible-release-tags) The symbol "left" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:252:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:252:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:252:7 - (ae-incompatible-release-tags) The symbol ""letter-spacing"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:253:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:253:7 - (ae-incompatible-release-tags) The symbol ""font-family"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:253:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:253:7 - (ae-incompatible-release-tags) The symbol ""line-height"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:254:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:254:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:254:7 - (ae-incompatible-release-tags) The symbol ""font-size"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:255:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:255:7 - (ae-incompatible-release-tags) The symbol ""font-stretch"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:256:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:256:7 - (ae-incompatible-release-tags) The symbol ""font-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:257:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:257:7 - (ae-incompatible-release-tags) The symbol ""font-variant-caps"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:254:7 - (ae-incompatible-release-tags) The symbol ""margin-bottom"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:255:7 - (ae-incompatible-release-tags) The symbol ""margin-left"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:256:7 - (ae-incompatible-release-tags) The symbol ""margin-right"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:257:7 - (ae-incompatible-release-tags) The symbol ""margin-top"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:258:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:258:7 - (ae-incompatible-release-tags) The symbol ""font-variant-east-asian"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:259:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:259:7 - (ae-incompatible-release-tags) The symbol ""font-variant-ligatures"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:260:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:260:7 - (ae-incompatible-release-tags) The symbol ""font-variant-numeric"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:258:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:258:7 - (ae-incompatible-release-tags) The symbol ""min-height"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:259:7 - (ae-incompatible-release-tags) The symbol ""min-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:260:7 - (ae-forgotten-export) The symbol "NumberPercentage" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:260:7 - (ae-incompatible-release-tags) The symbol "opacity" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:261:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:261:7 - (ae-incompatible-release-tags) The symbol ""font-variant-position"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:261:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:261:7 - (ae-incompatible-release-tags) The symbol ""outline-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:262:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:262:7 - (ae-incompatible-release-tags) The symbol ""font-weight"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:263:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:263:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:263:7 - (ae-incompatible-release-tags) The symbol "height" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:264:7 - (ae-incompatible-release-tags) The symbol ""inset-block-end"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:265:7 - (ae-incompatible-release-tags) The symbol ""inset-block-start"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:266:7 - (ae-incompatible-release-tags) The symbol ""inset-inline-end"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:267:7 - (ae-incompatible-release-tags) The symbol ""inset-inline-start"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:268:7 - (ae-incompatible-release-tags) The symbol "left" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:262:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:262:7 - (ae-incompatible-release-tags) The symbol ""outline-offset"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:263:7 - (ae-incompatible-release-tags) The symbol ""outline-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:264:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:264:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:264:7 - (ae-incompatible-release-tags) The symbol ""outline-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:265:7 - (ae-incompatible-release-tags) The symbol ""overflow-x"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:266:7 - (ae-incompatible-release-tags) The symbol ""overflow-y"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:267:7 - (ae-incompatible-release-tags) The symbol "position" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:268:7 - (ae-incompatible-release-tags) The symbol "right" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:269:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:269:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:269:7 - (ae-incompatible-release-tags) The symbol ""letter-spacing"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:270:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:270:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:270:7 - (ae-incompatible-release-tags) The symbol ""line-height"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:271:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:269:7 - (ae-incompatible-release-tags) The symbol "rotate" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:270:7 - (ae-incompatible-release-tags) The symbol ""text-align"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:271:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:271:7 - (ae-incompatible-release-tags) The symbol ""margin-bottom"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:272:7 - (ae-incompatible-release-tags) The symbol ""margin-left"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:273:7 - (ae-incompatible-release-tags) The symbol ""margin-right"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:274:7 - (ae-incompatible-release-tags) The symbol ""margin-top"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:275:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:271:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:272:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:272:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-line"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:273:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:274:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:274:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:274:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-thickness"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:275:7 - (ae-forgotten-export) The symbol "LengthPercentage" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:275:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:275:7 - (ae-incompatible-release-tags) The symbol ""min-height"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:276:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:276:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:276:7 - (ae-incompatible-release-tags) The symbol ""min-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:277:7 - (ae-forgotten-export) The symbol "NumberPercentage" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:277:7 - (ae-incompatible-release-tags) The symbol "opacity" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:278:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:278:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:278:7 - (ae-incompatible-release-tags) The symbol ""outline-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:279:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:279:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:279:7 - (ae-incompatible-release-tags) The symbol ""outline-offset"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:275:7 - (ae-incompatible-release-tags) The symbol ""text-indent"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:276:7 - (ae-incompatible-release-tags) The symbol ""text-overflow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:277:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:277:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:277:7 - (ae-incompatible-release-tags) The symbol ""text-shadow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:278:7 - (ae-incompatible-release-tags) The symbol ""text-transform"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:279:7 - (ae-incompatible-release-tags) The symbol "top" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:280:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:280:7 - (ae-incompatible-release-tags) The symbol ""outline-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:280:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:280:7 - (ae-incompatible-release-tags) The symbol "transform" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:281:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:281:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:281:7 - (ae-incompatible-release-tags) The symbol ""outline-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:282:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:282:7 - (ae-incompatible-release-tags) The symbol ""overflow-x"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:283:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:283:7 - (ae-incompatible-release-tags) The symbol ""overflow-y"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:281:7 - (ae-incompatible-release-tags) The symbol ""vertical-align"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:282:7 - (ae-incompatible-release-tags) The symbol "visibility" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:283:7 - (ae-incompatible-release-tags) The symbol ""white-space"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:284:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:284:7 - (ae-incompatible-release-tags) The symbol "position" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:285:7 - (ae-incompatible-release-tags) The symbol "right" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:286:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:286:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:286:7 - (ae-incompatible-release-tags) The symbol "rotate" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:287:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:287:7 - (ae-incompatible-release-tags) The symbol ""text-align"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:288:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:288:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:289:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:289:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-line"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:290:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:290:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:291:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:291:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:291:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-thickness"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:292:7 - (ae-forgotten-export) The symbol "LengthPercentage" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:292:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:292:7 - (ae-incompatible-release-tags) The symbol ""text-indent"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:293:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:293:7 - (ae-incompatible-release-tags) The symbol ""text-overflow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:294:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:294:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:294:7 - (ae-incompatible-release-tags) The symbol ""text-shadow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:295:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:295:7 - (ae-incompatible-release-tags) The symbol ""text-transform"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:296:7 - (ae-incompatible-release-tags) The symbol "top" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:297:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:297:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:297:7 - (ae-incompatible-release-tags) The symbol "transform" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:298:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:298:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:298:7 - (ae-incompatible-release-tags) The symbol ""vertical-align"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:299:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:299:7 - (ae-incompatible-release-tags) The symbol "visibility" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:300:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:300:7 - (ae-incompatible-release-tags) The symbol ""white-space"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:301:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:301:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:301:7 - (ae-incompatible-release-tags) The symbol "width" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:302:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:302:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:302:7 - (ae-incompatible-release-tags) The symbol ""word-spacing"" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:284:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:284:7 - (ae-incompatible-release-tags) The symbol "width" is marked as @public, but its signature references "Longhand" which is marked as @internal
+// src/longhands.ts:285:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:285:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:285:7 - (ae-incompatible-release-tags) The symbol ""word-spacing"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/shorthands.ts:46:14 - (ae-incompatible-release-tags) The symbol "background" is marked as @public, but its signature references "Shorthand" which is marked as @internal
 // src/shorthands.ts:47:14 - (ae-incompatible-release-tags) The symbol ""background-position"" is marked as @public, but its signature references "Shorthand" which is marked as @internal
 // src/shorthands.ts:48:14 - (ae-incompatible-release-tags) The symbol ""background-repeat"" is marked as @public, but its signature references "Shorthand" which is marked as @internal

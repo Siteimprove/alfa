@@ -71,7 +71,7 @@ export namespace Keyword {
   }
 
   /**
-   * ToKeywords<"a" | "b" | "c"> === Keyword<"a"> | Keyword<"b"> | Keyword<"c">
+   * ToKeywords\<"a" | "b" | "c"\> === Keyword\<"a"\> | Keyword\<"b"\> | Keyword\<"c"\>
    */
   export type ToKeywords<Words extends string> = {
     [K in Words]: Keyword<K>;
