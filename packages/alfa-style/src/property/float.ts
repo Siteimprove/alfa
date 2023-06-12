@@ -3,7 +3,7 @@ import { Keyword } from "@siteimprove/alfa-css";
 import { Longhand } from "../longhand";
 import { Value } from "../value";
 
-import type { Computed as Position } from "./position";
+import type Position from "./position";
 
 const base = Longhand.fromKeywords(
   { inherits: false },
@@ -16,11 +16,13 @@ const base = Longhand.fromKeywords(
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/float}
  * @internal
  */
-const property = Longhand.extend(base, {
+export default Longhand.extend(base, {
   compute: (value, style) => {
     // We need the type assertion to help TS break a circular type reference:
     // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
-    const position = style.computed("position").value as Position;
+    const position = style.computed("position").value as Longhand.Computed<
+      typeof Position
+    >;
 
     return position.equals(Keyword.of("absolute")) ||
       position.equals(Keyword.of("fixed"))
@@ -28,7 +30,3 @@ const property = Longhand.extend(base, {
       : value;
   },
 });
-
-export default property;
-
-export type Property = typeof property;

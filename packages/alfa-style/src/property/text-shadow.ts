@@ -13,7 +13,6 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
-const { isKeyword } = Keyword;
 const { either } = Parser;
 
 /**

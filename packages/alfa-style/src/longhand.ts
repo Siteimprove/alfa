@@ -174,6 +174,8 @@ export namespace Longhand {
 
   /**
    * Utility function for longhands whose value can only be a list of keywords.
+   *
+   * @internal
    */
   export function fromKeywords<K extends string>(
     options: Options,

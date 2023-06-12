@@ -1,12 +1,13 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Err, Result } from "@siteimprove/alfa-result";
 
+import { Longhand } from "../longhand";
 import { Shorthand } from "../shorthand";
 
-import * as Color from "./text-decoration-color";
-import * as Line from "./text-decoration-line";
-import * as Style from "./text-decoration-style";
-import * as Thickness from "./text-decoration-thickness";
+import Color from "./text-decoration-color";
+import Line from "./text-decoration-line";
+import Style from "./text-decoration-style";
+import Thickness from "./text-decoration-thickness";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-decoration}
@@ -20,10 +21,10 @@ export default Shorthand.of(
     "text-decoration-thickness",
   ],
   (input) => {
-    let line: Line.Specified | undefined;
-    let style: Style.Specified | undefined;
-    let color: Color.Specified | undefined;
-    let thickness: Thickness.Specified | undefined;
+    let line: Longhand.Parsed<typeof Line> | undefined;
+    let style: Longhand.Parsed<typeof Style> | undefined;
+    let color: Longhand.Parsed<typeof Color> | undefined;
+    let thickness: Longhand.Parsed<typeof Thickness> | undefined;
 
     while (true) {
       for (const [remainder] of Token.parseWhitespace(input)) {
@@ -31,7 +32,7 @@ export default Shorthand.of(
       }
 
       if (line === undefined) {
-        const result = Line.parse(input);
+        const result = Line.parseBase(input);
 
         if (result.isOk()) {
           [input, line] = result.get();
@@ -40,7 +41,7 @@ export default Shorthand.of(
       }
 
       if (style === undefined) {
-        const result = Style.parse(input);
+        const result = Style.parseBase(input);
 
         if (result.isOk()) {
           [input, style] = result.get();
@@ -49,7 +50,7 @@ export default Shorthand.of(
       }
 
       if (color === undefined) {
-        const result = Color.parse(input);
+        const result = Color.parseBase(input);
 
         if (result.isOk()) {
           [input, color] = result.get();
@@ -58,7 +59,7 @@ export default Shorthand.of(
       }
 
       if (thickness === undefined) {
-        const result = Thickness.parse(input);
+        const result = Thickness.parseBase(input);
 
         if (result.isOk()) {
           [input, thickness] = result.get();

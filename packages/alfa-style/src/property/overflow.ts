@@ -3,15 +3,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Shorthand } from "../shorthand";
 
-import * as X from "./overflow-x";
-
-/**
- * overflow-x and overflow-y are exactly the same.
- * We mimic it here to make the main parser less confusing.
- */
-namespace Y {
-  export const parse = X.parse;
-}
+import X from "./overflow-x";
+import Y from "./overflow-y";
 
 const { map, option, pair, delimited } = Parser;
 
@@ -19,8 +12,8 @@ const { map, option, pair, delimited } = Parser;
  * @internal
  */
 export const parse = pair(
-  X.parse,
-  option(delimited(option(Token.parseWhitespace), Y.parse))
+  X.parseBase,
+  option(delimited(option(Token.parseWhitespace), Y.parseBase))
 );
 
 /**

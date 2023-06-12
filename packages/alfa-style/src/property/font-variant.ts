@@ -5,11 +5,12 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Shorthand } from "../shorthand";
 
-import * as Caps from "./font-variant-caps";
+import Caps from "./font-variant-caps";
 import * as EastAsian from "./font-variant-east-asian";
 import * as Ligatures from "./font-variant-ligatures";
 
 import * as Numeric from "./font-variant-numeric";
+import { Longhand } from "../longhand";
 
 /**
  * @internal
@@ -17,7 +18,7 @@ import * as Numeric from "./font-variant-numeric";
 export const parse: Parser<
   Slice<Token>,
   [
-    ["font-variant-caps", Caps.Specified | Keyword<"initial">],
+    ["font-variant-caps", Longhand.Parsed<typeof Caps> | Keyword<"initial">],
     ["font-variant-east-asian", EastAsian.Specified | Keyword<"initial">],
     ["font-variant-ligatures", Ligatures.Specified | Keyword<"initial">],
     ["font-variant-numeric", Numeric.Specified | Keyword<"initial">]
@@ -28,7 +29,7 @@ export const parse: Parser<
    * we need to rewrite a parser and accept, e.g.
    * font-variant: historical-ligatures diagonal-fractions no-common-ligatures ordinal
    */
-  let caps: Caps.Specified | undefined;
+  let caps: Longhand.Parsed<typeof Caps> | undefined;
 
   let variant: EastAsian.Specified.Variant | undefined;
   let width: EastAsian.Specified.Width | undefined;
@@ -52,7 +53,7 @@ export const parse: Parser<
 
     // -------------------------    Caps
     if (caps === undefined) {
-      const result = Caps.parse(input);
+      const result = Caps.parseBase(input);
 
       if (result.isOk()) {
         [input, caps] = result.get();
