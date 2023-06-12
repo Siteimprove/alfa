@@ -23,6 +23,21 @@ export class Rectangle
     return new Rectangle(x, y, width, height);
   }
 
+  private static _empty = new Rectangle(Infinity, Infinity, 0, 0);
+  public static empty(): Rectangle {
+    return this._empty;
+  }
+
+  private static _full = new Rectangle(
+    -Infinity,
+    -Infinity,
+    Infinity,
+    Infinity
+  );
+  public static full(): Rectangle {
+    return this._full;
+  }
+
   private readonly _x: number;
   private readonly _y: number;
   private readonly _width: number;
@@ -52,22 +67,43 @@ export class Rectangle
   }
 
   public get top(): number {
+    // Infinity - Infinity is NaN, but here we want it to be -Infinity
+    if (this._y === Infinity && this._height === -Infinity) {
+      return -Infinity;
+    }
+
     return this._height > 0 ? this._y : this._y + this._height;
   }
 
   public get right(): number {
+    // -Infinity + Infinity is NaN, but here we want it to be Infinity
+    if (this._x === -Infinity && this._width === Infinity) {
+      return Infinity;
+    }
+
     return this._width > 0 ? this._x + this._width : this._x;
   }
 
   public get bottom(): number {
+    // -Infinity + Infinity is NaN, but here we want it to be Infinity
+    if (this._y === -Infinity && this._height === Infinity) {
+      return Infinity;
+    }
+
     return this._height > 0 ? this._y + this._height : this._y;
   }
 
   public get left(): number {
+    // Infinity - Infinity is NaN, but here we want it to be -Infinity
+    if (this._x === Infinity && this._width === -Infinity) {
+      return -Infinity;
+    }
+
     return this._width > 0 ? this._x : this._x + this._width;
   }
 
   public get center(): { x: number; y: number } {
+    // TODO: How to handle infinite rectangles?
     return {
       x: this._x + this._width / 2,
       y: this._y + this._height / 2,
@@ -78,7 +114,19 @@ export class Rectangle
     return this._width * this._height;
   }
 
+  public isEmpty(): boolean {
+    return this.equals(Rectangle.empty());
+  }
+
+  public isFull(): boolean {
+    return this.equals(Rectangle.full());
+  }
+
   public contains(other: Rectangle): boolean {
+    if (other.isEmpty() || this.isFull()) {
+      return true;
+    }
+
     return (
       this.left <= other.left &&
       this.top <= other.top &&
@@ -96,6 +144,54 @@ export class Rectangle
     );
   }
 
+  public union(other: Rectangle): Rectangle {
+    if (this.contains(other)) {
+      return this;
+    }
+
+    if (other.contains(this)) {
+      return other;
+    }
+
+    const minLeft = min(this.left, other.left);
+    const minTop = min(this.top, other.top);
+    const maxRight = max(this.right, other.right);
+    const maxBottom = max(this.bottom, other.bottom);
+
+    return Rectangle.of(
+      minLeft,
+      minTop,
+      maxRight - minLeft,
+      maxBottom - minTop
+    );
+  }
+
+  public intersection(other: Rectangle): Rectangle {
+    if (!this.intersects(other)) {
+      return Rectangle.empty();
+    }
+
+    if (this.contains(other)) {
+      return other;
+    }
+
+    if (other.contains(this)) {
+      return this;
+    }
+
+    const maxLeft = max(this.left, other.left);
+    const maxTop = max(this.top, other.top);
+    const minRight = min(this.right, other.right);
+    const minBottom = min(this.bottom, other.bottom);
+
+    return Rectangle.of(
+      maxLeft,
+      maxTop,
+      minRight - maxLeft,
+      minBottom - maxTop
+    );
+  }
+
   public equals(value: this): boolean;
   public equals(value: unknown): value is this;
   public equals(value: unknown): boolean {
@@ -104,8 +200,8 @@ export class Rectangle
       (value instanceof Rectangle &&
         value.top === this.top &&
         value.left === this.left &&
-        value.width === this.width &&
-        value.height === this.height)
+        value.bottom === this.bottom &&
+        value.right === this.right)
     );
   }
 
@@ -150,18 +246,12 @@ export namespace Rectangle {
   }
 
   export function union(...rectangles: Array<Rectangle>): Rectangle {
-    let l = Infinity;
-    let t = Infinity;
-    let r = -Infinity;
-    let b = -Infinity;
+    return rectangles.reduce((previous, current) => previous.union(current));
+  }
 
-    for (const rectangle of rectangles) {
-      l = min(l, rectangle.left);
-      t = min(t, rectangle.top);
-      r = max(r, rectangle.right);
-      b = max(b, rectangle.bottom);
-    }
-
-    return Rectangle.of(l, t, r - l, b - t);
+  export function intersection(...rectangles: Array<Rectangle>): Rectangle {
+    return rectangles.reduce((previous, current) =>
+      previous.intersection(current)
+    );
   }
 }
