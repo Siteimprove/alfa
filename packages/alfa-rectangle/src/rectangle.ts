@@ -246,12 +246,16 @@ export namespace Rectangle {
   }
 
   export function union(...rectangles: Array<Rectangle>): Rectangle {
-    return rectangles.reduce((previous, current) => previous.union(current));
+    return rectangles.reduce(
+      (previous, current) => previous.union(current),
+      Rectangle.empty()
+    );
   }
 
   export function intersection(...rectangles: Array<Rectangle>): Rectangle {
-    return rectangles.reduce((previous, current) =>
-      previous.intersection(current)
+    return rectangles.reduce(
+      (previous, current) => previous.intersection(current),
+      Rectangle.full()
     );
   }
 }

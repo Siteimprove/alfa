@@ -219,14 +219,18 @@ test("empty is right neutral with respect to #union", (t) => {
   t.equal(rect.union(Rectangle.empty()), rect);
 });
 
-test("full is left annihilating with respect to #union", (t) => {
+test("full is left absorbing with respect to #union", (t) => {
   const full = Rectangle.full();
   t.equal(full.union(rect), full);
 });
 
-test("full is right annihilating with respect to #union", (t) => {
+test("full is right absorbing with respect to #union", (t) => {
   const full = Rectangle.full();
   t.equal(rect.union(full), full);
+});
+
+test("#union of no rectangles returns empty rectangle", (t) => {
+  t.equal(Rectangle.union(), Rectangle.empty());
 });
 
 test("#intersection of nested rectangles returns inner rectangle", (t) => {
@@ -254,6 +258,28 @@ test("#intersection of disjoint rectangles returns the empty rectangle", (t) => 
   const rect2 = Rectangle.of(7, 6, 4, 3);
 
   t.equal(rect1.intersection(rect2), Rectangle.empty());
+});
+
+test("empty is left absorbing with respect to #intersection", (t) => {
+  const empty = Rectangle.empty();
+  t.equal(empty.intersection(rect), empty);
+});
+
+test("empty is right absorbing with respect to #intersection", (t) => {
+  const empty = Rectangle.empty();
+  t.equal(rect.intersection(empty), empty);
+});
+
+test("full is left neutral with respect to #intersection", (t) => {
+  t.equal(Rectangle.full().intersection(rect), rect);
+});
+
+test("full is right neutral with respect to #intersection", (t) => {
+  t.equal(rect.intersection(Rectangle.full()), rect);
+});
+
+test("#intersection of no rectangles returns full rectangle", (t) => {
+  t.equal(Rectangle.intersection(), Rectangle.full());
 });
 
 test("#hash returns the same hash for rectangles with the same values", (t) => {
