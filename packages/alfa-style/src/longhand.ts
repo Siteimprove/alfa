@@ -130,4 +130,20 @@ export namespace Longhand {
     | Keyword<"unset">;
 
   export const parseDefaults = Keyword.parse("initial", "inherit", "unset");
+
+  /**
+   * Utility function for longhands whose value can only be a list of keywords.
+   */
+  export function fromKeywords<K extends string>(
+    options: Options,
+    initial: K,
+    ...other: Array<K>
+  ): Longhand<Keyword.ToKeywords<K>> {
+    return Longhand.of<Keyword.ToKeywords<K>, Keyword.ToKeywords<K>>(
+      Keyword.of(initial),
+      Keyword.parse(initial, ...other),
+      (value) => value,
+      options
+    );
+  }
 }
