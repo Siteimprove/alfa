@@ -141,7 +141,7 @@ test(`.specified() doesn't accept spread nor inset`, (t) => {
   );
 
   t.deepEqual(
-    Style.from(withInset, Device.standard()).cascaded("text-shadow").isNone(),
+    Style.from(withSpread, Device.standard()).cascaded("text-shadow").isNone(),
     true
   );
 });
