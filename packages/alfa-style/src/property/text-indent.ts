@@ -1,11 +1,8 @@
 import { Length, type Percentage } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 
 import { LengthPercentage } from "./value/compound";
-
-const { either } = Parser;
 
 /**
  * @internal
