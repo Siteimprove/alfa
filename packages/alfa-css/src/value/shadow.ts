@@ -142,105 +142,118 @@ export namespace Shadow {
     isInset: boolean;
   }
 
-  export const parse: Parser<Slice<Token>, Shadow, string> = (input) => {
-    let horizontal: Length.Fixed | undefined;
-    let vertical: Length.Fixed | undefined;
-    let blur: Length.Fixed | undefined;
-    let spread: Length.Fixed | undefined;
-    let color: Color | undefined;
-    let isInset: boolean | undefined;
+  interface Options {
+    withInset: boolean;
+    withSpread: boolean;
+  }
 
-    const skipWhitespace = () => {
-      for (const [remainder] of Token.parseWhitespace(input)) {
-        input = remainder;
-      }
-    };
+  export function parse(
+    options?: Options
+  ): Parser<Slice<Token>, Shadow, string> {
+    const { withInset = true, withSpread = true } = options ?? {};
 
-    while (true) {
-      skipWhitespace();
+    return (input) => {
+      let horizontal: Length.Fixed | undefined;
+      let vertical: Length.Fixed | undefined;
+      let blur: Length.Fixed | undefined;
+      let spread: Length.Fixed | undefined;
+      let color: Color | undefined;
+      let isInset: boolean | undefined;
 
-      if (horizontal === undefined) {
-        // horizontal: <length>
-        const result = Length.parseBase(input);
+      const skipWhitespace = () => {
+        for (const [remainder] of Token.parseWhitespace(input)) {
+          input = remainder;
+        }
+      };
 
-        if (result.isOk()) {
-          [input, horizontal] = result.get();
-          skipWhitespace();
+      while (true) {
+        skipWhitespace();
 
-          {
-            // vertical: <length>
-            const result = Length.parseBase(input);
+        if (horizontal === undefined) {
+          // horizontal: <length>
+          const result = Length.parseBase(input);
 
-            if (result.isErr()) {
-              return result;
-            }
-
-            // the previous check ensure that the result is Ok
-            [input, vertical] = result.getUnsafe();
+          if (result.isOk()) {
+            [input, horizontal] = result.get();
             skipWhitespace();
 
             {
-              // blur: <length>?
+              // vertical: <length>
               const result = Length.parseBase(input);
 
-              if (result.isOk()) {
-                [input, blur] = result.get();
-                skipWhitespace();
+              if (result.isErr()) {
+                return result;
+              }
 
-                {
-                  // spread: <length>?
-                  const result = Length.parseBase(input);
+              // the previous check ensure that the result is Ok
+              [input, vertical] = result.getUnsafe();
+              skipWhitespace();
 
-                  if (result.isOk()) {
-                    [input, spread] = result.get();
+              {
+                // blur: <length>?
+                const result = Length.parseBase(input);
+
+                if (result.isOk()) {
+                  [input, blur] = result.get();
+                  skipWhitespace();
+
+                  {
+                    // spread: <length>?
+                    if (withSpread) {
+                      const result = Length.parseBase(input);
+
+                      if (result.isOk()) {
+                        [input, spread] = result.get();
+                      }
+                    }
                   }
                 }
               }
             }
+
+            continue;
           }
-
-          continue;
         }
+
+        if (color === undefined) {
+          // color: <color>?
+          const result = Color.parse(input);
+
+          if (result.isOk()) {
+            [input, color] = result.get();
+            continue;
+          }
+        }
+
+        if (withInset && isInset === undefined) {
+          // isInset: inset?
+          const result = Keyword.parse("inset")(input);
+
+          if (result.isOk()) {
+            isInset = true;
+            [input] = result.get();
+            continue;
+          }
+        }
+
+        break;
       }
 
-      if (color === undefined) {
-        // color: <color>?
-        const result = Color.parse(input);
-
-        if (result.isOk()) {
-          [input, color] = result.get();
-          continue;
-        }
+      if (horizontal === undefined || vertical === undefined) {
+        return Err.of("Expected horizontal and vertical offset");
       }
 
-      if (isInset === undefined) {
-        // isInset: inset?
-        const result = Keyword.parse("inset")(input);
-
-        if (result.isOk()) {
-          isInset = true;
-          [input] = result.get();
-          continue;
-        }
-      }
-
-      break;
-    }
-
-    if (horizontal === undefined || vertical === undefined) {
-      return Err.of("Expected horizontal and vertical offset");
-    }
-
-    return Result.of([
-      input,
-      Shadow.of(
-        horizontal,
-        vertical,
-        blur ?? Length.of(0, "px"),
-        spread ?? Length.of(0, "px"),
-        color ?? Keyword.of("currentcolor"),
-        isInset ?? false
-      ),
-    ]);
-  };
+      return Result.of([
+        input,
+        Shadow.of(
+          horizontal,
+          vertical,
+          blur ?? Length.of(0, "px"),
+          spread ?? Length.of(0, "px"),
+          color ?? Keyword.of("currentcolor"),
+          isInset ?? false
+        ),
+      ]);
+    };
+  }
 }

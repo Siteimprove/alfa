@@ -35,10 +35,7 @@ export type Computed =
       >
     >;
 
-/**
- * @internal
- */
-export const parseList = List.parseCommaSeparated(Shadow.parse);
+const parseList = List.parseCommaSeparated(Shadow.parse());
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow}
