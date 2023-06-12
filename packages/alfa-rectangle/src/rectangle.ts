@@ -139,7 +139,7 @@ export class Rectangle
     );
   }
 
-  public intersects(other: Rectangle) {
+  public intersects(other: Rectangle): boolean {
     return (
       other.left <= this.right &&
       other.top <= this.bottom &&
