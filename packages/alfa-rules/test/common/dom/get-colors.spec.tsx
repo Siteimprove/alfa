@@ -569,48 +569,54 @@ test("getBackgroundColor() gives up in case of text shadow", (t) => {
           element: target.toJSON(),
           property: "text-shadow",
           value: {
-            blur: {
-              type: "length",
-              unit: "px",
-              value: 2,
-            },
-            color: {
-              alpha: {
-                type: "percentage",
-                value: 1,
+            type: "list",
+            values: [
+              {
+                blur: {
+                  type: "length",
+                  unit: "px",
+                  value: 2,
+                },
+                color: {
+                  alpha: {
+                    type: "percentage",
+                    value: 1,
+                  },
+                  blue: {
+                    type: "percentage",
+                    value: 0.7960784,
+                  },
+                  format: "rgb",
+                  green: {
+                    type: "percentage",
+                    value: 0.7529412,
+                  },
+                  red: {
+                    type: "percentage",
+                    value: 1,
+                  },
+                  type: "color",
+                },
+                horizontal: {
+                  type: "length",
+                  unit: "px",
+                  value: 1,
+                },
+                isInset: false,
+                spread: {
+                  type: "length",
+                  unit: "px",
+                  value: 0,
+                },
+                type: "shadow",
+                vertical: {
+                  type: "length",
+                  unit: "px",
+                  value: 1,
+                },
               },
-              blue: {
-                type: "percentage",
-                value: 0.7960784,
-              },
-              format: "rgb",
-              green: {
-                type: "percentage",
-                value: 0.7529412,
-              },
-              red: {
-                type: "percentage",
-                value: 1,
-              },
-              type: "color",
-            },
-            horizontal: {
-              type: "length",
-              unit: "px",
-              value: 1,
-            },
-            isInset: false,
-            spread: {
-              type: "length",
-              unit: "px",
-              value: 0,
-            },
-            type: "shadow",
-            vertical: {
-              type: "length",
-              unit: "px",
-              value: 1,
-            },
+            ],
+            separator: ", ",
           },
         },
       ],

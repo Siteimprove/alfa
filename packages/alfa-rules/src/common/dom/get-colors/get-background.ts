@@ -11,6 +11,7 @@ import { Style } from "@siteimprove/alfa-style";
 import { Color } from "./color";
 import { ColorError, ColorErrors } from "./color-error";
 import { Layer } from "./get-layers";
+import { Iterable } from "@siteimprove/alfa-iterable";
 
 const { isVisibleShadow } = Style;
 
@@ -71,7 +72,10 @@ export function getBackground(
       let error: Option<ColorError<"background">> = None;
 
       // If the element has a visible text-shadow, we don't try to guess how it looks.
-      if (textShadow.type !== "keyword" && isVisibleShadow(textShadow)) {
+      if (
+        textShadow.type === "list" &&
+        Iterable.some(textShadow, (shadow) => isVisibleShadow(shadow))
+      ) {
         error = Option.of(ColorError.textShadow(element, textShadow));
       }
 
