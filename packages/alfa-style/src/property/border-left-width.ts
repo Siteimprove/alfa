@@ -1,6 +1,6 @@
 import { Longhand } from "../longhand";
 import type { Value } from "../value";
-import type { Computed as StyleProp } from "./border-top-style";
+import type { Property as StyleProp } from "./border-top-style";
 
 import Base, { compute } from "./border-top-width";
 
@@ -10,7 +10,9 @@ import Base, { compute } from "./border-top-width";
  */
 export default Longhand.extend(Base, {
   compute: (borderWidth, style) => {
-    const borderStyle = style.computed("border-left-style") as Value<StyleProp>;
+    const borderStyle = style.computed("border-left-style") as Value<
+      Longhand.Computed<StyleProp>
+    >;
     return compute(borderStyle, borderWidth, style);
   },
 });

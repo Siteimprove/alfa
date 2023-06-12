@@ -20,16 +20,17 @@ export namespace Specified {
 export type Computed = Specified;
 
 /**
+ * @remarks
+ * This is needed in the shorthand background
+ *
  * @internal
  */
 export const parse = Box.parse;
 
 /**
- * @internal
- */
-export const parseList = List.parseCommaSeparated(parse);
-
-/**
+ * @remarks
+ * This is needed in the shorthand background
+ *
  * @internal
  */
 export const initialItem = Keyword.of("border-box");
@@ -40,6 +41,6 @@ export const initialItem = Keyword.of("border-box");
  */
 export default Longhand.of<Specified, Computed>(
   List.of([initialItem], ", "),
-  parseList,
+  List.parseCommaSeparated(parse),
   (value) => value
 );

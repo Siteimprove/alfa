@@ -2,7 +2,7 @@ import { Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Shorthand } from "../shorthand";
-import { parse } from "./border-top-style";
+import Top from "./border-top-style";
 
 const { delimited, map, option, takeBetween } = Parser;
 
@@ -13,7 +13,7 @@ const { delimited, map, option, takeBetween } = Parser;
 export default Shorthand.of(
   ["border-block-start-style", "border-block-end-style"],
   map(
-    takeBetween(delimited(option(Token.parseWhitespace), parse), 1, 2),
+    takeBetween(delimited(option(Token.parseWhitespace), Top.parseBase), 1, 2),
     ([start, end = start]) => [
       ["border-block-start-style", start],
       ["border-block-end-style", end],

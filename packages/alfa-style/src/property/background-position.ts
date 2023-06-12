@@ -6,7 +6,7 @@ import { Shorthand } from "../shorthand";
 import * as X from "./background-position-x";
 import * as Y from "./background-position-y";
 
-const { map, delimited, option, separatedList } = Parser;
+const { map } = Parser;
 
 /**
  * @internal

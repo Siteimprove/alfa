@@ -3,11 +3,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
 
+import { Resolver } from "../resolver";
 import type { Style } from "../style";
 import type { Value } from "../value";
 
-import type { Computed as StyleProp } from "./border-top-style";
-import { Resolver } from "../resolver";
+import type { Property as StyleProp } from "./border-top-style";
 
 const { either } = Parser;
 
@@ -41,7 +41,9 @@ export default Longhand.of<Specified, Computed>(
   Length.of(3, "px"),
   parse,
   (borderWidth, style) => {
-    const borderStyle = style.computed("border-top-style") as Value<StyleProp>;
+    const borderStyle = style.computed("border-top-style") as Value<
+      Longhand.Computed<StyleProp>
+    >;
     return compute(borderStyle, borderWidth, style);
   }
 );
@@ -50,7 +52,7 @@ export default Longhand.of<Specified, Computed>(
  * @internal
  */
 export function compute(
-  styleProperty: Value<StyleProp>,
+  styleProperty: Value<Longhand.Computed<StyleProp>>,
   specified: Value<Specified>,
   style: Style
 ): Value<Computed> {

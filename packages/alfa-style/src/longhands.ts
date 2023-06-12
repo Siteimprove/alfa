@@ -129,16 +129,7 @@ export namespace Longhands {
    * The parsed type doesn't really exist in CSS. It is an artefact on how we
    * handle the default keywords.
    */
-  export type Parsed<N extends Name> = Property[N] extends Longhand<
-    infer S,
-    // Computed is only used in a covariant position in Longhand (as output of
-    // compute). Therefore, it does not need to be inferred exactly.
-    // C extends C' => Longhand<S, C> extends Longhand<S, C'>
-    // Especially, Longhand<S, C> extends Longhand<S, unknown> for all C.
-    unknown
-  >
-    ? S
-    : never;
+  export type Parsed<N extends Name> = Longhand.Parsed<Property[N]>;
 
   /**
    * Extract the declared type of a named property.
@@ -171,15 +162,7 @@ export namespace Longhands {
    *
    * {@link https://drafts.csswg.org/css-cascade/#computed}
    */
-  export type Computed<N extends Name> = Property[N] extends Longhand<
-    // Specified is used both in a covariant (output of the parser) and
-    // contravariant (input of compute) position in Longhand. Therefore,
-    // it needs to be exactly inferred for the subtyping to exist.
-    infer S,
-    infer C
-  >
-    ? C
-    : never;
+  export type Computed<N extends Name> = Longhand.Computed<Property[N]>;
 
   /**
    * Extract the initial type of a named property.
