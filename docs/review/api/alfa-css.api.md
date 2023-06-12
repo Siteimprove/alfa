@@ -1403,9 +1403,9 @@ export namespace Position {
         // (undocumented)
         export type JSON = Keyword.JSON | Length.Fixed.JSON | Percentage.JSON | Side.JSON;
         const // (undocumented)
-        parseHorizontal: Parser<Slice<Token>, Length.Fixed<Unit.Length> | Percentage | Keyword<"center"> | Side<Keyword.ToKeywords<"left" | "right">, Offset<Unit.Length>>, string, []>;
+        parseHorizontal: Parser<Slice<Token>, Percentage | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
         const // (undocumented)
-        parseVertical: Parser<Slice<Token>, Length.Fixed<Unit.Length> | Percentage | Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
+        parseVertical: Parser<Slice<Token>, Percentage | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
     }
     // (undocumented)
     export interface JSON extends Value.JSON<"position"> {
@@ -1427,14 +1427,14 @@ export namespace Position {
         // (undocumented)
         export type Vertical = Keyword<"top"> | Keyword<"bottom">;
         const // @internal (undocumented)
-        parseHorizontal: Parser<Slice<Token>, Keyword.ToKeywords<"left" | "right">, string>;
+        parseHorizontal: Parser<Slice<Token>, Keyword.ToKeywords<"right" | "left">, string>;
     }
     // (undocumented)
     export type Offset<U extends Unit.Length = Unit.Length> = Length.Fixed<U> | Percentage;
     // (undocumented)
     export namespace Offset {
         const // (undocumented)
-        parse: Parser<Slice<Token>, Length.Fixed<Unit.Length> | Percentage, string, []>;
+        parse: Parser<Slice<Token>, Percentage | Length.Fixed<Unit.Length>, string, []>;
     }
     // (undocumented)
     export function parse(legacySyntax?: boolean): Parser<Slice<Token>, Position, string>;
@@ -1469,15 +1469,15 @@ export namespace Position {
             side: Keyword.JSON;
         }
         const // (undocumented)
-        parseHorizontalKeywordValue: Parser<Slice<Token>, Side<Keyword.ToKeywords<"left" | "right">, Offset<Unit.Length>>, string>;
+        parseHorizontalKeywordValue: Parser<Slice<Token>, Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string>;
         const // (undocumented)
-        parseHorizontalKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"left" | "right">, Offset<Unit.Length>>, string>;
+        parseHorizontalKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string>;
         const // (undocumented)
         parseVerticalKeywordValue: Parser<Slice<Token>, Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string>;
         const // (undocumented)
         parseVerticalKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string>;
         const // (undocumented)
-        parseHorizontal: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"left" | "right">, Offset<Unit.Length>>, string, []>;
+        parseHorizontal: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
         const // (undocumented)
         parseVertical: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
     }
