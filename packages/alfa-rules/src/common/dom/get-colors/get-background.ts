@@ -2,6 +2,7 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Percentage, RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
@@ -11,7 +12,6 @@ import { Style } from "@siteimprove/alfa-style";
 import { Color } from "./color";
 import { ColorError, ColorErrors } from "./color-error";
 import { Layer } from "./get-layers";
-import { Iterable } from "@siteimprove/alfa-iterable";
 
 const { isVisibleShadow } = Style;
 

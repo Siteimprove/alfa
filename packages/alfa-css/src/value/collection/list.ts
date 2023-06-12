@@ -1,13 +1,13 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Functor } from "@siteimprove/alfa-functor";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-
-import { Value } from "../../value";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
+
 import { Token } from "../../syntax";
-import { Functor } from "@siteimprove/alfa-functor";
+import { Value } from "../../value";
 
 const { delimited, option, map, separatedList } = Parser;
 

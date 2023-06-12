@@ -1,14 +1,14 @@
 import { Hash } from "@siteimprove/alfa-hash";
-
-import { Length } from "./numeric";
-
-import { Value } from "../value";
-import { Color } from "./color";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
-import { Token } from "../syntax";
-import { Keyword } from "./keyword";
 import { Err, Result } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
+
+import { Token } from "../syntax";
+import { Value } from "../value";
+
+import { Color } from "./color";
+import { Keyword } from "./keyword";
+import { Length } from "./numeric";
 
 /**
  * @public

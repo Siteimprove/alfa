@@ -40,20 +40,15 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
   ): Longhand<SPECIFIED, COMPUTED> {
     const {
       initial = property._initial,
-      parse,
+      parse = property._parseBase,
       compute = property._compute,
       options = {},
     } = overrides;
 
-    return new Longhand(
-      initial,
-      parse === undefined ? property._parseBase : parse,
-      compute,
-      {
-        ...property._options,
-        ...options,
-      }
-    );
+    return new Longhand(initial, parse, compute, {
+      ...property._options,
+      ...options,
+    });
   }
 
   private readonly _initial: COMPUTED;
@@ -92,7 +87,7 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
 
   /**
    * Return the base parser of the property, which does not parse the global
-   * default values.
+   * default values. This is often useful when building parsers for shorthands.
    *
    * @internal
    */
@@ -124,7 +119,7 @@ export namespace Longhand {
   >;
 
   /**
-   * Extract the parsed type of a property.
+   * Extracts the parsed type of a property.
    *
    * @remarks
    * The parsed type differs from the declared type in that the parsed type
@@ -135,6 +130,11 @@ export namespace Longhand {
    * The parsed type doesn't really exist in CSS. It is an artefact on how we
    * handle the default keywords. It is incorrectly called SPECIFIED in the
    * class definition.
+   *
+   * @remarks
+   * This is a convenience type for building shorthands.
+   *
+   * @internal
    */
   export type Parsed<T> = T extends Longhand<
     infer S,
@@ -148,9 +148,14 @@ export namespace Longhand {
     : never;
 
   /**
-   * Extract the computed type a property.
+   * Extracts the computed type a property.
+   *
+   * @remarks
+   * This is a convenience type for building shorthands.
    *
    * {@link https://drafts.csswg.org/css-cascade/#computed}
+   *
+   * @internal
    */
   export type Computed<T> = T extends Longhand<
     // Specified is used both in a covariant (output of the parser) and
