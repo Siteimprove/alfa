@@ -488,7 +488,7 @@ export namespace Media {
    */
   const parseFeatureValue = either(
     either(
-      map(Token.parseNumber(), (number) => Number.of(number.value)),
+      Number.parseBase,
       map(Token.parseIdent(), (ident) => Keyword.of(ident.value.toLowerCase()))
     ),
     either(
