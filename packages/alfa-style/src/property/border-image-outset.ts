@@ -23,7 +23,7 @@ export type Specified = Tuple<
  * @internal
  */
 export namespace Specified {
-  export type Item = Length.Fixed | Number;
+  export type Item = Length | Number;
 }
 
 /**
@@ -53,8 +53,8 @@ export const parse = map(
     delimited(
       option(Token.parseWhitespace),
       filter(
-        either(Length.parseBase, Number.parse),
-        (size) => size.value >= 0,
+        either(Length.parse, Number.parse),
+        (size) => size.hasCalculation() || size.value >= 0,
         () => `Negative sizes are not allowed`
       )
     ),

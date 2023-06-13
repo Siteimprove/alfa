@@ -1,4 +1,4 @@
-import { Length } from "@siteimprove/alfa-css/src/value/numeric";
+import { Length } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";

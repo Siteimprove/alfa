@@ -5,21 +5,22 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Shorthand } from "../shorthand";
 
-import * as Direction from "./flex-direction";
-import * as Wrap from "./flex-wrap";
+import Direction from "./flex-direction";
+import Wrap from "./flex-wrap";
+import { Longhand } from "../longhand";
 
 const { map } = Parser;
 
 export const parse: Parser<
   Slice<Token>,
   [
-    Direction.Specified | Keyword<"initial">,
-    Wrap.Specified | Keyword<"initial">
+    Longhand.Parsed<typeof Direction> | Keyword<"initial">,
+    Longhand.Parsed<typeof Wrap> | Keyword<"initial">
   ],
   string
 > = (input) => {
-  let direction: Direction.Specified | undefined;
-  let wrap: Wrap.Specified | undefined;
+  let direction: Longhand.Parsed<typeof Direction> | undefined;
+  let wrap: Longhand.Parsed<typeof Wrap> | undefined;
 
   while (true) {
     for (const [remainder] of Token.parseWhitespace(input)) {
@@ -28,7 +29,7 @@ export const parse: Parser<
 
     // <direction>
     if (direction === undefined) {
-      const result = Direction.parse(input);
+      const result = Direction.parseBase(input);
 
       if (result.isOk()) {
         [input, direction] = result.get();
@@ -38,7 +39,7 @@ export const parse: Parser<
 
     // <wrap>
     if (wrap === undefined) {
-      const result = Wrap.parse(input);
+      const result = Wrap.parseBase(input);
 
       if (result.isOk()) {
         [input, wrap] = result.get();

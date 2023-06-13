@@ -1,7 +1,5 @@
-import { Keyword, type Token } from "@siteimprove/alfa-css";
-import { Length } from "@siteimprove/alfa-css/src/value/numeric";
+import { Keyword, Length } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
 import { Value } from "../value";
@@ -26,7 +24,7 @@ export type Computed = Length.Fixed<"px">;
 /**
  * @internal
  */
-export const parse = either<Slice<Token>, Specified, string>(
+export const parse = either(
   Keyword.parse("thin", "medium", "thick"),
   Length.parse
 );

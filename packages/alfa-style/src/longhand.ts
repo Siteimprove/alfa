@@ -20,56 +20,39 @@ const { left, either, end } = parser.Parser;
 export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
   public static of<SPECIFIED, COMPUTED>(
     initial: COMPUTED,
-    parse: Longhand.Parser<SPECIFIED>,
+    parse: parser.Parser<Slice<Token>, SPECIFIED, string>,
     compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
     options: Longhand.Options = {
       inherits: false,
     }
   ): Longhand<SPECIFIED, COMPUTED> {
-    return new Longhand(
-      initial,
-      left(
-        either(Longhand.parseDefaults, parse),
-        end(() => "Expected end of input")
-      ),
-      compute,
-      options
-    );
+    return new Longhand(initial, parse, compute, options);
   }
 
   public static extend<SPECIFIED, COMPUTED>(
     property: Longhand<SPECIFIED, COMPUTED>,
     overrides: {
       initial?: COMPUTED;
-      parse?: Longhand.Parser<SPECIFIED>;
+      parse?: parser.Parser<Slice<Token>, SPECIFIED, string>;
       compute?: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
       options?: Longhand.Options;
     } = {}
   ): Longhand<SPECIFIED, COMPUTED> {
     const {
       initial = property._initial,
-      parse,
+      parse = property._parseBase,
       compute = property._compute,
       options = {},
     } = overrides;
 
-    return new Longhand(
-      initial,
-      parse === undefined
-        ? property._parse
-        : left(
-            either(Longhand.parseDefaults, parse),
-            end(() => "Expected end of input")
-          ),
-      compute,
-      {
-        ...property._options,
-        ...options,
-      }
-    );
+    return new Longhand(initial, parse, compute, {
+      ...property._options,
+      ...options,
+    });
   }
 
   private readonly _initial: COMPUTED;
+  private readonly _parseBase: parser.Parser<Slice<Token>, SPECIFIED, string>;
   private readonly _parse: Longhand.Parser<SPECIFIED>;
   private readonly _compute: Mapper<
     Value<SPECIFIED>,
@@ -80,12 +63,16 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
 
   private constructor(
     initial: COMPUTED,
-    parse: Longhand.Parser<SPECIFIED>,
+    parseBase: parser.Parser<Slice<Token>, SPECIFIED, string>,
     compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
     options: Longhand.Options
   ) {
     this._initial = initial;
-    this._parse = parse;
+    this._parseBase = parseBase;
+    this._parse = left(
+      either(Longhand.parseDefaults, parseBase),
+      end(() => "Expected end of input")
+    );
     this._compute = compute;
     this._options = options;
   }
@@ -96,6 +83,16 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
 
   get parse(): Longhand.Parser<SPECIFIED> {
     return this._parse;
+  }
+
+  /**
+   * Return the base parser of the property, which does not parse the global
+   * default values. This is often useful when building parsers for shorthands.
+   *
+   * @internal
+   */
+  get parseBase(): parser.Parser<Slice<Token>, SPECIFIED, string> {
+    return this._parseBase;
   }
 
   get compute(): Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]> {
@@ -122,6 +119,55 @@ export namespace Longhand {
   >;
 
   /**
+   * Extracts the parsed type of a property.
+   *
+   * @remarks
+   * The parsed type differs from the declared type in that the parsed type
+   * must not include the defaulting keywords as these are handled globally
+   * rather than individually.
+   *
+   * @remarks
+   * The parsed type doesn't really exist in CSS. It is an artefact on how we
+   * handle the default keywords. It is incorrectly called SPECIFIED in the
+   * class definition.
+   *
+   * @remarks
+   * This is a convenience type for building shorthands.
+   *
+   * @internal
+   */
+  export type Parsed<T> = T extends Longhand<
+    infer S,
+    // Computed is only used in a covariant position in Longhand (as output of
+    // compute). Therefore, it does not need to be inferred exactly.
+    // C extends C' => Longhand<S, C> extends Longhand<S, C'>
+    // Especially, Longhand<S, C> extends Longhand<S, unknown> for all C.
+    unknown
+  >
+    ? S
+    : never;
+
+  /**
+   * Extracts the computed type a property.
+   *
+   * @remarks
+   * This is a convenience type for building shorthands.
+   *
+   * {@link https://drafts.csswg.org/css-cascade/#computed}
+   *
+   * @internal
+   */
+  export type Computed<T> = T extends Longhand<
+    // Specified is used both in a covariant (output of the parser) and
+    // contravariant (input of compute) position in Longhand. Therefore,
+    // it needs to be exactly inferred for the subtyping to exist.
+    infer S,
+    infer C
+  >
+    ? C
+    : never;
+
+  /**
    * The default keywords recognised by all properties.
    */
   export type Default =
@@ -130,4 +176,22 @@ export namespace Longhand {
     | Keyword<"unset">;
 
   export const parseDefaults = Keyword.parse("initial", "inherit", "unset");
+
+  /**
+   * Utility function for longhands whose value can only be a list of keywords.
+   *
+   * @internal
+   */
+  export function fromKeywords<K extends string>(
+    options: Options,
+    initial: K,
+    ...other: Array<K>
+  ): Longhand<Keyword.ToKeywords<K>> {
+    return Longhand.of<Keyword.ToKeywords<K>, Keyword.ToKeywords<K>>(
+      Keyword.of(initial),
+      Keyword.parse(initial, ...other),
+      (value) => value,
+      options
+    );
+  }
 }

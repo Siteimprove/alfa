@@ -16,8 +16,21 @@ import * as PositionX from "./background-position-x";
 import * as PositionY from "./background-position-y";
 import * as Repeat from "./background-repeat";
 import * as RepeatX from "./background-repeat-x";
-import * as RepeatY from "./background-repeat-y";
 import * as Size from "./background-size";
+
+/**
+ * background-repeat-x and background-repeat-y are identical.
+ * We mimic the needed bits here to avoid confusion in the main parser.
+ */
+namespace RepeatY {
+  export const parse = RepeatX.parse;
+
+  export namespace Specified {
+    export type Item = RepeatX.Specified.Item;
+  }
+
+  export const initialItem = RepeatX.initialItem;
+}
 
 const { map, filter, delimited, option, right, separatedList } = Parser;
 

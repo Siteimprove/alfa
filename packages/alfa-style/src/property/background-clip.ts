@@ -1,9 +1,6 @@
-import { Box, List, Keyword, Token } from "@siteimprove/alfa-css";
-import { Parser } from "@siteimprove/alfa-parser";
+import { Box, List, Keyword } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
-
-const { map, delimited, option, separatedList } = Parser;
 
 /**
  * @internal
@@ -23,22 +20,17 @@ export namespace Specified {
 export type Computed = Specified;
 
 /**
+ * @remarks
+ * This is needed in the shorthand background
+ *
  * @internal
  */
 export const parse = Box.parse;
 
 /**
- * @internal
- */
-export const parseList = map(
-  separatedList(
-    parse,
-    delimited(option(Token.parseWhitespace), Token.parseComma)
-  ),
-  (repeats) => List.of(repeats, ", ")
-);
-
-/**
+ * @remarks
+ * This is needed in the shorthand background
+ *
  * @internal
  */
 export const initialItem = Keyword.of("border-box");
@@ -49,6 +41,6 @@ export const initialItem = Keyword.of("border-box");
  */
 export default Longhand.of<Specified, Computed>(
   List.of([initialItem], ", "),
-  parseList,
+  List.parseCommaSeparated(parse),
   (value) => value
 );

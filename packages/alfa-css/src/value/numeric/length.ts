@@ -286,6 +286,10 @@ export namespace Length {
     return value instanceof Calculated || value instanceof Fixed;
   }
 
+  export function isCalculated(value: unknown): value is Calculated {
+    return value instanceof Calculated;
+  }
+
   export function isFixed(value: unknown): value is Fixed {
     return value instanceof Fixed;
   }

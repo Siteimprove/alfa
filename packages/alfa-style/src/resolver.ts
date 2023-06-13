@@ -122,13 +122,19 @@ export namespace Resolver {
         | Radial.Extent,
         Position<
           | Percentage
-          | Position.Center
+          | Position.Keywords.Center
           | Length.Fixed<"px">
-          | Position.Side<Position.Horizontal, Percentage | Length.Fixed<"px">>,
+          | Position.Side<
+              Position.Keywords.Horizontal,
+              Percentage | Length.Fixed<"px">
+            >,
           | Percentage
-          | Position.Center
+          | Position.Keywords.Center
           | Length.Fixed<"px">
-          | Position.Side<Position.Vertical, Percentage | Length.Fixed<"px">>
+          | Position.Side<
+              Position.Keywords.Vertical,
+              Percentage | Length.Fixed<"px">
+            >
         >
       >
   > {
@@ -213,13 +219,16 @@ export namespace Resolver {
     style: Style
   ): Position<
     | Percentage
-    | Position.Center
+    | Position.Keywords.Center
     | Length.Fixed<"px">
-    | Position.Side<Position.Horizontal, Percentage | Length.Fixed<"px">>,
+    | Position.Side<
+        Position.Keywords.Horizontal,
+        Percentage | Length.Fixed<"px">
+      >,
     | Percentage
-    | Position.Center
+    | Position.Keywords.Center
     | Length.Fixed<"px">
-    | Position.Side<Position.Vertical, Percentage | Length.Fixed<"px">>
+    | Position.Side<Position.Keywords.Vertical, Percentage | Length.Fixed<"px">>
   > {
     return Position.of(
       positionComponent(position.horizontal, style),
@@ -228,13 +237,13 @@ export namespace Resolver {
   }
 
   export function positionComponent<
-    S extends Position.Horizontal | Position.Vertical
+    S extends Position.Keywords.Horizontal | Position.Keywords.Vertical
   >(
     position: Position.Component<S>,
     style: Style
   ):
     | Percentage
-    | Position.Center
+    | Position.Keywords.Center
     | Length.Fixed<"px">
     | Position.Side<S, Percentage | Length.Fixed<"px">> {
     switch (position.type) {

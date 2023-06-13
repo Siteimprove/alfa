@@ -100,6 +100,7 @@
     { "path": "../alfa-array" },
     { "path": "../alfa-comparable" },
     { "path": "../alfa-equatable" },
+    { "path": "../alfa-functor" },
     { "path": "../alfa-hash" },
     { "path": "../alfa-iterable" },
     { "path": "../alfa-json" },
