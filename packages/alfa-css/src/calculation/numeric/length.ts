@@ -95,6 +95,9 @@ export namespace Length {
     return value instanceof Length;
   }
 
+  /**
+   * {@link https://drafts.csswg.org/css-values/#lengths}
+   */
   export const parse: Parser<Slice<Token>, Length, string> = either(
     map(
       Token.parseDimension((dimension) => Unit.isLength(dimension.unit)),

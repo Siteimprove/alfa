@@ -1,25 +1,31 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Hash } from "@siteimprove/alfa-hash";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Real } from "@siteimprove/alfa-math";
 
 import { Math } from "../../calculation";
-import { Numeric as NumericBase } from "../../calculation/numeric/index-new";
+import { Numeric as BaseNumeric } from "../../calculation/numeric/index-new";
 
 import { Value } from "../../value";
-import { Serializable } from "@siteimprove/alfa-json";
 
+/**
+ * @public
+ */
 export type Numeric<T extends Numeric.Type = Numeric.Type> =
   | Numeric.Calculated<T>
   | Numeric.Fixed<T>;
 
+/**
+ * @public
+ */
 export namespace Numeric {
   // Math expressions make no distinction between integer and float (number).
   type ToMath<T extends Type> = Math<
-    T extends NumericBase.Scalar ? "number" : T
+    T extends BaseNumeric.Scalar ? "number" : T
   >;
 
   /**
-   * Numeric that may contain calculations.
+   * Numerics that may contain calculations.
    *
    * @remarks
    * We actually guarantee that these **do** contain a calculation.
@@ -74,7 +80,7 @@ export namespace Numeric {
   }
 
   /**
-   * Lengths that are guaranteed to not contain any calculation.
+   * Numerics that are guaranteed to not contain any calculation.
    *
    * @public
    */
@@ -86,7 +92,7 @@ export namespace Numeric {
 
     protected constructor(value: number, type: T) {
       super(type, false);
-      this._value = Real.round(value, NumericBase.Decimals);
+      this._value = Real.round(value, BaseNumeric.Decimals);
     }
 
     public get value(): number {
@@ -140,7 +146,7 @@ export namespace Numeric {
     }
   }
 
-  export type Type = NumericBase.Type | `${NumericBase.Dimension}-percentage`;
+  export type Type = BaseNumeric.Type | `${BaseNumeric.Dimension}-percentage`;
 
   /**
    * @remarks

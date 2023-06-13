@@ -203,6 +203,10 @@ export namespace Math {
     return value instanceof Math;
   }
 
+  export function isNumber(value: unknown): value is Math<"number"> {
+    return isCalculation(value) && value.isNumber();
+  }
+
   /**
    * @internal
    */

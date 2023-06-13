@@ -326,6 +326,9 @@ export namespace Length {
     return length.isZero();
   }
 
+  /**
+   * {@link https://drafts.csswg.org/css-values/#lengths}
+   */
   export const parse: Parser<Slice<Token>, Length, string> = either(
     map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, of),
     map(Math.parseLength, of)
