@@ -6,7 +6,7 @@ function parse(input: string) {
   return Length.parse(Lexer.lex(input)).map(([, length]) => length);
 }
 
-test("parse() accepts length", (t) => {
+test("parse() accepts lengths", (t) => {
   t.deepEqual(parse("2em").getUnsafe().toJSON(), {
     type: "length",
     value: 2,
@@ -14,7 +14,7 @@ test("parse() accepts length", (t) => {
   });
 });
 
-test("parse() accepts math expression reducing to lengths", (t) => {
+test("parse() accepts math expressions reducing to lengths", (t) => {
   t.deepEqual(parse("calc(2px + 1vh)").getUnsafe().toJSON(), {
     type: "length",
     math: {

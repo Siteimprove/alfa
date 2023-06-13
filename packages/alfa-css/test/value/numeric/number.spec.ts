@@ -8,14 +8,14 @@ function parse(input: string) {
   return Number.parse(Lexer.lex(input)).map(([, value]) => value);
 }
 
-test("parse() accepts number", (t) => {
+test("parse() accepts numbers", (t) => {
   t.deepEqual(parse("3.14").getUnsafe().toJSON(), {
     type: "number",
     value: 3.14,
   });
 });
 
-test("parse() accepts math expression reducing to numbers", (t) => {
+test("parse() accepts math expressions reducing to numbers", (t) => {
   t.deepEqual(parse("calc((12 + 9) * 2)").getUnsafe().toJSON(), {
     type: "number",
     math: {
