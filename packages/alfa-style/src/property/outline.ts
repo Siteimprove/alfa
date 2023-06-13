@@ -1,11 +1,12 @@
 import { Keyword, Token } from "@siteimprove/alfa-css";
 import { Err, Result } from "@siteimprove/alfa-result";
 
+import { Longhand } from "../longhand";
 import { Shorthand } from "../shorthand";
 
-import * as Color from "./outline-color";
-import * as Style from "./outline-style";
-import * as Width from "./outline-width";
+import Color from "./outline-color";
+import Style from "./outline-style";
+import Width from "./outline-width";
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline}
@@ -14,9 +15,9 @@ import * as Width from "./outline-width";
 export default Shorthand.of(
   ["outline-width", "outline-style", "outline-color"],
   (input) => {
-    let width: Width.Specified | undefined;
-    let style: Style.Specified | undefined;
-    let color: Color.Specified | undefined;
+    let width: Longhand.Parsed<typeof Width> | undefined;
+    let style: Longhand.Parsed<typeof Style> | undefined;
+    let color: Longhand.Parsed<typeof Color> | undefined;
 
     while (true) {
       for (const [remainder] of Token.parseWhitespace(input)) {
@@ -24,7 +25,7 @@ export default Shorthand.of(
       }
 
       if (width === undefined) {
-        const result = Width.parse(input);
+        const result = Width.parseBase(input);
 
         if (result.isOk()) {
           [input, width] = result.get();
@@ -33,7 +34,7 @@ export default Shorthand.of(
       }
 
       if (style === undefined) {
-        const result = Style.parse(input);
+        const result = Style.parseBase(input);
 
         if (result.isOk()) {
           [input, style] = result.get();
@@ -42,7 +43,7 @@ export default Shorthand.of(
       }
 
       if (color === undefined) {
-        const result = Color.parse(input);
+        const result = Color.parseBase(input);
 
         if (result.isOk()) {
           [input, color] = result.get();

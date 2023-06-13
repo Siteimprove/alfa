@@ -4,7 +4,17 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Shorthand } from "../shorthand";
 
 import * as X from "./background-repeat-x";
-import * as Y from "./background-repeat-y";
+/**
+ * background-repeat-x and background-repeat-y are identical.
+ * We mimic the needed bits here to avoid confusion in the main parser.
+ */
+namespace Y {
+  export const parse = X.parse;
+
+  export namespace Specified {
+    export type Item = X.Specified.Item;
+  }
+}
 
 const { map, either, delimited, option, pair, separatedList } = Parser;
 
@@ -31,13 +41,7 @@ export const parse = either(
 /**
  * @internal
  */
-export const parseList = map(
-  separatedList(
-    parse,
-    delimited(option(Token.parseWhitespace), Token.parseComma)
-  ),
-  (repeats) => List.of(repeats, ", ")
-);
+export const parseList = List.parseCommaSeparated(parse);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-repeat}

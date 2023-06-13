@@ -6,8 +6,9 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Shorthand } from "../shorthand";
 
 import * as Color from "./border-top-color";
-import * as Style from "./border-top-style";
+import Style from "./border-top-style";
 import * as Width from "./border-top-width";
+import { Longhand } from "../longhand";
 
 const { map } = Parser;
 
@@ -15,13 +16,13 @@ export const parse: Parser<
   Slice<Token>,
   [
     Color.Specified | Keyword<"initial">,
-    Style.Specified | Keyword<"initial">,
+    Longhand.Parsed<typeof Style> | Keyword<"initial">,
     Width.Specified | Keyword<"initial">
   ],
   string
 > = (input) => {
   let color: Color.Specified | undefined;
-  let style: Style.Specified | undefined;
+  let style: Longhand.Parsed<typeof Style> | undefined;
   let width: Width.Specified | undefined;
 
   while (true) {
@@ -41,7 +42,7 @@ export const parse: Parser<
 
     // <style>
     if (style === undefined) {
-      const result = Style.parse(input);
+      const result = Style.parseBase(input);
 
       if (result.isOk()) {
         [input, style] = result.get();

@@ -1,13 +1,23 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
+import { Functor } from "@siteimprove/alfa-functor";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Mapper } from "@siteimprove/alfa-mapper";
+import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
+import { Token } from "../../syntax";
 import { Value } from "../../value";
+
+const { delimited, option, map, separatedList } = Parser;
 
 /**
  * @public
  */
-export class List<T> extends Value<"list", false> implements Iterable<T> {
+export class List<T>
+  extends Value<"list", false>
+  implements Iterable<T>, Functor<T>
+{
   public static of<T>(values: Iterable<T>, separator = " "): List<T> {
     return new List(Array.from(values), separator);
   }
@@ -25,8 +35,12 @@ export class List<T> extends Value<"list", false> implements Iterable<T> {
     return this._values;
   }
 
-  public resolve(): List<T> {
-    return this;
+  public resolve<U>(valueResolver: List.Resolver<T, U>): List<U> {
+    return this.map(valueResolver);
+  }
+
+  public map<U>(mapper: Mapper<T, U>): List<U> {
+    return new List(this._values.map(mapper), this._separator);
   }
 
   public equals<T>(value: List<T>): boolean;
@@ -77,6 +91,8 @@ export namespace List {
     separator: string;
   }
 
+  export type Resolver<T, U> = Mapper<T, U>;
+
   export function isList<T>(value: Iterable<T>): value is List<T>;
 
   export function isList<T>(value: unknown): value is List<T>;
@@ -84,4 +100,21 @@ export namespace List {
   export function isList<T>(value: unknown): value is List<T> {
     return value instanceof List;
   }
+
+  function parse(
+    separator: string,
+    parseSeparator: Parser<Slice<Token>, any, string>
+  ): <T>(
+    parseValue: Parser<Slice<Token>, T, string>
+  ) => Parser<Slice<Token>, List<T>, string> {
+    return (parseValue) =>
+      map(separatedList(parseValue, parseSeparator), (values) =>
+        List.of(values, separator)
+      );
+  }
+
+  const parseComma = delimited(option(Token.parseWhitespace), Token.parseComma);
+
+  export const parseCommaSeparated = parse(", ", parseComma);
+  export const parseSpaceSeparated = parse(" ", Token.parseWhitespace);
 }

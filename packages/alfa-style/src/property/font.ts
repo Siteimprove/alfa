@@ -3,14 +3,16 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
+import { Longhand } from "../longhand";
 import { Shorthand } from "../shorthand";
 
-import * as LineHeight from "./line-height";
-import * as Family from "./font-family";
-import * as Size from "./font-size";
+import LineHeight from "./line-height";
+import Family from "./font-family";
+import Size from "./font-size";
+// Only keyword stretch are accepted in font, so we need to import the correct parser
 import * as Stretch from "./font-stretch";
-import * as Style from "./font-style";
-import * as Weight from "./font-weight";
+import Style from "./font-style";
+import Weight from "./font-weight";
 
 const { map, option, pair, right, delimited } = Parser;
 
@@ -23,19 +25,19 @@ export const parsePrelude: Parser<
   Slice<Token>,
   [
     ["font-stretch", Stretch.Specified | Keyword<"initial">],
-    ["font-style", Style.Specified | Keyword<"initial">],
+    ["font-style", Longhand.Parsed<typeof Style> | Keyword<"initial">],
     // only "normal" and "small-caps" are accepted in font…
     [
       "font-variant-caps",
       Keyword<"normal"> | Keyword<"small-caps"> | Keyword<"initial">
     ],
-    ["font-weight", Weight.Specified | Keyword<"initial">]
+    ["font-weight", Longhand.Parsed<typeof Weight> | Keyword<"initial">]
   ],
   string
 > = (input) => {
-  let style: Style.Specified | undefined;
+  let style: Longhand.Parsed<typeof Style> | undefined;
   let variant: Keyword<"normal"> | Keyword<"small-caps"> | undefined;
-  let weight: Weight.Specified | undefined;
+  let weight: Longhand.Parsed<typeof Weight> | undefined;
   let stretch: Stretch.Specified | undefined;
 
   while (true) {
@@ -44,7 +46,7 @@ export const parsePrelude: Parser<
     }
 
     if (style === undefined) {
-      const result = Style.parse(input);
+      const result = Style.parseBase(input);
 
       if (result.isOk()) {
         [input, style] = result.get();
@@ -62,7 +64,7 @@ export const parsePrelude: Parser<
     }
 
     if (weight === undefined) {
-      const result = Weight.parse(input);
+      const result = Weight.parseBase(input);
 
       if (result.isOk()) {
         [input, weight] = result.get();
@@ -99,15 +101,15 @@ export const parsePrelude: Parser<
 export const parse = pair(
   parsePrelude,
   pair(
-    delimited(option(Token.parseWhitespace), Size.parse),
+    delimited(option(Token.parseWhitespace), Size.parseBase),
     pair(
       option(
         right(
           delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-          LineHeight.parse
+          LineHeight.parseBase
         )
       ),
-      delimited(option(Token.parseWhitespace), Family.parse)
+      delimited(option(Token.parseWhitespace), Family.parseBase)
     )
   )
 );

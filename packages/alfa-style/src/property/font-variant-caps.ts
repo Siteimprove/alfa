@@ -1,28 +1,11 @@
-import { Keyword } from "@siteimprove/alfa-css";
-
 import { Longhand } from "../longhand";
 
 /**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps}
  * @internal
  */
-export type Specified =
-  | Keyword<"normal">
-  | Keyword<"small-caps">
-  | Keyword<"all-small-caps">
-  | Keyword<"petite-caps">
-  | Keyword<"all-petite-caps">
-  | Keyword<"unicase">
-  | Keyword<"titling-caps">;
-
-/**
- * @internal
- */
-export type Computed = Specified;
-
-/**
- * @internal
- */
-export const parse = Keyword.parse(
+export default Longhand.fromKeywords(
+  { inherits: true },
   "normal",
   "small-caps",
   "all-small-caps",
@@ -30,15 +13,4 @@ export const parse = Keyword.parse(
   "all-petite-caps",
   "unicase",
   "titling-caps"
-);
-
-/**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-caps}
- * @internal
- */
-export default Longhand.of<Specified, Computed>(
-  Keyword.of("normal"),
-  parse,
-  (position) => position,
-  { inherits: true }
 );

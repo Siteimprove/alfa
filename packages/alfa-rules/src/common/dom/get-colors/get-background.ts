@@ -2,6 +2,7 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { Percentage, RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
+import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Context } from "@siteimprove/alfa-selector";
@@ -71,7 +72,10 @@ export function getBackground(
       let error: Option<ColorError<"background">> = None;
 
       // If the element has a visible text-shadow, we don't try to guess how it looks.
-      if (textShadow.type !== "keyword" && isVisibleShadow(textShadow)) {
+      if (
+        textShadow.type === "list" &&
+        Iterable.some(textShadow, (shadow) => isVisibleShadow(shadow))
+      ) {
         error = Option.of(ColorError.textShadow(element, textShadow));
       }
 

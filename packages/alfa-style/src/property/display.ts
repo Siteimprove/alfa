@@ -5,8 +5,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
 
-import type { Computed as Position } from "./position";
-import type { Computed as Float } from "./float";
+import type Position from "./position";
+import type Float from "./float";
 
 const { map, either } = Parser;
 
@@ -257,8 +257,12 @@ export default Longhand.of<Specified, Computed>(
   (value, style) => {
     // We need the type assertion to help TS break a circular type reference:
     // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
-    const position = style.computed("position").value as Position;
-    const float = style.computed("float").value as Float;
+    const position = style.computed("position").value as Longhand.Computed<
+      typeof Position
+    >;
+    const float = style.computed("float").value as Longhand.Computed<
+      typeof Float
+    >;
 
     return position.equals(Keyword.of("absolute")) ||
       position.equals(Keyword.of("fixed")) ||

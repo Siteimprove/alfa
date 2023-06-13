@@ -98,6 +98,7 @@
     { "path": "../alfa-media" },
     { "path": "../alfa-option" },
     { "path": "../alfa-predicate" },
+    { "path": "../alfa-rectangle"},
     { "path": "../alfa-refinement" },
     { "path": "../alfa-sarif" },
     { "path": "../alfa-sequence" },

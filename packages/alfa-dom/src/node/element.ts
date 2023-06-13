@@ -1,6 +1,7 @@
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Sequence } from "@siteimprove/alfa-sequence";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
@@ -13,8 +14,8 @@ import { Shadow } from "./shadow";
 import { Slot } from "./slot";
 import { Slotable } from "./slotable";
 
-import * as predicate from "./element/predicate";
 import * as helpers from "./element/input-type";
+import * as predicate from "./element/predicate";
 
 const { isEmpty } = Iterable;
 const { not } = Predicate;
@@ -32,7 +33,8 @@ export class Element<N extends string = string>
     name: N,
     attributes: Iterable<Attribute> = [],
     children: Iterable<Node> = [],
-    style: Option<Block> = None
+    style: Option<Block> = None,
+    rectangle: Option<Rectangle> = None
   ): Element<N> {
     return new Element(
       namespace,
@@ -40,7 +42,8 @@ export class Element<N extends string = string>
       name,
       Array.from(attributes),
       Array.from(children),
-      style
+      style,
+      rectangle
     );
   }
 
@@ -49,6 +52,7 @@ export class Element<N extends string = string>
   private readonly _name: N;
   private readonly _attributes: Map<string, Attribute>;
   private readonly _style: Option<Block>;
+  private readonly _box: Option<Rectangle>;
   private _shadow: Option<Shadow> = None;
   private _content: Option<Document> = None;
   private readonly _id: Option<string>;
@@ -60,7 +64,8 @@ export class Element<N extends string = string>
     name: N,
     attributes: Array<Attribute>,
     children: Array<Node>,
-    style: Option<Block>
+    style: Option<Block>,
+    box: Option<Rectangle>
   ) {
     super(children, "element");
 
@@ -83,6 +88,8 @@ export class Element<N extends string = string>
     this._classes = this.attribute("class")
       .map((attr) => attr.value.trim().split(/\s+/))
       .getOr([]);
+
+    this._box = box;
   }
 
   public get namespace(): Option<Namespace> {
@@ -132,6 +139,10 @@ export class Element<N extends string = string>
    */
   public get classes(): Sequence<string> {
     return Sequence.from(this._classes);
+  }
+
+  public get rectangle(): Option<Rectangle> {
+    return this._box;
   }
 
   public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {

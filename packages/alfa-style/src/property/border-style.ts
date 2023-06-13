@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { Shorthand } from "../shorthand";
 
-import { parse } from "./border-top-style";
+import Top from "./border-top-style";
 
 const { delimited, map, option, takeBetween } = Parser;
 
@@ -19,7 +19,7 @@ export default Shorthand.of(
     "border-left-style",
   ],
   map(
-    takeBetween(delimited(option(Token.parseWhitespace), parse), 1, 4),
+    takeBetween(delimited(option(Token.parseWhitespace), Top.parseBase), 1, 4),
     ([top, right = top, bottom = top, left = right]) => [
       ["border-top-style", top],
       ["border-right-style", right],

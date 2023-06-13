@@ -8,6 +8,7 @@ import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
 import { Equatable } from '@siteimprove/alfa-equatable';
+import { Functor } from '@siteimprove/alfa-functor';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
@@ -705,9 +706,10 @@ export namespace Keyword {
         value: T;
     }
     // (undocumented)
-    export function parse<T extends string>(...keywords: Array<T>): Parser<Slice<Token>, {
-        [K in T]: Keyword<K>;
-    }[T], string>;
+    export function parse<T extends string>(...keywords: Array<T>): Parser<Slice<Token>, ToKeywords<T>, string>;
+    export type ToKeywords<Words extends string> = {
+        [K in Words]: Keyword<K>;
+    }[Words];
 }
 
 // @public (undocumented)
@@ -798,6 +800,8 @@ export namespace Length {
         // (undocumented)
         resolve(resolver: Length.Resolver): Fixed<"px">;
     }
+    // (undocumented)
+    export function isCalculated(value: unknown): value is Calculated;
     // (undocumented)
     export function isFixed(value: unknown): value is Fixed;
     // (undocumented)
@@ -956,7 +960,7 @@ export namespace Linear {
 }
 
 // @public (undocumented)
-export class List<T> extends Value<"list", false> implements Iterable<T> {
+export class List<T> extends Value<"list", false> implements Iterable<T>, Functor<T> {
     // (undocumented)
     [Symbol.iterator](): Iterator<T>;
     // (undocumented)
@@ -966,9 +970,11 @@ export class List<T> extends Value<"list", false> implements Iterable<T> {
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
+    map<U>(mapper: Mapper<T, U>): List<U>;
+    // (undocumented)
     static of<T>(values: Iterable<T>, separator?: string): List<T>;
     // (undocumented)
-    resolve(): List<T>;
+    resolve<U>(valueResolver: List.Resolver<T, U>): List<U>;
     // (undocumented)
     toJSON(): List.JSON<T>;
     // (undocumented)
@@ -990,6 +996,12 @@ export namespace List {
         // (undocumented)
         values: Array<Serializable.ToJSON<T>>;
     }
+    // (undocumented)
+    export type Resolver<T, U> = Mapper<T, U>;
+    const // (undocumented)
+    parseCommaSeparated: <T>(parseValue: Parser<Slice<Token>, T, string>) => Parser<Slice<Token>, List<T>, string>;
+    const // (undocumented)
+    parseSpaceSeparated: <T>(parseValue: Parser<Slice<Token>, T, string>) => Parser<Slice<Token>, List<T>, string>;
 }
 
 // @public (undocumented)
@@ -1363,7 +1375,7 @@ export namespace Polygon {
 }
 
 // @public (undocumented)
-export class Position<H extends Position.Component<Position.Horizontal> = Position.Component<Position.Horizontal>, V extends Position.Component<Position.Vertical> = Position.Component<Position.Vertical>> extends Value<"position", false> {
+export class Position<H extends Position.Component<Position.Keywords.Horizontal> = Position.Component<Position.Keywords.Horizontal>, V extends Position.Component<Position.Keywords.Vertical> = Position.Component<Position.Keywords.Vertical>> extends Value<"position", false> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1371,7 +1383,7 @@ export class Position<H extends Position.Component<Position.Horizontal> = Positi
     // (undocumented)
     get horizontal(): H;
     // (undocumented)
-    static of<H extends Position.Component<Position.Horizontal>, V extends Position.Component<Position.Vertical>>(horizontal: H, vertical: V): Position<H, V>;
+    static of<H extends Position.Component<Position.Keywords.Horizontal>, V extends Position.Component<Position.Keywords.Vertical>>(horizontal: H, vertical: V): Position<H, V>;
     // (undocumented)
     resolve(): Position<H, V>;
     // (undocumented)
@@ -1385,18 +1397,16 @@ export class Position<H extends Position.Component<Position.Horizontal> = Positi
 // @public (undocumented)
 export namespace Position {
     // (undocumented)
-    export type Center = Keyword<"center">;
-    // (undocumented)
-    export type Component<S extends Horizontal | Vertical = Horizontal | Vertical, U extends Unit.Length = Unit.Length> = Center | Offset<U> | Side<S, Offset<U>>;
-    const // (undocumented)
-    parseCenter: Parser<Slice<Token>, Keyword<"center">, string>;
+    export type Component<S extends Keywords.Horizontal | Keywords.Vertical = Keywords.Horizontal | Keywords.Vertical, U extends Unit.Length = Unit.Length> = Keywords.Center | Offset<U> | Side<S, Offset<U>>;
     // (undocumented)
     export namespace Component {
         // (undocumented)
         export type JSON = Keyword.JSON | Length.Fixed.JSON | Percentage.JSON | Side.JSON;
+        const // (undocumented)
+        parseHorizontal: Parser<Slice<Token>, Percentage | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
+        const // (undocumented)
+        parseVertical: Parser<Slice<Token>, Percentage | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
     }
-    // (undocumented)
-    export type Horizontal = Keyword<"left"> | Keyword<"right">;
     // (undocumented)
     export interface JSON extends Value.JSON<"position"> {
         // (undocumented)
@@ -1405,11 +1415,31 @@ export namespace Position {
         vertical: Component.JSON;
     }
     // (undocumented)
+    export namespace Keywords {
+        // (undocumented)
+        export type Center = Keyword<"center">;
+        const // @internal (undocumented)
+        parseCenter: Parser<Slice<Token>, Keyword<"center">, string>;
+        // (undocumented)
+        export type Horizontal = Keyword<"left"> | Keyword<"right">;
+        const // @internal (undocumented)
+        parseVertical: Parser<Slice<Token>, Keyword.ToKeywords<"top" | "bottom">, string>;
+        // (undocumented)
+        export type Vertical = Keyword<"top"> | Keyword<"bottom">;
+        const // @internal (undocumented)
+        parseHorizontal: Parser<Slice<Token>, Keyword.ToKeywords<"right" | "left">, string>;
+    }
+    // (undocumented)
     export type Offset<U extends Unit.Length = Unit.Length> = Length.Fixed<U> | Percentage;
+    // (undocumented)
+    export namespace Offset {
+        const // (undocumented)
+        parse: Parser<Slice<Token>, Percentage | Length.Fixed<Unit.Length>, string, []>;
+    }
     // (undocumented)
     export function parse(legacySyntax?: boolean): Parser<Slice<Token>, Position, string>;
     // (undocumented)
-    export class Side<S extends Vertical | Horizontal = Vertical | Horizontal, O extends Offset = Offset> extends Value<"side", false> {
+    export class Side<S extends Keywords.Vertical | Keywords.Horizontal = Keywords.Vertical | Keywords.Horizontal, O extends Offset = Offset> extends Value<"side", false> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
@@ -1417,7 +1447,7 @@ export namespace Position {
         // (undocumented)
         isCenter(): boolean;
         // (undocumented)
-        static of<S extends Vertical | Horizontal, O extends Offset>(side: S, offset?: Option<O>): Side<S, O>;
+        static of<S extends Keywords.Vertical | Keywords.Horizontal, O extends Offset>(side: S, offset?: Option<O>): Side<S, O>;
         // (undocumented)
         get offset(): Option<O>;
         // (undocumented)
@@ -1438,9 +1468,19 @@ export namespace Position {
             // (undocumented)
             side: Keyword.JSON;
         }
+        const // (undocumented)
+        parseHorizontalKeywordValue: Parser<Slice<Token>, Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string>;
+        const // (undocumented)
+        parseHorizontalKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string>;
+        const // (undocumented)
+        parseVerticalKeywordValue: Parser<Slice<Token>, Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string>;
+        const // (undocumented)
+        parseVerticalKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string>;
+        const // (undocumented)
+        parseHorizontal: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
+        const // (undocumented)
+        parseVertical: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
     }
-    // (undocumented)
-    export type Vertical = Keyword<"top"> | Keyword<"bottom">;
         {};
 }
 
@@ -1882,6 +1922,16 @@ export namespace Shadow {
         // (undocumented)
         vertical: Length.Fixed.JSON;
     }
+    // (undocumented)
+    export interface Options {
+        // (undocumented)
+        withInset: boolean;
+        // (undocumented)
+        withSpread: boolean;
+    }
+    // (undocumented)
+    export function parse(options?: Options): Parser<Slice<Token>, Shadow, string>;
+        {};
 }
 
 // @public (undocumented)

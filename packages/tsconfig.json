@@ -54,6 +54,7 @@
     { "path": "alfa-predicate" },
     { "path": "alfa-promise" },
     { "path": "alfa-record" },
+    { "path": "alfa-rectangle" },
     { "path": "alfa-reducer" },
     { "path": "alfa-refinement" },
     { "path": "alfa-result" },

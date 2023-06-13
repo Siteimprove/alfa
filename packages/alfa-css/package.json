@@ -21,6 +21,7 @@
     "@siteimprove/alfa-array": "workspace:^0.63.3",
     "@siteimprove/alfa-comparable": "workspace:^0.63.3",
     "@siteimprove/alfa-equatable": "workspace:^0.63.3",
+    "@siteimprove/alfa-functor": "workspace:^0.63.3",
     "@siteimprove/alfa-hash": "workspace:^0.63.3",
     "@siteimprove/alfa-iterable": "workspace:^0.63.3",
     "@siteimprove/alfa-json": "workspace:^0.63.3",

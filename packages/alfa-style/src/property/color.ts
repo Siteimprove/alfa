@@ -14,17 +14,12 @@ export type Specified = Color;
 export type Computed = RGB<Percentage, Percentage> | Current | System;
 
 /**
- * @internal
- */
-export const parse = Color.parse;
-
-/**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/color}
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
   Color.system("canvastext"),
-  parse,
+  Color.parse,
   (value) => value.map((color) => Resolver.color(color)),
   {
     inherits: true,

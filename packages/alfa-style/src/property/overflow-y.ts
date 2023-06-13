@@ -2,40 +2,14 @@ import { Keyword } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
 
-/**
- * @internal
- */
-export type Specified =
-  | Keyword<"visible">
-  | Keyword<"hidden">
-  | Keyword<"clip">
-  | Keyword<"scroll">
-  | Keyword<"auto">;
+import Base from "./overflow-x";
 
 /**
+ * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/oevrflow-y}
  * @internal
  */
-export type Computed = Specified;
-
-/**
- * @internal
- */
-export const parse = Keyword.parse(
-  "visible",
-  "hidden",
-  "clip",
-  "scroll",
-  "auto"
-);
-
-/**
- * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-y}
- * @internal
- */
-export default Longhand.of<Specified, Computed>(
-  Keyword.of("visible"),
-  parse,
-  (overflowY, style) =>
+export default Longhand.extend(Base, {
+  compute: (overflowY, style) =>
     overflowY.map((y) => {
       if (y.value !== "visible" && y.value !== "clip") {
         return y;
@@ -48,5 +22,5 @@ export default Longhand.of<Specified, Computed>(
       }
 
       return y.value === "visible" ? Keyword.of("auto") : Keyword.of("hidden");
-    })
-);
+    }),
+});
