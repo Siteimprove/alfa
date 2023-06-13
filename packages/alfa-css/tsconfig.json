@@ -54,6 +54,7 @@
     "src/value/keyword.ts",
     "src/value/numeric/index.ts",
     "src/value/numeric/length.ts",
+    "src/value/numeric/numeric.ts",
     "src/value/position.ts",
     "src/value/shadow.ts",
     "src/value/shape/basic-shape.ts",

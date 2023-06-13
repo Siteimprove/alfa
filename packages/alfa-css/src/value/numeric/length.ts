@@ -1,3 +1,4 @@
+import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Mapper } from "@siteimprove/alfa-mapper";
@@ -5,11 +6,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
-import { Length as BaseLength } from "../../calculation/numeric/length";
+import { Length as BaseLength } from "../../calculation/numeric/index-new";
 import { Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
 import { Value } from "../../value";
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
 const { either, map } = Parser;
 
@@ -26,6 +26,9 @@ export type Length<U extends Unit.Length = Unit.Length> =
 export namespace Length {
   /**
    * Lengths that may contain calculations
+   *
+   * @remarks
+   * We actually guarantee that these **do** contain a calculation.
    *
    * @internal
    */
@@ -218,6 +221,12 @@ export namespace Length {
 
   export type JSON = Calculated.JSON | Fixed.JSON;
 
+  /**
+   * @remarks
+   * While hasCalculated and resolve are already defined on Value, they have
+   * a stricter type for Length. Hence, having an interface is more convenient
+   * to record that type.
+   */
   interface ILength<
     U extends Unit.Length = Unit.Length,
     CALC extends boolean = boolean
@@ -313,7 +322,7 @@ export namespace Length {
   }
 
   // Curryfied version is more convenient for monadic call sites.
-  export function isZero(length: Length.Fixed): boolean {
+  export function isZero(length: Fixed): boolean {
     return length.isZero();
   }
 
