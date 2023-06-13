@@ -1,9 +1,7 @@
-import { Keyword, Number as CSSNumber } from "@siteimprove/alfa-css";
+import { Keyword, Number } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
-
-import { Number } from "./value/compound";
 
 const { either } = Parser;
 
@@ -11,7 +9,7 @@ const { either } = Parser;
  * @internal
  */
 export type Specified =
-  | Number.Number
+  | Number
 
   // Absolute
   | Keyword<"normal">
@@ -24,7 +22,7 @@ export type Specified =
 /**
  * @internal
  */
-export type Computed = CSSNumber;
+export type Computed = Number.Fixed;
 
 /**
  * @internal
@@ -39,20 +37,20 @@ export const parse = either(
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  CSSNumber.of(400),
+  Number.of(400),
   parse,
   (fontWeight, style) =>
     fontWeight.map((fontWeight) => {
       if (Number.isNumber(fontWeight)) {
-        return Number.resolve(fontWeight);
+        return fontWeight.resolve();
       }
 
       switch (fontWeight.value) {
         case "normal":
-          return CSSNumber.of(400);
+          return Number.of(400);
 
         case "bold":
-          return CSSNumber.of(700);
+          return Number.of(700);
 
         // https://drafts.csswg.org/css-fonts/#relative-weights
         default: {
@@ -61,26 +59,26 @@ export default Longhand.of<Specified, Computed>(
           const parent = style.parent.computed("font-weight").value as Computed;
 
           if (parent.value < 100) {
-            return CSSNumber.of(bolder ? 400 : parent.value);
+            return Number.of(bolder ? 400 : parent.value);
           }
 
           if (parent.value < 350) {
-            return CSSNumber.of(bolder ? 400 : 100);
+            return Number.of(bolder ? 400 : 100);
           }
 
           if (parent.value < 550) {
-            return CSSNumber.of(bolder ? 700 : 100);
+            return Number.of(bolder ? 700 : 100);
           }
 
           if (parent.value < 750) {
-            return CSSNumber.of(bolder ? 900 : 400);
+            return Number.of(bolder ? 900 : 400);
           }
 
           if (parent.value < 900) {
-            return CSSNumber.of(bolder ? 900 : 700);
+            return Number.of(bolder ? 900 : 700);
           }
 
-          return CSSNumber.of(bolder ? parent.value : 700);
+          return Number.of(bolder ? parent.value : 700);
         }
       }
     }),

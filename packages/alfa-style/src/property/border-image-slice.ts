@@ -30,7 +30,7 @@ export type Specified = Tuple<
  * @internal
  */
 export namespace Specified {
-  export type Item = Number | Percentage;
+  export type Item = Number.Fixed | Percentage;
 }
 
 /**
@@ -39,7 +39,7 @@ export namespace Specified {
 export type Computed = Specified;
 
 const parseItem = filter(
-  either(Number.parse, Percentage.parse),
+  either(Number.parseBase, Percentage.parse),
   (size) => size.value >= 0,
   () => `Negative sizes are not allowed`
 );

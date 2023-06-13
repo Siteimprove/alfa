@@ -3,8 +3,10 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax";
 
-import { Angle, Number, Percentage } from "../../calculation";
+import { Angle, Percentage } from "../../calculation";
+
 import { Keyword } from "../keyword";
+import { Number } from "../numeric";
 
 import { Current } from "./current";
 import { Hex } from "./hex";
@@ -32,7 +34,10 @@ export namespace Color {
     return Hex.of(value);
   }
 
-  export function hsl<H extends Number | Angle, A extends Number | Percentage>(
+  export function hsl<
+    H extends Number.Fixed | Angle,
+    A extends Number.Fixed | Percentage
+  >(
     hue: H,
     saturation: Percentage,
     lightness: Percentage,
@@ -46,8 +51,8 @@ export namespace Color {
   }
 
   export function rgb<
-    C extends Number | Percentage,
-    A extends Number | Percentage
+    C extends Number.Fixed | Percentage,
+    A extends Number.Fixed | Percentage
   >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
     return RGB.of(red, green, blue, alpha);
   }

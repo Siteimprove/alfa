@@ -3,8 +3,10 @@ import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Angle, Number, Percentage } from "../../calculation";
+import { Angle, Percentage } from "../../calculation";
 import { Token } from "../../syntax";
+
+import { Number } from "../numeric";
 
 import { Format } from "./format";
 
@@ -14,10 +16,13 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
  * @public
  */
 export class HSL<
-  H extends Number | Angle = Number | Angle,
-  A extends Number | Percentage = Number | Percentage
+  H extends Number.Fixed | Angle = Number.Fixed | Angle,
+  A extends Number.Fixed | Percentage = Number.Fixed | Percentage
 > extends Format<"hsl"> {
-  public static of<H extends Number | Angle, A extends Number | Percentage>(
+  public static of<
+    H extends Number.Fixed | Angle,
+    A extends Number.Fixed | Percentage
+  >(
     hue: H,
     saturation: Percentage,
     lightness: Percentage,
@@ -131,15 +136,15 @@ export class HSL<
  */
 export namespace HSL {
   export interface JSON extends Format.JSON<"hsl"> {
-    hue: Number.JSON | Angle.JSON;
+    hue: Number.Fixed.JSON | Angle.JSON;
     saturation: Percentage.JSON;
     lightness: Percentage.JSON;
-    alpha: Number.JSON | Percentage.JSON;
+    alpha: Number.Fixed.JSON | Percentage.JSON;
   }
 
   export function isHSL<
-    H extends Number | Angle,
-    A extends Number | Percentage
+    H extends Number.Fixed | Angle,
+    A extends Number.Fixed | Percentage
   >(value: unknown): value is HSL<H, A> {
     return value instanceof HSL;
   }
@@ -147,16 +152,16 @@ export namespace HSL {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlpha: Parser<Slice<Token>, Number | Percentage, string> = either(
-    Number.parse,
+  const parseAlpha: Parser<Slice<Token>, Number.Fixed | Percentage, string> = either(
+    Number.parseBase,
     Percentage.parse
   );
 
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-hue}
    */
-  const parseHue: Parser<Slice<Token>, Number | Angle, string> = either(
-    Number.parse,
+  const parseHue: Parser<Slice<Token>, Number.Fixed | Angle, string> = either(
+    Number.parseBase,
     Angle.parse
   );
 

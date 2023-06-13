@@ -7,18 +7,13 @@
  * @internal
  */
 
-import {
-  Length,
-  Math,
-  Number as CSSNumber,
-  Percentage,
-  type Token,
-} from "@siteimprove/alfa-css";
+import { Length, Math, Percentage, type Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Length as BaseLength } from "@siteimprove/alfa-css/src/calculation/numeric/length";
+import { Number as BaseNumber } from "@siteimprove/alfa-css/src/calculation/numeric/number";
 
 import { Resolver } from "../../resolver";
 import type { Style } from "../../style";
@@ -89,18 +84,18 @@ export namespace LengthPercentage {
  * @internal
  */
 export namespace NumberPercentage {
-  export type NumberPercentage = CSSNumber | Percentage | Math<"number">;
+  export type NumberPercentage = BaseNumber | Percentage | Math<"number">;
 
   export function isNumber(value: unknown): value is NumberPercentage {
     return (
-      CSSNumber.isNumber(value) ||
+      BaseNumber.isNumber(value) ||
       Percentage.isPercentage(value) ||
       (Math.isCalculation(value) && value.isNumber())
     );
   }
 
   export const parse = either<Slice<Token>, NumberPercentage, string>(
-    CSSNumber.parse,
+    BaseNumber.parse,
     Percentage.parse,
     Math.parseNumber
   );
@@ -110,46 +105,14 @@ export namespace NumberPercentage {
    *
    * @param value the Number to resolve
    */
-  export function resolve(value: NumberPercentage): CSSNumber | Percentage {
+  export function resolve(value: NumberPercentage): BaseNumber | Percentage {
     switch (value.type) {
       case "math expression":
         // Since the calculation has been parsed and typed, there should
         // always be something to get.
-        return value.resolve2().getUnsafe();
+        return BaseNumber.of(value.resolve2().getUnsafe().value);
       case "number":
       case "percentage":
-        return value;
-    }
-  }
-}
-
-/**
- * @internal
- */
-export namespace Number {
-  export type Number = CSSNumber | Math<"number">;
-
-  export function isNumber(value: unknown): value is Number {
-    return (
-      CSSNumber.isNumber(value) ||
-      (Math.isCalculation(value) && value.isNumber())
-    );
-  }
-
-  export const parse = either(CSSNumber.parse, Math.parseNumber);
-
-  /**
-   * Resolve a Number .
-   *
-   * @param value the Number to resolve
-   */
-  export function resolve(value: Number): CSSNumber {
-    switch (value.type) {
-      case "math expression":
-        // Since the calculation has been parsed and typed, there should
-        // always be something to get.
-        return value.resolve2().getUnsafe();
-      case "number":
         return value;
     }
   }

@@ -4,8 +4,8 @@ import { Some } from "@siteimprove/alfa-option/src/some";
 import { Selective } from "@siteimprove/alfa-selective";
 
 // TODO: resimplify
-import { Angle, Number, Numeric, Percentage } from "../numeric";
-import { Length } from "../numeric/index-new";
+import { Angle, Percentage } from "../numeric";
+import { Length, Number, Numeric } from "../numeric/index-new";
 
 import { Unit } from "../../unit";
 

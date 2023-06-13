@@ -2,8 +2,9 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Number } from "../../calculation";
 import { Token } from "../../syntax";
+
+import { Number } from "../numeric";
 
 import { Format } from "./format";
 
@@ -30,19 +31,19 @@ export class Hex extends Format<"hex"> {
     return this._value;
   }
 
-  public get red(): Number {
+  public get red(): Number.Fixed {
     return Number.of(this._value >>> 24);
   }
 
-  public get green(): Number {
+  public get green(): Number.Fixed {
     return Number.of((this._value >>> 16) & 0xff);
   }
 
-  public get blue(): Number {
+  public get blue(): Number.Fixed {
     return Number.of((this._value >>> 8) & 0xff);
   }
 
-  public get alpha(): Number {
+  public get alpha(): Number.Fixed {
     return Number.of(this._value & 0xff);
   }
 

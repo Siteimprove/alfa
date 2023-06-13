@@ -872,7 +872,10 @@ export namespace Media {
 
       public toLength(): Range<T | Length<"px">> {
         return this.map((bound) =>
-          Refinement.and(Number.isNumber, (value) => value.value === 0)(bound)
+          Refinement.and(
+            Number.isNumber,
+            (value) => !value.hasCalculation() && value.value === 0
+          )(bound)
             ? Length.of(0, "px")
             : bound
         );

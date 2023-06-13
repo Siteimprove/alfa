@@ -2,9 +2,11 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Angle, Number } from "../../calculation";
+import { Angle } from "../../calculation";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
+
+import { Number } from "../numeric";
 
 import { Function } from "./function";
 
@@ -15,20 +17,25 @@ const { map, left, right, pair, either, delimited, option } = Parser;
  */
 export class Rotate<A extends Angle = Angle> extends Function<"rotate"> {
   public static of<A extends Angle>(
-    x: Number,
-    y: Number,
-    z: Number,
+    x: Number.Fixed,
+    y: Number.Fixed,
+    z: Number.Fixed,
     angle: A
   ): Rotate<A> {
     return new Rotate(x, y, z, angle);
   }
 
-  private readonly _x: Number;
-  private readonly _y: Number;
-  private readonly _z: Number;
+  private readonly _x: Number.Fixed;
+  private readonly _y: Number.Fixed;
+  private readonly _z: Number.Fixed;
   private readonly _angle: A;
 
-  private constructor(x: Number, y: Number, z: Number, angle: A) {
+  private constructor(
+    x: Number.Fixed,
+    y: Number.Fixed,
+    z: Number.Fixed,
+    angle: A
+  ) {
     super("rotate", false);
     this._x = x;
     this._y = y;
@@ -36,15 +43,15 @@ export class Rotate<A extends Angle = Angle> extends Function<"rotate"> {
     this._angle = angle;
   }
 
-  public get x(): Number {
+  public get x(): Number.Fixed {
     return this._x;
   }
 
-  public get y(): Number {
+  public get y(): Number.Fixed {
     return this._y;
   }
 
-  public get z(): Number {
+  public get z(): Number.Fixed {
     return this._z;
   }
 
@@ -98,9 +105,9 @@ export class Rotate<A extends Angle = Angle> extends Function<"rotate"> {
  */
 export namespace Rotate {
   export interface JSON extends Function.JSON<"rotate"> {
-    x: Number.JSON;
-    y: Number.JSON;
-    z: Number.JSON;
+    x: Number.Fixed.JSON;
+    y: Number.Fixed.JSON;
+    z: Number.Fixed.JSON;
     angle: Angle.JSON;
   }
 
@@ -186,14 +193,17 @@ export namespace Rotate {
         delimited(
           option(Token.parseWhitespace),
           pair(
-            Number.parse,
+            Number.parseBase,
             right(
               parseSeparator,
               pair(
-                Number.parse,
+                Number.parseBase,
                 right(
                   parseSeparator,
-                  pair(Number.parse, right(parseSeparator, parseAngleOrZero))
+                  pair(
+                    Number.parseBase,
+                    right(parseSeparator, parseAngleOrZero)
+                  )
                 )
               )
             )

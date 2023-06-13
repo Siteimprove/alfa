@@ -1,10 +1,10 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Angle, Number, Percentage } from "../../calculation";
+import { Angle, Percentage } from "../../calculation";
 import { Token } from "../../syntax";
 
-import { Length } from "../numeric";
+import { Length, Number } from "../numeric";
 
 import { Matrix } from "./matrix";
 import { Perspective } from "./perspective";
@@ -30,7 +30,7 @@ export type Transform =
  * @public
  */
 export namespace Transform {
-  export function matrix(...values: Matrix.Values<Number>): Matrix {
+  export function matrix(...values: Matrix.Values<Number.Fixed>): Matrix {
     return Matrix.of(...values);
   }
 
@@ -41,15 +41,15 @@ export namespace Transform {
   }
 
   export function rotate<A extends Angle>(
-    x: Number,
-    y: Number,
-    z: Number,
+    x: Number.Fixed,
+    y: Number.Fixed,
+    z: Number.Fixed,
     angle: A
   ): Rotate<A> {
     return Rotate.of(x, y, z, angle);
   }
 
-  export function scale(x: Number, y: Number): Scale {
+  export function scale(x: Number.Fixed, y: Number.Fixed): Scale {
     return Scale.of(x, y);
   }
 

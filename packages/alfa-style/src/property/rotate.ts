@@ -28,7 +28,10 @@ function takeThree<T>(array: Array<T>): Result<[T, T, T], string> {
 // and scale properties.
 const parseAxis = either<
   Slice<Token>,
-  Keyword<"x"> | Keyword<"y"> | Keyword<"z"> | [Number, Number, Number],
+  | Keyword<"x">
+  | Keyword<"y">
+  | Keyword<"z">
+  | [Number.Fixed, Number.Fixed, Number.Fixed],
   string
 >(
   Keyword.parse("x"),
@@ -36,7 +39,7 @@ const parseAxis = either<
   Keyword.parse("z"),
   // We need to not consume the last whitespace which is expected by parseRotate,
   // so we can hardly use Parser.take.
-  mapResult(separatedList(Number.parse, Token.parseWhitespace), takeThree)
+  mapResult(separatedList(Number.parseBase, Token.parseWhitespace), takeThree)
 );
 
 /**

@@ -2,8 +2,11 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Number, Percentage } from "../../calculation";
+import { Percentage } from "../../calculation";
 import { Token } from "../../syntax";
+
+import { Number } from "../numeric";
+
 import { Format } from "./format";
 
 const { pair, map, either, option, left, right, take, delimited } = Parser;
@@ -12,12 +15,12 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
  * @public
  */
 export class RGB<
-  C extends Number | Percentage = Number | Percentage,
-  A extends Number | Percentage = Number | Percentage
+  C extends Number.Fixed | Percentage = Number.Fixed | Percentage,
+  A extends Number.Fixed | Percentage = Number.Fixed | Percentage
 > extends Format<"rgb"> {
   public static of<
-    C extends Number | Percentage,
-    A extends Number | Percentage
+    C extends Number.Fixed | Percentage,
+    A extends Number.Fixed | Percentage
   >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
     return new RGB(red, green, blue, alpha);
   }
@@ -95,15 +98,15 @@ export class RGB<
  */
 export namespace RGB {
   export interface JSON extends Format.JSON<"rgb"> {
-    red: Number.JSON | Percentage.JSON;
-    green: Number.JSON | Percentage.JSON;
-    blue: Number.JSON | Percentage.JSON;
-    alpha: Number.JSON | Percentage.JSON;
+    red: Number.Fixed.JSON | Percentage.JSON;
+    green: Number.Fixed.JSON | Percentage.JSON;
+    blue: Number.Fixed.JSON | Percentage.JSON;
+    alpha: Number.Fixed.JSON | Percentage.JSON;
   }
 
   export function isRGB<
-    C extends Number | Percentage,
-    A extends Number | Percentage
+    C extends Number.Fixed | Percentage,
+    A extends Number.Fixed | Percentage
   >(value: unknown): value is RGB<C, A> {
     return value instanceof RGB;
   }
@@ -111,7 +114,7 @@ export namespace RGB {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlpha = either(Number.parse, Percentage.parse);
+  const parseAlpha = either(Number.parseBase, Percentage.parse);
 
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-rgb}
@@ -133,8 +136,11 @@ export namespace RGB {
                   )
                 ),
                 pair(
-                  Number.parse,
-                  take(right(option(Token.parseWhitespace), Number.parse), 2)
+                  Number.parseBase,
+                  take(
+                    right(option(Token.parseWhitespace), Number.parseBase),
+                    2
+                  )
                 )
               ),
               option(
@@ -163,14 +169,14 @@ export namespace RGB {
                   )
                 ),
                 pair(
-                  Number.parse,
+                  Number.parseBase,
                   take(
                     right(
                       delimited(
                         option(Token.parseWhitespace),
                         Token.parseComma
                       ),
-                      Number.parse
+                      Number.parseBase
                     ),
                     2
                   )

@@ -2,9 +2,11 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Angle, Number } from "../../calculation";
+import { Angle } from "../../calculation";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
+
+import { Number } from "../numeric";
 
 import { Function } from "./function";
 

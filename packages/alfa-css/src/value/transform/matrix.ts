@@ -2,8 +2,9 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Number } from "../../calculation";
 import { Token } from "../../syntax";
+
+import { Number } from "../numeric";
 
 import { Function } from "./function";
 
@@ -13,18 +14,18 @@ const { map, left, right, pair, either, take, delimited, option } = Parser;
  * @public
  */
 export class Matrix extends Function<"matrix"> {
-  public static of(...values: Matrix.Values<Number>): Matrix {
+  public static of(...values: Matrix.Values<Number.Fixed>): Matrix {
     return new Matrix(values);
   }
 
-  private readonly _values: Matrix.Values<Number>;
+  private readonly _values: Matrix.Values<Number.Fixed>;
 
-  private constructor(values: Matrix.Values<Number>) {
+  private constructor(values: Matrix.Values<Number.Fixed>) {
     super("matrix", false);
     this._values = values;
   }
 
-  public get values(): Matrix.Values<Number> {
+  public get values(): Matrix.Values<Number.Fixed> {
     return this._values;
   }
 
@@ -54,7 +55,7 @@ export class Matrix extends Function<"matrix"> {
       ...super.toJSON(),
       values: this._values.map((row) =>
         row.map((value) => value.toJSON())
-      ) as Matrix.Values<Number.JSON>,
+      ) as Matrix.Values<Number.Fixed.JSON>,
     };
   }
 
@@ -88,7 +89,7 @@ export class Matrix extends Function<"matrix"> {
  */
 export namespace Matrix {
   export interface JSON extends Function.JSON<"matrix"> {
-    values: Values<Number.JSON>;
+    values: Values<Number.Fixed.JSON>;
   }
 
   export type Values<T> = [
@@ -112,11 +113,11 @@ export namespace Matrix {
         delimited(
           option(Token.parseWhitespace),
           pair(
-            Number.parse,
+            Number.parseBase,
             take(
               right(
                 delimited(option(Token.parseWhitespace), Token.parseComma),
-                Number.parse
+                Number.parseBase
               ),
               5
             )
@@ -150,11 +151,11 @@ export namespace Matrix {
         delimited(
           option(Token.parseWhitespace),
           pair(
-            Number.parse,
+            Number.parseBase,
             take(
               right(
                 delimited(option(Token.parseWhitespace), Token.parseComma),
-                Number.parse
+                Number.parseBase
               ),
               15
             )

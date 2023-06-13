@@ -1,7 +1,6 @@
 import {
   Angle,
   Color,
-  Converter,
   Current,
   Gradient,
   Image,
@@ -31,7 +30,7 @@ export namespace Resolver {
   /**
    * Resolve a percentage, according to a base numeric value
    */
-  export function percentage<N extends Numeric = Numeric>(
+  export function percentage<N extends Numeric.Fixed = Numeric.Fixed>(
     base: N
   ): Mapper<Percentage, N> {
     return (percentage) => base.scale(percentage.value) as N;

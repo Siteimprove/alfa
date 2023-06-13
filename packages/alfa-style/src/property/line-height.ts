@@ -1,14 +1,9 @@
-import {
-  Keyword,
-  Length,
-  Number as CSSNumber,
-  type Token,
-} from "@siteimprove/alfa-css";
+import { Keyword, Length, Number, type Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
-import { LengthPercentage, Number } from "./value/compound";
+import { LengthPercentage } from "./value/compound";
 
 import type { Computed as FontSize } from "./font-size";
 import { Selective } from "@siteimprove/alfa-selective";
@@ -21,12 +16,12 @@ const { either } = Parser;
 export type Specified =
   | Keyword<"normal">
   | LengthPercentage.LengthPercentage
-  | Number.Number;
+  | Number;
 
 /**
  * @internal
  */
-export type Computed = Keyword<"normal"> | CSSNumber | Length.Fixed<"px">;
+export type Computed = Keyword<"normal"> | Number.Fixed | Length.Fixed<"px">;
 
 /**
  * @internal
@@ -50,14 +45,16 @@ export default Longhand.of<Specified, Computed>(
       // this -> style.computed -> Longhands.Name -> Longhands.longhands -> this.
       const fontSize = style.computed("font-size").value as FontSize;
 
-      return Selective.of(height)
-        .if(
-          LengthPercentage.isLengthPercentage,
-          LengthPercentage.resolve(fontSize, style)
-        )
-        .if(Number.isNumber, Number.resolve)
-        // Keywords are left untouched
-        .get();
+      return (
+        Selective.of(height)
+          .if(
+            LengthPercentage.isLengthPercentage,
+            LengthPercentage.resolve(fontSize, style)
+          )
+          .if(Number.isNumber, (value) => value.resolve())
+          // Keywords are left untouched
+          .get()
+      );
     }),
   {
     inherits: true,

@@ -10,8 +10,8 @@ import { Token, Function as CSSFunction } from "../../syntax";
 import { Value as CSSValue } from "../../value";
 
 // TODO: resimplify
-import { Angle, Number, Numeric, Percentage } from "../numeric";
-import { Length } from "../numeric/index-new";
+import { Angle, Percentage } from "../numeric";
+import { Length, Number, Numeric } from "../numeric/index-new";
 
 import { Expression } from "./expression";
 import { Function } from "./function";
