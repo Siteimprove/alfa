@@ -53,6 +53,7 @@
     "src/value/index.ts",
     "src/value/keyword.ts",
     "src/value/numeric/index.ts",
+    "src/value/numeric/integer.ts",
     "src/value/numeric/length.ts",
     "src/value/numeric/number.ts",
     "src/value/numeric/numeric.ts",

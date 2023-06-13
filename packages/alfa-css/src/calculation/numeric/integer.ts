@@ -14,8 +14,11 @@ const { map } = Parser;
  * @public
  */
 export class Integer extends Numeric<"integer"> {
+  /**
+   * {@link https://drafts.csswg.org/css-values/#css-round-to-the-nearest-integer}
+   */
   public static of(value: number): Integer {
-    return new Integer(value | 0);
+    return new Integer(Math.round(value));
   }
 
   private constructor(value: number) {

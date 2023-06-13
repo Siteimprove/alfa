@@ -35,7 +35,7 @@ export namespace Number {
    */
   export class Calculated
     extends Numeric.Calculated<"number">
-    implements INumeric<true>
+    implements INumber<true>
   {
     public static of(value: Math<"number">): Calculated {
       return new Calculated(value);
@@ -77,7 +77,7 @@ export namespace Number {
    */
   export class Fixed
     extends Numeric.Fixed<"number">
-    implements INumeric<false>
+    implements INumber<false>
   {
     public static of(value: number | BaseNumber): Fixed {
       return new Fixed(BaseNumber.isNumber(value) ? value.value : value);
@@ -113,7 +113,7 @@ export namespace Number {
    * a stricter type for Number. Hence, having an interface is more convenient
    * to record that type.
    */
-  interface INumeric<CALC extends boolean = boolean>
+  interface INumber<CALC extends boolean = boolean>
     extends Value<"number", CALC> {
     hasCalculation(): this is Calculated;
     resolve(): Fixed;
