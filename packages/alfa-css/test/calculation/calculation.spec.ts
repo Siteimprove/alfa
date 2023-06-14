@@ -160,6 +160,62 @@ test(".parse() parses a multiplication expression of a number and a length", (t)
   });
 });
 
+test(".parse() parses an addition expression of angles", (t) => {
+  const calculation = parse("calc(90deg + 1rad)").getUnsafe();
+
+  t(calculation.isDimension("angle"));
+
+  t.deepEqual(calculation.toJSON(), {
+    type: "math expression",
+    expression: {
+      type: "value",
+      value: { type: "angle", value: 147.2957795, unit: "deg" },
+    },
+  });
+});
+
+test(".parse() parses an addition expression of an angle and a percentage", (t) => {
+  const calculation = parse("calc(90deg + 2%").getUnsafe();
+
+  t(calculation.isDimensionPercentage("angle"));
+
+  t.deepEqual(calculation.toJSON(), {
+    type: "math expression",
+    expression: {
+      type: "calculation",
+      arguments: [
+        {
+          type: "sum",
+          operands: [
+            {
+              type: "value",
+              value: { type: "angle", value: 90, unit: "deg" },
+            },
+            {
+              type: "value",
+              value: { type: "percentage", value: 0.02 },
+            },
+          ],
+        },
+      ],
+    },
+  });
+});
+
+test(".parse() parses a multiplication expression of a number and an angle", (t) => {
+  const calculation = parse("calc(2 * 21deg)").getUnsafe();
+
+  t(calculation.isDimension("angle"));
+
+  t.deepEqual(calculation.toJSON(), {
+    type: "math expression",
+    expression: {
+      type: "value",
+      value: { type: "angle", value: 42, unit: "deg" },
+    },
+  });
+});
+
 test(".parse() gives higher precedence to * and / than + and -", (t) => {
   t.deepEqual(parse("calc(2 * 3 + 4)").getUnsafe().toJSON(), {
     type: "math expression",
