@@ -18,7 +18,9 @@ export class Integer extends Numeric<"integer"> {
    * {@link https://drafts.csswg.org/css-values/#css-round-to-the-nearest-integer}
    */
   public static of(value: number): Integer {
-    return new Integer(Math.round(value));
+    // Math.round ensure the correct rounding.
+    // The bitwise or ensure coercion to 32 bits integer
+    return new Integer(Math.round(value) | 0);
   }
 
   private constructor(value: number) {
