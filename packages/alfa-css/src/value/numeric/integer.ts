@@ -104,6 +104,10 @@ export namespace Integer {
       super(value, "number");
     }
 
+    public resolve(): this {
+      return this;
+    }
+
     public scale(factor: number): Fixed {
       return new Fixed(this._value * factor);
     }

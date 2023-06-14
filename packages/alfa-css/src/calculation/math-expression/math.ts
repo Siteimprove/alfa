@@ -320,6 +320,13 @@ export namespace Math {
   export const parse = map(parseFunction, Math.of);
 
   // other parsers + filters can be added when needed
+  export const parseAngle = filter(
+    parse,
+    (calculation): calculation is Math<"angle"> =>
+      calculation.isDimension("angle"),
+    () => `calc() expression must be of type "angle"`
+  );
+
   export const parseLength = filter(
     parse,
     (calculation): calculation is Math<"length"> =>

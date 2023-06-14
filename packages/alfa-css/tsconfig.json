@@ -52,6 +52,8 @@
     "src/value/image/url.ts",
     "src/value/index.ts",
     "src/value/keyword.ts",
+    "src/value/numeric/angle.ts",
+    "src/value/numeric/dimension.ts",
     "src/value/numeric/index.ts",
     "src/value/numeric/integer.ts",
     "src/value/numeric/length.ts",

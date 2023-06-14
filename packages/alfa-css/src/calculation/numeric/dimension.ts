@@ -4,13 +4,6 @@ import { Convertible, Unit } from "../../unit";
 
 import { Numeric } from "./numeric";
 
-type ToDimension<T extends Numeric.Dimension> = T extends "length"
-  ? Unit.Length
-  : T extends "angle"
-  ? Unit.Angle
-  : // We currently do not really support other dimensions
-    Unit;
-
 /**
  * {@link https://drafts.csswg.org/css-values/#dimensions}
  *
@@ -19,32 +12,39 @@ type ToDimension<T extends Numeric.Dimension> = T extends "length"
 export abstract class Dimension<
     T extends Numeric.Dimension = Numeric.Dimension,
     // The actual unit in which the dimension is expressed, e.g px, em, rad, …
-    V extends ToDimension<T> = ToDimension<T>
+    U extends Dimension.ToDimension<T> = Dimension.ToDimension<T>
   >
   extends Numeric<T>
-  implements Convertible<ToDimension<T>>, Comparable<Dimension<T>>
+  implements Convertible<Dimension.ToDimension<T>>, Comparable<Dimension<T>>
 {
-  protected readonly _unit: V;
+  protected readonly _unit: U;
 
-  protected constructor(value: number, unit: V, type: T) {
+  protected constructor(value: number, unit: U, type: T) {
     super(value, type);
     this._unit = unit;
   }
 
-  public get unit(): V {
+  public get unit(): U {
     return this._unit;
   }
 
   /**
    * {@link https://drafts.csswg.org/css-values/#canonical-unit}
    */
-  public abstract get canonicalUnit(): ToDimension<T>;
-
-  public hasUnit<V extends ToDimension<T>>(unit: V): this is Dimension<T, V> {
-    return (this._unit as ToDimension<T>) === unit;
+  public get canonicalUnit(): Dimension.ToCanonical<T> {
+    // The this.type test does not correctly narrow T, so we need to force typing.
+    return (this.type === "angle" ? "deg" : "px") as Dimension.ToCanonical<T>;
   }
 
-  public abstract withUnit<V extends ToDimension<T>>(unit: V): Dimension<T, V>;
+  public hasUnit<V extends Dimension.ToDimension<T>>(
+    unit: V
+  ): this is Dimension<T, V> {
+    return (this._unit as Dimension.ToDimension<T>) === unit;
+  }
+
+  public abstract withUnit<V extends Dimension.ToDimension<T>>(
+    unit: V
+  ): Dimension<T, V>;
 
   public equals(value: unknown): value is this {
     return (
@@ -61,7 +61,7 @@ export abstract class Dimension<
     return Comparable.compareNumber(a.value, b.value);
   }
 
-  public toJSON(): Dimension.JSON<T, V> {
+  public toJSON(): Dimension.JSON<T, U> {
     return { ...super.toJSON(), unit: this._unit };
   }
 }
@@ -76,6 +76,39 @@ export namespace Dimension {
   > extends Numeric.JSON<T> {
     unit: U;
   }
+
+  /**
+   * Helper type to infer Unit sub-type based on its string representation.
+   *
+   * @remarks
+   * This could probably be factored in within Unit themselves, which would need
+   * to rearrange how Unit are built (i.e. not keep them as union of strings).
+   *
+   * @internal
+   */
+  export type ToDimension<T extends Numeric.Dimension> = T extends "angle"
+    ? Unit.Angle
+    : T extends "length"
+    ? Unit.Length
+    : // We currently do not really support other dimensions
+      Unit;
+
+  /**
+   * Helper type to infer the canonical unit of a sub-type based on its string
+   * representation.
+   *
+   * @remarks
+   * This should probably be factored in within Unit themselves, which would need
+   * to rearrange how Unit are built (i.e. not keep them as union of strings).
+   *
+   * @internal
+   */
+  export type ToCanonical<T extends Numeric.Dimension> = T extends "angle"
+    ? "deg"
+    : T extends "length"
+    ? "px"
+    : // We currently do not really support other dimensions
+      Unit;
 
   export function isDimension(value: unknown): value is Dimension {
     return value instanceof Dimension;

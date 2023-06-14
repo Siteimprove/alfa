@@ -1,14 +1,13 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
 import { Number as BaseNumber } from "../../calculation/numeric/index-new";
-
+import { Token } from "../../syntax";
 import { Value } from "../../value";
 
+import { Dimension } from "./dimension";
 import { Numeric } from "./numeric";
-import { Token } from "../../syntax";
 
 const { either, map } = Parser;
 
@@ -17,16 +16,16 @@ const { either, map } = Parser;
  *
  * @public
  */
-export type Number = Number.Calculated | Number.Fixed;
+export type Angle = Angle.Calculated | Angle.Fixed;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#numbers}
  *
  * @public
  */
-export namespace Number {
+export namespace Angle {
   /**
-   * Numbers that may contain calculations.
+   * Angles that may contain calculations.
    *
    * @remarks
    * We actually guarantee that these **do** contain a calculation.
@@ -34,24 +33,19 @@ export namespace Number {
    * @public
    */
   export class Calculated
-    extends Numeric.Calculated<"number">
-    implements INumber<true>
+    extends Numeric.Calculated<"angle">
+    implements IAngle<true>
   {
-    public static of(value: Math<"number">): Calculated {
+    public static of(value: Math<"angle">): Calculated {
       return new Calculated(value);
     }
 
-    private constructor(value: Math<"number">) {
-      super(value, "number");
+    private constructor(value: Math<"angle">) {
+      super(value, "angle");
     }
 
     public resolve(): Fixed {
-      return Fixed.of(
-        this._math
-          .resolve2()
-          // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not fully resolve ${this} as a number`)
-      );
+      return Fixed.of(0);
     }
 
     public equals(value: unknown): value is this {
@@ -67,7 +61,7 @@ export namespace Number {
    * @public
    */
   export namespace Calculated {
-    export interface JSON extends Numeric.Calculated.JSON<"number"> {}
+    export interface JSON extends Numeric.Calculated.JSON<"angle"> {}
   }
 
   /**
@@ -75,13 +69,13 @@ export namespace Number {
    *
    * @public
    */
-  export class Fixed extends Numeric.Fixed<"number"> implements INumber<false> {
+  export class Fixed extends Numeric.Fixed<"angle"> implements IAngle<false> {
     public static of(value: number | BaseNumber): Fixed {
       return new Fixed(BaseNumber.isNumber(value) ? value.value : value);
     }
 
     private constructor(value: number) {
-      super(value, "number");
+      super(value, "angle");
     }
 
     public resolve(): this {
@@ -105,7 +99,7 @@ export namespace Number {
    * @public
    */
   export namespace Fixed {
-    export interface JSON extends Numeric.Fixed.JSON<"number"> {}
+    export interface JSON extends Numeric.Fixed.JSON<"angle"> {}
   }
 
   /**
@@ -114,8 +108,8 @@ export namespace Number {
    * a stricter type for Number. Hence, having an interface is more convenient
    * to record that type.
    */
-  interface INumber<CALC extends boolean = boolean>
-    extends Value<"number", CALC> {
+  interface IAngle<CALC extends boolean = boolean>
+    extends Value<"angle", CALC> {
     hasCalculation(): this is Calculated;
     resolve(): Fixed;
   }
@@ -128,7 +122,7 @@ export namespace Number {
     return value instanceof Fixed;
   }
 
-  export function isNumber(value: unknown): value is Number {
+  export function isAngle(value: unknown): value is Angle {
     return value instanceof Calculated || value instanceof Fixed;
   }
 
@@ -136,35 +130,19 @@ export namespace Number {
 
   export function of(value: BaseNumber): Fixed;
 
-  export function of(value: Math<"number">): Calculated;
+  export function of(value: Math<"angle">): Calculated;
 
-  export function of(value: number | BaseNumber | Math<"number">): Number {
-    return Selective.of(value)
-      .if(Math.isNumber, Calculated.of)
-      .else(Fixed.of)
-      .get();
+  export function of(value: number | BaseNumber | Math<"angle">): Angle {
+    return Fixed.of(0);
   }
 
   /**
    * {@link https://drafts.csswg.org/css-values/#number-value}
    */
-  export const parse: Parser<Slice<Token>, Number, string> = either(
+  export const parse: Parser<Slice<Token>, Angle, string> = either(
     map<Slice<Token>, BaseNumber, Fixed, string>(BaseNumber.parse, of),
-    map(Math.parseNumber, of)
+    map(Math.parseAngle, of)
   );
-
-  /**
-   * @remarks
-   * Zero values must be true 0, not calculations evaluating to 0.
-   *
-   * {@link https://drafts.csswg.org/css-values/#zero-value}
-   */
-  export const parseZero: Parser<Slice<Token>, Fixed, string> = map<
-    Slice<Token>,
-    BaseNumber,
-    Fixed,
-    string
-  >(BaseNumber.parseZero, of);
 
   // TODO: temporary helper needed during migration
   export const parseBase: Parser<Slice<Token>, Fixed, string> = map<

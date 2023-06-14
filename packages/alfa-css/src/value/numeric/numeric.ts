@@ -20,7 +20,10 @@ export type Numeric<T extends Numeric.Type = Numeric.Type> =
  */
 export namespace Numeric {
   // Math expressions make no distinction between integer and float (number).
-  type ToMath<T extends Type> = Math<
+  /**
+   * @internal
+   */
+  export type ToMath<T extends Type> = Math<
     T extends BaseNumeric.Scalar ? "number" : T
   >;
 
@@ -105,9 +108,7 @@ export namespace Numeric {
       return false;
     }
 
-    public resolve(): this {
-      return this;
-    }
+    public abstract resolve(resolver?: unknown): Fixed<T>;
 
     public isZero(): boolean {
       return this._value === 0;
@@ -157,7 +158,7 @@ export namespace Numeric {
   interface INumeric<T extends Type = Type, CALC extends boolean = boolean>
     extends Value<T, CALC> {
     hasCalculation(): this is Calculated<T>;
-    resolve(): Fixed<T>;
+    resolve(resolver?: unknown): Fixed<T>;
   }
 
   export function isCalculated(value: unknown): value is Calculated {
