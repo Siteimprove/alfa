@@ -1,7 +1,15 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 
-import { Numeric } from "./numeric";
 import { Convertible, Unit } from "../../unit";
+
+import { Numeric } from "./numeric";
+
+type ToDimension<T extends Numeric.Dimension> = T extends "length"
+  ? Unit.Length
+  : T extends "angle"
+  ? Unit.Angle
+  : // We currently do not really support other dimensions
+    Unit;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#dimensions}
@@ -10,13 +18,11 @@ import { Convertible, Unit } from "../../unit";
  */
 export abstract class Dimension<
     T extends Numeric.Dimension = Numeric.Dimension,
-    // The type of all units of the same dimension, e.g. Length, Angle, …
-    U extends Unit = Unit,
     // The actual unit in which the dimension is expressed, e.g px, em, rad, …
-    V extends U = U
+    V extends ToDimension<T> = ToDimension<T>
   >
   extends Numeric<T>
-  implements Convertible<U>, Comparable<Dimension<T, U>>
+  implements Convertible<ToDimension<T>>, Comparable<Dimension<T>>
 {
   protected readonly _unit: V;
 
@@ -32,13 +38,13 @@ export abstract class Dimension<
   /**
    * {@link https://drafts.csswg.org/css-values/#canonical-unit}
    */
-  public abstract get canonicalUnit(): U;
+  public abstract get canonicalUnit(): ToDimension<T>;
 
-  public hasUnit<V extends U>(unit: V): this is Dimension<T, U, V> {
-    return (this._unit as U) === unit;
+  public hasUnit<V extends ToDimension<T>>(unit: V): this is Dimension<T, V> {
+    return (this._unit as ToDimension<T>) === unit;
   }
 
-  public abstract withUnit<V extends U>(unit: V): Dimension<T, U, V>;
+  public abstract withUnit<V extends ToDimension<T>>(unit: V): Dimension<T, V>;
 
   public equals(value: unknown): value is this {
     return (
@@ -48,7 +54,7 @@ export abstract class Dimension<
     );
   }
 
-  public compare(value: Dimension<T, U>): Comparison {
+  public compare(value: Dimension<T>): Comparison {
     const a = this.withUnit(this.canonicalUnit);
     const b = value.withUnit(value.canonicalUnit);
 
@@ -66,7 +72,7 @@ export abstract class Dimension<
 export namespace Dimension {
   export interface JSON<
     T extends Numeric.Dimension = Numeric.Dimension,
-    U extends Unit = Unit
+    U extends ToDimension<T> = ToDimension<T>
   > extends Numeric.JSON<T> {
     unit: U;
   }

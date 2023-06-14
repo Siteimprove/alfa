@@ -15,7 +15,7 @@ const { map, either } = Parser;
  * @public
  */
 export class Length<U extends Unit.Length = Unit.Length>
-  extends Dimension<"length", Unit.Length, U>
+  extends Dimension<"length", U>
   implements Convertible<Unit.Length.Absolute>
 {
   public static of<U extends Unit.Length>(value: number, unit: U): Length<U> {
