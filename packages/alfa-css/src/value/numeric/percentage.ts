@@ -165,6 +165,9 @@ export namespace Percentage {
   );
 
   // TODO: temporary helper needed during migration
+  /**
+   * @internal
+   */
   export const parseBase: Parser<Slice<Token>, Fixed, string> = map<
     Slice<Token>,
     BasePercentage,

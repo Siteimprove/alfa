@@ -182,6 +182,9 @@ export namespace Angle {
   );
 
   // TODO: temporary helper needed during migration
+  /**
+   * @internal
+   */
   export const parseBase: Parser<Slice<Token>, Fixed, string> = map<
     Slice<Token>,
     BaseAngle,
