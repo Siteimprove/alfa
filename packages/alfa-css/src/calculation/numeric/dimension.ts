@@ -1,6 +1,4 @@
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
-
-import { Convertible, Unit } from "../../unit";
+import { Unit } from "../../unit";
 
 import { Numeric } from "./numeric";
 
@@ -10,13 +8,10 @@ import { Numeric } from "./numeric";
  * @public
  */
 export abstract class Dimension<
-    T extends Numeric.Dimension = Numeric.Dimension,
-    // The actual unit in which the dimension is expressed, e.g px, em, rad, …
-    U extends Dimension.ToDimension<T> = Dimension.ToDimension<T>
-  >
-  extends Numeric<T>
-  implements Convertible<Dimension.ToDimension<T>>, Comparable<Dimension<T>>
-{
+  T extends Numeric.Dimension = Numeric.Dimension,
+  // The actual unit in which the dimension is expressed, e.g px, em, rad, …
+  U extends Dimension.ToDimension<T> = Dimension.ToDimension<T>
+> extends Numeric<T> {
   protected readonly _unit: U;
 
   protected constructor(value: number, unit: U, type: T) {
@@ -26,14 +21,6 @@ export abstract class Dimension<
 
   public get unit(): U {
     return this._unit;
-  }
-
-  /**
-   * {@link https://drafts.csswg.org/css-values/#canonical-unit}
-   */
-  public get canonicalUnit(): Dimension.ToCanonical<T> {
-    // The this.type test does not correctly narrow T, so we need to force typing.
-    return (this.type === "angle" ? "deg" : "px") as Dimension.ToCanonical<T>;
   }
 
   public hasUnit<V extends Dimension.ToDimension<T>>(
@@ -52,13 +39,6 @@ export abstract class Dimension<
       super.equals(value) &&
       value._unit === this._unit
     );
-  }
-
-  public compare(value: Dimension<T>): Comparison {
-    const a = this.withUnit(this.canonicalUnit);
-    const b = value.withUnit(value.canonicalUnit);
-
-    return Comparable.compareNumber(a.value, b.value);
   }
 
   public toJSON(): Dimension.JSON<T, U> {

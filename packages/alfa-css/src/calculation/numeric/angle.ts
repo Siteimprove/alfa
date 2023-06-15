@@ -25,10 +25,6 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
     super(value, unit, "angle");
   }
 
-  public get canonicalUnit(): "deg" {
-    return "deg";
-  }
-
   public hasUnit<U extends Unit.Angle>(unit: U): this is Angle<U> {
     return (this._unit as Unit.Angle) === unit;
   }
