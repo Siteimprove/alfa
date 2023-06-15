@@ -28,22 +28,13 @@ import { Style } from "./style";
  */
 export namespace Resolver {
   /**
-   * Resolve a percentage, according to a base numeric value
-   */
-  export function percentage<N extends Numeric.Fixed = Numeric.Fixed>(
-    base: N
-  ): Mapper<Percentage, N> {
-    return (percentage) => base.scale(percentage.resolve().value) as N;
-  }
-
-  /**
    * Resolve a length in an arbitrary unit to a length in pixels.
    * Absolute lengths are left untouched, and normalised into "px".
    * Relative lengths resolution depends on another length which is passed as
    * part of a Style:
    * * viewport dimensions are fetch from style.device;
    * * root relative depend on style.root().computed("font-size");
-   * * other relative unit depend on style.conputed("font-size");
+   * * other relative unit depend on style.computed("font-size");
    *
    * In nearly all cases, the style is the element's own style, except for
    * resolving font-size itself, in which case the parent's style is used.

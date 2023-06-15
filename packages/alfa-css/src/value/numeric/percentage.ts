@@ -45,13 +45,20 @@ export namespace Percentage {
       super(math, "percentage");
     }
 
-    public resolve(): Fixed {
-      return Fixed.of(
+    public resolve(): Fixed;
+
+    public resolve<N extends Numeric.Fixed>(base: N): N;
+
+    public resolve<T extends Numeric.Type>(
+      base?: Numeric.Fixed<T>
+    ): Fixed | Numeric.Fixed<T> {
+      const percentage = Fixed.of(
         this._math
           .resolve2()
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not fully resolve ${this} as a percentage`)
       );
+      return base === undefined ? percentage : base.scale(percentage.value);
     }
 
     public equals(value: unknown): value is this {
@@ -89,8 +96,14 @@ export namespace Percentage {
       super(value, "percentage");
     }
 
-    public resolve(): this {
-      return this;
+    public resolve(): this;
+
+    public resolve<N extends Numeric.Fixed>(base: N): N;
+
+    public resolve<T extends Numeric.Type>(
+      base?: Numeric.Fixed<T>
+    ): this | Numeric.Fixed<T> {
+      return base === undefined ? this : base.scale(this._value);
     }
 
     public scale(factor: number): Fixed {
