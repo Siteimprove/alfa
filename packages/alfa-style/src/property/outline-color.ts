@@ -19,7 +19,7 @@ export type Specified = Color | Keyword<"invert">;
  * @internal
  */
 export type Computed =
-  | RGB<Percentage, Percentage>
+  | RGB<Percentage.Fixed, Percentage.Fixed>
   | Current
   | System
   | Keyword<"invert">;

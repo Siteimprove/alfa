@@ -11,7 +11,10 @@ export type Specified = Color;
 /**
  * @internal
  */
-export type Computed = RGB<Percentage, Percentage> | Current | System;
+export type Computed =
+  | RGB<Percentage.Fixed, Percentage.Fixed>
+  | Current
+  | System;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/color}

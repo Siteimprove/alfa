@@ -31,7 +31,7 @@ export type Computed =
         Length.Fixed<"px">,
         Length.Fixed<"px">,
         Length.Fixed<"px">,
-        RGB<Percentage, Percentage> | Current | System
+        RGB<Percentage.Fixed, Percentage.Fixed> | Current | System
       >
     >;
 

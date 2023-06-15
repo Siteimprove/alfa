@@ -33,7 +33,7 @@ export namespace Resolver {
   export function percentage<N extends Numeric.Fixed = Numeric.Fixed>(
     base: N
   ): Mapper<Percentage, N> {
-    return (percentage) => base.scale(percentage.value) as N;
+    return (percentage) => base.scale(percentage.resolve().value) as N;
   }
 
   /**
@@ -68,7 +68,7 @@ export namespace Resolver {
    */
   export function color(
     color: Color
-  ): Current | System | RGB<Percentage, Percentage> {
+  ): Current | System | RGB<Percentage.Fixed, Percentage.Fixed> {
     switch (color.type) {
       case "color": {
         const [red, green, blue] = [color.red, color.green, color.blue].map(
@@ -103,36 +103,36 @@ export namespace Resolver {
   ): Image<
     | URL
     | Linear<
-        | Gradient.Hint<Percentage | Length.Fixed<"px">>
+        | Gradient.Hint<Percentage.Fixed | Length.Fixed<"px">>
         | Gradient.Stop<
-            Current | System | RGB<Percentage, Percentage>,
-            Percentage | Length.Fixed<"px">
+            Current | System | RGB<Percentage.Fixed, Percentage.Fixed>,
+            Percentage.Fixed | Length.Fixed<"px">
           >,
         Angle.Fixed<"deg"> | Linear.Side | Linear.Corner
       >
     | Radial<
-        | Gradient.Hint<Percentage | Length.Fixed<"px">>
+        | Gradient.Hint<Percentage.Fixed | Length.Fixed<"px">>
         | Gradient.Stop<
-            Current | System | RGB<Percentage, Percentage>,
-            Percentage | Length.Fixed<"px">
+            Current | System | RGB<Percentage.Fixed, Percentage.Fixed>,
+            Percentage.Fixed | Length.Fixed<"px">
           >,
         | Radial.Circle<Length.Fixed<"px">>
-        | Radial.Ellipse<Percentage | Length.Fixed<"px">>
+        | Radial.Ellipse<Percentage.Fixed | Length.Fixed<"px">>
         | Radial.Extent,
         Position<
-          | Percentage
+          | Percentage.Fixed
           | Position.Keywords.Center
           | Length.Fixed<"px">
           | Position.Side<
               Position.Keywords.Horizontal,
-              Percentage | Length.Fixed<"px">
+              Percentage.Fixed | Length.Fixed<"px">
             >,
-          | Percentage
+          | Percentage.Fixed
           | Position.Keywords.Center
           | Length.Fixed<"px">
           | Position.Side<
               Position.Keywords.Vertical,
-              Percentage | Length.Fixed<"px">
+              Percentage.Fixed | Length.Fixed<"px">
             >
         >
       >
@@ -217,17 +217,20 @@ export namespace Resolver {
     position: Position,
     style: Style
   ): Position<
-    | Percentage
+    | Percentage.Fixed
     | Position.Keywords.Center
     | Length.Fixed<"px">
     | Position.Side<
         Position.Keywords.Horizontal,
-        Percentage | Length.Fixed<"px">
+        Percentage.Fixed | Length.Fixed<"px">
       >,
-    | Percentage
+    | Percentage.Fixed
     | Position.Keywords.Center
     | Length.Fixed<"px">
-    | Position.Side<Position.Keywords.Vertical, Percentage | Length.Fixed<"px">>
+    | Position.Side<
+        Position.Keywords.Vertical,
+        Percentage.Fixed | Length.Fixed<"px">
+      >
   > {
     return Position.of(
       positionComponent(position.horizontal, style),
@@ -241,10 +244,10 @@ export namespace Resolver {
     position: Position.Component<S>,
     style: Style
   ):
-    | Percentage
+    | Percentage.Fixed
     | Position.Keywords.Center
     | Length.Fixed<"px">
-    | Position.Side<S, Percentage | Length.Fixed<"px">> {
+    | Position.Side<S, Percentage.Fixed | Length.Fixed<"px">> {
     switch (position.type) {
       case "keyword":
       case "percentage":

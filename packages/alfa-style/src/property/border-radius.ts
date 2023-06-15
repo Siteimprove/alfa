@@ -13,7 +13,7 @@ const parse = map(
     takeBetween(
       delimited(
         option(Token.parseWhitespace),
-        either(Length.parse, Percentage.parse)
+        either(Length.parse, Percentage.parseBase)
       ),
       1,
       4
@@ -24,7 +24,7 @@ const parse = map(
         takeBetween(
           delimited(
             option(Token.parseWhitespace),
-            either(Length.parse, Percentage.parse)
+            either(Length.parse, Percentage.parseBase)
           ),
           1,
           4

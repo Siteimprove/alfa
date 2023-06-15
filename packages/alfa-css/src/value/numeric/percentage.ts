@@ -104,6 +104,10 @@ export namespace Percentage {
     public toJSON(): Fixed.JSON {
       return super.toJSON();
     }
+
+    public toString(): string {
+      return `${this._value * 100}%`;
+    }
   }
 
   /**

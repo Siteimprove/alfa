@@ -11,7 +11,7 @@ export type Specified = Color;
 /**
  * @internal
  */
-export type Computed = RGB<Percentage, Percentage> | Current | System;
+export type Computed = RGB<Percentage.Fixed, Percentage.Fixed> | Current | System;
 
 /**
  * @internal

@@ -1,13 +1,15 @@
-import { Number } from "@siteimprove/alfa-css";
+import { Number, Percentage } from "@siteimprove/alfa-css";
 import { Real } from "@siteimprove/alfa-math";
+import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
-import { NumberPercentage } from "./value/compound";
+
+const { either } = Parser;
 
 /**
  * @internal
  */
-export type Specified = NumberPercentage.NumberPercentage;
+export type Specified = Number | Percentage;
 
 /**
  * @internal
@@ -19,12 +21,10 @@ export type Computed = Number.Fixed;
  */
 export default Longhand.of<Specified, Computed>(
   Number.of(1),
-  NumberPercentage.parse,
+  either(Number.parse, Percentage.parse),
   (value) =>
     value.map((opacity) =>
-      Number.of(Real.clamp(NumberPercentage.resolve(opacity).value, 0, 1))
+      Number.of(Real.clamp(opacity.resolve().value, 0, 1))
     ),
-  {
-    inherits: true,
-  }
+  { inherits: true }
 );

@@ -6,9 +6,12 @@ import { Style } from "@siteimprove/alfa-style";
  * @public
  */
 export namespace Color {
-  export type Computed = RGB<Percentage, Percentage> | Current | System;
+  export type Computed =
+    | RGB<Percentage.Fixed, Percentage.Fixed>
+    | Current
+    | System;
 
-  export type Resolved = RGB<Percentage, Percentage>;
+  export type Resolved = RGB<Percentage.Fixed, Percentage.Fixed>;
 
   export function resolve(color: Computed, style: Style): Option<Resolved> {
     switch (color.type) {

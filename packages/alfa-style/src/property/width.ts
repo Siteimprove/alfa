@@ -14,7 +14,7 @@ export type Specified = Keyword<"auto"> | Length | Percentage;
 /**
  * @internal
  */
-export type Computed = Keyword<"auto"> | Length.Fixed<"px"> | Percentage;
+export type Computed = Keyword<"auto"> | Length.Fixed<"px"> | Percentage.Fixed;
 
 /**
  * @internal
@@ -35,8 +35,9 @@ export default Longhand.of<Specified, Computed>(
     width.map((width) => {
       switch (width.type) {
         case "keyword":
+          return width
         case "percentage":
-          return width;
+          return width.resolve();
 
         case "length":
           return width.resolve(Resolver.length(style));

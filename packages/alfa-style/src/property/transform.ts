@@ -39,8 +39,8 @@ export type Computed =
       | Scale
       | Skew<Angle.Fixed<"deg">, Angle.Fixed<"deg">>
       | Translate<
-          Length.Fixed<"px"> | Percentage,
-          Length.Fixed<"px"> | Percentage,
+          Length.Fixed<"px"> | Percentage.Fixed,
+          Length.Fixed<"px"> | Percentage.Fixed,
           Length.Fixed<"px">
         >
     >;

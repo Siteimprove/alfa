@@ -124,7 +124,7 @@ function hasDimensions(device: Device): Predicate<Element> {
       dimension,
       and(
         // TODO: switch back to only use isNumeric
-        or(Numeric.isFixed, or(Length.isFixed, Percentage.isPercentage)),
+        or(Numeric.isFixed, or(Length.isFixed, Percentage.isFixed)),
         (number) => number.value > 0
       ),
       device

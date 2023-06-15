@@ -34,20 +34,20 @@ export type Computed =
       | URL
       | Linear<
           | Gradient.Stop<
-              RGB<Percentage, Percentage> | Current | System,
-              Length.Fixed<"px"> | Percentage
+              RGB<Percentage.Fixed, Percentage.Fixed> | Current | System,
+              Length.Fixed<"px"> | Percentage.Fixed
             >
-          | Gradient.Hint<Length.Fixed<"px"> | Percentage>,
+          | Gradient.Hint<Length.Fixed<"px"> | Percentage.Fixed>,
           Angle.Fixed<"deg"> | Linear.Side | Linear.Corner
         >
       | Radial<
           | Gradient.Stop<
-              RGB<Percentage, Percentage> | Current | System,
-              Length.Fixed<"px"> | Percentage
+              RGB<Percentage.Fixed, Percentage.Fixed> | Current | System,
+              Length.Fixed<"px"> | Percentage.Fixed
             >
-          | Gradient.Hint<Length.Fixed<"px"> | Percentage>,
+          | Gradient.Hint<Length.Fixed<"px"> | Percentage.Fixed>,
           | Radial.Circle<Length.Fixed<"px">>
-          | Radial.Ellipse<Length.Fixed<"px"> | Percentage>
+          | Radial.Ellipse<Length.Fixed<"px"> | Percentage.Fixed>
           | Radial.Extent,
           Position<
             Position.Component<Position.Keywords.Horizontal, "px">,
