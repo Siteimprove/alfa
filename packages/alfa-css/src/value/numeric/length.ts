@@ -46,7 +46,7 @@ export namespace Length {
     public resolve(resolver: Length.Resolver): Fixed<"px"> {
       return Fixed.of(
         this._math
-          .resolve2({
+          .resolve({
             // The math expression resolver is only aware of BaseLength and thus
             // work with these, but we want to abstract them from further layers,
             // so the resolver here is only aware of Length, and we need to
@@ -156,9 +156,8 @@ export namespace Length {
 
   export type JSON = Calculated.JSON | Fixed.JSON;
 
-  interface ILength<
-    CALC extends boolean = boolean
-  > extends Value<"length", CALC> {
+  interface ILength<CALC extends boolean = boolean>
+    extends Value<"length", CALC> {
     hasCalculation(): this is Calculated;
     resolve(resolver: Length.Resolver): Fixed<"px">;
   }

@@ -43,7 +43,7 @@ export namespace Number {
     public resolve(): Fixed {
       return Fixed.of(
         this._math
-          .resolve2()
+          .resolve()
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not fully resolve ${this} as a number`)
       );

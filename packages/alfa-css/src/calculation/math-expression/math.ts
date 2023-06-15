@@ -7,8 +7,6 @@ import * as json from "@siteimprove/alfa-json";
 
 import { Function as CSSFunction, Token } from "../../syntax";
 
-import { Value as CSSValue } from "../../value";
-
 import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
 import { Expression } from "./expression";
@@ -34,9 +32,7 @@ const {
  *
  * @public
  */
-export class Math<
-  out D extends Math.Dimension = Math.Dimension
-> extends CSSValue<"math expression", true> {
+export class Math<out D extends Math.Dimension = Math.Dimension> {
   public static of(expression: Expression): Math {
     return new Math(
       expression.reduce({
@@ -47,15 +43,18 @@ export class Math<
   }
 
   private readonly _expression: Expression;
+  private readonly _type = "math expression";
 
   private constructor(expression: Expression) {
-    super("math expression", true);
-
     this._expression = expression;
   }
 
   public get expression(): Expression {
     return this._expression;
+  }
+
+  public get type(): "math expression" {
+    return this._type;
   }
 
   public reduce(resolver: Expression.Resolver): Math {
@@ -100,33 +99,29 @@ export class Math<
     return this._expression.kind.is("percentage");
   }
 
-  public resolve(): any {
-    throw new Error("temporarily failing");
-  }
-
   // Other resolvers should be added when needed.
   /**
    * Resolves a calculation typed as an angle, length, length-percentage or number.
    * Needs a resolver to handle relative lengths and percentages.
    */
-  public resolve2(this: Math<"angle">): Result<Angle<"deg">, string>;
+  public resolve(this: Math<"angle">): Result<Angle<"deg">, string>;
 
-  public resolve2(
+  public resolve(
     this: Math<"length">,
     resolver: Expression.LengthResolver
   ): Result<Length<"px">, string>;
 
-  public resolve2(
+  public resolve(
     this: Math<"length-percentage">,
     resolver: Expression.Resolver<"px", Length<"px">>,
     hint?: "length"
   ): Result<Length<"px">, string>;
 
-  public resolve2(this: Math<"number">): Result<Number, string>;
+  public resolve(this: Math<"number">): Result<Number, string>;
 
-  public resolve2(this: Math<"percentage">): Result<Percentage, string>;
+  public resolve(this: Math<"percentage">): Result<Percentage, string>;
 
-  public resolve2(
+  public resolve(
     this: Math,
     resolver?:
       | Expression.LengthResolver

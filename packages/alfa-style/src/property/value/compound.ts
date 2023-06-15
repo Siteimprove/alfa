@@ -78,7 +78,7 @@ export namespace LengthPercentage {
           Length.of(percentage(BasePercentage.of(value.value)))
         )
         .else((value) =>
-          Length.of(value.resolve2({ length, percentage }).getUnsafe())
+          Length.of(value.resolve({ length, percentage }).getUnsafe())
         )
         .get();
     };

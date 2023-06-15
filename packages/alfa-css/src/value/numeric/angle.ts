@@ -49,7 +49,7 @@ export namespace Angle {
     public resolve(): Fixed<"deg"> {
       return Fixed.of(
         this._math
-          .resolve2()
+          .resolve()
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as an angle`)
       );
