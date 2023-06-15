@@ -92,7 +92,7 @@ export namespace Angle {
     export function of(value: Math_2<"angle">): Calculated;
     const // (undocumented)
     parse: Parser<Slice<Token>, Angle, string>;
-    const // (undocumented)
+    const // @internal (undocumented)
     parseBase: Parser<Slice<Token>, Fixed, string>;
         {};
 }
@@ -806,7 +806,7 @@ export namespace Integer {
     export function of(value: Math_2<"number">): Calculated;
     const // (undocumented)
     parse: Parser<Slice<Token>, Integer, string>;
-    const // (undocumented)
+    const // @internal (undocumented)
     parseBase: Parser<Slice<Token>, Fixed, string>;
         {};
 }
@@ -925,7 +925,7 @@ export namespace Length {
     export function resolver(emBase: Fixed<"px">, remBase: Fixed<"px">, vwBase: Fixed<"px">, vhBase: Fixed<"px">): Resolver;
     const // (undocumented)
     parse: Parser<Slice<Token>, Length, string>;
-    const // (undocumented)
+    const // @internal (undocumented)
     parseBase: Parser<Slice<Token>, Fixed<Unit.Length>, string, []>;
         {};
 }
@@ -1109,7 +1109,7 @@ export namespace List {
 }
 
 // @public (undocumented)
-class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"math expression", true> {
+class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1130,25 +1130,25 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"m
     static of(expression: Expression): Math_2;
     // (undocumented)
     reduce(resolver: Expression.Resolver): Math_2;
+    resolve(this: Math_2<"angle">): Result<Angle_2<"deg">, string>;
     // (undocumented)
-    resolve(): any;
-    resolve2(this: Math_2<"angle">): Result<Angle_2<"deg">, string>;
+    resolve(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length_2<"px">, string>;
     // (undocumented)
-    resolve2(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length_2<"px">, string>;
-    // (undocumented)
-    resolve2(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length_2<"px">>, hint?: "length"): Result<Length_2<"px">, string>;
+    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length_2<"px">>, hint?: "length"): Result<Length_2<"px">, string>;
     // Warning: (ae-forgotten-export) The symbol "Number" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    resolve2(this: Math_2<"number">): Result<Number_3, string>;
+    resolve(this: Math_2<"number">): Result<Number_3, string>;
     // Warning: (ae-forgotten-export) The symbol "Percentage" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    resolve2(this: Math_2<"percentage">): Result<Percentage_2, string>;
+    resolve(this: Math_2<"percentage">): Result<Percentage_2, string>;
     // (undocumented)
     toJSON(): Math_2.JSON;
     // (undocumented)
     toString(): string;
+    // (undocumented)
+    get type(): "math expression";
 }
 
 // @public (undocumented)
@@ -1392,7 +1392,7 @@ namespace Number_2 {
     parse: Parser<Slice<Token>, Number_2, string>;
     const // (undocumented)
     parseZero: Parser<Slice<Token>, Fixed, string>;
-    const // (undocumented)
+    const // @internal (undocumented)
     parseBase: Parser<Slice<Token>, Fixed, string>;
         {};
 }
@@ -1558,7 +1558,7 @@ export namespace Percentage {
     export function of(value: Math_2<"percentage">): Calculated;
     const // (undocumented)
     parse: Parser<Slice<Token>, Percentage, string>;
-    const // (undocumented)
+    const // @internal (undocumented)
     parseBase: Parser<Slice<Token>, Fixed, string>;
         {};
 }
