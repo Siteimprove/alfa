@@ -850,7 +850,6 @@ export type Length<U extends Unit.Length = Unit.Length> = Length.Calculated | Le
 
 // @public (undocumented)
 export namespace Length {
-    // @internal
     export class Calculated extends Dimension.Calculated<"length"> implements ILength<true> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -1596,7 +1595,7 @@ export namespace Perspective {
 }
 
 // @public (undocumented)
-export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage = Length.Fixed | Percentage> extends BasicShape<"polygon"> {
+export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> extends BasicShape<"polygon"> {
     // (undocumented)
     equals(value: Polygon): boolean;
     // (undocumented)
@@ -1606,7 +1605,7 @@ export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fix
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage = Length.Fixed | Percentage>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
+    static of<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
     // (undocumented)
     resolve(): Polygon<F, V>;
     // (undocumented)
@@ -1622,14 +1621,14 @@ export namespace Polygon {
     // (undocumented)
     export type Fill = Keyword<"nonzero"> | Keyword<"evenodd">;
     // (undocumented)
-    export interface JSON<F extends Fill = Fill, V extends Length | Percentage = Length | Percentage> extends BasicShape.JSON<"polygon"> {
+    export interface JSON<F extends Fill = Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> extends BasicShape.JSON<"polygon"> {
         // (undocumented)
         fill: Option.JSON<F>;
         // (undocumented)
         vertices: Array_2<Serializable.ToJSON<Vertex<V>>>;
     }
     // (undocumented)
-    export type Vertex<V extends Length | Percentage = Length | Percentage> = readonly [V, V];
+    export type Vertex<V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> = readonly [V, V];
     const // (undocumented)
     parse: Parser<Slice<Token>, Polygon, string>;
 }
