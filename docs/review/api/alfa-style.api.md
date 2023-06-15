@@ -32,7 +32,6 @@ import { Matrix } from '@siteimprove/alfa-css';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Node } from '@siteimprove/alfa-dom';
 import { Number as Number_2 } from '@siteimprove/alfa-css';
-import { Numeric } from '@siteimprove/alfa-css';
 import { Option } from '@siteimprove/alfa-option';
 import { Parser } from '@siteimprove/alfa-parser';
 import * as parser from '@siteimprove/alfa-parser';
@@ -248,7 +247,7 @@ export namespace Longhands {
         readonly "font-variant-ligatures": Longhand<Specified_27, Specified_27>;
         readonly "font-variant-numeric": Longhand<Specified_28, Specified_28>;
         readonly "font-variant-position": Longhand<Keyword.ToKeywords<"sub" | "normal" | "super">, Keyword.ToKeywords<"sub" | "normal" | "super">>;
-        readonly "font-weight": Longhand<Specified_29, Number_2>;
+        readonly "font-weight": Longhand<Specified_29, Number_2.Fixed>;
         readonly height: Longhand<Specified_30, Computed_16>;
         readonly "inset-block-end": Longhand<Specified_16, Computed_12>;
         readonly "inset-block-start": Longhand<Specified_16, Computed_12>;
@@ -263,32 +262,32 @@ export namespace Longhands {
         readonly "margin-top": Longhand<Specified_33, Computed_19>;
         readonly "min-height": Longhand<Specified_34, Computed_20>;
         readonly "min-width": Longhand<Specified_34, Computed_20>;
-        readonly opacity: Longhand<import("./property/value/compound").NumberPercentage.NumberPercentage, Number_2>;
-        readonly "outline-color": Longhand<Specified_35, Computed_21>;
-        readonly "outline-offset": Longhand<Specified_36, Computed_22>;
+        readonly opacity: Longhand<Specified_35, Number_2.Fixed>;
+        readonly "outline-color": Longhand<Specified_36, Computed_21>;
+        readonly "outline-offset": Longhand<Specified_37, Computed_22>;
         readonly "outline-style": Longhand<Keyword.ToKeywords<"none" | "inset" | "auto" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "inset" | "auto" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
-        readonly "outline-width": Longhand<Specified_37, Computed_23>;
+        readonly "outline-width": Longhand<Specified_38, Computed_23>;
         readonly "overflow-x": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"scroll"> | Keyword<"auto"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
         readonly "overflow-y": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"scroll"> | Keyword<"auto"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
         readonly position: Longhand<Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">, Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">>;
         readonly right: Longhand<Specified_16, Computed_12>;
-        readonly rotate: Longhand<Specified_38, Computed_24>;
+        readonly rotate: Longhand<Specified_39, Computed_24>;
         readonly "text-align": Longhand<Keyword.ToKeywords<"left" | "right" | "center" | "start" | "end" | "justify">, Keyword.ToKeywords<"left" | "right" | "center" | "start" | "end" | "justify">>;
         readonly "text-decoration-color": Longhand<Color, Computed_25>;
-        readonly "text-decoration-line": Longhand<Specified_39, Specified_39>;
+        readonly "text-decoration-line": Longhand<Specified_40, Specified_40>;
         readonly "text-decoration-style": Longhand<Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">, Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">>;
-        readonly "text-decoration-thickness": Longhand<Specified_40, Computed_26>;
+        readonly "text-decoration-thickness": Longhand<Specified_41, Computed_26>;
         readonly "text-indent": Longhand<import("./property/value/compound").LengthPercentage.LengthPercentage, Computed_27>;
         readonly "text-overflow": Longhand<Keyword.ToKeywords<"clip" | "ellipsis">, Keyword.ToKeywords<"clip" | "ellipsis">>;
-        readonly "text-shadow": Longhand<Specified_41, Computed_28>;
+        readonly "text-shadow": Longhand<Specified_42, Computed_28>;
         readonly "text-transform": Longhand<Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">, Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">>;
         readonly top: Longhand<Specified_16, Computed_12>;
-        readonly transform: Longhand<Specified_42, Computed_29>;
-        readonly "vertical-align": Longhand<Specified_43, Computed_30>;
+        readonly transform: Longhand<Specified_43, Computed_29>;
+        readonly "vertical-align": Longhand<Specified_44, Computed_30>;
         readonly visibility: Longhand<Keyword.ToKeywords<"hidden" | "collapse" | "visible">, Keyword.ToKeywords<"hidden" | "collapse" | "visible">>;
         readonly "white-space": Longhand<Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">, Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">>;
-        readonly width: Longhand<Specified_44, Computed_31>;
-        readonly "word-spacing": Longhand<Specified_45, Computed_32>;
+        readonly width: Longhand<Specified_45, Computed_31>;
+        readonly "word-spacing": Longhand<Specified_46, Computed_32>;
     };
     // (undocumented)
     export type Property = typeof longHands;
@@ -301,15 +300,14 @@ export namespace Longhands {
 // @internal
 export namespace Resolver {
     // (undocumented)
-    export function color(color: Color): Current | System | RGB<Percentage, Percentage>;
+    export function color(color: Color): Current | System | RGB<Percentage.Fixed, Percentage.Fixed>;
     // (undocumented)
-    export function image(image: Image, style: Style): Image<URL | Linear<Gradient.Hint<Percentage | Length.Fixed<"px">> | Gradient.Stop<Current | System | RGB<Percentage, Percentage>, Percentage | Length.Fixed<"px">>, Angle<"deg"> | Linear.Side | Linear.Corner> | Radial<Gradient.Hint<Percentage | Length.Fixed<"px">> | Gradient.Stop<Current | System | RGB<Percentage, Percentage>, Percentage | Length.Fixed<"px">>, Radial.Circle<Length.Fixed<"px">> | Radial.Ellipse<Percentage | Length.Fixed<"px">> | Radial.Extent, Position<Percentage | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Horizontal, Percentage | Length.Fixed<"px">>, Percentage | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Vertical, Percentage | Length.Fixed<"px">>>>>;
+    export function image(image: Image, style: Style): Image<URL | Linear<Gradient.Hint<Percentage.Fixed | Length.Fixed<"px">> | Gradient.Stop<Current | System | RGB<Percentage.Fixed, Percentage.Fixed>, Percentage.Fixed | Length.Fixed<"px">>, Angle.Fixed<"deg"> | Linear.Side | Linear.Corner> | Radial<Gradient.Hint<Percentage.Fixed | Length.Fixed<"px">> | Gradient.Stop<Current | System | RGB<Percentage.Fixed, Percentage.Fixed>, Percentage.Fixed | Length.Fixed<"px">>, Radial.Circle<Length.Fixed<"px">> | Radial.Ellipse<Percentage.Fixed | Length.Fixed<"px">> | Radial.Extent, Position<Percentage.Fixed | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Horizontal, Percentage.Fixed | Length.Fixed<"px">>, Percentage.Fixed | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Vertical, Percentage.Fixed | Length.Fixed<"px">>>>>;
     export function length(style: Style): Length.Resolver;
-    export function percentage<N extends Numeric = Numeric>(base: N): Mapper<Percentage, N>;
     // (undocumented)
-    export function position(position: Position, style: Style): Position<Percentage | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Horizontal, Percentage | Length.Fixed<"px">>, Percentage | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Vertical, Percentage | Length.Fixed<"px">>>;
+    export function position(position: Position, style: Style): Position<Percentage.Fixed | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Horizontal, Percentage.Fixed | Length.Fixed<"px">>, Percentage.Fixed | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<Position.Keywords.Vertical, Percentage.Fixed | Length.Fixed<"px">>>;
     // (undocumented)
-    export function positionComponent<S extends Position.Keywords.Horizontal | Position.Keywords.Vertical>(position: Position.Component<S>, style: Style): Percentage | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<S, Percentage | Length.Fixed<"px">>;
+    export function positionComponent<S extends Position.Keywords.Horizontal | Position.Keywords.Vertical>(position: Position.Component<S>, style: Style): Percentage.Fixed | Position.Keywords.Center | Length.Fixed<"px"> | Position.Side<S, Percentage.Fixed | Length.Fixed<"px">>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
@@ -660,7 +658,7 @@ export namespace Value {
 // src/longhands.ts:258:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:258:7 - (ae-incompatible-release-tags) The symbol ""min-height"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:259:7 - (ae-incompatible-release-tags) The symbol ""min-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:260:7 - (ae-forgotten-export) The symbol "NumberPercentage" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:260:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:260:7 - (ae-incompatible-release-tags) The symbol "opacity" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:261:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:261:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
