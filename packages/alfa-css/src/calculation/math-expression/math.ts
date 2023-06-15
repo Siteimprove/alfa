@@ -18,6 +18,7 @@ import { Function } from "./function";
 import { Kind } from "./kind";
 import { Operation } from "./operation";
 import { Value } from "./value";
+import { Option } from "@siteimprove/alfa-option";
 
 const {
   delimited,
@@ -120,7 +121,8 @@ export class Math<
 
   public resolve2(
     this: Math<"length-percentage">,
-    resolver: Expression.Resolver<"px", Length<"px">>
+    resolver: Expression.Resolver<"px", Length<"px">>,
+    hint?: "length"
   ): Result<Length<"px">, string>;
 
   public resolve2(this: Math<"number">): Result<Number, string>;
@@ -129,7 +131,8 @@ export class Math<
     this: Math,
     resolver?:
       | Expression.LengthResolver
-      | Expression.Resolver<"px", Length<"px">>
+      | Expression.Resolver<"px", Length<"px">>,
+    hint: Kind.Base = "length"
   ): Result<Numeric, string> {
     // Since the expressions can theoretically contain arbitrarily units in them,
     // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
@@ -146,29 +149,26 @@ export class Math<
         ...resolver,
       });
 
+      // Pure percentages can be resolved as any dimension (or stay as percentage)
+      // We need a hint, provided by the context, in order to know what type of
+      // value to convert to afterward.
+      if (this.isPercentage()) {
+        const converters = {
+          angle: "toAngle",
+          length: "toLength",
+          percentage: "toPercentage",
+        } as const;
+        return expression[converters[hint]]();
+      }
+
       return this.isDimensionPercentage("angle")
         ? // angle are also angle-percentage, so this catches both.
-          expression
-            .toAngle()
-            .reduce<Result<Numeric, string>>(
-              (_, value) => Ok.of(value),
-              Err.of(`${this} does not resolve to a valid length-percentage`)
-            )
+          expression.toAngle()
         : this.isDimensionPercentage("length")
         ? // length are also length-percentage, so this catches both.
-          expression
-            .toLength()
-            .reduce<Result<Numeric, string>>(
-              (_, value) => Ok.of(value),
-              Err.of(`${this} does not resolve to a valid length-percentage`)
-            )
+          expression.toLength()
         : this.isNumber()
-        ? expression
-            .toNumber()
-            .reduce<Result<Numeric, string>>(
-              (_, value) => Ok.of(value),
-              Err.of(`${this} does not resolve to a valid number`)
-            )
+        ? expression.toNumber()
         : Err.of(`${this} does not resolve to a valid expression`);
     } catch (e) {
       if (e instanceof Error) {

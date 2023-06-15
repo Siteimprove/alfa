@@ -11,6 +11,7 @@ import { Unit } from "../../unit";
 
 import { Expression } from "./expression";
 import { Kind } from "./kind";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 const { isAngle } = Angle;
 const { isLength } = Length;
@@ -76,52 +77,52 @@ export class Value<N extends Numeric = Numeric> extends Expression {
     );
   }
 
-  public toAngle(this: Value<Angle>): Some<Angle>;
+  public toAngle(this: Value<Angle>): Ok<Angle>;
 
-  public toAngle(this: Value<Exclude<Numeric, Angle>>): None;
+  public toAngle(this: Value<Exclude<Numeric, Angle>>): Err<string>;
 
-  public toAngle(): Option<Angle> {
+  public toAngle(): Result<Angle, string> {
     if (isAngle(this.value)) {
-      return Option.of(this.value);
+      return Ok.of(this.value);
     }
 
-    return None;
+    return Err.of(`${this} is not an angle`);
   }
 
-  public toLength(this: Value<Length>): Some<Length>;
+  public toLength(this: Value<Length>): Ok<Length>;
 
-  public toLength(this: Value<Exclude<Numeric, Length>>): None;
+  public toLength(this: Value<Exclude<Numeric, Length>>): Err<string>;
 
-  public toLength(): Option<Length> {
+  public toLength(): Result<Length, string> {
     if (isLength(this.value)) {
-      return Option.of(this.value);
+      return Ok.of(this.value);
     }
 
-    return None;
+    return Err.of(`${this} is not a length`);
   }
 
-  public toNumber(this: Value<Number>): Some<Number>;
+  public toNumber(this: Value<Number>): Ok<Number>;
 
-  public toNumber(this: Value<Exclude<Numeric, Number>>): None;
+  public toNumber(this: Value<Exclude<Numeric, Number>>): Err<string>;
 
-  public toNumber(): Option<Number> {
+  public toNumber(): Result<Number, string> {
     if (isNumber(this.value)) {
-      return Option.of(this.value);
+      return Ok.of(this.value);
     }
 
-    return None;
+    return Err.of(`${this} is not a number`);
   }
 
-  public toPercentage(this: Value<Percentage>): Some<Percentage>;
+  public toPercentage(this: Value<Percentage>): Ok<Percentage>;
 
-  public toPercentage(this: Value<Exclude<Numeric, Percentage>>): None;
+  public toPercentage(this: Value<Exclude<Numeric, Percentage>>): Err<string>;
 
-  public toPercentage(): Option<Percentage> {
+  public toPercentage(): Result<Percentage, string> {
     if (isPercentage(this.value)) {
-      return Option.of(this.value);
+      return Ok.of(this.value);
     }
 
-    return None;
+    return Err.of(`${this} is not a percentage`);
   }
 
   public equals(value: unknown): value is this {
