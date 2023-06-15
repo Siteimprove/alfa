@@ -12,8 +12,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Length as BaseLength } from "@siteimprove/alfa-css/src/calculation/numeric/length";
-import { Number as BaseNumber } from "@siteimprove/alfa-css/src/calculation/numeric/number";
+import {
+  Length as BaseLength,
+  Percentage as BasePercentage,
+} from "@siteimprove/alfa-css/src/calculation/numeric";
 
 import { Resolver } from "../../resolver";
 import type { Style } from "../../style";
@@ -29,7 +31,7 @@ export namespace LengthPercentage {
    */
   export type LengthPercentage =
     | Length
-    | Percentage
+    | Percentage.Fixed
     | Math<"length-percentage">;
 
   export function isLengthPercentage(
@@ -43,7 +45,7 @@ export namespace LengthPercentage {
   }
 
   export const parse = either<Slice<Token>, LengthPercentage, string>(
-    Percentage.parse,
+    Percentage.parseBase,
     Length.parse,
     Math.parseLengthPercentage
   );
@@ -60,7 +62,7 @@ export namespace LengthPercentage {
     lengthBase: Style
   ): (value: LengthPercentage) => Length.Fixed<"px"> {
     return (value) => {
-      const percentage: (p: Percentage) => BaseLength<"px"> = (p) =>
+      const percentage: (p: BasePercentage) => BaseLength<"px"> = (p) =>
         BaseLength.of(percentageBase.value, percentageBase.unit).scale(p.value);
 
       const length: (l: BaseLength) => BaseLength<"px"> = (l) => {
@@ -72,49 +74,13 @@ export namespace LengthPercentage {
         .if(Length.isLength, (value) =>
           value.resolve(Resolver.length(lengthBase))
         )
-        .if(Percentage.isPercentage, (value) => Length.of(percentage(value)))
+        .if(Percentage.isPercentage, (value) =>
+          Length.of(percentage(BasePercentage.of(value.value)))
+        )
         .else((value) =>
           Length.of(value.resolve2({ length, percentage }).getUnsafe())
         )
         .get();
     };
-  }
-}
-
-/**
- * @internal
- */
-export namespace NumberPercentage {
-  export type NumberPercentage = BaseNumber | Percentage | Math<"number">;
-
-  export function isNumber(value: unknown): value is NumberPercentage {
-    return (
-      BaseNumber.isNumber(value) ||
-      Percentage.isPercentage(value) ||
-      (Math.isCalculation(value) && value.isNumber())
-    );
-  }
-
-  export const parse = either<Slice<Token>, NumberPercentage, string>(
-    BaseNumber.parse,
-    Percentage.parse,
-    Math.parseNumber
-  );
-
-  /**
-   * Resolve a Number .
-   *
-   * @param value the Number to resolve
-   */
-  export function resolve(value: NumberPercentage): BaseNumber | Percentage {
-    switch (value.type) {
-      case "math expression":
-        // Since the calculation has been parsed and typed, there should
-        // always be something to get.
-        return BaseNumber.of(value.resolve2().getUnsafe().value);
-      case "number":
-      case "percentage":
-        return value;
-    }
   }
 }
