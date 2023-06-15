@@ -6,7 +6,7 @@ import { Math } from "../../calculation";
 import { Angle as BaseAngle } from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
-import { Value } from "../../value";
+import { Value } from "../value";
 
 import { Dimension } from "./dimension";
 

@@ -7,7 +7,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Math as Calculation } from "../../calculation";
 import { Integer as BaseInteger } from "../../calculation/numeric";
 
-import { Value } from "../../value";
+import { Value } from "../value";
 
 import { Numeric } from "./numeric";
 import { Token } from "../../syntax";

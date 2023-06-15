@@ -80,7 +80,7 @@
     "src/value/transform/skew.ts",
     "src/value/transform/transform.ts",
     "src/value/transform/translate.ts",
-    "src/value.ts",
+    "src/value/value.ts",
     "test/syntax/block.spec.ts",
     "test/syntax/component.spec.ts",
     "test/syntax/declaration.spec.ts",

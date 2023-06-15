@@ -6,7 +6,7 @@ import { Real } from "@siteimprove/alfa-math";
 import { Math } from "../../calculation";
 import { Numeric as BaseNumeric } from "../../calculation/numeric";
 
-import { Value } from "../../value";
+import { Value } from "../value";
 
 /**
  * @public

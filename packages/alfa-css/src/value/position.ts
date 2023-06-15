@@ -9,7 +9,7 @@ import { Length, Percentage } from "./numeric";
 
 import { Token } from "../syntax";
 import { Unit } from "../unit";
-import { Value } from "../value";
+import { Value } from "./value";
 
 const { map, either, pair, right } = Parser;
 

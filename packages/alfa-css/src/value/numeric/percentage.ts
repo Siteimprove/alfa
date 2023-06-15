@@ -5,7 +5,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Math } from "../../calculation";
 import { Percentage as BasePercentage } from "../../calculation/numeric";
 
-import { Value } from "../../value";
+import { Value } from "../value";
 
 import { Numeric } from "./numeric";
 import { Token } from "../../syntax";

@@ -7,7 +7,7 @@ import { Math } from "../../calculation";
 import { Length as BaseLength } from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
-import { Value } from "../../value";
+import { Value } from "../value";
 
 import { Dimension } from "./dimension";
 

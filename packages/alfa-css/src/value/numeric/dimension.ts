@@ -5,7 +5,7 @@ import {
   Numeric as BaseNumeric,
 } from "../../calculation/numeric";
 import { Convertible } from "../../unit";
-import { Value } from "../../value";
+import { Value } from "../value";
 
 import { Numeric } from "./numeric";
 import { Hash } from "@siteimprove/alfa-hash";

@@ -2,7 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
-import { Value } from "../../value";
+import { Value } from "../value";
 
 /**
  * @public
