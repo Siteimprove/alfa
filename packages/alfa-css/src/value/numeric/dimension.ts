@@ -21,12 +21,7 @@ export type Dimension<T extends BaseNumeric.Dimension = BaseNumeric.Dimension> =
  */
 export namespace Dimension {
   /**
-   * Dimensions that may contain calculations.
-   *
-   * @remarks
-   * We actually guarantee that these **do** contain a calculation.
-   *
-   * @public
+   * Dimensions that are the result of a calculation.
    */
   export abstract class Calculated<
       T extends BaseNumeric.Dimension = BaseNumeric.Dimension
@@ -61,9 +56,7 @@ export namespace Dimension {
   }
 
   /**
-   * Dimensions that are guaranteed to not contain any calculation.
-   *
-   * @public
+   * Dimensions that are a fixed (not calculated) value.
    */
   export abstract class Fixed<
       T extends BaseNumeric.Dimension = BaseNumeric.Dimension,
@@ -156,12 +149,6 @@ export namespace Dimension {
     }
   }
 
-  /**
-   * @remarks
-   * While hasCalculated and resolve are already defined on Numeric, they have
-   * a stricter type for Dimension. Hence, having an interface is more convenient
-   * to record that type.
-   */
   interface IDimension<
     T extends BaseNumeric.Dimension = BaseNumeric.Dimension,
     CALC extends boolean = boolean

@@ -1,5 +1,4 @@
 import { Cache } from "@siteimprove/alfa-cache";
-// TODO: clean, Length will ultimately be part of Numeric.
 import { Length, Numeric, Percentage } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Node } from "@siteimprove/alfa-dom";
@@ -18,7 +17,6 @@ import { isRendered } from "./is-rendered";
 import { isTransparent } from "./is-transparent";
 
 const { hasName, isElement, isReplaced } = Element;
-const { isNumeric } = Numeric;
 const { nor, not, test } = Predicate;
 const { and, or } = Refinement;
 const { isText } = Text;

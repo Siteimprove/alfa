@@ -28,12 +28,7 @@ export type Integer = Integer.Calculated | Integer.Fixed;
  */
 export namespace Integer {
   /**
-   * Integers that may contain calculations.
-   *
-   * @remarks
-   * We actually guarantee that these **do** contain a calculation.
-   *
-   * @public
+   * Integers that are the result of a calculation.
    */
   export class Calculated
     extends Numeric.Calculated<"number">
@@ -79,9 +74,7 @@ export namespace Integer {
   }
 
   /**
-   * Numbers that are guaranteed to not contain any calculation.
-   *
-   * @public
+   * Numbers that are a fixed (not calculated) value.
    */
   export class Fixed
     extends Numeric.Fixed<"number">
@@ -132,12 +125,6 @@ export namespace Integer {
     export interface JSON extends Numeric.Fixed.JSON<"number"> {}
   }
 
-  /**
-   * @remarks
-   * While hasCalculated and resolve are already defined on Numeric, they have
-   * a stricter type for Number. Hence, having an interface is more convenient
-   * to record that type.
-   */
   interface IInteger<CALC extends boolean = boolean>
     extends Value<"number", CALC> {
     hasCalculation(): this is Calculated;

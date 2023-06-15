@@ -25,12 +25,7 @@ export type Length<U extends Unit.Length = Unit.Length> =
  */
 export namespace Length {
   /**
-   * Lengths that may contain calculations
-   *
-   * @remarks
-   * We actually guarantee that these **do** contain a calculation.
-   *
-   * @internal
+   * Lengths that are the result of a calculation.
    */
   export class Calculated
     extends Dimension.Calculated<"length">
@@ -76,7 +71,7 @@ export namespace Length {
   }
 
   /**
-   * Lengths that are guaranteed to not contain any calculation.
+   * Lengths that are a fixed (not calculated) value.
    */
   export class Fixed<U extends Unit.Length = Unit.Length>
     extends Dimension.Fixed<"length", U>
@@ -161,14 +156,7 @@ export namespace Length {
 
   export type JSON = Calculated.JSON | Fixed.JSON;
 
-  /**
-   * @remarks
-   * While hasCalculated and resolve are already defined on Value, they have
-   * a stricter type for Length. Hence, having an interface is more convenient
-   * to record that type.
-   */
   interface ILength<
-    // U extends Unit.Length = Unit.Length,
     CALC extends boolean = boolean
   > extends Value<"length", CALC> {
     hasCalculation(): this is Calculated;

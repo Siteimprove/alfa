@@ -28,12 +28,7 @@ export namespace Numeric {
   >;
 
   /**
-   * Numerics that may contain calculations.
-   *
-   * @remarks
-   * We actually guarantee that these **do** contain a calculation.
-   *
-   * @public
+   * Numerics that are the result of a calculation.
    */
   export abstract class Calculated<T extends Type = Type>
     extends Value<T, true>
@@ -83,9 +78,7 @@ export namespace Numeric {
   }
 
   /**
-   * Numerics that are guaranteed to not contain any calculation.
-   *
-   * @public
+   * Numerics that are a fixed (not calculated) value.
    */
   export abstract class Fixed<T extends Type = Type>
     extends Value<T, false>
@@ -149,12 +142,6 @@ export namespace Numeric {
 
   export type Type = BaseNumeric.Type | `${BaseNumeric.Dimension}-percentage`;
 
-  /**
-   * @remarks
-   * While hasCalculated and resolve are already defined on Value, they have
-   * a stricter type for Numeric. Hence, having an interface is more convenient
-   * to record that type.
-   */
   interface INumeric<T extends Type = Type, CALC extends boolean = boolean>
     extends Value<T, CALC> {
     hasCalculation(): this is Calculated<T>;

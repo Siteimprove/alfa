@@ -1,8 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer } from "../../../src";
-// TODO clean deep import
-import { Number } from "../../../src/value/numeric/number";
+import { Lexer, Number } from "../../../src";
 
 function parse(input: string) {
   return Number.parse(Lexer.lex(input)).map(([, value]) => value);

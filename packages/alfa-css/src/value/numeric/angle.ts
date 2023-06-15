@@ -28,12 +28,7 @@ export type Angle<U extends Unit.Angle = Unit.Angle> =
  */
 export namespace Angle {
   /**
-   * Angles that may contain calculations.
-   *
-   * @remarks
-   * We actually guarantee that these **do** contain a calculation.
-   *
-   * @public
+   * Angles that are the result of a calculation.
    */
   export class Calculated
     extends Dimension.Calculated<"angle">
@@ -73,9 +68,7 @@ export namespace Angle {
   }
 
   /**
-   * Angles that are guaranteed to not contain any calculation.
-   *
-   * @public
+   * Angles that are a fixed (not calculated) value.
    */
   export class Fixed<U extends Unit.Angle = Unit.Angle>
     extends Dimension.Fixed<"angle", U>
@@ -140,12 +133,6 @@ export namespace Angle {
 
   export type JSON = Calculated.JSON | Fixed.JSON;
 
-  /**
-   * @remarks
-   * While hasCalculated and resolve are already defined on Numeric, they have
-   * a stricter type for Number. Hence, having an interface is more convenient
-   * to record that type.
-   */
   interface IAngle<CALC extends boolean = boolean>
     extends Value<"angle", CALC> {
     hasCalculation(): this is Calculated;

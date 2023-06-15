@@ -26,12 +26,7 @@ export type Percentage = Percentage.Calculated | Percentage.Fixed;
  */
 export namespace Percentage {
   /**
-   * Percentages that may contain calculations.
-   *
-   * @remarks
-   * We actually guarantee that these **do** contain a calculation.
-   *
-   * @public
+   * Percentages that are the result of a calculation.
    */
   export class Calculated
     extends Numeric.Calculated<"percentage">
@@ -78,9 +73,7 @@ export namespace Percentage {
   }
 
   /**
-   * Percentages that are guaranteed to not contain any calculation.
-   *
-   * @public
+   * Percentages that are a fixed (not calculated) value.
    */
   export class Fixed
     extends Numeric.Fixed<"percentage">
@@ -130,12 +123,6 @@ export namespace Percentage {
     export interface JSON extends Numeric.Fixed.JSON<"percentage"> {}
   }
 
-  /**
-   * @remarks
-   * While hasCalculated and resolve are already defined on Numeric, they have
-   * a stricter type for Number. Hence, having an interface is more convenient
-   * to record that type.
-   */
   interface IPercentage<CALC extends boolean = boolean>
     extends Value<"percentage", CALC> {
     hasCalculation(): this is Calculated;
