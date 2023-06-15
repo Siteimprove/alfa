@@ -3,10 +3,9 @@ import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Percentage } from "../../calculation";
 import { Token } from "../../syntax";
 
-import { Angle, Number } from "../numeric";
+import { Angle, Number, Percentage } from "../numeric";
 
 import { Format } from "./format";
 
@@ -17,32 +16,32 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
  */
 export class HSL<
   H extends Number.Fixed | Angle.Fixed = Number.Fixed | Angle.Fixed,
-  A extends Number.Fixed | Percentage = Number.Fixed | Percentage
+  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
 > extends Format<"hsl"> {
   public static of<
     H extends Number.Fixed | Angle.Fixed,
-    A extends Number.Fixed | Percentage
+    A extends Number.Fixed | Percentage.Fixed
   >(
     hue: H,
-    saturation: Percentage,
-    lightness: Percentage,
+    saturation: Percentage.Fixed,
+    lightness: Percentage.Fixed,
     alpha: A
   ): HSL<H, A> {
     return new HSL(hue, saturation, lightness, alpha);
   }
 
   private readonly _hue: H;
-  private readonly _saturation: Percentage;
-  private readonly _lightness: Percentage;
-  private readonly _red: Percentage;
-  private readonly _green: Percentage;
-  private readonly _blue: Percentage;
+  private readonly _saturation: Percentage.Fixed;
+  private readonly _lightness: Percentage.Fixed;
+  private readonly _red: Percentage.Fixed;
+  private readonly _green: Percentage.Fixed;
+  private readonly _blue: Percentage.Fixed;
   private readonly _alpha: A;
 
   private constructor(
     hue: H,
-    saturation: Percentage,
-    lightness: Percentage,
+    saturation: Percentage.Fixed,
+    lightness: Percentage.Fixed,
     alpha: A
   ) {
     super("hsl", false);
@@ -68,23 +67,23 @@ export class HSL<
     return this._hue;
   }
 
-  public get saturation(): Percentage {
+  public get saturation(): Percentage.Fixed {
     return this._saturation;
   }
 
-  public get lightness(): Percentage {
+  public get lightness(): Percentage.Fixed {
     return this._lightness;
   }
 
-  public get red(): Percentage {
+  public get red(): Percentage.Fixed {
     return this._red;
   }
 
-  public get green(): Percentage {
+  public get green(): Percentage.Fixed {
     return this._green;
   }
 
-  public get blue(): Percentage {
+  public get blue(): Percentage.Fixed {
     return this._blue;
   }
 
@@ -137,14 +136,14 @@ export class HSL<
 export namespace HSL {
   export interface JSON extends Format.JSON<"hsl"> {
     hue: Number.Fixed.JSON | Angle.Fixed.JSON;
-    saturation: Percentage.JSON;
-    lightness: Percentage.JSON;
-    alpha: Number.Fixed.JSON | Percentage.JSON;
+    saturation: Percentage.Fixed.JSON;
+    lightness: Percentage.Fixed.JSON;
+    alpha: Number.Fixed.JSON | Percentage.Fixed.JSON;
   }
 
   export function isHSL<
     H extends Number.Fixed | Angle.Fixed,
-    A extends Number.Fixed | Percentage
+    A extends Number.Fixed | Percentage.Fixed
   >(value: unknown): value is HSL<H, A> {
     return value instanceof HSL;
   }
@@ -152,7 +151,7 @@ export namespace HSL {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlpha = either(Number.parseBase, Percentage.parse);
+  const parseAlpha = either(Number.parseBase, Percentage.parseBase);
 
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-hue}
@@ -172,7 +171,10 @@ export namespace HSL {
             pair(
               pair(
                 parseHue,
-                take(right(option(Token.parseWhitespace), Percentage.parse), 2)
+                take(
+                  right(option(Token.parseWhitespace), Percentage.parseBase),
+                  2
+                )
               ),
               option(
                 right(
@@ -190,7 +192,7 @@ export namespace HSL {
                 take(
                   right(
                     delimited(option(Token.parseWhitespace), Token.parseComma),
-                    Percentage.parse
+                    Percentage.parseBase
                   ),
                   2
                 )

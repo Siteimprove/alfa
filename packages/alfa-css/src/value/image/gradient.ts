@@ -7,11 +7,10 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Percentage } from "../../calculation";
 import { Token } from "../../syntax";
 
 import { Color } from "../color";
-import { Length } from "../numeric";
+import { Length, Percentage } from "../numeric";
 
 import { Linear } from "./gradient-linear";
 import { Radial } from "./gradient-radial";
@@ -36,13 +35,13 @@ export namespace Gradient {
    */
   export class Stop<
     C extends Color = Color,
-    P extends Length.Fixed | Percentage = Length.Fixed | Percentage
+    P extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
   > implements Equatable, Hashable, Serializable
   {
-    public static of<C extends Color, P extends Length.Fixed | Percentage>(
-      color: C,
-      position: Option<P> = None
-    ): Stop<C, P> {
+    public static of<
+      C extends Color,
+      P extends Length.Fixed | Percentage.Fixed
+    >(color: C, position: Option<P> = None): Stop<C, P> {
       return new Stop(color, position);
     }
 
@@ -100,7 +99,7 @@ export namespace Gradient {
       [key: string]: json.JSON;
       type: "stop";
       color: Color.JSON;
-      position: Length.Fixed.JSON | Percentage.JSON | null;
+      position: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
     }
   }
 
@@ -111,7 +110,7 @@ export namespace Gradient {
     map(
       pair(
         left(Color.parse, Token.parseWhitespace),
-        either(Length.parseBase, Percentage.parse)
+        either(Length.parseBase, Percentage.parseBase)
       ),
       (result) => {
         const [color, position] = result;
@@ -120,7 +119,7 @@ export namespace Gradient {
     ),
     map(
       pair(
-        either(Length.parseBase, Percentage.parse),
+        either(Length.parseBase, Percentage.parseBase),
         right(Token.parseWhitespace, Color.parse)
       ),
       (result) => {
@@ -135,10 +134,10 @@ export namespace Gradient {
    * {@link https://drafts.csswg.org/css-images/#color-transition-hint}
    */
   export class Hint<
-    P extends Length.Fixed | Percentage = Length.Fixed | Percentage
+    P extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
   > implements Equatable, Hashable, Serializable
   {
-    public static of<P extends Length.Fixed | Percentage>(
+    public static of<P extends Length.Fixed | Percentage.Fixed>(
       position: P
     ): Hint<P> {
       return new Hint(position);
@@ -182,7 +181,7 @@ export namespace Gradient {
     export interface JSON {
       [key: string]: json.JSON;
       type: "hint";
-      position: Length.Fixed.JSON | Percentage.JSON;
+      position: Length.Fixed.JSON | Percentage.Fixed.JSON;
     }
   }
 
@@ -190,7 +189,7 @@ export namespace Gradient {
    * {@link https://drafts.csswg.org/css-images/#typedef-linear-color-hint}
    */
   export const parseHint: Parser<Slice<Token>, Hint, string> = map(
-    either(Length.parseBase, Percentage.parse),
+    either(Length.parseBase, Percentage.parseBase),
     (position) => Hint.of(position)
   );
 

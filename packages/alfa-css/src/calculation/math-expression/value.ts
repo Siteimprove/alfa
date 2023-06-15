@@ -1,11 +1,7 @@
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { None, Option } from "@siteimprove/alfa-option";
-import { Some } from "@siteimprove/alfa-option/src/some";
 import { Selective } from "@siteimprove/alfa-selective";
 
-// TODO: resimplify
-import { Percentage } from "../numeric";
-import { Angle, Length, Number, Numeric } from "../numeric/index-new";
+import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
 import { Unit } from "../../unit";
 

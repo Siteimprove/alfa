@@ -1,11 +1,9 @@
-import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
-// We need to rename Math to avoid collision with the global namespace.
-import { Math as Calculation } from "../../calculation";
-import { Integer as BaseInteger } from "../../calculation/numeric";
+import { Math } from "../../calculation";
+import { Percentage as BasePercentage } from "../../calculation/numeric";
 
 import { Value } from "../../value";
 
@@ -15,20 +13,20 @@ import { Token } from "../../syntax";
 const { either, map } = Parser;
 
 /**
- * {@link https://drafts.csswg.org/css-values/#integers}
+ * {@link https://drafts.csswg.org/css-values/#numbers}
  *
  * @public
  */
-export type Integer = Integer.Calculated | Integer.Fixed;
+export type Percentage = Percentage.Calculated | Percentage.Fixed;
 
 /**
- * {@link https://drafts.csswg.org/css-values/#integers}
+ * {@link https://drafts.csswg.org/css-values/#numbers}
  *
  * @public
  */
-export namespace Integer {
+export namespace Percentage {
   /**
-   * Integers that may contain calculations.
+   * Percentages that may contain calculations.
    *
    * @remarks
    * We actually guarantee that these **do** contain a calculation.
@@ -36,29 +34,23 @@ export namespace Integer {
    * @public
    */
   export class Calculated
-    extends Numeric.Calculated<"number">
-    implements IInteger<true>
+    extends Numeric.Calculated<"percentage">
+    implements IPercentage<true>
   {
-    public static of(value: Calculation<"number">): Calculated {
+    public static of(value: Math<"percentage">): Calculated {
       return new Calculated(value);
     }
 
-    private constructor(value: Calculation<"number">) {
-      super(value, "number");
+    private constructor(math: Math<"percentage">) {
+      super(math, "percentage");
     }
 
-    /**
-     * @remarks
-     * Numbers are rounded to the nearest integer upon resolving calculation
-     *
-     * {@link https://drafts.csswg.org/css-values/#calc-type-checking}
-     */
     public resolve(): Fixed {
       return Fixed.of(
         this._math
           .resolve2()
           // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not fully resolve ${this} as a number`).value
+          .getUnsafe(`Could not fully resolve ${this} as a percentage`)
       );
     }
 
@@ -75,33 +67,26 @@ export namespace Integer {
    * @public
    */
   export namespace Calculated {
-    export interface JSON extends Numeric.Calculated.JSON<"number"> {}
+    export interface JSON extends Numeric.Calculated.JSON<"percentage"> {}
   }
 
   /**
-   * Numbers that are guaranteed to not contain any calculation.
+   * Percentages that are guaranteed to not contain any calculation.
    *
    * @public
    */
   export class Fixed
-    extends Numeric.Fixed<"number">
-    implements IInteger<false>
+    extends Numeric.Fixed<"percentage">
+    implements IPercentage<false>
   {
-    /**
-     * {@link https://drafts.csswg.org/css-values/#css-round-to-the-nearest-integer}
-     */
-    public static of(value: number | BaseInteger): Fixed {
+    public static of(value: number | BasePercentage): Fixed {
       return new Fixed(
-        BaseInteger.isInteger(value)
-          ? value.value
-          : // Math.round ensure the correct rounding.
-            // The bitwise or ensure coercion to 32 bits integer
-            Math.round(value) | 0
+        BasePercentage.isPercentage(value) ? value.value : value
       );
     }
 
     private constructor(value: number) {
-      super(value, "number");
+      super(value, "percentage");
     }
 
     public resolve(): this {
@@ -116,10 +101,6 @@ export namespace Integer {
       return value instanceof Fixed && super.equals(value);
     }
 
-    public hash(hash: Hash): void {
-      hash.writeInt32(this._value);
-    }
-
     public toJSON(): Fixed.JSON {
       return super.toJSON();
     }
@@ -129,7 +110,7 @@ export namespace Integer {
    * @public
    */
   export namespace Fixed {
-    export interface JSON extends Numeric.Fixed.JSON<"number"> {}
+    export interface JSON extends Numeric.Fixed.JSON<"percentage"> {}
   }
 
   /**
@@ -138,8 +119,8 @@ export namespace Integer {
    * a stricter type for Number. Hence, having an interface is more convenient
    * to record that type.
    */
-  interface IInteger<CALC extends boolean = boolean>
-    extends Value<"number", CALC> {
+  interface IPercentage<CALC extends boolean = boolean>
+    extends Value<"percentage", CALC> {
     hasCalculation(): this is Calculated;
     resolve(): Fixed;
   }
@@ -152,21 +133,21 @@ export namespace Integer {
     return value instanceof Fixed;
   }
 
-  export function isInteger(value: unknown): value is Integer {
+  export function isPercentage(value: unknown): value is Percentage {
     return value instanceof Calculated || value instanceof Fixed;
   }
 
   export function of(value: number): Fixed;
 
-  export function of(value: BaseInteger): Fixed;
+  export function of(value: BasePercentage): Fixed;
 
-  export function of(value: Calculation<"number">): Calculated;
+  export function of(value: Math<"percentage">): Calculated;
 
   export function of(
-    value: number | BaseInteger | Calculation<"number">
-  ): Integer {
+    value: number | BasePercentage | Math<"percentage">
+  ): Percentage {
     return Selective.of(value)
-      .if(Calculation.isNumber, Calculated.of)
+      .if(Math.isPercentage, Calculated.of)
       .else(Fixed.of)
       .get();
   }
@@ -174,16 +155,16 @@ export namespace Integer {
   /**
    * {@link https://drafts.csswg.org/css-values/#number-value}
    */
-  export const parse: Parser<Slice<Token>, Integer, string> = either(
-    map<Slice<Token>, BaseInteger, Fixed, string>(BaseInteger.parse, of),
-    map(Calculation.parseNumber, of)
+  export const parse: Parser<Slice<Token>, Percentage, string> = either(
+    map<Slice<Token>, BasePercentage, Fixed, string>(BasePercentage.parse, of),
+    map(Math.parsePercentage, of)
   );
 
   // TODO: temporary helper needed during migration
   export const parseBase: Parser<Slice<Token>, Fixed, string> = map<
     Slice<Token>,
-    BaseInteger,
+    BasePercentage,
     Fixed,
     string
-  >(BaseInteger.parse, of);
+  >(BasePercentage.parse, of);
 }

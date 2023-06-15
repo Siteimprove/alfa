@@ -3,7 +3,7 @@ import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
 import {
   Dimension as BaseDimension,
   Numeric as BaseNumeric,
-} from "../../calculation/numeric/index-new";
+} from "../../calculation/numeric";
 import { Convertible } from "../../unit";
 import { Value } from "../../value";
 

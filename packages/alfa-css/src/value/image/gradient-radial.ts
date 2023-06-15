@@ -11,9 +11,7 @@ import * as json from "@siteimprove/alfa-json";
 import { Token } from "../../syntax";
 import { Value } from "../../value";
 
-import { Percentage } from "../../calculation";
-
-import { Length } from "../numeric";
+import { Length, Percentage } from "../numeric";
 import { Position } from "../position";
 
 import type { Gradient } from "./gradient";
@@ -209,10 +207,10 @@ export namespace Radial {
    * {@link https://drafts.csswg.org/css-images/#valdef-ending-shape-ellipse}
    */
   export class Ellipse<
-    R extends Length.Fixed | Percentage = Length.Fixed | Percentage
+    R extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
   > implements Equatable, Hashable, Serializable<Ellipse.JSON>
   {
-    public static of<R extends Length.Fixed | Percentage>(
+    public static of<R extends Length.Fixed | Percentage.Fixed>(
       horizontal: R,
       vertical: R
     ): Ellipse<R> {
@@ -272,8 +270,8 @@ export namespace Radial {
     export interface JSON {
       [key: string]: json.JSON;
       type: "ellipse";
-      horizontal: Length.Fixed.JSON | Percentage.JSON;
-      vertical: Length.Fixed.JSON | Percentage.JSON;
+      horizontal: Length.Fixed.JSON | Percentage.Fixed.JSON;
+      vertical: Length.Fixed.JSON | Percentage.Fixed.JSON;
     }
   }
 
@@ -407,15 +405,15 @@ export namespace Radial {
   const parseEllipseSize = take(
     delimited(
       option(Token.parseWhitespace),
-      either(Length.parseBase, Percentage.parse)
+      either(Length.parseBase, Percentage.parseBase)
     ),
     2
   );
 
   const parseEllipse: Parser<Slice<Token>, Ellipse, string> = (input) => {
     let shape: Keyword<"ellipse"> | undefined;
-    let horizontal: Length.Fixed | Percentage | undefined;
-    let vertical: Length.Fixed | Percentage | undefined;
+    let horizontal: Length.Fixed | Percentage.Fixed | undefined;
+    let vertical: Length.Fixed | Percentage.Fixed | undefined;
 
     while (true) {
       for ([input] of Token.parseWhitespace(input)) {

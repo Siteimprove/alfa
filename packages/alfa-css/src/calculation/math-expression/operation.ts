@@ -1,15 +1,14 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Result } from "@siteimprove/alfa-result";
 
-// TODO: resimplify
-import { Percentage } from "../numeric";
 import {
   Angle,
   Dimension,
   Length,
   Number,
   Numeric,
-} from "../numeric/index-new";
+  Percentage,
+} from "../numeric";
 
 import { Unit } from "../../unit";
 

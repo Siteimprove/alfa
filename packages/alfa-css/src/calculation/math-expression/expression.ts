@@ -5,10 +5,8 @@ import { Err, Result } from "@siteimprove/alfa-result";
 import * as json from "@siteimprove/alfa-json";
 
 import { Unit } from "../../unit";
-// TODO: the imports will need to be re-shortened once migration is done and
-// numeric re-exports them for internal use.
-import { Percentage } from "../numeric";
-import { Angle, Length, Number, Numeric } from "../numeric/index-new";
+
+import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
 import { Kind } from "./kind";
 

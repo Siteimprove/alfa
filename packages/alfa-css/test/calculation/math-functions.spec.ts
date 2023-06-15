@@ -1,8 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Lexer, Math } from "../../src";
-// TODO: simplify import
-import { Length } from "../../src/calculation/numeric/index-new";
+import { Length } from "../../src/calculation/numeric";
 
 function parse(input: string) {
   return Math.parse(Lexer.lex(input)).map(([, expr]) => expr);

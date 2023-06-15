@@ -4,7 +4,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
-import { Length as BaseLength } from "../../calculation/numeric/index-new";
+import { Length as BaseLength } from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
 import { Value } from "../../value";

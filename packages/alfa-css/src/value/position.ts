@@ -4,10 +4,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Err } from "@siteimprove/alfa-result";
 
-import { Percentage } from "../calculation";
-
 import { Keyword } from "./keyword";
-import { Length } from "./numeric";
+import { Length, Percentage } from "./numeric";
 
 import { Token } from "../syntax";
 import { Unit } from "../unit";
@@ -111,10 +109,10 @@ export namespace Position {
 
   type Offset<U extends Unit.Length = Unit.Length> =
     | Length.Fixed<U>
-    | Percentage;
+    | Percentage.Fixed;
 
   namespace Offset {
-    export const parse = either(Length.parseBase, Percentage.parse);
+    export const parse = either(Length.parseBase, Percentage.parseBase);
   }
 
   export class Side<
@@ -187,7 +185,7 @@ export namespace Position {
   export namespace Side {
     export interface JSON extends Value.JSON<"side"> {
       side: Keyword.JSON;
-      offset: Length.Fixed.JSON | Percentage.JSON | null;
+      offset: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
     }
 
     /**
@@ -249,7 +247,7 @@ export namespace Position {
     export type JSON =
       | Keyword.JSON
       | Length.Fixed.JSON
-      | Percentage.JSON
+      | Percentage.Fixed.JSON
       | Side.JSON;
 
     // "center" is included in Side.parse[Horizontal, Vertical]

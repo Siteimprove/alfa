@@ -6,11 +6,10 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Percentage } from "../../calculation";
 import { Function, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
-import { Length } from "../numeric";
+import { Length, Percentage } from "../numeric";
 
 import { BasicShape } from "./basic-shape";
 

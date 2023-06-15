@@ -3,7 +3,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
-import { Angle as BaseAngle } from "../../calculation/numeric/index-new";
+import { Angle as BaseAngle } from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
 import { Value } from "../../value";

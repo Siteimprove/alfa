@@ -1,10 +1,9 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Percentage } from "../../calculation";
 import { Token } from "../../syntax";
 
-import { Angle, Length, Number } from "../numeric";
+import { Angle, Length, Number, Percentage } from "../numeric";
 
 import { Matrix } from "./matrix";
 import { Perspective } from "./perspective";
@@ -61,8 +60,8 @@ export namespace Transform {
   }
 
   export function translate<
-    X extends Length.Fixed | Percentage,
-    Y extends Length.Fixed | Percentage,
+    X extends Length.Fixed | Percentage.Fixed,
+    Y extends Length.Fixed | Percentage.Fixed,
     Z extends Length.Fixed
   >(x: X, y: Y, z: Z): Translate<X, Y, Z> {
     return Translate.of(x, y, z);

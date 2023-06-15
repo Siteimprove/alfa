@@ -3,7 +3,7 @@ import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
-import { Number as BaseNumber } from "../../calculation/numeric/index-new";
+import { Number as BaseNumber } from "../../calculation/numeric";
 
 import { Value } from "../../value";
 
