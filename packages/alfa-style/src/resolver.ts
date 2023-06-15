@@ -108,7 +108,7 @@ export namespace Resolver {
             Current | System | RGB<Percentage, Percentage>,
             Percentage | Length.Fixed<"px">
           >,
-        Angle<"deg"> | Linear.Side | Linear.Corner
+        Angle.Fixed<"deg"> | Linear.Side | Linear.Corner
       >
     | Radial<
         | Gradient.Hint<Percentage | Length.Fixed<"px">>

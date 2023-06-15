@@ -62,6 +62,7 @@ export namespace LengthPercentage {
     return (value) => {
       const percentage: (p: Percentage) => BaseLength<"px"> = (p) =>
         BaseLength.of(percentageBase.value, percentageBase.unit).scale(p.value);
+
       const length: (l: BaseLength) => BaseLength<"px"> = (l) => {
         const resolved = Length.of(l).resolve(Resolver.length(lengthBase));
         return BaseLength.of(resolved.value, resolved.unit);

@@ -35,9 +35,9 @@ export type Computed =
   | List<
       | Matrix
       | Perspective<Length.Fixed<"px">>
-      | Rotate<Angle<"deg">>
+      | Rotate<Angle.Fixed<"deg">>
       | Scale
-      | Skew<Angle<"deg">, Angle<"deg">>
+      | Skew<Angle.Fixed<"deg">, Angle.Fixed<"deg">>
       | Translate<
           Length.Fixed<"px"> | Percentage,
           Length.Fixed<"px"> | Percentage,

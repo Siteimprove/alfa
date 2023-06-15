@@ -15,7 +15,7 @@ export type Specified = Keyword<"none"> | Rotate;
 /**
  * @internal
  */
-export type Computed = Keyword<"none"> | Rotate<Angle<"deg">>;
+export type Computed = Keyword<"none"> | Rotate<Angle.Fixed<"deg">>;
 
 function takeThree<T>(array: Array<T>): Result<[T, T, T], string> {
   return array.length === 3
@@ -50,7 +50,7 @@ function delta(keyword: Keyword, data: string): 0 | 1 {
 }
 
 const parseRotate = map(
-  pair(option(left(parseAxis, Token.parseWhitespace)), Angle.parse),
+  pair(option(left(parseAxis, Token.parseWhitespace)), Angle.parseBase),
   ([axis, angle]) => {
     for (const value of axis) {
       if (Keyword.isKeyword(value)) {

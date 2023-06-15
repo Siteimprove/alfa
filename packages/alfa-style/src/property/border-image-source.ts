@@ -38,7 +38,7 @@ export type Computed =
               Length.Fixed<"px"> | Percentage
             >
           | Gradient.Hint<Length.Fixed<"px"> | Percentage>,
-          Angle<"deg"> | Linear.Side | Linear.Corner
+          Angle.Fixed<"deg"> | Linear.Side | Linear.Corner
         >
       | Radial<
           | Gradient.Stop<
