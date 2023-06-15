@@ -2,11 +2,10 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Angle } from "../../calculation";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
 
-import { Number } from "../numeric";
+import { Angle, Number } from "../numeric";
 
 import { Function } from "./function";
 
@@ -16,10 +15,13 @@ const { map, left, right, pair, either, delimited, option } = Parser;
  * @public
  */
 export class Skew<
-  X extends Angle = Angle,
-  Y extends Angle = Angle
+  X extends Angle.Fixed = Angle.Fixed,
+  Y extends Angle.Fixed = Angle.Fixed
 > extends Function<"skew"> {
-  public static of<X extends Angle, Y extends Angle>(x: X, y: Y): Skew<X, Y> {
+  public static of<X extends Angle.Fixed, Y extends Angle.Fixed>(
+    x: X,
+    y: Y
+  ): Skew<X, Y> {
     return new Skew(x, y);
   }
 
@@ -82,18 +84,18 @@ export class Skew<
  */
 export namespace Skew {
   export interface JSON extends Function.JSON<"skew"> {
-    x: Angle.JSON;
-    y: Angle.JSON;
+    x: Angle.Fixed.JSON;
+    y: Angle.Fixed.JSON;
   }
 
-  export function isSkew<X extends Angle, Y extends Angle>(
+  export function isSkew<X extends Angle.Fixed, Y extends Angle.Fixed>(
     value: unknown
   ): value is Skew<X, Y> {
     return value instanceof Skew;
   }
 
   const parseAngleOrZero = either(
-    Angle.parse,
+    Angle.parseBase,
     map(Number.parseZero, () => Angle.of<Unit.Angle>(0, "deg"))
   );
 
@@ -122,7 +124,7 @@ export namespace Skew {
     (result) => {
       const [x, y] = result;
 
-      return Skew.of<Angle, Angle>(
+      return Skew.of<Angle.Fixed, Angle.Fixed>(
         x,
         y.getOrElse(() => Angle.of(0, "deg"))
       );
@@ -140,7 +142,7 @@ export namespace Skew {
         Token.parseCloseParenthesis
       )
     ),
-    (x) => Skew.of<Angle, Angle>(x, Angle.of(0, "deg"))
+    (x) => Skew.of<Angle.Fixed, Angle.Fixed>(x, Angle.of(0, "deg"))
   );
 
   /**
@@ -154,7 +156,7 @@ export namespace Skew {
         Token.parseCloseParenthesis
       )
     ),
-    (y) => Skew.of<Angle, Angle>(Angle.of(0, "deg"), y)
+    (y) => Skew.of<Angle.Fixed, Angle.Fixed>(Angle.of(0, "deg"), y)
   );
 
   export const parse: Parser<Slice<Token>, Skew, string> = either(

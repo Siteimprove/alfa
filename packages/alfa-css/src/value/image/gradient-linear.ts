@@ -9,7 +9,8 @@ import * as json from "@siteimprove/alfa-json";
 import { Token } from "../../syntax";
 import { Value } from "../../value";
 
-import { Angle } from "../../calculation";
+import { Angle } from "../numeric";
+
 import type { Gradient } from "./gradient";
 
 const { map, either, pair, option, left, right, delimited } = Parser;
@@ -114,10 +115,10 @@ export namespace Linear {
     repeats: boolean;
   }
 
-  export type Direction = Angle | Side | Corner;
+  export type Direction = Angle.Fixed | Side | Corner;
 
   export namespace Direction {
-    export type JSON = Angle.JSON | Side.JSON | Corner.JSON;
+    export type JSON = Angle.Fixed.JSON | Side.JSON | Corner.JSON;
   }
 
   export type Position = Position.Vertical | Position.Horizontal;
@@ -294,7 +295,7 @@ export namespace Linear {
   );
 
   const parseDirection = either(
-    Angle.parse,
+    Angle.parseBase,
     // Corners must be parsed before sides as sides are also valid prefixes of
     // corners.
     either(parseCorner, parseSide)

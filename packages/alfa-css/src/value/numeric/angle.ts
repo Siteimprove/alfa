@@ -1,13 +1,14 @@
+import { Comparable } from "@siteimprove/alfa-comparable";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
-import { Number as BaseNumber } from "../../calculation/numeric/index-new";
+import { Angle as BaseAngle } from "../../calculation/numeric/index-new";
 import { Token } from "../../syntax";
+import { Converter, Unit } from "../../unit";
 import { Value } from "../../value";
 
 import { Dimension } from "./dimension";
-import { Numeric } from "./numeric";
 
 const { either, map } = Parser;
 
@@ -16,7 +17,9 @@ const { either, map } = Parser;
  *
  * @public
  */
-export type Angle = Angle.Calculated | Angle.Fixed;
+export type Angle<U extends Unit.Angle = Unit.Angle> =
+  | Angle.Calculated
+  | Angle.Fixed<U>;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#numbers}
@@ -33,7 +36,7 @@ export namespace Angle {
    * @public
    */
   export class Calculated
-    extends Numeric.Calculated<"angle">
+    extends Dimension.Calculated<"angle">
     implements IAngle<true>
   {
     public static of(value: Math<"angle">): Calculated {
@@ -44,16 +47,21 @@ export namespace Angle {
       super(value, "angle");
     }
 
-    public resolve(): Fixed {
-      return Fixed.of(0);
+    public hasCalculation(): this is Calculated {
+      return true;
+    }
+
+    public resolve(): Fixed<"deg"> {
+      return Fixed.of(
+        this._math
+          .resolve2()
+          // Since the expression has been correctly typed, it should always resolve.
+          .getUnsafe(`Could not resolve ${this._math} as an angle`)
+      );
     }
 
     public equals(value: unknown): value is this {
       return value instanceof Calculated && super.equals(value);
-    }
-
-    public toJSON(): Calculated.JSON {
-      return super.toJSON();
     }
   }
 
@@ -61,37 +69,64 @@ export namespace Angle {
    * @public
    */
   export namespace Calculated {
-    export interface JSON extends Numeric.Calculated.JSON<"angle"> {}
+    export interface JSON extends Dimension.Calculated.JSON<"angle"> {}
   }
 
   /**
-   * Numbers that are guaranteed to not contain any calculation.
+   * Angles that are guaranteed to not contain any calculation.
    *
    * @public
    */
-  export class Fixed extends Numeric.Fixed<"angle"> implements IAngle<false> {
-    public static of(value: number | BaseNumber): Fixed {
-      return new Fixed(BaseNumber.isNumber(value) ? value.value : value);
+  export class Fixed<U extends Unit.Angle = Unit.Angle>
+    extends Dimension.Fixed<"angle", U>
+    implements IAngle<false>, Comparable<Fixed<U>>
+  {
+    public static of<U extends Unit.Angle>(value: number, unit: U): Fixed<U>;
+
+    public static of<U extends Unit.Angle>(value: BaseAngle<U>): Fixed<U>;
+
+    public static of<U extends Unit.Angle>(
+      value: number | BaseAngle<U>,
+      unit?: U
+    ): Fixed<U> {
+      if (typeof value === "number") {
+        // The overloads ensure that unit is not undefined
+        return new Fixed(value, unit!);
+      }
+
+      return new Fixed(value.value, value.unit);
     }
 
-    private constructor(value: number) {
-      super(value, "angle");
+    private constructor(value: number, unit: U) {
+      super(value, unit, "angle");
     }
 
-    public resolve(): this {
-      return this;
+    public hasCalculation(): this is Calculated {
+      return false;
     }
 
-    public scale(factor: number): Fixed {
-      return new Fixed(this._value * factor);
+    public hasUnit<U extends Unit.Angle>(unit: U): this is Fixed<U> {
+      return (this._unit as Unit.Angle) === unit;
+    }
+
+    public withUnit<U extends Unit.Angle>(unit: U): Fixed<U> {
+      if (this.hasUnit(unit)) {
+        return this;
+      }
+
+      return Fixed.of(Converter.angle(this._value, this._unit, unit), unit);
+    }
+
+    public scale(factor: number): Fixed<U> {
+      return new Fixed(this._value * factor, this._unit);
+    }
+
+    public resolve(): Fixed<"deg"> {
+      return this.withUnit("deg");
     }
 
     public equals(value: unknown): value is this {
       return value instanceof Fixed && super.equals(value);
-    }
-
-    public toJSON(): Fixed.JSON {
-      return super.toJSON();
     }
   }
 
@@ -99,8 +134,11 @@ export namespace Angle {
    * @public
    */
   export namespace Fixed {
-    export interface JSON extends Numeric.Fixed.JSON<"angle"> {}
+    export interface JSON<U extends Unit.Angle = Unit.Angle>
+      extends Dimension.Fixed.JSON<"angle", U> {}
   }
+
+  export type JSON = Calculated.JSON | Fixed.JSON;
 
   /**
    * @remarks
@@ -111,7 +149,7 @@ export namespace Angle {
   interface IAngle<CALC extends boolean = boolean>
     extends Value<"angle", CALC> {
     hasCalculation(): this is Calculated;
-    resolve(): Fixed;
+    resolve(): Fixed<"deg">;
   }
 
   export function isCalculated(value: unknown): value is Calculated {
@@ -126,29 +164,41 @@ export namespace Angle {
     return value instanceof Calculated || value instanceof Fixed;
   }
 
-  export function of(value: number): Fixed;
+  export function of<U extends Unit.Angle>(value: number, unit: U): Fixed<U>;
 
-  export function of(value: BaseNumber): Fixed;
+  export function of<U extends Unit.Angle>(value: BaseAngle<U>): Fixed<U>;
 
   export function of(value: Math<"angle">): Calculated;
 
-  export function of(value: number | BaseNumber | Math<"angle">): Angle {
-    return Fixed.of(0);
+  export function of<U extends Unit.Angle>(
+    value: number | BaseAngle<U> | Math<"angle">,
+    unit?: U
+  ): Angle<U> {
+    if (typeof value === "number") {
+      // The overloads ensure that unit is not undefined
+      return Fixed.of(value, unit!);
+    }
+
+    if (BaseAngle.isAngle(value)) {
+      return Fixed.of(value.value, value.unit);
+    }
+
+    return Calculated.of(value);
   }
 
   /**
    * {@link https://drafts.csswg.org/css-values/#number-value}
    */
   export const parse: Parser<Slice<Token>, Angle, string> = either(
-    map<Slice<Token>, BaseNumber, Fixed, string>(BaseNumber.parse, of),
+    map<Slice<Token>, BaseAngle, Fixed, string>(BaseAngle.parse, of),
     map(Math.parseAngle, of)
   );
 
   // TODO: temporary helper needed during migration
   export const parseBase: Parser<Slice<Token>, Fixed, string> = map<
     Slice<Token>,
-    BaseNumber,
+    BaseAngle,
     Fixed,
     string
-  >(BaseNumber.parse, of);
+  >(BaseAngle.parse, of);
 }

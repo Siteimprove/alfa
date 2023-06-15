@@ -3,10 +3,10 @@ import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Angle, Percentage } from "../../calculation";
+import { Percentage } from "../../calculation";
 import { Token } from "../../syntax";
 
-import { Number } from "../numeric";
+import { Angle, Number } from "../numeric";
 
 import { Format } from "./format";
 
@@ -16,11 +16,11 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
  * @public
  */
 export class HSL<
-  H extends Number.Fixed | Angle = Number.Fixed | Angle,
+  H extends Number.Fixed | Angle.Fixed = Number.Fixed | Angle.Fixed,
   A extends Number.Fixed | Percentage = Number.Fixed | Percentage
 > extends Format<"hsl"> {
   public static of<
-    H extends Number.Fixed | Angle,
+    H extends Number.Fixed | Angle.Fixed,
     A extends Number.Fixed | Percentage
   >(
     hue: H,
@@ -136,14 +136,14 @@ export class HSL<
  */
 export namespace HSL {
   export interface JSON extends Format.JSON<"hsl"> {
-    hue: Number.Fixed.JSON | Angle.JSON;
+    hue: Number.Fixed.JSON | Angle.Fixed.JSON;
     saturation: Percentage.JSON;
     lightness: Percentage.JSON;
     alpha: Number.Fixed.JSON | Percentage.JSON;
   }
 
   export function isHSL<
-    H extends Number.Fixed | Angle,
+    H extends Number.Fixed | Angle.Fixed,
     A extends Number.Fixed | Percentage
   >(value: unknown): value is HSL<H, A> {
     return value instanceof HSL;
@@ -152,18 +152,12 @@ export namespace HSL {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlpha: Parser<Slice<Token>, Number.Fixed | Percentage, string> = either(
-    Number.parseBase,
-    Percentage.parse
-  );
+  const parseAlpha = either(Number.parseBase, Percentage.parse);
 
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-hue}
    */
-  const parseHue: Parser<Slice<Token>, Number.Fixed | Angle, string> = either(
-    Number.parseBase,
-    Angle.parse
-  );
+  const parseHue = either(Number.parseBase, Angle.parseBase);
 
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}

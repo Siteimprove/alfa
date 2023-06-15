@@ -91,6 +91,7 @@
     "test/calculation/calculation.spec.ts",
     "test/calculation/math-functions.spec.ts",
     "test/value/gradient/radial.spec.ts",
+    "test/value/numeric/angle.spec.ts",
     "test/value/numeric/length.spec.ts",
     "test/value/numeric/number.spec.ts",
     "test/value/position.spec.ts",

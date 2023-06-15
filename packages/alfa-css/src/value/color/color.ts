@@ -3,10 +3,10 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax";
 
-import { Angle, Percentage } from "../../calculation";
+import { Percentage } from "../../calculation";
 
 import { Keyword } from "../keyword";
-import { Number } from "../numeric";
+import { Angle, Number } from "../numeric";
 
 import { Current } from "./current";
 import { Hex } from "./hex";
@@ -35,7 +35,7 @@ export namespace Color {
   }
 
   export function hsl<
-    H extends Number.Fixed | Angle,
+    H extends Number.Fixed | Angle.Fixed,
     A extends Number.Fixed | Percentage
   >(
     hue: H,

@@ -7,7 +7,7 @@ import { Unit } from "../../unit";
 // TODO: the imports will need to be re-shortened once migration is done and
 // numeric re-exports them for internal use.
 import { Percentage } from "../numeric";
-import { Length, Number, Numeric } from "../numeric/index-new";
+import { Angle, Length, Number, Numeric } from "../numeric/index-new";
 
 import { Kind } from "./kind";
 
@@ -42,6 +42,10 @@ export abstract class Expression<T extends string = string>
     L extends Unit.Length = "px",
     P extends Numeric = Numeric
   >(resolver: Expression.Resolver<L, P>): Expression;
+
+  public toAngle(): Option<Angle> {
+    return None;
+  }
 
   public toLength(): Option<Length> {
     return None;

@@ -34,7 +34,7 @@ export namespace Length {
    */
   export class Calculated
     extends Dimension.Calculated<"length">
-    implements ILength<Unit.Length, true>
+    implements ILength<true>
   {
     public static of(value: Math<"length">): Calculated {
       return new Calculated(value);
@@ -80,7 +80,7 @@ export namespace Length {
    */
   export class Fixed<U extends Unit.Length = Unit.Length>
     extends Dimension.Fixed<"length", U>
-    implements ILength<U, false>, Comparable<Fixed<U>>
+    implements ILength<false>, Comparable<Fixed<U>>
   {
     public static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
 
@@ -106,7 +106,7 @@ export namespace Length {
       return false;
     }
 
-    public hasUnit<V extends Unit.Length>(unit: V): this is Fixed<V> {
+    public hasUnit<U extends Unit.Length>(unit: U): this is Fixed<U> {
       return (this._unit as Unit.Length) === unit;
     }
 
@@ -168,7 +168,7 @@ export namespace Length {
    * to record that type.
    */
   interface ILength<
-    U extends Unit.Length = Unit.Length,
+    // U extends Unit.Length = Unit.Length,
     CALC extends boolean = boolean
   > extends Value<"length", CALC> {
     hasCalculation(): this is Calculated;

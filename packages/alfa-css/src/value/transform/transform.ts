@@ -1,10 +1,10 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Angle, Percentage } from "../../calculation";
+import { Percentage } from "../../calculation";
 import { Token } from "../../syntax";
 
-import { Length, Number } from "../numeric";
+import { Angle, Length, Number } from "../numeric";
 
 import { Matrix } from "./matrix";
 import { Perspective } from "./perspective";
@@ -40,7 +40,7 @@ export namespace Transform {
     return Perspective.of(depth);
   }
 
-  export function rotate<A extends Angle>(
+  export function rotate<A extends Angle.Fixed>(
     x: Number.Fixed,
     y: Number.Fixed,
     z: Number.Fixed,
@@ -53,7 +53,7 @@ export namespace Transform {
     return Scale.of(x, y);
   }
 
-  export function skew<X extends Angle, Y extends Angle>(
+  export function skew<X extends Angle.Fixed, Y extends Angle.Fixed>(
     x: X,
     y: Y
   ): Skew<X, Y> {

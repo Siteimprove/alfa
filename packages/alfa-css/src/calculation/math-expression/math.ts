@@ -10,8 +10,8 @@ import { Token, Function as CSSFunction } from "../../syntax";
 import { Value as CSSValue } from "../../value";
 
 // TODO: resimplify
-import { Angle, Percentage } from "../numeric";
-import { Length, Number, Numeric } from "../numeric/index-new";
+import { Percentage } from "../numeric";
+import { Angle, Length, Number, Numeric } from "../numeric/index-new";
 
 import { Expression } from "./expression";
 import { Function } from "./function";
@@ -108,9 +108,11 @@ export class Math<
 
   // Other resolvers should be added when needed.
   /**
-   * Resolves a calculation typed as a length, length-percentage or number.
+   * Resolves a calculation typed as an angle, length, length-percentage or number.
    * Needs a resolver to handle relative lengths and percentages.
    */
+  public resolve2(this: Math<"angle">): Result<Angle<"deg">, string>;
+
   public resolve2(
     this: Math<"length">,
     resolver: Expression.LengthResolver
@@ -144,7 +146,15 @@ export class Math<
         ...resolver,
       });
 
-      return this.isDimensionPercentage("length")
+      return this.isDimensionPercentage("angle")
+        ? // angle are also angle-percentage, so this catches both.
+          expression
+            .toAngle()
+            .reduce<Result<Numeric, string>>(
+              (_, value) => Ok.of(value),
+              Err.of(`${this} does not resolve to a valid length-percentage`)
+            )
+        : this.isDimensionPercentage("length")
         ? // length are also length-percentage, so this catches both.
           expression
             .toLength()

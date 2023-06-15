@@ -2,11 +2,10 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Angle } from "../../calculation";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
 
-import { Number } from "../numeric";
+import { Angle, Number } from "../numeric";
 
 import { Function } from "./function";
 
@@ -15,8 +14,8 @@ const { map, left, right, pair, either, delimited, option } = Parser;
 /**
  * @public
  */
-export class Rotate<A extends Angle = Angle> extends Function<"rotate"> {
-  public static of<A extends Angle>(
+export class Rotate<A extends Angle.Fixed = Angle.Fixed> extends Function<"rotate"> {
+  public static of<A extends Angle.Fixed>(
     x: Number.Fixed,
     y: Number.Fixed,
     z: Number.Fixed,
@@ -108,17 +107,17 @@ export namespace Rotate {
     x: Number.Fixed.JSON;
     y: Number.Fixed.JSON;
     z: Number.Fixed.JSON;
-    angle: Angle.JSON;
+    angle: Angle.Fixed.JSON;
   }
 
-  export function isRotate<A extends Angle>(
+  export function isRotate<A extends Angle.Fixed>(
     value: unknown
   ): value is Rotate<A> {
     return value instanceof Rotate;
   }
 
   const parseAngleOrZero = either(
-    Angle.parse,
+    Angle.parseBase,
     map(Number.parseZero, () => Angle.of<Unit.Angle>(0, "deg"))
   );
 
