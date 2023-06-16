@@ -35,7 +35,7 @@ export namespace Angle {
         // (undocumented)
         static of(value: Math_2<"angle">): Calculated;
         // (undocumented)
-        resolve(): Fixed<"deg">;
+        resolve(): Canonical;
     }
     // (undocumented)
     export namespace Calculated {
@@ -43,6 +43,8 @@ export namespace Angle {
         export interface JSON extends Dimension.Calculated.JSON<"angle"> {
         }
     }
+    // (undocumented)
+    export type Canonical = Fixed<"deg">;
     export class Fixed<U extends Unit.Angle = Unit.Angle> extends Dimension.Fixed<"angle", U> implements IAngle<false>, Comparable<Fixed<U>> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -57,7 +59,7 @@ export namespace Angle {
         // (undocumented)
         static of<U extends Unit.Angle>(value: Angle_2<U>): Fixed<U>;
         // (undocumented)
-        resolve(): Fixed<"deg">;
+        resolve(): Canonical;
         // (undocumented)
         scale(factor: number): Fixed<U>;
         // (undocumented)
@@ -74,7 +76,7 @@ export namespace Angle {
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
-        resolve(): Fixed<"deg">;
+        resolve(): Canonical;
     }
     // (undocumented)
     export function isAngle(value: unknown): value is Angle;
@@ -205,6 +207,8 @@ export type Color = Hex | Named | HSL | RGB | Current | System;
 
 // @public (undocumented)
 export namespace Color {
+    // (undocumented)
+    export type Canonical = Current | System | RGB<Percentage.Canonical, Percentage.Canonical>;
     // (undocumented)
     export function hex(value: number): Hex;
     const // (undocumented)
@@ -482,6 +486,8 @@ export type Gradient = Linear | Radial;
 // @public (undocumented)
 export namespace Gradient {
     // (undocumented)
+    export type Canonical = Linear.Canonical | Radial.Canonical;
+    // (undocumented)
     export class Hint<P extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> implements Equatable, Hashable, Serializable {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -500,6 +506,8 @@ export namespace Gradient {
     }
     // (undocumented)
     export namespace Hint {
+        // (undocumented)
+        export type Canonical = Hint<Percentage.Canonical | Length.Canonical>;
         // (undocumented)
         export interface JSON {
             // (undocumented)
@@ -544,6 +552,8 @@ export namespace Gradient {
     }
     // (undocumented)
     export namespace Stop {
+        // (undocumented)
+        export type Canonical = Stop<Color.Canonical, Percentage.Canonical | Length.Canonical>;
         // (undocumented)
         export interface JSON {
             // (undocumented)
@@ -675,6 +685,8 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"ima
 // @public (undocumented)
 export namespace Image {
     // (undocumented)
+    export type Canonical = Image<URL | Gradient.Canonical>;
+    // (undocumented)
     export function isImage<I extends URL | Gradient>(value: unknown): value is Image<I>;
     // (undocumented)
     export interface JSON extends Value.JSON<"image"> {
@@ -763,6 +775,8 @@ export namespace Integer {
         export interface JSON extends Numeric.Calculated.JSON<"number"> {
         }
     }
+    // (undocumented)
+    export type Canonical = Fixed;
     export class Fixed extends Numeric.Fixed<"number"> implements IInteger<false> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -858,7 +872,7 @@ export namespace Length {
         // (undocumented)
         static of(value: Math_2<"length">): Calculated;
         // (undocumented)
-        resolve(resolver: Length.Resolver): Fixed<"px">;
+        resolve(resolver: Length.Resolver): Canonical;
     }
     // (undocumented)
     export namespace Calculated {
@@ -866,6 +880,8 @@ export namespace Length {
         export interface JSON extends Dimension.Calculated.JSON<"length"> {
         }
     }
+    // (undocumented)
+    export type Canonical = Fixed<"px">;
     export class Fixed<U extends Unit.Length = Unit.Length> extends Dimension.Fixed<"length", U> implements ILength<false>, Comparable<Fixed<U>> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -887,7 +903,7 @@ export namespace Length {
         //
         // (undocumented)
         static of<U extends Unit.Length>(value: Length_2<U>): Fixed<U>;
-        resolve(resolver: Length.Resolver): Fixed<"px">;
+        resolve(resolver: Length.Resolver): Canonical;
         // (undocumented)
         scale(factor: number): Fixed<U>;
         // (undocumented)
@@ -904,7 +920,7 @@ export namespace Length {
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
-        resolve(resolver: Length.Resolver): Fixed<"px">;
+        resolve(resolver: Length.Resolver): Canonical;
     }
     // (undocumented)
     export function isCalculated(value: unknown): value is Calculated;
@@ -921,8 +937,8 @@ export namespace Length {
     // (undocumented)
     export function of(value: Math_2<"length">): Calculated;
     // (undocumented)
-    export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Fixed<"px">>;
-    export function resolver(emBase: Fixed<"px">, remBase: Fixed<"px">, vwBase: Fixed<"px">, vhBase: Fixed<"px">): Resolver;
+    export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+    export function resolver(emBase: Canonical, remBase: Canonical, vwBase: Canonical, vhBase: Canonical): Resolver;
     const // (undocumented)
     parse: Parser<Slice<Token>, Length, string>;
     const // @internal (undocumented)
@@ -964,6 +980,8 @@ export class Linear<I extends Gradient.Item = Gradient.Item, D extends Linear.Di
 
 // @public (undocumented)
 export namespace Linear {
+    // (undocumented)
+    export type Canonical = Linear<Gradient.Hint.Canonical | Gradient.Stop.Canonical, Angle.Canonical | Linear.Side | Linear.Corner>;
     // (undocumented)
     export class Corner implements Equatable, Serializable {
         // (undocumented)
@@ -1351,6 +1369,8 @@ namespace Number_2 {
         interface JSON extends Numeric.Calculated.JSON<"number"> {
         }
     }
+    // (undocumented)
+    type Canonical = Fixed;
     class Fixed extends Numeric.Fixed<"number"> implements INumber<false> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -1515,6 +1535,8 @@ export namespace Percentage {
         export interface JSON extends Numeric.Calculated.JSON<"percentage"> {
         }
     }
+    // (undocumented)
+    export type Canonical = Fixed;
     export class Fixed extends Numeric.Fixed<"percentage"> implements IPercentage<false> {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -1583,6 +1605,8 @@ export class Perspective<D extends Length.Fixed = Length.Fixed> extends Function
 
 // @public (undocumented)
 export namespace Perspective {
+    // (undocumented)
+    export type Canonical = Perspective<Length.Canonical>;
     // (undocumented)
     export function isPerspective<D extends Length.Fixed>(value: unknown): value is Perspective<D>;
     // (undocumented)
@@ -1656,9 +1680,13 @@ export class Position<H extends Position.Component<Position.Keywords.Horizontal>
 // @public (undocumented)
 export namespace Position {
     // (undocumented)
+    export type Canonical = Position<Component.Canonical<Keywords.Horizontal>, Component.Canonical<Keywords.Vertical>>;
+    // (undocumented)
     export type Component<S extends Keywords.Horizontal | Keywords.Vertical = Keywords.Horizontal | Keywords.Vertical, U extends Unit.Length = Unit.Length> = Keywords.Center | Offset<U> | Side<S, Offset<U>>;
     // (undocumented)
     export namespace Component {
+        // (undocumented)
+        export type Canonical<S extends Keywords.Horizontal | Keywords.Vertical> = Percentage.Canonical | Keywords.Center | Length.Canonical | Side.Canonical<S>;
         // (undocumented)
         export type JSON = Keyword.JSON | Length.Fixed.JSON | Percentage.Fixed.JSON | Side.JSON;
         const // (undocumented)
@@ -1721,6 +1749,8 @@ export namespace Position {
     // (undocumented)
     export namespace Side {
         // (undocumented)
+        export type Canonical<S extends Keywords.Vertical | Keywords.Horizontal> = Side<S, Percentage.Canonical | Length.Canonical>;
+        // (undocumented)
         export interface JSON extends Value.JSON<"side"> {
             // (undocumented)
             offset: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
@@ -1774,6 +1804,8 @@ export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Sh
 // @public (undocumented)
 export namespace Radial {
     // (undocumented)
+    export type Canonical = Radial<Gradient.Hint.Canonical | Gradient.Stop.Canonical, Radial.Circle.Canonical | Radial.Ellipse.Canonical | Radial.Extent, Position.Canonical>;
+    // (undocumented)
     export class Circle<R extends Length.Fixed = Length.Fixed> implements Equatable, Hashable, Serializable<Circle.JSON> {
         // (undocumented)
         equals(value: Circle): boolean;
@@ -1794,6 +1826,8 @@ export namespace Radial {
     }
     // (undocumented)
     export namespace Circle {
+        // (undocumented)
+        export type Canonical = Circle<Length.Canonical>;
         // (undocumented)
         export interface JSON {
             // (undocumented)
@@ -1827,6 +1861,8 @@ export namespace Radial {
     }
     // (undocumented)
     export namespace Ellipse {
+        // (undocumented)
+        export type Canonical = Ellipse<Percentage.Canonical | Length.Canonical>;
         // (undocumented)
         export interface JSON {
             // (undocumented)
@@ -2083,6 +2119,8 @@ export class Rotate<A extends Angle.Fixed = Angle.Fixed> extends Function_3<"rot
 // @public (undocumented)
 export namespace Rotate {
     // (undocumented)
+    export type Canonical = Rotate<Angle.Canonical>;
+    // (undocumented)
     export function isRotate<A extends Angle.Fixed>(value: unknown): value is Rotate<A>;
     // (undocumented)
     export interface JSON extends Function_3.JSON<"rotate"> {
@@ -2166,6 +2204,8 @@ export class Shadow<H extends Length.Fixed = Length.Fixed, V extends Length.Fixe
 
 // @public (undocumented)
 export namespace Shadow {
+    // (undocumented)
+    export type Canonical = Shadow<Length.Canonical, Length.Canonical, Length.Canonical, Length.Canonical, Color.Canonical>;
     // (undocumented)
     export interface JSON extends Value.JSON<"shadow"> {
         // (undocumented)
@@ -2252,6 +2292,8 @@ export class Skew<X extends Angle.Fixed = Angle.Fixed, Y extends Angle.Fixed = A
 
 // @public (undocumented)
 export namespace Skew {
+    // (undocumented)
+    export type Canonical = Skew<Angle.Canonical, Angle.Canonical>;
     // (undocumented)
     export function isSkew<X extends Angle.Fixed, Y extends Angle.Fixed>(value: unknown): value is Skew<X, Y>;
     // (undocumented)
@@ -3085,6 +3127,8 @@ export type Transform = Matrix | Perspective | Rotate | Scale | Skew | Translate
 // @public (undocumented)
 export namespace Transform {
     // (undocumented)
+    export type Canonical = Matrix | Perspective.Canonical | Rotate.Canonical | Scale | Skew.Canonical | Translate.Canonical;
+    // (undocumented)
     export function matrix(...values: Matrix.Values<Number_2.Fixed>): Matrix;
     // (undocumented)
     export function perspective<D extends Length.Fixed>(depth: D): Perspective<D>;
@@ -3126,6 +3170,8 @@ export class Translate<X extends Length.Fixed | Percentage.Fixed = Length.Fixed 
 
 // @public (undocumented)
 export namespace Translate {
+    // (undocumented)
+    export type Canonical = Translate<Length.Canonical | Percentage.Canonical, Length.Canonical | Percentage.Canonical, Length.Canonical>;
     // (undocumented)
     export function isTranslate<X extends Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed, Z extends Length.Fixed>(value: unknown): value is Translate<X, Y, Z>;
     // (undocumented)
