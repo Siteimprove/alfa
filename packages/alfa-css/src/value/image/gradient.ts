@@ -28,6 +28,8 @@ export type Gradient = Linear | Radial;
  * @public
  */
 export namespace Gradient {
+  export type Canonical = Linear.Canonical | Radial.Canonical;
+
   export type JSON = Linear.JSON | Radial.JSON;
 
   /**
@@ -95,6 +97,10 @@ export namespace Gradient {
   }
 
   export namespace Stop {
+    export type Canonical = Stop<
+      Color.Canonical,
+      Percentage.Canonical | Length.Canonical
+    >;
     export interface JSON {
       [key: string]: json.JSON;
       type: "stop";
@@ -178,6 +184,8 @@ export namespace Gradient {
   }
 
   export namespace Hint {
+    export type Canonical = Hint<Percentage.Canonical | Length.Canonical>;
+
     export interface JSON {
       [key: string]: json.JSON;
       type: "hint";

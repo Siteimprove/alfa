@@ -15,7 +15,7 @@ export type Specified = Keyword<"none"> | Rotate;
 /**
  * @internal
  */
-export type Computed = Keyword<"none"> | Rotate<Angle.Fixed<"deg">>;
+export type Computed = Keyword<"none"> | Rotate.Canonical;
 
 function takeThree<T>(array: Array<T>): Result<[T, T, T], string> {
   return array.length === 3

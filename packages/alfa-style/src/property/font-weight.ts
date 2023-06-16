@@ -22,7 +22,7 @@ export type Specified =
 /**
  * @internal
  */
-export type Computed = Number.Fixed;
+export type Computed = Number.Canonical;
 
 /**
  * @internal

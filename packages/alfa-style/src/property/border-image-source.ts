@@ -28,33 +28,7 @@ export type Specified = Keyword<"none"> | Image;
 /**
  * @internal
  */
-export type Computed =
-  | Keyword<"none">
-  | Image<
-      | URL
-      | Linear<
-          | Gradient.Stop<
-              RGB<Percentage.Fixed, Percentage.Fixed> | Current | System,
-              Length.Fixed<"px"> | Percentage.Fixed
-            >
-          | Gradient.Hint<Length.Fixed<"px"> | Percentage.Fixed>,
-          Angle.Fixed<"deg"> | Linear.Side | Linear.Corner
-        >
-      | Radial<
-          | Gradient.Stop<
-              RGB<Percentage.Fixed, Percentage.Fixed> | Current | System,
-              Length.Fixed<"px"> | Percentage.Fixed
-            >
-          | Gradient.Hint<Length.Fixed<"px"> | Percentage.Fixed>,
-          | Radial.Circle<Length.Fixed<"px">>
-          | Radial.Ellipse<Length.Fixed<"px"> | Percentage.Fixed>
-          | Radial.Extent,
-          Position<
-            Position.Component<Position.Keywords.Horizontal, "px">,
-            Position.Component<Position.Keywords.Vertical, "px">
-          >
-        >
-    >;
+export type Computed = Keyword<"none"> | Image.Canonical;
 
 /**
  * @internal

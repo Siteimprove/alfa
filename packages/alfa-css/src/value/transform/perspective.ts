@@ -59,6 +59,8 @@ export class Perspective<
  * @public
  */
 export namespace Perspective {
+  export type Canonical = Perspective<Length.Canonical>
+
   export interface JSON extends Function.JSON<"perspective"> {
     depth: Length.Fixed.JSON;
   }

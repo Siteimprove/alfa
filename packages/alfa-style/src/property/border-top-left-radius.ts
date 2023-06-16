@@ -21,7 +21,10 @@ export type Specified = Tuple<
  * @internal
  */
 export type Computed = Tuple<
-  [horizontal: Length<"px"> | Percentage.Fixed, vertical: Length<"px"> | Percentage.Fixed]
+  [
+    horizontal: Length.Canonical | Percentage.Canonical,
+    vertical: Length.Canonical | Percentage.Canonical
+  ]
 >;
 
 /**

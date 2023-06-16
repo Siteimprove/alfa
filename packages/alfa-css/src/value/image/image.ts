@@ -62,6 +62,8 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<
  * @public
  */
 export namespace Image {
+  export type Canonical = Image<URL | Gradient.Canonical>;
+
   export interface JSON extends Value.JSON<"image"> {
     image: URL.JSON | Gradient.JSON;
   }

@@ -83,6 +83,7 @@ export class Skew<
  * @public
  */
 export namespace Skew {
+  export type Canonical = Skew<Angle.Canonical, Angle.Canonical>;
   export interface JSON extends Function.JSON<"skew"> {
     x: Angle.Fixed.JSON;
     y: Angle.Fixed.JSON;

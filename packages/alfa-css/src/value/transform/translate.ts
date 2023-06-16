@@ -90,6 +90,12 @@ export class Translate<
  * @public
  */
 export namespace Translate {
+  export type Canonical = Translate<
+    Length.Canonical | Percentage.Canonical,
+    Length.Canonical | Percentage.Canonical,
+    Length.Canonical
+  >;
+
   export interface JSON extends Function.JSON<"translate"> {
     x: Length.Fixed.JSON | Percentage.Fixed.JSON;
     y: Length.Fixed.JSON | Percentage.Fixed.JSON;

@@ -133,6 +133,12 @@ export class Radial<
  * @public
  */
 export namespace Radial {
+  export type Canonical = Radial<
+    Gradient.Hint.Canonical | Gradient.Stop.Canonical,
+    Radial.Circle.Canonical | Radial.Ellipse.Canonical | Radial.Extent,
+    Position.Canonical
+  >;
+
   export interface JSON extends Value.JSON<"gradient"> {
     kind: "radial";
     shape: Shape.JSON;
@@ -196,6 +202,7 @@ export namespace Radial {
   }
 
   export namespace Circle {
+    export type Canonical = Circle<Length.Canonical>;
     export interface JSON {
       [key: string]: json.JSON;
       type: "circle";
@@ -267,6 +274,8 @@ export namespace Radial {
   }
 
   export namespace Ellipse {
+    export type Canonical = Ellipse<Percentage.Canonical | Length.Canonical>;
+
     export interface JSON {
       [key: string]: json.JSON;
       type: "ellipse";

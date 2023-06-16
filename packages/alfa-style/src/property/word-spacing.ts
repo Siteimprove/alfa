@@ -16,7 +16,7 @@ export type Specified = Keyword<"normal"> | Length;
 /**
  * @internal
  */
-export type Computed = Length.Fixed<"px">;
+export type Computed = Length.Canonical;
 
 /**
  * @internal

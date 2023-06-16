@@ -27,6 +27,8 @@ export type Angle<U extends Unit.Angle = Unit.Angle> =
  * @public
  */
 export namespace Angle {
+  export type Canonical = Fixed<"deg">;
+
   /**
    * Angles that are the result of a calculation.
    */
@@ -46,7 +48,7 @@ export namespace Angle {
       return true;
     }
 
-    public resolve(): Fixed<"deg"> {
+    public resolve(): Canonical {
       return Fixed.of(
         this._math
           .resolve()
@@ -114,7 +116,7 @@ export namespace Angle {
       return new Fixed(this._value * factor, this._unit);
     }
 
-    public resolve(): Fixed<"deg"> {
+    public resolve(): Canonical {
       return this.withUnit("deg");
     }
 
@@ -136,7 +138,7 @@ export namespace Angle {
   interface IAngle<CALC extends boolean = boolean>
     extends Value<"angle", CALC> {
     hasCalculation(): this is Calculated;
-    resolve(): Fixed<"deg">;
+    resolve(): Canonical;
   }
 
   export function isCalculated(value: unknown): value is Calculated {

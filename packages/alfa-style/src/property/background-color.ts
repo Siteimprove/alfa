@@ -1,4 +1,4 @@
-import { Current, Color, Percentage, RGB, System } from "@siteimprove/alfa-css";
+import { Color, Percentage } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
@@ -11,7 +11,7 @@ export type Specified = Color;
 /**
  * @internal
  */
-export type Computed = RGB<Percentage.Fixed, Percentage.Fixed> | Current | System;
+export type Computed = Color.Canonical;
 
 /**
  * @internal

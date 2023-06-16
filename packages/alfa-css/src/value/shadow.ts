@@ -133,6 +133,13 @@ export class Shadow<
  * @public
  */
 export namespace Shadow {
+  export type Canonical = Shadow<
+    Length.Canonical,
+    Length.Canonical,
+    Length.Canonical,
+    Length.Canonical,
+    Color.Canonical
+  >;
   export interface JSON extends Value.JSON<"shadow"> {
     horizontal: Length.Fixed.JSON;
     vertical: Length.Fixed.JSON;

@@ -24,6 +24,8 @@ export type Length<U extends Unit.Length = Unit.Length> =
  * @public
  */
 export namespace Length {
+  export type Canonical = Fixed<"px">;
+
   /**
    * Lengths that are the result of a calculation.
    */
@@ -43,7 +45,7 @@ export namespace Length {
       return true;
     }
 
-    public resolve(resolver: Length.Resolver): Fixed<"px"> {
+    public resolve(resolver: Length.Resolver): Canonical {
       return Fixed.of(
         this._math
           .resolve({
@@ -140,7 +142,7 @@ export namespace Length {
     /**
      * Resolve a Length into an absolute Length in pixels.
      */
-    public resolve(resolver: Length.Resolver): Fixed<"px"> {
+    public resolve(resolver: Length.Resolver): Canonical {
       return this.isRelative() ? resolver(this) : this.withUnit("px");
     }
 
@@ -159,7 +161,7 @@ export namespace Length {
   interface ILength<CALC extends boolean = boolean>
     extends Value<"length", CALC> {
     hasCalculation(): this is Calculated;
-    resolve(resolver: Length.Resolver): Fixed<"px">;
+    resolve(resolver: Length.Resolver): Canonical;
   }
 
   // In order to resolve a length, we need to know how to resolve relative
@@ -167,16 +169,16 @@ export namespace Length {
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Fixed<"px">>;
+  export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Canonical>;
 
   /**
    * Build a (fixed) length resolver, using basis for the relative units
    */
   export function resolver(
-    emBase: Fixed<"px">,
-    remBase: Fixed<"px">,
-    vwBase: Fixed<"px">,
-    vhBase: Fixed<"px">
+    emBase: Canonical,
+    remBase: Canonical,
+    vwBase: Canonical,
+    vhBase: Canonical
   ): Resolver {
     return (length) => {
       const { unit, value } = length;

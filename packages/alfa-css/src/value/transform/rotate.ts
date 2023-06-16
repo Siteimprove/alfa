@@ -14,7 +14,9 @@ const { map, left, right, pair, either, delimited, option } = Parser;
 /**
  * @public
  */
-export class Rotate<A extends Angle.Fixed = Angle.Fixed> extends Function<"rotate"> {
+export class Rotate<
+  A extends Angle.Fixed = Angle.Fixed
+> extends Function<"rotate"> {
   public static of<A extends Angle.Fixed>(
     x: Number.Fixed,
     y: Number.Fixed,
@@ -103,6 +105,8 @@ export class Rotate<A extends Angle.Fixed = Angle.Fixed> extends Function<"rotat
  * @public
  */
 export namespace Rotate {
+  export type Canonical = Rotate<Angle.Canonical>;
+
   export interface JSON extends Function.JSON<"rotate"> {
     x: Number.Fixed.JSON;
     y: Number.Fixed.JSON;

@@ -1,7 +1,5 @@
 import {
-  Angle,
   Color,
-  Current,
   Gradient,
   Image,
   Length,
@@ -10,7 +8,6 @@ import {
   Position,
   Radial,
   RGB,
-  System,
   URL,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -55,9 +52,7 @@ export namespace Resolver {
   /**
    * {@link https://drafts.csswg.org/css-color/#resolving-color-values}
    */
-  export function color(
-    color: Color
-  ): Current | System | RGB<Percentage.Fixed, Percentage.Fixed> {
+  export function color(color: Color): Color.Canonical {
     switch (color.type) {
       case "color": {
         const [red, green, blue] = [color.red, color.green, color.blue].map(
@@ -89,43 +84,7 @@ export namespace Resolver {
   export function image(
     image: Image,
     style: Style
-  ): Image<
-    | URL
-    | Linear<
-        | Gradient.Hint<Percentage.Fixed | Length.Fixed<"px">>
-        | Gradient.Stop<
-            Current | System | RGB<Percentage.Fixed, Percentage.Fixed>,
-            Percentage.Fixed | Length.Fixed<"px">
-          >,
-        Angle.Fixed<"deg"> | Linear.Side | Linear.Corner
-      >
-    | Radial<
-        | Gradient.Hint<Percentage.Fixed | Length.Fixed<"px">>
-        | Gradient.Stop<
-            Current | System | RGB<Percentage.Fixed, Percentage.Fixed>,
-            Percentage.Fixed | Length.Fixed<"px">
-          >,
-        | Radial.Circle<Length.Fixed<"px">>
-        | Radial.Ellipse<Percentage.Fixed | Length.Fixed<"px">>
-        | Radial.Extent,
-        Position<
-          | Percentage.Fixed
-          | Position.Keywords.Center
-          | Length.Fixed<"px">
-          | Position.Side<
-              Position.Keywords.Horizontal,
-              Percentage.Fixed | Length.Fixed<"px">
-            >,
-          | Percentage.Fixed
-          | Position.Keywords.Center
-          | Length.Fixed<"px">
-          | Position.Side<
-              Position.Keywords.Vertical,
-              Percentage.Fixed | Length.Fixed<"px">
-            >
-        >
-      >
-  > {
+  ): Image<URL | Gradient.Canonical> {
     switch (image.image.type) {
       case "url":
         return Image.of(image.image);
@@ -135,7 +94,10 @@ export namespace Resolver {
     }
   }
 
-  function gradient(gradient: Gradient, style: Style) {
+  function gradient(
+    gradient: Gradient,
+    style: Style
+  ): Image<Gradient.Canonical> {
     switch (gradient.kind) {
       case "linear":
         return Image.of(
@@ -205,22 +167,7 @@ export namespace Resolver {
   export function position(
     position: Position,
     style: Style
-  ): Position<
-    | Percentage.Fixed
-    | Position.Keywords.Center
-    | Length.Fixed<"px">
-    | Position.Side<
-        Position.Keywords.Horizontal,
-        Percentage.Fixed | Length.Fixed<"px">
-      >,
-    | Percentage.Fixed
-    | Position.Keywords.Center
-    | Length.Fixed<"px">
-    | Position.Side<
-        Position.Keywords.Vertical,
-        Percentage.Fixed | Length.Fixed<"px">
-      >
-  > {
+  ): Position.Canonical {
     return Position.of(
       positionComponent(position.horizontal, style),
       positionComponent(position.vertical, style)
@@ -232,11 +179,7 @@ export namespace Resolver {
   >(
     position: Position.Component<S>,
     style: Style
-  ):
-    | Percentage.Fixed
-    | Position.Keywords.Center
-    | Length.Fixed<"px">
-    | Position.Side<S, Percentage.Fixed | Length.Fixed<"px">> {
+  ): Position.Component.Canonical<S> {
     switch (position.type) {
       case "keyword":
       case "percentage":

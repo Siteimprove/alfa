@@ -25,6 +25,8 @@ export type Percentage = Percentage.Calculated | Percentage.Fixed;
  * @public
  */
 export namespace Percentage {
+  export type Canonical = Fixed;
+
   /**
    * Percentages that are the result of a calculation.
    */

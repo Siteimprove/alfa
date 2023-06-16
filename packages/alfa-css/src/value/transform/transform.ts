@@ -29,6 +29,14 @@ export type Transform =
  * @public
  */
 export namespace Transform {
+  export type Canonical =
+    | Matrix
+    | Perspective.Canonical
+    | Rotate.Canonical
+    | Scale
+    | Skew.Canonical
+    | Translate.Canonical;
+
   export function matrix(...values: Matrix.Values<Number.Fixed>): Matrix {
     return Matrix.of(...values);
   }

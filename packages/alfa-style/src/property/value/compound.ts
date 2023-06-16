@@ -58,9 +58,9 @@ export namespace LengthPercentage {
    * relative lengths (usually the element's own style, or its parent's style).
    */
   export function resolve(
-    percentageBase: Length.Fixed<"px">,
+    percentageBase: Length.Canonical,
     lengthBase: Style
-  ): (value: LengthPercentage) => Length.Fixed<"px"> {
+  ): (value: LengthPercentage) => Length.Canonical {
     return (value) => {
       const percentage: (p: BasePercentage) => BaseLength<"px"> = (p) =>
         BaseLength.of(percentageBase.value, percentageBase.unit).scale(p.value);

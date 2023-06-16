@@ -25,6 +25,8 @@ export type Number = Number.Calculated | Number.Fixed;
  * @public
  */
 export namespace Number {
+  export type Canonical = Fixed;
+
   /**
    * Numbers that are the result of a calculation.
    */

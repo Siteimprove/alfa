@@ -108,6 +108,11 @@ export class Linear<
  * @public
  */
 export namespace Linear {
+  export type Canonical = Linear<
+    Gradient.Hint.Canonical | Gradient.Stop.Canonical,
+    Angle.Canonical | Linear.Side | Linear.Corner
+  >;
+
   export interface JSON extends Value.JSON<"gradient"> {
     kind: "linear";
     direction: Direction.JSON;

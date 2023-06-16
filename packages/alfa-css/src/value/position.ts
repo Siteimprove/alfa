@@ -79,6 +79,11 @@ export class Position<
  * @public
  */
 export namespace Position {
+  export type Canonical = Position<
+    Component.Canonical<Keywords.Horizontal>,
+    Component.Canonical<Keywords.Vertical>
+  >;
+
   export interface JSON extends Value.JSON<"position"> {
     horizontal: Component.JSON;
     vertical: Component.JSON;
@@ -183,6 +188,9 @@ export namespace Position {
   }
 
   export namespace Side {
+    export type Canonical<S extends Keywords.Vertical | Keywords.Horizontal> =
+      Side<S, Percentage.Canonical | Length.Canonical>;
+
     export interface JSON extends Value.JSON<"side"> {
       side: Keyword.JSON;
       offset: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
@@ -244,6 +252,12 @@ export namespace Position {
   > = Keywords.Center | Offset<U> | Side<S, Offset<U>>;
 
   export namespace Component {
+    export type Canonical<S extends Keywords.Horizontal | Keywords.Vertical> =
+      | Percentage.Canonical
+      | Keywords.Center
+      | Length.Canonical
+      | Side.Canonical<S>;
+
     export type JSON =
       | Keyword.JSON
       | Length.Fixed.JSON

@@ -21,7 +21,7 @@ export type Specified =
 /**
  * @internal
  */
-export type Computed = Keyword<"normal"> | Number.Fixed | Length.Fixed<"px">;
+export type Computed = Keyword<"normal"> | Number.Canonical | Length.Canonical;
 
 /**
  * @internal

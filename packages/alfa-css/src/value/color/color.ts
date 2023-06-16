@@ -24,6 +24,11 @@ export type Color = Hex | Named | HSL | RGB | Current | System;
  * @public
  */
 export namespace Color {
+  export type Canonical =
+    | Current
+    | System
+    | RGB<Percentage.Canonical, Percentage.Canonical>;
+
   export type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
 
   export const current: Current = Keyword.of("currentcolor");

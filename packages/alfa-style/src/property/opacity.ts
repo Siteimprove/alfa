@@ -14,7 +14,7 @@ export type Specified = Number | Percentage;
 /**
  * @internal
  */
-export type Computed = Number.Fixed;
+export type Computed = Number.Canonical;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/opacity}
