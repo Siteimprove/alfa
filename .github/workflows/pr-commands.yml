@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: "Should pr command run?"
         id: should-run
-        uses: siteimprove/pr-command/check-run/check@v2.3
+        uses: siteimprove/pr-command/check-run/check@v2.4
         with:
           # Personal access token (PAT) used to fetch the repository and add reaction on comment.
           token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
@@ -27,15 +27,15 @@ jobs:
         if: env.PR_COMMAND_WILL_RUN == 'true'
         uses: actions/setup-node@v3
         with:
-          # We use versions 14 and 16 in the integrate workflow
-          node-version: 16
+          # We use versions 18 and 20 in the integrate workflow
+          node-version: 18
 
       - name: "Install dependencies"
         if: env.PR_COMMAND_WILL_RUN == 'true'
         run: yarn install --immutable
 
       - name: "React to command"
-        uses: siteimprove/pr-command/check-run/run@v2.3
+        uses: siteimprove/pr-command/check-run/run@v2.4
         with:
           # Personal access token (PAT) used to fetch the repository and add reaction on comment.
           token: ${{ secrets.A11Y_PUBLIC_GITHUB_TOKEN }}
