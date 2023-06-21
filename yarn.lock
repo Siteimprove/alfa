@@ -1720,9 +1720,10 @@ __metadata:
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
     "@changesets/cli": ^2.26.1
+    "@changesets/get-github-info": ^0.5.2
+    "@changesets/types": ^5.2.1
     "@microsoft/api-documenter": ^7.19.9
     "@microsoft/api-extractor": ^7.29.5
-    "@svitejs/changesets-changelog-github-compact": ^1.1.0
     "@types/async": ^3.2.5
     "@types/jsonld": ^1.5.6
     "@types/node": ^14.14.31
@@ -1747,16 +1748,6 @@ __metadata:
   bin:
     github-codeowners: dist/cli.js
   checksum: 133f867fa968f96229ebce724d8aedaa124218e20add96a3a7d39ea45e52007fee50cc90c39e406c9e662483d003da9326e00dc4d612afa5c2ca069d1cdab9d7
-  languageName: node
-  linkType: hard
-
-"@svitejs/changesets-changelog-github-compact@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@svitejs/changesets-changelog-github-compact@npm:1.1.0"
-  dependencies:
-    "@changesets/get-github-info": ^0.5.2
-    dotenv: ^16.0.3
-  checksum: 51a8727f6ee5d0eddc48c24ef1b809d714d1d1b04cbb4bbb33f39e3096708e7f5957274a2fcaa8eeb273a16295f0f612ca4d7e5e672dfce558e1f3d7faeb1815
   languageName: node
   linkType: hard
 
@@ -2843,13 +2834,6 @@ __metadata:
   dependencies:
     path-type: ^4.0.0
   checksum: fa05e18324510d7283f55862f3161c6759a3f2f8dbce491a2fc14c8324c498286c54282c1f0e933cb930da8419b30679389499b919122952a4f8592362ef4615
-  languageName: node
-  linkType: hard
-
-"dotenv@npm:^16.0.3":
-  version: 16.0.3
-  resolution: "dotenv@npm:16.0.3"
-  checksum: afcf03f373d7a6d62c7e9afea6328e62851d627a4e73f2e12d0a8deae1cd375892004f3021883f8aec85932cd2834b091f568ced92b4774625b321db83b827f8
   languageName: node
   linkType: hard
 
