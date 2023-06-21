@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<F extends Polygon.Fill = Polygon.Fill, V extends Length | Percentage = Length | Percentage>(fill: Option<F>, vertices: Iterable<Polygon.Vertex<V>>): Polygon<F, V>;
+static of<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed>(fill: Option<F>, vertices: Iterable<Polygon.Vertex<V>>): Polygon<F, V>;
 ```
 
 ## Parameters

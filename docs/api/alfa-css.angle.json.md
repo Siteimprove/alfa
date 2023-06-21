@@ -2,12 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Angle](./alfa-css.angle.md) &gt; [JSON](./alfa-css.angle.json.md)
 
-## Angle.JSON interface
+## Angle.JSON type
 
 <b>Signature:</b>
 
 ```typescript
-interface JSON<U extends Unit.Angle = Unit.Angle> extends Dimension.JSON<"angle", U> 
+export type JSON = Calculated.JSON | Fixed.JSON;
 ```
-<b>Extends:</b> [Dimension.JSON](./alfa-css.dimension.json.md)<!-- -->&lt;"angle", U&gt;
+<b>References:</b> [Calculated.JSON](./alfa-css.angle.calculated.json.md)<!-- -->, [Fixed.JSON](./alfa-css.angle.fixed.json.md)
 

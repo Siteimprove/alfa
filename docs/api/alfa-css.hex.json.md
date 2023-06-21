@@ -7,14 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Value.JSON<"color"> 
+interface JSON extends Format.JSON<"hex"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"color"&gt;
+<b>Extends:</b> Format.JSON&lt;"hex"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [format](./alfa-css.hex.json.format.md) |  | "hex" |  |
 |  [value](./alfa-css.hex.json.value.md) |  | number |  |
 

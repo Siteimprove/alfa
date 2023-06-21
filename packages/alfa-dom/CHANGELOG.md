@@ -1,5 +1,19 @@
 # @siteimprove/alfa-dom
 
+## 0.64.0
+
+### Minor Changes
+
+- **Added:** Optional `Rectangle` property on `Element`. ([#1427](https://github.com/Siteimprove/alfa/pull/1427))
+
+  The new property can optionally be set when constructing an element, but it doesn't do anything yet.
+
+- **Breaking:** The method `.elementDescendants()` on the classes `Document` and `Node` has been removed. In stead the function `Query.getElementDescendants()` should be used. ([#1425](https://github.com/Siteimprove/alfa/pull/1425))
+
+- **Added:** `Query` namespace with functions for querying element descendants and elements by id. ([#1413](https://github.com/Siteimprove/alfa/pull/1413))
+
+  The result of the queries are cached.
+
 ## 0.63.3
 
 ### Patch Changes

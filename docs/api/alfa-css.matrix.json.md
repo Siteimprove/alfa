@@ -7,14 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Value.JSON<"transform"> 
+interface JSON extends Function.JSON<"matrix"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"transform"&gt;
+<b>Extends:</b> Function.JSON&lt;"matrix"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [kind](./alfa-css.matrix.json.kind.md) |  | "matrix" |  |
-|  [values](./alfa-css.matrix.json.values.md) |  | [Values](./alfa-css.matrix.values.md)<!-- -->&lt;Number.JSON&gt; |  |
+|  [values](./alfa-css.matrix.json.values.md) |  | [Values](./alfa-css.matrix.values.md)<!-- -->&lt;Number.Fixed.JSON&gt; |  |
 

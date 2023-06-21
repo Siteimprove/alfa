@@ -2,12 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Angle](./alfa-css.angle.md) &gt; [of](./alfa-css.angle.of.md)
 
-## Angle.of() method
+## Angle.of() function
 
 <b>Signature:</b>
 
 ```typescript
-static of<U extends Unit.Angle>(value: number, unit: U): Angle<U>;
+export function of<U extends Unit.Angle>(value: number, unit: U): Fixed<U>;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ static of<U extends Unit.Angle>(value: number, unit: U): Angle<U>;
 
 <b>Returns:</b>
 
-[Angle](./alfa-css.angle.md)<!-- -->&lt;U&gt;
+[Fixed](./alfa-css.angle.fixed.md)<!-- -->&lt;U&gt;
 

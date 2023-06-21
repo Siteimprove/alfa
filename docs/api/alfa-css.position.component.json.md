@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type JSON = Keyword.JSON | Length.JSON | Percentage.JSON | Side.JSON;
+type JSON = Keyword.JSON | Length.Fixed.JSON | Percentage.Fixed.JSON | Side.JSON;
 ```
-<b>References:</b> [Keyword.JSON](./alfa-css.keyword.json.md)<!-- -->, [Length.JSON](./alfa-css.length.json.md)<!-- -->, [Percentage.JSON](./alfa-css.percentage.json.md)<!-- -->, [Side.JSON](./alfa-css.position.side.json.md)
+<b>References:</b> [Keyword.JSON](./alfa-css.keyword.json.md)<!-- -->, [Length.Fixed.JSON](./alfa-css.length.fixed.json.md)<!-- -->, [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)<!-- -->, [Side.JSON](./alfa-css.position.side.json.md)
 

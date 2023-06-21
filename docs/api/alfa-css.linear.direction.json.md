@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type JSON = Angle.JSON | Side.JSON | Corner.JSON;
+type JSON = Angle.Fixed.JSON | Side.JSON | Corner.JSON;
 ```
-<b>References:</b> [Angle.JSON](./alfa-css.angle.json.md)<!-- -->, [Side.JSON](./alfa-css.linear.side.json.md)<!-- -->, [Corner.JSON](./alfa-css.linear.corner.json.md)
+<b>References:</b> [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md)<!-- -->, [Side.JSON](./alfa-css.linear.side.json.md)<!-- -->, [Corner.JSON](./alfa-css.linear.corner.json.md)
 

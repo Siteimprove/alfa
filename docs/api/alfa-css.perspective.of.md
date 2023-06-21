@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<D extends Length>(depth: D): Perspective<D>;
+static of<D extends Length.Fixed>(depth: D): Perspective<D>;
 ```
 
 ## Parameters

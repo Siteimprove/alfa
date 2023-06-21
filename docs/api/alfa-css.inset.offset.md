@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Offset = Length | Percentage;
+type Offset = Length.Fixed | Percentage.Fixed;
 ```
-<b>References:</b> [Length](./alfa-css.length.md)<!-- -->, [Percentage](./alfa-css.percentage.md)
+<b>References:</b> [Length.Fixed](./alfa-css.length.fixed.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
 

@@ -29,3 +29,9 @@ export declare namespace Translate
 |  --- | --- |
 |  [parse](./alfa-css.translate.parse.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.translate.canonical.md) |  |
+

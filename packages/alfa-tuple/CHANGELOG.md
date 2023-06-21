@@ -1,5 +1,7 @@
 # @siteimprove/alfa-tuple
 
+## 0.64.0
+
 ## 0.63.3
 
 ### Patch Changes

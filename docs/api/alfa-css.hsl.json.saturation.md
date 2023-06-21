@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-saturation: Percentage.JSON;
+saturation: Percentage.Fixed.JSON;
 ```

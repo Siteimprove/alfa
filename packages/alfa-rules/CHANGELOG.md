@@ -1,5 +1,17 @@
 # @siteimprove/alfa-rules
 
+## 0.64.0
+
+### Minor Changes
+
+- **Breaking:** Deprecated R34 and R36 ([#1428](https://github.com/Siteimprove/alfa/pull/1428))
+
+  The rules have been renamed to DR34 and DR36 and removed from the composite rules R35, R37 and R38
+
+### Patch Changes
+
+- **Fixed:** SIA-R78 now correctly has a scope of "Page". ([#1434](https://github.com/Siteimprove/alfa/pull/1434))
+
 ## 0.63.3
 
 ### Patch Changes

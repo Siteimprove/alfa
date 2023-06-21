@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-abstract get type(): T;
+get type(): T;
 ```

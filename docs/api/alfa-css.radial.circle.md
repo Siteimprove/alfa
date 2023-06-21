@@ -16,3 +16,9 @@ namespace Circle
 |  --- | --- |
 |  [JSON](./alfa-css.radial.circle.json.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.radial.circle.canonical.md) |  |
+

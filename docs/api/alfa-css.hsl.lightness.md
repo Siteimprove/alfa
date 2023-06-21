@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get lightness(): Percentage;
+get lightness(): Percentage.Fixed;
 ```

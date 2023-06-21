@@ -4,6 +4,8 @@
 
 ## Length.parse variable
 
+[https://drafts.csswg.org/css-values/\#lengths](https://drafts.csswg.org/css-values/#lengths)
+
 <b>Signature:</b>
 
 ```typescript

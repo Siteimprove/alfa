@@ -29,3 +29,9 @@ export declare namespace Rotate
 |  --- | --- |
 |  [parse](./alfa-css.rotate.parse.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.rotate.canonical.md) |  |
+

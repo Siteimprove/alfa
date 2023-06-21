@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-function matrix(...values: Matrix.Values<Number>): Matrix;
+function matrix(...values: Matrix.Values<Number.Fixed>): Matrix;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  values | [Matrix.Values](./alfa-css.matrix.values.md)<!-- -->&lt;Number&gt; |  |
+|  values | [Matrix.Values](./alfa-css.matrix.values.md)<!-- -->&lt;Number.Fixed&gt; |  |
 
 <b>Returns:</b>
 

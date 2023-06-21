@@ -16,3 +16,9 @@ namespace Ellipse
 |  --- | --- |
 |  [JSON](./alfa-css.radial.ellipse.json.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.radial.ellipse.canonical.md) |  |
+

@@ -7,17 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Value.JSON<"transform"> 
+interface JSON extends Function.JSON<"rotate"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"transform"&gt;
+<b>Extends:</b> Function.JSON&lt;"rotate"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [angle](./alfa-css.rotate.json.angle.md) |  | [Angle.JSON](./alfa-css.angle.json.md) |  |
-|  [kind](./alfa-css.rotate.json.kind.md) |  | "rotate" |  |
-|  [x](./alfa-css.rotate.json.x.md) |  | Number.JSON |  |
-|  [y](./alfa-css.rotate.json.y.md) |  | Number.JSON |  |
-|  [z](./alfa-css.rotate.json.z.md) |  | Number.JSON |  |
+|  [angle](./alfa-css.rotate.json.angle.md) |  | [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md) |  |
+|  [x](./alfa-css.rotate.json.x.md) |  | Number.Fixed.JSON |  |
+|  [y](./alfa-css.rotate.json.y.md) |  | Number.Fixed.JSON |  |
+|  [z](./alfa-css.rotate.json.z.md) |  | Number.Fixed.JSON |  |
 

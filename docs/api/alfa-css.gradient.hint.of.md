@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<P extends Length | Percentage>(position: P): Hint<P>;
+static of<P extends Length.Fixed | Percentage.Fixed>(position: P): Hint<P>;
 ```
 
 ## Parameters

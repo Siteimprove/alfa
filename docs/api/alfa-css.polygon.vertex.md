@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Vertex<V extends Length | Percentage = Length | Percentage> = readonly [V, V];
+type Vertex<V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> = readonly [V, V];
 ```
-<b>References:</b> [Length](./alfa-css.length.md)<!-- -->, [Percentage](./alfa-css.percentage.md)
+<b>References:</b> [Length.Fixed](./alfa-css.length.fixed.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
 

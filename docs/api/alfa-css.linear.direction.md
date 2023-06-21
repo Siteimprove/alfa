@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Direction = Angle | Side | Corner;
+type Direction = Angle.Fixed | Side | Corner;
 ```
-<b>References:</b> [Angle](./alfa-css.angle.md)<!-- -->, [Side](./alfa-css.linear.side.md)<!-- -->, [Corner](./alfa-css.linear.corner.md)
+<b>References:</b> [Angle.Fixed](./alfa-css.angle.fixed.md)<!-- -->, [Side](./alfa-css.linear.side.md)<!-- -->, [Corner](./alfa-css.linear.corner.md)
 

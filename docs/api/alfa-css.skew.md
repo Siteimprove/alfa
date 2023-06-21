@@ -29,3 +29,9 @@ export declare namespace Skew
 |  --- | --- |
 |  [parse](./alfa-css.skew.parse.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.skew.canonical.md) |  |
+

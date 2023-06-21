@@ -7,17 +7,17 @@
 <b>Signature:</b>
 
 ```typescript
-if<P extends S, U>(refinement: Refinement<S, P>, mapper: Mapper<P, U>): Selective<Exclude<S, P>, T | U>;
+if<P, Q extends P, U>(refinement: Refinement<P, Q>, mapper: Mapper<S & Q, U>): Selective<Exclude<S, Q>, T | U>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;S, P&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;P, U&gt; |  |
+|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;P, Q&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S &amp; Q, U&gt; |  |
 
 <b>Returns:</b>
 
-[Selective](./alfa-selective.selective.md)<!-- -->&lt;Exclude&lt;S, P&gt;, T \| U&gt;
+[Selective](./alfa-selective.selective.md)<!-- -->&lt;Exclude&lt;S, Q&gt;, T \| U&gt;
 

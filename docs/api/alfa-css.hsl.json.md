@@ -7,17 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Value.JSON<"color"> 
+interface JSON extends Format.JSON<"hsl"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"color"&gt;
+<b>Extends:</b> Format.JSON&lt;"hsl"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [alpha](./alfa-css.hsl.json.alpha.md) |  | Number.JSON \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
-|  [format](./alfa-css.hsl.json.format.md) |  | "hsl" |  |
-|  [hue](./alfa-css.hsl.json.hue.md) |  | Number.JSON \| [Angle.JSON](./alfa-css.angle.json.md) |  |
-|  [lightness](./alfa-css.hsl.json.lightness.md) |  | [Percentage.JSON](./alfa-css.percentage.json.md) |  |
-|  [saturation](./alfa-css.hsl.json.saturation.md) |  | [Percentage.JSON](./alfa-css.percentage.json.md) |  |
+|  [alpha](./alfa-css.hsl.json.alpha.md) |  | Number.Fixed.JSON \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
+|  [hue](./alfa-css.hsl.json.hue.md) |  | Number.Fixed.JSON \| [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md) |  |
+|  [lightness](./alfa-css.hsl.json.lightness.md) |  | [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
+|  [saturation](./alfa-css.hsl.json.saturation.md) |  | [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
 

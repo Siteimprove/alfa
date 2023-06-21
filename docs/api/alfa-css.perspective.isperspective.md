@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isPerspective<D extends Length>(value: unknown): value is Perspective<D>;
+function isPerspective<D extends Length.Fixed>(value: unknown): value is Perspective<D>;
 ```
 
 ## Parameters

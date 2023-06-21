@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isInteger(value: unknown): value is Integer;
+export function isInteger(value: unknown): value is Integer;
 ```
 
 ## Parameters

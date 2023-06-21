@@ -1,3 +1,18 @@
+# [v0.64.0](../../compare/v0.63.3...v0.64.0) (2023-06-21)
+
+Packages changed:
+.changeset/brown-countries-applaud.md:These abstractions are now exported from  instead of the old abstractions which didn't accept calculations. In order to keep the functionalities of the old abstractions, replace  (, , …) with .
+.changeset/serious-snails-switch.md:**Breaking:** The  helper has been removed. Instead, the  method (from ) provides the same functionality.
+.changeset/wild-horses-press.md:**Added:**  and  CSS values are now exported from .
+.changeset/wild-horses-press.md:These values were previously internal to the  package and are now grouped with the other CSS values.
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md)
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md)
+- [@siteimprove/alfa-rectangle](packages/alfa-rectangle/CHANGELOG.md)
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
+- [@siteimprove/alfa-selective](packages/alfa-selective/CHANGELOG.md)
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md)
+- [@siteimprove/alfa-wcag](packages/alfa-wcag/CHANGELOG.md)
+
 # [v0.63.3](../../compare/v0.63.2...v0.63.3) (2023-05-22)
 
 Packages changed:

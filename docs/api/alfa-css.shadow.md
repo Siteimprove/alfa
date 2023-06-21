@@ -11,9 +11,22 @@
 export declare namespace Shadow 
 ```
 
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [parse(options)](./alfa-css.shadow.parse.md) |  |
+
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-css.shadow.json.md) |  |
+|  [Options](./alfa-css.shadow.options.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.shadow.canonical.md) |  |
 

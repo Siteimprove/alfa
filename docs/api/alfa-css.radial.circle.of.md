@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<R extends Length>(radius: R): Circle<R>;
+static of<R extends Length.Fixed>(radius: R): Circle<R>;
 ```
 
 ## Parameters

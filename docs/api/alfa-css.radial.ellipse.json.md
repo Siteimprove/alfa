@@ -14,7 +14,7 @@ interface JSON
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [horizontal](./alfa-css.radial.ellipse.json.horizontal.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
+|  [horizontal](./alfa-css.radial.ellipse.json.horizontal.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
 |  [type](./alfa-css.radial.ellipse.json.type.md) |  | "ellipse" |  |
-|  [vertical](./alfa-css.radial.ellipse.json.vertical.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
+|  [vertical](./alfa-css.radial.ellipse.json.vertical.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
 

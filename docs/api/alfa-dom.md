@@ -78,6 +78,7 @@
 |  [NamespaceRule](./alfa-dom.namespacerule.md) |  |
 |  [Node](./alfa-dom.node.md) |  |
 |  [PageRule](./alfa-dom.pagerule.md) |  |
+|  [Query](./alfa-dom.query.md) |  |
 |  [Rule](./alfa-dom.rule.md) |  |
 |  [Shadow](./alfa-dom.shadow.md) |  |
 |  [Sheet](./alfa-dom.sheet.md) |  |

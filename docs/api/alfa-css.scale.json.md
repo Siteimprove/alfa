@@ -7,15 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Value.JSON<"transform"> 
+interface JSON extends Function.JSON<"scale"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"transform"&gt;
+<b>Extends:</b> Function.JSON&lt;"scale"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [kind](./alfa-css.scale.json.kind.md) |  | "scale" |  |
-|  [x](./alfa-css.scale.json.x.md) |  | Number.JSON |  |
-|  [y](./alfa-css.scale.json.y.md) |  | Number.JSON |  |
+|  [x](./alfa-css.scale.json.x.md) |  | Number.Fixed.JSON |  |
+|  [y](./alfa-css.scale.json.y.md) |  | Number.Fixed.JSON |  |
 

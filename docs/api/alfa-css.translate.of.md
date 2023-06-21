@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<X extends Length | Percentage, Y extends Length | Percentage, Z extends Length>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
+static of<X extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed, Z extends Length.Fixed = Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
 ```
 
 ## Parameters

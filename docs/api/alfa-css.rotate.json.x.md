@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-x: Number.JSON;
+x: Number.Fixed.JSON;
 ```

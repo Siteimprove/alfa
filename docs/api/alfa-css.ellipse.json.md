@@ -7,16 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Value.JSON<"basic-shape"> 
+interface JSON extends BasicShape.JSON<"ellipse"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"basic-shape"&gt;
+<b>Extends:</b> BasicShape.JSON&lt;"ellipse"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [center](./alfa-css.ellipse.json.center.md) |  | [Position.JSON](./alfa-css.position.json.md) |  |
-|  [kind](./alfa-css.ellipse.json.kind.md) |  | "ellipse" |  |
 |  [rx](./alfa-css.ellipse.json.rx.md) |  | [Radius.JSON](./alfa-css.radius.json.md) |  |
 |  [ry](./alfa-css.ellipse.json.ry.md) |  | [Radius.JSON](./alfa-css.radius.json.md) |  |
 

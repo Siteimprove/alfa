@@ -7,14 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Value.JSON<"basic-shape"> 
+interface JSON extends BasicShape.JSON<"radius"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"basic-shape"&gt;
+<b>Extends:</b> BasicShape.JSON&lt;"radius"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [kind](./alfa-css.radius.json.kind.md) |  | "radius" |  |
-|  [value](./alfa-css.radius.json.value.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Percentage.JSON](./alfa-css.percentage.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
+|  [value](./alfa-css.radius.json.value.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
 

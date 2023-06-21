@@ -1,5 +1,11 @@
 # @siteimprove/alfa-wcag
 
+## 0.64.0
+
+### Patch Changes
+
+- **Added:** `Criterion.fromURI` now accepts URI with `/WCAG/` or `/WCAG21/` paths. ([#1435](https://github.com/Siteimprove/alfa/pull/1435))
+
 ## 0.63.3
 
 ### Patch Changes

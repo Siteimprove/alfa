@@ -4,6 +4,8 @@
 
 ## Position.parse() function
 
+[https://drafts.csswg.org/css-values/\#typedef-position](https://drafts.csswg.org/css-values/#typedef-position) [https://drafts.csswg.org/css-backgrounds/\#typedef-bg-position](https://drafts.csswg.org/css-backgrounds/#typedef-bg-position)
+
 <b>Signature:</b>
 
 ```typescript
@@ -19,18 +21,4 @@ export function parse(legacySyntax?: boolean): Parser<Slice<Token>, Position, st
 <b>Returns:</b>
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Position](./alfa-css.position.md)<!-- -->, string&gt;
-
-## Remarks
-
-Positions can be declared using either 1, 2, 3, or 4 tokens with the longest possible match taking precedence. The 3-token syntax is deprecated and must be selectively enabled.
-
-Notation:
-
-- H/V: keyword, top \| bottom \| right \| left \| center - h/v: numeric, &lt;<!-- -->length \| percentage<!-- -->&gt; - Hh/Vv: keyword (excluding center) and numeric
-
-Syntax:
-
-- 4 tokens: Hh Vv \| Vv Hh - 3 tokens: Hh V \| H Vv \| Vv H \| V Hh - 2 tokens: H V \| H v \| h V \| h v \| V H - 1 token: H \| V \| h
-
-[https://drafts.csswg.org/css-values/\#typedef-position](https://drafts.csswg.org/css-values/#typedef-position) [https://drafts.csswg.org/css-backgrounds/\#typedef-bg-position](https://drafts.csswg.org/css-backgrounds/#typedef-bg-position)
 

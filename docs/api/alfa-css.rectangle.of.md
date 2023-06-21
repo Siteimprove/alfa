@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(top: O, right: O, bottom: O, left: O): Rectangle<O>;
+static of<O extends Length.Fixed | Rectangle.Auto = Length.Fixed | Rectangle.Auto>(top: O, right: O, bottom: O, left: O): Rectangle<O>;
 ```
 
 ## Parameters

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<R extends Length | Percentage>(horizontal: R, vertical: R): Ellipse<R>;
+static of<R extends Length.Fixed | Percentage.Fixed>(horizontal: R, vertical: R): Ellipse<R>;
 ```
 
 ## Parameters

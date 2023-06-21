@@ -24,3 +24,9 @@ export declare namespace Keyword
 |  --- | --- |
 |  [JSON](./alfa-css.keyword.json.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [ToKeywords](./alfa-css.keyword.tokeywords.md) | ToKeywords<!-- -->&lt;<!-- -->"a" \| "b" \| "c"<!-- -->&gt; === Keyword<!-- -->&lt;<!-- -->"a"<!-- -->&gt; \| Keyword<!-- -->&lt;<!-- -->"b"<!-- -->&gt; \| Keyword<!-- -->&lt;<!-- -->"c"<!-- -->&gt; |
+

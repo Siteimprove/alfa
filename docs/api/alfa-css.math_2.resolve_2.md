@@ -7,16 +7,18 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(this: Math<"number">): Result<Number, string>;
+resolve(this: Math<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>, hint?: "length"): Result<Length<"px">, string>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Math&lt;"number"&gt; |  |
+|  this | Math&lt;"length-percentage"&gt; |  |
+|  resolver | Expression.Resolver&lt;"px", Length&lt;"px"&gt;&gt; |  |
+|  hint | "length" | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
-[Result](./alfa-result.result.md)<!-- -->&lt;Number, string&gt;
+[Result](./alfa-result.result.md)<!-- -->&lt;Length&lt;"px"&gt;, string&gt;
 

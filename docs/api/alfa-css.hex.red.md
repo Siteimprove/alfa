@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get red(): Number;
+get red(): Number.Fixed;
 ```

@@ -2,12 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Percentage](./alfa-css.percentage.md) &gt; [of](./alfa-css.percentage.of.md)
 
-## Percentage.of() method
+## Percentage.of() function
 
 <b>Signature:</b>
 
 ```typescript
-static of(value: number): Percentage;
+export function of(value: number): Fixed;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ static of(value: number): Percentage;
 
 <b>Returns:</b>
 
-[Percentage](./alfa-css.percentage.md)
+[Fixed](./alfa-css.percentage.fixed.md)
 

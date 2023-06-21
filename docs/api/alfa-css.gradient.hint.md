@@ -16,3 +16,9 @@ namespace Hint
 |  --- | --- |
 |  [JSON](./alfa-css.gradient.hint.json.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.gradient.hint.canonical.md) |  |
+

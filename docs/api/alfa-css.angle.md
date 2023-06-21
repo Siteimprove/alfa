@@ -2,30 +2,14 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Angle](./alfa-css.angle.md)
 
-## Angle namespace
+## Angle type
 
+[https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers)
 
 <b>Signature:</b>
 
 ```typescript
-export declare namespace Angle 
+export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.Fixed<U>;
 ```
-
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [isAngle(value)](./alfa-css.angle.isangle.md) |  |
-
-## Interfaces
-
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.angle.json.md) |  |
-
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.angle.parse.md) |  |
+<b>References:</b> [Unit.Angle](./alfa-css.unit.angle.md)<!-- -->, [Angle.Calculated](./alfa-css.angle.calculated.md)<!-- -->, [Angle.Fixed](./alfa-css.angle.fixed.md)
 

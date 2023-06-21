@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-static of(x: Number, y: Number): Scale;
+static of(x: Number.Fixed, y: Number.Fixed): Scale;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  x | Number |  |
-|  y | Number |  |
+|  x | Number.Fixed |  |
+|  y | Number.Fixed |  |
 
 <b>Returns:</b>
 

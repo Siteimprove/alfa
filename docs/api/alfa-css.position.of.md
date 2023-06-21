@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<H extends Position.Component<Position.Horizontal>, V extends Position.Component<Position.Vertical>>(horizontal: H, vertical: V): Position<H, V>;
+static of<H extends Position.Component<Position.Keywords.Horizontal>, V extends Position.Component<Position.Keywords.Vertical>>(horizontal: H, vertical: V): Position<H, V>;
 ```
 
 ## Parameters
