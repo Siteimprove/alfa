@@ -172,6 +172,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@changesets/get-github-info@npm:^0.5.2":
+  version: 0.5.2
+  resolution: "@changesets/get-github-info@npm:0.5.2"
+  dependencies:
+    dataloader: ^1.4.0
+    node-fetch: ^2.5.0
+  checksum: 067e07eeaecdbedbd1c715513c4aa6206a941bd1d3af292d067792808c6fa6644caad2b35fba614a44892559c031c234df8028f8d2abd4cb2682d48080ef5df3
+  languageName: node
+  linkType: hard
+
 "@changesets/get-release-plan@npm:^3.0.16":
   version: 3.0.16
   resolution: "@changesets/get-release-plan@npm:3.0.16"
@@ -1670,6 +1680,7 @@ __metadata:
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
     "@changesets/cli": ^2.26.1
+    "@changesets/get-github-info": ^0.5.2
     "@changesets/types": ^5.2.1
     "@microsoft/api-documenter": ^7.19.9
     "@microsoft/api-extractor": ^7.29.5
@@ -2540,6 +2551,13 @@ __metadata:
     dagre-abstract-renderer: ^1.14.1
     dagre-cluster-fix: 0.9.3
   checksum: 6def67f435f3cbb7050cc4fda62eec383653a9bf5549b70fd9c6da99a5600493e8ba01a704f2210af25f9ac36d83aade22baaf048c61a8a9d83c0078af1c84a2
+  languageName: node
+  linkType: hard
+
+"dataloader@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "dataloader@npm:1.4.0"
+  checksum: e2c93d43afde68980efc0cd9ff48e9851116e27a9687f863e02b56d46f7e7868cc762cd6dcbaf4197e1ca850a03651510c165c2ae24b8e9843fd894002ad0e20
   languageName: node
   linkType: hard
 
@@ -4199,6 +4217,20 @@ __metadata:
     encoding:
       optional: true
   checksum: 8d816ffd1ee22cab8301c7756ef04f3437f18dace86a1dae22cf81db8ef29c0bf6655f3215cb0cdb22b420b6fe141e64b26905e7f33f9377a7fa59135ea3e10b
+  languageName: node
+  linkType: hard
+
+"node-fetch@npm:^2.5.0":
+  version: 2.6.11
+  resolution: "node-fetch@npm:2.6.11"
+  dependencies:
+    whatwg-url: ^5.0.0
+  peerDependencies:
+    encoding: ^0.1.0
+  peerDependenciesMeta:
+    encoding:
+      optional: true
+  checksum: 249d0666a9497553384d46b5ab296ba223521ac88fed4d8a17d6ee6c2efb0fc890f3e8091cafe7f9fba8151a5b8d925db2671543b3409a56c3cd522b468b47b3
   languageName: node
   linkType: hard
 
