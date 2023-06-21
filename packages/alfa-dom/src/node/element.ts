@@ -34,7 +34,7 @@ export class Element<N extends string = string>
     attributes: Iterable<Attribute> = [],
     children: Iterable<Node> = [],
     style: Option<Block> = None,
-    rectangle: Option<Rectangle> = None
+    box: Option<Rectangle> = None
   ): Element<N> {
     return new Element(
       namespace,
@@ -43,7 +43,7 @@ export class Element<N extends string = string>
       Array.from(attributes),
       Array.from(children),
       style,
-      rectangle
+      box
     );
   }
 
