@@ -1,4 +1,5 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { Hash } from "@siteimprove/alfa-hash";
 
 import {
   Dimension as BaseDimension,
@@ -8,7 +9,6 @@ import { Convertible } from "../../unit";
 import { Value } from "../value";
 
 import { Numeric } from "./numeric";
-import { Hash } from "@siteimprove/alfa-hash";
 
 /**
  * @public
@@ -46,9 +46,6 @@ export namespace Dimension {
     }
   }
 
-  /**
-   * @public
-   */
   export namespace Calculated {
     export interface JSON<
       T extends BaseNumeric.Dimension = BaseNumeric.Dimension
@@ -137,9 +134,6 @@ export namespace Dimension {
     }
   }
 
-  /**
-   * @public
-   */
   export namespace Fixed {
     export interface JSON<
       T extends BaseNumeric.Dimension = BaseNumeric.Dimension,
