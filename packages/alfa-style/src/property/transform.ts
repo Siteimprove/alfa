@@ -1,13 +1,8 @@
 import {
-  Angle,
   Keyword,
-  Length,
   List,
-  Matrix,
-  Percentage,
   Perspective,
   Rotate,
-  Scale,
   Skew,
   Transform,
   Translate,
@@ -23,27 +18,12 @@ const { map, either } = Parser;
 /**
  * @internal
  */
-export type Specified =
-  | Keyword<"none">
-  | List<Matrix | Perspective | Rotate | Scale | Skew | Translate>;
+export type Specified = Keyword<"none"> | List<Transform>;
 
 /**
  * @internal
  */
-export type Computed =
-  | Keyword<"none">
-  | List<
-      | Matrix
-      | Perspective<Length.Fixed<"px">>
-      | Rotate<Angle<"deg">>
-      | Scale
-      | Skew<Angle<"deg">, Angle<"deg">>
-      | Translate<
-          Length.Fixed<"px"> | Percentage,
-          Length.Fixed<"px"> | Percentage,
-          Length.Fixed<"px">
-        >
-    >;
+export type Computed = Keyword<"none"> | List<Transform.Canonical>;
 
 /**
  * @internal

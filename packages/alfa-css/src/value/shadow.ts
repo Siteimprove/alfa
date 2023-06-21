@@ -4,7 +4,7 @@ import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax";
-import { Value } from "../value";
+import { Value } from "./value";
 
 import { Color } from "./color";
 import { Keyword } from "./keyword";
@@ -133,6 +133,13 @@ export class Shadow<
  * @public
  */
 export namespace Shadow {
+  export type Canonical = Shadow<
+    Length.Canonical,
+    Length.Canonical,
+    Length.Canonical,
+    Length.Canonical,
+    Color.Canonical
+  >;
   export interface JSON extends Value.JSON<"shadow"> {
     horizontal: Length.Fixed.JSON;
     vertical: Length.Fixed.JSON;

@@ -15,7 +15,7 @@ export type Specified = Keyword<"auto"> | Length | Percentage;
 /**
  * @internal
  */
-export type Computed = Keyword<"auto"> | Length.Fixed<"px"> | Percentage;
+export type Computed = Keyword<"auto"> | Length.Canonical | Percentage;
 
 /**
  * @internal

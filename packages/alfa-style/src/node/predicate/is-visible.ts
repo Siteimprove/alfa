@@ -1,6 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
-// TODO: clean, Length will ultimately be part of Numeric.
-import { Length, Numeric } from "@siteimprove/alfa-css";
+import { Numeric } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Text, Node } from "@siteimprove/alfa-dom";
 import { Option } from "@siteimprove/alfa-option";
@@ -18,7 +17,6 @@ import { isRendered } from "./is-rendered";
 import { isTransparent } from "./is-transparent";
 
 const { hasName, isElement, isReplaced } = Element;
-const { isNumeric } = Numeric;
 const { nor, not, test } = Predicate;
 const { and, or } = Refinement;
 const { isText } = Text;
@@ -122,15 +120,15 @@ function hasDimensions(device: Device): Predicate<Element> {
   const hasDimension = (dimension: "height" | "width") =>
     hasComputedStyle(
       dimension,
-      and(or(isNumeric, Length.isFixed), (number) => number.value > 0),
+      and(Numeric.isFixed, (number) => number.value > 0),
       device
     );
 
   const isStretched = (...sides: ["top", "bottom"] | ["left", "right"]) =>
     and(
       isPositioned(device, "absolute"),
-      hasComputedStyle(sides[0], or(isNumeric, Length.isLength), device),
-      hasComputedStyle(sides[1], or(isNumeric, Length.isLength), device)
+      hasComputedStyle(sides[0], Numeric.isNumeric, device),
+      hasComputedStyle(sides[1], Numeric.isNumeric, device)
     );
 
   return and(

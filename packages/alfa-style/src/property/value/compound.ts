@@ -7,18 +7,15 @@
  * @internal
  */
 
-import {
-  Length,
-  Math,
-  Number as CSSNumber,
-  Percentage,
-  type Token,
-} from "@siteimprove/alfa-css";
+import { Length, Math, Percentage, type Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Length as BaseLength } from "@siteimprove/alfa-css/src/calculation/numeric/length";
+import {
+  Length as BaseLength,
+  Percentage as BasePercentage,
+} from "@siteimprove/alfa-css/src/calculation/numeric";
 
 import { Resolver } from "../../resolver";
 import type { Style } from "../../style";
@@ -34,7 +31,7 @@ export namespace LengthPercentage {
    */
   export type LengthPercentage =
     | Length
-    | Percentage
+    | Percentage.Fixed
     | Math<"length-percentage">;
 
   export function isLengthPercentage(
@@ -48,7 +45,7 @@ export namespace LengthPercentage {
   }
 
   export const parse = either<Slice<Token>, LengthPercentage, string>(
-    Percentage.parse,
+    Percentage.parseBase,
     Length.parse,
     Math.parseLengthPercentage
   );
@@ -61,12 +58,13 @@ export namespace LengthPercentage {
    * relative lengths (usually the element's own style, or its parent's style).
    */
   export function resolve(
-    percentageBase: Length.Fixed<"px">,
+    percentageBase: Length.Canonical,
     lengthBase: Style
-  ): (value: LengthPercentage) => Length.Fixed<"px"> {
+  ): (value: LengthPercentage) => Length.Canonical {
     return (value) => {
-      const percentage: (p: Percentage) => BaseLength<"px"> = (p) =>
+      const percentage: (p: BasePercentage) => BaseLength<"px"> = (p) =>
         BaseLength.of(percentageBase.value, percentageBase.unit).scale(p.value);
+
       const length: (l: BaseLength) => BaseLength<"px"> = (l) => {
         const resolved = Length.of(l).resolve(Resolver.length(lengthBase));
         return BaseLength.of(resolved.value, resolved.unit);
@@ -76,81 +74,13 @@ export namespace LengthPercentage {
         .if(Length.isLength, (value) =>
           value.resolve(Resolver.length(lengthBase))
         )
-        .if(Percentage.isPercentage, (value) => Length.of(percentage(value)))
+        .if(Percentage.isPercentage, (value) =>
+          Length.of(percentage(BasePercentage.of(value.value)))
+        )
         .else((value) =>
-          Length.of(value.resolve2({ length, percentage }).getUnsafe())
+          Length.of(value.resolve({ length, percentage }).getUnsafe())
         )
         .get();
     };
-  }
-}
-
-/**
- * @internal
- */
-export namespace NumberPercentage {
-  export type NumberPercentage = CSSNumber | Percentage | Math<"number">;
-
-  export function isNumber(value: unknown): value is NumberPercentage {
-    return (
-      CSSNumber.isNumber(value) ||
-      Percentage.isPercentage(value) ||
-      (Math.isCalculation(value) && value.isNumber())
-    );
-  }
-
-  export const parse = either<Slice<Token>, NumberPercentage, string>(
-    CSSNumber.parse,
-    Percentage.parse,
-    Math.parseNumber
-  );
-
-  /**
-   * Resolve a Number .
-   *
-   * @param value the Number to resolve
-   */
-  export function resolve(value: NumberPercentage): CSSNumber | Percentage {
-    switch (value.type) {
-      case "math expression":
-        // Since the calculation has been parsed and typed, there should
-        // always be something to get.
-        return value.resolve2().getUnsafe();
-      case "number":
-      case "percentage":
-        return value;
-    }
-  }
-}
-
-/**
- * @internal
- */
-export namespace Number {
-  export type Number = CSSNumber | Math<"number">;
-
-  export function isNumber(value: unknown): value is Number {
-    return (
-      CSSNumber.isNumber(value) ||
-      (Math.isCalculation(value) && value.isNumber())
-    );
-  }
-
-  export const parse = either(CSSNumber.parse, Math.parseNumber);
-
-  /**
-   * Resolve a Number .
-   *
-   * @param value the Number to resolve
-   */
-  export function resolve(value: Number): CSSNumber {
-    switch (value.type) {
-      case "math expression":
-        // Since the calculation has been parsed and typed, there should
-        // always be something to get.
-        return value.resolve2().getUnsafe();
-      case "number":
-        return value;
-    }
   }
 }

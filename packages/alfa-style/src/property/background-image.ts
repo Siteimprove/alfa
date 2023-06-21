@@ -1,19 +1,4 @@
-import {
-  Angle,
-  Current,
-  Gradient,
-  Image,
-  Keyword,
-  Length,
-  Linear,
-  List,
-  Percentage,
-  Position,
-  Radial,
-  RGB,
-  System,
-  URL,
-} from "@siteimprove/alfa-css";
+import { Image, Keyword, List } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
@@ -37,34 +22,7 @@ export namespace Specified {
 /**
  * @internal
  */
-export type Computed = List<
-  | Keyword<"none">
-  | Image<
-      | URL
-      | Linear<
-          | Gradient.Stop<
-              RGB<Percentage, Percentage> | Current | System,
-              Length.Fixed<"px"> | Percentage
-            >
-          | Gradient.Hint<Length.Fixed<"px"> | Percentage>,
-          Angle<"deg"> | Linear.Side | Linear.Corner
-        >
-      | Radial<
-          | Gradient.Stop<
-              RGB<Percentage, Percentage> | Current | System,
-              Length.Fixed<"px"> | Percentage
-            >
-          | Gradient.Hint<Length.Fixed<"px"> | Percentage>,
-          | Radial.Circle<Length.Fixed<"px">>
-          | Radial.Ellipse<Length.Fixed<"px"> | Percentage>
-          | Radial.Extent,
-          Position<
-            Position.Component<Position.Keywords.Horizontal, "px">,
-            Position.Component<Position.Keywords.Vertical, "px">
-          >
-        >
-    >
->;
+export type Computed = List<Keyword<"none"> | Image.Canonical>;
 
 /**
  * @internal

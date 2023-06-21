@@ -1,13 +1,4 @@
-import {
-  Current,
-  Keyword,
-  Length,
-  List,
-  Percentage,
-  RGB,
-  Shadow,
-  System,
-} from "@siteimprove/alfa-css";
+import { Keyword, List, Shadow } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
@@ -23,17 +14,7 @@ export type Specified = Keyword<"none"> | List<Shadow>;
 /**
  * @internal
  */
-export type Computed =
-  | Keyword<"none">
-  | List<
-      Shadow<
-        Length.Fixed<"px">,
-        Length.Fixed<"px">,
-        Length.Fixed<"px">,
-        Length.Fixed<"px">,
-        RGB<Percentage, Percentage> | Current | System
-      >
-    >;
+export type Computed = Keyword<"none"> | List<Shadow.Canonical>;
 
 const parseList = List.parseCommaSeparated(Shadow.parse());
 

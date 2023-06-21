@@ -42,7 +42,7 @@ export type Computed = Tuple<
  * @internal
  */
 export namespace Computed {
-  export type Item = Length.Fixed<"px"> | Number;
+  export type Item = Length.Canonical | Number;
 }
 
 /**

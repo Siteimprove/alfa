@@ -1,5 +1,4 @@
-import { Keyword, Length as CSSLength } from "@siteimprove/alfa-css";
-import { Length } from "@siteimprove/alfa-css/src/value/numeric";
+import { Keyword, Numeric } from "@siteimprove/alfa-css";
 import { Longhands, Shorthands, Style } from "@siteimprove/alfa-style";
 
 import { normalize } from "../common/normalize";
@@ -85,8 +84,8 @@ export namespace Serialise {
 
     for (const shadow of boxShadow) {
       const { vertical, horizontal, blur, spread, isInset, color } = shadow;
-      const omitBlur = CSSLength.isZero(spread) && CSSLength.isZero(blur);
-      const omitSpread = CSSLength.isZero(spread);
+      const omitBlur = Numeric.isZero(spread) && Numeric.isZero(blur);
+      const omitSpread = Numeric.isZero(spread);
       const blurToString = omitBlur ? "" : blur.toString();
       const spreadToString = omitSpread ? "" : spread.toString();
       const insetToString = isInset ? "inset" : "";

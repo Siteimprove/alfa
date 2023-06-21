@@ -1,13 +1,12 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
-import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Err, Result } from "@siteimprove/alfa-result";
+
+import * as json from "@siteimprove/alfa-json";
 
 import { Unit } from "../../unit";
-// TODO: the imports will need to be re-shortened once migration is done and
-// numeric re-exports them for internal use.
-import { Number, Numeric, Percentage } from "../numeric";
-import { Length } from "../numeric/index-new";
+
+import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
 import { Kind } from "./kind";
 
@@ -43,16 +42,20 @@ export abstract class Expression<T extends string = string>
     P extends Numeric = Numeric
   >(resolver: Expression.Resolver<L, P>): Expression;
 
-  public toLength(): Option<Length> {
-    return None;
+  public toAngle(): Result<Angle, string> {
+    return Err.of(`${this} is not a reduced angle`);
   }
 
-  public toNumber(): Option<Number> {
-    return None;
+  public toLength(): Result<Length, string> {
+    return Err.of(`${this} is not a reduced length`);
   }
 
-  public toPercentage(): Option<Percentage> {
-    return None;
+  public toNumber(): Result<Number, string> {
+    return Err.of(`${this} is not a reduced number`);
+  }
+
+  public toPercentage(): Result<Percentage, string> {
+    return Err.of(`${this} is not a reduced percentage`);
   }
 
   public abstract equals(value: unknown): value is this;

@@ -2,9 +2,10 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Angle, Number } from "../../calculation";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
+
+import { Angle, Number } from "../numeric";
 
 import { Function } from "./function";
 
@@ -13,22 +14,29 @@ const { map, left, right, pair, either, delimited, option } = Parser;
 /**
  * @public
  */
-export class Rotate<A extends Angle = Angle> extends Function<"rotate"> {
-  public static of<A extends Angle>(
-    x: Number,
-    y: Number,
-    z: Number,
+export class Rotate<
+  A extends Angle.Fixed = Angle.Fixed
+> extends Function<"rotate"> {
+  public static of<A extends Angle.Fixed>(
+    x: Number.Fixed,
+    y: Number.Fixed,
+    z: Number.Fixed,
     angle: A
   ): Rotate<A> {
     return new Rotate(x, y, z, angle);
   }
 
-  private readonly _x: Number;
-  private readonly _y: Number;
-  private readonly _z: Number;
+  private readonly _x: Number.Fixed;
+  private readonly _y: Number.Fixed;
+  private readonly _z: Number.Fixed;
   private readonly _angle: A;
 
-  private constructor(x: Number, y: Number, z: Number, angle: A) {
+  private constructor(
+    x: Number.Fixed,
+    y: Number.Fixed,
+    z: Number.Fixed,
+    angle: A
+  ) {
     super("rotate", false);
     this._x = x;
     this._y = y;
@@ -36,15 +44,15 @@ export class Rotate<A extends Angle = Angle> extends Function<"rotate"> {
     this._angle = angle;
   }
 
-  public get x(): Number {
+  public get x(): Number.Fixed {
     return this._x;
   }
 
-  public get y(): Number {
+  public get y(): Number.Fixed {
     return this._y;
   }
 
-  public get z(): Number {
+  public get z(): Number.Fixed {
     return this._z;
   }
 
@@ -97,21 +105,23 @@ export class Rotate<A extends Angle = Angle> extends Function<"rotate"> {
  * @public
  */
 export namespace Rotate {
+  export type Canonical = Rotate<Angle.Canonical>;
+
   export interface JSON extends Function.JSON<"rotate"> {
-    x: Number.JSON;
-    y: Number.JSON;
-    z: Number.JSON;
-    angle: Angle.JSON;
+    x: Number.Fixed.JSON;
+    y: Number.Fixed.JSON;
+    z: Number.Fixed.JSON;
+    angle: Angle.Fixed.JSON;
   }
 
-  export function isRotate<A extends Angle>(
+  export function isRotate<A extends Angle.Fixed>(
     value: unknown
   ): value is Rotate<A> {
     return value instanceof Rotate;
   }
 
   const parseAngleOrZero = either(
-    Angle.parse,
+    Angle.parseBase,
     map(Number.parseZero, () => Angle.of<Unit.Angle>(0, "deg"))
   );
 
@@ -186,14 +196,17 @@ export namespace Rotate {
         delimited(
           option(Token.parseWhitespace),
           pair(
-            Number.parse,
+            Number.parseBase,
             right(
               parseSeparator,
               pair(
-                Number.parse,
+                Number.parseBase,
                 right(
                   parseSeparator,
-                  pair(Number.parse, right(parseSeparator, parseAngleOrZero))
+                  pair(
+                    Number.parseBase,
+                    right(parseSeparator, parseAngleOrZero)
+                  )
                 )
               )
             )

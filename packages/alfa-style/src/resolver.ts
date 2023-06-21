@@ -1,22 +1,16 @@
 import {
-  Angle,
   Color,
-  Converter,
-  Current,
   Gradient,
   Image,
   Length,
   Linear,
-  Numeric,
   Percentage,
   Position,
   Radial,
   RGB,
-  System,
   URL,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { Real } from "@siteimprove/alfa-math";
 
 import { Style } from "./style";
@@ -29,22 +23,13 @@ import { Style } from "./style";
  */
 export namespace Resolver {
   /**
-   * Resolve a percentage, according to a base numeric value
-   */
-  export function percentage<N extends Numeric = Numeric>(
-    base: N
-  ): Mapper<Percentage, N> {
-    return (percentage) => base.scale(percentage.value) as N;
-  }
-
-  /**
    * Resolve a length in an arbitrary unit to a length in pixels.
    * Absolute lengths are left untouched, and normalised into "px".
    * Relative lengths resolution depends on another length which is passed as
    * part of a Style:
    * * viewport dimensions are fetch from style.device;
    * * root relative depend on style.root().computed("font-size");
-   * * other relative unit depend on style.conputed("font-size");
+   * * other relative unit depend on style.computed("font-size");
    *
    * In nearly all cases, the style is the element's own style, except for
    * resolving font-size itself, in which case the parent's style is used.
@@ -67,9 +52,7 @@ export namespace Resolver {
   /**
    * {@link https://drafts.csswg.org/css-color/#resolving-color-values}
    */
-  export function color(
-    color: Color
-  ): Current | System | RGB<Percentage, Percentage> {
+  export function color(color: Color): Color.Canonical {
     switch (color.type) {
       case "color": {
         const [red, green, blue] = [color.red, color.green, color.blue].map(
@@ -101,43 +84,7 @@ export namespace Resolver {
   export function image(
     image: Image,
     style: Style
-  ): Image<
-    | URL
-    | Linear<
-        | Gradient.Hint<Percentage | Length.Fixed<"px">>
-        | Gradient.Stop<
-            Current | System | RGB<Percentage, Percentage>,
-            Percentage | Length.Fixed<"px">
-          >,
-        Angle<"deg"> | Linear.Side | Linear.Corner
-      >
-    | Radial<
-        | Gradient.Hint<Percentage | Length.Fixed<"px">>
-        | Gradient.Stop<
-            Current | System | RGB<Percentage, Percentage>,
-            Percentage | Length.Fixed<"px">
-          >,
-        | Radial.Circle<Length.Fixed<"px">>
-        | Radial.Ellipse<Percentage | Length.Fixed<"px">>
-        | Radial.Extent,
-        Position<
-          | Percentage
-          | Position.Keywords.Center
-          | Length.Fixed<"px">
-          | Position.Side<
-              Position.Keywords.Horizontal,
-              Percentage | Length.Fixed<"px">
-            >,
-          | Percentage
-          | Position.Keywords.Center
-          | Length.Fixed<"px">
-          | Position.Side<
-              Position.Keywords.Vertical,
-              Percentage | Length.Fixed<"px">
-            >
-        >
-      >
-  > {
+  ): Image<URL | Gradient.Canonical> {
     switch (image.image.type) {
       case "url":
         return Image.of(image.image);
@@ -147,7 +94,10 @@ export namespace Resolver {
     }
   }
 
-  function gradient(gradient: Gradient, style: Style) {
+  function gradient(
+    gradient: Gradient,
+    style: Style
+  ): Image<Gradient.Canonical> {
     switch (gradient.kind) {
       case "linear":
         return Image.of(
@@ -217,19 +167,7 @@ export namespace Resolver {
   export function position(
     position: Position,
     style: Style
-  ): Position<
-    | Percentage
-    | Position.Keywords.Center
-    | Length.Fixed<"px">
-    | Position.Side<
-        Position.Keywords.Horizontal,
-        Percentage | Length.Fixed<"px">
-      >,
-    | Percentage
-    | Position.Keywords.Center
-    | Length.Fixed<"px">
-    | Position.Side<Position.Keywords.Vertical, Percentage | Length.Fixed<"px">>
-  > {
+  ): Position.Canonical {
     return Position.of(
       positionComponent(position.horizontal, style),
       positionComponent(position.vertical, style)
@@ -241,11 +179,7 @@ export namespace Resolver {
   >(
     position: Position.Component<S>,
     style: Style
-  ):
-    | Percentage
-    | Position.Keywords.Center
-    | Length.Fixed<"px">
-    | Position.Side<S, Percentage | Length.Fixed<"px">> {
+  ): Position.Component.Canonical<S> {
     switch (position.type) {
       case "keyword":
       case "percentage":

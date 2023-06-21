@@ -488,7 +488,7 @@ export namespace Media {
    */
   const parseFeatureValue = either(
     either(
-      map(Token.parseNumber(), (number) => Number.of(number.value)),
+      Number.parseBase,
       map(Token.parseIdent(), (ident) => Keyword.of(ident.value.toLowerCase()))
     ),
     either(
@@ -872,7 +872,10 @@ export namespace Media {
 
       public toLength(): Range<T | Length<"px">> {
         return this.map((bound) =>
-          Refinement.and(Number.isNumber, (value) => value.value === 0)(bound)
+          Refinement.and(
+            Number.isNumber,
+            (value) => !value.hasCalculation() && value.value === 0
+          )(bound)
             ? Length.of(0, "px")
             : bound
         );

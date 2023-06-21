@@ -23,34 +23,80 @@ import { Serializable } from '@siteimprove/alfa-json';
 import { Slice } from '@siteimprove/alfa-slice';
 
 // @public (undocumented)
-export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<"angle", Unit.Angle, U> {
-    // (undocumented)
-    get canonicalUnit(): "deg";
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    hasUnit<U extends Unit.Angle>(unit: U): this is Angle<U>;
-    // (undocumented)
-    static of<U extends Unit.Angle>(value: number, unit: U): Angle<U>;
-    // (undocumented)
-    scale(factor: number): Angle<U>;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    withUnit<U extends Unit.Angle>(unit: U): Angle<U>;
-}
+export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.Fixed<U>;
 
 // @public (undocumented)
 export namespace Angle {
+    export class Calculated extends Dimension.Calculated<"angle"> implements IAngle<true> {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hasCalculation(): this is Calculated;
+        // (undocumented)
+        static of(value: Math_2<"angle">): Calculated;
+        // (undocumented)
+        resolve(): Canonical;
+    }
+    // (undocumented)
+    export namespace Calculated {
+        // (undocumented)
+        export interface JSON extends Dimension.Calculated.JSON<"angle"> {
+        }
+    }
+    // (undocumented)
+    export type Canonical = Fixed<"deg">;
+    export class Fixed<U extends Unit.Angle = Unit.Angle> extends Dimension.Fixed<"angle", U> implements IAngle<false>, Comparable<Fixed<U>> {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hasCalculation(): this is Calculated;
+        // (undocumented)
+        hasUnit<U extends Unit.Angle>(unit: U): this is Fixed<U>;
+        // (undocumented)
+        static of<U extends Unit.Angle>(value: number, unit: U): Fixed<U>;
+        // Warning: (ae-forgotten-export) The symbol "Angle" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        static of<U extends Unit.Angle>(value: Angle_2<U>): Fixed<U>;
+        // (undocumented)
+        resolve(): Canonical;
+        // (undocumented)
+        scale(factor: number): Fixed<U>;
+        // (undocumented)
+        withUnit<U extends Unit.Angle>(unit: U): Fixed<U>;
+    }
+    // (undocumented)
+    export namespace Fixed {
+        // (undocumented)
+        export interface JSON<U extends Unit.Angle = Unit.Angle> extends Dimension.Fixed.JSON<"angle", U> {
+        }
+    }
+    // (undocumented)
+    export interface IAngle<CALC extends boolean = boolean> extends Value<"angle", CALC> {
+        // (undocumented)
+        hasCalculation(): this is Calculated;
+        // (undocumented)
+        resolve(): Canonical;
+    }
     // (undocumented)
     export function isAngle(value: unknown): value is Angle;
     // (undocumented)
-    export interface JSON<U extends Unit.Angle = Unit.Angle> extends Dimension.JSON<"angle", U> {
-    }
+    export function isCalculated(value: unknown): value is Calculated;
+    // (undocumented)
+    export function isFixed(value: unknown): value is Fixed;
+    // (undocumented)
+    export type JSON = Calculated.JSON | Fixed.JSON;
+    // (undocumented)
+    export function of<U extends Unit.Angle>(value: number, unit: U): Fixed<U>;
+    // (undocumented)
+    export function of<U extends Unit.Angle>(value: Angle_2<U>): Fixed<U>;
+    // (undocumented)
+    export function of(value: Math_2<"angle">): Calculated;
     const // (undocumented)
     parse: Parser<Slice<Token>, Angle, string>;
+    const // @internal (undocumented)
+    parseBase: Parser<Slice<Token>, Fixed, string>;
+        {};
 }
 
 // @public (undocumented)
@@ -162,11 +208,13 @@ export type Color = Hex | Named | HSL | RGB | Current | System;
 // @public (undocumented)
 export namespace Color {
     // (undocumented)
+    export type Canonical = Current | System | RGB<Percentage.Canonical, Percentage.Canonical>;
+    // (undocumented)
     export function hex(value: number): Hex;
     const // (undocumented)
     current: Current;
     // (undocumented)
-    export function hsl<H extends Number_2 | Angle, A extends Number_2 | Percentage>(hue: H, saturation: Percentage, lightness: Percentage, alpha: A): HSL<H, A>;
+    export function hsl<H extends Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(hue: H, saturation: Percentage.Fixed, lightness: Percentage.Fixed, alpha: A): HSL<H, A>;
     // (undocumented)
     export function isTransparent(color: Color): boolean;
     // (undocumented)
@@ -174,7 +222,7 @@ export namespace Color {
     // (undocumented)
     export function named<C extends Named.Color>(color: C): Named<C>;
     // (undocumented)
-    export function rgb<C extends Number_2 | Percentage, A extends Number_2 | Percentage>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
+    export function rgb<C extends Number_2.Fixed | Percentage.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
     const // (undocumented)
     parse: Parser<Slice<Token>, Color, string>;
     // (undocumented)
@@ -280,36 +328,79 @@ export namespace Declaration {
     parseList: Parser<Slice<Token>, Iterable<Declaration>, string>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "Numeric" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export abstract class Dimension<T extends Numeric.Dimension = Numeric.Dimension, U extends Unit = Unit, V extends U = U> extends Numeric<T> implements Convertible<U>, Comparable<Dimension<T, U>> {
-    protected constructor(value: number, unit: V, type: T);
-    // (undocumented)
-    abstract get canonicalUnit(): U;
-    // (undocumented)
-    compare(value: Dimension<T, U>): Comparison;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hasUnit<V extends U>(unit: V): this is Dimension<T, U, V>;
-    // (undocumented)
-    toJSON(): Dimension.JSON<T, V>;
-    // (undocumented)
-    get unit(): V;
-    // (undocumented)
-    protected readonly _unit: V;
-    // (undocumented)
-    abstract withUnit<V extends U>(unit: V): Dimension<T, U, V>;
-}
+export type Dimension<T extends Numeric_2.Dimension = Numeric_2.Dimension> = Dimension.Calculated<T> | Dimension.Fixed<T>;
 
 // @public (undocumented)
 export namespace Dimension {
-    // (undocumented)
-    export function isDimension(value: unknown): value is Dimension;
-    // (undocumented)
-    export interface JSON<T extends Numeric.Dimension = Numeric.Dimension, U extends Unit = Unit> extends Numeric.JSON<T> {
+    export abstract class Calculated<T extends Numeric_2.Dimension = Numeric_2.Dimension> extends Numeric.Calculated<T> implements IDimension<T, true> {
+        protected constructor(math: Numeric.ToMath<T>, type: T);
         // (undocumented)
-        unit: U;
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hasCalculation(): this is Calculated<T>;
+        // Warning: (ae-forgotten-export) The symbol "Dimension" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        abstract resolve(resolver?: unknown): Fixed<T, Dimension_2.ToCanonical<T>>;
     }
+    // (undocumented)
+    export namespace Calculated {
+        // (undocumented)
+        export interface JSON<T extends Numeric_2.Dimension = Numeric_2.Dimension> extends Numeric.Calculated.JSON<T> {
+        }
+    }
+    export abstract class Fixed<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends Dimension_2.ToDimension<T> = Dimension_2.ToDimension<T>> extends Numeric.Fixed<T> implements IDimension<T, false>, Convertible<Dimension_2.ToDimension<T>>, Comparable<Fixed<T>> {
+        protected constructor(value: number, unit: U, type: T);
+        // (undocumented)
+        get canonicalUnit(): Dimension_2.ToCanonical<T>;
+        // (undocumented)
+        compare(value: Fixed<T>): Comparison;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hasCalculation(): this is Calculated<T>;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // (undocumented)
+        hasUnit<V extends Dimension_2.ToDimension<T>>(unit: V): this is Fixed<T, V>;
+        // (undocumented)
+        abstract resolve(resolver?: unknown): Fixed<T, Dimension_2.ToCanonical<T>>;
+        // (undocumented)
+        toJSON(): Fixed.JSON<T, U>;
+        // (undocumented)
+        toString(): string;
+        // (undocumented)
+        get unit(): U;
+        // (undocumented)
+        protected readonly _unit: U;
+        // (undocumented)
+        abstract withUnit<V extends Dimension_2.ToDimension<T>>(unit: V): Fixed<T, V>;
+    }
+    // (undocumented)
+    export namespace Fixed {
+        // (undocumented)
+        export interface JSON<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends Dimension_2.ToDimension<T> = Dimension_2.ToDimension<T>> extends Numeric.Fixed.JSON<T> {
+            // (undocumented)
+            unit: U;
+        }
+    }
+    // (undocumented)
+    export interface IDimension<T extends Numeric_2.Dimension = Numeric_2.Dimension, CALC extends boolean = boolean> extends Value<T, CALC> {
+        // (undocumented)
+        hasCalculation(): this is Calculated<T>;
+        // (undocumented)
+        resolve(resolver?: unknown): Fixed<T, Dimension_2.ToCanonical<T>>;
+    }
+    // (undocumented)
+    export function isCalculated(value: unknown): value is Calculated;
+    // (undocumented)
+    export function isDimension(value: unknown): value is Numeric;
+    // (undocumented)
+    export function isFixed(value: unknown): value is Fixed;
+        {};
 }
 
 // @public (undocumented)
@@ -395,13 +486,15 @@ export type Gradient = Linear | Radial;
 // @public (undocumented)
 export namespace Gradient {
     // (undocumented)
-    export class Hint<P extends Length.Fixed | Percentage = Length.Fixed | Percentage> implements Equatable, Hashable, Serializable {
+    export type Canonical = Linear.Canonical | Radial.Canonical;
+    // (undocumented)
+    export class Hint<P extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> implements Equatable, Hashable, Serializable {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         hash(hash: Hash): void;
         // (undocumented)
-        static of<P extends Length.Fixed | Percentage>(position: P): Hint<P>;
+        static of<P extends Length.Fixed | Percentage.Fixed>(position: P): Hint<P>;
         // (undocumented)
         get position(): P;
         // (undocumented)
@@ -414,11 +507,13 @@ export namespace Gradient {
     // (undocumented)
     export namespace Hint {
         // (undocumented)
+        export type Canonical = Hint<Percentage.Canonical | Length.Canonical>;
+        // (undocumented)
         export interface JSON {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
-            position: Length.Fixed.JSON | Percentage.JSON;
+            position: Length.Fixed.JSON | Percentage.Fixed.JSON;
             // (undocumented)
             type: "hint";
         }
@@ -437,7 +532,7 @@ export namespace Gradient {
     const // (undocumented)
     parseHint: Parser<Slice<Token>, Hint, string>;
     // (undocumented)
-    export class Stop<C extends Color = Color, P extends Length.Fixed | Percentage = Length.Fixed | Percentage> implements Equatable, Hashable, Serializable {
+    export class Stop<C extends Color = Color, P extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> implements Equatable, Hashable, Serializable {
         // (undocumented)
         get color(): C;
         // (undocumented)
@@ -445,7 +540,7 @@ export namespace Gradient {
         // (undocumented)
         hash(hash: Hash): void;
         // (undocumented)
-        static of<C extends Color, P extends Length.Fixed | Percentage>(color: C, position?: Option<P>): Stop<C, P>;
+        static of<C extends Color, P extends Length.Fixed | Percentage.Fixed>(color: C, position?: Option<P>): Stop<C, P>;
         // (undocumented)
         get position(): Option<P>;
         // (undocumented)
@@ -458,13 +553,15 @@ export namespace Gradient {
     // (undocumented)
     export namespace Stop {
         // (undocumented)
+        export type Canonical = Stop<Color.Canonical, Percentage.Canonical | Length.Canonical>;
+        // (undocumented)
         export interface JSON {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
             color: Color.JSON;
             // (undocumented)
-            position: Length.Fixed.JSON | Percentage.JSON | null;
+            position: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
             // (undocumented)
             type: "stop";
         }
@@ -482,19 +579,19 @@ export namespace Gradient {
 // @public (undocumented)
 export class Hex extends Format<"hex"> {
     // (undocumented)
-    get alpha(): Number_2;
+    get alpha(): Number_2.Fixed;
     // (undocumented)
-    get blue(): Number_2;
+    get blue(): Number_2.Fixed;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get green(): Number_2;
+    get green(): Number_2.Fixed;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
     static of(value: number): Hex;
     // (undocumented)
-    get red(): Number_2;
+    get red(): Number_2.Fixed;
     // (undocumented)
     resolve(): Hex;
     // (undocumented)
@@ -519,29 +616,29 @@ export namespace Hex {
 }
 
 // @public (undocumented)
-export class HSL<H extends Number_2 | Angle = Number_2 | Angle, A extends Number_2 | Percentage = Number_2 | Percentage> extends Format<"hsl"> {
+export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed = Number_2.Fixed | Percentage.Fixed> extends Format<"hsl"> {
     // (undocumented)
     get alpha(): A;
     // (undocumented)
-    get blue(): Percentage;
+    get blue(): Percentage.Fixed;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get green(): Percentage;
+    get green(): Percentage.Fixed;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
     get hue(): H;
     // (undocumented)
-    get lightness(): Percentage;
+    get lightness(): Percentage.Fixed;
     // (undocumented)
-    static of<H extends Number_2 | Angle, A extends Number_2 | Percentage>(hue: H, saturation: Percentage, lightness: Percentage, alpha: A): HSL<H, A>;
+    static of<H extends Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(hue: H, saturation: Percentage.Fixed, lightness: Percentage.Fixed, alpha: A): HSL<H, A>;
     // (undocumented)
-    get red(): Percentage;
+    get red(): Percentage.Fixed;
     // (undocumented)
     resolve(): HSL<H, A>;
     // (undocumented)
-    get saturation(): Percentage;
+    get saturation(): Percentage.Fixed;
     // (undocumented)
     toJSON(): HSL.JSON;
     // (undocumented)
@@ -551,17 +648,17 @@ export class HSL<H extends Number_2 | Angle = Number_2 | Angle, A extends Number
 // @public (undocumented)
 export namespace HSL {
     // (undocumented)
-    export function isHSL<H extends Number_2 | Angle, A extends Number_2 | Percentage>(value: unknown): value is HSL<H, A>;
+    export function isHSL<H extends Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(value: unknown): value is HSL<H, A>;
     // (undocumented)
     export interface JSON extends Format.JSON<"hsl"> {
         // (undocumented)
-        alpha: Number_2.JSON | Percentage.JSON;
+        alpha: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
         // (undocumented)
-        hue: Number_2.JSON | Angle.JSON;
+        hue: Number_2.Fixed.JSON | Angle.Fixed.JSON;
         // (undocumented)
-        lightness: Percentage.JSON;
+        lightness: Percentage.Fixed.JSON;
         // (undocumented)
-        saturation: Percentage.JSON;
+        saturation: Percentage.Fixed.JSON;
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, HSL, string>;
@@ -587,6 +684,8 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"ima
 
 // @public (undocumented)
 export namespace Image {
+    // (undocumented)
+    export type Canonical = Image<URL | Gradient.Canonical>;
     // (undocumented)
     export function isImage<I extends URL | Gradient>(value: unknown): value is Image<I>;
     // (undocumented)
@@ -648,34 +747,82 @@ export namespace Inset {
         offsets: Serializable.ToJSON<readonly [O, O, O, O]>;
     }
     // (undocumented)
-    export type Offset = Length.Fixed | Percentage;
+    export type Offset = Length.Fixed | Percentage.Fixed;
     // (undocumented)
-    export type Radius = Length.Fixed | Percentage;
+    export type Radius = Length.Fixed | Percentage.Fixed;
     const // (undocumented)
     parse: Parser<Slice<Token>, Inset, string>;
 }
 
 // @public (undocumented)
-export class Integer extends Numeric<"integer"> {
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    static of(value: number): Integer;
-    // (undocumented)
-    scale(factor: number): Integer;
-}
+export type Integer = Integer.Calculated | Integer.Fixed;
 
 // @public (undocumented)
 export namespace Integer {
+    export class Calculated extends Numeric.Calculated<"number"> implements IInteger<true> {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        static of(value: Math_2<"number">): Calculated;
+        // (undocumented)
+        resolve(): Fixed;
+        // (undocumented)
+        toJSON(): Calculated.JSON;
+    }
+    // (undocumented)
+    export namespace Calculated {
+        // (undocumented)
+        export interface JSON extends Numeric.Calculated.JSON<"number"> {
+        }
+    }
+    // (undocumented)
+    export type Canonical = Fixed;
+    export class Fixed extends Numeric.Fixed<"number"> implements IInteger<false> {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // Warning: (ae-forgotten-export) The symbol "Integer" needs to be exported by the entry point index.d.ts
+        //
+        // (undocumented)
+        static of(value: number | Integer_2): Fixed;
+        // (undocumented)
+        resolve(): this;
+        // (undocumented)
+        scale(factor: number): Fixed;
+        // (undocumented)
+        toJSON(): Fixed.JSON;
+    }
+    // (undocumented)
+    export namespace Fixed {
+        // (undocumented)
+        export interface JSON extends Numeric.Fixed.JSON<"number"> {
+        }
+    }
+    // (undocumented)
+    export interface IInteger<CALC extends boolean = boolean> extends Value<"number", CALC> {
+        // (undocumented)
+        hasCalculation(): this is Calculated;
+        // (undocumented)
+        resolve(): Fixed;
+    }
+    // (undocumented)
+    export function isCalculated(value: unknown): value is Calculated;
+    // (undocumented)
+    export function isFixed(value: unknown): value is Fixed;
     // (undocumented)
     export function isInteger(value: unknown): value is Integer;
     // (undocumented)
-    export interface JSON extends Numeric.JSON<"integer"> {
-    }
+    export function of(value: number): Fixed;
+    // (undocumented)
+    export function of(value: Integer_2): Fixed;
+    // (undocumented)
+    export function of(value: Math_2<"number">): Calculated;
     const // (undocumented)
     parse: Parser<Slice<Token>, Integer, string>;
+    const // @internal (undocumented)
+    parseBase: Parser<Slice<Token>, Fixed, string>;
+        {};
 }
 
 // @public (undocumented)
@@ -717,88 +864,63 @@ export type Length<U extends Unit.Length = Unit.Length> = Length.Calculated | Le
 
 // @public (undocumented)
 export namespace Length {
-    // @internal
-    export class Calculated extends Value<"length", true> implements ILength<Unit.Length, true> {
+    export class Calculated extends Dimension.Calculated<"length"> implements ILength<true> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
-        hash(hash: Hash): void;
-        // (undocumented)
-        get math(): Math_2<"length">;
-        // (undocumented)
         static of(value: Math_2<"length">): Calculated;
         // (undocumented)
-        resolve(resolver: Length.Resolver): Fixed<"px">;
-        // (undocumented)
-        toJSON(): Calculated.JSON;
-        // (undocumented)
-        toString(): string;
+        resolve(resolver: Length.Resolver): Canonical;
     }
     // (undocumented)
     export namespace Calculated {
         // (undocumented)
-        export interface JSON extends Value.JSON<"length"> {
-            // (undocumented)
-            math: Math_2.JSON;
+        export interface JSON extends Dimension.Calculated.JSON<"length"> {
         }
     }
-    export class Fixed<U extends Unit.Length = Unit.Length> extends Value<"length", false> implements ILength<U, false>, Comparable<Fixed<U>> {
-        // (undocumented)
-        get canonicalUnit(): "px";
-        // (undocumented)
-        compare(value: Fixed<U>): Comparison;
+    // (undocumented)
+    export type Canonical = Fixed<"px">;
+    export class Fixed<U extends Unit.Length = Unit.Length> extends Dimension.Fixed<"length", U> implements ILength<false>, Comparable<Fixed<U>> {
         // (undocumented)
         equals(value: unknown): value is this;
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
-        hash(hash: Hash): void;
-        // (undocumented)
         hasUnit<U extends Unit.Length>(unit: U): this is Fixed<U>;
+        // (undocumented)
+        isAbsolute(): this is Length<Unit.Length.Absolute>;
         // (undocumented)
         isFontRelative(): this is Length<Unit.Length.Relative.Font>;
         // (undocumented)
         isRelative(): this is Fixed<Unit.Length.Relative>;
         // (undocumented)
-        isZero(): boolean;
+        isViewportRelative(): this is Length<Unit.Length.Relative.Viewport>;
         // (undocumented)
         static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
         // Warning: (ae-forgotten-export) The symbol "Length" needs to be exported by the entry point index.d.ts
         //
         // (undocumented)
         static of<U extends Unit.Length>(value: Length_2<U>): Fixed<U>;
-        resolve(resolver: Length.Resolver): Fixed<"px">;
+        resolve(resolver: Length.Resolver): Canonical;
         // (undocumented)
         scale(factor: number): Fixed<U>;
-        // (undocumented)
-        toJSON(): Fixed.JSON<U>;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get unit(): U;
-        // (undocumented)
-        get value(): number;
         // (undocumented)
         withUnit<U extends Unit.Length>(unit: U): Fixed<U>;
     }
     // (undocumented)
     export namespace Fixed {
         // (undocumented)
-        export interface JSON<U extends Unit.Length = Unit.Length> extends Value.JSON<"length"> {
-            // (undocumented)
-            unit: U;
-            // (undocumented)
-            value: number;
+        export interface JSON<U extends Unit.Length = Unit.Length> extends Dimension.Fixed.JSON<"length", U> {
         }
     }
     // (undocumented)
-    export interface ILength<U extends Unit.Length = Unit.Length, CALC extends boolean = boolean> extends Value<"length", CALC> {
+    export interface ILength<CALC extends boolean = boolean> extends Value<"length", CALC> {
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
-        resolve(resolver: Length.Resolver): Fixed<"px">;
+        resolve(resolver: Length.Resolver): Canonical;
     }
     // (undocumented)
     export function isCalculated(value: unknown): value is Calculated;
@@ -806,8 +928,6 @@ export namespace Length {
     export function isFixed(value: unknown): value is Fixed;
     // (undocumented)
     export function isLength(value: unknown): value is Length;
-    // (undocumented)
-    export function isZero(length: Length.Fixed): boolean;
     // (undocumented)
     export type JSON = Calculated.JSON | Fixed.JSON;
     // (undocumented)
@@ -817,11 +937,11 @@ export namespace Length {
     // (undocumented)
     export function of(value: Math_2<"length">): Calculated;
     // (undocumented)
-    export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Fixed<"px">>;
-    export function resolver(emBase: Fixed<"px">, remBase: Fixed<"px">, vwBase: Fixed<"px">, vhBase: Fixed<"px">): Resolver;
+    export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+    export function resolver(emBase: Canonical, remBase: Canonical, vwBase: Canonical, vhBase: Canonical): Resolver;
     const // (undocumented)
     parse: Parser<Slice<Token>, Length, string>;
-    const // (undocumented)
+    const // @internal (undocumented)
     parseBase: Parser<Slice<Token>, Fixed<Unit.Length>, string, []>;
         {};
 }
@@ -861,6 +981,8 @@ export class Linear<I extends Gradient.Item = Gradient.Item, D extends Linear.Di
 // @public (undocumented)
 export namespace Linear {
     // (undocumented)
+    export type Canonical = Linear<Gradient.Hint.Canonical | Gradient.Stop.Canonical, Angle.Canonical | Linear.Side | Linear.Corner>;
+    // (undocumented)
     export class Corner implements Equatable, Serializable {
         // (undocumented)
         equals(value: unknown): value is this;
@@ -894,11 +1016,11 @@ export namespace Linear {
         }
     }
     // (undocumented)
-    export type Direction = Angle | Side | Corner;
+    export type Direction = Angle.Fixed | Side | Corner;
     // (undocumented)
     export namespace Direction {
         // (undocumented)
-        export type JSON = Angle.JSON | Side.JSON | Corner.JSON;
+        export type JSON = Angle.Fixed.JSON | Side.JSON | Corner.JSON;
     }
     // (undocumented)
     export interface JSON extends Value.JSON<"gradient"> {
@@ -1005,7 +1127,7 @@ export namespace List {
 }
 
 // @public (undocumented)
-class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"math expression", true> {
+class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1013,9 +1135,9 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"m
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    isDimension<D extends Numeric.Dimension>(dimension: D): this is Math_2<D>;
+    isDimension<D extends Numeric_2.Dimension>(dimension: D): this is Math_2<D>;
     // (undocumented)
-    isDimensionPercentage<D extends Numeric.Dimension>(dimension: D): this is Math_2<`${D}-percentage`>;
+    isDimensionPercentage<D extends Numeric_2.Dimension>(dimension: D): this is Math_2<`${D}-percentage`>;
     // (undocumented)
     isNumber(): this is Math_2<"number">;
     // (undocumented)
@@ -1026,17 +1148,25 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> extends Value<"m
     static of(expression: Expression): Math_2;
     // (undocumented)
     reduce(resolver: Expression.Resolver): Math_2;
+    resolve(this: Math_2<"angle">): Result<Angle_2<"deg">, string>;
     // (undocumented)
-    resolve(): any;
-    resolve2(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length_2<"px">, string>;
+    resolve(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length_2<"px">, string>;
     // (undocumented)
-    resolve2(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length_2<"px">>): Result<Length_2<"px">, string>;
+    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length_2<"px">>, hint?: "length"): Result<Length_2<"px">, string>;
+    // Warning: (ae-forgotten-export) The symbol "Number" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    resolve2(this: Math_2<"number">): Result<Number_2, string>;
+    resolve(this: Math_2<"number">): Result<Number_3, string>;
+    // Warning: (ae-forgotten-export) The symbol "Percentage" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    resolve(this: Math_2<"percentage">): Result<Percentage_2, string>;
     // (undocumented)
     toJSON(): Math_2.JSON;
     // (undocumented)
     toString(): string;
+    // (undocumented)
+    get type(): "math expression";
 }
 
 // @public (undocumented)
@@ -1044,9 +1174,13 @@ namespace Math_2 {
     // Warning: (ae-forgotten-export) The symbol "Kind" needs to be exported by the entry point index.d.ts
     //
     // @internal (undocumented)
-    type Dimension = Kind.Base | `${Numeric.Dimension}-percentage` | "number";
+    type Dimension = Kind.Base | `${Numeric_2.Dimension}-percentage` | "number";
     // (undocumented)
     function isCalculation(value: unknown): value is Math_2;
+    // (undocumented)
+    function isNumber(value: unknown): value is Math_2<"number">;
+    // (undocumented)
+    function isPercentage(value: unknown): value is Math_2<"percentage">;
     // (undocumented)
     interface JSON {
         // (undocumented)
@@ -1061,11 +1195,15 @@ namespace Math_2 {
     // (undocumented)
     parse: Parser<Slice<Token>, Math_2<Dimension>, string, []>;
     const // (undocumented)
+    parseAngle: Parser<Slice<Token>, Math_2<"angle">, string, []>;
+    const // (undocumented)
     parseLength: Parser<Slice<Token>, Math_2<"length">, string, []>;
     const // (undocumented)
     parseLengthPercentage: Parser<Slice<Token>, Math_2<"length-percentage">, string, []>;
     const // (undocumented)
     parseNumber: Parser<Slice<Token>, Math_2<"number">, string, []>;
+    const // (undocumented)
+    parsePercentage: Parser<Slice<Token>, Math_2<"percentage">, string, []>;
 }
 export { Math_2 as Math }
 
@@ -1078,7 +1216,7 @@ export class Matrix extends Function_3<"matrix"> {
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of(...values: Matrix.Values<Number_2>): Matrix;
+    static of(...values: Matrix.Values<Number_2.Fixed>): Matrix;
     // (undocumented)
     resolve(): Matrix;
     // (undocumented)
@@ -1086,7 +1224,7 @@ export class Matrix extends Function_3<"matrix"> {
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get values(): Matrix.Values<Number_2>;
+    get values(): Matrix.Values<Number_2.Fixed>;
 }
 
 // @public (undocumented)
@@ -1096,7 +1234,7 @@ export namespace Matrix {
     // (undocumented)
     export interface JSON extends Function_3.JSON<"matrix"> {
         // (undocumented)
-        values: Values<Number_2.JSON>;
+        values: Values<Number_2.Fixed.JSON>;
     }
     // (undocumented)
     export type Values<T> = [
@@ -1132,21 +1270,21 @@ export namespace Matrix {
 // @public (undocumented)
 export class Named<C extends Named.Color = Named.Color> extends Format<"named"> {
     // (undocumented)
-    get alpha(): Number_2;
+    get alpha(): Number_2.Fixed;
     // (undocumented)
-    get blue(): Number_2;
+    get blue(): Number_2.Fixed;
     // (undocumented)
     get color(): C;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
-    get green(): Number_2;
+    get green(): Number_2.Fixed;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
     static of<C extends Named.Color>(color: C): Named<C>;
     // (undocumented)
-    get red(): Number_2;
+    get red(): Number_2.Fixed;
     // (undocumented)
     resolve(): Named<C>;
     // (undocumented)
@@ -1211,97 +1349,240 @@ export namespace Nth {
 }
 
 // @public (undocumented)
-class Number_2 extends Numeric<"number"> {
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    static of(value: number): Number_2;
-    // (undocumented)
-    scale(factor: number): Number_2;
-}
+type Number_2 = Number_2.Calculated | Number_2.Fixed;
 
 // @public (undocumented)
 namespace Number_2 {
+    class Calculated extends Numeric.Calculated<"number"> implements INumber<true> {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        static of(value: Math_2<"number">): Calculated;
+        // (undocumented)
+        resolve(): Fixed;
+        // (undocumented)
+        toJSON(): Calculated.JSON;
+    }
+    // (undocumented)
+    namespace Calculated {
+        // (undocumented)
+        interface JSON extends Numeric.Calculated.JSON<"number"> {
+        }
+    }
+    // (undocumented)
+    type Canonical = Fixed;
+    class Fixed extends Numeric.Fixed<"number"> implements INumber<false> {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        static of(value: number | Number_3): Fixed;
+        // (undocumented)
+        resolve(): this;
+        // (undocumented)
+        scale(factor: number): Fixed;
+        // (undocumented)
+        toJSON(): Fixed.JSON;
+    }
+    // (undocumented)
+    namespace Fixed {
+        // (undocumented)
+        interface JSON extends Numeric.Fixed.JSON<"number"> {
+        }
+    }
+    // (undocumented)
+    interface INumber<CALC extends boolean = boolean> extends Value<"number", CALC> {
+        // (undocumented)
+        hasCalculation(): this is Calculated;
+        // (undocumented)
+        resolve(): Fixed;
+    }
+    // (undocumented)
+    function isCalculated(value: unknown): value is Calculated;
+    // (undocumented)
+    function isFixed(value: unknown): value is Fixed;
     // (undocumented)
     function isNumber(value: unknown): value is Number_2;
     // (undocumented)
-    interface JSON extends Numeric.JSON<"number"> {
-    }
-    const // (undocumented)
-    parseZero: Parser<Slice<Token>, Number_2, string>;
+    function of(value: number): Fixed;
+    // (undocumented)
+    function of(value: Number_3): Fixed;
+    // (undocumented)
+    function of(value: Math_2<"number">): Calculated;
     const // (undocumented)
     parse: Parser<Slice<Token>, Number_2, string>;
+    const // (undocumented)
+    parseZero: Parser<Slice<Token>, Fixed, string>;
+    const // @internal (undocumented)
+    parseBase: Parser<Slice<Token>, Fixed, string>;
+        {};
 }
 export { Number_2 as Number }
 
 // @public (undocumented)
-export abstract class Numeric<T extends Numeric.Type = Numeric.Type> extends Value<T, false> implements Comparable<Numeric<T>> {
-    protected constructor(value: number, type: T);
-    // (undocumented)
-    compare(value: Numeric<T>): Comparison;
-    static readonly Decimals = 7;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    resolve<N extends Numeric<T>>(this: N): N;
-    // (undocumented)
-    abstract scale(factor: number): Numeric<T>;
-    // (undocumented)
-    toJSON(): Numeric.JSON<T>;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    get value(): number;
-    // (undocumented)
-    protected readonly _value: number;
-}
+export type Numeric<T extends Numeric.Type = Numeric.Type> = Numeric.Calculated<T> | Numeric.Fixed<T>;
 
 // @public (undocumented)
 export namespace Numeric {
-    // (undocumented)
-    export type Dimension = "angle" | "length";
-    // (undocumented)
-    export function isNumeric(value: unknown): value is Numeric;
-    // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Type" which is marked as @internal
-    //
-    // (undocumented)
-    export interface JSON<T extends Type = Type> extends Value.JSON<T> {
+    export abstract class Calculated<T extends Type = Type> extends Value<T, true> implements INumeric<T, true> {
+        // Warning: (ae-incompatible-release-tags) The symbol "__constructor" is marked as @public, but its signature references "ToMath" which is marked as @internal
+        protected constructor(math: ToMath<T>, type: T);
         // (undocumented)
-        [key: string]: json.JSON;
+        equals(value: unknown): value is this;
         // (undocumented)
-        value: number;
+        hasCalculation(): this is Calculated<T>;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // Warning: (ae-incompatible-release-tags) The symbol "math" is marked as @public, but its signature references "ToMath" which is marked as @internal
+        //
+        // (undocumented)
+        get math(): ToMath<T>;
+        // Warning: (ae-incompatible-release-tags) The symbol "_math" is marked as @public, but its signature references "ToMath" which is marked as @internal
+        //
+        // (undocumented)
+        protected readonly _math: ToMath<T>;
+        // (undocumented)
+        abstract resolve(resolver?: unknown): Fixed<T>;
+        // (undocumented)
+        toJSON(): Calculated.JSON<T>;
+        // (undocumented)
+        toString(): string;
     }
     // (undocumented)
-    export type Ratio = "percentage";
+    export namespace Calculated {
+        // (undocumented)
+        export interface JSON<T extends Type = Type> extends Value.JSON<T> {
+            // Warning: (ae-incompatible-release-tags) The symbol "math" is marked as @public, but its signature references "ToMath" which is marked as @internal
+            //
+            // (undocumented)
+            math: Serializable.ToJSON<ToMath<T>>;
+        }
+    }
+    export abstract class Fixed<T extends Type = Type> extends Value<T, false> implements INumeric<T, false>, Comparable<Fixed> {
+        protected constructor(value: number, type: T);
+        // (undocumented)
+        compare(value: Fixed<T>): Comparison;
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        hasCalculation(): this is Calculated<T>;
+        // (undocumented)
+        hash(hash: Hash): void;
+        // (undocumented)
+        isZero(): boolean;
+        // (undocumented)
+        abstract resolve(resolver?: unknown): Fixed<T>;
+        // (undocumented)
+        abstract scale(factor: number): Fixed<T>;
+        // (undocumented)
+        toJSON(): Fixed.JSON<T>;
+        // (undocumented)
+        toString(): string;
+        // (undocumented)
+        get value(): number;
+        // (undocumented)
+        protected readonly _value: number;
+    }
     // (undocumented)
-    export type Scalar = "integer" | "number";
+    export namespace Fixed {
+        // (undocumented)
+        export interface JSON<T extends Type = Type> extends Value.JSON<T> {
+            // (undocumented)
+            value: number;
+        }
+    }
+    // (undocumented)
+    export interface INumeric<T extends Type = Type, CALC extends boolean = boolean> extends Value<T, CALC> {
+        // (undocumented)
+        hasCalculation(): this is Calculated<T>;
+        // (undocumented)
+        resolve(resolver?: unknown): Fixed<T>;
+    }
+    // (undocumented)
+    export function isCalculated(value: unknown): value is Calculated;
+    // (undocumented)
+    export function isFixed(value: unknown): value is Fixed;
+    // (undocumented)
+    export function isNumeric(value: unknown): value is Numeric;
+    // (undocumented)
+    export function isZero(value: Fixed): boolean;
     // @internal (undocumented)
-    export type Type = Scalar | Ratio | Dimension;
+    export type ToMath<T extends Type> = Math_2<T extends Numeric_2.Scalar ? "number" : T>;
+    // (undocumented)
+    export type Type = Numeric_2.Type | `${Numeric_2.Dimension}-percentage`;
+        {};
 }
 
 // @public (undocumented)
-export class Percentage extends Numeric<"percentage"> {
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    static of(value: number): Percentage;
-    // (undocumented)
-    scale(factor: number): Percentage;
-    // (undocumented)
-    toString(): string;
-}
+export type Percentage = Percentage.Calculated | Percentage.Fixed;
 
 // @public (undocumented)
 export namespace Percentage {
+    export class Calculated extends Numeric.Calculated<"percentage"> implements IPercentage<true> {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        static of(value: Math_2<"percentage">): Calculated;
+        // (undocumented)
+        resolve(): Fixed;
+        // (undocumented)
+        resolve<N extends Numeric.Fixed>(base: N): N;
+        // (undocumented)
+        toJSON(): Calculated.JSON;
+    }
+    // (undocumented)
+    export namespace Calculated {
+        // (undocumented)
+        export interface JSON extends Numeric.Calculated.JSON<"percentage"> {
+        }
+    }
+    // (undocumented)
+    export type Canonical = Fixed;
+    export class Fixed extends Numeric.Fixed<"percentage"> implements IPercentage<false> {
+        // (undocumented)
+        equals(value: unknown): value is this;
+        // (undocumented)
+        static of(value: number | Percentage_2): Fixed;
+        // (undocumented)
+        resolve(): this;
+        // (undocumented)
+        resolve<N extends Numeric.Fixed>(base: N): N;
+        // (undocumented)
+        scale(factor: number): Fixed;
+        // (undocumented)
+        toJSON(): Fixed.JSON;
+        // (undocumented)
+        toString(): string;
+    }
+    // (undocumented)
+    export namespace Fixed {
+        // (undocumented)
+        export interface JSON extends Numeric.Fixed.JSON<"percentage"> {
+        }
+    }
+    // (undocumented)
+    export interface IPercentage<CALC extends boolean = boolean> extends Value<"percentage", CALC> {
+        // (undocumented)
+        hasCalculation(): this is Calculated;
+        // (undocumented)
+        resolve(): Fixed;
+    }
+    // (undocumented)
+    export function isCalculated(value: unknown): value is Calculated;
+    // (undocumented)
+    export function isFixed(value: unknown): value is Fixed;
     // (undocumented)
     export function isPercentage(value: unknown): value is Percentage;
     // (undocumented)
-    export interface JSON extends Numeric.JSON<"percentage"> {
-    }
+    export function of(value: number): Fixed;
+    // (undocumented)
+    export function of(value: Percentage_2): Fixed;
+    // (undocumented)
+    export function of(value: Math_2<"percentage">): Calculated;
     const // (undocumented)
     parse: Parser<Slice<Token>, Percentage, string>;
+    const // @internal (undocumented)
+    parseBase: Parser<Slice<Token>, Fixed, string>;
+        {};
 }
 
 // @public (undocumented)
@@ -1325,6 +1606,8 @@ export class Perspective<D extends Length.Fixed = Length.Fixed> extends Function
 // @public (undocumented)
 export namespace Perspective {
     // (undocumented)
+    export type Canonical = Perspective<Length.Canonical>;
+    // (undocumented)
     export function isPerspective<D extends Length.Fixed>(value: unknown): value is Perspective<D>;
     // (undocumented)
     export interface JSON extends Function_3.JSON<"perspective"> {
@@ -1336,7 +1619,7 @@ export namespace Perspective {
 }
 
 // @public (undocumented)
-export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage = Length.Fixed | Percentage> extends BasicShape<"polygon"> {
+export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> extends BasicShape<"polygon"> {
     // (undocumented)
     equals(value: Polygon): boolean;
     // (undocumented)
@@ -1346,7 +1629,7 @@ export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fix
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage = Length.Fixed | Percentage>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
+    static of<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
     // (undocumented)
     resolve(): Polygon<F, V>;
     // (undocumented)
@@ -1362,14 +1645,14 @@ export namespace Polygon {
     // (undocumented)
     export type Fill = Keyword<"nonzero"> | Keyword<"evenodd">;
     // (undocumented)
-    export interface JSON<F extends Fill = Fill, V extends Length | Percentage = Length | Percentage> extends BasicShape.JSON<"polygon"> {
+    export interface JSON<F extends Fill = Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> extends BasicShape.JSON<"polygon"> {
         // (undocumented)
         fill: Option.JSON<F>;
         // (undocumented)
         vertices: Array_2<Serializable.ToJSON<Vertex<V>>>;
     }
     // (undocumented)
-    export type Vertex<V extends Length | Percentage = Length | Percentage> = readonly [V, V];
+    export type Vertex<V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> = readonly [V, V];
     const // (undocumented)
     parse: Parser<Slice<Token>, Polygon, string>;
 }
@@ -1397,15 +1680,19 @@ export class Position<H extends Position.Component<Position.Keywords.Horizontal>
 // @public (undocumented)
 export namespace Position {
     // (undocumented)
+    export type Canonical = Position<Component.Canonical<Keywords.Horizontal>, Component.Canonical<Keywords.Vertical>>;
+    // (undocumented)
     export type Component<S extends Keywords.Horizontal | Keywords.Vertical = Keywords.Horizontal | Keywords.Vertical, U extends Unit.Length = Unit.Length> = Keywords.Center | Offset<U> | Side<S, Offset<U>>;
     // (undocumented)
     export namespace Component {
         // (undocumented)
-        export type JSON = Keyword.JSON | Length.Fixed.JSON | Percentage.JSON | Side.JSON;
+        export type Canonical<S extends Keywords.Horizontal | Keywords.Vertical> = Percentage.Canonical | Keywords.Center | Length.Canonical | Side.Canonical<S>;
+        // (undocumented)
+        export type JSON = Keyword.JSON | Length.Fixed.JSON | Percentage.Fixed.JSON | Side.JSON;
         const // (undocumented)
-        parseHorizontal: Parser<Slice<Token>, Percentage | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
+        parseHorizontal: Parser<Slice<Token>, Length.Fixed<Unit.Length> | Percentage.Fixed | Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
         const // (undocumented)
-        parseVertical: Parser<Slice<Token>, Percentage | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
+        parseVertical: Parser<Slice<Token>, Length.Fixed<Unit.Length> | Percentage.Fixed | Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
     }
     // (undocumented)
     export interface JSON extends Value.JSON<"position"> {
@@ -1430,11 +1717,11 @@ export namespace Position {
         parseHorizontal: Parser<Slice<Token>, Keyword.ToKeywords<"right" | "left">, string>;
     }
     // (undocumented)
-    export type Offset<U extends Unit.Length = Unit.Length> = Length.Fixed<U> | Percentage;
+    export type Offset<U extends Unit.Length = Unit.Length> = Length.Fixed<U> | Percentage.Fixed;
     // (undocumented)
     export namespace Offset {
         const // (undocumented)
-        parse: Parser<Slice<Token>, Percentage | Length.Fixed<Unit.Length>, string, []>;
+        parse: Parser<Slice<Token>, Length.Fixed<Unit.Length> | Percentage.Fixed, string, []>;
     }
     // (undocumented)
     export function parse(legacySyntax?: boolean): Parser<Slice<Token>, Position, string>;
@@ -1462,9 +1749,11 @@ export namespace Position {
     // (undocumented)
     export namespace Side {
         // (undocumented)
+        export type Canonical<S extends Keywords.Vertical | Keywords.Horizontal> = Side<S, Percentage.Canonical | Length.Canonical>;
+        // (undocumented)
         export interface JSON extends Value.JSON<"side"> {
             // (undocumented)
-            offset: Length.Fixed.JSON | Percentage.JSON | null;
+            offset: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
             // (undocumented)
             side: Keyword.JSON;
         }
@@ -1515,6 +1804,8 @@ export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Sh
 // @public (undocumented)
 export namespace Radial {
     // (undocumented)
+    export type Canonical = Radial<Gradient.Hint.Canonical | Gradient.Stop.Canonical, Radial.Circle.Canonical | Radial.Ellipse.Canonical | Radial.Extent, Position.Canonical>;
+    // (undocumented)
     export class Circle<R extends Length.Fixed = Length.Fixed> implements Equatable, Hashable, Serializable<Circle.JSON> {
         // (undocumented)
         equals(value: Circle): boolean;
@@ -1536,6 +1827,8 @@ export namespace Radial {
     // (undocumented)
     export namespace Circle {
         // (undocumented)
+        export type Canonical = Circle<Length.Canonical>;
+        // (undocumented)
         export interface JSON {
             // (undocumented)
             [key: string]: json.JSON;
@@ -1546,7 +1839,7 @@ export namespace Radial {
         }
     }
     // (undocumented)
-    export class Ellipse<R extends Length.Fixed | Percentage = Length.Fixed | Percentage> implements Equatable, Hashable, Serializable<Ellipse.JSON> {
+    export class Ellipse<R extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> implements Equatable, Hashable, Serializable<Ellipse.JSON> {
         // (undocumented)
         equals(value: Ellipse): boolean;
         // (undocumented)
@@ -1556,7 +1849,7 @@ export namespace Radial {
         // (undocumented)
         get horizontal(): R;
         // (undocumented)
-        static of<R extends Length.Fixed | Percentage>(horizontal: R, vertical: R): Ellipse<R>;
+        static of<R extends Length.Fixed | Percentage.Fixed>(horizontal: R, vertical: R): Ellipse<R>;
         // (undocumented)
         toJSON(): Ellipse.JSON;
         // (undocumented)
@@ -1569,15 +1862,17 @@ export namespace Radial {
     // (undocumented)
     export namespace Ellipse {
         // (undocumented)
+        export type Canonical = Ellipse<Percentage.Canonical | Length.Canonical>;
+        // (undocumented)
         export interface JSON {
             // (undocumented)
             [key: string]: json.JSON;
             // (undocumented)
-            horizontal: Length.Fixed.JSON | Percentage.JSON;
+            horizontal: Length.Fixed.JSON | Percentage.Fixed.JSON;
             // (undocumented)
             type: "ellipse";
             // (undocumented)
-            vertical: Length.Fixed.JSON | Percentage.JSON;
+            vertical: Length.Fixed.JSON | Percentage.Fixed.JSON;
         }
     }
     // (undocumented)
@@ -1658,7 +1953,7 @@ export namespace Radial {
 }
 
 // @public (undocumented)
-export class Radius<R extends Length.Fixed | Percentage | Radius.Side = Length.Fixed | Percentage | Radius.Side> extends BasicShape<"radius"> {
+export class Radius<R extends Length.Fixed | Percentage.Fixed | Radius.Side = Length.Fixed | Percentage.Fixed | Radius.Side> extends BasicShape<"radius"> {
     // (undocumented)
     equals(value: Radius): boolean;
     // (undocumented)
@@ -1666,7 +1961,7 @@ export class Radius<R extends Length.Fixed | Percentage | Radius.Side = Length.F
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<R extends Length.Fixed | Percentage | Radius.Side>(value: R): Radius<R>;
+    static of<R extends Length.Fixed | Percentage.Fixed | Radius.Side>(value: R): Radius<R>;
     // (undocumented)
     resolve(): Radius<R>;
     // (undocumented)
@@ -1684,7 +1979,7 @@ export namespace Radius {
     // (undocumented)
     export interface JSON extends BasicShape.JSON<"radius"> {
         // (undocumented)
-        value: Length.Fixed.JSON | Percentage.JSON | Keyword.JSON;
+        value: Length.Fixed.JSON | Percentage.Fixed.JSON | Keyword.JSON;
     }
     // (undocumented)
     export type Side = Side.Closest | Side.Farthest;
@@ -1755,7 +2050,7 @@ export namespace Rectangle {
 }
 
 // @public (undocumented)
-export class RGB<C extends Number_2 | Percentage = Number_2 | Percentage, A extends Number_2 | Percentage = Number_2 | Percentage> extends Format<"rgb"> {
+export class RGB<C extends Number_2.Fixed | Percentage.Fixed = Number_2.Fixed | Percentage.Fixed, A extends Number_2.Fixed | Percentage.Fixed = Number_2.Fixed | Percentage.Fixed> extends Format<"rgb"> {
     // (undocumented)
     get alpha(): A;
     // (undocumented)
@@ -1767,7 +2062,7 @@ export class RGB<C extends Number_2 | Percentage = Number_2 | Percentage, A exte
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<C extends Number_2 | Percentage, A extends Number_2 | Percentage>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
+    static of<C extends Number_2.Fixed | Percentage.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
     // (undocumented)
     get red(): C;
     // (undocumented)
@@ -1781,24 +2076,24 @@ export class RGB<C extends Number_2 | Percentage = Number_2 | Percentage, A exte
 // @public (undocumented)
 export namespace RGB {
     // (undocumented)
-    export function isRGB<C extends Number_2 | Percentage, A extends Number_2 | Percentage>(value: unknown): value is RGB<C, A>;
+    export function isRGB<C extends Number_2.Fixed | Percentage.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(value: unknown): value is RGB<C, A>;
     // (undocumented)
     export interface JSON extends Format.JSON<"rgb"> {
         // (undocumented)
-        alpha: Number_2.JSON | Percentage.JSON;
+        alpha: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
         // (undocumented)
-        blue: Number_2.JSON | Percentage.JSON;
+        blue: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
         // (undocumented)
-        green: Number_2.JSON | Percentage.JSON;
+        green: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
         // (undocumented)
-        red: Number_2.JSON | Percentage.JSON;
+        red: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, RGB, string>;
 }
 
 // @public (undocumented)
-export class Rotate<A extends Angle = Angle> extends Function_3<"rotate"> {
+export class Rotate<A extends Angle.Fixed = Angle.Fixed> extends Function_3<"rotate"> {
     // (undocumented)
     get angle(): A;
     // (undocumented)
@@ -1806,7 +2101,7 @@ export class Rotate<A extends Angle = Angle> extends Function_3<"rotate"> {
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<A extends Angle>(x: Number_2, y: Number_2, z: Number_2, angle: A): Rotate<A>;
+    static of<A extends Angle.Fixed>(x: Number_2.Fixed, y: Number_2.Fixed, z: Number_2.Fixed, angle: A): Rotate<A>;
     // (undocumented)
     resolve(): Rotate<A>;
     // (undocumented)
@@ -1814,27 +2109,29 @@ export class Rotate<A extends Angle = Angle> extends Function_3<"rotate"> {
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get x(): Number_2;
+    get x(): Number_2.Fixed;
     // (undocumented)
-    get y(): Number_2;
+    get y(): Number_2.Fixed;
     // (undocumented)
-    get z(): Number_2;
+    get z(): Number_2.Fixed;
 }
 
 // @public (undocumented)
 export namespace Rotate {
     // (undocumented)
-    export function isRotate<A extends Angle>(value: unknown): value is Rotate<A>;
+    export type Canonical = Rotate<Angle.Canonical>;
+    // (undocumented)
+    export function isRotate<A extends Angle.Fixed>(value: unknown): value is Rotate<A>;
     // (undocumented)
     export interface JSON extends Function_3.JSON<"rotate"> {
         // (undocumented)
-        angle: Angle.JSON;
+        angle: Angle.Fixed.JSON;
         // (undocumented)
-        x: Number_2.JSON;
+        x: Number_2.Fixed.JSON;
         // (undocumented)
-        y: Number_2.JSON;
+        y: Number_2.Fixed.JSON;
         // (undocumented)
-        z: Number_2.JSON;
+        z: Number_2.Fixed.JSON;
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Rotate, string>;
@@ -1849,7 +2146,7 @@ export class Scale extends Function_3<"scale"> {
     // (undocumented)
     get kind(): "scale";
     // (undocumented)
-    static of(x: Number_2, y: Number_2): Scale;
+    static of(x: Number_2.Fixed, y: Number_2.Fixed): Scale;
     // (undocumented)
     resolve(): Scale;
     // (undocumented)
@@ -1857,9 +2154,9 @@ export class Scale extends Function_3<"scale"> {
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get x(): Number_2;
+    get x(): Number_2.Fixed;
     // (undocumented)
-    get y(): Number_2;
+    get y(): Number_2.Fixed;
 }
 
 // @public (undocumented)
@@ -1869,9 +2166,9 @@ export namespace Scale {
     // (undocumented)
     export interface JSON extends Function_3.JSON<"scale"> {
         // (undocumented)
-        x: Number_2.JSON;
+        x: Number_2.Fixed.JSON;
         // (undocumented)
-        y: Number_2.JSON;
+        y: Number_2.Fixed.JSON;
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Scale, string>;
@@ -1907,6 +2204,8 @@ export class Shadow<H extends Length.Fixed = Length.Fixed, V extends Length.Fixe
 
 // @public (undocumented)
 export namespace Shadow {
+    // (undocumented)
+    export type Canonical = Shadow<Length.Canonical, Length.Canonical, Length.Canonical, Length.Canonical, Color.Canonical>;
     // (undocumented)
     export interface JSON extends Value.JSON<"shadow"> {
         // (undocumented)
@@ -1972,13 +2271,13 @@ export namespace Shape {
 }
 
 // @public (undocumented)
-export class Skew<X extends Angle = Angle, Y extends Angle = Angle> extends Function_3<"skew"> {
+export class Skew<X extends Angle.Fixed = Angle.Fixed, Y extends Angle.Fixed = Angle.Fixed> extends Function_3<"skew"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<X extends Angle, Y extends Angle>(x: X, y: Y): Skew<X, Y>;
+    static of<X extends Angle.Fixed, Y extends Angle.Fixed>(x: X, y: Y): Skew<X, Y>;
     // (undocumented)
     resolve(): Skew<X, Y>;
     // (undocumented)
@@ -1994,13 +2293,15 @@ export class Skew<X extends Angle = Angle, Y extends Angle = Angle> extends Func
 // @public (undocumented)
 export namespace Skew {
     // (undocumented)
-    export function isSkew<X extends Angle, Y extends Angle>(value: unknown): value is Skew<X, Y>;
+    export type Canonical = Skew<Angle.Canonical, Angle.Canonical>;
+    // (undocumented)
+    export function isSkew<X extends Angle.Fixed, Y extends Angle.Fixed>(value: unknown): value is Skew<X, Y>;
     // (undocumented)
     export interface JSON extends Function_3.JSON<"skew"> {
         // (undocumented)
-        x: Angle.JSON;
+        x: Angle.Fixed.JSON;
         // (undocumented)
-        y: Angle.JSON;
+        y: Angle.Fixed.JSON;
     }
     const // (undocumented)
     parse: Parser<Slice<Token>, Skew, string>;
@@ -2826,17 +3127,19 @@ export type Transform = Matrix | Perspective | Rotate | Scale | Skew | Translate
 // @public (undocumented)
 export namespace Transform {
     // (undocumented)
-    export function matrix(...values: Matrix.Values<Number_2>): Matrix;
+    export type Canonical = Matrix | Perspective.Canonical | Rotate.Canonical | Scale | Skew.Canonical | Translate.Canonical;
+    // (undocumented)
+    export function matrix(...values: Matrix.Values<Number_2.Fixed>): Matrix;
     // (undocumented)
     export function perspective<D extends Length.Fixed>(depth: D): Perspective<D>;
     // (undocumented)
-    export function rotate<A extends Angle>(x: Number_2, y: Number_2, z: Number_2, angle: A): Rotate<A>;
+    export function rotate<A extends Angle.Fixed>(x: Number_2.Fixed, y: Number_2.Fixed, z: Number_2.Fixed, angle: A): Rotate<A>;
     // (undocumented)
-    export function scale(x: Number_2, y: Number_2): Scale;
+    export function scale(x: Number_2.Fixed, y: Number_2.Fixed): Scale;
     // (undocumented)
-    export function skew<X extends Angle, Y extends Angle>(x: X, y: Y): Skew<X, Y>;
+    export function skew<X extends Angle.Fixed, Y extends Angle.Fixed>(x: X, y: Y): Skew<X, Y>;
     // (undocumented)
-    export function translate<X extends Length.Fixed | Percentage, Y extends Length.Fixed | Percentage, Z extends Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
+    export function translate<X extends Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed, Z extends Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
     const // (undocumented)
     parse: Parser<Slice<Token>, Transform, string, []>;
     const // (undocumented)
@@ -2844,13 +3147,13 @@ export namespace Transform {
 }
 
 // @public (undocumented)
-export class Translate<X extends Length.Fixed | Percentage = Length.Fixed | Percentage, Y extends Length.Fixed | Percentage = Length.Fixed | Percentage, Z extends Length.Fixed = Length.Fixed> extends Function_3<"translate"> {
+export class Translate<X extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed, Z extends Length.Fixed = Length.Fixed> extends Function_3<"translate"> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<X extends Length.Fixed | Percentage = Length.Fixed | Percentage, Y extends Length.Fixed | Percentage = Length.Fixed | Percentage, Z extends Length.Fixed = Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
+    static of<X extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed, Z extends Length.Fixed = Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
     // (undocumented)
     resolve(): Translate<X, Y, Z>;
     // (undocumented)
@@ -2868,13 +3171,15 @@ export class Translate<X extends Length.Fixed | Percentage = Length.Fixed | Perc
 // @public (undocumented)
 export namespace Translate {
     // (undocumented)
-    export function isTranslate<X extends Length.Fixed | Percentage, Y extends Length.Fixed | Percentage, Z extends Length.Fixed>(value: unknown): value is Translate<X, Y, Z>;
+    export type Canonical = Translate<Length.Canonical | Percentage.Canonical, Length.Canonical | Percentage.Canonical, Length.Canonical>;
+    // (undocumented)
+    export function isTranslate<X extends Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed, Z extends Length.Fixed>(value: unknown): value is Translate<X, Y, Z>;
     // (undocumented)
     export interface JSON extends Function_3.JSON<"translate"> {
         // (undocumented)
-        x: Length.Fixed.JSON | Percentage.JSON;
+        x: Length.Fixed.JSON | Percentage.Fixed.JSON;
         // (undocumented)
-        y: Length.Fixed.JSON | Percentage.JSON;
+        y: Length.Fixed.JSON | Percentage.Fixed.JSON;
         // (undocumented)
         z: Length.Fixed.JSON;
     }

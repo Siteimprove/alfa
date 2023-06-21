@@ -6,11 +6,10 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Percentage } from "../../calculation";
 import { Function, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
-import { Length } from "../numeric";
+import { Length, Percentage } from "../numeric";
 
 import { BasicShape } from "./basic-shape";
 
@@ -25,11 +24,11 @@ const { parseComma, parseWhitespace } = Token;
  */
 export class Polygon<
   F extends Polygon.Fill = Polygon.Fill,
-  V extends Length.Fixed | Percentage = Length.Fixed | Percentage
+  V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
 > extends BasicShape<"polygon"> {
   public static of<
     F extends Polygon.Fill = Polygon.Fill,
-    V extends Length.Fixed | Percentage = Length.Fixed | Percentage
+    V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
   >(fill: Option<F>, vertices: Iterable<Polygon.Vertex<V>>): Polygon<F, V> {
     return new Polygon(fill, Array.from(vertices));
   }
@@ -94,18 +93,18 @@ export class Polygon<
 export namespace Polygon {
   export type Fill = Keyword<"nonzero"> | Keyword<"evenodd">;
 
-  export type Vertex<V extends Length | Percentage = Length | Percentage> =
+  export type Vertex<V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> =
     readonly [V, V];
 
   export interface JSON<
     F extends Fill = Fill,
-    V extends Length | Percentage = Length | Percentage
+    V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
   > extends BasicShape.JSON<"polygon"> {
     fill: Option.JSON<F>;
     vertices: Array<Serializable.ToJSON<Vertex<V>>>;
   }
 
-  const parseLengthPercentage = either(Length.parseBase, Percentage.parse);
+  const parseLengthPercentage = either(Length.parseBase, Percentage.parseBase);
 
   const parseVertex = separated(
     parseLengthPercentage,

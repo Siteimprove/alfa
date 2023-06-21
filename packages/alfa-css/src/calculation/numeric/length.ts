@@ -4,7 +4,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax";
 
-import { Converter, Convertible, Unit } from "../../unit";
+import { Converter, Unit } from "../../unit";
 import { Dimension } from "./dimension";
 
 const { map, either } = Parser;
@@ -14,20 +14,16 @@ const { map, either } = Parser;
  *
  * @public
  */
-export class Length<U extends Unit.Length = Unit.Length>
-  extends Dimension<"length", Unit.Length, U>
-  implements Convertible<Unit.Length.Absolute>
-{
+export class Length<U extends Unit.Length = Unit.Length> extends Dimension<
+  "length",
+  U
+> {
   public static of<U extends Unit.Length>(value: number, unit: U): Length<U> {
     return new Length(value, unit);
   }
 
   private constructor(value: number, unit: U) {
     super(value, unit, "length");
-  }
-
-  public get canonicalUnit(): "px" {
-    return "px";
   }
 
   public hasUnit<U extends Unit.Length>(unit: U): this is Length<U> {
@@ -48,18 +44,6 @@ export class Length<U extends Unit.Length = Unit.Length>
 
   public isRelative(): this is Length<Unit.Length.Relative> {
     return Unit.isRelativeLength(this._unit);
-  }
-
-  public isFontRelative(): this is Length<Unit.Length.Relative.Font> {
-    return Unit.isFontRelativeLength(this._unit);
-  }
-
-  public isViewportRelative(): this is Length<Unit.Length.Relative.Viewport> {
-    return Unit.isViewportRelativeLength(this._unit);
-  }
-
-  public isAbsolute(): this is Length<Unit.Length.Absolute> {
-    return Unit.isAbsoluteLength(this._unit);
   }
 
   public scale(factor: number): Length<U> {
@@ -95,6 +79,9 @@ export namespace Length {
     return value instanceof Length;
   }
 
+  /**
+   * {@link https://drafts.csswg.org/css-values/#lengths}
+   */
   export const parse: Parser<Slice<Token>, Length, string> = either(
     map(
       Token.parseDimension((dimension) => Unit.isLength(dimension.unit)),
@@ -105,8 +92,4 @@ export namespace Length {
       () => Length.of(0, "px")
     )
   );
-
-  export function isZero(length: Length): boolean {
-    return length.value === 0;
-  }
 }

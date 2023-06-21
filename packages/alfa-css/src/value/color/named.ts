@@ -2,8 +2,9 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Number } from "../../calculation";
 import { Token } from "../../syntax";
+
+import { Number } from "../numeric";
 
 import { Format } from "./format";
 
@@ -34,19 +35,19 @@ export class Named<
     return Colors[this._color];
   }
 
-  public get red(): Number {
+  public get red(): Number.Fixed {
     return Number.of(this.value >>> 16);
   }
 
-  public get green(): Number {
+  public get green(): Number.Fixed {
     return Number.of((this.value >>> 8) & 0xff);
   }
 
-  public get blue(): Number {
+  public get blue(): Number.Fixed {
     return Number.of(this.value & 0xff);
   }
 
-  public get alpha(): Number {
+  public get alpha(): Number.Fixed {
     // The "transparent" color has an alpha of 0 as it's, well, transparent. All
     // other named colors are fully opaque and therefore have an alpha of 1.
     return Number.of(this._color === "transparent" ? 0 : 1);

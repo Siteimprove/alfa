@@ -15,7 +15,6 @@ const { map } = Parser;
  */
 export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
   "angle",
-  Unit.Angle,
   U
 > {
   public static of<U extends Unit.Angle>(value: number, unit: U): Angle<U> {
@@ -24,10 +23,6 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
 
   private constructor(value: number, unit: U) {
     super(value, unit, "angle");
-  }
-
-  public get canonicalUnit(): "deg" {
-    return "deg";
   }
 
   public hasUnit<U extends Unit.Angle>(unit: U): this is Angle<U> {

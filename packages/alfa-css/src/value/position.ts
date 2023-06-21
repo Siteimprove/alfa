@@ -4,14 +4,12 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 import { Err } from "@siteimprove/alfa-result";
 
-import { Percentage } from "../calculation";
-
 import { Keyword } from "./keyword";
-import { Length } from "./numeric";
+import { Length, Percentage } from "./numeric";
 
 import { Token } from "../syntax";
 import { Unit } from "../unit";
-import { Value } from "../value";
+import { Value } from "./value";
 
 const { map, either, pair, right } = Parser;
 
@@ -81,6 +79,11 @@ export class Position<
  * @public
  */
 export namespace Position {
+  export type Canonical = Position<
+    Component.Canonical<Keywords.Horizontal>,
+    Component.Canonical<Keywords.Vertical>
+  >;
+
   export interface JSON extends Value.JSON<"position"> {
     horizontal: Component.JSON;
     vertical: Component.JSON;
@@ -111,10 +114,10 @@ export namespace Position {
 
   type Offset<U extends Unit.Length = Unit.Length> =
     | Length.Fixed<U>
-    | Percentage;
+    | Percentage.Fixed;
 
   namespace Offset {
-    export const parse = either(Length.parseBase, Percentage.parse);
+    export const parse = either(Length.parseBase, Percentage.parseBase);
   }
 
   export class Side<
@@ -185,9 +188,12 @@ export namespace Position {
   }
 
   export namespace Side {
+    export type Canonical<S extends Keywords.Vertical | Keywords.Horizontal> =
+      Side<S, Percentage.Canonical | Length.Canonical>;
+
     export interface JSON extends Value.JSON<"side"> {
       side: Keyword.JSON;
-      offset: Length.Fixed.JSON | Percentage.JSON | null;
+      offset: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
     }
 
     /**
@@ -246,10 +252,16 @@ export namespace Position {
   > = Keywords.Center | Offset<U> | Side<S, Offset<U>>;
 
   export namespace Component {
+    export type Canonical<S extends Keywords.Horizontal | Keywords.Vertical> =
+      | Percentage.Canonical
+      | Keywords.Center
+      | Length.Canonical
+      | Side.Canonical<S>;
+
     export type JSON =
       | Keyword.JSON
       | Length.Fixed.JSON
-      | Percentage.JSON
+      | Percentage.Fixed.JSON
       | Side.JSON;
 
     // "center" is included in Side.parse[Horizontal, Vertical]

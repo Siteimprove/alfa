@@ -2,8 +2,9 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Number } from "../../calculation";
 import { Token } from "../../syntax";
+
+import { Number } from "../numeric";
 
 import { Function } from "./function";
 
@@ -13,14 +14,14 @@ const { map, left, right, pair, either, delimited, option } = Parser;
  * @public
  */
 export class Scale extends Function<"scale"> {
-  public static of(x: Number, y: Number): Scale {
+  public static of(x: Number.Fixed, y: Number.Fixed): Scale {
     return new Scale(x, y);
   }
 
-  private readonly _x: Number;
-  private readonly _y: Number;
+  private readonly _x: Number.Fixed;
+  private readonly _y: Number.Fixed;
 
-  private constructor(x: Number, y: Number) {
+  private constructor(x: Number.Fixed, y: Number.Fixed) {
     super("scale", false);
     this._x = x;
     this._y = y;
@@ -30,11 +31,11 @@ export class Scale extends Function<"scale"> {
     return "scale";
   }
 
-  public get x(): Number {
+  public get x(): Number.Fixed {
     return this._x;
   }
 
-  public get y(): Number {
+  public get y(): Number.Fixed {
     return this._y;
   }
 
@@ -84,8 +85,8 @@ export class Scale extends Function<"scale"> {
  */
 export namespace Scale {
   export interface JSON extends Function.JSON<"scale"> {
-    x: Number.JSON;
-    y: Number.JSON;
+    x: Number.Fixed.JSON;
+    y: Number.Fixed.JSON;
   }
 
   export function isScale(value: unknown): value is Scale {
@@ -102,11 +103,11 @@ export namespace Scale {
         delimited(
           option(Token.parseWhitespace),
           pair(
-            Number.parse,
+            Number.parseBase,
             option(
               right(
                 delimited(option(Token.parseWhitespace), Token.parseComma),
-                Number.parse
+                Number.parseBase
               )
             )
           )
@@ -128,7 +129,7 @@ export namespace Scale {
     right(
       Token.parseFunction("scaleX"),
       left(
-        delimited(option(Token.parseWhitespace), Number.parse),
+        delimited(option(Token.parseWhitespace), Number.parseBase),
         Token.parseCloseParenthesis
       )
     ),
@@ -142,7 +143,7 @@ export namespace Scale {
     right(
       Token.parseFunction("scaleY"),
       left(
-        delimited(option(Token.parseWhitespace), Number.parse),
+        delimited(option(Token.parseWhitespace), Number.parseBase),
         Token.parseCloseParenthesis
       )
     ),

@@ -1,15 +1,15 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash } from "@siteimprove/alfa-hash";
+import { Comparable } from "@siteimprove/alfa-comparable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
-import { Length as BaseLength } from "../../calculation/numeric/length";
+import { Length as BaseLength } from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
-import { Value } from "../../value";
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { Value } from "../value";
+
+import { Dimension } from "./dimension";
 
 const { either, map } = Parser;
 
@@ -24,38 +24,31 @@ export type Length<U extends Unit.Length = Unit.Length> =
  * @public
  */
 export namespace Length {
+  export type Canonical = Fixed<"px">;
+
   /**
-   * Lengths that may contain calculations
-   *
-   * @internal
+   * Lengths that are the result of a calculation.
    */
   export class Calculated
-    extends Value<"length", true>
-    implements ILength<Unit.Length, true>
+    extends Dimension.Calculated<"length">
+    implements ILength<true>
   {
     public static of(value: Math<"length">): Calculated {
       return new Calculated(value);
     }
 
-    private readonly _math: Math<"length">;
-
     private constructor(math: Math<"length">) {
-      super("length", true);
-      this._math = math;
-    }
-
-    public get math(): Math<"length"> {
-      return this._math;
+      super(math, "length");
     }
 
     public hasCalculation(): this is Calculated {
       return true;
     }
 
-    public resolve(resolver: Length.Resolver): Fixed<"px"> {
+    public resolve(resolver: Length.Resolver): Canonical {
       return Fixed.of(
         this._math
-          .resolve2({
+          .resolve({
             // The math expression resolver is only aware of BaseLength and thus
             // work with these, but we want to abstract them from further layers,
             // so the resolver here is only aware of Length, and we need to
@@ -71,34 +64,20 @@ export namespace Length {
     }
 
     public equals(value: unknown): value is this {
-      return value instanceof Calculated && value._math.equals(this._math);
-    }
-
-    public hash(hash: Hash): void {
-      this._math.hash(hash);
-    }
-
-    public toJSON(): Calculated.JSON {
-      return { ...super.toJSON(), math: this._math.toJSON() };
-    }
-
-    public toString(): string {
-      return this._math.toString();
+      return value instanceof Calculated && super.equals(value);
     }
   }
 
   export namespace Calculated {
-    export interface JSON extends Value.JSON<"length"> {
-      math: Math.JSON;
-    }
+    export interface JSON extends Dimension.Calculated.JSON<"length"> {}
   }
 
   /**
-   * Lengths that are guaranteed to not contain any calculation.
+   * Lengths that are a fixed (not calculated) value.
    */
   export class Fixed<U extends Unit.Length = Unit.Length>
-    extends Value<"length", false>
-    implements ILength<U, false>, Comparable<Fixed<U>>
+    extends Dimension.Fixed<"length", U>
+    implements ILength<false>, Comparable<Fixed<U>>
   {
     public static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
 
@@ -116,25 +95,8 @@ export namespace Length {
       return new Fixed(value.value, value.unit);
     }
 
-    private readonly _value: number;
-    private readonly _unit: U;
-
     private constructor(value: number, unit: U) {
-      super("length", false);
-      this._value = value;
-      this._unit = unit;
-    }
-
-    public get canonicalUnit(): "px" {
-      return "px";
-    }
-
-    public get value(): number {
-      return this._value;
-    }
-
-    public get unit(): U {
-      return this._unit;
+      super(value, unit, "length");
     }
 
     public hasCalculation(): this is Calculated {
@@ -165,6 +127,14 @@ export namespace Length {
       return Unit.isFontRelativeLength(this._unit);
     }
 
+    public isViewportRelative(): this is Length<Unit.Length.Relative.Viewport> {
+      return Unit.isViewportRelativeLength(this._unit);
+    }
+
+    public isAbsolute(): this is Length<Unit.Length.Absolute> {
+      return Unit.isAbsoluteLength(this._unit);
+    }
+
     public scale(factor: number): Fixed<U> {
       return new Fixed(this._value * factor, this._unit);
     }
@@ -172,58 +142,26 @@ export namespace Length {
     /**
      * Resolve a Length into an absolute Length in pixels.
      */
-    public resolve(resolver: Length.Resolver): Fixed<"px"> {
+    public resolve(resolver: Length.Resolver): Canonical {
       return this.isRelative() ? resolver(this) : this.withUnit("px");
     }
 
-    public isZero(): boolean {
-      return this.value === 0;
-    }
-
     public equals(value: unknown): value is this {
-      return (
-        value instanceof Fixed &&
-        Equatable.equals(value._value, this._value) &&
-        Equatable.equals(value._unit, this._unit)
-      );
-    }
-
-    public compare(value: Fixed<U>): Comparison {
-      const a = this.withUnit(this.canonicalUnit);
-      const b = value.withUnit(value.canonicalUnit);
-
-      return Comparable.compareNumber(a.value, b.value);
-    }
-
-    public hash(hash: Hash): void {
-      hash.writeNumber(this._value).writeString(this._unit);
-    }
-
-    public toJSON(): Fixed.JSON<U> {
-      return { ...super.toJSON(), value: this._value, unit: this._unit };
-    }
-
-    public toString(): string {
-      return BaseLength.of(this._value, this._unit).toString();
+      return value instanceof Fixed && super.equals(value);
     }
   }
 
   export namespace Fixed {
     export interface JSON<U extends Unit.Length = Unit.Length>
-      extends Value.JSON<"length"> {
-      value: number;
-      unit: U;
-    }
+      extends Dimension.Fixed.JSON<"length", U> {}
   }
 
   export type JSON = Calculated.JSON | Fixed.JSON;
 
-  interface ILength<
-    U extends Unit.Length = Unit.Length,
-    CALC extends boolean = boolean
-  > extends Value<"length", CALC> {
+  interface ILength<CALC extends boolean = boolean>
+    extends Value<"length", CALC> {
     hasCalculation(): this is Calculated;
-    resolve(resolver: Length.Resolver): Fixed<"px">;
+    resolve(resolver: Length.Resolver): Canonical;
   }
 
   // In order to resolve a length, we need to know how to resolve relative
@@ -231,16 +169,16 @@ export namespace Length {
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Fixed<"px">>;
+  export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Canonical>;
 
   /**
    * Build a (fixed) length resolver, using basis for the relative units
    */
   export function resolver(
-    emBase: Fixed<"px">,
-    remBase: Fixed<"px">,
-    vwBase: Fixed<"px">,
-    vhBase: Fixed<"px">
+    emBase: Canonical,
+    remBase: Canonical,
+    vwBase: Canonical,
+    vhBase: Canonical
   ): Resolver {
     return (length) => {
       const { unit, value } = length;
@@ -316,17 +254,18 @@ export namespace Length {
     return Calculated.of(value);
   }
 
-  // Curryfied version is more convenient for monadic call sites.
-  export function isZero(length: Length.Fixed): boolean {
-    return length.isZero();
-  }
-
+  /**
+   * {@link https://drafts.csswg.org/css-values/#lengths}
+   */
   export const parse: Parser<Slice<Token>, Length, string> = either(
     map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, of),
     map(Math.parseLength, of)
   );
 
   // TODO: temporary helper needed during migration to calculated values.
+  /**
+   * @internal
+   */
   export const parseBase = map<Slice<Token>, BaseLength, Fixed, string>(
     BaseLength.parse,
     of

@@ -38,7 +38,7 @@ export class Selective<S, T = never> implements Functor<T>, Applicative<T>, Mona
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    if<P extends S, U>(refinement: Refinement<S, P>, mapper: Mapper<P, U>): Selective<Exclude<S, P>, T | U>;
+    if<P, Q extends P, U>(refinement: Refinement<P, Q>, mapper: Mapper<S & Q, U>): Selective<Exclude<S, Q>, T | U>;
     // (undocumented)
     if<U>(predicate: Predicate<S>, mapper: Mapper<S, U>): Selective<S, T | U>;
     // (undocumented)
