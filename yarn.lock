@@ -172,16 +172,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@changesets/get-github-info@npm:^0.5.2":
-  version: 0.5.2
-  resolution: "@changesets/get-github-info@npm:0.5.2"
-  dependencies:
-    dataloader: ^1.4.0
-    node-fetch: ^2.5.0
-  checksum: 067e07eeaecdbedbd1c715513c4aa6206a941bd1d3af292d067792808c6fa6644caad2b35fba614a44892559c031c234df8028f8d2abd4cb2682d48080ef5df3
-  languageName: node
-  linkType: hard
-
 "@changesets/get-release-plan@npm:^3.0.16":
   version: 3.0.16
   resolution: "@changesets/get-release-plan@npm:3.0.16"
@@ -1680,9 +1670,9 @@ __metadata:
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
     "@changesets/cli": ^2.26.1
+    "@changesets/types": ^5.2.1
     "@microsoft/api-documenter": ^7.19.9
     "@microsoft/api-extractor": ^7.29.5
-    "@svitejs/changesets-changelog-github-compact": ^1.1.0
     "@types/async": ^3.2.5
     "@types/jsonld": ^1.5.6
     "@types/node": ^14.14.31
@@ -1695,16 +1685,6 @@ __metadata:
     typescript: ^5.0.4
   languageName: unknown
   linkType: soft
-
-"@svitejs/changesets-changelog-github-compact@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@svitejs/changesets-changelog-github-compact@npm:1.1.0"
-  dependencies:
-    "@changesets/get-github-info": ^0.5.2
-    dotenv: ^16.0.3
-  checksum: 51a8727f6ee5d0eddc48c24ef1b809d714d1d1b04cbb4bbb33f39e3096708e7f5957274a2fcaa8eeb273a16295f0f612ca4d7e5e672dfce558e1f3d7faeb1815
-  languageName: node
-  linkType: hard
 
 "@tootallnate/once@npm:1":
   version: 1.1.2
@@ -2563,13 +2543,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dataloader@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "dataloader@npm:1.4.0"
-  checksum: e2c93d43afde68980efc0cd9ff48e9851116e27a9687f863e02b56d46f7e7868cc762cd6dcbaf4197e1ca850a03651510c165c2ae24b8e9843fd894002ad0e20
-  languageName: node
-  linkType: hard
-
 "debug@npm:4, debug@npm:4.3.4, debug@npm:^4.1.0, debug@npm:^4.1.1":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
@@ -2684,13 +2657,6 @@ __metadata:
   dependencies:
     path-type: ^4.0.0
   checksum: fa05e18324510d7283f55862f3161c6759a3f2f8dbce491a2fc14c8324c498286c54282c1f0e933cb930da8419b30679389499b919122952a4f8592362ef4615
-  languageName: node
-  linkType: hard
-
-"dotenv@npm:^16.0.3":
-  version: 16.0.3
-  resolution: "dotenv@npm:16.0.3"
-  checksum: afcf03f373d7a6d62c7e9afea6328e62851d627a4e73f2e12d0a8deae1cd375892004f3021883f8aec85932cd2834b091f568ced92b4774625b321db83b827f8
   languageName: node
   linkType: hard
 
@@ -4236,7 +4202,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.5.0, node-fetch@npm:^2.6.5":
+"node-fetch@npm:^2.6.5":
   version: 2.6.9
   resolution: "node-fetch@npm:2.6.9"
   dependencies:

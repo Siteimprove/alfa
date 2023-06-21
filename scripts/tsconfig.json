@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["es2018", "dom"],
+    "types": ["node"],
+  },
+  "files": ["src/changelog.ts"],
+  "references": [
+    {
+      "path": "../packages"
+    }
+  ]
+}
