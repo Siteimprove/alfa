@@ -21,7 +21,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r78",
-  tags: [Scope.Component],
+  tags: [Scope.Page],
   evaluate({ device, document }) {
     let headings: Sequence<Element>;
 

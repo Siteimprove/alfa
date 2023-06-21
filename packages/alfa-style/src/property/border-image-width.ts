@@ -2,6 +2,7 @@ import {
   Keyword,
   Length,
   Number,
+  Numeric,
   Percentage,
   Token,
   Tuple,
@@ -49,7 +50,11 @@ export type Computed = Tuple<
  * @internal
  */
 export namespace Computed {
-  export type Item = Length.Fixed<"px"> | Percentage | Number | Keyword<"auto">;
+  export type Item =
+    | Length.Canonical
+    | Percentage.Canonical
+    | Number.Canonical
+    | Keyword<"auto">;
 }
 
 /**
@@ -92,5 +97,5 @@ export default Longhand.of<Specified, Computed>(
 function resolve(style: Style): (specified: Specified.Item) => Computed.Item {
   const resolver = Resolver.length(style);
   return (specified) =>
-    Length.isLength(specified) ? specified.resolve(resolver) : specified;
+    Numeric.isNumeric(specified) ? specified.resolve(resolver) : specified;
 }

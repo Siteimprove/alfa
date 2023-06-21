@@ -9,3 +9,4 @@ export * from "./shadow";
 export * from "./shape";
 export * from "./string";
 export * from "./transform";
+export * from "./value";

@@ -227,9 +227,19 @@ export namespace Criterion {
   }
 
   export function fromURI(uri: string): Option<Criterion> {
+    const rewrittenUri = uri
+      // Keeping slashes in URL rewritting to ensure proper delimiting of path
+      // pieces.
+      // rewrite WCAG21 -> WCAG2 since we only parse the latter.
+      // We should use the shared way of tracking which version is the latest as
+      // this will require manual updates.
+      .replace("/WCAG21/", "/WCAG2/")
+      // rewrite WCAG -> WCAG2 since we only parse the latter.
+      .replace("/WCAG/", "/WCAG2/");
+
     for (const [chapter, value] of Object.entries(Criteria)) {
       for (const version of value.versions) {
-        if (version[1].uri === uri) {
+        if (version[1].uri === rewrittenUri) {
           return Option.of(Criterion.of(chapter as Chapter));
         }
       }

@@ -3,8 +3,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax";
 
-import { Angle, Number, Percentage } from "../../calculation";
 import { Keyword } from "../keyword";
+import { Angle, Number, Percentage } from "../numeric";
 
 import { Current } from "./current";
 import { Hex } from "./hex";
@@ -24,6 +24,11 @@ export type Color = Hex | Named | HSL | RGB | Current | System;
  * @public
  */
 export namespace Color {
+  export type Canonical =
+    | Current
+    | System
+    | RGB<Percentage.Canonical, Percentage.Canonical>;
+
   export type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
 
   export const current: Current = Keyword.of("currentcolor");
@@ -32,10 +37,13 @@ export namespace Color {
     return Hex.of(value);
   }
 
-  export function hsl<H extends Number | Angle, A extends Number | Percentage>(
+  export function hsl<
+    H extends Number.Fixed | Angle.Fixed,
+    A extends Number.Fixed | Percentage.Fixed
+  >(
     hue: H,
-    saturation: Percentage,
-    lightness: Percentage,
+    saturation: Percentage.Fixed,
+    lightness: Percentage.Fixed,
     alpha: A
   ): HSL<H, A> {
     return HSL.of(hue, saturation, lightness, alpha);
@@ -46,8 +54,8 @@ export namespace Color {
   }
 
   export function rgb<
-    C extends Number | Percentage,
-    A extends Number | Percentage
+    C extends Number.Fixed | Percentage.Fixed,
+    A extends Number.Fixed | Percentage.Fixed
   >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
     return RGB.of(red, green, blue, alpha);
   }

@@ -2,10 +2,9 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Percentage } from "../../calculation";
 import { Token } from "../../syntax";
 
-import { Length } from "../numeric";
+import { Length, Percentage } from "../numeric";
 
 import { Function } from "./function";
 
@@ -15,13 +14,13 @@ const { map, left, right, pair, either, delimited, option } = Parser;
  * @public
  */
 export class Translate<
-  X extends Length.Fixed | Percentage = Length.Fixed | Percentage,
-  Y extends Length.Fixed | Percentage = Length.Fixed | Percentage,
+  X extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
+  Y extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
   Z extends Length.Fixed = Length.Fixed
 > extends Function<"translate"> {
   public static of<
-    X extends Length.Fixed | Percentage = Length.Fixed | Percentage,
-    Y extends Length.Fixed | Percentage = Length.Fixed | Percentage,
+    X extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
+    Y extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
     Z extends Length.Fixed = Length.Fixed
   >(x: X, y: Y, z: Z): Translate<X, Y, Z> {
     return new Translate(x, y, z);
@@ -91,15 +90,21 @@ export class Translate<
  * @public
  */
 export namespace Translate {
+  export type Canonical = Translate<
+    Length.Canonical | Percentage.Canonical,
+    Length.Canonical | Percentage.Canonical,
+    Length.Canonical
+  >;
+
   export interface JSON extends Function.JSON<"translate"> {
-    x: Length.Fixed.JSON | Percentage.JSON;
-    y: Length.Fixed.JSON | Percentage.JSON;
+    x: Length.Fixed.JSON | Percentage.Fixed.JSON;
+    y: Length.Fixed.JSON | Percentage.Fixed.JSON;
     z: Length.Fixed.JSON;
   }
 
   export function isTranslate<
-    X extends Length.Fixed | Percentage,
-    Y extends Length.Fixed | Percentage,
+    X extends Length.Fixed | Percentage.Fixed,
+    Y extends Length.Fixed | Percentage.Fixed,
     Z extends Length.Fixed
   >(value: unknown): value is Translate<X, Y, Z> {
     return value instanceof Translate;
@@ -115,11 +120,11 @@ export namespace Translate {
         delimited(
           option(Token.parseWhitespace),
           pair(
-            either(Length.parseBase, Percentage.parse),
+            either(Length.parseBase, Percentage.parseBase),
             option(
               right(
                 delimited(option(Token.parseWhitespace), Token.parseComma),
-                either(Length.parseBase, Percentage.parse)
+                either(Length.parseBase, Percentage.parseBase)
               )
             )
           )
@@ -147,7 +152,7 @@ export namespace Translate {
       left(
         delimited(
           option(Token.parseWhitespace),
-          either(Length.parseBase, Percentage.parse)
+          either(Length.parseBase, Percentage.parseBase)
         ),
         Token.parseCloseParenthesis
       )
@@ -164,7 +169,7 @@ export namespace Translate {
       left(
         delimited(
           option(Token.parseWhitespace),
-          either(Length.parseBase, Percentage.parse)
+          either(Length.parseBase, Percentage.parseBase)
         ),
         Token.parseCloseParenthesis
       )
@@ -196,11 +201,11 @@ export namespace Translate {
         delimited(
           option(Token.parseWhitespace),
           pair(
-            either(Length.parseBase, Percentage.parse),
+            either(Length.parseBase, Percentage.parseBase),
             pair(
               right(
                 delimited(option(Token.parseWhitespace), Token.parseComma),
-                either(Length.parseBase, Percentage.parse)
+                either(Length.parseBase, Percentage.parseBase)
               ),
               right(
                 delimited(option(Token.parseWhitespace), Token.parseComma),

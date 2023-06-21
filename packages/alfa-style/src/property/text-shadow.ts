@@ -23,17 +23,7 @@ export type Specified = Keyword<"none"> | List<Shadow>;
 /**
  * @internal
  */
-export type Computed =
-  | Keyword<"none">
-  | List<
-      Shadow<
-        Length.Fixed<"px">,
-        Length.Fixed<"px">,
-        Length.Fixed<"px">,
-        Length.Fixed<"px">,
-        RGB<Percentage, Percentage> | Current | System
-      >
-    >;
+export type Computed = Keyword<"none"> | List<Shadow.Canonical>;
 
 const parseList = List.parseCommaSeparated(
   Shadow.parse({ withInset: false, withSpread: false })

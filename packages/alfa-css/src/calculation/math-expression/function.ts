@@ -1,9 +1,7 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Result } from "@siteimprove/alfa-result";
 
-// TODO: resimplify
-import { Angle, Number, Numeric } from "../numeric";
-import { Length } from "../numeric/index-new";
+import { Angle, Length, Number, Numeric } from "../numeric";
 
 import { Unit } from "../../unit";
 

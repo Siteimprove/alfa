@@ -63,7 +63,7 @@ export default Longhand.of<Specified, Computed>(
 
       const base = Selective.of(lineHeight)
         .if(isNormal, () => fontSize.scale(1.2))
-        .if(Number.isNumber, ({ value }) => fontSize.scale(value))
+        .if(Number.isNumber, (value) => fontSize.scale(value.value))
         .get();
 
       return Selective.of(verticalAlign)

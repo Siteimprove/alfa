@@ -26,7 +26,7 @@ export type Computed =
   | Keyword<"fit-content">
   | Keyword<"max-content">
   | Keyword<"min-content">
-  | Length.Fixed<"px">
+  | Length.Canonical
   | Percentage;
 
 /**

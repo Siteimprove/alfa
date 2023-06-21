@@ -11,7 +11,7 @@ export type Specified = Length;
 /**
  * @internal
  */
-export type Computed = Length.Fixed<"px">;
+export type Computed = Length.Canonical;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset}

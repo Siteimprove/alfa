@@ -1,17 +1,13 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
-import { Err, Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Token, Function as CSSFunction } from "../../syntax";
+import { Function as CSSFunction, Token } from "../../syntax";
 
-import { Value as CSSValue } from "../../value";
-
-// TODO: resimplify
-import { Angle, Number, Numeric, Percentage } from "../numeric";
-import { Length } from "../numeric/index-new";
+import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
 import { Expression } from "./expression";
 import { Function } from "./function";
@@ -36,9 +32,7 @@ const {
  *
  * @public
  */
-export class Math<
-  out D extends Math.Dimension = Math.Dimension
-> extends CSSValue<"math expression", true> {
+export class Math<out D extends Math.Dimension = Math.Dimension> {
   public static of(expression: Expression): Math {
     return new Math(
       expression.reduce({
@@ -49,15 +43,18 @@ export class Math<
   }
 
   private readonly _expression: Expression;
+  private readonly _type = "math expression";
 
   private constructor(expression: Expression) {
-    super("math expression", true);
-
     this._expression = expression;
   }
 
   public get expression(): Expression {
     return this._expression;
+  }
+
+  public get type(): "math expression" {
+    return this._type;
   }
 
   public reduce(resolver: Expression.Resolver): Math {
@@ -102,63 +99,77 @@ export class Math<
     return this._expression.kind.is("percentage");
   }
 
-  public resolve(): any {
-    throw new Error("temporarily failing");
-  }
-
   // Other resolvers should be added when needed.
   /**
-   * Resolves a calculation typed as a length, length-percentage or number.
+   * Resolves a calculation typed as an angle, length, length-percentage or number.
    * Needs a resolver to handle relative lengths and percentages.
    */
-  public resolve2(
+  public resolve(this: Math<"angle">): Result<Angle<"deg">, string>;
+
+  public resolve(
     this: Math<"length">,
     resolver: Expression.LengthResolver
   ): Result<Length<"px">, string>;
 
-  public resolve2(
+  public resolve(
     this: Math<"length-percentage">,
-    resolver: Expression.Resolver<"px", Length<"px">>
+    resolver: Expression.Resolver<"px", Length<"px">>,
+    hint?: "length"
   ): Result<Length<"px">, string>;
 
-  public resolve2(this: Math<"number">): Result<Number, string>;
+  public resolve(this: Math<"number">): Result<Number, string>;
 
-  public resolve2(
+  public resolve(this: Math<"percentage">): Result<Percentage, string>;
+
+  public resolve(
     this: Math,
     resolver?:
       | Expression.LengthResolver
-      | Expression.Resolver<"px", Length<"px">>
+      | Expression.Resolver<"px", Length<"px">>,
+    hint: Kind.Hint = "length"
   ): Result<Numeric, string> {
     // Since the expressions can theoretically contain arbitrarily units in them,
     // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
     // they seem to be more restricted), we can't easily type Expression itself
     // (other than with its Kind).
     try {
-      const expression = this._expression.reduce({
+      const expression = this._expression.reduce<
+        "px",
+        Length<"px"> | Percentage
+      >({
+        // If the expression is a length and we can't resolve relative lengths,
+        // abort.
         length: () => {
           throw new Error(`Missing length resolver for ${this}`);
         },
-        percentage: () => {
-          throw new Error(`Missing percentage resolver for ${this}`);
-        },
+        // If the expression is a percentage and we can't resolve percentages,
+        // we keep them as percentages.
+        percentage: (p) => p,
         ...resolver,
       });
 
-      return this.isDimensionPercentage("length")
+      // Pure percentages can be resolved as any dimension (or stay as percentage)
+      // We need a hint, provided by the context, in order to know what type of
+      // value to convert to afterward.
+      if (this.isPercentage()) {
+        const converters = {
+          angle: "toAngle",
+          length: "toLength",
+        } as const;
+        // If no resolver is provided, percentages must stay as percentages
+        return expression[
+          resolver === undefined ? "toPercentage" : converters[hint]
+        ]();
+      }
+
+      return this.isDimensionPercentage("angle")
+        ? // angle are also angle-percentage, so this catches both.
+          expression.toAngle()
+        : this.isDimensionPercentage("length")
         ? // length are also length-percentage, so this catches both.
-          expression
-            .toLength()
-            .reduce<Result<Numeric, string>>(
-              (_, value) => Ok.of(value),
-              Err.of(`${this} does not resolve to a valid length-percentage`)
-            )
+          expression.toLength()
         : this.isNumber()
-        ? expression
-            .toNumber()
-            .reduce<Result<Numeric, string>>(
-              (_, value) => Ok.of(value),
-              Err.of(`${this} does not resolve to a valid number`)
-            )
+        ? expression.toNumber()
         : Err.of(`${this} does not resolve to a valid expression`);
     } catch (e) {
       if (e instanceof Error) {
@@ -201,6 +212,14 @@ export namespace Math {
 
   export function isCalculation(value: unknown): value is Math {
     return value instanceof Math;
+  }
+
+  export function isNumber(value: unknown): value is Math<"number"> {
+    return isCalculation(value) && value.isNumber();
+  }
+
+  export function isPercentage(value: unknown): value is Math<"percentage"> {
+    return isCalculation(value) && value.isPercentage();
   }
 
   /**
@@ -316,6 +335,13 @@ export namespace Math {
   export const parse = map(parseFunction, Math.of);
 
   // other parsers + filters can be added when needed
+  export const parseAngle = filter(
+    parse,
+    (calculation): calculation is Math<"angle"> =>
+      calculation.isDimension("angle"),
+    () => `calc() expression must be of type "angle"`
+  );
+
   export const parseLength = filter(
     parse,
     (calculation): calculation is Math<"length"> =>
@@ -334,5 +360,12 @@ export namespace Math {
     parse,
     (calculation): calculation is Math<"number"> => calculation.isNumber(),
     () => `calc() expression must be of type "number"`
+  );
+
+  export const parsePercentage = filter(
+    parse,
+    (calculation): calculation is Math<"percentage"> =>
+      calculation.isPercentage(),
+    () => `calc() expression must be of type "percentage"`
   );
 }

@@ -2,11 +2,10 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Percentage } from "../../calculation";
 import { Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
-import { Length } from "../numeric";
+import { Length, Percentage } from "../numeric";
 
 import { BasicShape } from "./basic-shape";
 
@@ -18,12 +17,12 @@ const { either, map, filter } = Parser;
  * @public
  */
 export class Radius<
-  R extends Length.Fixed | Percentage | Radius.Side =
+  R extends Length.Fixed | Percentage.Fixed | Radius.Side =
     | Length.Fixed
-    | Percentage
+    | Percentage.Fixed
     | Radius.Side
 > extends BasicShape<"radius"> {
-  public static of<R extends Length.Fixed | Percentage | Radius.Side>(
+  public static of<R extends Length.Fixed | Percentage.Fixed | Radius.Side>(
     value: R
   ): Radius<R> {
     return new Radius(value);
@@ -73,7 +72,7 @@ export class Radius<
  */
 export namespace Radius {
   export interface JSON extends BasicShape.JSON<"radius"> {
-    value: Length.Fixed.JSON | Percentage.JSON | Keyword.JSON;
+    value: Length.Fixed.JSON | Percentage.Fixed.JSON | Keyword.JSON;
   }
 
   export type Side = Side.Closest | Side.Farthest;
@@ -97,7 +96,7 @@ export namespace Radius {
   export const parse: Parser<Slice<Token>, Radius, string> = map(
     either(
       filter(
-        either(Length.parseBase, Percentage.parse),
+        either(Length.parseBase, Percentage.parseBase),
         ({ value }) => value >= 0,
         () => "Radius cannot be negative"
       ),

@@ -50,10 +50,10 @@ export class Selective<S, T = never>
     return this.flatMap((selective) => selective);
   }
 
-  public if<P extends S, U>(
-    refinement: Refinement<S, P>,
-    mapper: Mapper<P, U>
-  ): Selective<Exclude<S, P>, T | U>;
+  public if<P, Q extends P, U>(
+    refinement: Refinement<P, Q>,
+    mapper: Mapper<S & Q, U>
+  ): Selective<Exclude<S, Q>, T | U>;
 
   public if<U>(
     predicate: Predicate<S>,

@@ -1,5 +1,4 @@
-import { Color } from "@siteimprove/alfa-css";
-import { Length } from "@siteimprove/alfa-css/src/value/numeric";
+import { Color, Numeric } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -18,7 +17,7 @@ export function hasOutline(
     const style = Style.from(element, device, context);
 
     return (
-      style.computed("outline-width").none(Length.isZero) &&
+      style.computed("outline-width").none(Numeric.isZero) &&
       style.computed("outline-style").none((style) => style.value === "none") &&
       style
         .computed("outline-color")

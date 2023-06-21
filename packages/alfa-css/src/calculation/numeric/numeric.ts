@@ -1,17 +1,15 @@
-import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
-import { Hash } from "@siteimprove/alfa-hash";
+import { Equatable } from "@siteimprove/alfa-equatable";
+import { Hash, Hashable } from "@siteimprove/alfa-hash";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Real } from "@siteimprove/alfa-math";
 
 import * as json from "@siteimprove/alfa-json";
-
-import { Value } from "../../value";
 
 /**
  * @public
  */
 export abstract class Numeric<T extends Numeric.Type = Numeric.Type>
-  extends Value<T, false>
-  implements Comparable<Numeric<T>>
+  implements Equatable, Hashable, Serializable
 {
   /**
    * The number of decimals stored for every numeric value.
@@ -19,10 +17,15 @@ export abstract class Numeric<T extends Numeric.Type = Numeric.Type>
   public static readonly Decimals = 7;
 
   protected readonly _value: number;
+  protected readonly _type: T;
 
   protected constructor(value: number, type: T) {
-    super(type, false);
+    this._type = type;
     this._value = Real.round(value, Numeric.Decimals);
+  }
+
+  public get type(): T {
+    return this._type;
   }
 
   public get value(): number {
@@ -31,16 +34,8 @@ export abstract class Numeric<T extends Numeric.Type = Numeric.Type>
 
   public abstract scale(factor: number): Numeric<T>;
 
-  public resolve<N extends Numeric<T>>(this: N): N {
-    return this;
-  }
-
   public equals(value: unknown): value is this {
     return value instanceof Numeric && value._value === this._value;
-  }
-
-  public compare(value: Numeric<T>): Comparison {
-    return Comparable.compareNumber(this._value, value._value);
   }
 
   public hash(hash: Hash): void {
@@ -49,7 +44,7 @@ export abstract class Numeric<T extends Numeric.Type = Numeric.Type>
 
   public toJSON(): Numeric.JSON<T> {
     return {
-      ...super.toJSON(),
+      type: this._type,
       value: this._value,
     };
   }
@@ -63,8 +58,9 @@ export abstract class Numeric<T extends Numeric.Type = Numeric.Type>
  * @public
  */
 export namespace Numeric {
-  export interface JSON<T extends Type = Type> extends Value.JSON<T> {
+  export interface JSON<T extends Type = Type> {
     [key: string]: json.JSON;
+    type: T;
     value: number;
   }
 

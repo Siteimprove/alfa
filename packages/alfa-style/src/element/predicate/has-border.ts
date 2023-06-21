@@ -1,5 +1,4 @@
-import { Color } from "@siteimprove/alfa-css";
-import { Length } from "@siteimprove/alfa-css/src/value/numeric";
+import { Color, Numeric } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -21,7 +20,7 @@ export function hasBorder(
 
     return sides.some(
       (side) =>
-        style.computed(`border-${side}-width` as const).none(Length.isZero) &&
+        style.computed(`border-${side}-width` as const).none(Numeric.isZero) &&
         style
           .computed(`border-${side}-color` as const)
           .none((color) => color.type === "color" && Color.isTransparent(color))

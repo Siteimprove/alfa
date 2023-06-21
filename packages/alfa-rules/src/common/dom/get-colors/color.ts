@@ -1,4 +1,4 @@
-import { Current, Percentage, RGB, System } from "@siteimprove/alfa-css";
+import { type Color as CSSColor, Percentage, RGB } from "@siteimprove/alfa-css";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Style } from "@siteimprove/alfa-style";
 
@@ -6,9 +6,9 @@ import { Style } from "@siteimprove/alfa-style";
  * @public
  */
 export namespace Color {
-  export type Computed = RGB<Percentage, Percentage> | Current | System;
+  export type Computed = CSSColor.Canonical;
 
-  export type Resolved = RGB<Percentage, Percentage>;
+  export type Resolved = RGB<Percentage.Canonical, Percentage.Canonical>;
 
   export function resolve(color: Computed, style: Style): Option<Resolved> {
     switch (color.type) {
