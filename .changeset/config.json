@@ -1,17 +1,8 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": [
-    "../scripts/src/changelog.js",
-    {
-      "repo": "Siteimprove/alfa"
-    }
-  ],
+  "changelog": ["../scripts/src/changelog.js", { "repo": "Siteimprove/alfa" }],
   "commit": false,
-  "fixed": [
-    [
-      "@siteimprove/alfa-*"
-    ]
-  ],
+  "fixed": [["@siteimprove/alfa-*"]],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
