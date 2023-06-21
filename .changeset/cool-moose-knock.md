@@ -2,4 +2,4 @@
 "@siteimprove/alfa-rules": patch
 ---
 
-**Fixed:** SIA-R78 now corectly has a scope of "Page".
+**Fixed:** SIA-R78 now correctly has a scope of "Page".
