@@ -89,6 +89,7 @@ export namespace Native {
           "contentDocument" in element && element.contentDocument !== null
             ? toDocument(element.contentDocument)
             : null,
+        box: null // TODO: How do we get the box from the element?
       };
     }
 

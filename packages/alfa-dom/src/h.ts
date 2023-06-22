@@ -1,6 +1,7 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import {
   Attribute,
   Block,
@@ -35,9 +36,11 @@ export function h<N extends string = string>(
   name: N,
   attributes?: Array<Attribute> | Record<string, string | boolean>,
   children?: Array<Node | string>,
-  style?: Array<Declaration> | Record<string, string>
+  style?: Array<Declaration> | Record<string, string>,
+  namespace?: Namespace,
+  box?: Rectangle
 ): Element<N> {
-  return h.element(name, attributes, children, style);
+  return h.element(name, attributes, children, style, namespace, box);
 }
 
 /**
@@ -49,7 +52,8 @@ export namespace h {
     attributes: Array<Attribute> | Record<string, string | boolean> = [],
     children: Array<Node | string> = [],
     style: Array<Declaration> | Record<string, string> = [],
-    namespace?: Namespace
+    namespace?: Namespace,
+    box?: Rectangle
   ): Element<N> {
     attributes = Array.isArray(attributes)
       ? attributes
@@ -91,7 +95,8 @@ export namespace h {
       children
         .filter(nor(Document.isDocument, Shadow.isShadow))
         .map((child) => (typeof child === "string" ? h.text(child) : child)),
-      style.length === 0 ? None : Option.of(block)
+      style.length === 0 ? None : Option.of(block),
+      Option.from(box)
     );
 
     if (content !== undefined) {

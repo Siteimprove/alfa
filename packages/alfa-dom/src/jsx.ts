@@ -1,7 +1,8 @@
 import { h } from "./h";
 
-import { Node, Element } from ".";
+import { Element, Node } from ".";
 
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import * as dom from ".";
 
 const { entries } = Object;
@@ -16,6 +17,7 @@ export function jsx<N extends string = string>(
 ): Element<N> {
   const attributes: Record<string, string | boolean> = {};
   const style: Record<string, string> = {};
+  let box: Rectangle | undefined = undefined;
 
   for (const [name, value] of entries(properties ?? {})) {
     if (value === null || value === undefined) {
@@ -30,6 +32,11 @@ export function jsx<N extends string = string>(
 
         continue;
 
+      case "box":
+        // TODO: Should we rather just pass it in as a string with 4 numbers and parse it?
+        box = Rectangle.from(value as Rectangle.JSON);
+        continue;
+
       default:
         attributes[name] = value === true ? value : `${value}`;
     }
@@ -39,9 +46,20 @@ export function jsx<N extends string = string>(
     name,
     attributes,
     (children as Array<jsx.Child>).flat(Infinity),
-    style
+    style,
+    undefined,
+    box
   );
 }
+
+// TODO: Delete if it's not going to be used. Can be used to parse a string of 4 whitespace separeted numbers
+// const box = delimited(
+//   option(parseWhitespace),
+//   take(
+//     map(left(parseNumber(), parseWhitespace), (number) => number.value),
+//     4
+//   )
+// );
 
 /**
  * @public
