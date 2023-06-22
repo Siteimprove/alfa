@@ -79,7 +79,8 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
       - name: Build changelog script
-        run: yarn build scripts
+        run: |
+          [[ -d scripts ]] && yarn build scripts
 
       - name: Is current version unique?
         # Check that all packages are at the same version, if not, abort.
