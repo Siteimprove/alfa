@@ -16,14 +16,14 @@ const { either, map } = Parser;
 /**
  * @public
  */
-export type Length<U extends Unit.Length = Unit.Length> =
-  | Length.Calculated
-  | Length.Fixed<U>;
+export type LengthPercentage<U extends Unit.Length = Unit.Length> =
+  | LengthPercentage.Calculated
+  | LengthPercentage.Fixed<U>;
 
 /**
  * @public
  */
-export namespace Length {
+export namespace LengthPercentage {
   export type Canonical = Fixed<"px">;
 
   /**
@@ -31,7 +31,7 @@ export namespace Length {
    */
   export class Calculated
     extends Dimension.Calculated<"length">
-    implements ILength<true>
+    implements ILengthPercentage<true>
   {
     public static of(value: Math<"length">): Calculated {
       return new Calculated(value);
@@ -77,7 +77,7 @@ export namespace Length {
    */
   export class Fixed<U extends Unit.Length = Unit.Length>
     extends Dimension.Fixed<"length", U>
-    implements ILength<false>, Comparable<Fixed<U>>
+    implements ILengthPercentage<false>, Comparable<Fixed<U>>
   {
     public static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
 
@@ -158,7 +158,7 @@ export namespace Length {
 
   export type JSON = Calculated.JSON | Fixed.JSON;
 
-  interface ILength<CALC extends boolean = boolean>
+  interface ILengthPercentage<CALC extends boolean = boolean>
     extends Value<"length", CALC> {
     hasCalculation(): this is Calculated;
     resolve(resolver: Resolver): Canonical;
@@ -220,7 +220,7 @@ export namespace Length {
     };
   }
 
-  export function isLength(value: unknown): value is Length {
+  export function isLength(value: unknown): value is LengthPercentage {
     return value instanceof Calculated || value instanceof Fixed;
   }
 
@@ -241,7 +241,7 @@ export namespace Length {
   export function of<U extends Unit.Length>(
     value: number | BaseLength<U> | Math<"length">,
     unit?: U
-  ): Length<U> {
+  ): LengthPercentage<U> {
     if (typeof value === "number") {
       // The overloads ensure that unit is not undefined
       return Fixed.of(value, unit!);
@@ -257,7 +257,7 @@ export namespace Length {
   /**
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
-  export const parse: Parser<Slice<Token>, Length, string> = either(
+  export const parse: Parser<Slice<Token>, LengthPercentage, string> = either(
     map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, of),
     map(Math.parseLength, of)
   );
