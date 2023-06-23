@@ -80,9 +80,9 @@ export namespace Numeric {
   /**
    * Numerics that are a fixed (not calculated) value.
    */
-  export abstract class Fixed<T extends Type = Type>
-    extends Value<T, false, T>
-    implements INumeric<T, false>, Comparable<Fixed>
+  export abstract class Fixed<T extends Type = Type, R extends Type = T>
+    extends Value<T, false, R>
+    implements INumeric<T, false, R>, Comparable<Fixed>
   {
     protected readonly _value: number;
 
@@ -101,7 +101,7 @@ export namespace Numeric {
       return false;
     }
 
-    public abstract resolve(resolver?: unknown): Fixed<T>;
+    public abstract resolve(resolver?: unknown): Fixed<R>;
 
     public isZero(): boolean {
       return this._value === 0;
