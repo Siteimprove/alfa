@@ -17,7 +17,7 @@ import * as json from "@siteimprove/alfa-json";
 // without calculations.
 export abstract class Value<
   T extends string = string,
-  CALC extends boolean = false
+  CALC extends boolean = boolean
 > implements Equatable, Hashable, Serializable<Value.JSON<T>>
 {
   private readonly _type: T;
