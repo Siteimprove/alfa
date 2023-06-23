@@ -10,6 +10,7 @@ import { Converter, Unit } from "../../unit";
 import { Value } from "../value";
 
 import { Dimension } from "./dimension";
+import { Length } from "./length";
 
 const { either, map } = Parser;
 
@@ -18,13 +19,13 @@ const { either, map } = Parser;
  */
 export type LengthPercentage<U extends Unit.Length = Unit.Length> =
   | LengthPercentage.Calculated
-  | LengthPercentage.Fixed<U>;
+  | Length.Fixed<U>;
 
 /**
  * @public
  */
 export namespace LengthPercentage {
-  export type Canonical = Fixed<"px">;
+  export type Canonical = Length.Fixed<"px">;
 
   /**
    * Lengths that are the result of a calculation.
@@ -46,7 +47,7 @@ export namespace LengthPercentage {
     }
 
     public resolve(resolver: Resolver): Canonical {
-      return Fixed.of(
+      return Length.Fixed.of(
         this._math
           .resolve({
             // The math expression resolver is only aware of BaseLength and thus
@@ -54,7 +55,7 @@ export namespace LengthPercentage {
             // so the resolver here is only aware of Length, and we need to
             // translate back and forth.
             length: (length) => {
-              const resolved = resolver(Fixed.of(length));
+              const resolved = resolver(Length.Fixed.of(length));
               return BaseLength.of(resolved.value, resolved.unit);
             },
           })
@@ -72,91 +73,7 @@ export namespace LengthPercentage {
     export interface JSON extends Dimension.Calculated.JSON<"length"> {}
   }
 
-  /**
-   * Lengths that are a fixed (not calculated) value.
-   */
-  export class Fixed<U extends Unit.Length = Unit.Length>
-    extends Dimension.Fixed<"length", U>
-    implements ILengthPercentage<false>, Comparable<Fixed<U>>
-  {
-    public static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
-
-    public static of<U extends Unit.Length>(value: BaseLength<U>): Fixed<U>;
-
-    public static of<U extends Unit.Length>(
-      value: number | BaseLength<U>,
-      unit?: U
-    ): Fixed<U> {
-      if (typeof value === "number") {
-        // The overloads ensure that unit is not undefined
-        return new Fixed(value, unit!);
-      }
-
-      return new Fixed(value.value, value.unit);
-    }
-
-    private constructor(value: number, unit: U) {
-      super(value, unit, "length");
-    }
-
-    public hasCalculation(): this is never {
-      return false;
-    }
-
-    public hasUnit<U extends Unit.Length>(unit: U): this is Fixed<U> {
-      return (this._unit as Unit.Length) === unit;
-    }
-
-    public withUnit<U extends Unit.Length>(unit: U): Fixed<U> {
-      if (this.hasUnit(unit)) {
-        return this;
-      }
-
-      if (Unit.isAbsoluteLength(unit) && Unit.isAbsoluteLength(this._unit)) {
-        return Fixed.of(Converter.length(this._value, this._unit, unit), unit);
-      }
-
-      throw new Error(`Cannot convert ${this._unit} to ${unit}`);
-    }
-
-    public isRelative(): this is Fixed<Unit.Length.Relative> {
-      return Unit.isRelativeLength(this._unit);
-    }
-
-    public isFontRelative(): this is Fixed<Unit.Length.Relative.Font> {
-      return Unit.isFontRelativeLength(this._unit);
-    }
-
-    public isViewportRelative(): this is Fixed<Unit.Length.Relative.Viewport> {
-      return Unit.isViewportRelativeLength(this._unit);
-    }
-
-    public isAbsolute(): this is Fixed<Unit.Length.Absolute> {
-      return Unit.isAbsoluteLength(this._unit);
-    }
-
-    public scale(factor: number): Fixed<U> {
-      return new Fixed(this._value * factor, this._unit);
-    }
-
-    /**
-     * Resolve a Length into an absolute Length in pixels.
-     */
-    public resolve(resolver: Resolver): Canonical {
-      return this.isRelative() ? resolver(this) : this.withUnit("px");
-    }
-
-    public equals(value: unknown): value is this {
-      return value instanceof Fixed && super.equals(value);
-    }
-  }
-
-  export namespace Fixed {
-    export interface JSON<U extends Unit.Length = Unit.Length>
-      extends Dimension.Fixed.JSON<"length", U> {}
-  }
-
-  export type JSON = Calculated.JSON | Fixed.JSON;
+  export type JSON = Calculated.JSON | Length.Fixed.JSON;
 
   interface ILengthPercentage<CALC extends boolean = boolean>
     extends Value<"length", CALC> {
@@ -169,72 +86,30 @@ export namespace LengthPercentage {
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+  export type Resolver = Mapper<Length.Fixed<Unit.Length.Relative>, Canonical>;
 
-  /**
-   * Build a (fixed) length resolver, using basis for the relative units
-   */
-  export function resolver(
-    emBase: Canonical,
-    remBase: Canonical,
-    vwBase: Canonical,
-    vhBase: Canonical
-  ): Resolver {
-    return (length) => {
-      const { unit, value } = length;
-      const [min, max] =
-        vhBase.value < vwBase.value ? [vhBase, vwBase] : [vwBase, vhBase];
-
-      switch (unit) {
-        // https://www.w3.org/TR/css-values/#em
-        case "em":
-          return emBase.scale(value);
-
-        // https://www.w3.org/TR/css-values/#rem
-        case "rem": {
-          return remBase.scale(value);
-        }
-
-        // https://www.w3.org/TR/css-values/#ex
-        case "ex":
-        // https://www.w3.org/TR/css-values/#ch
-        case "ch":
-          return emBase.scale(value * 0.5);
-
-        // https://www.w3.org/TR/css-values/#vh
-        case "vh":
-          return vhBase.scale(value / 100);
-
-        // https://www.w3.org/TR/css-values/#vw
-        case "vw":
-          return vwBase.scale(value / 100);
-
-        // https://www.w3.org/TR/css-values/#vmin
-        case "vmin":
-          return min.scale(value / 100);
-
-        // https://www.w3.org/TR/css-values/#vmax
-        case "vmax":
-          return max.scale(value / 100);
-      }
-    };
-  }
-
-  export function isLength(value: unknown): value is LengthPercentage {
-    return value instanceof Calculated || value instanceof Fixed;
+  export function isLengthPercentage(
+    value: unknown
+  ): value is LengthPercentage {
+    return value instanceof Calculated || value instanceof Length.Fixed;
   }
 
   export function isCalculated(value: unknown): value is Calculated {
     return value instanceof Calculated;
   }
 
-  export function isFixed(value: unknown): value is Fixed {
-    return value instanceof Fixed;
+  export function isFixed(value: unknown): value is Length.Fixed {
+    return value instanceof Length.Fixed;
   }
 
-  export function of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
+  export function of<U extends Unit.Length>(
+    value: number,
+    unit: U
+  ): Length.Fixed<U>;
 
-  export function of<U extends Unit.Length>(value: BaseLength<U>): Fixed<U>;
+  export function of<U extends Unit.Length>(
+    value: BaseLength<U>
+  ): Length.Fixed<U>;
 
   export function of(value: Math<"length">): Calculated;
 
@@ -244,11 +119,11 @@ export namespace LengthPercentage {
   ): LengthPercentage<U> {
     if (typeof value === "number") {
       // The overloads ensure that unit is not undefined
-      return Fixed.of(value, unit!);
+      return Length.Fixed.of(value, unit!);
     }
 
     if (BaseLength.isLength(value)) {
-      return Fixed.of(value.value, value.unit);
+      return Length.Fixed.of(value.value, value.unit);
     }
 
     return Calculated.of(value);
@@ -258,16 +133,7 @@ export namespace LengthPercentage {
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
   export const parse: Parser<Slice<Token>, LengthPercentage, string> = either(
-    map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, of),
+    map<Slice<Token>, BaseLength, Length.Fixed, string>(BaseLength.parse, of),
     map(Math.parseLength, of)
-  );
-
-  // TODO: temporary helper needed during migration to calculated values.
-  /**
-   * @internal
-   */
-  export const parseBase = map<Slice<Token>, BaseLength, Fixed, string>(
-    BaseLength.parse,
-    of
   );
 }
