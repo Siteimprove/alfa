@@ -15,5 +15,5 @@ test("Box attribute gets turned into box property", (t) => {
 test("Element without box attribute has box property equal to `None`", (t) => {
   const element = <div></div>;
 
-  t(element.box.isNone);
+  t.deepEqual(element.box.isNone(), true);
 });
