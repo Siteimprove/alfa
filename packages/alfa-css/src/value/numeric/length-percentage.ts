@@ -1,4 +1,3 @@
-import { Comparable } from "@siteimprove/alfa-comparable";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -6,11 +5,12 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Math } from "../../calculation";
 import { Length as BaseLength } from "../../calculation/numeric";
 import { Token } from "../../syntax";
-import { Converter, Unit } from "../../unit";
+import { Unit } from "../../unit";
 import { Value } from "../value";
 
 import { Dimension } from "./dimension";
 import { Length } from "./length";
+import { Percentage } from "./percentage";
 
 const { either, map } = Parser;
 
@@ -19,6 +19,7 @@ const { either, map } = Parser;
  */
 export type LengthPercentage<U extends Unit.Length = Unit.Length> =
   | LengthPercentage.Calculated
+  | Percentage.Fixed
   | Length.Fixed<U>;
 
 /**
