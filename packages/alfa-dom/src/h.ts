@@ -37,10 +37,9 @@ export function h<N extends string = string>(
   attributes?: Array<Attribute> | Record<string, string | boolean>,
   children?: Array<Node | string>,
   style?: Array<Declaration> | Record<string, string>,
-  namespace?: Namespace,
   box?: Rectangle
 ): Element<N> {
-  return h.element(name, attributes, children, style, namespace, box);
+  return h.element(name, attributes, children, style, undefined, box);
 }
 
 /**

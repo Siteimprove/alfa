@@ -33,7 +33,6 @@ export function jsx<N extends string = string>(
         continue;
 
       case "box":
-        // TODO: Should we rather just pass it in as a string with 4 numbers and parse it?
         box = Rectangle.from(value as Rectangle.JSON);
         continue;
 
@@ -47,19 +46,9 @@ export function jsx<N extends string = string>(
     attributes,
     (children as Array<jsx.Child>).flat(Infinity),
     style,
-    undefined,
     box
   );
 }
-
-// TODO: Delete if it's not going to be used. Can be used to parse a string of 4 whitespace separeted numbers
-// const box = delimited(
-//   option(parseWhitespace),
-//   take(
-//     map(left(parseNumber(), parseWhitespace), (number) => number.value),
-//     4
-//   )
-// );
 
 /**
  * @public

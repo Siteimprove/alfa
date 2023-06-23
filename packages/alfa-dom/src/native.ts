@@ -1,5 +1,6 @@
 /// <reference lib="dom" />
 
+import type { Rectangle } from "@siteimprove/alfa-rectangle";
 import type {
   Attribute,
   Block,
@@ -15,12 +16,12 @@ import type {
   Node,
   PageRule,
   Rule,
+  Shadow,
   Sheet,
   StyleRule,
   SupportsRule,
   Text,
   Type,
-  Shadow,
 } from ".";
 
 /**
@@ -89,7 +90,7 @@ export namespace Native {
           "contentDocument" in element && element.contentDocument !== null
             ? toDocument(element.contentDocument)
             : null,
-        box: null // TODO: How do we get the box from the element?
+        box: toRectangle(element.getBoundingClientRect()),
       };
     }
 
@@ -306,6 +307,16 @@ export namespace Native {
           important: block.getPropertyPriority(name) === "important",
         };
       });
+    }
+
+    function toRectangle(domRect: globalThis.DOMRect): Rectangle.JSON {
+      return {
+        type: "rectangle",
+        x: domRect.x,
+        y: domRect.y,
+        width: domRect.width,
+        height: domRect.height,
+      };
     }
 
     function map<T, U>(
