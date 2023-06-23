@@ -32,15 +32,15 @@ export namespace LengthPercentage {
    * Lengths that are the result of a calculation.
    */
   export class Calculated
-    extends Dimension.Calculated<"length">
+    extends Dimension.Calculated<"length-percentage">
     implements ILengthPercentage<true>
   {
-    public static of(value: Math<"length">): Calculated {
+    public static of(value: Math<"length-percentage">): Calculated {
       return new Calculated(value);
     }
 
-    private constructor(math: Math<"length">) {
-      super(math, "length");
+    private constructor(math: Math<"length-percentage">) {
+      super(math, "length-percentage");
     }
 
     public hasCalculation(): this is Calculated {
@@ -50,15 +50,20 @@ export namespace LengthPercentage {
     public resolve(resolver: Resolver): Canonical {
       return Length.Fixed.of(
         this._math
+          // The math expression resolver is only aware of BaseLength and
+          // BasePercentage and thus work with these, but we want to abstract
+          // them from further layers, so the resolver here is only aware of
+          // Length and Percentage, and we need to translate back and forth.
           .resolve({
-            // The math expression resolver is only aware of BaseLength and thus
-            // work with these, but we want to abstract them from further layers,
-            // so the resolver here is only aware of Length, and we need to
-            // translate back and forth.
             length: (length) => {
-              const resolved = resolver(Length.Fixed.of(length));
+              const resolved = resolver.length(Length.Fixed.of(length));
               return BaseLength.of(resolved.value, resolved.unit);
             },
+            percentage: (value) =>
+              BaseLength.of(
+                resolver.percentageBase.value,
+                /* this is "px"! */ resolver.percentageBase.unit
+              ).scale(value.value),
           })
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as a length`)
@@ -77,7 +82,7 @@ export namespace LengthPercentage {
   export type JSON = Calculated.JSON | Length.Fixed.JSON;
 
   interface ILengthPercentage<CALC extends boolean = boolean>
-    extends Value<"length", CALC> {
+    extends Value<"length-percentage", CALC, "length"> {
     hasCalculation(): this is Calculated;
     resolve(resolver: Resolver): Canonical;
   }
@@ -87,7 +92,10 @@ export namespace LengthPercentage {
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export type Resolver = Mapper<Length.Fixed<Unit.Length.Relative>, Canonical>;
+  export type Resolver = {
+    length: Mapper<Length.Fixed<Unit.Length.Relative>, Canonical>;
+    percentageBase: Canonical;
+  };
 
   export function isLengthPercentage(
     value: unknown
@@ -112,10 +120,10 @@ export namespace LengthPercentage {
     value: BaseLength<U>
   ): Length.Fixed<U>;
 
-  export function of(value: Math<"length">): Calculated;
+  export function of(value: Math<"length-percentage">): Calculated;
 
   export function of<U extends Unit.Length>(
-    value: number | BaseLength<U> | Math<"length">,
+    value: number | BaseLength<U> | Math<"length-percentage">,
     unit?: U
   ): LengthPercentage<U> {
     if (typeof value === "number") {
@@ -135,6 +143,6 @@ export namespace LengthPercentage {
    */
   export const parse: Parser<Slice<Token>, LengthPercentage, string> = either(
     map<Slice<Token>, BaseLength, Length.Fixed, string>(BaseLength.parse, of),
-    map(Math.parseLength, of)
+    map(Math.parseLengthPercentage, of)
   );
 }

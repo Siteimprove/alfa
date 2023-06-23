@@ -51,16 +51,18 @@ export namespace Percentage {
 
     public resolve(): Fixed<"percentage">;
 
-    public resolve(base: Numeric.Fixed<R>): Numeric.Fixed<R>;
+    public resolve(resolver: Resolver<R>): Numeric.Fixed<R>;
 
-    public resolve(base?: Numeric.Fixed<R>): Fixed | Numeric.Fixed<R> {
+    public resolve(resolver?: Resolver<R>): Fixed | Numeric.Fixed<R> {
       const percentage = Fixed.of(
         this._math
           .resolve()
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not fully resolve ${this} as a percentage`)
       );
-      return base === undefined ? percentage : base.scale(percentage.value);
+      return resolver === undefined
+        ? percentage
+        : resolver.basePercentage.scale(percentage.value);
     }
 
     public equals(value: unknown): value is this {
@@ -98,12 +100,14 @@ export namespace Percentage {
 
     public resolve(): Fixed<"percentage">;
 
-    public resolve(base: Numeric.Fixed<R>): Numeric.Fixed<R>;
+    public resolve(resolver: Resolver<R>): Numeric.Fixed<R>;
 
     public resolve(
-      base?: Numeric.Fixed<R>
+      resolver?: Resolver<R>
     ): Fixed<"percentage"> | Numeric.Fixed<R> {
-      return base === undefined ? this : base.scale(this._value);
+      return resolver === undefined
+        ? this
+        : resolver.basePercentage.scale(this._value);
     }
 
     public scale(factor: number): Fixed {
@@ -130,12 +134,16 @@ export namespace Percentage {
     export interface JSON extends Numeric.Fixed.JSON<"percentage"> {}
   }
 
+  export interface Resolver<T extends BaseNumeric.Type> {
+    basePercentage: Numeric.Fixed<T>;
+  }
+
   interface IPercentage<
     CALC extends boolean = boolean,
     R extends BaseNumeric.Type = BaseNumeric.Type
   > extends Value<"percentage", CALC, "percentage" | R> {
     hasCalculation(): this is Calculated<R>;
-    resolve(): Fixed<"percentage" | R>;
+    resolve(resolver?: Resolver<R>): Fixed<"percentage" | R>;
   }
 
   export function isCalculated(value: unknown): value is Calculated {

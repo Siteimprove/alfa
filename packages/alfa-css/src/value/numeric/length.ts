@@ -54,7 +54,7 @@ export namespace Length {
             // so the resolver here is only aware of Length, and we need to
             // translate back and forth.
             length: (length) => {
-              const resolved = resolver(Fixed.of(length));
+              const resolved = resolver.length(Fixed.of(length));
               return BaseLength.of(resolved.value, resolved.unit);
             },
           })
@@ -143,7 +143,7 @@ export namespace Length {
      * Resolve a Length into an absolute Length in pixels.
      */
     public resolve(resolver: Resolver): Canonical {
-      return this.isRelative() ? resolver(this) : this.withUnit("px");
+      return this.isRelative() ? resolver.length(this) : this.withUnit("px");
     }
 
     public equals(value: unknown): value is this {
@@ -169,7 +169,9 @@ export namespace Length {
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+  export interface Resolver {
+    length: Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+  }
 
   /**
    * Build a (fixed) length resolver, using basis for the relative units
@@ -179,7 +181,7 @@ export namespace Length {
     remBase: Canonical,
     vwBase: Canonical,
     vhBase: Canonical
-  ): Resolver {
+  ): Mapper<Fixed<Unit.Length.Relative>, Canonical> {
     return (length) => {
       const { unit, value } = length;
       const [min, max] =

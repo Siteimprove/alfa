@@ -46,7 +46,7 @@ export namespace Resolver {
     const fontSize = style.computed("font-size").value;
     const rootFontSize = style.root().computed("font-size").value;
 
-    return Length.resolver(fontSize, rootFontSize, width, height);
+    return { length: Length.resolver(fontSize, rootFontSize, width, height) };
   }
 
   /**
