@@ -96,7 +96,7 @@ export namespace Angle {
       super(value, unit, "angle");
     }
 
-    public hasCalculation(): this is Calculated {
+    public hasCalculation(): this is never {
       return false;
     }
 

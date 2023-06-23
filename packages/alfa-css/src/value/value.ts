@@ -11,13 +11,18 @@ import * as json from "@siteimprove/alfa-json";
  *         When CALC is true, the value hasn't been resolved. It does not
  *         necessarily contain calculation; when CALC is false, the value has
  *         been fully resolved and is guaranteed without calculations.
+ * * R: a string representation of the type stored in the resolved value.
+ *      This differs from T, typically, for dimension-percentage values that
+ *      are resolved as dimensions only.
+ *
  * @public
  */
 // This is the main Value class that is implemented by all CSS values, with or
 // without calculations.
 export abstract class Value<
   T extends string = string,
-  CALC extends boolean = boolean
+  CALC extends boolean = boolean,
+  R extends string = T
 > implements Equatable, Hashable, Serializable<Value.JSON<T>>
 {
   private readonly _type: T;
@@ -31,11 +36,11 @@ export abstract class Value<
     return this._type;
   }
 
-  public hasCalculation(): this is Value<T, true> {
+  public hasCalculation(): this is Value<T, true, R> {
     return this._hasCalculation;
   }
 
-  public abstract resolve(resolver?: unknown): Value<T, false>;
+  public abstract resolve(resolver?: unknown): Value<R, false>;
 
   public abstract equals(value: unknown): value is this;
 

@@ -30,9 +30,9 @@ export namespace Numeric {
   /**
    * Numerics that are the result of a calculation.
    */
-  export abstract class Calculated<T extends Type = Type>
-    extends Value<T, true>
-    implements INumeric<T, true>
+  export abstract class Calculated<T extends Type = Type, R extends Type = T>
+    extends Value<T, true, R>
+    implements INumeric<T, true, R>
   {
     protected readonly _math: ToMath<T>;
 
@@ -45,11 +45,11 @@ export namespace Numeric {
       return this._math;
     }
 
-    public hasCalculation(): this is Calculated<T> {
+    public hasCalculation(): this is Calculated<T, R> {
       return true;
     }
 
-    public abstract resolve(resolver?: unknown): Fixed<T>;
+    public abstract resolve(resolver?: unknown): Fixed<R>;
 
     public equals(value: unknown): value is this {
       return value instanceof Calculated && value._math.equals(this._math);
@@ -81,7 +81,7 @@ export namespace Numeric {
    * Numerics that are a fixed (not calculated) value.
    */
   export abstract class Fixed<T extends Type = Type>
-    extends Value<T, false>
+    extends Value<T, false, T>
     implements INumeric<T, false>, Comparable<Fixed>
   {
     protected readonly _value: number;
@@ -97,7 +97,7 @@ export namespace Numeric {
 
     public abstract scale(factor: number): Fixed<T>;
 
-    public hasCalculation(): this is Calculated<T> {
+    public hasCalculation(): this is never {
       return false;
     }
 
@@ -142,10 +142,13 @@ export namespace Numeric {
 
   export type Type = BaseNumeric.Type | `${BaseNumeric.Dimension}-percentage`;
 
-  interface INumeric<T extends Type = Type, CALC extends boolean = boolean>
-    extends Value<T, CALC> {
-    hasCalculation(): this is Calculated<T>;
-    resolve(resolver?: unknown): Fixed<T>;
+  interface INumeric<
+    T extends Type = Type,
+    CALC extends boolean = boolean,
+    R extends Type = T
+  > extends Value<T, CALC, R> {
+    hasCalculation(): this is Calculated<T, R>;
+    resolve(resolver?: unknown): Fixed<R>;
   }
 
   export function isCalculated(value: unknown): value is Calculated {

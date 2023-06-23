@@ -99,7 +99,7 @@ export namespace Length {
       super(value, unit, "length");
     }
 
-    public hasCalculation(): this is Calculated {
+    public hasCalculation(): this is never {
       return false;
     }
 
