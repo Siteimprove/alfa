@@ -94,6 +94,7 @@
     "test/value/gradient/radial.spec.ts",
     "test/value/numeric/angle.spec.ts",
     "test/value/numeric/length.spec.ts",
+    "test/value/numeric/length-percentage.spec.ts",
     "test/value/numeric/number.spec.ts",
     "test/value/numeric/percentage.spec.ts",
     "test/value/position.spec.ts",

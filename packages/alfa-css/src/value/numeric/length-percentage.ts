@@ -3,7 +3,10 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
-import { Length as BaseLength } from "../../calculation/numeric";
+import {
+  Length as BaseLength,
+  Percentage as BasePercentage,
+} from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
 import { Value } from "../value";
@@ -100,7 +103,11 @@ export namespace LengthPercentage {
   export function isLengthPercentage(
     value: unknown
   ): value is LengthPercentage {
-    return value instanceof Calculated || value instanceof Length.Fixed;
+    return (
+      value instanceof Calculated ||
+      value instanceof Length.Fixed ||
+      value instanceof Percentage.Fixed
+    );
   }
 
   export function isCalculated(value: unknown): value is Calculated {
@@ -109,6 +116,10 @@ export namespace LengthPercentage {
 
   export function isFixed(value: unknown): value is Length.Fixed {
     return value instanceof Length.Fixed;
+  }
+
+  export function isPercentage(value: unknown): value is Percentage.Fixed {
+    return value instanceof Percentage.Fixed;
   }
 
   export function of<U extends Unit.Length>(
@@ -120,19 +131,30 @@ export namespace LengthPercentage {
     value: BaseLength<U>
   ): Length.Fixed<U>;
 
+  export function of(value: number): Percentage.Fixed;
+
+  export function of(value: BasePercentage): Percentage.Fixed;
+
   export function of(value: Math<"length-percentage">): Calculated;
 
   export function of<U extends Unit.Length>(
-    value: number | BaseLength<U> | Math<"length-percentage">,
+    value: number | BaseLength<U> | BasePercentage | Math<"length-percentage">,
     unit?: U
   ): LengthPercentage<U> {
     if (typeof value === "number") {
-      // The overloads ensure that unit is not undefined
-      return Length.Fixed.of(value, unit!);
+      if (unit === undefined) {
+        return Percentage.Fixed.of(value);
+      } else {
+        return Length.Fixed.of(value, unit);
+      }
     }
 
     if (BaseLength.isLength(value)) {
       return Length.Fixed.of(value.value, value.unit);
+    }
+
+    if (BasePercentage.isPercentage(value)) {
+      return Percentage.Fixed.of(value.value);
     }
 
     return Calculated.of(value);
@@ -142,7 +164,14 @@ export namespace LengthPercentage {
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
   export const parse: Parser<Slice<Token>, LengthPercentage, string> = either(
-    map<Slice<Token>, BaseLength, Length.Fixed, string>(BaseLength.parse, of),
+    map<Slice<Token>, BaseLength, LengthPercentage, string>(
+      BaseLength.parse,
+      of
+    ),
+    map<Slice<Token>, BasePercentage, LengthPercentage, string>(
+      BasePercentage.parse,
+      of
+    ),
     map(Math.parseLengthPercentage, of)
   );
 }
