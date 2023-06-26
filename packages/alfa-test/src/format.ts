@@ -3,7 +3,7 @@
 import * as assert from "assert";
 import * as path from "path";
 
-import { mark } from "@siteimprove/alfa-highlight";
+import { Marker } from "@siteimprove/alfa-highlight";
 
 import { stack } from "./stack";
 
@@ -47,7 +47,7 @@ export function format(name: string, error: Error): string {
   }
 
   const output = `
-${mark.underline(`${file}(${line},${column}):`)} ${mark.bold(
+${Marker.underline(`${file}(${line},${column}):`)} ${Marker.bold(
     name.trim().replace(/\s+/g, " ")
   )}
 ${message}

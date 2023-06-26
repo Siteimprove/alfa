@@ -53,8 +53,3 @@ export namespace Marker {
   export const white: Marker = chalk.white;
   export const gray: Marker = chalk.gray;
 }
-
-/**
- * @public
- */
-export const mark = Marker;
