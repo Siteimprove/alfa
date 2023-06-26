@@ -10,10 +10,7 @@ import type Float from "./float";
 
 const { map, either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Tuple<
+type Specified = Tuple<
   | [
       outside: Specified.Outside,
       inside: Specified.Inside,
@@ -23,10 +20,7 @@ export type Specified = Tuple<
   | [Specified.Box]
 >;
 
-/**
- * @internal
- */
-export namespace Specified {
+namespace Specified {
   /**
    * {@link https://drafts.csswg.org/css-display/#outer-role}
    */
@@ -74,10 +68,7 @@ export namespace Specified {
   export type Box = Keyword<"contents"> | Keyword<"none">;
 }
 
-/**
- * @internal
- */
-export type Computed = Specified;
+type Computed = Specified;
 
 /**
  * {@link https://drafts.csswg.org/css-display/#typedef-display-outside}
@@ -134,10 +125,7 @@ const parseLegacy = Keyword.parse(
   "inline-grid"
 );
 
-/**
- * @internal
- */
-export const parse = either<Slice<Token>, Specified, string>(
+const parse = either<Slice<Token>, Specified, string>(
   (input) => {
     let outside: Specified.Outside | undefined;
     let inside: Specified.Inside | undefined;

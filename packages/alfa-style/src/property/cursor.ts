@@ -55,15 +55,9 @@ namespace Specified {
   export type Custom = URL | Tuple<[URL, Number, Number]>;
 }
 
-/**
- * @internal
- */
-export type Specified = Tuple<[List<Specified.Custom>, Specified.Builtin]>;
+type Specified = Tuple<[List<Specified.Custom>, Specified.Builtin]>;
 
-/**
- * @internal
- */
-export type Computed = Specified;
+type Computed = Specified;
 
 const parseBuiltin = Keyword.parse(
   "auto",
@@ -118,10 +112,7 @@ const parseCustomList = map(
   (list) => List.of(list, ",")
 );
 
-/**
- * @internal
- */
-export const parse = map(
+const parse = map(
   separated(parseCustomList, option(parseWhitespace), parseBuiltin),
   ([custom, fallback]) => Tuple.of(custom, fallback)
 );

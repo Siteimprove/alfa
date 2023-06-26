@@ -5,10 +5,7 @@ import { Longhand } from "../longhand";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified =
+type Specified =
   | Number
 
   // Absolute
@@ -19,15 +16,9 @@ export type Specified =
   | Keyword<"bolder">
   | Keyword<"lighter">;
 
-/**
- * @internal
- */
-export type Computed = Number.Canonical;
+type Computed = Number.Canonical;
 
-/**
- * @internal
- */
-export const parse = either(
+const parse = either(
   Number.parse,
   Keyword.parse("normal", "bold", "bolder", "lighter")
 );
