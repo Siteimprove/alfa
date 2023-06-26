@@ -7,7 +7,7 @@ function parse(input: string) {
 }
 
 const resolver: LengthPercentage.Resolver = {
-  percentageBase: Length.of(16, "px"),
+  basePercentage: Length.of(16, "px"),
   length: Length.resolver(
     Length.of(16, "px"),
     Length.of(16, "px"),

@@ -84,7 +84,9 @@ export namespace Number {
     }
 
     public scale(factor: number): this {
-      return new Fixed(this._value * factor);
+      // The type assertion is safe because the constructor is private, making
+      // the class final.
+      return new Fixed(this._value * factor) as this;
     }
 
     public equals(value: unknown): value is this {

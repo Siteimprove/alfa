@@ -114,8 +114,10 @@ export namespace Percentage {
         : resolver.basePercentage.scale(this._value);
     }
 
-    public scale(factor: number): Fixed {
-      return new Fixed(this._value * factor);
+    public scale(factor: number): this {
+      // The type assertion is safe because the constructor is private, making
+      // the class final.
+      return new Fixed(this._value * factor) as this;
     }
 
     public equals(value: unknown): value is this {

@@ -135,8 +135,10 @@ export namespace Length {
       return Unit.isAbsoluteLength(this._unit);
     }
 
-    public scale(factor: number): Fixed<U> {
-      return new Fixed(this._value * factor, this._unit);
+    public scale(factor: number): this {
+      // The type assertion is safe because the constructor is private, making
+      // the class final.
+      return new Fixed<U>(this._value * factor, this._unit) as this;
     }
 
     /**

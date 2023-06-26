@@ -103,8 +103,10 @@ export namespace Integer {
       return this;
     }
 
-    public scale(this: Fixed, factor: number): Fixed {
-      return new Fixed(this._value * factor);
+    public scale(this: Fixed, factor: number): this {
+      // The type assertion is safe because the constructor is private, making
+      // the class final.
+      return new Fixed(this._value * factor) as this;
     }
 
     public equals(value: unknown): value is this {
