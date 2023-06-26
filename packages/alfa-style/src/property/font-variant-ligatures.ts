@@ -35,10 +35,8 @@ export namespace Specified {
 
   export type Item = Common | Discretionary | Historical | Contextual;
 }
-/**
- * @internal
- */
-export type Computed = Specified;
+
+type Computed = Specified;
 
 /**
  * @internal
@@ -145,10 +143,7 @@ const parseLigature: Parser<Slice<Token>, List<Specified.Item>, string> = (
   ]);
 };
 
-/**
- * @internal
- */
-export const parse = either(Keyword.parse("none", "normal"), parseLigature);
+const parse = either(Keyword.parse("none", "normal"), parseLigature);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures}

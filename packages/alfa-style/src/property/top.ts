@@ -6,15 +6,9 @@ import { LengthPercentage } from "./value/compound";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Keyword<"auto"> | LengthPercentage.LengthPercentage;
+type Specified = Keyword<"auto"> | LengthPercentage.LengthPercentage;
 
-/**
- * @internal
- */
-export type Computed = Keyword<"auto"> | Length.Canonical | Percentage;
+type Computed = Keyword<"auto"> | Length.Canonical | Percentage;
 
 /**
  * @internal
