@@ -16,6 +16,8 @@ export declare namespace Math
 |  Function | Description |
 |  --- | --- |
 |  [isCalculation(value)](./alfa-css.math_2.iscalculation.md) |  |
+|  [isNumber(value)](./alfa-css.math_2.isnumber.md) |  |
+|  [isPercentage(value)](./alfa-css.math_2.ispercentage.md) |  |
 
 ## Interfaces
 
@@ -28,7 +30,9 @@ export declare namespace Math
 |  Variable | Description |
 |  --- | --- |
 |  [parse](./alfa-css.math_2.parse.md) |  |
+|  [parseAngle](./alfa-css.math_2.parseangle.md) |  |
 |  [parseLength](./alfa-css.math_2.parselength.md) |  |
 |  [parseLengthPercentage](./alfa-css.math_2.parselengthpercentage.md) |  |
 |  [parseNumber](./alfa-css.math_2.parsenumber.md) |  |
+|  [parsePercentage](./alfa-css.math_2.parsepercentage.md) |  |
 

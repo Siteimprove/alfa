@@ -4,6 +4,8 @@
 
 ## Collection.Indexed.collectFirst() method
 
+Applies an `Option` valued mapper to each item in the collection, unwrapping and returning the first `Some`
+
 <b>Signature:</b>
 
 ```typescript

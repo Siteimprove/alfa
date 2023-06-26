@@ -7,15 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON<F extends Fill = Fill, V extends Length | Percentage = Length | Percentage> extends Value.JSON<"basic-shape"> 
+interface JSON<F extends Fill = Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> extends BasicShape.JSON<"polygon"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"basic-shape"&gt;
+<b>Extends:</b> BasicShape.JSON&lt;"polygon"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [fill](./alfa-css.polygon.json.fill.md) |  | [Option.JSON](./alfa-option.option.json.md)<!-- -->&lt;F&gt; |  |
-|  [kind](./alfa-css.polygon.json.kind.md) |  | "polygon" |  |
 |  [vertices](./alfa-css.polygon.json.vertices.md) |  | Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;[Vertex](./alfa-css.polygon.vertex.md)<!-- -->&lt;V&gt;&gt;&gt; |  |
 

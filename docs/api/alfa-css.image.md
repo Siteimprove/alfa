@@ -29,3 +29,9 @@ export declare namespace Image
 |  --- | --- |
 |  [parse](./alfa-css.image.parse.md) | [https://drafts.csswg.org/css-images/\#typedef-image](https://drafts.csswg.org/css-images/#typedef-image) |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.image.canonical.md) |  |
+

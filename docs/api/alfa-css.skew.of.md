@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<X extends Angle, Y extends Angle>(x: X, y: Y): Skew<X, Y>;
+static of<X extends Angle.Fixed, Y extends Angle.Fixed>(x: X, y: Y): Skew<X, Y>;
 ```
 
 ## Parameters

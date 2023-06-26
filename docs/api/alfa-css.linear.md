@@ -43,6 +43,7 @@ export declare namespace Linear
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [Canonical](./alfa-css.linear.canonical.md) |  |
 |  [Direction](./alfa-css.linear.direction.md) |  |
 |  [Position](./alfa-css.linear.position.md) |  |
 

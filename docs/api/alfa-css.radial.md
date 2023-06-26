@@ -44,5 +44,6 @@ export declare namespace Radial
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [Canonical](./alfa-css.radial.canonical.md) |  |
 |  [Shape](./alfa-css.radial.shape.md) |  |
 

@@ -7,14 +7,13 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Value.JSON<"transform"> 
+interface JSON extends Function.JSON<"perspective"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"transform"&gt;
+<b>Extends:</b> Function.JSON&lt;"perspective"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [depth](./alfa-css.perspective.json.depth.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
-|  [kind](./alfa-css.perspective.json.kind.md) |  | "perspective" |  |
+|  [depth](./alfa-css.perspective.json.depth.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) |  |
 

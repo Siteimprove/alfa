@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<C extends Color, P extends Length | Percentage>(color: C, position?: Option<P>): Stop<C, P>;
+static of<C extends Color, P extends Length.Fixed | Percentage.Fixed>(color: C, position?: Option<P>): Stop<C, P>;
 ```
 
 ## Parameters

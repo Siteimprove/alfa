@@ -2,12 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Number\_2](./alfa-css.number_2.md) &gt; [of](./alfa-css.number_2.of.md)
 
-## Number\_2.of() method
+## Number\_2.of() function
 
 <b>Signature:</b>
 
 ```typescript
-static of(value: number): Number;
+export function of(value: number): Fixed;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ static of(value: number): Number;
 
 <b>Returns:</b>
 
-Number
+Fixed
 

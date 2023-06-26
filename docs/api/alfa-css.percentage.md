@@ -2,30 +2,14 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Percentage](./alfa-css.percentage.md)
 
-## Percentage namespace
+## Percentage type
 
+[https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers)
 
 <b>Signature:</b>
 
 ```typescript
-export declare namespace Percentage 
+export type Percentage = Percentage.Calculated | Percentage.Fixed;
 ```
-
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [isPercentage(value)](./alfa-css.percentage.ispercentage.md) |  |
-
-## Interfaces
-
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.percentage.json.md) |  |
-
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.percentage.parse.md) |  |
+<b>References:</b> [Percentage.Calculated](./alfa-css.percentage.calculated.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
 

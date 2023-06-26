@@ -7,9 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function parse<T extends string>(...keywords: Array<T>): Parser<Slice<Token>, {
-        [K in T]: Keyword<K>;
-    }[T], string>;
+function parse<T extends string>(...keywords: Array<T>): Parser<Slice<Token>, ToKeywords<T>, string>;
 ```
 
 ## Parameters
@@ -20,5 +18,5 @@ function parse<T extends string>(...keywords: Array<T>): Parser<Slice<Token>, {
 
 <b>Returns:</b>
 
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, { \[K in T\]: [Keyword](./alfa-css.keyword.md)<!-- -->&lt;K&gt;; }\[T\], string&gt;
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [ToKeywords](./alfa-css.keyword.tokeywords.md)<!-- -->&lt;T&gt;, string&gt;
 

@@ -14,6 +14,6 @@ interface JSON
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [radius](./alfa-css.radial.circle.json.radius.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
+|  [radius](./alfa-css.radial.circle.json.radius.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) |  |
 |  [type](./alfa-css.radial.circle.json.type.md) |  | "circle" |  |
 

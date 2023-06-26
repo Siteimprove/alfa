@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Radius = Length | Percentage;
+type Radius = Length.Fixed | Percentage.Fixed;
 ```
-<b>References:</b> [Length](./alfa-css.length.md)<!-- -->, [Percentage](./alfa-css.percentage.md)
+<b>References:</b> [Length.Fixed](./alfa-css.length.fixed.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
 

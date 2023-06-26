@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isPercentage(value: unknown): value is Percentage;
+export function isPercentage(value: unknown): value is Percentage;
 ```
 
 ## Parameters

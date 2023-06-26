@@ -2,12 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Length](./alfa-css.length.md) &gt; [of](./alfa-css.length.of.md)
 
-## Length.of() method
+## Length.of() function
 
 <b>Signature:</b>
 
 ```typescript
-static of<U extends Unit.Length>(value: number, unit: U): Length<U>;
+export function of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ static of<U extends Unit.Length>(value: number, unit: U): Length<U>;
 
 <b>Returns:</b>
 
-[Length](./alfa-css.length.md)<!-- -->&lt;U&gt;
+[Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;U&gt;
 

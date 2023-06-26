@@ -16,3 +16,9 @@ namespace Stop
 |  --- | --- |
 |  [JSON](./alfa-css.gradient.stop.json.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.gradient.stop.canonical.md) |  |
+

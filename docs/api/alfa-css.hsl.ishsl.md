@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isHSL<H extends Number | Angle, A extends Number | Percentage>(value: unknown): value is HSL<H, A>;
+function isHSL<H extends Number.Fixed | Angle.Fixed, A extends Number.Fixed | Percentage.Fixed>(value: unknown): value is HSL<H, A>;
 ```
 
 ## Parameters

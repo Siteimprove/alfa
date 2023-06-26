@@ -21,7 +21,7 @@ export declare namespace Position
 
 |  Function | Description |
 |  --- | --- |
-|  [parse(legacySyntax)](./alfa-css.position.parse.md) |  |
+|  [parse(legacySyntax)](./alfa-css.position.parse.md) | [https://drafts.csswg.org/css-values/\#typedef-position](https://drafts.csswg.org/css-values/#typedef-position) [https://drafts.csswg.org/css-backgrounds/\#typedef-bg-position](https://drafts.csswg.org/css-backgrounds/#typedef-bg-position) |
 
 ## Interfaces
 
@@ -34,21 +34,15 @@ export declare namespace Position
 |  Namespace | Description |
 |  --- | --- |
 |  [Component](./alfa-css.position.component.md) |  |
+|  [Keywords](./alfa-css.position.keywords.md) |  |
+|  [Offset](./alfa-css.position.offset.md) |  |
 |  [Side](./alfa-css.position.side.md) |  |
-
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [parseCenter](./alfa-css.position.parsecenter.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Center](./alfa-css.position.center.md) |  |
+|  [Canonical](./alfa-css.position.canonical.md) |  |
 |  [Component](./alfa-css.position.component.md) |  |
-|  [Horizontal](./alfa-css.position.horizontal.md) |  |
 |  [Offset](./alfa-css.position.offset.md) |  |
-|  [Vertical](./alfa-css.position.vertical.md) |  |
 

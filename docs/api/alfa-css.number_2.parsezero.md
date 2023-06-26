@@ -4,10 +4,15 @@
 
 ## Number\_2.parseZero variable
 
-[https://drafts.csswg.org/css-values/\#zero-value](https://drafts.csswg.org/css-values/#zero-value)
-
 <b>Signature:</b>
 
 ```typescript
-parseZero: Parser<Slice<Token>, Number, string>
+parseZero: Parser<Slice<Token>, Fixed, string>
 ```
+
+## Remarks
+
+Zero values must be true 0, not calculations evaluating to 0.
+
+[https://drafts.csswg.org/css-values/\#zero-value](https://drafts.csswg.org/css-values/#zero-value)
+

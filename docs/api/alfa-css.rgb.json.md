@@ -7,17 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Value.JSON<"color"> 
+interface JSON extends Format.JSON<"rgb"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"color"&gt;
+<b>Extends:</b> Format.JSON&lt;"rgb"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [alpha](./alfa-css.rgb.json.alpha.md) |  | Number.JSON \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
-|  [blue](./alfa-css.rgb.json.blue.md) |  | Number.JSON \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
-|  [format](./alfa-css.rgb.json.format.md) |  | "rgb" |  |
-|  [green](./alfa-css.rgb.json.green.md) |  | Number.JSON \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
-|  [red](./alfa-css.rgb.json.red.md) |  | Number.JSON \| [Percentage.JSON](./alfa-css.percentage.json.md) |  |
+|  [alpha](./alfa-css.rgb.json.alpha.md) |  | Number.Fixed.JSON \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
+|  [blue](./alfa-css.rgb.json.blue.md) |  | Number.Fixed.JSON \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
+|  [green](./alfa-css.rgb.json.green.md) |  | Number.Fixed.JSON \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
+|  [red](./alfa-css.rgb.json.red.md) |  | Number.Fixed.JSON \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
 

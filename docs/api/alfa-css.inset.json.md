@@ -7,15 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON<O extends Offset = Offset, C extends Corner = Corner> extends Value.JSON<"basic-shape"> 
+interface JSON<O extends Offset = Offset, C extends Corner = Corner> extends BasicShape.JSON<"inset"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"basic-shape"&gt;
+<b>Extends:</b> BasicShape.JSON&lt;"inset"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [corners](./alfa-css.inset.json.corners.md) |  | [Option.JSON](./alfa-option.option.json.md)<!-- -->&lt;readonly \[C, C, C, C\]&gt; |  |
-|  [kind](./alfa-css.inset.json.kind.md) |  | "inset" |  |
 |  [offsets](./alfa-css.inset.json.offsets.md) |  | [Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;readonly \[O, O, O, O\]&gt; |  |
 

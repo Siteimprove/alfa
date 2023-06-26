@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-position: Length.JSON | Percentage.JSON | null;
+position: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
 ```

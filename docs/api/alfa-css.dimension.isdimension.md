@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isDimension(value: unknown): value is Dimension;
+export function isDimension(value: unknown): value is Numeric;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isDimension(value: unknown): value is Dimension;
 
 <b>Returns:</b>
 
-value is [Dimension](./alfa-css.dimension.md)
+value is [Numeric](./alfa-css.numeric.md)
 

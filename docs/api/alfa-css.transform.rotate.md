@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function rotate<A extends Angle>(x: Number, y: Number, z: Number, angle: A): Rotate<A>;
+function rotate<A extends Angle.Fixed>(x: Number.Fixed, y: Number.Fixed, z: Number.Fixed, angle: A): Rotate<A>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  x | Number |  |
-|  y | Number |  |
-|  z | Number |  |
+|  x | Number.Fixed |  |
+|  y | Number.Fixed |  |
+|  z | Number.Fixed |  |
 |  angle | A |  |
 
 <b>Returns:</b>

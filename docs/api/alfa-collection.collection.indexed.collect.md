@@ -4,6 +4,8 @@
 
 ## Collection.Indexed.collect() method
 
+Applies an `Option` valued mapper to each item in the collection, dropping the `None`<!-- -->s and unwrapping the `Some`<!-- -->s
+
 <b>Signature:</b>
 
 ```typescript

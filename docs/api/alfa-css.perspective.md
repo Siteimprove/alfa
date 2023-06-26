@@ -29,3 +29,9 @@ export declare namespace Perspective
 |  --- | --- |
 |  [parse](./alfa-css.perspective.parse.md) | [https://drafts.csswg.org/css-transforms-2/\#funcdef-perspective](https://drafts.csswg.org/css-transforms-2/#funcdef-perspective) |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.perspective.canonical.md) |  |
+

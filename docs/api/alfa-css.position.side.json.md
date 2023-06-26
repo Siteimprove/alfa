@@ -15,6 +15,6 @@ interface JSON extends Value.JSON<"side">
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [offset](./alfa-css.position.side.json.offset.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Percentage.JSON](./alfa-css.percentage.json.md) \| null |  |
+|  [offset](./alfa-css.position.side.json.offset.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) \| null |  |
 |  [side](./alfa-css.position.side.json.side.md) |  | [Keyword.JSON](./alfa-css.keyword.json.md) |  |
 

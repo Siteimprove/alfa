@@ -4,22 +4,21 @@
 
 ## Math\_2.resolve() method
 
-Resolves a calculation typed as a length, length-percentage or number. Needs a resolver to handle relative lengths and percentages.
+Resolves a calculation typed as an angle, length, length-percentage or number. Needs a resolver to handle relative lengths and percentages.
 
 <b>Signature:</b>
 
 ```typescript
-resolve(this: Math<"length">, resolver: Expression.LengthResolver): Result<Length<"px">, string>;
+resolve(this: Math<"angle">): Result<Angle<"deg">, string>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Math&lt;"length"&gt; |  |
-|  resolver | Expression.LengthResolver |  |
+|  this | Math&lt;"angle"&gt; |  |
 
 <b>Returns:</b>
 
-[Result](./alfa-result.result.md)<!-- -->&lt;[Length](./alfa-css.length.md)<!-- -->&lt;"px"&gt;, string&gt;
+[Result](./alfa-result.result.md)<!-- -->&lt;Angle&lt;"deg"&gt;, string&gt;
 

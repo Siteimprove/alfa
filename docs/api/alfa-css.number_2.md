@@ -2,31 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Number\_2](./alfa-css.number_2.md)
 
-## Number\_2 namespace
+## Number\_2 type
 
+[https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers)
 
 <b>Signature:</b>
 
 ```typescript
-export declare namespace Number 
+export type Number = Number.Calculated | Number.Fixed;
 ```
-
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [isNumber(value)](./alfa-css.number_2.isnumber.md) |  |
-
-## Interfaces
-
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.number_2.json.md) |  |
-
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.number_2.parse.md) | [https://drafts.csswg.org/css-values/\#number-value](https://drafts.csswg.org/css-values/#number-value) |
-|  [parseZero](./alfa-css.number_2.parsezero.md) | [https://drafts.csswg.org/css-values/\#zero-value](https://drafts.csswg.org/css-values/#zero-value) |
-

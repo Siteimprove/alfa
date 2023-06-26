@@ -2,30 +2,14 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Integer](./alfa-css.integer.md)
 
-## Integer namespace
+## Integer type
 
+[https://drafts.csswg.org/css-values/\#integers](https://drafts.csswg.org/css-values/#integers)
 
 <b>Signature:</b>
 
 ```typescript
-export declare namespace Integer 
+export type Integer = Integer.Calculated | Integer.Fixed;
 ```
-
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [isInteger(value)](./alfa-css.integer.isinteger.md) |  |
-
-## Interfaces
-
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.integer.json.md) |  |
-
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.integer.parse.md) |  |
+<b>References:</b> [Integer.Calculated](./alfa-css.integer.calculated.md)<!-- -->, [Integer.Fixed](./alfa-css.integer.fixed.md)
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Value.JSON<"shadow"> 
+export interface JSON extends Value.JSON<"shadow"> 
 ```
 <b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"shadow"&gt;
 
@@ -15,10 +15,10 @@ interface JSON extends Value.JSON<"shadow">
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [blur](./alfa-css.shadow.json.blur.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
+|  [blur](./alfa-css.shadow.json.blur.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) |  |
 |  [color](./alfa-css.shadow.json.color.md) |  | [Color.JSON](./alfa-css.color.json.md) |  |
-|  [horizontal](./alfa-css.shadow.json.horizontal.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
+|  [horizontal](./alfa-css.shadow.json.horizontal.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) |  |
 |  [isInset](./alfa-css.shadow.json.isinset.md) |  | boolean |  |
-|  [spread](./alfa-css.shadow.json.spread.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
-|  [vertical](./alfa-css.shadow.json.vertical.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
+|  [spread](./alfa-css.shadow.json.spread.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) |  |
+|  [vertical](./alfa-css.shadow.json.vertical.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) |  |
 

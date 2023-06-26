@@ -1,73 +1,24 @@
 # @siteimprove/alfa-dom
 
+## 0.64.0
+
+### Minor Changes
+
+- **Added:** Optional `Rectangle` property on `Element`. ([#1427](https://github.com/Siteimprove/alfa/pull/1427))
+
+  The new property can optionally be set when constructing an element, but it doesn't do anything yet.
+
+- **Breaking:** The method `.elementDescendants()` on the classes `Document` and `Node` has been removed. In stead the function `Query.getElementDescendants()` should be used. ([#1425](https://github.com/Siteimprove/alfa/pull/1425))
+
+- **Added:** `Query` namespace with functions for querying element descendants and elements by id. ([#1413](https://github.com/Siteimprove/alfa/pull/1413))
+
+  The result of the queries are cached.
+
 ## 0.63.3
-
-### Patch Changes
-
-- Updated dependencies []:
-  - @siteimprove/alfa-array@0.63.3
-  - @siteimprove/alfa-cache@0.63.3
-  - @siteimprove/alfa-css@0.63.3
-  - @siteimprove/alfa-earl@0.63.3
-  - @siteimprove/alfa-equatable@0.63.3
-  - @siteimprove/alfa-flags@0.63.3
-  - @siteimprove/alfa-iterable@0.63.3
-  - @siteimprove/alfa-json@0.63.3
-  - @siteimprove/alfa-lazy@0.63.3
-  - @siteimprove/alfa-media@0.63.3
-  - @siteimprove/alfa-option@0.63.3
-  - @siteimprove/alfa-predicate@0.63.3
-  - @siteimprove/alfa-refinement@0.63.3
-  - @siteimprove/alfa-sarif@0.63.3
-  - @siteimprove/alfa-sequence@0.63.3
-  - @siteimprove/alfa-trampoline@0.63.3
-  - @siteimprove/alfa-tree@0.63.3
 
 ## 0.63.2
 
-### Patch Changes
-
-- Updated dependencies []:
-  - @siteimprove/alfa-array@0.63.2
-  - @siteimprove/alfa-cache@0.63.2
-  - @siteimprove/alfa-css@0.63.2
-  - @siteimprove/alfa-earl@0.63.2
-  - @siteimprove/alfa-equatable@0.63.2
-  - @siteimprove/alfa-flags@0.63.2
-  - @siteimprove/alfa-iterable@0.63.2
-  - @siteimprove/alfa-json@0.63.2
-  - @siteimprove/alfa-lazy@0.63.2
-  - @siteimprove/alfa-media@0.63.2
-  - @siteimprove/alfa-option@0.63.2
-  - @siteimprove/alfa-predicate@0.63.2
-  - @siteimprove/alfa-refinement@0.63.2
-  - @siteimprove/alfa-sarif@0.63.2
-  - @siteimprove/alfa-sequence@0.63.2
-  - @siteimprove/alfa-trampoline@0.63.2
-  - @siteimprove/alfa-tree@0.63.2
-
 ## 0.63.1
-
-### Patch Changes
-
-- Updated dependencies []:
-  - @siteimprove/alfa-array@0.63.1
-  - @siteimprove/alfa-cache@0.63.1
-  - @siteimprove/alfa-css@0.63.1
-  - @siteimprove/alfa-earl@0.63.1
-  - @siteimprove/alfa-equatable@0.63.1
-  - @siteimprove/alfa-flags@0.63.1
-  - @siteimprove/alfa-iterable@0.63.1
-  - @siteimprove/alfa-json@0.63.1
-  - @siteimprove/alfa-lazy@0.63.1
-  - @siteimprove/alfa-media@0.63.1
-  - @siteimprove/alfa-option@0.63.1
-  - @siteimprove/alfa-predicate@0.63.1
-  - @siteimprove/alfa-refinement@0.63.1
-  - @siteimprove/alfa-sarif@0.63.1
-  - @siteimprove/alfa-sequence@0.63.1
-  - @siteimprove/alfa-trampoline@0.63.1
-  - @siteimprove/alfa-tree@0.63.1
 
 ## 0.63.0
 
@@ -81,67 +32,6 @@
 
   `hasTabIndex` accepts numbers and will be satisfied if the tabindex is any of these numbers. It still alternatively accepts a `Predicate<number>`.
 
-### Patch Changes
-
-- Updated dependencies [[`1134c0f58`](https://github.com/Siteimprove/alfa/commit/1134c0f580f1562fdb9becd3f5e442abcb86dc86), [`abc7b9744`](https://github.com/Siteimprove/alfa/commit/abc7b9744985d9935a079e82fddfa668463442c0), [`4eb920fbd`](https://github.com/Siteimprove/alfa/commit/4eb920fbd665f0a84432a79f87a11531480d1b29), [`4eb920fbd`](https://github.com/Siteimprove/alfa/commit/4eb920fbd665f0a84432a79f87a11531480d1b29)]:
-  - @siteimprove/alfa-css@0.63.0
-  - @siteimprove/alfa-option@0.63.0
-  - @siteimprove/alfa-media@0.63.0
-  - @siteimprove/alfa-array@0.63.0
-  - @siteimprove/alfa-cache@0.63.0
-  - @siteimprove/alfa-earl@0.63.0
-  - @siteimprove/alfa-iterable@0.63.0
-  - @siteimprove/alfa-sarif@0.63.0
-  - @siteimprove/alfa-sequence@0.63.0
-  - @siteimprove/alfa-tree@0.63.0
-  - @siteimprove/alfa-equatable@0.63.0
-  - @siteimprove/alfa-flags@0.63.0
-  - @siteimprove/alfa-json@0.63.0
-  - @siteimprove/alfa-lazy@0.63.0
-  - @siteimprove/alfa-predicate@0.63.0
-  - @siteimprove/alfa-refinement@0.63.0
-  - @siteimprove/alfa-trampoline@0.63.0
-
 ## 0.62.2
 
-### Patch Changes
-
-- Updated dependencies []:
-  - @siteimprove/alfa-cache@0.62.2
-  - @siteimprove/alfa-css@0.62.2
-  - @siteimprove/alfa-earl@0.62.2
-  - @siteimprove/alfa-equatable@0.62.2
-  - @siteimprove/alfa-flags@0.62.2
-  - @siteimprove/alfa-iterable@0.62.2
-  - @siteimprove/alfa-json@0.62.2
-  - @siteimprove/alfa-lazy@0.62.2
-  - @siteimprove/alfa-media@0.62.2
-  - @siteimprove/alfa-option@0.62.2
-  - @siteimprove/alfa-predicate@0.62.2
-  - @siteimprove/alfa-refinement@0.62.2
-  - @siteimprove/alfa-sarif@0.62.2
-  - @siteimprove/alfa-sequence@0.62.2
-  - @siteimprove/alfa-trampoline@0.62.2
-  - @siteimprove/alfa-tree@0.62.2
-
 ## 0.62.1
-
-### Patch Changes
-
-- Updated dependencies []:
-  - @siteimprove/alfa-cache@0.62.1
-  - @siteimprove/alfa-css@0.62.1
-  - @siteimprove/alfa-earl@0.62.1
-  - @siteimprove/alfa-equatable@0.62.1
-  - @siteimprove/alfa-flags@0.62.1
-  - @siteimprove/alfa-iterable@0.62.1
-  - @siteimprove/alfa-json@0.62.1
-  - @siteimprove/alfa-lazy@0.62.1
-  - @siteimprove/alfa-media@0.62.1
-  - @siteimprove/alfa-option@0.62.1
-  - @siteimprove/alfa-predicate@0.62.1
-  - @siteimprove/alfa-refinement@0.62.1
-  - @siteimprove/alfa-sarif@0.62.1
-  - @siteimprove/alfa-sequence@0.62.1
-  - @siteimprove/alfa-trampoline@0.62.1
-  - @siteimprove/alfa-tree@0.62.1

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<S extends Vertical | Horizontal, O extends Offset>(side: S, offset?: Option<O>): Side<S, O>;
+static of<S extends Keywords.Vertical | Keywords.Horizontal, O extends Offset>(side: S, offset?: Option<O>): Side<S, O>;
 ```
 
 ## Parameters

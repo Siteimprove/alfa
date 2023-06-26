@@ -2,31 +2,13 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Length](./alfa-css.length.md)
 
-## Length namespace
+## Length type
 
 
 <b>Signature:</b>
 
 ```typescript
-export declare namespace Length 
+export type Length<U extends Unit.Length = Unit.Length> = Length.Calculated | Length.Fixed<U>;
 ```
-
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [isLength(value)](./alfa-css.length.islength.md) |  |
-|  [isZero(length)](./alfa-css.length.iszero.md) |  |
-
-## Interfaces
-
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.length.json.md) |  |
-
-## Variables
-
-|  Variable | Description |
-|  --- | --- |
-|  [parse](./alfa-css.length.parse.md) |  |
+<b>References:</b> [Unit.Length](./alfa-css.unit.length.md)<!-- -->, [Length.Calculated](./alfa-css.length.calculated.md)<!-- -->, [Length.Fixed](./alfa-css.length.fixed.md)
 

@@ -9,5 +9,13 @@ Constructs a new instance of the `Value` class
 <b>Signature:</b>
 
 ```typescript
-protected constructor();
+protected constructor(type: T, hasCalculation: CALC);
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  type | T |  |
+|  hasCalculation | CALC |  |
+

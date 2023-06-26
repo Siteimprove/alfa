@@ -2,24 +2,13 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Dimension](./alfa-css.dimension.md)
 
-## Dimension namespace
+## Dimension type
 
 
 <b>Signature:</b>
 
 ```typescript
-export declare namespace Dimension 
+export type Dimension<T extends BaseNumeric.Dimension = BaseNumeric.Dimension> = Dimension.Calculated<T> | Dimension.Fixed<T>;
 ```
-
-## Functions
-
-|  Function | Description |
-|  --- | --- |
-|  [isDimension(value)](./alfa-css.dimension.isdimension.md) |  |
-
-## Interfaces
-
-|  Interface | Description |
-|  --- | --- |
-|  [JSON](./alfa-css.dimension.json.md) |  |
+<b>References:</b> [Dimension.Calculated](./alfa-css.dimension.calculated.md)<!-- -->, [Dimension.Fixed](./alfa-css.dimension.fixed.md)
 

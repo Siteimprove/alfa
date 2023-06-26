@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-abstract toJSON(): Value.JSON<T>;
+toJSON(): Value.JSON<T>;
 ```
 <b>Returns:</b>
 

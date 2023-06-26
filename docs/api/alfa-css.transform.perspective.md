@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function perspective<D extends Length>(depth: D): Perspective<D>;
+function perspective<D extends Length.Fixed>(depth: D): Perspective<D>;
 ```
 
 ## Parameters

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-hue: Number.JSON | Angle.JSON;
+hue: Number.Fixed.JSON | Angle.Fixed.JSON;
 ```

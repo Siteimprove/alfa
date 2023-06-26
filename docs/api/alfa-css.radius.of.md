@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<R extends Length | Percentage | Radius.Side>(value: R): Radius<R>;
+static of<R extends Length.Fixed | Percentage.Fixed | Radius.Side>(value: R): Radius<R>;
 ```
 
 ## Parameters

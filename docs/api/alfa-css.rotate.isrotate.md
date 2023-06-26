@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isRotate<A extends Angle>(value: unknown): value is Rotate<A>;
+function isRotate<A extends Angle.Fixed>(value: unknown): value is Rotate<A>;
 ```
 
 ## Parameters

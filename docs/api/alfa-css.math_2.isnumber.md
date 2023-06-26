@@ -2,16 +2,21 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Math\_2](./alfa-css.math_2.md) &gt; [isNumber](./alfa-css.math_2.isnumber.md)
 
-## Math\_2.isNumber() method
-
-[https://drafts.css-houdini.org/css-typed-om/\#cssnumericvalue-match](https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match)
+## Math\_2.isNumber() function
 
 <b>Signature:</b>
 
 ```typescript
-isNumber(): this is Math<"number">;
+function isNumber(value: unknown): value is Math<"number">;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  value | unknown |  |
+
 <b>Returns:</b>
 
-this is Math&lt;"number"&gt;
+value is Math&lt;"number"&gt;
 

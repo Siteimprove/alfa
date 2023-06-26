@@ -2,12 +2,12 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Length](./alfa-css.length.md) &gt; [JSON](./alfa-css.length.json.md)
 
-## Length.JSON interface
+## Length.JSON type
 
 <b>Signature:</b>
 
 ```typescript
-interface JSON<U extends Unit.Length = Unit.Length> extends Dimension.JSON<"length", U> 
+export type JSON = Calculated.JSON | Fixed.JSON;
 ```
-<b>Extends:</b> [Dimension.JSON](./alfa-css.dimension.json.md)<!-- -->&lt;"length", U&gt;
+<b>References:</b> [Calculated.JSON](./alfa-css.length.calculated.json.md)<!-- -->, [Fixed.JSON](./alfa-css.length.fixed.json.md)
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export type Component<S extends Horizontal | Vertical = Horizontal | Vertical, U extends Unit.Length = Unit.Length> = Center | Offset<U> | Side<S, Offset<U>>;
+export type Component<S extends Keywords.Horizontal | Keywords.Vertical = Keywords.Horizontal | Keywords.Vertical, U extends Unit.Length = Unit.Length> = Keywords.Center | Offset<U> | Side<S, Offset<U>>;
 ```
-<b>References:</b> [Horizontal](./alfa-css.position.horizontal.md)<!-- -->, [Vertical](./alfa-css.position.vertical.md)<!-- -->, [Unit.Length](./alfa-css.unit.length.md)<!-- -->, [Center](./alfa-css.position.center.md)<!-- -->, [Side](./alfa-css.position.side.md)
+<b>References:</b> [Keywords.Horizontal](./alfa-css.position.keywords.horizontal.md)<!-- -->, [Keywords.Vertical](./alfa-css.position.keywords.vertical.md)<!-- -->, [Unit.Length](./alfa-css.unit.length.md)<!-- -->, [Keywords.Center](./alfa-css.position.keywords.center.md)<!-- -->, [Side](./alfa-css.position.side.md)
 

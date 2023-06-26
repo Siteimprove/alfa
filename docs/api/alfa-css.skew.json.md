@@ -7,15 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON extends Value.JSON<"transform"> 
+interface JSON extends Function.JSON<"skew"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"transform"&gt;
+<b>Extends:</b> Function.JSON&lt;"skew"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [kind](./alfa-css.skew.json.kind.md) |  | "skew" |  |
-|  [x](./alfa-css.skew.json.x.md) |  | [Angle.JSON](./alfa-css.angle.json.md) |  |
-|  [y](./alfa-css.skew.json.y.md) |  | [Angle.JSON](./alfa-css.angle.json.md) |  |
+|  [x](./alfa-css.skew.json.x.md) |  | [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md) |  |
+|  [y](./alfa-css.skew.json.y.md) |  | [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md) |  |
 

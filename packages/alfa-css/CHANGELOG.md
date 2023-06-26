@@ -1,70 +1,49 @@
 # @siteimprove/alfa-css
 
+## 0.64.0
+
+### Minor Changes
+
+- **Breaking:** New abstractions for calculatable numeric values (numbers, percentages, dimensions) are introduced and used in style properties. Currently, style properties only accept non-calculated numeric (except for some properties that already accepted calculated lengths or length-percentages and keep doing so). ([#1432](https://github.com/Siteimprove/alfa/pull/1432))
+
+  These abstractions are now exported from `@siteimprove/alfa-css` instead of the old abstractions which didn't accept calculations. In order to keep the functionalities of the old abstractions, replace `Foo` (`Number`, `Length`, …) with `Foo.Fixed`.
+
+  The new abstractions come with a `#resolve()` method which resolve any remaining calculation and returns a `Fixed` value. These methods need various resolvers argument depending on the precise abstraction (e.g. `Length#resolve` needs to know how to resolve relative lengths into `px`).
+
+- **Breaking:** The redundant second type parameter (Unit category) of Dimensions has been removed and is now automatically inferred from the first parameter (type string representation). ([#1432](https://github.com/Siteimprove/alfa/pull/1432))
+
+- **Breaking:** The compound `Length` type has been removed from `alfa-style`. The `Length` type from `alfa-css/src/value/numeric` should be used instead. ([#1424](https://github.com/Siteimprove/alfa/pull/1424))
+
+- **Breaking:** `Math.resolve` now returns a `Result<Numeric, string>` instead of an `Option`. ([#1416](https://github.com/Siteimprove/alfa/pull/1416))
+  Invalid expressions return an error message.
+
+  **Breaking:** No resolver is needed for `Math.resolve` on `Number` expressions.
+
+  **Breaking:** Math expression converters (`.toLength`, …) now return a `Result<T, string>` instead of an `option<T>`.
+
+- **Breaking:** The `Position.Center`, `Position.Horizontal`, `Position.Vertical` types have been grouped under the `Position.Keywords` namespace. ([#1431](https://github.com/Siteimprove/alfa/pull/1431))
+
+- **Added:** Most CSS value types now export a `Foo.Canonical` type which is the canonical representation of the type with calculations resolved, relative values absolutized, and dimensions converted to their canonical units. The `Canonical` type is normally the one used to represent computed values of style properties. ([#1432](https://github.com/Siteimprove/alfa/pull/1432))
+
+- **Breaking:** `Value` now require a `resolve` method. ([#1416](https://github.com/Siteimprove/alfa/pull/1416))
+  This method resolves calculation into actual values.
+
+  **Added:** `Value` type now accepts a second boolean type parameter indicating whether the value may or not contain unresolved calculation.
+  This parameter defaults to `false`. Its value is also available via the `Value#hasCalculation()` type predicate.
+
+- **Added:** `List` and `Tuple` CSS values are now exported from `@siteimprove/alfa-css`. ([#1416](https://github.com/Siteimprove/alfa/pull/1416))
+
+  These values were previously internal to the `@siteimprove/alfa-style` package and are now grouped with the other CSS values.
+
+  **Added:** A `List.parseCommaSeparated` helper is now provided, taking a value parser as input and returning a parser for list of values separated by commas.
+
+  **Added:** `List` now implement the `Functor` interface.
+
 ## 0.63.3
-
-### Patch Changes
-
-- Updated dependencies []:
-  - @siteimprove/alfa-array@0.63.3
-  - @siteimprove/alfa-comparable@0.63.3
-  - @siteimprove/alfa-equatable@0.63.3
-  - @siteimprove/alfa-hash@0.63.3
-  - @siteimprove/alfa-iterable@0.63.3
-  - @siteimprove/alfa-json@0.63.3
-  - @siteimprove/alfa-mapper@0.63.3
-  - @siteimprove/alfa-math@0.63.3
-  - @siteimprove/alfa-option@0.63.3
-  - @siteimprove/alfa-parser@0.63.3
-  - @siteimprove/alfa-predicate@0.63.3
-  - @siteimprove/alfa-record@0.63.3
-  - @siteimprove/alfa-refinement@0.63.3
-  - @siteimprove/alfa-result@0.63.3
-  - @siteimprove/alfa-selective@0.63.3
-  - @siteimprove/alfa-slice@0.63.3
 
 ## 0.63.2
 
-### Patch Changes
-
-- Updated dependencies []:
-  - @siteimprove/alfa-array@0.63.2
-  - @siteimprove/alfa-comparable@0.63.2
-  - @siteimprove/alfa-equatable@0.63.2
-  - @siteimprove/alfa-hash@0.63.2
-  - @siteimprove/alfa-iterable@0.63.2
-  - @siteimprove/alfa-json@0.63.2
-  - @siteimprove/alfa-mapper@0.63.2
-  - @siteimprove/alfa-math@0.63.2
-  - @siteimprove/alfa-option@0.63.2
-  - @siteimprove/alfa-parser@0.63.2
-  - @siteimprove/alfa-predicate@0.63.2
-  - @siteimprove/alfa-record@0.63.2
-  - @siteimprove/alfa-refinement@0.63.2
-  - @siteimprove/alfa-result@0.63.2
-  - @siteimprove/alfa-selective@0.63.2
-  - @siteimprove/alfa-slice@0.63.2
-
 ## 0.63.1
-
-### Patch Changes
-
-- Updated dependencies []:
-  - @siteimprove/alfa-array@0.63.1
-  - @siteimprove/alfa-comparable@0.63.1
-  - @siteimprove/alfa-equatable@0.63.1
-  - @siteimprove/alfa-hash@0.63.1
-  - @siteimprove/alfa-iterable@0.63.1
-  - @siteimprove/alfa-json@0.63.1
-  - @siteimprove/alfa-mapper@0.63.1
-  - @siteimprove/alfa-math@0.63.1
-  - @siteimprove/alfa-option@0.63.1
-  - @siteimprove/alfa-parser@0.63.1
-  - @siteimprove/alfa-predicate@0.63.1
-  - @siteimprove/alfa-record@0.63.1
-  - @siteimprove/alfa-refinement@0.63.1
-  - @siteimprove/alfa-result@0.63.1
-  - @siteimprove/alfa-selective@0.63.1
-  - @siteimprove/alfa-slice@0.63.1
 
 ## 0.63.0
 
@@ -84,66 +63,6 @@
 
   Instead, a combination of `parseLengthPercentage` and `parseNumber` should be used.
 
-### Patch Changes
-
-- Updated dependencies [[`abc7b9744`](https://github.com/Siteimprove/alfa/commit/abc7b9744985d9935a079e82fddfa668463442c0), [`af412a630`](https://github.com/Siteimprove/alfa/commit/af412a6309e7eb1e8590d3f5e269bd95ac7d6f50)]:
-  - @siteimprove/alfa-option@0.63.0
-  - @siteimprove/alfa-result@0.63.0
-  - @siteimprove/alfa-array@0.63.0
-  - @siteimprove/alfa-iterable@0.63.0
-  - @siteimprove/alfa-parser@0.63.0
-  - @siteimprove/alfa-record@0.63.0
-  - @siteimprove/alfa-slice@0.63.0
-  - @siteimprove/alfa-comparable@0.63.0
-  - @siteimprove/alfa-equatable@0.63.0
-  - @siteimprove/alfa-hash@0.63.0
-  - @siteimprove/alfa-json@0.63.0
-  - @siteimprove/alfa-mapper@0.63.0
-  - @siteimprove/alfa-math@0.63.0
-  - @siteimprove/alfa-predicate@0.63.0
-  - @siteimprove/alfa-refinement@0.63.0
-  - @siteimprove/alfa-selective@0.63.0
-
 ## 0.62.2
 
-### Patch Changes
-
-- Updated dependencies []:
-  - @siteimprove/alfa-array@0.62.2
-  - @siteimprove/alfa-comparable@0.62.2
-  - @siteimprove/alfa-equatable@0.62.2
-  - @siteimprove/alfa-hash@0.62.2
-  - @siteimprove/alfa-iterable@0.62.2
-  - @siteimprove/alfa-json@0.62.2
-  - @siteimprove/alfa-mapper@0.62.2
-  - @siteimprove/alfa-math@0.62.2
-  - @siteimprove/alfa-option@0.62.2
-  - @siteimprove/alfa-parser@0.62.2
-  - @siteimprove/alfa-predicate@0.62.2
-  - @siteimprove/alfa-record@0.62.2
-  - @siteimprove/alfa-refinement@0.62.2
-  - @siteimprove/alfa-result@0.62.2
-  - @siteimprove/alfa-selective@0.62.2
-  - @siteimprove/alfa-slice@0.62.2
-
 ## 0.62.1
-
-### Patch Changes
-
-- Updated dependencies []:
-  - @siteimprove/alfa-array@0.62.1
-  - @siteimprove/alfa-comparable@0.62.1
-  - @siteimprove/alfa-equatable@0.62.1
-  - @siteimprove/alfa-hash@0.62.1
-  - @siteimprove/alfa-iterable@0.62.1
-  - @siteimprove/alfa-json@0.62.1
-  - @siteimprove/alfa-mapper@0.62.1
-  - @siteimprove/alfa-math@0.62.1
-  - @siteimprove/alfa-option@0.62.1
-  - @siteimprove/alfa-parser@0.62.1
-  - @siteimprove/alfa-predicate@0.62.1
-  - @siteimprove/alfa-record@0.62.1
-  - @siteimprove/alfa-refinement@0.62.1
-  - @siteimprove/alfa-result@0.62.1
-  - @siteimprove/alfa-selective@0.62.1
-  - @siteimprove/alfa-slice@0.62.1

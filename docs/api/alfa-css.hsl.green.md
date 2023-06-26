@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get green(): Percentage;
+get green(): Percentage.Fixed;
 ```
