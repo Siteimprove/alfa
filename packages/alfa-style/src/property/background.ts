@@ -34,10 +34,7 @@ namespace RepeatY {
 
 const { map, filter, delimited, option, right, separatedList } = Parser;
 
-/**
- * @internal
- */
-export const parse: Parser<
+const parse: Parser<
   Slice<Token>,
   [
     Color.Specified?,

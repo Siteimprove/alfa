@@ -13,10 +13,7 @@ const { map } = Parser;
  */
 export const parse = Position.parse(/* legacySyntax */ true);
 
-/**
- * @internal
- */
-export const parseList = List.parseCommaSeparated(parse);
+const parseList = List.parseCommaSeparated(parse);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}

@@ -7,30 +7,21 @@ import { LengthPercentage } from "./value/compound";
 
 const { takeBetween, map, delimited, option } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Tuple<
+type Specified = Tuple<
   [
     horizontal: LengthPercentage.LengthPercentage,
     vertical: LengthPercentage.LengthPercentage
   ]
 >;
 
-/**
- * @internal
- */
-export type Computed = Tuple<
+type Computed = Tuple<
   [
     horizontal: Length.Canonical | Percentage.Canonical,
     vertical: Length.Canonical | Percentage.Canonical
   ]
 >;
 
-/**
- * @internal
- */
-export const parse = map(
+const parse = map(
   takeBetween(
     delimited(option(Token.parseWhitespace), LengthPercentage.parse),
     1,
