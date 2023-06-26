@@ -7,15 +7,9 @@ import { Longhand } from "../longhand";
 
 const { either, left, map, mapResult, option, pair, separatedList } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Keyword<"none"> | Rotate;
+type Specified = Keyword<"none"> | Rotate;
 
-/**
- * @internal
- */
-export type Computed = Keyword<"none"> | Rotate.Canonical;
+type Computed = Keyword<"none"> | Rotate.Canonical;
 
 function takeThree<T>(array: Array<T>): Result<[T, T, T], string> {
   return array.length === 3
@@ -69,10 +63,7 @@ const parseRotate = map(
   }
 );
 
-/**
- * @internal
- */
-export const parse = either(Keyword.parse("none"), parseRotate);
+const parse = either(Keyword.parse("none"), parseRotate);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/rotate}

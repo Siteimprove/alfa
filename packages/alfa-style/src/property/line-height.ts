@@ -10,23 +10,14 @@ import { Selective } from "@siteimprove/alfa-selective";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified =
-  | Keyword<"normal">
-  | LengthPercentage.LengthPercentage
-  | Number;
+type Specified = Keyword<"normal"> | LengthPercentage.LengthPercentage | Number;
 
 /**
  * @internal
  */
 export type Computed = Keyword<"normal"> | Number.Canonical | Length.Canonical;
 
-/**
- * @internal
- */
-export const parse = either<Slice<Token>, Specified, string>(
+const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("normal"),
   Number.parse,
   LengthPercentage.parse

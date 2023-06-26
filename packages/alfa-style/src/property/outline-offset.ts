@@ -3,15 +3,9 @@ import { Length } from "@siteimprove/alfa-css";
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
-/**
- * @internal
- */
-export type Specified = Length;
+type Specified = Length;
 
-/**
- * @internal
- */
-export type Computed = Length.Canonical;
+type Computed = Length.Canonical;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-offset}

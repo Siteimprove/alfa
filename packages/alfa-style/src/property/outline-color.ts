@@ -3,15 +3,9 @@ import { Color, Keyword } from "@siteimprove/alfa-css";
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
-/**
- * @internal
- */
-export type Specified = Color | Keyword<"invert">;
+type Specified = Color | Keyword<"invert">;
 
-/**
- * @internal
- */
-export type Computed = Color.Canonical | Keyword<"invert">;
+type Computed = Color.Canonical | Keyword<"invert">;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-color}
