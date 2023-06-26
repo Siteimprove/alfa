@@ -14,10 +14,7 @@ import { LengthPercentage } from "./value/compound";
 
 const { map, either, option, pair, right } = Parser;
 
-/**
- * @internal
- */
-export type Specified = List<Specified.Item>;
+type Specified = List<Specified.Item>;
 
 /**
  * @internal
@@ -31,15 +28,9 @@ export namespace Specified {
     | Keyword<"contain">;
 }
 
-/**
- * @internal
- */
-export type Computed = List<Computed.Item>;
+type Computed = List<Computed.Item>;
 
-/**
- * @internal
- */
-export namespace Computed {
+namespace Computed {
   export type Dimension = Length<"px"> | Percentage | Keyword<"auto">;
 
   export type Item =
@@ -69,10 +60,7 @@ export const parse = either(
   Keyword.parse("contain", "cover")
 );
 
-/**
- * @internal
- */
-export const parseList = List.parseCommaSeparated(parse);
+const parseList = List.parseCommaSeparated(parse);
 
 /**
  * @internal
