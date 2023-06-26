@@ -244,7 +244,6 @@
     { "path": "../alfa-either" },
     { "path": "../alfa-equatable" },
     { "path": "../alfa-functor" },
-    { "path": "../alfa-hash" },
     { "path": "../alfa-iterable" },
     { "path": "../alfa-json" },
     { "path": "../alfa-mapper" },
