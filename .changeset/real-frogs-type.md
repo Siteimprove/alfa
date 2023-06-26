@@ -3,7 +3,7 @@
 "@siteimprove/alfa-rules": minor
 ---
 
-**Breaking:** Removed the `@siteimprove/alfa-highlight/mark` and `@siteimprove/alfa-rules/FlattenedRules` exports.
+**Removed:** The `@siteimprove/alfa-highlight/mark` and `@siteimprove/alfa-rules/FlattenedRules` exports are no longer available.
 
 These were duplicating similar exports of the package.
 
