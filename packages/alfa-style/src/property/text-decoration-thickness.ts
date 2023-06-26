@@ -10,23 +10,14 @@ import type { Computed as FontSize } from "./font-size";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified =
+type Specified =
   | LengthPercentage.LengthPercentage
   | Keyword<"auto">
   | Keyword<"from-font">;
 
-/**
- * @internal
- */
-export type Computed = Length<"px"> | Keyword<"auto"> | Keyword<"from-font">;
+type Computed = Length<"px"> | Keyword<"auto"> | Keyword<"from-font">;
 
-/**
- * @internal
- */
-export const parse = either<Slice<Token>, Specified, string>(
+const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("auto", "from-font"),
   LengthPercentage.parse
 );

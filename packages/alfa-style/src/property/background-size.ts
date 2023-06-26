@@ -20,7 +20,7 @@ type Specified = List<Specified.Item>;
  * @internal
  */
 export namespace Specified {
-  export type Dimension = LengthPercentage.LengthPercentage | Keyword<"auto">;
+  type Dimension = LengthPercentage.LengthPercentage | Keyword<"auto">;
 
   export type Item =
     | Tuple<[Dimension, Dimension]>
@@ -31,7 +31,7 @@ export namespace Specified {
 type Computed = List<Computed.Item>;
 
 namespace Computed {
-  export type Dimension = Length<"px"> | Percentage | Keyword<"auto">;
+  type Dimension = Length<"px"> | Percentage | Keyword<"auto">;
 
   export type Item =
     | Tuple<[Dimension, Dimension]>

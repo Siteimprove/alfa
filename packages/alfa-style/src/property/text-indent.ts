@@ -4,15 +4,9 @@ import { Longhand } from "../longhand";
 
 import { LengthPercentage } from "./value/compound";
 
-/**
- * @internal
- */
-export type Specified = LengthPercentage.LengthPercentage;
+type Specified = LengthPercentage.LengthPercentage;
 
-/**
- * @internal
- */
-export type Computed = Length.Canonical | Percentage.Canonical;
+type Computed = Length.Canonical | Percentage.Canonical;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent}

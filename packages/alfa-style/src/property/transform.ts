@@ -15,20 +15,11 @@ import { Resolver } from "../resolver";
 
 const { map, either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Keyword<"none"> | List<Transform>;
+type Specified = Keyword<"none"> | List<Transform>;
 
-/**
- * @internal
- */
-export type Computed = Keyword<"none"> | List<Transform.Canonical>;
+type Computed = Keyword<"none"> | List<Transform.Canonical>;
 
-/**
- * @internal
- */
-export const parse = either(
+const parse = either(
   Keyword.parse("none"),
   map(Transform.parseList, (transforms) => List.of(transforms))
 );
