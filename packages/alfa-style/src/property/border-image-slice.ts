@@ -26,17 +26,11 @@ export type Specified = Tuple<
   ]
 >;
 
-/**
- * @internal
- */
-export namespace Specified {
+namespace Specified {
   export type Item = Number.Fixed | Percentage.Fixed;
 }
 
-/**
- * @internal
- */
-export type Computed = Specified;
+type Computed = Specified;
 
 const parseItem = filter(
   either(Number.parseBase, Percentage.parseBase),
