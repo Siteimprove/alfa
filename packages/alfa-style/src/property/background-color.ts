@@ -8,10 +8,7 @@ import { Resolver } from "../resolver";
  */
 export type Specified = Color;
 
-/**
- * @internal
- */
-export type Computed = Color.Canonical;
+type Computed = Color.Canonical;
 
 /**
  * @internal
