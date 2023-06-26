@@ -64,8 +64,8 @@ export namespace LengthPercentage {
             },
             percentage: (value) =>
               BaseLength.of(
-                resolver.percentageBase.value,
-                /* this is "px"! */ resolver.percentageBase.unit
+                resolver.basePercentage.value,
+                /* this is "px"! */ resolver.basePercentage.unit
               ).scale(value.value),
           })
           // Since the expression has been correctly typed, it should always resolve.
@@ -90,15 +90,23 @@ export namespace LengthPercentage {
     resolve(resolver: Resolver): Canonical;
   }
 
+  // In order to resolve a percentage, we need a base (=100%)
   // In order to resolve a length, we need to know how to resolve relative
   // lengths.
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export type Resolver = {
-    length: Mapper<Length.Fixed<Unit.Length.Relative>, Canonical>;
-    percentageBase: Canonical;
-  };
+  export type Resolver = Length.Resolver &
+    Percentage.Resolver<"length", Canonical>;
+
+  export function resolver(
+    value: LengthPercentage,
+    resolver: Resolver
+  ): Canonical {
+    return isPercentage(value)
+      ? value.resolve(resolver)
+      : value.resolve(resolver);
+  }
 
   export function isLengthPercentage(
     value: unknown

@@ -83,7 +83,7 @@ export namespace Number {
       return this;
     }
 
-    public scale(factor: number): Fixed {
+    public scale(factor: number): this {
       return new Fixed(this._value * factor);
     }
 

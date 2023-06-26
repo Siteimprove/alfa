@@ -95,7 +95,7 @@ export namespace Numeric {
       return this._value;
     }
 
-    public abstract scale(factor: number): Fixed<T>;
+    public abstract scale(factor: number): this;
 
     public hasCalculation(): this is never {
       return false;

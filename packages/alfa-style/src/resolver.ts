@@ -3,14 +3,17 @@ import {
   Gradient,
   Image,
   Length,
+  LengthPercentage,
   Linear,
   Percentage,
   Position,
   Radial,
   RGB,
+  Unit,
   URL,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Mapper } from "@siteimprove/alfa-mapper";
 import { Real } from "@siteimprove/alfa-math";
 
 import { Style } from "./style";
@@ -38,7 +41,9 @@ export namespace Resolver {
    *
    * {@link https://drafts.csswg.org/css-values/#relative-lengths}
    */
-  export function length(style: Style): Length.Resolver {
+  function lengthResolver(
+    style: Style
+  ): Mapper<Length.Fixed<Unit.Length.Relative>, Length.Canonical> {
     const { viewport } = style.device;
     const width = Length.of(viewport.width, "px");
     const height = Length.of(viewport.height, "px");
@@ -46,7 +51,18 @@ export namespace Resolver {
     const fontSize = style.computed("font-size").value;
     const rootFontSize = style.root().computed("font-size").value;
 
-    return { length: Length.resolver(fontSize, rootFontSize, width, height) };
+    return Length.resolver(fontSize, rootFontSize, width, height);
+  }
+
+  export function length(style: Style): Length.Resolver {
+    return { length: lengthResolver(style) };
+  }
+
+  export function lengthPercentage(
+    base: Length.Canonical,
+    style: Style
+  ): LengthPercentage.Resolver {
+    return { percentageBase: base, length: lengthResolver(style) };
   }
 
   /**
