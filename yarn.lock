@@ -847,6 +847,7 @@ __metadata:
     "@siteimprove/alfa-iterable": "workspace:^0.64.0"
     "@siteimprove/alfa-json": "workspace:^0.64.0"
     "@siteimprove/alfa-lazy": "workspace:^0.64.0"
+    "@siteimprove/alfa-map": "workspace:^0.64.0"
     "@siteimprove/alfa-media": "workspace:^0.64.0"
     "@siteimprove/alfa-option": "workspace:^0.64.0"
     "@siteimprove/alfa-predicate": "workspace:^0.64.0"
@@ -1025,6 +1026,7 @@ __metadata:
     "@siteimprove/alfa-option": "workspace:^0.64.0"
     "@siteimprove/alfa-refinement": "workspace:^0.64.0"
     "@siteimprove/alfa-result": "workspace:^0.64.0"
+    "@siteimprove/alfa-test": "workspace:^0.64.0"
     "@siteimprove/alfa-url": "workspace:^0.64.0"
   languageName: unknown
   linkType: soft
@@ -1365,6 +1367,7 @@ __metadata:
     "@siteimprove/alfa-math": "workspace:^0.64.0"
     "@siteimprove/alfa-media": "workspace:^0.64.0"
     "@siteimprove/alfa-option": "workspace:^0.64.0"
+    "@siteimprove/alfa-parser": "workspace:^0.64.0"
     "@siteimprove/alfa-predicate": "workspace:^0.64.0"
     "@siteimprove/alfa-record": "workspace:^0.64.0"
     "@siteimprove/alfa-refinement": "workspace:^0.64.0"
@@ -1373,6 +1376,7 @@ __metadata:
     "@siteimprove/alfa-selector": "workspace:^0.64.0"
     "@siteimprove/alfa-sequence": "workspace:^0.64.0"
     "@siteimprove/alfa-set": "workspace:^0.64.0"
+    "@siteimprove/alfa-slice": "workspace:^0.64.0"
     "@siteimprove/alfa-style": "workspace:^0.64.0"
     "@siteimprove/alfa-table": "workspace:^0.64.0"
     "@siteimprove/alfa-test": "workspace:^0.64.0"
@@ -1693,6 +1697,7 @@ __metadata:
     "@siteimprove/alfa-refinement": "workspace:^0.64.0"
     "@siteimprove/alfa-result": "workspace:^0.64.0"
     "@siteimprove/alfa-sarif": "workspace:^0.64.0"
+    "@siteimprove/alfa-test": "workspace:^0.64.0"
   languageName: unknown
   linkType: soft
 
