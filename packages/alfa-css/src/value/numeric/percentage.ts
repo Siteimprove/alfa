@@ -64,7 +64,7 @@ export namespace Percentage {
       );
       return resolver === undefined
         ? percentage
-        : resolver.basePercentage.scale(percentage.value);
+        : resolver.percentageBase.scale(percentage.value);
     }
 
     public equals(value: unknown): value is this {
@@ -111,7 +111,7 @@ export namespace Percentage {
     ): Fixed<"percentage"> | T {
       return resolver === undefined
         ? this
-        : resolver.basePercentage.scale(this._value);
+        : resolver.percentageBase.scale(this._value);
     }
 
     public scale(factor: number): this {
@@ -144,7 +144,7 @@ export namespace Percentage {
     R extends BaseNumeric.Type,
     T extends Numeric.Fixed<R>
   > {
-    basePercentage: T;
+    percentageBase: T;
   }
 
   interface IPercentage<

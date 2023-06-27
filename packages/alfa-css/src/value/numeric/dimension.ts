@@ -84,9 +84,9 @@ export namespace Dimension {
       return (this.type === "angle" ? "deg" : "px") as Dimensions<T>[2];
     }
 
-    public hasUnit<V extends Dimensions<T>[1]>(unit: V): this is Fixed<T, V> {
-      return (this._unit as Dimensions<T>[1]) === unit;
-    }
+    public abstract hasUnit<V extends Dimensions<T>[1]>(
+      unit: V
+    ): this is Fixed<T, V>;
 
     public abstract withUnit<V extends Dimensions<T>[1]>(unit: V): Fixed<T, V>;
 

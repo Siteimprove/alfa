@@ -1,12 +1,9 @@
-import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
-import {
-  Length as BaseLength,
-  Percentage as BasePercentage,
-} from "../../calculation/numeric";
+import * as Base from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
 import { Value } from "../value";
@@ -22,14 +19,16 @@ const { either, map } = Parser;
  */
 export type LengthPercentage<U extends Unit.Length = Unit.Length> =
   | LengthPercentage.Calculated
-  | Percentage.Fixed
-  | Length.Fixed<U>;
+  | Length.Calculated
+  | Length.Fixed<U>
+  | Percentage.Calculated
+  | Percentage.Fixed;
 
 /**
  * @public
  */
 export namespace LengthPercentage {
-  export type Canonical = Length.Fixed<"px">;
+  export type Canonical = Length.Canonical;
 
   /**
    * Lengths that are the result of a calculation.
@@ -60,12 +59,12 @@ export namespace LengthPercentage {
           .resolve({
             length: (length) => {
               const resolved = resolver.length(Length.Fixed.of(length));
-              return BaseLength.of(resolved.value, resolved.unit);
+              return Base.Length.of(resolved.value, resolved.unit);
             },
             percentage: (value) =>
-              BaseLength.of(
-                resolver.basePercentage.value,
-                /* this is "px"! */ resolver.basePercentage.unit
+              Base.Length.of(
+                resolver.percentageBase.value,
+                /* this is "px"! */ resolver.percentageBase.unit
               ).scale(value.value),
           })
           // Since the expression has been correctly typed, it should always resolve.
@@ -99,13 +98,42 @@ export namespace LengthPercentage {
   export type Resolver = Length.Resolver &
     Percentage.Resolver<"length", Canonical>;
 
-  export function resolver(
-    value: LengthPercentage,
+  /**
+   * Fully resolves a length-percentage, when a full resolver is provided.
+   */
+  export function resolve(
     resolver: Resolver
-  ): Canonical {
-    return isPercentage(value)
-      ? value.resolve(resolver)
-      : value.resolve(resolver);
+  ): (value: LengthPercentage) => Canonical {
+    return (value) =>
+      // We need to break down the union to help TS find the correct overload
+      // of each component and correctly narrow the result.
+      Percentage.isPercentage(value)
+        ? value.resolve(resolver)
+        : value.resolve(resolver);
+  }
+
+  /**
+   * Partially resolves a length-percentage, when only a length resolver is
+   * provided.
+   *
+   * @remarks
+   * For many style properties, the percentages are resolved depending on the
+   * dimensions of the box, which we do not always have. In this case, we cannot
+   * resolve the percentage parts, but we can still fully resolve the length parts.
+   * Calculated percentages cannot be fully resolved into a canonical length, but
+   * we can nonetheless reduce them to a pure percentage. However, mixed
+   * calculations have to stay as they are.
+   */
+  export function resolvePartial(
+    resolver: Length.Resolver
+  ): (
+    value: LengthPercentage
+  ) => Length.Canonical | Percentage.Canonical | Calculated {
+    return (value) =>
+      Selective.of(value)
+        .if(Length.isLength, (value) => value.resolve(resolver))
+        .if(Percentage.isPercentage, (value) => value.resolve())
+        .get();
   }
 
   export function isLengthPercentage(
@@ -118,8 +146,14 @@ export namespace LengthPercentage {
     );
   }
 
-  export function isCalculated(value: unknown): value is Calculated {
-    return value instanceof Calculated;
+  export function isCalculated(
+    value: unknown
+  ): value is Calculated | Length.Calculated | Percentage.Calculated {
+    return (
+      value instanceof Calculated ||
+      Length.isCalculated(value) ||
+      Percentage.isCalculated(value)
+    );
   }
 
   export function isFixed(value: unknown): value is Length.Fixed {
@@ -136,33 +170,53 @@ export namespace LengthPercentage {
   ): Length.Fixed<U>;
 
   export function of<U extends Unit.Length>(
-    value: BaseLength<U>
+    value: Base.Length<U>
   ): Length.Fixed<U>;
 
   export function of(value: number): Percentage.Fixed;
 
-  export function of(value: BasePercentage): Percentage.Fixed;
+  export function of(value: Base.Percentage): Percentage.Fixed;
+
+  export function of(value: Math<"length">): Length.Calculated;
 
   export function of(value: Math<"length-percentage">): Calculated;
 
+  export function of(value: Math<"percentage">): Percentage.Calculated;
+
   export function of<U extends Unit.Length>(
-    value: number | BaseLength<U> | BasePercentage | Math<"length-percentage">,
+    value:
+      | number
+      | Base.Length<U>
+      | Base.Percentage
+      | Math<"length">
+      | Math<"length-percentage">
+      | Math<"percentage">,
     unit?: U
   ): LengthPercentage<U> {
     if (typeof value === "number") {
       if (unit === undefined) {
-        return Percentage.Fixed.of(value);
+        return Percentage.of(value);
       } else {
-        return Length.Fixed.of(value, unit);
+        return Length.of(value, unit);
       }
     }
 
-    if (BaseLength.isLength(value)) {
-      return Length.Fixed.of(value.value, value.unit);
+    if (Base.Length.isLength(value)) {
+      return Length.of(value.value, value.unit);
     }
 
-    if (BasePercentage.isPercentage(value)) {
-      return Percentage.Fixed.of(value.value);
+    if (Base.Percentage.isPercentage(value)) {
+      return Percentage.of(value.value);
+    }
+
+    // value must be a math expression
+
+    if (value.isPercentage()) {
+      return Percentage.of(value);
+    }
+
+    if (value.isDimension("length")) {
+      return Length.of(value);
     }
 
     return Calculated.of(value);
@@ -171,15 +225,12 @@ export namespace LengthPercentage {
   /**
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
-  export const parse: Parser<Slice<Token>, LengthPercentage, string> = either(
-    map<Slice<Token>, BaseLength, LengthPercentage, string>(
-      BaseLength.parse,
+  export const parse = either<Slice<Token>, LengthPercentage, string>(
+    Length.parse,
+    Percentage.parse,
+    map<Slice<Token>, Math<"length-percentage">, Calculated, string>(
+      Math.parseLengthPercentage,
       of
-    ),
-    map<Slice<Token>, BasePercentage, LengthPercentage, string>(
-      BasePercentage.parse,
-      of
-    ),
-    map(Math.parseLengthPercentage, of)
+    )
   );
 }
