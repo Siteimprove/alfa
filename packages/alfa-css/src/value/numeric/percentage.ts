@@ -64,7 +64,10 @@ export namespace Percentage {
       );
       return resolver === undefined
         ? percentage
-        : resolver.percentageBase.scale(percentage.value);
+        : // since we don't know much about percentageBase, scale defaults to
+          // the abstract one on Numeric and loses its actual type which needs
+          // to be asserted again.
+          (resolver.percentageBase.scale(percentage.value) as T);
     }
 
     public equals(value: unknown): value is this {
@@ -111,13 +114,14 @@ export namespace Percentage {
     ): Fixed<"percentage"> | T {
       return resolver === undefined
         ? this
-        : resolver.percentageBase.scale(this._value);
+        : // since we don't know much about percentageBase, scale defaults to
+          // the abstract one on Numeric and loses its actual type which needs
+          // to be asserted again.
+          (resolver.percentageBase.scale(this._value) as T);
     }
 
-    public scale(factor: number): this {
-      // The type assertion is safe because the constructor is private, making
-      // the class final.
-      return new Fixed(this._value * factor) as this;
+    public scale(factor: number): Fixed<R> {
+      return new Fixed(this._value * factor);
     }
 
     public equals(value: unknown): value is this {
