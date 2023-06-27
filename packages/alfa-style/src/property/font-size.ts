@@ -112,9 +112,9 @@ const property: Longhand<Specified, Computed> = Longhand.of<
       const parent = style.parent.computed("font-size").value as Computed;
 
       if (LengthPercentage.isLengthPercentage(fontSize)) {
-        return fontSize.resolve(
+        return LengthPercentage.resolve(
           Resolver.lengthPercentage(parent, style.parent)
-        );
+        )(fontSize);
       }
 
       // Must be a keyword

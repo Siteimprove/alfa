@@ -1,9 +1,14 @@
-import { Length, type Percentage, Token, Tuple } from "@siteimprove/alfa-css";
+import {
+  Length,
+  LengthPercentage,
+  type Percentage,
+  Token,
+  Tuple,
+} from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
-
-import { LengthPercentage } from "./value/compound";
+import { Resolver } from "../resolver";
 
 const { takeBetween, map, delimited, option } = Parser;
 
@@ -11,21 +16,26 @@ const { takeBetween, map, delimited, option } = Parser;
  * @internal
  */
 export type Specified = Tuple<
-  [
-    horizontal: LengthPercentage.LengthPercentage,
-    vertical: LengthPercentage.LengthPercentage
-  ]
+  [horizontal: LengthPercentage, vertical: LengthPercentage]
 >;
 
 /**
  * @internal
  */
 export type Computed = Tuple<
-  [
-    horizontal: Length.Canonical | Percentage.Canonical,
-    vertical: Length.Canonical | Percentage.Canonical
-  ]
+  [horizontal: Computed.Item, vertical: Computed.Item]
 >;
+
+namespace Computed {
+  export type Item =
+    | LengthPercentage.Canonical
+    // TODO: percentages resolve relative to the dimensions of the containing block,
+    //       which we do not handle.
+    //       This results in length-percentage calculations leaking to computed
+    //       values, which is a bit annoying.
+    | Percentage.Canonical
+    | LengthPercentage.Calculated;
+}
 
 /**
  * @internal
@@ -51,12 +61,8 @@ export default Longhand.of<Specified, Computed>(
       // Percentages are relative to the size of the border box, which we don't
       // really handle currently.
       Tuple.of(
-        h.type === "length" || h.type === "math expression"
-          ? LengthPercentage.resolve(Length.of(0, "px"), style)(h)
-          : h,
-        v.type === "length" || v.type === "math expression"
-          ? LengthPercentage.resolve(Length.of(0, "px"), style)(v)
-          : v
+        LengthPercentage.partiallyResolve(Resolver.length(style))(h),
+        LengthPercentage.partiallyResolve(Resolver.length(style))(v)
       )
     )
 );

@@ -230,6 +230,7 @@
     "test/property/text-decoration.spec.tsx",
     "test/property/text-indent.spec.tsx",
     "test/property/text-shadow.spec.tsx",
+    "test/property/top.spec.tsx",
     "test/style.spec.tsx",
     "test/variable.spec.ts"
   ],

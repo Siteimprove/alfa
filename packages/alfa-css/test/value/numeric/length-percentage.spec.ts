@@ -141,36 +141,36 @@ test("resolve() resolves mix of lengths and percentages", (t) => {
   });
 });
 
-const resolvePartial = LengthPercentage.resolvePartial({
+const partiallyResolve = LengthPercentage.partiallyResolve({
   length: resolver.length,
 });
 
-test("resolvePartial() absolutize lengths", (t) => {
-  t.deepEqual(resolvePartial(parse("2em").getUnsafe()).toJSON(), {
+test("partiallyResolve() absolutize lengths", (t) => {
+  t.deepEqual(partiallyResolve(parse("2em").getUnsafe()).toJSON(), {
     type: "length",
     value: 32,
     unit: "px",
   });
 });
 
-test("resolvePartial() resolves lengths calculations", (t) => {
-  t.deepEqual(resolvePartial(parse("calc(1em + 2px)").getUnsafe()).toJSON(), {
+test("partiallyResolve() resolves lengths calculations", (t) => {
+  t.deepEqual(partiallyResolve(parse("calc(1em + 2px)").getUnsafe()).toJSON(), {
     type: "length",
     value: 18,
     unit: "px",
   });
 });
 
-test("resolvePartial() leaves pure percentages untouched", (t) => {
-  t.deepEqual(resolvePartial(parse("50%").getUnsafe()).toJSON(), {
+test("partiallyResolve() leaves pure percentages untouched", (t) => {
+  t.deepEqual(partiallyResolve(parse("50%").getUnsafe()).toJSON(), {
     type: "percentage",
     value: 0.5,
   });
 });
 
-test("resolvePartial() simplify calculated percentages", (t) => {
+test("partiallyResolve() simplify calculated percentages", (t) => {
   t.deepEqual(
-    resolvePartial(parse("calc((12% + 9%) * 2)").getUnsafe()).toJSON(),
+    partiallyResolve(parse("calc((12% + 9%) * 2)").getUnsafe()).toJSON(),
     {
       type: "percentage",
       value: 0.42,
@@ -178,8 +178,8 @@ test("resolvePartial() simplify calculated percentages", (t) => {
   );
 });
 
-test("resolvePartial() leaves mix of lengths and percentages untouched", (t) => {
-  t.deepEqual(resolvePartial(parse("calc(10px + 5%)").getUnsafe()).toJSON(), {
+test("partiallyResolve() leaves mix of lengths and percentages untouched", (t) => {
+  t.deepEqual(partiallyResolve(parse("calc(10px + 5%)").getUnsafe()).toJSON(), {
     type: "length-percentage",
     math: {
       type: "math expression",

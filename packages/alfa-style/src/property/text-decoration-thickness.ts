@@ -1,10 +1,10 @@
-import { Keyword, type Length, type Token } from "@siteimprove/alfa-css";
+import { Keyword, LengthPercentage, type Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
-import { LengthPercentage } from "./value/compound";
+import { Resolver } from "../resolver";
 
 import type { Computed as FontSize } from "./font-size";
 
@@ -14,14 +14,17 @@ const { either } = Parser;
  * @internal
  */
 export type Specified =
-  | LengthPercentage.LengthPercentage
+  | LengthPercentage
   | Keyword<"auto">
   | Keyword<"from-font">;
 
 /**
  * @internal
  */
-export type Computed = Length<"px"> | Keyword<"auto"> | Keyword<"from-font">;
+export type Computed =
+  | LengthPercentage.Canonical
+  | Keyword<"auto">
+  | Keyword<"from-font">;
 
 /**
  * @internal
@@ -47,7 +50,7 @@ export default Longhand.of<Specified, Computed>(
       return Selective.of(value)
         .if(
           LengthPercentage.isLengthPercentage,
-          LengthPercentage.resolve(fontSize, style)
+          LengthPercentage.resolve(Resolver.lengthPercentage(fontSize, style))
         )
         .get();
     })

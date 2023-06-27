@@ -124,7 +124,7 @@ export namespace LengthPercentage {
    * we can nonetheless reduce them to a pure percentage. However, mixed
    * calculations have to stay as they are.
    */
-  export function resolvePartial(
+  export function partiallyResolve(
     resolver: Length.Resolver
   ): (
     value: LengthPercentage
@@ -141,8 +141,8 @@ export namespace LengthPercentage {
   ): value is LengthPercentage {
     return (
       value instanceof Calculated ||
-      value instanceof Length.Fixed ||
-      value instanceof Percentage.Fixed
+      Length.isLength(value) ||
+      Percentage.isPercentage(value)
     );
   }
 

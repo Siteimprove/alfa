@@ -36,24 +36,9 @@ export default Rule.Atomic.of<Page, Element>({
             not(hasName("sup", "sub")),
             Node.hasTextContent(),
             isVisible(device),
-            hasCascadedStyle(
-              `font-size`,
-              (fontSize) => {
-                switch (fontSize.type) {
-                  case "length":
-                    // We cannot resolve calculation at cascaded time, so we simply
-                    // discard elements with calculated font-size to avoid
-                    // false positives.
-                    return !fontSize.hasCalculation() && fontSize.value > 0;
-                  case "percentage":
-                    return fontSize.value > 0;
-
-                  default:
-                    return true;
-                }
-              },
-              device
-            )
+            // If the font-size ultimately computes to size 0, the element is not
+            // visible.
+            hasCascadedStyle(`font-size`, () => true, device)
           )
         );
       },
