@@ -1733,7 +1733,7 @@ __metadata:
     async: ^3.2.1
     axios: ^0.27.2
     execa: ^5.1.1
-    knip: ^2.14.1
+    knip: ^2.14.3
     minimist: ^1.2.6
     package-dependency-graph: ^1.14.4
     prettier: ^2.7.1
@@ -4144,9 +4144,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:^2.14.1":
-  version: 2.14.2
-  resolution: "knip@npm:2.14.2"
+"knip@npm:^2.14.3":
+  version: 2.14.3
+  resolution: "knip@npm:2.14.3"
   dependencies:
     "@npmcli/map-workspaces": ^3.0.4
     "@snyk/github-codeowners": ^1.1.0
@@ -4164,10 +4164,10 @@ __metadata:
     summary: ^2.1.0
     typescript: ^5.0.2
     zod: ^3.20.6
-    zod-validation-error: 1.3.0
+    zod-validation-error: 1.3.1
   bin:
     knip: dist/cli.js
-  checksum: 07f3ef1752d2dd46d580c2b83bc1bd64c82b611cab5c1a0856c02e3314cd7f7df0cf2b3da60018be6d3f7d91153bfd8d4bf74f80e274e71688a842f04b323d11
+  checksum: 2283fc680b2de89c7be90e08cfc5b03aa3074e73257851543c7d78ef37b1e6d4bfcf6f0b1cfca499ea337a089ab085de6e13bd62a1a5aa89858fa5a78220ebdc
   languageName: node
   linkType: hard
 
@@ -6516,12 +6516,12 @@ typescript@~4.7.4:
   languageName: node
   linkType: hard
 
-"zod-validation-error@npm:1.3.0":
-  version: 1.3.0
-  resolution: "zod-validation-error@npm:1.3.0"
+"zod-validation-error@npm:1.3.1":
+  version: 1.3.1
+  resolution: "zod-validation-error@npm:1.3.1"
   peerDependencies:
     zod: ^3.18.0
-  checksum: 4ff5ec35e77b04218f12da15ee910b7ae35add9addf0a551ba66bd5b61e312c828c274534fb563e1e1a1de2cdfb261a55b5fdeb8efd86f8dd70cb3bb71a59b89
+  checksum: f27484377be368e41f29b122df6d4b9276e03774e1ceb26c8b77dd3dff0a216221ae8fd63643f75742236a4df80b27fc43b4c8efae80ae8c8fe38c4d12bbd104
   languageName: node
   linkType: hard
 
