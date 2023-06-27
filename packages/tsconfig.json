@@ -34,7 +34,6 @@
     { "path": "alfa-generator" },
     { "path": "alfa-graph" },
     { "path": "alfa-hash" },
-    { "path": "alfa-highlight" },
     { "path": "alfa-http" },
     { "path": "alfa-iana" },
     { "path": "alfa-iterable" },
