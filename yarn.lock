@@ -965,14 +965,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-highlight@workspace:^0.64.0, @siteimprove/alfa-highlight@workspace:packages/alfa-highlight":
-  version: 0.0.0-use.local
-  resolution: "@siteimprove/alfa-highlight@workspace:packages/alfa-highlight"
-  dependencies:
-    chalk: ^4.1.2
-  languageName: unknown
-  linkType: soft
-
 "@siteimprove/alfa-http@workspace:^0.64.0, @siteimprove/alfa-http@workspace:packages/alfa-http":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-http@workspace:packages/alfa-http"
@@ -1515,8 +1507,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-test@workspace:packages/alfa-test"
   dependencies:
-    "@siteimprove/alfa-highlight": "workspace:^0.64.0"
     "@types/node": ^14.14.31
+    chalk: ^4.1.2
   languageName: unknown
   linkType: soft
 
