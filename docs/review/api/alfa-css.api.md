@@ -1386,15 +1386,15 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> {
     reduce(resolver: Expression.Resolver): Math_2;
     resolve(this: Math_2<"angle">): Result<Angle_2<"deg">, string>;
     // (undocumented)
-    resolve(this: Math_2<"angle-percentage">, resolver: Expression.PercentageResolver<Angle_2<"deg">>, hint: "angle"): Result<Angle_2<"deg">, string>;
+    resolve(this: Math_2<"angle-percentage">, resolver: Expression.PercentageResolver<Angle_2<"deg">>): Result<Angle_2<"deg">, string>;
     // (undocumented)
     resolve(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length_2<"px">, string>;
     // (undocumented)
-    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length_2<"px">>, hint?: "length"): Result<Length_2<"px">, string>;
+    resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length_2<"px">>): Result<Length_2<"px">, string>;
     // (undocumented)
     resolve(this: Math_2<"number">): Result<Number_3, string>;
     // (undocumented)
-    resolve(this: Math_2<"percentage">): Result<Percentage_2, string>;
+    resolve<T extends Numeric_2 = Percentage_2>(this: Math_2<"percentage">, resolver?: Expression.PercentageResolver<T>, hint?: T extends Angle_2 ? "angle" : "length"): Result<T, string>;
     // (undocumented)
     toJSON(): Math_2.JSON;
     // (undocumented)
