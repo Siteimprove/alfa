@@ -1,8 +1,4 @@
-import {
-  Keyword,
-  LengthPercentage,
-  type Percentage,
-} from "@siteimprove/alfa-css";
+import { Keyword, LengthPercentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 
@@ -18,16 +14,14 @@ export type Specified = Keyword<"auto"> | LengthPercentage;
 
 /**
  * @internal
+ *
+ * @remarks
+ * TODO: percentages resolve relative to the dimensions of the containing block,
+ *       which we do not handle.
+ *       This results in length-percentage calculations leaking to computed
+ *       values, which is a bit annoying.
  */
-export type Computed =
-  | Keyword<"auto">
-  | LengthPercentage.Canonical
-  // TODO: percentages resolve relative to the dimensions of the containing block,
-  //       which we do not handle.
-  //       This results in length-percentage calculations leaking to computed
-  //       values, which is a bit annoying.
-  | Percentage.Canonical
-  | LengthPercentage.Calculated;
+export type Computed = Keyword<"auto"> | LengthPercentage.PartiallyResolved;
 
 /**
  * @internal

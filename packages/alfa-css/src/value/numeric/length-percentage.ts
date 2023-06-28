@@ -29,6 +29,14 @@ export type LengthPercentage<U extends Unit.Length = Unit.Length> =
  */
 export namespace LengthPercentage {
   export type Canonical = Length.Canonical;
+  /**
+   * Some percentages are resolved against boxes dimensions which we do not
+   * always have access to at compute time.
+   */
+  export type PartiallyResolved =
+    | Canonical
+    | Percentage.Canonical
+    | LengthPercentage.Calculated;
 
   /**
    * Lengths that are the result of a calculation.
@@ -126,9 +134,7 @@ export namespace LengthPercentage {
    */
   export function partiallyResolve(
     resolver: Length.Resolver
-  ): (
-    value: LengthPercentage
-  ) => Length.Canonical | Percentage.Canonical | Calculated {
+  ): (value: LengthPercentage) => PartiallyResolved {
     return (value) =>
       Selective.of(value)
         .if(Length.isLength, (value) => value.resolve(resolver))

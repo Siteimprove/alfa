@@ -1,8 +1,4 @@
-import {
-  Length,
-  LengthPercentage,
-  type Percentage,
-} from "@siteimprove/alfa-css";
+import { Length, LengthPercentage } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
@@ -14,15 +10,15 @@ export type Specified = LengthPercentage;
 
 /**
  * @internal
+ *
+ * @remarks
+ * TODO: percentages resolve relative to the dimensions of the containing block,
+ *       which we do not handle.
+ *       This results in length-percentage calculations leaking to computed
+ *       values, which is a bit annoying.
+ *
  */
-export type Computed =
-  | LengthPercentage.Canonical
-  // TODO: percentages resolve relative to the dimensions of the containing block,
-  //       which we do not handle.
-  //       This results in length-percentage calculations leaking to computed
-  //       values, which is a bit annoying.
-  | Percentage.Canonical
-  | LengthPercentage.Calculated;
+export type Computed = LengthPercentage.PartiallyResolved;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent}

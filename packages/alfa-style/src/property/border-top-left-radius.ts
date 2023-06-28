@@ -1,10 +1,4 @@
-import {
-  Length,
-  LengthPercentage,
-  type Percentage,
-  Token,
-  Tuple,
-} from "@siteimprove/alfa-css";
+import { Length, LengthPercentage, Token, Tuple } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
@@ -21,21 +15,19 @@ export type Specified = Tuple<
 
 /**
  * @internal
+ *
+ * @remarks
+ * TODO: percentages resolve relative to the dimensions of the containing block,
+ *       which we do not handle.
+ *       This results in length-percentage calculations leaking to computed
+ *       values, which is a bit annoying.
  */
 export type Computed = Tuple<
-  [horizontal: Computed.Item, vertical: Computed.Item]
+  [
+    horizontal: LengthPercentage.PartiallyResolved,
+    vertical: LengthPercentage.PartiallyResolved
+  ]
 >;
-
-namespace Computed {
-  export type Item =
-    | LengthPercentage.Canonical
-    // TODO: percentages resolve relative to the dimensions of the containing block,
-    //       which we do not handle.
-    //       This results in length-percentage calculations leaking to computed
-    //       values, which is a bit annoying.
-    | Percentage.Canonical
-    | LengthPercentage.Calculated;
-}
 
 /**
  * @internal
