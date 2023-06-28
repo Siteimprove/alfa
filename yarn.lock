@@ -1720,10 +1720,8 @@ __metadata:
     "@microsoft/api-documenter": ^7.19.9
     "@microsoft/api-extractor": ^7.29.5
     "@types/async": ^3.2.5
-    "@types/jsonld": ^1.5.6
     "@types/node": ^14.14.31
     async: ^3.2.1
-    axios: ^0.27.2
     execa: ^5.1.1
     knip: ^2.14.3
     minimist: ^1.2.6
@@ -1808,13 +1806,6 @@ __metadata:
   dependencies:
     ci-info: ^3.1.0
   checksum: 7c1f1f16c1fa2134de7400d82766c83fa76057261ba890628af77a09382ebb92d945bb077b98cfcf3d40ab1469c9ffbd2278112867edbe57aa655f53547eb139
-  languageName: node
-  linkType: hard
-
-"@types/jsonld@npm:^1.5.6":
-  version: 1.5.6
-  resolution: "@types/jsonld@npm:1.5.6"
-  checksum: 66cf4586b6336c3d7024bcf3d07e2d31b9eee8dd0f57af1caa991ce0c70fcdf7ea011496d2c0ccf15ce5d40f88cf3218eb5cb1c011ab512564d0b2694314d4af
   languageName: node
   linkType: hard
 
