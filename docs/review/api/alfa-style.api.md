@@ -193,11 +193,11 @@ export namespace Longhands {
         readonly "border-collapse": Longhand<Keyword.ToKeywords<"separate" | "collapse">, Keyword.ToKeywords<"separate" | "collapse">>;
         readonly "border-end-end-radius": Longhand<Specified_10, Computed_5>;
         readonly "border-end-start-radius": Longhand<Specified_10, Computed_5>;
-        readonly "border-image-outset": Longhand<Specified_11, Computed_7>;
+        readonly "border-image-outset": Longhand<Specified_11, Computed_6>;
         readonly "border-image-repeat": Longhand<Specified_12, Specified_12>;
         readonly "border-image-slice": Longhand<Specified_13, Specified_13>;
-        readonly "border-image-source": Longhand<Specified_14, Computed_8>;
-        readonly "border-image-width": Longhand<Specified_15, Computed_9>;
+        readonly "border-image-source": Longhand<Specified_14, Computed_7>;
+        readonly "border-image-width": Longhand<Specified_15, Computed_8>;
         readonly "border-inline-end-color": Longhand<Color, Color>;
         readonly "border-inline-end-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-inline-end-width": Longhand<Specified_9, Length>;
@@ -217,8 +217,8 @@ export namespace Longhands {
         readonly "border-top-right-radius": Longhand<Specified_10, Computed_5>;
         readonly "border-top-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-top-width": Longhand<Specified_9, Length>;
-        readonly bottom: Longhand<Specified_16, Computed_10>;
-        readonly "box-shadow": Longhand<Specified_17, Computed_11>;
+        readonly bottom: Longhand<Specified_16, Computed_9>;
+        readonly "box-shadow": Longhand<Specified_17, Computed_10>;
         readonly "clip-path": Longhand<Specified_18, Specified_18>;
         readonly clip: Longhand<Specified_19, Specified_19>;
         readonly color: Longhand<Color, Color>;
@@ -237,45 +237,45 @@ export namespace Longhands {
         readonly "font-variant-numeric": Longhand<Specified_28, Specified_28>;
         readonly "font-variant-position": Longhand<Keyword.ToKeywords<"sub" | "normal" | "super">, Keyword.ToKeywords<"sub" | "normal" | "super">>;
         readonly "font-weight": Longhand<Specified_29, Number_2.Fixed>;
-        readonly height: Longhand<Specified_30, Computed_12>;
-        readonly "inset-block-end": Longhand<Specified_16, Computed_10>;
-        readonly "inset-block-start": Longhand<Specified_16, Computed_10>;
-        readonly "inset-inline-end": Longhand<Specified_16, Computed_10>;
-        readonly "inset-inline-start": Longhand<Specified_16, Computed_10>;
-        readonly left: Longhand<Specified_16, Computed_10>;
+        readonly height: Longhand<Specified_30, Computed_11>;
+        readonly "inset-block-end": Longhand<Specified_16, Computed_9>;
+        readonly "inset-block-start": Longhand<Specified_16, Computed_9>;
+        readonly "inset-inline-end": Longhand<Specified_16, Computed_9>;
+        readonly "inset-inline-start": Longhand<Specified_16, Computed_9>;
+        readonly left: Longhand<Specified_16, Computed_9>;
         readonly "letter-spacing": Longhand<Specified_31, Length>;
-        readonly "line-height": Longhand<Specified_32, Computed_13>;
-        readonly "margin-bottom": Longhand<Specified_33, Computed_14>;
-        readonly "margin-left": Longhand<Specified_33, Computed_14>;
-        readonly "margin-right": Longhand<Specified_33, Computed_14>;
-        readonly "margin-top": Longhand<Specified_33, Computed_14>;
-        readonly "min-height": Longhand<Specified_34, Computed_15>;
-        readonly "min-width": Longhand<Specified_34, Computed_15>;
+        readonly "line-height": Longhand<Specified_32, Computed_12>;
+        readonly "margin-bottom": Longhand<Specified_33, Computed_13>;
+        readonly "margin-left": Longhand<Specified_33, Computed_13>;
+        readonly "margin-right": Longhand<Specified_33, Computed_13>;
+        readonly "margin-top": Longhand<Specified_33, Computed_13>;
+        readonly "min-height": Longhand<Specified_34, Computed_14>;
+        readonly "min-width": Longhand<Specified_34, Computed_14>;
         readonly opacity: Longhand<Specified_35, Number_2.Fixed>;
-        readonly "outline-color": Longhand<Specified_36, Computed_16>;
+        readonly "outline-color": Longhand<Specified_36, Computed_15>;
         readonly "outline-offset": Longhand<Specified_37, Length>;
         readonly "outline-style": Longhand<Keyword.ToKeywords<"none" | "inset" | "auto" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "inset" | "auto" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "outline-width": Longhand<Specified_38, Length>;
         readonly "overflow-x": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"scroll"> | Keyword<"auto"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
         readonly "overflow-y": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"scroll"> | Keyword<"auto"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
         readonly position: Longhand<Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">, Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">>;
-        readonly right: Longhand<Specified_16, Computed_10>;
-        readonly rotate: Longhand<Specified_39, Computed_17>;
+        readonly right: Longhand<Specified_16, Computed_9>;
+        readonly rotate: Longhand<Specified_39, Computed_16>;
         readonly "text-align": Longhand<Keyword.ToKeywords<"left" | "right" | "center" | "start" | "end" | "justify">, Keyword.ToKeywords<"left" | "right" | "center" | "start" | "end" | "justify">>;
         readonly "text-decoration-color": Longhand<Color, Color>;
         readonly "text-decoration-line": Longhand<Specified_40, Specified_40>;
         readonly "text-decoration-style": Longhand<Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">, Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">>;
-        readonly "text-decoration-thickness": Longhand<Specified_41, Computed_18>;
-        readonly "text-indent": Longhand<Specified_42, Computed_19>;
+        readonly "text-decoration-thickness": Longhand<Specified_41, Computed_17>;
+        readonly "text-indent": Longhand<Specified_42, LengthPercentage>;
         readonly "text-overflow": Longhand<Keyword.ToKeywords<"clip" | "ellipsis">, Keyword.ToKeywords<"clip" | "ellipsis">>;
-        readonly "text-shadow": Longhand<Specified_43, Computed_20>;
+        readonly "text-shadow": Longhand<Specified_43, Computed_18>;
         readonly "text-transform": Longhand<Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">, Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">>;
-        readonly top: Longhand<Specified_16, Computed_10>;
-        readonly transform: Longhand<Specified_44, Computed_21>;
-        readonly "vertical-align": Longhand<Specified_45, Computed_22>;
+        readonly top: Longhand<Specified_16, Computed_9>;
+        readonly transform: Longhand<Specified_44, Computed_19>;
+        readonly "vertical-align": Longhand<Specified_45, Computed_20>;
         readonly visibility: Longhand<Keyword.ToKeywords<"hidden" | "collapse" | "visible">, Keyword.ToKeywords<"hidden" | "collapse" | "visible">>;
         readonly "white-space": Longhand<Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">, Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">>;
-        readonly width: Longhand<Specified_46, Computed_23>;
+        readonly width: Longhand<Specified_46, Computed_21>;
         readonly "word-spacing": Longhand<Specified_47, Length>;
     };
     // (undocumented)
@@ -670,7 +670,6 @@ export namespace Value {
 // src/longhands.ts:274:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:274:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-thickness"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:275:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:275:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:275:7 - (ae-incompatible-release-tags) The symbol ""text-indent"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:276:7 - (ae-incompatible-release-tags) The symbol ""text-overflow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:277:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
