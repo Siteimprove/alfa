@@ -55,16 +55,13 @@ export namespace AnglePercentage {
           // thus work with it, but we want to abstract it from further layers,
           // so the resolver here is only aware of Percentage, and we need to
           // translate back and forth.
-          .resolve(
-            {
-              percentage: (value) =>
-                Base.Angle.of(
-                  resolver.percentageBase.value,
-                  /* this is "deg"! */ resolver.percentageBase.unit
-                ).scale(value.value),
-            },
-            "angle"
-          )
+          .resolve({
+            percentage: (value) =>
+              Base.Angle.of(
+                resolver.percentageBase.value,
+                /* this is "deg"! */ resolver.percentageBase.unit
+              ).scale(value.value),
+          })
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as an angle`)
       );
