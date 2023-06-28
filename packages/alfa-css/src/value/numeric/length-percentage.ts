@@ -90,7 +90,12 @@ export namespace LengthPercentage {
       extends Dimension.Calculated.JSON<"length-percentage"> {}
   }
 
-  export type JSON = Calculated.JSON | Length.Fixed.JSON;
+  export type JSON =
+    | Calculated.JSON
+    | Length.Calculated.JSON
+    | Length.Fixed.JSON
+    | Percentage.Calculated.JSON
+    | Percentage.Fixed.JSON;
 
   interface ILengthPercentage<CALC extends boolean = boolean>
     extends Value<"length-percentage", CALC, "length"> {

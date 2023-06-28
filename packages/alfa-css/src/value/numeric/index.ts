@@ -1,4 +1,5 @@
 export * from "./angle";
+export * from "./angle-percentage";
 export * from "./dimension";
 export * from "./integer";
 export * from "./length";

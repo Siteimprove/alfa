@@ -107,6 +107,12 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
   public resolve(this: Math<"angle">): Result<Angle<"deg">, string>;
 
   public resolve(
+    this: Math<"angle-percentage">,
+    resolver: Expression.PercentageResolver<Angle<"deg">>,
+    hint: "angle"
+  ): Result<Angle<"deg">, string>;
+
+  public resolve(
     this: Math<"length">,
     resolver: Expression.LengthResolver
   ): Result<Length<"px">, string>;
@@ -125,7 +131,8 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
     this: Math,
     resolver?:
       | Expression.LengthResolver
-      | Expression.Resolver<"px", Length<"px">>,
+      | Expression.Resolver<"px", Length<"px">>
+      | Expression.PercentageResolver<Angle<"deg">>,
     hint: Kind.Hint = "length"
   ): Result<Numeric, string> {
     // Since the expressions can theoretically contain arbitrarily units in them,
@@ -135,7 +142,7 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
     try {
       const expression = this._expression.reduce<
         "px",
-        Length<"px"> | Percentage
+        Angle<"deg"> | Length<"px"> | Percentage
       >({
         // If the expression is a length and we can't resolve relative lengths,
         // abort.
@@ -156,7 +163,7 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
           angle: "toAngle",
           length: "toLength",
         } as const;
-        // If no resolver is provided, percentages must stay as percentages
+        // If no resolver was provided, percentages must stay as percentages
         return expression[
           resolver === undefined ? "toPercentage" : converters[hint]
         ]();
@@ -340,6 +347,13 @@ export namespace Math {
     (calculation): calculation is Math<"angle"> =>
       calculation.isDimension("angle"),
     () => `calc() expression must be of type "angle"`
+  );
+
+  export const parseAnglePercentage = filter(
+    parse,
+    (calculation): calculation is Math<"angle-percentage"> =>
+      calculation.isDimensionPercentage("angle"),
+    () => `calc() expression must be of type "angle" or "percentage"`
   );
 
   export const parseLength = filter(
