@@ -116,6 +116,17 @@ test("resolve() resolves pure percentages", (t) => {
   });
 });
 
+test("resolve() resolves percentage calculations", (t) => {
+  t.deepEqual(
+    parse("calc((12% + 9%) * 2)").getUnsafe().resolve(resolver).toJSON(),
+    {
+      type: "angle",
+      value: 37.8,
+      unit: "deg",
+    }
+  );
+});
+
 test("resolve() resolves mix of angles and percentages", (t) => {
   t.deepEqual(
     parse("calc(0.5turn + 10%)").getUnsafe().resolve(resolver).toJSON(),

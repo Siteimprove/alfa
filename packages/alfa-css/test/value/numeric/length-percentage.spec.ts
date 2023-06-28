@@ -133,6 +133,17 @@ test("resolve() resolves pure percentages", (t) => {
   });
 });
 
+test("resolve() resolves percentage calculations", (t) => {
+  t.deepEqual(
+    parse("calc((12% + 9%) * 2)").getUnsafe().resolve(resolver).toJSON(),
+    {
+      type: "length",
+      value: 6.72,
+      unit: "px",
+    }
+  );
+});
+
 test("resolve() resolves mix of lengths and percentages", (t) => {
   t.deepEqual(parse("calc(2em + 10%)").getUnsafe().resolve(resolver).toJSON(), {
     type: "length",
