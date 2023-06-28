@@ -8,16 +8,14 @@ import Y from "./overflow-y";
 
 const { map, option, pair, delimited } = Parser;
 
-/**
- * @internal
- */
-export const parse = pair(
+const parse = pair(
   X.parseBase,
   option(delimited(option(Token.parseWhitespace), Y.parseBase))
 );
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/overflow}
+ *
  * @internal
  */
 export default Shorthand.of(

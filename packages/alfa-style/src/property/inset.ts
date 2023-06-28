@@ -7,10 +7,7 @@ import * as Top from "./top";
 
 const { map, option, delimited, takeBetween } = Parser;
 
-/**
- * @internal
- */
-export const parse = takeBetween(
+const parse = takeBetween(
   delimited(option(Token.parseWhitespace), Top.parse),
   1,
   4

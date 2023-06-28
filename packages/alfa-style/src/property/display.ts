@@ -264,9 +264,8 @@ export default Longhand.of<Specified, Computed>(
 );
 /**
  * {@link https://drafts.csswg.org/css2/#dis-pos-flo}
- * @internal
  */
-export function displayTable(value: Specified): Computed {
+function displayTable(value: Specified): Computed {
   // Boxes are not changed by this.
   if (value.values.length === 1) {
     return value;
