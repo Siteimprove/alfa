@@ -18,7 +18,7 @@
     "extract": "node scripts/api-extractor.js --pretty",
     "document": "api-documenter generate -i docs/data/api -o docs/api",
     "dependency-graph": "package-dependency-graph --config config/package-dependency-graph.ts --exclude-node_modules --graphviz --dot docs/dependency-graph.dot --png docs/dependency-graph.png",
-    "knip": "knip -c config/knip.json"
+    "knip": "knip -c config/knip.ts"
   },
   "workspaces": [
     "packages/*"
