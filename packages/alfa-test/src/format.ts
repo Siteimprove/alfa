@@ -1,9 +1,8 @@
 /// <reference types="node" />
 
 import * as assert from "assert";
+import * as chalk from "chalk";
 import * as path from "path";
-
-import { Marker } from "@siteimprove/alfa-highlight";
 
 import { stack } from "./stack";
 
@@ -47,7 +46,7 @@ export function format(name: string, error: Error): string {
   }
 
   const output = `
-${Marker.underline(`${file}(${line},${column}):`)} ${Marker.bold(
+${chalk.underline(`${file}(${line},${column}):`)} ${chalk.bold(
     name.trim().replace(/\s+/g, " ")
   )}
 ${message}
