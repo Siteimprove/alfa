@@ -1,9 +1,7 @@
 import {
   Keyword,
-  Length,
   List,
   LengthPercentage,
-  Percentage,
   Token,
   Tuple,
 } from "@siteimprove/alfa-css";
@@ -40,7 +38,7 @@ export type Computed = List<Computed.Item>;
  * @internal
  */
 export namespace Computed {
-  export type Dimension = Length<"px"> | Percentage | Keyword<"auto">;
+  export type Dimension = LengthPercentage.PartiallyResolved | Keyword<"auto">;
 
   export type Item =
     | Tuple<[Dimension, Dimension]>
@@ -94,14 +92,15 @@ export default Longhand.of<Specified, Computed>(
         }
 
         const [x, y] = size.values;
-
-        // Percentages are relative to the size of the background positioning
-        // area, which we don't really handle currently.
-        const resolver = Resolver.lengthPercentage(Length.of(0, "px"), style);
+        const resolver = Resolver.length(style);
 
         return Tuple.of(
-          LengthPercentage.isPercentage(x) ? x : x.resolve(resolver),
-          LengthPercentage.isPercentage(y) ? y : y.resolve(resolver)
+          Keyword.isKeyword(x)
+            ? x
+            : LengthPercentage.partiallyResolve(resolver)(x),
+          Keyword.isKeyword(y)
+            ? y
+            : LengthPercentage.partiallyResolve(resolver)(y)
         );
       })
     )

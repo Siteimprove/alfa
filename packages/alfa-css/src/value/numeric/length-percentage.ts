@@ -39,7 +39,7 @@ export namespace LengthPercentage {
     | LengthPercentage.Calculated;
 
   /**
-   * Lengths that are the result of a calculation.
+   * Length-percentages that are the result of a calculation.
    */
   export class Calculated
     extends Dimension.Calculated<"length-percentage">
@@ -86,7 +86,8 @@ export namespace LengthPercentage {
   }
 
   export namespace Calculated {
-    export interface JSON extends Dimension.Calculated.JSON<"length"> {}
+    export interface JSON
+      extends Dimension.Calculated.JSON<"length-percentage"> {}
   }
 
   export type JSON = Calculated.JSON | Length.Fixed.JSON;

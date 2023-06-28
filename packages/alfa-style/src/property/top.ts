@@ -38,8 +38,10 @@ export default Longhand.of<Specified, Computed>(
   (top, style) =>
     top.map((top) =>
       Selective.of(top)
-        .if(Keyword.isKeyword, (top) => top)
-        .else(LengthPercentage.partiallyResolve(Resolver.length(style)))
+        .if(
+          LengthPercentage.isLengthPercentage,
+          LengthPercentage.partiallyResolve(Resolver.length(style))
+        )
         .get()
     )
 );
