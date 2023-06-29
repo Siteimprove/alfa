@@ -70,3 +70,11 @@ test(`evaluates() is inapplicable to an <iframe> with negative tabindex`, async 
 
   t.deepEqual(await evaluate(R13, { document }), [inapplicable(R13)]);
 });
+
+test("evaluates() is inapplicable to an <iframe> that is marked as decorative", async (t) => {
+  const target = <iframe title="iframe" srcdoc="Hello World!" role="none" />;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R13, { document }), [inapplicable(R13)]);
+});
