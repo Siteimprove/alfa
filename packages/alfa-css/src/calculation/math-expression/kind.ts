@@ -224,10 +224,6 @@ export namespace Kind {
     hint: Hint | null;
   }
 
-  export function isKind(value: unknown): value is Kind {
-    return value instanceof Kind;
-  }
-
   /**
    * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-type}
    */

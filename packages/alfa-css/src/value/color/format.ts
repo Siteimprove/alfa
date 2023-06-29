@@ -32,8 +32,4 @@ export namespace Format {
   export interface JSON<F extends string = string> extends Value.JSON<"color"> {
     format: F;
   }
-
-  export function isBasicShape(value: unknown): value is Format {
-    return value instanceof Format;
-  }
 }
