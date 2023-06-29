@@ -10,7 +10,11 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope } from "../tags";
 
-const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
+const {
+  hasNonEmptyAccessibleName,
+  isIncludedInTheAccessibilityTree,
+  isMarkedDecorative,
+} = DOM;
 const { hasName, hasNamespace, hasTabIndex } = Element;
 const { and, not } = Predicate;
 const { getElementDescendants } = Query;
@@ -27,7 +31,8 @@ export default Rule.Atomic.of<Page, Element>({
             hasNamespace(Namespace.HTML),
             hasName("iframe"),
             isIncludedInTheAccessibilityTree(device),
-            not(hasTabIndex((n) => n < 0))
+            not(hasTabIndex((n) => n < 0)),
+            not(isMarkedDecorative)
           )
         );
       },
