@@ -28,6 +28,10 @@ export class Percentage extends Numeric<"percentage"> {
     return value instanceof Percentage && super.equals(value);
   }
 
+  public toJSON(): Percentage.JSON {
+    return super.toJSON();
+  }
+
   public toString(): string {
     return `${this._value * 100}%`;
   }
