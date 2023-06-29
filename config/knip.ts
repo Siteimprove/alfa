@@ -11,6 +11,24 @@ const config: KnipConfig = {
       entry: "src/index.ts!",
       project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
     },
+    "packages/alfa-device": {
+      entry: ["src/index.ts!", "native.ts!"],
+      project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
+    },
+    "packages/alfa-dom": {
+      entry: [
+        "src/index.ts!",
+        "h.ts!",
+        "jsx.ts!",
+        "jsx-runtime.ts!",
+        "native.ts!",
+      ],
+      project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
+    },
+    "packages/alfa-web": {
+      entry: ["src/index.ts!", "native.ts!"],
+      project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
+    },
   },
 };
 
