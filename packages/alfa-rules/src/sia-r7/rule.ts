@@ -22,7 +22,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import { isWhitespace } from "../common/predicate";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasAttribute, hasName, hasNamespace, isElement } = Element;
@@ -36,7 +36,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r7",
   requirements: [Criterion.of("3.1.2"), Technique.of("H58")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

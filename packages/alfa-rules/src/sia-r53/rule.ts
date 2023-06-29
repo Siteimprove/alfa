@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { and, equals } = Predicate;
@@ -16,7 +16,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r53",
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     const headings = getElementDescendants(document, Node.flatTree).filter(
       and(hasRole(device, "heading"), isIncludedInTheAccessibilityTree(device))

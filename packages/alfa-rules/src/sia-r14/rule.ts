@@ -13,7 +13,7 @@ import { expectation } from "../common/act/expectation";
 import { normalize } from "../common/normalize";
 
 import { isWhitespace } from "../common/predicate";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasAccessibleName, hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasNamespace, hasName, isElement } = Element;
@@ -26,7 +26,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r14",
   requirements: [Criterion.of("2.5.3"), Technique.of("G208")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 import { WithRole } from "../common/diagnostic/with-role";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasRole, isIncludedInTheAccessibilityTree, isPerceivableForAll } = DOM;
 const { isElement, hasName, hasNamespace } = Element;
@@ -17,7 +17,7 @@ const { and, test } = Refinement;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r76",
   requirements: [Criterion.of("1.3.1")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

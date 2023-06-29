@@ -14,7 +14,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import { withDocumentElement } from "../common/applicability/with-document-element";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasName, hasNamespace } = Element;
 const { hasTextContent } = Node;
@@ -28,7 +28,7 @@ export default Rule.Atomic.of<Page, Document>({
     Technique.of("G88"),
     Technique.of("H25"),
   ],
-  tags: [Scope.Page],
+  tags: [Scope.Page, Stability.Stable],
   evaluate({ document }) {
     return {
       applicability() {

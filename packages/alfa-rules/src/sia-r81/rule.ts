@@ -20,7 +20,7 @@ import { referenceSameResource } from "../common/predicate";
 
 import { normalize } from "../common/normalize";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;
@@ -31,7 +31,7 @@ const { getElementDescendants, getElementIdMap } = Query;
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r81",
   requirements: [Criterion.of("2.4.4"), Criterion.of("2.4.9")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document, response }) {
     return {
       applicability() {

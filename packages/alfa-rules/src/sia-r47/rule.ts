@@ -11,7 +11,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasAttribute, hasName, hasNamespace } = Element;
 const { and, equals } = Predicate;
@@ -27,7 +27,7 @@ export default Rule.Atomic.of<Page, Element>({
     // in the reports.
     // Criterion.of("1.4.10"),
   ],
-  tags: [Scope.Page],
+  tags: [Scope.Page, Stability.Stable],
   evaluate({ document }) {
     let maximumScaleMap = Map.empty<Element, number>();
     let userScalableMap = Map.empty<Element, "zoom" | "fixed">();

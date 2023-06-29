@@ -15,7 +15,7 @@ import { WithRole } from "../common/diagnostic/with-role";
 
 import { normalize } from "../common/normalize";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const {
   hasIncorrectRoleWithoutName,
@@ -28,7 +28,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r55",
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

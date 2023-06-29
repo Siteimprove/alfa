@@ -11,7 +11,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { WithBadElements } from "../common/diagnostic/with-bad-elements";
 
-import { Scope, Version } from "../tags";
+import { Scope, Stability, Version } from "../tags";
 
 const { hasName, hasNamespace, hasTabIndex } = Element;
 const { and, test } = Predicate;
@@ -28,7 +28,7 @@ export default Rule.Atomic.of<Page, Element>({
     // in the reports.
     // Criterion.of("2.1.3"),
   ],
-  tags: [Scope.Component, Version.of(2)],
+  tags: [Scope.Component, Stability.Stable, Version.of(2)],
   evaluate({ device, document }) {
     let tabbables = Map.empty<Element, Sequence<Element>>();
 

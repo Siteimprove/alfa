@@ -14,7 +14,7 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasNonDefaultRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasNamespace } = Element;
@@ -30,7 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
     Criterion.of("4.1.2"),
     Technique.of("ARIA5"),
   ],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

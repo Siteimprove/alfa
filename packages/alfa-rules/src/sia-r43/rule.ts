@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const {
   hasExplicitRole,
@@ -22,7 +22,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r43",
   requirements: [Criterion.of("1.1.1")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ document, device }) {
     return {
       applicability() {

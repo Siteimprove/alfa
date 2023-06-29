@@ -9,7 +9,7 @@ import { nonDisabledTexts } from "../common/applicability/non-disabled-texts";
 
 import { hasSufficientContrast } from "../common/expectation/contrast";
 
-import { Scope, Version } from "../tags";
+import { Scope, Stability, Version } from "../tags";
 
 export default Rule.Atomic.of<
   Page,
@@ -19,7 +19,7 @@ export default Rule.Atomic.of<
 >({
   uri: "https://alfa.siteimprove.com/rules/sia-r66",
   requirements: [Criterion.of("1.4.6")],
-  tags: [Scope.Component, Version.of(2)],
+  tags: [Scope.Component, Stability.Stable, Version.of(2)],
   evaluate({ device, document }) {
     return {
       applicability() {

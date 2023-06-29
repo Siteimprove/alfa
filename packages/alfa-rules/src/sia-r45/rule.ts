@@ -11,7 +11,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasId, hasName, hasNamespace } = Element;
@@ -21,7 +21,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r45",
   requirements: [Criterion.of("1.3.1"), Technique.of("H43")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     const cellsCache = Cache.empty<Element, Sequence<Element>>();
 

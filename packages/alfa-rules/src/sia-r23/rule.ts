@@ -6,11 +6,11 @@ import { audio } from "../common/applicability/audio";
 import { audioTranscript } from "../common/expectation/media-transcript";
 import { Question } from "../common/act/question";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r23",
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ document, device }) {
     return {
       applicability() {

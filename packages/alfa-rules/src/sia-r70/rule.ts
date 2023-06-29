@@ -16,7 +16,7 @@ import { expectation } from "../common/act/expectation";
 import { WithBadElements } from "../common/diagnostic/with-bad-elements";
 
 import { withDocumentElement } from "../common/applicability/with-document-element";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasName, hasNamespace } = Element;
 const { and } = Predicate;
@@ -56,7 +56,7 @@ const isDeprecated = hasName(
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r70",
-  tags: [Scope.Page],
+  tags: [Scope.Page, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

@@ -11,7 +11,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasNonEmptyAccessibleName, isPerceivableForAll } = DOM;
 const { hasAttribute, hasName, hasNamespace, isElement } = Element;
@@ -22,7 +22,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r49",
   requirements: [Technique.of("G170")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ document, device }) {
     return {
       applicability() {

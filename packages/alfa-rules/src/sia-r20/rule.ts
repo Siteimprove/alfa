@@ -7,13 +7,13 @@ import { Page } from "@siteimprove/alfa-web";
 import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r20",
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ document }) {
     return {
       applicability() {

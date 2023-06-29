@@ -13,7 +13,7 @@ import * as dom from "@siteimprove/alfa-dom";
 import { expectation } from "../common/act/expectation";
 
 import { isWhitespace } from "../common/predicate";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const {
   hasIncorrectRoleWithoutName,
@@ -30,7 +30,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r57",
-  tags: [Scope.Page],
+  tags: [Scope.Page, Stability.Stable],
   evaluate({ document, device }) {
     const firstTabbable = document
       .tabOrder()

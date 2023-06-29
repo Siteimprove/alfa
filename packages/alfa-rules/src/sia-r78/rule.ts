@@ -10,7 +10,7 @@ import { Sequence } from "@siteimprove/alfa-sequence";
 import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 import isText = Text.isText;
 
 const { hasHeadingLevel, hasRole, isIncludedInTheAccessibilityTree } = DOM;
@@ -21,7 +21,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r78",
-  tags: [Scope.Page],
+  tags: [Scope.Page, Stability.Stable],
   evaluate({ device, document }) {
     let headings: Sequence<Element>;
 
