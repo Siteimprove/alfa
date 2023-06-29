@@ -25,6 +25,6 @@ export namespace Resolver {
     const fontSize = Length.of(16, "px");
     const rootFontSize = Length.of(16, "px");
 
-    return Length.resolver(fontSize, rootFontSize, width, height);
+    return { length: Length.resolver(fontSize, rootFontSize, width, height) };
   }
 }

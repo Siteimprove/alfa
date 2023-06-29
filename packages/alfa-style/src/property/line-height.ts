@@ -1,9 +1,14 @@
-import { Keyword, Length, Number, type Token } from "@siteimprove/alfa-css";
+import {
+  Keyword,
+  LengthPercentage,
+  Number,
+  type Token,
+} from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Longhand } from "../longhand";
-import { LengthPercentage } from "./value/compound";
+import { Resolver } from "../resolver";
 
 import type { Computed as FontSize } from "./font-size";
 import { Selective } from "@siteimprove/alfa-selective";
@@ -13,15 +18,15 @@ const { either } = Parser;
 /**
  * @internal
  */
-export type Specified =
-  | Keyword<"normal">
-  | LengthPercentage.LengthPercentage
-  | Number;
+export type Specified = Keyword<"normal"> | LengthPercentage | Number;
 
 /**
  * @internal
  */
-export type Computed = Keyword<"normal"> | Number.Canonical | Length.Canonical;
+export type Computed =
+  | Keyword<"normal">
+  | Number.Canonical
+  | LengthPercentage.Canonical;
 
 /**
  * @internal
@@ -49,7 +54,7 @@ export default Longhand.of<Specified, Computed>(
         Selective.of(height)
           .if(
             LengthPercentage.isLengthPercentage,
-            LengthPercentage.resolve(fontSize, style)
+            LengthPercentage.resolve(Resolver.lengthPercentage(fontSize, style))
           )
           .if(Number.isNumber, (value) => value.resolve())
           // Keywords are left untouched

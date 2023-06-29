@@ -3,7 +3,10 @@ import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
-import { Percentage as BasePercentage } from "../../calculation/numeric";
+import {
+  Numeric as BaseNumeric,
+  Percentage as BasePercentage,
+} from "../../calculation/numeric";
 
 import { Value } from "../value";
 
@@ -30,9 +33,9 @@ export namespace Percentage {
   /**
    * Percentages that are the result of a calculation.
    */
-  export class Calculated
-    extends Numeric.Calculated<"percentage">
-    implements IPercentage<true>
+  export class Calculated<R extends BaseNumeric.Type = BaseNumeric.Type>
+    extends Numeric.Calculated<"percentage", "percentage" | R>
+    implements IPercentage<true, R>
   {
     public static of(value: Math<"percentage">): Calculated {
       return new Calculated(value);
@@ -42,20 +45,29 @@ export namespace Percentage {
       super(math, "percentage");
     }
 
-    public resolve(): Fixed;
+    public hasCalculation(): this is Calculated<R> {
+      return true;
+    }
 
-    public resolve<N extends Numeric.Fixed>(base: N): N;
+    public resolve(): Fixed<"percentage">;
 
-    public resolve<T extends Numeric.Type>(
-      base?: Numeric.Fixed<T>
-    ): Fixed | Numeric.Fixed<T> {
-      const percentage = Fixed.of(
+    public resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R, T>): T;
+
+    public resolve<T extends Numeric.Fixed<R>>(
+      resolver?: Resolver<R, T>
+    ): Fixed<R> | T {
+      const percentage = Fixed.of<R>(
         this._math
           .resolve()
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not fully resolve ${this} as a percentage`)
       );
-      return base === undefined ? percentage : base.scale(percentage.value);
+      return resolver === undefined
+        ? percentage
+        : // since we don't know much about percentageBase, scale defaults to
+          // the abstract one on Numeric and loses its actual type which needs
+          // to be asserted again.
+          (resolver.percentageBase.scale(percentage.value) as T);
     }
 
     public equals(value: unknown): value is this {
@@ -77,11 +89,13 @@ export namespace Percentage {
   /**
    * Percentages that are a fixed (not calculated) value.
    */
-  export class Fixed
-    extends Numeric.Fixed<"percentage">
-    implements IPercentage<false>
+  export class Fixed<R extends BaseNumeric.Type = BaseNumeric.Type>
+    extends Numeric.Fixed<"percentage", "percentage" | R>
+    implements IPercentage<false, R>
   {
-    public static of(value: number | BasePercentage): Fixed {
+    public static of<R extends BaseNumeric.Type = BaseNumeric.Type>(
+      value: number | BasePercentage
+    ): Fixed<R> {
       return new Fixed(
         BasePercentage.isPercentage(value) ? value.value : value
       );
@@ -91,17 +105,22 @@ export namespace Percentage {
       super(value, "percentage");
     }
 
-    public resolve(): this;
+    public resolve(): Fixed<"percentage">;
 
-    public resolve<N extends Numeric.Fixed>(base: N): N;
+    public resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R, T>): T;
 
-    public resolve<T extends Numeric.Type>(
-      base?: Numeric.Fixed<T>
-    ): this | Numeric.Fixed<T> {
-      return base === undefined ? this : base.scale(this._value);
+    public resolve<T extends Numeric.Fixed<R>>(
+      resolver?: Resolver<R, T>
+    ): Fixed<"percentage"> | T {
+      return resolver === undefined
+        ? this
+        : // since we don't know much about percentageBase, scale defaults to
+          // the abstract one on Numeric and loses its actual type which needs
+          // to be asserted again.
+          (resolver.percentageBase.scale(this._value) as T);
     }
 
-    public scale(factor: number): Fixed {
+    public scale(factor: number): Fixed<R> {
       return new Fixed(this._value * factor);
     }
 
@@ -125,10 +144,21 @@ export namespace Percentage {
     export interface JSON extends Numeric.Fixed.JSON<"percentage"> {}
   }
 
-  interface IPercentage<CALC extends boolean = boolean>
-    extends Value<"percentage", CALC> {
-    hasCalculation(): this is Calculated;
-    resolve(): Fixed;
+  export interface Resolver<
+    R extends BaseNumeric.Type,
+    T extends Numeric.Fixed<R>
+  > {
+    percentageBase: T;
+  }
+
+  interface IPercentage<
+    CALC extends boolean = boolean,
+    R extends BaseNumeric.Type = BaseNumeric.Type
+  > extends Value<"percentage", CALC, "percentage" | R> {
+    hasCalculation(): this is Calculated<R>;
+    resolve<T extends Numeric.Fixed<R>>(
+      resolver?: Resolver<R, T>
+    ): Fixed<"percentage"> | T;
   }
 
   export function isCalculated(value: unknown): value is Calculated {

@@ -107,26 +107,35 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
   public resolve(this: Math<"angle">): Result<Angle<"deg">, string>;
 
   public resolve(
+    this: Math<"angle-percentage">,
+    resolver: Expression.PercentageResolver<Angle<"deg">>
+  ): Result<Angle<"deg">, string>;
+
+  public resolve(
     this: Math<"length">,
     resolver: Expression.LengthResolver
   ): Result<Length<"px">, string>;
 
   public resolve(
     this: Math<"length-percentage">,
-    resolver: Expression.Resolver<"px", Length<"px">>,
-    hint?: "length"
+    resolver: Expression.Resolver<"px", Length<"px">>
   ): Result<Length<"px">, string>;
 
   public resolve(this: Math<"number">): Result<Number, string>;
 
-  public resolve(this: Math<"percentage">): Result<Percentage, string>;
+  public resolve<T extends Numeric = Percentage>(
+    this: Math<"percentage">,
+    resolver?: Expression.PercentageResolver<T>,
+    hint?: T extends Angle ? "angle" : "length"
+  ): Result<T, string>;
 
-  public resolve(
+  public resolve<T extends Numeric>(
     this: Math,
     resolver?:
       | Expression.LengthResolver
-      | Expression.Resolver<"px", Length<"px">>,
-    hint: Kind.Hint = "length"
+      | Expression.Resolver<"px", Length<"px">>
+      | Expression.PercentageResolver<T>,
+    hint?: T extends Angle ? "angle" : "length"
   ): Result<Numeric, string> {
     // Since the expressions can theoretically contain arbitrarily units in them,
     // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
@@ -135,9 +144,9 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
     try {
       const expression = this._expression.reduce<
         "px",
-        Length<"px"> | Percentage
+        Angle<"deg"> | Length<"px"> | Percentage | T
       >({
-        // If the expression is a length and we can't resolve relative lengths,
+        // If the expression is a length, and we can't resolve relative lengths,
         // abort.
         length: () => {
           throw new Error(`Missing length resolver for ${this}`);
@@ -156,9 +165,11 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
           angle: "toAngle",
           length: "toLength",
         } as const;
-        // If no resolver is provided, percentages must stay as percentages
+        // If no resolver was provided, percentages must stay as percentages
         return expression[
-          resolver === undefined ? "toPercentage" : converters[hint]
+          resolver === undefined || hint === undefined
+            ? "toPercentage"
+            : converters[hint]
         ]();
       }
 
@@ -340,6 +351,13 @@ export namespace Math {
     (calculation): calculation is Math<"angle"> =>
       calculation.isDimension("angle"),
     () => `calc() expression must be of type "angle"`
+  );
+
+  export const parseAnglePercentage = filter(
+    parse,
+    (calculation): calculation is Math<"angle-percentage"> =>
+      calculation.isDimensionPercentage("angle"),
+    () => `calc() expression must be of type "angle" or "percentage"`
   );
 
   export const parseLength = filter(

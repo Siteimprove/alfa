@@ -1,9 +1,9 @@
-import { Keyword, Length, Number } from "@siteimprove/alfa-css";
+import { Keyword, LengthPercentage, Number } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Selective } from "@siteimprove/alfa-selective";
 
 import { Longhand } from "../longhand";
-import { LengthPercentage } from "./value/compound";
+import { Resolver } from "../resolver";
 
 import type { Computed as FontSize } from "./font-size";
 import type { Computed as LineHeight } from "./line-height";
@@ -23,11 +23,11 @@ type keywords =
 /**
  * @internal
  */
-export type Specified = keywords | LengthPercentage.LengthPercentage;
+export type Specified = keywords | LengthPercentage;
 /**
  * @internal
  */
-export type Computed = keywords | Length<"px">;
+export type Computed = keywords | LengthPercentage.Canonical;
 
 /**
  * @internal
@@ -69,7 +69,7 @@ export default Longhand.of<Specified, Computed>(
       return Selective.of(verticalAlign)
         .if(
           LengthPercentage.isLengthPercentage,
-          LengthPercentage.resolve(base, style)
+          LengthPercentage.resolve(Resolver.lengthPercentage(base, style))
         )
         .get();
     })

@@ -1,20 +1,18 @@
 import { Comparable, Comparison } from "@siteimprove/alfa-comparable";
+import { Hash } from "@siteimprove/alfa-hash";
 
-import {
-  Dimension as BaseDimension,
-  Numeric as BaseNumeric,
-} from "../../calculation/numeric";
-import { Convertible } from "../../unit";
+import { Numeric as BaseNumeric } from "../../calculation/numeric";
+import { Convertible, Unit } from "../../unit";
 import { Value } from "../value";
 
 import { Numeric } from "./numeric";
-import { Hash } from "@siteimprove/alfa-hash";
 
 /**
  * @public
  */
-export type Dimension<T extends BaseNumeric.Dimension = BaseNumeric.Dimension> =
-  Dimension.Calculated<T> | Dimension.Fixed<T>;
+export type Dimension<T extends Type = Type> =
+  | Dimension.Calculated<T>
+  | Dimension.Fixed<Dimensions<T>[0]>;
 
 /**
  * @public
@@ -23,10 +21,8 @@ export namespace Dimension {
   /**
    * Dimensions that are the result of a calculation.
    */
-  export abstract class Calculated<
-      T extends BaseNumeric.Dimension = BaseNumeric.Dimension
-    >
-    extends Numeric.Calculated<T>
+  export abstract class Calculated<T extends Type = Type>
+    extends Numeric.Calculated<T, Dimensions<T>[0]>
     implements IDimension<T, true>
   {
     protected constructor(math: Numeric.ToMath<T>, type: T) {
@@ -39,20 +35,16 @@ export namespace Dimension {
 
     public abstract resolve(
       resolver?: unknown
-    ): Fixed<T, BaseDimension.ToCanonical<T>>;
+    ): Fixed<Dimensions<T>[0], Dimensions<T>[2]>;
 
     public equals(value: unknown): value is this {
       return value instanceof Calculated && super.equals(value);
     }
   }
 
-  /**
-   * @public
-   */
   export namespace Calculated {
-    export interface JSON<
-      T extends BaseNumeric.Dimension = BaseNumeric.Dimension
-    > extends Numeric.Calculated.JSON<T> {}
+    export interface JSON<T extends Type = Type>
+      extends Numeric.Calculated.JSON<T> {}
   }
 
   /**
@@ -61,12 +53,12 @@ export namespace Dimension {
   export abstract class Fixed<
       T extends BaseNumeric.Dimension = BaseNumeric.Dimension,
       // The actual unit in which the dimension is expressed, e.g px, em, rad, …
-      U extends BaseDimension.ToDimension<T> = BaseDimension.ToDimension<T>
+      U extends Dimensions<T>[1] = Dimensions<T>[1]
     >
     extends Numeric.Fixed<T>
     implements
       IDimension<T, false>,
-      Convertible<BaseDimension.ToDimension<T>>,
+      Convertible<Dimensions<T>[1]>,
       Comparable<Fixed<T>>
   {
     protected readonly _unit: U;
@@ -80,33 +72,25 @@ export namespace Dimension {
       return this._unit;
     }
 
-    public hasCalculation(): this is Calculated<T> {
+    public hasCalculation(): this is never {
       return false;
     }
 
     /**
      * {@link https://drafts.csswg.org/css-values/#canonical-unit}
      */
-    public get canonicalUnit(): BaseDimension.ToCanonical<T> {
+    public get canonicalUnit(): Dimensions<T>[2] {
       // The this.type test does not correctly narrow T, so we need to force typing.
-      return (
-        this.type === "angle" ? "deg" : "px"
-      ) as BaseDimension.ToCanonical<T>;
+      return (this.type === "angle" ? "deg" : "px") as Dimensions<T>[2];
     }
 
-    public hasUnit<V extends BaseDimension.ToDimension<T>>(
+    public abstract hasUnit<V extends Dimensions<T>[1]>(
       unit: V
-    ): this is Fixed<T, V> {
-      return (this._unit as BaseDimension.ToDimension<T>) === unit;
-    }
+    ): this is Fixed<T, V>;
 
-    public abstract withUnit<V extends BaseDimension.ToDimension<T>>(
-      unit: V
-    ): Fixed<T, V>;
+    public abstract withUnit<V extends Dimensions<T>[1]>(unit: V): Fixed<T, V>;
 
-    public abstract resolve(
-      resolver?: unknown
-    ): Fixed<T, BaseDimension.ToCanonical<T>>;
+    public abstract resolve(resolver?: unknown): Fixed<T, Dimensions<T>[2]>;
 
     public equals(value: unknown): value is this {
       return (
@@ -137,24 +121,19 @@ export namespace Dimension {
     }
   }
 
-  /**
-   * @public
-   */
   export namespace Fixed {
     export interface JSON<
-      T extends BaseNumeric.Dimension = BaseNumeric.Dimension,
-      U extends BaseDimension.ToDimension<T> = BaseDimension.ToDimension<T>
+      T extends Type = Type,
+      U extends Dimensions<T>[1] = Dimensions<T>[1]
     > extends Numeric.Fixed.JSON<T> {
       unit: U;
     }
   }
 
-  interface IDimension<
-    T extends BaseNumeric.Dimension = BaseNumeric.Dimension,
-    CALC extends boolean = boolean
-  > extends Value<T, CALC> {
+  interface IDimension<T extends Type = Type, CALC extends boolean = boolean>
+    extends Value<T, CALC, Dimensions<T>[0]> {
     hasCalculation(): this is Calculated<T>;
-    resolve(resolver?: unknown): Fixed<T, BaseDimension.ToCanonical<T>>;
+    resolve(resolver?: unknown): Fixed<Dimensions<T>[0], Dimensions<T>[2]>;
   }
 
   export function isCalculated(value: unknown): value is Calculated {
@@ -169,3 +148,21 @@ export namespace Dimension {
     return value instanceof Calculated || value instanceof Fixed;
   }
 }
+
+type Type = BaseNumeric.Dimension | `${BaseNumeric.Dimension}-percentage`;
+
+/**
+ * Helper type to turn a dimension or dimension-percentage type into its
+ * components:
+ * [base dimension, corresponding unit, canonical unit]
+ */
+type Dimensions<T extends Type> = T extends "angle"
+  ? ["angle", Unit.Angle, "deg"]
+  : T extends "angle-percentage"
+  ? ["angle", Unit.Angle, "deg"]
+  : T extends "length"
+  ? ["length", Unit.Length, "px"]
+  : T extends "length-percentage"
+  ? ["length", Unit.Length, "px"]
+  : // We currently do not really support other dimensions
+    never;

@@ -1,20 +1,27 @@
-import { Keyword, Length, type Percentage } from "@siteimprove/alfa-css";
+import { Keyword, LengthPercentage } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import { Longhand } from "../longhand";
-import { LengthPercentage } from "./value/compound";
+import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
 /**
  * @internal
  */
-export type Specified = Keyword<"auto"> | LengthPercentage.LengthPercentage;
+export type Specified = Keyword<"auto"> | LengthPercentage;
 
 /**
  * @internal
+ *
+ * @remarks
+ * TODO: percentages resolve relative to the dimensions of the containing block,
+ *       which we do not handle.
+ *       This results in length-percentage calculations leaking to computed
+ *       values, which is a bit annoying.
  */
-export type Computed = Keyword<"auto"> | Length.Canonical | Percentage;
+export type Computed = Keyword<"auto"> | LengthPercentage.PartiallyResolved;
 
 /**
  * @internal
@@ -29,17 +36,12 @@ export default Longhand.of<Specified, Computed>(
   Keyword.of("auto"),
   parse,
   (top, style) =>
-    top.map((top) => {
-      switch (top.type) {
-        case "keyword":
-        // Percentages resolve relative to the height of the containing block,
-        // which we do not handle
-        case "percentage":
-          return top;
-
-        case "length":
-        case "math expression":
-          return LengthPercentage.resolve(Length.of(0, "px"), style)(top);
-      }
-    })
+    top.map((top) =>
+      Selective.of(top)
+        .if(
+          LengthPercentage.isLengthPercentage,
+          LengthPercentage.partiallyResolve(Resolver.length(style))
+        )
+        .get()
+    )
 );
