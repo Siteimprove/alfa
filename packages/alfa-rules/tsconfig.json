@@ -37,7 +37,6 @@
     "src/common/expectation/video-description-track-accurate.ts",
     "src/common/normalize.ts",
     "src/common/outcome/contrast.ts",
-    "src/common/outcome/text-spacing.ts",
     "src/common/outcome/refresh-delay.ts",
     "src/common/predicate.ts",
     "src/common/predicate/has-interposed-descendant.ts",
