@@ -1,16 +1,21 @@
-import { Length, Keyword, type Token } from "@siteimprove/alfa-css";
+import {
+  Length,
+  LengthPercentage,
+  Keyword,
+  type Token,
+} from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import type { Slice } from "@siteimprove/alfa-slice";
 
-import { LengthPercentage } from "./value/compound";
 import { Longhand } from "../longhand";
+import { Resolver } from "../resolver";
 
 import type { Computed as FontFamily } from "./font-family";
 
 const { either } = Parser;
 
 type Specified =
-  | LengthPercentage.LengthPercentage
+  | LengthPercentage
 
   // Absolute
   | Keyword<"xx-small">
@@ -29,7 +34,7 @@ type Specified =
 /**
  * @internal
  */
-export type Computed = Length.Canonical;
+export type Computed = LengthPercentage.Canonical;
 
 const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse(
@@ -101,7 +106,9 @@ const property: Longhand<Specified, Computed> = Longhand.of<
       const parent = style.parent.computed("font-size").value as Computed;
 
       if (LengthPercentage.isLengthPercentage(fontSize)) {
-        return LengthPercentage.resolve(parent, style.parent)(fontSize);
+        return LengthPercentage.resolve(
+          Resolver.lengthPercentage(parent, style.parent)
+        )(fontSize);
       }
 
       // Must be a keyword

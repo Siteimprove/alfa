@@ -1,12 +1,19 @@
-import { Length, type Percentage } from "@siteimprove/alfa-css";
+import { Length, LengthPercentage } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
+import { Resolver } from "../resolver";
 
-import { LengthPercentage } from "./value/compound";
+type Specified = LengthPercentage;
 
-type Specified = LengthPercentage.LengthPercentage;
-
-type Computed = Length.Canonical | Percentage.Canonical;
+/**
+ * @remarks
+ * TODO: percentages resolve relative to the dimensions of the containing block,
+ *       which we do not handle.
+ *       This results in length-percentage calculations leaking to computed
+ *       values, which is a bit annoying.
+ *
+ */
+type Computed = LengthPercentage.PartiallyResolved;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent}
@@ -16,13 +23,6 @@ export default Longhand.of<Specified, Computed>(
   Length.of(0, "px"),
   LengthPercentage.parse,
   (textIndent, style) =>
-    textIndent.map((indent) =>
-      // Percentages resolve relative to the width, which we do not really handle.
-      indent.type === "percentage"
-        ? indent
-        : LengthPercentage.resolve(Length.of(0, "px"), style)(indent)
-    ),
-  {
-    inherits: true,
-  }
+    textIndent.map(LengthPercentage.partiallyResolve(Resolver.length(style))),
+  { inherits: true }
 );

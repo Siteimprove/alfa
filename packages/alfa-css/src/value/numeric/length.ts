@@ -45,7 +45,7 @@ export namespace Length {
       return true;
     }
 
-    public resolve(resolver: Length.Resolver): Canonical {
+    public resolve(resolver: Resolver): Canonical {
       return Fixed.of(
         this._math
           .resolve({
@@ -54,7 +54,7 @@ export namespace Length {
             // so the resolver here is only aware of Length, and we need to
             // translate back and forth.
             length: (length) => {
-              const resolved = resolver(Fixed.of(length));
+              const resolved = resolver.length(Fixed.of(length));
               return BaseLength.of(resolved.value, resolved.unit);
             },
           })
@@ -99,7 +99,7 @@ export namespace Length {
       super(value, unit, "length");
     }
 
-    public hasCalculation(): this is Calculated {
+    public hasCalculation(): this is never {
       return false;
     }
 
@@ -123,15 +123,15 @@ export namespace Length {
       return Unit.isRelativeLength(this._unit);
     }
 
-    public isFontRelative(): this is Length<Unit.Length.Relative.Font> {
+    public isFontRelative(): this is Fixed<Unit.Length.Relative.Font> {
       return Unit.isFontRelativeLength(this._unit);
     }
 
-    public isViewportRelative(): this is Length<Unit.Length.Relative.Viewport> {
+    public isViewportRelative(): this is Fixed<Unit.Length.Relative.Viewport> {
       return Unit.isViewportRelativeLength(this._unit);
     }
 
-    public isAbsolute(): this is Length<Unit.Length.Absolute> {
+    public isAbsolute(): this is Fixed<Unit.Length.Absolute> {
       return Unit.isAbsoluteLength(this._unit);
     }
 
@@ -142,8 +142,8 @@ export namespace Length {
     /**
      * Resolve a Length into an absolute Length in pixels.
      */
-    public resolve(resolver: Length.Resolver): Canonical {
-      return this.isRelative() ? resolver(this) : this.withUnit("px");
+    public resolve(resolver: Resolver): Canonical {
+      return this.isRelative() ? resolver.length(this) : this.withUnit("px");
     }
 
     public equals(value: unknown): value is this {
@@ -161,7 +161,7 @@ export namespace Length {
   interface ILength<CALC extends boolean = boolean>
     extends Value<"length", CALC> {
     hasCalculation(): this is Calculated;
-    resolve(resolver: Length.Resolver): Canonical;
+    resolve(resolver: Resolver): Canonical;
   }
 
   // In order to resolve a length, we need to know how to resolve relative
@@ -169,7 +169,9 @@ export namespace Length {
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+  export interface Resolver {
+    length: Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+  }
 
   /**
    * Build a (fixed) length resolver, using basis for the relative units
@@ -179,7 +181,7 @@ export namespace Length {
     remBase: Canonical,
     vwBase: Canonical,
     vhBase: Canonical
-  ): Resolver {
+  ): Mapper<Fixed<Unit.Length.Relative>, Canonical> {
     return (length) => {
       const { unit, value } = length;
       const [min, max] =

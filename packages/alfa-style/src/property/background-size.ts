@@ -1,16 +1,14 @@
 import {
   Keyword,
-  Length,
   List,
-  Percentage,
+  LengthPercentage,
   Token,
   Tuple,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
-
-import { LengthPercentage } from "./value/compound";
+import { Resolver } from "../resolver";
 
 const { map, either, option, pair, right } = Parser;
 
@@ -20,7 +18,7 @@ type Specified = List<Specified.Item>;
  * @internal
  */
 export namespace Specified {
-  type Dimension = LengthPercentage.LengthPercentage | Keyword<"auto">;
+  type Dimension = LengthPercentage | Keyword<"auto">;
 
   export type Item =
     | Tuple<[Dimension, Dimension]>
@@ -31,7 +29,7 @@ export namespace Specified {
 type Computed = List<Computed.Item>;
 
 namespace Computed {
-  type Dimension = Length<"px"> | Percentage | Keyword<"auto">;
+  type Dimension = LengthPercentage.PartiallyResolved | Keyword<"auto">;
 
   export type Item =
     | Tuple<[Dimension, Dimension]>
@@ -82,16 +80,15 @@ export default Longhand.of<Specified, Computed>(
         }
 
         const [x, y] = size.values;
+        const resolver = Resolver.length(style);
 
-        // Percentages are relative to the size of the background positioning
-        // area, which we don't really handle currently.
         return Tuple.of(
-          x.type === "length" || x.type === "math expression"
-            ? LengthPercentage.resolve(Length.of(0, "px"), style)(x)
-            : x,
-          y.type === "length" || y.type === "math expression"
-            ? LengthPercentage.resolve(Length.of(0, "px"), style)(y)
-            : y
+          Keyword.isKeyword(x)
+            ? x
+            : LengthPercentage.partiallyResolve(resolver)(x),
+          Keyword.isKeyword(y)
+            ? y
+            : LengthPercentage.partiallyResolve(resolver)(y)
         );
       })
     )

@@ -21,15 +21,14 @@ import * as json from '@siteimprove/alfa-json';
 import { Keyword } from '@siteimprove/alfa-css';
 import { Length } from '@siteimprove/alfa-css';
 import { Length as Length_2 } from '@siteimprove/alfa-css/src/value/numeric';
+import { LengthPercentage } from '@siteimprove/alfa-css';
 import { List } from '@siteimprove/alfa-css';
 import { Map as Map_2 } from '@siteimprove/alfa-map';
 import { Mapper } from '@siteimprove/alfa-mapper';
-import { Math as Math_2 } from '@siteimprove/alfa-css';
 import { Monad } from '@siteimprove/alfa-monad';
 import { Node } from '@siteimprove/alfa-dom';
 import { Number as Number_2 } from '@siteimprove/alfa-css';
 import { Option } from '@siteimprove/alfa-option';
-import { Parser } from '@siteimprove/alfa-parser';
 import * as parser from '@siteimprove/alfa-parser';
 import { Percentage } from '@siteimprove/alfa-css';
 import { Position } from '@siteimprove/alfa-css';
@@ -267,17 +266,17 @@ export namespace Longhands {
         readonly "text-decoration-line": Longhand<Specified_40, Specified_40>;
         readonly "text-decoration-style": Longhand<Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">, Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">>;
         readonly "text-decoration-thickness": Longhand<Specified_41, Computed_17>;
-        readonly "text-indent": Longhand<import("./property/value/compound").LengthPercentage.LengthPercentage, Computed_18>;
+        readonly "text-indent": Longhand<Specified_42, LengthPercentage>;
         readonly "text-overflow": Longhand<Keyword.ToKeywords<"clip" | "ellipsis">, Keyword.ToKeywords<"clip" | "ellipsis">>;
-        readonly "text-shadow": Longhand<Specified_42, Computed_19>;
+        readonly "text-shadow": Longhand<Specified_43, Computed_18>;
         readonly "text-transform": Longhand<Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">, Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">>;
         readonly top: Longhand<Specified_16, Computed_9>;
-        readonly transform: Longhand<Specified_43, Computed_20>;
-        readonly "vertical-align": Longhand<Specified_44, Computed_21>;
+        readonly transform: Longhand<Specified_44, Computed_19>;
+        readonly "vertical-align": Longhand<Specified_45, Computed_20>;
         readonly visibility: Longhand<Keyword.ToKeywords<"hidden" | "collapse" | "visible">, Keyword.ToKeywords<"hidden" | "collapse" | "visible">>;
         readonly "white-space": Longhand<Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">, Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">>;
-        readonly width: Longhand<Specified_45, Computed_22>;
-        readonly "word-spacing": Longhand<Specified_46, Length>;
+        readonly width: Longhand<Specified_46, Computed_21>;
+        readonly "word-spacing": Longhand<Specified_47, Length>;
     };
     // (undocumented)
     export type Property = typeof longHands;
@@ -293,7 +292,10 @@ export namespace Resolver {
     export function color(color: Color): Color.Canonical;
     // (undocumented)
     export function image(image: Image, style: Style): Image<URL | Gradient.Canonical>;
+    // (undocumented)
     export function length(style: Style): Length.Resolver;
+    // (undocumented)
+    export function lengthPercentage(base: Length.Canonical, style: Style): LengthPercentage.Resolver;
     // (undocumented)
     export function position(position: Position, style: Style): Position.Canonical;
     // (undocumented)
@@ -667,8 +669,7 @@ export namespace Value {
 // src/longhands.ts:274:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:274:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:274:7 - (ae-incompatible-release-tags) The symbol ""text-decoration-thickness"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:275:7 - (ae-forgotten-export) The symbol "LengthPercentage" needs to be exported by the entry point index.d.ts
-// src/longhands.ts:275:7 - (ae-forgotten-export) The symbol "Computed" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:275:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:275:7 - (ae-incompatible-release-tags) The symbol ""text-indent"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:276:7 - (ae-incompatible-release-tags) The symbol ""text-overflow"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:277:7 - (ae-forgotten-export) The symbol "Specified" needs to be exported by the entry point index.d.ts

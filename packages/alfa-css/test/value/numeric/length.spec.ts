@@ -57,7 +57,7 @@ test("resolve() absolutize lengths", (t) => {
   t.deepEqual(
     parse("calc(1em + 2px)")
       .getUnsafe()
-      .resolve(() => Length.of(16, "px"))
+      .resolve({ length: () => Length.of(16, "px") })
       .toJSON(),
     {
       type: "length",

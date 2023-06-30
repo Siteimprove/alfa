@@ -27,24 +27,11 @@ export default Rule.Atomic.of<Page, Element>({
         return getElementDescendants(document, Node.fullTree).filter(
           and(
             hasRole(device, "paragraph"),
-            hasCascadedStyle(
-              "font-size",
-              (fontSize) => {
-                switch (fontSize.type) {
-                  case "length":
-                    // Calculated lengths cannot be resolved at cascade time,
-                    // so we just ignore them.
-                    return !fontSize.hasCalculation() && fontSize.value > 0;
-                  case "percentage":
-                    return fontSize.value > 0;
-                  default:
-                    return true;
-                }
-              },
-              device
-            ),
             Node.hasTextContent(),
-            isVisible(device)
+            isVisible(device),
+            // If the font-size ultimately computes to size 0, the element is not
+            // visible.
+            hasCascadedStyle("font-size", () => true, device)
           )
         );
       },

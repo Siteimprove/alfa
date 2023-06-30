@@ -27,7 +27,7 @@ export type Integer = Integer.Calculated | Integer.Fixed;
  * @public
  */
 export namespace Integer {
-  export type Canonical = Fixed
+  export type Canonical = Fixed;
 
   /**
    * Integers that are the result of a calculation.

@@ -1,4 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
+import { LengthPercentage } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -118,6 +119,12 @@ function isClippedByIndent(
     if (x.value === "hidden") {
       const { value: indent } = style.computed("text-indent");
       const { value: whitespace } = style.computed("white-space");
+
+      if (LengthPercentage.isCalculated(indent)) {
+        // We couldn't fully resolve the mix of length and percentage.
+        // We just assume the element is not indented off-screen.
+        return false;
+      }
 
       if (indent.value < 0 || whitespace.value === "nowrap") {
         switch (indent.type) {

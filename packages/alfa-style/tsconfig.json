@@ -174,7 +174,6 @@
     "src/property/text-shadow.ts",
     "src/property/top.ts",
     "src/property/transform.ts",
-    "src/property/value/compound.ts",
     "src/property/vertical-align.ts",
     "src/property/visibility.ts",
     "src/property/white-space.ts",
@@ -231,6 +230,7 @@
     "test/property/text-decoration.spec.tsx",
     "test/property/text-indent.spec.tsx",
     "test/property/text-shadow.spec.tsx",
+    "test/property/top.spec.tsx",
     "test/style.spec.tsx",
     "test/variable.spec.ts"
   ],
