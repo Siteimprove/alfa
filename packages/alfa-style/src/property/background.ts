@@ -1,4 +1,4 @@
-import { List, Token } from "@siteimprove/alfa-css";
+import { List, Token, Tuple } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -39,18 +39,20 @@ const { map, filter, delimited, option, right, separatedList } = Parser;
  */
 export const parse: Parser<
   Slice<Token>,
-  [
-    Color.Specified?,
-    Image.Specified.Item?,
-    PositionX.Specified.Item?,
-    PositionY.Specified.Item?,
-    Size.Specified.Item?,
-    RepeatX.Specified.Item?,
-    RepeatY.Specified.Item?,
-    Attachment.Specified.Item?,
-    Origin.Specified.Item?,
-    Clip.Specified.Item?
-  ],
+  Tuple<
+    [
+      Color.Specified?,
+      Image.Specified.Item?,
+      PositionX.Specified.Item?,
+      PositionY.Specified.Item?,
+      Size.Specified.Item?,
+      RepeatX.Specified.Item?,
+      RepeatY.Specified.Item?,
+      Attachment.Specified.Item?,
+      Origin.Specified.Item?,
+      Clip.Specified.Item?
+    ]
+  >,
   string
 > = (input) => {
   let color: Color.Specified | undefined;
@@ -120,7 +122,10 @@ export const parse: Parser<
       const result = Repeat.parse(input);
 
       if (result.isOk()) {
-        [input, [repeatX, repeatY]] = result.get();
+        let repeat: Tuple<[RepeatX.Specified.Item, RepeatY.Specified.Item]>;
+        [input, repeat] = result.get();
+        [repeatX, repeatY] = repeat.values;
+
         continue;
       }
     }
@@ -181,7 +186,7 @@ export const parse: Parser<
 
   return Result.of([
     input,
-    [
+    Tuple.of(
       color,
       image,
       positionX,
@@ -191,8 +196,8 @@ export const parse: Parser<
       repeatY,
       attachment,
       origin,
-      clip ?? origin,
-    ],
+      clip ?? origin
+    ),
   ]);
 };
 
@@ -206,7 +211,7 @@ export const parseList = map(
       delimited(option(Token.parseWhitespace), Token.parseComma)
     ),
     (layers) =>
-      [...layers].slice(0, -1).every(([color]) => color === undefined),
+      [...layers].slice(0, -1).every((layer) => layer.values[0] === undefined),
     () => "Only the last layer may contain a color"
   ),
   (layers) => List.of(layers, ", ")
@@ -241,7 +246,8 @@ export default Shorthand.of(
     let origin: Array<Origin.Specified.Item> = [];
     let clip: Array<Clip.Specified.Item> = [];
 
-    for (const layer of layers) {
+    for (const tuple of layers) {
+      const layer = tuple.values;
       color = layer[0];
       image.push(layer[1] ?? Image.initialItem);
       positionX.push(layer[2] ?? PositionX.initialItem);

@@ -1,4 +1,4 @@
-import { Keyword, List, Token } from "@siteimprove/alfa-css";
+import { Keyword, List, Token, Value } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -193,7 +193,7 @@ export const parse: Parser<
     return Err.of("At least one Font variant value must be provided");
   }
 
-  function list<T>(
+  function list<T extends Value>(
     ...values: Array<T | undefined>
   ): List<T> | Keyword<"initial"> {
     // filter doesn't narrow so we need to do it manually

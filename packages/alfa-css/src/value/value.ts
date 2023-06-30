@@ -47,9 +47,7 @@ export abstract class Value<
   public abstract hash(hash: Hash): void;
 
   public toJSON(): Value.JSON<T> {
-    return {
-      type: this._type,
-    };
+    return { type: this._type };
   }
 
   public abstract toString(): string;
@@ -72,4 +70,12 @@ export namespace Value {
       value instanceof Value && (type === undefined || value.type === type)
     );
   }
+
+  export type Resolved<V extends Value> = V extends Value<
+    string,
+    boolean,
+    infer R
+  >
+    ? R
+    : string;
 }
