@@ -15,47 +15,47 @@ const { delimited, option, map, separatedList } = Parser;
 /**
  * @public
  */
-export class List<T extends Value, CALC extends boolean = boolean>
+export class List<V extends Value, CALC extends boolean = boolean>
   extends Value<"list", CALC>
-  implements Iterable<T>
+  implements Iterable<V>
 {
-  public static of<T extends Value>(
-    values: Iterable<T>,
+  public static of<V extends Value>(
+    values: Iterable<V>,
     separator = " "
-  ): List<T, T extends Value<string, false> ? false : true> {
+  ): List<V, V extends Value<string, false> ? false : true> {
     const array = Array.from(values);
     const calculation = array.some((value) =>
       value.hasCalculation()
-    ) as T extends Value<string, false> ? false : true;
+    ) as V extends Value<string, false> ? false : true;
 
     return new List(array, separator, calculation);
   }
 
-  private readonly _values: Array<T>;
+  private readonly _values: Array<V>;
   private readonly _separator: string;
 
-  private constructor(values: Array<T>, separator: string, calculation: CALC) {
+  private constructor(values: Array<V>, separator: string, calculation: CALC) {
     super("list", calculation);
     this._values = values;
     this._separator = separator;
   }
 
-  public get values(): ReadonlyArray<T> {
+  public get values(): ReadonlyArray<V> {
     return this._values;
   }
 
   public resolve(
     resolver?: unknown
-  ): List<Value<Value.Resolved<T>, false>, false> {
+  ): List<Value<Value.Resolved<V>, false>, false> {
     const array = this._values.map(
-      (value) => value.resolve(resolver) as Value<Value.Resolved<T>, false>
+      (value) => value.resolve(resolver) as Value<Value.Resolved<V>, false>
     );
 
     return new List(array, this._separator, false);
   }
 
   public map<U extends Value>(
-    mapper: Mapper<T, U>
+    mapper: Mapper<V, U>
   ): List<U, U extends Value<string, false> ? false : true> {
     const array = this._values.map(mapper);
     const calculation = array.some((value) =>
@@ -85,11 +85,11 @@ export class List<T extends Value, CALC extends boolean = boolean>
     hash.writeUint32(this._values.length).writeString(this._separator);
   }
 
-  public *[Symbol.iterator](): Iterator<T> {
+  public *[Symbol.iterator](): Iterator<V> {
     yield* this._values;
   }
 
-  public toJSON(): List.JSON<T> {
+  public toJSON(): List.JSON<V> {
     return {
       ...super.toJSON(),
       values: this._values.map((value) => value.toJSON()),
@@ -106,25 +106,25 @@ export class List<T extends Value, CALC extends boolean = boolean>
  * @public
  */
 export namespace List {
-  export interface JSON<T extends Value> extends Value.JSON<"list"> {
+  export interface JSON<V extends Value> extends Value.JSON<"list"> {
     values: Array<Value.JSON>;
     separator: string;
   }
 
-  export function isList<T extends Value>(value: Iterable<T>): value is List<T>;
+  export function isList<V extends Value>(value: Iterable<V>): value is List<V>;
 
-  export function isList<T extends Value>(value: unknown): value is List<T>;
+  export function isList<V extends Value>(value: unknown): value is List<V>;
 
-  export function isList<T extends Value>(value: unknown): value is List<T> {
+  export function isList<V extends Value>(value: unknown): value is List<V> {
     return value instanceof List;
   }
 
   function parse(
     separator: string,
     parseSeparator: Parser<Slice<Token>, any, string>
-  ): <T extends Value>(
-    parseValue: Parser<Slice<Token>, T, string>
-  ) => Parser<Slice<Token>, List<T>, string> {
+  ): <V extends Value>(
+    parseValue: Parser<Slice<Token>, V, string>
+  ) => Parser<Slice<Token>, List<V>, string> {
     return (parseValue) =>
       map(separatedList(parseValue, parseSeparator), (values) =>
         List.of(values, separator)
