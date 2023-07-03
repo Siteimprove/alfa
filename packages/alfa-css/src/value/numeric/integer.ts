@@ -7,6 +7,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Math as Calculation } from "../../calculation";
 import { Integer as BaseInteger } from "../../calculation/numeric";
 
+import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Numeric } from "./numeric";
@@ -50,7 +51,7 @@ export namespace Integer {
      *
      * {@link https://drafts.csswg.org/css-values/#calc-type-checking}
      */
-    public resolve(): Fixed {
+    public resolve(): Canonical {
       return Fixed.of(
         this._math
           .resolve()
@@ -128,9 +129,10 @@ export namespace Integer {
   }
 
   interface IInteger<CALC extends boolean = boolean>
-    extends Value<"number", CALC> {
+    extends Value<"number", CALC>,
+      Resolvable<Canonical, never> {
     hasCalculation(): this is Calculated;
-    resolve(): Fixed;
+    resolve(): Canonical;
   }
 
   export function isCalculated(value: unknown): value is Calculated {
