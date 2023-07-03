@@ -16,27 +16,27 @@ function parse<V extends Value>(
   str: string,
   parser: Parser<Slice<Token>, V, string>
 ): List<V> {
-  return List.parseCommaSeparated(parser)(Lexer.lex("1, 2, 3")).getUnsafe()[1];
+  return List.parseCommaSeparated(parser)(Lexer.lex(str)).getUnsafe()[1];
 }
 
 test("parseCommaSeparated() parses a comma separated list", (t) => {
-  const actual = parse("1px, 2px, 3px", Length.parse);
+  const actual = parse("1, 2, 3", Number.parse);
 
   t.deepEqual(actual.hasCalculation(), false);
 
-  // t.deepEqual(actual.toJSON(), {
-  //   type: "list",
-  //   values: [
-  //     { type: "number", value: 1 },
-  //     { type: "number", value: 2 },
-  //     { type: "number", value: 3 },
-  //   ],
-  //   separator: ", ",
-  // });
+  t.deepEqual(actual.toJSON(), {
+    type: "list",
+    values: [
+      { type: "number", value: 1 },
+      { type: "number", value: 2 },
+      { type: "number", value: 3 },
+    ],
+    separator: ", ",
+  });
 });
 
 test(".of() considers the list as calculated when one value is", (t) => {
-  const actual = parse("1px, 2px", LengthPercentage.parse);
+  const actual = parse("1px, 10%, calc(1px + 2em)", LengthPercentage.parse);
 
   t.deepEqual(actual.hasCalculation(), true);
 });
@@ -57,7 +57,7 @@ test("resolve() resolves all values in a list", (t) => {
 
   t.deepEqual(resolved.hasCalculation(), false);
 
-  t.deepEqual(actual.toJSON(), {
+  t.deepEqual(resolved.toJSON(), {
     type: "list",
     values: [
       { type: "length", value: 1, unit: "px" },
