@@ -7,7 +7,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax";
 
-import { Resolvable } from "../resolvable";
+import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 const { delimited, option, map, separatedList } = Parser;
@@ -21,7 +21,7 @@ export class List<V extends Value, CALC extends boolean = boolean>
     Iterable<V>,
     Resolvable<
       "list",
-      List<Value<Resolvable.ResolvedType<V>>, false>,
+      List<Resolvable.Resolved<V>, false>,
       Resolvable.Resolver<V>
     >
 {
@@ -52,10 +52,9 @@ export class List<V extends Value, CALC extends boolean = boolean>
 
   public resolve(
     resolver?: Resolvable.Resolver<V>
-  ): List<Value<Resolvable.ResolvedType<V>, false>, false> {
+  ): List<Resolvable.Resolved<V>, false> {
     return this.map(
-      (value) =>
-        value.resolve(resolver) as Value<Resolvable.ResolvedType<V>, false>
+      (value) => value.resolve(resolver) as Resolvable.Resolved<V>
     );
   }
 

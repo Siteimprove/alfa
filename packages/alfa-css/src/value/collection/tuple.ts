@@ -2,7 +2,7 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
-import { Resolvable } from "../resolvable";
+import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 /**
