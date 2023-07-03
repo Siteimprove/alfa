@@ -1,13 +1,9 @@
 import type { Value } from "./value";
 
 /**
- * @remarks
- * * T: the string representation of the resolved value.
- * * V: the actual value this will resolve to.
- *
  * @internal
  */
-export interface Resolvable<T extends string, V extends Value<T, false>, in R> {
+export interface Resolvable<V extends Value<string, false>, in R> {
   resolve(resolver?: R): V;
 }
 
@@ -30,22 +26,18 @@ export namespace Resolvable {
   /**
    * The actual type a value resolves to.
    */
-  export type Resolved<V extends Value> = V extends Resolvable<
-    string,
-    infer U,
-    unknown
-  >
+  export type Resolved<V extends Value> = V extends Resolvable<infer U, unknown>
     ? U
     : V;
 
   /**
    * @privateRemarks
-   * Somehow, applying `V extends Resolvable<string, infer R> ? R : never`
+   * Somehow, applying `V extends Resolvable<Value, infer R> ? R : never`
    * to a union distribute over the union (despite R being in contravariant
    * position in Resolvable), which is not what we want.
    * In order to resolve a `A | B`, we need to know how to resolve A **and**
    * how to resolve B, i.e. a `ResolverA & ResolverB`. So we manually switch the
-   * union to un intersection.
+   * union to an intersection.
    *
    * @privateRemarks
    * This type first turns the union U into a union of functions, putting U in a
@@ -67,6 +59,6 @@ export namespace Resolvable {
    * The type of the resolver needed to resolve a given Value.
    */
   export type Resolver<V extends Value> = UnionToIntersection<
-    V extends Resolvable<string, Value<string, false>, infer R> ? R : never
+    V extends Resolvable<Value<string, false>, infer R> ? R : never
   >;
 }

@@ -10,8 +10,7 @@ import { Value } from "../value";
  */
 export class Tuple<T extends Array<Value>, CALC extends boolean = boolean>
   extends Value<"tuple", CALC>
-  implements
-    Resolvable<"tuple", Tuple<Tuple.Resolved<T>, false>, Tuple.Resolver<T>>
+  implements Resolvable<Tuple<Tuple.Resolved<T>, false>, Tuple.Resolver<T>>
 {
   public static of<T extends Array<Value>>(
     ...values: Readonly<T>

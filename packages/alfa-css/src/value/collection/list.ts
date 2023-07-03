@@ -19,11 +19,7 @@ export class List<V extends Value, CALC extends boolean = boolean>
   extends Value<"list", CALC>
   implements
     Iterable<V>,
-    Resolvable<
-      "list",
-      List<Resolvable.Resolved<V>, false>,
-      Resolvable.Resolver<V>
-    >
+    Resolvable<List<Resolvable.Resolved<V>, false>, Resolvable.Resolver<V>>
 {
   public static of<V extends Value>(
     values: Iterable<V>,
