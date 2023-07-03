@@ -12,18 +12,6 @@ export interface Resolvable<V extends Value<string, false>, in R> {
  */
 export namespace Resolvable {
   /**
-   * The string representation of the resolved type of a value.
-   * E.g. Value<"length-percentage", boolean, "length"> => "length".
-   */
-  export type ResolvedType<V extends Value> = V extends Value<
-    string,
-    boolean,
-    infer R
-  >
-    ? R
-    : string;
-
-  /**
    * The actual type a value resolves to.
    */
   export type Resolved<V extends Value> = V extends Resolvable<infer U, unknown>

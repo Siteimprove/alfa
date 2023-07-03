@@ -52,15 +52,13 @@ export class Tuple<T extends Array<Value>, CALC extends boolean = boolean>
     return (
       Tuple.isTuple(value) &&
       value._values.length === this._values.length &&
-      value._values.every((value, i) =>
-        Equatable.equals(value, this._values[i])
-      )
+      value._values.every((value, i) => value.equals(this._values[i]))
     );
   }
 
   public hash(hash: Hash): void {
     for (const value of this._values) {
-      hash.writeUnknown(value);
+      value.hash(hash);
     }
 
     hash.writeUint32(this._values.length);
@@ -70,7 +68,7 @@ export class Tuple<T extends Array<Value>, CALC extends boolean = boolean>
     return {
       ...super.toJSON(),
       values: this._values.map((value) =>
-        Serializable.toJSON(value)
+        value.toJSON()
       ) as Serializable.ToJSON<T>,
     };
   }
@@ -95,7 +93,7 @@ export namespace Tuple {
   }
 
   /**
-   * Applying the Resolved<T> to all members of a tuple, keeping size and order.
+   * Applying Resolved<T> to all members of a tuple, keeping size and order.
    *
    * {@link https://levelup.gitconnected.com/crazy-powerful-typescript-tuple-types-9b121e0a690c}
    *
@@ -109,7 +107,7 @@ export namespace Tuple {
     : [];
 
   /**
-   * Applying the Resolver<T> to all members of a tuple, collapsing them into
+   * Applying Resolver<T> to all members of a tuple, collapsing them into
    * a single union
    *
    * @internal
