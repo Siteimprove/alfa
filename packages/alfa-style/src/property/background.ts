@@ -39,20 +39,18 @@ const { map, filter, delimited, option, right, separatedList } = Parser;
  */
 export const parse: Parser<
   Slice<Token>,
-  Tuple<
-    [
-      Color.Specified?,
-      Image.Specified.Item?,
-      PositionX.Specified.Item?,
-      PositionY.Specified.Item?,
-      Size.Specified.Item?,
-      RepeatX.Specified.Item?,
-      RepeatY.Specified.Item?,
-      Attachment.Specified.Item?,
-      Origin.Specified.Item?,
-      Clip.Specified.Item?
-    ]
-  >,
+  [
+    Color.Specified?,
+    Image.Specified.Item?,
+    PositionX.Specified.Item?,
+    PositionY.Specified.Item?,
+    Size.Specified.Item?,
+    RepeatX.Specified.Item?,
+    RepeatY.Specified.Item?,
+    Attachment.Specified.Item?,
+    Origin.Specified.Item?,
+    Clip.Specified.Item?
+  ],
   string
 > = (input) => {
   let color: Color.Specified | undefined;
@@ -186,7 +184,7 @@ export const parse: Parser<
 
   return Result.of([
     input,
-    Tuple.of(
+    [
       color,
       image,
       positionX,
@@ -196,25 +194,21 @@ export const parse: Parser<
       repeatY,
       attachment,
       origin,
-      clip ?? origin
-    ),
+      clip ?? origin,
+    ],
   ]);
 };
 
 /**
  * @internal
  */
-export const parseList = map(
-  filter(
-    separatedList(
-      parse,
-      delimited(option(Token.parseWhitespace), Token.parseComma)
-    ),
-    (layers) =>
-      [...layers].slice(0, -1).every((layer) => layer.values[0] === undefined),
-    () => "Only the last layer may contain a color"
+export const parseList = filter(
+  separatedList(
+    parse,
+    delimited(option(Token.parseWhitespace), Token.parseComma)
   ),
-  (layers) => List.of(layers, ", ")
+  (layers) => [...layers].slice(0, -1).every((layer) => layer[0] === undefined),
+  () => "Only the last layer may contain a color"
 );
 
 /**
@@ -246,8 +240,7 @@ export default Shorthand.of(
     let origin: Array<Origin.Specified.Item> = [];
     let clip: Array<Clip.Specified.Item> = [];
 
-    for (const tuple of layers) {
-      const layer = tuple.values;
+    for (const layer of layers) {
       color = layer[0];
       image.push(layer[1] ?? Image.initialItem);
       positionX.push(layer[2] ?? PositionX.initialItem);

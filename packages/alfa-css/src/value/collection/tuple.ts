@@ -7,8 +7,8 @@ import { Value } from "../value";
 /**
  * @public
  */
-export class Tuple<T extends Array<unknown>> extends Value<"tuple", false> {
-  public static of<T extends Array<unknown>>(...values: Readonly<T>): Tuple<T> {
+export class Tuple<T extends Array<Value>> extends Value<"tuple", false> {
+  public static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T> {
     return new Tuple(values);
   }
 
@@ -27,7 +27,7 @@ export class Tuple<T extends Array<unknown>> extends Value<"tuple", false> {
     return this;
   }
 
-  public equals<T extends Array<unknown>>(value: Tuple<T>): boolean;
+  public equals<T extends Array<Value>>(value: Tuple<T>): boolean;
 
   public equals(value: unknown): value is this;
 
@@ -67,11 +67,11 @@ export class Tuple<T extends Array<unknown>> extends Value<"tuple", false> {
  * @public
  */
 export namespace Tuple {
-  export interface JSON<T extends Array<unknown>> extends Value.JSON<"tuple"> {
+  export interface JSON<T extends Array<Value>> extends Value.JSON<"tuple"> {
     values: Serializable.ToJSON<T>;
   }
 
-  export function isTuple<T extends Array<unknown>>(
+  export function isTuple<T extends Array<Value>>(
     value: unknown
   ): value is Tuple<T> {
     return value instanceof Tuple;

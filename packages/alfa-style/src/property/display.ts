@@ -13,15 +13,17 @@ const { map, either } = Parser;
 /**
  * @internal
  */
-export type Specified = Tuple<
-  | [
-      outside: Specified.Outside,
-      inside: Specified.Inside,
-      listitem?: Specified.ListItem
-    ]
-  | [outside: Specified.Internal, inside: Specified.Inside]
-  | [Specified.Box]
->;
+export type Specified =
+  | Tuple<[outside: Specified.Outside, inside: Specified.Inside]>
+  | Tuple<
+      [
+        outside: Specified.Outside,
+        inside: Specified.Inside,
+        listitem: Specified.ListItem
+      ]
+    >
+  | Tuple<[outside: Specified.Internal, inside: Specified.Inside]>
+  | Tuple<[Specified.Box]>;
 
 /**
  * @internal
