@@ -93,6 +93,7 @@
     "test/syntax/token.spec.ts",
     "test/calculation/calculation.spec.ts",
     "test/calculation/math-functions.spec.ts",
+    "test/value/collection/list.spec.tsx",
     "test/value/gradient/radial.spec.ts",
     "test/value/numeric/angle.spec.ts",
     "test/value/numeric/angle-percentage.spec.ts",

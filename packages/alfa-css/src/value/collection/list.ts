@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -89,7 +90,9 @@ export class List<V extends Value, CALC extends boolean = boolean>
   public toJSON(): List.JSON<V> {
     return {
       ...super.toJSON(),
-      values: this._values.map((value) => value.toJSON()),
+      values: this._values.map(
+        (value) => value.toJSON() as Serializable.ToJSON<V>
+      ),
       separator: this._separator,
     };
   }
@@ -104,7 +107,7 @@ export class List<V extends Value, CALC extends boolean = boolean>
  */
 export namespace List {
   export interface JSON<V extends Value> extends Value.JSON<"list"> {
-    values: Array<Value.JSON>;
+    values: Array<Serializable.ToJSON<V>>;
     separator: string;
   }
 
