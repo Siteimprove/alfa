@@ -4,6 +4,8 @@ import { Predicate } from "@siteimprove/alfa-predicate";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax";
+
+import type { Resolvable } from "./resolvable";
 import { Value } from "./value";
 
 const { map } = Parser;
@@ -14,10 +16,10 @@ const { equals } = Predicate;
  *
  * @public
  */
-export class Keyword<T extends string = string> extends Value<
-  "keyword",
-  false
-> {
+export class Keyword<T extends string = string>
+  extends Value<"keyword", false>
+  implements Resolvable<Keyword<T>, never>
+{
   public static of<T extends string>(value: T): Keyword<T> {
     return new Keyword(value);
   }

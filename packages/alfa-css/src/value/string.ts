@@ -3,6 +3,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../syntax";
+
+import type { Resolvable } from "./resolvable";
 import { Value } from "./value";
 
 const { map } = Parser;
@@ -12,7 +14,10 @@ const { map } = Parser;
  *
  * @public
  */
-export class String extends Value<"string", false> {
+export class String
+  extends Value<"string", false>
+  implements Resolvable<String, never>
+{
   public static of(value: string): String {
     return new String(value);
   }
