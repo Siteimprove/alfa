@@ -8,7 +8,6 @@ import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
 import { Equatable } from '@siteimprove/alfa-equatable';
-import { Functor } from '@siteimprove/alfa-functor';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
@@ -1053,8 +1052,10 @@ export namespace Length {
         export interface JSON<U extends Unit.Length = Unit.Length> extends Dimension.Fixed.JSON<"length", U> {
         }
     }
+    // Warning: (ae-forgotten-export) The symbol "Resolvable" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    export interface ILength<CALC extends boolean = boolean> extends Value<"length", CALC> {
+    export interface ILength<CALC extends boolean = boolean> extends Value<"length", CALC>, Resolvable<"length", Resolver> {
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
@@ -1142,7 +1143,7 @@ export namespace LengthPercentage {
     // (undocumented)
     export type Canonical = Length.Canonical;
     // (undocumented)
-    export interface ILengthPercentage<CALC extends boolean = boolean> extends Value<"length-percentage", CALC, "length"> {
+    export interface ILengthPercentage<CALC extends boolean = boolean> extends Value<"length-percentage", CALC, "length">, Resolvable<"length", Resolver> {
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
@@ -1318,48 +1319,46 @@ export namespace Linear {
 }
 
 // @public (undocumented)
-export class List<T> extends Value<"list", false> implements Iterable<T>, Functor<T> {
+export class List<V extends Value, CALC extends boolean = boolean> extends Value<"list", CALC> implements Iterable_2<V>, Resolvable<"list", Resolvable.Resolver<V>> {
     // (undocumented)
-    [Symbol.iterator](): Iterator<T>;
+    [Symbol.iterator](): Iterator<V>;
     // (undocumented)
-    equals<T>(value: List<T>): boolean;
+    equals<T extends Value>(value: List<T>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U>): List<U>;
+    map<U extends Value>(mapper: Mapper<V, U>): List<U, U extends Value<string, false> ? false : true>;
     // (undocumented)
-    static of<T>(values: Iterable<T>, separator?: string): List<T>;
+    static of<V extends Value>(values: Iterable_2<V>, separator?: string): List<V, V extends Value<string, false> ? false : true>;
     // (undocumented)
-    resolve<U>(valueResolver: List.Resolver<T, U>): List<U>;
+    resolve(resolver?: Resolvable.Resolver<V>): List<Value<Resolvable.Resolved<V>, false>, false>;
     // (undocumented)
-    toJSON(): List.JSON<T>;
+    toJSON(): List.JSON<V>;
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get values(): ReadonlyArray<T>;
+    get values(): ReadonlyArray<V>;
 }
 
 // @public (undocumented)
 export namespace List {
     // (undocumented)
-    export function isList<T>(value: Iterable<T>): value is List<T>;
+    export function isList<V extends Value>(value: Iterable_2<V>): value is List<V>;
     // (undocumented)
-    export function isList<T>(value: unknown): value is List<T>;
+    export function isList<V extends Value>(value: unknown): value is List<V>;
     // (undocumented)
-    export interface JSON<T> extends Value.JSON<"list"> {
+    export interface JSON<V extends Value> extends Value.JSON<"list"> {
         // (undocumented)
         separator: string;
         // (undocumented)
-        values: Array<Serializable.ToJSON<T>>;
+        values: Array<Serializable.ToJSON<V>>;
     }
-    // (undocumented)
-    export type Resolver<T, U> = Mapper<T, U>;
     const // (undocumented)
-    parseCommaSeparated: <T>(parseValue: Parser<Slice<Token>, T, string>) => Parser<Slice<Token>, List<T>, string>;
+    parseCommaSeparated: <V extends Value<string, boolean, string>>(parseValue: Parser<Slice<Token>, V, string>) => Parser<Slice<Token>, List<V, boolean>, string>;
     const // (undocumented)
-    parseSpaceSeparated: <T>(parseValue: Parser<Slice<Token>, T, string>) => Parser<Slice<Token>, List<T>, string>;
+    parseSpaceSeparated: <V extends Value<string, boolean, string>>(parseValue: Parser<Slice<Token>, V, string>) => Parser<Slice<Token>, List<V, boolean>, string>;
 }
 
 // @public (undocumented)
@@ -1870,7 +1869,7 @@ export namespace Percentage {
         }
     }
     // (undocumented)
-    export interface IPercentage<CALC extends boolean = boolean, R extends Numeric_2.Type = Numeric_2.Type> extends Value<"percentage", CALC, "percentage" | R> {
+    export interface IPercentage<CALC extends boolean = boolean, R extends Numeric_2.Type = Numeric_2.Type> extends Value<"percentage", CALC, "percentage" | R>, Resolvable<"percentage" | R, Resolver<R, Numeric.Fixed<R>>> {
         // (undocumented)
         hasCalculation(): this is Calculated<R>;
         // (undocumented)
@@ -3648,7 +3647,7 @@ export namespace URL {
 }
 
 // @public
-export abstract class Value<T extends string = string, CALC extends boolean = boolean, R extends string = T> implements Equatable, Hashable, Serializable<Value.JSON<T>> {
+export abstract class Value<T extends string = string, CALC extends boolean = boolean, R extends string = T> implements Equatable, Hashable, Serializable<Value.JSON<T>>, Resolvable<R, Resolvable.Resolver<Value>> {
     protected constructor(type: T, hasCalculation: CALC);
     // (undocumented)
     abstract equals(value: unknown): value is this;
