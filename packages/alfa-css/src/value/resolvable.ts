@@ -26,15 +26,16 @@ export namespace Resolvable {
   /**
    * @privateRemarks
    * Somehow, applying `V extends Resolvable<string, infer R> ? R : never`
-   * to a union distribute over the union, which is not what we want.
+   * to a union distribute over the union (despite R being in contravariant
+   * position in Resolvable), which is not what we want.
    * In order to resolve a `A | B`, we need to know how to resolve A **and**
    * how to resolve B, i.e. a `ResolverA & ResolverB`. So we manually switch the
    * union to un intersection.
    *
    * @privateRemarks
-   * This type first turn the union U into a union of functions, putting U in a
-   * contravraiant position, then infer the type of the argument of this union
-   * off functions.
+   * This type first turns the union U into a union of functions, putting U in a
+   * contravariant position, then infers the type of the argument of this union
+   * of functions.
    * It does not work well with some specific internal types. E.g. internally,
    * `boolean = true | false`, so
    * `UnionToIntersection<boolean> = true & false = never`.
