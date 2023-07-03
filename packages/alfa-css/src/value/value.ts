@@ -23,7 +23,11 @@ export abstract class Value<
   T extends string = string,
   CALC extends boolean = boolean,
   R extends string = T
-> implements Equatable, Hashable, Serializable<Value.JSON<T>>
+> implements
+    Equatable,
+    Hashable,
+    Serializable<Value.JSON<T>>,
+    Value.Resolvable<R, Value.Resolver>
 {
   private readonly _type: T;
   protected readonly _hasCalculation: CALC;
@@ -40,7 +44,7 @@ export abstract class Value<
     return this._hasCalculation;
   }
 
-  public abstract resolve(resolver?: unknown): Value<R, false>;
+  public abstract resolve(resolver?: Value.Resolver): Value<R, false>;
 
   public abstract equals(value: unknown): value is this;
 
@@ -71,6 +75,12 @@ export namespace Value {
     );
   }
 
+  export interface Resolver {}
+
+  export interface Resolvable<T extends string, R extends Resolver> {
+    resolve(resolver?: R): Value<T, false>;
+  }
+
   export type Resolved<V extends Value> = V extends Value<
     string,
     boolean,
@@ -78,4 +88,17 @@ export namespace Value {
   >
     ? R
     : string;
+
+  /**
+   * {@link https://stackoverflow.com/questions/50374908/transform-union-type-to-intersection-type}
+   */
+  type UnionToIntersection<U> = (
+    U extends any ? (k: U) => void : never
+  ) extends (k: infer I) => void
+    ? I
+    : never;
+
+  export type ResolverF<V extends Value> = UnionToIntersection<
+    V extends Resolvable<string, infer R> ? R : never
+  >;
 }

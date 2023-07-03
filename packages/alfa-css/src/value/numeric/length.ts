@@ -159,7 +159,8 @@ export namespace Length {
   export type JSON = Calculated.JSON | Fixed.JSON;
 
   interface ILength<CALC extends boolean = boolean>
-    extends Value<"length", CALC> {
+    extends Value<"length", CALC>,
+      Value.Resolvable<"length", Resolver> {
     hasCalculation(): this is Calculated;
     resolve(resolver: Resolver): Canonical;
   }
@@ -169,7 +170,7 @@ export namespace Length {
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export interface Resolver {
+  export interface Resolver extends Value.Resolver {
     length: Mapper<Fixed<Unit.Length.Relative>, Canonical>;
   }
 

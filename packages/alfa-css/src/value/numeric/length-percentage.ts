@@ -98,7 +98,8 @@ export namespace LengthPercentage {
     | Percentage.Fixed.JSON;
 
   interface ILengthPercentage<CALC extends boolean = boolean>
-    extends Value<"length-percentage", CALC, "length"> {
+    extends Value<"length-percentage", CALC, "length">,
+      Value.Resolvable<"length", Resolver> {
     hasCalculation(): this is Calculated;
     resolve(resolver: Resolver): Canonical;
   }
