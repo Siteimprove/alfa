@@ -1,8 +1,5 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Functor } from "@siteimprove/alfa-functor";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -47,11 +44,9 @@ export class List<V extends Value, CALC extends boolean = boolean>
   public resolve(
     resolver?: Value.ResolverF<V>
   ): List<Value<Value.Resolved<V>, false>, false> {
-    const array = this._values.map(
+    return this.map(
       (value) => value.resolve(resolver) as Value<Value.Resolved<V>, false>
     );
-
-    return new List(array, this._separator, false);
   }
 
   public map<U extends Value>(
