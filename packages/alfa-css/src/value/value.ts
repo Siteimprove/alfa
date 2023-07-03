@@ -4,7 +4,7 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Resolvable } from "./resolvable";
+import type { Resolvable } from "./resolvable";
 
 /**
  * * T: a string representation of the type stored in the value,

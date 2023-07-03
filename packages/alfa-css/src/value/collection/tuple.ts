@@ -1,8 +1,8 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
-import { Resolvable } from "../resolvable";
 
+import { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 /**
@@ -13,8 +13,16 @@ export class Tuple<T extends Array<Value>, CALC extends boolean = boolean>
   implements
     Resolvable<"tuple", Tuple<Tuple.Resolved<T>, false>, Tuple.Resolver<T>>
 {
-  public static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T> {
-    return new Tuple(values, false);
+  public static of<T extends Array<Value>>(
+    ...values: Readonly<T>
+  ): Tuple<
+    T,
+    T extends Array<infer V extends Value<string, false>> ? false : true
+  > {
+    const calculation = values.some((value) =>
+      value.hasCalculation()
+    ) as T extends Array<infer V extends Value<string, false>> ? false : true;
+    return new Tuple(values, calculation);
   }
 
   private readonly _values: Readonly<T>;
@@ -31,10 +39,10 @@ export class Tuple<T extends Array<Value>, CALC extends boolean = boolean>
   public resolve(
     resolver?: Tuple.Resolver<T>
   ): Tuple<Tuple.Resolved<T>, false> {
-    const foo = this._values.map((value) =>
-      value.resolve(resolver)
-    ) as Tuple.Resolved<T>;
-    return new Tuple<Tuple.Resolved<T>, false>(foo, false);
+    return new Tuple<Tuple.Resolved<T>, false>(
+      this._values.map((value) => value.resolve(resolver)) as Tuple.Resolved<T>,
+      false
+    );
   }
 
   public equals<T extends Array<Value>>(value: Tuple<T>): boolean;
