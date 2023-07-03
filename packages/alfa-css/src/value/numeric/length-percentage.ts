@@ -6,6 +6,8 @@ import { Math } from "../../calculation";
 import * as Base from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
+
+import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Dimension } from "./dimension";
@@ -99,7 +101,7 @@ export namespace LengthPercentage {
 
   interface ILengthPercentage<CALC extends boolean = boolean>
     extends Value<"length-percentage", CALC, "length">,
-      Value.Resolvable<"length", Resolver> {
+      Resolvable<"length", Resolver> {
     hasCalculation(): this is Calculated;
     resolve(resolver: Resolver): Canonical;
   }

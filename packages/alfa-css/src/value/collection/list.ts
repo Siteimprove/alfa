@@ -5,6 +5,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Token } from "../../syntax";
+
+import { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 const { delimited, option, map, separatedList } = Parser;
@@ -14,7 +16,7 @@ const { delimited, option, map, separatedList } = Parser;
  */
 export class List<V extends Value, CALC extends boolean = boolean>
   extends Value<"list", CALC>
-  implements Iterable<V>, Value.Resolvable<"list", Value.ResolverF<V>>
+  implements Iterable<V>, Resolvable<"list", Resolvable.Resolver<V>>
 {
   public static of<V extends Value>(
     values: Iterable<V>,
@@ -42,10 +44,10 @@ export class List<V extends Value, CALC extends boolean = boolean>
   }
 
   public resolve(
-    resolver?: Value.ResolverF<V>
-  ): List<Value<Value.Resolved<V>, false>, false> {
+    resolver?: Resolvable.Resolver<V>
+  ): List<Value<Resolvable.Resolved<V>, false>, false> {
     return this.map(
-      (value) => value.resolve(resolver) as Value<Value.Resolved<V>, false>
+      (value) => value.resolve(resolver) as Value<Resolvable.Resolved<V>, false>
     );
   }
 

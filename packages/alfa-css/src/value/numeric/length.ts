@@ -7,6 +7,8 @@ import { Math } from "../../calculation";
 import { Length as BaseLength } from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
+
+import { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Dimension } from "./dimension";
@@ -160,7 +162,7 @@ export namespace Length {
 
   interface ILength<CALC extends boolean = boolean>
     extends Value<"length", CALC>,
-      Value.Resolvable<"length", Resolver> {
+      Resolvable<"length", Resolver> {
     hasCalculation(): this is Calculated;
     resolve(resolver: Resolver): Canonical;
   }
@@ -170,7 +172,7 @@ export namespace Length {
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export interface Resolver extends Value.Resolver {
+  export interface Resolver {
     length: Mapper<Fixed<Unit.Length.Relative>, Canonical>;
   }
 

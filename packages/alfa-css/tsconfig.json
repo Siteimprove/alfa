@@ -62,6 +62,7 @@
     "src/value/numeric/numeric.ts",
     "src/value/numeric/percentage.ts",
     "src/value/position.ts",
+    "src/value/resolvable.ts",
     "src/value/shadow.ts",
     "src/value/shape/basic-shape.ts",
     "src/value/shape/circle.ts",

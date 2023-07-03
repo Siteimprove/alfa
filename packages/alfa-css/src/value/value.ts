@@ -4,6 +4,8 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
+import { Resolvable } from "./resolvable";
+
 /**
  * * T: a string representation of the type stored in the value,
  *      e.g. "length", "color", …
@@ -27,7 +29,7 @@ export abstract class Value<
     Equatable,
     Hashable,
     Serializable<Value.JSON<T>>,
-    Value.Resolvable<R, Value.ResolverF<Value>>
+    Resolvable<R, Resolvable.Resolver<Value>>
 {
   private readonly _type: T;
   protected readonly _hasCalculation: CALC;
@@ -44,7 +46,7 @@ export abstract class Value<
     return this._hasCalculation;
   }
 
-  public abstract resolve(resolver?: Value.Resolver | unknown): Value<R, false>;
+  public abstract resolve(resolver?: unknown): Value<R, false>;
 
   public abstract equals(value: unknown): value is this;
 
@@ -74,31 +76,4 @@ export namespace Value {
       value instanceof Value && (type === undefined || value.type === type)
     );
   }
-
-  export interface Resolver {}
-
-  export interface Resolvable<T extends string, R extends Resolver | unknown> {
-    resolve(resolver?: R): Value<T, false>;
-  }
-
-  export type Resolved<V extends Value> = V extends Value<
-    string,
-    boolean,
-    infer R
-  >
-    ? R
-    : string;
-
-  /**
-   * {@link https://stackoverflow.com/questions/50374908/transform-union-type-to-intersection-type}
-   */
-  type UnionToIntersection<U> = (
-    U extends any ? (k: U) => void : never
-  ) extends (k: infer I) => void
-    ? I
-    : never;
-
-  export type ResolverF<V extends Value> = UnionToIntersection<
-    V extends Resolvable<string, infer R> ? R : never
-  >;
 }
