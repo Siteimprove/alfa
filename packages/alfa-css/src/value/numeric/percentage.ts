@@ -157,7 +157,11 @@ export namespace Percentage {
     CALC extends boolean = boolean,
     R extends BaseNumeric.Type = BaseNumeric.Type
   > extends Value<"percentage", CALC, "percentage" | R>,
-      Resolvable<"percentage" | R, Resolver<R, Numeric.Fixed<R>>> {
+      Resolvable<
+        "percentage" | R,
+        Canonical | Numeric.Fixed<R>,
+        Resolver<R, Numeric.Fixed<R>>
+      > {
     hasCalculation(): this is Calculated<R>;
     resolve<T extends Numeric.Fixed<R>>(
       resolver?: Resolver<R, T>

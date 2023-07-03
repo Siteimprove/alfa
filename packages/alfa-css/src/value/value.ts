@@ -29,7 +29,7 @@ export abstract class Value<
     Equatable,
     Hashable,
     Serializable<Value.JSON<T>>,
-    Resolvable<R, Resolvable.Resolver<Value>>
+    Resolvable<R, Value<R, false>, Resolvable.Resolver<Value>>
 {
   private readonly _type: T;
   protected readonly _hasCalculation: CALC;

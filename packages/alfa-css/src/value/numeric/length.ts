@@ -162,7 +162,7 @@ export namespace Length {
 
   interface ILength<CALC extends boolean = boolean>
     extends Value<"length", CALC>,
-      Resolvable<"length", Resolver> {
+      Resolvable<"length", Canonical, Resolver> {
     hasCalculation(): this is Calculated;
     resolve(resolver: Resolver): Canonical;
   }

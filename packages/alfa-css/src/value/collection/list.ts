@@ -17,7 +17,13 @@ const { delimited, option, map, separatedList } = Parser;
  */
 export class List<V extends Value, CALC extends boolean = boolean>
   extends Value<"list", CALC>
-  implements Iterable<V>, Resolvable<"list", Resolvable.Resolver<V>>
+  implements
+    Iterable<V>,
+    Resolvable<
+      "list",
+      List<Value<Resolvable.ResolvedType<V>>, false>,
+      Resolvable.Resolver<V>
+    >
 {
   public static of<V extends Value>(
     values: Iterable<V>,
@@ -46,9 +52,10 @@ export class List<V extends Value, CALC extends boolean = boolean>
 
   public resolve(
     resolver?: Resolvable.Resolver<V>
-  ): List<Value<Resolvable.Resolved<V>, false>, false> {
+  ): List<Value<Resolvable.ResolvedType<V>, false>, false> {
     return this.map(
-      (value) => value.resolve(resolver) as Value<Resolvable.Resolved<V>, false>
+      (value) =>
+        value.resolve(resolver) as Value<Resolvable.ResolvedType<V>, false>
     );
   }
 

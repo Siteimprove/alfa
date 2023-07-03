@@ -1,21 +1,26 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
+import { Resolvable } from "../resolvable";
 
 import { Value } from "../value";
 
 /**
  * @public
  */
-export class Tuple<T extends Array<Value>> extends Value<"tuple", false> {
+export class Tuple<T extends Array<Value>, CALC extends boolean = boolean>
+  extends Value<"tuple", CALC>
+  implements
+    Resolvable<"tuple", Tuple<Tuple.Resolved<T>, false>, Tuple.Resolver<T>>
+{
   public static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T> {
-    return new Tuple(values);
+    return new Tuple(values, false);
   }
 
   private readonly _values: Readonly<T>;
 
-  private constructor(values: Readonly<T>) {
-    super("tuple", false);
+  private constructor(values: Readonly<T>, calculation: CALC) {
+    super("tuple", calculation);
     this._values = values;
   }
 
@@ -23,8 +28,13 @@ export class Tuple<T extends Array<Value>> extends Value<"tuple", false> {
     return this._values;
   }
 
-  public resolve(): Tuple<T> {
-    return this;
+  public resolve(
+    resolver?: Tuple.Resolver<T>
+  ): Tuple<Tuple.Resolved<T>, false> {
+    const foo = this._values.map((value) =>
+      value.resolve(resolver)
+    ) as Tuple.Resolved<T>;
+    return new Tuple<Tuple.Resolved<T>, false>(foo, false);
   }
 
   public equals<T extends Array<Value>>(value: Tuple<T>): boolean;
@@ -76,4 +86,30 @@ export namespace Tuple {
   ): value is Tuple<T> {
     return value instanceof Tuple;
   }
+
+  /**
+   * Applying the Resolved<T> to all members of a tuple, keeping size and order.
+   *
+   * {@link https://levelup.gitconnected.com/crazy-powerful-typescript-tuple-types-9b121e0a690c}
+   *
+   * @internal
+   */
+  export type Resolved<T extends Array<Value>> = T extends [
+    infer Head extends Value,
+    ...infer Tail extends Array<Value>
+  ]
+    ? [Resolvable.Resolved<Head>, ...Resolved<Tail>]
+    : [];
+
+  /**
+   * Applying the Resolver<T> to all members of a tuple, collapsing them into
+   * a single union
+   *
+   * @internal
+   */
+  export type Resolver<T extends Array<Value>> = T extends Array<
+    infer V extends Value
+  >
+    ? Resolvable.Resolver<V>
+    : never;
 }
