@@ -27,7 +27,7 @@ export abstract class Value<
     Equatable,
     Hashable,
     Serializable<Value.JSON<T>>,
-    Value.Resolvable<R, Value.Resolver>
+    Value.Resolvable<R, Value.ResolverF<Value>>
 {
   private readonly _type: T;
   protected readonly _hasCalculation: CALC;
@@ -44,7 +44,7 @@ export abstract class Value<
     return this._hasCalculation;
   }
 
-  public abstract resolve(resolver?: Value.Resolver): Value<R, false>;
+  public abstract resolve(resolver?: Value.Resolver | unknown): Value<R, false>;
 
   public abstract equals(value: unknown): value is this;
 
@@ -77,7 +77,7 @@ export namespace Value {
 
   export interface Resolver {}
 
-  export interface Resolvable<T extends string, R extends Resolver> {
+  export interface Resolvable<T extends string, R extends Resolver | unknown> {
     resolve(resolver?: R): Value<T, false>;
   }
 
