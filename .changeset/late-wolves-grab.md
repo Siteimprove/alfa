@@ -1,11 +1,11 @@
 ---
-"@siteimprove/alfa-cascade": minor
-"@siteimprove/alfa-rules": minor
-"@siteimprove/alfa-style": minor
 "@siteimprove/alfa-aria": minor
-"@siteimprove/alfa-http": minor
+"@siteimprove/alfa-cascade": minor
 "@siteimprove/alfa-css": minor
 "@siteimprove/alfa-dom": minor
+"@siteimprove/alfa-http": minor
+"@siteimprove/alfa-rules": minor
+"@siteimprove/alfa-style": minor
 "@siteimprove/alfa-web": minor
 ---
 

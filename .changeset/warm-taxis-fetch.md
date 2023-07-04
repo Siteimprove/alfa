@@ -2,4 +2,4 @@
 "@siteimprove/alfa-rules": patch
 ---
 
-\*\*Added:00 All rules now have an explicit `Stability` tag.
+**Added:** All rules now have an explicit `Stability` tag.

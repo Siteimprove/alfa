@@ -33,13 +33,6 @@ export class Kind implements Equatable, Serializable {
     None
   );
 
-  /**
-   * @public
-   */
-  public static empty(): Kind {
-    return this._empty;
-  }
-
   private readonly _kinds: Kind.Map;
 
   private readonly _hint: Option<Kind.Hint>;
