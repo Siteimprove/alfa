@@ -167,6 +167,7 @@ export namespace SameNames {
 
   export function isSameNames(value: unknown): value is SameNames;
 
+  /**@public */
   export function isSameNames(value: unknown): value is SameNames {
     return value instanceof SameNames;
   }

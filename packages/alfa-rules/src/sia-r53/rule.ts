@@ -105,6 +105,7 @@ export namespace WithPreviousHeading {
     previous: Element.JSON;
   }
 
+  /**@public */
   export function isWithPreviousHeading(
     value: unknown
   ): value is WithPreviousHeading {

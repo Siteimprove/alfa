@@ -159,6 +159,7 @@ export namespace WithFirstHeading {
 
   export function isWithFirstHeading(value: unknown): value is WithFirstHeading;
 
+  /**@public */
   export function isWithFirstHeading(
     value: unknown
   ): value is WithFirstHeading {

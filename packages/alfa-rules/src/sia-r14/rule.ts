@@ -245,6 +245,7 @@ export namespace LabelAndName {
 
   export function isLabelAndName(value: unknown): value is LabelAndName;
 
+  /**@public */
   export function isLabelAndName(value: unknown): value is LabelAndName {
     return value instanceof LabelAndName;
   }

@@ -581,6 +581,7 @@ export namespace ClippingAncestors {
     value: unknown
   ): value is ClippingAncestors;
 
+  /**@public */
   export function isClippingAncestors(
     value: unknown
   ): value is ClippingAncestors {

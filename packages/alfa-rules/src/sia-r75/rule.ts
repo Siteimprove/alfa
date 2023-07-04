@@ -153,6 +153,7 @@ export namespace WithDeclaration {
 
   export function isWithDeclaration(value: unknown): value is WithDeclaration;
 
+  /**@public */
   export function isWithDeclaration(value: unknown): value is WithDeclaration {
     return value instanceof WithDeclaration;
   }

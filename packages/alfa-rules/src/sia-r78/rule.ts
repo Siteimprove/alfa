@@ -259,6 +259,7 @@ export namespace WithNextHeading {
 
   export function isWithNextHeading(value: unknown): value is WithNextHeading;
 
+  /**@public */
   export function isWithNextHeading(value: unknown): value is WithNextHeading {
     return value instanceof WithNextHeading;
   }

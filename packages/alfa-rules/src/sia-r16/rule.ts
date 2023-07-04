@@ -200,6 +200,7 @@ export namespace RoleAndRequiredAttributes {
     value: unknown
   ): value is RoleAndRequiredAttributes;
 
+  /**@public */
   export function isRoleAndRequiredAttributes(
     value: unknown
   ): value is RoleAndRequiredAttributes {

@@ -194,6 +194,7 @@ export namespace WithRoleAndName {
 
   export function isWithRoleAndName(value: unknown): value is WithRoleAndName;
 
+  /**@public */
   export function isWithRoleAndName(value: unknown): value is WithRoleAndName {
     return value instanceof WithRoleAndName;
   }
