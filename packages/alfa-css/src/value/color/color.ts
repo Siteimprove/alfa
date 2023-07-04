@@ -42,7 +42,8 @@ export namespace Color {
     saturation: Percentage.Fixed,
     lightness: Percentage.Fixed,
     alpha: A
-  ): HSL<H, A> {
+  ): HSL<H, A, false> {
+    // @ts-ignore
     return HSL.of(hue, saturation, lightness, alpha);
   }
 
@@ -53,7 +54,8 @@ export namespace Color {
   export function rgb<
     C extends Number.Fixed | Percentage.Fixed,
     A extends Number.Fixed | Percentage.Fixed
-  >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
+  >(red: C, green: C, blue: C, alpha: A): RGB<C, A, false> {
+    // @ts-ignore
     return RGB.of(red, green, blue, alpha);
   }
 
