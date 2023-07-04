@@ -4,11 +4,12 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
 import { Number as BaseNumber } from "../../calculation/numeric";
+import { Token } from "../../syntax";
 
+import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Numeric } from "./numeric";
-import { Token } from "../../syntax";
 
 const { either, map } = Parser;
 
@@ -42,7 +43,7 @@ export namespace Number {
       super(value, "number");
     }
 
-    public resolve(): Fixed {
+    public resolve(): Canonical {
       return Fixed.of(
         this._math
           .resolve()
@@ -104,9 +105,10 @@ export namespace Number {
   }
 
   interface INumber<CALC extends boolean = boolean>
-    extends Value<"number", CALC> {
+    extends Value<"number", CALC>,
+      Resolvable<Canonical, never> {
     hasCalculation(): this is Calculated;
-    resolve(): Fixed;
+    resolve(): Canonical;
   }
 
   export function isCalculated(value: unknown): value is Calculated {

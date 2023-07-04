@@ -6,6 +6,7 @@ import { Real } from "@siteimprove/alfa-math";
 import { Math } from "../../calculation";
 import { Numeric as BaseNumeric } from "../../calculation/numeric";
 
+import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 /**
@@ -146,7 +147,8 @@ export namespace Numeric {
     T extends Type = Type,
     CALC extends boolean = boolean,
     R extends Type = T
-  > extends Value<T, CALC, R> {
+  > extends Value<T, CALC, R>,
+      Resolvable<Fixed<R>, unknown> {
     hasCalculation(): this is Calculated<T, R>;
     resolve(resolver?: unknown): Fixed<R>;
   }

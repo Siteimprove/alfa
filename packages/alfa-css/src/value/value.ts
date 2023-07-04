@@ -4,6 +4,8 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
+import type { Resolvable } from "./resolvable";
+
 /**
  * * T: a string representation of the type stored in the value,
  *      e.g. "length", "color", …
@@ -23,7 +25,11 @@ export abstract class Value<
   T extends string = string,
   CALC extends boolean = boolean,
   R extends string = T
-> implements Equatable, Hashable, Serializable<Value.JSON<T>>
+> implements
+    Equatable,
+    Hashable,
+    Serializable<Value.JSON<T>>,
+    Resolvable<Value<R, false>, Resolvable.Resolver<Value>>
 {
   private readonly _type: T;
   protected readonly _hasCalculation: CALC;
@@ -47,9 +53,7 @@ export abstract class Value<
   public abstract hash(hash: Hash): void;
 
   public toJSON(): Value.JSON<T> {
-    return {
-      type: this._type,
-    };
+    return { type: this._type };
   }
 
   public abstract toString(): string;

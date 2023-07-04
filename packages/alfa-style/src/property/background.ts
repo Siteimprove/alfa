@@ -1,4 +1,4 @@
-import { List, Token } from "@siteimprove/alfa-css";
+import { List, Token, Tuple } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -120,7 +120,10 @@ export const parse: Parser<
       const result = Repeat.parse(input);
 
       if (result.isOk()) {
-        [input, [repeatX, repeatY]] = result.get();
+        let repeat: Tuple<[RepeatX.Specified.Item, RepeatY.Specified.Item]>;
+        [input, repeat] = result.get();
+        [repeatX, repeatY] = repeat.values;
+
         continue;
       }
     }
@@ -199,17 +202,13 @@ export const parse: Parser<
 /**
  * @internal
  */
-export const parseList = map(
-  filter(
-    separatedList(
-      parse,
-      delimited(option(Token.parseWhitespace), Token.parseComma)
-    ),
-    (layers) =>
-      [...layers].slice(0, -1).every(([color]) => color === undefined),
-    () => "Only the last layer may contain a color"
+export const parseList = filter(
+  separatedList(
+    parse,
+    delimited(option(Token.parseWhitespace), Token.parseComma)
   ),
-  (layers) => List.of(layers, ", ")
+  (layers) => [...layers].slice(0, -1).every((layer) => layer[0] === undefined),
+  () => "Only the last layer may contain a color"
 );
 
 /**

@@ -3,6 +3,8 @@ import { Hash } from "@siteimprove/alfa-hash";
 
 import { Numeric as BaseNumeric } from "../../calculation/numeric";
 import { Convertible, Unit } from "../../unit";
+
+import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Numeric } from "./numeric";
@@ -131,7 +133,8 @@ export namespace Dimension {
   }
 
   interface IDimension<T extends Type = Type, CALC extends boolean = boolean>
-    extends Value<T, CALC, Dimensions<T>[0]> {
+    extends Value<T, CALC, Dimensions<T>[0]>,
+      Resolvable<Fixed<Dimensions<T>[0], Dimensions<T>[2]>, unknown> {
     hasCalculation(): this is Calculated<T>;
     resolve(resolver?: unknown): Fixed<Dimensions<T>[0], Dimensions<T>[2]>;
   }

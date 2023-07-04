@@ -5,6 +5,8 @@ import { Math } from "../../calculation";
 import * as Base from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Unit } from "../../unit";
+
+import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Dimension } from "./dimension";
@@ -85,7 +87,8 @@ export namespace AnglePercentage {
     | Percentage.Fixed.JSON;
 
   interface IAnglePercentage<CALC extends boolean = boolean>
-    extends Value<"angle-percentage", CALC, "angle"> {
+    extends Value<"angle-percentage", CALC, "angle">,
+      Resolvable<Canonical, Resolver> {
     hasCalculation(): this is Calculated;
     resolve(resolver: Resolver): Canonical;
   }
