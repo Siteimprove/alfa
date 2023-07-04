@@ -2,11 +2,10 @@ import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 import { Value } from "../value";
 
 import { Angle } from "../numeric";
@@ -310,8 +309,8 @@ export namespace Linear {
    * {@link https://drafts.csswg.org/css-images/#funcdef-linear-gradient}
    */
   export function parse(
-    parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>
-  ): Parser<Slice<Token>, Linear, string> {
+    parseItemList: CSSParser<Array<Gradient.Item>>
+  ): CSSParser<Linear> {
     return map(
       pair(
         Token.parseFunction(

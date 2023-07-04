@@ -4,9 +4,8 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Function, Token } from "../../syntax";
+import { Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Length, Percentage } from "../numeric";
@@ -93,8 +92,9 @@ export class Polygon<
 export namespace Polygon {
   export type Fill = Keyword<"nonzero"> | Keyword<"evenodd">;
 
-  export type Vertex<V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> =
-    readonly [V, V];
+  export type Vertex<
+    V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
+  > = readonly [V, V];
 
   export interface JSON<
     F extends Fill = Fill,
@@ -112,7 +112,7 @@ export namespace Polygon {
     parseLengthPercentage
   );
 
-  export const parse: Parser<Slice<Token>, Polygon, string> = map(
+  export const parse: CSSParser<Polygon> = map(
     Function.parse(
       "polygon",
       pair(

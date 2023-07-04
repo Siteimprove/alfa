@@ -5,7 +5,7 @@ import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Function, Token } from "../../syntax";
+import { Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Length, Percentage } from "../numeric";
@@ -221,7 +221,7 @@ export namespace Inset {
         .getOr(horizontal)
   );
 
-  export const parse: Parser<Slice<Token>, Inset, string> = map(
+  export const parse: CSSParser<Inset> = map(
     Function.parse(
       "inset",
       pair(

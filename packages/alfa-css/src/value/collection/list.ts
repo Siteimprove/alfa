@@ -5,7 +5,7 @@ import { Mapper } from "@siteimprove/alfa-mapper";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
@@ -123,10 +123,8 @@ export namespace List {
 
   function parse(
     separator: string,
-    parseSeparator: Parser<Slice<Token>, any, string>
-  ): <V extends Value>(
-    parseValue: Parser<Slice<Token>, V, string>
-  ) => Parser<Slice<Token>, List<V>, string> {
+    parseSeparator: CSSParser<any>
+  ): <V extends Value>(parseValue: CSSParser<V>) => CSSParser<List<V>> {
     return (parseValue) =>
       map(separatedList(parseValue, parseSeparator), (values) =>
         List.of(values, separator)

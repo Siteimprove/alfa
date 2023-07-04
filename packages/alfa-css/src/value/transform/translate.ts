@@ -2,7 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Length, Percentage } from "../numeric";
 
@@ -224,7 +224,7 @@ export namespace Translate {
     }
   );
 
-  export const parse: Parser<Slice<Token>, Translate, string> = either(
+  export const parse: CSSParser<Translate> = either(
     parseTranslate,
     parseTranslateX,
     parseTranslateY,

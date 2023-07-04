@@ -6,6 +6,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Block } from "./block";
 import { Function } from "./function";
+import type { Parser as CSSParser } from "./parser";
 import { Token } from "./token";
 
 const { delimited, option, either, map } = Parser;
@@ -60,7 +61,7 @@ export namespace Component {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-component-value}
    */
-  export const consume: Parser<Slice<Token>, Component, string> = (input) =>
+  export const consume: CSSParser<Component> = (input) =>
     // eta expansion is necessary for `this` binding to resolve correctly
     either(
       map(Block.consume, (value) => Component.of(value)),

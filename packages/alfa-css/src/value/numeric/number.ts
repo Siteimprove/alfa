@@ -4,7 +4,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
 import { Number as BaseNumber } from "../../calculation/numeric";
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
@@ -139,7 +139,7 @@ export namespace Number {
   /**
    * {@link https://drafts.csswg.org/css-values/#number-value}
    */
-  export const parse: Parser<Slice<Token>, Number, string> = either(
+  export const parse: CSSParser<Number> = either(
     map<Slice<Token>, BaseNumber, Fixed, string>(BaseNumber.parse, of),
     map(Math.parseNumber, of)
   );
@@ -150,7 +150,7 @@ export namespace Number {
    *
    * {@link https://drafts.csswg.org/css-values/#zero-value}
    */
-  export const parseZero: Parser<Slice<Token>, Fixed, string> = map<
+  export const parseZero: CSSParser<Fixed> = map<
     Slice<Token>,
     BaseNumber,
     Fixed,
@@ -161,10 +161,8 @@ export namespace Number {
   /**
    * @internal
    */
-  export const parseBase: Parser<Slice<Token>, Fixed, string> = map<
-    Slice<Token>,
-    BaseNumber,
-    Fixed,
-    string
-  >(BaseNumber.parse, of);
+  export const parseBase = map<Slice<Token>, BaseNumber, Fixed, string>(
+    BaseNumber.parse,
+    of
+  );
 }

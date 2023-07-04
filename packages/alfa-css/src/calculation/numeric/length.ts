@@ -2,7 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Converter, Unit } from "../../unit";
 import { Dimension } from "./dimension";
@@ -82,7 +82,7 @@ export namespace Length {
   /**
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
-  export const parse: Parser<Slice<Token>, Length, string> = either(
+  export const parse: CSSParser<Length> = either(
     map(
       Token.parseDimension((dimension) => Unit.isLength(dimension.unit)),
       (dimension) => Length.of(dimension.value, dimension.unit as Unit.Length)

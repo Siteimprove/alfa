@@ -3,11 +3,10 @@ import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Color } from "../color";
 import { Length, Percentage } from "../numeric";
@@ -112,7 +111,7 @@ export namespace Gradient {
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-linear-color-stop}
    */
-  export const parseStop: Parser<Slice<Token>, Stop, string> = either(
+  export const parseStop: CSSParser<Stop> = either(
     map(
       pair(
         left(Color.parse, Token.parseWhitespace),
@@ -196,7 +195,7 @@ export namespace Gradient {
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-linear-color-hint}
    */
-  export const parseHint: Parser<Slice<Token>, Hint, string> = map(
+  export const parseHint: CSSParser<Hint> = map(
     either(Length.parseBase, Percentage.parseBase),
     (position) => Hint.of(position)
   );
@@ -207,15 +206,10 @@ export namespace Gradient {
     export type JSON = Stop.JSON | Hint.JSON;
   }
 
-  export const parseItem: Parser<Slice<Token>, Item, string> = either(
-    parseStop,
-    parseHint
-  );
-
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-color-stop-list}
    */
-  export const parseItemList: Parser<Slice<Token>, Array<Item>, string> = map(
+  export const parseItemList: CSSParser<Array<Item>> = map(
     pair(
       parseStop,
       oneOrMore(
@@ -247,6 +241,6 @@ export namespace Gradient {
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-gradient}
    */
-  export const parse: Parser<Slice<Token>, Gradient, string> = (input) =>
+  export const parse: CSSParser<Gradient> = (input) =>
     either(Linear.parse(parseItemList), Radial.parse(parseItemList))(input);
 }

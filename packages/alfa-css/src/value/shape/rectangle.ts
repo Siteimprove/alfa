@@ -2,7 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Function, Token } from "../../syntax";
+import { Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Length } from "../numeric";
@@ -116,7 +116,7 @@ export namespace Rectangle {
 
   const parseLengthAuto = either(Length.parseBase, Keyword.parse("auto"));
 
-  export const parse: Parser<Slice<Token>, Rectangle, string> = map(
+  export const parse: CSSParser<Rectangle> = map(
     Function.parse(
       "rect",
       either(

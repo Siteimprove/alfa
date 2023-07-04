@@ -5,6 +5,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
+import type { Parser as CSSParser } from "./parser";
 import { Token } from "./token";
 
 const { map, right, pair, delimited, option, either } = Parser;
@@ -117,7 +118,7 @@ export namespace Nth {
    *
    * {@link https://drafts.csswg.org/css-syntax/#anb-production}
    */
-  export const parse: Parser<Slice<Token>, Nth, string> = either(
+  export const parse: CSSParser<Nth> = either(
     // odd | even
     map(
       Token.parseIdent(
