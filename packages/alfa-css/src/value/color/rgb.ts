@@ -131,6 +131,57 @@ export namespace RGB {
    */
   const parseAlpha = either(Number.parseBase, Percentage.parseBase);
 
+  const parseLegacyTriplet = <C extends Number.Fixed | Percentage.Fixed>(
+    parser: Parser<Slice<Token>, C, string>
+  ) =>
+    map(
+      pair(
+        parser,
+        take(
+          right(
+            delimited(option(Token.parseWhitespace), Token.parseComma),
+            parser
+          ),
+          2
+        )
+      ),
+      ([r, [g, b]]) => [r, g, b] as const
+    );
+
+  const parseLegacy = pair(
+    either(
+      parseLegacyTriplet(Percentage.parseBase),
+      parseLegacyTriplet(Number.parseBase)
+    ),
+    option(
+      right(
+        delimited(option(Token.parseWhitespace), Token.parseComma),
+        parseAlpha
+      )
+    )
+  );
+
+  const parseModernTriplet = <C extends Number.Fixed | Percentage.Fixed>(
+    parser: Parser<Slice<Token>, C, string>
+  ) =>
+    map(
+      pair(parser, take(right(option(Token.parseWhitespace), parser), 2)),
+      ([r, [g, b]]) => [r, g, b] as const
+    );
+
+  const parseModern = pair(
+    either(
+      parseModernTriplet(Percentage.parseBase),
+      parseModernTriplet(Number.parseBase)
+    ),
+    option(
+      right(
+        delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
+        parseAlpha
+      )
+    )
+  );
+
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-rgb}
    */
@@ -140,77 +191,13 @@ export namespace RGB {
       left(
         delimited(
           option(Token.parseWhitespace),
-          either(
-            pair(
-              either(
-                pair(
-                  Percentage.parseBase,
-                  take(
-                    right(option(Token.parseWhitespace), Percentage.parseBase),
-                    2
-                  )
-                ),
-                pair(
-                  Number.parseBase,
-                  take(
-                    right(option(Token.parseWhitespace), Number.parseBase),
-                    2
-                  )
-                )
-              ),
-              option(
-                right(
-                  delimited(
-                    option(Token.parseWhitespace),
-                    Token.parseDelim("/")
-                  ),
-                  parseAlpha
-                )
-              )
-            ),
-            pair(
-              either(
-                pair(
-                  Percentage.parseBase,
-                  take(
-                    right(
-                      delimited(
-                        option(Token.parseWhitespace),
-                        Token.parseComma
-                      ),
-                      Percentage.parseBase
-                    ),
-                    2
-                  )
-                ),
-                pair(
-                  Number.parseBase,
-                  take(
-                    right(
-                      delimited(
-                        option(Token.parseWhitespace),
-                        Token.parseComma
-                      ),
-                      Number.parseBase
-                    ),
-                    2
-                  )
-                )
-              ),
-              option(
-                right(
-                  delimited(option(Token.parseWhitespace), Token.parseComma),
-                  parseAlpha
-                )
-              )
-            )
-          )
+          either(parseModern, parseLegacy)
         ),
         Token.parseCloseParenthesis
       )
     ),
     (result) => {
-      const [[red, [green, blue]], alpha] = result;
+      const [[red, green, blue], alpha] = result;
 
       return RGB.of(
         red,
