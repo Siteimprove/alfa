@@ -7,13 +7,14 @@ import { Token } from "../../syntax";
 import { Number } from "../numeric";
 
 import { Format } from "./format";
+import type { RGB } from "./rgb";
 
 const { map } = Parser;
 
 /**
  * @public
  */
-export class Hex extends Format<"hex"> {
+export class Hex extends Format<"hex", false> {
   public static of(value: number): Hex {
     return new Hex(value);
   }
@@ -47,7 +48,8 @@ export class Hex extends Format<"hex"> {
     return Number.of(this._value & 0xff);
   }
 
-  public resolve(): Hex {
+  public resolve(): RGB.Canonical {
+    // @ts-ignore
     return this;
   }
 

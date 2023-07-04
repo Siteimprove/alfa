@@ -5,6 +5,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Token } from "../../syntax";
 
 import { Number, Percentage } from "../numeric";
+import type { Value } from "../value";
 
 import { Format } from "./format";
 
@@ -15,13 +16,22 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
  */
 export class RGB<
   C extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
-  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
-> extends Format<"rgb"> {
+  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
+  CALC extends boolean = boolean
+> extends Format<"rgb", CALC> {
   public static of<
     C extends Number.Fixed | Percentage.Fixed,
     A extends Number.Fixed | Percentage.Fixed
-  >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
-    return new RGB(red, green, blue, alpha);
+  >(
+    red: C,
+    green: C,
+    blue: C,
+    alpha: A
+  ): RGB<C, A, Value.HasCalculation<[C, A]>> {
+    const calculation = [red, green, blue, alpha].some((value) =>
+      value.hasCalculation()
+    ) as Value.HasCalculation<[C, A]>;
+    return new RGB(red, green, blue, alpha, calculation);
   }
 
   private readonly _red: C;
@@ -29,8 +39,8 @@ export class RGB<
   private readonly _blue: C;
   private readonly _alpha: A;
 
-  private constructor(red: C, green: C, blue: C, alpha: A) {
-    super("rgb", false);
+  private constructor(red: C, green: C, blue: C, alpha: A, calculation: CALC) {
+    super("rgb", calculation);
     this._red = red;
     this._green = green;
     this._blue = blue;
@@ -53,7 +63,8 @@ export class RGB<
     return this._alpha;
   }
 
-  public resolve(): RGB<C, A> {
+  public resolve(): RGB.Canonical {
+    // @ts-ignore
     return this;
   }
 
@@ -96,6 +107,11 @@ export class RGB<
  * @public
  */
 export namespace RGB {
+  export type Canonical = RGB<
+    Percentage.Canonical,
+    Percentage.Canonical,
+    false
+  >;
   export interface JSON extends Format.JSON<"rgb"> {
     red: Number.Fixed.JSON | Percentage.Fixed.JSON;
     green: Number.Fixed.JSON | Percentage.Fixed.JSON;

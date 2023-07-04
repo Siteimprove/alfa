@@ -24,10 +24,7 @@ export type Color = Hex | Named | HSL | RGB | Current | System;
  * @public
  */
 export namespace Color {
-  export type Canonical =
-    | Current
-    | System
-    | RGB<Percentage.Canonical, Percentage.Canonical>;
+  export type Canonical = Current | System | RGB.Canonical;
 
   export type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
 

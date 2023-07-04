@@ -7,15 +7,17 @@ import { Token } from "../../syntax";
 import { Number } from "../numeric";
 
 import { Format } from "./format";
+import type { RGB } from "./rgb";
 
 const { map } = Parser;
 
 /**
  * @public
  */
-export class Named<
-  C extends Named.Color = Named.Color
-> extends Format<"named"> {
+export class Named<C extends Named.Color = Named.Color> extends Format<
+  "named",
+  false
+> {
   public static of<C extends Named.Color>(color: C): Named<C> {
     return new Named(color);
   }
@@ -53,7 +55,8 @@ export class Named<
     return Number.of(this._color === "transparent" ? 0 : 1);
   }
 
-  public resolve(): Named<C> {
+  public resolve(): RGB.Canonical {
+    // @ts-ignore
     return this;
   }
 

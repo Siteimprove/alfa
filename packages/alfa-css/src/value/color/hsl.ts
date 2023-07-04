@@ -6,8 +6,10 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Token } from "../../syntax";
 
 import { Angle, Number, Percentage } from "../numeric";
+import type { Value } from "../value";
 
 import { Format } from "./format";
+import type { RGB } from "./rgb";
 
 const { pair, map, either, option, left, right, take, delimited } = Parser;
 
@@ -16,18 +18,25 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
  */
 export class HSL<
   H extends Number.Fixed | Angle.Fixed = Number.Fixed | Angle.Fixed,
-  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
-> extends Format<"hsl"> {
+  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
+  CALC extends boolean = boolean
+> extends Format<"hsl", CALC> {
   public static of<
     H extends Number.Fixed | Angle.Fixed,
-    A extends Number.Fixed | Percentage.Fixed
+    A extends Number.Fixed | Percentage.Fixed,
+    S extends Percentage.Fixed,
+    L extends Percentage.Fixed
   >(
     hue: H,
-    saturation: Percentage.Fixed,
-    lightness: Percentage.Fixed,
+    saturation: S,
+    lightness: L,
     alpha: A
-  ): HSL<H, A> {
-    return new HSL(hue, saturation, lightness, alpha);
+  ): HSL<H, A, Value.HasCalculation<[H, A, S, L]>> {
+    const calculation = [hue, saturation, lightness, alpha].some((value) =>
+      value.hasCalculation()
+    ) as Value.HasCalculation<[H, A, S, L]>;
+
+    return new HSL(hue, saturation, lightness, alpha, calculation);
   }
 
   private readonly _hue: H;
@@ -42,9 +51,10 @@ export class HSL<
     hue: H,
     saturation: Percentage.Fixed,
     lightness: Percentage.Fixed,
-    alpha: A
+    alpha: A,
+    calculation: CALC
   ) {
-    super("hsl", false);
+    super("hsl", calculation);
     this._hue = hue;
     this._saturation = saturation;
     this._lightness = lightness;
@@ -91,7 +101,8 @@ export class HSL<
     return this._alpha;
   }
 
-  public resolve(): HSL<H, A> {
+  public resolve(): RGB.Canonical {
+    // @ts-ignore
     return this;
   }
 
