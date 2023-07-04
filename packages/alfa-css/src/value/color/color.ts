@@ -1,7 +1,6 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { type Parser as CSSParser } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Angle, Number, Percentage } from "../numeric";
