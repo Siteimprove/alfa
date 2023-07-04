@@ -1,13 +1,4 @@
-import {
-  Current,
-  Keyword,
-  Length,
-  List,
-  Percentage,
-  RGB,
-  Shadow,
-  System,
-} from "@siteimprove/alfa-css";
+import { Keyword, List, Shadow } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
@@ -15,15 +6,9 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Keyword<"none"> | List<Shadow>;
+type Specified = Keyword<"none"> | List<Shadow>;
 
-/**
- * @internal
- */
-export type Computed = Keyword<"none"> | List<Shadow.Canonical>;
+type Computed = Keyword<"none"> | List<Shadow.Canonical>;
 
 const parseList = List.parseCommaSeparated(
   Shadow.parse({ withInset: false, withSpread: false })

@@ -7,10 +7,7 @@ import { Selective } from "@siteimprove/alfa-selective";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = List<Specified.Item>;
+type Specified = List<Specified.Item>;
 
 /**
  * @internal
@@ -19,20 +16,14 @@ export namespace Specified {
   export type Item = Keyword<"none"> | Image;
 }
 
-/**
- * @internal
- */
-export type Computed = List<Keyword<"none"> | Image.Canonical>;
+type Computed = List<Keyword<"none"> | Image.Canonical>;
 
 /**
  * @internal
  */
 export const parse = either(Keyword.parse("none"), Image.parse);
 
-/**
- * @internal
- */
-export const parseList = List.parseCommaSeparated(parse);
+const parseList = List.parseCommaSeparated(parse);
 
 /**
  * @internal

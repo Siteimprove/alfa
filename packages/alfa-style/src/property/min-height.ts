@@ -6,10 +6,7 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified =
+type Specified =
   | Keyword<"auto">
   // The `fit-content(value)` syntax has poor support currently
   | Keyword<"fit-content">
@@ -18,10 +15,7 @@ export type Specified =
   | Length
   | Percentage;
 
-/**
- * @internal
- */
-export type Computed =
+type Computed =
   | Keyword<"auto">
   | Keyword<"fit-content">
   | Keyword<"max-content">
@@ -29,10 +23,7 @@ export type Computed =
   | Length.Canonical
   | Percentage;
 
-/**
- * @internal
- */
-export const parse = either(
+const parse = either(
   Keyword.parse("auto", "fit-content", "max-content", "min-content"),
   either(Length.parse, Percentage.parse)
 );

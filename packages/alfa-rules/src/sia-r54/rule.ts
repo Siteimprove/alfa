@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 import * as dom from "@siteimprove/alfa-dom";
 
 import { expectation } from "../common/act/expectation";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { isIncludedInTheAccessibilityTree } = DOM;
 const { and } = Predicate;
@@ -16,7 +16,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r54",
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

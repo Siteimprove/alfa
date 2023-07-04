@@ -95,6 +95,7 @@
     { "path": "../alfa-iterable" },
     { "path": "../alfa-json" },
     { "path": "../alfa-lazy" },
+    { "path": "../alfa-map" },
     { "path": "../alfa-media" },
     { "path": "../alfa-option" },
     { "path": "../alfa-predicate" },

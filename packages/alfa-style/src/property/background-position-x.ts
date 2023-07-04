@@ -3,10 +3,7 @@ import { List, Percentage, Position } from "@siteimprove/alfa-css";
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
-/**
- * @internal
- */
-export type Specified = List<Specified.Item>;
+type Specified = List<Specified.Item>;
 
 /**
  * @internal
@@ -15,24 +12,13 @@ export namespace Specified {
   export type Item = Position.Component<Position.Keywords.Horizontal>;
 }
 
-/**
- * @internal
- */
-export type Computed = List<Computed.Item>;
+type Computed = List<Computed.Item>;
 
-/**
- * @internal
- */
-export namespace Computed {
+namespace Computed {
   export type Item = Position.Component<Position.Keywords.Horizontal, "px">;
 }
 
-/**
- * @internal
- */
-export const parse = List.parseCommaSeparated(
-  Position.Component.parseHorizontal
-);
+const parse = List.parseCommaSeparated(Position.Component.parseHorizontal);
 
 /**
  * @internal

@@ -111,6 +111,8 @@ class Angle_2<U extends Unit.Angle = Unit.Angle> extends Dimension_2<"angle", U>
     // (undocumented)
     scale(factor: number): Angle_2<U>;
     // (undocumented)
+    toJSON(): Angle_2.JSON<U>;
+    // (undocumented)
     toString(): string;
     // (undocumented)
     withUnit<U extends Unit.Angle>(unit: U): Angle_2<U>;
@@ -953,6 +955,8 @@ class Integer_2 extends Numeric_2<"integer"> {
     static of(value: number): Integer_2;
     // (undocumented)
     scale(factor: number): Integer_2;
+    // (undocumented)
+    toJSON(): Integer_2.JSON;
 }
 
 // @public (undocumented)
@@ -1102,6 +1106,8 @@ class Length_2<U extends Unit.Length = Unit.Length> extends Dimension_2<"length"
     static of<U extends Unit.Length>(value: number, unit: U): Length_2<U>;
     // (undocumented)
     scale(factor: number): Length_2<U>;
+    // (undocumented)
+    toJSON(): Length_2.JSON<U>;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -1659,6 +1665,8 @@ class Number_3 extends Numeric_2<"number"> {
     static of(value: number): Number_3;
     // (undocumented)
     scale(factor: number): Number_3;
+    // (undocumented)
+    toJSON(): Number_3.JSON;
 }
 
 // @public (undocumented)
@@ -1905,6 +1913,8 @@ class Percentage_2 extends Numeric_2<"percentage"> {
     static of(value: number): Percentage_2;
     // (undocumented)
     scale(factor: number): Percentage_2;
+    // (undocumented)
+    toJSON(): Percentage_2.JSON;
     // (undocumented)
     toString(): string;
 }

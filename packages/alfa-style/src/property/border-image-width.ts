@@ -27,17 +27,11 @@ export type Specified = Tuple<
   ]
 >;
 
-/**
- * @internal
- */
-export namespace Specified {
+namespace Specified {
   export type Item = Length | Percentage | Number | Keyword<"auto">;
 }
 
-/**
- * @internal
- */
-export type Computed = Tuple<
+type Computed = Tuple<
   [
     top: Computed.Item,
     right: Computed.Item,
@@ -46,10 +40,7 @@ export type Computed = Tuple<
   ]
 >;
 
-/**
- * @internal
- */
-export namespace Computed {
+namespace Computed {
   export type Item =
     | Length.Canonical
     | Percentage.Canonical

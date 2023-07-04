@@ -77,6 +77,7 @@ export namespace MatchingClasses {
 
   export function isMatchingClasses(value: unknown): value is MatchingClasses;
 
+  /**@public */
   export function isMatchingClasses(value: unknown): value is MatchingClasses {
     return value instanceof MatchingClasses;
   }

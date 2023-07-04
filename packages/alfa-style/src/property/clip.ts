@@ -10,23 +10,18 @@ const { either, map } = Parser;
 
 /**
  * @deprecated The clip property is deprecated in CSS but still used by some sites.
- * @internal
  */
-export type Specified =
-  | Keyword<"auto">
-  | Shape<Rectangle, Keyword<"border-box">>;
+type Specified = Keyword<"auto"> | Shape<Rectangle, Keyword<"border-box">>;
 
 /**
  * @deprecated The clip property is deprecated in CSS but still used by some sites.
- * @internal
  */
-export type Computed = Specified;
+type Computed = Specified;
 
 /**
  * @deprecated The clip property is deprecated in CSS but still used by some sites.
- * @internal
  */
-export const parse = either(
+const parse = either(
   Keyword.parse("auto"),
   map(Rectangle.parse, (rectangle) =>
     Shape.of(rectangle, Keyword.of("border-box"))
@@ -36,6 +31,7 @@ export const parse = either(
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/clip}
  * @deprecated The clip property is deprecated in CSS but still used by some sites.
+ *
  * @internal
  */
 export default Longhand.of<Specified, Computed>(

@@ -10,7 +10,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { WithBadElements } from "../common/diagnostic/with-bad-elements";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasRole } = DOM;
 const { isElement, hasNamespace } = Element;
@@ -20,7 +20,7 @@ const { isTabbable } = Style;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r90",
   requirements: [Criterion.of("4.1.2")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

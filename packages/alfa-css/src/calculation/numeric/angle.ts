@@ -54,6 +54,10 @@ export class Angle<U extends Unit.Angle = Unit.Angle> extends Dimension<
     hash.writeString(this._unit);
   }
 
+  public toJSON(): Angle.JSON<U> {
+    return super.toJSON();
+  }
+
   public toString(): string {
     return `${this._value}${this._unit}`;
   }

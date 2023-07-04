@@ -10,7 +10,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasNamespace, isBrowsingContextContainer, isElement } = Element;
 const { not } = Predicate;
@@ -25,7 +25,7 @@ export default Rule.Atomic.of<Page, Element>({
     Criterion.of("2.1.3"),
     Technique.of("G202"),
   ],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

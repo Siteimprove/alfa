@@ -8,7 +8,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 import { withDocumentElement } from "../common/applicability/with-document-element";
 
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
@@ -17,7 +17,7 @@ const { and } = Refinement;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r61",
-  tags: [Scope.Page],
+  tags: [Scope.Page, Stability.Stable],
   evaluate({ device, document }) {
     const firstHeading = document
       .descendants(Node.flatTree)
@@ -159,6 +159,7 @@ export namespace WithFirstHeading {
 
   export function isWithFirstHeading(value: unknown): value is WithFirstHeading;
 
+  /**@public */
   export function isWithFirstHeading(
     value: unknown
   ): value is WithFirstHeading {

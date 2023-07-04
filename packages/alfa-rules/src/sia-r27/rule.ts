@@ -12,7 +12,7 @@ import { Question } from "../common/act/question";
 import R22 from "../sia-r22/rule";
 import R31 from "../sia-r31/rule";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 export default Rule.Composite.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r27",
@@ -22,7 +22,7 @@ export default Rule.Composite.of<Page, Element, Question.Metadata>({
     Technique.of("G93"),
     Technique.of("H95"),
   ],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   composes: [R22, R31],
   evaluate: () => {
     return {

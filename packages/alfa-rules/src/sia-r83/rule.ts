@@ -27,7 +27,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { isHeight, isWidth } = Media.Feature;
 const { Discrete, Range } = Media.Value;
@@ -42,7 +42,7 @@ const { getPositioningParent, hasCascadedStyle, isVisible } = Style;
 export default Rule.Atomic.of<Page, Text>({
   uri: "https://alfa.siteimprove.com/rules/sia-r83",
   requirements: [Criterion.of("1.4.4")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {
@@ -581,6 +581,7 @@ export namespace ClippingAncestors {
     value: unknown
   ): value is ClippingAncestors;
 
+  /**@public */
   export function isClippingAncestors(
     value: unknown
   ): value is ClippingAncestors {

@@ -18,7 +18,7 @@ import * as aria from "@siteimprove/alfa-aria";
 import { expectation } from "../common/act/expectation";
 import { isAriaControlsOptional } from "../common/predicate/is-aria-controls-optional";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasNamespace } = Element;
 const { isEmpty } = Iterable;
@@ -27,7 +27,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r19",
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

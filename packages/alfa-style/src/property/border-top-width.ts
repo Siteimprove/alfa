@@ -20,10 +20,7 @@ export type Specified =
   | Keyword<"medium">
   | Keyword<"thick">;
 
-/**
- * @internal
- */
-export type Computed = Length.Canonical;
+type Computed = Length.Canonical;
 
 /**
  * @internal

@@ -12,7 +12,7 @@ import * as aria from "@siteimprove/alfa-aria";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope, Version } from "../tags";
+import { Scope, Stability, Version } from "../tags";
 
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasDisplaySize, hasInputType } = Element;
@@ -22,7 +22,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r18",
   requirements: [Technique.of("ARIA5")],
-  tags: [Scope.Component, Version.of(2)],
+  tags: [Scope.Component, Stability.Stable, Version.of(2)],
   evaluate({ device, document }) {
     const global = Set.from(Role.of("roletype").supportedAttributes);
 

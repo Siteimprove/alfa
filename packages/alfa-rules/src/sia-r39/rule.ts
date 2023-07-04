@@ -9,7 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasInputType, hasName, hasNamespace } = Element;
@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
     Technique.of("G94"),
     Technique.of("G95"),
   ],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

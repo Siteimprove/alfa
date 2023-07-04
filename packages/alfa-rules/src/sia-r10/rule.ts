@@ -15,7 +15,7 @@ import * as dom from "@siteimprove/alfa-dom";
 import { expectation } from "../common/act/expectation";
 import { normalize } from "../common/normalize";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasRole, isPerceivableForAll } = DOM;
 const { hasAttribute, hasInputType, hasName, hasNamespace } = Element;
@@ -27,7 +27,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Attribute>({
   uri: "https://alfa.siteimprove.com/rules/sia-r10",
   requirements: [Criterion.of("1.3.5")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

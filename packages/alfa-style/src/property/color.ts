@@ -3,15 +3,9 @@ import { Color } from "@siteimprove/alfa-css";
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
-/**
- * @internal
- */
-export type Specified = Color;
+type Specified = Color;
 
-/**
- * @internal
- */
-export type Computed = Color.Canonical;
+type Computed = Color.Canonical;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/color}

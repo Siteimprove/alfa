@@ -7,21 +7,16 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Keyword<"auto"> | LengthPercentage;
+type Specified = Keyword<"auto"> | LengthPercentage;
 
 /**
- * @internal
- *
  * @remarks
  * TODO: percentages resolve relative to the dimensions of the containing block,
  *       which we do not handle.
  *       This results in length-percentage calculations leaking to computed
  *       values, which is a bit annoying.
  */
-export type Computed = Keyword<"auto"> | LengthPercentage.PartiallyResolved;
+type Computed = Keyword<"auto"> | LengthPercentage.PartiallyResolved;
 
 /**
  * @internal

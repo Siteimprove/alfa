@@ -5,10 +5,7 @@ import { Longhand } from "../longhand";
 
 const { either, map, separatedList } = Parser;
 
-/**
- * @internal
- */
-export type Specified = List<
+type Specified = List<
   | Keyword<"serif">
   | Keyword<"sans-serif">
   | Keyword<"cursive">
@@ -22,10 +19,7 @@ export type Specified = List<
  */
 export type Computed = Specified;
 
-/**
- * @internal
- */
-export const parse = List.parseCommaSeparated(
+const parse = List.parseCommaSeparated(
   either(
     Keyword.parse("serif", "sans-serif", "cursive", "fantasy", "monospace"),
     either(

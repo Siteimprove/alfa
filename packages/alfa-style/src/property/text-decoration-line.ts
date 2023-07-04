@@ -6,10 +6,7 @@ import { Longhand } from "../longhand";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified =
+type Specified =
   | Keyword<"none">
   | List<
       | Keyword<"underline">
@@ -18,15 +15,9 @@ export type Specified =
       | Keyword<"blink">
     >;
 
-/**
- * @internal
- */
-export type Computed = Specified;
+type Computed = Specified;
 
-/**
- * @internal
- */
-export const parse = either(Keyword.parse("none"), (input) => {
+const parse = either(Keyword.parse("none"), (input) => {
   const keywords: Array<
     | Keyword<"underline">
     | Keyword<"overline">

@@ -2,10 +2,7 @@ import { Box, List, Keyword } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
 
-/**
- * @internal
- */
-export type Specified = List<Specified.Item>;
+type Specified = List<Specified.Item>;
 
 /**
  * @internal
@@ -14,10 +11,7 @@ export namespace Specified {
   export type Item = Box;
 }
 
-/**
- * @internal
- */
-export type Computed = Specified;
+type Computed = Specified;
 
 /**
  * @remarks

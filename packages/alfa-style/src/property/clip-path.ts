@@ -5,23 +5,11 @@ import { Longhand } from "../longhand";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = URL | Shape | Keyword<"none">;
+type Specified = URL | Shape | Keyword<"none">;
 
-/**
- * @internal
- */
-export type Computed = Specified;
+type Computed = Specified;
 
-/**
- * @internal
- */
-export const parse = either(
-  URL.parse,
-  either(Shape.parse, Keyword.parse("none"))
-);
+const parse = either(URL.parse, either(Shape.parse, Keyword.parse("none")));
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/clip-path}

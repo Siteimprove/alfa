@@ -6,7 +6,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 import { getRefreshTime } from "../common/expectation/get-refresh-time";
 import { RefreshDelay as Outcomes } from "../common/outcome/refresh-delay";
@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
     Technique.of("G110"),
     Technique.of("H76"),
   ],
-  tags: [Scope.Page],
+  tags: [Scope.Page, Stability.Stable],
   evaluate({ document }) {
     // since we take the first one with a valid content attribute, we only need to store one value
     let refreshTime: number;

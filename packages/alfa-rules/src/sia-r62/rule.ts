@@ -27,7 +27,7 @@ import { contrast } from "../common/expectation/contrast";
 import { getForeground } from "../common/dom/get-colors";
 import { isWhitespace } from "../common/predicate";
 
-import { Scope, Version } from "../tags";
+import { Scope, Stability, Version } from "../tags";
 
 import { DistinguishingStyles, ElementDistinguishable } from "./diagnostics";
 
@@ -50,26 +50,10 @@ let distinguishingProperties: Map<
   Map<Element, List<ElementDistinguishable.Property>>
 > = Map.empty();
 
-/**
- * This version of R62 accepts differences in `font-family`, differences
- * in `cursor` (in the `hover` state), and 3:1 or more contrast with surrounding
- * text.
- *
- * These cannot be easily displayed in the current Page report:
- * * `cursor` only shows on hovering, we could have a `a:link` and `a:hover`
- *   states that look similar, but the first one is bad and the second good,
- *   resulting in confusing info;
- * * contrast with surrounding text is not shown as only link text is shown in
- *   the decorator. Additionally, we could have similar looking states but with
- *   different colors, one being good and the other bad, with little way to
- *   understand the difference.
- * * `font-family` may depend on a font that for some reason can't be loaded,
- *   so the difference wouldn't be visible.
- */
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r62",
   requirements: [Criterion.of("1.4.1")],
-  tags: [Scope.Component, Version.of(2)],
+  tags: [Scope.Component, Stability.Stable, Version.of(2)],
   evaluate({ device, document }) {
     // Contains links (key) and their containing paragraph (value)
     let containers: Map<Element, Element> = Map.empty();

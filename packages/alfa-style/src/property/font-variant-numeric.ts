@@ -31,10 +31,8 @@ export namespace Specified {
     | Keyword<"ordinal">
     | Keyword<"slashed-zero">;
 }
-/**
- * @internal
- */
-export type Computed = Specified;
+
+type Computed = Specified;
 
 /**
  * @internal
@@ -54,9 +52,6 @@ export const parseFraction = Keyword.parse(
   "stacked-fractions"
 );
 
-/**
- * @internal
- */
 const parseNumeric: Parser<Slice<Token>, List<Specified.Item>, string> = (
   input
 ) => {
@@ -141,10 +136,7 @@ const parseNumeric: Parser<Slice<Token>, List<Specified.Item>, string> = (
   ]);
 };
 
-/**
- * @internal
- */
-export const parse = either(Keyword.parse("normal"), parseNumeric);
+const parse = either(Keyword.parse("normal"), parseNumeric);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-numeric}

@@ -8,7 +8,7 @@ import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { equals } = Predicate;
 const { hasAttribute, hasName, isElement } = Element;
@@ -19,7 +19,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r79",
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

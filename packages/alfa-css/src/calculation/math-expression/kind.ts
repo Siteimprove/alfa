@@ -33,10 +33,6 @@ export class Kind implements Equatable, Serializable {
     None
   );
 
-  public static empty(): Kind {
-    return this._empty;
-  }
-
   private readonly _kinds: Kind.Map;
 
   private readonly _hint: Option<Kind.Hint>;
@@ -219,10 +215,6 @@ export namespace Kind {
     [key: string]: json.JSON;
     kinds: Array<[Base, number]>;
     hint: Hint | null;
-  }
-
-  export function isKind(value: unknown): value is Kind {
-    return value instanceof Kind;
   }
 
   /**

@@ -33,8 +33,4 @@ export namespace BasicShape {
     extends Value.JSON<"basic-shape"> {
     kind: K;
   }
-
-  export function isBasicShape(value: unknown): value is BasicShape {
-    return value instanceof BasicShape;
-  }
 }

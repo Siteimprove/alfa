@@ -6,15 +6,9 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Keyword<"none"> | List<Shadow>;
+type Specified = Keyword<"none"> | List<Shadow>;
 
-/**
- * @internal
- */
-export type Computed = Keyword<"none"> | List<Shadow.Canonical>;
+type Computed = Keyword<"none"> | List<Shadow.Canonical>;
 
 const parseList = List.parseCommaSeparated(Shadow.parse());
 

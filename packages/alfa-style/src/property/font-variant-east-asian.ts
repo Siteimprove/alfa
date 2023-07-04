@@ -28,10 +28,8 @@ export namespace Specified {
 
   export type Item = Variant | Width | Keyword<"ruby">;
 }
-/**
- * @internal
- */
-export type Computed = Specified;
+
+type Computed = Specified;
 
 /**
  * @internal
@@ -111,10 +109,7 @@ const parseEastAsian: Parser<Slice<Token>, List<Specified.Item>, string> = (
   ]);
 };
 
-/**
- * @internal
- */
-export const parse = either(Keyword.parse("normal"), parseEastAsian);
+const parse = either(Keyword.parse("normal"), parseEastAsian);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian}

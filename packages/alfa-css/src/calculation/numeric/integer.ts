@@ -38,6 +38,10 @@ export class Integer extends Numeric<"integer"> {
   public hash(hash: Hash): void {
     hash.writeInt32(this._value);
   }
+
+  public toJSON(): Integer.JSON {
+    return super.toJSON();
+  }
 }
 
 /**

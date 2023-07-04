@@ -22,10 +22,7 @@ export type Specified =
   | Keyword<"extra-expanded">
   | Keyword<"ultra-expanded">;
 
-/**
- * @internal
- */
-export type Computed = Percentage;
+type Computed = Percentage;
 
 /**
  * @internal
@@ -42,10 +39,7 @@ export const parseAbsolute = Keyword.parse(
   "ultra-expanded"
 );
 
-/**
- * @internal
- */
-export const parse = either(Percentage.parse, parseAbsolute);
+const parse = either(Percentage.parse, parseAbsolute);
 
 /**
  * {@link https://drafts.csswg.org/css-fonts/#font-stretch-prop}

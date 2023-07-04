@@ -6,15 +6,9 @@ import { Longhand } from "../longhand";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Number | Percentage;
+type Specified = Number | Percentage;
 
-/**
- * @internal
- */
-export type Computed = Number.Canonical;
+type Computed = Number.Canonical;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/opacity}

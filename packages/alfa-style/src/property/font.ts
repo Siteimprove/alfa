@@ -18,10 +18,7 @@ const { map, option, pair, right, delimited } = Parser;
 
 // font may only set font-variant-caps to small-caps, but setting font
 // does reset all font-variant-* longhand to initial value (this is good!)
-/**
- * @internal
- */
-export const parsePrelude: Parser<
+const parsePrelude: Parser<
   Slice<Token>,
   [
     ["font-stretch", Stretch.Specified | Keyword<"initial">],
@@ -95,10 +92,7 @@ export const parsePrelude: Parser<
   ]);
 };
 
-/**
- * @internal
- */
-export const parse = pair(
+const parse = pair(
   parsePrelude,
   pair(
     delimited(option(Token.parseWhitespace), Size.parseBase),

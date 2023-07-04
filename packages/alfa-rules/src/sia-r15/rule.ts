@@ -13,7 +13,7 @@ import { Group } from "../common/act/group";
 import { Question } from "../common/act/question";
 
 import { referenceSameResource } from "../common/predicate";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 import { normalize } from "../common/normalize";
 
@@ -25,7 +25,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r15",
   requirements: [Criterion.of("4.1.2")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document, response }) {
     return {
       applicability() {

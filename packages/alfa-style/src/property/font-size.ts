@@ -14,10 +14,7 @@ import type { Computed as FontFamily } from "./font-family";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified =
+type Specified =
   | LengthPercentage
 
   // Absolute
@@ -39,10 +36,7 @@ export type Specified =
  */
 export type Computed = LengthPercentage.Canonical;
 
-/**
- * @internal
- */
-export const parse = either<Slice<Token>, Specified, string>(
+const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse(
     "xx-small",
     "x-small",

@@ -17,7 +17,7 @@ import { isAtTheStart } from "../common/predicate";
 
 import { Question } from "../common/act/question";
 import { withDocumentElement } from "../common/applicability/with-document-element";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasRole, isIgnored } = DOM;
 const { hasName, isElement } = Element;
@@ -28,7 +28,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Document, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r87",
   requirements: [Technique.of("G1")],
-  tags: [Scope.Page],
+  tags: [Scope.Page, Stability.Stable],
   evaluate({ device, document, response }) {
     return {
       applicability() {

@@ -104,7 +104,7 @@ export namespace Flattened {
  *
  * @public
  */
-export const FlattenedRules = Sequence.from<Flattened.Rule>(Rules.values());
+const FlattenedRules = Sequence.from<Flattened.Rule>(Rules.values());
 
 export default FlattenedRules;
 

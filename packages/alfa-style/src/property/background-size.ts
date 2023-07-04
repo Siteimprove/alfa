@@ -12,16 +12,13 @@ import { Resolver } from "../resolver";
 
 const { map, either, option, pair, right } = Parser;
 
-/**
- * @internal
- */
-export type Specified = List<Specified.Item>;
+type Specified = List<Specified.Item>;
 
 /**
  * @internal
  */
 export namespace Specified {
-  export type Dimension = LengthPercentage | Keyword<"auto">;
+  type Dimension = LengthPercentage | Keyword<"auto">;
 
   export type Item =
     | Tuple<[Dimension, Dimension]>
@@ -29,16 +26,10 @@ export namespace Specified {
     | Keyword<"contain">;
 }
 
-/**
- * @internal
- */
-export type Computed = List<Computed.Item>;
+type Computed = List<Computed.Item>;
 
-/**
- * @internal
- */
-export namespace Computed {
-  export type Dimension = LengthPercentage.PartiallyResolved | Keyword<"auto">;
+namespace Computed {
+  type Dimension = LengthPercentage.PartiallyResolved | Keyword<"auto">;
 
   export type Item =
     | Tuple<[Dimension, Dimension]>
@@ -67,10 +58,7 @@ export const parse = either(
   Keyword.parse("contain", "cover")
 );
 
-/**
- * @internal
- */
-export const parseList = List.parseCommaSeparated(parse);
+const parseList = List.parseCommaSeparated(parse);
 
 /**
  * @internal
