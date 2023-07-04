@@ -3,6 +3,7 @@ import { Hash, Hashable } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
+import { Number, Percentage } from "./numeric";
 
 import type { Resolvable } from "./resolvable";
 
@@ -76,4 +77,18 @@ export namespace Value {
       value instanceof Value && (type === undefined || value.type === type)
     );
   }
+
+  /**
+   * @internal
+   */
+  export type HasCalculation<V extends Value | Array<Value>> = V extends Value<
+    string,
+    false
+  >
+    ? false
+    : V extends Value
+    ? true
+    : V extends Array<Value<string, false>>
+    ? false
+    : true;
 }
