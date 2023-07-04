@@ -91,9 +91,7 @@ export namespace Angle {
     export function of<U extends Unit.Angle>(value: Angle_2<U>): Fixed<U>;
     // (undocumented)
     export function of(value: Math_2<"angle">): Calculated;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Angle>;
     const // @internal (undocumented)
     parseBase: Parser_2<Slice<Token>, Fixed<Unit.Angle>, string, []>;
@@ -127,9 +125,7 @@ namespace Angle_2 {
     // (undocumented)
     interface JSON<U extends Unit.Angle = Unit.Angle> extends Dimension_2.JSON<"angle", U> {
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Angle_2>;
 }
 
@@ -227,9 +223,7 @@ export namespace Block {
         value: Array<Token.JSON>;
     }
     export type Open = Token.OpenParenthesis | Token.OpenSquareBracket | Token.OpenCurlyBracket;
-    const // Warning: (ae-incompatible-release-tags) The symbol "consume" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     consume: Parser<Block>;
 }
 
@@ -240,9 +234,7 @@ export type Box = Keyword<"border-box"> | Keyword<"padding-box"> | Keyword<"cont
 export namespace Box {
     // (undocumented)
     export type Geometry = Shape | Keyword<"fill-box"> | Keyword<"stroke-box"> | Keyword<"view-box">;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Box>;
     // (undocumented)
     export namespace Geometry {
@@ -251,9 +243,7 @@ export namespace Box {
     }
     // (undocumented)
     export type JSON = Keyword.JSON<"border-box"> | Keyword.JSON<"padding-box"> | Keyword.JSON<"content-box">;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parseShape" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parseShape: Parser<Shape>;
     // (undocumented)
     export type Shape = Box | Keyword<"margin-box">;
@@ -262,9 +252,7 @@ export namespace Box {
         // (undocumented)
         export type JSON = Box.JSON | Keyword.JSON<"margin-box">;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parseGeometry" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parseGeometry: Parser<Geometry>;
 }
 
@@ -303,9 +291,7 @@ export namespace Circle {
         // (undocumented)
         radius: Radius.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Circle>;
 }
 
@@ -330,9 +316,7 @@ export namespace Color {
     export function named<C extends Named.Color>(color: C): Named<C>;
     // (undocumented)
     export function rgb<C extends Number_2.Fixed | Percentage.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Color>;
     // (undocumented)
     export function system(keyword: System.Keyword): System;
@@ -358,9 +342,7 @@ export class Component implements Iterable<Token>, Equatable, Serializable {
 export namespace Component {
     // (undocumented)
     export type JSON = Array<Token.JSON>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "consume" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     consume: Parser<Component>;
     const // (undocumented)
     parse: Parser_2<Slice<Token>, Component, string, []>;
@@ -392,9 +374,7 @@ export type Current = Keyword<"currentcolor">;
 
 // @public (undocumented)
 export namespace Current {
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Current>;
 }
 
@@ -431,21 +411,13 @@ export namespace Declaration {
         // (undocumented)
         value: Array<Token.JSON>;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "consume" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     consume: Parser<Declaration>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Declaration>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "consumeList" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     consumeList: Parser<Iterable<Declaration>>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parseList" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parseList: Parser<Iterable<Declaration>>;
 }
 
@@ -590,9 +562,7 @@ export namespace Ellipse {
         // (undocumented)
         ry: Radius.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Ellipse>;
 }
 
@@ -625,13 +595,9 @@ namespace Function_2 {
         // (undocumented)
         value: Array<Token.JSON>;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "consume" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     consume: Parser<Function_2>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: <T>(name?: string, body?: Parser<T> | undefined) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
 }
 export { Function_2 as Function }
@@ -676,9 +642,7 @@ export namespace Gradient {
     }
     // (undocumented)
     export type Item = Stop | Hint;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parseStop" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parseStop: Parser<Stop>;
     // (undocumented)
     export namespace Item {
@@ -687,9 +651,7 @@ export namespace Gradient {
     }
     // (undocumented)
     export type JSON = Linear.JSON | Radial.JSON;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parseHint" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parseHint: Parser<Hint>;
     // (undocumented)
     export class Stop<C extends Color = Color, P extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> implements Equatable, Hashable, Serializable {
@@ -726,13 +688,9 @@ export namespace Gradient {
             type: "stop";
         }
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parseItemList" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parseItemList: Parser<Array<Item>>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Gradient>;
 }
 
@@ -773,9 +731,7 @@ export namespace Hex {
         // (undocumented)
         value: number;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Hex>;
 }
 
@@ -824,9 +780,7 @@ export namespace HSL {
         // (undocumented)
         saturation: Percentage.Fixed.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<HSL>;
 }
 
@@ -859,9 +813,7 @@ export namespace Image {
         // (undocumented)
         image: URL.JSON | Gradient.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Image>;
 }
 
@@ -918,9 +870,7 @@ export namespace Inset {
     export type Offset = Length.Fixed | Percentage.Fixed;
     // (undocumented)
     export type Radius = Length.Fixed | Percentage.Fixed;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Inset>;
 }
 
@@ -986,9 +936,7 @@ export namespace Integer {
     export function of(value: Integer_2): Fixed;
     // (undocumented)
     export function of(value: Math_2<"number">): Calculated;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Integer>;
     const // @internal (undocumented)
     parseBase: Parser_2<Slice<Token>, Fixed, string, []>;
@@ -1016,9 +964,7 @@ namespace Integer_2 {
     // (undocumented)
     interface JSON extends Numeric_2.JSON<"integer"> {
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Integer_2>;
 }
 
@@ -1049,8 +995,6 @@ export namespace Keyword {
         // (undocumented)
         value: T;
     }
-    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
     // (undocumented)
     export function parse<T extends string>(...keywords: Array<T>): Parser<ToKeywords<T>>;
     export type ToKeywords<Words extends string> = {
@@ -1139,9 +1083,7 @@ export namespace Length {
         length: Mapper<Fixed<Unit.Length.Relative>, Canonical>;
     }
     export function resolver(emBase: Canonical, remBase: Canonical, vwBase: Canonical, vhBase: Canonical): Mapper<Fixed<Unit.Length.Relative>, Canonical>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Length>;
     const // @internal (undocumented)
     parseBase: Parser_2<Slice<Token>, Fixed<Unit.Length>, string, []>;
@@ -1177,9 +1119,7 @@ namespace Length_2 {
     // (undocumented)
     interface JSON<U extends Unit.Length = Unit.Length> extends Dimension_2.JSON<"length", U> {
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Length_2>;
 }
 
@@ -1334,8 +1274,6 @@ export namespace Linear {
         // (undocumented)
         repeats: boolean;
     }
-    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
     // (undocumented)
     export function parse(parseItemList: Parser<Array<Gradient.Item>>): Parser<Linear>;
     // (undocumented)
@@ -1421,9 +1359,7 @@ export namespace List {
         // (undocumented)
         values: Array<Serializable.ToJSON<V>>;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parseCommaSeparated" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parseCommaSeparated: <V extends Value<string, boolean, string>>(parseValue: Parser<V>) => Parser<List<V, boolean>>;
 }
 
@@ -1564,9 +1500,7 @@ export namespace Matrix {
     T
     ]
     ];
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Matrix>;
 }
 
@@ -1609,9 +1543,7 @@ export namespace Named {
         // (undocumented)
         color: string;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Named>;
 }
 
@@ -1649,9 +1581,7 @@ export namespace Nth {
         // (undocumented)
         step: number;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Nth>;
 }
 
@@ -1715,13 +1645,9 @@ namespace Number_2 {
     function of(value: Number_3): Fixed;
     // (undocumented)
     function of(value: Math_2<"number">): Calculated;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Number_2>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parseZero" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parseZero: Parser<Fixed>;
     const // @internal (undocumented)
     parseBase: Parser_2<Slice<Token>, Fixed, string, []>;
@@ -1748,13 +1674,9 @@ namespace Number_3 {
     // (undocumented)
     interface JSON extends Numeric_2.JSON<"number"> {
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parseZero" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parseZero: Parser<Number_3>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Number_3>;
 }
 
@@ -1901,9 +1823,7 @@ namespace Numeric_2 {
     type Type = Scalar | Ratio | Dimension;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "Parser" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
+// @public (undocumented)
 export type Parser<V> = Parser_2<Slice<Token>, V, string>;
 
 // @public (undocumented)
@@ -1979,9 +1899,7 @@ export namespace Percentage {
         // (undocumented)
         percentageBase: T;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Percentage>;
     const // @internal (undocumented)
     parseBase: Parser_2<Slice<Token>, Fixed<Numeric_2.Type>, string, []>;
@@ -2009,9 +1927,7 @@ namespace Percentage_2 {
     // (undocumented)
     interface JSON extends Numeric_2.JSON<"percentage"> {
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Percentage_2>;
 }
 
@@ -2044,9 +1960,7 @@ export namespace Perspective {
         // (undocumented)
         depth: Length.Fixed.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Perspective>;
 }
 
@@ -2085,9 +1999,7 @@ export namespace Polygon {
     }
     // (undocumented)
     export type Vertex<V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> = readonly [V, V];
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Polygon>;
 }
 
@@ -2163,8 +2075,6 @@ export namespace Position {
         // (undocumented)
         parse: Parser_2<Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length>, string, []>;
     }
-    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
     // (undocumented)
     export function parse(legacySyntax?: boolean): Parser<Position>;
     // (undocumented)
@@ -2199,21 +2109,13 @@ export namespace Position {
             // (undocumented)
             side: Keyword.JSON;
         }
-        const // Warning: (ae-incompatible-release-tags) The symbol "parseHorizontalKeywordValue" is marked as @public, but its signature references "Parser" which is marked as @internal
-        //
-        // (undocumented)
+        const // (undocumented)
         parseHorizontalKeywordValue: Parser<Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>>;
-        const // Warning: (ae-incompatible-release-tags) The symbol "parseHorizontalKeyword" is marked as @public, but its signature references "Parser" which is marked as @internal
-        //
-        // (undocumented)
+        const // (undocumented)
         parseHorizontalKeyword: Parser<Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>>;
-        const // Warning: (ae-incompatible-release-tags) The symbol "parseVerticalKeywordValue" is marked as @public, but its signature references "Parser" which is marked as @internal
-        //
-        // (undocumented)
+        const // (undocumented)
         parseVerticalKeywordValue: Parser<Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>>;
-        const // Warning: (ae-incompatible-release-tags) The symbol "parseVerticalKeyword" is marked as @public, but its signature references "Parser" which is marked as @internal
-        //
-        // (undocumented)
+        const // (undocumented)
         parseVerticalKeyword: Parser<Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>>;
         const // (undocumented)
         parseHorizontal: Parser_2<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
@@ -2391,8 +2293,6 @@ export namespace Radial {
         // (undocumented)
         shape: Shape.JSON;
     }
-    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
     // (undocumented)
     export function parse(parseItemList: Parser<Array<Gradient.Item>>): Parser<Radial>;
     // (undocumented)
@@ -2442,9 +2342,7 @@ export namespace Radius {
         // (undocumented)
         export type Farthest = Keyword<"farthest-side">;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Radius>;
 }
 
@@ -2499,9 +2397,7 @@ export namespace Rectangle {
         // (undocumented)
         top: Length.Fixed.JSON | Keyword.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Rectangle>;
 }
 
@@ -2544,9 +2440,7 @@ export namespace RGB {
         // (undocumented)
         red: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<RGB>;
 }
 
@@ -2591,9 +2485,7 @@ export namespace Rotate {
         // (undocumented)
         z: Number_2.Fixed.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Rotate>;
 }
 
@@ -2630,9 +2522,7 @@ export namespace Scale {
         // (undocumented)
         y: Number_2.Fixed.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Scale>;
 }
 
@@ -2690,8 +2580,6 @@ export namespace Shadow {
         // (undocumented)
         withSpread: boolean;
     }
-    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
     // (undocumented)
     export function parse(options?: Options): Parser<Shadow>;
         {};
@@ -2730,9 +2618,7 @@ export namespace Shape {
         // (undocumented)
         shape: Circle.JSON | Ellipse.JSON | Inset.JSON | Polygon.JSON | Rectangle.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Shape<Circle | Ellipse | Inset | Polygon>>;
 }
 
@@ -2769,9 +2655,7 @@ export namespace Skew {
         // (undocumented)
         y: Angle.Fixed.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Skew>;
 }
 
@@ -2802,9 +2686,7 @@ namespace String_2 {
         // (undocumented)
         value: string;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<String_2>;
 }
 export { String_2 as String }
@@ -2816,9 +2698,7 @@ export type System = Keyword<System.Keyword>;
 export namespace System {
     // (undocumented)
     export type Keyword = "canvas" | "canvastext" | "linktext" | "visitedtext" | "activetext" | "buttonface" | "buttontext" | "field" | "fieldtext" | "highlight" | "highlighttext" | "graytext";
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<System>;
 }
 
@@ -3614,9 +3494,7 @@ export namespace Transform {
     export function translate<X extends Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed, Z extends Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
     const // (undocumented)
     parse: Parser_2<Slice<Token>, Transform, string, []>;
-    const // Warning: (ae-incompatible-release-tags) The symbol "parseList" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parseList: Parser<Array<Transform>>;
 }
 
@@ -3657,9 +3535,7 @@ export namespace Translate {
         // (undocumented)
         z: Length.Fixed.JSON;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<Translate>;
 }
 
@@ -3782,9 +3658,7 @@ export namespace URL {
         // (undocumented)
         url: string;
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Parser" which is marked as @internal
-    //
-    // (undocumented)
+    const // (undocumented)
     parse: Parser<URL>;
 }
 
