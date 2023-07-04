@@ -97,6 +97,7 @@ export namespace ColorErrors {
     value: unknown
   ): value is ColorErrors<T>;
 
+  /**@public */
   export function isColorErrors<T extends keyof ErrorName = keyof ErrorName>(
     value: unknown
   ): value is ColorErrors<T> {
@@ -205,6 +206,7 @@ export namespace ColorError {
     K extends ErrorName[T] = ErrorName[T]
   >(value: unknown): value is ColorError<T, K>;
 
+  /**@public */
   export function isColorError<
     T extends keyof ErrorName = keyof ErrorName,
     K extends ErrorName[T] = ErrorName[T]
