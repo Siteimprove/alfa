@@ -1,5 +1,6 @@
-import { Keyword, List, Token } from "@siteimprove/alfa-css";
+import { Keyword, List, Token, Tuple } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import type { Slice } from "@siteimprove/alfa-slice";
 
 import { Shorthand } from "../shorthand";
 
@@ -16,25 +17,25 @@ namespace Y {
   }
 }
 
-const { map, either, delimited, option, pair, separatedList } = Parser;
+const { map, either, delimited, option, pair } = Parser;
 
 /**
  * @internal
  */
-export const parse = either(
+export const parse = either<
+  Slice<Token>,
+  Tuple<[X.Specified.Item, Y.Specified.Item]>,
+  string
+>(
   map(
     pair(X.parse, option(delimited(option(Token.parseWhitespace), Y.parse))),
-    ([x, y]) => [x, y.getOr(x)] as const
+    ([x, y]) => Tuple.of(x, y.getOr(x))
   ),
-  either(
-    map(
-      Keyword.parse("repeat-x"),
-      () => [Keyword.of("repeat"), Keyword.of("no-repeat")] as const
-    ),
-    map(
-      Keyword.parse("repeat-y"),
-      () => [Keyword.of("no-repeat"), Keyword.of("repeat")] as const
-    )
+  map(Keyword.parse("repeat-x"), () =>
+    Tuple.of(Keyword.of("repeat"), Keyword.of("no-repeat"))
+  ),
+  map(Keyword.parse("repeat-y"), () =>
+    Tuple.of(Keyword.of("no-repeat"), Keyword.of("repeat"))
   )
 );
 
@@ -51,7 +52,7 @@ export default Shorthand.of(
     const ys: Array<Y.Specified.Item> = [];
 
     for (const repeat of repeats) {
-      const [x, y] = repeat;
+      const [x, y] = repeat.values;
 
       xs.push(x);
       ys.push(y);

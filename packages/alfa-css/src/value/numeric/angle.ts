@@ -6,6 +6,7 @@ import { Math } from "../../calculation";
 import { Angle as BaseAngle } from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
+import { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Dimension } from "./dimension";
@@ -136,7 +137,8 @@ export namespace Angle {
   export type JSON = Calculated.JSON | Fixed.JSON;
 
   interface IAngle<CALC extends boolean = boolean>
-    extends Value<"angle", CALC> {
+    extends Value<"angle", CALC>,
+      Resolvable<Canonical, never> {
     hasCalculation(): this is Calculated;
     resolve(): Canonical;
   }

@@ -16,15 +16,24 @@ const { either, filter } = Parser;
 /**
  * @internal
  */
-export type Specified = Tuple<
-  [
-    top: Specified.Item,
-    right: Specified.Item,
-    bottom: Specified.Item,
-    left: Specified.Item,
-    fill?: Keyword<"fill">
-  ]
->;
+export type Specified =
+  | Tuple<
+      [
+        top: Specified.Item,
+        right: Specified.Item,
+        bottom: Specified.Item,
+        left: Specified.Item
+      ]
+    >
+  | Tuple<
+      [
+        top: Specified.Item,
+        right: Specified.Item,
+        bottom: Specified.Item,
+        left: Specified.Item,
+        fill: Keyword<"fill">
+      ]
+    >;
 
 namespace Specified {
   export type Item = Number.Fixed | Percentage.Fixed;

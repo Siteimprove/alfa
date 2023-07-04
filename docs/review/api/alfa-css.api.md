@@ -8,7 +8,6 @@ import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Comparable } from '@siteimprove/alfa-comparable';
 import { Comparison } from '@siteimprove/alfa-comparable';
 import { Equatable } from '@siteimprove/alfa-equatable';
-import { Functor } from '@siteimprove/alfa-functor';
 import { Hash } from '@siteimprove/alfa-hash';
 import { Hashable } from '@siteimprove/alfa-hash';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
@@ -69,8 +68,10 @@ export namespace Angle {
         export interface JSON<U extends Unit.Angle = Unit.Angle> extends Dimension.Fixed.JSON<"angle", U> {
         }
     }
+    // Warning: (ae-forgotten-export) The symbol "Resolvable" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    export interface IAngle<CALC extends boolean = boolean> extends Value<"angle", CALC> {
+    export interface IAngle<CALC extends boolean = boolean> extends Value<"angle", CALC>, Resolvable<Canonical, never> {
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
@@ -152,7 +153,7 @@ export namespace AnglePercentage {
     // (undocumented)
     export type Canonical = Angle.Canonical;
     // (undocumented)
-    export interface IAnglePercentage<CALC extends boolean = boolean> extends Value<"angle-percentage", CALC, "angle"> {
+    export interface IAnglePercentage<CALC extends boolean = boolean> extends Value<"angle-percentage", CALC, "angle">, Resolvable<Canonical, Resolver> {
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
@@ -479,7 +480,7 @@ export namespace Dimension {
         }
     }
     // (undocumented)
-    export interface IDimension<T extends Type = Type, CALC extends boolean = boolean> extends Value<T, CALC, Dimensions<T>[0]> {
+    export interface IDimension<T extends Type = Type, CALC extends boolean = boolean> extends Value<T, CALC, Dimensions<T>[0]>, Resolvable<Fixed<Dimensions<T>[0], Dimensions<T>[2]>, unknown> {
         // (undocumented)
         hasCalculation(): this is Calculated<T>;
         // (undocumented)
@@ -886,7 +887,7 @@ export namespace Integer {
         // (undocumented)
         static of(value: Math_2<"number">): Calculated;
         // (undocumented)
-        resolve(): Fixed;
+        resolve(): Canonical;
         // (undocumented)
         toJSON(): Calculated.JSON;
     }
@@ -919,11 +920,11 @@ export namespace Integer {
         }
     }
     // (undocumented)
-    export interface IInteger<CALC extends boolean = boolean> extends Value<"number", CALC> {
+    export interface IInteger<CALC extends boolean = boolean> extends Value<"number", CALC>, Resolvable<Canonical, never> {
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
-        resolve(): Fixed;
+        resolve(): Canonical;
     }
     // (undocumented)
     export function isCalculated(value: unknown): value is Calculated;
@@ -970,7 +971,7 @@ namespace Integer_2 {
 }
 
 // @public (undocumented)
-export class Keyword<T extends string = string> extends Value<"keyword", false> {
+export class Keyword<T extends string = string> extends Value<"keyword", false> implements Resolvable<Keyword<T>, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1058,7 +1059,7 @@ export namespace Length {
         }
     }
     // (undocumented)
-    export interface ILength<CALC extends boolean = boolean> extends Value<"length", CALC> {
+    export interface ILength<CALC extends boolean = boolean> extends Value<"length", CALC>, Resolvable<Canonical, Resolver> {
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
@@ -1148,7 +1149,7 @@ export namespace LengthPercentage {
     // (undocumented)
     export type Canonical = Length.Canonical;
     // (undocumented)
-    export interface ILengthPercentage<CALC extends boolean = boolean> extends Value<"length-percentage", CALC, "length"> {
+    export interface ILengthPercentage<CALC extends boolean = boolean> extends Value<"length-percentage", CALC, "length">, Resolvable<Length.Canonical, Resolver> {
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
@@ -1324,48 +1325,44 @@ export namespace Linear {
 }
 
 // @public (undocumented)
-export class List<T> extends Value<"list", false> implements Iterable<T>, Functor<T> {
+export class List<V extends Value, CALC extends boolean = boolean> extends Value<"list", CALC> implements Iterable_2<V>, Resolvable<List<Resolvable.Resolved<V>, false>, Resolvable.Resolver<V>> {
     // (undocumented)
-    [Symbol.iterator](): Iterator<T>;
+    [Symbol.iterator](): Iterator<V>;
     // (undocumented)
-    equals<T>(value: List<T>): boolean;
+    equals<T extends Value>(value: List<T>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    map<U>(mapper: Mapper<T, U>): List<U>;
+    map<U extends Value>(mapper: Mapper<V, U>): List<U, U extends Value<string, false> ? false : true>;
     // (undocumented)
-    static of<T>(values: Iterable<T>, separator?: string): List<T>;
+    static of<V extends Value>(values: Iterable_2<V>, separator?: string): List<V, V extends Value<string, false> ? false : true>;
     // (undocumented)
-    resolve<U>(valueResolver: List.Resolver<T, U>): List<U>;
+    resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>, false>;
     // (undocumented)
-    toJSON(): List.JSON<T>;
+    toJSON(): List.JSON<V>;
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get values(): ReadonlyArray<T>;
+    get values(): ReadonlyArray<V>;
 }
 
 // @public (undocumented)
 export namespace List {
     // (undocumented)
-    export function isList<T>(value: Iterable<T>): value is List<T>;
+    export function isList<V extends Value>(value: Iterable_2<V>): value is List<V>;
     // (undocumented)
-    export function isList<T>(value: unknown): value is List<T>;
+    export function isList<V extends Value>(value: unknown): value is List<V>;
     // (undocumented)
-    export interface JSON<T> extends Value.JSON<"list"> {
+    export interface JSON<V extends Value> extends Value.JSON<"list"> {
         // (undocumented)
         separator: string;
         // (undocumented)
-        values: Array<Serializable.ToJSON<T>>;
+        values: Array<Serializable.ToJSON<V>>;
     }
-    // (undocumented)
-    export type Resolver<T, U> = Mapper<T, U>;
     const // (undocumented)
-    parseCommaSeparated: <T>(parseValue: Parser<Slice<Token>, T, string>) => Parser<Slice<Token>, List<T>, string>;
-    const // (undocumented)
-    parseSpaceSeparated: <T>(parseValue: Parser<Slice<Token>, T, string>) => Parser<Slice<Token>, List<T>, string>;
+    parseCommaSeparated: <V extends Value<string, boolean, string>>(parseValue: Parser<Slice<Token>, V, string>) => Parser<Slice<Token>, List<V, boolean>, string>;
 }
 
 // @public (undocumented)
@@ -1601,7 +1598,7 @@ namespace Number_2 {
         // (undocumented)
         static of(value: Math_2<"number">): Calculated;
         // (undocumented)
-        resolve(): Fixed;
+        resolve(): Canonical;
         // (undocumented)
         toJSON(): Calculated.JSON;
     }
@@ -1632,11 +1629,11 @@ namespace Number_2 {
         }
     }
     // (undocumented)
-    interface INumber<CALC extends boolean = boolean> extends Value<"number", CALC> {
+    interface INumber<CALC extends boolean = boolean> extends Value<"number", CALC>, Resolvable<Canonical, never> {
         // (undocumented)
         hasCalculation(): this is Calculated;
         // (undocumented)
-        resolve(): Fixed;
+        resolve(): Canonical;
     }
     // (undocumented)
     function isCalculated(value: unknown): value is Calculated;
@@ -1758,7 +1755,7 @@ export namespace Numeric {
         }
     }
     // (undocumented)
-    export interface INumeric<T extends Type = Type, CALC extends boolean = boolean, R extends Type = T> extends Value<T, CALC, R> {
+    export interface INumeric<T extends Type = Type, CALC extends boolean = boolean, R extends Type = T> extends Value<T, CALC, R>, Resolvable<Fixed<R>, unknown> {
         // (undocumented)
         hasCalculation(): this is Calculated<T, R>;
         // (undocumented)
@@ -1878,7 +1875,7 @@ export namespace Percentage {
         }
     }
     // (undocumented)
-    export interface IPercentage<CALC extends boolean = boolean, R extends Numeric_2.Type = Numeric_2.Type> extends Value<"percentage", CALC, "percentage" | R> {
+    export interface IPercentage<CALC extends boolean = boolean, R extends Numeric_2.Type = Numeric_2.Type> extends Value<"percentage", CALC, "percentage" | R>, Resolvable<Canonical | Numeric.Fixed<R>, Resolver<R, Numeric.Fixed<R>>> {
         // (undocumented)
         hasCalculation(): this is Calculated<R>;
         // (undocumented)
@@ -2662,7 +2659,7 @@ export namespace Skew {
 }
 
 // @public (undocumented)
-class String_2 extends Value<"string", false> {
+class String_2 extends Value<"string", false> implements Resolvable<String_2, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -3542,17 +3539,17 @@ export namespace Translate {
 }
 
 // @public (undocumented)
-export class Tuple<T extends Array<unknown>> extends Value<"tuple", false> {
+export class Tuple<T extends Array<Value>, CALC extends boolean = boolean> extends Value<"tuple", CALC> implements Resolvable<Tuple<Tuple.Resolved<T>, false>, Tuple.Resolver<T>> {
     // (undocumented)
-    equals<T extends Array<unknown>>(value: Tuple<T>): boolean;
+    equals<T extends Array<Value>>(value: Tuple<T>): boolean;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<T extends Array<unknown>>(...values: Readonly<T>): Tuple<T>;
+    static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T, T extends Array<infer V extends Value<string, false>> ? false : true>;
     // (undocumented)
-    resolve(): Tuple<T>;
+    resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>, false>;
     // (undocumented)
     toJSON(): Tuple.JSON<T>;
     // (undocumented)
@@ -3564,12 +3561,19 @@ export class Tuple<T extends Array<unknown>> extends Value<"tuple", false> {
 // @public (undocumented)
 export namespace Tuple {
     // (undocumented)
-    export function isTuple<T extends Array<unknown>>(value: unknown): value is Tuple<T>;
+    export function isTuple<T extends Array<Value>>(value: unknown): value is Tuple<T>;
     // (undocumented)
-    export interface JSON<T extends Array<unknown>> extends Value.JSON<"tuple"> {
+    export interface JSON<T extends Array<Value>> extends Value.JSON<"tuple"> {
         // (undocumented)
         values: Serializable.ToJSON<T>;
     }
+    // @internal
+    export type Resolved<T extends Array<Value>> = T extends [
+    infer Head extends Value,
+    ...infer Tail extends Array<Value>
+    ] ? [Resolvable.Resolved<Head>, ...Resolved<Tail>] : [];
+    // @internal
+    export type Resolver<T extends Array<Value>> = T extends Array<infer V extends Value> ? Resolvable.Resolver<V> : never;
 }
 
 // @public (undocumented)
@@ -3658,7 +3662,7 @@ export namespace URL {
 }
 
 // @public
-export abstract class Value<T extends string = string, CALC extends boolean = boolean, R extends string = T> implements Equatable, Hashable, Serializable<Value.JSON<T>> {
+export abstract class Value<T extends string = string, CALC extends boolean = boolean, R extends string = T> implements Equatable, Hashable, Serializable<Value.JSON<T>>, Resolvable<Value<R, false>, Resolvable.Resolver<Value>> {
     protected constructor(type: T, hasCalculation: CALC);
     // (undocumented)
     abstract equals(value: unknown): value is this;

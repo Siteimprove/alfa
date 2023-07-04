@@ -7,6 +7,8 @@ import { Math } from "../../calculation";
 import { Length as BaseLength } from "../../calculation/numeric";
 import { Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
+
+import { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Dimension } from "./dimension";
@@ -159,7 +161,8 @@ export namespace Length {
   export type JSON = Calculated.JSON | Fixed.JSON;
 
   interface ILength<CALC extends boolean = boolean>
-    extends Value<"length", CALC> {
+    extends Value<"length", CALC>,
+      Resolvable<Canonical, Resolver> {
     hasCalculation(): this is Calculated;
     resolve(resolver: Resolver): Canonical;
   }
