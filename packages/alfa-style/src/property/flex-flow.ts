@@ -11,7 +11,7 @@ import { Longhand } from "../longhand";
 
 const { map } = Parser;
 
-export const parse: Parser<
+const parse: Parser<
   Slice<Token>,
   [
     Longhand.Parsed<typeof Direction> | Keyword<"initial">,
@@ -58,6 +58,7 @@ export const parse: Parser<
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-flow}
+ *
  * @internal
  */
 export default Shorthand.of(

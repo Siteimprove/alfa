@@ -63,6 +63,10 @@ export class Length<U extends Unit.Length = Unit.Length> extends Dimension<
     hash.writeString(this._unit);
   }
 
+  public toJSON(): Length.JSON<U> {
+    return super.toJSON();
+  }
+
   public toString(): string {
     return `${this._value}${this._unit}`;
   }

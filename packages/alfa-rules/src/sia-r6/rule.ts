@@ -9,7 +9,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasAttribute, isDocumentElement } = Element;
 const { isEmpty } = Iterable;
@@ -18,7 +18,7 @@ const { and, not, tee, test } = Predicate;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r6",
   requirements: [Criterion.of("3.1.1")],
-  tags: [Scope.Page],
+  tags: [Scope.Page, Stability.Stable],
   evaluate({ document }) {
     // These will be set at most once since the rule only applies to the document element
     let cachedLang: Language;

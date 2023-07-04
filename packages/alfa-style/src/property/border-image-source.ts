@@ -1,18 +1,4 @@
-import {
-  Angle,
-  Current,
-  Gradient,
-  Image,
-  Keyword,
-  Length,
-  Linear,
-  Percentage,
-  Position,
-  Radial,
-  RGB,
-  System,
-  URL,
-} from "@siteimprove/alfa-css";
+import { Image, Keyword } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Longhand } from "../longhand";
@@ -25,10 +11,7 @@ const { either } = Parser;
  */
 export type Specified = Keyword<"none"> | Image;
 
-/**
- * @internal
- */
-export type Computed = Keyword<"none"> | Image.Canonical;
+type Computed = Keyword<"none"> | Image.Canonical;
 
 /**
  * @internal

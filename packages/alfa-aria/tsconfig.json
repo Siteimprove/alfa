@@ -52,7 +52,6 @@
     { "path": "../alfa-array" },
     { "path": "../alfa-branched" },
     { "path": "../alfa-cache" },
-    { "path": "../alfa-comparable" },
     { "path": "../alfa-compatibility" },
     { "path": "../alfa-device" },
     { "path": "../alfa-dom" },

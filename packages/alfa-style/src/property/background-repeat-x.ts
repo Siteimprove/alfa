@@ -2,10 +2,7 @@ import { Keyword, List } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
 
-/**
- * @internal
- */
-export type Specified = List<Specified.Item>;
+type Specified = List<Specified.Item>;
 
 /**
  * @internal
@@ -18,20 +15,14 @@ export namespace Specified {
     | Keyword<"no-repeat">;
 }
 
-/**
- * @internal
- */
-export type Computed = Specified;
+type Computed = Specified;
 
 /**
  * @internal
  */
 export const parse = Keyword.parse("repeat", "space", "round", "no-repeat");
 
-/**
- * @internal
- */
-export const parseList = List.parseCommaSeparated(parse);
+const parseList = List.parseCommaSeparated(parse);
 
 /**
  * @internal

@@ -3,14 +3,9 @@ import { Length, LengthPercentage } from "@siteimprove/alfa-css";
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
 
-/**
- * @internal
- */
-export type Specified = LengthPercentage;
+type Specified = LengthPercentage;
 
 /**
- * @internal
- *
  * @remarks
  * TODO: percentages resolve relative to the dimensions of the containing block,
  *       which we do not handle.
@@ -18,7 +13,7 @@ export type Specified = LengthPercentage;
  *       values, which is a bit annoying.
  *
  */
-export type Computed = LengthPercentage.PartiallyResolved;
+type Computed = LengthPercentage.PartiallyResolved;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-indent}

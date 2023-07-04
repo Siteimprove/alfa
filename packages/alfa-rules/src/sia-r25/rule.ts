@@ -9,12 +9,12 @@ import { video } from "../common/applicability/video";
 import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r25",
   requirements: [Technique.of("G8"), Technique.of("G78"), Technique.of("G173")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

@@ -12,10 +12,7 @@ export type Specified = Tuple<
   [vertical: Specified.Item, horizontal: Specified.Item]
 >;
 
-/**
- * @internal
- */
-export namespace Specified {
+namespace Specified {
   export type Item =
     | Keyword<"stretch">
     | Keyword<"repeat">
@@ -23,10 +20,7 @@ export namespace Specified {
     | Keyword<"space">;
 }
 
-/**
- * @internal
- */
-export type Computed = Specified;
+type Computed = Specified;
 
 /**
  * @internal

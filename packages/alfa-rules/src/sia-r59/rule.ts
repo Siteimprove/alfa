@@ -14,7 +14,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import { withDocumentElement } from "../common/applicability/with-document-element";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasRole } = DOM;
 const { hasNamespace } = Element;
@@ -23,7 +23,7 @@ const { getElementDescendants } = Query;
 
 export default Rule.Atomic.of<Page, Document>({
   uri: "https://alfa.siteimprove.com/rules/sia-r59",
-  tags: [Scope.Page],
+  tags: [Scope.Page, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

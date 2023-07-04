@@ -66,6 +66,7 @@ export namespace WithRole {
 
   export function isWithRole(value: unknown): value is WithRole;
 
+  /** @public */
   export function isWithRole(value: unknown): value is WithRole {
     return value instanceof WithRole;
   }

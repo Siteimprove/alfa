@@ -6,23 +6,11 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Keyword<"auto"> | Length | Percentage;
+type Specified = Keyword<"auto"> | Length | Percentage;
 
-/**
- * @internal
- */
-export type Computed =
-  | Keyword<"auto">
-  | Length.Canonical
-  | Percentage.Canonical;
+type Computed = Keyword<"auto"> | Length.Canonical | Percentage.Canonical;
 
-/**
- * @internal
- */
-export const parse = either(
+const parse = either(
   Keyword.parse("auto"),
   either(Length.parse, Percentage.parse)
 );

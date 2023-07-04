@@ -8,7 +8,7 @@ import { Style } from "@siteimprove/alfa-style";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasRole } = DOM;
 const { and } = Predicate;
@@ -18,7 +18,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r73",
   requirements: [Criterion.of("1.4.8")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {

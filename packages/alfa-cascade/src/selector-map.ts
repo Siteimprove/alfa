@@ -48,10 +48,8 @@ const isDescendantSelector = and(
  * lower precedence than origins defined later.
  *
  * {@link https://www.w3.org/TR/css-cascade/#cascading-origins}
- *
- * @internal
  */
-export enum Origin {
+enum Origin {
   /**
    * {@link https://www.w3.org/TR/css-cascade/#cascade-origin-ua}
    */

@@ -7,20 +7,11 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Keyword<"normal"> | Length;
+type Specified = Keyword<"normal"> | Length;
 
-/**
- * @internal
- */
-export type Computed = Length.Canonical;
+type Computed = Length.Canonical;
 
-/**
- * @internal
- */
-export const parse = either(Keyword.parse("normal"), Length.parse);
+const parse = either(Keyword.parse("normal"), Length.parse);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing}

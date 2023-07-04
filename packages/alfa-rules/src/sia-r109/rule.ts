@@ -173,6 +173,7 @@ export namespace Languages {
 
   export function isLanguages(value: unknown): value is Languages;
 
+  /**@public */
   export function isLanguages(value: unknown): value is Languages {
     return value instanceof Languages;
   }

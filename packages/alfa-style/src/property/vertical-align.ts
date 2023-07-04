@@ -20,20 +20,11 @@ type keywords =
   | Keyword<"top">
   | Keyword<"bottom">;
 
-/**
- * @internal
- */
-export type Specified = keywords | LengthPercentage;
-/**
- * @internal
- */
-export type Computed = keywords | LengthPercentage.Canonical;
+type Specified = keywords | LengthPercentage;
 
-/**
- * @internal
- */
+type Computed = keywords | LengthPercentage.Canonical;
 
-export const parse = either(
+const parse = either(
   Keyword.parse(
     "baseline",
     "sub",

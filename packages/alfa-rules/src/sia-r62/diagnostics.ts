@@ -267,6 +267,7 @@ export namespace DistinguishingStyles {
     value: unknown
   ): value is DistinguishingStyles;
 
+  /**@public */
   export function isDistinguishingStyles(
     value: unknown
   ): value is DistinguishingStyles {

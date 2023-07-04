@@ -208,7 +208,7 @@ const _default_63: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 // @public (undocumented)
 const _default_64: Rule.Atomic<Page, Document, {}, Document>;
 
-// @public
+// @public (undocumented)
 const _default_65: Rule.Atomic<Page, Element<string>, {}, Element<string>>;
 
 // @public (undocumented)
@@ -380,7 +380,6 @@ export namespace Flattened {
 
 // @public
 const FlattenedRules: Sequence<Flattened.Rule>;
-export { FlattenedRules }
 export default FlattenedRules;
 
 // @public (undocumented)

@@ -15,7 +15,7 @@ import { Page } from "@siteimprove/alfa-web";
 import { expectation } from "../common/act/expectation";
 
 import { Question } from "../common/act/question";
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 import { MatchingClasses } from "./diagnostics";
 
 const { isElement } = Element;
@@ -28,7 +28,7 @@ const { hasBorder, hasBoxShadow, hasOutline, hasTextDecoration, isTabbable } =
 export default Rule.Atomic.of<Page, Element, Question.Metadata>({
   uri: "https://alfa.siteimprove.com/rules/sia-r65",
   requirements: [Criterion.of("2.4.7")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     const tabbables = document.tabOrder().filter(isTabbable(device));
 

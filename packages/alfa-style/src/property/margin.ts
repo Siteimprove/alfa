@@ -6,10 +6,7 @@ import * as Top from "./margin-top";
 
 const { map, option, delimited, takeBetween } = Parser;
 
-/**
- * @internal
- */
-export const parse = takeBetween(
+const parse = takeBetween(
   delimited(option(Token.parseWhitespace), Top.parse),
   1,
   4
@@ -17,6 +14,7 @@ export const parse = takeBetween(
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/margin}
+ *
  * @internal
  */
 export default Shorthand.of(

@@ -6,33 +6,25 @@ import { Resolver } from "../resolver";
 
 const { takeBetween, map, delimited, option } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Tuple<
+type Specified = Tuple<
   [horizontal: LengthPercentage, vertical: LengthPercentage]
 >;
 
 /**
- * @internal
- *
  * @remarks
  * TODO: percentages resolve relative to the dimensions of the containing block,
  *       which we do not handle.
  *       This results in length-percentage calculations leaking to computed
  *       values, which is a bit annoying.
  */
-export type Computed = Tuple<
+type Computed = Tuple<
   [
     horizontal: LengthPercentage.PartiallyResolved,
     vertical: LengthPercentage.PartiallyResolved
   ]
 >;
 
-/**
- * @internal
- */
-export const parse = map(
+const parse = map(
   takeBetween(
     delimited(option(Token.parseWhitespace), LengthPercentage.parse),
     1,

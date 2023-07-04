@@ -23,8 +23,6 @@ import * as Size from "./background-size";
  * We mimic the needed bits here to avoid confusion in the main parser.
  */
 namespace RepeatY {
-  export const parse = RepeatX.parse;
-
   export namespace Specified {
     export type Item = RepeatX.Specified.Item;
   }
@@ -34,10 +32,7 @@ namespace RepeatY {
 
 const { map, filter, delimited, option, right, separatedList } = Parser;
 
-/**
- * @internal
- */
-export const parse: Parser<
+const parse: Parser<
   Slice<Token>,
   [
     Color.Specified?,
@@ -199,10 +194,7 @@ export const parse: Parser<
   ]);
 };
 
-/**
- * @internal
- */
-export const parseList = filter(
+const parseList = filter(
   separatedList(
     parse,
     delimited(option(Token.parseWhitespace), Token.parseComma)

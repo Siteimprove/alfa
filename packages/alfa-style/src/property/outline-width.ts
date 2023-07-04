@@ -7,27 +7,15 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified =
+type Specified =
   | Length
   | Keyword<"thin">
   | Keyword<"medium">
   | Keyword<"thick">;
 
-/**
- * @internal
- */
-export type Computed = Length.Canonical;
+type Computed = Length.Canonical;
 
-/**
- * @internal
- */
-export const parse = either(
-  Keyword.parse("thin", "medium", "thick"),
-  Length.parse
-);
+const parse = either(Keyword.parse("thin", "medium", "thick"), Length.parse);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/outline-width}

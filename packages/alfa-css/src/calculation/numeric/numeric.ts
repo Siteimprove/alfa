@@ -64,6 +64,7 @@ export namespace Numeric {
     value: number;
   }
 
+  /** @public */
   export function isNumeric(value: unknown): value is Numeric {
     return value instanceof Numeric;
   }

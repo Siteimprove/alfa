@@ -10,7 +10,7 @@ import { Page } from "@siteimprove/alfa-web";
 
 import { expectation } from "../common/act/expectation";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasRole, isIncludedInTheAccessibilityTree, isPerceivableForAll } = DOM;
 const { hasName, hasNamespace } = Element;
@@ -20,7 +20,7 @@ const { getElementDescendants } = Query;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r77",
   requirements: [Criterion.of("1.3.1")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     let data = Map.empty<Element, Cell>();
 

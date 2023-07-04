@@ -7,15 +7,9 @@ import { Resolver } from "../resolver";
 
 const { either } = Parser;
 
-/**
- * @internal
- */
-export type Specified = Keyword<"auto"> | Length | Percentage;
+type Specified = Keyword<"auto"> | Length | Percentage;
 
-/**
- * @internal
- */
-export type Computed = Keyword<"auto"> | Length.Canonical | Percentage;
+type Computed = Keyword<"auto"> | Length.Canonical | Percentage;
 
 /**
  * @internal

@@ -33,3 +33,4 @@ jobs:
       - run: yarn build --quiet
       - run: yarn test
       - run: yarn extract --quiet
+      - run: yarn knip

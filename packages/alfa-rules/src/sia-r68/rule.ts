@@ -13,7 +13,7 @@ import * as aria from "@siteimprove/alfa-aria";
 import { expectation } from "../common/act/expectation";
 import { WithRole } from "../common/diagnostic/with-role";
 
-import { Scope } from "../tags";
+import { Scope, Stability } from "../tags";
 
 const { hasRole, isIncludedInTheAccessibilityTree } = DOM;
 const { hasAttribute, hasNamespace, isElement } = Element;
@@ -22,7 +22,7 @@ const { and, equals } = Refinement;
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r68",
   requirements: [Criterion.of("1.3.1")],
-  tags: [Scope.Component],
+  tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     return {
       applicability() {
