@@ -1,6 +1,7 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
@@ -119,16 +120,11 @@ export namespace Function {
     )(input);
 
   export const parse = <T>(
-    name?: string,
+    query?: string | Predicate<Token.Function>,
     body?: Parser<Slice<Token>, T, string>
   ) =>
     flatMap(
-      right(
-        peek(
-          Token.parseFunction((fn) => name === undefined || fn.value === name)
-        ),
-        Function.consume
-      ),
+      right(peek(Token.parseFunction(query)), Function.consume),
       (fn) => (input) => {
         if (body === undefined) {
           return Result.of([input, [fn, undefined as never] as const]);

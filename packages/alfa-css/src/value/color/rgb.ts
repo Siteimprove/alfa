@@ -2,7 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { Function, Token } from "../../syntax";
 
 import { Number, Percentage } from "../numeric";
 import type { Value } from "../value";
@@ -186,18 +186,12 @@ export namespace RGB {
    * {@link https://drafts.csswg.org/css-color/#funcdef-rgb}
    */
   export const parse: Parser<Slice<Token>, RGB, string> = map(
-    right(
-      Token.parseFunction((fn) => fn.value === "rgb" || fn.value === "rgba"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          either(parseModern, parseLegacy)
-        ),
-        Token.parseCloseParenthesis
-      )
+    Function.parse(
+      (fn) => fn.value === "rgb" || fn.value === "rgba",
+      either(parseModern, parseLegacy)
     ),
     (result) => {
-      const [[red, green, blue], alpha] = result;
+      const [fn, [[red, green, blue], alpha]] = result;
 
       return RGB.of(
         red,
