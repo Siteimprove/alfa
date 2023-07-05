@@ -126,3 +126,29 @@ test("parse() rejects `none` in legacy syntax", (t) => {
     t.deepEqual(RGB.parse(Lexer.lex(str)).isErr(), true);
   }
 });
+
+test("#resolve() returns percentages", (t) => {
+  const expected: RGB.JSON = {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 1 },
+    green: { type: "percentage", value: 1 },
+    blue: { type: "percentage", value: 1 },
+    alpha: { type: "percentage", value: 1 },
+  };
+
+  for (const actual of [
+    parse("rgb(255, 255, 255)"),
+    parse("rgba(255, 255, 255)"),
+    parse("rgb(255, 255, 255, 1)"),
+    parse("rgba(100%, 100%, 100%)"),
+    parse("rgb(100%, 100%, 100%, 1)"),
+    parse("rgba(255 255 255)"),
+    parse("rgb(255 255 255 / 1)"),
+    parse("rgba(100% 100% 100%)"),
+    parse("rgb(100% 100% 100% / 1)"),
+    parse("rgba(100% 100% 100%/  1)"),
+  ]) {
+    t.deepEqual(actual.resolve().toJSON(), expected);
+  }
+});

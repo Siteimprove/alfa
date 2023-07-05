@@ -1,4 +1,5 @@
 import { Hash } from "@siteimprove/alfa-hash";
+import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -66,8 +67,10 @@ export class RGB<
   }
 
   public resolve(): RGB.Canonical {
-    // @ts-ignore
-    return this;
+    return new RGB(
+      ...Format.resolve(this._red, this._green, this._blue, this._alpha),
+      false
+    );
   }
 
   public equals(value: unknown): value is this {
