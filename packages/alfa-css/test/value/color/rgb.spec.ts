@@ -153,3 +153,24 @@ test("#resolve() returns percentages", (t) => {
     t.deepEqual(actual.resolve().toJSON(), expected);
   }
 });
+
+test("parse() accepts calculations", (t) => {
+  const expected = (type: "number" | "percentage") =>
+    ({
+      type: "color",
+      format: "rgb",
+      red: { type: type, value: 0 },
+      green: { type: type, value: type === "number" ? 255 : 1 },
+      blue: { type: type, value: 0 },
+      alpha: { type: "number", value: 0 },
+    } as RGB.JSON);
+
+  for (const [actual, type] of [
+    [parse("rgb(0% 100% 0% / 0)"), "percentage"],
+    [parse("rgba(0 255 0 / calc(10 - 5 + 2*3 - 11)"), "number"],
+    [parse("rgb(calc(3% + 3% - 6%) 100% 0% / 0)"), "percentage"],
+    [parse("rgba(0 255 calc(0*2) / calc(1 + 1 + 2 - 2*2))"), "number"],
+  ] as const) {
+    t.deepEqual(actual.toJSON(), expected(type));
+  }
+});
