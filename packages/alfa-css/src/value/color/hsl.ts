@@ -20,7 +20,7 @@ export class HSL<
   H extends Number.Fixed | Angle.Fixed = Number.Fixed | Angle.Fixed,
   A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
   CALC extends boolean = boolean
-> extends Format<"hsl", CALC> {
+> extends Format<"hsl"> {
   public static of<
     H extends Number.Fixed | Angle.Fixed,
     A extends Number.Fixed | Percentage.Fixed,
@@ -32,11 +32,7 @@ export class HSL<
     lightness: L,
     alpha: A
   ): HSL<H, A, Value.HasCalculation<[H, A, S, L]>> {
-    const calculation = [hue, saturation, lightness, alpha].some((value) =>
-      value.hasCalculation()
-    ) as Value.HasCalculation<[H, A, S, L]>;
-
-    return new HSL(hue, saturation, lightness, alpha, calculation);
+    return new HSL(hue, saturation, lightness, alpha);
   }
 
   private readonly _hue: H;
@@ -51,10 +47,9 @@ export class HSL<
     hue: H,
     saturation: Percentage.Fixed,
     lightness: Percentage.Fixed,
-    alpha: A,
-    calculation: CALC
+    alpha: A
   ) {
-    super("hsl", calculation);
+    super("hsl");
     this._hue = hue;
     this._saturation = saturation;
     this._lightness = lightness;

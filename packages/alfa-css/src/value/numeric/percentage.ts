@@ -146,6 +146,8 @@ export namespace Percentage {
     export interface JSON extends Numeric.Fixed.JSON<"percentage"> {}
   }
 
+  export type JSON = Calculated.JSON | Fixed.JSON;
+
   export interface Resolver<
     R extends BaseNumeric.Type,
     T extends Numeric.Fixed<R>

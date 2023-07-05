@@ -14,7 +14,7 @@ const { map } = Parser;
 /**
  * @public
  */
-export class Hex extends Format<"hex", false> {
+export class Hex extends Format<"hex"> {
   public static of(value: number): Hex {
     return new Hex(value);
   }
@@ -22,7 +22,7 @@ export class Hex extends Format<"hex", false> {
   private readonly _value: number;
 
   private constructor(value: number) {
-    super("hex", false);
+    super("hex");
 
     // Make sure that only the lower 4 bytes are stored.
     this._value = value & 0xff_ff_ff_ff;
