@@ -8,22 +8,10 @@ test("parse() legacy syntax with numbers", (t) => {
   const expected: RGB.JSON = {
     type: "color",
     format: "rgb",
-    red: {
-      value: 255,
-      type: "number",
-    },
-    green: {
-      value: 255,
-      type: "number",
-    },
-    blue: {
-      value: 255,
-      type: "number",
-    },
-    alpha: {
-      value: 1,
-      type: "number",
-    },
+    red: { type: "number", value: 255 },
+    green: { type: "number", value: 255 },
+    blue: { type: "number", value: 255 },
+    alpha: { type: "number", value: 1 },
   };
 
   for (const actual of [
@@ -37,26 +25,14 @@ test("parse() legacy syntax with numbers", (t) => {
   }
 });
 
-test("parse() legacy syntax with numbers", (t) => {
+test("parse() legacy syntax with percentages", (t) => {
   const expected: RGB.JSON = {
     type: "color",
     format: "rgb",
-    red: {
-      value: 1,
-      type: "percentage",
-    },
-    green: {
-      value: 1,
-      type: "percentage",
-    },
-    blue: {
-      value: 1,
-      type: "percentage",
-    },
-    alpha: {
-      value: 1,
-      type: "number",
-    },
+    red: { type: "percentage", value: 1 },
+    green: { type: "percentage", value: 1 },
+    blue: { type: "percentage", value: 1 },
+    alpha: { type: "number", value: 1 },
   };
 
   for (const actual of [
@@ -73,22 +49,10 @@ test("parse() modern syntax with numbers", (t) => {
   const expected: RGB.JSON = {
     type: "color",
     format: "rgb",
-    red: {
-      value: 255,
-      type: "number",
-    },
-    green: {
-      value: 255,
-      type: "number",
-    },
-    blue: {
-      value: 255,
-      type: "number",
-    },
-    alpha: {
-      value: 1,
-      type: "number",
-    },
+    red: { type: "number", value: 255 },
+    green: { type: "number", value: 255 },
+    blue: { type: "number", value: 255 },
+    alpha: { type: "number", value: 1 },
   };
 
   for (const actual of [
@@ -101,26 +65,14 @@ test("parse() modern syntax with numbers", (t) => {
   }
 });
 
-test("parse() modern syntax with numbers", (t) => {
+test("parse() modern syntax with percentage", (t) => {
   const expected: RGB.JSON = {
     type: "color",
     format: "rgb",
-    red: {
-      value: 1,
-      type: "percentage",
-    },
-    green: {
-      value: 1,
-      type: "percentage",
-    },
-    blue: {
-      value: 1,
-      type: "percentage",
-    },
-    alpha: {
-      value: 1,
-      type: "number",
-    },
+    red: { type: "percentage", value: 1 },
+    green: { type: "percentage", value: 1 },
+    blue: { type: "percentage", value: 1 },
+    alpha: { type: "number", value: 1 },
   };
 
   for (const actual of [
@@ -133,12 +85,43 @@ test("parse() modern syntax with numbers", (t) => {
   }
 });
 
-test("parse() refuse mixing numbers and percentages", (t) => {
+test("parse() refuses mixing numbers and percentages", (t) => {
   for (const str of [
     "rgba(100 255 100%)",
     "rgba(100% 255 100%)",
     "rgba(100%, 255, 100)",
     "rgba(100, 255, 100%)",
+  ]) {
+    t.deepEqual(RGB.parse(Lexer.lex(str)).isErr(), true);
+  }
+});
+
+test("parse() accepts `none` in modern syntax", (t) => {
+  const expected = (type: "number" | "percentage") => ({
+    type: "color",
+    format: "rgb",
+    red: { type: type, value: 0 },
+    green: { type: type, value: type === "number" ? 255 : 1 },
+    blue: { type: type, value: 0 },
+    alpha: { type: "number", value: 0 },
+  });
+
+  for (const [actual, type] of [
+    [parse("rgb(0% 100% 0% / 0)"), "percentage"],
+    [parse("rgba(0 255 0 / none)"), "number"],
+    [parse("rgb(none 100% 0% / 0)"), "percentage"],
+    [parse("rgba(0 255 none/ none)"), "number"],
+  ] as const) {
+    t.deepEqual(actual.toJSON(), expected(type));
+  }
+});
+
+test("parse() rejects `none` in legacy syntax", (t) => {
+  for (const str of [
+    "rgba(none, 255, 100)",
+    "rgba(100, 255, none)",
+    "rgba(100, none, 0)",
+    "rgba(100, 255, 255, none)",
   ]) {
     t.deepEqual(RGB.parse(Lexer.lex(str)).isErr(), true);
   }

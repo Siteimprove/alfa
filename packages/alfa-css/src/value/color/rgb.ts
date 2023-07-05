@@ -1,8 +1,10 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Function, Token } from "../../syntax";
+import { Keyword } from "../keyword";
 
 import { Number, Percentage } from "../numeric";
 import type { Value } from "../value";
@@ -127,25 +129,62 @@ export namespace RGB {
   }
 
   /**
+   * @remarks
+   * While the three R, G, B component must be either all numbers or all
+   * percentage, the alpha component can be either independently.
+   *
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlpha = either(Number.parseBase, Percentage.parseBase);
+  const parseAlphaLegacy = either(Number.parseBase, Percentage.parseBase);
+  const parseAlphaModern = either<
+    Slice<Token>,
+    Number.Fixed | Percentage.Fixed,
+    string
+  >(
+    Number.parseBase,
+    Percentage.parseBase,
+    map(Keyword.parse("none"), () => Number.of(0))
+  );
+
+  /**
+   * Parses either a number/percentage or the keyword "none", reduce "none" to
+   * the correct type, or fail if it is not allowed.
+   */
+  const parseItem = <C extends Number.Fixed | Percentage.Fixed>(
+    parser: Parser<Slice<Token>, C, string>,
+    ifNone?: C
+  ) =>
+    either(
+      parser,
+      ifNone !== undefined
+        ? map(Keyword.parse("none"), () => ifNone)
+        : () => Err.of("none is not accepted in legacy rbg syntax")
+    );
+
+  /**
+   * Parses 3 items.
+   * In legacy syntax, they must be separated by a comma, in modern syntax by
+   * whitespace.
+   */
+  const parseTriplet = <C extends Number.Fixed | Percentage.Fixed>(
+    parser: Parser<Slice<Token>, C, string>,
+    separator: Parser<Slice<Token>, any, string>,
+    ifNone?: C
+  ) =>
+    map(
+      pair(
+        parseItem(parser, ifNone),
+        take(right(separator, parseItem(parser, ifNone)), 2)
+      ),
+      ([r, [g, b]]) => [r, g, b] as const
+    );
 
   const parseLegacyTriplet = <C extends Number.Fixed | Percentage.Fixed>(
     parser: Parser<Slice<Token>, C, string>
   ) =>
-    map(
-      pair(
-        parser,
-        take(
-          right(
-            delimited(option(Token.parseWhitespace), Token.parseComma),
-            parser
-          ),
-          2
-        )
-      ),
-      ([r, [g, b]]) => [r, g, b] as const
+    parseTriplet(
+      parser,
+      delimited(option(Token.parseWhitespace), Token.parseComma)
     );
 
   const parseLegacy = pair(
@@ -156,28 +195,25 @@ export namespace RGB {
     option(
       right(
         delimited(option(Token.parseWhitespace), Token.parseComma),
-        parseAlpha
+        parseAlphaLegacy
       )
     )
   );
 
   const parseModernTriplet = <C extends Number.Fixed | Percentage.Fixed>(
-    parser: Parser<Slice<Token>, C, string>
-  ) =>
-    map(
-      pair(parser, take(right(option(Token.parseWhitespace), parser), 2)),
-      ([r, [g, b]]) => [r, g, b] as const
-    );
+    parser: Parser<Slice<Token>, C, string>,
+    ifNone: C
+  ) => parseTriplet(parser, option(Token.parseWhitespace), ifNone);
 
   const parseModern = pair(
     either(
-      parseModernTriplet(Percentage.parseBase),
-      parseModernTriplet(Number.parseBase)
+      parseModernTriplet(Percentage.parseBase, Percentage.of(0)),
+      parseModernTriplet(Number.parseBase, Number.of(0))
     ),
     option(
       right(
         delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-        parseAlpha
+        parseAlphaModern
       )
     )
   );
@@ -191,7 +227,7 @@ export namespace RGB {
       either(parseModern, parseLegacy)
     ),
     (result) => {
-      const [fn, [[red, green, blue], alpha]] = result;
+      const [, [[red, green, blue], alpha]] = result;
 
       return RGB.of(
         red,
