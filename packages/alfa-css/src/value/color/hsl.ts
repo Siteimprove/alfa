@@ -6,7 +6,6 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Token } from "../../syntax";
 
 import { Angle, Number, Percentage } from "../numeric";
-import type { Value } from "../value";
 
 import { Format } from "./format";
 import type { RGB } from "./rgb";
@@ -18,25 +17,15 @@ const { pair, map, either, option, left, right, take, delimited } = Parser;
  */
 export class HSL<
   H extends Number.Fixed | Angle.Fixed = Number.Fixed | Angle.Fixed,
-  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
-  CALC extends boolean = boolean
-> extends Format<"hsl", CALC> {
+  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
+> extends Format<"hsl"> {
   public static of<
     H extends Number.Fixed | Angle.Fixed,
     A extends Number.Fixed | Percentage.Fixed,
     S extends Percentage.Fixed,
     L extends Percentage.Fixed
-  >(
-    hue: H,
-    saturation: S,
-    lightness: L,
-    alpha: A
-  ): HSL<H, A, Value.HasCalculation<[H, A, S, L]>> {
-    const calculation = [hue, saturation, lightness, alpha].some((value) =>
-      value.hasCalculation()
-    ) as Value.HasCalculation<[H, A, S, L]>;
-
-    return new HSL(hue, saturation, lightness, alpha, calculation);
+  >(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A> {
+    return new HSL(hue, saturation, lightness, alpha);
   }
 
   private readonly _hue: H;
@@ -51,10 +40,9 @@ export class HSL<
     hue: H,
     saturation: Percentage.Fixed,
     lightness: Percentage.Fixed,
-    alpha: A,
-    calculation: CALC
+    alpha: A
   ) {
-    super("hsl", calculation);
+    super("hsl");
     this._hue = hue;
     this._saturation = saturation;
     this._lightness = lightness;

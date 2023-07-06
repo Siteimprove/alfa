@@ -1,5 +1,4 @@
 import { Hash } from "@siteimprove/alfa-hash";
-import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -8,33 +7,23 @@ import { Function, Token } from "../../syntax";
 import { Keyword } from "../keyword";
 
 import { Number, Percentage } from "../numeric";
-import type { Value } from "../value";
 
 import { Format } from "./format";
 
-const { pair, map, either, option, left, right, take, delimited } = Parser;
+const { pair, map, either, option, right, take, delimited } = Parser;
 
 /**
  * @public
  */
 export class RGB<
   C extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
-  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
-  CALC extends boolean = boolean
-> extends Format<"rgb", CALC> {
+  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
+> extends Format<"rgb"> {
   public static of<
     C extends Number.Fixed | Percentage.Fixed,
     A extends Number.Fixed | Percentage.Fixed
-  >(
-    red: C,
-    green: C,
-    blue: C,
-    alpha: A
-  ): RGB<C, A, Value.HasCalculation<[C, A]>> {
-    const calculation = [red, green, blue, alpha].some((value) =>
-      value.hasCalculation()
-    ) as Value.HasCalculation<[C, A]>;
-    return new RGB(red, green, blue, alpha, calculation);
+  >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
+    return new RGB(red, green, blue, alpha);
   }
 
   private readonly _red: C;
@@ -42,8 +31,8 @@ export class RGB<
   private readonly _blue: C;
   private readonly _alpha: A;
 
-  private constructor(red: C, green: C, blue: C, alpha: A, calculation: CALC) {
-    super("rgb", calculation);
+  private constructor(red: C, green: C, blue: C, alpha: A) {
+    super("rgb");
     this._red = red;
     this._green = green;
     this._blue = blue;
@@ -68,8 +57,7 @@ export class RGB<
 
   public resolve(): RGB.Canonical {
     return new RGB(
-      ...Format.resolve(this._red, this._green, this._blue, this._alpha),
-      false
+      ...Format.resolve(this._red, this._green, this._blue, this._alpha)
     );
   }
 
@@ -112,11 +100,7 @@ export class RGB<
  * @public
  */
 export namespace RGB {
-  export type Canonical = RGB<
-    Percentage.Canonical,
-    Percentage.Canonical,
-    false
-  >;
+  export type Canonical = RGB<Percentage.Canonical, Percentage.Canonical>;
   export interface JSON extends Format.JSON<"rgb"> {
     red: Number.Fixed.JSON | Percentage.Fixed.JSON;
     green: Number.Fixed.JSON | Percentage.Fixed.JSON;
