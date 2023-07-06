@@ -41,21 +41,19 @@ export namespace Format {
   }
 
   function toPercentage(
-    channel: Number | Percentage,
+    channel: Number.Canonical | Percentage.Canonical,
     max: number
   ): Percentage.Canonical {
-    const resolved = channel.resolve();
-
     return Percentage.of(
-      Real.clamp(resolved.value / (Number.isNumber(resolved) ? max : 1), 0, 1)
+      Real.clamp(channel.value / (Number.isNumber(channel) ? max : 1), 0, 1)
     );
   }
 
   export function resolve(
-    red: Number | Percentage,
-    green: Number | Percentage,
-    blue: Number | Percentage,
-    alpha: Number | Percentage
+    red: Number.Canonical | Percentage.Canonical,
+    green: Number.Canonical | Percentage.Canonical,
+    blue: Number.Canonical | Percentage.Canonical,
+    alpha: Number.Canonical | Percentage.Canonical
   ): [
     Percentage.Canonical,
     Percentage.Canonical,
