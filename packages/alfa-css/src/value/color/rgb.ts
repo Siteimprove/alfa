@@ -13,7 +13,7 @@ import { Format } from "./format";
 const { pair, map, either, option, right, take, delimited } = Parser;
 
 // We cannot easily use Resolvable.Resolved because Percentage may resolve to
-// anything depending on the base.
+// anything depending on the base, here we want to keep them as percentages.
 type ToCanonical<T extends Number | Percentage> = T extends Number
   ? Number.Canonical
   : T extends Percentage
@@ -24,6 +24,12 @@ type ToCanonical<T extends Number | Percentage> = T extends Number
  * @public
  */
 export class RGB<
+  // These should actually use the aliases `.Canonical` instead.
+  // However, that triggers
+  // error TS2589: Type instantiation is excessively deep and possibly infinite.
+  // in an unrelated place.
+  // We are likely very close to the TS instantiation limit, and using aliases
+  // triggers it.
   C extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
   A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
 > extends Format<"rgb"> {
