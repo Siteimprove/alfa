@@ -14,9 +14,10 @@ const { map } = Parser;
 /**
  * @public
  */
-export class Named<
-  C extends Named.Color = Named.Color
-> extends Format<"named"> {
+export class Named<C extends Named.Color = Named.Color> extends Format<
+  "named",
+  false
+> {
   public static of<C extends Named.Color>(color: C): Named<C> {
     return new Named(color);
   }
@@ -24,7 +25,7 @@ export class Named<
   private readonly _color: C;
 
   private constructor(color: C) {
-    super("named");
+    super("named", false);
     this._color = color;
   }
 

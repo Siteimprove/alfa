@@ -1,4 +1,5 @@
 import { Hash } from "@siteimprove/alfa-hash";
+import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
@@ -7,40 +8,33 @@ import { Function, Token } from "../../syntax";
 import { Keyword } from "../keyword";
 
 import { Number, Percentage } from "../numeric";
+import type { Value } from "../value";
 
 import { Format } from "./format";
 
 const { pair, map, either, option, left, right, take, delimited } = Parser;
 
-// We cannot easily use Resolvable.Resolved because Percentage may resolve to
-// anything depending on the base.
-type ToCanonical<T extends Number | Percentage> = T extends Number
-  ? Number.Canonical
-  : T extends Percentage
-  ? Percentage.Canonical
-  : Number.Canonical | Percentage.Canonical;
-
 /**
  * @public
  */
 export class RGB<
-  C extends Number.Canonical | Percentage.Canonical =
-    | Number.Canonical
-    | Percentage.Canonical,
-  A extends Number.Canonical | Percentage.Canonical =
-    | Number.Canonical
-    | Percentage.Canonical
-> extends Format<"rgb"> {
+  C extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
+  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
+  CALC extends boolean = boolean
+> extends Format<"rgb", CALC> {
   public static of<
-    C extends Number | Percentage,
-    A extends Number | Percentage
-  >(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>> {
-    return new RGB(
-      red.resolve() as ToCanonical<C>,
-      green.resolve() as ToCanonical<C>,
-      blue.resolve() as ToCanonical<C>,
-      alpha.resolve() as ToCanonical<A>
-    );
+    C extends Number.Fixed | Percentage.Fixed,
+    A extends Number.Fixed | Percentage.Fixed
+  >(
+    red: C,
+    green: C,
+    blue: C,
+    alpha: A
+  ): RGB<C, A, Value.HasCalculation<[C, A]>> {
+    const calculation = [red, green, blue, alpha].some((value) =>
+      value.hasCalculation()
+    ) as Value.HasCalculation<[C, A]>;
+    return new RGB(red, green, blue, alpha, calculation);
   }
 
   private readonly _red: C;
@@ -48,8 +42,8 @@ export class RGB<
   private readonly _blue: C;
   private readonly _alpha: A;
 
-  private constructor(red: C, green: C, blue: C, alpha: A) {
-    super("rgb");
+  private constructor(red: C, green: C, blue: C, alpha: A, calculation: CALC) {
+    super("rgb", calculation);
     this._red = red;
     this._green = green;
     this._blue = blue;
@@ -74,7 +68,8 @@ export class RGB<
 
   public resolve(): RGB.Canonical {
     return new RGB(
-      ...Format.resolve(this._red, this._green, this._blue, this._alpha)
+      ...Format.resolve(this._red, this._green, this._blue, this._alpha),
+      false
     );
   }
 
@@ -117,7 +112,11 @@ export class RGB<
  * @public
  */
 export namespace RGB {
-  export type Canonical = RGB<Percentage.Canonical, Percentage.Canonical>;
+  export type Canonical = RGB<
+    Percentage.Canonical,
+    Percentage.Canonical,
+    false
+  >;
   export interface JSON extends Format.JSON<"rgb"> {
     red: Number.Fixed.JSON | Percentage.Fixed.JSON;
     green: Number.Fixed.JSON | Percentage.Fixed.JSON;
@@ -126,8 +125,8 @@ export namespace RGB {
   }
 
   export function isRGB<
-    C extends Number.Canonical | Percentage.Canonical,
-    A extends Number.Canonical | Percentage.Canonical
+    C extends Number.Fixed | Percentage.Fixed,
+    A extends Number.Fixed | Percentage.Fixed
   >(value: unknown): value is RGB<C, A> {
     return value instanceof RGB;
   }
@@ -139,10 +138,14 @@ export namespace RGB {
    *
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlphaLegacy = either(Number.parse, Percentage.parse);
-  const parseAlphaModern = either<Slice<Token>, Number | Percentage, string>(
-    Number.parse,
-    Percentage.parse,
+  const parseAlphaLegacy = either(Number.parseBase, Percentage.parseBase);
+  const parseAlphaModern = either<
+    Slice<Token>,
+    Number.Fixed | Percentage.Fixed,
+    string
+  >(
+    Number.parseBase,
+    Percentage.parseBase,
     map(Keyword.parse("none"), () => Number.of(0))
   );
 
@@ -150,7 +153,7 @@ export namespace RGB {
    * Parses either a number/percentage or the keyword "none", reduce "none" to
    * the correct type, or fail if it is not allowed.
    */
-  const parseItem = <C extends Number | Percentage>(
+  const parseItem = <C extends Number.Fixed | Percentage.Fixed>(
     parser: Parser<Slice<Token>, C, string>,
     ifNone?: C
   ) =>
@@ -166,7 +169,7 @@ export namespace RGB {
    * In legacy syntax, they must be separated by a comma, in modern syntax by
    * whitespace.
    */
-  const parseTriplet = <C extends Number | Percentage>(
+  const parseTriplet = <C extends Number.Fixed | Percentage.Fixed>(
     parser: Parser<Slice<Token>, C, string>,
     separator: Parser<Slice<Token>, any, string>,
     ifNone?: C
@@ -179,7 +182,7 @@ export namespace RGB {
       ([r, [g, b]]) => [r, g, b] as const
     );
 
-  const parseLegacyTriplet = <C extends Number | Percentage>(
+  const parseLegacyTriplet = <C extends Number.Fixed | Percentage.Fixed>(
     parser: Parser<Slice<Token>, C, string>
   ) =>
     parseTriplet(
@@ -189,8 +192,8 @@ export namespace RGB {
 
   const parseLegacy = pair(
     either(
-      parseLegacyTriplet(Percentage.parse),
-      parseLegacyTriplet(Number.parse)
+      parseLegacyTriplet(Percentage.parseBase),
+      parseLegacyTriplet(Number.parseBase)
     ),
     option(
       right(
@@ -200,15 +203,15 @@ export namespace RGB {
     )
   );
 
-  const parseModernTriplet = <C extends Number | Percentage>(
+  const parseModernTriplet = <C extends Number.Fixed | Percentage.Fixed>(
     parser: Parser<Slice<Token>, C, string>,
     ifNone: C
   ) => parseTriplet(parser, option(Token.parseWhitespace), ifNone);
 
   const parseModern = pair(
     either(
-      parseModernTriplet(Percentage.parse, Percentage.of(0)),
-      parseModernTriplet(Number.parse, Number.of(0))
+      parseModernTriplet(Percentage.parseBase, Percentage.of(0)),
+      parseModernTriplet(Number.parseBase, Number.of(0))
     ),
     option(
       right(

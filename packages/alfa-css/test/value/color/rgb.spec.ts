@@ -97,15 +97,14 @@ test("parse() refuses mixing numbers and percentages", (t) => {
 });
 
 test("parse() accepts `none` in modern syntax", (t) => {
-  const expected = (type: "number" | "percentage") =>
-    ({
-      type: "color",
-      format: "rgb",
-      red: { type: type, value: 0 },
-      green: { type: type, value: type === "number" ? 255 : 1 },
-      blue: { type: type, value: 0 },
-      alpha: { type: "number", value: 0 },
-    } as RGB.JSON);
+  const expected = (type: "number" | "percentage") => ({
+    type: "color",
+    format: "rgb",
+    red: { type: type, value: 0 },
+    green: { type: type, value: type === "number" ? 255 : 1 },
+    blue: { type: type, value: 0 },
+    alpha: { type: "number", value: 0 },
+  });
 
   for (const [actual, type] of [
     [parse("rgb(0% 100% 0% / 0)"), "percentage"],

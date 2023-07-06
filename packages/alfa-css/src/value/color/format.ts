@@ -1,29 +1,23 @@
 import { Real } from "@siteimprove/alfa-math";
-
 import { Number, Percentage } from "../numeric";
-import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
-
-import type { RGB } from "./rgb";
 
 /**
  * @internal
  */
-export abstract class Format<F extends string = string>
-  extends Value<"color", false>
-  implements Resolvable<RGB.Canonical, never>
-{
+export abstract class Format<
+  F extends string = string,
+  CALC extends boolean = boolean
+> extends Value<"color", CALC> {
   private readonly _format: F;
-  protected constructor(format: F) {
-    super("color", false);
+  protected constructor(format: F, hasCalculation: CALC) {
+    super("color", hasCalculation);
     this._format = format;
   }
 
   public get format(): F {
     return this._format;
   }
-
-  public abstract resolve(): RGB.Canonical;
 
   public toJSON(): Format.JSON<F> {
     return {
@@ -42,19 +36,21 @@ export namespace Format {
   }
 
   function toPercentage(
-    channel: Number.Canonical | Percentage.Canonical,
+    channel: Number | Percentage,
     max: number
   ): Percentage.Canonical {
+    const resolved = channel.resolve();
+
     return Percentage.of(
-      Real.clamp(channel.value / (Number.isNumber(channel) ? max : 1), 0, 1)
+      Real.clamp(resolved.value / (Number.isNumber(resolved) ? max : 1), 0, 1)
     );
   }
 
   export function resolve(
-    red: Number.Canonical | Percentage.Canonical,
-    green: Number.Canonical | Percentage.Canonical,
-    blue: Number.Canonical | Percentage.Canonical,
-    alpha: Number.Canonical | Percentage.Canonical
+    red: Number | Percentage,
+    green: Number | Percentage,
+    blue: Number | Percentage,
+    alpha: Number | Percentage
   ): [
     Percentage.Canonical,
     Percentage.Canonical,

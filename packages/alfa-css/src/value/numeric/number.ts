@@ -104,8 +104,6 @@ export namespace Number {
     export interface JSON extends Numeric.Fixed.JSON<"number"> {}
   }
 
-  export type JSON = Calculated.JSON | Fixed.JSON;
-
   interface INumber<CALC extends boolean = boolean>
     extends Value<"number", CALC>,
       Resolvable<Canonical, never> {
