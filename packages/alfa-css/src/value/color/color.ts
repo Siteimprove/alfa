@@ -54,6 +54,7 @@ export namespace Color {
     C extends Number.Fixed | Percentage.Fixed,
     A extends Number.Fixed | Percentage.Fixed
   >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
+    // @ts-ignore
     return RGB.of(red, green, blue, alpha);
   }
 

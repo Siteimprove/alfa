@@ -12,6 +12,14 @@ import { Format } from "./format";
 
 const { pair, map, either, option, right, take, delimited } = Parser;
 
+// We cannot easily use Resolvable.Resolved because Percentage may resolve to
+// anything depending on the base.
+type ToCanonical<T extends Number | Percentage> = T extends Number
+  ? Number.Canonical
+  : T extends Percentage
+  ? Percentage.Canonical
+  : Number.Canonical | Percentage.Canonical;
+
 /**
  * @public
  */
@@ -20,10 +28,15 @@ export class RGB<
   A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
 > extends Format<"rgb"> {
   public static of<
-    C extends Number.Fixed | Percentage.Fixed,
-    A extends Number.Fixed | Percentage.Fixed
-  >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
-    return new RGB(red, green, blue, alpha);
+    C extends Number | Percentage,
+    A extends Number | Percentage
+  >(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>> {
+    return new RGB(
+      red.resolve() as ToCanonical<C>,
+      green.resolve() as ToCanonical<C>,
+      blue.resolve() as ToCanonical<C>,
+      alpha.resolve() as ToCanonical<A>
+    );
   }
 
   private readonly _red: C;
