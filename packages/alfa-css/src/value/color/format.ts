@@ -23,6 +23,12 @@ export abstract class Format<F extends string = string>
     return this._format;
   }
 
+  public abstract get red(): Number.Fixed | Percentage.Fixed;
+
+  public abstract get green(): Number.Fixed | Percentage.Fixed;
+
+  public abstract get blue(): Number.Fixed | Percentage.Fixed;
+
   public abstract resolve(): RGB.Canonical;
 
   public toJSON(): Format.JSON<F> {
