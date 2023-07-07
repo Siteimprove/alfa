@@ -9,7 +9,7 @@ import { Keyword } from "../keyword";
 import { Angle, Number, Percentage } from "../numeric";
 
 import { Format } from "./format";
-import type { RGB } from "./rgb";
+import { RGB } from "./rgb";
 
 const { pair, map, either, option, right, take, delimited } = Parser;
 
@@ -111,8 +111,9 @@ export class HSL<
   }
 
   public resolve(): RGB.Canonical {
-    // @ts-ignore
-    return this;
+    return RGB.of(
+      ...Format.resolve(this.red, this.green, this.blue, this.alpha)
+    );
   }
 
   public equals(value: unknown): value is this {

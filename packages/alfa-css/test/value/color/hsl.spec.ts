@@ -117,3 +117,14 @@ test("parse() accepts calculations", (t) => {
     t.deepEqual(actual.toJSON(), expected(type));
   }
 });
+
+test("#resolve() returns RBG color in percentages", (t) => {
+  t.deepEqual(parse("hsl(0, 100%, 100%)").resolve().toJSON(), {
+    type: "color",
+    format: "rgb",
+    red: { type: "percentage", value: 1 },
+    green: { type: "percentage", value: 1 },
+    blue: { type: "percentage", value: 1 },
+    alpha: { type: "percentage", value: 1 },
+  });
+});

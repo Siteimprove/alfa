@@ -49,7 +49,9 @@ export class Hex extends Format<"hex"> {
   }
 
   public resolve(): RGB.Canonical {
-    return RGB.of(this.red, this.green, this.blue, this.alpha).resolve();
+    return RGB.of(
+      ...Format.resolve(this.red, this.green, this.blue, this.alpha)
+    );
   }
 
   public equals(value: unknown): value is this {
