@@ -7,7 +7,7 @@ import { Token } from "../../syntax";
 import { Number } from "../numeric";
 
 import { Format } from "./format";
-import type { RGB } from "./rgb";
+import { RGB } from "./rgb";
 
 const { map } = Parser;
 
@@ -49,8 +49,7 @@ export class Hex extends Format<"hex"> {
   }
 
   public resolve(): RGB.Canonical {
-    // @ts-ignore
-    return this;
+    return RGB.of(this.red, this.green, this.blue, this.alpha).resolve();
   }
 
   public equals(value: unknown): value is this {
