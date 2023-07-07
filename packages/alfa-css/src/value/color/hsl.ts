@@ -3,7 +3,7 @@ import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { Function, Token } from "../../syntax";
 
 import { Angle, Number, Percentage } from "../numeric";
 
@@ -157,59 +157,47 @@ export namespace HSL {
    */
   const parseHue = either(Number.parseBase, Angle.parseBase);
 
+  const parseTriplet = (separator: Parser<Slice<Token>, any, string>) =>
+    map(
+      pair(parseHue, take(right(separator, Percentage.parseBase), 2)),
+      ([h, [s, l]]) => [h, s, l] as const
+    );
+
+  /**
+   * @remarks
+   * Modern syntax is supposed to accept numbers in addition to percentages
+   * for saturation and lightness. This seems to have poor browser support
+   * currently, so we ignore it until we encounter it in the wild.
+   */
+  const parseModern = pair(
+    parseTriplet(option(Token.parseWhitespace)),
+    option(
+      right(
+        delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
+        parseAlpha
+      )
+    )
+  );
+
+  const parseLegacy = pair(
+    parseTriplet(delimited(option(Token.parseWhitespace), Token.parseComma)),
+    option(
+      right(
+        delimited(option(Token.parseWhitespace), Token.parseComma),
+        parseAlpha
+      )
+    )
+  );
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
    */
   export const parse: Parser<Slice<Token>, HSL, string> = map(
-    right(
-      Token.parseFunction((fn) => fn.value === "hsl" || fn.value === "hsla"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          either(
-            pair(
-              pair(
-                parseHue,
-                take(
-                  right(option(Token.parseWhitespace), Percentage.parseBase),
-                  2
-                )
-              ),
-              option(
-                right(
-                  delimited(
-                    option(Token.parseWhitespace),
-                    Token.parseDelim("/")
-                  ),
-                  parseAlpha
-                )
-              )
-            ),
-            pair(
-              pair(
-                parseHue,
-                take(
-                  right(
-                    delimited(option(Token.parseWhitespace), Token.parseComma),
-                    Percentage.parseBase
-                  ),
-                  2
-                )
-              ),
-              option(
-                right(
-                  delimited(option(Token.parseWhitespace), Token.parseComma),
-                  parseAlpha
-                )
-              )
-            )
-          )
-        ),
-        Token.parseCloseParenthesis
-      )
+    Function.parse(
+      (fn) => fn.value === "hsl" || fn.value === "hsla",
+      either(parseLegacy, parseModern)
     ),
     (result) => {
-      const [[hue, [saturation, lightness]], alpha] = result;
+      const [, [[hue, saturation, lightness], alpha]] = result;
 
       return HSL.of(
         hue,

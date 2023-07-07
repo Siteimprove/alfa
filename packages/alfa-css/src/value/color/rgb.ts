@@ -226,7 +226,7 @@ export namespace RGB {
   export const parse: Parser<Slice<Token>, RGB, string> = map(
     Function.parse(
       (fn) => fn.value === "rgb" || fn.value === "rgba",
-      either(parseModern, parseLegacy)
+      either(parseLegacy, parseModern)
     ),
     (result) => {
       const [, [[red, green, blue], alpha]] = result;
