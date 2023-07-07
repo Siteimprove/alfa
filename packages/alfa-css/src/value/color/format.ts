@@ -1,6 +1,7 @@
 import { Real } from "@siteimprove/alfa-math";
 
 import { Number, Percentage } from "../numeric";
+import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import type { RGB } from "./rgb";
@@ -8,10 +9,10 @@ import type { RGB } from "./rgb";
 /**
  * @internal
  */
-export abstract class Format<F extends string = string> extends Value<
-  "color",
-  false
-> {
+export abstract class Format<F extends string = string>
+  extends Value<"color", false>
+  implements Resolvable<RGB.Canonical, never>
+{
   private readonly _format: F;
   protected constructor(format: F) {
     super("color", false);

@@ -128,8 +128,8 @@ export namespace RGB {
   }
 
   export function isRGB<
-    C extends Number.Fixed | Percentage.Fixed,
-    A extends Number.Fixed | Percentage.Fixed
+    C extends Number.Canonical | Percentage.Canonical,
+    A extends Number.Canonical | Percentage.Canonical
   >(value: unknown): value is RGB<C, A> {
     return value instanceof RGB;
   }
@@ -141,14 +141,10 @@ export namespace RGB {
    *
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlphaLegacy = either(Number.parseBase, Percentage.parseBase);
-  const parseAlphaModern = either<
-    Slice<Token>,
-    Number.Fixed | Percentage.Fixed,
-    string
-  >(
-    Number.parseBase,
-    Percentage.parseBase,
+  const parseAlphaLegacy = either(Number.parse, Percentage.parse);
+  const parseAlphaModern = either<Slice<Token>, Number | Percentage, string>(
+    Number.parse,
+    Percentage.parse,
     map(Keyword.parse("none"), () => Number.of(0))
   );
 
@@ -156,7 +152,7 @@ export namespace RGB {
    * Parses either a number/percentage or the keyword "none", reduce "none" to
    * the correct type, or fail if it is not allowed.
    */
-  const parseItem = <C extends Number.Fixed | Percentage.Fixed>(
+  const parseItem = <C extends Number | Percentage>(
     parser: Parser<Slice<Token>, C, string>,
     ifNone?: C
   ) =>
@@ -172,7 +168,7 @@ export namespace RGB {
    * In legacy syntax, they must be separated by a comma, in modern syntax by
    * whitespace.
    */
-  const parseTriplet = <C extends Number.Fixed | Percentage.Fixed>(
+  const parseTriplet = <C extends Number | Percentage>(
     parser: Parser<Slice<Token>, C, string>,
     separator: Parser<Slice<Token>, any, string>,
     ifNone?: C
@@ -185,7 +181,7 @@ export namespace RGB {
       ([r, [g, b]]) => [r, g, b] as const
     );
 
-  const parseLegacyTriplet = <C extends Number.Fixed | Percentage.Fixed>(
+  const parseLegacyTriplet = <C extends Number | Percentage>(
     parser: Parser<Slice<Token>, C, string>
   ) =>
     parseTriplet(
@@ -195,8 +191,8 @@ export namespace RGB {
 
   const parseLegacy = pair(
     either(
-      parseLegacyTriplet(Percentage.parseBase),
-      parseLegacyTriplet(Number.parseBase)
+      parseLegacyTriplet(Percentage.parse),
+      parseLegacyTriplet(Number.parse)
     ),
     option(
       right(
@@ -206,15 +202,15 @@ export namespace RGB {
     )
   );
 
-  const parseModernTriplet = <C extends Number.Fixed | Percentage.Fixed>(
+  const parseModernTriplet = <C extends Number | Percentage>(
     parser: Parser<Slice<Token>, C, string>,
     ifNone: C
   ) => parseTriplet(parser, option(Token.parseWhitespace), ifNone);
 
   const parseModern = pair(
     either(
-      parseModernTriplet(Percentage.parseBase, Percentage.of(0)),
-      parseModernTriplet(Number.parseBase, Number.of(0))
+      parseModernTriplet(Percentage.parse, Percentage.of(0)),
+      parseModernTriplet(Number.parse, Number.of(0))
     ),
     option(
       right(
