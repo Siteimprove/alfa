@@ -95,6 +95,8 @@
     "test/calculation/math-functions.spec.ts",
     "test/value/collection/list.spec.ts",
     "test/value/collection/tuple.spec.ts",
+    "test/value/color/hex.spec.ts",
+    "test/value/color/hsl.spec.ts",
     "test/value/color/rgb.spec.ts",
     "test/value/color/named.spec.ts",
     "test/value/gradient/radial.spec.ts",
