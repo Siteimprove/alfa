@@ -4,6 +4,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Function, Token } from "../../syntax";
+import { Keyword } from "../keyword";
 
 import { Angle, Number, Percentage } from "../numeric";
 
@@ -157,9 +158,32 @@ export namespace HSL {
    */
   const parseHue = either(Number.parseBase, Angle.parseBase);
 
-  const parseTriplet = (separator: Parser<Slice<Token>, any, string>) =>
+  const orNone = <T>(parser: Parser<Slice<Token>, T, string>) =>
+    either(
+      parser,
+      map(Keyword.parse("none"), () => Percentage.of(0))
+    );
+
+  const parseTriplet = (
+    separator: Parser<Slice<Token>, any, string>,
+    acceptNone: boolean = false
+  ) =>
     map(
-      pair(parseHue, take(right(separator, Percentage.parseBase), 2)),
+      pair(
+        acceptNone
+          ? either(
+              parseHue,
+              map(Keyword.parse("none"), () => Number.of(0))
+            )
+          : parseHue,
+        take(
+          right(
+            separator,
+            acceptNone ? orNone(Percentage.parseBase) : Percentage.parseBase
+          ),
+          2
+        )
+      ),
       ([h, [s, l]]) => [h, s, l] as const
     );
 
@@ -168,13 +192,14 @@ export namespace HSL {
    * Modern syntax is supposed to accept numbers in addition to percentages
    * for saturation and lightness. This seems to have poor browser support
    * currently, so we ignore it until we encounter it in the wild.
+   * Look at waht is done for RGB parser if need be.
    */
   const parseModern = pair(
     parseTriplet(option(Token.parseWhitespace)),
     option(
       right(
         delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-        parseAlpha
+        orNone(parseAlpha)
       )
     )
   );
