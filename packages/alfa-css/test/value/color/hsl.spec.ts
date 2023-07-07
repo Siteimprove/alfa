@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { HSL, Lexer, type RGB } from "../../../src";
+import { HSL, Lexer } from "../../../src";
 
 const parse = (str: string) => HSL.parse(Lexer.lex(str)).getUnsafe()[1];
 
@@ -91,5 +91,29 @@ test("parse() rejects `none` in legacy syntax", (t) => {
     "hsl(100, 255, 255, none)",
   ]) {
     t.deepEqual(HSL.parse(Lexer.lex(str)).isErr(), true);
+  }
+});
+
+test("parse() accepts calculations", (t) => {
+  const expected = (type: "number" | "angle") =>
+    ({
+      type: "color",
+      format: "hsl",
+      hue:
+        type === "angle"
+          ? { type: "angle", value: 0, unit: "deg" }
+          : { type: "number", value: 0 },
+      saturation: { type: "percentage", value: 1 },
+      lightness: { type: "percentage", value: 0 },
+      alpha: { type: "number", value: 0 },
+    } as HSL.JSON);
+
+  for (const [actual, type] of [
+    [parse("hsl(0 100% 0% / 0)"), "number"],
+    [parse("hsla(0 100% 0% / calc(10 - 5 + 2*3 - 11)"), "number"],
+    [parse("hsl(calc(3deg + 3deg - 6deg) 100% 0% / 0)"), "angle"],
+    [parse("hsla(0, 100%, calc(0*2%), calc(1 + 1 + 2 - 2*2))"), "number"],
+  ] as const) {
+    t.deepEqual(actual.toJSON(), expected(type));
   }
 });

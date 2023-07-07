@@ -43,6 +43,7 @@ export namespace Color {
     lightness: Percentage.Fixed,
     alpha: A
   ): HSL<H, A> {
+    // @ts-ignore
     return HSL.of(hue, saturation, lightness, alpha);
   }
 

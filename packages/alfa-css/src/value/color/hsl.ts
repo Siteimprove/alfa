@@ -11,7 +11,17 @@ import { Angle, Number, Percentage } from "../numeric";
 import { Format } from "./format";
 import type { RGB } from "./rgb";
 
-const { pair, map, either, option, left, right, take, delimited } = Parser;
+const { pair, map, either, option, right, take, delimited } = Parser;
+
+// We cannot easily use Resolvable.Resolved because Percentage may resolve to
+// anything depending on the base, here we want to keep them as percentages.
+type ToCanonical<T extends Angle | Number | Percentage> = T extends Angle
+  ? Angle.Canonical
+  : T extends Number
+  ? Number.Canonical
+  : T extends Percentage
+  ? Percentage.Canonical
+  : Number.Canonical | Percentage.Canonical;
 
 /**
  * @public
@@ -21,12 +31,22 @@ export class HSL<
   A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
 > extends Format<"hsl"> {
   public static of<
-    H extends Number.Fixed | Angle.Fixed,
-    A extends Number.Fixed | Percentage.Fixed,
-    S extends Percentage.Fixed,
-    L extends Percentage.Fixed
-  >(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A> {
-    return new HSL(hue, saturation, lightness, alpha);
+    H extends Number | Angle,
+    A extends Number | Percentage,
+    S extends Percentage,
+    L extends Percentage
+  >(
+    hue: H,
+    saturation: S,
+    lightness: L,
+    alpha: A
+  ): HSL<ToCanonical<H>, ToCanonical<A>> {
+    return new HSL(
+      hue.resolve() as ToCanonical<H>,
+      saturation.resolve(),
+      lightness.resolve(),
+      alpha.resolve() as ToCanonical<A>
+    );
   }
 
   private readonly _hue: H;
@@ -151,12 +171,12 @@ export namespace HSL {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlpha = either(Number.parseBase, Percentage.parseBase);
+  const parseAlpha = either(Number.parse, Percentage.parse);
 
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-hue}
    */
-  const parseHue = either(Number.parseBase, Angle.parseBase);
+  const parseHue = either(Number.parse, Angle.parse);
 
   const orNone = <T>(parser: Parser<Slice<Token>, T, string>) =>
     either(
@@ -179,7 +199,7 @@ export namespace HSL {
         take(
           right(
             separator,
-            acceptNone ? orNone(Percentage.parseBase) : Percentage.parseBase
+            acceptNone ? orNone(Percentage.parse) : Percentage.parse
           ),
           2
         )
