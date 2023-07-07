@@ -34,6 +34,16 @@ export class RGB<
   A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
 > extends Format<"rgb"> {
   public static of<
+    C extends Number.Canonical | Percentage.Canonical,
+    A extends Number.Canonical | Percentage.Canonical
+  >(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
+
+  public static of<
+    C extends Number | Percentage,
+    A extends Number | Percentage
+  >(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>>;
+
+  public static of<
     C extends Number | Percentage,
     A extends Number | Percentage
   >(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>> {

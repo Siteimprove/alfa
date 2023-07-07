@@ -35,15 +35,14 @@ export namespace Color {
   }
 
   export function hsl<
-    H extends Number.Fixed | Angle.Fixed,
-    A extends Number.Fixed | Percentage.Fixed
+    H extends Number.Canonical | Angle.Canonical,
+    A extends Number.Canonical | Percentage.Canonical
   >(
     hue: H,
-    saturation: Percentage.Fixed,
-    lightness: Percentage.Fixed,
+    saturation: Percentage.Canonical,
+    lightness: Percentage.Canonical,
     alpha: A
   ): HSL<H, A> {
-    // @ts-ignore
     return HSL.of(hue, saturation, lightness, alpha);
   }
 
@@ -52,10 +51,9 @@ export namespace Color {
   }
 
   export function rgb<
-    C extends Number.Fixed | Percentage.Fixed,
-    A extends Number.Fixed | Percentage.Fixed
+    C extends Number.Canonical | Percentage.Canonical,
+    A extends Number.Canonical | Percentage.Canonical
   >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
-    // @ts-ignore
     return RGB.of(red, green, blue, alpha);
   }
 
@@ -66,12 +64,13 @@ export namespace Color {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-color}
    */
-  export const parse: Parser<Slice<Token>, Color, string> = either(
+  export const parse = either<Slice<Token>, Color, string>(
     Hex.parse,
-    either(
-      Named.parse,
-      either(either(RGB.parse, HSL.parse), either(Current.parse, System.parse))
-    )
+    Named.parse,
+    RGB.parse,
+    HSL.parse,
+    Current.parse,
+    System.parse
   );
 
   export function isTransparent(color: Color): boolean {

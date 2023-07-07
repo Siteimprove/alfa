@@ -21,7 +21,7 @@ type ToCanonical<T extends Angle | Number | Percentage> = T extends Angle
   ? Number.Canonical
   : T extends Percentage
   ? Percentage.Canonical
-  : Number.Canonical | Percentage.Canonical;
+  : Angle.Canonical | Number.Canonical | Percentage.Canonical;
 
 /**
  * @public
@@ -30,6 +30,25 @@ export class HSL<
   H extends Number.Fixed | Angle.Fixed = Number.Fixed | Angle.Fixed,
   A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
 > extends Format<"hsl"> {
+  public static of<
+    H extends Number.Canonical | Angle.Canonical,
+    A extends Number.Canonical | Percentage.Canonical,
+    S extends Percentage,
+    L extends Percentage
+  >(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A>;
+
+  public static of<
+    H extends Number | Angle,
+    A extends Number | Percentage,
+    S extends Percentage,
+    L extends Percentage
+  >(
+    hue: H,
+    saturation: S,
+    lightness: L,
+    alpha: A
+  ): HSL<ToCanonical<H>, ToCanonical<A>>;
+
   public static of<
     H extends Number | Angle,
     A extends Number | Percentage,
