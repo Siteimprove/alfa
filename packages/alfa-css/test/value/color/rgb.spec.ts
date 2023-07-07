@@ -4,7 +4,7 @@ import { Lexer, RGB } from "../../../src";
 
 const parse = (str: string) => RGB.parse(Lexer.lex(str)).getUnsafe()[1];
 
-test("parse() legacy syntax with numbers", (t) => {
+test("parse() accepts legacy syntax with numbers", (t) => {
   const expected: RGB.JSON = {
     type: "color",
     format: "rgb",
@@ -25,7 +25,7 @@ test("parse() legacy syntax with numbers", (t) => {
   }
 });
 
-test("parse() legacy syntax with percentages", (t) => {
+test("parse() accepts legacy syntax with percentages", (t) => {
   const expected: RGB.JSON = {
     type: "color",
     format: "rgb",
@@ -45,7 +45,7 @@ test("parse() legacy syntax with percentages", (t) => {
   }
 });
 
-test("parse() modern syntax with numbers", (t) => {
+test("parse() accepts modern syntax with numbers", (t) => {
   const expected: RGB.JSON = {
     type: "color",
     format: "rgb",
@@ -65,7 +65,7 @@ test("parse() modern syntax with numbers", (t) => {
   }
 });
 
-test("parse() modern syntax with percentage", (t) => {
+test("parse() accepts modern syntax with percentage", (t) => {
   const expected: RGB.JSON = {
     type: "color",
     format: "rgb",
