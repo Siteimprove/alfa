@@ -192,10 +192,10 @@ export namespace HSL {
    * Modern syntax is supposed to accept numbers in addition to percentages
    * for saturation and lightness. This seems to have poor browser support
    * currently, so we ignore it until we encounter it in the wild.
-   * Look at waht is done for RGB parser if need be.
+   * Look at what is done for RGB parser if need be.
    */
   const parseModern = pair(
-    parseTriplet(option(Token.parseWhitespace)),
+    parseTriplet(option(Token.parseWhitespace), true),
     option(
       right(
         delimited(option(Token.parseWhitespace), Token.parseDelim("/")),

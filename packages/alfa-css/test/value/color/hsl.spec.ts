@@ -77,7 +77,7 @@ test("parse() accepts `none` in modern syntax", (t) => {
     parse("hsl(0 100% 0% / 0%)"),
     parse("hsla(0 100% 0% / none)"),
     parse("hsl(none 100% 0% / 0%)"),
-    parse("hsla(0 100% none/ none)"),
+    parse("hsla(0 100% none / none)"),
   ] as const) {
     t.deepEqual(actual.toJSON(), expected);
   }
