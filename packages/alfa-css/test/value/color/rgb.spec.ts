@@ -103,13 +103,13 @@ test("parse() accepts `none` in modern syntax", (t) => {
     red: { type: type, value: 0 },
     green: { type: type, value: type === "number" ? 255 : 1 },
     blue: { type: type, value: 0 },
-    alpha: { type: "number", value: 0 },
+    alpha: { type: "percentage", value: 0 },
   });
 
   for (const [actual, type] of [
-    [parse("rgb(0% 100% 0% / 0)"), "percentage"],
+    [parse("rgb(0% 100% 0% / 0%)"), "percentage"],
     [parse("rgba(0 255 0 / none)"), "number"],
-    [parse("rgb(none 100% 0% / 0)"), "percentage"],
+    [parse("rgb(none 100% 0% / 0%)"), "percentage"],
     [parse("rgba(0 255 none/ none)"), "number"],
   ] as const) {
     t.deepEqual(actual.toJSON(), expected(type));

@@ -7,6 +7,11 @@ import { Value } from "../value";
 import type { RGB } from "./rgb";
 
 /**
+ * @remarks
+ * While colors can be calculated, they only use numbers and raw percentages.
+ * Therefore, the calculations can be fully resolved at parse time and do not
+ * need to be stored.
+ *
  * @internal
  */
 export abstract class Format<F extends string = string>
@@ -23,11 +28,11 @@ export abstract class Format<F extends string = string>
     return this._format;
   }
 
-  public abstract get red(): Number.Fixed | Percentage.Fixed;
+  public abstract get red(): Number.Canonical | Percentage.Canonical;
 
-  public abstract get green(): Number.Fixed | Percentage.Fixed;
+  public abstract get green(): Number.Canonical | Percentage.Canonical;
 
-  public abstract get blue(): Number.Fixed | Percentage.Fixed;
+  public abstract get blue(): Number.Canonical | Percentage.Canonical;
 
   public abstract resolve(): RGB.Canonical;
 

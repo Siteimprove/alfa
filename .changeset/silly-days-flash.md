@@ -2,4 +2,4 @@
 "@siteimprove/alfa-css": patch
 ---
 
-**Fixed:** RGB colors now also accept the `none` keyword for any component when in modern syntax.
+**Fixed:** HSL and RGB colors now also accept the `none` keyword for any component when in modern syntax.

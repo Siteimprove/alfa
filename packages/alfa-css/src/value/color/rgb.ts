@@ -24,14 +24,25 @@ type ToCanonical<T extends Number | Percentage> = T extends Number
  * @public
  */
 export class RGB<
-  // These should actually use the aliases `.Canonical` instead.
+  // These should actually use the aliases `Percentage.Canonical` instead.
   // However, that triggers
   // error TS2589: Type instantiation is excessively deep and possibly infinite.
   // in an unrelated place.
   // We are likely very close to the TS instantiation limit, and using aliases
   // triggers it.
-  C extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
-  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
+  // This is probably a combination of the fact that percentages can resolve to
+  // different things (creating more instantiations?) and the "color[]" type in
+  // alfa-rules Questions that also get instantiated a lot (?) There might be
+  // some combinatorics explosion of instantiations leading to this, especially
+  // in nested interviews (?) It might be possible to solve it by giving the
+  // correct depth indication to TS at interview build time and ease the
+  // instantiation process (?)
+  C extends Number.Canonical | Percentage.Canonical =
+    | Number.Canonical
+    | Percentage.Fixed,
+  A extends Number.Canonical | Percentage.Canonical =
+    | Number.Canonical
+    | Percentage.Fixed
 > extends Format<"rgb"> {
   public static of<
     C extends Number.Canonical | Percentage.Canonical,
@@ -130,6 +141,7 @@ export class RGB<
  */
 export namespace RGB {
   export type Canonical = RGB<Percentage.Canonical, Percentage.Canonical>;
+
   export interface JSON extends Format.JSON<"rgb"> {
     red: Number.Fixed.JSON | Percentage.Fixed.JSON;
     green: Number.Fixed.JSON | Percentage.Fixed.JSON;
@@ -146,7 +158,7 @@ export namespace RGB {
 
   /**
    * @remarks
-   * While the three R, G, B component must be either all numbers or all
+   * While the three R, G, B components must be either all numbers or all
    * percentage, the alpha component can be either independently.
    *
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
@@ -155,12 +167,12 @@ export namespace RGB {
   const parseAlphaModern = either<Slice<Token>, Number | Percentage, string>(
     Number.parse,
     Percentage.parse,
-    map(Keyword.parse("none"), () => Number.of(0))
+    map(Keyword.parse("none"), () => Percentage.of(0))
   );
 
   /**
-   * Parses either a number/percentage or the keyword "none", reduce "none" to
-   * the correct type, or fail if it is not allowed.
+   * Parses either a number/percentage or the keyword "none", reduces "none" to
+   * the correct type, or fails if it is not allowed.
    */
   const parseItem = <C extends Number | Percentage>(
     parser: Parser<Slice<Token>, C, string>,
