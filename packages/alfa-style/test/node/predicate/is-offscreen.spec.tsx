@@ -73,7 +73,14 @@ test(`isOffscreen() returns false for elements that can be brought on screen by 
     <div box={{ x: 10000, y: 0, width: 100, height: 10 }}>Hello world</div>
   );
 
-  const container = <div style={{ overflowX: "visible" }}>{element}</div>;
+  const _ = (
+    <div
+      box={{ x: 0, y: 0, width: 200, height: 10 }}
+      style={{ overflowX: "visible" }}
+    >
+      {element}
+    </div>
+  );
 
   t.deepEqual(isOffscreen(element), false);
 });
@@ -83,7 +90,14 @@ test(`isOffscreen() returns true for elements that cannot be brought on screen b
     <div box={{ x: 10000, y: 0, width: 100, height: 10 }}>Hello world</div>
   );
 
-  const container = <div style={{ overflowX: "clip" }}>{element}</div>;
+  const _ = (
+    <div
+      box={{ x: 0, y: 0, width: 200, height: 10 }}
+      style={{ overflowX: "clip" }}
+    >
+      {element}
+    </div>
+  );
 
   t.deepEqual(isOffscreen(element), true);
 });

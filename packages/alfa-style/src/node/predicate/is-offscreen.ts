@@ -97,9 +97,10 @@ function isOffscreenLayout(element: Element, device: Device): boolean {
 
       if (["auto", "scroll", "visible"].includes(overflow)) {
         // The ancestor creates a scrollbar which can show the element.
-        return true;
+        return false;
       }
     }
+    ancestor = getPositioningParent(target, device);
   }
 
   // The element wasn't itself intersecting the (extended) viewport, and we couldn't
