@@ -1,7 +1,6 @@
 import { Color, Keyword } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
 
 type Specified = Color | Keyword<"invert">;
 
@@ -20,6 +19,6 @@ export default Longhand.of<Specified, Computed>(
         return color;
       }
 
-      return Resolver.color(color);
+      return color.resolve();
     })
 );

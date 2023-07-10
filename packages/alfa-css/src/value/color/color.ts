@@ -39,8 +39,8 @@ export namespace Color {
     A extends Number.Canonical | Percentage.Canonical
   >(
     hue: H,
-    saturation: Percentage.Canonical,
-    lightness: Percentage.Canonical,
+    saturation: Percentage,
+    lightness: Percentage,
     alpha: A
   ): HSL<H, A> {
     return HSL.of(hue, saturation, lightness, alpha);

@@ -56,6 +56,9 @@ export namespace Format {
     );
   }
 
+  /**
+   * {@link https://drafts.csswg.org/css-color/#resolving-color-values}
+   */
   export function resolve(
     red: Number.Canonical | Percentage.Canonical,
     green: Number.Canonical | Percentage.Canonical,

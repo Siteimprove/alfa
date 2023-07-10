@@ -1,7 +1,6 @@
-import { Color, Keyword } from "@siteimprove/alfa-css";
+import { Color } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
 
 /**
  * @internal
@@ -19,8 +18,6 @@ export const parse = Color.parse;
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/border-top-color}
  * @internal
  */
-export default Longhand.of<Specified, Computed>(
-  Keyword.of("currentcolor"),
-  parse,
-  (value) => value.map((color) => Resolver.color(color))
+export default Longhand.of<Specified, Computed>(Color.current, parse, (value) =>
+  value.map((color) => color.resolve())
 );
