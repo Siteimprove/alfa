@@ -253,12 +253,14 @@
     { "path": "../alfa-option" },
     { "path": "../alfa-parser" },
     { "path": "../alfa-predicate" },
+    { "path": "../alfa-rectangle" },
     { "path": "../alfa-refinement" },
     { "path": "../alfa-result" },
     { "path": "../alfa-selective" },
     { "path": "../alfa-selector" },
     { "path": "../alfa-set" },
     { "path": "../alfa-slice" },
-    { "path": "../alfa-test" }
+    { "path": "../alfa-test" },
+    { "path": "../alfa-trilean" }
   ]
 }
