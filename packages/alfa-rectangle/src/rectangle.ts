@@ -8,9 +8,9 @@ const { max, min } = Math;
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/API/DOMRect}
- * 
+ *
  * @remarks
- * The y axis in the coordinate system on the HTML canvas is inverted so that 
+ * The y axis in the coordinate system on the HTML canvas is inverted so that
  * the y coordinates gets bigger further down the page.
  *
  * @public

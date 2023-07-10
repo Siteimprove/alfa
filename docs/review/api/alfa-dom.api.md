@@ -262,6 +262,8 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get attributes(): Sequence<Attribute>;
     // (undocumented)
+    get box(): Option<Rectangle>;
+    // (undocumented)
     children(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
     get classes(): Sequence<string>;
@@ -278,15 +280,13 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, rectangle?: Option<Rectangle>): Element<N>;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, box?: Option<Rectangle>): Element<N>;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
     get prefix(): Option<string>;
     // (undocumented)
     get qualifiedName(): string;
-    // (undocumented)
-    get rectangle(): Option<Rectangle>;
     // (undocumented)
     get shadow(): Option<Shadow>;
     // (undocumented)
@@ -309,6 +309,8 @@ export namespace Element {
     export interface JSON<N extends string = string> extends Node.JSON<"element"> {
         // (undocumented)
         attributes: Array<Attribute.JSON>;
+        // (undocumented)
+        box: Rectangle.JSON | null;
         // (undocumented)
         content: Document.JSON | null;
         // (undocumented)
@@ -439,7 +441,7 @@ export namespace GroupingRule {
 }
 
 // @public (undocumented)
-export function h<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>): Element<N>;
+export function h<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, box?: Rectangle): Element<N>;
 
 // @public (undocumented)
 export namespace h {
@@ -452,7 +454,7 @@ export namespace h {
     // (undocumented)
     export function document(children: Array<Node | string>, style?: Array<Sheet>): Document;
     // (undocumented)
-    export function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace): Element<N>;
+    export function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace, box?: Rectangle): Element<N>;
     // (undocumented)
     export function fragment(children: Array<Node | string>): Fragment;
     // (undocumented)
