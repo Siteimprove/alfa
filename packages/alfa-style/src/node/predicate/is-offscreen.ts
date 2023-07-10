@@ -12,7 +12,7 @@ import { Style } from "../../style";
 
 const { hasBox, isElement } = Element;
 const { abs } = Math;
-const { and, or } = Predicate;
+const { and, or, not } = Predicate;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
@@ -30,7 +30,7 @@ export function isOffscreen(
       .get(node, () => {
         if (isElement(node)) {
           if (node.box.isSome() && context === Context.empty()) {
-            return isOffscreenLayout(node, device);
+            return !isOnscreenLayout(node, device);
           } else {
             const style = Style.from(node, device, context);
 
@@ -46,6 +46,8 @@ export function isOffscreen(
   };
 }
 
+const scrollableQuadrant = Rectangle.of(0, 0, Infinity, Infinity);
+
 /**
  * @remarks
  * We assume that the layout was gathered with an empty context and therefore
@@ -58,42 +60,26 @@ export function isOffscreen(
  * be scrolled to. We assume there is always a way to scroll to the bottom, but
  * we do search for explicit scroll bar on ancestors' overflow for right.
  */
-function isOffscreenLayout(element: Element, device: Device): boolean {
+function isOnscreenLayout(element: Element, device: Device): boolean {
   // By definition, the viewport top-left corner is (0, 0).
   // We assume that most elements are on screen and order tests to try and
   // avoid unnecessarily work.
-
-  // At first, we check whether the element's box intersects an infinitely high
-  // rectangle extending the viewport to the bottom.
-  // If yes, then the element can be brought into viewport by vertical scrolling
-  // which, we assume, is not restricted.
   const extendedViewport = Rectangle.of(0, 0, device.viewport.width, Infinity);
 
-  if (element.box.some((box) => box.intersects(extendedViewport))) {
-    return false;
-  }
-
-  // Next, we also extend the viewport infinitely to the right.
-  // If the element's box does not intersect this, then the element is quite
-  // surely out of viewport (to the left or to the top).
-  const scrollableViewport = Rectangle.of(0, 0, Infinity, Infinity);
-
-  if (element.box.none((box) => box.intersects(scrollableViewport))) {
-    return true;
-  }
-
-  // At this point, the element can only be to the right of the viewport. We need
-  // to see if some (positioning) ancestor creates a scrollbar **and** is itself
-  // intersecting the (extended) viewport.
-  // Note: there might a be another ancestor in the way that is clipping the
-  // element away. This is handled by isClipped and is ignored here.
-  if (hasPositioningParent(device, isOnscreenAndScrolling(device))(element)) {
-    return false;
-  }
-
-  // The element wasn't itself intersecting the (extended) viewport, and we couldn't
-  // find any ancestor creating a scrollbar. So the element is fully offscreen.
-  return true;
+  return or(
+    // At first, we check whether the element's box intersects an infinitely high
+    // rectangle extending the viewport to the bottom.
+    // If yes, then the element can be brought into viewport by vertical scrolling
+    // which, we assume, is not restricted.
+    hasBox((box) => box.intersects(extendedViewport)),
+    // Next, we search whether the element is in the scrollable quadrant (extends
+    // to the bottom and right), and has a positioning ancestor that creates
+    // the needed horizontal scrolling.
+    and(
+      hasBox((box) => box.intersects(scrollableQuadrant)),
+      hasPositioningParent(device, isOnscreenAndScrolling(device))
+    )
+  )(element);
 }
 
 const onscreenAndScrollingCache = Cache.empty<
@@ -101,6 +87,10 @@ const onscreenAndScrollingCache = Cache.empty<
   Cache<Element, boolean>
 >();
 
+/**
+ * Checks if an element is on the (extended) viewport and creates or inherits
+ * an horizontal scrollbar to see it's offscreen (to the right) content.
+ */
 function isOnscreenAndScrolling(device: Device): Predicate<Element> {
   const extendedViewport = Rectangle.of(0, 0, device.viewport.width, Infinity);
 
@@ -118,6 +108,7 @@ function isOnscreenAndScrolling(device: Device): Predicate<Element> {
             device
           )
         ),
+        // Otherwise, jump to the positioning parent and try again.
         hasPositioningParent(device, predicate)
       )(element)
     );
