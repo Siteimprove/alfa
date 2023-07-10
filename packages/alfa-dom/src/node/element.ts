@@ -34,7 +34,7 @@ export class Element<N extends string = string>
     attributes: Iterable<Attribute> = [],
     children: Iterable<Node> = [],
     style: Option<Block> = None,
-    rectangle: Option<Rectangle> = None
+    box: Option<Rectangle> = None
   ): Element<N> {
     return new Element(
       namespace,
@@ -43,7 +43,7 @@ export class Element<N extends string = string>
       Array.from(attributes),
       Array.from(children),
       style,
-      rectangle
+      box
     );
   }
 
@@ -141,7 +141,7 @@ export class Element<N extends string = string>
     return Sequence.from(this._classes);
   }
 
-  public get rectangle(): Option<Rectangle> {
+  public get box(): Option<Rectangle> {
     return this._box;
   }
 
@@ -312,6 +312,7 @@ export class Element<N extends string = string>
       style: this._style.map((style) => style.toJSON()).getOr(null),
       shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
       content: this._content.map((content) => content.toJSON()).getOr(null),
+      box: this._box.map((box) => box.toJSON()).getOr(null),
     };
   }
 
@@ -381,6 +382,7 @@ export namespace Element {
     style: Block.JSON | null;
     shadow: Shadow.JSON | null;
     content: Document.JSON | null;
+    box: Rectangle.JSON | null;
   }
 
   export function isElement(value: unknown): value is Element {
@@ -405,7 +407,8 @@ export namespace Element {
           children,
           json.style?.length === 0
             ? None
-            : Option.from(json.style).map(Block.from)
+            : Option.from(json.style).map(Block.from),
+          Option.from(json.box).map(Rectangle.from)
         );
 
         if (json.shadow !== null) {
