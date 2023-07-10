@@ -60,6 +60,34 @@ test(`isOffscreen() returns false for elements that partially intersect the view
   t.deepEqual(isOffscreen(element), false);
 });
 
+test(`isOffscreen() returns false for elements that far away to the bottom of the page`, (t) => {
+  const element = (
+    <div box={{ x: 100, y: 100000, width: 100, height: 10 }}>Hello world</div>
+  );
+
+  t.deepEqual(isOffscreen(element), false);
+});
+
+test(`isOffscreen() returns false for elements that can be brought on screen by horizontal scrolling`, (t) => {
+  const element = (
+    <div box={{ x: 10000, y: 0, width: 100, height: 10 }}>Hello world</div>
+  );
+
+  const container = <div style={{ overflowX: "visible" }}>{element}</div>;
+
+  t.deepEqual(isOffscreen(element), false);
+});
+
+test(`isOffscreen() returns true for elements that cannot be brought on screen by horizontal scrolling`, (t) => {
+  const element = (
+    <div box={{ x: 10000, y: 0, width: 100, height: 10 }}>Hello world</div>
+  );
+
+  const container = <div style={{ overflowX: "clip" }}>{element}</div>;
+
+  t.deepEqual(isOffscreen(element), true);
+});
+
 /*************************************************************************
  *
  * Checks **without** boxes. These use the fallback heuristics.
