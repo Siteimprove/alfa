@@ -6,12 +6,13 @@ import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Context } from "@siteimprove/alfa-selector";
 import { Trilean } from "@siteimprove/alfa-trilean";
 
-import { getPositioningParent } from "../../element/element";
+import { hasComputedStyle, hasPositioningParent } from "../../element/element";
 
 import { Style } from "../../style";
 
+const { hasBox, isElement } = Element;
 const { abs } = Math;
-const { isElement } = Element;
+const { and, or } = Predicate;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
@@ -86,26 +87,41 @@ function isOffscreenLayout(element: Element, device: Device): boolean {
   // intersecting the (extended) viewport.
   // Note: there might a be another ancestor in the way that is clipping the
   // element away. This is handled by isClipped and is ignored here.
-  let ancestor = getPositioningParent(element, device);
-  while (ancestor.isSome()) {
-    const target = ancestor.get();
-
-    if (target.box.some((box) => box.intersects(extendedViewport))) {
-      // We've found an ancestor which intersects the extended viewport.
-      const overflow = Style.from(target, device).computed("overflow-x").value
-        .value;
-
-      if (["auto", "scroll", "visible"].includes(overflow)) {
-        // The ancestor creates a scrollbar which can show the element.
-        return false;
-      }
-    }
-    ancestor = getPositioningParent(target, device);
+  if (hasPositioningParent(device, isOnscreenAndScrolling(device))(element)) {
+    return false;
   }
 
   // The element wasn't itself intersecting the (extended) viewport, and we couldn't
   // find any ancestor creating a scrollbar. So the element is fully offscreen.
   return true;
+}
+
+const onscreenAndScrollingCache = Cache.empty<
+  Device,
+  Cache<Element, boolean>
+>();
+
+function isOnscreenAndScrolling(device: Device): Predicate<Element> {
+  const extendedViewport = Rectangle.of(0, 0, device.viewport.width, Infinity);
+
+  return function predicate(element): boolean {
+    return onscreenAndScrollingCache.get(device, Cache.empty).get(element, () =>
+      or(
+        and(
+          // Does the element intersect the extended viewport?
+          hasBox((box) => box.intersects(extendedViewport)),
+          // And does it create a scrollbar which can show the element?
+          hasComputedStyle(
+            "overflow-x",
+            (overflow) =>
+              ["auto", "scroll", "visible"].includes(overflow.value),
+            device
+          )
+        ),
+        hasPositioningParent(device, predicate)
+      )(element)
+    );
+  };
 }
 
 /**
