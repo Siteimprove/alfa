@@ -85,8 +85,15 @@ export class Shadow<
     return this._isInset;
   }
 
-  public resolve(): Shadow<H, V, B, S, C> {
-    return this;
+  public resolve(resolver: Length.Resolver): Shadow.Canonical {
+    return new Shadow(
+      this._horizontal.resolve(resolver),
+      this._vertical.resolve(resolver),
+      this._blur.resolve(resolver),
+      this._spread.resolve(resolver),
+      this._color.resolve(),
+      this._isInset
+    );
   }
   public equals(value: unknown): value is this {
     return (
