@@ -1,7 +1,8 @@
 import { h } from "./h";
 
-import { Node, Element } from ".";
+import { Element, Node } from ".";
 
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import * as dom from ".";
 
 const { entries } = Object;
@@ -16,6 +17,7 @@ export function jsx<N extends string = string>(
 ): Element<N> {
   const attributes: Record<string, string | boolean> = {};
   const style: Record<string, string> = {};
+  let box: Rectangle | undefined = undefined;
 
   for (const [name, value] of entries(properties ?? {})) {
     if (value === null || value === undefined) {
@@ -30,6 +32,10 @@ export function jsx<N extends string = string>(
 
         continue;
 
+      case "box":
+        box = Rectangle.from(value as Rectangle.JSON);
+        continue;
+
       default:
         attributes[name] = value === true ? value : `${value}`;
     }
@@ -39,7 +45,8 @@ export function jsx<N extends string = string>(
     name,
     attributes,
     (children as Array<jsx.Child>).flat(Infinity),
-    style
+    style,
+    box
   );
 }
 
