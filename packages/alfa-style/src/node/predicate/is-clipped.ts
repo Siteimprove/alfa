@@ -1,5 +1,5 @@
 import { Cache } from "@siteimprove/alfa-cache";
-import { LengthPercentage } from "@siteimprove/alfa-css";
+import { Length, LengthPercentage, Numeric } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -101,63 +101,31 @@ function isClippedBySize(
     // enough room in it to show the content?
     const hasScrollBar = x === "scroll" || y === "scroll";
 
-    // Is the element reduced to nothingness in the horizontal axis?
-    switch (x) {
-      case "visible":
-        // The horizontal overflow is visible
-        break;
-      case "clip":
-      case "hidden":
-        // The horizontal overflow is clipped, is the element small enough to
-        // be considered invisible?
-        if (width.type === "percentage" && width.value <= 0) {
-          // width: 0%
-          return true;
-        }
-        if (width.type === "length" && width.value <= (hasScrollBar ? 0 : 1)) {
-          // "width: 0px" (and no vertical scrollbar) or "width: 1px"
-          return true;
-        }
-        break;
-      case "auto":
-      case "scroll":
-        // The horizontal overflow creates a scrollbar, is the element small
-        // enough to hide it anyway?
-        if (width.type !== "keyword" && width.value <= 0) {
-          return true;
-        }
-        break;
-    }
+    for (const [axis, dimension] of [
+      [x, width],
+      [y, height],
+    ] as const) {
+      // Is the element reduced to nothingness in this axis?
+      if (axis === "visible") {
+        // The content overflows in this axis, go to next axis.
+        continue;
+      }
 
-    // Is the element reduced to nothingness in the vertical axis?
-    switch (y) {
-      case "visible":
-        // The vertical overflow is visible
-        break;
-      case "clip":
-      case "hidden":
-        // The vertical overflow is clipped, is the element small enough to
-        // be considered invisible?
-        if (height.type === "percentage" && height.value <= 0) {
-          // height: 0%
-          return true;
-        }
-        if (
-          height.type === "length" &&
-          height.value <= (hasScrollBar ? 0 : 1)
-        ) {
-          // "height: 0px" (and no horizontal scrollbar) or "height: 1px"
-          return true;
-        }
-        break;
-      case "auto":
-      case "scroll":
-        // The vertical overflow creates a scrollbar, is the element small
-        // enough to hide it anyway?
-        if (height.type !== "keyword" && height.value <= 0) {
-          return true;
-        }
-        break;
+      if (Numeric.isNumeric(dimension) && Numeric.isZero(dimension)) {
+        // "dimension: 0%" or "dimension: 0px", nothing shows nor overflows
+        return true;
+      }
+
+      if (
+        !hasScrollBar &&
+        (axis === "clip" || axis === "hidden") &&
+        Length.isLength(dimension) &&
+        dimension.value <= 1
+      ) {
+        // "dimension: 1px" and there is no scrollbar in the other axis
+        // (nor in this axis, since the overflow doesn't create one)
+        return true;
+      }
     }
 
     return false;
