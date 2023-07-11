@@ -58,6 +58,14 @@ export function isClipped(
  * somehow hidden.
  *
  * @remarks
+ * Although 1px is theoretically visible, many clipping technique reduce size to
+ * 1px instead of 0. Thus we consider that it is enough.
+ *
+ * @remarks
+ * Most clipping techniques reduce both axis to 0 or 1 px, not just one. This, on
+ * overall, tends to make this check a bit more robust.
+ *
+ * @remarks
  * Clipping occurs at the border, thus including the padding. It is possible
  * for an element to clip overflow, and have a width/height of 0, yet still show
  * content in its padding area. This should probably also look into padding size.
@@ -69,49 +77,87 @@ export function isClipped(
  * The boxes we get with getBoundingClientRect include padding (and border).
  * Thus, when these boxes have width/height of 0 and the content is clipped, we
  * are fairly sure that nothing shows.
+ *
+ * @remarks
+ * We mostly work on a per-dimension basis. In each axis, check whether the size
+ * is 0 or 1; and whether the corresponding overflow is clip or hidden.
+ * However, the presence of a guaranteed scrollbar (overflow of "scroll") in *any*
+ * dimension will always show something in a 1px size, so we consider these as
+ * not clipped.
  */
 function isClippedBySize(
   device: Device,
   context: Context = Context.empty()
 ): Predicate<Element> {
   return function isClipped(element: Element): boolean {
+    // Gathering the required style properties.
     const style = Style.from(element, device, context);
+    const x = style.computed("overflow-x").value.value;
+    const y = style.computed("overflow-y").value.value;
+    const width = style.computed("width").value;
+    const height = style.computed("height").value;
 
-    const {
-      value: { value: x },
-    } = style.computed("overflow-x");
-    const {
-      value: { value: y },
-    } = style.computed("overflow-y");
+    // Does the element always show a scrollbar, no matter whether there is
+    // enough room in it to show the content?
+    const hasScrollBar = x === "scroll" || y === "scroll";
 
-    const { value: height } = style.computed("height");
-    const { value: width } = style.computed("width");
-
-    const hasNoScrollBar =
-      (x !== "auto" && x !== "scroll") || (y !== "auto" && y !== "scroll");
-
-    if (x !== "visible" || y !== "visible") {
-      for (const dimension of [height, width]) {
-        switch (dimension.type) {
-          case "percentage":
-            if (dimension.value <= 0) {
-              return true;
-            } else {
-              break;
-            }
-
-          // Technically, 1×1 elements are (possibly) visible since they
-          // show one pixel of background. We assume this is used to hide
-          // elements and that the background is the same as the surrounding
-          // one.
-          case "length":
-            if (dimension.value <= (hasNoScrollBar ? 1 : 0)) {
-              return true;
-            } else {
-              break;
-            }
+    // Is the element reduced to nothingness in the horizontal axis?
+    switch (x) {
+      case "visible":
+        // The horizontal overflow is visible
+        break;
+      case "clip":
+      case "hidden":
+        // The horizontal overflow is clipped, is the element small enough to
+        // be considered invisible?
+        if (width.type === "percentage" && width.value <= 0) {
+          // width: 0%
+          return true;
         }
-      }
+        if (width.type === "length" && width.value <= (hasScrollBar ? 0 : 1)) {
+          // "width: 0px" (and no vertical scrollbar) or "width: 1px"
+          return true;
+        }
+        break;
+      case "auto":
+      case "scroll":
+        // The horizontal overflow creates a scrollbar, is the element small
+        // enough to hide it anyway?
+        if (width.type !== "keyword" && width.value <= 0) {
+          return true;
+        }
+        break;
+    }
+
+    // Is the element reduced to nothingness in the vertical axis?
+    switch (y) {
+      case "visible":
+        // The vertical overflow is visible
+        break;
+      case "clip":
+      case "hidden":
+        // The vertical overflow is clipped, is the element small enough to
+        // be considered invisible?
+        if (height.type === "percentage" && height.value <= 0) {
+          // height: 0%
+          return true;
+        }
+        if (
+          height.type === "length" &&
+          height.value <= (hasScrollBar ? 0 : 1)
+        ) {
+          // "height: 0px" (and no horizontal scrollbar) or "height: 1px"
+          return true;
+        }
+        break;
+      case "auto":
+      case "scroll":
+        // The vertical overflow creates a scrollbar, is the element small
+        // enough to hide it anyway?
+        if (height.type !== "keyword" && height.value <= 0) {
+          return true;
+        }
+        break;
     }
 
     return false;

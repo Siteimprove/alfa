@@ -25,38 +25,27 @@ test(`isClipped() returns true when an element is hidden by reducing its size
     for (const element of [
       target({ width: "0", overflowX: overflow }),
       target({ height: "0", overflowY: overflow }),
-      target({
-        width: "0",
-        height: "0",
-        overflow,
-      }),
+      target({ width: "0", height: "0", overflow }),
     ]) {
       t.equal(isClipped(element), true);
     }
   }
 });
 
-// test(`isClipped() returns false when an element is not hidden by reducing its size
-//       to 0 and clipping overflow in the other dimension`, (t) => {
-//   for (const crossOverflow of ["clip", "hidden"]) {
-//     for (const sameOverflow of ["auto", "scroll", "visible"]) {
-//       for (const element of [
-//         target({
-//           width: "0",
-//           overflowX: sameOverflow,
-//           overflowY: crossOverflow,
-//         }),
-//         target({
-//           height: "0",
-//           overflowX: crossOverflow,
-//           overflowY: sameOverflow,
-//         }),
-//       ]) {
-//         t.equal(isClipped(element), false);
-//       }
-//     }
-//   }
-// });
+/**
+ * @remarks
+ * If the cross overflow is set to "hidden" instead, then the (default) "visible"
+ * in the same dimension computes to "auto" resulting in a clipped element.
+ */
+test(`isClipped() returns false when an element is not hidden by reducing its size
+      to 0 and clipping overflow in the other dimension but overflowing in the same`, (t) => {
+  for (const element of [
+    target({ width: "0", overflowY: "clip" }),
+    target({ height: "0", overflowX: "clip" }),
+  ]) {
+    t.equal(isClipped(element), false);
+  }
+});
 
 test(`isClipped() returns true when an element is hidden by reducing its size
       to 1x1 pixels and clipping overflow`, (t) => {
@@ -66,16 +55,16 @@ test(`isClipped() returns true when an element is hidden by reducing its size
   }
 });
 
-// test(`isClipped() returns false when an element is reduced to 1px in any dimension, and shows a scrollbar in any dimension`, (t) => {
-//   for (const element of [
-//     target({ width: "1px", overflowX: "scroll", overflowY: "clip" }),
-//     target({ height: "1px", overflowX: "scroll", overflowY: "clip" }),
-//     target({ width: "1px", overflowX: "clip", overflowY: "scroll" }),
-//     target({ height: "1px", overflowX: "clip", overflowY: "scroll" }),
-//   ]) {
-//     t.deepEqual(isClipped(element), false);
-//   }
-// });
+test(`isClipped() returns false when an element is reduced to 1px in any dimension, and shows a scrollbar in any dimension`, (t) => {
+  for (const element of [
+    target({ width: "1px", overflowX: "scroll", overflowY: "clip" }),
+    target({ height: "1px", overflowX: "scroll", overflowY: "clip" }),
+    target({ width: "1px", overflowX: "clip", overflowY: "scroll" }),
+    target({ height: "1px", overflowX: "clip", overflowY: "scroll" }),
+  ]) {
+    t.deepEqual(isClipped(element), false);
+  }
+});
 
 test(`isClipped() returns true when an element is reduced to 1px in any dimension, clips in that dimension,
       and does not always show a scrollbar in the cross dimension`, (t) => {
