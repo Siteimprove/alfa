@@ -6,6 +6,7 @@ import { type Parser as CSSParser, Token } from "../../syntax";
 import { Number } from "../numeric";
 
 import { Format } from "./format";
+import { RGB } from "./rgb";
 
 const { map } = Parser;
 
@@ -20,7 +21,7 @@ export class Hex extends Format<"hex"> {
   private readonly _value: number;
 
   private constructor(value: number) {
-    super("hex", false);
+    super("hex");
 
     // Make sure that only the lower 4 bytes are stored.
     this._value = value & 0xff_ff_ff_ff;
@@ -46,8 +47,10 @@ export class Hex extends Format<"hex"> {
     return Number.of(this._value & 0xff);
   }
 
-  public resolve(): Hex {
-    return this;
+  public resolve(): RGB.Canonical {
+    return RGB.of(
+      ...Format.resolve(this.red, this.green, this.blue, this.alpha)
+    );
   }
 
   public equals(value: unknown): value is this {

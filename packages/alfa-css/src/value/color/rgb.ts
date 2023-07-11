@@ -1,26 +1,69 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Err } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { Function, type Parser as CSSParser, Token } from "../../syntax";
+import { Keyword } from "../keyword";
 
 import { Number, Percentage } from "../numeric";
 
 import { Format } from "./format";
 
-const { pair, map, either, option, left, right, take, delimited } = Parser;
+const { pair, map, either, option, right, take, delimited } = Parser;
+
+// We cannot easily use Resolvable.Resolved because Percentage may resolve to
+// anything depending on the base, here we want to keep them as percentages.
+type ToCanonical<T extends Number | Percentage> = T extends Number
+  ? Number.Canonical
+  : T extends Percentage
+  ? Percentage.Canonical
+  : Number.Canonical | Percentage.Canonical;
 
 /**
  * @public
  */
 export class RGB<
-  C extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed,
-  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
+  // These should actually use the aliases `Percentage.Canonical` instead.
+  // However, that triggers
+  // error TS2589: Type instantiation is excessively deep and possibly infinite.
+  // in an unrelated place.
+  // We are likely very close to the TS instantiation limit, and using aliases
+  // triggers it.
+  // This is probably a combination of the fact that percentages can resolve to
+  // different things (creating more instantiations?) and the "color[]" type in
+  // alfa-rules Questions that also get instantiated a lot (?) There might be
+  // some combinatorics explosion of instantiations leading to this, especially
+  // in nested interviews (?) It might be possible to solve it by giving the
+  // correct depth indication to TS at interview build time and ease the
+  // instantiation process (?)
+  C extends Number.Canonical | Percentage.Canonical =
+    | Number.Canonical
+    | Percentage.Fixed,
+  A extends Number.Canonical | Percentage.Canonical =
+    | Number.Canonical
+    | Percentage.Fixed
 > extends Format<"rgb"> {
   public static of<
-    C extends Number.Fixed | Percentage.Fixed,
-    A extends Number.Fixed | Percentage.Fixed
-  >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
-    return new RGB(red, green, blue, alpha);
+    C extends Number.Canonical | Percentage.Canonical,
+    A extends Number.Canonical | Percentage.Canonical
+  >(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
+
+  public static of<
+    C extends Number | Percentage,
+    A extends Number | Percentage
+  >(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>>;
+
+  public static of<
+    C extends Number | Percentage,
+    A extends Number | Percentage
+  >(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>> {
+    return new RGB(
+      red.resolve() as ToCanonical<C>,
+      green.resolve() as ToCanonical<C>,
+      blue.resolve() as ToCanonical<C>,
+      alpha.resolve() as ToCanonical<A>
+    );
   }
 
   private readonly _red: C;
@@ -29,7 +72,7 @@ export class RGB<
   private readonly _alpha: A;
 
   private constructor(red: C, green: C, blue: C, alpha: A) {
-    super("rgb", false);
+    super("rgb");
     this._red = red;
     this._green = green;
     this._blue = blue;
@@ -52,8 +95,10 @@ export class RGB<
     return this._alpha;
   }
 
-  public resolve(): RGB<C, A> {
-    return this;
+  public resolve(): RGB.Canonical {
+    return new RGB(
+      ...Format.resolve(this._red, this._green, this._blue, this._alpha)
+    );
   }
 
   public equals(value: unknown): value is this {
@@ -95,6 +140,8 @@ export class RGB<
  * @public
  */
 export namespace RGB {
+  export type Canonical = RGB<Percentage.Canonical, Percentage.Canonical>;
+
   export interface JSON extends Format.JSON<"rgb"> {
     red: Number.Fixed.JSON | Percentage.Fixed.JSON;
     green: Number.Fixed.JSON | Percentage.Fixed.JSON;
@@ -103,97 +150,108 @@ export namespace RGB {
   }
 
   export function isRGB<
-    C extends Number.Fixed | Percentage.Fixed,
-    A extends Number.Fixed | Percentage.Fixed
+    C extends Number.Canonical | Percentage.Canonical,
+    A extends Number.Canonical | Percentage.Canonical
   >(value: unknown): value is RGB<C, A> {
     return value instanceof RGB;
   }
 
   /**
+   * @remarks
+   * While the three R, G, B components must be either all numbers or all
+   * percentage, the alpha component can be either independently.
+   *
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlpha = either(Number.parseBase, Percentage.parseBase);
+  const parseAlphaLegacy = either(Number.parse, Percentage.parse);
+  const parseAlphaModern = either<Slice<Token>, Number | Percentage, string>(
+    Number.parse,
+    Percentage.parse,
+    map(Keyword.parse("none"), () => Percentage.of(0))
+  );
+
+  /**
+   * Parses either a number/percentage or the keyword "none", reduces "none" to
+   * the correct type, or fails if it is not allowed.
+   */
+  const parseItem = <C extends Number | Percentage>(
+    parser: CSSParser<C>,
+    ifNone?: C
+  ) =>
+    either(
+      parser,
+      ifNone !== undefined
+        ? map(Keyword.parse("none"), () => ifNone)
+        : () => Err.of("none is not accepted in legacy rbg syntax")
+    );
+
+  /**
+   * Parses 3 items.
+   * In legacy syntax, they must be separated by a comma, in modern syntax by
+   * whitespace.
+   */
+  const parseTriplet = <C extends Number | Percentage>(
+    parser: CSSParser<C>,
+    separator: CSSParser<any>,
+    ifNone?: C
+  ) =>
+    map(
+      pair(
+        parseItem(parser, ifNone),
+        take(right(separator, parseItem(parser, ifNone)), 2)
+      ),
+      ([r, [g, b]]) => [r, g, b] as const
+    );
+
+  const parseLegacyTriplet = <C extends Number | Percentage>(
+    parser: CSSParser<C>
+  ) =>
+    parseTriplet(
+      parser,
+      delimited(option(Token.parseWhitespace), Token.parseComma)
+    );
+
+  const parseLegacy = pair(
+    either(
+      parseLegacyTriplet(Percentage.parse),
+      parseLegacyTriplet(Number.parse)
+    ),
+    option(
+      right(
+        delimited(option(Token.parseWhitespace), Token.parseComma),
+        parseAlphaLegacy
+      )
+    )
+  );
+
+  const parseModernTriplet = <C extends Number | Percentage>(
+    parser: CSSParser<C>,
+    ifNone: C
+  ) => parseTriplet(parser, option(Token.parseWhitespace), ifNone);
+
+  const parseModern = pair(
+    either(
+      parseModernTriplet(Percentage.parse, Percentage.of(0)),
+      parseModernTriplet(Number.parse, Number.of(0))
+    ),
+    option(
+      right(
+        delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
+        parseAlphaModern
+      )
+    )
+  );
 
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-rgb}
    */
   export const parse: CSSParser<RGB> = map(
-    right(
-      Token.parseFunction((fn) => fn.value === "rgb" || fn.value === "rgba"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          either(
-            pair(
-              either(
-                pair(
-                  Percentage.parseBase,
-                  take(
-                    right(option(Token.parseWhitespace), Percentage.parseBase),
-                    2
-                  )
-                ),
-                pair(
-                  Number.parseBase,
-                  take(
-                    right(option(Token.parseWhitespace), Number.parseBase),
-                    2
-                  )
-                )
-              ),
-              option(
-                right(
-                  delimited(
-                    option(Token.parseWhitespace),
-                    Token.parseDelim("/")
-                  ),
-                  parseAlpha
-                )
-              )
-            ),
-            pair(
-              either(
-                pair(
-                  Percentage.parseBase,
-                  take(
-                    right(
-                      delimited(
-                        option(Token.parseWhitespace),
-                        Token.parseComma
-                      ),
-                      Percentage.parseBase
-                    ),
-                    2
-                  )
-                ),
-                pair(
-                  Number.parseBase,
-                  take(
-                    right(
-                      delimited(
-                        option(Token.parseWhitespace),
-                        Token.parseComma
-                      ),
-                      Number.parseBase
-                    ),
-                    2
-                  )
-                )
-              ),
-              option(
-                right(
-                  delimited(option(Token.parseWhitespace), Token.parseComma),
-                  parseAlpha
-                )
-              )
-            )
-          )
-        ),
-        Token.parseCloseParenthesis
-      )
+    Function.parse(
+      (fn) => fn.value === "rgb" || fn.value === "rgba",
+      either(parseLegacy, parseModern)
     ),
     (result) => {
-      const [[red, [green, blue]], alpha] = result;
+      const [, [[red, green, blue], alpha]] = result;
 
       return RGB.of(
         red,

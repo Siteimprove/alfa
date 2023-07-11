@@ -1,7 +1,6 @@
-import { Color, Keyword } from "@siteimprove/alfa-css";
+import { Color } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
-import { Resolver } from "../resolver";
 
 type Specified = Color;
 
@@ -15,7 +14,7 @@ const parse = Color.parse;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(
-  Keyword.of("currentcolor"),
+  Color.current,
   parse,
-  (textDecorationColor) => textDecorationColor.map(Resolver.color)
+  (textDecorationColor) => textDecorationColor.map((color) => color.resolve())
 );

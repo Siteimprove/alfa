@@ -1,6 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
-import { type Parser as CSSParser } from "../../syntax";
+import { Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Angle, Number, Percentage } from "../numeric";
@@ -23,10 +24,7 @@ export type Color = Hex | Named | HSL | RGB | Current | System;
  * @public
  */
 export namespace Color {
-  export type Canonical =
-    | Current
-    | System
-    | RGB<Percentage.Canonical, Percentage.Canonical>;
+  export type Canonical = Current | System | RGB.Canonical;
 
   export type JSON = Hex.JSON | Named.JSON | HSL.JSON | RGB.JSON | Keyword.JSON;
 
@@ -37,12 +35,12 @@ export namespace Color {
   }
 
   export function hsl<
-    H extends Number.Fixed | Angle.Fixed,
-    A extends Number.Fixed | Percentage.Fixed
+    H extends Number.Canonical | Angle.Canonical,
+    A extends Number.Canonical | Percentage.Canonical
   >(
     hue: H,
-    saturation: Percentage.Fixed,
-    lightness: Percentage.Fixed,
+    saturation: Percentage,
+    lightness: Percentage,
     alpha: A
   ): HSL<H, A> {
     return HSL.of(hue, saturation, lightness, alpha);
@@ -53,8 +51,8 @@ export namespace Color {
   }
 
   export function rgb<
-    C extends Number.Fixed | Percentage.Fixed,
-    A extends Number.Fixed | Percentage.Fixed
+    C extends Number.Canonical | Percentage.Canonical,
+    A extends Number.Canonical | Percentage.Canonical
   >(red: C, green: C, blue: C, alpha: A): RGB<C, A> {
     return RGB.of(red, green, blue, alpha);
   }
@@ -66,12 +64,13 @@ export namespace Color {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-color}
    */
-  export const parse: CSSParser<Color> = either(
+  export const parse = either<Slice<Token>, Color, string>(
     Hex.parse,
-    either(
-      Named.parse,
-      either(either(RGB.parse, HSL.parse), either(Current.parse, System.parse))
-    )
+    Named.parse,
+    RGB.parse,
+    HSL.parse,
+    Current.parse,
+    System.parse
   );
 
   export function isTransparent(color: Color): boolean {

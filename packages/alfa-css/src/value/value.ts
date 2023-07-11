@@ -76,4 +76,18 @@ export namespace Value {
       value instanceof Value && (type === undefined || value.type === type)
     );
   }
+
+  /**
+   * @internal
+   */
+  export type HasCalculation<V extends Value | Array<Value>> = V extends Value<
+    string,
+    false
+  >
+    ? false
+    : V extends Value
+    ? true
+    : V extends Array<Value<string, false>>
+    ? false
+    : true;
 }

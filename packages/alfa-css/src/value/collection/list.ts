@@ -23,11 +23,11 @@ export class List<V extends Value, CALC extends boolean = boolean>
   public static of<V extends Value>(
     values: Iterable<V>,
     separator = " "
-  ): List<V, V extends Value<string, false> ? false : true> {
+  ): List<V, Value.HasCalculation<V>> {
     const array = Array.from(values);
     const calculation = array.some((value) =>
       value.hasCalculation()
-    ) as V extends Value<string, false> ? false : true;
+    ) as Value.HasCalculation<V>;
 
     return new List(array, separator, calculation);
   }

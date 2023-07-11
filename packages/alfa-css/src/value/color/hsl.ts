@@ -2,13 +2,25 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { Function, type Parser as CSSParser, Token } from "../../syntax";
+import { Keyword } from "../keyword";
 
 import { Angle, Number, Percentage } from "../numeric";
 
 import { Format } from "./format";
+import { RGB } from "./rgb";
 
-const { pair, map, either, option, left, right, take, delimited } = Parser;
+const { pair, map, either, option, right, take, delimited } = Parser;
+
+// We cannot easily use Resolvable.Resolved because Percentage may resolve to
+// anything depending on the base, here we want to keep them as percentages.
+type ToCanonical<T extends Angle | Number | Percentage> = T extends Angle
+  ? Angle.Canonical
+  : T extends Number
+  ? Number.Canonical
+  : T extends Percentage
+  ? Percentage.Canonical
+  : Angle.Canonical | Number.Canonical | Percentage.Canonical;
 
 /**
  * @public
@@ -18,15 +30,41 @@ export class HSL<
   A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
 > extends Format<"hsl"> {
   public static of<
-    H extends Number.Fixed | Angle.Fixed,
-    A extends Number.Fixed | Percentage.Fixed
+    H extends Number.Canonical | Angle.Canonical,
+    A extends Number.Canonical | Percentage.Canonical,
+    S extends Percentage,
+    L extends Percentage
+  >(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A>;
+
+  public static of<
+    H extends Number | Angle,
+    A extends Number | Percentage,
+    S extends Percentage,
+    L extends Percentage
   >(
     hue: H,
-    saturation: Percentage.Fixed,
-    lightness: Percentage.Fixed,
+    saturation: S,
+    lightness: L,
     alpha: A
-  ): HSL<H, A> {
-    return new HSL(hue, saturation, lightness, alpha);
+  ): HSL<ToCanonical<H>, ToCanonical<A>>;
+
+  public static of<
+    H extends Number | Angle,
+    A extends Number | Percentage,
+    S extends Percentage,
+    L extends Percentage
+  >(
+    hue: H,
+    saturation: S,
+    lightness: L,
+    alpha: A
+  ): HSL<ToCanonical<H>, ToCanonical<A>> {
+    return new HSL(
+      hue.resolve() as ToCanonical<H>,
+      saturation.resolve(),
+      lightness.resolve(),
+      alpha.resolve() as ToCanonical<A>
+    );
   }
 
   private readonly _hue: H;
@@ -43,7 +81,7 @@ export class HSL<
     lightness: Percentage.Fixed,
     alpha: A
   ) {
-    super("hsl", false);
+    super("hsl");
     this._hue = hue;
     this._saturation = saturation;
     this._lightness = lightness;
@@ -90,8 +128,10 @@ export class HSL<
     return this._alpha;
   }
 
-  public resolve(): HSL<H, A> {
-    return this;
+  public resolve(): RGB.Canonical {
+    return RGB.of(
+      ...Format.resolve(this.red, this.green, this.blue, this.alpha)
+    );
   }
 
   public equals(value: unknown): value is this {
@@ -150,66 +190,78 @@ export namespace HSL {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlpha = either(Number.parseBase, Percentage.parseBase);
+  const parseAlpha = either(Number.parse, Percentage.parse);
 
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-hue}
    */
-  const parseHue = either(Number.parseBase, Angle.parseBase);
+  const parseHue = either(Number.parse, Angle.parse);
 
+  const orNone = <T>(parser: CSSParser<T>) =>
+    either(
+      parser,
+      map(Keyword.parse("none"), () => Percentage.of(0))
+    );
+
+  const parseTriplet = (
+    separator: CSSParser<any>,
+    acceptNone: boolean = false
+  ) =>
+    map(
+      pair(
+        acceptNone
+          ? either(
+              parseHue,
+              map(Keyword.parse("none"), () => Number.of(0))
+            )
+          : parseHue,
+        take(
+          right(
+            separator,
+            acceptNone ? orNone(Percentage.parse) : Percentage.parse
+          ),
+          2
+        )
+      ),
+      ([h, [s, l]]) => [h, s, l] as const
+    );
+
+  /**
+   * @remarks
+   * Modern syntax is supposed to accept numbers in addition to percentages
+   * for saturation and lightness. This seems to have poor browser support
+   * currently, so we ignore it until we encounter it in the wild.
+   * Look at what is done for RGB parser if need be.
+   */
+  const parseModern = pair(
+    parseTriplet(option(Token.parseWhitespace), true),
+    option(
+      right(
+        delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
+        orNone(parseAlpha)
+      )
+    )
+  );
+
+  const parseLegacy = pair(
+    parseTriplet(delimited(option(Token.parseWhitespace), Token.parseComma)),
+    option(
+      right(
+        delimited(option(Token.parseWhitespace), Token.parseComma),
+        parseAlpha
+      )
+    )
+  );
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
    */
   export const parse: CSSParser<HSL> = map(
-    right(
-      Token.parseFunction((fn) => fn.value === "hsl" || fn.value === "hsla"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          either(
-            pair(
-              pair(
-                parseHue,
-                take(
-                  right(option(Token.parseWhitespace), Percentage.parseBase),
-                  2
-                )
-              ),
-              option(
-                right(
-                  delimited(
-                    option(Token.parseWhitespace),
-                    Token.parseDelim("/")
-                  ),
-                  parseAlpha
-                )
-              )
-            ),
-            pair(
-              pair(
-                parseHue,
-                take(
-                  right(
-                    delimited(option(Token.parseWhitespace), Token.parseComma),
-                    Percentage.parseBase
-                  ),
-                  2
-                )
-              ),
-              option(
-                right(
-                  delimited(option(Token.parseWhitespace), Token.parseComma),
-                  parseAlpha
-                )
-              )
-            )
-          )
-        ),
-        Token.parseCloseParenthesis
-      )
+    Function.parse(
+      (fn) => fn.value === "hsl" || fn.value === "hsla",
+      either(parseLegacy, parseModern)
     ),
     (result) => {
-      const [[hue, [saturation, lightness]], alpha] = result;
+      const [, [[hue, saturation, lightness], alpha]] = result;
 
       return HSL.of(
         hue,
