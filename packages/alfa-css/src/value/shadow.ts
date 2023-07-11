@@ -1,7 +1,5 @@
 import { Hash } from "@siteimprove/alfa-hash";
-import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import { type Parser as CSSParser, Token } from "../syntax";
 import { Value } from "./value";

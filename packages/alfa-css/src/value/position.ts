@@ -1,7 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 import { Err } from "@siteimprove/alfa-result";
 
 import { Keyword } from "./keyword";
