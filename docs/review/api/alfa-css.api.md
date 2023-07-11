@@ -301,13 +301,13 @@ export type Color = Hex | Named | HSL | RGB | Current | System;
 // @public (undocumented)
 export namespace Color {
     // (undocumented)
-    export type Canonical = Current | System | RGB<Percentage.Canonical, Percentage.Canonical>;
+    export type Canonical = Current | System | RGB.Canonical;
     // (undocumented)
     export function hex(value: number): Hex;
     const // (undocumented)
     current: Current;
     // (undocumented)
-    export function hsl<H extends Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(hue: H, saturation: Percentage.Fixed, lightness: Percentage.Fixed, alpha: A): HSL<H, A>;
+    export function hsl<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(hue: H, saturation: Percentage, lightness: Percentage, alpha: A): HSL<H, A>;
     // (undocumented)
     export function isTransparent(color: Color): boolean;
     // (undocumented)
@@ -315,9 +315,9 @@ export namespace Color {
     // (undocumented)
     export function named<C extends Named.Color>(color: C): Named<C>;
     // (undocumented)
-    export function rgb<C extends Number_2.Fixed | Percentage.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
+    export function rgb<C extends Number_2.Canonical | Percentage.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
     const // (undocumented)
-    parse: Parser<Color>;
+    parse: Parser_2<Slice<Token>, Color, string, []>;
     // (undocumented)
     export function system(keyword: System.Keyword): System;
 }
@@ -598,7 +598,7 @@ namespace Function_2 {
     const // (undocumented)
     consume: Parser<Function_2>;
     const // (undocumented)
-    parse: <T>(name?: string, body?: Parser<T> | undefined) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
+    parse: <T>(query?: string | Predicate<Token.Function>, body?: Parser<T> | undefined) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
 }
 export { Function_2 as Function }
 
@@ -713,7 +713,7 @@ export class Hex extends Format<"hex"> {
     // (undocumented)
     get red(): Number_2.Fixed;
     // (undocumented)
-    resolve(): Hex;
+    resolve(): RGB.Canonical;
     // (undocumented)
     toJSON(): Hex.JSON;
     // (undocumented)
@@ -752,11 +752,15 @@ export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle
     // (undocumented)
     get lightness(): Percentage.Fixed;
     // (undocumented)
-    static of<H extends Number_2.Fixed | Angle.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(hue: H, saturation: Percentage.Fixed, lightness: Percentage.Fixed, alpha: A): HSL<H, A>;
+    static of<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical, S extends Percentage, L extends Percentage>(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A>;
+    // Warning: (ae-forgotten-export) The symbol "ToCanonical" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    static of<H extends Number_2 | Angle, A extends Number_2 | Percentage, S extends Percentage, L extends Percentage>(hue: H, saturation: S, lightness: L, alpha: A): HSL<ToCanonical_2<H>, ToCanonical_2<A>>;
     // (undocumented)
     get red(): Percentage.Fixed;
     // (undocumented)
-    resolve(): HSL<H, A>;
+    resolve(): RGB.Canonical;
     // (undocumented)
     get saturation(): Percentage.Fixed;
     // (undocumented)
@@ -1335,7 +1339,7 @@ export class List<V extends Value, CALC extends boolean = boolean> extends Value
     // (undocumented)
     map<U extends Value>(mapper: Mapper<V, U>): List<U, U extends Value<string, false> ? false : true>;
     // (undocumented)
-    static of<V extends Value>(values: Iterable_2<V>, separator?: string): List<V, V extends Value<string, false> ? false : true>;
+    static of<V extends Value>(values: Iterable_2<V>, separator?: string): List<V, Value.HasCalculation<V>>;
     // (undocumented)
     resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>, false>;
     // (undocumented)
@@ -1523,7 +1527,7 @@ export class Named<C extends Named.Color = Named.Color> extends Format<"named"> 
     // (undocumented)
     get red(): Number_2.Fixed;
     // (undocumented)
-    resolve(): Named<C>;
+    resolve(): RGB.Canonical;
     // (undocumented)
     toJSON(): Named.JSON;
     // (undocumented)
@@ -2402,7 +2406,7 @@ export namespace Rectangle {
 }
 
 // @public (undocumented)
-export class RGB<C extends Number_2.Fixed | Percentage.Fixed = Number_2.Fixed | Percentage.Fixed, A extends Number_2.Fixed | Percentage.Fixed = Number_2.Fixed | Percentage.Fixed> extends Format<"rgb"> {
+export class RGB<C extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed, A extends Number_2.Canonical | Percentage.Canonical = Number_2.Canonical | Percentage.Fixed> extends Format<"rgb"> {
     // (undocumented)
     get alpha(): A;
     // (undocumented)
@@ -2414,11 +2418,15 @@ export class RGB<C extends Number_2.Fixed | Percentage.Fixed = Number_2.Fixed | 
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<C extends Number_2.Fixed | Percentage.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
+    static of<C extends Number_2.Canonical | Percentage.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
+    // Warning: (ae-forgotten-export) The symbol "ToCanonical" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    static of<C extends Number_2 | Percentage, A extends Number_2 | Percentage>(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>>;
     // (undocumented)
     get red(): C;
     // (undocumented)
-    resolve(): RGB<C, A>;
+    resolve(): RGB.Canonical;
     // (undocumented)
     toJSON(): RGB.JSON;
     // (undocumented)
@@ -2428,7 +2436,9 @@ export class RGB<C extends Number_2.Fixed | Percentage.Fixed = Number_2.Fixed | 
 // @public (undocumented)
 export namespace RGB {
     // (undocumented)
-    export function isRGB<C extends Number_2.Fixed | Percentage.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(value: unknown): value is RGB<C, A>;
+    export type Canonical = RGB<Percentage.Canonical, Percentage.Canonical>;
+    // (undocumented)
+    export function isRGB<C extends Number_2.Canonical | Percentage.Canonical, A extends Number_2.Canonical | Percentage.Canonical>(value: unknown): value is RGB<C, A>;
     // (undocumented)
     export interface JSON extends Format.JSON<"rgb"> {
         // (undocumented)
@@ -2543,7 +2553,7 @@ export class Shadow<H extends Length.Fixed = Length.Fixed, V extends Length.Fixe
     // (undocumented)
     static of<H extends Length.Fixed = Length.Fixed, V extends Length.Fixed = H, B extends Length.Fixed = Length.Fixed, S extends Length.Fixed = Length.Fixed, C extends Color = Color>(horizontal: H, vertical: V, blur: B, spread: S, color: C, isInset: boolean): Shadow<H, V, B, S, C>;
     // (undocumented)
-    resolve(): Shadow<H, V, B, S, C>;
+    resolve(resolver: Length.Resolver): Shadow.Canonical;
     // (undocumented)
     get spread(): S;
     // (undocumented)
@@ -3548,7 +3558,7 @@ export class Tuple<T extends Array<Value>, CALC extends boolean = boolean> exten
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T, T extends Array<infer V extends Value<string, false>> ? false : true>;
+    static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T, Value.HasCalculation<T>>;
     // (undocumented)
     resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>, false>;
     // (undocumented)
@@ -3685,6 +3695,8 @@ export abstract class Value<T extends string = string, CALC extends boolean = bo
 
 // @public (undocumented)
 export namespace Value {
+    // @internal (undocumented)
+    export type HasCalculation<V extends Value | Array<Value>> = V extends Value<string, false> ? false : V extends Value ? true : V extends Array<Value<string, false>> ? false : true;
     // (undocumented)
     export function isValue<T extends string>(value: unknown, type?: T): value is Value<T>;
     // (undocumented)
