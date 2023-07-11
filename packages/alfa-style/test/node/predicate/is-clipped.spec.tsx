@@ -1,10 +1,17 @@
 import { Device } from "@siteimprove/alfa-device";
-import { h } from "@siteimprove/alfa-dom";
+import { Element, h, Text } from "@siteimprove/alfa-dom";
 import { test } from "@siteimprove/alfa-test";
 
 import * as predicate from "../../../src/node/predicate/is-clipped";
 
 const isClipped = predicate.isClipped(Device.standard());
+
+function target(
+  style: { [prop: string]: string },
+  child?: Element | Text
+): Element {
+  return <div style={style}>{child ?? "Hello World"}</div>;
+}
 
 /*********************************************************************
  *
@@ -13,48 +20,44 @@ const isClipped = predicate.isClipped(Device.standard());
  *********************************************************************/
 
 test(`isClipped() returns true when an element is hidden by reducing its size
-      to 0 and clipping overflow`, (t) => {
-  for (const element of [
-    <div style={{ width: "0", overflowX: "hidden" }}>Hello World</div>,
-
-    <div style={{ width: "0", overflowY: "hidden" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowX: "hidden" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowY: "hidden" }}>Hello World</div>,
-
-    <div style={{ width: "0", height: "0", overflow: "hidden" }}>
-      Hello World
-    </div>,
-  ]) {
-    t.equal(isClipped(element), true);
+      to 0 and clipping overflow in the same dimension`, (t) => {
+  for (const overflow of ["clip", "hidden"]) {
+    for (const element of [
+      target({ width: "0", overflowX: overflow }),
+      target({ height: "0", overflowY: overflow }),
+      target({
+        width: "0",
+        height: "0",
+        overflow,
+      }),
+    ]) {
+      t.equal(isClipped(element), true);
+    }
   }
 });
 
 test(`isClipped() returns true when an element is hidden by reducing its size
       to 1x1 pixels and clipping overflow`, (t) => {
-  const element = (
-    <div style={{ width: "1px", height: "1px", overflow: "hidden" }}>
-      Hello World
-    </div>
-  );
+  for (const overflow of ["clip", "hidden"]) {
+    const element = target({ width: "1px", height: "1px", overflow });
+    t.equal(isClipped(element), true);
+  }
+});
 
-  t.equal(isClipped(element), true);
+test(`isClipped() returns false when an 1×1px element scrolls, thus showing the scrollbar`, (t) => {
+  for (const overflow of ["auto", "scroll", "visible"]) {
+    const element = target({ width: "1px", height: "1px", overflow });
+    t.equal(isClipped(element), false);
+  }
 });
 
 test(`isClipped() returns true when an element scrolls its overflow and its size is reduced to 0 pixel, thus hiding the scrollbar`, (t) => {
   for (const element of [
-    <div style={{ width: "0", overflowX: "scroll" }}>Hello World</div>,
-
-    <div style={{ width: "0", overflowY: "scroll" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowX: "scroll" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowY: "scroll" }}>Hello World</div>,
-
-    <div style={{ width: "0", height: "0", overflow: "scroll" }}>
-      Hello World
-    </div>,
+    target({ width: "0", overflowX: "scroll" }),
+    target({ width: "0", overflowY: "scroll" }),
+    target({ height: "0", overflowX: "scroll" }),
+    target({ height: "0", overflowY: "scroll" }),
+    target({ width: "0", height: "0", overflow: "scroll" }),
   ]) {
     t.equal(isClipped(element), true);
   }
@@ -62,17 +65,11 @@ test(`isClipped() returns true when an element scrolls its overflow and its size
 
 test(`isClipped() returns true when an element has its overflow set to auto and its size is reduced to 0 pixel, thus hiding the scrollbar`, (t) => {
   for (const element of [
-    <div style={{ width: "0", overflowX: "auto" }}>Hello World</div>,
-
-    <div style={{ width: "0", overflowY: "auto" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowX: "auto" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowY: "auto" }}>Hello World</div>,
-
-    <div style={{ width: "0", height: "0", overflow: "auto" }}>
-      Hello World
-    </div>,
+    target({ width: "0", overflowX: "auto" }),
+    target({ width: "0", overflowY: "auto" }),
+    target({ height: "0", overflowX: "auto" }),
+    target({ height: "0", overflowY: "auto" }),
+    target({ width: "0", height: "0", overflow: "auto" }),
   ]) {
     t.equal(isClipped(element), true);
   }
@@ -88,16 +85,9 @@ test(`isClipped() returns true for a text node with hidden overflow and a 100%
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textIndent: "100%",
-      }}
-    >
-      {text}
-    </div>
+  const div = target(
+    { overflow: "hidden", whiteSpace: "nowrap", textIndent: "100%" },
+    text
   );
 
   t.equal(isClipped(text), true);
@@ -108,16 +98,9 @@ test(`isClipped() returns false for a text node with hidden overflow and a 20%
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textIndent: "20%",
-      }}
-    >
-      {text}
-    </div>
+  const div = target(
+    { overflow: "hidden", whiteSpace: "nowrap", textIndent: "20%" },
+    text
   );
 
   t.equal(isClipped(text), false);
@@ -128,16 +111,7 @@ test(`isClipped() returns true for a text node with hidden overflow and a -100%
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        textIndent: "-100%",
-      }}
-    >
-      {text}
-    </div>
-  );
+  const div = target({ overflow: "hidden", textIndent: "-100%" }, text);
 
   t.equal(isClipped(text), true);
   t.equal(isClipped(div), true);
@@ -147,16 +121,9 @@ test(`isClipped() returns true for a text node with hidden overflow and a 999px
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textIndent: "999px",
-      }}
-    >
-      {text}
-    </div>
+  const div = target(
+    { overflow: "hidden", whiteSpace: "nowrap", textIndent: "999px" },
+    text
   );
 
   t.equal(isClipped(text), true);
@@ -167,16 +134,9 @@ test(`isClipped() returns false for a text node with hidden overflow and a 20px
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textIndent: "20px",
-      }}
-    >
-      {text}
-    </div>
+  const div = target(
+    { overflow: "hidden", whiteSpace: "nowrap", textIndent: "20px" },
+    text
   );
 
   t.equal(isClipped(text), false);
@@ -187,16 +147,7 @@ test(`isClipped() returns true for a text node with hidden overflow and a -999px
       text indent`, (t) => {
   const text = h.text("Hello world");
 
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        textIndent: "-999px",
-      }}
-    >
-      {text}
-    </div>
-  );
+  const div = target({ overflow: "hidden", textIndent: "-999px" }, text);
 
   t.equal(isClipped(text), true);
   t.equal(isClipped(div), true);
@@ -210,9 +161,7 @@ test(`isClipped() returns true for a text node with hidden overflow and a -999px
 
 test(`isClipped() returns false for a relatively positioned element clipped by
       \`rect(1px, 1px, 1px, 1px)\``, (t) => {
-  const element = (
-    <div style={{ clip: "rect(1px, 1px, 1px, 1px)" }}>Invisible text</div>
-  );
+  const element = target({ clip: "rect(1px, 1px, 1px, 1px)" });
 
   t.equal(isClipped(element), false);
 });
@@ -229,17 +178,15 @@ test(`isClipped() returns true for an element with a fully clipped ancestor`, (t
   const spanMask = <span>Hello World</span>;
 
   h.document([
-    <div style={{ height: "0px", width: "0px", overflow: "hidden" }}>
-      {spanSize}
-    </div>,
-    <div
-      style={{ textIndent: "100%", whiteSpace: "nowrap", overflow: "hidden" }}
-    >
-      {spanIndent}
-    </div>,
-    <div style={{ clip: "rect(1px, 1px, 1px, 1px)", position: "absolute" }}>
-      {spanMask}
-    </div>,
+    target({ height: "0px", width: "0px", overflow: "hidden" }, spanSize),
+    target(
+      { textIndent: "100%", whiteSpace: "nowrap", overflow: "hidden" },
+      spanIndent
+    ),
+    target(
+      { clip: "rect(1px, 1px, 1px, 1px)", position: "absolute" },
+      spanMask
+    ),
   ]);
 
   for (const target of [spanSize, spanIndent, spanMask]) {
