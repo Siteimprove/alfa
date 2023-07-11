@@ -13,6 +13,93 @@ function target(
   return <div style={style}>{child ?? "Hello World"}</div>;
 }
 
+function boxed(
+  box: { width: number; height: number },
+  style: { [prop: string]: string },
+  child?: Element | Text
+): Element {
+  return (
+    // The actual position of the element doesn't matter.
+    <div box={{ x: 10, y: 10, ...box }} style={style}>
+      {child ?? "Hello World"}
+    </div>
+  );
+}
+
+/*********************************************************************
+ *
+ * Clipping by size, with layout information
+ *
+ *********************************************************************/
+
+test(`isClipped() returns true when an element hides overflow and has a 0 size box in the same dimension`, (t) => {
+  for (const overflow of ["clip", "hidden"]) {
+    for (const element of [
+      boxed({ width: 0, height: 100 }, { overflowX: overflow }),
+      boxed({ width: 100, height: 0 }, { overflowY: overflow }),
+    ]) {
+      t.deepEqual(isClipped(element), true);
+    }
+  }
+});
+
+test(`isClipped() returns false when an element overflows its 0 size box`, (t) => {
+  for (const element of [
+    boxed({ width: 0, height: 100 }, { overflowX: "visible" }),
+    boxed({ width: 100, height: 0 }, { overflowY: "visible" }),
+  ]) {
+    t.deepEqual(isClipped(element), false);
+  }
+});
+
+test(`isClipped() returns true when an element has no permanent scrollbar,
+     hides overflow, and has a 1 size box in the same dimension`, (t) => {
+  for (const sameOverflow of ["clip", "hidden"]) {
+    for (const crossOverflow of ["auto", "visible"]) {
+      for (const element of [
+        boxed(
+          { width: 1, height: 100 },
+          { overflowX: sameOverflow, overflowY: crossOverflow }
+        ),
+        boxed(
+          { width: 100, height: 1 },
+          { overflowX: crossOverflow, overflowY: sameOverflow }
+        ),
+      ]) {
+        t.deepEqual(isClipped(element), true);
+      }
+    }
+  }
+});
+
+test(`isClipped() returns false when an element has a permanent scrollbar,
+     hides overflow, but has a 1 size box in the same dimension`, (t) => {
+  for (const overflow of ["clip", "hidden"]) {
+    for (const element of [
+      boxed(
+        { width: 1, height: 100 },
+        { overflowX: overflow, overflowY: "scroll" }
+      ),
+      boxed(
+        { width: 100, height: 1 },
+        { overflowX: "scroll", overflowY: overflow }
+      ),
+    ]) {
+      t.deepEqual(isClipped(element), false);
+    }
+  }
+});
+
+test(`isClipped() returns false when an element has a 1 size box but creates
+      a non-permanent scrollbar in the same dimension`, (t) => {
+  for (const element of [
+    boxed({ width: 1, height: 100 }, { overflowX: "auto" }),
+    boxed({ width: 100, height: 1 }, { overflowY: "auto" }),
+  ]) {
+    t.deepEqual(isClipped(element), false);
+  }
+});
+
 /*********************************************************************
  *
  * Clipping by size, no layout information

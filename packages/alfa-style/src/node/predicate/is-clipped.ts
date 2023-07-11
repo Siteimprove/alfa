@@ -99,16 +99,21 @@ function isClippedBySize(
 
     // Does the element always show a scrollbar, no matter whether there is
     // enough room in it to show the content?
-    const hasScrollBar = x === "scroll" || y === "scroll";
+    const hasNoScrollBar = x !== "scroll" && y !== "scroll";
 
-    for (const [axis, dimension] of [
-      [x, width],
-      [y, height],
+    for (const [axis, overflow, dimension] of [
+      ["width", x, width],
+      ["height", y, height],
     ] as const) {
       // Is the element reduced to nothingness in this axis?
-      if (axis === "visible") {
+      if (overflow === "visible") {
         // The content overflows in this axis, go to next axis.
         continue;
+      }
+
+      if (element.box.some((box) => box[axis] === 0)) {
+        // The element's box is squished in this axis.
+        return true;
       }
 
       if (Numeric.isNumeric(dimension) && Numeric.isZero(dimension)) {
@@ -116,15 +121,21 @@ function isClippedBySize(
         return true;
       }
 
-      if (
-        !hasScrollBar &&
-        (axis === "clip" || axis === "hidden") &&
-        Length.isLength(dimension) &&
-        dimension.value <= 1
-      ) {
-        // "dimension: 1px" and there is no scrollbar in the other axis
-        // (nor in this axis, since the overflow doesn't create one)
-        return true;
+      if (hasNoScrollBar && (overflow === "clip" || overflow === "hidden")) {
+        // There is no scrollbar in any axis, so we consider that 1px is
+        // invisible.
+        // Note that overflow==="auto" would create a scrollbar in this axis,
+        // so we cannot only rely on hasNoScrollBar.
+
+        if (element.box.some((box) => box[axis] <= 1)) {
+          return true;
+        }
+
+        if (Length.isLength(dimension) && dimension.value <= 1) {
+          // "dimension: 1px" and there is no scrollbar in the other axis
+          // (nor in this axis, since the overflow doesn't create one)
+          return true;
+        }
       }
     }
 
