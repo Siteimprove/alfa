@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Function, Token } from "../../syntax";
+import { Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Position } from "../position";
@@ -104,7 +103,7 @@ export namespace Ellipse {
     return value instanceof Ellipse;
   }
 
-  export const parse: Parser<Slice<Token>, Ellipse, string> = map(
+  export const parse: CSSParser<Ellipse> = map(
     Function.parse(
       "ellipse",
       pair(

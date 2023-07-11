@@ -1,7 +1,6 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 import { Numeric } from "./numeric";
 
 const { map } = Parser;
@@ -47,7 +46,7 @@ export namespace Percentage {
     return value instanceof Percentage;
   }
 
-  export const parse: Parser<Slice<Token>, Percentage, string> = map(
+  export const parse: CSSParser<Percentage> = map(
     Token.parsePercentage(),
     (percentage) => Percentage.of(percentage.value)
   );

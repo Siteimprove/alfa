@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
 import { Angle, Number } from "../numeric";
@@ -222,7 +221,7 @@ export namespace Rotate {
     }
   );
 
-  export const parse: Parser<Slice<Token>, Rotate, string> = either(
+  export const parse: CSSParser<Rotate> = either(
     parseRotate,
     parseRotateX,
     parseRotateY,

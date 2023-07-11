@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
 import { Dimension } from "./dimension";
 
@@ -74,7 +73,7 @@ export namespace Angle {
     return value instanceof Angle;
   }
 
-  export const parse: Parser<Slice<Token>, Angle, string> = map(
+  export const parse: CSSParser<Angle> = map(
     Token.parseDimension((dimension) => Unit.isAngle(dimension.unit)),
     (dimension) => Angle.of(dimension.value, dimension.unit as Unit.Angle)
   );

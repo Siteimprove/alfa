@@ -5,7 +5,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
 import { Length as BaseLength } from "../../calculation/numeric";
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
 
 import { Resolvable } from "../resolvable";
@@ -262,7 +262,7 @@ export namespace Length {
   /**
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
-  export const parse: Parser<Slice<Token>, Length, string> = either(
+  export const parse: CSSParser<Length> = either(
     map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, of),
     map(Math.parseLength, of)
   );

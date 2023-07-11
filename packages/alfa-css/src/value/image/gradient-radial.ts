@@ -4,11 +4,10 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Result, Err } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 import { Value } from "../value";
 
 import { Length, Percentage } from "../numeric";
@@ -373,7 +372,7 @@ export namespace Radial {
 
   const parseCircleRadius = Length.parseBase;
 
-  const parseCircle: Parser<Slice<Token>, Circle, string> = (input) => {
+  const parseCircle: CSSParser<Circle> = (input) => {
     let shape: Keyword<"circle"> | undefined;
     let radius: Length.Fixed | undefined;
 
@@ -419,7 +418,7 @@ export namespace Radial {
     2
   );
 
-  const parseEllipse: Parser<Slice<Token>, Ellipse, string> = (input) => {
+  const parseEllipse: CSSParser<Ellipse> = (input) => {
     let shape: Keyword<"ellipse"> | undefined;
     let horizontal: Length.Fixed | Percentage.Fixed | undefined;
     let vertical: Length.Fixed | Percentage.Fixed | undefined;
@@ -471,7 +470,7 @@ export namespace Radial {
     (keyword) => keyword.value as Extent.Size
   );
 
-  const parseExtent: Parser<Slice<Token>, Radial.Extent, string> = (input) => {
+  const parseExtent: CSSParser<Radial.Extent> = (input) => {
     let shape: Extent.Shape | undefined;
     let size: Extent.Size | undefined;
 
@@ -513,8 +512,8 @@ export namespace Radial {
    * {@link https://drafts.csswg.org/css-images/#funcdef-radial-gradient}
    */
   export function parse(
-    parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>
-  ): Parser<Slice<Token>, Radial, string> {
+    parseItemList: CSSParser<Array<Gradient.Item>>
+  ): CSSParser<Radial> {
     return map(
       pair(
         Token.parseFunction(

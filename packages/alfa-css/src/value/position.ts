@@ -1,13 +1,12 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 import { Err } from "@siteimprove/alfa-result";
 
 import { Keyword } from "./keyword";
 import { Length, Percentage } from "./numeric";
 
-import { Token } from "../syntax";
+import { type Parser as CSSParser, Token } from "../syntax";
 import { Unit } from "../unit";
 import { Value } from "./value";
 
@@ -202,8 +201,8 @@ export namespace Position {
      * @private
      */
     function parseKeyword<S extends Keywords.Horizontal | Keywords.Vertical>(
-      parser: Parser<Slice<Token>, S, string>
-    ): Parser<Slice<Token>, Keyword<"center"> | Side<S>, string> {
+      parser: CSSParser<S>
+    ): CSSParser<Keyword<"center"> | Side<S>> {
       return either(Keywords.parseCenter, map(parser, Side.of));
     }
 
@@ -214,9 +213,7 @@ export namespace Position {
      */
     function parseKeywordValue<
       S extends Keywords.Horizontal | Keywords.Vertical
-    >(
-      parser: Parser<Slice<Token>, S, string>
-    ): Parser<Slice<Token>, Side<S>, string> {
+    >(parser: CSSParser<S>): CSSParser<Side<S>> {
       return map(
         pair(parser, right(Token.parseWhitespace, Offset.parse)),
         ([keyword, value]) => Side.of(keyword, Option.of(value))
@@ -398,9 +395,7 @@ export namespace Position {
    * {@link https://drafts.csswg.org/css-values/#typedef-position}
    * {@link https://drafts.csswg.org/css-backgrounds/#typedef-bg-position}
    */
-  export function parse(
-    legacySyntax: boolean = false
-  ): Parser<Slice<Token>, Position, string> {
+  export function parse(legacySyntax: boolean = false): CSSParser<Position> {
     return either(
       parse4,
       legacySyntax ? parse3 : () => Err.of("Three-value syntax is not allowed"),

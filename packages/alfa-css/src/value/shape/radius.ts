@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import type { Parser as CSSParser } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Length, Percentage } from "../numeric";
@@ -93,7 +92,7 @@ export namespace Radius {
     return value instanceof Radius;
   }
 
-  export const parse: Parser<Slice<Token>, Radius, string> = map(
+  export const parse: CSSParser<Radius> = map(
     either(
       filter(
         either(Length.parseBase, Percentage.parseBase),

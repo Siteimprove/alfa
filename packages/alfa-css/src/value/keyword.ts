@@ -1,9 +1,8 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Predicate } from "@siteimprove/alfa-predicate";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax";
+import { type Parser as CSSParser, Token } from "../syntax";
 
 import type { Resolvable } from "./resolvable";
 import { Value } from "./value";
@@ -81,7 +80,7 @@ export namespace Keyword {
 
   export function parse<T extends string>(
     ...keywords: Array<T>
-  ): Parser<Slice<Token>, ToKeywords<T>, string> {
+  ): CSSParser<ToKeywords<T>> {
     return map(
       Token.parseIdent((ident) =>
         keywords.some(equals(ident.value.toLowerCase()))
