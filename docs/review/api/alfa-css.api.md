@@ -14,7 +14,7 @@ import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Mapper } from '@siteimprove/alfa-mapper';
 import { Option } from '@siteimprove/alfa-option';
-import { Parser } from '@siteimprove/alfa-parser';
+import { Parser as Parser_2 } from '@siteimprove/alfa-parser';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Record as Record_2 } from '@siteimprove/alfa-record';
 import { Result } from '@siteimprove/alfa-result';
@@ -92,9 +92,9 @@ export namespace Angle {
     // (undocumented)
     export function of(value: Math_2<"angle">): Calculated;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Angle, string>;
+    parse: Parser<Angle>;
     const // @internal (undocumented)
-    parseBase: Parser<Slice<Token>, Fixed, string>;
+    parseBase: Parser_2<Slice<Token>, Fixed<Unit.Angle>, string, []>;
         {};
 }
 
@@ -126,7 +126,7 @@ namespace Angle_2 {
     interface JSON<U extends Unit.Angle = Unit.Angle> extends Dimension_2.JSON<"angle", U> {
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Angle_2, string>;
+    parse: Parser<Angle_2>;
 }
 
 // @public (undocumented)
@@ -188,7 +188,7 @@ export namespace AnglePercentage {
     // (undocumented)
     export type Resolver = Percentage.Resolver<"angle", Canonical>;
     const // (undocumented)
-    parse: Parser<Slice<Token>, AnglePercentage<Unit.Angle>, string, []>;
+    parse: Parser_2<Slice<Token>, AnglePercentage<Unit.Angle>, string, []>;
         {};
 }
 
@@ -224,7 +224,7 @@ export namespace Block {
     }
     export type Open = Token.OpenParenthesis | Token.OpenSquareBracket | Token.OpenCurlyBracket;
     const // (undocumented)
-    consume: Parser<Slice<Token>, Block, string>;
+    consume: Parser<Block>;
 }
 
 // @public (undocumented)
@@ -235,7 +235,7 @@ export namespace Box {
     // (undocumented)
     export type Geometry = Shape | Keyword<"fill-box"> | Keyword<"stroke-box"> | Keyword<"view-box">;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Box, string>;
+    parse: Parser<Box>;
     // (undocumented)
     export namespace Geometry {
         // (undocumented)
@@ -244,7 +244,7 @@ export namespace Box {
     // (undocumented)
     export type JSON = Keyword.JSON<"border-box"> | Keyword.JSON<"padding-box"> | Keyword.JSON<"content-box">;
     const // (undocumented)
-    parseShape: Parser<Slice<Token>, Shape, string>;
+    parseShape: Parser<Shape>;
     // (undocumented)
     export type Shape = Box | Keyword<"margin-box">;
     // (undocumented)
@@ -253,7 +253,7 @@ export namespace Box {
         export type JSON = Box.JSON | Keyword.JSON<"margin-box">;
     }
     const // (undocumented)
-    parseGeometry: Parser<Slice<Token>, Geometry, string>;
+    parseGeometry: Parser<Geometry>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "BasicShape" needs to be exported by the entry point index.d.ts
@@ -292,7 +292,7 @@ export namespace Circle {
         radius: Radius.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Circle, string>;
+    parse: Parser<Circle>;
 }
 
 // @public (undocumented)
@@ -317,7 +317,7 @@ export namespace Color {
     // (undocumented)
     export function rgb<C extends Number_2.Fixed | Percentage.Fixed, A extends Number_2.Fixed | Percentage.Fixed>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Color, string>;
+    parse: Parser<Color>;
     // (undocumented)
     export function system(keyword: System.Keyword): System;
 }
@@ -343,9 +343,9 @@ export namespace Component {
     // (undocumented)
     export type JSON = Array<Token.JSON>;
     const // (undocumented)
-    consume: Parser<Slice<Token>, Component, string>;
+    consume: Parser<Component>;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Component, string, []>;
+    parse: Parser_2<Slice<Token>, Component, string, []>;
 }
 
 // @public
@@ -375,7 +375,7 @@ export type Current = Keyword<"currentcolor">;
 // @public (undocumented)
 export namespace Current {
     const // (undocumented)
-    parse: Parser<Slice<Token>, Current, string>;
+    parse: Parser<Current>;
 }
 
 // @public (undocumented)
@@ -412,13 +412,13 @@ export namespace Declaration {
         value: Array<Token.JSON>;
     }
     const // (undocumented)
-    consume: Parser<Slice<Token>, Declaration, string>;
+    consume: Parser<Declaration>;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Declaration, string>;
+    parse: Parser<Declaration>;
     const // (undocumented)
-    consumeList: Parser<Slice<Token>, Iterable<Declaration>, string>;
+    consumeList: Parser<Iterable<Declaration>>;
     const // (undocumented)
-    parseList: Parser<Slice<Token>, Iterable<Declaration>, string>;
+    parseList: Parser<Iterable<Declaration>>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Type" needs to be exported by the entry point index.d.ts
@@ -563,7 +563,7 @@ export namespace Ellipse {
         ry: Radius.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Ellipse, string>;
+    parse: Parser<Ellipse>;
 }
 
 // @public (undocumented)
@@ -596,9 +596,9 @@ namespace Function_2 {
         value: Array<Token.JSON>;
     }
     const // (undocumented)
-    consume: Parser<Slice<Token>, Function_2, string>;
+    consume: Parser<Function_2>;
     const // (undocumented)
-    parse: <T>(name?: string, body?: Parser<Slice<Token>, T, string> | undefined) => Parser<Slice<Token>, readonly [Function_2, T], string, []>;
+    parse: <T>(name?: string, body?: Parser<T> | undefined) => Parser_2<Slice<Token>, readonly [Function_2, T], string, []>;
 }
 export { Function_2 as Function }
 
@@ -643,7 +643,7 @@ export namespace Gradient {
     // (undocumented)
     export type Item = Stop | Hint;
     const // (undocumented)
-    parseStop: Parser<Slice<Token>, Stop, string>;
+    parseStop: Parser<Stop>;
     // (undocumented)
     export namespace Item {
         // (undocumented)
@@ -652,7 +652,7 @@ export namespace Gradient {
     // (undocumented)
     export type JSON = Linear.JSON | Radial.JSON;
     const // (undocumented)
-    parseHint: Parser<Slice<Token>, Hint, string>;
+    parseHint: Parser<Hint>;
     // (undocumented)
     export class Stop<C extends Color = Color, P extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> implements Equatable, Hashable, Serializable {
         // (undocumented)
@@ -689,11 +689,9 @@ export namespace Gradient {
         }
     }
     const // (undocumented)
-    parseItem: Parser<Slice<Token>, Item, string>;
+    parseItemList: Parser<Array<Item>>;
     const // (undocumented)
-    parseItemList: Parser<Slice<Token>, Array<Item>, string>;
-    const // (undocumented)
-    parse: Parser<Slice<Token>, Gradient, string>;
+    parse: Parser<Gradient>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Format" needs to be exported by the entry point index.d.ts
@@ -734,7 +732,7 @@ export namespace Hex {
         value: number;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Hex, string>;
+    parse: Parser<Hex>;
 }
 
 // @public (undocumented)
@@ -783,7 +781,7 @@ export namespace HSL {
         saturation: Percentage.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, HSL, string>;
+    parse: Parser<HSL>;
 }
 
 // @public (undocumented)
@@ -816,7 +814,7 @@ export namespace Image {
         image: URL.JSON | Gradient.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Image, string>;
+    parse: Parser<Image>;
 }
 
 // @public (undocumented)
@@ -873,7 +871,7 @@ export namespace Inset {
     // (undocumented)
     export type Radius = Length.Fixed | Percentage.Fixed;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Inset, string>;
+    parse: Parser<Inset>;
 }
 
 // @public (undocumented)
@@ -939,9 +937,9 @@ export namespace Integer {
     // (undocumented)
     export function of(value: Math_2<"number">): Calculated;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Integer, string>;
+    parse: Parser<Integer>;
     const // @internal (undocumented)
-    parseBase: Parser<Slice<Token>, Fixed, string>;
+    parseBase: Parser_2<Slice<Token>, Fixed, string, []>;
         {};
 }
 
@@ -967,7 +965,7 @@ namespace Integer_2 {
     interface JSON extends Numeric_2.JSON<"integer"> {
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Integer_2, string>;
+    parse: Parser<Integer_2>;
 }
 
 // @public (undocumented)
@@ -998,7 +996,7 @@ export namespace Keyword {
         value: T;
     }
     // (undocumented)
-    export function parse<T extends string>(...keywords: Array<T>): Parser<Slice<Token>, ToKeywords<T>, string>;
+    export function parse<T extends string>(...keywords: Array<T>): Parser<ToKeywords<T>>;
     export type ToKeywords<Words extends string> = {
         [K in Words]: Keyword<K>;
     }[Words];
@@ -1086,9 +1084,9 @@ export namespace Length {
     }
     export function resolver(emBase: Canonical, remBase: Canonical, vwBase: Canonical, vhBase: Canonical): Mapper<Fixed<Unit.Length.Relative>, Canonical>;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Length, string>;
+    parse: Parser<Length>;
     const // @internal (undocumented)
-    parseBase: Parser<Slice<Token>, Fixed<Unit.Length>, string, []>;
+    parseBase: Parser_2<Slice<Token>, Fixed<Unit.Length>, string, []>;
         {};
 }
 
@@ -1122,7 +1120,7 @@ namespace Length_2 {
     interface JSON<U extends Unit.Length = Unit.Length> extends Dimension_2.JSON<"length", U> {
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Length_2, string>;
+    parse: Parser<Length_2>;
 }
 
 // @public (undocumented)
@@ -1185,7 +1183,7 @@ export namespace LengthPercentage {
     // (undocumented)
     export type Resolver = Length.Resolver & Percentage.Resolver<"length", Canonical>;
     const // (undocumented)
-    parse: Parser<Slice<Token>, LengthPercentage<Unit.Length>, string, []>;
+    parse: Parser_2<Slice<Token>, LengthPercentage<Unit.Length>, string, []>;
         {};
 }
 
@@ -1277,7 +1275,7 @@ export namespace Linear {
         repeats: boolean;
     }
     // (undocumented)
-    export function parse(parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>): Parser<Slice<Token>, Linear, string>;
+    export function parse(parseItemList: Parser<Array<Gradient.Item>>): Parser<Linear>;
     // (undocumented)
     export type Position = Position.Vertical | Position.Horizontal;
     // (undocumented)
@@ -1287,11 +1285,11 @@ export namespace Linear {
         // (undocumented)
         export type Vertical = "top" | "bottom";
         const // (undocumented)
-        parseVertical: Parser<Slice<Token>, Vertical, string, []>;
+        parseVertical: Parser_2<Slice<Token>, Vertical, string, []>;
         const // (undocumented)
-        parseHorizontal: Parser<Slice<Token>, Horizontal, string, []>;
+        parseHorizontal: Parser_2<Slice<Token>, Horizontal, string, []>;
         const // (undocumented)
-        parse: Parser<Slice<Token>, Vertical | Horizontal, string, []>;
+        parse: Parser_2<Slice<Token>, Vertical | Horizontal, string, []>;
     }
     // (undocumented)
     export class Side implements Equatable, Hashable, Serializable {
@@ -1362,7 +1360,7 @@ export namespace List {
         values: Array<Serializable.ToJSON<V>>;
     }
     const // (undocumented)
-    parseCommaSeparated: <V extends Value<string, boolean, string>>(parseValue: Parser<Slice<Token>, V, string>) => Parser<Slice<Token>, List<V, boolean>, string>;
+    parseCommaSeparated: <V extends Value<string, boolean, string>>(parseValue: Parser<V>) => Parser<List<V, boolean>>;
 }
 
 // @public (undocumented)
@@ -1430,19 +1428,19 @@ namespace Math_2 {
     const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Dimension" which is marked as @internal
     //
     // (undocumented)
-    parse: Parser<Slice<Token>, Math_2<Dimension>, string, []>;
+    parse: Parser_2<Slice<Token>, Math_2<Dimension>, string, []>;
     const // (undocumented)
-    parseAngle: Parser<Slice<Token>, Math_2<"angle">, string, []>;
+    parseAngle: Parser_2<Slice<Token>, Math_2<"angle">, string, []>;
     const // (undocumented)
-    parseAnglePercentage: Parser<Slice<Token>, Math_2<"angle-percentage">, string, []>;
+    parseAnglePercentage: Parser_2<Slice<Token>, Math_2<"angle-percentage">, string, []>;
     const // (undocumented)
-    parseLength: Parser<Slice<Token>, Math_2<"length">, string, []>;
+    parseLength: Parser_2<Slice<Token>, Math_2<"length">, string, []>;
     const // (undocumented)
-    parseLengthPercentage: Parser<Slice<Token>, Math_2<"length-percentage">, string, []>;
+    parseLengthPercentage: Parser_2<Slice<Token>, Math_2<"length-percentage">, string, []>;
     const // (undocumented)
-    parseNumber: Parser<Slice<Token>, Math_2<"number">, string, []>;
+    parseNumber: Parser_2<Slice<Token>, Math_2<"number">, string, []>;
     const // (undocumented)
-    parsePercentage: Parser<Slice<Token>, Math_2<"percentage">, string, []>;
+    parsePercentage: Parser_2<Slice<Token>, Math_2<"percentage">, string, []>;
 }
 export { Math_2 as Math }
 
@@ -1503,7 +1501,7 @@ export namespace Matrix {
     ]
     ];
     const // (undocumented)
-    parse: Parser<Slice<Token>, Matrix, string>;
+    parse: Parser<Matrix>;
 }
 
 // @public (undocumented)
@@ -1546,7 +1544,7 @@ export namespace Named {
         color: string;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Named, string>;
+    parse: Parser<Named>;
 }
 
 // @public (undocumented)
@@ -1584,7 +1582,7 @@ export namespace Nth {
         step: number;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Nth, string>;
+    parse: Parser<Nth>;
 }
 
 // @public (undocumented)
@@ -1648,11 +1646,11 @@ namespace Number_2 {
     // (undocumented)
     function of(value: Math_2<"number">): Calculated;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Number_2, string>;
+    parse: Parser<Number_2>;
     const // (undocumented)
-    parseZero: Parser<Slice<Token>, Fixed, string>;
+    parseZero: Parser<Fixed>;
     const // @internal (undocumented)
-    parseBase: Parser<Slice<Token>, Fixed, string>;
+    parseBase: Parser_2<Slice<Token>, Fixed, string, []>;
         {};
 }
 export { Number_2 as Number }
@@ -1677,9 +1675,9 @@ namespace Number_3 {
     interface JSON extends Numeric_2.JSON<"number"> {
     }
     const // (undocumented)
-    parseZero: Parser<Slice<Token>, Number_3, string>;
+    parseZero: Parser<Number_3>;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Number_3, string>;
+    parse: Parser<Number_3>;
 }
 
 // @public (undocumented)
@@ -1826,6 +1824,9 @@ namespace Numeric_2 {
 }
 
 // @public (undocumented)
+export type Parser<V> = Parser_2<Slice<Token>, V, string>;
+
+// @public (undocumented)
 export type Percentage = Percentage.Calculated | Percentage.Fixed;
 
 // @public (undocumented)
@@ -1899,9 +1900,9 @@ export namespace Percentage {
         percentageBase: T;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Percentage, string>;
+    parse: Parser<Percentage>;
     const // @internal (undocumented)
-    parseBase: Parser<Slice<Token>, Fixed, string>;
+    parseBase: Parser_2<Slice<Token>, Fixed<Numeric_2.Type>, string, []>;
         {};
 }
 
@@ -1927,7 +1928,7 @@ namespace Percentage_2 {
     interface JSON extends Numeric_2.JSON<"percentage"> {
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Percentage_2, string>;
+    parse: Parser<Percentage_2>;
 }
 
 // @public (undocumented)
@@ -1960,7 +1961,7 @@ export namespace Perspective {
         depth: Length.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Perspective, string>;
+    parse: Parser<Perspective>;
 }
 
 // @public (undocumented)
@@ -1999,7 +2000,7 @@ export namespace Polygon {
     // (undocumented)
     export type Vertex<V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> = readonly [V, V];
     const // (undocumented)
-    parse: Parser<Slice<Token>, Polygon, string>;
+    parse: Parser<Polygon>;
 }
 
 // @public (undocumented)
@@ -2037,11 +2038,11 @@ export namespace Position {
         const // Warning: (ae-incompatible-release-tags) The symbol "parseHorizontal" is marked as @public, but its signature references "Type" which is marked as @internal
         //
         // (undocumented)
-        parseHorizontal: Parser<Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
+        parseHorizontal: Parser_2<Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
         const // Warning: (ae-incompatible-release-tags) The symbol "parseVertical" is marked as @public, but its signature references "Type" which is marked as @internal
         //
         // (undocumented)
-        parseVertical: Parser<Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
+        parseVertical: Parser_2<Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
     }
     // (undocumented)
     export interface JSON extends Value.JSON<"position"> {
@@ -2055,15 +2056,15 @@ export namespace Position {
         // (undocumented)
         export type Center = Keyword<"center">;
         const // @internal (undocumented)
-        parseCenter: Parser<Slice<Token>, Keyword<"center">, string>;
+        parseCenter: Parser<Keyword<"center">>;
         // (undocumented)
         export type Horizontal = Keyword<"left"> | Keyword<"right">;
         const // @internal (undocumented)
-        parseVertical: Parser<Slice<Token>, Keyword.ToKeywords<"top" | "bottom">, string>;
+        parseVertical: Parser<Keyword.ToKeywords<"top" | "bottom">>;
         // (undocumented)
         export type Vertical = Keyword<"top"> | Keyword<"bottom">;
         const // @internal (undocumented)
-        parseHorizontal: Parser<Slice<Token>, Keyword.ToKeywords<"right" | "left">, string>;
+        parseHorizontal: Parser<Keyword.ToKeywords<"right" | "left">>;
     }
     // (undocumented)
     export type Offset<U extends Unit.Length = Unit.Length> = Length.Fixed<U> | Percentage.Fixed;
@@ -2072,10 +2073,10 @@ export namespace Position {
         const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Type" which is marked as @internal
         //
         // (undocumented)
-        parse: Parser<Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length>, string, []>;
+        parse: Parser_2<Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length>, string, []>;
     }
     // (undocumented)
-    export function parse(legacySyntax?: boolean): Parser<Slice<Token>, Position, string>;
+    export function parse(legacySyntax?: boolean): Parser<Position>;
     // (undocumented)
     export class Side<S extends Keywords.Vertical | Keywords.Horizontal = Keywords.Vertical | Keywords.Horizontal, O extends Offset = Offset> extends Value<"side", false> {
         // (undocumented)
@@ -2109,17 +2110,17 @@ export namespace Position {
             side: Keyword.JSON;
         }
         const // (undocumented)
-        parseHorizontalKeywordValue: Parser<Slice<Token>, Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string>;
+        parseHorizontalKeywordValue: Parser<Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>>;
         const // (undocumented)
-        parseHorizontalKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string>;
+        parseHorizontalKeyword: Parser<Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>>;
         const // (undocumented)
-        parseVerticalKeywordValue: Parser<Slice<Token>, Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string>;
+        parseVerticalKeywordValue: Parser<Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>>;
         const // (undocumented)
-        parseVerticalKeyword: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string>;
+        parseVerticalKeyword: Parser<Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>>;
         const // (undocumented)
-        parseHorizontal: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
+        parseHorizontal: Parser_2<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
         const // (undocumented)
-        parseVertical: Parser<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
+        parseVertical: Parser_2<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
     }
         {};
 }
@@ -2293,7 +2294,7 @@ export namespace Radial {
         shape: Shape.JSON;
     }
     // (undocumented)
-    export function parse(parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>): Parser<Slice<Token>, Radial, string>;
+    export function parse(parseItemList: Parser<Array<Gradient.Item>>): Parser<Radial>;
     // (undocumented)
     export type Shape = Circle | Ellipse | Extent;
     // (undocumented)
@@ -2342,7 +2343,7 @@ export namespace Radius {
         export type Farthest = Keyword<"farthest-side">;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Radius, string>;
+    parse: Parser<Radius>;
 }
 
 // @public @deprecated (undocumented)
@@ -2397,7 +2398,7 @@ export namespace Rectangle {
         top: Length.Fixed.JSON | Keyword.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Rectangle, string>;
+    parse: Parser<Rectangle>;
 }
 
 // @public (undocumented)
@@ -2440,7 +2441,7 @@ export namespace RGB {
         red: Number_2.Fixed.JSON | Percentage.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, RGB, string>;
+    parse: Parser<RGB>;
 }
 
 // @public (undocumented)
@@ -2485,7 +2486,7 @@ export namespace Rotate {
         z: Number_2.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Rotate, string>;
+    parse: Parser<Rotate>;
 }
 
 // @public (undocumented)
@@ -2522,7 +2523,7 @@ export namespace Scale {
         y: Number_2.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Scale, string>;
+    parse: Parser<Scale>;
 }
 
 // @public (undocumented)
@@ -2580,7 +2581,7 @@ export namespace Shadow {
         withSpread: boolean;
     }
     // (undocumented)
-    export function parse(options?: Options): Parser<Slice<Token>, Shadow, string>;
+    export function parse(options?: Options): Parser<Shadow>;
         {};
 }
 
@@ -2618,7 +2619,7 @@ export namespace Shape {
         shape: Circle.JSON | Ellipse.JSON | Inset.JSON | Polygon.JSON | Rectangle.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Shape<Circle | Ellipse | Inset | Polygon>, string>;
+    parse: Parser<Shape<Circle | Ellipse | Inset | Polygon>>;
 }
 
 // @public (undocumented)
@@ -2655,7 +2656,7 @@ export namespace Skew {
         y: Angle.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Skew, string>;
+    parse: Parser<Skew>;
 }
 
 // @public (undocumented)
@@ -2686,7 +2687,7 @@ namespace String_2 {
         value: string;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, String_2, string>;
+    parse: Parser<String_2>;
 }
 export { String_2 as String }
 
@@ -2698,7 +2699,7 @@ export namespace System {
     // (undocumented)
     export type Keyword = "canvas" | "canvastext" | "linktext" | "visitedtext" | "activetext" | "buttonface" | "buttontext" | "field" | "fieldtext" | "highlight" | "highlighttext" | "graytext";
     const // (undocumented)
-    parse: Parser<Slice<Token>, System, string>;
+    parse: Parser<System>;
 }
 
 // @public (undocumented)
@@ -3216,7 +3217,7 @@ export namespace Token {
     whitespace: typeof Whitespace.of, // (undocumented)
     isWhitespace: typeof Whitespace.isWhitespace;
     const // (undocumented)
-    parseWhitespace: Parser<Slice<Token>, Whitespace, string, []>;
+    parseWhitespace: Parser_2<Slice<Token>, Whitespace, string, []>;
     // (undocumented)
     export namespace OpenParenthesis {
         // (undocumented)
@@ -3248,7 +3249,7 @@ export namespace Token {
     colon: typeof Colon.of, // (undocumented)
     isColon: typeof Colon.isColon;
     const // (undocumented)
-    parseColon: Parser<Slice<Token>, Colon, string, []>;
+    parseColon: Parser_2<Slice<Token>, Colon, string, []>;
     // (undocumented)
     export namespace OpenSquareBracket {
         // (undocumented)
@@ -3262,48 +3263,48 @@ export namespace Token {
         }
     }
     // (undocumented)
-    export function parseDelim(query?: string | number | Predicate<Delim>): Parser<Slice<Token>, Delim, string, []>;
+    export function parseDelim(query?: string | number | Predicate<Delim>): Parser_2<Slice<Token>, Delim, string, []>;
     const // (undocumented)
     semicolon: typeof Semicolon.of, // (undocumented)
     isSemicolon: typeof Semicolon.isSemicolon;
     const // (undocumented)
-    parseSemicolon: Parser<Slice<Token>, Semicolon, string, []>;
+    parseSemicolon: Parser_2<Slice<Token>, Semicolon, string, []>;
     // (undocumented)
-    export function parseDimension(predicate?: Predicate<Dimension>): Parser<Slice<Token>, Dimension, string, []>;
+    export function parseDimension(predicate?: Predicate<Dimension>): Parser_2<Slice<Token>, Dimension, string, []>;
     // (undocumented)
-    export function parseFunction(query?: string | Predicate<Function>): Parser<Slice<Token>, Function, string, []>;
+    export function parseFunction(query?: string | Predicate<Function>): Parser_2<Slice<Token>, Function, string, []>;
     const // (undocumented)
     comma: typeof Comma.of, // (undocumented)
     isComma: typeof Comma.isComma;
     const // (undocumented)
-    parseComma: Parser<Slice<Token>, Comma, string, []>;
+    parseComma: Parser_2<Slice<Token>, Comma, string, []>;
     // (undocumented)
-    export function parseHash(predicate?: Predicate<Hash>): Parser<Slice<Token>, Hash, string, []>;
+    export function parseHash(predicate?: Predicate<Hash>): Parser_2<Slice<Token>, Hash, string, []>;
     // (undocumented)
-    export function parseIdent(query?: string | Predicate<Ident>): Parser<Slice<Token>, Ident, string, []>;
+    export function parseIdent(query?: string | Predicate<Ident>): Parser_2<Slice<Token>, Ident, string, []>;
     const // (undocumented)
     openParenthesis: typeof OpenParenthesis.of, // (undocumented)
     isOpenParenthesis: typeof OpenParenthesis.isOpenParenthesis;
     const // (undocumented)
-    parseOpenParenthesis: Parser<Slice<Token>, OpenParenthesis, string, []>;
+    parseOpenParenthesis: Parser_2<Slice<Token>, OpenParenthesis, string, []>;
     // (undocumented)
-    export function parseNumber(predicate?: Predicate<Number>): Parser<Slice<Token>, Number, string, []>;
+    export function parseNumber(predicate?: Predicate<Number>): Parser_2<Slice<Token>, Number, string, []>;
     // (undocumented)
-    export function parsePercentage(predicate?: Predicate<Percentage>): Parser<Slice<Token>, Percentage, string, []>;
+    export function parsePercentage(predicate?: Predicate<Percentage>): Parser_2<Slice<Token>, Percentage, string, []>;
     const // (undocumented)
     closeParenthesis: typeof CloseParenthesis.of, // (undocumented)
     isCloseParenthesis: typeof CloseParenthesis.isCloseParenthesis;
     const // (undocumented)
-    parseCloseParenthesis: Parser<Slice<Token>, CloseParenthesis, string, []>;
+    parseCloseParenthesis: Parser_2<Slice<Token>, CloseParenthesis, string, []>;
     // (undocumented)
-    export function parseString(predicate?: Predicate<String>): Parser<Slice<Token>, String, string, []>;
+    export function parseString(predicate?: Predicate<String>): Parser_2<Slice<Token>, String, string, []>;
     // (undocumented)
-    export function parseURL(predicate?: Predicate<URL>): Parser<Slice<Token>, URL, string, []>;
+    export function parseURL(predicate?: Predicate<URL>): Parser_2<Slice<Token>, URL, string, []>;
     const // (undocumented)
     openSquareBracket: typeof OpenSquareBracket.of, // (undocumented)
     isOpenSquareBracket: typeof OpenSquareBracket.isOpenSquareBracket;
     const // (undocumented)
-    parseOpenSquareBracket: Parser<Slice<Token>, OpenSquareBracket, string, []>;
+    parseOpenSquareBracket: Parser_2<Slice<Token>, OpenSquareBracket, string, []>;
     // (undocumented)
     export class Percentage implements Equatable, Serializable<Percentage.JSON> {
         // (undocumented)
@@ -3341,7 +3342,7 @@ export namespace Token {
     closeSquareBracket: typeof CloseSquareBracket.of, // (undocumented)
     isCloseSquareBracket: typeof CloseSquareBracket.isCloseSquareBracket;
     const // (undocumented)
-    parseCloseSquareBracket: Parser<Slice<Token>, CloseSquareBracket, string, []>;
+    parseCloseSquareBracket: Parser_2<Slice<Token>, CloseSquareBracket, string, []>;
     // (undocumented)
     export class Semicolon implements Equatable, Serializable<Semicolon.JSON> {
         // (undocumented)
@@ -3371,7 +3372,7 @@ export namespace Token {
     openCurlyBracket: typeof OpenCurlyBracket.of, // (undocumented)
     isOpenCurlyBracket: typeof OpenCurlyBracket.isOpenCurlyBracket;
     const // (undocumented)
-    parseOpenCurlyBracket: Parser<Slice<Token>, OpenCurlyBracket, string, []>;
+    parseOpenCurlyBracket: Parser_2<Slice<Token>, OpenCurlyBracket, string, []>;
     // (undocumented)
     export class String implements Equatable, Serializable<String.JSON> {
         // (undocumented)
@@ -3405,7 +3406,7 @@ export namespace Token {
     closeCurlyBracket: typeof CloseCurlyBracket.of, // (undocumented)
     isCloseCurlyBracket: typeof CloseCurlyBracket.isCloseCurlyBracket;
     const // (undocumented)
-    parseCloseCurlyBracket: Parser<Slice<Token>, CloseCurlyBracket, string, []>;
+    parseCloseCurlyBracket: Parser_2<Slice<Token>, CloseCurlyBracket, string, []>;
     // (undocumented)
     export class URL implements Equatable, Serializable<URL.JSON> {
         // (undocumented)
@@ -3439,7 +3440,7 @@ export namespace Token {
     openComment: typeof OpenComment.of, // (undocumented)
     isOpenComment: typeof OpenComment.isOpenComment;
     const // (undocumented)
-    parseOpenComment: Parser<Slice<Token>, OpenComment, string, []>;
+    parseOpenComment: Parser_2<Slice<Token>, OpenComment, string, []>;
     // (undocumented)
     export class Whitespace implements Equatable, Serializable<Whitespace.JSON> {
         // (undocumented)
@@ -3469,7 +3470,7 @@ export namespace Token {
     closeComment: typeof CloseComment.of, // (undocumented)
     isCloseComment: typeof CloseComment.isCloseComment;
     const // (undocumented)
-    parseCloseComment: Parser<Slice<Token>, CloseComment, string, []>;
+    parseCloseComment: Parser_2<Slice<Token>, CloseComment, string, []>;
 }
 
 // @public (undocumented)
@@ -3492,9 +3493,9 @@ export namespace Transform {
     // (undocumented)
     export function translate<X extends Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed, Z extends Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
     const // (undocumented)
-    parse: Parser<Slice<Token>, Transform, string, []>;
+    parse: Parser_2<Slice<Token>, Transform, string, []>;
     const // (undocumented)
-    parseList: Parser<Slice<Token>, Array<Transform>, string>;
+    parseList: Parser<Array<Transform>>;
 }
 
 // @public (undocumented)
@@ -3535,7 +3536,7 @@ export namespace Translate {
         z: Length.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, Translate, string>;
+    parse: Parser<Translate>;
 }
 
 // @public (undocumented)
@@ -3658,7 +3659,7 @@ export namespace URL {
         url: string;
     }
     const // (undocumented)
-    parse: Parser<Slice<Token>, URL, string>;
+    parse: Parser<URL>;
 }
 
 // @public

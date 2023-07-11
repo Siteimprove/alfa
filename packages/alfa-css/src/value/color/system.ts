@@ -1,7 +1,4 @@
-import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
-
-import { Token } from "../../syntax";
+import { type Parser as CSSParser } from "../../syntax";
 
 import { Keyword } from "../keyword";
 
@@ -33,7 +30,7 @@ export namespace System {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-system-color}
    */
-  export const parse: Parser<Slice<Token>, System, string> = Keyword.parse(
+  export const parse: CSSParser<System> = Keyword.parse(
     "canvas",
     "canvastext",
     "linktext",

@@ -5,7 +5,11 @@ import { Err, Result } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Function as CSSFunction, Token } from "../../syntax";
+import {
+  Function as CSSFunction,
+  Token,
+  type Parser as CSSParser,
+} from "../../syntax";
 
 import { Angle, Length, Number, Numeric, Percentage } from "../numeric";
 
@@ -245,7 +249,7 @@ export namespace Math {
   // are mutually recursive and must be kept together here rather than distributed
   // in the corresponding files.
 
-  let parseSum: Parser<Slice<Token>, Expression, string>;
+  let parseSum: CSSParser<Expression>;
 
   const parseCalc = map(
     CSSFunction.parse("calc", (input) => parseSum(input)),

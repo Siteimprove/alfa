@@ -4,8 +4,9 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
 import { Angle as BaseAngle } from "../../calculation/numeric";
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
+
 import { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
@@ -180,7 +181,7 @@ export namespace Angle {
   /**
    * {@link https://drafts.csswg.org/css-values/#number-value}
    */
-  export const parse: Parser<Slice<Token>, Angle, string> = either(
+  export const parse: CSSParser<Angle> = either(
     map<Slice<Token>, BaseAngle, Fixed, string>(BaseAngle.parse, of),
     map(Math.parseAngle, of)
   );
@@ -189,10 +190,8 @@ export namespace Angle {
   /**
    * @internal
    */
-  export const parseBase: Parser<Slice<Token>, Fixed, string> = map<
-    Slice<Token>,
-    BaseAngle,
-    Fixed,
-    string
-  >(BaseAngle.parse, of);
+  export const parseBase = map<Slice<Token>, BaseAngle, Fixed, string>(
+    BaseAngle.parse,
+    of
+  );
 }

@@ -1,9 +1,8 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Angle, Number, Percentage } from "../numeric";
 
@@ -161,7 +160,7 @@ export namespace HSL {
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
    */
-  export const parse: Parser<Slice<Token>, HSL, string> = map(
+  export const parse: CSSParser<HSL> = map(
     right(
       Token.parseFunction((fn) => fn.value === "hsl" || fn.value === "hsla"),
       left(

@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Number, Percentage } from "../numeric";
 
@@ -118,7 +117,7 @@ export namespace RGB {
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-rgb}
    */
-  export const parse: Parser<Slice<Token>, RGB, string> = map(
+  export const parse: CSSParser<RGB> = map(
     right(
       Token.parseFunction((fn) => fn.value === "rgb" || fn.value === "rgba"),
       left(

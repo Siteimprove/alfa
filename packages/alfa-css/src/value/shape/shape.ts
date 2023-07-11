@@ -4,10 +4,11 @@ import { Err, Result } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Value } from "../value";
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Box } from "../box";
 import { Keyword } from "../keyword";
+
 import { Circle } from "./circle";
 import { Inset } from "./inset";
 import { Rectangle } from "./rectangle";
@@ -113,11 +114,9 @@ export namespace Shape {
    * @remarks
    * This does not parse the deprecated `rect()` shape.
    */
-  export const parse: Parser<
-    Slice<Token>,
-    Shape<Circle | Ellipse | Inset | Polygon>,
-    string
-  > = (input) => {
+  export const parse: CSSParser<Shape<Circle | Ellipse | Inset | Polygon>> = (
+    input
+  ) => {
     let shape: Circle | Ellipse | Inset | Polygon | undefined;
     let box: Box.Geometry | undefined;
 

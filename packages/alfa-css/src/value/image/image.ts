@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import type { Parser as CSSParser } from "../../syntax";
 import { Value } from "../value";
 
 import { URL } from "./url";
@@ -77,7 +76,7 @@ export namespace Image {
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-image}
    */
-  export const parse: Parser<Slice<Token>, Image, string> = map(
+  export const parse: CSSParser<Image> = map(
     either(URL.parse, Gradient.parse),
     (image) => Image.of(image)
   );

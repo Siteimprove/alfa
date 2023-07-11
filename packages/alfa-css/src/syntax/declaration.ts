@@ -8,6 +8,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import * as json from "@siteimprove/alfa-json";
 
 import { Component } from "./component";
+import type { Parser as CSSParser } from "./parser";
 import { Token } from "./token";
 
 const { not } = Predicate;
@@ -103,7 +104,7 @@ export namespace Declaration {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-declaration}
    */
-  export const consume: Parser<Slice<Token>, Declaration, string> = flatMap(
+  export const consume: CSSParser<Declaration> = flatMap(
     pair(
       left(
         Token.parseIdent(),
@@ -150,7 +151,7 @@ export namespace Declaration {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#parse-a-declaration}
    */
-  export const parse: Parser<Slice<Token>, Declaration, string> = (input) => {
+  export const parse: CSSParser<Declaration> = (input) => {
     while (input.get(0).some(Token.isWhitespace)) {
       input = input.slice(1);
     }
@@ -167,11 +168,7 @@ export namespace Declaration {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-list-of-declarations}
    */
-  export const consumeList: Parser<
-    Slice<Token>,
-    Iterable<Declaration>,
-    string
-  > = (input) => {
+  export const consumeList: CSSParser<Iterable<Declaration>> = (input) => {
     const declarations: Array<Declaration> = [];
 
     while (input.length > 0) {
@@ -215,9 +212,5 @@ export namespace Declaration {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#parse-a-list-of-declarations}
    */
-  export const parseList: Parser<
-    Slice<Token>,
-    Iterable<Declaration>,
-    string
-  > = (input) => consumeList(input);
+  export const parseList: CSSParser<Iterable<Declaration>> = consumeList;
 }

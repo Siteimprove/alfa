@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Number } from "../numeric";
 
@@ -86,7 +85,7 @@ export namespace Hex {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-hex-color}
    */
-  export const parse: Parser<Slice<Token>, Hex, string> = map(
+  export const parse: CSSParser<Hex> = map(
     map(
       Token.parseHash((hash) => {
         switch (hash.value.length) {

@@ -4,4 +4,5 @@ export * from "./declaration";
 export * from "./function";
 export * from "./lexer";
 export * from "./nth";
+export * from "./parser";
 export * from "./token";

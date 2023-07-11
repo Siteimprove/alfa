@@ -4,8 +4,8 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { Slice } from "@siteimprove/alfa-slice";
 import { Component } from "./component";
+import type { Parser as CSSParser } from "./parser";
 import { Token } from "./token";
 
 const { either, pair, left, map, takeUntil } = Parser;
@@ -106,10 +106,7 @@ export namespace Block {
    * The compiler doesn't check if the delimiter types match, that needs to be
    * ensured by the caller of the function.
    */
-  function consumeDelimited(
-    open: Parser<Slice<Token>, Open, string>,
-    closed: Parser<Slice<Token>, Close, string>
-  ) {
+  function consumeDelimited(open: CSSParser<Open>, closed: CSSParser<Close>) {
     return map(
       left(
         pair(
@@ -143,7 +140,7 @@ export namespace Block {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-simple-block}
    */
-  export const consume: Parser<Slice<Token>, Block, string> = either(
+  export const consume: CSSParser<Block> = either(
     consumeParentheses,
     consumeSquareBrackets,
     consumeCurlyBracket

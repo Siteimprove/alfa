@@ -6,12 +6,12 @@ import { Slice } from "@siteimprove/alfa-slice";
 // We need to rename Math to avoid collision with the global namespace.
 import { Math as Calculation } from "../../calculation";
 import { Integer as BaseInteger } from "../../calculation/numeric";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import type { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Numeric } from "./numeric";
-import { Token } from "../../syntax";
 
 const { either, map } = Parser;
 
@@ -165,7 +165,7 @@ export namespace Integer {
   /**
    * {@link https://drafts.csswg.org/css-values/#number-value}
    */
-  export const parse: Parser<Slice<Token>, Integer, string> = either(
+  export const parse: CSSParser<Integer> = either(
     map<Slice<Token>, BaseInteger, Fixed, string>(BaseInteger.parse, of),
     map(Calculation.parseNumber, of)
   );
@@ -174,10 +174,8 @@ export namespace Integer {
   /**
    * @internal
    */
-  export const parseBase: Parser<Slice<Token>, Fixed, string> = map<
-    Slice<Token>,
-    BaseInteger,
-    Fixed,
-    string
-  >(BaseInteger.parse, of);
+  export const parseBase = map<Slice<Token>, BaseInteger, Fixed, string>(
+    BaseInteger.parse,
+    of
+  );
 }

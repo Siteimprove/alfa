@@ -8,7 +8,7 @@ import {
   Percentage as BasePercentage,
 } from "../../calculation/numeric";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Resolvable } from "../resolvable";
 import { Value } from "../value";
@@ -194,7 +194,7 @@ export namespace Percentage {
   /**
    * {@link https://drafts.csswg.org/css-values/#number-value}
    */
-  export const parse: Parser<Slice<Token>, Percentage, string> = either(
+  export const parse: CSSParser<Percentage> = either(
     map<Slice<Token>, BasePercentage, Fixed, string>(BasePercentage.parse, of),
     map(Math.parsePercentage, of)
   );
@@ -203,10 +203,8 @@ export namespace Percentage {
   /**
    * @internal
    */
-  export const parseBase: Parser<Slice<Token>, Fixed, string> = map<
-    Slice<Token>,
-    BasePercentage,
-    Fixed,
-    string
-  >(BasePercentage.parse, of);
+  export const parseBase = map<Slice<Token>, BasePercentage, Fixed, string>(
+    BasePercentage.parse,
+    of
+  );
 }

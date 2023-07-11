@@ -7,6 +7,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import * as json from "@siteimprove/alfa-json";
 
 import { Component } from "./component";
+import type { Parser as CSSParser } from "./parser";
 import { Token } from "./token";
 
 const {
@@ -94,7 +95,7 @@ export namespace Function {
   /**
    * {@link https://drafts.csswg.org/css-syntax/#consume-a-function}
    */
-  export const consume: Parser<Slice<Token>, Function, string> = (input) =>
+  export const consume: CSSParser<Function> = (input) =>
     // eta expansion is necessary for `this` binding to resolve correctly
     map(
       pair(
@@ -118,10 +119,7 @@ export namespace Function {
       ([{ value: name }, value]) => Function.of(name, value)
     )(input);
 
-  export const parse = <T>(
-    name?: string,
-    body?: Parser<Slice<Token>, T, string>
-  ) =>
+  export const parse = <T>(name?: string, body?: CSSParser<T>) =>
     flatMap(
       right(
         peek(
