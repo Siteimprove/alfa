@@ -30,6 +30,7 @@ import { Node } from '@siteimprove/alfa-dom';
 import { Number as Number_2 } from '@siteimprove/alfa-css';
 import { Numeric } from '@siteimprove/alfa-css/src/calculation/numeric';
 import { Option } from '@siteimprove/alfa-option';
+import { Parser } from '@siteimprove/alfa-css';
 import * as parser from '@siteimprove/alfa-parser';
 import { Percentage } from '@siteimprove/alfa-css';
 import { Position } from '@siteimprove/alfa-css';
@@ -147,7 +148,7 @@ export namespace Longhand {
     }
     export type Parsed<T> = T extends Longhand<infer S, unknown> ? S : never;
     const // (undocumented)
-    parseDefaults: parser.Parser<Slice<Token>, Keyword.ToKeywords<"initial" | "inherit" | "unset">, string>;
+    parseDefaults: Parser<Keyword.ToKeywords<"initial" | "inherit" | "unset">>;
     // (undocumented)
     export type Parser<SPECIFIED> = parser.Parser<Slice<Token>, Default | SPECIFIED, string>;
 }

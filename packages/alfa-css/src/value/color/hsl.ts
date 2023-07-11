@@ -1,9 +1,8 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Function, Token } from "../../syntax";
+import { Function, type Parser as CSSParser, Token } from "../../syntax";
 import { Keyword } from "../keyword";
 
 import { Angle, Number, Percentage } from "../numeric";
@@ -198,14 +197,14 @@ export namespace HSL {
    */
   const parseHue = either(Number.parse, Angle.parse);
 
-  const orNone = <T>(parser: Parser<Slice<Token>, T, string>) =>
+  const orNone = <T>(parser: CSSParser<T>) =>
     either(
       parser,
       map(Keyword.parse("none"), () => Percentage.of(0))
     );
 
   const parseTriplet = (
-    separator: Parser<Slice<Token>, any, string>,
+    separator: CSSParser<any>,
     acceptNone: boolean = false
   ) =>
     map(
@@ -256,7 +255,7 @@ export namespace HSL {
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
    */
-  export const parse: Parser<Slice<Token>, HSL, string> = map(
+  export const parse: CSSParser<HSL> = map(
     Function.parse(
       (fn) => fn.value === "hsl" || fn.value === "hsla",
       either(parseLegacy, parseModern)

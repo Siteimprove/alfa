@@ -1726,7 +1726,7 @@ __metadata:
     minimist: ^1.2.6
     package-dependency-graph: ^1.14.4
     prettier: ^2.7.1
-    typescript: ^5.1.6
+    typescript: ^5.0.4
   languageName: unknown
   linkType: soft
 
@@ -5407,11 +5407,11 @@ resolve@~1.19.0:
   linkType: hard
 
 "semver@npm:2 || 3 || 4 || 5, semver@npm:^5.4.1":
-  version: 5.7.1
-  resolution: "semver@npm:5.7.1"
+  version: 5.7.2
+  resolution: "semver@npm:5.7.2"
   bin:
-    semver: ./bin/semver
-  checksum: 57fd0acfd0bac382ee87cd52cd0aaa5af086a7dc8d60379dfe65fea491fb2489b6016400813930ecd61fd0952dae75c115287a1b16c234b1550887117744dfaf
+    semver: bin/semver
+  checksum: fb4ab5e0dd1c22ce0c937ea390b4a822147a9c53dbd2a9a0132f12fe382902beef4fbf12cf51bb955248d8d15874ce8cd89532569756384f994309825f10b686
   languageName: node
   linkType: hard
 
@@ -6065,23 +6065,23 @@ resolve@~1.19.0:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.0.2, typescript@npm:^5.1.6":
-  version: 5.1.6
-  resolution: "typescript@npm:5.1.6"
+"typescript@npm:^5.0.2, typescript@npm:^5.0.4":
+  version: 5.1.5
+  resolution: "typescript@npm:5.1.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: b2f2c35096035fe1f5facd1e38922ccb8558996331405eb00a5111cc948b2e733163cc22fab5db46992aba7dd520fff637f2c1df4996ff0e134e77d3249a7350
+  checksum: 0eef8699e05ae767096924dbed633c340b4d36e953bb8ed87fb12e9dd9dcea5055ceac7182c614a556dbd346a8a82df799d330e1e286ae66e17c84e1710f6a6f
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^5.0.2#~builtin<compat/typescript>, typescript@patch:typescript@^5.1.6#~builtin<compat/typescript>":
-  version: 5.1.6
-  resolution: "typescript@patch:typescript@npm%3A5.1.6#~builtin<compat/typescript>::version=5.1.6&hash=85af82"
+"typescript@patch:typescript@^5.0.2#~builtin<compat/typescript>, typescript@patch:typescript@^5.0.4#~builtin<compat/typescript>":
+  version: 5.1.5
+  resolution: "typescript@patch:typescript@npm%3A5.1.5#~builtin<compat/typescript>::version=5.1.5&hash=85af82"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 21e88b0a0c0226f9cb9fd25b9626fb05b4c0f3fddac521844a13e1f30beb8f14e90bd409a9ac43c812c5946d714d6e0dee12d5d02dfc1c562c5aacfa1f49b606
+  checksum: 33020c886b1aa2e948b557aad4986cf6448b30c58915b12cac873bd35dc2260d93f71af8a661d2c9f352b5d099d9df13a59688e222e79276099b9c5d86d847be
   languageName: node
   linkType: hard
 

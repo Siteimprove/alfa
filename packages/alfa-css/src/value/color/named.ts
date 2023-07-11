@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Number } from "../numeric";
 
@@ -90,7 +89,7 @@ export namespace Named {
 
   export type Color = keyof Colors;
 
-  export const parse: Parser<Slice<Token>, Named, string> = map(
+  export const parse: CSSParser<Named> = map(
     Token.parseIdent((ident) => ident.value.toLowerCase() in Colors),
     (ident) => Named.of(ident.value.toLowerCase() as Color)
   );

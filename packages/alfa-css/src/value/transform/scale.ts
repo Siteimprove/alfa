@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Number } from "../numeric";
 
@@ -150,7 +149,7 @@ export namespace Scale {
     (y) => Scale.of(Number.of(1), y)
   );
 
-  export const parse: Parser<Slice<Token>, Scale, string> = either(
+  export const parse: CSSParser<Scale> = either(
     parseScale,
     parseScaleX,
     parseScaleY

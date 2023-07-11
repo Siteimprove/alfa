@@ -1,7 +1,6 @@
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax";
+import { type Parser as CSSParser } from "../syntax";
 
 import { Keyword } from "./keyword";
 
@@ -26,7 +25,7 @@ export namespace Box {
     | Keyword.JSON<"padding-box">
     | Keyword.JSON<"content-box">;
 
-  export const parse: Parser<Slice<Token>, Box, string> = Keyword.parse(
+  export const parse: CSSParser<Box> = Keyword.parse(
     "border-box",
     "padding-box",
     "content-box"
@@ -41,7 +40,7 @@ export namespace Box {
     export type JSON = Box.JSON | Keyword.JSON<"margin-box">;
   }
 
-  export const parseShape: Parser<Slice<Token>, Shape, string> = either(
+  export const parseShape: CSSParser<Shape> = either(
     parse,
     Keyword.parse("margin-box")
   );
@@ -63,7 +62,7 @@ export namespace Box {
       | Keyword.JSON<"view-box">;
   }
 
-  export const parseGeometry: Parser<Slice<Token>, Geometry, string> = either(
+  export const parseGeometry: CSSParser<Geometry> = either(
     parseShape,
     Keyword.parse("fill-box", "stroke-box", "view-box")
   );

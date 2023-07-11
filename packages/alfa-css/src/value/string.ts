@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax";
+import { type Parser as CSSParser, Token } from "../syntax";
 
 import type { Resolvable } from "./resolvable";
 import { Value } from "./value";
@@ -69,8 +68,7 @@ export namespace String {
     return value instanceof String;
   }
 
-  export const parse: Parser<Slice<Token>, String, string> = map(
-    Token.parseString(),
-    (string) => String.of(string.value)
+  export const parse: CSSParser<String> = map(Token.parseString(), (string) =>
+    String.of(string.value)
   );
 }

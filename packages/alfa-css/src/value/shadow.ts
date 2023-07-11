@@ -1,9 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
-import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../syntax";
+import { type Parser as CSSParser, Token } from "../syntax";
 import { Value } from "./value";
 
 import { Color } from "./color";
@@ -161,9 +159,7 @@ export namespace Shadow {
     withSpread: boolean;
   }
 
-  export function parse(
-    options?: Options
-  ): Parser<Slice<Token>, Shadow, string> {
+  export function parse(options?: Options): CSSParser<Shadow> {
     const { withInset = true, withSpread = true } = options ?? {};
 
     return (input) => {

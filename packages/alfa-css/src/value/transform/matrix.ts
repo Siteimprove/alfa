@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Number } from "../numeric";
 
@@ -177,8 +176,5 @@ export namespace Matrix {
     }
   );
 
-  export const parse: Parser<Slice<Token>, Matrix, string> = either(
-    parseMatrix,
-    parseMatrix3d
-  );
+  export const parse: CSSParser<Matrix> = either(parseMatrix, parseMatrix3d);
 }

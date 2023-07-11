@@ -8,6 +8,8 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import * as json from "@siteimprove/alfa-json";
 
+import type { Parser as CSSParser } from "./parser";
+
 const { map, oneOrMore, parseIf } = Parser;
 const { fromCharCode } = String;
 const { and } = Refinement;
@@ -69,9 +71,7 @@ export namespace Token {
     | OpenComment.JSON
     | CloseComment.JSON;
 
-  const parseFirst: Parser<Slice<Token>, Token, string> = (
-    input: Slice<Token>
-  ) =>
+  const parseFirst: CSSParser<Token> = (input) =>
     input
       .first()
       .map((token) => Ok.of<[Slice<Token>, Token]>([input.rest(), token]))

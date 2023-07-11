@@ -1,9 +1,8 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Function, Token } from "../../syntax";
+import { Function, type Parser as CSSParser, Token } from "../../syntax";
 import { Keyword } from "../keyword";
 
 import { Number, Percentage } from "../numeric";

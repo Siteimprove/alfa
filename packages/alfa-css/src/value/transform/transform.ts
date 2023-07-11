@@ -1,7 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Angle, Length, Number, Percentage } from "../numeric";
 
@@ -90,9 +90,7 @@ export namespace Transform {
   /**
    * {@link https://drafts.csswg.org/css-transforms/#typedef-transform-list}
    */
-  export const parseList: Parser<
-    Slice<Token>,
-    Array<Transform>,
-    string
-  > = oneOrMore(delimited(option(Token.parseWhitespace), parse));
+  export const parseList: CSSParser<Array<Transform>> = oneOrMore(
+    delimited(option(Token.parseWhitespace), parse)
+  );
 }

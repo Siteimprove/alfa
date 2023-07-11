@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Numeric } from "./numeric";
 
@@ -54,7 +53,7 @@ export namespace Integer {
     return value instanceof Integer;
   }
 
-  export const parse: Parser<Slice<Token>, Integer, string> = map(
+  export const parse: CSSParser<Integer> = map(
     Token.parseNumber((number) => number.isInteger),
     (integer) => Integer.of(integer.value)
   );

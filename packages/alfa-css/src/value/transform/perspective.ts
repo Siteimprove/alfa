@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Length } from "../numeric";
 
@@ -59,7 +58,7 @@ export class Perspective<
  * @public
  */
 export namespace Perspective {
-  export type Canonical = Perspective<Length.Canonical>
+  export type Canonical = Perspective<Length.Canonical>;
 
   export interface JSON extends Function.JSON<"perspective"> {
     depth: Length.Fixed.JSON;
@@ -74,7 +73,7 @@ export namespace Perspective {
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-perspective}
    */
-  export const parse: Parser<Slice<Token>, Perspective, string> = map(
+  export const parse: CSSParser<Perspective> = map(
     right(
       Token.parseFunction("perspective"),
       left(
