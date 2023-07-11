@@ -56,6 +56,19 @@ export function isClipped(
 /**
  * Checks if an element's size is reduced to 0 or 1 pixel, and overflow is
  * somehow hidden.
+ *
+ * @remarks
+ * Clipping occurs at the border, thus including the padding. It is possible
+ * for an element to clip overflow, and have a width/height of 0, yet still show
+ * content in its padding area. This should probably also look into padding size.
+ * So far, we haven't encountered problem due to that. Presumably, content that
+ * is meant to be clipped is correctly put in elements without padding, and the
+ * incorrect clipping would be easily detected by visual regression test early on.
+ *
+ * @remarks
+ * The boxes we get with getBoundingClientRect include padding (and border).
+ * Thus, when these boxes have width/height of 0 and the content is clipped, we
+ * are fairly sure that nothing shows.
  */
 function isClippedBySize(
   device: Device,
@@ -74,7 +87,8 @@ function isClippedBySize(
     const { value: height } = style.computed("height");
     const { value: width } = style.computed("width");
 
-    const hasNoScrollBar = x === "hidden" || y === "hidden";
+    const hasNoScrollBar =
+      (x !== "auto" && x !== "scroll") || (y !== "auto" && y !== "scroll");
 
     if (x !== "visible" || y !== "visible") {
       for (const dimension of [height, width]) {
