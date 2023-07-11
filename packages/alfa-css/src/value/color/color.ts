@@ -1,7 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { type Parser as CSSParser } from "../../syntax";
+import { Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Angle, Number, Percentage } from "../numeric";
@@ -64,7 +64,7 @@ export namespace Color {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-color}
    */
-  export const parse: CSSParser<Color> = either(
+  export const parse = either<Slice<Token>, Color, string>(
     Hex.parse,
     Named.parse,
     RGB.parse,

@@ -1,6 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Function, type Parser as CSSParser, Token } from "../../syntax";
 import { Keyword } from "../keyword";
@@ -174,7 +175,7 @@ export namespace RGB {
    * the correct type, or fails if it is not allowed.
    */
   const parseItem = <C extends Number | Percentage>(
-    parser: Parser<Slice<Token>, C, string>,
+    parser: CSSParser<C>,
     ifNone?: C
   ) =>
     either(
@@ -190,8 +191,8 @@ export namespace RGB {
    * whitespace.
    */
   const parseTriplet = <C extends Number | Percentage>(
-    parser: Parser<Slice<Token>, C, string>,
-    separator: Parser<Slice<Token>, any, string>,
+    parser: CSSParser<C>,
+    separator: CSSParser<any>,
     ifNone?: C
   ) =>
     map(
@@ -203,7 +204,7 @@ export namespace RGB {
     );
 
   const parseLegacyTriplet = <C extends Number | Percentage>(
-    parser: Parser<Slice<Token>, C, string>
+    parser: CSSParser<C>
   ) =>
     parseTriplet(
       parser,
@@ -224,7 +225,7 @@ export namespace RGB {
   );
 
   const parseModernTriplet = <C extends Number | Percentage>(
-    parser: Parser<Slice<Token>, C, string>,
+    parser: CSSParser<C>,
     ifNone: C
   ) => parseTriplet(parser, option(Token.parseWhitespace), ifNone);
 
@@ -244,7 +245,7 @@ export namespace RGB {
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-rgb}
    */
-  export const parse: Parser<Slice<Token>, RGB, string> = map(
+  export const parse: CSSParser<RGB> = map(
     Function.parse(
       (fn) => fn.value === "rgb" || fn.value === "rgba",
       either(parseLegacy, parseModern)
