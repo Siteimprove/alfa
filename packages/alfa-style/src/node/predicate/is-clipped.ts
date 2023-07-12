@@ -1,7 +1,7 @@
 import { Cache } from "@siteimprove/alfa-cache";
 import { Length, LengthPercentage, Numeric } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
-import { Element, Node } from "@siteimprove/alfa-dom";
+import { Element, h, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Refinement } from "@siteimprove/alfa-refinement";
@@ -269,16 +269,20 @@ function isClipping(elementBox: Rectangle, device: Device): Predicate<Element> {
       }
 
       if (
-        elementBox.bottom < ancestorBox.top &&
-        hasComputedStyle("overflow-y", isNotVisible, device)(ancestor)
+        and(
+          hasBox((ancestorBox) => elementBox.bottom < ancestorBox.top),
+          hasComputedStyle("overflow-y", isNotVisible, device)
+        )(ancestor)
       ) {
         // The element is above, and clipped away.
         return true;
       }
 
       if (
-        elementBox.top > ancestorBox.bottom &&
-        hasComputedStyle("overflow-y", isClip, device)(ancestor)
+        and(
+          hasBox((ancestorBox) => elementBox.top > ancestorBox.bottom),
+          hasComputedStyle("overflow-y", isClip, device)
+        )(ancestor)
       ) {
         // The element is below and cannot be scrolled to
         return true;
