@@ -432,7 +432,7 @@ test(`evaluate() passes a text node with horizontal wrapping set by a font-relat
   ]);
 });
 
-test(`evaluate() passes a text node with fixed height and antoher property
+test(`evaluate() passes a text node with fixed height and another property
       set by a font-relative height media query`, async (t) => {
   const target = h.text("Hello World");
 
