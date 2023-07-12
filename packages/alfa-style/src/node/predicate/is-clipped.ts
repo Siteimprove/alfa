@@ -3,9 +3,11 @@ import { Length, LengthPercentage, Numeric } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Rectangle } from "@siteimprove/alfa-rectangle";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Context } from "@siteimprove/alfa-selector";
-import { getPositioningParent } from "../../element/helpers/get-positioning-parent";
+import { hasComputedStyle } from "../../element/predicate/has-computed-style";
+import { Longhands } from "../../longhands";
 
 import { Style } from "../../style";
 import { hasPositioningParent } from "../../element/predicate/has-positioning-parent";
@@ -40,7 +42,8 @@ export function isClipped(
                 isClippedBySize(device, context),
                 isClippedByIndent(device, context),
                 isClippedByMasking(device, context),
-                // We only check moving away in presence of layout.
+                // We know isClippedByMovingAway relies on layout and shortcut it
+                // if no layout is present
                 and(hasBox(), isClippedByMovingAway(device)),
                 // Or it is an element whose positioning parent is clipped
                 hasPositioningParent(device, isClipped(device, context))
@@ -225,57 +228,65 @@ function isClippedByMasking(
  */
 function isClippedByMovingAway(device: Device): Predicate<Element> {
   return (element) => {
-    const elementBox = element.box.getUnsafe();
+    return hasBox((elementBox) =>
+      hasPositioningParent(device, isClipping(elementBox, device))(element)
+    )(element);
+  };
+}
 
-    function isClippedBy(ancestor: Element) {
-      const ancestorBox = ancestor.box.getUnsafe();
+const isNotVisible = (overflow: Longhands.Specified<"overflow-x">): boolean =>
+  overflow.value !== "visible";
+const isClip = (overflow: Longhands.Specified<"overflow-x">): boolean =>
+  overflow.value === "clip" || overflow.value === "hidden";
 
-      if (elementBox.intersects(ancestorBox)) {
+function isClipping(elementBox: Rectangle, device: Device): Predicate<Element> {
+  return (ancestor) =>
+    hasBox((ancestorBox) => {
+      if (hasBox(elementBox.intersects.bind(elementBox))(ancestor)) {
         // The boxes intersect, we see the intersection at least.
         // This doesn't handle corner cases of 1×1px intersections.
         return false;
       }
 
-      const style = Style.from(ancestor, device);
-      const x = style.computed("overflow-x").value.value;
-      const y = style.computed("overflow-y").value.value;
-
-      if (elementBox.right < ancestorBox.left && x !== "visible") {
+      if (
+        and(
+          hasBox((ancestorBox) => elementBox.right < ancestorBox.left),
+          hasComputedStyle("overflow-x", isNotVisible, device)
+        )(ancestor)
+      ) {
         // The element is to the left, and clipped away.
         return true;
       }
 
       if (
-        elementBox.left > ancestorBox.right &&
-        (x === "clip" || x === "hidden")
+        and(
+          hasBox((ancestorBox) => elementBox.left > ancestorBox.right),
+          hasComputedStyle("overflow-x", isClip, device)
+        )(ancestor)
       ) {
         // The element is to the right and cannot be scrolled to
         return true;
       }
 
-      if (elementBox.bottom < ancestorBox.top && y !== "visible") {
+      if (
+        elementBox.bottom < ancestorBox.top &&
+        hasComputedStyle("overflow-y", isNotVisible, device)(ancestor)
+      ) {
         // The element is above, and clipped away.
         return true;
       }
 
       if (
         elementBox.top > ancestorBox.bottom &&
-        (y === "clip" || y === "hidden")
+        hasComputedStyle("overflow-y", isClip, device)(ancestor)
       ) {
         // The element is below and cannot be scrolled to
         return true;
       }
-    }
 
-    let parent = getPositioningParent(element, device);
-    while (parent.isSome()) {
-      if (isClippedBy(parent.get())) {
-        return true;
-      }
-
-      parent = getPositioningParent(parent.get(), device);
-    }
-
-    return false;
-  };
+      return hasPositioningParent(
+        device,
+        isClipping(elementBox, device)
+      )(ancestor);
+    })(ancestor);
 }
