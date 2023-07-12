@@ -14,7 +14,7 @@ function target(
 }
 
 function boxed(
-  box: { width: number; height: number },
+  box: { x?: number; y?: number; width: number; height: number },
   style: { [prop: string]: string },
   child?: Element | Text
 ): Element {
@@ -309,7 +309,7 @@ test(`isClipped() returns false for a relatively positioned element clipped by
 
 /*********************************************************************
  *
- * Checking the recurrence, no layout information
+ * Checking the recurrence
  *
  *********************************************************************/
 
@@ -357,4 +357,190 @@ test("isClipped() returns false for an absolutely positioned element with a clip
   );
 
   t.equal(isClipped(element), false);
+});
+
+/*********************************************************************
+ *
+ * Checking if an element is moved out of a clipping positioning ancestor
+ *
+ *********************************************************************/
+
+function container(
+  style: { [prop: string]: string },
+  element: Element
+): Element {
+  return boxed({ x: 100, y: 100, width: 10, height: 10 }, style, element);
+}
+
+const intersect = () => [
+  boxed({ x: 95, y: 95, width: 10, height: 10 }, {}),
+  boxed({ x: 105, y: 95, width: 10, height: 10 }, {}),
+  boxed({ x: 95, y: 105, width: 10, height: 10 }, {}),
+  boxed({ x: 105, y: 105, width: 10, height: 10 }, {}),
+];
+
+const aboveLeft = () => boxed({ x: 0, y: 0, width: 10, height: 10 }, {});
+const above = () => boxed({ x: 100, y: 0, width: 10, height: 10 }, {});
+const aboveRight = () => boxed({ x: 200, y: 0, width: 10, height: 10 }, {});
+const right = () => boxed({ x: 200, y: 100, width: 10, height: 10 }, {});
+const belowRight = () => boxed({ x: 200, y: 200, width: 10, height: 10 }, {});
+const below = () => boxed({ x: 100, y: 200, width: 10, height: 10 }, {});
+
+const belowLeft = () => boxed({ x: 0, y: 200, width: 10, height: 10 }, {});
+
+const left = () => boxed({ x: 0, y: 100, width: 10, height: 10 }, {});
+
+const overflows = ["auto", "clip", "hidden", "scroll", "visible"];
+const noVisible = ["auto", "clip", "hidden", "scroll"];
+const clipping = ["clip", "hidden"];
+const scrolling = ["auto", "scroll"];
+
+test(`isClipped() returns false when an element intersects its ancestor box`, (t) => {
+  for (const element of intersect()) {
+    for (const overflowX of overflows) {
+      for (const overflowY of overflows) {
+        const _ = container({ overflowX, overflowY }, element);
+
+        t.deepEqual(isClipped(element), false);
+      }
+    }
+  }
+});
+
+test(`isClipped() returns true when an element is left of an horizontally not overflowing ancestor`, (t) => {
+  for (const element of [aboveLeft(), left(), belowLeft()]) {
+    for (const overflowX of noVisible) {
+      for (const overflowY of overflows) {
+        const _ = container({ overflowX, overflowY }, element);
+
+        t.deepEqual(isClipped(element), true);
+      }
+    }
+  }
+});
+
+test(`isClipped() returns false when an element is left of an ancestor showing horizontal overflow`, (t) => {
+  for (const element of [aboveLeft(), left(), belowLeft()]) {
+    const _ = container(
+      { overflowX: "visible", overflowY: "visible" },
+      element
+    );
+
+    t.deepEqual(isClipped(element), false);
+  }
+});
+
+test(`isClipped() returns false when an element is precisely left of an ancestor showing horizontal overflow`, (t) => {
+  // Anything other than clip, visible will turn the overflow-x: visible into auto
+  // and clip on the left.
+  for (const overflowY of ["clip", "visible"]) {
+    const element = left();
+    const _ = container({ overflowX: "visible", overflowY }, element);
+
+    t.deepEqual(isClipped(element), false);
+  }
+});
+
+test(`isClipped() returns true when an element above a vertically not overflowing ancestor`, (t) => {
+  for (const element of [aboveLeft(), above(), aboveRight()]) {
+    for (const overflowX of overflows) {
+      for (const overflowY of noVisible) {
+        const _ = container({ overflowX, overflowY }, element);
+
+        t.deepEqual(isClipped(element), true);
+      }
+    }
+  }
+});
+
+test(`isClipped() returns false when an element is above an ancestor showing vertical overflow`, (t) => {
+  for (const element of [aboveLeft(), above(), aboveRight()]) {
+    const _ = container(
+      { overflowX: "visible", overflowY: "visible" },
+      element
+    );
+
+    t.deepEqual(isClipped(element), false);
+  }
+});
+
+test(`isClipped() returns false when an element is precisely above an ancestor showing vertical overflow`, (t) => {
+  // Anything other than clip, visible will turn the overflow-y: visible into auto
+  // and clip on the left.
+  for (const overflowX of ["clip", "visible"]) {
+    const element = above();
+    const _ = container({ overflowX, overflowY: "visible" }, element);
+
+    t.deepEqual(isClipped(element), false);
+  }
+});
+
+test(`isClipped() returns true when an element is right of an horizontally clipping ancestor`, (t) => {
+  for (const element of [aboveRight(), right(), belowRight()]) {
+    for (const overflowX of clipping) {
+      for (const overflowY of overflows) {
+        const _ = container({ overflowX, overflowY }, element);
+
+        t.deepEqual(isClipped(element), true);
+      }
+    }
+  }
+});
+
+test(`isClipped() returns false when an element is right of an ancestor showing horizontal overflow or scroll`, (t) => {
+  for (const overflowX of ["visible", ...scrolling]) {
+    // for aboveRight(), an overflow-x other than visible turns overflow-y into
+    // auto, which clips above. The (visible, visible) case is tested with the "above" cases.
+    for (const element of [/*aboveRight(),*/ right(), belowRight()]) {
+      const _ = container({ overflowX, overflowY: "visible" }, element);
+
+      t.deepEqual(isClipped(element), false);
+    }
+  }
+});
+
+test(`isClipped() returns false when an element is precisely right of an ancestor showing horizontal overflow or scroll`, (t) => {
+  for (const overflowX of ["visible", ...scrolling]) {
+    for (const overflowY of overflows) {
+      const element = right();
+      const _ = container({ overflowX, overflowY }, element);
+
+      t.deepEqual(isClipped(element), false);
+    }
+  }
+});
+
+test(`isClipped() returns true when an element is below a vertically clipping ancestor`, (t) => {
+  for (const element of [belowLeft(), below(), belowRight()]) {
+    for (const overflowX of overflows) {
+      for (const overflowY of clipping) {
+        const _ = container({ overflowX, overflowY }, element);
+
+        t.deepEqual(isClipped(element), true);
+      }
+    }
+  }
+});
+
+test(`isClipped() returns false when an element is below an ancestor showing vertical overflow or scroll`, (t) => {
+  for (const overflowY of ["visible", ...scrolling]) {
+    // for belowLeft(), an overflow-y other than visible turns overflow-x into
+    // auto, which clips left. The (visible, visible) case is tested with the "left" cases.
+    for (const element of [/*belowLeft(),*/ below(), belowRight()]) {
+      const _ = container({ overflowX: "visible", overflowY }, element);
+
+      t.deepEqual(isClipped(element), false);
+    }
+  }
+});
+
+test(`isClipped() returns false when an element is precisely below an ancestor showing horizontal overflow or scroll`, (t) => {
+  for (const overflowY of ["visible", ...scrolling]) {
+    for (const overflowX of overflows) {
+      const element = below();
+      const _ = container({ overflowX, overflowY }, element);
+
+      t.deepEqual(isClipped(element), false);
+    }
+  }
 });
