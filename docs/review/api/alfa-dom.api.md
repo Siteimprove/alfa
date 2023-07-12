@@ -328,6 +328,7 @@ export namespace Element {
     //
     // (undocumented)
     hasAttribute: typeof predicate_3.hasAttribute, // (undocumented)
+    hasBox: typeof predicate_3.hasBox, // (undocumented)
     hasDisplaySize: typeof predicate_3.hasDisplaySize, // (undocumented)
     hasId: typeof predicate_3.hasId, // (undocumented)
     hasInputType: typeof predicate_3.hasInputType, // (undocumented)
@@ -491,6 +492,9 @@ function hasAttribute(predicate: Predicate<Attribute>): Predicate<Element>;
 
 // @public (undocumented)
 function hasAttribute(name: string, value?: Predicate<string>): Predicate<Element>;
+
+// @public (undocumented)
+function hasBox(predicate?: Predicate<Rectangle>): Predicate<Element>;
 
 // @public (undocumented)
 function hasChild(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
