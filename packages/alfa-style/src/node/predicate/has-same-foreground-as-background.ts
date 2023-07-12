@@ -15,6 +15,15 @@ const { or, test } = Predicate;
 const cache = Cache.empty<Device, Cache<Context, Cache<Text, boolean>>>();
 
 /**
+ * Checks if an text has the same foreground color as its background.
+ *
+ * @remarks
+ * This currently does not look at layout information. It probably should.
+ * But texts (and elements) that are moved out of their positioning ancestors
+ * could be anywhere on the page and finding the actual background requires
+ * looking at potentially any element of the page. This is too complex to
+ * implement before we encounter problems due to this.
+ *
  * @internal
  */
 export function hasSameForegroundAsBackground(

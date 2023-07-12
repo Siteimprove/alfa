@@ -103,6 +103,7 @@ const isVisibleWhenEmpty = hasName("textarea");
 /**
  * Does the element have set dimensions?
  *
+ * @remarks
  * For each direction (x / y), we look if the element either has a set dimension
  * (width / height), or is stretched after being absolutely positioned.
  * An element has a set dimension if its value is a numeric value (not a keyword)
@@ -112,9 +113,14 @@ const isVisibleWhenEmpty = hasName("textarea");
  *
  * If an element has dimension in both directions, it is assumed to be visible.
  *
- * @remarks
  * width / height keyword value are auto, max-content, min-content, and
  * fit-content; all of them depend on content and do not stretch empty elements.
+ *
+ * This does **not** look at layout information. We are here searching for
+ * author's intention to stretch the element (presumably to use it as a background
+ * or background image), not for elements that the UA happens to stretch (these
+ * should be visible due to visible content that caused them to stretch in the
+ * first place)..
  */
 function hasDimensions(device: Device): Predicate<Element> {
   const hasDimension = (dimension: "height" | "width") =>
