@@ -109,7 +109,39 @@ export default Rule.Atomic.of<Page, Text>({
           1: expectation(
             horizontallyClippedBy.isSome() || verticallyClippedBy.isSome(),
             () =>
-              Outcomes.ClipsText(horizontallyClippedBy, verticallyClippedBy),
+              horizontallyClippedBy.every((clipper) =>
+                clipper.box.some((clippingBox) =>
+                  target
+                    .parent()
+                    .filter(isElement)
+                    .some((element) =>
+                      element.box.some(
+                        (targetBox) => clippingBox.width >= 2 * targetBox.width
+                      )
+                    )
+                )
+              ) &&
+              verticallyClippedBy.every((clipper) =>
+                clipper.box.some((clippingBox) =>
+                  target
+                    .parent()
+                    .filter(isElement)
+                    .some((element) =>
+                      element.box.some(
+                        (targetBox) =>
+                          clippingBox.height >= 2 * targetBox.height
+                      )
+                    )
+                )
+              )
+                ? Outcomes.IsContainer(
+                    horizontallyClippedBy,
+                    verticallyClippedBy
+                  )
+                : Outcomes.ClipsText(
+                    horizontallyClippedBy,
+                    verticallyClippedBy
+                  ),
             () => Outcomes.WrapsText
           ),
         };
@@ -602,4 +634,16 @@ export namespace Outcomes {
     vertical: Option<Element>
   ) =>
     Err.of(ClippingAncestors.of(`The text is clipped`, horizontal, vertical));
+
+  export const IsContainer = (
+    horizontal: Option<Element>,
+    vertical: Option<Element>
+  ) =>
+    Ok.of(
+      ClippingAncestors.of(
+        "The text would be clipped but the clipper is more than twice as large",
+        horizontal,
+        vertical
+      )
+    );
 }
