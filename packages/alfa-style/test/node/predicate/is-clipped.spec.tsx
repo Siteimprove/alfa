@@ -309,58 +309,6 @@ test(`isClipped() returns false for a relatively positioned element clipped by
 
 /*********************************************************************
  *
- * Checking the recurrence
- *
- *********************************************************************/
-
-test(`isClipped() returns true for an element with a fully clipped ancestor`, (t) => {
-  const spanSize = <span>Hello World</span>;
-  const spanIndent = <span>Hello World</span>;
-  const spanMask = <span>Hello World</span>;
-
-  h.document([
-    target({ height: "0px", width: "0px", overflow: "hidden" }, spanSize),
-    target(
-      { textIndent: "100%", whiteSpace: "nowrap", overflow: "hidden" },
-      spanIndent
-    ),
-    target(
-      { clip: "rect(1px, 1px, 1px, 1px)", position: "absolute" },
-      spanMask
-    ),
-  ]);
-
-  for (const target of [spanSize, spanIndent, spanMask]) {
-    t.equal(isClipped(target), true);
-  }
-});
-
-test("isClipped() returns false for an absolutely positioned element with a clipping ancestor before its offset parent ", (t) => {
-  const element = <div class="absolute">Hello world</div>;
-
-  h.document(
-    [
-      <div style={{ position: "relative" }}>
-        <div class="clip">{element}</div>
-      </div>,
-    ],
-    [
-      h.sheet([
-        h.rule.style(".absolute", { position: "absolute" }),
-        h.rule.style(".clip", {
-          overflow: "hidden",
-          height: "0px",
-          width: "0px",
-        }),
-      ]),
-    ]
-  );
-
-  t.equal(isClipped(element), false);
-});
-
-/*********************************************************************
- *
  * Checking if an element is moved out of a clipping positioning ancestor
  *
  *********************************************************************/
@@ -543,4 +491,93 @@ test(`isClipped() returns false when an element is precisely below an ancestor s
       t.deepEqual(isClipped(element), false);
     }
   }
+});
+
+/*********************************************************************
+ *
+ * Checking the recurrence
+ *
+ *********************************************************************/
+
+test(`isClipped() returns true for an element with a fully clipped ancestor`, (t) => {
+  const spanSize = <span>Hello World</span>;
+  const spanIndent = <span>Hello World</span>;
+  const spanMask = <span>Hello World</span>;
+
+  h.document([
+    target({ height: "0px", width: "0px", overflow: "hidden" }, spanSize),
+    target(
+      { textIndent: "100%", whiteSpace: "nowrap", overflow: "hidden" },
+      spanIndent
+    ),
+    target(
+      { clip: "rect(1px, 1px, 1px, 1px)", position: "absolute" },
+      spanMask
+    ),
+  ]);
+
+  for (const target of [spanSize, spanIndent, spanMask]) {
+    t.equal(isClipped(target), true);
+  }
+});
+
+test("isClipped() returns false for an absolutely positioned element with a clipping ancestor before its offset parent ", (t) => {
+  const element = <div class="absolute">Hello world</div>;
+
+  h.document(
+    [
+      <div style={{ position: "relative" }}>
+        <div class="clip">{element}</div>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".absolute", { position: "absolute" }),
+        h.rule.style(".clip", {
+          overflow: "hidden",
+          height: "0px",
+          width: "0px",
+        }),
+      ]),
+    ]
+  );
+
+  t.equal(isClipped(element), false);
+});
+
+/**
+ * isClippedByMovingAway does its own recurrence when looking for a clipping
+ * ancestor.
+ */
+test(`isClippedByMovingAway() only look at positioning ancestors`, (t) => {
+  const element = (
+    <div class="absolute" box={{ x: 110, y: 110, width: 20, height: 20 }}>
+      Hello world
+    </div>
+  );
+
+  h.document(
+    [
+      <div
+        style={{ position: "relative" }}
+        box={{ x: 100, y: 100, width: 50, height: 50 }}
+      >
+        <div class="clip" box={{ x: 10, y: 10, width: 10, height: 10 }}>
+          {element}
+        </div>
+      </div>,
+    ],
+    [
+      h.sheet([
+        h.rule.style(".absolute", { position: "absolute" }),
+        h.rule.style(".clip", {
+          overflow: "hidden",
+          height: "0px",
+          width: "0px",
+        }),
+      ]),
+    ]
+  );
+
+  t.equal(isClipped(element), false);
 });
