@@ -37,7 +37,7 @@
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
     "prettier": "^2.7.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.1.6"
   },
   "packageManager": "yarn@3.5.0"
 }

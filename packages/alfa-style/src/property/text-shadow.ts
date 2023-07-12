@@ -28,18 +28,7 @@ export default Longhand.of<Specified, Computed>(
           return value;
 
         case "list":
-          const resolver = Resolver.length(style);
-
-          return value.map((shadow) =>
-            Shadow.of(
-              shadow.horizontal.resolve(resolver),
-              shadow.vertical.resolve(resolver),
-              shadow.blur.resolve(resolver),
-              shadow.spread.resolve(resolver),
-              Resolver.color(shadow.color),
-              shadow.isInset
-            )
-          );
+          return value.map((shadow) => shadow.resolve(Resolver.length(style)));
       }
     }),
   { inherits: true }

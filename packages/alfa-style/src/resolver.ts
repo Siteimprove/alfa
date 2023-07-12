@@ -65,38 +65,6 @@ export namespace Resolver {
     return { percentageBase: base, length: lengthResolver(style) };
   }
 
-  /**
-   * {@link https://drafts.csswg.org/css-color/#resolving-color-values}
-   */
-  export function color(color: Color): Color.Canonical {
-    switch (color.type) {
-      case "color": {
-        const [red, green, blue] = [color.red, color.green, color.blue].map(
-          (channel) =>
-            Percentage.of(
-              Real.clamp(
-                channel.type === "number"
-                  ? channel.value / 0xff
-                  : channel.value,
-                0,
-                1
-              )
-            )
-        );
-
-        return RGB.of(
-          red,
-          green,
-          blue,
-          Percentage.of(Real.clamp(color.alpha.value, 0, 1))
-        );
-      }
-
-      case "keyword":
-        return color;
-    }
-  }
-
   export function image(
     image: Image,
     style: Style
@@ -142,7 +110,7 @@ export namespace Resolver {
     switch (item.type) {
       case "stop":
         return Gradient.Stop.of(
-          Resolver.color(item.color),
+          item.color.resolve(),
           item.position.map((position) =>
             position.type === "length"
               ? position.resolve(length(style))

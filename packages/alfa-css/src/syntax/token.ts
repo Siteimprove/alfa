@@ -199,15 +199,8 @@ export namespace Token {
   export function parseFunction(
     query: string | Predicate<Function> = () => true
   ) {
-    let predicate: Predicate<Function>;
-
-    if (typeof query === "function") {
-      predicate = query;
-    } else {
-      const value = query;
-
-      predicate = (ident) => ident.value === value;
-    }
+    const predicate: Predicate<Function> =
+      typeof query === "function" ? query : (ident) => ident.value === query;
 
     return parseToken(and(isFunction, predicate));
   }

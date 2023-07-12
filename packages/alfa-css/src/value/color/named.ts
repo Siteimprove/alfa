@@ -6,6 +6,7 @@ import { type Parser as CSSParser, Token } from "../../syntax";
 import { Number } from "../numeric";
 
 import { Format } from "./format";
+import { RGB } from "./rgb";
 
 const { map } = Parser;
 
@@ -22,7 +23,7 @@ export class Named<
   private readonly _color: C;
 
   private constructor(color: C) {
-    super("named", false);
+    super("named");
     this._color = color;
   }
 
@@ -52,8 +53,10 @@ export class Named<
     return Number.of(this._color === "transparent" ? 0 : 1);
   }
 
-  public resolve(): Named<C> {
-    return this;
+  public resolve(): RGB.Canonical {
+    return RGB.of(
+      ...Format.resolve(this.red, this.green, this.blue, this.alpha)
+    );
   }
 
   public equals(value: unknown): value is this {

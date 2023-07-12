@@ -1,4 +1,3 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
 import { Serializable } from "@siteimprove/alfa-json";
 
@@ -14,13 +13,10 @@ export class Tuple<T extends Array<Value>, CALC extends boolean = boolean>
 {
   public static of<T extends Array<Value>>(
     ...values: Readonly<T>
-  ): Tuple<
-    T,
-    T extends Array<infer V extends Value<string, false>> ? false : true
-  > {
+  ): Tuple<T, Value.HasCalculation<T>> {
     const calculation = values.some((value) =>
       value.hasCalculation()
-    ) as T extends Array<infer V extends Value<string, false>> ? false : true;
+    ) as Value.HasCalculation<T>;
     return new Tuple(values, calculation);
   }
 
