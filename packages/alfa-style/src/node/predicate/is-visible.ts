@@ -120,7 +120,7 @@ const isVisibleWhenEmpty = hasName("textarea");
  * author's intention to stretch the element (presumably to use it as a background
  * or background image), not for elements that the UA happens to stretch (these
  * should be visible due to visible content that caused them to stretch in the
- * first place)..
+ * first place).
  */
 function hasDimensions(device: Device): Predicate<Element> {
   const hasDimension = (dimension: "height" | "width") =>

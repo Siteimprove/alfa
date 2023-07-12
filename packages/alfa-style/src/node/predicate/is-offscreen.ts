@@ -12,7 +12,7 @@ import { Style } from "../../style";
 
 const { hasBox, isElement } = Element;
 const { abs } = Math;
-const { and, or, not } = Predicate;
+const { and, or } = Predicate;
 
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
@@ -49,12 +49,13 @@ export function isOffscreen(
 const scrollableQuadrant = Rectangle.of(0, 0, Infinity, Infinity);
 
 /**
+ * Checks whether an element's box intersect the scrollable viewport.
+ *
  * @remarks
  * We assume that the layout was gathered with an empty context and therefore
  * only use it for empty context. Non-empty context may bring content on screen,
  * typically "skip to content" links are only on screen when focused.
  *
- * @remarks
  * Content that is hidden to the left or top of the screen is fairly safe to
  * be assumed invisible. Content that is hidden to the right or bottom may
  * be scrolled to. We assume there is always a way to scroll to the bottom, but
@@ -89,7 +90,7 @@ const onscreenAndScrollingCache = Cache.empty<
 
 /**
  * Checks if an element is on the (extended) viewport and creates or inherits
- * an horizontal scrollbar to see it's offscreen (to the right) content.
+ * a horizontal scrollbar to see its offscreen (to the right) content.
  */
 function isOnscreenAndScrolling(device: Device): Predicate<Element> {
   const extendedViewport = Rectangle.of(0, 0, device.viewport.width, Infinity);
@@ -100,7 +101,7 @@ function isOnscreenAndScrolling(device: Device): Predicate<Element> {
         and(
           // Does the element intersect the extended viewport?
           hasBox((box) => box.intersects(extendedViewport)),
-          // And does it create a scrollbar which can show the element?
+          // And does it create a scrollbar which can show the content to the right?
           hasComputedStyle(
             "overflow-x",
             (overflow) =>
@@ -116,12 +117,14 @@ function isOnscreenAndScrolling(device: Device): Predicate<Element> {
 }
 
 /**
+ * Use heuristics to check whether an element ('s style) has been moved offscreen.
+ *
  * @remarks
- * We can't really detect if content is moved off-screen, due to the lack of
+ * We can't really detect if content is moved offscreen, due to the lack of
  * layout system.
  * Instead, we inspect a handful of properties that affect positioning. If their
  * value is "large enough", we consider this as an indication that the content
- * is actually off-screen.
+ * is actually offscreen.
  * Since pages are mostly vertical scrolling, and most of the languages we look
  * at are left-to-right, this is mostly accurate when content is moved to the
  * left. Content moved to the right may actually create horizontal scrolling.

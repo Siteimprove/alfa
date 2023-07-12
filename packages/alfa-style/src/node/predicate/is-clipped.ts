@@ -43,7 +43,12 @@ export function isClipped(
                 isClippedBySize(device, context),
                 isClippedByIndent(device, context),
                 isClippedByMasking(device, context),
-                isClippedByMovingAway(device),
+                and(
+                  // Boxes are gathered on an empty context and can only be used
+                  // with an empty context.
+                  () => context === Context.empty(),
+                  isClippedByMovingAway(device)
+                ),
                 // Or it is an element whose positioning parent is clipped
                 hasPositioningParent(device, isClipped(device, context))
               )
@@ -74,11 +79,14 @@ export function isClipped(
  * content in its padding area. This should probably also look into padding size.
  * So far, we haven't encountered problem due to that. Presumably, content that
  * is meant to be clipped is correctly put in elements without padding, and the
- * incorrect clipping would be easily detected by visual regression test early on.
+ * incorrect clipping would be easily detected by visual regression tests early on.
  *
  * The boxes we get with getBoundingClientRect include padding (and border).
  * Thus, when these boxes have width/height of 0 and the content is clipped, we
  * are fairly sure that nothing shows.
+ *
+ * Boxes are gathered with an empty context, so they can only be used with an
+ * empty context.
  *
  * We mostly work on a per-dimension basis. In each axis, check whether the size
  * is 0 or 1; and whether the corresponding overflow is clip or hidden.
@@ -112,7 +120,10 @@ function isClippedBySize(
         continue;
       }
 
-      if (element.box.some((box) => box[axis] === 0)) {
+      if (
+        context === Context.empty() &&
+        element.box.some((box) => box[axis] === 0)
+      ) {
         // The element's box is squished in this axis.
         return true;
       }
@@ -125,10 +136,14 @@ function isClippedBySize(
       if (hasNoScrollBar && (overflow === "clip" || overflow === "hidden")) {
         // There is no scrollbar in any axis, so we consider that 1px is
         // invisible.
-        // Note that overflow==="auto" would create a scrollbar in this axis,
-        // so we cannot only rely on hasNoScrollBar.
+        // Note that overflow: "auto" would create a scrollbar in this axis,
+        // so we cannot rely on hasNoScrollBar alone and need specific check in
+        // this axis.
 
-        if (element.box.some((box) => box[axis] <= 1)) {
+        if (
+          context === Context.empty() &&
+          element.box.some((box) => box[axis] <= 1)
+        ) {
           return true;
         }
 
@@ -240,6 +255,10 @@ const isNoScroll = (overflow: Longhands.Specified<"overflow-x">): boolean =>
 
 /**
  * Does the ancestors totally clips the elementBox?
+ *
+ * @remarks
+ * Scrollbars are only created to scroll to the bottom or right of the content,
+ * thus stuff on the top or left cannot be scrolled to.
  */
 function isClipping(elementBox: Rectangle, device: Device): Predicate<Element> {
   return function isClipping(ancestor): boolean {
