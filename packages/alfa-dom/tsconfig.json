@@ -26,6 +26,7 @@
     "src/node/element/input-type.ts",
     "src/node/element/predicate.ts",
     "src/node/element/predicate/has-attribute.ts",
+    "src/node/element/predicate/has-box.ts",
     "src/node/element/predicate/has-display-size.ts",
     "src/node/element/predicate/has-id.ts",
     "src/node/element/predicate/has-input-type.ts",

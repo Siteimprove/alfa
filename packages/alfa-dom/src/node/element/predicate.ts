@@ -1,4 +1,5 @@
 export * from "./predicate/has-attribute";
+export * from "./predicate/has-box";
 export * from "./predicate/has-display-size";
 export * from "./predicate/has-id";
 export * from "./predicate/has-input-type";

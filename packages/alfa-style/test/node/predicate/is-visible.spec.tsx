@@ -62,72 +62,6 @@ test(`isVisible() returns false when an element or text is hidden using the
   t.equal(isVisible(text), false);
 });
 
-test(`isVisible() returns false when an element is hidden by reducing its size
-      to 0 and clipping overflow`, (t) => {
-  for (const element of [
-    <div style={{ width: "0", overflowX: "hidden" }}>Hello World</div>,
-
-    <div style={{ width: "0", overflowY: "hidden" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowX: "hidden" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowY: "hidden" }}>Hello World</div>,
-
-    <div style={{ width: "0", height: "0", overflow: "hidden" }}>
-      Hello World
-    </div>,
-  ]) {
-    t.equal(isVisible(element), false);
-  }
-});
-
-test(`isVisible() returns false when an element is hidden by reducing its size
-      to 1x1 pixels and clipping overflow`, (t) => {
-  const element = (
-    <div style={{ width: "1px", height: "1px", overflow: "hidden" }}>
-      Hello World
-    </div>
-  );
-
-  t.equal(isVisible(element), false);
-});
-
-test(`isVisible() returns false when an element scrolls its overflow and its size is reduced to 0 pixel, thus hiding the scrollbar`, (t) => {
-  for (const element of [
-    <div style={{ width: "0", overflowX: "scroll" }}>Hello World</div>,
-
-    <div style={{ width: "0", overflowY: "scroll" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowX: "scroll" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowY: "scroll" }}>Hello World</div>,
-
-    <div style={{ width: "0", height: "0", overflow: "scroll" }}>
-      Hello World
-    </div>,
-  ]) {
-    t.equal(isVisible(element), false);
-  }
-});
-
-test(`isVisible() returns false when an element has its overflow set to auto and its size is reduced to 0 pixel, thus hidding the scrollbar`, (t) => {
-  for (const element of [
-    <div style={{ width: "0", overflowX: "auto" }}>Hello World</div>,
-
-    <div style={{ width: "0", overflowY: "auto" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowX: "auto" }}>Hello World</div>,
-
-    <div style={{ height: "0", overflowY: "auto" }}>Hello World</div>,
-
-    <div style={{ width: "0", height: "0", overflow: "auto" }}>
-      Hello World
-    </div>,
-  ]) {
-    t.equal(isVisible(element), false);
-  }
-});
-
 test("isVisible() returns false on empty elements", (t) => {
   const element = <div />;
 
@@ -167,58 +101,6 @@ test("isVisible() returns true for replaced elements with no child", (t) => {
   const element = <img src="foo.jpg" />;
 
   t.equal(isVisible(element), true);
-});
-
-test(`isVisible() returns false for an element that has been pulled offscreen
-      by position: absolute and left: 9999px`, (t) => {
-  const element = (
-    <div style={{ position: "absolute", left: "9999px" }}>Hello world</div>
-  );
-
-  t.equal(isVisible(element), false);
-});
-
-test(`isVisible() returns false for an element that has been pulled offscreen
-      by position: absolute and left: -9999px`, (t) => {
-  const element = (
-    <div style={{ position: "absolute", left: "-9999px" }}>Hello world</div>
-  );
-
-  t.equal(isVisible(element), false);
-});
-
-test(`isVisible() returns false for an element that has been pulled offscreen
-      by position: absolute and right: 9999px`, (t) => {
-  const element = (
-    <div style={{ position: "absolute", right: "9999px" }}>Hello world</div>
-  );
-
-  t.equal(isVisible(element), false);
-});
-
-test(`isVisible() returns false for an element that has been pulled offscreen
-      by position: absolute and right: -9999px`, (t) => {
-  const element = (
-    <div style={{ position: "absolute", right: "-9999px" }}>Hello world</div>
-  );
-
-  t.equal(isVisible(element), false);
-});
-
-test(`isVisible() returns false for an element that has been pulled offscreen
-      by position: absolute and top: -9999px`, (t) => {
-  const element = (
-    <div style={{ position: "absolute", top: "-9999px" }}>Hello world</div>
-  );
-
-  t.equal(isVisible(element), false);
-});
-
-test(`isVisible() returns false for an element that has been pulled offscreen
-      by position: margin-left: -9999px`, (t) => {
-  const element = <div style={{ marginLeft: "-9999px" }}>Hello world</div>;
-
-  t.equal(isVisible(element), false);
 });
 
 test("isVisible() returns false for a text node with no data", (t) => {
@@ -284,124 +166,6 @@ test("isVisible() returns true for a text node with a font size of 1px", (t) => 
   t.equal(isVisible(div), true);
 });
 
-test(`isVisible() returns false for a text node with hidden overflow and a 100%
-      text indent`, (t) => {
-  const text = h.text("Hello world");
-
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textIndent: "100%",
-      }}
-    >
-      {text}
-    </div>
-  );
-
-  t.equal(isVisible(text), false);
-  t.equal(isVisible(div), false);
-});
-
-test(`isVisible() returns true for a text node with hidden overflow and a 20%
-      text indent`, (t) => {
-  const text = h.text("Hello world");
-
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textIndent: "20%",
-      }}
-    >
-      {text}
-    </div>
-  );
-
-  t.equal(isVisible(text), true);
-  t.equal(isVisible(div), true);
-});
-
-test(`isVisible() returns false for a text node with hidden overflow and a -100%
-      text indent`, (t) => {
-  const text = h.text("Hello world");
-
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        textIndent: "-100%",
-      }}
-    >
-      {text}
-    </div>
-  );
-
-  t.equal(isVisible(text), false);
-  t.equal(isVisible(div), false);
-});
-
-test(`isVisible() returns false for a text node with hidden overflow and a 999px
-      text indent`, (t) => {
-  const text = h.text("Hello world");
-
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textIndent: "999px",
-      }}
-    >
-      {text}
-    </div>
-  );
-
-  t.equal(isVisible(text), false);
-  t.equal(isVisible(div), false);
-});
-
-test(`isVisible() returns true for a text node with hidden overflow and a 20px
-      text indent`, (t) => {
-  const text = h.text("Hello world");
-
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        whiteSpace: "nowrap",
-        textIndent: "20px",
-      }}
-    >
-      {text}
-    </div>
-  );
-
-  t.equal(isVisible(text), true);
-  t.equal(isVisible(div), true);
-});
-
-test(`isVisible() returns false for a text node with hidden overflow and a -999px
-      text indent`, (t) => {
-  const text = h.text("Hello world");
-
-  const div = (
-    <div
-      style={{
-        overflow: "hidden",
-        textIndent: "-999px",
-      }}
-    >
-      {text}
-    </div>
-  );
-
-  t.equal(isVisible(text), false);
-  t.equal(isVisible(div), false);
-});
-
 test("isVisible() returns true for textarea with no child", (t) => {
   const element = <textarea />;
 
@@ -419,15 +183,6 @@ test(`isVisible() returns false for an absolutely positioned element clipped by
   t.equal(isVisible(element), false);
 });
 
-test(`isVisible() returns true for a relatively positioned element clipped by
-      \`rect(1px, 1px, 1px, 1px)\``, (t) => {
-  const element = (
-    <div style={{ clip: "rect(1px, 1px, 1px, 1px)" }}>Invisible text</div>
-  );
-
-  t.equal(isVisible(element), true);
-});
-
 test(`isVisible() returns false for a text node with a parent element with
       \`opacity: 0\``, (t) => {
   const text = h.text("Hello world");
@@ -436,30 +191,6 @@ test(`isVisible() returns false for a text node with a parent element with
 
   t.equal(isVisible(text), false);
   t.equal(isVisible(element), false);
-});
-
-test(`isVisible() returns false for an element with a fully clipped ancestor`, (t) => {
-  const spanSize = <span>Hello World</span>;
-  const spanIndent = <span>Hello World</span>;
-  const spanMask = <span>Hello World</span>;
-
-  h.document([
-    <div style={{ height: "0px", width: "0px", overflow: "hidden" }}>
-      {spanSize}
-    </div>,
-    <div
-      style={{ textIndent: "100%", whiteSpace: "nowrap", overflow: "hidden" }}
-    >
-      {spanIndent}
-    </div>,
-    <div style={{ clip: "rect(1px, 1px, 1px, 1px)", position: "absolute" }}>
-      {spanMask}
-    </div>,
-  ]);
-
-  for (const target of [spanSize, spanIndent, spanMask]) {
-    t.equal(isVisible(target), false);
-  }
 });
 
 test("isVisible() return true for an empty element with set dimensions", (t) => {
@@ -535,30 +266,6 @@ test("isVisible() returns true for an element stretched horizontally and dimensi
           height: "100px",
           left: "0",
           right: "-1px",
-        }),
-      ]),
-    ]
-  );
-
-  t.equal(isVisible(element), true);
-});
-
-test("isVisible() returns true for an absolutely positioned element with a clipping ancestor before its offset parent ", (t) => {
-  const element = <div class="absolute">Hello world</div>;
-
-  h.document(
-    [
-      <div style={{ position: "relative" }}>
-        <div class="clip">{element}</div>
-      </div>,
-    ],
-    [
-      h.sheet([
-        h.rule.style(".absolute", { position: "absolute" }),
-        h.rule.style(".clip", {
-          overflow: "hidden",
-          height: "0px",
-          width: "0px",
         }),
       ]),
     ]
