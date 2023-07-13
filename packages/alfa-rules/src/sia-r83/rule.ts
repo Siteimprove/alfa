@@ -34,8 +34,14 @@ const { Discrete, Range } = Media.Value;
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const { hasAttribute, hasDisplaySize, hasName, hasNamespace, isElement } =
-  Element;
+const {
+  hasAttribute,
+  hasBox,
+  hasDisplaySize,
+  hasName,
+  hasNamespace,
+  isElement,
+} = Element;
 const { isText } = Text;
 const { getPositioningParent, hasCascadedStyle, isVisible } = Style;
 
@@ -121,25 +127,25 @@ export default Rule.Atomic.of<Page, Text>({
               // clips both the text and the found clipping ancestors. We assume
               // this is not likely and just ignore it. This would only create
               // false negatives.
-              horizontallyClippedBy.every((clipper) =>
-                clipper.box.some((clippingBox) =>
+              horizontallyClippedBy.every(
+                hasBox((clippingBox) =>
                   target
                     .parent()
                     .filter(isElement)
-                    .some((element) =>
-                      element.box.some(
+                    .some(
+                      hasBox(
                         (targetBox) => clippingBox.width >= 2 * targetBox.width
                       )
                     )
                 )
               ) &&
-              verticallyClippedBy.every((clipper) =>
-                clipper.box.some((clippingBox) =>
+              verticallyClippedBy.every(
+                hasBox((clippingBox) =>
                   target
                     .parent()
                     .filter(isElement)
-                    .some((element) =>
-                      element.box.some(
+                    .some(
+                      hasBox(
                         (targetBox) =>
                           clippingBox.height >= 2 * targetBox.height
                       )
