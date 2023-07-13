@@ -3,9 +3,6 @@ import { Trampoline } from "@siteimprove/alfa-trampoline";
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
-import { Query } from "./query";
-
-const { getElementDescendants } = Query;
 
 /**
  * @public
