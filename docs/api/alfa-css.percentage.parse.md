@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, Percentage, string>
+parse: CSSParser<Percentage>
 ```

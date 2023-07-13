@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseHint: Parser<Slice<Token>, Hint, string>
+parseHint: CSSParser<Hint>
 ```

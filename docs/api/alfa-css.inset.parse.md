@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, Inset, string>
+parse: CSSParser<Inset>
 ```

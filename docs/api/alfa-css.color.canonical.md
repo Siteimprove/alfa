@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Canonical = Current | System | RGB<Percentage.Canonical, Percentage.Canonical>;
+type Canonical = Current | System | RGB.Canonical;
 ```
-<b>References:</b> [Current](./alfa-css.current.md)<!-- -->, [System](./alfa-css.system.md)<!-- -->, [RGB](./alfa-css.rgb.md)<!-- -->, [Percentage.Canonical](./alfa-css.percentage.canonical.md)
+<b>References:</b> [Current](./alfa-css.current.md)<!-- -->, [System](./alfa-css.system.md)<!-- -->, [RGB.Canonical](./alfa-css.rgb.canonical.md)
 

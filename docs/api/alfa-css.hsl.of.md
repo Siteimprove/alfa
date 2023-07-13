@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<H extends Number.Fixed | Angle.Fixed, A extends Number.Fixed | Percentage.Fixed>(hue: H, saturation: Percentage.Fixed, lightness: Percentage.Fixed, alpha: A): HSL<H, A>;
+static of<H extends Number.Canonical | Angle.Canonical, A extends Number.Canonical | Percentage.Canonical, S extends Percentage, L extends Percentage>(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A>;
 ```
 
 ## Parameters
@@ -15,8 +15,8 @@ static of<H extends Number.Fixed | Angle.Fixed, A extends Number.Fixed | Percent
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  hue | H |  |
-|  saturation | [Percentage.Fixed](./alfa-css.percentage.fixed.md) |  |
-|  lightness | [Percentage.Fixed](./alfa-css.percentage.fixed.md) |  |
+|  saturation | S |  |
+|  lightness | L |  |
 |  alpha | A |  |
 
 <b>Returns:</b>

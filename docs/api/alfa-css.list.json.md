@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON<T> extends Value.JSON<"list"> 
+interface JSON<V extends Value> extends Value.JSON<"list"> 
 ```
 <b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"list"&gt;
 
@@ -16,5 +16,5 @@ interface JSON<T> extends Value.JSON<"list">
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [separator](./alfa-css.list.json.separator.md) |  | string |  |
-|  [values](./alfa-css.list.json.values.md) |  | Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;&gt; |  |
+|  [values](./alfa-css.list.json.values.md) |  | Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;V&gt;&gt; |  |
 

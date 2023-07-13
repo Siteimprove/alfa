@@ -16,6 +16,7 @@ interface JSON<N extends string = string> extends Node.JSON<"element">
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [attributes](./alfa-dom.element.json.attributes.md) |  | Array&lt;[Attribute.JSON](./alfa-dom.attribute.json.md)<!-- -->&gt; |  |
+|  [box](./alfa-dom.element.json.box.md) |  | Rectangle.JSON \| null |  |
 |  [content](./alfa-dom.element.json.content.md) |  | [Document.JSON](./alfa-dom.document.json.md) \| null |  |
 |  [name](./alfa-dom.element.json.name.md) |  | N |  |
 |  [namespace](./alfa-dom.element.json.namespace.md) |  | string \| null |  |

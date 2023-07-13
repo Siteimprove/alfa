@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, Circle, string>
+parse: CSSParser<Circle>
 ```

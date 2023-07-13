@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseList: Parser<Slice<Token>, Array<Transform>, string>
+parseList: CSSParser<Array<Transform>>
 ```

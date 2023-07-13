@@ -7,9 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(): Fixed;
+resolve<T extends Numeric.Fixed<R>>(resolver?: Resolver<R, T>): Fixed<"percentage"> | T;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;R, T&gt; | <i>(Optional)</i> |
+
 <b>Returns:</b>
 
-[Fixed](./alfa-css.percentage.fixed.md)
+[Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;"percentage"&gt; \| T
 

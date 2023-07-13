@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-interface IAngle<CALC extends boolean = boolean> extends Value<"angle", CALC> 
+interface IAngle<CALC extends boolean = boolean> extends Value<"angle", CALC>, Resolvable<Canonical, never> 
 ```
-<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;"angle", CALC&gt;
+<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;"angle", CALC&gt;, Resolvable&lt;[Canonical](./alfa-css.angle.canonical.md)<!-- -->, never&gt;
 
 ## Methods
 

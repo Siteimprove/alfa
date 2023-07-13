@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseHorizontal: Parser<Slice<Token>, Horizontal, string, []>
+parseHorizontal: Parser<import("@siteimprove/alfa-slice").Slice<Token>, Horizontal, string, []>
 ```

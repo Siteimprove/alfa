@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(this: Math<"percentage">): Result<Percentage, string>;
+resolve(this: Math<"number">): Result<Number, string>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Math&lt;"percentage"&gt; |  |
+|  this | Math&lt;"number"&gt; |  |
 
 <b>Returns:</b>
 
-[Result](./alfa-result.result.md)<!-- -->&lt;Percentage, string&gt;
+[Result](./alfa-result.result.md)<!-- -->&lt;Number, string&gt;
 

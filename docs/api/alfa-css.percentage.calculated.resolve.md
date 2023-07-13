@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(): Fixed;
+resolve(): Fixed<"percentage">;
 ```
 <b>Returns:</b>
 
-[Fixed](./alfa-css.percentage.fixed.md)
+[Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;"percentage"&gt;
 

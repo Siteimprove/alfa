@@ -1,3 +1,16 @@
+# [v0.65.0](../../compare/v0.64.0...v0.65.0) (2023-07-13)
+
+Packages changed:
+.changeset/real-frogs-type.md:**Removed:** The  export is no longer available.
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md)
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md)
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md)
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md)
+- [@siteimprove/alfa-http](packages/alfa-http/CHANGELOG.md)
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md)
+- [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md)
+
 # [v0.64.0](../../compare/v0.63.3...v0.64.0) (2023-06-21)
 
 Packages changed:

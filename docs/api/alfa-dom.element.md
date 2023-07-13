@@ -28,6 +28,7 @@ export declare namespace Element
 |  Variable | Description |
 |  --- | --- |
 |  [hasAttribute](./alfa-dom.element.hasattribute.md) |  |
+|  [hasBox](./alfa-dom.element.hasbox.md) |  |
 |  [hasDisplaySize](./alfa-dom.element.hasdisplaysize.md) |  |
 |  [hasId](./alfa-dom.element.hasid.md) |  |
 |  [hasInputType](./alfa-dom.element.hasinputtype.md) |  |

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function hsl<H extends Number.Fixed | Angle.Fixed, A extends Number.Fixed | Percentage.Fixed>(hue: H, saturation: Percentage.Fixed, lightness: Percentage.Fixed, alpha: A): HSL<H, A>;
+function hsl<H extends Number.Canonical | Angle.Canonical, A extends Number.Canonical | Percentage.Canonical>(hue: H, saturation: Percentage, lightness: Percentage, alpha: A): HSL<H, A>;
 ```
 
 ## Parameters
@@ -15,8 +15,8 @@ function hsl<H extends Number.Fixed | Angle.Fixed, A extends Number.Fixed | Perc
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  hue | H |  |
-|  saturation | [Percentage.Fixed](./alfa-css.percentage.fixed.md) |  |
-|  lightness | [Percentage.Fixed](./alfa-css.percentage.fixed.md) |  |
+|  saturation | [Percentage](./alfa-css.percentage.md) |  |
+|  lightness | [Percentage](./alfa-css.percentage.md) |  |
 |  alpha | A |  |
 
 <b>Returns:</b>

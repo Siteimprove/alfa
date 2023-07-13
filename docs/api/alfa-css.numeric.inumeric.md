@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-interface INumeric<T extends Type = Type, CALC extends boolean = boolean> extends Value<T, CALC> 
+interface INumeric<T extends Type = Type, CALC extends boolean = boolean, R extends Type = T> extends Value<T, CALC, R>, Resolvable<Fixed<R>, unknown> 
 ```
-<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;T, CALC&gt;
+<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;T, CALC, R&gt;, Resolvable&lt;[Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;R&gt;, unknown&gt;
 
 ## Methods
 

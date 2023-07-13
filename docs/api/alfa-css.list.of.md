@@ -7,17 +7,17 @@
 <b>Signature:</b>
 
 ```typescript
-static of<T>(values: Iterable<T>, separator?: string): List<T>;
+static of<V extends Value>(values: Iterable<V>, separator?: string): List<V, Value.HasCalculation<V>>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  values | Iterable&lt;T&gt; |  |
+|  values | Iterable&lt;V&gt; |  |
 |  separator | string | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
-[List](./alfa-css.list.md)<!-- -->&lt;T&gt;
+[List](./alfa-css.list.md)<!-- -->&lt;V, Value.HasCalculation&lt;V&gt;&gt;
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export function parse(options?: Options): Parser<Slice<Token>, Shadow, string>;
+export function parse(options?: Options): CSSParser<Shadow>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ export function parse(options?: Options): Parser<Slice<Token>, Shadow, string>;
 
 <b>Returns:</b>
 
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Shadow](./alfa-css.shadow.md)<!-- -->, string&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Shadow](./alfa-css.shadow.md)<!-- -->&gt;
 

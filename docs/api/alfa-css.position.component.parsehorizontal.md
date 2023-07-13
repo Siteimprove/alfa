@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseHorizontal: Parser<Slice<Token>, Length.Fixed<Unit.Length> | Percentage.Fixed | Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>
+parseHorizontal: Parser<import("@siteimprove/alfa-slice").Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>
 ```

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: <T>(name?: string, body?: Parser<Slice<Token>, T, string> | undefined) => Parser<Slice<Token>, readonly [Function, T], string, []>
+parse: <T>(query?: string | Predicate<Token.Function>, body?: CSSParser<T> | undefined) => Parser<Slice<Token>, readonly [Function, T], string, []>
 ```

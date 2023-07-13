@@ -39,7 +39,6 @@
 |  [@siteimprove/alfa-generator](./alfa-generator.md) |  |
 |  [@siteimprove/alfa-graph](./alfa-graph.md) |  |
 |  [@siteimprove/alfa-hash](./alfa-hash.md) |  |
-|  [@siteimprove/alfa-highlight](./alfa-highlight.md) |  |
 |  [@siteimprove/alfa-http](./alfa-http.md) |  |
 |  [@siteimprove/alfa-iana](./alfa-iana.md) |  |
 |  [@siteimprove/alfa-iterable](./alfa-iterable.md) |  |

@@ -4,7 +4,6 @@
 
 ## Dimension.Calculated namespace
 
-
 <b>Signature:</b>
 
 ```typescript

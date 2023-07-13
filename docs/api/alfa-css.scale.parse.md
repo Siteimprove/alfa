@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, Scale, string>
+parse: CSSParser<Scale>
 ```

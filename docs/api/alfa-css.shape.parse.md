@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, Shape<Circle | Ellipse | Inset | Polygon>, string>
+parse: CSSParser<Shape<Circle | Ellipse | Inset | Polygon>>
 ```
 
 ## Remarks

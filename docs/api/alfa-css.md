@@ -41,7 +41,7 @@
 |  [Translate](./alfa-css.translate.md) |  |
 |  [Tuple](./alfa-css.tuple.md) |  |
 |  [URL](./alfa-css.url.md) | [https://drafts.csswg.org/css-values/\#urls](https://drafts.csswg.org/css-values/#urls) |
-|  [Value](./alfa-css.value.md) | \* T: a string representation of the type stored in the value, e.g. "length", "color", … \* CALC: whether the numeric values in this may include calculation or not. When CALC is true, the value hasn't been resolved. It does not necessarily contain calculation; when CALC is false, the value has been fully resolved and is guaranteed without calculations. |
+|  [Value](./alfa-css.value.md) | \* T: a string representation of the type stored in the value, e.g. "length", "color", … \* CALC: whether the numeric values in this may include calculation or not. When CALC is true, the value hasn't been resolved. It does not necessarily contain calculation; when CALC is false, the value has been fully resolved and is guaranteed without calculations. \* R: a string representation of the type stored in the resolved value. This differs from T, typically, for dimension-percentage values that are resolved as dimensions only. |
 
 ## Interfaces
 
@@ -54,6 +54,7 @@
 |  Namespace | Description |
 |  --- | --- |
 |  [Angle](./alfa-css.angle.md) | [https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers) |
+|  [AnglePercentage](./alfa-css.anglepercentage.md) |  |
 |  [Block](./alfa-css.block.md) |  |
 |  [Box](./alfa-css.box.md) |  |
 |  [Circle](./alfa-css.circle.md) |  |
@@ -73,6 +74,7 @@
 |  [Integer](./alfa-css.integer.md) | [https://drafts.csswg.org/css-values/\#integers](https://drafts.csswg.org/css-values/#integers) |
 |  [Keyword](./alfa-css.keyword.md) |  |
 |  [Length](./alfa-css.length.md) |  |
+|  [LengthPercentage](./alfa-css.lengthpercentage.md) |  |
 |  [Lexer](./alfa-css.lexer.md) |  |
 |  [Linear](./alfa-css.linear.md) |  |
 |  [List](./alfa-css.list.md) |  |
@@ -110,6 +112,7 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [Angle](./alfa-css.angle.md) | [https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers) |
+|  [AnglePercentage](./alfa-css.anglepercentage.md) |  |
 |  [Box](./alfa-css.box.md) | [https://drafts.csswg.org/css-backgrounds/\#typedef-box](https://drafts.csswg.org/css-backgrounds/#typedef-box) |
 |  [Color](./alfa-css.color.md) |  |
 |  [Converter](./alfa-css.converter.md) | Converters are functions that convert an input value from one unit within a set of units to another unit within the same set of units. |
@@ -118,8 +121,10 @@
 |  [Gradient](./alfa-css.gradient.md) | [https://drafts.csswg.org/css-images/\#gradients](https://drafts.csswg.org/css-images/#gradients) |
 |  [Integer](./alfa-css.integer.md) | [https://drafts.csswg.org/css-values/\#integers](https://drafts.csswg.org/css-values/#integers) |
 |  [Length](./alfa-css.length.md) |  |
+|  [LengthPercentage](./alfa-css.lengthpercentage.md) |  |
 |  [Number\_2](./alfa-css.number_2.md) | [https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers) |
 |  [Numeric](./alfa-css.numeric.md) |  |
+|  [Parser](./alfa-css.parser.md) |  |
 |  [Percentage](./alfa-css.percentage.md) | [https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers) |
 |  [System](./alfa-css.system.md) | [https://drafts.csswg.org/css-color/\#css-system-colors](https://drafts.csswg.org/css-color/#css-system-colors) |
 |  [Token](./alfa-css.token.md) |  |

@@ -31,6 +31,7 @@ export declare namespace Math
 |  --- | --- |
 |  [parse](./alfa-css.math_2.parse.md) |  |
 |  [parseAngle](./alfa-css.math_2.parseangle.md) |  |
+|  [parseAnglePercentage](./alfa-css.math_2.parseanglepercentage.md) |  |
 |  [parseLength](./alfa-css.math_2.parselength.md) |  |
 |  [parseLengthPercentage](./alfa-css.math_2.parselengthpercentage.md) |  |
 |  [parseNumber](./alfa-css.math_2.parsenumber.md) |  |

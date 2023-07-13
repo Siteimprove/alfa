@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-scale(factor: number): Fixed;
+scale(factor: number): Fixed<R>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ scale(factor: number): Fixed;
 
 <b>Returns:</b>
 
-[Fixed](./alfa-css.percentage.fixed.md)
+[Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;R&gt;
 

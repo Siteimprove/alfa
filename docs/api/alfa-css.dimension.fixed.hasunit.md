@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-hasUnit<V extends BaseDimension.ToDimension<T>>(unit: V): this is Fixed<T, V>;
+abstract hasUnit<V extends Dimensions<T>[1]>(unit: V): this is Fixed<T, V>;
 ```
 
 ## Parameters

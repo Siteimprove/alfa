@@ -9,16 +9,16 @@
 <b>Signature:</b>
 
 ```typescript
-function parse(parseItemList: Parser<Slice<Token>, Array<Gradient.Item>, string>): Parser<Slice<Token>, Radial, string>;
+function parse(parseItemList: CSSParser<Array<Gradient.Item>>): CSSParser<Radial>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  parseItemList | [Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, Array&lt;[Gradient.Item](./alfa-css.gradient.item.md)<!-- -->&gt;, string&gt; |  |
+|  parseItemList | [CSSParser](./alfa-css.parser.md)<!-- -->&lt;Array&lt;[Gradient.Item](./alfa-css.gradient.item.md)<!-- -->&gt;&gt; |  |
 
 <b>Returns:</b>
 
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Radial](./alfa-css.radial.md)<!-- -->, string&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Radial](./alfa-css.radial.md)<!-- -->&gt;
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-abstract resolve(resolver?: unknown): Fixed<T>;
+abstract resolve(resolver?: unknown): Fixed<R>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ abstract resolve(resolver?: unknown): Fixed<T>;
 
 <b>Returns:</b>
 
-[Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;T&gt;
+[Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;R&gt;
 

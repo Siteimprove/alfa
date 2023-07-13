@@ -2,12 +2,17 @@
 
 [Home](./index.md) &gt; [@siteimprove/alfa-css](./alfa-css.md) &gt; [Length](./alfa-css.length.md) &gt; [Resolver](./alfa-css.length.resolver.md)
 
-## Length.Resolver type
+## Length.Resolver interface
 
 <b>Signature:</b>
 
 ```typescript
-export type Resolver = Mapper<Fixed<Unit.Length.Relative>, Canonical>;
+export interface Resolver 
 ```
-<b>References:</b> [Mapper](./alfa-mapper.mapper.md)<!-- -->, [Fixed](./alfa-css.length.fixed.md)<!-- -->, [Unit.Length.Relative](./alfa-css.unit.length.relative.md)<!-- -->, [Canonical](./alfa-css.length.canonical.md)
+
+## Properties
+
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [length](./alfa-css.length.resolver.length.md) |  | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;[Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;[Unit.Length.Relative](./alfa-css.unit.length.relative.md)<!-- -->&gt;, [Canonical](./alfa-css.length.canonical.md)<!-- -->&gt; |  |
 

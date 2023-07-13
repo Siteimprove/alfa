@@ -7,9 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(): Shadow<H, V, B, S, C>;
+resolve(resolver: Length.Resolver): Shadow.Canonical;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Length.Resolver](./alfa-css.length.resolver.md) |  |
+
 <b>Returns:</b>
 
-[Shadow](./alfa-css.shadow.md)<!-- -->&lt;H, V, B, S, C&gt;
+[Shadow.Canonical](./alfa-css.shadow.canonical.md)
 

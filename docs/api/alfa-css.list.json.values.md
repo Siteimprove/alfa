@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-values: Array<Serializable.ToJSON<T>>;
+values: Array<Serializable.ToJSON<V>>;
 ```

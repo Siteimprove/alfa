@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isTuple<T extends Array<unknown>>(value: unknown): value is Tuple<T>;
+function isTuple<T extends Array<Value>>(value: unknown): value is Tuple<T>;
 ```
 
 ## Parameters

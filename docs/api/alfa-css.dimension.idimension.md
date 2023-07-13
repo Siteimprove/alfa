@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-interface IDimension<T extends BaseNumeric.Dimension = BaseNumeric.Dimension, CALC extends boolean = boolean> extends Value<T, CALC> 
+interface IDimension<T extends Type = Type, CALC extends boolean = boolean> extends Value<T, CALC, Dimensions<T>[0]>, Resolvable<Fixed<Dimensions<T>[0], Dimensions<T>[2]>, unknown> 
 ```
-<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;T, CALC&gt;
+<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;T, CALC, Dimensions&lt;T&gt;\[0\]&gt;, Resolvable&lt;[Fixed](./alfa-css.dimension.fixed.md)<!-- -->&lt;Dimensions&lt;T&gt;\[0\], Dimensions&lt;T&gt;\[2\]&gt;, unknown&gt;
 
 ## Methods
 

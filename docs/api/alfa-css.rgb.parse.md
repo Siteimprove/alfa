@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, RGB, string>
+parse: CSSParser<RGB>
 ```

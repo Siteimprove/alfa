@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-map<U>(mapper: Mapper<T, U>): List<U>;
+map<U extends Value>(mapper: Mapper<V, U>): List<U, U extends Value<string, false> ? false : true>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U&gt; |  |
 
 <b>Returns:</b>
 
-[List](./alfa-css.list.md)<!-- -->&lt;U&gt;
+[List](./alfa-css.list.md)<!-- -->&lt;U, U extends [Value](./alfa-css.value.md)<!-- -->&lt;string, false&gt; ? false : true&gt;
 

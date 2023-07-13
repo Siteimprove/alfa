@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-abstract scale(factor: number): Fixed<T>;
+abstract scale(factor: number): Fixed<T, R>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ abstract scale(factor: number): Fixed<T>;
 
 <b>Returns:</b>
 
-[Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;T&gt;
+[Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;T, R&gt;
 

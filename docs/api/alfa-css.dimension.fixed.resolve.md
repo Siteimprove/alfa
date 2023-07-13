@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-abstract resolve(resolver?: unknown): Fixed<T, BaseDimension.ToCanonical<T>>;
+abstract resolve(resolver?: unknown): Fixed<T, Dimensions<T>[2]>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ abstract resolve(resolver?: unknown): Fixed<T, BaseDimension.ToCanonical<T>>;
 
 <b>Returns:</b>
 
-[Fixed](./alfa-css.dimension.fixed.md)<!-- -->&lt;T, BaseDimension.ToCanonical&lt;T&gt;&gt;
+[Fixed](./alfa-css.dimension.fixed.md)<!-- -->&lt;T, Dimensions&lt;T&gt;\[2\]&gt;
 

@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-isViewportRelative(): this is Length<Unit.Length.Relative.Viewport>;
+isViewportRelative(): this is Fixed<Unit.Length.Relative.Viewport>;
 ```
 <b>Returns:</b>
 
-this is [Length](./alfa-css.length.md)<!-- -->&lt;[Unit.Length.Relative.Viewport](./alfa-css.unit.length.relative.viewport.md)<!-- -->&gt;
+this is [Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;[Unit.Length.Relative.Viewport](./alfa-css.unit.length.relative.viewport.md)<!-- -->&gt;
 

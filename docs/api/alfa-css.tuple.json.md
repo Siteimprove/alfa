@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-interface JSON<T extends Array<unknown>> extends Value.JSON<"tuple"> 
+interface JSON<T extends Array<Value>> extends Value.JSON<"tuple"> 
 ```
 <b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"tuple"&gt;
 

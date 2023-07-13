@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-interface IPercentage<CALC extends boolean = boolean> extends Value<"percentage", CALC> 
+interface IPercentage<CALC extends boolean = boolean, R extends BaseNumeric.Type = BaseNumeric.Type> extends Value<"percentage", CALC, "percentage" | R>, Resolvable<Canonical | Numeric.Fixed<R>, Resolver<R, Numeric.Fixed<R>>> 
 ```
-<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;"percentage", CALC&gt;
+<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;"percentage", CALC, "percentage" \| R&gt;, Resolvable&lt;[Canonical](./alfa-css.percentage.canonical.md) \| [Numeric.Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;R&gt;, [Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;R, [Numeric.Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;R&gt;&gt;&gt;
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
 |  [hasCalculation()](./alfa-css.percentage.ipercentage.hascalculation.md) |  |
-|  [resolve()](./alfa-css.percentage.ipercentage.resolve.md) |  |
+|  [resolve(resolver)](./alfa-css.percentage.ipercentage.resolve.md) |  |
 

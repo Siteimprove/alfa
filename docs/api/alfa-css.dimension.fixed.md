@@ -4,7 +4,6 @@
 
 ## Dimension.Fixed namespace
 
-
 <b>Signature:</b>
 
 ```typescript

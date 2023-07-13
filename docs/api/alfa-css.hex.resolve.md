@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(): Hex;
+resolve(): RGB.Canonical;
 ```
 <b>Returns:</b>
 
-[Hex](./alfa-css.hex.md)
+[RGB.Canonical](./alfa-css.rgb.canonical.md)
 

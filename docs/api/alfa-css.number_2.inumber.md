@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-interface INumber<CALC extends boolean = boolean> extends Value<"number", CALC> 
+interface INumber<CALC extends boolean = boolean> extends Value<"number", CALC>, Resolvable<Canonical, never> 
 ```
-<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;"number", CALC&gt;
+<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;"number", CALC&gt;, Resolvable&lt;Canonical, never&gt;
 
 ## Methods
 

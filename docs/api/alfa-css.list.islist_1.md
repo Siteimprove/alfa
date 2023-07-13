@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isList<T>(value: unknown): value is List<T>;
+function isList<V extends Value>(value: unknown): value is List<V>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isList<T>(value: unknown): value is List<T>;
 
 <b>Returns:</b>
 
-value is [List](./alfa-css.list.md)<!-- -->&lt;T&gt;
+value is [List](./alfa-css.list.md)<!-- -->&lt;V&gt;
 

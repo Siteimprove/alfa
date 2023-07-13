@@ -29,11 +29,4 @@ export declare namespace List
 |  Variable | Description |
 |  --- | --- |
 |  [parseCommaSeparated](./alfa-css.list.parsecommaseparated.md) |  |
-|  [parseSpaceSeparated](./alfa-css.list.parsespaceseparated.md) |  |
-
-## Type Aliases
-
-|  Type Alias | Description |
-|  --- | --- |
-|  [Resolver](./alfa-css.list.resolver.md) |  |
 

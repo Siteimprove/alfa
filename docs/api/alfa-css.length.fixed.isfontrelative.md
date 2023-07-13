@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-isFontRelative(): this is Length<Unit.Length.Relative.Font>;
+isFontRelative(): this is Fixed<Unit.Length.Relative.Font>;
 ```
 <b>Returns:</b>
 
-this is [Length](./alfa-css.length.md)<!-- -->&lt;[Unit.Length.Relative.Font](./alfa-css.unit.length.relative.font.md)<!-- -->&gt;
+this is [Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;[Unit.Length.Relative.Font](./alfa-css.unit.length.relative.font.md)<!-- -->&gt;
 

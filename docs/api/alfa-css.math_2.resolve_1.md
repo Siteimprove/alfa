@@ -7,17 +7,17 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(this: Math<"length">, resolver: Expression.LengthResolver): Result<Length<"px">, string>;
+resolve(this: Math<"angle-percentage">, resolver: Expression.PercentageResolver<Angle<"deg">>): Result<Angle<"deg">, string>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Math&lt;"length"&gt; |  |
-|  resolver | Expression.LengthResolver |  |
+|  this | Math&lt;"angle-percentage"&gt; |  |
+|  resolver | Expression.PercentageResolver&lt;Angle&lt;"deg"&gt;&gt; |  |
 
 <b>Returns:</b>
 
-[Result](./alfa-result.result.md)<!-- -->&lt;Length&lt;"px"&gt;, string&gt;
+[Result](./alfa-result.result.md)<!-- -->&lt;Angle&lt;"deg"&gt;, string&gt;
 

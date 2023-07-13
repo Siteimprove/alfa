@@ -1,5 +1,23 @@
 # @siteimprove/alfa-dom
 
+## 0.65.0
+
+### Minor Changes
+
+- **Added:** Support for optional `box` everywhere when constructing an `Element`. ([#1440](https://github.com/Siteimprove/alfa/pull/1440))
+
+  Boxes are expected to be the result of `getBoundingClientRect`, i.e. contain adding and border.
+
+  It is up to the caller to ensure that the boxes were generated on the same `Device` that is used for audits. Alfa does not (and cannot) verify this.
+
+  Alfa assumes that the boxes where generated with an empty `Context`. It is up to the caller to ensure that this is the case.
+
+- **Removed:** Many pieces of code are no longer exported. These were mostly internal exports that are no longer used in other files and should not impact intended usage of the packages. ([#1437](https://github.com/Siteimprove/alfa/pull/1437))
+
+- **Breaking:** Renamed public property `rectangle` to `box` which was overlooked in the last version ([#1440](https://github.com/Siteimprove/alfa/pull/1440))
+
+- **Added:** A `Element.hasBox` predicate builder is now available. ([#1450](https://github.com/Siteimprove/alfa/pull/1450))
+
 ## 0.64.0
 
 ### Minor Changes

@@ -1,5 +1,52 @@
 # @siteimprove/alfa-css
 
+## 0.65.0
+
+### Minor Changes
+
+- **Breaking:** `List` and `Tuple` can now only contain other CSS `Value`. ([#1446](https://github.com/Siteimprove/alfa/pull/1446))
+
+- **Breaking:** The `CALC` parameter of `Value` now defaults to `boolean` instead of `false`. ([#1443](https://github.com/Siteimprove/alfa/pull/1443))
+
+  We do not assume anymore that `Value` are not calculated (`CALC=false`), the default is now `boolean` (i.e. we don't know).
+
+- **Removed:** Many pieces of code are no longer exported. These were mostly internal exports that are no longer used in other files and should not impact intended usage of the packages. ([#1437](https://github.com/Siteimprove/alfa/pull/1437))
+
+- **Added:** An abstraction for `AnglePercentage` is now available. ([#1443](https://github.com/Siteimprove/alfa/pull/1443))
+
+- **Added:** `Tuple` and `Value` can now be built of calculated values. ([#1446](https://github.com/Siteimprove/alfa/pull/1446))
+
+  Both calculated and non-calculated values can be mixed. The collection will have its `hasCalculation` flag set to true if at least one of the member has.
+  The collections also come with a `resolve` method that take a `Resolver` able to resolve all members and apply it to the members.
+
+- **Breaking:** The resolvers for `Length` and `Percentage` are now wrapped in an object. ([#1443](https://github.com/Siteimprove/alfa/pull/1443))
+
+  The resolver for `Length` is now a `{ length: Mapper<…> }` instead of being just a `Mapper`, similarly the resolver for `Percentage` is now a `{ basePercentage: … }`. This allows for more complex value types who require more than one resolver (e.g. length-percentage require both a length resolver and a percentage resolver).
+
+- **Added:** A `LengthPercentage` abstraction is now available. ([#1443](https://github.com/Siteimprove/alfa/pull/1443))
+
+  It is mostly `Length | Percentage`, plus the mixed calculations (e.g. `calc(1em + 2px)`). It comes with the usual helper functions to parse and resolve it.
+
+- **Removed:** The `Gradient.parseItem` helper has been removed as it wasn't used. ([#1447](https://github.com/Siteimprove/alfa/pull/1447))
+
+  If need be, use `Parser.either(Gradient.parseHint, Gradient.parseStop)` instead.
+
+- **Added:** `Function.parse` now also accepts a predicate instead of just a name to compare to. ([#1448](https://github.com/Siteimprove/alfa/pull/1448))
+
+- **Added:** CSS colors now accept calculated values. ([#1448](https://github.com/Siteimprove/alfa/pull/1448))
+
+  CSS colors in RGB and HSL format now accept calculations as any of their components. Style properties that use colors have been updated accordingly.
+
+- **Added:** `Value` can now resolve to a different `type` than the current one. ([#1443](https://github.com/Siteimprove/alfa/pull/1443))
+
+  For example, a `Value<"length-percentage">` will fully resolve as a `Value<"length">`, not as a `Value<"length-percentage">`.
+
+  The `Value` type accepts a third type parameter (defaulting to the first one), which is (the representation of) the type into which the value will resolve. The `Value#resolve` method now returns this type of `Value`.
+
+### Patch Changes
+
+- **Fixed:** HSL and RGB colors now also accept the `none` keyword for any component when in modern syntax. ([#1448](https://github.com/Siteimprove/alfa/pull/1448))
+
 ## 0.64.0
 
 ### Minor Changes

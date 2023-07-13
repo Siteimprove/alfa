@@ -9,7 +9,7 @@
 <b>Signature:</b>
 
 ```typescript
-export function parse(legacySyntax?: boolean): Parser<Slice<Token>, Position, string>;
+export function parse(legacySyntax?: boolean): CSSParser<Position>;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ export function parse(legacySyntax?: boolean): Parser<Slice<Token>, Position, st
 
 <b>Returns:</b>
 
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Position](./alfa-css.position.md)<!-- -->, string&gt;
+[CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Position](./alfa-css.position.md)<!-- -->&gt;
 

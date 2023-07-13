@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isRGB<C extends Number.Fixed | Percentage.Fixed, A extends Number.Fixed | Percentage.Fixed>(value: unknown): value is RGB<C, A>;
+function isRGB<C extends Number.Canonical | Percentage.Canonical, A extends Number.Canonical | Percentage.Canonical>(value: unknown): value is RGB<C, A>;
 ```
 
 ## Parameters

@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, Rotate, string>
+parse: CSSParser<Rotate>
 ```

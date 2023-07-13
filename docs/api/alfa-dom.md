@@ -43,7 +43,7 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [h(name, attributes, children, style)](./alfa-dom.h.md) |  |
+|  [h(name, attributes, children, style, box)](./alfa-dom.h.md) |  |
 |  [jsx(name, properties, children)](./alfa-dom.jsx.md) |  |
 
 ## Interfaces

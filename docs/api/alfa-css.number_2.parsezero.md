@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-parseZero: Parser<Slice<Token>, Fixed, string>
+parseZero: CSSParser<Fixed>
 ```
 
 ## Remarks

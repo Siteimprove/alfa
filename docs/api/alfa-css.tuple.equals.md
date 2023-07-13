@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-equals<T extends Array<unknown>>(value: Tuple<T>): boolean;
+equals<T extends Array<Value>>(value: Tuple<T>): boolean;
 ```
 
 ## Parameters

@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-function isList<T>(value: Iterable<T>): value is List<T>;
+function isList<V extends Value>(value: Iterable<V>): value is List<V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;T&gt; |  |
+|  value | Iterable&lt;V&gt; |  |
 
 <b>Returns:</b>
 
-value is [List](./alfa-css.list.md)<!-- -->&lt;T&gt;
+value is [List](./alfa-css.list.md)<!-- -->&lt;V&gt;
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-equals<T>(value: List<T>): boolean;
+equals<T extends Value>(value: List<T>): boolean;
 ```
 
 ## Parameters

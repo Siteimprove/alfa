@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-abstract resolve(resolver?: unknown): Value<T, false>;
+abstract resolve(resolver?: unknown): Value<R, false>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ abstract resolve(resolver?: unknown): Value<T, false>;
 
 <b>Returns:</b>
 
-[Value](./alfa-css.value.md)<!-- -->&lt;T, false&gt;
+[Value](./alfa-css.value.md)<!-- -->&lt;R, false&gt;
 

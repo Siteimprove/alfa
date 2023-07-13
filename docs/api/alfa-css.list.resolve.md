@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-resolve<U>(valueResolver: List.Resolver<T, U>): List<U>;
+resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>, false>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  valueResolver | [List.Resolver](./alfa-css.list.resolver.md)<!-- -->&lt;T, U&gt; |  |
+|  resolver | Resolvable.Resolver&lt;V&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
-[List](./alfa-css.list.md)<!-- -->&lt;U&gt;
+[List](./alfa-css.list.md)<!-- -->&lt;Resolvable.Resolved&lt;V&gt;, false&gt;
 

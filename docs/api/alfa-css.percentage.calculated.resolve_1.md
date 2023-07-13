@@ -7,16 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-resolve<N extends Numeric.Fixed>(base: N): N;
+resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R, T>): T;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  base | N |  |
+|  resolver | [Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;R, T&gt; |  |
 
 <b>Returns:</b>
 
-N
+T
 

@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(): Fixed;
+resolve(): Canonical;
 ```
 <b>Returns:</b>
 
-[Fixed](./alfa-css.integer.fixed.md)
+[Canonical](./alfa-css.integer.canonical.md)
 

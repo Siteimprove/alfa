@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-hasCalculation(): this is Calculated;
+hasCalculation(): this is Calculated<R>;
 ```
 <b>Returns:</b>
 
-this is [Calculated](./alfa-css.percentage.calculated.md)
+this is [Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;R&gt;
 

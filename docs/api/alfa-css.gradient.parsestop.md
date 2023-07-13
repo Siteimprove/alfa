@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseStop: Parser<Slice<Token>, Stop, string>
+parseStop: CSSParser<Stop>
 ```

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, Nth, string>
+parse: CSSParser<Nth>
 ```
 
 ## Remarks

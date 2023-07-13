@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseHorizontalKeywordValue: Parser<Slice<Token>, Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string>
+parseHorizontalKeywordValue: CSSParser<Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>>
 ```

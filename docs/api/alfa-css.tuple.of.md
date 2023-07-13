@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<T extends Array<unknown>>(...values: Readonly<T>): Tuple<T>;
+static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T, Value.HasCalculation<T>>;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ static of<T extends Array<unknown>>(...values: Readonly<T>): Tuple<T>;
 
 <b>Returns:</b>
 
-[Tuple](./alfa-css.tuple.md)<!-- -->&lt;T&gt;
+[Tuple](./alfa-css.tuple.md)<!-- -->&lt;T, Value.HasCalculation&lt;T&gt;&gt;
 

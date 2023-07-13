@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseList: Parser<Slice<Token>, Iterable<Declaration>, string>
+parseList: CSSParser<Iterable<Declaration>>
 ```

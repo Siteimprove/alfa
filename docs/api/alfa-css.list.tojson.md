@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-toJSON(): List.JSON<T>;
+toJSON(): List.JSON<V>;
 ```
 <b>Returns:</b>
 
-[List.JSON](./alfa-css.list.json.md)<!-- -->&lt;T&gt;
+[List.JSON](./alfa-css.list.json.md)<!-- -->&lt;V&gt;
 

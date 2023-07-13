@@ -29,3 +29,9 @@ export declare namespace RGB
 |  --- | --- |
 |  [parse](./alfa-css.rgb.parse.md) | [https://drafts.csswg.org/css-color/\#funcdef-rgb](https://drafts.csswg.org/css-color/#funcdef-rgb) |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.rgb.canonical.md) |  |
+

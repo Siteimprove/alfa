@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-get canonicalUnit(): BaseDimension.ToCanonical<T>;
+get canonicalUnit(): Dimensions<T>[2];
 ```

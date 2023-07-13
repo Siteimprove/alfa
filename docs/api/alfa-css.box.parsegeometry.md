@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseGeometry: Parser<Slice<Token>, Geometry, string>
+parseGeometry: CSSParser<Geometry>
 ```

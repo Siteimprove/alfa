@@ -19,7 +19,7 @@ export declare namespace h
 |  [block(declarations)](./alfa-dom.h.block.md) |  |
 |  [declaration(name, value, important)](./alfa-dom.h.declaration.md) |  |
 |  [document(children, style)](./alfa-dom.h.document.md) |  |
-|  [element(name, attributes, children, style, namespace)](./alfa-dom.h.element.md) |  |
+|  [element(name, attributes, children, style, namespace, box)](./alfa-dom.h.element.md) |  |
 |  [fragment(children)](./alfa-dom.h.fragment.md) |  |
 |  [shadow(children, style, mode)](./alfa-dom.h.shadow.md) |  |
 |  [sheet(rules, disabled, condition)](./alfa-dom.h.sheet.md) |  |

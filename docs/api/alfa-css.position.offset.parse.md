@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: Parser<Slice<Token>, Length.Fixed<Unit.Length> | Percentage.Fixed, string, []>
+parse: Parser<import("@siteimprove/alfa-slice").Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length>, string, []>
 ```

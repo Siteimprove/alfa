@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(): Fixed;
+resolve(): Canonical;
 ```
 <b>Returns:</b>
 
-Fixed
+Canonical
 

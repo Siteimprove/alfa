@@ -7,9 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(): Tuple<T>;
+resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>, false>;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | Tuple.Resolver&lt;T&gt; | <i>(Optional)</i> |
+
 <b>Returns:</b>
 
-[Tuple](./alfa-css.tuple.md)<!-- -->&lt;T&gt;
+[Tuple](./alfa-css.tuple.md)<!-- -->&lt;Tuple.Resolved&lt;T&gt;, false&gt;
 

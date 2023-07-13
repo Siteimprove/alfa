@@ -1,5 +1,21 @@
 # @siteimprove/alfa-style
 
+## 0.65.0
+
+### Minor Changes
+
+- **Changed:** `isVisible` now considers layout information. ([#1450](https://github.com/Siteimprove/alfa/pull/1450))
+
+  When checking if an element is off-screen, clipped to size 0, or positioned out of a clipping ancestor, Alfa now uses layout information (Element's boxes) when available.
+
+  This should improve the accuracy of `isVisible` in several corner cases, notably content that is moved just out of the screen, since the current heuristics wants at least a `9999px` offset to be on the safe side.
+
+- **Removed:** Many pieces of code are no longer exported. These were mostly internal exports that are no longer used in other files and should not impact intended usage of the packages. ([#1437](https://github.com/Siteimprove/alfa/pull/1437))
+
+- **Added:** CSS colors now accept calculated values. ([#1448](https://github.com/Siteimprove/alfa/pull/1448))
+
+  CSS colors in RGB and HSL format now accept calculations as any of their components. Style properties that use colors have been updated accordingly.
+
 ## 0.64.0
 
 ### Minor Changes
