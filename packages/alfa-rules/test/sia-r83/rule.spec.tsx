@@ -459,7 +459,6 @@ test(`evaluate() passes a text node with fixed height and another property
   ]);
 });
 
-/* here */
 test(`evaluates() passes a text node horizontally overflowing its small
       parent and not clipped by its wide grand-parent`, async (t) => {
   const target = h.text("Hello world");
@@ -488,7 +487,6 @@ test(`evaluates() passes a text node horizontally overflowing its small
   ]);
 });
 
-/* and here */
 test(`evaluate() passes a text node vertically overflowing its small
       parent and not clipped by its high grand-parent`, async (t) => {
   const target = h.text("Hello world");
