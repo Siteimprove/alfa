@@ -34,8 +34,14 @@ const { Discrete, Range } = Media.Value;
 
 const { or, not, equals } = Predicate;
 const { and, test } = Refinement;
-const { hasAttribute, hasDisplaySize, hasName, hasNamespace, isElement } =
-  Element;
+const {
+  hasAttribute,
+  hasBox,
+  hasDisplaySize,
+  hasName,
+  hasNamespace,
+  isElement,
+} = Element;
 const { isText } = Text;
 const { getPositioningParent, hasCascadedStyle, isVisible } = Style;
 
@@ -109,7 +115,51 @@ export default Rule.Atomic.of<Page, Text>({
           1: expectation(
             horizontallyClippedBy.isSome() || verticallyClippedBy.isSome(),
             () =>
-              Outcomes.ClipsText(horizontallyClippedBy, verticallyClippedBy),
+              // If the clipping ancestor happens to be twice as big as the text
+              // (parent), clipping only occurs after 200% zoom, which is OK.
+              // We do not really care where is the text inside the clipping
+              // ancestor, and simply assume that if it's big enough it will have
+              // room to grow. This is not always true as the text may be pushed
+              // to the far side already and ends up being clipped anyway.
+              // This would only create false negatives, so this is OK.
+
+              // There may be another further ancestor that is actually small and
+              // clips both the text and the found clipping ancestors. We assume
+              // this is not likely and just ignore it. This would only create
+              // false negatives.
+              horizontallyClippedBy.every(
+                hasBox((clippingBox) =>
+                  target
+                    .parent()
+                    .filter(isElement)
+                    .some(
+                      hasBox(
+                        (targetBox) => clippingBox.width >= 2 * targetBox.width
+                      )
+                    )
+                )
+              ) &&
+              verticallyClippedBy.every(
+                hasBox((clippingBox) =>
+                  target
+                    .parent()
+                    .filter(isElement)
+                    .some(
+                      hasBox(
+                        (targetBox) =>
+                          clippingBox.height >= 2 * targetBox.height
+                      )
+                    )
+                )
+              )
+                ? Outcomes.IsContainer(
+                    horizontallyClippedBy,
+                    verticallyClippedBy
+                  )
+                : Outcomes.ClipsText(
+                    horizontallyClippedBy,
+                    verticallyClippedBy
+                  ),
             () => Outcomes.WrapsText
           ),
         };
@@ -602,4 +652,16 @@ export namespace Outcomes {
     vertical: Option<Element>
   ) =>
     Err.of(ClippingAncestors.of(`The text is clipped`, horizontal, vertical));
+
+  export const IsContainer = (
+    horizontal: Option<Element>,
+    vertical: Option<Element>
+  ) =>
+    Ok.of(
+      ClippingAncestors.of(
+        "The text would be clipped but the clipper is more than twice as large",
+        horizontal,
+        vertical
+      )
+    );
 }
