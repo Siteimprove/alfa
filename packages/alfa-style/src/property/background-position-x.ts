@@ -1,4 +1,5 @@
-import { List, Percentage, Position } from "@siteimprove/alfa-css";
+import { Keyword, List, Percentage, Position } from "@siteimprove/alfa-css";
+import { Some } from "@siteimprove/alfa-option";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
@@ -23,7 +24,10 @@ const parse = List.parseCommaSeparated(Position.Component.parseHorizontal);
 /**
  * @internal
  */
-export const initialItem = Percentage.of(0);
+export const initialItem: Computed.Item = Position.Side.of(
+  Keyword.of("left"),
+  Some.of(Percentage.of(0))
+);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}

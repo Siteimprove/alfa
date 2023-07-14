@@ -11,44 +11,26 @@ function parse(input: string, legacySyntax: boolean = false) {
 test(".parse() parses 1-token positions", (t) => {
   t.deepEqual(parse("center").getUnsafe(), {
     type: "position",
-    horizontal: {
-      type: "keyword",
-      value: "center",
-    },
-    vertical: {
-      type: "keyword",
-      value: "center",
-    },
+    horizontal: { type: "keyword", value: "center" },
+    vertical: { type: "keyword", value: "center" },
   });
 
   t.deepEqual(parse("right").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "side",
-      side: {
-        type: "keyword",
-        value: "right",
-      },
+      side: { type: "keyword", value: "right" },
       offset: null,
     },
-    vertical: {
-      type: "keyword",
-      value: "center",
-    },
+    vertical: { type: "keyword", value: "center" },
   });
 
   t.deepEqual(parse("top").getUnsafe(), {
     type: "position",
-    horizontal: {
-      type: "keyword",
-      value: "center",
-    },
+    horizontal: { type: "keyword", value: "center" },
     vertical: {
       type: "side",
-      side: {
-        type: "keyword",
-        value: "top",
-      },
+      side: { type: "keyword", value: "top" },
       offset: null,
     },
   });
@@ -56,29 +38,20 @@ test(".parse() parses 1-token positions", (t) => {
   t.deepEqual(parse("10px").getUnsafe(), {
     type: "position",
     horizontal: {
-      type: "length",
-      unit: "px",
-      value: 10,
+      type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
-    vertical: {
-      type: "keyword",
-      value: "center",
-    },
+    vertical: { type: "keyword", value: "center" },
   });
 
   // "10px" is not consumed
   t.deepEqual(parse("top 10px").getUnsafe(), {
     type: "position",
-    horizontal: {
-      type: "keyword",
-      value: "center",
-    },
+    horizontal: { type: "keyword", value: "center" },
     vertical: {
       type: "side",
-      side: {
-        type: "keyword",
-        value: "top",
-      },
+      side: { type: "keyword", value: "top" },
       offset: null,
     },
   });
@@ -87,14 +60,11 @@ test(".parse() parses 1-token positions", (t) => {
   t.deepEqual(parse("10px left").getUnsafe(), {
     type: "position",
     horizontal: {
-      type: "length",
-      unit: "px",
-      value: 10,
+      type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
-    vertical: {
-      type: "keyword",
-      value: "center",
-    },
+    vertical: { type: "keyword", value: "center" },
   });
 });
 
@@ -103,18 +73,12 @@ test(".parse() parses 2-token positions", (t) => {
     type: "position",
     horizontal: {
       type: "side",
-      side: {
-        type: "keyword",
-        value: "left",
-      },
+      side: { type: "keyword", value: "left" },
       offset: null,
     },
     vertical: {
       type: "side",
-      side: {
-        type: "keyword",
-        value: "bottom",
-      },
+      side: { type: "keyword", value: "bottom" },
       offset: null,
     },
   });
@@ -123,18 +87,12 @@ test(".parse() parses 2-token positions", (t) => {
     type: "position",
     horizontal: {
       type: "side",
-      side: {
-        type: "keyword",
-        value: "left",
-      },
+      side: { type: "keyword", value: "left" },
       offset: null,
     },
     vertical: {
       type: "side",
-      side: {
-        type: "keyword",
-        value: "bottom",
-      },
+      side: { type: "keyword", value: "bottom" },
       offset: null,
     },
   });
@@ -143,64 +101,46 @@ test(".parse() parses 2-token positions", (t) => {
     type: "position",
     horizontal: {
       type: "side",
-      side: {
-        type: "keyword",
-        value: "left",
-      },
+      side: { type: "keyword", value: "left" },
       offset: null,
     },
-    vertical: {
-      type: "keyword",
-      value: "center",
-    },
+    vertical: { type: "keyword", value: "center" },
   });
 
   t.deepEqual(parse("center left").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "side",
-      side: {
-        type: "keyword",
-        value: "left",
-      },
+      side: { type: "keyword", value: "left" },
       offset: null,
     },
-    vertical: {
-      type: "keyword",
-      value: "center",
-    },
+    vertical: { type: "keyword", value: "center" },
   });
 
   t.deepEqual(parse("left 10px").getUnsafe(), {
     type: "position",
     horizontal: {
       type: "side",
-      side: {
-        type: "keyword",
-        value: "left",
-      },
+      side: { type: "keyword", value: "left" },
       offset: null,
     },
     vertical: {
-      type: "length",
-      unit: "px",
-      value: 10,
+      type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
   });
 
   t.deepEqual(parse("10px top").getUnsafe(), {
     type: "position",
     horizontal: {
-      type: "length",
-      unit: "px",
-      value: 10,
+      type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
     vertical: {
       type: "side",
-      side: {
-        type: "keyword",
-        value: "top",
-      },
+      side: { type: "keyword", value: "top" },
       offset: null,
     },
   });
@@ -208,13 +148,14 @@ test(".parse() parses 2-token positions", (t) => {
   t.deepEqual(parse("10px 20%").getUnsafe(), {
     type: "position",
     horizontal: {
-      type: "length",
-      unit: "px",
-      value: 10,
+      type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
     vertical: {
-      type: "percentage",
-      value: 0.2,
+      type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: { type: "percentage", value: 0.2 },
     },
   });
 
@@ -222,17 +163,14 @@ test(".parse() parses 2-token positions", (t) => {
   t.deepEqual(parse("10px top 20%", true).getUnsafe(), {
     type: "position",
     horizontal: {
-      type: "length",
-      unit: "px",
-      value: 10,
+      type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
     vertical: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "top",
-      },
       type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: null,
     },
   });
 
@@ -240,17 +178,14 @@ test(".parse() parses 2-token positions", (t) => {
   t.deepEqual(parse("left 10px 20%", true).getUnsafe(), {
     type: "position",
     horizontal: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "left",
-      },
       type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: null,
     },
     vertical: {
-      type: "length",
-      unit: "px",
-      value: 10,
+      type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
   });
 
@@ -258,37 +193,25 @@ test(".parse() parses 2-token positions", (t) => {
   t.deepEqual(parse("left top 10px").getUnsafe(), {
     type: "position",
     horizontal: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "left",
-      },
       type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: null,
     },
     vertical: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "top",
-      },
       type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: null,
     },
   });
 
   // "left" not consumed
   t.deepEqual(parse("top 10px left").getUnsafe(), {
     type: "position",
-    horizontal: {
-      type: "keyword",
-      value: "center",
-    },
+    horizontal: { type: "keyword", value: "center" },
     vertical: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "top",
-      },
       type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: null,
     },
   });
 
@@ -296,33 +219,25 @@ test(".parse() parses 2-token positions", (t) => {
   t.deepEqual(parse("top left 10px").getUnsafe(), {
     type: "position",
     horizontal: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "left",
-      },
       type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: null,
     },
     vertical: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "top",
-      },
       type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: null,
     },
   });
 
   // "right 10px" not consumed
   t.deepEqual(parse("center 20% right 10px").getUnsafe(), {
     type: "position",
-    horizontal: {
-      type: "keyword",
-      value: "center",
-    },
+    horizontal: { type: "keyword", value: "center" },
     vertical: {
-      type: "percentage",
-      value: 0.2,
+      type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: { type: "percentage", value: 0.2 },
     },
   });
 });
@@ -331,92 +246,52 @@ test(".parse() parses 3-token positions", (t) => {
   t.deepEqual(parse("left 10px center", true).getUnsafe(), {
     type: "position",
     horizontal: {
-      offset: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
-      side: {
-        type: "keyword",
-        value: "left",
-      },
       type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
-    vertical: {
-      type: "keyword",
-      value: "center",
-    },
+    vertical: { type: "keyword", value: "center" },
   });
 
   t.deepEqual(parse("left top 10px", true).getUnsafe(), {
     type: "position",
     horizontal: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "left",
-      },
       type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: null,
     },
     vertical: {
-      offset: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
-      side: {
-        type: "keyword",
-        value: "top",
-      },
       type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
   });
 
   t.deepEqual(parse("top 10px left", true).getUnsafe(), {
     type: "position",
     horizontal: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "left",
-      },
       type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: null,
     },
     vertical: {
-      offset: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
-      side: {
-        type: "keyword",
-        value: "top",
-      },
       type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
   });
 
   t.deepEqual(parse("top left 10px", true).getUnsafe(), {
     type: "position",
     horizontal: {
-      offset: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
-      side: {
-        type: "keyword",
-        value: "left",
-      },
       type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
     vertical: {
-      offset: null,
-      side: {
-        type: "keyword",
-        value: "top",
-      },
       type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: null,
     },
   });
 });
@@ -425,54 +300,28 @@ test(".parse() parses 4-token positions", (t) => {
   t.deepEqual(parse("right 10px bottom 20%").getUnsafe(), {
     type: "position",
     horizontal: {
-      offset: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
-      side: {
-        type: "keyword",
-        value: "right",
-      },
       type: "side",
+      side: { type: "keyword", value: "right" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
     vertical: {
-      offset: {
-        type: "percentage",
-        value: 0.2,
-      },
-      side: {
-        type: "keyword",
-        value: "bottom",
-      },
       type: "side",
+      side: { type: "keyword", value: "bottom" },
+      offset: { type: "percentage", value: 0.2 },
     },
   });
 
   t.deepEqual(parse("bottom 20% right 10px").getUnsafe(), {
     type: "position",
     horizontal: {
-      offset: {
-        type: "length",
-        unit: "px",
-        value: 10,
-      },
-      side: {
-        type: "keyword",
-        value: "right",
-      },
       type: "side",
+      side: { type: "keyword", value: "right" },
+      offset: { type: "length", unit: "px", value: 10 },
     },
     vertical: {
-      offset: {
-        type: "percentage",
-        value: 0.2,
-      },
-      side: {
-        type: "keyword",
-        value: "bottom",
-      },
       type: "side",
+      side: { type: "keyword", value: "bottom" },
+      offset: { type: "percentage", value: 0.2 },
     },
   });
 });

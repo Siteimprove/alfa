@@ -162,11 +162,7 @@ export namespace Resolver {
   ): Position.Component.Canonical<S> {
     switch (position.type) {
       case "keyword":
-      case "percentage":
         return position;
-
-      case "length":
-        return position.resolve(Resolver.length(style));
 
       case "side":
         return Position.Side.of(

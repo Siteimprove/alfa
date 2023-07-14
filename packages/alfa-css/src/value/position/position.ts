@@ -196,10 +196,13 @@ export namespace Position {
   const parse2 = either(
     map(
       pair(
-        either(parseHorizontalKeyword, LengthPercentage.parseBase),
+        either(
+          parseHorizontalKeyword,
+          Component.parseOffset(Keyword.of("left"))
+        ),
         right(
           Token.parseWhitespace,
-          either(parseVerticalKeyword, LengthPercentage.parseBase)
+          either(parseVerticalKeyword, Component.parseOffset(Keyword.of("top")))
         )
       ),
       mapHV
@@ -224,7 +227,7 @@ export namespace Position {
     map(parseVerticalKeyword, (vertical) =>
       Position.of(Keyword.of("center"), vertical)
     ),
-    map(LengthPercentage.parseBase, (horizontal) =>
+    map(Component.parseOffset(Keyword.of("left")), (horizontal) =>
       Position.of(horizontal, Keyword.of("center"))
     )
   );
