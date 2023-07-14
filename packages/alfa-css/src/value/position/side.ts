@@ -18,29 +18,29 @@ const { either, map, pair, right } = Parser;
  * @public
  */
 export class Side<
-  U extends Unit.Length = Unit.Length,
-  CALC extends boolean = boolean,
   S extends Keywords.Vertical | Keywords.Horizontal =
     | Keywords.Vertical
     | Keywords.Horizontal,
+  U extends Unit.Length = Unit.Length,
+  CALC extends boolean = boolean,
   O extends LengthPercentage<U, CALC> = LengthPercentage<U, CALC>
 > extends Value<"side", CALC> {
   public static of<S extends Keywords.Vertical | Keywords.Horizontal>(
     side: S
-  ): Side<Unit.Length, false, S>;
+  ): Side<S, Unit.Length, false>;
 
   public static of<
+    S extends Keywords.Vertical | Keywords.Horizontal,
     U extends Unit.Length,
     CALC extends boolean,
-    S extends Keywords.Vertical | Keywords.Horizontal,
     O extends LengthPercentage<U, CALC>
-  >(side: S, offset?: Option<O>): Side<U, CALC, S, O>;
+  >(side: S, offset?: Option<O>): Side<S, U, CALC, O>;
   public static of<
+    S extends Keywords.Vertical | Keywords.Horizontal,
     U extends Unit.Length,
     CALC extends boolean,
-    S extends Keywords.Vertical | Keywords.Horizontal,
     O extends LengthPercentage<U, CALC>
-  >(side: S, offset: Option<O> = None): Side<U, CALC, S, O> {
+  >(side: S, offset: Option<O> = None): Side<S, U, CALC, O> {
     return new Side(side, offset);
   }
 
@@ -100,16 +100,24 @@ export class Side<
  */
 export namespace Side {
   export type Canonical<S extends Keywords.Vertical | Keywords.Horizontal> =
-    Side<"px", false, S, LengthPercentage.Canonical>;
+    Side<S, "px", false, LengthPercentage.Canonical>;
 
   export type PartiallyResolved<
     S extends Keywords.Vertical | Keywords.Horizontal
-  > = Side<"px", false, S, Length.Canonical | Percentage.Fixed>;
+  > = Side<S, "px", false, Length.Canonical | Percentage.Fixed>;
 
   export interface JSON extends Value.JSON<"side"> {
     side: Keyword.JSON;
     offset: LengthPercentage.JSON | null;
   }
+
+  // export function partiallyResolve<
+  //   S extends Keywords.Vertical | Keywords.Horizontal
+  // >(
+  //   resolver: Length.Resolver
+  // ): (side: Side<Unit.Length, boolean, S>) => PartiallyResolved<S> {
+  //   return Side.of()
+  // };
 
   /**
    * Parse a side keyword (top/bottom/left/right) or "center"
@@ -118,10 +126,10 @@ export namespace Side {
    */
   function parseKeyword<S extends Keywords.Horizontal | Keywords.Vertical>(
     parser: CSSParser<S>
-  ): CSSParser<Keyword<"center"> | Side<Unit.Length, false, S>> {
+  ): CSSParser<Keyword<"center"> | Side<S, Unit.Length, false>> {
     return either(
       Keywords.parseCenter,
-      map<Slice<Token>, S, Side<Unit.Length, false, S>, string>(parser, Side.of)
+      map<Slice<Token>, S, Side<S, Unit.Length, false>, string>(parser, Side.of)
     );
   }
 
@@ -132,7 +140,7 @@ export namespace Side {
    */
   function parseKeywordValue<S extends Keywords.Horizontal | Keywords.Vertical>(
     parser: CSSParser<S>
-  ): CSSParser<Side<Unit.Length, false, S>> {
+  ): CSSParser<Side<S, Unit.Length, false>> {
     return map(
       pair(parser, right(Token.parseWhitespace, LengthPercentage.parseBase)),
       ([keyword, value]) => Side.of(keyword, Option.of(value))
