@@ -113,11 +113,13 @@ export namespace Side {
 
   // export function partiallyResolve<
   //   S extends Keywords.Vertical | Keywords.Horizontal
-  // >(
-  //   resolver: Length.Resolver
-  // ): (side: Side<Unit.Length, boolean, S>) => PartiallyResolved<S> {
-  //   return Side.of()
-  // };
+  // >(resolver: Length.Resolver): (side: Side<S>) => PartiallyResolved<S> {
+  //   return (side) =>
+  //     Side.of(
+  //       side.side,
+  //       side.offset.map(LengthPercentage.partiallyResolve(resolver))
+  //     );
+  // }
 
   /**
    * Parse a side keyword (top/bottom/left/right) or "center"
