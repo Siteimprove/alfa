@@ -3,12 +3,12 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
 
-import { Keyword } from "./keyword";
-import { Length, Percentage } from "./numeric";
+import { Keyword } from "../keyword";
+import { Length, Percentage } from "../numeric/index";
 
-import { type Parser as CSSParser, Token } from "../syntax";
-import { Unit } from "../unit";
-import { Value } from "./value";
+import { type Parser as CSSParser, Token } from "../../syntax/index";
+import { Unit } from "../../unit/index";
+import { Value } from "../value";
 
 const { map, either, pair, right } = Parser;
 

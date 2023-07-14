@@ -1,7 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer } from "../../src/syntax/lexer";
-import { Position } from "../../src/value/position";
+import { Lexer, Position } from "../../src";
 
 function parse(input: string, legacySyntax: boolean = false) {
   return Position.parse(legacySyntax)(Lexer.lex(input)).map(([, position]) =>
