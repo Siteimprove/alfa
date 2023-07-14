@@ -22,7 +22,7 @@ export type Component<
     | Keywords.Horizontal
     | Keywords.Vertical,
   U extends Unit.Length = Unit.Length
-> = Keywords.Center | Offset<U> | Side<S, Offset<U>>;
+> = Keywords.Center | Offset<U> | Side<U, false, S>;
 
 /**
  * @public

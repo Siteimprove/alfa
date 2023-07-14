@@ -1,8 +1,10 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { Parser as CSSParser, Token } from "../../syntax";
+import { Unit } from "../../unit";
 
 import { Keyword } from "../keyword";
 import { Length, LengthPercentage, Percentage } from "../numeric";
@@ -12,21 +14,33 @@ import { Keywords } from "./keywords";
 
 const { either, map, pair, right } = Parser;
 
-type Offset = Length.Fixed | Percentage.Fixed;
-
 /**
  * @public
  */
 export class Side<
+  U extends Unit.Length = Unit.Length,
+  CALC extends boolean = boolean,
   S extends Keywords.Vertical | Keywords.Horizontal =
     | Keywords.Vertical
     | Keywords.Horizontal,
-  O extends Offset = Offset
-> extends Value<"side", false> {
+  O extends LengthPercentage<U, CALC> = LengthPercentage<U, CALC>
+> extends Value<"side", CALC> {
+  public static of<S extends Keywords.Vertical | Keywords.Horizontal>(
+    side: S
+  ): Side<Unit.Length, false, S>;
+
   public static of<
+    U extends Unit.Length,
+    CALC extends boolean,
     S extends Keywords.Vertical | Keywords.Horizontal,
-    O extends Offset
-  >(side: S, offset: Option<O> = None): Side<S, O> {
+    O extends LengthPercentage<U, CALC>
+  >(side: S, offset?: Option<O>): Side<U, CALC, S, O>;
+  public static of<
+    U extends Unit.Length,
+    CALC extends boolean,
+    S extends Keywords.Vertical | Keywords.Horizontal,
+    O extends LengthPercentage<U, CALC>
+  >(side: S, offset: Option<O> = None): Side<U, CALC, S, O> {
     return new Side(side, offset);
   }
 
@@ -34,7 +48,7 @@ export class Side<
   private readonly _offset: Option<O>;
 
   private constructor(side: S, offset: Option<O>) {
-    super("side", false);
+    super("side", offset.some((offset) => offset.hasCalculation()) as CALC);
     this._side = side;
     this._offset = offset;
   }
@@ -47,14 +61,11 @@ export class Side<
     return this._offset;
   }
 
-  public isCenter(): boolean {
-    return this._offset.some(
-      (offset) => offset.type === "percentage" && offset.value === 0.5
+  public resolve(resolver: LengthPercentage.Resolver): Side.Canonical<S> {
+    return new Side(
+      this._side,
+      this._offset.map(LengthPercentage.resolve(resolver))
     );
-  }
-
-  public resolve(): Side<S, O> {
-    return this;
   }
 
   public equals(value: unknown): value is this {
@@ -89,15 +100,15 @@ export class Side<
  */
 export namespace Side {
   export type Canonical<S extends Keywords.Vertical | Keywords.Horizontal> =
-    Side<S, LengthPercentage.Canonical>;
+    Side<"px", false, S, LengthPercentage.Canonical>;
 
   export type PartiallyResolved<
     S extends Keywords.Vertical | Keywords.Horizontal
-  > = Side<S, Length.Canonical | Percentage.Fixed>;
+  > = Side<"px", false, S, Length.Canonical | Percentage.Fixed>;
 
   export interface JSON extends Value.JSON<"side"> {
     side: Keyword.JSON;
-    offset: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
+    offset: LengthPercentage.JSON | null;
   }
 
   /**
@@ -107,8 +118,11 @@ export namespace Side {
    */
   function parseKeyword<S extends Keywords.Horizontal | Keywords.Vertical>(
     parser: CSSParser<S>
-  ): CSSParser<Keyword<"center"> | Side<S>> {
-    return either(Keywords.parseCenter, map(parser, Side.of));
+  ): CSSParser<Keyword<"center"> | Side<Unit.Length, false, S>> {
+    return either(
+      Keywords.parseCenter,
+      map<Slice<Token>, S, Side<Unit.Length, false, S>, string>(parser, Side.of)
+    );
   }
 
   /**
@@ -118,7 +132,7 @@ export namespace Side {
    */
   function parseKeywordValue<S extends Keywords.Horizontal | Keywords.Vertical>(
     parser: CSSParser<S>
-  ): CSSParser<Side<S>> {
+  ): CSSParser<Side<Unit.Length, false, S>> {
     return map(
       pair(parser, right(Token.parseWhitespace, LengthPercentage.parseBase)),
       ([keyword, value]) => Side.of(keyword, Option.of(value))
