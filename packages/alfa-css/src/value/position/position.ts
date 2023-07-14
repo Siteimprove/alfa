@@ -3,12 +3,14 @@ import { Option, None } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
 
-import { Keyword } from "../keyword";
-import { Length, Percentage } from "../numeric/index";
+import { type Parser as CSSParser, Token } from "../../syntax";
+import { Unit } from "../../unit";
 
-import { type Parser as CSSParser, Token } from "../../syntax/index";
-import { Unit } from "../../unit/index";
+import { Keyword } from "../keyword";
+import { Length, Percentage } from "../numeric";
 import { Value } from "../value";
+
+import { Offset } from "./offset";
 
 const { map, either, pair, right } = Parser;
 
@@ -109,14 +111,6 @@ export namespace Position {
      * @internal
      */
     export const parseHorizontal = Keyword.parse("left", "right");
-  }
-
-  type Offset<U extends Unit.Length = Unit.Length> =
-    | Length.Fixed<U>
-    | Percentage.Fixed;
-
-  namespace Offset {
-    export const parse = either(Length.parseBase, Percentage.parseBase);
   }
 
   export class Side<

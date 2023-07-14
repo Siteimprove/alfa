@@ -63,6 +63,7 @@
     "src/value/numeric/numeric.ts",
     "src/value/numeric/percentage.ts",
     "src/value/position/index.ts",
+    "src/value/position/offset.ts",
     "src/value/position/position.ts",
     "src/value/resolvable.ts",
     "src/value/shadow.ts",
