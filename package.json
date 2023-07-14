@@ -24,7 +24,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@changesets/cli": "^2.26.1",
+    "@changesets/cli": "^2.26.2",
     "@changesets/get-github-info": "^0.5.2",
     "@changesets/types": "^5.2.1",
     "@microsoft/api-documenter": "^7.19.9",
