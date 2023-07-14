@@ -3,13 +3,16 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Unit } from "../../unit";
 
 import { Keyword } from "../keyword";
-import { Length, Percentage } from "../numeric";
+import { Length, LengthPercentage, Percentage } from "../numeric";
 
 import { Keywords } from "./keywords";
-import { Offset } from "./offset";
 import { Side } from "./side";
 
 const { either } = Parser;
+
+type Offset<U extends Unit.Length = Unit.Length> =
+  | Length.Fixed<U>
+  | Percentage.Fixed;
 
 /**
  * @public
@@ -29,7 +32,15 @@ export namespace Component {
     | Percentage.Canonical
     | Keywords.Center
     | Length.Canonical
-    | Side.Canonical<S>;
+    | Side.PartiallyResolved<S>;
+
+  export type PartiallyResolved<
+    S extends Keywords.Horizontal | Keywords.Vertical
+  > =
+    | Percentage.Canonical
+    | Keywords.Center
+    | Length.Canonical
+    | Side.PartiallyResolved<S>;
 
   export type JSON =
     | Keyword.JSON
@@ -41,10 +52,16 @@ export namespace Component {
   /**
    * @internal
    */
-  export const parseHorizontal = either(Offset.parse, Side.parseHorizontal);
+  export const parseHorizontal = either(
+    LengthPercentage.parseBase,
+    Side.parseHorizontal
+  );
 
   /**
    * @internal
    */
-  export const parseVertical = either(Offset.parse, Side.parseVertical);
+  export const parseVertical = either(
+    LengthPercentage.parseBase,
+    Side.parseVertical
+  );
 }

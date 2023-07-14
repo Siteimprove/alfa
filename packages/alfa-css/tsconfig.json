@@ -65,7 +65,6 @@
     "src/value/position/component.ts",
     "src/value/position/index.ts",
     "src/value/position/keywords.ts",
-    "src/value/position/offset.ts",
     "src/value/position/position.ts",
     "src/value/position/side.ts",
     "src/value/resolvable.ts",

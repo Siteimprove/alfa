@@ -248,4 +248,9 @@ export namespace LengthPercentage {
       of
     )
   );
+
+  /**
+   * @internal
+   */
+  export const parseBase = either(Length.parseBase, Percentage.parseBase);
 }

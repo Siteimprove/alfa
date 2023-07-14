@@ -5,17 +5,23 @@ import { Err } from "@siteimprove/alfa-result";
 import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
+import { LengthPercentage } from "../numeric";
 import { Value } from "../value";
 
 import * as component from "./component";
 import * as keywords from "./keywords";
-import { Offset } from "./offset";
 import * as side from "./side";
 
 const { map, either, pair, right } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#position}
+ *
+ * @remarks
+ * A Position has a horizontal and a vertical component, corresponding to some
+ * coordinates. Each component can either be an offset (implicitly from the
+ * "start" side (left or top, usually)), or the keyword "center", or a Side
+ * (i.e. an explicit side with an optional offset).
  *
  * @public
  */
@@ -111,15 +117,15 @@ export namespace Position {
    *
    * Notation:
    *
-   *   - H/V: keyword, top | bottom | right | left | center
-   *   - h/v: numeric, \<length | percentage\>
+   *   - H/V: keyword: top | bottom | right | left | center
+   *   - h/v: numeric: \<length | percentage\>
    *   - Hh/Vv: keyword (excluding center) and numeric
    *
    * Syntax:
    *
    *   - 4 tokens: Hh Vv | Vv Hh
    *   - 3 tokens: Hh V | H Vv | Vv H | V Hh
-   *   - 2 tokens: H V | H v | h V | h v | V H
+   *   - 2 tokens: H V | H v | h V | h v | V H   <- Obs! no V h | v H | v h
    *   - 1 token:  H | V | h
    */
   const mapHV = ([horizontal, vertical]: [
@@ -190,8 +196,11 @@ export namespace Position {
   const parse2 = either(
     map(
       pair(
-        either(parseHorizontalKeyword, Offset.parse),
-        right(Token.parseWhitespace, either(parseVerticalKeyword, Offset.parse))
+        either(parseHorizontalKeyword, LengthPercentage.parseBase),
+        right(
+          Token.parseWhitespace,
+          either(parseVerticalKeyword, LengthPercentage.parseBase)
+        )
       ),
       mapHV
     ),
@@ -215,15 +224,19 @@ export namespace Position {
     map(parseVerticalKeyword, (vertical) =>
       Position.of(Keyword.of("center"), vertical)
     ),
-    map(Offset.parse, (horizontal) =>
+    map(LengthPercentage.parseBase, (horizontal) =>
       Position.of(horizontal, Keyword.of("center"))
     )
   );
 
   /**
+   * Parse a position, optionally accepting legacy 3-values syntax.
    *
    * {@link https://drafts.csswg.org/css-values/#typedef-position}
    * {@link https://drafts.csswg.org/css-backgrounds/#typedef-bg-position}
+   *
+   * @privateRemarks
+   * The parsers must be tested in decreasing number of tokens.
    */
   export function parse(legacySyntax: boolean = false): CSSParser<Position> {
     return either(

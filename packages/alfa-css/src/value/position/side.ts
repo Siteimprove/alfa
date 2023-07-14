@@ -5,13 +5,14 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
-import { Length, Percentage } from "../numeric";
+import { Length, LengthPercentage, Percentage } from "../numeric";
 import { Value } from "../value";
 
 import { Keywords } from "./keywords";
-import { Offset } from "./offset";
 
 const { either, map, pair, right } = Parser;
+
+type Offset = Length.Fixed | Percentage.Fixed;
 
 /**
  * @public
@@ -88,7 +89,11 @@ export class Side<
  */
 export namespace Side {
   export type Canonical<S extends Keywords.Vertical | Keywords.Horizontal> =
-    Side<S, Percentage.Canonical | Length.Canonical>;
+    Side<S, LengthPercentage.Canonical>;
+
+  export type PartiallyResolved<
+    S extends Keywords.Vertical | Keywords.Horizontal
+  > = Side<S, Length.Canonical | Percentage.Fixed>;
 
   export interface JSON extends Value.JSON<"side"> {
     side: Keyword.JSON;
@@ -107,7 +112,7 @@ export namespace Side {
   }
 
   /**
-   * Parse a side keyword followed by an offset (Length | Percentage).
+   * Parse a side keyword followed by an offset (length-percentage).
    *
    * @private
    */
@@ -115,7 +120,7 @@ export namespace Side {
     parser: CSSParser<S>
   ): CSSParser<Side<S>> {
     return map(
-      pair(parser, right(Token.parseWhitespace, Offset.parse)),
+      pair(parser, right(Token.parseWhitespace, LengthPercentage.parseBase)),
       ([keyword, value]) => Side.of(keyword, Option.of(value))
     );
   }
