@@ -1,20 +1,16 @@
 import {
-  Color,
   Gradient,
   Image,
   Length,
   LengthPercentage,
   Linear,
-  Percentage,
   Position,
   Radial,
-  RGB,
   Unit,
   URL,
 } from "@siteimprove/alfa-css";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Mapper } from "@siteimprove/alfa-mapper";
-import { Real } from "@siteimprove/alfa-math";
 
 import { Style } from "./style";
 
