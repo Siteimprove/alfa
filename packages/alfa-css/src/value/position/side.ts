@@ -13,6 +13,9 @@ import { Offset } from "./offset";
 
 const { either, map, pair, right } = Parser;
 
+/**
+ * @public
+ */
 export class Side<
   S extends Keywords.Vertical | Keywords.Horizontal =
     | Keywords.Vertical
@@ -80,6 +83,9 @@ export class Side<
   }
 }
 
+/**
+ * @public
+ */
 export namespace Side {
   export type Canonical<S extends Keywords.Vertical | Keywords.Horizontal> =
     Side<S, Percentage.Canonical | Length.Canonical>;

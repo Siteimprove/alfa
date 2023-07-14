@@ -3,12 +3,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
 
 import { type Parser as CSSParser, Token } from "../../syntax";
-import { Unit } from "../../unit";
 
 import { Keyword } from "../keyword";
-import { Length, Percentage } from "../numeric";
 import { Value } from "../value";
 
+import * as component from "./component";
 import * as keywords from "./keywords";
 import { Offset } from "./offset";
 import * as side from "./side";
@@ -95,30 +94,7 @@ export namespace Position {
 
   export import Side = side.Side;
 
-  export type Component<
-    S extends Keywords.Horizontal | Keywords.Vertical =
-      | Keywords.Horizontal
-      | Keywords.Vertical,
-    U extends Unit.Length = Unit.Length
-  > = Keywords.Center | Offset<U> | Side<S, Offset<U>>;
-
-  export namespace Component {
-    export type Canonical<S extends Keywords.Horizontal | Keywords.Vertical> =
-      | Percentage.Canonical
-      | Keywords.Center
-      | Length.Canonical
-      | Side.Canonical<S>;
-
-    export type JSON =
-      | Keyword.JSON
-      | Length.Fixed.JSON
-      | Percentage.Fixed.JSON
-      | Side.JSON;
-
-    // "center" is included in Side.parse[Horizontal, Vertical]
-    export const parseHorizontal = either(Offset.parse, Side.parseHorizontal);
-    export const parseVertical = either(Offset.parse, Side.parseVertical);
-  }
+  export import Component = component.Component;
 
   /**
    * @remarks

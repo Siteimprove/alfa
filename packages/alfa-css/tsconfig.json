@@ -62,6 +62,7 @@
     "src/value/numeric/number.ts",
     "src/value/numeric/numeric.ts",
     "src/value/numeric/percentage.ts",
+    "src/value/position/component.ts",
     "src/value/position/index.ts",
     "src/value/position/keywords.ts",
     "src/value/position/offset.ts",
