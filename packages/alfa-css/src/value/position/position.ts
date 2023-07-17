@@ -7,7 +7,7 @@ import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
 import { Keyword } from "../keyword";
-import { LengthPercentage } from "../numeric";
+import { Length, LengthPercentage } from "../numeric";
 import { Value } from "../value";
 
 import * as component from "./component";
@@ -67,8 +67,14 @@ export class Position<
 
   public resolve(resolver: Position.Resolver): Position.Canonical<H, V> {
     return new Position(
-      Position.Component.resolve<H>(resolver)(this._horizontal),
-      Position.Component.resolve<V>(resolver)(this._vertical),
+      Position.Component.resolve<H>({
+        length: resolver.length,
+        percentageBase: resolver.percentageHBase,
+      })(this._horizontal),
+      Position.Component.resolve<V>({
+        length: resolver.length,
+        percentageBase: resolver.percentageVBase,
+      })(this._vertical),
       false
     );
   }
@@ -136,7 +142,13 @@ export namespace Position {
 
   export import Component = component.Component;
 
-  export type Resolver = Component.Resolver;
+  /**
+   * Percentages are not resolved against the same base in both dimensions.
+   */
+  export interface Resolver extends Length.Resolver {
+    percentageHBase: Length.Canonical;
+    percentageVBase: Length.Canonical;
+  }
 
   export type PartialResolver = Component.PartialResolver;
 
