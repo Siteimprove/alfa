@@ -2,4 +2,4 @@
 "@siteimprove/alfa-css": minor
 ---
 
-**Removed:** The unused `Side.isCenter()` test is no longer available.
+**Removed:** The unused `Side.isCenter()` predicate is no longer available.
