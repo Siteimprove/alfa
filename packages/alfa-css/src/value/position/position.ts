@@ -1,11 +1,11 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
-import { LengthPercentage } from "../numeric";
 import { Value } from "../value";
 
 import * as component from "./component";
@@ -26,35 +26,49 @@ const { map, either, pair, right } = Parser;
  * @public
  */
 export class Position<
-  H extends Position.Component<Position.Keywords.Horizontal> = Position.Component<Position.Keywords.Horizontal>,
-  V extends Position.Component<Position.Keywords.Vertical> = Position.Component<Position.Keywords.Vertical>
-> extends Value<"position", false> {
+  H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal,
+  V extends Position.Keywords.Vertical = Position.Keywords.Vertical,
+  HC extends Position.Component<H> = Position.Component<H>,
+  VC extends Position.Component<V> = Position.Component<V>,
+  CALC extends boolean = boolean
+> extends Value<"position", CALC> {
   public static of<
-    H extends Position.Component<Position.Keywords.Horizontal>,
-    V extends Position.Component<Position.Keywords.Vertical>
-  >(horizontal: H, vertical: V): Position<H, V> {
-    return new Position(horizontal, vertical);
+    H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal,
+    V extends Position.Keywords.Vertical = Position.Keywords.Vertical,
+    HC extends Position.Component<H> = Position.Component<H>,
+    VC extends Position.Component<V> = Position.Component<V>
+  >(
+    horizontal: HC,
+    vertical: VC
+  ): Position<H, V, HC, VC, Value.HasCalculation<[HC, VC]>> {
+    const calculation = (horizontal.hasCalculation() ||
+      vertical.hasCalculation()) as Value.HasCalculation<[HC, VC]>;
+    return new Position(horizontal, vertical, calculation);
   }
 
-  private readonly _horizontal: H;
-  private readonly _vertical: V;
+  private readonly _horizontal: HC;
+  private readonly _vertical: VC;
 
-  private constructor(horizontal: H, vertical: V) {
-    super("position", false);
+  private constructor(horizontal: HC, vertical: VC, calculation: CALC) {
+    super("position", calculation);
     this._horizontal = horizontal;
     this._vertical = vertical;
   }
 
-  public get horizontal(): H {
+  public get horizontal(): HC {
     return this._horizontal;
   }
 
-  public get vertical(): V {
+  public get vertical(): VC {
     return this._vertical;
   }
 
-  public resolve(): Position<H, V> {
-    return this;
+  public resolve(resolver: Position.Resolver): Position.Canonical<H, V> {
+    return new Position(
+      Position.Component.resolve<H>(resolver)(this._horizontal),
+      Position.Component.resolve<V>(resolver)(this._vertical),
+      false
+    );
   }
 
   public equals(value: unknown): value is this {
@@ -86,9 +100,19 @@ export class Position<
  * @public
  */
 export namespace Position {
-  export type Canonical = Position<
-    Component.Canonical<Keywords.Horizontal>,
-    Component.Canonical<Keywords.Vertical>
+  export type Canonical<
+    H extends Keywords.Horizontal,
+    V extends Keywords.Vertical
+  > = Position<H, V, Component.Canonical<H>, Component.Canonical<V>, false>;
+
+  export type PartiallyResolved<
+    H extends Keywords.Horizontal,
+    V extends Keywords.Vertical
+  > = Position<
+    H,
+    V,
+    Component.PartiallyResolved<H>,
+    Component.PartiallyResolved<V>
   >;
 
   export interface JSON extends Value.JSON<"position"> {
@@ -101,6 +125,23 @@ export namespace Position {
   export import Side = side.Side;
 
   export import Component = component.Component;
+
+  export type Resolver = Component.Resolver;
+
+  export type PartialResolver = Component.PartialResolver;
+
+  export function partiallyResolve<
+    H extends Keywords.Horizontal,
+    V extends Keywords.Vertical
+  >(
+    resolver: PartialResolver
+  ): (value: Position<H, V>) => PartiallyResolved<H, V> {
+    return (value) =>
+      Position.of(
+        Component.partiallyResolve<H>(resolver)(value.horizontal),
+        Component.partiallyResolve<V>(resolver)(value.vertical)
+      );
+  }
 
   /**
    * @remarks
@@ -217,12 +258,9 @@ export namespace Position {
   );
 
   // H | V | h
-  const parse1 = either(
+  const parse1 = either<Slice<Token>, Position, string>(
     map(parseHorizontalKeyword, (horizontal) =>
-      Position.of<Component<Keywords.Horizontal>, Component<Keywords.Vertical>>(
-        horizontal,
-        Keyword.of("center")
-      )
+      Position.of(horizontal, Keyword.of("center"))
     ),
     map(parseVerticalKeyword, (vertical) =>
       Position.of(Keyword.of("center"), vertical)

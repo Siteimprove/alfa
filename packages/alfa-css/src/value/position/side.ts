@@ -72,7 +72,7 @@ export class Side<
     return this._offset;
   }
 
-  public resolve(resolver: LengthPercentage.Resolver): Side.Canonical<S> {
+  public resolve(resolver: Side.Resolver): Side.Canonical<S> {
     return new Side(
       this._side,
       this._offset.map(LengthPercentage.resolve(resolver))
@@ -115,22 +115,30 @@ export namespace Side {
 
   export type PartiallyResolved<
     S extends Keywords.Vertical | Keywords.Horizontal
-  > = Side<S, "px", false, Length.Canonical | Percentage.Fixed>;
+  > = Side<S, "px", boolean, LengthPercentage.PartiallyResolved>;
 
   export interface JSON extends Value.JSON<"side"> {
     side: Keyword.JSON;
     offset: LengthPercentage.JSON | null;
   }
 
-  // export function partiallyResolve<
-  //   S extends Keywords.Vertical | Keywords.Horizontal
-  // >(resolver: Length.Resolver): (side: Side<S>) => PartiallyResolved<S> {
-  //   return (side) =>
-  //     Side.of(
-  //       side.side,
-  //       side.offset.map(LengthPercentage.partiallyResolve(resolver))
-  //     );
-  // }
+  export type Resolver = LengthPercentage.Resolver;
+
+  export type PartialResolver = Length.Resolver;
+
+  export function partiallyResolve<
+    S extends Keywords.Vertical | Keywords.Horizontal
+  >(resolver: PartialResolver): (side: Side<S>) => PartiallyResolved<S> {
+    return (side) =>
+      Side.of(
+        side.side,
+        side.offset.map(LengthPercentage.partiallyResolve(resolver))
+      );
+  }
+
+  export function isSide(value: unknown): value is Side {
+    return value instanceof Side;
+  }
 
   /**
    * Parse a side keyword (top/bottom/left/right) or "center"
@@ -153,9 +161,9 @@ export namespace Side {
    */
   function parseKeywordValue<S extends Keywords.Horizontal | Keywords.Vertical>(
     parser: CSSParser<S>
-  ): CSSParser<Side<S, Unit.Length, false>> {
+  ): CSSParser<Side<S>> {
     return map(
-      pair(parser, right(Token.parseWhitespace, LengthPercentage.parseBase)),
+      pair(parser, right(Token.parseWhitespace, LengthPercentage.parse)),
       ([keyword, value]) => Side.of(keyword, value)
     );
   }

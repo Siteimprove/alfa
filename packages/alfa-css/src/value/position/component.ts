@@ -19,8 +19,9 @@ export type Component<
   S extends Keywords.Horizontal | Keywords.Vertical =
     | Keywords.Horizontal
     | Keywords.Vertical,
-  U extends Unit.Length = Unit.Length
-> = Keywords.Center | Side<S, U, false>;
+  U extends Unit.Length = Unit.Length,
+  CALC extends boolean = boolean
+> = Keywords.Center | Side<S, U, CALC>;
 
 /**
  * @public
@@ -28,13 +29,30 @@ export type Component<
 export namespace Component {
   export type Canonical<S extends Keywords.Horizontal | Keywords.Vertical> =
     | Keywords.Center
-    | Side.PartiallyResolved<S>;
+    | Side.Canonical<S>;
 
   export type PartiallyResolved<
     S extends Keywords.Horizontal | Keywords.Vertical
   > = Keywords.Center | Side.PartiallyResolved<S>;
 
   export type JSON = Keyword.JSON | Side.JSON;
+
+  export type Resolver = Side.Resolver;
+
+  export function resolve<S extends Keywords.Horizontal | Keywords.Vertical>(
+    resolver: Resolver
+  ): (value: Component<S>) => Canonical<S> {
+    return (value) => (Side.isSide(value) ? value.resolve(resolver) : value);
+  }
+
+  export type PartialResolver = Side.PartialResolver;
+
+  export function partiallyResolve<
+    S extends Keywords.Horizontal | Keywords.Vertical
+  >(resolver: PartialResolver): (value: Component<S>) => PartiallyResolved<S> {
+    return (value) =>
+      Side.isSide(value) ? Side.partiallyResolve<S>(resolver)(value) : value;
+  }
 
   /**
    * Parses an isolated offset (length-percentage), and adds the provided default
@@ -47,7 +65,7 @@ export namespace Component {
   >(
     side: T
   ): CSSParser<Component<T>> =>
-    map(LengthPercentage.parseBase, (value) => Side.of(side, value));
+    map(LengthPercentage.parse, (value) => Side.of(side, value));
 
   // "center" is included in Side.parse[Horizontal, Vertical]
   /**

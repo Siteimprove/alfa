@@ -136,6 +136,8 @@ export namespace LengthPercentage {
         : value.resolve(resolver);
   }
 
+  export type PartialResolver = Length.Resolver;
+
   /**
    * Partially resolves a length-percentage, when only a length resolver is
    * provided.
@@ -149,7 +151,7 @@ export namespace LengthPercentage {
    * calculations have to stay as they are.
    */
   export function partiallyResolve(
-    resolver: Length.Resolver
+    resolver: PartialResolver
   ): (value: LengthPercentage) => PartiallyResolved {
     return (value) =>
       Selective.of(value)
