@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer, Math, Position } from "../../src";
+import { Length, Lexer, Math, Position } from "../../src";
 
 function parse(input: string, legacySyntax: boolean = false) {
   return Position.parse(legacySyntax)(Lexer.lex(input))
@@ -408,4 +408,70 @@ test(".parse() accepts calculations", (t) => {
       offset: { type: "length-percentage", math: calcJSON },
     },
   });
+});
+
+test(".resolve() fully resolves positions", (t) => {
+  const actual = Position.parse()(Lexer.lex("left calc(1em + 5%) top 20%"))
+    .map(([, position]) => position)
+    .getUnsafe();
+
+  t.deepEqual(
+    actual
+      .resolve({
+        length: Length.resolver(
+          Length.of(16, "px"),
+          Length.of(0, "px"),
+          Length.of(0, "px"),
+          Length.of(0, "px")
+        ),
+        percentageHBase: Length.of(10, "px"),
+        percentageVBase: Length.of(20, "px"),
+      })
+      .toJSON(),
+    {
+      type: "position",
+      horizontal: {
+        type: "side",
+        side: { type: "keyword", value: "left" },
+        offset: { type: "length", unit: "px", value: 16.5 },
+      },
+      vertical: {
+        type: "side",
+        side: { type: "keyword", value: "top" },
+        offset: { type: "length", unit: "px", value: 4 },
+      },
+    }
+  );
+});
+
+test(".partiallyResolve() partially resolves positions", (t) => {
+  const actual = Position.parse()(
+    Lexer.lex("left calc(1em + 1px) top calc(20% + 10%)")
+  )
+    .map(([, position]) => position)
+    .getUnsafe();
+
+  t.deepEqual(
+    Position.partiallyResolve({
+      length: Length.resolver(
+        Length.of(16, "px"),
+        Length.of(0, "px"),
+        Length.of(0, "px"),
+        Length.of(0, "px")
+      ),
+    })(actual).toJSON(),
+    {
+      type: "position",
+      horizontal: {
+        type: "side",
+        side: { type: "keyword", value: "left" },
+        offset: { type: "length", unit: "px", value: 17 },
+      },
+      vertical: {
+        type: "side",
+        side: { type: "keyword", value: "top" },
+        offset: { type: "percentage", value: 0.3 },
+      },
+    }
+  );
 });
