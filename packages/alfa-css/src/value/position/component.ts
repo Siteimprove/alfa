@@ -37,6 +37,9 @@ export namespace Component {
   export type JSON = Keyword.JSON | Side.JSON;
 
   /**
+   * Parses an isolated offset (length-percentage), and adds the provided default
+   * side to make a Side.
+   *
    * @internal
    */
   export const parseOffset = <
@@ -44,7 +47,7 @@ export namespace Component {
   >(
     side: T
   ): CSSParser<Component<T>> =>
-    map(LengthPercentage.parseBase, (value) => Side.of(side, Some.of(value)));
+    map(LengthPercentage.parseBase, (value) => Side.of(side, value));
 
   // "center" is included in Side.parse[Horizontal, Vertical]
   /**

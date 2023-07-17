@@ -34,14 +34,14 @@ export class Side<
     U extends Unit.Length,
     CALC extends boolean,
     O extends LengthPercentage<U, CALC>
-  >(side: S, offset?: Option<O>): Side<S, U, CALC, O>;
+  >(side: S, offset?: O): Side<S, U, CALC, O>;
   public static of<
     S extends Keywords.Vertical | Keywords.Horizontal,
     U extends Unit.Length,
     CALC extends boolean,
     O extends LengthPercentage<U, CALC>
-  >(side: S, offset: Option<O> = None): Side<S, U, CALC, O> {
-    return new Side(side, offset);
+  >(side: S, offset?: O): Side<S, U, CALC, O> {
+    return new Side(side, Option.from(offset));
   }
 
   private readonly _side: S;
@@ -145,7 +145,7 @@ export namespace Side {
   ): CSSParser<Side<S, Unit.Length, false>> {
     return map(
       pair(parser, right(Token.parseWhitespace, LengthPercentage.parseBase)),
-      ([keyword, value]) => Side.of(keyword, Option.of(value))
+      ([keyword, value]) => Side.of(keyword, value)
     );
   }
 
