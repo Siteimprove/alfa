@@ -34,14 +34,25 @@ export class Side<
     U extends Unit.Length,
     CALC extends boolean,
     O extends LengthPercentage<U, CALC>
-  >(side: S, offset?: O): Side<S, U, CALC, O>;
+  >(side: S, offset: O): Side<S, U, CALC, O>;
+
   public static of<
     S extends Keywords.Vertical | Keywords.Horizontal,
     U extends Unit.Length,
     CALC extends boolean,
     O extends LengthPercentage<U, CALC>
-  >(side: S, offset?: O): Side<S, U, CALC, O> {
-    return new Side(side, Option.from(offset));
+  >(side: S, offset: Option<O>): Side<S, U, CALC, O>;
+
+  public static of<
+    S extends Keywords.Vertical | Keywords.Horizontal,
+    U extends Unit.Length,
+    CALC extends boolean,
+    O extends LengthPercentage<U, CALC>
+  >(side: S, offset?: O | Option<O>): Side<S, U, CALC, O> {
+    return new Side(
+      side,
+      Option.isOption(offset) ? offset : Option.from(offset)
+    );
   }
 
   private readonly _side: S;

@@ -1,5 +1,5 @@
 ---
-"@siteimprove/alfa-css": minor
+"@siteimprove/alfa-css": patch
 ---
 
-**Changed:** `Position.Side.of` now expects an optional offset, rather than an `Option<offset>`.
+**Added:** `Position.Side.of` now also accepts an optional offset, instead of an `Option<offset>`.

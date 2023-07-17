@@ -167,17 +167,15 @@ export namespace Resolver {
       case "side":
         return Position.Side.of(
           position.side,
-          position.offset
-            .map((offset) => {
-              switch (offset.type) {
-                case "percentage":
-                  return offset;
+          position.offset.map((offset) => {
+            switch (offset.type) {
+              case "percentage":
+                return offset;
 
-                case "length":
-                  return offset.resolve(Resolver.length(style));
-              }
-            })
-            .getOr(undefined)
+              case "length":
+                return offset.resolve(Resolver.length(style));
+            }
+          })
         );
     }
   }
