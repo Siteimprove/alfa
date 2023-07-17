@@ -4,8 +4,10 @@ import { Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { type Parser as CSSParser, Token } from "../../syntax";
+import { Unit } from "../../unit";
 
 import { Keyword } from "../keyword";
+import { LengthPercentage } from "../numeric";
 import { Value } from "../value";
 
 import * as component from "./component";
@@ -101,19 +103,27 @@ export class Position<
  */
 export namespace Position {
   export type Canonical<
-    H extends Keywords.Horizontal,
-    V extends Keywords.Vertical
+    H extends Keywords.Horizontal = Keywords.Horizontal,
+    V extends Keywords.Vertical = Keywords.Vertical
   > = Position<H, V, Component.Canonical<H>, Component.Canonical<V>, false>;
 
   export type PartiallyResolved<
-    H extends Keywords.Horizontal,
-    V extends Keywords.Vertical
+    H extends Keywords.Horizontal = Keywords.Horizontal,
+    V extends Keywords.Vertical = Keywords.Vertical
   > = Position<
     H,
     V,
     Component.PartiallyResolved<H>,
     Component.PartiallyResolved<V>
   >;
+
+  /**
+   * @internal
+   */
+  export type Fixed<
+    H extends Keywords.Horizontal = Keywords.Horizontal,
+    V extends Keywords.Vertical = Keywords.Vertical
+  > = Position<H, V, Component.Fixed<H>, Component.Fixed<V>, false>;
 
   export interface JSON extends Value.JSON<"position"> {
     horizontal: Component.JSON;
@@ -169,14 +179,14 @@ export namespace Position {
    *   - 2 tokens: H V | H v | h V | h v | V H   <- Obs! no V h | v H | v h
    *   - 1 token:  H | V | h
    */
-  const mapHV = ([horizontal, vertical]: [
-    Component<Keywords.Horizontal>,
-    Component<Keywords.Vertical>
+  const mapHV = <CALC extends boolean>([horizontal, vertical]: [
+    Component<Keywords.Horizontal, Unit.Length, CALC>,
+    Component<Keywords.Vertical, Unit.Length, CALC>
   ]) => Position.of(horizontal, vertical);
 
-  const mapVH = ([vertical, horizontal]: [
-    Component<Keywords.Vertical>,
-    Component<Keywords.Horizontal>
+  const mapVH = <CALC extends boolean>([vertical, horizontal]: [
+    Component<Keywords.Vertical, Unit.Length, CALC>,
+    Component<Keywords.Horizontal, Unit.Length, CALC>
   ]) => Position.of(horizontal, vertical);
 
   const {
@@ -186,89 +196,125 @@ export namespace Position {
     parseVerticalKeyword,
   } = Side;
 
-  // Hh Vv | Vv Hh
-  const parse4 = either(
-    map(
-      pair(
-        parseHorizontalKeywordValue,
-        right(Token.parseWhitespace, parseVerticalKeywordValue)
+  const parse4 = <CALC extends boolean>(withCalculation: CALC) =>
+    either(
+      map(
+        pair(
+          parseHorizontalKeywordValue(withCalculation),
+          right(
+            Token.parseWhitespace,
+            parseVerticalKeywordValue(withCalculation)
+          )
+        ),
+        mapHV
       ),
-      mapHV
-    ),
-    map(
-      pair(
-        parseVerticalKeywordValue,
-        right(Token.parseWhitespace, parseHorizontalKeywordValue)
-      ),
-      mapVH
-    )
-  );
+      map(
+        pair(
+          parseVerticalKeywordValue(withCalculation),
+          right(
+            Token.parseWhitespace,
+            parseHorizontalKeywordValue(withCalculation)
+          )
+        ),
+        mapVH
+      )
+    );
 
   // Hh V | H Vv | Vv H | V Hh
-  const parse3 = either(
-    map(
-      either(
-        pair(
-          parseHorizontalKeywordValue,
-          right(Token.parseWhitespace, parseVerticalKeyword)
-        ),
-        pair(
-          parseHorizontalKeyword,
-          right(Token.parseWhitespace, parseVerticalKeywordValue)
-        )
-      ),
-      mapHV
-    ),
-    map(
-      either(
-        pair(
-          parseVerticalKeywordValue,
-          right(Token.parseWhitespace, parseHorizontalKeyword)
-        ),
-        pair(
-          parseVerticalKeyword,
-          right(Token.parseWhitespace, parseHorizontalKeywordValue)
-        )
-      ),
-      mapVH
-    )
-  );
-  // H V | H v | h V | h v | V H = (H | h) (V | v) | V H
-  const parse2 = either(
-    map(
-      pair(
+  const parse3 = <CALC extends boolean>(withCalculation: CALC) =>
+    either(
+      map(
         either(
-          parseHorizontalKeyword,
-          Component.parseOffset(Keyword.of("left"))
+          pair(
+            parseHorizontalKeywordValue(withCalculation),
+            right(Token.parseWhitespace, parseVerticalKeyword(withCalculation))
+          ),
+          pair(
+            parseHorizontalKeyword(withCalculation),
+            right(
+              Token.parseWhitespace,
+              parseVerticalKeywordValue(withCalculation)
+            )
+          )
         ),
-        right(
-          Token.parseWhitespace,
-          either(parseVerticalKeyword, Component.parseOffset(Keyword.of("top")))
-        )
+        mapHV
       ),
-      mapHV
-    ),
-    map(
-      pair(
-        parseVerticalKeyword,
-        right(Token.parseWhitespace, parseHorizontalKeyword)
+      map(
+        either(
+          pair(
+            parseVerticalKeywordValue(withCalculation),
+            right(
+              Token.parseWhitespace,
+              parseHorizontalKeyword(withCalculation)
+            )
+          ),
+          pair(
+            parseVerticalKeyword(withCalculation),
+            right(
+              Token.parseWhitespace,
+              parseHorizontalKeywordValue(withCalculation)
+            )
+          )
+        ),
+        mapVH
+      )
+    );
+
+  // H V | H v | h V | h v | V H = (H | h) (V | v) | V H
+  const parse2 = <CALC extends boolean>(withCalculation: CALC) =>
+    either(
+      map(
+        pair(
+          either(
+            parseHorizontalKeyword(withCalculation),
+            Component.parseOffset(Keyword.of("left"), withCalculation)
+          ),
+          right(
+            Token.parseWhitespace,
+            either(
+              parseVerticalKeyword(withCalculation),
+              Component.parseOffset(Keyword.of("top"), withCalculation)
+            )
+          )
+        ),
+        mapHV
       ),
-      mapVH
-    )
-  );
+      map(
+        pair(
+          parseVerticalKeyword(withCalculation),
+          right(Token.parseWhitespace, parseHorizontalKeyword(withCalculation))
+        ),
+        mapVH
+      )
+    );
+
+  type withCalculation<CALC extends boolean> = Position<
+    Keywords.Horizontal,
+    Keywords.Vertical,
+    Component<Keywords.Horizontal, Unit.Length, CALC>,
+    Component<Keywords.Vertical, Unit.Length, CALC>,
+    CALC
+  >;
 
   // H | V | h
-  const parse1 = either<Slice<Token>, Position, string>(
-    map(parseHorizontalKeyword, (horizontal) =>
-      Position.of(horizontal, Keyword.of("center"))
-    ),
-    map(parseVerticalKeyword, (vertical) =>
-      Position.of(Keyword.of("center"), vertical)
-    ),
-    map(Component.parseOffset(Keyword.of("left")), (horizontal) =>
-      Position.of(horizontal, Keyword.of("center"))
-    )
-  );
+  const parse1 = <CALC extends boolean>(withCalculation: CALC) =>
+    either(
+      map(
+        parseHorizontalKeyword(withCalculation),
+        (horizontal) =>
+          Position.of(horizontal, Keyword.of("center")) as withCalculation<CALC>
+      ),
+      map(
+        parseVerticalKeyword(withCalculation),
+        (vertical) =>
+          Position.of(Keyword.of("center"), vertical) as withCalculation<CALC>
+      ),
+      map(
+        Component.parseOffset(Keyword.of("left"), withCalculation),
+        (horizontal) =>
+          Position.of(horizontal, Keyword.of("center")) as withCalculation<CALC>
+      )
+    );
 
   /**
    * Parse a position, optionally accepting legacy 3-values syntax.
@@ -281,10 +327,26 @@ export namespace Position {
    */
   export function parse(legacySyntax: boolean = false): CSSParser<Position> {
     return either(
-      parse4,
-      legacySyntax ? parse3 : () => Err.of("Three-value syntax is not allowed"),
-      parse2,
-      parse1
+      parse4(true),
+      legacySyntax
+        ? parse3(true)
+        : () => Err.of("Three-value syntax is not allowed"),
+      parse2(true),
+      parse1(true)
+    );
+  }
+
+  /**
+   * @interna
+   */
+  export function parseBase(legacySyntax: boolean = false): CSSParser<Fixed> {
+    return either(
+      parse4(false),
+      legacySyntax
+        ? parse3(false)
+        : () => Err.of("Three-value syntax is not allowed"),
+      parse2(false),
+      parse1(false)
     );
   }
 }

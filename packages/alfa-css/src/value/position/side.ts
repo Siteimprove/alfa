@@ -1,8 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
-import { None, Option } from "@siteimprove/alfa-option";
+import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
-
 import { Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
@@ -142,47 +141,75 @@ export namespace Side {
 
   /**
    * Parse a side keyword (top/bottom/left/right) or "center"
-   *
-   * @private
    */
-  function parseKeyword<S extends Keywords.Horizontal | Keywords.Vertical>(
-    parser: CSSParser<S>
-  ): CSSParser<Keyword<"center"> | Side<S, Unit.Length, false>> {
+  function parseKeyword<
+    S extends Keywords.Horizontal | Keywords.Vertical,
+    CALC extends boolean
+  >(
+    parser: CSSParser<S>,
+    // This is a useless parameter, temporarily used to enforce inference of CALC
+    // at call sites.
+    withCalculation: CALC
+  ): CSSParser<Keyword<"center"> | Side<S, Unit.Length, CALC>> {
     return either(
       Keywords.parseCenter,
-      map<Slice<Token>, S, Side<S, Unit.Length, false>, string>(parser, Side.of)
+      // This is asserting false => true i.e. losing the fact that there is
+      // no calculation in the Keyword. This is acceptable.
+      map(parser, (side) => Side.of(side) as Side<S, Unit.Length, CALC>)
     );
   }
 
   /**
    * Parse a side keyword followed by an offset (length-percentage).
    *
-   * @private
+   * @TODO
+   * The withCalculation parameter (and CALC type parameter) is temporally needed
+   * until Shape and Gradient are properly migrated to calculatable values.
    */
-  function parseKeywordValue<S extends Keywords.Horizontal | Keywords.Vertical>(
-    parser: CSSParser<S>
-  ): CSSParser<Side<S>> {
+  function parseKeywordValue<
+    S extends Keywords.Horizontal | Keywords.Vertical,
+    CALC extends boolean
+  >(
+    parser: CSSParser<S>,
+    withCalculation: CALC
+  ): CSSParser<Side<S, Unit.Length, CALC>> {
+    const offsetParser = (
+      withCalculation ? LengthPercentage.parse : LengthPercentage.parseBase
+    ) as CSSParser<LengthPercentage<Unit.Length, CALC>>;
+
     return map(
-      pair(parser, right(Token.parseWhitespace, LengthPercentage.parse)),
+      pair(parser, right(Token.parseWhitespace, offsetParser)),
       ([keyword, value]) => Side.of(keyword, value)
     );
   }
 
-  export const parseHorizontalKeywordValue = parseKeywordValue(
-    Keywords.parseHorizontal
-  );
-  export const parseHorizontalKeyword = parseKeyword(Keywords.parseHorizontal);
-  export const parseVerticalKeywordValue = parseKeywordValue(
-    Keywords.parseVertical
-  );
-  export const parseVerticalKeyword = parseKeyword(Keywords.parseVertical);
+  export const parseHorizontalKeywordValue = <CALC extends boolean>(
+    withCalculation: CALC
+  ) => parseKeywordValue(Keywords.parseHorizontal, withCalculation);
 
-  export const parseHorizontal = either(
-    parseHorizontalKeyword,
-    parseHorizontalKeywordValue
-  );
-  export const parseVertical = either(
-    parseVerticalKeyword,
-    parseVerticalKeywordValue
-  );
+  export const parseHorizontalKeyword = <CALC extends boolean>(
+    withCalculation: CALC
+  ) => parseKeyword(Keywords.parseHorizontal, withCalculation);
+
+  export const parseHorizontal = <CALC extends boolean>(
+    withCalculation: CALC
+  ) =>
+    either(
+      parseHorizontalKeyword(withCalculation),
+      parseHorizontalKeywordValue(withCalculation)
+    );
+
+  export const parseVerticalKeywordValue = <CALC extends boolean>(
+    withCalculation: CALC
+  ) => parseKeywordValue(Keywords.parseVertical, withCalculation);
+
+  export const parseVerticalKeyword = <CALC extends boolean>(
+    withCalculation: CALC
+  ) => parseKeyword(Keywords.parseVertical, withCalculation);
+
+  export const parseVertical = <CALC extends boolean>(withCalculation: CALC) =>
+    either(
+      parseVerticalKeyword(withCalculation),
+      parseVerticalKeywordValue(withCalculation)
+    );
 }
