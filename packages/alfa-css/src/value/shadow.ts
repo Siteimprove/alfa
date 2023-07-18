@@ -65,9 +65,9 @@ export class Shadow<
     spread: S,
     color: C,
     isInset: boolean,
-    calculation: CALC
+    hasCalculation: CALC
   ) {
-    super("shadow", calculation);
+    super("shadow", hasCalculation);
     this._horizontal = horizontal;
     this._vertical = vertical;
     this._blur = blur;
