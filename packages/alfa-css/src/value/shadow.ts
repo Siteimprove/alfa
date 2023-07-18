@@ -7,25 +7,30 @@ import { type Parser as CSSParser, Token } from "../syntax";
 import { Color } from "./color";
 import { Keyword } from "./keyword";
 import { Length } from "./numeric";
+import { Resolvable } from "./resolvable";
 import { Value } from "./value";
 
-const { parseIf, separatedList, takeBetween } = Parser;
+const { parseIf, separatedList } = Parser;
 
 /**
  * @public
  */
 export class Shadow<
-  H extends Length.Fixed = Length.Fixed,
-  V extends Length.Fixed = H,
-  B extends Length.Fixed = Length.Fixed,
-  S extends Length.Fixed = Length.Fixed,
-  C extends Color = Color
-> extends Value<"shadow", false> {
+    H extends Length = Length,
+    V extends Length = H,
+    B extends Length = Length,
+    S extends Length = Length,
+    C extends Color = Color,
+    CALC extends boolean = boolean
+  >
+  extends Value<"shadow", CALC>
+  implements Resolvable<Shadow.Canonical, Shadow.Resolver>
+{
   public static of<
-    H extends Length.Fixed = Length.Fixed,
-    V extends Length.Fixed = H,
-    B extends Length.Fixed = Length.Fixed,
-    S extends Length.Fixed = Length.Fixed,
+    H extends Length = Length,
+    V extends Length = H,
+    B extends Length = Length,
+    S extends Length = Length,
     C extends Color = Color
   >(
     horizontal: H,
@@ -34,8 +39,20 @@ export class Shadow<
     spread: S,
     color: C,
     isInset: boolean
-  ): Shadow<H, V, B, S, C> {
-    return new Shadow(horizontal, vertical, blur, spread, color, isInset);
+  ): Shadow<H, V, B, S, C, Value.HasCalculation<[H, V, B, S]>> {
+    const calculation = [horizontal, vertical, blur, spread].some((value) =>
+      value.hasCalculation()
+    ) as Value.HasCalculation<[H, V, B, S]>;
+
+    return new Shadow(
+      horizontal,
+      vertical,
+      blur,
+      spread,
+      color,
+      isInset,
+      calculation
+    );
   }
 
   private readonly _horizontal: H;
@@ -51,9 +68,10 @@ export class Shadow<
     blur: B,
     spread: S,
     color: C,
-    isInset: boolean
+    isInset: boolean,
+    calculation: CALC
   ) {
-    super("shadow", false);
+    super("shadow", calculation);
     this._horizontal = horizontal;
     this._vertical = vertical;
     this._blur = blur;
@@ -86,14 +104,15 @@ export class Shadow<
     return this._isInset;
   }
 
-  public resolve(resolver: Length.Resolver): Shadow.Canonical {
+  public resolve(resolver: Shadow.Resolver): Shadow.Canonical {
     return new Shadow(
       this._horizontal.resolve(resolver),
       this._vertical.resolve(resolver),
       this._blur.resolve(resolver),
       this._spread.resolve(resolver),
       this._color.resolve(),
-      this._isInset
+      this._isInset,
+      false
     );
   }
   public equals(value: unknown): value is this {
@@ -146,13 +165,14 @@ export namespace Shadow {
     Length.Canonical,
     Length.Canonical,
     Length.Canonical,
-    Color.Canonical
+    Color.Canonical,
+    false
   >;
   export interface JSON extends Value.JSON<"shadow"> {
-    horizontal: Length.Fixed.JSON;
-    vertical: Length.Fixed.JSON;
-    blur: Length.Fixed.JSON;
-    spread: Length.Fixed.JSON;
+    horizontal: Length.JSON;
+    vertical: Length.JSON;
+    blur: Length.JSON;
+    spread: Length.JSON;
     color: Color.JSON;
     isInset: boolean;
   }
@@ -164,6 +184,8 @@ export namespace Shadow {
     withInset: boolean;
     withSpread: boolean;
   }
+
+  export type Resolver = Length.Resolver;
 
   type Sized<T, N extends 3 | 4> = [T, T] | [T, T, T] | N extends 3
     ? never
