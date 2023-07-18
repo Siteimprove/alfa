@@ -40,10 +40,6 @@ export class Shadow<
     color: C,
     isInset: boolean
   ): Shadow<H, V, B, S, C, Value.HasCalculation<[H, V, B, S]>> {
-    const calculation = [horizontal, vertical, blur, spread].some((value) =>
-      value.hasCalculation()
-    ) as Value.HasCalculation<[H, V, B, S]>;
-
     return new Shadow(
       horizontal,
       vertical,
@@ -51,7 +47,7 @@ export class Shadow<
       spread,
       color,
       isInset,
-      calculation
+      Value.hasCalculation(horizontal, vertical, blur, spread)
     );
   }
 

@@ -14,10 +14,7 @@ export class Tuple<T extends Array<Value>, CALC extends boolean = boolean>
   public static of<T extends Array<Value>>(
     ...values: Readonly<T>
   ): Tuple<T, Value.HasCalculation<T>> {
-    const calculation = values.some((value) =>
-      value.hasCalculation()
-    ) as Value.HasCalculation<T>;
-    return new Tuple(values, calculation);
+    return new Tuple(values, Value.hasCalculation(...values));
   }
 
   private readonly _values: Readonly<T>;
