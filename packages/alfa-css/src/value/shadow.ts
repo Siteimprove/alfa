@@ -157,7 +157,10 @@ export namespace Shadow {
     isInset: boolean;
   }
 
-  interface Options {
+  /**
+   * @internal
+   */
+  export interface Options {
     withInset: boolean;
     withSpread: boolean;
   }
