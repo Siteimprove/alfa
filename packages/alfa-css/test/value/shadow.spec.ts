@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer, Shadow } from "../../src";
+import { Color, Length, Lexer, Shadow } from "../../src";
 
 function parse(input: string, options?: Shadow.Options) {
   return Shadow.parse(options)(Lexer.lex(input))
@@ -193,4 +193,39 @@ test("parse() refuses inset or color between lengths", (t) => {
     // It either fails to parse, or fails to consume all tokens
     t.deepEqual(!result.isOk() || !result.get()[0].isEmpty(), true);
   }
+});
+
+test(".resolve() returns a canonical shadow", (t) => {
+  const actual = Shadow.of(
+    Length.of(1, "px"),
+    Length.of(1, "em"),
+    Length.of(2, "vh"),
+    Length.of(4, "rem"),
+    Color.named("red"),
+    true
+  ).resolve({
+    length: Length.resolver(
+      Length.of(16, "px"),
+      Length.of(10, "px"),
+      Length.of(16, "px"),
+      Length.of(20, "px")
+    ),
+  });
+
+  t.deepEqual(actual.toJSON(), {
+    type: "shadow",
+    horizontal: { type: "length", unit: "px", value: 1 },
+    vertical: { type: "length", unit: "px", value: 16 },
+    blur: { type: "length", unit: "px", value: 0.4 },
+    spread: { type: "length", unit: "px", value: 40 },
+    color: {
+      type: "color",
+      format: "rgb",
+      red: { type: "percentage", value: 1 },
+      green: { type: "percentage", value: 0 },
+      blue: { type: "percentage", value: 0 },
+      alpha: { type: "percentage", value: 1 },
+    },
+    isInset: true,
+  });
 });
