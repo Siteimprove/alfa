@@ -198,12 +198,10 @@ export namespace Shadow {
       array.length >= 2 && array.length <= max;
   }
 
-  function parseLengths<N extends 3 | 4>(
-    max: N
-  ): CSSParser<Sized<Length.Fixed, N>> {
+  function parseLengths<N extends 3 | 4>(max: N): CSSParser<Sized<Length, N>> {
     return parseIf(
-      checkLength<Length.Fixed, N>(max),
-      separatedList(Length.parseBase, Token.parseWhitespace),
+      checkLength<Length, N>(max),
+      separatedList(Length.parse, Token.parseWhitespace),
       () => `Shadows must have between 2 and ${max} lengths`
     );
   }
@@ -212,10 +210,10 @@ export namespace Shadow {
     const { withInset = true, withSpread = true } = options ?? {};
 
     return (input) => {
-      let horizontal: Length.Fixed | undefined;
-      let vertical: Length.Fixed | undefined;
-      let blur: Length.Fixed | undefined;
-      let spread: Length.Fixed | undefined;
+      let horizontal: Length | undefined;
+      let vertical: Length | undefined;
+      let blur: Length | undefined;
+      let spread: Length | undefined;
       let color: Color | undefined;
       let isInset: boolean | undefined;
 
