@@ -2051,9 +2051,7 @@ export namespace Position {
     import Keywords = keywords.Keywords;
     import Side = side.Side;
     import Component = component.Component;
-    // Warning: (ae-incompatible-release-tags) The symbol "parseBase" is marked as @public, but its signature references "Fixed" which is marked as @internal
-    //
-    // (undocumented)
+    // @internal (undocumented)
     export function parseBase(legacySyntax?: boolean): Parser<Fixed>;
     // (undocumented)
     export function partiallyResolve<H extends Keywords.Horizontal, V extends Keywords.Vertical>(resolver: PartialResolver): (value: Position<H, V>) => PartiallyResolved<H, V>;
