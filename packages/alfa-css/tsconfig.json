@@ -108,6 +108,7 @@
     "test/value/numeric/number.spec.ts",
     "test/value/numeric/percentage.spec.ts",
     "test/value/position.spec.ts",
+    "test/value/shadow.spec.ts",
     "test/value/shape.spec.ts",
     "test/value/shape/circle.spec.ts",
     "test/value/shape/ellipse.spec.ts",
