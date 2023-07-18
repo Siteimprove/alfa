@@ -1339,7 +1339,7 @@ export class List<V extends Value, CALC extends boolean = boolean> extends Value
     // (undocumented)
     map<U extends Value>(mapper: Mapper<V, U>): List<U, U extends Value<string, false> ? false : true>;
     // (undocumented)
-    static of<V extends Value>(values: Iterable_2<V>, separator?: string): List<V, Value.HasCalculation<V>>;
+    static of<V extends Value>(values: Iterable_2<V>, separator?: string): List<V, Value.HasCalculation<[V]>>;
     // (undocumented)
     resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>, false>;
     // (undocumented)
@@ -3699,7 +3699,9 @@ export abstract class Value<T extends string = string, CALC extends boolean = bo
 // @public (undocumented)
 export namespace Value {
     // @internal (undocumented)
-    export type HasCalculation<V extends Value | Array<Value>> = V extends Value<string, false> ? false : V extends Value ? true : V extends Array<Value<string, false>> ? false : true;
+    export type HasCalculation<V extends Array<Value>> = V extends Array<Value<string, false>> ? false : true;
+    // @internal (undocumented)
+    export function hasCalculation<A extends Array<Value> = []>(...values: A): HasCalculation<A>;
     // (undocumented)
     export function isValue<T extends string>(value: unknown, type?: T): value is Value<T>;
     // (undocumented)
