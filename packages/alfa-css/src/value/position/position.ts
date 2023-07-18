@@ -1,13 +1,12 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
 import { Keyword } from "../keyword";
-import { Length, LengthPercentage } from "../numeric";
+import { Length } from "../numeric";
 import { Value } from "../value";
 
 import * as component from "./component";

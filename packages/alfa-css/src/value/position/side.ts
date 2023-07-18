@@ -1,12 +1,11 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 import { Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
 import { Keyword } from "../keyword";
-import { Length, LengthPercentage, Percentage } from "../numeric";
+import { Length, LengthPercentage } from "../numeric";
 import { Value } from "../value";
 
 import { Keywords } from "./keywords";
