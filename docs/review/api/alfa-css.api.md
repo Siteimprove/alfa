@@ -1189,7 +1189,7 @@ export namespace LengthPercentage {
     // (undocumented)
     export type Resolver = Length.Resolver & Percentage.Resolver<"length", Canonical>;
     const // (undocumented)
-    parse: Parser_2<Slice<Token>, Length.Calculated | Length.Fixed<Unit.Length> | Calculated | Percentage.Calculated<Base.Numeric.Type> | Percentage.Fixed<Base.Numeric.Type>, string, []>;
+    parse: Parser_2<Slice<Token>, Percentage.Fixed<Base.Numeric.Type> | Length.Fixed<Unit.Length> | Calculated | Length.Calculated | Percentage.Calculated<Base.Numeric.Type>, string, []>;
     const // @internal (undocumented)
     parseBase: Parser<LengthPercentage<Unit.Length, false>>;
         {};
@@ -2012,7 +2012,7 @@ export namespace Polygon {
 }
 
 // @public (undocumented)
-export class Position<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>, CALC extends boolean = boolean> extends Value<"position", CALC> {
+export class Position<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>, CALC extends boolean = boolean> extends Value<"position", CALC> implements Resolvable<Position.Canonical<H, V>, Position.Resolver> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)

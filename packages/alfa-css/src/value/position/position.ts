@@ -7,6 +7,7 @@ import { Unit } from "../../unit";
 
 import { Keyword } from "../keyword";
 import { Length } from "../numeric";
+import { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import * as component from "./component";
@@ -27,12 +28,15 @@ const { map, either, pair, right } = Parser;
  * @public
  */
 export class Position<
-  H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal,
-  V extends Position.Keywords.Vertical = Position.Keywords.Vertical,
-  HC extends Position.Component<H> = Position.Component<H>,
-  VC extends Position.Component<V> = Position.Component<V>,
-  CALC extends boolean = boolean
-> extends Value<"position", CALC> {
+    H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal,
+    V extends Position.Keywords.Vertical = Position.Keywords.Vertical,
+    HC extends Position.Component<H> = Position.Component<H>,
+    VC extends Position.Component<V> = Position.Component<V>,
+    CALC extends boolean = boolean
+  >
+  extends Value<"position", CALC>
+  implements Resolvable<Position.Canonical<H, V>, Position.Resolver>
+{
   public static of<
     H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal,
     V extends Position.Keywords.Vertical = Position.Keywords.Vertical,

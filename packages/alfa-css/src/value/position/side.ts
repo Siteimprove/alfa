@@ -6,6 +6,7 @@ import { Unit } from "../../unit";
 
 import { Keyword } from "../keyword";
 import { Length, LengthPercentage } from "../numeric";
+import { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Keywords } from "./keywords";
@@ -16,13 +17,16 @@ const { either, map, pair, right } = Parser;
  * @public
  */
 export class Side<
-  S extends Keywords.Vertical | Keywords.Horizontal =
-    | Keywords.Vertical
-    | Keywords.Horizontal,
-  U extends Unit.Length = Unit.Length,
-  CALC extends boolean = boolean,
-  O extends LengthPercentage<U, CALC> = LengthPercentage<U, CALC>
-> extends Value<"side", CALC> {
+    S extends Keywords.Vertical | Keywords.Horizontal =
+      | Keywords.Vertical
+      | Keywords.Horizontal,
+    U extends Unit.Length = Unit.Length,
+    CALC extends boolean = boolean,
+    O extends LengthPercentage<U, CALC> = LengthPercentage<U, CALC>
+  >
+  extends Value<"side", CALC>
+  implements Resolvable<Side.Canonical<S>, Side.Resolver>
+{
   public static of<S extends Keywords.Vertical | Keywords.Horizontal>(
     side: S
   ): Side<S, Unit.Length, false>;
