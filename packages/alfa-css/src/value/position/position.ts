@@ -348,7 +348,7 @@ export namespace Position {
   }
 
   /**
-   * @interna
+   * @internal
    */
   export function parseBase(legacySyntax: boolean = false): CSSParser<Fixed> {
     return either(
