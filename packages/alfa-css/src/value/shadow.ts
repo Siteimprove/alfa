@@ -227,11 +227,15 @@ export namespace Shadow {
           }
         }
 
-        if (withInset && isInset === undefined) {
+        if (isInset === undefined) {
           // isInset: inset?
           const result = Keyword.parse("inset")(input);
 
           if (result.isOk()) {
+            if (!withInset) {
+              return Err.of("Inset is not allowed in this shadow");
+            }
+
             isInset = true;
             [input] = result.get();
             continue;
