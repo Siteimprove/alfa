@@ -7,10 +7,7 @@ test("#cascaded() parses `box-shadow: none`", (t) => {
   const element = <div style={{ boxShadow: "none" }} />;
 
   t.deepEqual(cascaded(element, "box-shadow"), {
-    value: {
-      type: "keyword",
-      value: "none",
-    },
+    value: { type: "keyword", value: "none" },
     source: h.declaration("box-shadow", "none").toJSON(),
   });
 });
@@ -25,30 +22,11 @@ test("#cascaded() parses `box-shadow: 1px 2px`", (t) => {
       values: [
         {
           type: "shadow",
-          horizontal: {
-            type: "length",
-            unit: "px",
-            value: 1,
-          },
-          vertical: {
-            type: "length",
-            unit: "px",
-            value: 2,
-          },
-          blur: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          spread: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          color: {
-            type: "keyword",
-            value: "currentcolor",
-          },
+          horizontal: { type: "length", unit: "px", value: 1 },
+          vertical: { type: "length", unit: "px", value: 2 },
+          blur: { type: "length", unit: "px", value: 0 },
+          spread: { type: "length", unit: "px", value: 0 },
+          color: { type: "keyword", value: "currentcolor" },
           isInset: false,
         },
       ],
@@ -67,30 +45,11 @@ test("#cascaded() parses `box-shadow: 1px 2px 3px`", (t) => {
       values: [
         {
           type: "shadow",
-          horizontal: {
-            type: "length",
-            unit: "px",
-            value: 1,
-          },
-          vertical: {
-            type: "length",
-            unit: "px",
-            value: 2,
-          },
-          blur: {
-            type: "length",
-            unit: "px",
-            value: 3,
-          },
-          spread: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          color: {
-            type: "keyword",
-            value: "currentcolor",
-          },
+          horizontal: { type: "length", unit: "px", value: 1 },
+          vertical: { type: "length", unit: "px", value: 2 },
+          blur: { type: "length", unit: "px", value: 3 },
+          spread: { type: "length", unit: "px", value: 0 },
+          color: { type: "keyword", value: "currentcolor" },
           isInset: false,
         },
       ],
@@ -109,30 +68,11 @@ test("#cascaded() parses `box-shadow: 1px 2px 3px 4px`", (t) => {
       values: [
         {
           type: "shadow",
-          horizontal: {
-            type: "length",
-            unit: "px",
-            value: 1,
-          },
-          vertical: {
-            type: "length",
-            unit: "px",
-            value: 2,
-          },
-          blur: {
-            type: "length",
-            unit: "px",
-            value: 3,
-          },
-          spread: {
-            type: "length",
-            unit: "px",
-            value: 4,
-          },
-          color: {
-            type: "keyword",
-            value: "currentcolor",
-          },
+          horizontal: { type: "length", unit: "px", value: 1 },
+          vertical: { type: "length", unit: "px", value: 2 },
+          blur: { type: "length", unit: "px", value: 3 },
+          spread: { type: "length", unit: "px", value: 4 },
+          color: { type: "keyword", value: "currentcolor" },
           isInset: false,
         },
       ],
@@ -151,30 +91,11 @@ test("#cascaded() parses `box-shadow: 1px 2px inset`", (t) => {
       values: [
         {
           type: "shadow",
-          horizontal: {
-            type: "length",
-            unit: "px",
-            value: 1,
-          },
-          vertical: {
-            type: "length",
-            unit: "px",
-            value: 2,
-          },
-          blur: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          spread: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          color: {
-            type: "keyword",
-            value: "currentcolor",
-          },
+          horizontal: { type: "length", unit: "px", value: 1 },
+          vertical: { type: "length", unit: "px", value: 2 },
+          blur: { type: "length", unit: "px", value: 0 },
+          spread: { type: "length", unit: "px", value: 0 },
+          color: { type: "keyword", value: "currentcolor" },
           isInset: true,
         },
       ],
@@ -193,30 +114,11 @@ test("#cascaded() parses `box-shadow: inset 1px 2px`", (t) => {
       values: [
         {
           type: "shadow",
-          horizontal: {
-            type: "length",
-            unit: "px",
-            value: 1,
-          },
-          vertical: {
-            type: "length",
-            unit: "px",
-            value: 2,
-          },
-          blur: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          spread: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          color: {
-            type: "keyword",
-            value: "currentcolor",
-          },
+          horizontal: { type: "length", unit: "px", value: 1 },
+          vertical: { type: "length", unit: "px", value: 2 },
+          blur: { type: "length", unit: "px", value: 0 },
+          spread: { type: "length", unit: "px", value: 0 },
+          color: { type: "keyword", value: "currentcolor" },
           isInset: true,
         },
       ],
@@ -235,31 +137,11 @@ test("#cascaded() parses `box-shadow: 1px 2px red`", (t) => {
       values: [
         {
           type: "shadow",
-          horizontal: {
-            type: "length",
-            unit: "px",
-            value: 1,
-          },
-          vertical: {
-            type: "length",
-            unit: "px",
-            value: 2,
-          },
-          blur: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          spread: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          color: {
-            type: "color",
-            format: "named",
-            color: "red",
-          },
+          horizontal: { type: "length", unit: "px", value: 1 },
+          vertical: { type: "length", unit: "px", value: 2 },
+          blur: { type: "length", unit: "px", value: 0 },
+          spread: { type: "length", unit: "px", value: 0 },
+          color: { type: "color", format: "named", color: "red" },
           isInset: false,
         },
       ],
@@ -278,31 +160,11 @@ test("#cascaded() parses `box-shadow: red 1px 2px`", (t) => {
       values: [
         {
           type: "shadow",
-          horizontal: {
-            type: "length",
-            unit: "px",
-            value: 1,
-          },
-          vertical: {
-            type: "length",
-            unit: "px",
-            value: 2,
-          },
-          blur: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          spread: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          color: {
-            type: "color",
-            format: "named",
-            color: "red",
-          },
+          horizontal: { type: "length", unit: "px", value: 1 },
+          vertical: { type: "length", unit: "px", value: 2 },
+          blur: { type: "length", unit: "px", value: 0 },
+          spread: { type: "length", unit: "px", value: 0 },
+          color: { type: "color", format: "named", color: "red" },
           isInset: false,
         },
       ],
@@ -321,31 +183,11 @@ test("#cascaded() parses `box-shadow: red 1px 2px inset`", (t) => {
       values: [
         {
           type: "shadow",
-          horizontal: {
-            type: "length",
-            unit: "px",
-            value: 1,
-          },
-          vertical: {
-            type: "length",
-            unit: "px",
-            value: 2,
-          },
-          blur: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          spread: {
-            type: "length",
-            unit: "px",
-            value: 0,
-          },
-          color: {
-            type: "color",
-            format: "named",
-            color: "red",
-          },
+          horizontal: { type: "length", unit: "px", value: 1 },
+          vertical: { type: "length", unit: "px", value: 2 },
+          blur: { type: "length", unit: "px", value: 0 },
+          spread: { type: "length", unit: "px", value: 0 },
+          color: { type: "color", format: "named", color: "red" },
           isInset: true,
         },
       ],
