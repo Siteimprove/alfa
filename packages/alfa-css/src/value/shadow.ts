@@ -1,12 +1,15 @@
 import { Hash } from "@siteimprove/alfa-hash";
+import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
 import { type Parser as CSSParser, Token } from "../syntax";
-import { Value } from "./value";
 
 import { Color } from "./color";
 import { Keyword } from "./keyword";
 import { Length } from "./numeric";
+import { Value } from "./value";
+
+const { parseIf, separatedList, takeBetween } = Parser;
 
 /**
  * @public
@@ -159,6 +162,27 @@ export namespace Shadow {
     withSpread: boolean;
   }
 
+  type Sized<T, N extends 3 | 4> = [T, T] | [T, T, T] | N extends 3
+    ? never
+    : [T, T, T, T];
+
+  function checkLength<T, N extends 3 | 4>(
+    max: N
+  ): (array: Array<T>) => array is Sized<T, N> {
+    return (array): array is Sized<T, N> =>
+      array.length >= 2 && array.length <= max;
+  }
+
+  function parseLengths<N extends 3 | 4>(
+    max: N
+  ): CSSParser<Sized<Length.Fixed, N>> {
+    return parseIf(
+      checkLength<Length.Fixed, N>(max),
+      separatedList(Length.parseBase, Token.parseWhitespace),
+      () => `Shadows must have between 2 and ${max} lengths`
+    );
+  }
+
   export function parse(options?: Options): CSSParser<Shadow> {
     const { withInset = true, withSpread = true } = options ?? {};
 
@@ -180,46 +204,11 @@ export namespace Shadow {
         skipWhitespace();
 
         if (horizontal === undefined) {
-          // horizontal: <length>
-          const result = Length.parseBase(input);
+          // horizontal vertical blur? spread?
+          const result = parseLengths(withSpread ? 4 : 3)(input);
 
           if (result.isOk()) {
-            [input, horizontal] = result.get();
-            skipWhitespace();
-
-            {
-              // vertical: <length>
-              const result = Length.parseBase(input);
-
-              if (result.isErr()) {
-                return result;
-              }
-
-              // the previous check ensure that the result is Ok
-              [input, vertical] = result.getUnsafe();
-              skipWhitespace();
-
-              {
-                // blur: <length>?
-                const result = Length.parseBase(input);
-
-                if (result.isOk()) {
-                  [input, blur] = result.get();
-                  skipWhitespace();
-
-                  {
-                    // spread: <length>?
-                    if (withSpread) {
-                      const result = Length.parseBase(input);
-
-                      if (result.isOk()) {
-                        [input, spread] = result.get();
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            [input, [horizontal, vertical, blur, spread]] = result.get();
 
             continue;
           }
