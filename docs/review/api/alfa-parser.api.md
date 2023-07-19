@@ -49,6 +49,8 @@ export namespace Parser {
     export function pair<I, T, U, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, U, E, A>): Parser<I, [T, U], E, A>;
     export function parseIf<I, T, E, U extends T = T, A extends Array_2<unknown> = []>(refinement: Refinement<T, U>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, U, E, A>;
     // (undocumented)
+    export function parseIf<I, T, E, A extends Array_2<unknown> = []>(predicate: Predicate<T>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, T, E, A>;
+    // (undocumented)
     export function peek<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
     // (undocumented)
     export function reject<I, T, U extends T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, refinement: Refinement<T, U>, ifError: Mapper<T, E>): Parser<I, Exclude<T, U>, E, A>;
