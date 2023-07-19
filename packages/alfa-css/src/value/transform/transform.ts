@@ -1,7 +1,7 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { Token } from "../../syntax";
 
 import { List } from "../collection";
 import { Angle, Length, Number, Percentage } from "../numeric";
@@ -13,7 +13,7 @@ import { Scale } from "./scale";
 import { Skew } from "./skew";
 import { Translate } from "./translate";
 
-const { either, oneOrMore, delimited, option } = Parser;
+const { either } = Parser;
 
 /**
  * @public
