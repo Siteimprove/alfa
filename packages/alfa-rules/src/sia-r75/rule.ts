@@ -40,14 +40,15 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             hasNamespace(Namespace.HTML),
             not(hasName("sup", "sub")),
-            (node) =>
+            not((node) =>
               visibleTextCache
                 .get(node, () =>
                   node
                     .descendants(Node.fullTree)
                     .filter(and(isText, isVisible(device)))
                 )
-                .some(() => true),
+                .isEmpty()
+            ),
             hasCascadedStyle(`font-size`, () => true, device)
           )
         );
