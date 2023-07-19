@@ -1,13 +1,29 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Slice } from "@siteimprove/alfa-slice";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import {
+  Function as CSSFunction,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax";
 
 import { Number } from "../numeric";
 
 import { Function } from "./function";
 
-const { map, left, right, pair, either, take, delimited, option } = Parser;
+const {
+  map,
+  left,
+  right,
+  pair,
+  either,
+  take,
+  delimited,
+  option,
+  parseIf,
+  separatedList,
+} = Parser;
 
 /**
  * @public
@@ -102,34 +118,26 @@ export namespace Matrix {
     return value instanceof Matrix;
   }
 
+  const _0 = Number.of(0);
+  const _1 = Number.of(1);
+
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-matrix}
    */
   const parseMatrix = map(
-    right(
-      Token.parseFunction("matrix"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            Number.parseBase,
-            take(
-              right(
-                delimited(option(Token.parseWhitespace), Token.parseComma),
-                Number.parseBase
-              ),
-              5
-            )
-          )
+    CSSFunction.parse(
+      "matrix",
+      parseIf<Slice<Token>, Array<Number.Fixed>, string>(
+        (values): values is Array<Number.Fixed> => values.length === 6,
+        separatedList(
+          Number.parseBase,
+          delimited(option(Token.parseWhitespace), Token.parseComma)
         ),
-        Token.parseCloseParenthesis
+        () => "2D matrix must have exactly 6 values"
       )
     ),
     (result) => {
-      const _0 = Number.of(0);
-      const _1 = Number.of(1);
-
-      const [_a, [_b, _c, _d, _e, _f]] = result;
+      const [_, [_a, _b, _c, _d, _e, _f]] = result;
 
       return Matrix.of(
         [_a, _c, _0, _e],
@@ -144,28 +152,22 @@ export namespace Matrix {
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-matrix3d}
    */
   const parseMatrix3d = map(
-    right(
-      Token.parseFunction("matrix3d"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            Number.parseBase,
-            take(
-              right(
-                delimited(option(Token.parseWhitespace), Token.parseComma),
-                Number.parseBase
-              ),
-              15
-            )
-          )
+    CSSFunction.parse(
+      "matrix3d",
+      parseIf<Slice<Token>, Array<Number.Fixed>, string>(
+        (values): values is Array<Number.Fixed> => values.length === 16,
+        separatedList(
+          Number.parseBase,
+          delimited(option(Token.parseWhitespace), Token.parseComma)
         ),
-        Token.parseCloseParenthesis
+        () => "3D matrix must have exactly 16 values"
       )
     ),
     (result) => {
-      const [_a, [_b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p]] =
-        result;
+      const [
+        _,
+        [_a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p],
+      ] = result;
 
       return Matrix.of(
         [_a, _e, _i, _m],
