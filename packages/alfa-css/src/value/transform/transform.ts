@@ -3,6 +3,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { type Parser as CSSParser, Token } from "../../syntax";
 
+import { List } from "../collection";
 import { Angle, Length, Number, Percentage } from "../numeric";
 
 import { Matrix } from "./matrix";
@@ -77,6 +78,8 @@ export namespace Transform {
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#typedef-transform-function}
+   *
+   * @internal
    */
   export const parse = either<Slice<Token>, Transform, string>(
     Matrix.parse,
@@ -90,7 +93,5 @@ export namespace Transform {
   /**
    * {@link https://drafts.csswg.org/css-transforms/#typedef-transform-list}
    */
-  export const parseList: CSSParser<Array<Transform>> = oneOrMore(
-    delimited(option(Token.parseWhitespace), parse)
-  );
+  export const parseList = List.parseSpaceSeparated(parse);
 }

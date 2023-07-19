@@ -132,5 +132,9 @@ export namespace List {
 
   const parseComma = delimited(option(Token.parseWhitespace), Token.parseComma);
 
+  const parseSpace = option(Token.parseWhitespace);
+
   export const parseCommaSeparated = parse(", ", parseComma);
+
+  export const parseSpaceSeparated = parse(" ", parseSpace);
 }
