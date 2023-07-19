@@ -1,29 +1,14 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
-import {
-  Function as CSSFunction,
-  type Parser as CSSParser,
-  Token,
-} from "../../syntax";
+import { Function as CSSFunction } from "../../syntax";
 
+import { List } from "../collection";
 import { Number } from "../numeric";
 
 import { Function } from "./function";
 
-const {
-  map,
-  left,
-  right,
-  pair,
-  either,
-  take,
-  delimited,
-  option,
-  parseIf,
-  separatedList,
-} = Parser;
+const { map, either, delimited, option, parseIf, separatedList } = Parser;
 
 /**
  * @public
@@ -121,21 +106,18 @@ export namespace Matrix {
   const _0 = Number.of(0);
   const _1 = Number.of(1);
 
+  const parseValues = (name: string, quantity: number) =>
+    parseIf(
+      (values: ReadonlyArray<Number.Fixed>) => values.length === quantity,
+      map(List.parseCommaSeparated(Number.parseBase), (list) => list.values),
+      () => `${name} matrix must have exactly ${quantity} values`
+    );
+
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-matrix}
    */
   const parseMatrix = map(
-    CSSFunction.parse(
-      "matrix",
-      parseIf<Slice<Token>, Array<Number.Fixed>, string>(
-        (values): values is Array<Number.Fixed> => values.length === 6,
-        separatedList(
-          Number.parseBase,
-          delimited(option(Token.parseWhitespace), Token.parseComma)
-        ),
-        () => "2D matrix must have exactly 6 values"
-      )
-    ),
+    CSSFunction.parse("matrix", parseValues("2D", 6)),
     (result) => {
       const [_, [_a, _b, _c, _d, _e, _f]] = result;
 
@@ -152,17 +134,7 @@ export namespace Matrix {
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-matrix3d}
    */
   const parseMatrix3d = map(
-    CSSFunction.parse(
-      "matrix3d",
-      parseIf<Slice<Token>, Array<Number.Fixed>, string>(
-        (values): values is Array<Number.Fixed> => values.length === 16,
-        separatedList(
-          Number.parseBase,
-          delimited(option(Token.parseWhitespace), Token.parseComma)
-        ),
-        () => "3D matrix must have exactly 16 values"
-      )
-    ),
+    CSSFunction.parse("matrix3d", parseValues("3D", 16)),
     (result) => {
       const [
         _,
@@ -178,5 +150,5 @@ export namespace Matrix {
     }
   );
 
-  export const parse: CSSParser<Matrix> = either(parseMatrix, parseMatrix3d);
+  export const parse = either(parseMatrix, parseMatrix3d);
 }
