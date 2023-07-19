@@ -74,3 +74,14 @@ test("parse() parses a rotate3d function", (t) => {
     angle: { type: "angle", unit: "rad", value: 42 },
   });
 });
+
+test("parse() requires three axis for a rotate3d function", (t) => {
+  for (const input of [
+    "rotate3d(1, 1, 42rad)",
+    "rotate3d(1, 1, 1, 1, 42rad)",
+  ]) {
+    const actual = parseErr(input);
+
+    t.deepEqual(actual.isErr(), true);
+  }
+});
