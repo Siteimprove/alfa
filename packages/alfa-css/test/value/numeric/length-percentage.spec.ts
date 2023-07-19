@@ -1,10 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, LengthPercentage, Lexer } from "../../../src";
+import { Length, LengthPercentage } from "../../../src";
 
-function parse(input: string) {
-  return LengthPercentage.parse(Lexer.lex(input)).map(([, length]) => length);
-}
+import { parser, serializer } from "../../common/parse";
+
+const parse = parser(LengthPercentage.parse);
+const serialize = serializer(LengthPercentage.parse);
 
 const resolver: LengthPercentage.Resolver = {
   percentageBase: Length.of(16, "px"),
@@ -17,7 +18,7 @@ const resolver: LengthPercentage.Resolver = {
 };
 
 test("parse() accepts lengths", (t) => {
-  t.deepEqual(parse("2em").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("2em"), {
     type: "length",
     value: 2,
     unit: "em",
@@ -25,7 +26,7 @@ test("parse() accepts lengths", (t) => {
 });
 
 test("parse() accepts math expressions reducing to lengths", (t) => {
-  t.deepEqual(parse("calc(2px + 1vh)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc(2px + 1vh)"), {
     type: "length",
     math: {
       type: "math expression",
@@ -52,7 +53,7 @@ test("parse() accepts math expressions reducing to lengths", (t) => {
 });
 
 test("parse() accepts math expressions reducing to percentages", (t) => {
-  t.deepEqual(parse("calc((12% + 9%) * 2)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc((12% + 9%) * 2)"), {
     type: "percentage",
     math: {
       type: "math expression",
@@ -68,7 +69,7 @@ test("parse() accepts math expressions reducing to percentages", (t) => {
 });
 
 test("parse() accepts math expressions mixing lengths and percentages", (t) => {
-  t.deepEqual(parse("calc(10px + 5%)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc(10px + 5%)"), {
     type: "length-percentage",
     math: {
       type: "math expression",
@@ -95,10 +96,7 @@ test("parse() accepts math expressions mixing lengths and percentages", (t) => {
 });
 
 test("parse() accepts percentages", (t) => {
-  t.deepEqual(parse("20%").getUnsafe().toJSON(), {
-    type: "percentage",
-    value: 0.2,
-  });
+  t.deepEqual(serialize("20%"), { type: "percentage", value: 0.2 });
 });
 
 test("parse() rejects math expressions with angles", (t) => {

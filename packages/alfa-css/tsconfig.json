@@ -85,6 +85,7 @@
     "src/value/transform/transform.ts",
     "src/value/transform/translate.ts",
     "src/value/value.ts",
+    "test/common/parse.ts",
     "test/syntax/block.spec.ts",
     "test/syntax/component.spec.ts",
     "test/syntax/declaration.spec.ts",

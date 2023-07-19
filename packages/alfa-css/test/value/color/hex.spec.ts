@@ -1,8 +1,10 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Hex, Lexer, type RGB } from "../../../src";
+import { Hex, type RGB } from "../../../src";
 
-const parse = (str: string) => Hex.parse(Lexer.lex(str)).getUnsafe()[1];
+import { parserUnsafe } from "../../common/parse";
+
+const parse = parserUnsafe(Hex.parse);
 
 test("parse() accepts hex format with various numbers of digits", (t) => {
   const expected = (value: number): Hex.JSON => ({
