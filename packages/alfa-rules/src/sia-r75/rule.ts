@@ -1,4 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Cache } from "@siteimprove/alfa-cache";
 import {
   Declaration,
   Element,
@@ -11,6 +12,7 @@ import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -30,6 +32,8 @@ export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r75",
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
+    const visibleTextCache = Cache.empty<Element<string>, Sequence<Text>>();
+
     return {
       applicability() {
         return getElementDescendants(document, Node.fullTree).filter(
@@ -37,9 +41,13 @@ export default Rule.Atomic.of<Page, Element>({
             hasNamespace(Namespace.HTML),
             not(hasName("sup", "sub")),
             (node) =>
-              node
-                .descendants(Node.fullTree)
-                .some(and(isText, isVisible(device))),
+              visibleTextCache
+                .get(node, () =>
+                  node
+                    .descendants(Node.fullTree)
+                    .filter(and(isText, isVisible(device)))
+                )
+                .some(() => true),
             hasCascadedStyle(`font-size`, () => true, device)
           )
         );
@@ -51,9 +59,9 @@ export default Rule.Atomic.of<Page, Element>({
           // Applicability guarantees there is a cascaded value
           .getUnsafe().source;
 
-        const texts = target
-          .descendants(Node.fullTree)
-          .filter(and(isText, isVisible(device)))
+        const texts = visibleTextCache
+          .get(target)
+          .getUnsafe() // Applicability guarantees there's an entry for target
           .reject((text) => text.data.trim() === "")
           .every(
             or(
