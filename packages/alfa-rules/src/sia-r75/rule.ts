@@ -9,6 +9,7 @@ import {
 } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
@@ -17,9 +18,10 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope, Stability } from "../tags";
 
-const { isElement, hasNamespace, hasName } = Element;
+const { hasNamespace, hasName } = Element;
 const { isText } = Text;
-const { and, or, not } = Predicate;
+const { or, not } = Predicate;
+const { and } = Refinement;
 const { hasCascadedStyle, hasComputedStyle, hasSpecifiedStyle, isVisible } =
   Style;
 const { getElementDescendants } = Query;
@@ -34,10 +36,10 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             hasNamespace(Namespace.HTML),
             not(hasName("sup", "sub")),
-            Node.hasTextContent(),
-            isVisible(device),
-            // If the font-size ultimately computes to size 0, the element is not
-            // visible.
+            (node) =>
+              node
+                .descendants(Node.fullTree)
+                .some(and(isText, isVisible(device))),
             hasCascadedStyle(`font-size`, () => true, device)
           )
         );
@@ -51,9 +53,8 @@ export default Rule.Atomic.of<Page, Element>({
 
         const texts = target
           .descendants(Node.fullTree)
-          .filter(isText)
+          .filter(and(isText, isVisible(device)))
           .reject((text) => text.data.trim() === "")
-          .collect((text) => text.parent().filter(isElement))
           .every(
             or(
               hasSpecifiedStyle(
