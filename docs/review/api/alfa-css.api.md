@@ -1339,7 +1339,7 @@ export class List<V extends Value, CALC extends boolean = boolean> extends Value
     // (undocumented)
     map<U extends Value>(mapper: Mapper<V, U>): List<U, U extends Value<string, false> ? false : true>;
     // (undocumented)
-    static of<V extends Value>(values: Iterable_2<V>, separator?: string): List<V, Value.HasCalculation<V>>;
+    static of<V extends Value>(values: Iterable_2<V>, separator?: string): List<V, Value.HasCalculation<[V]>>;
     // (undocumented)
     resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>, false>;
     // (undocumented)
@@ -2537,7 +2537,7 @@ export namespace Scale {
 }
 
 // @public (undocumented)
-export class Shadow<H extends Length.Fixed = Length.Fixed, V extends Length.Fixed = H, B extends Length.Fixed = Length.Fixed, S extends Length.Fixed = Length.Fixed, C extends Color = Color> extends Value<"shadow", false> {
+export class Shadow<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color, CALC extends boolean = boolean> extends Value<"shadow", CALC> implements Resolvable<Shadow.Canonical, Shadow.Resolver> {
     // (undocumented)
     get blur(): B;
     // (undocumented)
@@ -2551,9 +2551,9 @@ export class Shadow<H extends Length.Fixed = Length.Fixed, V extends Length.Fixe
     // (undocumented)
     get isInset(): boolean;
     // (undocumented)
-    static of<H extends Length.Fixed = Length.Fixed, V extends Length.Fixed = H, B extends Length.Fixed = Length.Fixed, S extends Length.Fixed = Length.Fixed, C extends Color = Color>(horizontal: H, vertical: V, blur: B, spread: S, color: C, isInset: boolean): Shadow<H, V, B, S, C>;
+    static of<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color>(horizontal: H, vertical: V, blur: B, spread: S, color: C, isInset: boolean): Shadow<H, V, B, S, C, Value.HasCalculation<[H, V, B, S]>>;
     // (undocumented)
-    resolve(resolver: Length.Resolver): Shadow.Canonical;
+    resolve(resolver: Shadow.Resolver): Shadow.Canonical;
     // (undocumented)
     get spread(): S;
     // (undocumented)
@@ -2567,32 +2567,35 @@ export class Shadow<H extends Length.Fixed = Length.Fixed, V extends Length.Fixe
 // @public (undocumented)
 export namespace Shadow {
     // (undocumented)
-    export type Canonical = Shadow<Length.Canonical, Length.Canonical, Length.Canonical, Length.Canonical, Color.Canonical>;
+    export type Canonical = Shadow<Length.Canonical, Length.Canonical, Length.Canonical, Length.Canonical, Color.Canonical, false>;
     // (undocumented)
     export interface JSON extends Value.JSON<"shadow"> {
         // (undocumented)
-        blur: Length.Fixed.JSON;
+        blur: Length.JSON;
         // (undocumented)
         color: Color.JSON;
         // (undocumented)
-        horizontal: Length.Fixed.JSON;
+        horizontal: Length.JSON;
         // (undocumented)
         isInset: boolean;
         // (undocumented)
-        spread: Length.Fixed.JSON;
+        spread: Length.JSON;
         // (undocumented)
-        vertical: Length.Fixed.JSON;
+        vertical: Length.JSON;
     }
-    // (undocumented)
+    // @internal (undocumented)
     export interface Options {
         // (undocumented)
         withInset: boolean;
         // (undocumented)
         withSpread: boolean;
     }
+    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Options" which is marked as @internal
+    //
     // (undocumented)
     export function parse(options?: Options): Parser<Shadow>;
-        {};
+    // (undocumented)
+    export type Resolver = Length.Resolver;
 }
 
 // @public (undocumented)
@@ -3696,7 +3699,9 @@ export abstract class Value<T extends string = string, CALC extends boolean = bo
 // @public (undocumented)
 export namespace Value {
     // @internal (undocumented)
-    export type HasCalculation<V extends Value | Array<Value>> = V extends Value<string, false> ? false : V extends Value ? true : V extends Array<Value<string, false>> ? false : true;
+    export type HasCalculation<V extends Array<Value>> = V extends Array<Value<string, false>> ? false : true;
+    // @internal (undocumented)
+    export function hasCalculation<A extends Array<Value> = []>(...values: A): HasCalculation<A>;
     // (undocumented)
     export function isValue<T extends string>(value: unknown, type?: T): value is Value<T>;
     // (undocumented)

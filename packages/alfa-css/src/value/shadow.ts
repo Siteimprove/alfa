@@ -1,28 +1,36 @@
 import { Hash } from "@siteimprove/alfa-hash";
+import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
 import { type Parser as CSSParser, Token } from "../syntax";
-import { Value } from "./value";
 
 import { Color } from "./color";
 import { Keyword } from "./keyword";
 import { Length } from "./numeric";
+import { Resolvable } from "./resolvable";
+import { Value } from "./value";
+
+const { parseIf, separatedList } = Parser;
 
 /**
  * @public
  */
 export class Shadow<
-  H extends Length.Fixed = Length.Fixed,
-  V extends Length.Fixed = H,
-  B extends Length.Fixed = Length.Fixed,
-  S extends Length.Fixed = Length.Fixed,
-  C extends Color = Color
-> extends Value<"shadow", false> {
+    H extends Length = Length,
+    V extends Length = H,
+    B extends Length = Length,
+    S extends Length = Length,
+    C extends Color = Color,
+    CALC extends boolean = boolean
+  >
+  extends Value<"shadow", CALC>
+  implements Resolvable<Shadow.Canonical, Shadow.Resolver>
+{
   public static of<
-    H extends Length.Fixed = Length.Fixed,
-    V extends Length.Fixed = H,
-    B extends Length.Fixed = Length.Fixed,
-    S extends Length.Fixed = Length.Fixed,
+    H extends Length = Length,
+    V extends Length = H,
+    B extends Length = Length,
+    S extends Length = Length,
     C extends Color = Color
   >(
     horizontal: H,
@@ -31,8 +39,16 @@ export class Shadow<
     spread: S,
     color: C,
     isInset: boolean
-  ): Shadow<H, V, B, S, C> {
-    return new Shadow(horizontal, vertical, blur, spread, color, isInset);
+  ): Shadow<H, V, B, S, C, Value.HasCalculation<[H, V, B, S]>> {
+    return new Shadow(
+      horizontal,
+      vertical,
+      blur,
+      spread,
+      color,
+      isInset,
+      Value.hasCalculation(horizontal, vertical, blur, spread)
+    );
   }
 
   private readonly _horizontal: H;
@@ -48,9 +64,10 @@ export class Shadow<
     blur: B,
     spread: S,
     color: C,
-    isInset: boolean
+    isInset: boolean,
+    hasCalculation: CALC
   ) {
-    super("shadow", false);
+    super("shadow", hasCalculation);
     this._horizontal = horizontal;
     this._vertical = vertical;
     this._blur = blur;
@@ -83,14 +100,15 @@ export class Shadow<
     return this._isInset;
   }
 
-  public resolve(resolver: Length.Resolver): Shadow.Canonical {
+  public resolve(resolver: Shadow.Resolver): Shadow.Canonical {
     return new Shadow(
       this._horizontal.resolve(resolver),
       this._vertical.resolve(resolver),
       this._blur.resolve(resolver),
       this._spread.resolve(resolver),
       this._color.resolve(),
-      this._isInset
+      this._isInset,
+      false
     );
   }
   public equals(value: unknown): value is this {
@@ -143,30 +161,55 @@ export namespace Shadow {
     Length.Canonical,
     Length.Canonical,
     Length.Canonical,
-    Color.Canonical
+    Color.Canonical,
+    false
   >;
   export interface JSON extends Value.JSON<"shadow"> {
-    horizontal: Length.Fixed.JSON;
-    vertical: Length.Fixed.JSON;
-    blur: Length.Fixed.JSON;
-    spread: Length.Fixed.JSON;
+    horizontal: Length.JSON;
+    vertical: Length.JSON;
+    blur: Length.JSON;
+    spread: Length.JSON;
     color: Color.JSON;
     isInset: boolean;
   }
 
-  interface Options {
+  /**
+   * @internal
+   */
+  export interface Options {
     withInset: boolean;
     withSpread: boolean;
+  }
+
+  export type Resolver = Length.Resolver;
+
+  type Sized<T, N extends 3 | 4> = [T, T] | [T, T, T] | N extends 3
+    ? never
+    : [T, T, T, T];
+
+  function checkLength<T, N extends 3 | 4>(
+    max: N
+  ): (array: Array<T>) => array is Sized<T, N> {
+    return (array): array is Sized<T, N> =>
+      array.length >= 2 && array.length <= max;
+  }
+
+  function parseLengths<N extends 3 | 4>(max: N): CSSParser<Sized<Length, N>> {
+    return parseIf(
+      checkLength<Length, N>(max),
+      separatedList(Length.parse, Token.parseWhitespace),
+      () => `Shadows must have between 2 and ${max} lengths`
+    );
   }
 
   export function parse(options?: Options): CSSParser<Shadow> {
     const { withInset = true, withSpread = true } = options ?? {};
 
     return (input) => {
-      let horizontal: Length.Fixed | undefined;
-      let vertical: Length.Fixed | undefined;
-      let blur: Length.Fixed | undefined;
-      let spread: Length.Fixed | undefined;
+      let horizontal: Length | undefined;
+      let vertical: Length | undefined;
+      let blur: Length | undefined;
+      let spread: Length | undefined;
       let color: Color | undefined;
       let isInset: boolean | undefined;
 
@@ -180,46 +223,11 @@ export namespace Shadow {
         skipWhitespace();
 
         if (horizontal === undefined) {
-          // horizontal: <length>
-          const result = Length.parseBase(input);
+          // horizontal vertical blur? spread?
+          const result = parseLengths(withSpread ? 4 : 3)(input);
 
           if (result.isOk()) {
-            [input, horizontal] = result.get();
-            skipWhitespace();
-
-            {
-              // vertical: <length>
-              const result = Length.parseBase(input);
-
-              if (result.isErr()) {
-                return result;
-              }
-
-              // the previous check ensure that the result is Ok
-              [input, vertical] = result.getUnsafe();
-              skipWhitespace();
-
-              {
-                // blur: <length>?
-                const result = Length.parseBase(input);
-
-                if (result.isOk()) {
-                  [input, blur] = result.get();
-                  skipWhitespace();
-
-                  {
-                    // spread: <length>?
-                    if (withSpread) {
-                      const result = Length.parseBase(input);
-
-                      if (result.isOk()) {
-                        [input, spread] = result.get();
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            [input, [horizontal, vertical, blur, spread]] = result.get();
 
             continue;
           }
@@ -235,11 +243,15 @@ export namespace Shadow {
           }
         }
 
-        if (withInset && isInset === undefined) {
+        if (isInset === undefined) {
           // isInset: inset?
           const result = Keyword.parse("inset")(input);
 
           if (result.isOk()) {
+            if (!withInset) {
+              return Err.of("Inset is not allowed in this shadow");
+            }
+
             isInset = true;
             [input] = result.get();
             continue;

@@ -3,11 +3,11 @@ import { Color, Shadow } from "@siteimprove/alfa-css";
 /**
  * @public
  * */
-export function isVisibleShadow(shadow: Shadow): boolean {
+export function isVisibleShadow(shadow: Shadow.Canonical): boolean {
   return !isInvisibleShadow(shadow);
 }
 
-function isInvisibleShadow(shadow: Shadow): boolean {
+function isInvisibleShadow(shadow: Shadow.Canonical): boolean {
   return (
     // Transparent shadows are not visible
     Color.isTransparent(shadow.color) ||
@@ -16,5 +16,5 @@ function isInvisibleShadow(shadow: Shadow): boolean {
       shadow.horizontal.value === 0 &&
       shadow.blur.value === 0 &&
       shadow.spread.value === 0)
-      );
+  );
 }
