@@ -23,13 +23,9 @@ export class List<V extends Value, CALC extends boolean = boolean>
   public static of<V extends Value>(
     values: Iterable<V>,
     separator = " "
-  ): List<V, Value.HasCalculation<V>> {
+  ): List<V, Value.HasCalculation<[V]>> {
     const array = Array.from(values);
-    const calculation = array.some((value) =>
-      value.hasCalculation()
-    ) as Value.HasCalculation<V>;
-
-    return new List(array, separator, calculation);
+    return new List(array, separator, Value.hasCalculation(...array));
   }
 
   private readonly _values: Array<V>;

@@ -22,14 +22,6 @@ export default Longhand.of<Specified, Computed>(
   Keyword.of("none"),
   either(Keyword.parse("none"), parseList),
   (textShadow, style) =>
-    textShadow.map((value) => {
-      switch (value.type) {
-        case "keyword":
-          return value;
-
-        case "list":
-          return value.map((shadow) => shadow.resolve(Resolver.length(style)));
-      }
-    }),
+    textShadow.map((value) => value.resolve(Resolver.length(style))),
   { inherits: true }
 );

@@ -80,14 +80,18 @@ export namespace Value {
   /**
    * @internal
    */
-  export type HasCalculation<V extends Value | Array<Value>> = V extends Value<
-    string,
-    false
+  export type HasCalculation<V extends Array<Value>> = V extends Array<
+    Value<string, false>
   >
     ? false
-    : V extends Value
-    ? true
-    : V extends Array<Value<string, false>>
-    ? false
     : true;
+
+  /**
+   * @internal
+   */
+  export function hasCalculation<A extends Array<Value> = []>(
+    ...values: A
+  ): HasCalculation<A> {
+    return values.some((value) => value.hasCalculation()) as HasCalculation<A>;
+  }
 }
