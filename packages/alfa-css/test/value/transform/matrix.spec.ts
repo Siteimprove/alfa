@@ -9,6 +9,7 @@ const parseErr = parser(Matrix.parse);
 
 const _0 = { type: "number", value: 0 };
 const _1 = { type: "number", value: 1 };
+const _2 = { type: "number", value: 2 };
 const _a = { type: "number", value: 1 };
 const _b = { type: "number", value: 2 };
 const _c = { type: "number", value: 3 };
@@ -78,4 +79,37 @@ test("parse() requires 16 values for a 3D matrix", (t) => {
 
     t(actual.isErr());
   }
+});
+
+const x = "calc(1 + 1)";
+const values = (n: number) => [...Array(n)].map(() => x).join(", ");
+
+test("parse() accepts calculations and resolve them for a 2D matrix", (t) => {
+  const actual = serialize(`matrix(${values(6)})`);
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "matrix",
+    values: [
+      [_2, _2, _0, _2],
+      [_2, _2, _0, _2],
+      [_0, _0, _1, _0],
+      [_0, _0, _0, _1],
+    ],
+  });
+});
+
+test("parse() accepts calculations and resolve them for a 3D matrix", (t) => {
+  const actual = serialize(`matrix3d(${values(16)})`);
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "matrix",
+    values: [
+      [_2, _2, _2, _2],
+      [_2, _2, _2, _2],
+      [_2, _2, _2, _2],
+      [_2, _2, _2, _2],
+    ],
+  });
 });

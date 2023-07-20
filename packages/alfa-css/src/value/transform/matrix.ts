@@ -14,18 +14,22 @@ const { map, either } = Parser;
  * @public
  */
 export class Matrix extends Function<"matrix", false> {
-  public static of(...values: Matrix.Values<Number.Fixed>): Matrix {
-    return new Matrix(values);
+  public static of(...values: Matrix.Values<Number>): Matrix {
+    return new Matrix(
+      values.map((row) =>
+        row.map((value) => value.resolve())
+      ) as Matrix.Values<Number.Canonical>
+    );
   }
 
-  private readonly _values: Matrix.Values<Number.Fixed>;
+  private readonly _values: Matrix.Values<Number.Canonical>;
 
-  private constructor(values: Matrix.Values<Number.Fixed>) {
+  private constructor(values: Matrix.Values<Number.Canonical>) {
     super("matrix", false);
     this._values = values;
   }
 
-  public get values(): Matrix.Values<Number.Fixed> {
+  public get values(): Matrix.Values<Number.Canonical> {
     return this._values;
   }
 
@@ -110,7 +114,7 @@ export namespace Matrix {
     CSSFunction.parse(
       name,
       map(
-        List.parseCommaSeparated(Number.parseBase, quantity, quantity),
+        List.parseCommaSeparated(Number.parse, quantity, quantity),
         (list) => list.values
       )
     );

@@ -14,7 +14,7 @@ const { map, left, right, filter, delimited, option } = Parser;
  */
 export class Perspective<
   D extends Length.Fixed = Length.Fixed
-> extends Function<"perspective"> {
+> extends Function<"perspective", false> {
   public static of<D extends Length.Fixed>(depth: D): Perspective<D> {
     return new Perspective(depth);
   }
