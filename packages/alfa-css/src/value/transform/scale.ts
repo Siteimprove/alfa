@@ -1,13 +1,18 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import {
+  Function as CSSFunction,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax";
 
+import { List } from "../collection";
 import { Number } from "../numeric";
 
 import { Function } from "./function";
 
-const { map, left, right, pair, either, delimited, option } = Parser;
+const { map, right, pair, either, delimited, option, parseIf } = Parser;
 
 /**
  * @public
@@ -96,57 +101,32 @@ export namespace Scale {
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scale}
    */
   const parseScale = map(
-    right(
-      Token.parseFunction("scale"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            Number.parseBase,
-            option(
-              right(
-                delimited(option(Token.parseWhitespace), Token.parseComma),
-                Number.parseBase
-              )
-            )
-          )
-        ),
-        Token.parseCloseParenthesis
+    CSSFunction.parse(
+      "scale",
+      parseIf(
+        (values: ReadonlyArray<Number.Fixed>) =>
+          values.length === 1 || values.length === 2,
+        map(List.parseCommaSeparated(Number.parseBase), (list) => list.values),
+        () => "scale() must have one or two coordinates"
       )
     ),
-    (result) => {
-      const [x, y] = result;
-
-      return Scale.of(x, y.getOr(x));
-    }
+    ([_, [x, y]]) => Scale.of(x, y ?? x)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scalex}
    */
   const parseScaleX = map(
-    right(
-      Token.parseFunction("scaleX"),
-      left(
-        delimited(option(Token.parseWhitespace), Number.parseBase),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (x) => Scale.of(x, Number.of(1))
+    CSSFunction.parse("scaleX", Number.parseBase),
+    ([_, x]) => Scale.of(x, Number.of(1))
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scaley}
    */
   const parseScaleY = map(
-    right(
-      Token.parseFunction("scaleY"),
-      left(
-        delimited(option(Token.parseWhitespace), Number.parseBase),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (y) => Scale.of(Number.of(1), y)
+    CSSFunction.parse("scaleY", Number.parseBase),
+    ([_, y]) => Scale.of(Number.of(1), y)
   );
 
   export const parse: CSSParser<Scale> = either(
