@@ -107,48 +107,44 @@ export namespace Matrix {
   const _1 = Number.of(1);
 
   const parseValues = (name: string, quantity: number) =>
-    parseIf(
-      (values: ReadonlyArray<Number.Fixed>) => values.length === quantity,
-      map(List.parseCommaSeparated(Number.parseBase), (list) => list.values),
-      () => `${name} matrix must have exactly ${quantity} values`
+    CSSFunction.parse(
+      name,
+      map(
+        List.parseCommaSeparated(Number.parseBase, quantity, quantity),
+        (list) => list.values
+      )
     );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-matrix}
    */
-  const parseMatrix = map(
-    CSSFunction.parse("matrix", parseValues("2D", 6)),
-    (result) => {
-      const [_, [_a, _b, _c, _d, _e, _f]] = result;
+  const parseMatrix = map(parseValues("matrix", 6), (result) => {
+    const [_, [_a, _b, _c, _d, _e, _f]] = result;
 
-      return Matrix.of(
-        [_a, _c, _0, _e],
-        [_b, _d, _0, _f],
-        [_0, _0, _1, _0],
-        [_0, _0, _0, _1]
-      );
-    }
-  );
+    return Matrix.of(
+      [_a, _c, _0, _e],
+      [_b, _d, _0, _f],
+      [_0, _0, _1, _0],
+      [_0, _0, _0, _1]
+    );
+  });
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-matrix3d}
    */
-  const parseMatrix3d = map(
-    CSSFunction.parse("matrix3d", parseValues("3D", 16)),
-    (result) => {
-      const [
-        _,
-        [_a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p],
-      ] = result;
+  const parseMatrix3d = map(parseValues("matrix3d", 16), (result) => {
+    const [
+      _,
+      [_a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p],
+    ] = result;
 
-      return Matrix.of(
-        [_a, _e, _i, _m],
-        [_b, _f, _j, _n],
-        [_c, _g, _k, _o],
-        [_d, _h, _l, _p]
-      );
-    }
-  );
+    return Matrix.of(
+      [_a, _e, _i, _m],
+      [_b, _f, _j, _n],
+      [_c, _g, _k, _o],
+      [_d, _h, _l, _p]
+    );
+  });
 
   export const parse = either(parseMatrix, parseMatrix3d);
 }

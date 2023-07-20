@@ -170,13 +170,9 @@ export namespace Rotate {
     CSSFunction.parse(
       "rotate3d",
       pair(
-        parseIf(
-          (values: ReadonlyArray<Number.Fixed>) => values.length === 3,
-          map(
-            List.parseCommaSeparated(Number.parseBase),
-            (list) => list.values
-          ),
-          () => `rotate3d must specify exactly 3 axis`
+        map(
+          List.parseCommaSeparated(Number.parseBase, 3, 3),
+          (list) => list.values
         ),
         right(
           delimited(option(Token.parseWhitespace), Token.parseComma),

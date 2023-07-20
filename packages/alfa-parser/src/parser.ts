@@ -338,13 +338,24 @@ export namespace Parser {
    *
    * @param parser - Parser for the items in the list
    * @param separator - Parser for the separator between items
+   * @param lower - Minimum number of items to parse, defaults to 1
+   * @param upper - Maximum number of items to parse, defaults to Infinity
    */
   export function separatedList<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    separator: Parser<I, unknown, E, A>
+    separator: Parser<I, unknown, E, A>,
+    lower: number = 1,
+    upper: number = Infinity
   ): Parser<I, [T, ...Array<T>], E, A> {
     return map(
-      pair(parser, zeroOrMore(right(separator, parser))),
+      pair(
+        parser,
+        takeBetween(
+          right(separator, parser),
+          Math.max(0, lower - 1),
+          Math.min(Infinity, upper - 1)
+        )
+      ),
       ([first, rest]) => Array.prepend(rest, first)
     );
   }

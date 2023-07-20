@@ -103,11 +103,9 @@ export namespace Scale {
   const parseScale = map(
     CSSFunction.parse(
       "scale",
-      parseIf(
-        (values: ReadonlyArray<Number.Fixed>) =>
-          values.length === 1 || values.length === 2,
-        map(List.parseCommaSeparated(Number.parseBase), (list) => list.values),
-        () => "scale() must have one or two coordinates"
+      map(
+        List.parseCommaSeparated(Number.parseBase, 1, 2),
+        (list) => list.values
       )
     ),
     ([_, [x, y]]) => Scale.of(x, y ?? x)
