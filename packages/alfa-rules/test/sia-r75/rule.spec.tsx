@@ -5,7 +5,7 @@ import { test } from "@siteimprove/alfa-test";
 import R75, { Outcomes } from "../../src/sia-r75/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { failed, inapplicable, passed } from "../common/outcome";
 
 const fontSize = (value: string) => Declaration.of("font-size", value);
 const makeTarget = (
@@ -148,4 +148,47 @@ test("evaluate() is inapplicable to a <sup> element", async (t) => {
   const document = h.document([target]);
 
   t.deepEqual(await evaluate(R75, { document }), [inapplicable(R75)]);
+});
+
+test("evaluate() passes visible element with font-size: 0px and non-whitespace text", async (t) => {
+  const div = <div style={{ fontSize: "14px" }}>world</div>;
+  const target = (
+    <div style={{ background: "#eee", fontSize: "0px" }}>
+      hello
+      {div}!
+    </div>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R75, { document }), [
+    passed(R75, target, {
+      1: Outcomes.IsSufficient(Option.of(fontSize("0px"))),
+    }),
+    passed(R75, div, {
+      1: Outcomes.IsSufficient(Option.of(fontSize("14px"))),
+    }),
+  ]);
+});
+
+test("evaluate() passes visible element with font-size: 0px and whitespace text", async (t) => {
+  const div = <div style={{ fontSize: "14px" }}>world</div>;
+  const target = (
+    <div style={{ background: "#eee", fontSize: "0px" }}>
+      {h.text("\n")}
+      {div}
+      {h.text("\n")}
+    </div>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R75, { document }), [
+    passed(R75, target, {
+      1: Outcomes.IsSufficient(Option.of(fontSize("0px"))),
+    }),
+    passed(R75, div, {
+      1: Outcomes.IsSufficient(Option.of(fontSize("14px"))),
+    }),
+  ]);
 });
