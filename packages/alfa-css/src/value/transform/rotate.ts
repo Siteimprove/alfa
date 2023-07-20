@@ -1,14 +1,19 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import {
+  Function as CSSFunction,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax";
 import { Unit } from "../../unit";
+import { List } from "../collection";
 
 import { Angle, Number } from "../numeric";
 
 import { Function } from "./function";
 
-const { map, left, right, pair, either, delimited, option } = Parser;
+const { map, right, pair, either, delimited, option, parseIf } = Parser;
 
 /**
  * @public
@@ -124,98 +129,60 @@ export namespace Rotate {
     map(Number.parseZero, () => Angle.of<Unit.Angle>(0, "deg"))
   );
 
-  const parseSeparator = delimited(
-    option(Token.parseWhitespace),
-    Token.parseComma
-  );
+  const parseAxis = (name: string) =>
+    map(CSSFunction.parse(name, parseAngleOrZero), ([_, angle]) => angle);
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-rotate}
    */
-  const parseRotate = map(
-    right(
-      Token.parseFunction("rotate"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (angle) => Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
+  const parseRotate = map(parseAxis("rotate"), (angle) =>
+    Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatex}
    */
-  const parseRotateX = map(
-    right(
-      Token.parseFunction("rotateX"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (angle) => Rotate.of(Number.of(1), Number.of(0), Number.of(0), angle)
+  const parseRotateX = map(parseAxis("rotateX"), (angle) =>
+    Rotate.of(Number.of(1), Number.of(0), Number.of(0), angle)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey}
    */
-  const parseRotateY = map(
-    right(
-      Token.parseFunction("rotateY"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (angle) => Rotate.of(Number.of(0), Number.of(1), Number.of(0), angle)
+  const parseRotateY = map(parseAxis("rotateY"), (angle) =>
+    Rotate.of(Number.of(0), Number.of(1), Number.of(0), angle)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey}
    */
-  const parseRotateZ = map(
-    right(
-      Token.parseFunction("rotateZ"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (angle) => Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
+  const parseRotateZ = map(parseAxis("rotateZ"), (angle) =>
+    Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotate3d}
    */
   const parseRotate3d = map(
-    right(
-      Token.parseFunction("rotate3d"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            Number.parseBase,
-            right(
-              parseSeparator,
-              pair(
-                Number.parseBase,
-                right(
-                  parseSeparator,
-                  pair(
-                    Number.parseBase,
-                    right(parseSeparator, parseAngleOrZero)
-                  )
-                )
-              )
-            )
-          )
+    CSSFunction.parse(
+      "rotate3d",
+      pair(
+        parseIf(
+          (values: ReadonlyArray<Number.Fixed>) => values.length === 3,
+          map(
+            List.parseCommaSeparated(Number.parseBase),
+            (list) => list.values
+          ),
+          () => `rotate3d must specify exactly 3 axis`
         ),
-        Token.parseCloseParenthesis
+        right(
+          delimited(option(Token.parseWhitespace), Token.parseComma),
+          parseAngleOrZero
+        )
       )
     ),
     (result) => {
-      const [x, [y, [z, angle]]] = result;
+      const [_, [[x, y, z], angle]] = result;
 
       return Rotate.of(x, y, z, angle);
     }
