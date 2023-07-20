@@ -1,8 +1,13 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import {
+  Function as CSSFunction,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax";
 import { Unit } from "../../unit";
+import { List } from "../collection";
 
 import { Angle, Number } from "../numeric";
 
@@ -94,69 +99,41 @@ export namespace Skew {
     return value instanceof Skew;
   }
 
+  const _0 = Angle.of(0, "deg");
+
   const parseAngleOrZero = either(
     Angle.parseBase,
-    map(Number.parseZero, () => Angle.of<Unit.Angle>(0, "deg"))
+    map(Number.parseZero, () => _0)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skew}
    */
   const parseSkew = map(
-    right(
-      Token.parseFunction("skew"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            parseAngleOrZero,
-            option(
-              right(
-                delimited(option(Token.parseWhitespace), Token.parseComma),
-                parseAngleOrZero
-              )
-            )
-          )
-        ),
-        Token.parseCloseParenthesis
+    CSSFunction.parse(
+      "skew",
+      map(
+        List.parseCommaSeparated(parseAngleOrZero, 1, 2),
+        (list) => list.values
       )
     ),
-    (result) => {
-      const [x, y] = result;
-
-      return Skew.of<Angle.Fixed, Angle.Fixed>(
-        x,
-        y.getOrElse(() => Angle.of(0, "deg"))
-      );
-    }
+    ([_, [x, y]]) => Skew.of(x, y ?? _0)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skewx}
    */
   const parseSkewX = map(
-    right(
-      Token.parseFunction("skewX"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (x) => Skew.of<Angle.Fixed, Angle.Fixed>(x, Angle.of(0, "deg"))
+    CSSFunction.parse("skewX", parseAngleOrZero),
+    ([_, x]) => Skew.of(x, _0)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skewy}
    */
   const parseSkewY = map(
-    right(
-      Token.parseFunction("skewY"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (y) => Skew.of<Angle.Fixed, Angle.Fixed>(Angle.of(0, "deg"), y)
+    CSSFunction.parse("skewY", parseAngleOrZero),
+    ([_, y]) => Skew.of(_0, y)
   );
 
   export const parse: CSSParser<Skew> = either(
