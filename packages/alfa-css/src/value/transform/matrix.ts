@@ -8,7 +8,7 @@ import { Number } from "../numeric";
 
 import { Function } from "./function";
 
-const { map, either, delimited, option, parseIf, separatedList } = Parser;
+const { map, either } = Parser;
 
 /**
  * @public

@@ -4,16 +4,14 @@ import { Parser } from "@siteimprove/alfa-parser";
 import {
   Function as CSSFunction,
   type Parser as CSSParser,
-  Token,
 } from "../../syntax";
-import { Unit } from "../../unit";
 import { List } from "../collection";
 
 import { Angle, Number } from "../numeric";
 
 import { Function } from "./function";
 
-const { map, left, right, pair, either, delimited, option } = Parser;
+const { map, either } = Parser;
 
 /**
  * @public

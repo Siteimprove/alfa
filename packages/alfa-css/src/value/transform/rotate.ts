@@ -13,7 +13,7 @@ import { Angle, Number } from "../numeric";
 
 import { Function } from "./function";
 
-const { map, right, pair, either, delimited, option, parseIf } = Parser;
+const { map, right, pair, either, delimited, option } = Parser;
 
 /**
  * @public
