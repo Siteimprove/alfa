@@ -117,6 +117,7 @@
     "test/value/shape/polygon.spec.ts",
     "test/value/shape/rectangle.spec.ts",
     "test/value/transform/matrix.spec.ts",
+    "test/value/transform/perspective.spec.ts",
     "test/value/transform/rotate.spec.ts",
     "test/value/transform/scale.spec.ts",
     "test/value/transform/skew.spec.ts",
