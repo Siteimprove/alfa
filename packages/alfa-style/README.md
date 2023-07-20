@@ -6,7 +6,7 @@ This package implements support for CSS properties.
 
 ## Scaffolding
 
-To avoid circular dependencies, the package is organised as follow (from bottom to top) (all paths are relative to `src/`) :
+To avoid circular dependencies, the package is organised as follows (from bottom to top) (all paths are relative to `src/`) :
 
 - `longhand.ts`: defines the basic class to model longhand properties;
 - `property/*.ts` (part of): individual longhand properties, one per file;

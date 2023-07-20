@@ -27,7 +27,6 @@ export namespace Resolvable {
    * how to resolve B, i.e. a `ResolverA & ResolverB`. So we manually switch the
    * union to an intersection.
    *
-   * @privateRemarks
    * This type first turns the union U into a union of functions, putting U in a
    * contravariant position, then infers the type of the argument of this union
    * of functions.
