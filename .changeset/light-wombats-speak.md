@@ -1,5 +1,5 @@
 ---
-"@siteimprove/alfa-css": patch
+"@siteimprove/alfa-css": minor
 ---
 
-**Added:** A `List.parsSpaceSeparated` parser is now availabel.
+**Added:** A `List.parseSpaceSeparated` parser is now available.
