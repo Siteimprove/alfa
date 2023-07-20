@@ -1,7 +1,11 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import {
+  Function as CSSFunction,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax";
 
 import { Length } from "../numeric";
 
@@ -74,20 +78,14 @@ export namespace Perspective {
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-perspective}
    */
   export const parse: CSSParser<Perspective> = map(
-    right(
-      Token.parseFunction("perspective"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          filter(
-            Length.parseBase,
-            (length) => length.value >= 0,
-            () => "Depth cannot be less than 0"
-          )
-        ),
-        Token.parseCloseParenthesis
+    CSSFunction.parse(
+      "perspective",
+      filter(
+        Length.parseBase,
+        (length) => length.value >= 0,
+        () => "Depth cannot be less than 0"
       )
     ),
-    (depth) => Perspective.of(depth)
+    ([_, depth]) => Perspective.of(depth)
   );
 }
