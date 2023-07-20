@@ -4,29 +4,32 @@ import { Parser } from "@siteimprove/alfa-parser";
 import {
   Function as CSSFunction,
   type Parser as CSSParser,
-  Token,
 } from "../../syntax";
 
 import { Length } from "../numeric";
+import { Value } from "../value";
 
 import { Function } from "./function";
 
-const { map, left, right, filter, delimited, option } = Parser;
+const { map, filter } = Parser;
 
 /**
  * @public
  */
 export class Perspective<
-  D extends Length.Fixed = Length.Fixed
-> extends Function<"perspective", false> {
-  public static of<D extends Length.Fixed>(depth: D): Perspective<D> {
-    return new Perspective(depth);
+  D extends Length = Length,
+  CALC extends boolean = boolean
+> extends Function<"perspective", CALC> {
+  public static of<D extends Length>(
+    depth: D
+  ): Perspective<D, Value.HasCalculation<[D]>> {
+    return new Perspective(depth, Value.hasCalculation(depth));
   }
 
   private readonly _depth: D;
 
-  private constructor(depth: D) {
-    super("perspective", false);
+  private constructor(depth: D, hasCalculation: CALC) {
+    super("perspective", hasCalculation);
     this._depth = depth;
   }
 
@@ -34,8 +37,8 @@ export class Perspective<
     return this._depth;
   }
 
-  public resolve(): Perspective<D> {
-    return this;
+  public resolve(resolver: Perspective.Resolver): Perspective.Canonical {
+    return new Perspective(this._depth.resolve(resolver), false);
   }
 
   public equals(value: unknown): value is this {
@@ -62,11 +65,13 @@ export class Perspective<
  * @public
  */
 export namespace Perspective {
-  export type Canonical = Perspective<Length.Canonical>;
+  export type Canonical = Perspective<Length.Canonical, false>;
 
   export interface JSON extends Function.JSON<"perspective"> {
-    depth: Length.Fixed.JSON;
+    depth: Length.JSON;
   }
+
+  export type Resolver = Length.Resolver;
 
   export function isPerspective<D extends Length.Fixed>(
     value: unknown
@@ -81,8 +86,9 @@ export namespace Perspective {
     CSSFunction.parse(
       "perspective",
       filter(
-        Length.parseBase,
-        (length) => length.value >= 0,
+        Length.parse,
+        // {@link https://drafts.csswg.org/css-values/#calc-range}
+        (length) => Length.isCalculated(length) || length.value >= 0,
         () => "Depth cannot be less than 0"
       )
     ),
