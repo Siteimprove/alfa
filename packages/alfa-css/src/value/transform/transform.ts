@@ -33,27 +33,25 @@ export namespace Transform {
   export type Canonical =
     | Matrix
     | Perspective.Canonical
-    | Rotate.Canonical
+    | Rotate
     | Scale
     | Skew.Canonical
     | Translate.Canonical;
 
-  export function matrix(...values: Matrix.Values<Number.Fixed>): Matrix {
+  export function matrix(...values: Matrix.Values<Number>): Matrix {
     return Matrix.of(...values);
   }
 
-  export function perspective<D extends Length.Fixed>(
-    depth: D
-  ): Perspective<D> {
+  export function perspective<D extends Length>(depth: D): Perspective<D> {
     return Perspective.of(depth);
   }
 
-  export function rotate<A extends Angle.Fixed>(
+  export function rotate(
     x: Number.Fixed,
     y: Number.Fixed,
     z: Number.Fixed,
-    angle: A
-  ): Rotate<A> {
+    angle: Angle
+  ): Rotate {
     return Rotate.of(x, y, z, angle);
   }
 

@@ -9,7 +9,7 @@ const { either, left, map, mapResult, option, pair, separatedList } = Parser;
 
 type Specified = Keyword<"none"> | Rotate;
 
-type Computed = Keyword<"none"> | Rotate.Canonical;
+type Computed = Specified;
 
 function takeThree<T>(array: Array<T>): Result<[T, T, T], string> {
   return array.length === 3
@@ -22,10 +22,7 @@ function takeThree<T>(array: Array<T>): Result<[T, T, T], string> {
 // and scale properties.
 const parseAxis = either<
   Slice<Token>,
-  | Keyword<"x">
-  | Keyword<"y">
-  | Keyword<"z">
-  | [Number.Fixed, Number.Fixed, Number.Fixed],
+  Keyword<"x"> | Keyword<"y"> | Keyword<"z"> | [Number, Number, Number],
   string
 >(
   Keyword.parse("x"),
@@ -33,7 +30,7 @@ const parseAxis = either<
   Keyword.parse("z"),
   // We need to not consume the last whitespace which is expected by parseRotate,
   // so we can hardly use Parser.take.
-  mapResult(separatedList(Number.parseBase, Token.parseWhitespace), takeThree)
+  mapResult(separatedList(Number.parse, Token.parseWhitespace), takeThree)
 );
 
 /**
@@ -44,7 +41,7 @@ function delta(keyword: Keyword, data: string): 0 | 1 {
 }
 
 const parseRotate = map(
-  pair(option(left(parseAxis, Token.parseWhitespace)), Angle.parseBase),
+  pair(option(left(parseAxis, Token.parseWhitespace)), Angle.parse),
   ([axis, angle]) => {
     for (const value of axis) {
       if (Keyword.isKeyword(value)) {
@@ -72,10 +69,5 @@ const parse = either(Keyword.parse("none"), parseRotate);
 export default Longhand.of<Specified, Computed>(
   Keyword.of("none"),
   parse,
-  (rotate) =>
-    rotate.map((rotate) =>
-      Keyword.isKeyword(rotate)
-        ? rotate
-        : Rotate.of(rotate.x, rotate.y, rotate.z, rotate.angle.withUnit("deg"))
-    )
+  (rotate) => rotate
 );
