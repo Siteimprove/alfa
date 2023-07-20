@@ -1,5 +1,14 @@
 # @siteimprove/alfa-rules
 
+## 0.65.1
+
+### Patch Changes
+
+- **Fixed:** Issue where R75 would incorrectly flag some elements with invisible text ([#1456](https://github.com/Siteimprove/alfa/pull/1456))
+
+  This was due to a change in the applicability of the rule which exposed some elements to being misidentified as having insufficient font size, even though they in fact had invisible text.
+  Other elements are in some cases also now passing where they would previously not be flagged by the rule, but this is not considered a bug.
+
 ## 0.65.0
 
 ### Minor Changes

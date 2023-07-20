@@ -1,4 +1,5 @@
 import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Cache } from "@siteimprove/alfa-cache";
 import {
   Declaration,
   Element,
@@ -9,7 +10,9 @@ import {
 } from "@siteimprove/alfa-dom";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
+import { Refinement } from "@siteimprove/alfa-refinement";
 import { Err, Ok } from "@siteimprove/alfa-result";
+import { Sequence } from "@siteimprove/alfa-sequence";
 import { Style } from "@siteimprove/alfa-style";
 import { Page } from "@siteimprove/alfa-web";
 
@@ -17,9 +20,10 @@ import { expectation } from "../common/act/expectation";
 
 import { Scope, Stability } from "../tags";
 
-const { isElement, hasNamespace, hasName } = Element;
+const { hasNamespace, hasName } = Element;
 const { isText } = Text;
-const { and, or, not } = Predicate;
+const { or, not } = Predicate;
+const { and } = Refinement;
 const { hasCascadedStyle, hasComputedStyle, hasSpecifiedStyle, isVisible } =
   Style;
 const { getElementDescendants } = Query;
@@ -28,16 +32,23 @@ export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r75",
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
+    const visibleTextCache = Cache.empty<Element<string>, Sequence<Text>>();
+
     return {
       applicability() {
         return getElementDescendants(document, Node.fullTree).filter(
           and(
             hasNamespace(Namespace.HTML),
             not(hasName("sup", "sub")),
-            Node.hasTextContent(),
-            isVisible(device),
-            // If the font-size ultimately computes to size 0, the element is not
-            // visible.
+            not((node) =>
+              visibleTextCache
+                .get(node, () =>
+                  node
+                    .descendants(Node.fullTree)
+                    .filter(and(isText, isVisible(device)))
+                )
+                .isEmpty()
+            ),
             hasCascadedStyle(`font-size`, () => true, device)
           )
         );
@@ -49,11 +60,10 @@ export default Rule.Atomic.of<Page, Element>({
           // Applicability guarantees there is a cascaded value
           .getUnsafe().source;
 
-        const texts = target
-          .descendants(Node.fullTree)
-          .filter(isText)
+        const texts = visibleTextCache
+          .get(target)
+          .getUnsafe() // Applicability guarantees there's an entry for target
           .reject((text) => text.data.trim() === "")
-          .collect((text) => text.parent().filter(isElement))
           .every(
             or(
               hasSpecifiedStyle(
