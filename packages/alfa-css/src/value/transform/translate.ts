@@ -1,13 +1,18 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import {
+  Function as CSSFunction,
+  type Parser as CSSParser,
+  Token,
+} from "../../syntax";
+import { List } from "../collection";
 
-import { Length, Percentage } from "../numeric";
+import { Length, LengthPercentage, Percentage } from "../numeric";
 
 import { Function } from "./function";
 
-const { map, left, right, pair, either, delimited, option } = Parser;
+const { map, left, right, pair, either, delimited, option, parseIf } = Parser;
 
 /**
  * @public
@@ -109,118 +114,78 @@ export namespace Translate {
     return value instanceof Translate;
   }
 
+  const _0 = Length.of(0, "px");
+
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translate}
    */
   const parseTranslate = map(
-    right(
-      Token.parseFunction("translate"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            either(Length.parseBase, Percentage.parseBase),
-            option(
-              right(
-                delimited(option(Token.parseWhitespace), Token.parseComma),
-                either(Length.parseBase, Percentage.parseBase)
-              )
-            )
-          )
+    CSSFunction.parse(
+      "translate",
+      map(
+        List.parseCommaSeparated(
+          either(Length.parseBase, Percentage.parseBase),
+          1,
+          2
         ),
-        Token.parseCloseParenthesis
+        (list) => list.values
       )
     ),
-    (result) => {
-      const [x, y] = result;
 
-      return Translate.of(
-        x,
-        y.getOrElse(() => Length.of(0, "px")),
-        Length.of(0, "px")
-      );
-    }
+    ([_, [x, y]]) => Translate.of(x, y ?? _0, _0)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translatex}
    */
   const parseTranslateX = map(
-    right(
-      Token.parseFunction("translateX"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          either(Length.parseBase, Percentage.parseBase)
-        ),
-        Token.parseCloseParenthesis
-      )
+    CSSFunction.parse(
+      "translateX",
+      either(Length.parseBase, Percentage.parseBase)
     ),
-    (x) => Translate.of(x, Length.of(0, "px"), Length.of(0, "px"))
+    ([_, x]) => Translate.of(x, _0, _0)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translatey}
    */
   const parseTranslateY = map(
-    right(
-      Token.parseFunction("translateY"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          either(Length.parseBase, Percentage.parseBase)
-        ),
-        Token.parseCloseParenthesis
-      )
+    CSSFunction.parse(
+      "translateY",
+      either(Length.parseBase, Percentage.parseBase)
     ),
-    (y) => Translate.of(Length.of(0, "px"), y, Length.of(0, "px"))
+    ([_, y]) => Translate.of(_0, y, _0)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-translatez}
    */
   const parseTranslateZ = map(
-    right(
-      Token.parseFunction("translateZ"),
-      left(
-        delimited(option(Token.parseWhitespace), Length.parseBase),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (z) => Translate.of(Length.of(0, "px"), Length.of(0, "px"), z)
+    CSSFunction.parse("translateZ", Length.parseBase),
+    ([_, z]) => Translate.of(_0, _0, z)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-translate3d}
    */
   const parseTranslate3d = map(
-    right(
-      Token.parseFunction("translate3d"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
+    CSSFunction.parse(
+      "translate3d",
+      parseIf(
+        (values: ReadonlyArray<LengthPercentage>) => Length.isLength(values[2]),
+        map(
+          List.parseCommaSeparated(
             either(Length.parseBase, Percentage.parseBase),
-            pair(
-              right(
-                delimited(option(Token.parseWhitespace), Token.parseComma),
-                either(Length.parseBase, Percentage.parseBase)
-              ),
-              right(
-                delimited(option(Token.parseWhitespace), Token.parseComma),
-                Length.parseBase
-              )
-            )
-          )
+            3,
+            3
+          ),
+          (list) => list.values
         ),
-        Token.parseCloseParenthesis
+        () => "The z component of translate3d must be a length"
       )
     ),
-    (result) => {
-      const [x, [y, z]] = result;
-
-      return Translate.of(x, y, z);
-    }
+    // The type of z is ensured by parseIf.
+    ([_, [x, y, z]]) => Translate.of(x, y, z as Length.Fixed)
   );
 
   export const parse: CSSParser<Translate> = either(
