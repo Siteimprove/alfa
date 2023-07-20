@@ -124,6 +124,9 @@ export namespace Rotate {
     return value instanceof Rotate;
   }
 
+  const _0 = Number.of(0);
+  const _1 = Number.of(1);
+
   const parseAngleOrZero = either(
     Angle.parseBase,
     map(Number.parseZero, () => Angle.of<Unit.Angle>(0, "deg"))
@@ -136,28 +139,28 @@ export namespace Rotate {
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-rotate}
    */
   const parseRotate = map(parseAxis("rotate"), (angle) =>
-    Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
+    Rotate.of(_0, _0, _1, angle)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatex}
    */
   const parseRotateX = map(parseAxis("rotateX"), (angle) =>
-    Rotate.of(Number.of(1), Number.of(0), Number.of(0), angle)
+    Rotate.of(_1, _0, _0, angle)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey}
    */
   const parseRotateY = map(parseAxis("rotateY"), (angle) =>
-    Rotate.of(Number.of(0), Number.of(1), Number.of(0), angle)
+    Rotate.of(_0, _1, _0, angle)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey}
    */
   const parseRotateZ = map(parseAxis("rotateZ"), (angle) =>
-    Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
+    Rotate.of(_0, _0, _1, angle)
   );
 
   /**
