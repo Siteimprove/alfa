@@ -18,9 +18,10 @@ const { map, right, pair, either, delimited, option } = Parser;
 /**
  * @public
  */
-export class Rotate<
-  A extends Angle.Fixed = Angle.Fixed
-> extends Function<"rotate"> {
+export class Rotate<A extends Angle.Fixed = Angle.Fixed> extends Function<
+  "rotate",
+  false
+> {
   public static of<A extends Angle.Fixed>(
     x: Number.Fixed,
     y: Number.Fixed,

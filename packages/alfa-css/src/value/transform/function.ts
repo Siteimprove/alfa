@@ -3,12 +3,12 @@ import { Value } from "../value";
 /**
  * @internal
  */
-export abstract class Function<K extends string = string> extends Value<
-  "transform",
-  false
-> {
+export abstract class Function<
+  K extends string = string,
+  CALC extends boolean = boolean
+> extends Value<"transform", CALC> {
   private readonly _kind: K;
-  protected constructor(kind: K, hasCalculation: false) {
+  protected constructor(kind: K, hasCalculation: CALC) {
     super("transform", hasCalculation);
     this._kind = kind;
   }

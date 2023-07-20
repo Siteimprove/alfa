@@ -19,7 +19,7 @@ const { map, either } = Parser;
 export class Skew<
   X extends Angle.Fixed = Angle.Fixed,
   Y extends Angle.Fixed = Angle.Fixed
-> extends Function<"skew"> {
+> extends Function<"skew", false> {
   public static of<X extends Angle.Fixed, Y extends Angle.Fixed>(
     x: X,
     y: Y

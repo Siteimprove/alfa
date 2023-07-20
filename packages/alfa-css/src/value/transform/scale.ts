@@ -16,7 +16,7 @@ const { map, either } = Parser;
 /**
  * @public
  */
-export class Scale extends Function<"scale"> {
+export class Scale extends Function<"scale", false> {
   public static of(x: Number.Fixed, y: Number.Fixed): Scale {
     return new Scale(x, y);
   }

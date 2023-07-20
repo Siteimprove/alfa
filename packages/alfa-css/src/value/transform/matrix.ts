@@ -13,7 +13,7 @@ const { map, either } = Parser;
 /**
  * @public
  */
-export class Matrix extends Function<"matrix"> {
+export class Matrix extends Function<"matrix", false> {
   public static of(...values: Matrix.Values<Number.Fixed>): Matrix {
     return new Matrix(values);
   }

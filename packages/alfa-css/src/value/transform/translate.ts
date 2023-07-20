@@ -20,7 +20,7 @@ export class Translate<
   X extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
   Y extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
   Z extends Length.Fixed = Length.Fixed
-> extends Function<"translate"> {
+> extends Function<"translate", false> {
   public static of<
     X extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
     Y extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
