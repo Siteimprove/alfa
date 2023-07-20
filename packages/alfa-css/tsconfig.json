@@ -118,7 +118,8 @@
     "test/value/transform/matrix.spec.ts",
     "test/value/transform/rotate.spec.ts",
     "test/value/transform/scale.spec.ts",
-    "test/value/transform/skew.spec.ts"
+    "test/value/transform/skew.spec.ts",
+    "test/value/transform/translate.spec.ts"
   ],
   "references": [
     { "path": "../alfa-array" },

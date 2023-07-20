@@ -65,7 +65,7 @@ test("parse() requires 6 values for a 2D matrix", (t) => {
   ]) {
     const actual = parseErr(input);
 
-    t.deepEqual(actual.isErr(), true);
+    t(actual.isErr());
   }
 });
 
@@ -76,6 +76,6 @@ test("parse() requires 16 values for a 3D matrix", (t) => {
   ]) {
     const actual = parseErr(input);
 
-    t.deepEqual(actual.isErr(), true);
+    t(actual.isErr());
   }
 });

@@ -54,6 +54,6 @@ test("parses expect exactly one argument for scaleY", (t) => {
   for (const input of ["scaleY()", "scaleY(1, 2)"]) {
     const actual = parseErr(input);
 
-    t.deepEqual(actual.isErr(), true);
+    t(actual.isErr());
   }
 });

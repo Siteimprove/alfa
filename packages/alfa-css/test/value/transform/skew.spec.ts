@@ -33,7 +33,7 @@ test("parse expects 1 or 2 arguments for skew()", (t) => {
   for (const input of ["skew()", "skew(1deg, 1deg, 1deg)"]) {
     const actual = parseErr(input);
 
-    t.deepEqual(actual.isErr(), true);
+    t(actual.isErr());
   }
 });
 

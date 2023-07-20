@@ -82,6 +82,6 @@ test("parse() requires three axis for a rotate3d function", (t) => {
   ]) {
     const actual = parseErr(input);
 
-    t.deepEqual(actual.isErr(), true);
+    t(actual.isErr());
   }
 });
