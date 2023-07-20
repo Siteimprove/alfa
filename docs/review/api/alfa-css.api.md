@@ -1364,7 +1364,9 @@ export namespace List {
         values: Array<Serializable.ToJSON<V>>;
     }
     const // (undocumented)
-    parseCommaSeparated: <V extends Value<string, boolean, string>>(parseValue: Parser<V>) => Parser<List<V, boolean>>;
+    parseCommaSeparated: <V extends Value<string, boolean, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V, boolean>>;
+    const // (undocumented)
+    parseSpaceSeparated: <V extends Value<string, boolean, string>>(parseValue: Parser<V>, lower?: number, upper?: number) => Parser<List<V, boolean>>;
 }
 
 // @public (undocumented)
@@ -1505,7 +1507,7 @@ export namespace Matrix {
     ]
     ];
     const // (undocumented)
-    parse: Parser<Matrix>;
+    parse: Parser_2<Slice<Token>, Matrix, string, []>;
 }
 
 // @public (undocumented)
@@ -3502,10 +3504,10 @@ export namespace Transform {
     export function skew<X extends Angle.Fixed, Y extends Angle.Fixed>(x: X, y: Y): Skew<X, Y>;
     // (undocumented)
     export function translate<X extends Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed, Z extends Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
-    const // (undocumented)
+    const // @internal (undocumented)
     parse: Parser_2<Slice<Token>, Transform, string, []>;
     const // (undocumented)
-    parseList: Parser<Array<Transform>>;
+    parseList: Parser<List<Transform, boolean>>;
 }
 
 // @public (undocumented)
