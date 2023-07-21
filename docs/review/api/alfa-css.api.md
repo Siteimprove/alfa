@@ -1973,7 +1973,7 @@ export namespace Perspective {
     // (undocumented)
     export type Resolver = Length.Resolver;
     const // (undocumented)
-    parse: Parser<Perspective>;
+    parse: Parser_2<Slice<Token>, Perspective<Length<import("../..").Unit.Length>>, string, []>;
 }
 
 // @public (undocumented)
@@ -2463,7 +2463,7 @@ export namespace RGB {
 }
 
 // @public (undocumented)
-export class Rotate extends Function_3<"rotate", false> implements Resolvable<Rotate.Canonical, never> {
+export class Rotate extends Function_3<"rotate", false> implements Resolvable<Rotate.Canonical, unknown> {
     // (undocumented)
     get angle(): Angle.Canonical;
     // (undocumented)
@@ -2504,11 +2504,11 @@ export namespace Rotate {
         z: Number_2.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser<Rotate>;
+    parse: Parser_2<Slice<Token>, Rotate, string, []>;
 }
 
 // @public (undocumented)
-export class Scale extends Function_3<"scale", false> implements Resolvable<Scale.Canonical, never> {
+export class Scale extends Function_3<"scale", false> implements Resolvable<Scale.Canonical, unknown> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -2543,7 +2543,7 @@ export namespace Scale {
         y: Number_2.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser<Scale>;
+    parse: Parser_2<Slice<Token>, Scale, string, []>;
 }
 
 // @public (undocumented)
@@ -2646,7 +2646,7 @@ export namespace Shape {
 }
 
 // @public (undocumented)
-export class Skew extends Function_3<"skew", false> implements Resolvable<Skew.Canonical, never> {
+export class Skew extends Function_3<"skew", false> implements Resolvable<Skew.Canonical, unknown> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -2679,7 +2679,7 @@ export namespace Skew {
         y: Angle.Fixed.JSON;
     }
     const // (undocumented)
-    parse: Parser<Skew>;
+    parse: Parser_2<Slice<Token>, Skew, string, []>;
 }
 
 // @public (undocumented)
