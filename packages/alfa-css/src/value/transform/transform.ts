@@ -5,6 +5,8 @@ import { Token } from "../../syntax";
 
 import { List } from "../collection";
 import { Angle, Length, LengthPercentage, Number } from "../numeric";
+import { Resolvable } from "../resolvable";
+import { Value } from "../value";
 
 import { Matrix } from "./matrix";
 import { Perspective } from "./perspective";

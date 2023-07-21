@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Length, Perspective } from "../../../src";
 
-import { parser, serializer } from "../../common/parse";
+import { parserUnsafe, serializer } from "../../common/parse";
 
 const serialize = serializer(Perspective.parse);
 
@@ -50,24 +50,20 @@ test("parse() parses a perspective with calculation", (t) => {
 });
 
 test("resolve() resolves a perspective", (t) => {
-  const actual = parser(Perspective.parse)("perspective(calc(1em + 2px))");
+  const actual = parserUnsafe(Perspective.parse)(
+    "perspective(calc(1em + 2px))"
+  ).resolve({
+    length: Length.resolver(
+      Length.of(16, "px"),
+      Length.of(16, "px"),
+      Length.of(16, "px"),
+      Length.of(16, "px")
+    ),
+  });
 
-  t.deepEqual(
-    actual
-      .getUnsafe()
-      .resolve({
-        length: Length.resolver(
-          Length.of(16, "px"),
-          Length.of(16, "px"),
-          Length.of(16, "px"),
-          Length.of(16, "px")
-        ),
-      })
-      .toJSON(),
-    {
-      type: "transform",
-      kind: "perspective",
-      depth: { type: "length", unit: "px", value: 18 },
-    }
-  );
+  t.deepEqual(actual.toJSON(), {
+    type: "transform",
+    kind: "perspective",
+    depth: { type: "length", unit: "px", value: 18 },
+  });
 });

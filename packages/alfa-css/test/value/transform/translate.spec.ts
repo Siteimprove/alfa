@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Length, Translate } from "../../../src";
 
-import { parser, serializer } from "../../common/parse";
+import { parser, parserUnsafe, serializer } from "../../common/parse";
 
 const serialize = serializer(Translate.parse);
 const parseErr = parser(Translate.parse);
@@ -61,7 +61,7 @@ test("parse() accept mixed length and percentages in translate()", (t) => {
   for (const input of ["translate(1px, 2%)", "translate(2%, 1px)"]) {
     const actual = parseErr(input);
 
-    t.deepEqual(actual.isOk(), true);
+    t(actual.isOk());
   }
 });
 
@@ -369,11 +369,9 @@ test("parse() accepts calculation in translate3d function", (t) => {
 });
 
 test("resolve() resolves a Translate", (t) => {
-  const actual = parseErr(
+  const actual = parserUnsafe(Translate.parse)(
     "translate3d(calc(2px + 10%), calc(1em + 1px), calc(1em * 2))"
-  ).getUnsafe();
-
-  const resolved = actual.resolve({
+  ).resolve({
     length: Length.resolver(
       Length.of(16, "px"),
       Length.of(16, "px"),
@@ -383,7 +381,7 @@ test("resolve() resolves a Translate", (t) => {
     percentageBase: Length.of(10, "px"),
   });
 
-  t.deepEqual(resolved.toJSON(), {
+  t.deepEqual(actual.toJSON(), {
     type: "transform",
     kind: "translate",
     x: { type: "length", unit: "px", value: 3 },

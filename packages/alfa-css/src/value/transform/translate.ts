@@ -7,7 +7,7 @@ import {
 } from "../../syntax";
 import { List } from "../collection";
 
-import { Length, LengthPercentage } from "../numeric";
+import { Length, LengthPercentage, Numeric } from "../numeric";
 import { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
@@ -88,9 +88,11 @@ export class Translate<
   }
 
   public toString(): string {
-    if (!this._z.hasCalculation() && this._z.value === 0) {
+    if (!this._z.hasCalculation() && Numeric.isZero(this._z)) {
       return `translate(${this._x}${
-        !this._y.hasCalculation() && this._y.value === 0 ? "" : `, ${this._y}`
+        !this._y.hasCalculation() && Numeric.isZero(this._y)
+          ? ""
+          : `, ${this._y}`
       })`;
     }
 

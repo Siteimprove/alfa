@@ -1,11 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import {
-  Function as CSSFunction,
-  type Parser as CSSParser,
-  Token,
-} from "../../syntax";
+import { Function as CSSFunction, Token } from "../../syntax";
 import { List } from "../collection";
 
 import { Angle, Number } from "../numeric";
@@ -20,7 +16,7 @@ const { map, right, pair, either, delimited, option } = Parser;
  */
 export class Rotate
   extends Function<"rotate", false>
-  implements Resolvable<Rotate.Canonical, never>
+  implements Resolvable<Rotate.Canonical, unknown>
 {
   public static of<A extends Angle>(
     x: Number,
@@ -185,7 +181,7 @@ export namespace Rotate {
     }
   );
 
-  export const parse: CSSParser<Rotate> = either(
+  export const parse = either(
     parseRotate,
     parseRotateX,
     parseRotateY,

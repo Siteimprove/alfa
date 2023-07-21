@@ -1,10 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import {
-  Function as CSSFunction,
-  type Parser as CSSParser,
-} from "../../syntax";
+import { Function as CSSFunction } from "../../syntax";
 import { List } from "../collection";
 
 import { Angle, Number } from "../numeric";
@@ -19,7 +16,7 @@ const { map, either } = Parser;
  */
 export class Skew
   extends Function<"skew", false>
-  implements Resolvable<Skew.Canonical, never>
+  implements Resolvable<Skew.Canonical, unknown>
 {
   public static of(x: Angle, y: Angle): Skew {
     return new Skew(x.resolve(), y.resolve());
@@ -84,6 +81,7 @@ export class Skew
  */
 export namespace Skew {
   export type Canonical = Skew;
+
   export interface JSON extends Function.JSON<"skew"> {
     x: Angle.Fixed.JSON;
     y: Angle.Fixed.JSON;
@@ -130,9 +128,5 @@ export namespace Skew {
     ([_, y]) => Skew.of(_0, y)
   );
 
-  export const parse: CSSParser<Skew> = either(
-    parseSkew,
-    parseSkewX,
-    parseSkewY
-  );
+  export const parse = either(parseSkew, parseSkewX, parseSkewY);
 }

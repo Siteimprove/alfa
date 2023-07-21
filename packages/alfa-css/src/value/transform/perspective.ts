@@ -1,10 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import {
-  Function as CSSFunction,
-  type Parser as CSSParser,
-} from "../../syntax";
+import { Function as CSSFunction } from "../../syntax";
 
 import { Length } from "../numeric";
 import { Resolvable } from "../resolvable";
@@ -81,13 +78,13 @@ export namespace Perspective {
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-perspective}
    */
-  export const parse: CSSParser<Perspective> = map(
+  export const parse = map(
     CSSFunction.parse(
       "perspective",
       filter(
         Length.parse,
         // {@link https://drafts.csswg.org/css-values/#calc-range}
-        (length) => Length.isCalculated(length) || length.value >= 0,
+        (length) => length.hasCalculation() || length.value >= 0,
         () => "Depth cannot be less than 0"
       )
     ),

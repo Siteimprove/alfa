@@ -97,6 +97,7 @@ export class Matrix
  */
 export namespace Matrix {
   export type Canonical = Matrix;
+
   export interface JSON extends Function.JSON<"matrix"> {
     values: Values<Number.Fixed.JSON>;
   }

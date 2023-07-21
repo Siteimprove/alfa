@@ -1,10 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import {
-  Function as CSSFunction,
-  type Parser as CSSParser,
-} from "../../syntax";
+import { Function as CSSFunction } from "../../syntax";
 
 import { List } from "../collection";
 import { Number } from "../numeric";
@@ -19,7 +16,7 @@ const { map, either } = Parser;
  */
 export class Scale
   extends Function<"scale", false>
-  implements Resolvable<Scale.Canonical, never>
+  implements Resolvable<Scale.Canonical, unknown>
 {
   public static of(x: Number, y: Number): Scale {
     return new Scale(x.resolve(), y.resolve());
@@ -126,9 +123,5 @@ export namespace Scale {
     Scale.of(Number.of(1), y)
   );
 
-  export const parse: CSSParser<Scale> = either(
-    parseScale,
-    parseScaleX,
-    parseScaleY
-  );
+  export const parse = either(parseScale, parseScaleX, parseScaleY);
 }

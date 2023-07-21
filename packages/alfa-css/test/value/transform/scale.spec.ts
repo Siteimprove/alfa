@@ -26,7 +26,7 @@ test("parses expect exactly one or two arguments for scale", (t) => {
   for (const input of ["scale()", "scale(1, 2, 3)"]) {
     const actual = parseErr(input);
 
-    t.deepEqual(actual.isErr(), true);
+    t(actual.isErr());
   }
 });
 
@@ -40,7 +40,7 @@ test("parses expect exactly one argument for scaleX", (t) => {
   for (const input of ["scaleX()", "scaleX(1, 2)"]) {
     const actual = parseErr(input);
 
-    t.deepEqual(actual.isErr(), true);
+    t(actual.isErr());
   }
 });
 
