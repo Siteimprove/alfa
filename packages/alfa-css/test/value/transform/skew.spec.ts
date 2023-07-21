@@ -14,7 +14,7 @@ test("parse() parses a skew function with two arguments", (t) => {
     type: "transform",
     kind: "skew",
     x: { type: "angle", unit: "deg", value: 45 },
-    y: { type: "angle", unit: "rad", value: 1 },
+    y: { type: "angle", unit: "deg", value: 57.2957795 },
   });
 });
 
@@ -50,6 +50,39 @@ test("parse() parses a skewX function", (t) => {
 
 test("parse() parses a skewY function", (t) => {
   const actual = serialize("skewY(45deg)");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "skew",
+    x: { type: "angle", unit: "deg", value: 0 },
+    y: { type: "angle", unit: "deg", value: 45 },
+  });
+});
+
+test("parse() accepts calculations in a skew function and resolves them", (t) => {
+  const actual = serialize("skew(calc(20deg + 25deg), calc(2rad - 1rad))");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "skew",
+    x: { type: "angle", unit: "deg", value: 45 },
+    y: { type: "angle", unit: "deg", value: 57.2957795 },
+  });
+});
+
+test("parse() accept calculation in a skewX function and resolves it", (t) => {
+  const actual = serialize("skewX(calc(20deg + 25deg))");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "skew",
+    x: { type: "angle", unit: "deg", value: 45 },
+    y: { type: "angle", unit: "deg", value: 0 },
+  });
+});
+
+test("parse() accepts calculation in a skewY function and resolves it", (t) => {
+  const actual = serialize("skewY(calc(20deg + 25deg))");
 
   t.deepEqual(actual, {
     type: "transform",

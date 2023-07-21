@@ -8,6 +8,7 @@ import {
 import { List } from "../collection";
 
 import { Angle, Number } from "../numeric";
+import { Resolvable } from "../resolvable";
 
 import { Function } from "./function";
 
@@ -16,35 +17,32 @@ const { map, either } = Parser;
 /**
  * @public
  */
-export class Skew<
-  X extends Angle.Fixed = Angle.Fixed,
-  Y extends Angle.Fixed = Angle.Fixed
-> extends Function<"skew", false> {
-  public static of<X extends Angle.Fixed, Y extends Angle.Fixed>(
-    x: X,
-    y: Y
-  ): Skew<X, Y> {
-    return new Skew(x, y);
+export class Skew
+  extends Function<"skew", false>
+  implements Resolvable<Skew.Canonical, never>
+{
+  public static of(x: Angle, y: Angle): Skew {
+    return new Skew(x.resolve(), y.resolve());
   }
 
-  private readonly _x: X;
-  private readonly _y: Y;
+  private readonly _x: Angle.Canonical;
+  private readonly _y: Angle.Canonical;
 
-  private constructor(x: X, y: Y) {
+  private constructor(x: Angle.Canonical, y: Angle.Canonical) {
     super("skew", false);
     this._x = x;
     this._y = y;
   }
 
-  public get x(): X {
+  public get x(): Angle.Canonical {
     return this._x;
   }
 
-  public get y(): Y {
+  public get y(): Angle.Canonical {
     return this._y;
   }
 
-  public resolve(): Skew<X, Y> {
+  public resolve(): Skew {
     return this;
   }
 
@@ -85,22 +83,20 @@ export class Skew<
  * @public
  */
 export namespace Skew {
-  export type Canonical = Skew<Angle.Canonical, Angle.Canonical>;
+  export type Canonical = Skew;
   export interface JSON extends Function.JSON<"skew"> {
     x: Angle.Fixed.JSON;
     y: Angle.Fixed.JSON;
   }
 
-  export function isSkew<X extends Angle.Fixed, Y extends Angle.Fixed>(
-    value: unknown
-  ): value is Skew<X, Y> {
+  export function isSkew(value: unknown): value is Skew {
     return value instanceof Skew;
   }
 
   const _0 = Angle.of(0, "deg");
 
   const parseAngleOrZero = either(
-    Angle.parseBase,
+    Angle.parse,
     map(Number.parseZero, () => _0)
   );
 

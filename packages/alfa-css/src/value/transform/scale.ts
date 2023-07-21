@@ -8,6 +8,7 @@ import {
 
 import { List } from "../collection";
 import { Number } from "../numeric";
+import { Resolvable } from "../resolvable";
 
 import { Function } from "./function";
 
@@ -16,7 +17,10 @@ const { map, either } = Parser;
 /**
  * @public
  */
-export class Scale extends Function<"scale", false> {
+export class Scale
+  extends Function<"scale", false>
+  implements Resolvable<Scale.Canonical, never>
+{
   public static of(x: Number, y: Number): Scale {
     return new Scale(x.resolve(), y.resolve());
   }
@@ -87,6 +91,7 @@ export class Scale extends Function<"scale", false> {
  * @public
  */
 export namespace Scale {
+  export type Canonical = Scale;
   export interface JSON extends Function.JSON<"scale"> {
     x: Number.Fixed.JSON;
     y: Number.Fixed.JSON;

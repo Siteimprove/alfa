@@ -31,10 +31,10 @@ export type Transform =
  */
 export namespace Transform {
   export type Canonical =
-    | Matrix
+    | Matrix.Canonical
     | Perspective.Canonical
-    | Rotate
-    | Scale
+    | Rotate.Canonical
+    | Scale.Canonical
     | Skew.Canonical
     | Translate.Canonical;
 
@@ -47,22 +47,19 @@ export namespace Transform {
   }
 
   export function rotate(
-    x: Number.Fixed,
-    y: Number.Fixed,
-    z: Number.Fixed,
+    x: Number,
+    y: Number,
+    z: Number,
     angle: Angle
   ): Rotate {
     return Rotate.of(x, y, z, angle);
   }
 
-  export function scale(x: Number.Fixed, y: Number.Fixed): Scale {
+  export function scale(x: Number, y: Number): Scale {
     return Scale.of(x, y);
   }
 
-  export function skew<X extends Angle.Fixed, Y extends Angle.Fixed>(
-    x: X,
-    y: Y
-  ): Skew<X, Y> {
+  export function skew(x: Angle, y: Angle): Skew {
     return Skew.of(x, y);
   }
 

@@ -7,6 +7,7 @@ import {
 } from "../../syntax";
 
 import { Length } from "../numeric";
+import { Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Function } from "./function";
@@ -17,9 +18,12 @@ const { map, filter } = Parser;
  * @public
  */
 export class Perspective<
-  D extends Length = Length,
-  CALC extends boolean = boolean
-> extends Function<"perspective", CALC> {
+    D extends Length = Length,
+    CALC extends boolean = boolean
+  >
+  extends Function<"perspective", CALC>
+  implements Resolvable<Perspective.Canonical, Perspective.Resolver>
+{
   public static of<D extends Length>(
     depth: D
   ): Perspective<D, Value.HasCalculation<[D]>> {

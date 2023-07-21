@@ -6,10 +6,10 @@ import {
   type Parser as CSSParser,
   Token,
 } from "../../syntax";
-import { Unit } from "../../unit";
 import { List } from "../collection";
 
 import { Angle, Number } from "../numeric";
+import { Resolvable } from "../resolvable";
 
 import { Function } from "./function";
 
@@ -18,7 +18,10 @@ const { map, right, pair, either, delimited, option } = Parser;
 /**
  * @public
  */
-export class Rotate extends Function<"rotate", false> {
+export class Rotate
+  extends Function<"rotate", false>
+  implements Resolvable<Rotate.Canonical, never>
+{
   public static of<A extends Angle>(
     x: Number,
     y: Number,
@@ -107,6 +110,7 @@ export class Rotate extends Function<"rotate", false> {
  * @public
  */
 export namespace Rotate {
+  export type Canonical = Rotate;
   export interface JSON extends Function.JSON<"rotate"> {
     x: Number.Fixed.JSON;
     y: Number.Fixed.JSON;

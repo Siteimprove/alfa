@@ -5,6 +5,7 @@ import { Function as CSSFunction } from "../../syntax";
 
 import { List } from "../collection";
 import { Number } from "../numeric";
+import { Resolvable } from "../resolvable";
 
 import { Function } from "./function";
 
@@ -13,7 +14,10 @@ const { map, either } = Parser;
 /**
  * @public
  */
-export class Matrix extends Function<"matrix", false> {
+export class Matrix
+  extends Function<"matrix", false>
+  implements Resolvable<Matrix.Canonical, never>
+{
   public static of(...values: Matrix.Values<Number>): Matrix {
     return new Matrix(
       values.map((row) =>
@@ -92,6 +96,7 @@ export class Matrix extends Function<"matrix", false> {
  * @public
  */
 export namespace Matrix {
+  export type Canonical = Matrix;
   export interface JSON extends Function.JSON<"matrix"> {
     values: Values<Number.Fixed.JSON>;
   }
