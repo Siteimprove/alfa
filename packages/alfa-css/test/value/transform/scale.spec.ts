@@ -57,3 +57,21 @@ test("parses expect exactly one argument for scaleY", (t) => {
     t(actual.isErr());
   }
 });
+
+test("parse() accepts calculations in a scale function", (t) => {
+  const actual = serialize("scale(calc(10 - 9), calc(1 + 1))");
+
+  t.deepEqual(actual, { type: "transform", kind: "scale", x: _1, y: _2 });
+});
+
+test("parse() parses scaleX function", (t) => {
+  const actual = serialize("scaleX(calc(1 + 1))");
+
+  t.deepEqual(actual, { type: "transform", kind: "scale", x: _2, y: _1 });
+});
+
+test("parse() parses scaleY function", (t) => {
+  const actual = serialize("scaleY(calc(1 + 1))");
+
+  t.deepEqual(actual, { type: "transform", kind: "scale", x: _1, y: _2 });
+});
