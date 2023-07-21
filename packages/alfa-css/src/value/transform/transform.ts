@@ -4,7 +4,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 import { Token } from "../../syntax";
 
 import { List } from "../collection";
-import { Angle, Length, Number, Percentage } from "../numeric";
+import { Angle, Length, LengthPercentage, Number } from "../numeric";
 
 import { Matrix } from "./matrix";
 import { Perspective } from "./perspective";
@@ -64,9 +64,9 @@ export namespace Transform {
   }
 
   export function translate<
-    X extends Length.Fixed | Percentage.Fixed,
-    Y extends Length.Fixed | Percentage.Fixed,
-    Z extends Length.Fixed
+    X extends LengthPercentage,
+    Y extends LengthPercentage,
+    Z extends Length
   >(x: X, y: Y, z: Z): Translate<X, Y, Z> {
     return Translate.of(x, y, z);
   }

@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Translate } from "../../../src";
+import { Length, Translate } from "../../../src";
 
 import { parser, serializer } from "../../common/parse";
 
@@ -185,4 +185,209 @@ test("parse() rejects percentage in z component of a translate3d", (t) => {
 
     t(actual.isErr());
   }
+});
+
+test("parse() accepts calculation in translate function", (t) => {
+  const actual = serialize("translate(calc(2px + 10%), calc(1em * 2))");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "translate",
+    x: {
+      type: "length-percentage",
+      math: {
+        type: "math expression",
+        expression: {
+          type: "calculation",
+          arguments: [
+            {
+              type: "sum",
+              operands: [
+                {
+                  type: "value",
+                  value: { type: "length", unit: "px", value: 2 },
+                },
+                { type: "value", value: { type: "percentage", value: 0.1 } },
+              ],
+            },
+          ],
+        },
+      },
+    },
+    y: {
+      type: "length",
+      math: {
+        type: "math expression",
+        expression: {
+          type: "value",
+          value: { type: "length", unit: "em", value: 2 },
+        },
+      },
+    },
+    z: _0,
+  });
+});
+
+test("parse() accepts calculation in translateX function", (t) => {
+  const actual = serialize("translateX(calc(2px + 10%))");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "translate",
+    x: {
+      type: "length-percentage",
+      math: {
+        type: "math expression",
+        expression: {
+          type: "calculation",
+          arguments: [
+            {
+              type: "sum",
+              operands: [
+                {
+                  type: "value",
+                  value: { type: "length", unit: "px", value: 2 },
+                },
+                { type: "value", value: { type: "percentage", value: 0.1 } },
+              ],
+            },
+          ],
+        },
+      },
+    },
+    y: _0,
+    z: _0,
+  });
+});
+
+test("parse() accepts calculation in translateY function", (t) => {
+  const actual = serialize("translateY(calc(1em * 2))");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "translate",
+    x: _0,
+    y: {
+      type: "length",
+      math: {
+        type: "math expression",
+        expression: {
+          type: "value",
+          value: { type: "length", unit: "em", value: 2 },
+        },
+      },
+    },
+    z: _0,
+  });
+});
+
+test("parse() accepts calculation in translateZ function", (t) => {
+  const actual = serialize("translateZ(calc(1em * 2))");
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "translate",
+    x: _0,
+    y: _0,
+    z: {
+      type: "length",
+      math: {
+        type: "math expression",
+        expression: {
+          type: "value",
+          value: { type: "length", unit: "em", value: 2 },
+        },
+      },
+    },
+  });
+});
+
+test("parse() accepts calculation in translate3d function", (t) => {
+  const actual = serialize(
+    "translate3d(calc(2px + 10%), calc(1em + 1px), calc(1em * 2))"
+  );
+
+  t.deepEqual(actual, {
+    type: "transform",
+    kind: "translate",
+    x: {
+      type: "length-percentage",
+      math: {
+        type: "math expression",
+        expression: {
+          type: "calculation",
+          arguments: [
+            {
+              type: "sum",
+              operands: [
+                {
+                  type: "value",
+                  value: { type: "length", unit: "px", value: 2 },
+                },
+                { type: "value", value: { type: "percentage", value: 0.1 } },
+              ],
+            },
+          ],
+        },
+      },
+    },
+    y: {
+      type: "length",
+      math: {
+        type: "math expression",
+        expression: {
+          type: "calculation",
+          arguments: [
+            {
+              operands: [
+                {
+                  type: "value",
+                  value: { type: "length", unit: "em", value: 1 },
+                },
+                {
+                  type: "value",
+                  value: { type: "length", unit: "px", value: 1 },
+                },
+              ],
+              type: "sum",
+            },
+          ],
+        },
+      },
+    },
+    z: {
+      type: "length",
+      math: {
+        type: "math expression",
+        expression: {
+          type: "value",
+          value: { type: "length", unit: "em", value: 2 },
+        },
+      },
+    },
+  });
+});
+
+test("resolve() resolves a Translate", (t) => {
+  const actual = parseErr(
+    "translate3d(calc(2px + 10%), calc(1em + 1px), calc(1em * 2))"
+  ).getUnsafe();
+
+  const resolved = actual.resolve({
+    length: Length.resolver(
+      Length.of(16, "px"),
+      Length.of(16, "px"),
+      Length.of(16, "px"),
+      Length.of(16, "px")
+    ),
+    percentageBase: Length.of(10, "px"),
+  });
+
+  t.deepEqual(resolved.toJSON(), {
+    type: "transform",
+    kind: "translate",
+    x: { type: "length", unit: "px", value: 3 },
+    y: { type: "length", unit: "px", value: 17 },
+    z: { type: "length", unit: "px", value: 32 },
+  });
 });

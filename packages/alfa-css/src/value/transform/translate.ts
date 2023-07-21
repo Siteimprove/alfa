@@ -7,7 +7,9 @@ import {
 } from "../../syntax";
 import { List } from "../collection";
 
-import { Length, LengthPercentage, Percentage } from "../numeric";
+import { Length, LengthPercentage } from "../numeric";
+import { Resolvable } from "../resolvable";
+import { Value } from "../value";
 
 import { Function } from "./function";
 
@@ -17,24 +19,28 @@ const { map, either, parseIf } = Parser;
  * @public
  */
 export class Translate<
-  X extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
-  Y extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
-  Z extends Length.Fixed = Length.Fixed
-> extends Function<"translate", false> {
+    X extends LengthPercentage = LengthPercentage,
+    Y extends LengthPercentage = LengthPercentage,
+    Z extends Length = Length,
+    CALC extends boolean = boolean
+  >
+  extends Function<"translate", CALC>
+  implements Resolvable<Translate.Canonical, Translate.Resolver>
+{
   public static of<
-    X extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
-    Y extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed,
-    Z extends Length.Fixed = Length.Fixed
-  >(x: X, y: Y, z: Z): Translate<X, Y, Z> {
-    return new Translate(x, y, z);
+    X extends LengthPercentage = LengthPercentage,
+    Y extends LengthPercentage = LengthPercentage,
+    Z extends Length = Length
+  >(x: X, y: Y, z: Z): Translate<X, Y, Z, Value.HasCalculation<[X, Y, Z]>> {
+    return new Translate(x, y, z, Value.hasCalculation(x, y, z));
   }
 
   private readonly _x: X;
   private readonly _y: Y;
   private readonly _z: Z;
 
-  private constructor(x: X, y: Y, z: Z) {
-    super("translate", false);
+  private constructor(x: X, y: Y, z: Z, hasCalculation: CALC) {
+    super("translate", hasCalculation);
     this._x = x;
     this._y = y;
     this._z = z;
@@ -52,8 +58,13 @@ export class Translate<
     return this._z;
   }
 
-  public resolve(): Translate<X, Y, Z> {
-    return this;
+  public resolve(resolver: Translate.Resolver): Translate.Canonical {
+    return new Translate(
+      LengthPercentage.resolve(resolver)(this._x),
+      LengthPercentage.resolve(resolver)(this._y),
+      this._z.resolve(resolver),
+      false
+    );
   }
 
   public equals(value: unknown): value is this {
@@ -79,9 +90,9 @@ export class Translate<
   }
 
   public toString(): string {
-    if (this._z.value === 0) {
+    if (!this._z.hasCalculation() && this._z.value === 0) {
       return `translate(${this._x}${
-        this._y.value === 0 ? "" : `, ${this._y}`
+        !this._y.hasCalculation() && this._y.value === 0 ? "" : `, ${this._y}`
       })`;
     }
 
@@ -94,21 +105,30 @@ export class Translate<
  */
 export namespace Translate {
   export type Canonical = Translate<
-    Length.Canonical | Percentage.Canonical,
-    Length.Canonical | Percentage.Canonical,
-    Length.Canonical
+    LengthPercentage.Canonical,
+    LengthPercentage.Canonical,
+    Length.Canonical,
+    false
   >;
 
+  // export type PartiallyResolved = Translate<
+  //   LengthPercentage.PartiallyResolved,
+  //   LengthPercentage.PartiallyResolved,
+  //   Length.Canonical
+  // >;
+
   export interface JSON extends Function.JSON<"translate"> {
-    x: Length.Fixed.JSON | Percentage.Fixed.JSON;
-    y: Length.Fixed.JSON | Percentage.Fixed.JSON;
-    z: Length.Fixed.JSON;
+    x: LengthPercentage.JSON;
+    y: LengthPercentage.JSON;
+    z: Length.JSON;
   }
 
+  export type Resolver = LengthPercentage.Resolver;
+
   export function isTranslate<
-    X extends Length.Fixed | Percentage.Fixed,
-    Y extends Length.Fixed | Percentage.Fixed,
-    Z extends Length.Fixed
+    X extends LengthPercentage,
+    Y extends LengthPercentage,
+    Z extends Length
   >(value: unknown): value is Translate<X, Y, Z> {
     return value instanceof Translate;
   }
@@ -122,11 +142,7 @@ export namespace Translate {
     CSSFunction.parse(
       "translate",
       map(
-        List.parseCommaSeparated(
-          either(Length.parseBase, Percentage.parseBase),
-          1,
-          2
-        ),
+        List.parseCommaSeparated(LengthPercentage.parse, 1, 2),
         (list) => list.values
       )
     ),
@@ -138,10 +154,7 @@ export namespace Translate {
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translatex}
    */
   const parseTranslateX = map(
-    CSSFunction.parse(
-      "translateX",
-      either(Length.parseBase, Percentage.parseBase)
-    ),
+    CSSFunction.parse("translateX", LengthPercentage.parse),
     ([_, x]) => Translate.of(x, _0, _0)
   );
 
@@ -149,18 +162,15 @@ export namespace Translate {
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-translatey}
    */
   const parseTranslateY = map(
-    CSSFunction.parse(
-      "translateY",
-      either(Length.parseBase, Percentage.parseBase)
-    ),
+    CSSFunction.parse("translateY", LengthPercentage.parse),
     ([_, y]) => Translate.of(_0, y, _0)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-translatez}
    */
-  const parseTranslateZ = map(
-    CSSFunction.parse("translateZ", Length.parseBase),
+  const parseTranslateZ: CSSParser<Translate> = map(
+    CSSFunction.parse("translateZ", Length.parse),
     ([_, z]) => Translate.of(_0, _0, z)
   );
 
@@ -173,18 +183,14 @@ export namespace Translate {
       parseIf(
         (values: ReadonlyArray<LengthPercentage>) => Length.isLength(values[2]),
         map(
-          List.parseCommaSeparated(
-            either(Length.parseBase, Percentage.parseBase),
-            3,
-            3
-          ),
+          List.parseCommaSeparated(LengthPercentage.parse, 3, 3),
           (list) => list.values
         ),
         () => "The z component of translate3d must be a length"
       )
     ),
     // The type of z is ensured by parseIf.
-    ([_, [x, y, z]]) => Translate.of(x, y, z as Length.Fixed)
+    ([_, [x, y, z]]) => Translate.of(x, y, z as Length)
   );
 
   export const parse: CSSParser<Translate> = either(
