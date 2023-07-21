@@ -165,7 +165,7 @@ export namespace Rotate {
       "rotate3d",
       pair(
         map(
-          List.parseCommaSeparated(Number.parseBase, 3, 3),
+          List.parseCommaSeparated(Number.parse, 3, 3),
           (list) => list.values
         ),
         right(
