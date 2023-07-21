@@ -2463,7 +2463,7 @@ export namespace RGB {
 }
 
 // @public (undocumented)
-export class Rotate extends Function_3<"rotate", false> implements Resolvable<Rotate.Canonical, unknown> {
+export class Rotate extends Function_3<"rotate", false> implements Resolvable<Rotate.Canonical, never> {
     // (undocumented)
     get angle(): Angle.Canonical;
     // (undocumented)
@@ -2508,7 +2508,7 @@ export namespace Rotate {
 }
 
 // @public (undocumented)
-export class Scale extends Function_3<"scale", false> implements Resolvable<Scale.Canonical, unknown> {
+export class Scale extends Function_3<"scale", false> implements Resolvable<Scale.Canonical, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -2646,7 +2646,7 @@ export namespace Shape {
 }
 
 // @public (undocumented)
-export class Skew extends Function_3<"skew", false> implements Resolvable<Skew.Canonical, unknown> {
+export class Skew extends Function_3<"skew", false> implements Resolvable<Skew.Canonical, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
