@@ -111,11 +111,11 @@ export namespace Translate {
     false
   >;
 
-  // export type PartiallyResolved = Translate<
-  //   LengthPercentage.PartiallyResolved,
-  //   LengthPercentage.PartiallyResolved,
-  //   Length.Canonical
-  // >;
+  export type PartiallyResolved = Translate<
+    LengthPercentage.PartiallyResolved,
+    LengthPercentage.PartiallyResolved,
+    Length.Canonical
+  >;
 
   export interface JSON extends Function.JSON<"translate"> {
     x: LengthPercentage.JSON;
@@ -125,6 +125,19 @@ export namespace Translate {
 
   export type Resolver = LengthPercentage.Resolver;
 
+  export type PartialResolver = LengthPercentage.PartialResolver &
+    Length.Resolver;
+
+  export function partiallyResolve(
+    resolver: PartialResolver
+  ): (value: Translate) => PartiallyResolved {
+    return (value) =>
+      Translate.of(
+        LengthPercentage.partiallyResolve(resolver)(value.x),
+        LengthPercentage.partiallyResolve(resolver)(value.x),
+        value.z.resolve(resolver)
+      );
+  }
   export function isTranslate<
     X extends LengthPercentage,
     Y extends LengthPercentage,

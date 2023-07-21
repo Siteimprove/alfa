@@ -38,6 +38,31 @@ export namespace Transform {
     | Skew.Canonical
     | Translate.Canonical;
 
+  export type Resolver = LengthPercentage.Resolver;
+
+  export function resolve(resolver: Resolver): (value: Transform) => Canonical {
+    return (value) => value.resolve(resolver);
+  }
+
+  export type PartiallyResolved =
+    | Matrix.Canonical
+    | Perspective.Canonical
+    | Rotate.Canonical
+    | Scale.Canonical
+    | Skew.Canonical
+    | Translate.PartiallyResolved;
+
+  export type PartialResolver = Translate.PartialResolver;
+
+  export function partiallyResolve(
+    resolver: PartialResolver
+  ): (value: Transform) => PartiallyResolved {
+    return (value) =>
+      Translate.isTranslate(value)
+        ? Translate.partiallyResolve(resolver)(value)
+        : value.resolve(resolver);
+  }
+
   export function matrix(...values: Matrix.Values<Number>): Matrix {
     return Matrix.of(...values);
   }
