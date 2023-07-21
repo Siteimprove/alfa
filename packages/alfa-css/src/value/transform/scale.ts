@@ -16,7 +16,7 @@ const { map, either } = Parser;
  */
 export class Scale
   extends Function<"scale", false>
-  implements Resolvable<Scale.Canonical, unknown>
+  implements Resolvable<Scale.Canonical, never>
 {
   public static of(x: Number, y: Number): Scale {
     return new Scale(x.resolve(), y.resolve());

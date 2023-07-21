@@ -16,7 +16,7 @@ const { map, either } = Parser;
  */
 export class Skew
   extends Function<"skew", false>
-  implements Resolvable<Skew.Canonical, unknown>
+  implements Resolvable<Skew.Canonical, never>
 {
   public static of(x: Angle, y: Angle): Skew {
     return new Skew(x.resolve(), y.resolve());

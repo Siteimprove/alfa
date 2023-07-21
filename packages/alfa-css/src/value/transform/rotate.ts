@@ -16,7 +16,7 @@ const { map, right, pair, either, delimited, option } = Parser;
  */
 export class Rotate
   extends Function<"rotate", false>
-  implements Resolvable<Rotate.Canonical, unknown>
+  implements Resolvable<Rotate.Canonical, never>
 {
   public static of<A extends Angle>(
     x: Number,
