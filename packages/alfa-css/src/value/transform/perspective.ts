@@ -17,23 +17,18 @@ const { map, filter } = Parser;
 /**
  * @public
  */
-export class Perspective<
-    D extends Length = Length,
-    CALC extends boolean = boolean
-  >
-  extends Function<"perspective", CALC>
+export class Perspective<D extends Length = Length>
+  extends Function<"perspective", Value.HasCalculation<[D]>>
   implements Resolvable<Perspective.Canonical, Perspective.Resolver>
 {
-  public static of<D extends Length>(
-    depth: D
-  ): Perspective<D, Value.HasCalculation<[D]>> {
-    return new Perspective(depth, Value.hasCalculation(depth));
+  public static of<D extends Length>(depth: D): Perspective<D> {
+    return new Perspective(depth);
   }
 
   private readonly _depth: D;
 
-  private constructor(depth: D, hasCalculation: CALC) {
-    super("perspective", hasCalculation);
+  private constructor(depth: D) {
+    super("perspective", Value.hasCalculation(depth));
     this._depth = depth;
   }
 
@@ -42,7 +37,7 @@ export class Perspective<
   }
 
   public resolve(resolver: Perspective.Resolver): Perspective.Canonical {
-    return new Perspective(this._depth.resolve(resolver), false);
+    return new Perspective(this._depth.resolve(resolver));
   }
 
   public equals(value: unknown): value is this {
@@ -69,7 +64,7 @@ export class Perspective<
  * @public
  */
 export namespace Perspective {
-  export type Canonical = Perspective<Length.Canonical, false>;
+  export type Canonical = Perspective<Length.Canonical>;
 
   export interface JSON extends Function.JSON<"perspective"> {
     depth: Length.JSON;

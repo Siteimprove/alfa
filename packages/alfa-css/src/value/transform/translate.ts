@@ -21,26 +21,25 @@ const { map, either, parseIf } = Parser;
 export class Translate<
     X extends LengthPercentage = LengthPercentage,
     Y extends LengthPercentage = LengthPercentage,
-    Z extends Length = Length,
-    CALC extends boolean = boolean
+    Z extends Length = Length
   >
-  extends Function<"translate", CALC>
+  extends Function<"translate", Value.HasCalculation<[X, Y, Z]>>
   implements Resolvable<Translate.Canonical, Translate.Resolver>
 {
   public static of<
     X extends LengthPercentage = LengthPercentage,
     Y extends LengthPercentage = LengthPercentage,
     Z extends Length = Length
-  >(x: X, y: Y, z: Z): Translate<X, Y, Z, Value.HasCalculation<[X, Y, Z]>> {
-    return new Translate(x, y, z, Value.hasCalculation(x, y, z));
+  >(x: X, y: Y, z: Z): Translate<X, Y, Z> {
+    return new Translate(x, y, z);
   }
 
   private readonly _x: X;
   private readonly _y: Y;
   private readonly _z: Z;
 
-  private constructor(x: X, y: Y, z: Z, hasCalculation: CALC) {
-    super("translate", hasCalculation);
+  private constructor(x: X, y: Y, z: Z) {
+    super("translate", Value.hasCalculation(x, y, z));
     this._x = x;
     this._y = y;
     this._z = z;
@@ -62,8 +61,7 @@ export class Translate<
     return new Translate(
       LengthPercentage.resolve(resolver)(this._x),
       LengthPercentage.resolve(resolver)(this._y),
-      this._z.resolve(resolver),
-      false
+      this._z.resolve(resolver)
     );
   }
 
@@ -107,8 +105,7 @@ export namespace Translate {
   export type Canonical = Translate<
     LengthPercentage.Canonical,
     LengthPercentage.Canonical,
-    Length.Canonical,
-    false
+    Length.Canonical
   >;
 
   export type PartiallyResolved = Translate<
