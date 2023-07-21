@@ -1181,8 +1181,10 @@ export namespace LengthPercentage {
     export function of(value: Math_2<"length-percentage">): Calculated;
     // (undocumented)
     export function of(value: Math_2<"percentage">): Percentage.Calculated;
-    export function partiallyResolve(resolver: Length.Resolver): (value: LengthPercentage) => PartiallyResolved;
+    export function partiallyResolve(resolver: PartialResolver): (value: LengthPercentage) => PartiallyResolved;
     export type PartiallyResolved = Canonical | Percentage.Canonical | LengthPercentage.Calculated;
+    // (undocumented)
+    export type PartialResolver = Length.Resolver;
     export function resolve(resolver: Resolver): (value: LengthPercentage) => Canonical;
     // (undocumented)
     export type Resolver = Length.Resolver & Percentage.Resolver<"length", Canonical>;
@@ -1453,13 +1455,13 @@ export { Math_2 as Math }
 // Warning: (ae-forgotten-export) The symbol "Function" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export class Matrix extends Function_3<"matrix"> {
+export class Matrix extends Function_3<"matrix", false> implements Resolvable<Matrix.Canonical, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of(...values: Matrix.Values<Number_2.Fixed>): Matrix;
+    static of(...values: Matrix.Values<Number_2>): Matrix;
     // (undocumented)
     resolve(): Matrix;
     // (undocumented)
@@ -1467,11 +1469,13 @@ export class Matrix extends Function_3<"matrix"> {
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get values(): Matrix.Values<Number_2.Fixed>;
+    get values(): Matrix.Values<Number_2.Canonical>;
 }
 
 // @public (undocumented)
 export namespace Matrix {
+    // (undocumented)
+    export type Canonical = Matrix;
     // (undocumented)
     export function isMatrix(value: unknown): value is Matrix;
     // (undocumented)
@@ -1938,7 +1942,7 @@ namespace Percentage_2 {
 }
 
 // @public (undocumented)
-export class Perspective<D extends Length.Fixed = Length.Fixed> extends Function_3<"perspective"> {
+export class Perspective<D extends Length = Length> extends Function_3<"perspective", Value.HasCalculation<[D]>> implements Resolvable<Perspective.Canonical, Perspective.Resolver> {
     // (undocumented)
     get depth(): D;
     // (undocumented)
@@ -1946,9 +1950,9 @@ export class Perspective<D extends Length.Fixed = Length.Fixed> extends Function
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<D extends Length.Fixed>(depth: D): Perspective<D>;
+    static of<D extends Length>(depth: D): Perspective<D>;
     // (undocumented)
-    resolve(): Perspective<D>;
+    resolve(resolver: Perspective.Resolver): Perspective.Canonical;
     // (undocumented)
     toJSON(): Perspective.JSON;
     // (undocumented)
@@ -1964,8 +1968,10 @@ export namespace Perspective {
     // (undocumented)
     export interface JSON extends Function_3.JSON<"perspective"> {
         // (undocumented)
-        depth: Length.Fixed.JSON;
+        depth: Length.JSON;
     }
+    // (undocumented)
+    export type Resolver = Length.Resolver;
     const // (undocumented)
     parse: Parser<Perspective>;
 }
@@ -2457,39 +2463,39 @@ export namespace RGB {
 }
 
 // @public (undocumented)
-export class Rotate<A extends Angle.Fixed = Angle.Fixed> extends Function_3<"rotate"> {
+export class Rotate extends Function_3<"rotate", false> implements Resolvable<Rotate.Canonical, never> {
     // (undocumented)
-    get angle(): A;
+    get angle(): Angle.Canonical;
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<A extends Angle.Fixed>(x: Number_2.Fixed, y: Number_2.Fixed, z: Number_2.Fixed, angle: A): Rotate<A>;
+    static of<A extends Angle>(x: Number_2, y: Number_2, z: Number_2, angle: A): Rotate;
     // (undocumented)
-    resolve(): Rotate<A>;
+    resolve(): Rotate;
     // (undocumented)
     toJSON(): Rotate.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get x(): Number_2.Fixed;
+    get x(): Number_2.Canonical;
     // (undocumented)
-    get y(): Number_2.Fixed;
+    get y(): Number_2.Canonical;
     // (undocumented)
-    get z(): Number_2.Fixed;
+    get z(): Number_2.Canonical;
 }
 
 // @public (undocumented)
 export namespace Rotate {
     // (undocumented)
-    export type Canonical = Rotate<Angle.Canonical>;
+    export type Canonical = Rotate;
     // (undocumented)
-    export function isRotate<A extends Angle.Fixed>(value: unknown): value is Rotate<A>;
+    export function isRotate(value: unknown): value is Rotate;
     // (undocumented)
     export interface JSON extends Function_3.JSON<"rotate"> {
         // (undocumented)
-        angle: Angle.Fixed.JSON;
+        angle: Angle.Fixed.JSON<"deg">;
         // (undocumented)
         x: Number_2.Fixed.JSON;
         // (undocumented)
@@ -2502,7 +2508,7 @@ export namespace Rotate {
 }
 
 // @public (undocumented)
-export class Scale extends Function_3<"scale"> {
+export class Scale extends Function_3<"scale", false> implements Resolvable<Scale.Canonical, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -2510,7 +2516,7 @@ export class Scale extends Function_3<"scale"> {
     // (undocumented)
     get kind(): "scale";
     // (undocumented)
-    static of(x: Number_2.Fixed, y: Number_2.Fixed): Scale;
+    static of(x: Number_2, y: Number_2): Scale;
     // (undocumented)
     resolve(): Scale;
     // (undocumented)
@@ -2518,13 +2524,15 @@ export class Scale extends Function_3<"scale"> {
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get x(): Number_2.Fixed;
+    get x(): Number_2.Canonical;
     // (undocumented)
-    get y(): Number_2.Fixed;
+    get y(): Number_2.Canonical;
 }
 
 // @public (undocumented)
 export namespace Scale {
+    // (undocumented)
+    export type Canonical = Scale;
     // (undocumented)
     export function isScale(value: unknown): value is Scale;
     // (undocumented)
@@ -2638,31 +2646,31 @@ export namespace Shape {
 }
 
 // @public (undocumented)
-export class Skew<X extends Angle.Fixed = Angle.Fixed, Y extends Angle.Fixed = Angle.Fixed> extends Function_3<"skew"> {
+export class Skew extends Function_3<"skew", false> implements Resolvable<Skew.Canonical, never> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<X extends Angle.Fixed, Y extends Angle.Fixed>(x: X, y: Y): Skew<X, Y>;
+    static of(x: Angle, y: Angle): Skew;
     // (undocumented)
-    resolve(): Skew<X, Y>;
+    resolve(): Skew;
     // (undocumented)
     toJSON(): Skew.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get x(): X;
+    get x(): Angle.Canonical;
     // (undocumented)
-    get y(): Y;
+    get y(): Angle.Canonical;
 }
 
 // @public (undocumented)
 export namespace Skew {
     // (undocumented)
-    export type Canonical = Skew<Angle.Canonical, Angle.Canonical>;
+    export type Canonical = Skew;
     // (undocumented)
-    export function isSkew<X extends Angle.Fixed, Y extends Angle.Fixed>(value: unknown): value is Skew<X, Y>;
+    export function isSkew(value: unknown): value is Skew;
     // (undocumented)
     export interface JSON extends Function_3.JSON<"skew"> {
         // (undocumented)
@@ -3494,19 +3502,29 @@ export type Transform = Matrix | Perspective | Rotate | Scale | Skew | Translate
 // @public (undocumented)
 export namespace Transform {
     // (undocumented)
-    export type Canonical = Matrix | Perspective.Canonical | Rotate.Canonical | Scale | Skew.Canonical | Translate.Canonical;
+    export type Canonical = Matrix.Canonical | Perspective.Canonical | Rotate.Canonical | Scale.Canonical | Skew.Canonical | Translate.Canonical;
     // (undocumented)
-    export function matrix(...values: Matrix.Values<Number_2.Fixed>): Matrix;
+    export function matrix(...values: Matrix.Values<Number_2>): Matrix;
     // (undocumented)
-    export function perspective<D extends Length.Fixed>(depth: D): Perspective<D>;
+    export function partiallyResolve(resolver: PartialResolver): (value: Transform) => PartiallyResolved;
     // (undocumented)
-    export function rotate<A extends Angle.Fixed>(x: Number_2.Fixed, y: Number_2.Fixed, z: Number_2.Fixed, angle: A): Rotate<A>;
+    export type PartiallyResolved = Matrix.Canonical | Perspective.Canonical | Rotate.Canonical | Scale.Canonical | Skew.Canonical | Translate.PartiallyResolved;
     // (undocumented)
-    export function scale(x: Number_2.Fixed, y: Number_2.Fixed): Scale;
+    export type PartialResolver = Translate.PartialResolver;
     // (undocumented)
-    export function skew<X extends Angle.Fixed, Y extends Angle.Fixed>(x: X, y: Y): Skew<X, Y>;
+    export function perspective<D extends Length>(depth: D): Perspective<D>;
     // (undocumented)
-    export function translate<X extends Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed, Z extends Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
+    export function resolve(resolver: Resolver): (value: Transform) => Canonical;
+    // (undocumented)
+    export type Resolver = LengthPercentage.Resolver;
+    // (undocumented)
+    export function rotate(x: Number_2, y: Number_2, z: Number_2, angle: Angle): Rotate;
+    // (undocumented)
+    export function scale(x: Number_2, y: Number_2): Scale;
+    // (undocumented)
+    export function skew(x: Angle, y: Angle): Skew;
+    // (undocumented)
+    export function translate<X extends LengthPercentage, Y extends LengthPercentage, Z extends Length>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
     const // @internal (undocumented)
     parse: Parser_2<Slice<Token>, Transform, string, []>;
     const // (undocumented)
@@ -3514,15 +3532,15 @@ export namespace Transform {
 }
 
 // @public (undocumented)
-export class Translate<X extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed, Z extends Length.Fixed = Length.Fixed> extends Function_3<"translate"> {
+export class Translate<X extends LengthPercentage = LengthPercentage, Y extends LengthPercentage = LengthPercentage, Z extends Length = Length> extends Function_3<"translate", Value.HasCalculation<[X, Y, Z]>> implements Resolvable<Translate.Canonical, Translate.Resolver> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<X extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed, Z extends Length.Fixed = Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
+    static of<X extends LengthPercentage = LengthPercentage, Y extends LengthPercentage = LengthPercentage, Z extends Length = Length>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
     // (undocumented)
-    resolve(): Translate<X, Y, Z>;
+    resolve(resolver: Translate.Resolver): Translate.Canonical;
     // (undocumented)
     toJSON(): Translate.JSON;
     // (undocumented)
@@ -3538,18 +3556,26 @@ export class Translate<X extends Length.Fixed | Percentage.Fixed = Length.Fixed 
 // @public (undocumented)
 export namespace Translate {
     // (undocumented)
-    export type Canonical = Translate<Length.Canonical | Percentage.Canonical, Length.Canonical | Percentage.Canonical, Length.Canonical>;
+    export type Canonical = Translate<LengthPercentage.Canonical, LengthPercentage.Canonical, Length.Canonical>;
     // (undocumented)
-    export function isTranslate<X extends Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed, Z extends Length.Fixed>(value: unknown): value is Translate<X, Y, Z>;
+    export function isTranslate<X extends LengthPercentage, Y extends LengthPercentage, Z extends Length>(value: unknown): value is Translate<X, Y, Z>;
     // (undocumented)
     export interface JSON extends Function_3.JSON<"translate"> {
         // (undocumented)
-        x: Length.Fixed.JSON | Percentage.Fixed.JSON;
+        x: LengthPercentage.JSON;
         // (undocumented)
-        y: Length.Fixed.JSON | Percentage.Fixed.JSON;
+        y: LengthPercentage.JSON;
         // (undocumented)
-        z: Length.Fixed.JSON;
+        z: Length.JSON;
     }
+    // (undocumented)
+    export function partiallyResolve(resolver: PartialResolver): (value: Translate) => PartiallyResolved;
+    // (undocumented)
+    export type PartiallyResolved = Translate<LengthPercentage.PartiallyResolved, LengthPercentage.PartiallyResolved, Length.Canonical>;
+    // (undocumented)
+    export type PartialResolver = LengthPercentage.PartialResolver & Length.Resolver;
+    // (undocumented)
+    export type Resolver = LengthPercentage.Resolver;
     const // (undocumented)
     parse: Parser<Translate>;
 }
