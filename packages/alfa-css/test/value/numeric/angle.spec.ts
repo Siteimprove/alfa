@@ -1,13 +1,14 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Angle, Lexer } from "../../../src";
+import { Angle } from "../../../src";
 
-function parse(input: string) {
-  return Angle.parse(Lexer.lex(input)).map(([, angle]) => angle);
-}
+import { parser, serializer } from "../../common/parse";
+
+const parse = parser(Angle.parse);
+const serialize = serializer(Angle.parse);
 
 test("parse() accepts angles", (t) => {
-  t.deepEqual(parse("2deg").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("2deg"), {
     type: "angle",
     value: 2,
     unit: "deg",
@@ -15,7 +16,7 @@ test("parse() accepts angles", (t) => {
 });
 
 test("parse() accepts math expressions reducing to angles", (t) => {
-  t.deepEqual(parse("calc(2deg + 1turn)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc(2deg + 1turn)"), {
     type: "angle",
     math: {
       type: "math expression",

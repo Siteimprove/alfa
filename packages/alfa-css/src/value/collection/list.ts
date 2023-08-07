@@ -116,17 +116,32 @@ export namespace List {
     return value instanceof List;
   }
 
-  function parse(
+  function parse<V extends Value>(
+    parseValue: CSSParser<V>,
     separator: string,
-    parseSeparator: CSSParser<any>
-  ): <V extends Value>(parseValue: CSSParser<V>) => CSSParser<List<V>> {
-    return (parseValue) =>
-      map(separatedList(parseValue, parseSeparator), (values) =>
-        List.of(values, separator)
-      );
+    parseSeparator: CSSParser<any>,
+    lower: number,
+    upper: number
+  ): CSSParser<List<V>> {
+    return map(
+      separatedList(parseValue, parseSeparator, lower, upper),
+      (values) => List.of(values, separator)
+    );
   }
 
   const parseComma = delimited(option(Token.parseWhitespace), Token.parseComma);
 
-  export const parseCommaSeparated = parse(", ", parseComma);
+  const parseSpace = option(Token.parseWhitespace);
+
+  export const parseCommaSeparated = <V extends Value>(
+    parseValue: CSSParser<V>,
+    lower: number = 1,
+    upper: number = Infinity
+  ) => parse(parseValue, ", ", parseComma, lower, upper);
+
+  export const parseSpaceSeparated = <V extends Value>(
+    parseValue: CSSParser<V>,
+    lower: number = 1,
+    upper: number = Infinity
+  ) => parse(parseValue, " ", parseSpace, lower, upper);
 }

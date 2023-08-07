@@ -85,6 +85,7 @@
     "src/value/transform/transform.ts",
     "src/value/transform/translate.ts",
     "src/value/value.ts",
+    "test/common/parse.ts",
     "test/syntax/block.spec.ts",
     "test/syntax/component.spec.ts",
     "test/syntax/declaration.spec.ts",
@@ -114,7 +115,13 @@
     "test/value/shape/ellipse.spec.ts",
     "test/value/shape/inset.spec.ts",
     "test/value/shape/polygon.spec.ts",
-    "test/value/shape/rectangle.spec.ts"
+    "test/value/shape/rectangle.spec.ts",
+    "test/value/transform/matrix.spec.ts",
+    "test/value/transform/perspective.spec.ts",
+    "test/value/transform/rotate.spec.ts",
+    "test/value/transform/scale.spec.ts",
+    "test/value/transform/skew.spec.ts",
+    "test/value/transform/translate.spec.ts"
   ],
   "references": [
     { "path": "../alfa-array" },

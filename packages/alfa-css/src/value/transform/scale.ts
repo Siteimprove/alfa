@@ -1,26 +1,31 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { Function as CSSFunction } from "../../syntax";
 
+import { List } from "../collection";
 import { Number } from "../numeric";
+import { Resolvable } from "../resolvable";
 
 import { Function } from "./function";
 
-const { map, left, right, pair, either, delimited, option } = Parser;
+const { map, either } = Parser;
 
 /**
  * @public
  */
-export class Scale extends Function<"scale"> {
-  public static of(x: Number.Fixed, y: Number.Fixed): Scale {
-    return new Scale(x, y);
+export class Scale
+  extends Function<"scale", false>
+  implements Resolvable<Scale.Canonical, never>
+{
+  public static of(x: Number, y: Number): Scale {
+    return new Scale(x.resolve(), y.resolve());
   }
 
-  private readonly _x: Number.Fixed;
-  private readonly _y: Number.Fixed;
+  private readonly _x: Number.Canonical;
+  private readonly _y: Number.Canonical;
 
-  private constructor(x: Number.Fixed, y: Number.Fixed) {
+  private constructor(x: Number.Canonical, y: Number.Canonical) {
     super("scale", false);
     this._x = x;
     this._y = y;
@@ -30,11 +35,11 @@ export class Scale extends Function<"scale"> {
     return "scale";
   }
 
-  public get x(): Number.Fixed {
+  public get x(): Number.Canonical {
     return this._x;
   }
 
-  public get y(): Number.Fixed {
+  public get y(): Number.Canonical {
     return this._y;
   }
 
@@ -83,6 +88,7 @@ export class Scale extends Function<"scale"> {
  * @public
  */
 export namespace Scale {
+  export type Canonical = Scale;
   export interface JSON extends Function.JSON<"scale"> {
     x: Number.Fixed.JSON;
     y: Number.Fixed.JSON;
@@ -96,62 +102,26 @@ export namespace Scale {
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scale}
    */
   const parseScale = map(
-    right(
-      Token.parseFunction("scale"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            Number.parseBase,
-            option(
-              right(
-                delimited(option(Token.parseWhitespace), Token.parseComma),
-                Number.parseBase
-              )
-            )
-          )
-        ),
-        Token.parseCloseParenthesis
-      )
+    CSSFunction.parse(
+      "scale",
+      map(List.parseCommaSeparated(Number.parse, 1, 2), (list) => list.values)
     ),
-    (result) => {
-      const [x, y] = result;
-
-      return Scale.of(x, y.getOr(x));
-    }
+    ([_, [x, y]]) => Scale.of(x, y ?? x)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scalex}
    */
-  const parseScaleX = map(
-    right(
-      Token.parseFunction("scaleX"),
-      left(
-        delimited(option(Token.parseWhitespace), Number.parseBase),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (x) => Scale.of(x, Number.of(1))
+  const parseScaleX = map(CSSFunction.parse("scaleX", Number.parse), ([_, x]) =>
+    Scale.of(x, Number.of(1))
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-scaley}
    */
-  const parseScaleY = map(
-    right(
-      Token.parseFunction("scaleY"),
-      left(
-        delimited(option(Token.parseWhitespace), Number.parseBase),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (y) => Scale.of(Number.of(1), y)
+  const parseScaleY = map(CSSFunction.parse("scaleY", Number.parse), ([_, y]) =>
+    Scale.of(Number.of(1), y)
   );
 
-  export const parse: CSSParser<Scale> = either(
-    parseScale,
-    parseScaleX,
-    parseScaleY
-  );
+  export const parse = either(parseScale, parseScaleX, parseScaleY);
 }

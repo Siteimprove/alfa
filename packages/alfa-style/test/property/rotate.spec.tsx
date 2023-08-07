@@ -60,3 +60,30 @@ test("#computed() resolves `rotate: 1 0.3 5 10deg`", (t) => {
     source: h.declaration("rotate", "1 0.3 5 10deg").toJSON(),
   });
 });
+
+test("rotate accepts calculations", (t) => {
+  const element = (
+    <div
+      style={{ rotate: "calc(1 + 1) calc(2 - 1) calc(2*2) calc(1deg + 1turn)" }}
+    />
+  );
+
+  const style = Style.from(element, device);
+
+  t.deepEqual(style.computed("rotate").toJSON(), {
+    value: {
+      type: "transform",
+      kind: "rotate",
+      x: { type: "number", value: 2 },
+      y: { type: "number", value: 1 },
+      z: { type: "number", value: 4 },
+      angle: { type: "angle", value: 361, unit: "deg" },
+    },
+    source: h
+      .declaration(
+        "rotate",
+        "calc(1 + 1) calc(2 - 1) calc(2*2) calc(1deg + 1turn)"
+      )
+      .toJSON(),
+  });
+});

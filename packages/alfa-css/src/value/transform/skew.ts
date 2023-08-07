@@ -1,47 +1,45 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Unit } from "../../unit";
+import { Function as CSSFunction } from "../../syntax";
+import { List } from "../collection";
 
 import { Angle, Number } from "../numeric";
+import { Resolvable } from "../resolvable";
 
 import { Function } from "./function";
 
-const { map, left, right, pair, either, delimited, option } = Parser;
+const { map, either } = Parser;
 
 /**
  * @public
  */
-export class Skew<
-  X extends Angle.Fixed = Angle.Fixed,
-  Y extends Angle.Fixed = Angle.Fixed
-> extends Function<"skew"> {
-  public static of<X extends Angle.Fixed, Y extends Angle.Fixed>(
-    x: X,
-    y: Y
-  ): Skew<X, Y> {
-    return new Skew(x, y);
+export class Skew
+  extends Function<"skew", false>
+  implements Resolvable<Skew.Canonical, never>
+{
+  public static of(x: Angle, y: Angle): Skew {
+    return new Skew(x.resolve(), y.resolve());
   }
 
-  private readonly _x: X;
-  private readonly _y: Y;
+  private readonly _x: Angle.Canonical;
+  private readonly _y: Angle.Canonical;
 
-  private constructor(x: X, y: Y) {
+  private constructor(x: Angle.Canonical, y: Angle.Canonical) {
     super("skew", false);
     this._x = x;
     this._y = y;
   }
 
-  public get x(): X {
+  public get x(): Angle.Canonical {
     return this._x;
   }
 
-  public get y(): Y {
+  public get y(): Angle.Canonical {
     return this._y;
   }
 
-  public resolve(): Skew<X, Y> {
+  public resolve(): Skew {
     return this;
   }
 
@@ -82,86 +80,53 @@ export class Skew<
  * @public
  */
 export namespace Skew {
-  export type Canonical = Skew<Angle.Canonical, Angle.Canonical>;
+  export type Canonical = Skew;
+
   export interface JSON extends Function.JSON<"skew"> {
     x: Angle.Fixed.JSON;
     y: Angle.Fixed.JSON;
   }
 
-  export function isSkew<X extends Angle.Fixed, Y extends Angle.Fixed>(
-    value: unknown
-  ): value is Skew<X, Y> {
+  export function isSkew(value: unknown): value is Skew {
     return value instanceof Skew;
   }
 
+  const _0 = Angle.of(0, "deg");
+
   const parseAngleOrZero = either(
-    Angle.parseBase,
-    map(Number.parseZero, () => Angle.of<Unit.Angle>(0, "deg"))
+    Angle.parse,
+    map(Number.parseZero, () => _0)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skew}
    */
   const parseSkew = map(
-    right(
-      Token.parseFunction("skew"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            parseAngleOrZero,
-            option(
-              right(
-                delimited(option(Token.parseWhitespace), Token.parseComma),
-                parseAngleOrZero
-              )
-            )
-          )
-        ),
-        Token.parseCloseParenthesis
+    CSSFunction.parse(
+      "skew",
+      map(
+        List.parseCommaSeparated(parseAngleOrZero, 1, 2),
+        (list) => list.values
       )
     ),
-    (result) => {
-      const [x, y] = result;
-
-      return Skew.of<Angle.Fixed, Angle.Fixed>(
-        x,
-        y.getOrElse(() => Angle.of(0, "deg"))
-      );
-    }
+    ([_, [x, y]]) => Skew.of(x, y ?? _0)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skewx}
    */
   const parseSkewX = map(
-    right(
-      Token.parseFunction("skewX"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (x) => Skew.of<Angle.Fixed, Angle.Fixed>(x, Angle.of(0, "deg"))
+    CSSFunction.parse("skewX", parseAngleOrZero),
+    ([_, x]) => Skew.of(x, _0)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-skewy}
    */
   const parseSkewY = map(
-    right(
-      Token.parseFunction("skewY"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (y) => Skew.of<Angle.Fixed, Angle.Fixed>(Angle.of(0, "deg"), y)
+    CSSFunction.parse("skewY", parseAngleOrZero),
+    ([_, y]) => Skew.of(_0, y)
   );
 
-  export const parse: CSSParser<Skew> = either(
-    parseSkew,
-    parseSkewX,
-    parseSkewY
-  );
+  export const parse = either(parseSkew, parseSkewX, parseSkewY);
 }

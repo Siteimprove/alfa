@@ -1,28 +1,31 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { Function as CSSFunction } from "../../syntax";
 
 import { Length } from "../numeric";
+import { Resolvable } from "../resolvable";
+import { Value } from "../value";
 
 import { Function } from "./function";
 
-const { map, left, right, filter, delimited, option } = Parser;
+const { map, filter } = Parser;
 
 /**
  * @public
  */
-export class Perspective<
-  D extends Length.Fixed = Length.Fixed
-> extends Function<"perspective"> {
-  public static of<D extends Length.Fixed>(depth: D): Perspective<D> {
+export class Perspective<D extends Length = Length>
+  extends Function<"perspective", Value.HasCalculation<[D]>>
+  implements Resolvable<Perspective.Canonical, Perspective.Resolver>
+{
+  public static of<D extends Length>(depth: D): Perspective<D> {
     return new Perspective(depth);
   }
 
   private readonly _depth: D;
 
   private constructor(depth: D) {
-    super("perspective", false);
+    super("perspective", Value.hasCalculation(depth));
     this._depth = depth;
   }
 
@@ -30,8 +33,8 @@ export class Perspective<
     return this._depth;
   }
 
-  public resolve(): Perspective<D> {
-    return this;
+  public resolve(resolver: Perspective.Resolver): Perspective.Canonical {
+    return new Perspective(this._depth.resolve(resolver));
   }
 
   public equals(value: unknown): value is this {
@@ -61,8 +64,10 @@ export namespace Perspective {
   export type Canonical = Perspective<Length.Canonical>;
 
   export interface JSON extends Function.JSON<"perspective"> {
-    depth: Length.Fixed.JSON;
+    depth: Length.JSON;
   }
+
+  export type Resolver = Length.Resolver;
 
   export function isPerspective<D extends Length.Fixed>(
     value: unknown
@@ -73,21 +78,16 @@ export namespace Perspective {
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-perspective}
    */
-  export const parse: CSSParser<Perspective> = map(
-    right(
-      Token.parseFunction("perspective"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          filter(
-            Length.parseBase,
-            (length) => length.value >= 0,
-            () => "Depth cannot be less than 0"
-          )
-        ),
-        Token.parseCloseParenthesis
+  export const parse = map(
+    CSSFunction.parse(
+      "perspective",
+      filter(
+        Length.parse,
+        // {@link https://drafts.csswg.org/css-values/#calc-range}
+        (length) => length.hasCalculation() || length.value >= 0,
+        () => "Depth cannot be less than 0"
       )
     ),
-    (depth) => Perspective.of(depth)
+    ([_, depth]) => Perspective.of(depth)
   );
 }

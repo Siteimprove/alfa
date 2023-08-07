@@ -1,8 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer, RGB } from "../../../src";
+import { RGB } from "../../../src";
 
-const parse = (str: string) => RGB.parse(Lexer.lex(str)).getUnsafe()[1];
+import { parser, parserUnsafe } from "../../common/parse";
+
+const parse = parserUnsafe(RGB.parse);
+const parseErr = parser(RGB.parse);
 
 test("parse() accepts legacy syntax with numbers", (t) => {
   const expected: RGB.JSON = {
@@ -92,7 +95,7 @@ test("parse() refuses mixing numbers and percentages", (t) => {
     "rgba(100%, 255, 100)",
     "rgba(100, 255, 100%)",
   ]) {
-    t.deepEqual(RGB.parse(Lexer.lex(str)).isErr(), true);
+    t.deepEqual(parseErr(str).isErr(), true);
   }
 });
 
@@ -123,7 +126,7 @@ test("parse() rejects `none` in legacy syntax", (t) => {
     "rgba(100, none, 0)",
     "rgba(100, 255, 255, none)",
   ]) {
-    t.deepEqual(RGB.parse(Lexer.lex(str)).isErr(), true);
+    t.deepEqual(parseErr(str).isErr(), true);
   }
 });
 

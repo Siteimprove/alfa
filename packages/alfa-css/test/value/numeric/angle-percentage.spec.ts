@@ -1,25 +1,22 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Angle, AnglePercentage, Lexer } from "../../../src";
+import { Angle, AnglePercentage } from "../../../src";
 
-function parse(input: string) {
-  return AnglePercentage.parse(Lexer.lex(input)).map(([, angle]) => angle);
-}
+import { parser, serializer } from "../../common/parse";
+
+const parse = parser(AnglePercentage.parse);
+const serialize = serializer(AnglePercentage.parse);
 
 const resolver: AnglePercentage.Resolver = {
   percentageBase: Angle.of(90, "deg"),
 };
 
 test("parse() accepts angles", (t) => {
-  t.deepEqual(parse("2rad").getUnsafe().toJSON(), {
-    type: "angle",
-    value: 2,
-    unit: "rad",
-  });
+  t.deepEqual(serialize("2rad"), { type: "angle", value: 2, unit: "rad" });
 });
 
 test("parse() accepts math expressions reducing to angles", (t) => {
-  t.deepEqual(parse("calc(2deg + 1turn)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc(2deg + 1turn)"), {
     type: "angle",
     math: {
       type: "math expression",
@@ -32,23 +29,17 @@ test("parse() accepts math expressions reducing to angles", (t) => {
 });
 
 test("parse() accepts math expressions reducing to percentages", (t) => {
-  t.deepEqual(parse("calc((12% + 9%) * 2)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc((12% + 9%) * 2)"), {
     type: "percentage",
     math: {
       type: "math expression",
-      expression: {
-        type: "value",
-        value: {
-          type: "percentage",
-          value: 0.42,
-        },
-      },
+      expression: { type: "value", value: { type: "percentage", value: 0.42 } },
     },
   });
 });
 
 test("parse() accepts math expressions mixing angles and percentages", (t) => {
-  t.deepEqual(parse("calc(10deg + 5%)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc(10deg + 5%)"), {
     type: "angle-percentage",
     math: {
       type: "math expression",
@@ -62,10 +53,7 @@ test("parse() accepts math expressions mixing angles and percentages", (t) => {
                 type: "value",
                 value: { type: "angle", value: 10, unit: "deg" },
               },
-              {
-                type: "value",
-                value: { type: "percentage", value: 0.05 },
-              },
+              { type: "value", value: { type: "percentage", value: 0.05 } },
             ],
           },
         ],
@@ -75,7 +63,7 @@ test("parse() accepts math expressions mixing angles and percentages", (t) => {
 });
 
 test("parse() accepts percentages", (t) => {
-  t.deepEqual(parse("20%").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("20%"), {
     type: "percentage",
     value: 0.2,
   });
@@ -100,11 +88,7 @@ test("resolve() returns canonical angles", (t) => {
 test("resolve() resolves angle calculations", (t) => {
   t.deepEqual(
     parse("calc(0.5turn + 90deg)").getUnsafe().resolve(resolver).toJSON(),
-    {
-      type: "angle",
-      value: 270,
-      unit: "deg",
-    }
+    { type: "angle", value: 270, unit: "deg" }
   );
 });
 
@@ -119,21 +103,13 @@ test("resolve() resolves pure percentages", (t) => {
 test("resolve() resolves percentage calculations", (t) => {
   t.deepEqual(
     parse("calc((12% + 9%) * 2)").getUnsafe().resolve(resolver).toJSON(),
-    {
-      type: "angle",
-      value: 37.8,
-      unit: "deg",
-    }
+    { type: "angle", value: 37.8, unit: "deg" }
   );
 });
 
 test("resolve() resolves mix of angles and percentages", (t) => {
   t.deepEqual(
     parse("calc(0.5turn + 10%)").getUnsafe().resolve(resolver).toJSON(),
-    {
-      type: "angle",
-      value: 189,
-      unit: "deg",
-    }
+    { type: "angle", value: 189, unit: "deg" }
   );
 });

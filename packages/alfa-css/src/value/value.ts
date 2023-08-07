@@ -33,6 +33,7 @@ export abstract class Value<
 {
   private readonly _type: T;
   protected readonly _hasCalculation: CALC;
+
   protected constructor(type: T, hasCalculation: CALC) {
     this._type = type;
     this._hasCalculation = hasCalculation;

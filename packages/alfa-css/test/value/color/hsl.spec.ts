@@ -1,8 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { HSL, Lexer } from "../../../src";
+import { HSL } from "../../../src";
 
-const parse = (str: string) => HSL.parse(Lexer.lex(str)).getUnsafe()[1];
+import { parser, parserUnsafe } from "../../common/parse";
+
+const parse = parserUnsafe(HSL.parse);
+const parseErr = parser(HSL.parse);
 
 test("parse() accepts legacy syntax with percentages", (t) => {
   const expected = (type: "angle" | "number"): HSL.JSON => ({
@@ -59,7 +62,7 @@ test("parse() rejects numbers for saturation and lightness", (t) => {
     "hsl(0, 0, 100%)",
     "hsl(0, 100%, 1, 1)",
   ]) {
-    t.deepEqual(HSL.parse(Lexer.lex(color)).isErr(), true);
+    t.deepEqual(parseErr(color).isErr(), true);
   }
 });
 
@@ -90,7 +93,7 @@ test("parse() rejects `none` in legacy syntax", (t) => {
     "hsla(100, none, 0)",
     "hsl(100, 255, 255, none)",
   ]) {
-    t.deepEqual(HSL.parse(Lexer.lex(str)).isErr(), true);
+    t.deepEqual(parseErr(str).isErr(), true);
   }
 });
 

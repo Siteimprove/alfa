@@ -46,6 +46,12 @@ export namespace Resolvable {
    * The type of the resolver needed to resolve a given Value.
    */
   export type Resolver<V extends Value> = UnionToIntersection<
-    V extends Resolvable<Value<string, false>, infer R> ? R : never
+    // We first need to remove the `never` resolver from the union, to avoid
+    // everything collapsing to `unknown`.
+    V extends Resolvable<Value<string, false>, never>
+      ? never
+      : V extends Resolvable<Value<string, false>, infer R>
+      ? R
+      : never
   >;
 }
