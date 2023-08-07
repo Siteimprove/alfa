@@ -4,7 +4,6 @@
 
 ```ts
 
-import { Angle } from '@siteimprove/alfa-css';
 import { Applicative } from '@siteimprove/alfa-applicative';
 import { Array as Array_2 } from '@siteimprove/alfa-array';
 import { Box } from '@siteimprove/alfa-css';
@@ -222,7 +221,7 @@ export namespace Longhands {
         readonly "border-top-right-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage], boolean>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage], boolean>>;
         readonly "border-top-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-top-width": Longhand<Specified, Length>;
-        readonly bottom: Longhand<Keyword<"auto"> | LengthPercentage, LengthPercentage | Keyword<"auto">>;
+        readonly bottom: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         readonly "box-shadow": Longhand<Keyword<"none"> | List<Shadow<Length, Length, Length, Length, Color, boolean>, boolean>, Keyword<"none"> | List<Shadow.Canonical, boolean>>;
         readonly "clip-path": Longhand<URL | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>, URL | Keyword<"none"> | Shape<Shape.Basic, Box.Geometry>>;
         readonly clip: Longhand<Keyword<"auto"> | Shape<Rectangle<Length<Unit.Length> | Rectangle.Auto>, Keyword<"border-box">>, Keyword<"auto"> | Shape<Rectangle<Length<Unit.Length> | Rectangle.Auto>, Keyword<"border-box">>>;
@@ -243,11 +242,11 @@ export namespace Longhands {
         readonly "font-variant-position": Longhand<Keyword.ToKeywords<"sub" | "normal" | "super">, Keyword.ToKeywords<"sub" | "normal" | "super">>;
         readonly "font-weight": Longhand<Number_2 | Keyword<"normal"> | Keyword<"bold"> | Keyword<"bolder"> | Keyword<"lighter">, Number_2.Fixed>;
         readonly height: Longhand<Percentage | Length | Keyword<"auto">, Percentage.Canonical | Length | Keyword<"auto">>;
-        readonly "inset-block-end": Longhand<Keyword<"auto"> | LengthPercentage, LengthPercentage | Keyword<"auto">>;
-        readonly "inset-block-start": Longhand<Keyword<"auto"> | LengthPercentage, LengthPercentage | Keyword<"auto">>;
-        readonly "inset-inline-end": Longhand<Keyword<"auto"> | LengthPercentage, LengthPercentage | Keyword<"auto">>;
-        readonly "inset-inline-start": Longhand<Keyword<"auto"> | LengthPercentage, LengthPercentage | Keyword<"auto">>;
-        readonly left: Longhand<Keyword<"auto"> | LengthPercentage, LengthPercentage | Keyword<"auto">>;
+        readonly "inset-block-end": Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
+        readonly "inset-block-start": Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
+        readonly "inset-inline-end": Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
+        readonly "inset-inline-start": Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
+        readonly left: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         readonly "letter-spacing": Longhand<Length | Keyword<"normal">, Length>;
         readonly "line-height": Longhand<Number_2 | LengthPercentage | Keyword<"normal">, Computed>;
         readonly "margin-bottom": Longhand<Percentage | Length | Keyword<"auto">, Percentage | Length | Keyword<"auto">>;
@@ -264,19 +263,19 @@ export namespace Longhands {
         readonly "overflow-x": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"scroll"> | Keyword<"auto"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
         readonly "overflow-y": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"scroll"> | Keyword<"auto"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
         readonly position: Longhand<Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">, Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">>;
-        readonly right: Longhand<Keyword<"auto"> | LengthPercentage, LengthPercentage | Keyword<"auto">>;
-        readonly rotate: Longhand<Keyword<"none"> | Rotate<Angle.Fixed<Unit.Angle>>, Rotate.Canonical | Keyword<"none">>;
+        readonly right: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
+        readonly rotate: Longhand<Rotate | Keyword<"none">, Rotate | Keyword<"none">>;
         readonly "text-align": Longhand<Keyword.ToKeywords<"left" | "right" | "center" | "start" | "end" | "justify">, Keyword.ToKeywords<"left" | "right" | "center" | "start" | "end" | "justify">>;
         readonly "text-decoration-color": Longhand<Color, Color.Canonical>;
         readonly "text-decoration-line": Longhand<Keyword<"none"> | List<Keyword<"underline"> | Keyword<"overline"> | Keyword<"line-through"> | Keyword<"blink">, boolean>, Keyword<"none"> | List<Keyword<"underline"> | Keyword<"overline"> | Keyword<"line-through"> | Keyword<"blink">, boolean>>;
         readonly "text-decoration-style": Longhand<Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">, Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">>;
-        readonly "text-decoration-thickness": Longhand<Keyword<"auto"> | LengthPercentage | Keyword<"from-font">, Length | Keyword<"auto"> | Keyword<"from-font">>;
+        readonly "text-decoration-thickness": Longhand<LengthPercentage | Keyword<"auto"> | Keyword<"from-font">, Length | Keyword<"auto"> | Keyword<"from-font">>;
         readonly "text-indent": Longhand<Length | Length<Unit.Length> | LengthPercentage | Percentage.Calculated<Numeric.Type> | Percentage.Fixed<Numeric.Type>, LengthPercentage>;
         readonly "text-overflow": Longhand<Keyword.ToKeywords<"clip" | "ellipsis">, Keyword.ToKeywords<"clip" | "ellipsis">>;
         readonly "text-shadow": Longhand<Keyword<"none"> | List<Shadow<Length, Length, Length, Length, Color, boolean>, boolean>, Keyword<"none"> | List<Shadow.Canonical, boolean>>;
         readonly "text-transform": Longhand<Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">, Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">>;
-        readonly top: Longhand<Keyword<"auto"> | LengthPercentage, LengthPercentage | Keyword<"auto">>;
-        readonly transform: Longhand<Keyword<"none"> | List<Transform, boolean>, Keyword<"none"> | List<Transform.Canonical, boolean>>;
+        readonly top: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
+        readonly transform: Longhand<Keyword<"none"> | List<Transform, boolean>, Keyword<"none"> | List<Transform.PartiallyResolved, boolean>>;
         readonly "vertical-align": Longhand<LengthPercentage | (Keyword<"top"> | Keyword<"bottom"> | Keyword<"sub"> | Keyword<"super"> | Keyword<"baseline"> | Keyword<"text-top"> | Keyword<"text-bottom"> | Keyword<"middle">), Length | (Keyword<"top"> | Keyword<"bottom"> | Keyword<"sub"> | Keyword<"super"> | Keyword<"baseline"> | Keyword<"text-top"> | Keyword<"text-bottom"> | Keyword<"middle">)>;
         readonly visibility: Longhand<Keyword.ToKeywords<"hidden" | "collapse" | "visible">, Keyword.ToKeywords<"hidden" | "collapse" | "visible">>;
         readonly "white-space": Longhand<Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">, Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">>;

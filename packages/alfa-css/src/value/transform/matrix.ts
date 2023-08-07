@@ -1,30 +1,39 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { Function as CSSFunction } from "../../syntax";
 
+import { List } from "../collection";
 import { Number } from "../numeric";
+import { Resolvable } from "../resolvable";
 
 import { Function } from "./function";
 
-const { map, left, right, pair, either, take, delimited, option } = Parser;
+const { map, either } = Parser;
 
 /**
  * @public
  */
-export class Matrix extends Function<"matrix"> {
-  public static of(...values: Matrix.Values<Number.Fixed>): Matrix {
-    return new Matrix(values);
+export class Matrix
+  extends Function<"matrix", false>
+  implements Resolvable<Matrix.Canonical, never>
+{
+  public static of(...values: Matrix.Values<Number>): Matrix {
+    return new Matrix(
+      values.map((row) =>
+        row.map((value) => value.resolve())
+      ) as Matrix.Values<Number.Canonical>
+    );
   }
 
-  private readonly _values: Matrix.Values<Number.Fixed>;
+  private readonly _values: Matrix.Values<Number.Canonical>;
 
-  private constructor(values: Matrix.Values<Number.Fixed>) {
+  private constructor(values: Matrix.Values<Number.Canonical>) {
     super("matrix", false);
     this._values = values;
   }
 
-  public get values(): Matrix.Values<Number.Fixed> {
+  public get values(): Matrix.Values<Number.Canonical> {
     return this._values;
   }
 
@@ -87,6 +96,8 @@ export class Matrix extends Function<"matrix"> {
  * @public
  */
 export namespace Matrix {
+  export type Canonical = Matrix;
+
   export interface JSON extends Function.JSON<"matrix"> {
     values: Values<Number.Fixed.JSON>;
   }
@@ -102,79 +113,48 @@ export namespace Matrix {
     return value instanceof Matrix;
   }
 
+  const _0 = Number.of(0);
+  const _1 = Number.of(1);
+
+  const parseValues = (name: string, quantity: number) =>
+    CSSFunction.parse(
+      name,
+      map(
+        List.parseCommaSeparated(Number.parse, quantity, quantity),
+        (list) => list.values
+      )
+    );
+
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-matrix}
    */
-  const parseMatrix = map(
-    right(
-      Token.parseFunction("matrix"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            Number.parseBase,
-            take(
-              right(
-                delimited(option(Token.parseWhitespace), Token.parseComma),
-                Number.parseBase
-              ),
-              5
-            )
-          )
-        ),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (result) => {
-      const _0 = Number.of(0);
-      const _1 = Number.of(1);
+  const parseMatrix = map(parseValues("matrix", 6), (result) => {
+    const [_, [_a, _b, _c, _d, _e, _f]] = result;
 
-      const [_a, [_b, _c, _d, _e, _f]] = result;
-
-      return Matrix.of(
-        [_a, _c, _0, _e],
-        [_b, _d, _0, _f],
-        [_0, _0, _1, _0],
-        [_0, _0, _0, _1]
-      );
-    }
-  );
+    return Matrix.of(
+      [_a, _c, _0, _e],
+      [_b, _d, _0, _f],
+      [_0, _0, _1, _0],
+      [_0, _0, _0, _1]
+    );
+  });
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-matrix3d}
    */
-  const parseMatrix3d = map(
-    right(
-      Token.parseFunction("matrix3d"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            Number.parseBase,
-            take(
-              right(
-                delimited(option(Token.parseWhitespace), Token.parseComma),
-                Number.parseBase
-              ),
-              15
-            )
-          )
-        ),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (result) => {
-      const [_a, [_b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p]] =
-        result;
+  const parseMatrix3d = map(parseValues("matrix3d", 16), (result) => {
+    const [
+      _,
+      [_a, _b, _c, _d, _e, _f, _g, _h, _i, _j, _k, _l, _m, _n, _o, _p],
+    ] = result;
 
-      return Matrix.of(
-        [_a, _e, _i, _m],
-        [_b, _f, _j, _n],
-        [_c, _g, _k, _o],
-        [_d, _h, _l, _p]
-      );
-    }
-  );
+    return Matrix.of(
+      [_a, _e, _i, _m],
+      [_b, _f, _j, _n],
+      [_c, _g, _k, _o],
+      [_d, _h, _l, _p]
+    );
+  });
 
-  export const parse: CSSParser<Matrix> = either(parseMatrix, parseMatrix3d);
+  export const parse = either(parseMatrix, parseMatrix3d);
 }

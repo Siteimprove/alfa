@@ -1,10 +1,10 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, LengthPercentage, Lexer, Tuple } from "../../../src";
+import { Length, LengthPercentage, Tuple } from "../../../src";
 
-function parse(str: string): LengthPercentage {
-  return LengthPercentage.parse(Lexer.lex(str)).getUnsafe()[1];
-}
+import { parserUnsafe } from "../../common/parse";
+
+const parse = parserUnsafe(LengthPercentage.parse);
 
 const absolute = parse("1px");
 const relative = parse("2em");

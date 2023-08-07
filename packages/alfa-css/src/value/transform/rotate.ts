@@ -1,40 +1,42 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Unit } from "../../unit";
+import { Function as CSSFunction, Token } from "../../syntax";
+import { List } from "../collection";
 
 import { Angle, Number } from "../numeric";
+import { Resolvable } from "../resolvable";
 
 import { Function } from "./function";
 
-const { map, left, right, pair, either, delimited, option } = Parser;
+const { map, right, pair, either, delimited, option } = Parser;
 
 /**
  * @public
  */
-export class Rotate<
-  A extends Angle.Fixed = Angle.Fixed
-> extends Function<"rotate"> {
-  public static of<A extends Angle.Fixed>(
-    x: Number.Fixed,
-    y: Number.Fixed,
-    z: Number.Fixed,
+export class Rotate
+  extends Function<"rotate", false>
+  implements Resolvable<Rotate.Canonical, never>
+{
+  public static of<A extends Angle>(
+    x: Number,
+    y: Number,
+    z: Number,
     angle: A
-  ): Rotate<A> {
-    return new Rotate(x, y, z, angle);
+  ): Rotate {
+    return new Rotate(x.resolve(), y.resolve(), z.resolve(), angle.resolve());
   }
 
-  private readonly _x: Number.Fixed;
-  private readonly _y: Number.Fixed;
-  private readonly _z: Number.Fixed;
-  private readonly _angle: A;
+  private readonly _x: Number.Canonical;
+  private readonly _y: Number.Canonical;
+  private readonly _z: Number.Canonical;
+  private readonly _angle: Angle.Canonical;
 
   private constructor(
-    x: Number.Fixed,
-    y: Number.Fixed,
-    z: Number.Fixed,
-    angle: A
+    x: Number.Canonical,
+    y: Number.Canonical,
+    z: Number.Canonical,
+    angle: Angle.Canonical
   ) {
     super("rotate", false);
     this._x = x;
@@ -43,23 +45,23 @@ export class Rotate<
     this._angle = angle;
   }
 
-  public get x(): Number.Fixed {
+  public get x(): Number.Canonical {
     return this._x;
   }
 
-  public get y(): Number.Fixed {
+  public get y(): Number.Canonical {
     return this._y;
   }
 
-  public get z(): Number.Fixed {
+  public get z(): Number.Canonical {
     return this._z;
   }
 
-  public get angle(): A {
+  public get angle(): Angle.Canonical {
     return this._angle;
   }
 
-  public resolve(): Rotate<A> {
+  public resolve(): Rotate {
     return this;
   }
 
@@ -104,124 +106,82 @@ export class Rotate<
  * @public
  */
 export namespace Rotate {
-  export type Canonical = Rotate<Angle.Canonical>;
-
+  export type Canonical = Rotate;
   export interface JSON extends Function.JSON<"rotate"> {
     x: Number.Fixed.JSON;
     y: Number.Fixed.JSON;
     z: Number.Fixed.JSON;
-    angle: Angle.Fixed.JSON;
+    angle: Angle.Fixed.JSON<"deg">;
   }
 
-  export function isRotate<A extends Angle.Fixed>(
-    value: unknown
-  ): value is Rotate<A> {
+  export function isRotate(value: unknown): value is Rotate {
     return value instanceof Rotate;
   }
 
+  const _0 = Number.of(0);
+  const _1 = Number.of(1);
+
   const parseAngleOrZero = either(
-    Angle.parseBase,
-    map(Number.parseZero, () => Angle.of<Unit.Angle>(0, "deg"))
+    Angle.parse,
+    map(Number.parseZero, () => Angle.of(0, "deg"))
   );
 
-  const parseSeparator = delimited(
-    option(Token.parseWhitespace),
-    Token.parseComma
-  );
+  const parseAxis = (name: string) =>
+    map(CSSFunction.parse(name, parseAngleOrZero), ([_, angle]) => angle);
 
   /**
    * {@link https://drafts.csswg.org/css-transforms/#funcdef-transform-rotate}
    */
-  const parseRotate = map(
-    right(
-      Token.parseFunction("rotate"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (angle) => Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
+  const parseRotate = map(parseAxis("rotate"), (angle) =>
+    Rotate.of(_0, _0, _1, angle)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatex}
    */
-  const parseRotateX = map(
-    right(
-      Token.parseFunction("rotateX"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (angle) => Rotate.of(Number.of(1), Number.of(0), Number.of(0), angle)
+  const parseRotateX = map(parseAxis("rotateX"), (angle) =>
+    Rotate.of(_1, _0, _0, angle)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey}
    */
-  const parseRotateY = map(
-    right(
-      Token.parseFunction("rotateY"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (angle) => Rotate.of(Number.of(0), Number.of(1), Number.of(0), angle)
+  const parseRotateY = map(parseAxis("rotateY"), (angle) =>
+    Rotate.of(_0, _1, _0, angle)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotatey}
    */
-  const parseRotateZ = map(
-    right(
-      Token.parseFunction("rotateZ"),
-      left(
-        delimited(option(Token.parseWhitespace), parseAngleOrZero),
-        Token.parseCloseParenthesis
-      )
-    ),
-    (angle) => Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle)
+  const parseRotateZ = map(parseAxis("rotateZ"), (angle) =>
+    Rotate.of(_0, _0, _1, angle)
   );
 
   /**
    * {@link https://drafts.csswg.org/css-transforms-2/#funcdef-rotate3d}
    */
   const parseRotate3d = map(
-    right(
-      Token.parseFunction("rotate3d"),
-      left(
-        delimited(
-          option(Token.parseWhitespace),
-          pair(
-            Number.parseBase,
-            right(
-              parseSeparator,
-              pair(
-                Number.parseBase,
-                right(
-                  parseSeparator,
-                  pair(
-                    Number.parseBase,
-                    right(parseSeparator, parseAngleOrZero)
-                  )
-                )
-              )
-            )
-          )
+    CSSFunction.parse(
+      "rotate3d",
+      pair(
+        map(
+          List.parseCommaSeparated(Number.parse, 3, 3),
+          (list) => list.values
         ),
-        Token.parseCloseParenthesis
+        right(
+          delimited(option(Token.parseWhitespace), Token.parseComma),
+          parseAngleOrZero
+        )
       )
     ),
     (result) => {
-      const [x, [y, [z, angle]]] = result;
+      const [_, [[x, y, z], angle]] = result;
 
       return Rotate.of(x, y, z, angle);
     }
   );
 
-  export const parse: CSSParser<Rotate> = either(
+  export const parse = either(
     parseRotate,
     parseRotateX,
     parseRotateY,

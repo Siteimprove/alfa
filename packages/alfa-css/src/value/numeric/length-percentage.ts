@@ -122,6 +122,8 @@ export namespace LengthPercentage {
   export type Resolver = Length.Resolver &
     Percentage.Resolver<"length", Canonical>;
 
+  export type PartialResolver = Length.Resolver;
+
   /**
    * Fully resolves a length-percentage, when a full resolver is provided.
    */

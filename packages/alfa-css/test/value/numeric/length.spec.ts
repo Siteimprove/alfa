@@ -1,13 +1,14 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Lexer } from "../../../src";
+import { Length } from "../../../src";
 
-function parse(input: string) {
-  return Length.parse(Lexer.lex(input)).map(([, length]) => length);
-}
+import { parser, serializer } from "../../common/parse";
+
+const parse = parser(Length.parse);
+const serialize = serializer(Length.parse);
 
 test("parse() accepts lengths", (t) => {
-  t.deepEqual(parse("2em").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("2em"), {
     type: "length",
     value: 2,
     unit: "em",
@@ -15,7 +16,7 @@ test("parse() accepts lengths", (t) => {
 });
 
 test("parse() accepts math expressions reducing to lengths", (t) => {
-  t.deepEqual(parse("calc(2px + 1vh)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc(2px + 1vh)"), {
     type: "length",
     math: {
       type: "math expression",

@@ -338,19 +338,30 @@ export namespace Parser {
    *
    * @param parser - Parser for the items in the list
    * @param separator - Parser for the separator between items
+   * @param lower - Minimum number of items to parse, defaults to 1
+   * @param upper - Maximum number of items to parse, defaults to Infinity
    */
   export function separatedList<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    separator: Parser<I, unknown, E, A>
+    separator: Parser<I, unknown, E, A>,
+    lower: number = 1,
+    upper: number = Infinity
   ): Parser<I, [T, ...Array<T>], E, A> {
     return map(
-      pair(parser, zeroOrMore(right(separator, parser))),
+      pair(
+        parser,
+        takeBetween(
+          right(separator, parser),
+          Math.max(0, lower - 1),
+          Math.min(Infinity, upper - 1)
+        )
+      ),
       ([first, rest]) => Array.prepend(rest, first)
     );
   }
 
   /**
-   * Parse if the result satisfies the refinement.
+   * Parse if the result satisfies the predicate or refinement.
    */
   export function parseIf<
     I,
@@ -362,11 +373,29 @@ export namespace Parser {
     refinement: Refinement<T, U>,
     parser: Parser<I, T, E, A>,
     ifError: Mapper<T, E>
-  ): Parser<I, U, E, A> {
+  ): Parser<I, U, E, A>;
+
+  export function parseIf<I, T, E, A extends Array<unknown> = []>(
+    predicate: Predicate<T>,
+    parser: Parser<I, T, E, A>,
+    ifError: Mapper<T, E>
+  ): Parser<I, T, E, A>;
+
+  export function parseIf<
+    I,
+    T,
+    E,
+    U extends T = T,
+    A extends Array<unknown> = []
+  >(
+    refinement: Refinement<T, U> | Predicate<T>,
+    parser: Parser<I, T, E, A>,
+    ifError: Mapper<T, E>
+  ): Parser<I, U, E, A> | Parser<I, T, E, A> {
     return (input, ...args) =>
       parser(input, ...args).flatMap(([rest, result]) =>
         refinement(result)
-          ? Ok.of<[I, U]>([rest, result])
+          ? Ok.of<[I, T]>([rest, result])
           : Err.of(ifError(result))
       );
   }

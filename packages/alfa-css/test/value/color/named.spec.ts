@@ -2,7 +2,10 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Lexer, Named, type RGB } from "../../../src";
 
-const parse = (str: string) => Named.parse(Lexer.lex(str)).getUnsafe()[1];
+import { parser, parserUnsafe } from "../../common/parse";
+
+const parse = parserUnsafe(Named.parse);
+const parseErr = parser(Named.parse);
 
 test("parse() accepts named colors", (t) => {
   const expected = (name: Named.Color): Named.JSON => ({
@@ -18,7 +21,7 @@ test("parse() accepts named colors", (t) => {
 
 test("parse() rejects invalid names", (t) => {
   for (const name of ["foo", "hello", "world"]) {
-    t.deepEqual(Named.parse(Lexer.lex(name)).isErr(), true);
+    t.deepEqual(parseErr(name).isErr(), true);
   }
 });
 

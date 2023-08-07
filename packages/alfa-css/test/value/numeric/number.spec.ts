@@ -1,30 +1,22 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer, Number } from "../../../src";
+import { Number } from "../../../src";
 
-function parse(input: string) {
-  return Number.parse(Lexer.lex(input)).map(([, value]) => value);
-}
+import { parser, serializer } from "../../common/parse";
+
+const parse = parser(Number.parse);
+const serialize = serializer(Number.parse);
 
 test("parse() accepts numbers", (t) => {
-  t.deepEqual(parse("3.14").getUnsafe().toJSON(), {
-    type: "number",
-    value: 3.14,
-  });
+  t.deepEqual(serialize("3.14"), { type: "number", value: 3.14 });
 });
 
 test("parse() accepts math expressions reducing to numbers", (t) => {
-  t.deepEqual(parse("calc((12 + 9) * 2)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc((12 + 9) * 2)"), {
     type: "number",
     math: {
       type: "math expression",
-      expression: {
-        type: "value",
-        value: {
-          type: "number",
-          value: 42,
-        },
-      },
+      expression: { type: "value", value: { type: "number", value: 42 } },
     },
   });
 });

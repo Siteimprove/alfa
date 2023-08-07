@@ -49,6 +49,8 @@ export namespace Parser {
     export function pair<I, T, U, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, U, E, A>): Parser<I, [T, U], E, A>;
     export function parseIf<I, T, E, U extends T = T, A extends Array_2<unknown> = []>(refinement: Refinement<T, U>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, U, E, A>;
     // (undocumented)
+    export function parseIf<I, T, E, A extends Array_2<unknown> = []>(predicate: Predicate<T>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, T, E, A>;
+    // (undocumented)
     export function peek<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
     // (undocumented)
     export function reject<I, T, U extends T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, refinement: Refinement<T, U>, ifError: Mapper<T, E>): Parser<I, Exclude<T, U>, E, A>;
@@ -60,7 +62,7 @@ export namespace Parser {
     export function separated<I, T, U, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>): Parser<I, [T, T], E, A>;
     // (undocumented)
     export function separated<I, T, U, E, A extends Array_2<unknown> = []>(left: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>, right: Parser<I, U, E, A>): Parser<I, [T, U], E, A>;
-    export function separatedList<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>): Parser<I, [T, ...Array_2<T>], E, A>;
+    export function separatedList<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>, lower?: number, upper?: number): Parser<I, [T, ...Array_2<T>], E, A>;
     // (undocumented)
     export function take<I, T, E, A extends Array_2<unknown> = []>(parser: Parser<I, T, E, A>, count: number): Parser<I, Array_2<T>, E, A>;
     // (undocumented)
