@@ -18,6 +18,6 @@ The following is an index of all the architecture decisions taken so far. Whenev
 - [**ADR 14**](decisions/adr-014.md): Implement our own command line wrapper package
 - [**ADR 15**](decisions/adr-015.md): Use (extended) diagnostic in outcomes
 - [**ADR 16**](decisions/adr-016.md): Use enriched questions (rhetorical questions, optional questions, diagnostic)
-- [**ADR 17**](decisions/adr-017.md): Use mutable `Cache` with weak references
+- [**ADR 17**](decisions/adr-017.md): Use mutable `Cache` with weak references for memoization
 - [**ADR 18**](decisions/adr-018.md): Use external layout information
 - [**ADR 19**](decisions/adr-019.md): Keep layout information optional
