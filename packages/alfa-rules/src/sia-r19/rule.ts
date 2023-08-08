@@ -115,7 +115,8 @@ function isValid(attribute: aria.Attribute): boolean {
 }
 
 function treeHasId(id: string, node: Node): boolean {
-  return Query.getElementIdMap(node).has(id);
+  // Since ID are scoped to tree, we need no traversal option to find the root.
+  return Query.getElementIdMap(node.root()).has(id);
 }
 
 /**
