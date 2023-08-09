@@ -7,9 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(): Translate<X, Y, Z>;
+resolve(resolver: Translate.Resolver): Translate.Canonical;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Translate.Resolver](./alfa-css.translate.resolver.md) |  |
+
 <b>Returns:</b>
 
-[Translate](./alfa-css.translate.md)<!-- -->&lt;X, Y, Z&gt;
+[Translate.Canonical](./alfa-css.translate.canonical.md)
 

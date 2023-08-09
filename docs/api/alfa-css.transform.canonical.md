@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Canonical = Matrix | Perspective.Canonical | Rotate.Canonical | Scale | Skew.Canonical | Translate.Canonical;
+type Canonical = Matrix.Canonical | Perspective.Canonical | Rotate.Canonical | Scale.Canonical | Skew.Canonical | Translate.Canonical;
 ```
-<b>References:</b> [Matrix](./alfa-css.matrix.md)<!-- -->, [Perspective.Canonical](./alfa-css.perspective.canonical.md)<!-- -->, [Rotate.Canonical](./alfa-css.rotate.canonical.md)<!-- -->, [Scale](./alfa-css.scale.md)<!-- -->, [Skew.Canonical](./alfa-css.skew.canonical.md)<!-- -->, [Translate.Canonical](./alfa-css.translate.canonical.md)
+<b>References:</b> [Matrix.Canonical](./alfa-css.matrix.canonical.md)<!-- -->, [Perspective.Canonical](./alfa-css.perspective.canonical.md)<!-- -->, [Rotate.Canonical](./alfa-css.rotate.canonical.md)<!-- -->, [Scale.Canonical](./alfa-css.scale.canonical.md)<!-- -->, [Skew.Canonical](./alfa-css.skew.canonical.md)<!-- -->, [Translate.Canonical](./alfa-css.translate.canonical.md)
 

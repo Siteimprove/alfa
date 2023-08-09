@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export type Canonical = Shadow<Length.Canonical, Length.Canonical, Length.Canonical, Length.Canonical, Color.Canonical>;
+type Canonical = Shadow<Length.Canonical, Length.Canonical, Length.Canonical, Length.Canonical, Color.Canonical, false>;
 ```
 <b>References:</b> [Shadow](./alfa-css.shadow.md)<!-- -->, [Length.Canonical](./alfa-css.length.canonical.md)<!-- -->, [Color.Canonical](./alfa-css.color.canonical.md)
 

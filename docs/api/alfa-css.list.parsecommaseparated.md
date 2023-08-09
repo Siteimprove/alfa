@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseCommaSeparated: <V extends Value<string, boolean, string>>(parseValue: CSSParser<V>) => CSSParser<List<V, boolean>>
+parseCommaSeparated: <V extends Value<string, boolean, string>>(parseValue: CSSParser<V>, lower?: number, upper?: number) => CSSParser<List<V, boolean>>
 ```

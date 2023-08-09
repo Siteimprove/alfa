@@ -7,14 +7,14 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(resolver: Length.Resolver): Shadow.Canonical;
+resolve(resolver: Shadow.Resolver): Shadow.Canonical;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [Length.Resolver](./alfa-css.length.resolver.md) |  |
+|  resolver | [Shadow.Resolver](./alfa-css.shadow.resolver.md) |  |
 
 <b>Returns:</b>
 

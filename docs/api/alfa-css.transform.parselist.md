@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-parseList: CSSParser<Array<Transform>>
+parseList: import("../../syntax").Parser<List<Transform, boolean>>
 ```

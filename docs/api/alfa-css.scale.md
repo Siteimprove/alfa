@@ -29,3 +29,9 @@ export declare namespace Scale
 |  --- | --- |
 |  [parse](./alfa-css.scale.parse.md) |  |
 
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.scale.canonical.md) |  |
+

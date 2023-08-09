@@ -33,5 +33,6 @@ export declare namespace Matrix
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [Canonical](./alfa-css.matrix.canonical.md) |  |
 |  [Values](./alfa-css.matrix.values.md) |  |
 
