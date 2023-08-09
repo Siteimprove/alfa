@@ -1,5 +1,11 @@
 # @siteimprove/alfa-rules
 
+## 0.66.0
+
+### Patch Changes
+
+- **Fixed:** SIA-R19 correctly searches for `id` in the full DOM tree again (instead of the subtree of the element). ([#1459](https://github.com/Siteimprove/alfa/pull/1459))
+
 ## 0.65.1
 
 ### Patch Changes

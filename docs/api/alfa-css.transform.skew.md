@@ -7,17 +7,17 @@
 <b>Signature:</b>
 
 ```typescript
-function skew<X extends Angle.Fixed, Y extends Angle.Fixed>(x: X, y: Y): Skew<X, Y>;
+function skew(x: Angle, y: Angle): Skew;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  x | X |  |
-|  y | Y |  |
+|  x | [Angle](./alfa-css.angle.md) |  |
+|  y | [Angle](./alfa-css.angle.md) |  |
 
 <b>Returns:</b>
 
-[Skew](./alfa-css.skew.md)<!-- -->&lt;X, Y&gt;
+[Skew](./alfa-css.skew.md)
 

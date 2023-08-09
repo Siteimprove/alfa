@@ -7,9 +7,16 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(): Perspective<D>;
+resolve(resolver: Perspective.Resolver): Perspective.Canonical;
 ```
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Perspective.Resolver](./alfa-css.perspective.resolver.md) |  |
+
 <b>Returns:</b>
 
-[Perspective](./alfa-css.perspective.md)<!-- -->&lt;D&gt;
+[Perspective.Canonical](./alfa-css.perspective.canonical.md)
 

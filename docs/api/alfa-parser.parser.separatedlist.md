@@ -9,7 +9,7 @@ Parse a separated list containing at least one item
 <b>Signature:</b>
 
 ```typescript
-function separatedList<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>): Parser<I, [T, ...Array<T>], E, A>;
+function separatedList<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>, lower?: number, upper?: number): Parser<I, [T, ...Array<T>], E, A>;
 ```
 
 ## Parameters
@@ -18,6 +18,8 @@ function separatedList<I, T, E, A extends Array<unknown> = []>(parser: Parser<I,
 |  --- | --- | --- |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; | Parser for the items in the list |
 |  separator | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt; | Parser for the separator between items |
+|  lower | number | <i>(Optional)</i> Minimum number of items to parse, defaults to 1 |
+|  upper | number | <i>(Optional)</i> Maximum number of items to parse, defaults to Infinity |
 
 <b>Returns:</b>
 

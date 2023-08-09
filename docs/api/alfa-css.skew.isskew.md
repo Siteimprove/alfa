@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function isSkew<X extends Angle.Fixed, Y extends Angle.Fixed>(value: unknown): value is Skew<X, Y>;
+function isSkew(value: unknown): value is Skew;
 ```
 
 ## Parameters
@@ -18,5 +18,5 @@ function isSkew<X extends Angle.Fixed, Y extends Angle.Fixed>(value: unknown): v
 
 <b>Returns:</b>
 
-value is [Skew](./alfa-css.skew.md)<!-- -->&lt;X, Y&gt;
+value is [Skew](./alfa-css.skew.md)
 

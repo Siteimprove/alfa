@@ -9,5 +9,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: CSSParser<Perspective>
+parse: Parser<import("@siteimprove/alfa-slice").Slice<import("../../syntax").Token>, Perspective<Length<import("../..").Unit.Length>>, string, []>
 ```

@@ -29,4 +29,5 @@ export declare namespace List
 |  Variable | Description |
 |  --- | --- |
 |  [parseCommaSeparated](./alfa-css.list.parsecommaseparated.md) |  |
+|  [parseSpaceSeparated](./alfa-css.list.parsespaceseparated.md) |  |
 

@@ -15,7 +15,7 @@ interface JSON extends Function.JSON<"translate">
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [x](./alfa-css.translate.json.x.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
-|  [y](./alfa-css.translate.json.y.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) |  |
-|  [z](./alfa-css.translate.json.z.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) |  |
+|  [x](./alfa-css.translate.json.x.md) |  | [LengthPercentage.JSON](./alfa-css.lengthpercentage.json.md) |  |
+|  [y](./alfa-css.translate.json.y.md) |  | [LengthPercentage.JSON](./alfa-css.lengthpercentage.json.md) |  |
+|  [z](./alfa-css.translate.json.z.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export function parse(options?: Options): CSSParser<Shadow>;
+function parse(options?: Options): CSSParser<Shadow>;
 ```
 
 ## Parameters
