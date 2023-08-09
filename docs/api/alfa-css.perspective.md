@@ -34,4 +34,5 @@ export declare namespace Perspective
 |  Type Alias | Description |
 |  --- | --- |
 |  [Canonical](./alfa-css.perspective.canonical.md) |  |
+|  [Resolver](./alfa-css.perspective.resolver.md) |  |
 

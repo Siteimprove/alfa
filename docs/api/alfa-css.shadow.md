@@ -22,11 +22,11 @@ export declare namespace Shadow
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-css.shadow.json.md) |  |
-|  [Options](./alfa-css.shadow.options.md) |  |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
 |  [Canonical](./alfa-css.shadow.canonical.md) |  |
+|  [Resolver](./alfa-css.shadow.resolver.md) |  |
 

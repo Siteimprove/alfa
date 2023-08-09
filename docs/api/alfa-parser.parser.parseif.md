@@ -4,7 +4,7 @@
 
 ## Parser.parseIf() function
 
-Parse if the result satisfies the refinement.
+Parse if the result satisfies the predicate or refinement.
 
 <b>Signature:</b>
 

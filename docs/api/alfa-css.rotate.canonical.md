@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Canonical = Rotate<Angle.Canonical>;
+type Canonical = Rotate;
 ```
-<b>References:</b> [Rotate](./alfa-css.rotate.md)<!-- -->, [Angle.Canonical](./alfa-css.angle.canonical.md)
+<b>References:</b> [Rotate](./alfa-css.rotate.md)
 

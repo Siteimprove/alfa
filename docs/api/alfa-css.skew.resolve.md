@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(): Skew<X, Y>;
+resolve(): Skew;
 ```
 <b>Returns:</b>
 
-[Skew](./alfa-css.skew.md)<!-- -->&lt;X, Y&gt;
+[Skew](./alfa-css.skew.md)
 

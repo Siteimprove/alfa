@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: CSSParser<Skew>
+parse: Parser<import("@siteimprove/alfa-slice").Slice<import("../../syntax").Token>, Skew, string, []>
 ```

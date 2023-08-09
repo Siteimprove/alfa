@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: CSSParser<Matrix>
+parse: Parser<import("@siteimprove/alfa-slice").Slice<import("../../syntax").Token>, Matrix, string, []>
 ```

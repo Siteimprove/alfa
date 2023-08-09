@@ -9,14 +9,14 @@ Partially resolves a length-percentage, when only a length resolver is provided.
 <b>Signature:</b>
 
 ```typescript
-export function partiallyResolve(resolver: Length.Resolver): (value: LengthPercentage) => PartiallyResolved;
+export function partiallyResolve(resolver: PartialResolver): (value: LengthPercentage) => PartiallyResolved;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | [Length.Resolver](./alfa-css.length.resolver.md) |  |
+|  resolver | [PartialResolver](./alfa-css.lengthpercentage.partialresolver.md) |  |
 
 <b>Returns:</b>
 

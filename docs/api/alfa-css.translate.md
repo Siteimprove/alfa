@@ -16,6 +16,7 @@ export declare namespace Translate
 |  Function | Description |
 |  --- | --- |
 |  [isTranslate(value)](./alfa-css.translate.istranslate.md) |  |
+|  [partiallyResolve(resolver)](./alfa-css.translate.partiallyresolve.md) |  |
 
 ## Interfaces
 
@@ -34,4 +35,7 @@ export declare namespace Translate
 |  Type Alias | Description |
 |  --- | --- |
 |  [Canonical](./alfa-css.translate.canonical.md) |  |
+|  [PartiallyResolved](./alfa-css.translate.partiallyresolved.md) |  |
+|  [PartialResolver](./alfa-css.translate.partialresolver.md) |  |
+|  [Resolver](./alfa-css.translate.resolver.md) |  |
 

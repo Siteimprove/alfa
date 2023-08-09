@@ -1,5 +1,28 @@
 # @siteimprove/alfa-css
 
+## 0.66.0
+
+### Minor Changes
+
+- **Added:** `Shadow` are now calculatable. ([#1455](https://github.com/Siteimprove/alfa/pull/1455))
+
+- **Added:** A `List.parseSpaceSeparated` parser is now available. ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
+
+- **Added:** CSS `transfrom` functions now accept calculations in any of their numerical components. ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
+
+- **Breaking:** CSS `rotate` and `skew` now convert their angles into degrees at build time. ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
+
+  This means that no matter which angles are provided, only angles in degrees are stored. Serialisation will thus also return values in degrees.
+
+- **Added:** `List.parseCommaSeparated` and `List.parseSpaceSeparated` now accept optional `lower` and ` upper` numbers of items to parse. ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
+
+  If unspecified, they will parse any number of items, otherwise they will parse at least `lower` and at most `upper` items. The parsers will fail if there are less; they won't fail if there are more, but these won't be consumed.
+  The parsers will always accepts at least one item, even if `lower` is 0.
+
+- **Breaking:** The `Transform.parse` parser is now considered `@internal`. ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
+
+  It should not be used externally since individual transform functions are normally only used in contexts where the actual transformation is known in advance, in which case the specific parser (`Matrix.parse`, `Rotate.parse`, …) can be used instead. `Transform.parseList` is still available externally.
+
 ## 0.65.1
 
 ## 0.65.0

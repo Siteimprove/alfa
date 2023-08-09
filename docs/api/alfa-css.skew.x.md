@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get x(): X;
+get x(): Angle.Canonical;
 ```

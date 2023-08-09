@@ -7,19 +7,19 @@
 <b>Signature:</b>
 
 ```typescript
-function rotate<A extends Angle.Fixed>(x: Number.Fixed, y: Number.Fixed, z: Number.Fixed, angle: A): Rotate<A>;
+function rotate(x: Number, y: Number, z: Number, angle: Angle): Rotate;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  x | Number.Fixed |  |
-|  y | Number.Fixed |  |
-|  z | Number.Fixed |  |
-|  angle | A |  |
+|  x | Number |  |
+|  y | Number |  |
+|  z | Number |  |
+|  angle | [Angle](./alfa-css.angle.md) |  |
 
 <b>Returns:</b>
 
-[Rotate](./alfa-css.rotate.md)<!-- -->&lt;A&gt;
+[Rotate](./alfa-css.rotate.md)
 

@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<H extends Length.Fixed = Length.Fixed, V extends Length.Fixed = H, B extends Length.Fixed = Length.Fixed, S extends Length.Fixed = Length.Fixed, C extends Color = Color>(horizontal: H, vertical: V, blur: B, spread: S, color: C, isInset: boolean): Shadow<H, V, B, S, C>;
+static of<H extends Length = Length, V extends Length = H, B extends Length = Length, S extends Length = Length, C extends Color = Color>(horizontal: H, vertical: V, blur: B, spread: S, color: C, isInset: boolean): Shadow<H, V, B, S, C, Value.HasCalculation<[H, V, B, S]>>;
 ```
 
 ## Parameters
@@ -23,5 +23,5 @@ static of<H extends Length.Fixed = Length.Fixed, V extends Length.Fixed = H, B e
 
 <b>Returns:</b>
 
-[Shadow](./alfa-css.shadow.md)<!-- -->&lt;H, V, B, S, C&gt;
+[Shadow](./alfa-css.shadow.md)<!-- -->&lt;H, V, B, S, C, Value.HasCalculation&lt;\[H, V, B, S\]&gt;&gt;
 

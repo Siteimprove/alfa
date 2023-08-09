@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Canonical = Translate<Length.Canonical | Percentage.Canonical, Length.Canonical | Percentage.Canonical, Length.Canonical>;
+type Canonical = Translate<LengthPercentage.Canonical, LengthPercentage.Canonical, Length.Canonical>;
 ```
-<b>References:</b> [Translate](./alfa-css.translate.md)<!-- -->, [Length.Canonical](./alfa-css.length.canonical.md)<!-- -->, [Percentage.Canonical](./alfa-css.percentage.canonical.md)
+<b>References:</b> [Translate](./alfa-css.translate.md)<!-- -->, [LengthPercentage.Canonical](./alfa-css.lengthpercentage.canonical.md)<!-- -->, [Length.Canonical](./alfa-css.length.canonical.md)
 
