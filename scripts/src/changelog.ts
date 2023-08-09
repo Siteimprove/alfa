@@ -4,7 +4,7 @@
  *
  * @remarks
  * This is copied from {@link https://github.com/svitejs/changesets-changelog-github-compact}
- * but removing the list of dependencies updates that is cluttering the packages
+ * by removing the list of dependencies updates that is cluttering the packages
  * changelogs
  */
 
