@@ -10,10 +10,13 @@ import { getElementDescendants } from "./element-descendants";
 const elementMapCache = Cache.empty<Document, Map<string, Element>>();
 
 /**
- * @public
+ * Returns a map from id to elements, in the subtree rooted at a given node.
  *
- * @remarks Since `id` are scoped to trees, and do not cross shadow or content boundaries,
+ * @privateRemarks
+ * Since `id` are scoped to trees, and do not cross shadow or content boundaries,
  * we never need traversal options.
+ *
+ * @public
  */
 export function getElementIdMap(node: Node): Map<string, Element> {
   if (Document.isDocument(node)) {
