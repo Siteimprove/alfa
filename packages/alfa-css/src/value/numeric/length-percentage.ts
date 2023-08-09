@@ -138,8 +138,6 @@ export namespace LengthPercentage {
         : value.resolve(resolver);
   }
 
-  export type PartialResolver = Length.Resolver;
-
   /**
    * Partially resolves a length-percentage, when only a length resolver is
    * provided.
