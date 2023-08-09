@@ -291,6 +291,19 @@ test("evaluate() fails a required aria-controls property pointing to a non-exist
   ]);
 });
 
+test("evaluate() passes a required aria-controls property pointing to an existent ID", async (t) => {
+  const target = <div role="scrollbar" aria-controls="content"></div>;
+  const controlled = <div id="content"></div>;
+
+  const document = h.document([target, controlled]);
+
+  t.deepEqual(await evaluate(R19, { document }), [
+    passed(R19, target.attribute("aria-controls").getUnsafe(), {
+      1: Outcomes.HasValidValue,
+    }),
+  ]);
+});
+
 test("evaluate() is inapplicable when an element does not have any ARIA attribute", async (t) => {
   const document = h.document([<div>Some Content</div>]);
 
