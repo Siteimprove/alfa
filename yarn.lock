@@ -738,6 +738,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@siteimprove/alfa-changelog@workspace:packages/alfa-changelog":
+  version: 0.0.0-use.local
+  resolution: "@siteimprove/alfa-changelog@workspace:packages/alfa-changelog"
+  languageName: unknown
+  linkType: soft
+
 "@siteimprove/alfa-clone@workspace:^0.66.0, @siteimprove/alfa-clone@workspace:packages/alfa-clone":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-clone@workspace:packages/alfa-clone"

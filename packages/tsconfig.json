@@ -13,6 +13,7 @@
     { "path": "alfa-cache" },
     { "path": "alfa-callback" },
     { "path": "alfa-cascade" },
+    { "path": "alfa-changelog" },
     { "path": "alfa-clone" },
     { "path": "alfa-collection" },
     { "path": "alfa-comparable" },
