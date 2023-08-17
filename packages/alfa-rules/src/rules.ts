@@ -3,7 +3,6 @@ export { default as R2 } from "./sia-r2/rule";
 export { default as R3 } from "./sia-r3/rule";
 export { default as R4 } from "./sia-r4/rule";
 export { default as R5 } from "./sia-r5/rule";
-export { default as R6 } from "./sia-r6/rule";
 export { default as R7 } from "./sia-r7/rule";
 export { default as R8 } from "./sia-r8/rule";
 export { default as R9 } from "./sia-r9/rule";
