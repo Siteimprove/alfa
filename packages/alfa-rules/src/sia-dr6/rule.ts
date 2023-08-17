@@ -17,6 +17,8 @@ const { and, not, tee, test } = Predicate;
 
 /**
  * @deprecated
+ * This rule has been deprecated because `xml:lang` attribute are not used
+ * anymore.
  */
 export default Rule.Atomic.of<Page, Element>({
   uri: "https://alfa.siteimprove.com/rules/sia-r6",
