@@ -20,5 +20,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://npm.pkg.github.com/"
+  },
+  "dependencies": {
+    "@svitejs/changesets-changelog-github-compact": "^1.1.0"
   }
 }
