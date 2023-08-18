@@ -2,7 +2,7 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Changeset } from "../../src/changeset/get-changeset-details";
 
-test("Changeset.getDetails accepts a valid changeset with details", (t) => {
+test("getDetails() accepts a valid changeset with details", (t) => {
   for (const kind of Changeset.kinds) {
     t.deepEqual(
       Changeset.getDetails({
@@ -28,7 +28,7 @@ Some clever details.`,
   }
 });
 
-test("Changeset.getDetails accepts a valid changeset without details", (t) => {
+test("getDetails() accepts a valid changeset without details", (t) => {
   for (const kind of Changeset.kinds) {
     t.deepEqual(
       Changeset.getDetails({
@@ -52,7 +52,7 @@ test("Changeset.getDetails accepts a valid changeset without details", (t) => {
   }
 });
 
-test("Changeset.getDetails accepts a valid changeset with multiline details", (t) => {
+test("getDetails() accepts a valid changeset with multiline details", (t) => {
   for (const kind of Changeset.kinds) {
     t.deepEqual(
       Changeset.getDetails({
@@ -82,7 +82,7 @@ over several lines.`,
   }
 });
 
-test("Changeset.getDetails rejects a changeset with incorrect kind", (t) => {
+test("getDetails() rejects a changeset with incorrect kind", (t) => {
   for (const kind of ["hello", "world", "invalid", "added", "fixed"]) {
     t.deepEqual(
       Changeset.getDetails({
@@ -98,7 +98,7 @@ test("Changeset.getDetails rejects a changeset with incorrect kind", (t) => {
   }
 });
 
-test("Changeset.getDetails rejects a changeset with incorrect header", (t) => {
+test("getDetails() rejects a changeset with incorrect header", (t) => {
   for (const summary of [
     "*Added:** hello" /* single starting '*' */,
     "**Added:* hello" /* single ending '*' */,

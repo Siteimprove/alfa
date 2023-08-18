@@ -26,7 +26,7 @@ const config: KnipConfig = {
       project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
     },
     "packages/alfa-toolchain": {
-      entry: ["src/index.ts!", "src/changelog.ts!"],
+      entry: ["src/index.ts!"],
       project: ["src/**/*.ts!", "test/**/*.ts"],
     },
     "packages/alfa-web": {
