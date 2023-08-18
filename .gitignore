@@ -8,5 +8,5 @@ node_modules
 **/*.map
 
 !**/scripts/**/*.js
-scripts/src/changelog.js
+scripts/src/changelog-individual.js
 !**/types/**/*.d.ts

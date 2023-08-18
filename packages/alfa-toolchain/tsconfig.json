@@ -1,5 +1,12 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/changelog.ts", "src/index.ts"]
+  "files": [
+    "src/changelog/changelog-global.ts",
+    "src/changelog/changelog-individual.ts",
+    "src/changelog/get-changeset-details.ts",
+    "src/index.ts",
+    "test/changelog/get-changeset-details.spec.tsx"
+  ],
+  "references": [{ "path": "../alfa-result" }, { "path": "../alfa-test" }]
 }

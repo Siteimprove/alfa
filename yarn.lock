@@ -1590,8 +1590,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain"
   dependencies:
+    "@changesets/read": ^0.5.9
     "@changesets/types": ^5.2.1
+    "@siteimprove/alfa-result": "workspace:^0.66.0"
     "@svitejs/changesets-changelog-github-compact": ^1.1.0
+  bin:
+    alfa-changelog: src/changelog/changelog-global.js
   languageName: unknown
   linkType: soft
 
