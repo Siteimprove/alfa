@@ -13,7 +13,7 @@ test("getChangesetDetails accepts a valid changeset with details", (t) => {
           { name: "my-package", type: "minor" },
           { name: "my-other-package", type: "patch" },
         ],
-        summary: `**${kind}:** Some clever summary
+        summary: `**${kind}:** Some. Clever. Summary.
 
 Some clever details.`,
         id: "unused",
@@ -22,7 +22,7 @@ Some clever details.`,
         type: "ok",
         value: {
           kind: kind,
-          summary: "Some clever summary",
+          summary: "Some. Clever. Summary.",
           details: "Some clever details.",
           packages: ["my-package", "my-other-package"],
         },
