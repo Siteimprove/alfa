@@ -8,5 +8,5 @@
     "jsxImportSource": "@siteimprove/alfa-dom"
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "references": [{ "path": "../packages" }, { "path": "../scripts" }]
+  "references": [{ "path": "../packages" }]
 }
