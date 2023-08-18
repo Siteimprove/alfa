@@ -12,7 +12,8 @@ async function main() {
 
   const details = changesets
     .map(Changeset.getDetails)
-    .filter<Ok<Changeset.Details>>(Result.isOk);
+    .filter<Ok<Changeset.Details>>(Result.isOk)
+    .map((changeset) => changeset.get());
 
   console.dir(changesets, { depth: null });
   console.dir(details, { depth: null });

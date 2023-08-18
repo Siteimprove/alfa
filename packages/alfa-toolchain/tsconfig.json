@@ -6,14 +6,18 @@
     "types": ["node"]
   },
   "files": [
-    "src/changeset/build-changelog-line.ts",
+    "src/changeset/build-changelog.ts",
     "src/changeset/changelog-global.ts",
     "src/changeset/changelog-individual.ts",
     "src/changeset/get-changeset-details.ts",
     "src/validation/validate-changesets.ts",
     "src/index.ts",
-    "test/changeset/build-changelog-line.tsx",
+    "test/changeset/build-changelog.tsx",
     "test/changeset/get-changeset-details.spec.tsx"
   ],
-  "references": [{ "path": "../alfa-result" }, { "path": "../alfa-test" }]
+  "references": [
+    { "path": "../alfa-map" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-test" }
+  ]
 }

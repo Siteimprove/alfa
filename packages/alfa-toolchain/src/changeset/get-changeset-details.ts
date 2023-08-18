@@ -9,7 +9,10 @@ export namespace Changeset {
    * @internal
    */
   export const kinds = ["Added", "Breaking", "Removed", "Fixed"] as const;
-  type Kind = typeof kinds[number];
+  /**
+   * @internal
+   */
+  export type Kind = typeof kinds[number];
 
   function isKind(name: string): name is Kind {
     return kinds.some((kind) => kind === name);
