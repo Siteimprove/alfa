@@ -78,9 +78,9 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --immutable
-      - name: Build changelog script
+      - name: Build toolchain if needed
         run: |
-          [[ -d scripts ]] && yarn build scripts
+          [[ -d packages/alfa-toolchain ]] && yarn build packages/alfa-toolchain
 
       - name: Is current version unique?
         # Check that all packages are at the same version, if not, abort.

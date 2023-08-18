@@ -1597,6 +1597,7 @@ __metadata:
     "@svitejs/changesets-changelog-github-compact": ^1.1.0
   bin:
     alfa-changelog: src/changeset/changelog-global.js
+    validate-changesets: src/validation/validate-changesets.js
   languageName: unknown
   linkType: soft
 

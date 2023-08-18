@@ -1,5 +1,3 @@
-/// <reference lib="dom" />
-/// <reference types="node" />
 import getChangeSets from "@changesets/read";
 
 import { getChangesetDetails } from "./get-changeset-details";

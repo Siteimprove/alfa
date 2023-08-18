@@ -19,7 +19,8 @@
   },
   "types": "src/index.d.ts",
   "bin": {
-    "alfa-changelog": "src/changeset/changelog-global.js"
+    "alfa-changelog": "src/changeset/changelog-global.js",
+    "validate-changesets": "src/validation/validate-changesets.js"
   },
   "files": [
     "src/**/*.js",

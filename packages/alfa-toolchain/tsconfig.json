@@ -1,10 +1,15 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["dom"],
+    "types": ["node"]
+  },
   "files": [
     "src/changeset/changelog-global.ts",
     "src/changeset/changelog-individual.ts",
     "src/changeset/get-changeset-details.ts",
+    "src/validation/validate-changesets.ts",
     "src/index.ts",
     "test/changeset/get-changeset-details.spec.tsx"
   ],
