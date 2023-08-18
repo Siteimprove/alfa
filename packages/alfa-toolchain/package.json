@@ -14,12 +14,12 @@
   "main": "src/index.js",
   "exports": {
     ".": "./src/index.js",
-    "./changelog": "./src/changelog/changelog-individual.js",
-    "./changelog.js": "./src/changelog/changelog-individual.js"
+    "./changelog": "./src/changeset/changelog-individual.js",
+    "./changelog.js": "./src/changeset/changelog-individual.js"
   },
   "types": "src/index.d.ts",
   "bin": {
-    "alfa-changelog": "src/changelog/changelog-global.js"
+    "alfa-changelog": "src/changeset/changelog-global.js"
   },
   "files": [
     "src/**/*.js",

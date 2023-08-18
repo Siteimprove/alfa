@@ -3,7 +3,7 @@ import { test } from "@siteimprove/alfa-test";
 import {
   getChangesetDetails,
   kinds,
-} from "../../src/changelog/get-changeset-details";
+} from "../../src/changeset/get-changeset-details";
 
 test("getChangesetDetails accepts a valid changeset with details", (t) => {
   for (const kind of kinds) {

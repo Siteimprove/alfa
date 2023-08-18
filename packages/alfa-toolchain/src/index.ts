@@ -1,2 +1,2 @@
-export * as globalChangelog from "./changelog/changelog-global";
-export * as individualChangelog from "./changelog/changelog-individual";
+export * as globalChangelog from "./changeset/changelog-global";
+export * as individualChangelog from "./changeset/changelog-individual";
