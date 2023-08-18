@@ -1,14 +1,11 @@
 import { test } from "@siteimprove/alfa-test";
 
-import {
-  getChangesetDetails,
-  kinds,
-} from "../../src/changeset/get-changeset-details";
+import { Changeset } from "../../src/changeset/get-changeset-details";
 
-test("getChangesetDetails accepts a valid changeset with details", (t) => {
-  for (const kind of kinds) {
+test("Changeset.getDetails accepts a valid changeset with details", (t) => {
+  for (const kind of Changeset.kinds) {
     t.deepEqual(
-      getChangesetDetails({
+      Changeset.getDetails({
         releases: [
           { name: "my-package", type: "minor" },
           { name: "my-other-package", type: "patch" },
@@ -31,10 +28,10 @@ Some clever details.`,
   }
 });
 
-test("getChangesetDetails accepts a valid changeset without details", (t) => {
-  for (const kind of kinds) {
+test("Changeset.getDetails accepts a valid changeset without details", (t) => {
+  for (const kind of Changeset.kinds) {
     t.deepEqual(
-      getChangesetDetails({
+      Changeset.getDetails({
         releases: [
           { name: "my-package", type: "minor" },
           { name: "my-other-package", type: "patch" },
@@ -55,10 +52,10 @@ test("getChangesetDetails accepts a valid changeset without details", (t) => {
   }
 });
 
-test("getChangesetDetails accepts a valid changeset with multiline details", (t) => {
-  for (const kind of kinds) {
+test("Changeset.getDetails accepts a valid changeset with multiline details", (t) => {
+  for (const kind of Changeset.kinds) {
     t.deepEqual(
-      getChangesetDetails({
+      Changeset.getDetails({
         releases: [
           { name: "my-package", type: "minor" },
           { name: "my-other-package", type: "patch" },
@@ -85,10 +82,10 @@ over several lines.`,
   }
 });
 
-test("getChangesetDetails rejects a changeset with incorrect kind", (t) => {
+test("Changeset.getDetails rejects a changeset with incorrect kind", (t) => {
   for (const kind of ["hello", "world", "invalid", "added", "fixed"]) {
     t.deepEqual(
-      getChangesetDetails({
+      Changeset.getDetails({
         releases: [
           { name: "my-package", type: "minor" },
           { name: "my-other-package", type: "patch" },
@@ -101,7 +98,7 @@ test("getChangesetDetails rejects a changeset with incorrect kind", (t) => {
   }
 });
 
-test("getChangesetDetails rejects a changeset with incorrect header", (t) => {
+test("Changeset.getDetails rejects a changeset with incorrect header", (t) => {
   for (const summary of [
     "*Added:** hello" /* single starting '*' */,
     "**Added:* hello" /* single ending '*' */,
@@ -111,7 +108,7 @@ test("getChangesetDetails rejects a changeset with incorrect header", (t) => {
     "**Added:** hello\nworld" /* no empty line between summary and details */,
   ]) {
     t.deepEqual(
-      getChangesetDetails({
+      Changeset.getDetails({
         releases: [{ name: "my-package", type: "patch" }],
         summary,
         id: "unused",

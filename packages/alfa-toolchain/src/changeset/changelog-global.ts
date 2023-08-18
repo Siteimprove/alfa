@@ -1,6 +1,7 @@
 import getChangeSets from "@changesets/read";
+import { Ok, Result } from "@siteimprove/alfa-result";
 
-import { getChangesetDetails } from "./get-changeset-details";
+import { Changeset } from "./get-changeset-details";
 
 const targetPath = process.argv[2] ?? ".";
 
@@ -9,8 +10,7 @@ main();
 async function main() {
   const changesets = await getChangeSets(targetPath);
 
-  const test = changesets[0];
-  console.dir(test);
-
-  console.dir(getChangesetDetails(test));
+  const details = changesets
+    .map(Changeset.getDetails)
+    .filter<Ok<Changeset.Details>>(Result.isOk);
 }
