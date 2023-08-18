@@ -1586,10 +1586,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain":
+"@siteimprove/alfa-toolchain@workspace:^0.66.0, @siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain":
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain"
   dependencies:
+    "@changesets/types": ^5.2.1
     "@svitejs/changesets-changelog-github-compact": ^1.1.0
   languageName: unknown
   linkType: soft
@@ -1724,10 +1725,9 @@ __metadata:
   resolution: "@siteimprove/alfa@workspace:."
   dependencies:
     "@changesets/cli": ^2.26.2
-    "@changesets/get-github-info": ^0.5.2
-    "@changesets/types": ^5.2.1
     "@microsoft/api-documenter": ^7.19.9
     "@microsoft/api-extractor": ^7.29.5
+    "@siteimprove/alfa-toolchain": "workspace:^0.66.0"
     "@types/async": ^3.2.5
     "@types/node": ^14.14.31
     async: ^3.2.1

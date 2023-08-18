@@ -3,7 +3,7 @@ import type { KnipConfig } from "knip";
 const config: KnipConfig = {
   workspaces: {
     ".": {
-      entry: ["scripts/src/changelog.ts", "scripts/*.js"],
+      entry: ["scripts/*.js"],
       project: ["scripts/**/*.ts", "scripts/**/*.js"],
       ignoreDependencies: ["prettier"],
     },
@@ -24,6 +24,10 @@ const config: KnipConfig = {
         "native.ts!",
       ],
       project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
+    },
+    "packages/alfa-toolchain": {
+      entry: ["src/index.ts!", "src/changelog.ts!"],
+      project: ["src/**/*.ts!", "test/**/*.ts"],
     },
     "packages/alfa-web": {
       entry: ["src/index.ts!", "native.ts!"],

@@ -1,5 +1,5 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
-  "files": ["src/changelog.ts"]
+  "files": ["src/changelog.ts", "src/index.ts"]
 }
