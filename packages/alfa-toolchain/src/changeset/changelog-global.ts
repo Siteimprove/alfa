@@ -1,6 +1,7 @@
 import getChangeSets from "@changesets/read";
 import { Ok, Result } from "@siteimprove/alfa-result";
 
+import { Changelog } from "./build-changelog";
 import { Changeset } from "./get-changeset-details";
 
 const targetPath = process.argv[2] ?? ".";
@@ -15,6 +16,9 @@ async function main() {
     .filter<Ok<Changeset.Details>>(Result.isOk)
     .map((changeset) => changeset.get());
 
-  console.dir(changesets, { depth: null });
-  console.dir(details, { depth: null });
+  const body = Changelog.buildBody(
+    details.map((detail) => [detail, "NOT A LINK"])
+  );
+
+  console.log(body);
 }

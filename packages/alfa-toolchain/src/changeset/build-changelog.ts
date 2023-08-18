@@ -55,11 +55,13 @@ export namespace Changelog {
 
     changesets.forEach((item) => sorted[item[0].kind].push(item));
 
-    return `${(["Breaking", "Removed", "Added", "Fixed"] as const).map((kind) =>
-      sorted[kind].length === 0
-        ? ""
-        : buildGroup(kind, sorted[kind], prefix, subdirectories)
-    )}`;
+    return `${(["Breaking", "Removed", "Added", "Fixed"] as const)
+      .map((kind) =>
+        sorted[kind].length === 0
+          ? ""
+          : buildGroup(kind, sorted[kind], prefix, subdirectories)
+      )
+      .join("")}`;
   }
 
   /**
