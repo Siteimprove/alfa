@@ -55,15 +55,26 @@ export namespace Changelog {
 
     changesets.forEach((item) => sorted[item[0].kind].push(item));
 
-    return `${sorted.Breaking.length === 0 ? "" : ""}`;
+    return `${(["Breaking", "Removed", "Added", "Fixed"] as const).map((kind) =>
+      sorted[kind].length === 0
+        ? ""
+        : buildGroup(kind, sorted[kind], prefix, subdirectories)
+    )}`;
   }
 
-  function buildGroup(
+  /**
+   * @internal
+   */
+  export function buildGroup(
     kind: Changeset.Kind,
     changesets: Array<[changeset: Changeset.Details, prLink: string]>,
     prefix: string = "@siteimprove",
-    subdirectories: Map<string, string>
+    subdirectories: Map<string, string> = Map.empty()
   ): string {
-    return `### ${kind}\n\n`;
+    return `### ${kind}\n\n${changesets
+      .map(([changeset, prLink]) =>
+        buildLine(changeset, prLink, subdirectories, prefix)
+      )
+      .join("\n\n")}`;
   }
 }
