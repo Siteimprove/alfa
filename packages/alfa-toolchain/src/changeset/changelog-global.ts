@@ -1,4 +1,5 @@
 import getChangeSets from "@changesets/read";
+import { NewChangeset } from "@changesets/types";
 import { Ok, Result } from "@siteimprove/alfa-result";
 
 import { Changelog } from "./build-changelog";
@@ -11,6 +12,8 @@ main();
 async function main() {
   const changesets = await getChangeSets(targetPath);
 
+  console.dir(changesets, { depth: null });
+
   const details = changesets
     .map(Changeset.getDetails)
     .filter<Ok<Changeset.Details>>(Result.isOk)
@@ -21,4 +24,8 @@ async function main() {
   );
 
   console.log(body);
+}
+
+async function getPRLink(changeset: NewChangeset): Promise<string> {
+  return "NOT A LINK";
 }

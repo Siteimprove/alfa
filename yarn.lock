@@ -1592,6 +1592,7 @@ __metadata:
   dependencies:
     "@changesets/read": ^0.5.9
     "@changesets/types": ^5.2.1
+    "@siteimprove/alfa-map": "workspace:^0.66.0"
     "@siteimprove/alfa-result": "workspace:^0.66.0"
     "@siteimprove/alfa-test": "workspace:^0.66.0"
     "@svitejs/changesets-changelog-github-compact": ^1.1.0
