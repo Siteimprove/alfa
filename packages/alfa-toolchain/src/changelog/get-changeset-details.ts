@@ -4,13 +4,7 @@ import { Err, Result } from "@siteimprove/alfa-result";
 /**
  * @internal
  */
-export const kinds = [
-  "Added",
-  "Breaking",
-  "Removed",
-  "Changed",
-  "Fixed",
-] as const;
+export const kinds = ["Added", "Breaking", "Removed", "Fixed"] as const;
 type Kind = typeof kinds[number];
 
 function isKind(name: string): name is Kind {
