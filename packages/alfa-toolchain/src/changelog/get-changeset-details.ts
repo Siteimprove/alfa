@@ -43,7 +43,7 @@ export function getChangesetDetails(
      *   capture group <details> (all the rest, incl. newlines ('s' flag))
      * end of string
      */
-    /[*][*](?<kind>[a-zA-Z]*):[*][*] (?<summary>[^\n]*)(?:\n\n(?<details>.*))?$/s
+    /[*][*](?<kind>[^\n]*):[*][*] (?<summary>[^\n]*)(?:\n\n(?<details>.*))?$/s
   );
 
   if (matches === null) {
