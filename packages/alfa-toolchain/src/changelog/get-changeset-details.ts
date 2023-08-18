@@ -41,21 +41,22 @@ export function getChangesetDetails(
   const matches = changeset.summary.match(
     /**
      * '**'
-     * capture group (1) for potential kind (any letters)
+     * capture group <kind> (any letters)
      * ':**'
-     * capture group (2) for details (everything up to first newline excluded)
+     * capture group <summary> (everything up to first newline excluded)
      * non-capture group, optional of:
-     *   two newlines (end of details, empty line)
-     *   capture group (3) for all the rest of the details
+     *   two newlines (end of summary, empty line)
+     *   capture group <details> (all the rest,incl. newlines)
      */
-    /[*][*]([a-zA-Z]*):[*][*] ([^\n]*)(?:\n\n((?:.|\n)*))?/
+    /[*][*](?<kind>[a-zA-Z]*):[*][*] (?<summary>[^\n]*)(?:\n\n(?<details>[^]*))?/
   );
 
   if (matches === null) {
     return Err.of("Changeset doesn't match the required format");
   }
 
-  const [_, kind, summary, details = ""] = matches;
+  // Since the match succeeded, we are sure that groups exists
+  const { kind, summary, details } = matches.groups!;
 
   if (!isKind(kind)) {
     return Err.of(`Invalid kind: ${kind}`);
@@ -64,7 +65,7 @@ export function getChangesetDetails(
   return Result.of({
     kind,
     summary,
-    details,
+    details: details ?? "",
     packages: changeset.releases.map((release) => release.name),
   });
 }
