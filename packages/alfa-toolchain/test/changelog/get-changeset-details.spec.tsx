@@ -84,3 +84,42 @@ over several lines.`,
     );
   }
 });
+
+test("getChangesetDetails rejects a changeset with incorrect kind", (t) => {
+  for (const kind of ["hello", "world", "invalid", "added", "fixed"]) {
+    t.deepEqual(
+      getChangesetDetails({
+        releases: [
+          { name: "my-package", type: "minor" },
+          { name: "my-other-package", type: "patch" },
+        ],
+        summary: `**${kind}:** Some clever summary`,
+        id: "unused",
+      }).toJSON(),
+      { type: "err", error: `Invalid kind: ${kind}` }
+    );
+  }
+});
+
+test("getChangesetDetails rejects a changeset with incorrect header", (t) => {
+  for (const summary of [
+    "*Added:** hello" /* single starting '*' */,
+    "**Added:* hello" /* single ending '*' */,
+    "**Added**: hello" /* misplaced ':' */,
+    "**Added:**hello" /* missing space */,
+    "**Added3:** hello" /* non-letter in kind */,
+    "**Added:** hello\nworld" /* no empty line between summary and details */,
+  ]) {
+    t.deepEqual(
+      getChangesetDetails({
+        releases: [{ name: "my-package", type: "patch" }],
+        summary,
+        id: "unused",
+      }).toJSON(),
+      {
+        type: "err",
+        error: `Changeset doesn't match the required format (${summary})`,
+      }
+    );
+  }
+});

@@ -46,13 +46,16 @@ export function getChangesetDetails(
      * capture group <summary> (everything up to first newline excluded)
      * non-capture group, optional of:
      *   two newlines (end of summary, empty line)
-     *   capture group <details> (all the rest,incl. newlines)
+     *   capture group <details> (all the rest, incl. newlines ('s' flag))
+     * end of string
      */
-    /[*][*](?<kind>[a-zA-Z]*):[*][*] (?<summary>[^\n]*)(?:\n\n(?<details>[^]*))?/
+    /[*][*](?<kind>[a-zA-Z]*):[*][*] (?<summary>[^\n]*)(?:\n\n(?<details>.*))?$/s
   );
 
   if (matches === null) {
-    return Err.of("Changeset doesn't match the required format");
+    return Err.of(
+      `Changeset doesn't match the required format (${changeset.summary})`
+    );
   }
 
   // Since the match succeeded, we are sure that groups exists
