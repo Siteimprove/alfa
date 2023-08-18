@@ -45,7 +45,7 @@ export namespace Changelog {
   export function buildBody(
     changesets: Array<[changeset: Changeset.Details, prLink: string]>,
     prefix: string = "@siteimprove",
-    subdirectories: Map<string, string>
+    subdirectories: Map<string, string> = Map.empty()
   ): string {
     const sorted: {
       [kind in Changeset.Kind]: Array<
