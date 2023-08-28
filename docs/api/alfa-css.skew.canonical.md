@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-type Canonical = Skew<Angle.Canonical, Angle.Canonical>;
+type Canonical = Skew;
 ```
-<b>References:</b> [Skew](./alfa-css.skew.md)<!-- -->, [Angle.Canonical](./alfa-css.angle.canonical.md)
+<b>References:</b> [Skew](./alfa-css.skew.md)
 

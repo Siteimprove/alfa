@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-function translate<X extends Length.Fixed | Percentage.Fixed, Y extends Length.Fixed | Percentage.Fixed, Z extends Length.Fixed>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
+function translate<X extends LengthPercentage, Y extends LengthPercentage, Z extends Length>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
 ```
 
 ## Parameters

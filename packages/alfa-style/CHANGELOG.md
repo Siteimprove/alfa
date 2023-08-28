@@ -1,5 +1,11 @@
 # @siteimprove/alfa-style
 
+## 0.66.0
+
+### Minor Changes
+
+- **Breaking:** The `is-visible-shadow` predicate can now only be applied to canonical shadows (i.e. computed values of properties using `Shadow`). ([#1455](https://github.com/Siteimprove/alfa/pull/1455))
+
 ## 0.65.1
 
 ## 0.65.0

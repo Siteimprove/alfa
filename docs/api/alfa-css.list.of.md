@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-static of<V extends Value>(values: Iterable<V>, separator?: string): List<V, Value.HasCalculation<V>>;
+static of<V extends Value>(values: Iterable<V>, separator?: string): List<V, Value.HasCalculation<[V]>>;
 ```
 
 ## Parameters
@@ -19,5 +19,5 @@ static of<V extends Value>(values: Iterable<V>, separator?: string): List<V, Val
 
 <b>Returns:</b>
 
-[List](./alfa-css.list.md)<!-- -->&lt;V, Value.HasCalculation&lt;V&gt;&gt;
+[List](./alfa-css.list.md)<!-- -->&lt;V, Value.HasCalculation&lt;\[V\]&gt;&gt;
 

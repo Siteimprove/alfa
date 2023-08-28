@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-parse: CSSParser<Rotate>
+parse: Parser<import("@siteimprove/alfa-slice").Slice<Token>, Rotate, string, []>
 ```

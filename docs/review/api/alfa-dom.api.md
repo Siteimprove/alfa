@@ -409,7 +409,7 @@ export namespace Fragment {
 // @public (undocumented)
 function getElementDescendants(node: Node, options?: Node.Traversal): Sequence<Element>;
 
-// @public (undocumented)
+// @public
 function getElementIdMap(node: Node): Map_2<string, Element>;
 
 // Warning: (ae-forgotten-export) The symbol "Options" needs to be exported by the entry point index.d.ts

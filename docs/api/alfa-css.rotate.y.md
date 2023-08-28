@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-get y(): Number.Fixed;
+get y(): Number.Canonical;
 ```

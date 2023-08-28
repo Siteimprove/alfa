@@ -15,5 +15,5 @@ interface JSON extends Function.JSON<"perspective">
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [depth](./alfa-css.perspective.json.depth.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) |  |
+|  [depth](./alfa-css.perspective.json.depth.md) |  | [Length.JSON](./alfa-css.length.json.md) |  |
 

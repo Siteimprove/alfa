@@ -1,3 +1,11 @@
+# [v0.66.0](../../compare/v0.65.1...v0.66.0) (2023-08-09)
+
+Packages changed:
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md)
+- [@siteimprove/alfa-parser](packages/alfa-parser/CHANGELOG.md)
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md)
+
 # [v0.65.1](../../compare/v0.65.0...v0.65.1) (2023-07-19)
 
 Packages changed:

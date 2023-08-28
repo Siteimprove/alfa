@@ -7,15 +7,15 @@
 <b>Signature:</b>
 
 ```typescript
-function scale(x: Number.Fixed, y: Number.Fixed): Scale;
+function scale(x: Number, y: Number): Scale;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  x | Number.Fixed |  |
-|  y | Number.Fixed |  |
+|  x | Number |  |
+|  y | Number |  |
 
 <b>Returns:</b>
 

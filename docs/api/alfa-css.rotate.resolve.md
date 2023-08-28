@@ -7,9 +7,9 @@
 <b>Signature:</b>
 
 ```typescript
-resolve(): Rotate<A>;
+resolve(): Rotate;
 ```
 <b>Returns:</b>
 
-[Rotate](./alfa-css.rotate.md)<!-- -->&lt;A&gt;
+[Rotate](./alfa-css.rotate.md)
 

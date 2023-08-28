@@ -1,5 +1,7 @@
 # @siteimprove/alfa-promise
 
+## 0.66.0
+
 ## 0.65.1
 
 ## 0.65.0
