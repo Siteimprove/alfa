@@ -7,6 +7,37 @@ import { Changeset } from "./get-changeset-details";
  */
 export namespace Changelog {
   /**
+   * Builds the global changelog body, from an array of changesets.
+   *
+   * @remarks
+   * When we pre-process changesets, we do not yet know the new version number.
+   * So we use a placeholder to be replaced at a later stage.
+   */
+  export function buildBody(
+    changesets: Array<[changeset: Changeset.Details, prLink: string]>,
+    prefix: string = "@siteimprove",
+    subdirectories: Map<string, string> = Map.empty()
+  ): string {
+    const sorted: {
+      [kind in Changeset.Kind]: Array<
+        [changeset: Changeset.Details, prLink: string]
+      >;
+    } = { Added: [], Breaking: [], Fixed: [], Removed: [] };
+
+    changesets.forEach((item) => sorted[item[0].kind].push(item));
+
+    return `${(["Breaking", "Removed", "Added", "Fixed"] as const)
+      .map((kind) =>
+        sorted[kind].length === 0
+          ? ""
+          : buildGroup(kind, sorted[kind], prefix, subdirectories)
+      )
+      .join("")}`;
+  }
+
+  /**
+   * Builds a global changelog entry from a changeset.
+   *
    * @internal
    */
   export function buildLine(
@@ -48,36 +79,6 @@ export namespace Changelog {
         )}/${shortName}/CHANGELOG.md#[INSERT NEW VERSION HERE])`;
     };
   }
-
-  /**
-   * Builds the global changelog body, from an array of changesets.
-   *
-   * @remarks
-   * When we pre-process changesets, we do not yet know the new version number.
-   * So we use a placeholder to be replaced at a later stage.
-   */
-  export function buildBody(
-    changesets: Array<[changeset: Changeset.Details, prLink: string]>,
-    prefix: string = "@siteimprove",
-    subdirectories: Map<string, string> = Map.empty()
-  ): string {
-    const sorted: {
-      [kind in Changeset.Kind]: Array<
-        [changeset: Changeset.Details, prLink: string]
-      >;
-    } = { Added: [], Breaking: [], Fixed: [], Removed: [] };
-
-    changesets.forEach((item) => sorted[item[0].kind].push(item));
-
-    return `${(["Breaking", "Removed", "Added", "Fixed"] as const)
-      .map((kind) =>
-        sorted[kind].length === 0
-          ? ""
-          : buildGroup(kind, sorted[kind], prefix, subdirectories)
-      )
-      .join("")}`;
-  }
-
   /**
    * @internal
    */
