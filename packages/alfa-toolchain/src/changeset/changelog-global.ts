@@ -12,7 +12,7 @@ main();
 async function main() {
   const changesets = await getChangeSets(targetPath);
 
-  console.dir(changesets, { depth: null });
+  // console.dir(changesets, { depth: null });
 
   const details = changesets
     .map(Changeset.getDetails)

@@ -32,7 +32,8 @@ export namespace Changelog {
           ? ""
           : buildGroup(kind, sorted[kind], prefix, subdirectories)
       )
-      .join("")}`;
+      .filter((group) => group !== "")
+      .join("\n\n")}`;
   }
 
   /**
@@ -71,7 +72,7 @@ export namespace Changelog {
     subdirectories: Map<string, string>
   ): (fullName: string) => string {
     return (fullName) => {
-      const shortName = fullName.replace(prefix, "");
+      const shortName = fullName.replace(`${prefix}/`, "");
       return `[${fullName}](${subdirectories
         .get(shortName)
         .getOr(
