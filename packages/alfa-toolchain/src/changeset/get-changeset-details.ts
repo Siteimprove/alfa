@@ -9,9 +9,6 @@ export namespace Changeset {
    * @internal
    */
   export const kinds = ["Added", "Breaking", "Removed", "Fixed"] as const;
-  /**
-   * @internal
-   */
   export type Kind = typeof kinds[number];
 
   function isKind(name: string): name is Kind {
@@ -21,7 +18,7 @@ export namespace Changeset {
   export type Details = {
     kind: Kind;
     packages: Array<string>;
-    summary: string;
+    title: string;
     details?: string;
   };
 
@@ -30,7 +27,7 @@ export namespace Changeset {
    *
    * @remarks
    * The changeset.summary must match:
-   * > **[kind]:** [summary]
+   * > **[kind]:** [title]
    * >
    * > [details?]
    */
@@ -40,13 +37,13 @@ export namespace Changeset {
        * '**'
        * capture group <kind> (any letters)
        * ':**'
-       * capture group <summary> (everything up to first newline excluded)
+       * capture group <title> (everything up to first newline excluded)
        * non-capture group, optional of:
-       *   two newlines (end of summary, empty line)
+       *   two newlines (end of title, empty line)
        *   capture group <details> (all the rest, incl. newlines ('s' flag))
        * end of string
        */
-      /[*][*](?<kind>[a-zA-Z]*):[*][*] (?<summary>[^\n]*)(?:\n\n(?<details>.*))?$/s
+      /[*][*](?<kind>[a-zA-Z]*):[*][*] (?<title>[^\n]*)(?:\n\n(?<details>.*))?$/s
     );
 
     if (matches === null) {
@@ -56,7 +53,7 @@ export namespace Changeset {
     }
 
     // Since the match succeeded, we are sure that groups exists
-    const { kind, summary, details } = matches.groups!;
+    const { kind, title, details } = matches.groups!;
 
     if (!isKind(kind)) {
       return Err.of(`Invalid kind: ${kind}`);
@@ -64,7 +61,7 @@ export namespace Changeset {
 
     return Result.of({
       kind,
-      summary,
+      title,
       details: details ?? "",
       packages: changeset.releases.map((release) => release.name),
     });

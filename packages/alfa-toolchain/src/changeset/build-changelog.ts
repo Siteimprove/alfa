@@ -6,6 +6,9 @@ import { Changeset } from "./get-changeset-details";
  * @public
  */
 export namespace Changelog {
+  /**
+   * @internal
+   */
   export function buildLine(
     changeset: Changeset.Details,
     prLink: string,
@@ -15,18 +18,22 @@ export namespace Changelog {
     return `- ${changeset.packages
       .map(linkToPackage(prefix, subdirectories))
       .join(", ")}: ${
-      // Remove any trailing dot, then add one.
-      changeset.summary.trimEnd().replace(/\.$/, "")
+      // Remove trailing dot, if any, then add one.
+      changeset.title.trimEnd().replace(/\.$/, "")
     }. (${prLink})`;
   }
 
   /**
-   * Turns "@siteimprove/package-name" into a Markdown link to its changelog from
+   * Turns "<prefix>/package-name" into a Markdown link to its changelog from
    * the top-level directory.
    *
    * @remarks
    * When we pre-process changesets, we do not yet know the new version number.
    * So we use a placeholder to be replaced at a later stage.
+   *
+   * @privateRemarks
+   * We need to know in which sub-directory the package source code is located.
+   * The default is "packages".
    */
   function linkToPackage(
     prefix: string,
@@ -42,6 +49,13 @@ export namespace Changelog {
     };
   }
 
+  /**
+   * Builds the global changelog body, from an array of changesets.
+   *
+   * @remarks
+   * When we pre-process changesets, we do not yet know the new version number.
+   * So we use a placeholder to be replaced at a later stage.
+   */
   export function buildBody(
     changesets: Array<[changeset: Changeset.Details, prLink: string]>,
     prefix: string = "@siteimprove",

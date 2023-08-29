@@ -88,7 +88,7 @@ export default {
         "@siteimprove/alfa-sarif",
       ],
     },
-    { name: "Tooling", children: ["@siteimprove/alfa-changelog"] },
+    { name: "Tooling", children: ["@siteimprove/alfa-toolchain"] },
     {
       name: "Type definitions",
       children: [

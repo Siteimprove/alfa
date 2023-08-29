@@ -8,13 +8,13 @@ Alfa is using [changesets](../../docs/guides/changeset.md). We keep one changelo
 
 Individual changesets ar expected to have the following shape (after the frontmatter):
 ```markdown
-**[kind]:** [summary]
+**[kind]:** [title]
 
 [details]
 ```
 
-where `[summary]` is a one line summary of the changes, `[details]` is an arbitrary long detailed explanation, and `[kind]` is one of: `Breaking`, `Removed`, `Added`, `Fixed`.
+where `[title]` is a one line summary for the changes (the full text is called `summary` in changesets lingo, so we call that summary `title` instead), `[details]` is an arbitrary long detailed explanation, and `[kind]` is one of: `Breaking`, `Removed`, `Added`, `Fixed`.
 
 `Breaking` and `Removed` kinds may only be used on major bumps (or minor bumps pre-1.0.0); `Added` kind may only be used on minor or major bumps (and should only be used on minor bumps); `Fixed` kinds can be used on any bump but should only be used on patch bumps.
 
-The individual changelog contains the full changeset. The global changelog contains only the summary, with link to the individual changelog.
+The individual changelog contains the full changeset. The global changelog contains only the title, with link to the individual changelog.
