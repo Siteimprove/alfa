@@ -1,5 +1,5 @@
 import getChangeSets from "@changesets/read";
-import { NewChangeset } from "@changesets/types";
+import { NewChangesetWithCommit } from "@changesets/types";
 import { Ok, Result } from "@siteimprove/alfa-result";
 
 import { Changelog } from "./build-changelog";
@@ -12,20 +12,28 @@ main();
 async function main() {
   const changesets = await getChangeSets(targetPath);
 
-  // console.dir(changesets, { depth: null });
-
   const details = changesets
     .map(Changeset.getDetails)
     .filter<Ok<Changeset.Details>>(Result.isOk)
     .map((changeset) => changeset.get());
 
+  if (details.length !== changesets.length) {
+    console.error("Some changesets are invalid");
+    process.exit(1);
+  }
+
   const body = Changelog.buildBody(
-    details.map((detail) => [detail, "NOT A LINK"])
+    await Promise.all(
+      details.map(async (detail, idx) => [
+        detail,
+        await getPRLink(changesets[idx]),
+      ])
+    )
   );
 
   console.log(body);
 }
 
-async function getPRLink(changeset: NewChangeset): Promise<string> {
-  return "NOT A LINK";
+async function getPRLink(changeset: NewChangesetWithCommit): Promise<string> {
+  return `NOT A LINK ${changeset.commit}`;
 }
