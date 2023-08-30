@@ -31,7 +31,10 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "dependencies": {
+    "@changesets/assemble-release-plan": "^5.2.4",
+    "@changesets/config": "^2.3.1",
     "@changesets/read": "^0.5.9",
+    "@manypkg/get-packages": "^1.1.3",
     "@siteimprove/alfa-map": "workspace:^0.66.0",
     "@siteimprove/alfa-result": "workspace:^0.66.0",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0"

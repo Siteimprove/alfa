@@ -1590,8 +1590,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@siteimprove/alfa-toolchain@workspace:packages/alfa-toolchain"
   dependencies:
+    "@changesets/assemble-release-plan": ^5.2.4
+    "@changesets/config": ^2.3.1
     "@changesets/read": ^0.5.9
     "@changesets/types": ^5.2.1
+    "@manypkg/get-packages": ^1.1.3
     "@siteimprove/alfa-map": "workspace:^0.66.0"
     "@siteimprove/alfa-result": "workspace:^0.66.0"
     "@siteimprove/alfa-test": "workspace:^0.66.0"

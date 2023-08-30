@@ -1,5 +1,8 @@
+import assembleReleasePlan from "@changesets/assemble-release-plan";
+import { read as readConfig } from "@changesets/config";
 import getChangeSets from "@changesets/read";
 import { NewChangesetWithCommit } from "@changesets/types";
+import { getPackages } from "@manypkg/get-packages";
 import { Ok, Result } from "@siteimprove/alfa-result";
 
 import { Changelog } from "./build-changelog";
@@ -10,7 +13,23 @@ const targetPath = process.argv[2] ?? ".";
 main();
 
 async function main() {
+  const packages = await getPackages(targetPath);
+  // console.dir(packages);
+
+  const config = await readConfig(targetPath, packages);
+  console.dir(config);
+
   const changesets = await getChangeSets(targetPath);
+
+  const releasePlan = assembleReleasePlan(
+    changesets,
+    packages,
+    config,
+    undefined,
+    undefined
+  );
+
+  // console.dir(releasePlan);
 
   const details = changesets
     .map(Changeset.getDetails)
