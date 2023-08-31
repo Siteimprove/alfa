@@ -1,3 +1,4 @@
+export * from "./helpers/get-bounding-box";
 export * from "./helpers/get-offset-parent";
 export * from "./helpers/get-positioning-parent";
 export * from "./predicate/has-border";
