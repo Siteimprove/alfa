@@ -48,6 +48,21 @@ test("buildLine() leaves intermediate dots alone", (t) => {
   );
 });
 
+test("buildLine() skips undefined PR links", (t) => {
+  t.deepEqual(
+    Changelog.buildLine(
+      {
+        kind: "Added",
+        title: "Some awesome title",
+        packages: ["@siteimprove/my-package"],
+      },
+      undefined
+    ),
+    "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      " Some awesome title."
+  );
+});
+
 test("buildLine() handles multi-packages change", (t) => {
   t.deepEqual(
     Changelog.buildLine(

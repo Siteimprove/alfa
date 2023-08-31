@@ -14,13 +14,15 @@ export namespace Changelog {
    * So we use a placeholder to be replaced at a later stage.
    */
   export function buildBody(
-    changesets: Array<[changeset: Changeset.Details, prLink: string]>,
+    changesets: Array<
+      [changeset: Changeset.Details, prLink: string | undefined]
+    >,
     prefix: string = "@siteimprove",
     subdirectories: Map<string, string> = Map.empty()
   ): string {
     const sorted: {
       [kind in Changeset.Kind]: Array<
-        [changeset: Changeset.Details, prLink: string]
+        [changeset: Changeset.Details, prLink: string | undefined]
       >;
     } = { Added: [], Breaking: [], Fixed: [], Removed: [] };
 
@@ -43,7 +45,7 @@ export namespace Changelog {
    */
   export function buildLine(
     changeset: Changeset.Details,
-    prLink: string,
+    prLink: string | undefined,
     subdirectories: Map<string, string> = Map.empty(),
     prefix: string = "@siteimprove"
   ): string {
@@ -52,7 +54,7 @@ export namespace Changelog {
       .join(", ")}: ${
       // Remove trailing dot, if any, then add one.
       changeset.title.trimEnd().replace(/\.$/, "")
-    }. (${prLink})`;
+    }.${prLink === undefined ? "" : ` (${prLink})`}`;
   }
 
   /**
@@ -85,7 +87,9 @@ export namespace Changelog {
    */
   export function buildGroup(
     kind: Changeset.Kind,
-    changesets: Array<[changeset: Changeset.Details, prLink: string]>,
+    changesets: Array<
+      [changeset: Changeset.Details, prLink: string | undefined]
+    >,
     prefix: string = "@siteimprove",
     subdirectories: Map<string, string> = Map.empty()
   ): string {

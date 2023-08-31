@@ -1592,6 +1592,8 @@ __metadata:
   dependencies:
     "@changesets/assemble-release-plan": ^5.2.4
     "@changesets/config": ^2.3.1
+    "@changesets/get-github-info": ^0.5.2
+    "@changesets/git": ^2.0.0
     "@changesets/read": ^0.5.9
     "@changesets/types": ^5.2.1
     "@manypkg/get-packages": ^1.1.3
