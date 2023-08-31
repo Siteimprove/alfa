@@ -110,14 +110,6 @@ export function hasSufficientContrast(
   // for foreground and background.
   const interposedDescendants = Set.from(foreground).concat(background);
 
-  // If we have layout we should be able to answer the ignored-interposed-elements question
-
-  // 1. Check if (parent element of) target has layout, if not we cannot answer the question
-  // 2. If there is just one interposed element without layout we cannot answer the question, this corresponds to the status quo
-  // 3. If all interposed elements have layout, we can answer the question, the answer will be a list of all the interposed elements not overlapping the (parent element of the) target.
-  //    Note to self: The fact that we answered the question means it won't be asked to the consumer
-  //
-
   let ignoredInterposedElements = Question.of(
     "ignored-interposed-elements",
     Group.of(interposedDescendants),
