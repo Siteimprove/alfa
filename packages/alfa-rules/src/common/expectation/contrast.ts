@@ -2,9 +2,10 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
-import { Set } from "@siteimprove/alfa-set";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { Set } from "@siteimprove/alfa-set";
 
+import { Option } from "@siteimprove/alfa-option";
 import { expectation } from "../act/expectation";
 import { Group } from "../act/group";
 import { Question } from "../act/question";
@@ -109,11 +110,37 @@ export function hasSufficientContrast(
   // for foreground and background.
   const interposedDescendants = Set.from(foreground).concat(background);
 
-  const ignoredInterposedElements = Question.of(
+  // If we have layout we should be able to answer the ignored-interposed-elements question
+
+  // 1. Check if (parent element of) target has layout, if not we cannot answer the question
+  // 2. If there is just one interposed element without layout we cannot answer the question, this corresponds to the status quo
+  // 3. If all interposed elements have layout, we can answer the question, the answer will be a list of all the interposed elements not overlapping the (parent element of the) target.
+  //    Note to self: The fact that we answered the question means it won't be asked to the consumer
+  //
+
+  let ignoredInterposedElements = Question.of(
     "ignored-interposed-elements",
     Group.of(interposedDescendants),
     target
-  ).answerIf(interposedDescendants.isEmpty(), []);
+  );
+
+  if (interposedDescendants.isEmpty()) {
+    ignoredInterposedElements = ignoredInterposedElements.answerIf(
+      Option.of([])
+    );
+  } else if (
+    parent.box.isSome() &&
+    interposedDescendants.every((interposed) => interposed.box.isSome())
+  ) {
+    const notOverlapping = interposedDescendants.filter(
+      (interposed) =>
+        !interposed.box.getUnsafe().intersects(parent.box.getUnsafe())
+    );
+
+    ignoredInterposedElements = ignoredInterposedElements.answerIf(
+      Option.of(notOverlapping)
+    );
+  }
 
   const foregrounds = Question.of("foreground-colors", target);
   const backgrounds = Question.of("background-colors", target);
