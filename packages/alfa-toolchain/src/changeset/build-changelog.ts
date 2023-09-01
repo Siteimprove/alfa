@@ -24,6 +24,7 @@ export namespace Changelog {
     packages: Packages,
     config: Config
   ): Promise<string> {
+    // Build release plan (compute old and new versions for each package)
     const releasePlan = assembleReleasePlan(
       changesets,
       packages,
@@ -32,6 +33,7 @@ export namespace Changelog {
       undefined
     );
 
+    // Check unicity of versions
     const versions = getVersions(releasePlan);
     if (!versions.isOk()) {
       console.error(versions.getErrUnsafe());
@@ -41,6 +43,8 @@ export namespace Changelog {
     const { oldVersion, newVersion } = versions.get();
     console.log(`Going from ${oldVersion} to ${newVersion}`);
 
+    // Check that changeset config.changelog[1].repo exists, so we can fetch
+    // the PRs.
     const changelog = config.changelog;
     if (changelog === false) {
       console.error(
@@ -57,8 +61,11 @@ export namespace Changelog {
       process.exit(1);
     }
 
-    const prLinks = await getPRlinks(cwd, changesets, repo);
+    // Build links to PRs, this is an array of same length as the changesets
+    // with a one-to-one correspondence.
+    const prLinks = await getPRlinks(changesets, repo);
 
+    // Parse the changeset and extract the details.
     const details = changesets
       .map(Changeset.getDetails)
       .filter<Ok<Changeset.Details>>(Result.isOk)
@@ -66,9 +73,10 @@ export namespace Changelog {
 
     if (details.length !== changesets.length) {
       console.error("Some changesets are invalid");
-      process.exit(2);
+      process.exit(4);
     }
 
+    // Build the body of the global changelog.
     return Changelog.buildBody(
       details.map((detail, idx) => [detail, prLinks[idx]])
     );
@@ -104,7 +112,6 @@ export namespace Changelog {
   }
 
   async function getPRlinks(
-    cwd: string,
     changesets: Array<NewChangesetWithCommit>,
     repo: string
   ): Promise<Array<string | undefined>> {
