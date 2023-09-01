@@ -65,7 +65,8 @@ export namespace Changelog {
     // Build the body of the global changelog.
     return Changelog.buildBody(
       details.map((detail, idx) => [detail, prLinks[idx]]),
-      packages.packages
+      packages.packages,
+      newVersion
     );
   }
 
@@ -73,6 +74,101 @@ export namespace Changelog {
     oldVersion: string;
     newVersion: string;
   }
+
+  /**
+   * Builds the global changelog body, from an array of changesets.
+   *
+   * @remarks
+   * When we pre-process changesets, we do not yet know the new version number.
+   * So we use a placeholder to be replaced at a later stage.
+   */
+  export function buildBody(
+    changesets: ReadonlyArray<
+      [changeset: Changeset.Details, prLink: string | undefined]
+    >,
+    packages: ReadonlyArray<Package>,
+    newVersion: string
+  ): string {
+    const sorted: {
+      [kind in Changeset.Kind]: Array<
+        [changeset: Changeset.Details, prLink: string | undefined]
+      >;
+    } = { Added: [], Breaking: [], Fixed: [], Removed: [] };
+
+    changesets.forEach((item) => sorted[item[0].kind].push(item));
+
+    return `${(["Breaking", "Removed", "Added", "Fixed"] as const)
+      .map((kind) =>
+        sorted[kind].length === 0
+          ? ""
+          : buildGroup(kind, sorted[kind], packages, newVersion)
+      )
+      .filter((group) => group !== "")
+      .join("\n\n")}`;
+  }
+
+  /**
+   * @internal
+   */
+  export function buildGroup(
+    kind: Changeset.Kind,
+    changesets: ReadonlyArray<
+      [changeset: Changeset.Details, prLink: string | undefined]
+    >,
+    packages: ReadonlyArray<Package>,
+    newVersion: string
+  ): string {
+    return `### ${kind}\n\n${changesets
+      .map(([changeset, prLink]) =>
+        buildLine(changeset, prLink, packages, newVersion)
+      )
+      .join("\n\n")}`;
+  }
+
+  /**
+   * Builds a global changelog entry from a changeset.
+   *
+   * @internal
+   */
+  export function buildLine(
+    changeset: Changeset.Details,
+    prLink: string | undefined,
+    packages: ReadonlyArray<Package>,
+    newVersion: string
+  ): string {
+    return `- ${changeset.packages
+      .map(linkToPackage(packages, newVersion))
+      .join(", ")}: ${
+      // Remove trailing dot, if any, then add one.
+      changeset.title.trimEnd().replace(/\.$/, "")
+    }.${prLink === undefined ? "" : ` (${prLink})`}`;
+  }
+
+  /**
+   * Turns "package-name" into a Markdown link to its changelog from the
+   * top-level directory.
+   *
+   * @remarks
+   * The version is sent as a full semver X.Y.Z. However, Github links to markdown
+   * headings strip the dots.
+   */
+  function linkToPackage(
+    packages: ReadonlyArray<Package>,
+    newVersion: string
+  ): (fullName: string) => string {
+    return (fullName) => {
+      const packageJSON = packages.find((p) => p.packageJson.name === fullName)!
+        .packageJson as { [key: string]: any };
+
+      return `[${fullName}](${
+        packageJSON?.repository?.directory
+      }/CHANGELOG.md#${newVersion.replace(/\./g, "")})`;
+    };
+  }
+
+  /**
+   * Check that old and new versions are unique in a release plan, and return them.
+   */
   function getVersions(releasePlan: ReleasePlan): Result<Versions, string> {
     return releasePlan.releases.reduce(
       (previous: Result<Versions, string>, current) => {
@@ -98,6 +194,13 @@ export namespace Changelog {
     );
   }
 
+  /**
+   * Get links to PRs that added the given changesets to the repo.
+   *
+   * @privateRemarks
+   * Trying to bake Result into that gets messy because of the interleaving
+   * of Result and (native) Promise.
+   */
   async function getPRlinks(
     changesets: Array<NewChangesetWithCommit>,
     repo: string
@@ -107,6 +210,9 @@ export namespace Changelog {
     );
   }
 
+  /**
+   * Get a markdown formatted link to the PR that added a given commit.
+   */
   function getPRLink(
     repo: string
   ): (commit: string | undefined) => Promise<string | undefined> {
@@ -116,81 +222,6 @@ export namespace Changelog {
         : getInfo({ commit, repo }).then(
             (info) => info?.links.pull ?? undefined
           );
-  }
-  /**
-   * Builds the global changelog body, from an array of changesets.
-   *
-   * @remarks
-   * When we pre-process changesets, we do not yet know the new version number.
-   * So we use a placeholder to be replaced at a later stage.
-   */
-  export function buildBody(
-    changesets: ReadonlyArray<
-      [changeset: Changeset.Details, prLink: string | undefined]
-    >,
-    packages: ReadonlyArray<Package>
-  ): string {
-    const sorted: {
-      [kind in Changeset.Kind]: Array<
-        [changeset: Changeset.Details, prLink: string | undefined]
-      >;
-    } = { Added: [], Breaking: [], Fixed: [], Removed: [] };
-
-    changesets.forEach((item) => sorted[item[0].kind].push(item));
-
-    return `${(["Breaking", "Removed", "Added", "Fixed"] as const)
-      .map((kind) =>
-        sorted[kind].length === 0
-          ? ""
-          : buildGroup(kind, sorted[kind], packages)
-      )
-      .filter((group) => group !== "")
-      .join("\n\n")}`;
-  }
-
-  /**
-   * Builds a global changelog entry from a changeset.
-   *
-   * @internal
-   */
-  export function buildLine(
-    changeset: Changeset.Details,
-    prLink: string | undefined,
-    packages: ReadonlyArray<Package>
-  ): string {
-    return `- ${changeset.packages.map(linkToPackage(packages)).join(", ")}: ${
-      // Remove trailing dot, if any, then add one.
-      changeset.title.trimEnd().replace(/\.$/, "")
-    }.${prLink === undefined ? "" : ` (${prLink})`}`;
-  }
-
-  /**
-   * Turns "package-name" into a Markdown link to its changelog from the
-   * top-level directory.
-   */
-  function linkToPackage(
-    packages: ReadonlyArray<Package>
-  ): (fullName: string) => string {
-    return (fullName) => {
-      const packageJSON = packages.find((p) => p.packageJson.name === fullName)!
-        .packageJson as { [key: string]: any };
-
-      return `[${fullName}](${packageJSON?.repository?.directory}/CHANGELOG.md#[INSERT NEW VERSION HERE])`;
-    };
-  }
-  /**
-   * @internal
-   */
-  export function buildGroup(
-    kind: Changeset.Kind,
-    changesets: ReadonlyArray<
-      [changeset: Changeset.Details, prLink: string | undefined]
-    >,
-    packages: ReadonlyArray<Package>
-  ): string {
-    return `### ${kind}\n\n${changesets
-      .map(([changeset, prLink]) => buildLine(changeset, prLink, packages))
-      .join("\n\n")}`;
   }
 }
 

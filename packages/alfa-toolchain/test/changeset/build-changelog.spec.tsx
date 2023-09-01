@@ -26,9 +26,10 @@ test("buildLine() builds a package line entry", (t) => {
         packages: ["@siteimprove/my-package"],
       },
       "[NOT A LINK]",
-      [fakePackage("@siteimprove/my-package")]
+      [fakePackage("@siteimprove/my-package")],
+      "X.Y.Z"
     ),
-    "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+    "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
       " Some awesome title. ([NOT A LINK])"
   );
 });
@@ -42,9 +43,10 @@ test("buildLine() adds trailing dot if necessary", (t) => {
         packages: ["@siteimprove/my-package"],
       },
       "[NOT A LINK]",
-      [fakePackage("@siteimprove/my-package")]
+      [fakePackage("@siteimprove/my-package")],
+      "X.Y.Z"
     ),
-    "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+    "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
       " Some awesome title. ([NOT A LINK])"
   );
 });
@@ -58,9 +60,10 @@ test("buildLine() leaves intermediate dots alone", (t) => {
         packages: ["@siteimprove/my-package"],
       },
       "[NOT A LINK]",
-      [fakePackage("@siteimprove/my-package")]
+      [fakePackage("@siteimprove/my-package")],
+      "X.Y.Z"
     ),
-    "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+    "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
       " Some. Awesome. Title. ([NOT A LINK])"
   );
 });
@@ -74,9 +77,10 @@ test("buildLine() skips undefined PR links", (t) => {
         packages: ["@siteimprove/my-package"],
       },
       undefined,
-      [fakePackage("@siteimprove/my-package")]
+      [fakePackage("@siteimprove/my-package")],
+      "X.Y.Z"
     ),
-    "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+    "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
       " Some awesome title."
   );
 });
@@ -92,10 +96,11 @@ test("buildLine() handles multi-packages change", (t) => {
       "[NOT A LINK]",
       ["@siteimprove/my-package", "@siteimprove/my-other-package"].map((pkg) =>
         fakePackage(pkg)
-      )
+      ),
+      "X.Y.Z"
     ),
-    "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE])," +
-      " [@siteimprove/my-other-package](packages/my-other-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+    "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ)," +
+      " [@siteimprove/my-other-package](packages/my-other-package/CHANGELOG.md#XYZ):" +
       " Some awesome title. ([NOT A LINK])"
   );
 });
@@ -129,13 +134,14 @@ test("buildGroup() builds a group of same kinds changes", (t) => {
         "@siteimprove/my-package",
         "@siteimprove/my-other-package",
         "@siteimprove/my-third-package",
-      ].map((pkg) => fakePackage(pkg))
+      ].map((pkg) => fakePackage(pkg)),
+      "X.Y.Z"
     ),
     "### Added\n\n" +
-      "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE])," +
-      " [@siteimprove/my-other-package](packages/my-other-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ)," +
+      " [@siteimprove/my-other-package](packages/my-other-package/CHANGELOG.md#XYZ):" +
       " Some awesome title. ([NOT A LINK])\n\n" +
-      "- [@siteimprove/my-third-package](packages/my-third-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@siteimprove/my-third-package](packages/my-third-package/CHANGELOG.md#XYZ):" +
       " Some other title. ([STILL NOT A LINK])"
   );
 });
@@ -192,22 +198,23 @@ test("buildBody() builds a full body", (t) => {
         "@siteimprove/package-3",
         "@siteimprove/package-4",
         "@siteimprove/package-5",
-      ].map((pkg) => fakePackage(pkg))
+      ].map((pkg) => fakePackage(pkg)),
+      "X.Y.Z"
     ),
     "### Breaking\n\n" +
-      "- [@siteimprove/package-2](packages/package-2/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@siteimprove/package-2](packages/package-2/CHANGELOG.md#XYZ):" +
       " Title 2. ([LINK 2])\n\n" +
       "### Removed\n\n" +
-      "- [@siteimprove/package-5](packages/package-5/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@siteimprove/package-5](packages/package-5/CHANGELOG.md#XYZ):" +
       " Title 5. ([LINK 5])\n\n" +
       "### Added\n\n" +
-      "- [@siteimprove/package-1-1](packages/package-1-1/CHANGELOG.md#[INSERT NEW VERSION HERE])," +
-      " [@siteimprove/package-1-2](packages/package-1-2/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@siteimprove/package-1-1](packages/package-1-1/CHANGELOG.md#XYZ)," +
+      " [@siteimprove/package-1-2](packages/package-1-2/CHANGELOG.md#XYZ):" +
       " Title 1. ([LINK 1])\n\n" +
-      "- [@siteimprove/package-3](packages/package-3/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@siteimprove/package-3](packages/package-3/CHANGELOG.md#XYZ):" +
       " Title 3. ([LINK 3])\n\n" +
       "### Fixed\n\n" +
-      "- [@siteimprove/package-4](packages/package-4/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@siteimprove/package-4](packages/package-4/CHANGELOG.md#XYZ):" +
       " Title 4. ([LINK 4])"
   );
 });
@@ -246,16 +253,17 @@ test("buildBody() skips missing kinds", (t) => {
         "@siteimprove/package-1-2",
         "@siteimprove/package-2",
         "@siteimprove/package-3",
-      ].map((pkg) => fakePackage(pkg))
+      ].map((pkg) => fakePackage(pkg)),
+      "X.Y.Z"
     ),
     "### Breaking\n\n" +
-      "- [@siteimprove/package-2](packages/package-2/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@siteimprove/package-2](packages/package-2/CHANGELOG.md#XYZ):" +
       " Title 2. ([LINK 2])\n\n" +
       "### Added\n\n" +
-      "- [@siteimprove/package-1-1](packages/package-1-1/CHANGELOG.md#[INSERT NEW VERSION HERE])," +
-      " [@siteimprove/package-1-2](packages/package-1-2/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@siteimprove/package-1-1](packages/package-1-1/CHANGELOG.md#XYZ)," +
+      " [@siteimprove/package-1-2](packages/package-1-2/CHANGELOG.md#XYZ):" +
       " Title 1. ([LINK 1])\n\n" +
-      "- [@siteimprove/package-3](packages/package-3/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@siteimprove/package-3](packages/package-3/CHANGELOG.md#XYZ):" +
       " Title 3. ([LINK 3])"
   );
 });
@@ -294,16 +302,17 @@ test("buildBody() respect prefix and package map", (t) => {
         fakePackage("@myOrg/package-1-2", "@myOrg", "packages"),
         fakePackage("@myOrg/package-2", "@myOrg", "packages"),
         fakePackage("@myOrg/package-3", "@myOrg", "dir3"),
-      ]
+      ],
+      "X.Y.Z"
     ),
     "### Breaking\n\n" +
-      "- [@myOrg/package-2](packages/package-2/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@myOrg/package-2](packages/package-2/CHANGELOG.md#XYZ):" +
       " Title 2. ([LINK 2])\n\n" +
       "### Added\n\n" +
-      "- [@myOrg/package-1-1](dir1/package-1-1/CHANGELOG.md#[INSERT NEW VERSION HERE])," +
-      " [@myOrg/package-1-2](packages/package-1-2/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@myOrg/package-1-1](dir1/package-1-1/CHANGELOG.md#XYZ)," +
+      " [@myOrg/package-1-2](packages/package-1-2/CHANGELOG.md#XYZ):" +
       " Title 1. ([LINK 1])\n\n" +
-      "- [@myOrg/package-3](dir3/package-3/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
+      "- [@myOrg/package-3](dir3/package-3/CHANGELOG.md#XYZ):" +
       " Title 3. ([LINK 3])"
   );
 });
