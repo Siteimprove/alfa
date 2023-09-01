@@ -20,6 +20,8 @@ export interface ChangelogFunctions {
     packages: Packages,
     config: Config
   ): Promise<string>;
+
+  insertBody(oldBody: string, newBody: string): string;
 }
 
 export function getOrDie<T>(result: Result<T, string>, code: number): T {

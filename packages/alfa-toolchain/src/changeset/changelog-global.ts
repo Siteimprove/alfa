@@ -4,7 +4,9 @@ import getChangeSets from "@changesets/read";
 import type { NewChangesetWithCommit } from "@changesets/types";
 import { getPackages } from "@manypkg/get-packages";
 
+import * as fs from "fs";
 import * as path from "path";
+
 import { type ChangelogFunctions, getConfigOption, Error } from "./helpers";
 
 import resolveFrom = require("resolve-from");
@@ -23,6 +25,7 @@ async function main(cwd: string) {
   // Load the global changelog provider.
   let ChangelogFuncs: ChangelogFunctions = {
     getBody: () => Promise.resolve(""),
+    insertBody: () => "",
   };
 
   const changesetPath = path.join(cwd, ".changeset");
@@ -32,12 +35,19 @@ async function main(cwd: string) {
   if (possibleChangelogFunc.default) {
     possibleChangelogFunc = possibleChangelogFunc.default;
   }
-  if (typeof possibleChangelogFunc.getBody === "function") {
+  if (
+    typeof possibleChangelogFunc.getBody === "function" &&
+    typeof possibleChangelogFunc.insertBody === "function"
+  ) {
     ChangelogFuncs = possibleChangelogFunc;
   } else {
     console.error("Could not resolve changelog generation functions");
     process.exit(Error.NO_GLOBAL_CHANGELOG_PROVIDER);
   }
+
+  // Load the existing Changelog
+  const changelogFile = path.join(targetPath, "CHANGELOG.md");
+  const oldChangelog = fs.readFileSync(changelogFile, "utf-8");
 
   // Load changesets, add the commit hashes to them
   const changesets = await getChangeSets(cwd);
@@ -54,12 +64,15 @@ async function main(cwd: string) {
     })
   );
 
-  // Build the new body for the global changelog.
+  // Build the new body for the global changelog and write it.
   const body = await ChangelogFuncs.getBody(
     changesetsWithCommit,
     packages,
     config
   );
+
+  const newChangelog = ChangelogFuncs.insertBody(oldChangelog, body);
+  fs.writeFileSync(changelogFile, newChangelog, "utf-8");
 
   console.log(body);
 }

@@ -235,6 +235,9 @@ export namespace Changelog {
 
 const changelogFunctions: ChangelogFunctions = {
   getBody: Changelog.getBody,
+  insertBody(oldBody: string, newBody: string): string {
+    return newBody + "\n\n" + oldBody;
+  },
 };
 
 export default changelogFunctions;
