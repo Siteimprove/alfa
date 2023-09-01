@@ -6,14 +6,12 @@ import { getPackages, type Packages } from "@manypkg/get-packages";
 
 import * as path from "path";
 
-import { Changelog } from "./build-changelog";
 import resolveFrom = require("resolve-from");
 
 const targetPath = process.argv[2] ?? ".";
 
 export interface ChangelogFunctions {
   getBody(
-    cwd: string,
     changesets: Array<NewChangesetWithCommit>,
     packages: Packages,
     config: Config
@@ -81,7 +79,6 @@ async function main(cwd: string) {
 
   // Build the new body for the global changelog.
   const body = await ChangelogFuncs.getBody(
-    targetPath,
     changesetsWithCommit,
     packages,
     config

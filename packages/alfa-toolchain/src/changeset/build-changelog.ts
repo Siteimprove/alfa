@@ -1,14 +1,11 @@
 import assembleReleasePlan from "@changesets/assemble-release-plan";
 import { getInfo } from "@changesets/get-github-info";
-import { getCommitsThatAddFiles } from "@changesets/git";
 import type {
   Config,
-  NewChangeset,
   NewChangesetWithCommit,
   ReleasePlan,
 } from "@changesets/types";
-import type { Packages } from "@manypkg/get-packages";
-import { Map } from "@siteimprove/alfa-map";
+import type { Package, Packages } from "@manypkg/get-packages";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Changeset } from "./get-changeset-details";
@@ -19,7 +16,6 @@ import type { ChangelogFunctions } from "./changelog-global";
  */
 export namespace Changelog {
   export async function getBody(
-    cwd: string,
     changesets: Array<NewChangesetWithCommit>,
     packages: Packages,
     config: Config
@@ -78,7 +74,8 @@ export namespace Changelog {
 
     // Build the body of the global changelog.
     return Changelog.buildBody(
-      details.map((detail, idx) => [detail, prLinks[idx]])
+      details.map((detail, idx) => [detail, prLinks[idx]]),
+      packages.packages
     );
   }
 
@@ -138,11 +135,10 @@ export namespace Changelog {
    * So we use a placeholder to be replaced at a later stage.
    */
   export function buildBody(
-    changesets: Array<
+    changesets: ReadonlyArray<
       [changeset: Changeset.Details, prLink: string | undefined]
     >,
-    prefix: string = "@siteimprove",
-    subdirectories: Map<string, string> = Map.empty()
+    packages: ReadonlyArray<Package>
   ): string {
     const sorted: {
       [kind in Changeset.Kind]: Array<
@@ -156,7 +152,7 @@ export namespace Changelog {
       .map((kind) =>
         sorted[kind].length === 0
           ? ""
-          : buildGroup(kind, sorted[kind], prefix, subdirectories)
+          : buildGroup(kind, sorted[kind], packages)
       )
       .filter((group) => group !== "")
       .join("\n\n")}`;
@@ -170,40 +166,26 @@ export namespace Changelog {
   export function buildLine(
     changeset: Changeset.Details,
     prLink: string | undefined,
-    subdirectories: Map<string, string> = Map.empty(),
-    prefix: string = "@siteimprove"
+    packages: ReadonlyArray<Package>
   ): string {
-    return `- ${changeset.packages
-      .map(linkToPackage(prefix, subdirectories))
-      .join(", ")}: ${
+    return `- ${changeset.packages.map(linkToPackage(packages)).join(", ")}: ${
       // Remove trailing dot, if any, then add one.
       changeset.title.trimEnd().replace(/\.$/, "")
     }.${prLink === undefined ? "" : ` (${prLink})`}`;
   }
 
   /**
-   * Turns "<prefix>/package-name" into a Markdown link to its changelog from
-   * the top-level directory.
-   *
-   * @remarks
-   * When we pre-process changesets, we do not yet know the new version number.
-   * So we use a placeholder to be replaced at a later stage.
-   *
-   * @privateRemarks
-   * We need to know in which sub-directory the package source code is located.
-   * The default is "packages".
+   * Turns "package-name" into a Markdown link to its changelog from the
+   * top-level directory.
    */
   function linkToPackage(
-    prefix: string,
-    subdirectories: Map<string, string>
+    packages: ReadonlyArray<Package>
   ): (fullName: string) => string {
     return (fullName) => {
-      const shortName = fullName.replace(`${prefix}/`, "");
-      return `[${fullName}](${subdirectories
-        .get(shortName)
-        .getOr(
-          "packages"
-        )}/${shortName}/CHANGELOG.md#[INSERT NEW VERSION HERE])`;
+      const packageJSON = packages.find((p) => p.packageJson.name === fullName)!
+        .packageJson as { [key: string]: any };
+
+      return `[${fullName}](${packageJSON?.repository?.directory}/CHANGELOG.md#[INSERT NEW VERSION HERE])`;
     };
   }
   /**
@@ -211,16 +193,13 @@ export namespace Changelog {
    */
   export function buildGroup(
     kind: Changeset.Kind,
-    changesets: Array<
+    changesets: ReadonlyArray<
       [changeset: Changeset.Details, prLink: string | undefined]
     >,
-    prefix: string = "@siteimprove",
-    subdirectories: Map<string, string> = Map.empty()
+    packages: ReadonlyArray<Package>
   ): string {
     return `### ${kind}\n\n${changesets
-      .map(([changeset, prLink]) =>
-        buildLine(changeset, prLink, subdirectories, prefix)
-      )
+      .map(([changeset, prLink]) => buildLine(changeset, prLink, packages))
       .join("\n\n")}`;
   }
 }

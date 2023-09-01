@@ -1,7 +1,21 @@
+import type { Package } from "@manypkg/get-packages";
 import { Map } from "@siteimprove/alfa-map";
 import { test } from "@siteimprove/alfa-test";
 
 import { Changelog } from "../../src/changeset/build-changelog";
+
+function fakePackage(
+  pkg: string,
+  prefix: string = "@siteimprove",
+  dir: string = "packages"
+): Package {
+  return {
+    packageJson: {
+      name: pkg,
+      repository: { directory: `${dir}/${pkg.replace(`${prefix}/`, "")}` },
+    },
+  } as any as Package;
+}
 
 test("buildLine() builds a package line entry", (t) => {
   t.deepEqual(
@@ -11,7 +25,8 @@ test("buildLine() builds a package line entry", (t) => {
         title: "Some awesome title.",
         packages: ["@siteimprove/my-package"],
       },
-      "[NOT A LINK]"
+      "[NOT A LINK]",
+      [fakePackage("@siteimprove/my-package")]
     ),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
       " Some awesome title. ([NOT A LINK])"
@@ -26,7 +41,8 @@ test("buildLine() adds trailing dot if necessary", (t) => {
         title: "Some awesome title",
         packages: ["@siteimprove/my-package"],
       },
-      "[NOT A LINK]"
+      "[NOT A LINK]",
+      [fakePackage("@siteimprove/my-package")]
     ),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
       " Some awesome title. ([NOT A LINK])"
@@ -41,7 +57,8 @@ test("buildLine() leaves intermediate dots alone", (t) => {
         title: "Some. Awesome. Title",
         packages: ["@siteimprove/my-package"],
       },
-      "[NOT A LINK]"
+      "[NOT A LINK]",
+      [fakePackage("@siteimprove/my-package")]
     ),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
       " Some. Awesome. Title. ([NOT A LINK])"
@@ -56,7 +73,8 @@ test("buildLine() skips undefined PR links", (t) => {
         title: "Some awesome title",
         packages: ["@siteimprove/my-package"],
       },
-      undefined
+      undefined,
+      [fakePackage("@siteimprove/my-package")]
     ),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
       " Some awesome title."
@@ -71,7 +89,10 @@ test("buildLine() handles multi-packages change", (t) => {
         title: "Some awesome title",
         packages: ["@siteimprove/my-package", "@siteimprove/my-other-package"],
       },
-      "[NOT A LINK]"
+      "[NOT A LINK]",
+      ["@siteimprove/my-package", "@siteimprove/my-other-package"].map((pkg) =>
+        fakePackage(pkg)
+      )
     ),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE])," +
       " [@siteimprove/my-other-package](packages/my-other-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
@@ -81,27 +102,35 @@ test("buildLine() handles multi-packages change", (t) => {
 
 test("buildGroup() builds a group of same kinds changes", (t) => {
   t.deepEqual(
-    Changelog.buildGroup("Added", [
+    Changelog.buildGroup(
+      "Added",
       [
-        {
-          kind: "Added",
-          title: "Some awesome title",
-          packages: [
-            "@siteimprove/my-package",
-            "@siteimprove/my-other-package",
-          ],
-        },
-        "[NOT A LINK]",
+        [
+          {
+            kind: "Added",
+            title: "Some awesome title",
+            packages: [
+              "@siteimprove/my-package",
+              "@siteimprove/my-other-package",
+            ],
+          },
+          "[NOT A LINK]",
+        ],
+        [
+          {
+            kind: "Added",
+            title: "Some other title",
+            packages: ["@siteimprove/my-third-package"],
+          },
+          "[STILL NOT A LINK]",
+        ],
       ],
       [
-        {
-          kind: "Added",
-          title: "Some other title",
-          packages: ["@siteimprove/my-third-package"],
-        },
-        "[STILL NOT A LINK]",
-      ],
-    ]),
+        "@siteimprove/my-package",
+        "@siteimprove/my-other-package",
+        "@siteimprove/my-third-package",
+      ].map((pkg) => fakePackage(pkg))
+    ),
     "### Added\n\n" +
       "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#[INSERT NEW VERSION HERE])," +
       " [@siteimprove/my-other-package](packages/my-other-package/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
@@ -113,48 +142,58 @@ test("buildGroup() builds a group of same kinds changes", (t) => {
 
 test("buildBody() builds a full body", (t) => {
   t.deepEqual(
-    Changelog.buildBody([
+    Changelog.buildBody(
       [
-        {
-          kind: "Added",
-          title: "Title 1",
-          packages: ["@siteimprove/package-1-1", "@siteimprove/package-1-2"],
-        },
-        "[LINK 1]",
+        [
+          {
+            kind: "Added",
+            title: "Title 1",
+            packages: ["@siteimprove/package-1-1", "@siteimprove/package-1-2"],
+          },
+          "[LINK 1]",
+        ],
+        [
+          {
+            kind: "Breaking",
+            title: "Title 2",
+            packages: ["@siteimprove/package-2"],
+          },
+          "[LINK 2]",
+        ],
+        [
+          {
+            kind: "Added",
+            title: "Title 3",
+            packages: ["@siteimprove/package-3"],
+          },
+          "[LINK 3]",
+        ],
+        [
+          {
+            kind: "Fixed",
+            title: "Title 4",
+            packages: ["@siteimprove/package-4"],
+          },
+          "[LINK 4]",
+        ],
+        [
+          {
+            kind: "Removed",
+            title: "Title 5",
+            packages: ["@siteimprove/package-5"],
+          },
+          "[LINK 5]",
+        ],
       ],
       [
-        {
-          kind: "Breaking",
-          title: "Title 2",
-          packages: ["@siteimprove/package-2"],
-        },
-        "[LINK 2]",
-      ],
-      [
-        {
-          kind: "Added",
-          title: "Title 3",
-          packages: ["@siteimprove/package-3"],
-        },
-        "[LINK 3]",
-      ],
-      [
-        {
-          kind: "Fixed",
-          title: "Title 4",
-          packages: ["@siteimprove/package-4"],
-        },
-        "[LINK 4]",
-      ],
-      [
-        {
-          kind: "Removed",
-          title: "Title 5",
-          packages: ["@siteimprove/package-5"],
-        },
-        "[LINK 5]",
-      ],
-    ]),
+        "@siteimprove/package-1-1",
+        "@siteimprove/package-1-2",
+        "@siteimprove/package-2",
+        "@siteimprove/package-3",
+        "@siteimprove/package-4",
+        "@siteimprove/package-5",
+      ].map((pkg) => fakePackage(pkg))
+    ),
     "### Breaking\n\n" +
       "- [@siteimprove/package-2](packages/package-2/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
       " Title 2. ([LINK 2])\n\n" +
@@ -175,32 +214,40 @@ test("buildBody() builds a full body", (t) => {
 
 test("buildBody() skips missing kinds", (t) => {
   t.deepEqual(
-    Changelog.buildBody([
+    Changelog.buildBody(
       [
-        {
-          kind: "Added",
-          title: "Title 1",
-          packages: ["@siteimprove/package-1-1", "@siteimprove/package-1-2"],
-        },
-        "[LINK 1]",
+        [
+          {
+            kind: "Added",
+            title: "Title 1",
+            packages: ["@siteimprove/package-1-1", "@siteimprove/package-1-2"],
+          },
+          "[LINK 1]",
+        ],
+        [
+          {
+            kind: "Breaking",
+            title: "Title 2",
+            packages: ["@siteimprove/package-2"],
+          },
+          "[LINK 2]",
+        ],
+        [
+          {
+            kind: "Added",
+            title: "Title 3",
+            packages: ["@siteimprove/package-3"],
+          },
+          "[LINK 3]",
+        ],
       ],
       [
-        {
-          kind: "Breaking",
-          title: "Title 2",
-          packages: ["@siteimprove/package-2"],
-        },
-        "[LINK 2]",
-      ],
-      [
-        {
-          kind: "Added",
-          title: "Title 3",
-          packages: ["@siteimprove/package-3"],
-        },
-        "[LINK 3]",
-      ],
-    ]),
+        "@siteimprove/package-1-1",
+        "@siteimprove/package-1-2",
+        "@siteimprove/package-2",
+        "@siteimprove/package-3",
+      ].map((pkg) => fakePackage(pkg))
+    ),
     "### Breaking\n\n" +
       "- [@siteimprove/package-2](packages/package-2/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
       " Title 2. ([LINK 2])\n\n" +
@@ -242,11 +289,12 @@ test("buildBody() respect prefix and package map", (t) => {
           "[LINK 3]",
         ],
       ],
-      "@myOrg",
-      Map.from([
-        ["package-1-1", "dir1"],
-        ["package-3", "dir3"],
-      ])
+      [
+        fakePackage("@myOrg/package-1-1", "@myOrg", "dir1"),
+        fakePackage("@myOrg/package-1-2", "@myOrg", "packages"),
+        fakePackage("@myOrg/package-2", "@myOrg", "packages"),
+        fakePackage("@myOrg/package-3", "@myOrg", "dir3"),
+      ]
     ),
     "### Breaking\n\n" +
       "- [@myOrg/package-2](packages/package-2/CHANGELOG.md#[INSERT NEW VERSION HERE]):" +
