@@ -7,9 +7,16 @@ import type {
 } from "@changesets/types";
 import type { Package, Packages } from "@manypkg/get-packages";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
-
 import { Changeset } from "./get-changeset-details";
-import type { ChangelogFunctions } from "./changelog-global";
+import {
+  type ChangelogFunctions,
+  Error,
+  getConfigOption,
+  getOrDie,
+} from "./helpers";
+
+const NON_UNIQUE_VERSION = Error.freeFrom + 1;
+const INVALID_CHANGESETS = Error.freeFrom + 2;
 
 /**
  * @public
@@ -30,32 +37,15 @@ export namespace Changelog {
     );
 
     // Check unicity of versions
-    const versions = getVersions(releasePlan);
-    if (!versions.isOk()) {
-      console.error(versions.getErrUnsafe());
-      process.exit(3);
-    }
-
-    const { oldVersion, newVersion } = versions.get();
+    const { oldVersion, newVersion } = getOrDie(
+      getVersions(releasePlan),
+      NON_UNIQUE_VERSION
+    );
     console.log(`Going from ${oldVersion} to ${newVersion}`);
 
     // Check that changeset config.changelog[1].repo exists, so we can fetch
     // the PRs.
-    const changelog = config.changelog;
-    if (changelog === false) {
-      console.error(
-        "Changeset config.changelog is not in the correct format (missing options)"
-      );
-      process.exit(1);
-    }
-    const repo = changelog[1]?.repo;
-
-    if (typeof repo !== "string") {
-      console.error(
-        "Changeset config.changelog is not in the correct format (missing repo)"
-      );
-      process.exit(1);
-    }
+    const repo = getConfigOption(config, "repo");
 
     // Build links to PRs, this is an array of same length as the changesets
     // with a one-to-one correspondence.
@@ -69,7 +59,7 @@ export namespace Changelog {
 
     if (details.length !== changesets.length) {
       console.error("Some changesets are invalid");
-      process.exit(4);
+      process.exit(INVALID_CHANGESETS);
     }
 
     // Build the body of the global changelog.

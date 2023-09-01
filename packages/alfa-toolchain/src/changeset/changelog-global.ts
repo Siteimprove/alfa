@@ -1,22 +1,15 @@
 import { read as readConfig } from "@changesets/config";
 import { getCommitsThatAddFiles } from "@changesets/git";
 import getChangeSets from "@changesets/read";
-import type { Config, NewChangesetWithCommit } from "@changesets/types";
-import { getPackages, type Packages } from "@manypkg/get-packages";
+import type { NewChangesetWithCommit } from "@changesets/types";
+import { getPackages } from "@manypkg/get-packages";
 
 import * as path from "path";
+import { type ChangelogFunctions, getConfigOption, Error } from "./helpers";
 
 import resolveFrom = require("resolve-from");
 
 const targetPath = process.argv[2] ?? ".";
-
-export interface ChangelogFunctions {
-  getBody(
-    changesets: Array<NewChangesetWithCommit>,
-    packages: Packages,
-    config: Config
-  ): Promise<string>;
-}
 
 main(targetPath);
 
@@ -25,23 +18,7 @@ async function main(cwd: string) {
   const packages = await getPackages(cwd);
   const config = await readConfig(cwd, packages);
 
-  // Check that a global changelog generator is provided
-  // (changeset.changelog[1].global exists).
-  const changelog = config.changelog;
-  if (changelog === false) {
-    console.error(
-      "Changeset config.changelog is not in the correct format (missing options)"
-    );
-    process.exit(1);
-  }
-  const global = changelog[1]?.global;
-
-  if (typeof global !== "string") {
-    console.error(
-      "Changeset config.changelog is not in the correct format (missing global)"
-    );
-    process.exit(1);
-  }
+  const global = getConfigOption(config, "global");
 
   // Load the global changelog provider.
   let ChangelogFuncs: ChangelogFunctions = {
@@ -59,10 +36,10 @@ async function main(cwd: string) {
     ChangelogFuncs = possibleChangelogFunc;
   } else {
     console.error("Could not resolve changelog generation functions");
-    process.exit(2);
+    process.exit(Error.NO_GLOBAL_CHANGELOG_PROVIDER);
   }
 
-  // Load changesets, add the commit hash to them
+  // Load changesets, add the commit hashes to them
   const changesets = await getChangeSets(cwd);
 
   const commits = await getCommitsThatAddFiles(
