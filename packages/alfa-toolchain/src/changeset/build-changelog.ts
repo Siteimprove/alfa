@@ -1,4 +1,10 @@
+import assembleReleasePlan from "@changesets/assemble-release-plan";
+import { getInfo } from "@changesets/get-github-info";
+import { getCommitsThatAddFiles } from "@changesets/git";
+import type { Config, NewChangeset } from "@changesets/types";
+import type { Packages } from "@manypkg/get-packages";
 import { Map } from "@siteimprove/alfa-map";
+import { Ok, Result } from "@siteimprove/alfa-result";
 
 import { Changeset } from "./get-changeset-details";
 
@@ -6,6 +12,80 @@ import { Changeset } from "./get-changeset-details";
  * @public
  */
 export namespace Changelog {
+  export async function getBody(
+    cwd: string,
+    changesets: Array<NewChangeset>,
+    packages: Packages,
+    config: Config
+  ): Promise<string> {
+    const releasePlan = assembleReleasePlan(
+      changesets,
+      packages,
+      config,
+      undefined,
+      undefined
+    );
+
+    // console.dir(releasePlan);
+
+    const { oldVersion, newVersion } = releasePlan.releases[0];
+
+    console.log(`Going from ${oldVersion} to ${newVersion}`);
+
+    const changelog = config.changelog;
+    if (changelog === false) {
+      console.error(
+        "Changeset config.changelog is not in the correct format (missing options)"
+      );
+      process.exit(1);
+    }
+    const repo = changelog[1]?.repo;
+
+    if (typeof repo !== "string") {
+      console.error(
+        "Changeset config.changelog is not in the correct format (missing repo)"
+      );
+      process.exit(1);
+    }
+
+    const prLinks = await getPRlinks(cwd, changesets, repo);
+
+    const details = changesets
+      .map(Changeset.getDetails)
+      .filter<Ok<Changeset.Details>>(Result.isOk)
+      .map((changeset) => changeset.get());
+
+    if (details.length !== changesets.length) {
+      console.error("Some changesets are invalid");
+      process.exit(2);
+    }
+
+    return Changelog.buildBody(
+      details.map((detail, idx) => [detail, prLinks[idx]])
+    );
+  }
+
+  async function getPRlinks(
+    cwd: string,
+    changesets: Array<NewChangeset>,
+    repo: string
+  ): Promise<Array<string | undefined>> {
+    return getCommitsThatAddFiles(
+      changesets.map((changeset) => `.changeset/${changeset.id}.md`),
+      { cwd, short: true }
+    ).then((commits) => Promise.all(commits.map(getPRLink(repo))));
+  }
+
+  function getPRLink(
+    repo: string
+  ): (commit: string | undefined) => Promise<string | undefined> {
+    return async (commit) =>
+      commit === undefined
+        ? undefined
+        : getInfo({ commit, repo }).then(
+            (info) => info?.links.pull ?? undefined
+          );
+  }
   /**
    * Builds the global changelog body, from an array of changesets.
    *

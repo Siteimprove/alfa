@@ -1,86 +1,37 @@
-import assembleReleasePlan from "@changesets/assemble-release-plan";
 import { read as readConfig } from "@changesets/config";
-import { getInfo } from "@changesets/get-github-info";
-import { getCommitsThatAddFiles } from "@changesets/git";
 import getChangeSets from "@changesets/read";
-import { NewChangeset } from "@changesets/types";
-import { getPackages } from "@manypkg/get-packages";
-import { Ok, Result } from "@siteimprove/alfa-result";
-import * as path from "path";
+import type { Config, NewChangeset } from "@changesets/types";
+import { getPackages, type Packages } from "@manypkg/get-packages";
 
 import { Changelog } from "./build-changelog";
-import { Changeset } from "./get-changeset-details";
 
 const targetPath = process.argv[2] ?? ".";
+
+export interface ChangelogFunctions {
+  getBody(
+    cwd: string,
+    changesets: Array<NewChangeset>,
+    packages: Packages,
+    config: Config
+  ): Promise<string>;
+}
 
 main();
 
 async function main() {
   const packages = await getPackages(targetPath);
-  // console.dir(packages);
+  console.dir(packages);
 
   const config = await readConfig(targetPath, packages);
   // console.dir(config);
 
   const changesets = await getChangeSets(targetPath);
 
-  const releasePlan = assembleReleasePlan(
+  const body = await Changelog.getBody(
+    targetPath,
     changesets,
     packages,
-    config,
-    undefined,
-    undefined
-  );
-
-  // console.dir(releasePlan);
-
-  const { oldVersion, newVersion } = releasePlan.releases[0];
-
-  console.log(`Going from ${oldVersion} to ${newVersion}`);
-
-  const changelog = config.changelog;
-  if (changelog === false) {
-    console.error(
-      "Changeset config.changelog is not in the correct format (missing options)"
-    );
-    process.exit(1);
-  }
-  const repo = changelog[1]?.repo;
-
-  if (typeof repo !== "string") {
-    console.error(
-      "Changeset config.changelog is not in the correct format (missing repo)"
-    );
-    process.exit(1);
-  }
-
-  const commits = await getCommitsThatAddFiles(
-    changesets.map((changeset) => `.changeset/${changeset.id}.md`),
-    { cwd: targetPath, short: true }
-  );
-
-  const prLinks = (
-    (await Promise.all(
-      commits.map(async (commit) =>
-        commit === undefined ? undefined : await getInfo({ commit, repo })
-      )
-    )) ?? []
-  ).map((info) => info?.links.pull ?? undefined);
-
-  const details = changesets
-    .map(Changeset.getDetails)
-    .filter<Ok<Changeset.Details>>(Result.isOk)
-    .map((changeset) => changeset.get());
-
-  if (details.length !== changesets.length) {
-    console.error("Some changesets are invalid");
-    process.exit(2);
-  }
-
-  const body = Changelog.buildBody(
-    await Promise.all(
-      details.map(async (detail, idx) => [detail, prLinks[idx]])
-    )
+    config
   );
 
   console.log(body);
