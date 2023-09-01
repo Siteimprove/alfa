@@ -5,7 +5,8 @@ import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Set } from "@siteimprove/alfa-set";
 
-import { Option } from "@siteimprove/alfa-option";
+import { None, Option } from "@siteimprove/alfa-option";
+import { getBoundingBox } from "@siteimprove/alfa-style/src/element/element";
 import { expectation } from "../act/expectation";
 import { Group } from "../act/group";
 import { Question } from "../act/question";
@@ -110,29 +111,11 @@ export function hasSufficientContrast(
   // for foreground and background.
   const interposedDescendants = Set.from(foreground).concat(background);
 
-  let ignoredInterposedElements = Question.of(
+  const ignoredInterposedElements = Question.of(
     "ignored-interposed-elements",
     Group.of(interposedDescendants),
     target
-  );
-
-  if (interposedDescendants.isEmpty()) {
-    ignoredInterposedElements = ignoredInterposedElements.answerIf(
-      Option.of([])
-    );
-  } else if (
-    parent.box.isSome() &&
-    interposedDescendants.every((interposed) => interposed.box.isSome())
-  ) {
-    const notOverlapping = interposedDescendants.filter(
-      (interposed) =>
-        !interposed.box.getUnsafe().intersects(parent.box.getUnsafe())
-    );
-
-    ignoredInterposedElements = ignoredInterposedElements.answerIf(
-      Option.of(notOverlapping)
-    );
-  }
+  ).answerIf(getIgnoredInterposedAnswer(parent, interposedDescendants, device));
 
   const foregrounds = Question.of("foreground-colors", target);
   const backgrounds = Question.of("background-colors", target);
@@ -241,4 +224,44 @@ export function contrast(foreground: RGB, background: RGB): number {
   const contrast = (max(lf, lb) + 0.05) / (min(lf, lb) + 0.05);
 
   return round(contrast * 100) / 100;
+}
+
+/**
+ * @private
+ *
+ * Tries to answer which interposed descendants can be ignored using layout.
+ * If layout is missing `None` is returned meaning we cannot answer the question.
+ */
+function getIgnoredInterposedAnswer(
+  targetParent: Element<string>,
+  interposedDescendants: Set<Element<string>>,
+  device: Device
+): Option<Iterable<Element<string>>> {
+  if (interposedDescendants.isEmpty()) {
+    return Option.of([]);
+  }
+
+  const targetBox = getBoundingBox(targetParent, device);
+
+  // If the target doesn't have layout, we cannot answer the question
+  if (!targetBox.isSome()) {
+    return None;
+  }
+
+  const ignoredInterposed: Array<Element<string>> = [];
+  for (const interposed of interposedDescendants) {
+    const interposedBox = getBoundingBox(interposed, device);
+
+    // If we encounter any interposed element without layout, we cannot answer the question
+    if (!interposedBox.isSome()) {
+      return None;
+    }
+
+    // If the interposed doesn't intersect the target, it can be ignored
+    if (!interposedBox.get().intersects(targetBox.get())) {
+      ignoredInterposed.push(interposed);
+    }
+  }
+
+  return Option.of(ignoredInterposed);
 }
