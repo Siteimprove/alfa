@@ -63,10 +63,18 @@ export namespace Changelog {
     }
 
     // Build the body of the global changelog.
-    return Changelog.buildBody(
-      details.map((detail, idx) => [detail, prLinks[idx]]),
-      packages.packages,
-      newVersion
+    return (
+      `## [${newVersion}](../../compare/v${oldVersion}...v${newVersion}) (${new Date(
+        Date.now()
+      )
+        .toISOString()
+        .slice(0, 10)})` +
+      "\n\n" +
+      Changelog.buildBody(
+        details.map((detail, idx) => [detail, prLinks[idx]]),
+        packages.packages,
+        newVersion
+      )
     );
   }
 
