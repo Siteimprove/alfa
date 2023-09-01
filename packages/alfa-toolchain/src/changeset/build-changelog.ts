@@ -7,6 +7,7 @@ import { Map } from "@siteimprove/alfa-map";
 import { Ok, Result } from "@siteimprove/alfa-result";
 
 import { Changeset } from "./get-changeset-details";
+import type { ChangelogFunctions } from "./changelog-global";
 
 /**
  * @public
@@ -180,3 +181,9 @@ export namespace Changelog {
       .join("\n\n")}`;
   }
 }
+
+const changelogFunctions: ChangelogFunctions = {
+  getBody: Changelog.getBody,
+};
+
+export default changelogFunctions;

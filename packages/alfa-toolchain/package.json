@@ -15,7 +15,9 @@
   "exports": {
     ".": "./src/index.js",
     "./changelog": "./src/changeset/changelog-individual.js",
-    "./changelog.js": "./src/changeset/changelog-individual.js"
+    "./changelog.js": "./src/changeset/changelog-individual.js",
+    "./global-changelog": "./src/changeset/build-changelog.js",
+    "./global-changelog.js": "./src/changeset/build-changelog.js"
   },
   "types": "src/index.d.ts",
   "bin": {
@@ -39,7 +41,8 @@
     "@manypkg/get-packages": "^1.1.3",
     "@siteimprove/alfa-map": "workspace:^0.66.0",
     "@siteimprove/alfa-result": "workspace:^0.66.0",
-    "@svitejs/changesets-changelog-github-compact": "^1.1.0"
+    "@svitejs/changesets-changelog-github-compact": "^1.1.0",
+    "resolve-from": "^5.0.0"
   },
   "devDependencies": {
     "@changesets/types": "^5.2.1",
