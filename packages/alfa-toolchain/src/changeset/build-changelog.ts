@@ -1,7 +1,12 @@
 import assembleReleasePlan from "@changesets/assemble-release-plan";
 import { getInfo } from "@changesets/get-github-info";
 import { getCommitsThatAddFiles } from "@changesets/git";
-import type { Config, NewChangeset, ReleasePlan } from "@changesets/types";
+import type {
+  Config,
+  NewChangeset,
+  NewChangesetWithCommit,
+  ReleasePlan,
+} from "@changesets/types";
 import type { Packages } from "@manypkg/get-packages";
 import { Map } from "@siteimprove/alfa-map";
 import { Err, Ok, Result } from "@siteimprove/alfa-result";
@@ -13,38 +18,9 @@ import type { ChangelogFunctions } from "./changelog-global";
  * @public
  */
 export namespace Changelog {
-  interface Versions {
-    oldVersion: string;
-    newVersion: string;
-  }
-  function getVersions(releasePlan: ReleasePlan): Result<Versions, string> {
-    return releasePlan.releases.reduce(
-      (previous: Result<Versions, string>, current) => {
-        return previous.flatMap(({ oldVersion, newVersion }) => {
-          if (oldVersion !== "" && oldVersion !== current.oldVersion) {
-            return Err.of(
-              "Not all packages have the same current version, aborting"
-            );
-          }
-          if (newVersion !== "" && newVersion !== current.newVersion) {
-            return Err.of(
-              "Not all packages have the same future version, aborting"
-            );
-          }
-
-          return Ok.of({
-            oldVersion: current.oldVersion,
-            newVersion: current.newVersion,
-          });
-        });
-      },
-      Ok.of({ oldVersion: "", newVersion: "" })
-    );
-  }
-
   export async function getBody(
     cwd: string,
-    changesets: Array<NewChangeset>,
+    changesets: Array<NewChangesetWithCommit>,
     packages: Packages,
     config: Config
   ): Promise<string> {
@@ -98,15 +74,43 @@ export namespace Changelog {
     );
   }
 
+  interface Versions {
+    oldVersion: string;
+    newVersion: string;
+  }
+  function getVersions(releasePlan: ReleasePlan): Result<Versions, string> {
+    return releasePlan.releases.reduce(
+      (previous: Result<Versions, string>, current) => {
+        return previous.flatMap(({ oldVersion, newVersion }) => {
+          if (oldVersion !== "" && oldVersion !== current.oldVersion) {
+            return Err.of(
+              "Not all packages have the same current version, aborting"
+            );
+          }
+          if (newVersion !== "" && newVersion !== current.newVersion) {
+            return Err.of(
+              "Not all packages have the same future version, aborting"
+            );
+          }
+
+          return Ok.of({
+            oldVersion: current.oldVersion,
+            newVersion: current.newVersion,
+          });
+        });
+      },
+      Ok.of({ oldVersion: "", newVersion: "" })
+    );
+  }
+
   async function getPRlinks(
     cwd: string,
-    changesets: Array<NewChangeset>,
+    changesets: Array<NewChangesetWithCommit>,
     repo: string
   ): Promise<Array<string | undefined>> {
-    return getCommitsThatAddFiles(
-      changesets.map((changeset) => `.changeset/${changeset.id}.md`),
-      { cwd, short: true }
-    ).then((commits) => Promise.all(commits.map(getPRLink(repo))));
+    return Promise.all(
+      changesets.map((changeset) => getPRLink(repo)(changeset.commit))
+    );
   }
 
   function getPRLink(

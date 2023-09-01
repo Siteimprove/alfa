@@ -1,6 +1,7 @@
 import { read as readConfig } from "@changesets/config";
+import { getCommitsThatAddFiles } from "@changesets/git";
 import getChangeSets from "@changesets/read";
-import type { Config, NewChangeset } from "@changesets/types";
+import type { Config, NewChangesetWithCommit } from "@changesets/types";
 import { getPackages, type Packages } from "@manypkg/get-packages";
 
 import * as path from "path";
@@ -13,7 +14,7 @@ const targetPath = process.argv[2] ?? ".";
 export interface ChangelogFunctions {
   getBody(
     cwd: string,
-    changesets: Array<NewChangeset>,
+    changesets: Array<NewChangesetWithCommit>,
     packages: Packages,
     config: Config
   ): Promise<string>;
@@ -22,12 +23,12 @@ export interface ChangelogFunctions {
 main(targetPath);
 
 async function main(cwd: string) {
+  // Read packages list, and changeset config file
   const packages = await getPackages(cwd);
-  // console.dir(packages);
-
   const config = await readConfig(cwd, packages);
-  // console.dir(config);
 
+  // Check that a global changelog generator is provided
+  // (changeset.changelog[1].global exists).
   const changelog = config.changelog;
   if (changelog === false) {
     console.error(
@@ -44,8 +45,7 @@ async function main(cwd: string) {
     process.exit(1);
   }
 
-  const changesets = await getChangeSets(cwd);
-
+  // Load the global changelog provider.
   let ChangelogFuncs: ChangelogFunctions = {
     getBody: () => Promise.resolve(""),
   };
@@ -64,9 +64,25 @@ async function main(cwd: string) {
     process.exit(2);
   }
 
+  // Load changesets, add the commit hash to them
+  const changesets = await getChangeSets(cwd);
+
+  const commits = await getCommitsThatAddFiles(
+    changesets.map((changeset) => `.changeset/${changeset.id}.md`),
+    { cwd, short: true }
+  );
+
+  const changesetsWithCommit: Array<NewChangesetWithCommit> = changesets.map(
+    (changeset, idx) => ({
+      ...changeset,
+      commit: commits[idx],
+    })
+  );
+
+  // Build the new body for the global changelog.
   const body = await ChangelogFuncs.getBody(
     targetPath,
-    changesets,
+    changesetsWithCommit,
     packages,
     config
   );
