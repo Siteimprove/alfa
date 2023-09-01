@@ -1,10 +1,10 @@
 import assembleReleasePlan from "@changesets/assemble-release-plan";
 import { getInfo } from "@changesets/get-github-info";
 import { getCommitsThatAddFiles } from "@changesets/git";
-import type { Config, NewChangeset } from "@changesets/types";
+import type { Config, NewChangeset, ReleasePlan } from "@changesets/types";
 import type { Packages } from "@manypkg/get-packages";
 import { Map } from "@siteimprove/alfa-map";
-import { Ok, Result } from "@siteimprove/alfa-result";
+import { Err, Ok, Result } from "@siteimprove/alfa-result";
 
 import { Changeset } from "./get-changeset-details";
 import type { ChangelogFunctions } from "./changelog-global";
@@ -13,6 +13,35 @@ import type { ChangelogFunctions } from "./changelog-global";
  * @public
  */
 export namespace Changelog {
+  interface Versions {
+    oldVersion: string;
+    newVersion: string;
+  }
+  function getVersions(releasePlan: ReleasePlan): Result<Versions, string> {
+    return releasePlan.releases.reduce(
+      (previous: Result<Versions, string>, current) => {
+        return previous.flatMap(({ oldVersion, newVersion }) => {
+          if (oldVersion !== "" && oldVersion !== current.oldVersion) {
+            return Err.of(
+              "Not all packages have the same current version, aborting"
+            );
+          }
+          if (newVersion !== "" && newVersion !== current.newVersion) {
+            return Err.of(
+              "Not all packages have the same future version, aborting"
+            );
+          }
+
+          return Ok.of({
+            oldVersion: current.oldVersion,
+            newVersion: current.newVersion,
+          });
+        });
+      },
+      Ok.of({ oldVersion: "", newVersion: "" })
+    );
+  }
+
   export async function getBody(
     cwd: string,
     changesets: Array<NewChangeset>,
@@ -27,10 +56,13 @@ export namespace Changelog {
       undefined
     );
 
-    // console.dir(releasePlan);
+    const versions = getVersions(releasePlan);
+    if (!versions.isOk()) {
+      console.error(versions.getErrUnsafe());
+      process.exit(3);
+    }
 
-    const { oldVersion, newVersion } = releasePlan.releases[0];
-
+    const { oldVersion, newVersion } = versions.get();
     console.log(`Going from ${oldVersion} to ${newVersion}`);
 
     const changelog = config.changelog;
