@@ -9,6 +9,9 @@
 import type { ChangelogFunctions } from "@changesets/types";
 import changelog from "@svitejs/changesets-changelog-github-compact";
 
+/**
+ * @public
+ */
 const changelogFunctions: ChangelogFunctions = {
   getDependencyReleaseLine: async () => "",
   getReleaseLine: changelog.getReleaseLine,

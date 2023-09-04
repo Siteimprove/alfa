@@ -14,6 +14,9 @@ export namespace Error {
   export const freeFrom = 100;
 }
 
+/**
+ * @public
+ */
 export interface ChangelogFunctions {
   getBody(
     changesets: Array<NewChangesetWithCommit>,
@@ -24,6 +27,9 @@ export interface ChangelogFunctions {
   insertBody(oldBody: string, newBody: string): string;
 }
 
+/**
+ * @internal
+ */
 export function getOrDie<T>(result: Result<T, string>, code: number): T {
   if (result.isErr()) {
     console.error(result.getErr());
@@ -33,6 +39,9 @@ export function getOrDie<T>(result: Result<T, string>, code: number): T {
   return result.getUnsafe();
 }
 
+/**
+ * @public
+ */
 export function getConfigOption(config: Config, option: string): string {
   const changelog = config.changelog;
   if (changelog === false) {
