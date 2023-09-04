@@ -1,0 +1,25 @@
+# ADR 18: Use external layout information
+
+## Context
+
+Many accessibility checks depend on the precise layout of the page. Most notably to detect the background color of text positioned on top of an image, but also to detect whether content is moved offscreen, or inspect the size of some piece of content. The lack of layout information has been a recurring issue as exemplified in [this list of problems](https://github.com/Siteimprove/alfa/issues/1256). Heuristics can only go so far…
+
+There are two main approaches to adding layout information to Alfa:
+* One is to have Alfa rebuild the full layout based on its input data, i.e. virtually render the page. While rendering is usually costly, a large part of the cost is due to resolving cascades and computing CSS values, which Alfa needs to do anyway. However, correct rendering of text requires a full typesetting algorithm, which is complex to write. Additionally, correct rendering requires Alfa to be fed with all the assets for the page (images, fonts, …) which we do not necessarily have. On the plus side, an internal rendering algorithm ensures we get accurate information even when changing the `Device` or `Context` during the audit, which is needed to inspect `:focus` state or device orientation.
+* The other is to consider layout as external information. Callers need to provide the layout information to Alfa which we can simply use. As per [ADR 2](./adr-002.md), it doesn't matter how that information is built, Alfa will just consume it deterministically.
+
+## Decision
+
+We will implement layout as an external input value.
+
+## Status
+
+Accepted.
+
+## Consequences
+
+Checks that depend on layout will be more accurate.
+
+Since layout is tied to a specific `Device` and `Context`, we must take care to not try and use it with different ones.
+
+Because generating the DOM in the first place usually involves a browser to render the page, it is fairly easy for callers to also gather the required layout information at the same time. Thus, the extra work required from them is hopefully affordable for the benefits it provides.
