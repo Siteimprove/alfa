@@ -39,7 +39,6 @@
     "@changesets/git": "^2.0.0",
     "@changesets/read": "^0.5.9",
     "@manypkg/get-packages": "^1.1.3",
-    "@siteimprove/alfa-map": "workspace:^0.66.0",
     "@siteimprove/alfa-result": "workspace:^0.66.0",
     "@svitejs/changesets-changelog-github-compact": "^1.1.0",
     "resolve-from": "^5.0.0"

@@ -247,4 +247,7 @@ const changelogFunctions: ChangelogFunctions = {
   insertBody: Changelog.mergeBodies,
 };
 
+/**
+ * @public
+ */
 export default changelogFunctions;

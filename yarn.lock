@@ -1597,7 +1597,6 @@ __metadata:
     "@changesets/read": ^0.5.9
     "@changesets/types": ^5.2.1
     "@manypkg/get-packages": ^1.1.3
-    "@siteimprove/alfa-map": "workspace:^0.66.0"
     "@siteimprove/alfa-result": "workspace:^0.66.0"
     "@siteimprove/alfa-test": "workspace:^0.66.0"
     "@svitejs/changesets-changelog-github-compact": ^1.1.0
