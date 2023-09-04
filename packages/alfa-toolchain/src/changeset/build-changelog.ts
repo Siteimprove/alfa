@@ -82,7 +82,7 @@ export namespace Changelog {
    */
   export function mergeBodies(oldBody: string, newBody: string): string {
     // Insert the new body as third line skipping heading and one more newline
-    return oldBody.replace(/(?<heading>(.*\n){2})/, `$1${newBody}\n\n`);
+    return oldBody.replace(/((.*\n){2})/, `$1${newBody}\n\n`);
   }
 
   interface Versions {

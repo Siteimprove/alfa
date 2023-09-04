@@ -15,6 +15,19 @@ const targetPath = process.argv[2] ?? ".";
 
 main(targetPath);
 
+/**
+ * Update a global changelog
+ *
+ * @remarks
+ * * The functions for generating it are imported from the file pointed at by
+ *   changeset config.changelog[1].global
+ * * Packages, config, and changesets list are read.
+ * * Hashes of commits that created the changesets are added.
+ * * CHANGELOG.md is read, from the current directory.
+ * * New body is built via buildBody function.
+ * * Full body is built, from old and new body, via insertBody function.
+ * * CHANGELOG.md is overwritten with updated content.
+ */
 async function main(cwd: string) {
   // Read packages list, and changeset config file
   const packages = await getPackages(cwd);

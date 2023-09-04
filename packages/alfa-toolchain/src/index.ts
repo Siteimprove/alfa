@@ -1,3 +1,5 @@
-export * as globalChangelog from "./changeset/changelog-global";
-export * as individualChangelog from "./changeset/changelog-individual";
-export * as validateChangesets from "./validation/validate-changesets";
+import * as globalChangelog from "./changeset/changelog-global";
+import * as individualChangelog from "./changeset/changelog-individual";
+import * as validateChangesets from "./validation/validate-changesets";
+
+export { globalChangelog, individualChangelog, validateChangesets };
