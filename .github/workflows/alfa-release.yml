@@ -11,15 +11,15 @@ name: Create a new release (generic workflow)
 #
 # This workflow is intended to work on Alfa repos sharing the same structure for code and release.
 # Namely:
-# * TypeScript (or ECMAScript) mono-repo, with yarn workspaces in `packages/alfa-*`
+# * TypeScript (or ECMAScript) mono-repo, with yarn workspaces in `<prefix>/alfa-*`
 # * Default branch on `main`
 # * Relying on the `yarn install` / `yarn build` / `yarn test` cycle.
 # * Using node_modules for dependencies resolution.
 # * Using changeset for storing local changes as they happen.
 # * Sharing version number between all packages (`fixed` in changeset config).
 # * One CHANGELOG.md per workspace (this is part of changeset)
-# * One top-level CHANGELOG.md (currently with links to the individual ones, but this is something we
-#   may want to improve as part of this workflow).
+# * One top-level CHANGELOG.md
+# * One `yarn alfa-changelog` command to update the top-level changelog.
 # * Packages published on the Github registry (may be public or restricted).
 #
 # This workflow is likely to fail on any repository that does not have the same structure.
@@ -82,63 +82,18 @@ jobs:
         run: |
           [[ -d packages/alfa-toolchain ]] && yarn build packages/alfa-toolchain
 
-      - name: Is current version unique?
-        # Check that all packages are at the same version, if not, abort.
-        # The grep result looks like:
-        #    packages/alfa-foo: "version": "x.y.z",
-        # So we want the 4th "-separated field.
-        #
-        # If not unique, this exits and the workflow fails, which is good as it raises an alert for the caller.
-        run: |
-          [[ "$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u | wc -l)" == 1 ]] || exit 2
-
-      - name: Get current version
-        id: current
-        run: |
-          echo "version=v$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
-      - name: Get list of changed packages
-        id: changed
-        run: |
-          # Using a random heredoc delimiter for hardening.
-          # See https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "packages<<${EOF}" >> $GITHUB_OUTPUT
-          # The grep result looks like:
-          #    .changeset/foo.md: "@siteimprove/alfa-foo": increment
-          # So we want the second "-separated field.
-          grep @siteimprove/alfa- .changeset/*.md | cut -d\" -f2 | sort -u >> $GITHUB_OUTPUT
-          echo "${EOF}" >> $GITHUB_OUTPUT
+      - name: Build global changelog
+        run: yarn alfa-changelog
 
       - name: Gather changes and update packages
         run: yarn changeset version
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Get new version
+        # This is needed to push the correct git tag
         id: new
         run: |
           echo "version=v$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
-
-      - name: Preparing new section for global changelog
-        id: changelog
-        run: |
-          # Using a random heredoc delimiter for hardening.
-          # See https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "changelog<<${EOF}" >> $GITHUB_OUTPUT
-          # Build the header:
-          # # [vx.y.z-new](../../compare/vx.y.z-current...vx.y.z-new) (YYYY-MM-DD)
-          echo "# [${{ steps.new.outputs.version }}](../../compare/${{ steps.current.outputs.version }}...${{ steps.new.outputs.version }}) ($(date --iso-8601=date))" >> $GITHUB_OUTPUT
-          echo -e "\nPackages changed:" >> $GITHUB_OUTPUT
-          # Turn: @siteimprove/alfa-foo
-          # into: - [@siteimprove/alfa-foo](packages/alfa-foo/CHANGELOG.md)
-          # alfa-foo is the captured group \1
-          echo "${{ steps.changed.outputs.packages }}" | sed 's+@siteimprove/\(.*\)+- \[@siteimprove/\1](packages/\1/CHANGELOG.md)+' >> $GITHUB_OUTPUT
-          echo -e "\n" >> $GITHUB_OUTPUT
-          echo "${EOF}" >> $GITHUB_OUTPUT
-      - name: Build global changelog
-        # Since we want the new section at the top, we need to prepare it separately so we can cat in order.
-        # Bash reads the file first, so we don't need a temp storage.
-        run: echo "${{ steps.changelog.outputs.changelog }}$(cat CHANGELOG.md)" > CHANGELOG.md
 
       - name: Update lockfile
         # Cross-workspaces references need to be updated.
@@ -167,8 +122,12 @@ jobs:
           # Removed individual changesets, all changelog (global and local), all package.json (new version number), lockfile
           git add .changeset/ CHANGELOG.md **/CHANGELOG.md package.json **/package.json yarn.lock
           git commit -m ${{ steps.new.outputs.version }}
-          git tag --annotate ${{ steps.new.outputs.version }} --message=${{ steps.new.outputs.version }}
+          git tag --annotate ${VERSION} --message=${VERSION}
           git push --follow-tags
+        env:
+          # Passing it as a variable rather than inline hardens against script injection.
+          # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+          VERSION: ${{ steps.new.outputs.version }}
 
       - name: Make npm release
         run: >
