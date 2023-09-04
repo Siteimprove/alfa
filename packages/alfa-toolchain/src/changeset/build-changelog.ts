@@ -41,7 +41,6 @@ export namespace Changelog {
       getVersions(releasePlan),
       NON_UNIQUE_VERSION
     );
-    console.log(`Going from ${oldVersion} to ${newVersion}`);
 
     // Check that changeset config.changelog[1].repo exists, so we can fetch
     // the PRs.
@@ -83,6 +82,11 @@ export namespace Changelog {
     newVersion: string;
   }
 
+  type ChangeSetDetailsWithLink = [
+    changeset: Changeset.Details,
+    prLink: string | undefined
+  ];
+
   /**
    * Builds the global changelog body, from an array of changesets.
    *
@@ -91,16 +95,12 @@ export namespace Changelog {
    * So we use a placeholder to be replaced at a later stage.
    */
   export function buildBody(
-    changesets: ReadonlyArray<
-      [changeset: Changeset.Details, prLink: string | undefined]
-    >,
+    changesets: ReadonlyArray<ChangeSetDetailsWithLink>,
     packages: ReadonlyArray<Package>,
     newVersion: string
   ): string {
     const sorted: {
-      [kind in Changeset.Kind]: Array<
-        [changeset: Changeset.Details, prLink: string | undefined]
-      >;
+      [kind in Changeset.Kind]: Array<ChangeSetDetailsWithLink>;
     } = { Added: [], Breaking: [], Fixed: [], Removed: [] };
 
     changesets.forEach((item) => sorted[item[0].kind].push(item));
@@ -120,16 +120,12 @@ export namespace Changelog {
    */
   export function buildGroup(
     kind: Changeset.Kind,
-    changesets: ReadonlyArray<
-      [changeset: Changeset.Details, prLink: string | undefined]
-    >,
+    changesets: ReadonlyArray<ChangeSetDetailsWithLink>,
     packages: ReadonlyArray<Package>,
     newVersion: string
   ): string {
     return `### ${kind}\n\n${changesets
-      .map(([changeset, prLink]) =>
-        buildLine(changeset, prLink, packages, newVersion)
-      )
+      .map(buildLine(packages, newVersion))
       .join("\n\n")}`;
   }
 
@@ -139,17 +135,16 @@ export namespace Changelog {
    * @internal
    */
   export function buildLine(
-    changeset: Changeset.Details,
-    prLink: string | undefined,
     packages: ReadonlyArray<Package>,
     newVersion: string
-  ): string {
-    return `- ${changeset.packages
-      .map(linkToPackage(packages, newVersion))
-      .join(", ")}: ${
-      // Remove trailing dot, if any, then add one.
-      changeset.title.trimEnd().replace(/\.$/, "")
-    }.${prLink === undefined ? "" : ` (${prLink})`}`;
+  ): ([changeset, prLink]: ChangeSetDetailsWithLink) => string {
+    return ([changeset, prLink]) =>
+      `- ${changeset.packages
+        .map(linkToPackage(packages, newVersion))
+        .join(", ")}: ${
+        // Remove trailing dot, if any, then add one.
+        changeset.title.trimEnd().replace(/\.$/, "")
+      }.${prLink === undefined ? "" : ` (${prLink})`}`;
   }
 
   /**
@@ -165,10 +160,19 @@ export namespace Changelog {
     newVersion: string
   ): (fullName: string) => string {
     return (fullName) => {
-      const packageJSON = packages.find((p) => p.packageJson.name === fullName)!
-        .packageJson as { [key: string]: any };
+      // The non-null assertion is wrong if a package is deleted but still
+      // mentioned in a changeset.
+      const packageJSON =
+        // The type assertion is needed as we know our package.json have a
+        // repository.directory field, but manypkg.get-packages totally ignores
+        // that it may even exist.
+        packages.find((p) => p.packageJson.name === fullName)!.packageJson as {
+          [key: string]: any;
+        };
 
       return `[${fullName}](${
+        // Harden the access against non-existent packages or invalid
+        // package.json; this still leaks an undefined in the Changelog.
         packageJSON?.repository?.directory
       }/CHANGELOG.md#${newVersion.replace(/\./g, "")})`;
     };
@@ -192,10 +196,7 @@ export namespace Changelog {
             );
           }
 
-          return Ok.of({
-            oldVersion: current.oldVersion,
-            newVersion: current.newVersion,
-          });
+          return Ok.of(current);
         });
       },
       Ok.of({ oldVersion: "", newVersion: "" })

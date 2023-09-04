@@ -1,5 +1,4 @@
 import type { Package } from "@manypkg/get-packages";
-import { Map } from "@siteimprove/alfa-map";
 import { test } from "@siteimprove/alfa-test";
 
 import { Changelog } from "../../src/changeset/build-changelog";
@@ -20,15 +19,16 @@ function fakePackage(
 test("buildLine() builds a package line entry", (t) => {
   t.deepEqual(
     Changelog.buildLine(
+      [fakePackage("@siteimprove/my-package")],
+      "X.Y.Z"
+    )([
       {
         kind: "Added",
         title: "Some awesome title.",
         packages: ["@siteimprove/my-package"],
       },
       "[NOT A LINK]",
-      [fakePackage("@siteimprove/my-package")],
-      "X.Y.Z"
-    ),
+    ]),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
       " Some awesome title. ([NOT A LINK])"
   );
@@ -37,15 +37,16 @@ test("buildLine() builds a package line entry", (t) => {
 test("buildLine() adds trailing dot if necessary", (t) => {
   t.deepEqual(
     Changelog.buildLine(
+      [fakePackage("@siteimprove/my-package")],
+      "X.Y.Z"
+    )([
       {
         kind: "Added",
         title: "Some awesome title",
         packages: ["@siteimprove/my-package"],
       },
       "[NOT A LINK]",
-      [fakePackage("@siteimprove/my-package")],
-      "X.Y.Z"
-    ),
+    ]),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
       " Some awesome title. ([NOT A LINK])"
   );
@@ -54,15 +55,16 @@ test("buildLine() adds trailing dot if necessary", (t) => {
 test("buildLine() leaves intermediate dots alone", (t) => {
   t.deepEqual(
     Changelog.buildLine(
+      [fakePackage("@siteimprove/my-package")],
+      "X.Y.Z"
+    )([
       {
         kind: "Added",
         title: "Some. Awesome. Title",
         packages: ["@siteimprove/my-package"],
       },
       "[NOT A LINK]",
-      [fakePackage("@siteimprove/my-package")],
-      "X.Y.Z"
-    ),
+    ]),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
       " Some. Awesome. Title. ([NOT A LINK])"
   );
@@ -71,15 +73,16 @@ test("buildLine() leaves intermediate dots alone", (t) => {
 test("buildLine() skips undefined PR links", (t) => {
   t.deepEqual(
     Changelog.buildLine(
+      [fakePackage("@siteimprove/my-package")],
+      "X.Y.Z"
+    )([
       {
         kind: "Added",
         title: "Some awesome title",
         packages: ["@siteimprove/my-package"],
       },
       undefined,
-      [fakePackage("@siteimprove/my-package")],
-      "X.Y.Z"
-    ),
+    ]),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
       " Some awesome title."
   );
@@ -88,17 +91,18 @@ test("buildLine() skips undefined PR links", (t) => {
 test("buildLine() handles multi-packages change", (t) => {
   t.deepEqual(
     Changelog.buildLine(
+      ["@siteimprove/my-package", "@siteimprove/my-other-package"].map((pkg) =>
+        fakePackage(pkg)
+      ),
+      "X.Y.Z"
+    )([
       {
         kind: "Added",
         title: "Some awesome title",
         packages: ["@siteimprove/my-package", "@siteimprove/my-other-package"],
       },
       "[NOT A LINK]",
-      ["@siteimprove/my-package", "@siteimprove/my-other-package"].map((pkg) =>
-        fakePackage(pkg)
-      ),
-      "X.Y.Z"
-    ),
+    ]),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ)," +
       " [@siteimprove/my-other-package](packages/my-other-package/CHANGELOG.md#XYZ):" +
       " Some awesome title. ([NOT A LINK])"
