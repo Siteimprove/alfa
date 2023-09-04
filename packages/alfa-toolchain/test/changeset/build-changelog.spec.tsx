@@ -320,3 +320,17 @@ test("buildBody() respect prefix and package map", (t) => {
       " Title 3. ([LINK 3])"
   );
 });
+
+test("mergeBodies() insert new content after heading, and spaces it", (t) => {
+  t.deepEqual(
+    Changelog.mergeBodies(
+      "# Alfa\n\n" + "## Older versions",
+      "## New version\n\n" + "### Kind\n\n" + "Some changes"
+    ),
+    "# Alfa\n\n" +
+      "## New version\n\n" +
+      "### Kind\n\n" +
+      "Some changes\n\n" +
+      "## Older versions"
+  );
+});

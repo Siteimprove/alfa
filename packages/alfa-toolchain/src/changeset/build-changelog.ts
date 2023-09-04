@@ -77,6 +77,14 @@ export namespace Changelog {
     );
   }
 
+  /**
+   * @internal
+   */
+  export function mergeBodies(oldBody: string, newBody: string): string {
+    // Insert the new body as third line skipping heading and one more newline
+    return oldBody.replace(/(?<heading>(.*\n){2})/, `$1${newBody}\n\n`);
+  }
+
   interface Versions {
     oldVersion: string;
     newVersion: string;
@@ -236,9 +244,7 @@ export namespace Changelog {
 
 const changelogFunctions: ChangelogFunctions = {
   getBody: Changelog.getBody,
-  insertBody(oldBody: string, newBody: string): string {
-    return newBody + "\n\n" + oldBody;
-  },
+  insertBody: Changelog.mergeBodies,
 };
 
 export default changelogFunctions;
