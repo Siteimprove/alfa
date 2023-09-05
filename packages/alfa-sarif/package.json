@@ -20,7 +20,7 @@
   "dependencies": {
     "@siteimprove/alfa-option": "workspace:^0.66.0",
     "@siteimprove/alfa-refinement": "workspace:^0.66.0",
-    "@types/sarif": "^2.1.3"
+    "@types/sarif": "^2.1.4"
   },
   "publishConfig": {
     "access": "public",
