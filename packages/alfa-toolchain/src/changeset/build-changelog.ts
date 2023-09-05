@@ -109,11 +109,11 @@ export namespace Changelog {
   ): string {
     const sorted: {
       [kind in Changeset.Kind]: Array<ChangeSetDetailsWithLink>;
-    } = { Added: [], Breaking: [], Fixed: [], Removed: [] };
+    } = { Added: [], Breaking: [], Changed: [], Fixed: [], Removed: [] };
 
     changesets.forEach((item) => sorted[item[0].kind].push(item));
 
-    return `${(["Breaking", "Removed", "Added", "Fixed"] as const)
+    return `${(["Breaking", "Removed", "Added", "Changed", "Fixed"] as const)
       .map((kind) =>
         sorted[kind].length === 0
           ? ""
