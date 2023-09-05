@@ -1,6 +1,12 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.0/schema.json",
-  "changelog": ["../scripts/src/changelog.js", { "repo": "Siteimprove/alfa" }],
+  "changelog": [
+    "@siteimprove/alfa-toolchain/changelog",
+    {
+      "repo": "Siteimprove/alfa",
+      "global": "@siteimprove/alfa-toolchain/global-changelog"
+    }
+  ],
   "commit": false,
   "fixed": [["@siteimprove/alfa-*"]],
   "linked": [],
