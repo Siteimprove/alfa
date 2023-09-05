@@ -70,6 +70,7 @@
     { "path": "alfa-thenable" },
     { "path": "alfa-thunk" },
     { "path": "alfa-time" },
+    { "path": "alfa-toolchain"},
     { "path": "alfa-trampoline" },
     { "path": "alfa-tree" },
     { "path": "alfa-trilean" },
