@@ -6,7 +6,7 @@ This package contains the toolchain for developing Alfa and its [companion proje
 
 Alfa is using [changesets](../../docs/guides/changeset.md). We keep one changelog per package, plus one global changelog (because we keep all packages in sync at the same version number). The per package changelogs are handled directly by changeset, using a custom generation function defined here. The global changelog is built with utilities here.
 
-Individual changesets ar expected to have the following shape (after the frontmatter):
+Individual changesets are expected to have the following shape (after the frontmatter):
 ```markdown
 **[kind]:** [title]
 
