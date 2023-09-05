@@ -21,10 +21,14 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return getElementDescendants(document, dom.Node.fullTree).filter(
-          and(isIncludedInTheAccessibilityTree(device), (element) =>
-            Node.from(element, device)
-              .attribute("aria-live")
-              .some((attribute) => attribute.value === "assertive")
+          and(
+            isIncludedInTheAccessibilityTree(device),
+            (element) =>
+              Node.from(element, device)
+                .attribute("aria-live")
+                .some((attribute) => attribute.value === "assertive"),
+            (element) =>
+              !getElementDescendants(element, dom.Node.fullTree).isEmpty()
           )
         );
       },
