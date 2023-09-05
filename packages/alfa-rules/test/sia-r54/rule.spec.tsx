@@ -10,7 +10,7 @@ import { passed, failed, inapplicable } from "../common/outcome";
 test("evaluate() passes an assertive and lower-cased atomic element", async (t) => {
   const target = (
     <div aria-live="assertive" aria-atomic="true">
-      Some words
+      <span>Some words</span>
     </div>
   );
 
@@ -26,7 +26,7 @@ test("evaluate() passes an assertive and lower-cased atomic element", async (t) 
 test("evaluate() passes an assertive and mixed-cased atomic element", async (t) => {
   const target = (
     <div aria-live="assertive" aria-atomic="TRUe">
-      Some words
+      <span>Some words</span>
     </div>
   );
 
@@ -39,7 +39,11 @@ test("evaluate() passes an assertive and mixed-cased atomic element", async (t) 
   ]);
 });
 test("evaluate() fails an element which is assertive but not atomic", async (t) => {
-  const target = <div aria-live="assertive"> Some words </div>;
+  const target = (
+    <div aria-live="assertive">
+      <span>Some words</span>
+    </div>
+  );
 
   const document = h.document([target]);
 
@@ -53,7 +57,7 @@ test("evaluate() fails an element which is assertive but not atomic", async (t) 
 test("evaluate() fails an assertive element with an incorrect aria-atomic attribute", async (t) => {
   const target = (
     <div aria-live="assertive" aria-atomic="wrong">
-      Some words
+      <span>Some words</span>
     </div>
   );
 
@@ -69,7 +73,7 @@ test("evaluate() fails an assertive element with an incorrect aria-atomic attrib
 test("evaluate() is inapplicable to elements that are not in the accessibility tree", async (t) => {
   const target = (
     <div hidden aria-live="assertive" aria-atomic="true">
-      Some words
+      <span>Some words</span>
     </div>
   );
 
@@ -79,7 +83,27 @@ test("evaluate() is inapplicable to elements that are not in the accessibility t
 });
 
 test("evaluate() is inapplicable to an element which is not assertive", async (t) => {
-  const target = <div>Some words</div>;
+  const target = (
+    <div>
+      <span>Some words</span>
+    </div>
+  );
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R54, { document }), [inapplicable(R54)]);
+});
+
+test("evaluate() is inapplicable to empty elements", async (t) => {
+  const target = <div aria-live="assertive"></div>;
+
+  const document = h.document([target]);
+
+  t.deepEqual(await evaluate(R54, { document }), [inapplicable(R54)]);
+});
+
+test("evaluate() is inapplicable elements who only contain a text node", async (t) => {
+  const target = <div aria-live="assertive">Some words</div>;
 
   const document = h.document([target]);
 
