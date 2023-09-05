@@ -17,4 +17,7 @@ const changelogFunctions: ChangelogFunctions = {
   getReleaseLine: changelog.getReleaseLine,
 };
 
+/**
+ * @public
+ */
 export default changelogFunctions;
