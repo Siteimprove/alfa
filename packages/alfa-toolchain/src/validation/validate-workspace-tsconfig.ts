@@ -2,6 +2,9 @@ import { PackageJSON } from "@changesets/types";
 import * as fs from "fs";
 import * as path from "path";
 
+/**
+ * @public
+ */
 export function validateWorkspaceTsconfig({
   dir,
   packageJson,

@@ -3,8 +3,8 @@ import { PackageJSON } from "@changesets/types";
 /**
  * Extended PackageJSON type
  *
- * @remnarks
- * The one from @changesets/types does not include all possible properties…
+ * @remarks
+ * The one from \@changesets/types does not include all possible properties…
  */
 interface JSON extends PackageJSON {
   homepage?: string;
@@ -27,8 +27,10 @@ type Config = Partial<{
  * Checks that a package.json file has the correct fields and structure.
  *
  * @remarks
- * `pkg` comes from @manypkg/get-packages, which sets `dir` to the correct OS
+ * `pkg` comes from \@manypkg/get-packages, which sets `dir` to the correct OS
  * specific string.
+ *
+ * @public
  */
 export function validatePackageJson(
   {

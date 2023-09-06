@@ -5,8 +5,10 @@ import * as path from "path";
  * Checks that a directory includes an API extractor config file.
  *
  * @remarks
- * `dir` is coming from @manypkg/get-packages, which sets it to the OS
+ * `dir` is coming from \@manypkg/get-packages, which sets it to the OS
  * specific syntax.
+ *
+ * @public
  */
 export function hasExtractorConfig(name: string, dir: string): Array<string> {
   const errors: Array<string> = [];

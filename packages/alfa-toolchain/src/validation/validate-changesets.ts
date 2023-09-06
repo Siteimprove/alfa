@@ -5,6 +5,8 @@ import { Changeset } from "../changeset/get-changeset-details";
 
 /**
  * Validate that all changesets have the expected structure.
+ *
+ * @public
  */
 export async function validateChangesets(cwd: string): Promise<Array<string>> {
   return (await getChangeSets(cwd))

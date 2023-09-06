@@ -9,9 +9,12 @@ import { validateWorkspaceTsconfig } from "./validate-workspace-tsconfig";
 
 const targetPath = process.argv[2] ?? ".";
 
-main(targetPath);
+validate(targetPath);
 
-async function main(cwd: string) {
+/**
+ * @public
+ */
+export async function validate(cwd: string) {
   const errors: Array<string> = [];
 
   const config = JSON.parse(
