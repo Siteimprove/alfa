@@ -3,7 +3,7 @@ import type { KnipConfig } from "knip";
 const config: KnipConfig = {
   workspaces: {
     ".": {
-      entry: ["scripts/src/changelog.ts", "scripts/*.js"],
+      entry: ["scripts/*.js"],
       project: ["scripts/**/*.ts", "scripts/**/*.js"],
       ignoreDependencies: ["prettier"],
     },

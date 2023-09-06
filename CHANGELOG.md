@@ -1,92 +1,242 @@
-# [v0.66.0](../../compare/v0.65.1...v0.66.0) (2023-08-09)
+# Alfa changelog
 
-Packages changed:
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md)
-- [@siteimprove/alfa-parser](packages/alfa-parser/CHANGELOG.md)
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
-- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md)
+## [v0.66.0](../../compare/v0.65.1...v0.66.0) (2023-08-09)
 
-# [v0.65.1](../../compare/v0.65.0...v0.65.1) (2023-07-19)
+### Breaking
 
-Packages changed:
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): The `is-visible-shadow` predicate can now only be applied to canonical shadows (i.e. computed values of properties using `Shadow`). ([#1455](https://github.com/Siteimprove/alfa/pull/1455))
 
-# [v0.65.0](../../compare/v0.64.0...v0.65.0) (2023-07-13)
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): CSS `rotate` and `skew` now convert their angles into degrees at build time. ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
 
-Packages changed:
-.changeset/real-frogs-type.md:**Removed:** The  export is no longer available.
-- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md)
-- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md)
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md)
-- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md)
-- [@siteimprove/alfa-http](packages/alfa-http/CHANGELOG.md)
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
-- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md)
-- [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md)
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): The `Transform.parse` parser is now considered `@internal`. ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
 
-# [v0.64.0](../../compare/v0.63.3...v0.64.0) (2023-06-21)
+### Added
+ 
+- [@siteimprove/alfa-parser](packages/alfa-parser/CHANGELOG.md): `Parser.separatedList` now accepts optional `lower` and ` upper` numbers of items to parse. ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
 
-Packages changed:
-.changeset/brown-countries-applaud.md:These abstractions are now exported from  instead of the old abstractions which didn't accept calculations. In order to keep the functionalities of the old abstractions, replace  (, , …) with .
-.changeset/serious-snails-switch.md:**Breaking:** The  helper has been removed. Instead, the  method (from ) provides the same functionality.
-.changeset/wild-horses-press.md:**Added:**  and  CSS values are now exported from .
-.changeset/wild-horses-press.md:These values were previously internal to the  package and are now grouped with the other CSS values.
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md)
-- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md)
-- [@siteimprove/alfa-rectangle](packages/alfa-rectangle/CHANGELOG.md)
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
-- [@siteimprove/alfa-selective](packages/alfa-selective/CHANGELOG.md)
-- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md)
-- [@siteimprove/alfa-wcag](packages/alfa-wcag/CHANGELOG.md)
+- [@siteimprove/alfa-parser](packages/alfa-parser/CHANGELOG.md): `Parser.parseIf` now also accepts a `Predicate` (not just a `Refinement`). ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
 
-# [v0.63.3](../../compare/v0.63.2...v0.63.3) (2023-05-22)
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `Shadow` are now calculatable. ([#1455](https://github.com/Siteimprove/alfa/pull/1455))
 
-Packages changed:
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): A `List.parseSpaceSeparated` parser is now available. ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
 
-# [v0.63.2](../../compare/v0.63.1...v0.63.2) (2023-05-22)
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): CSS `transfrom` functions now accept calculations in any of their numerical components. ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
 
-Packages changed:
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
 
-# [v0.63.1](../../compare/v0.63.0...v0.63.1) (2023-05-17)
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `List.parseCommaSeparated` and `List.parseSpaceSeparated` now accept optional `lower` and ` upper` numbers of items to parse. ([#1457](https://github.com/Siteimprove/alfa/pull/1457))
 
-Packages changed:
-- [@siteimprove/alfa-http](packages/alfa-http/CHANGELOG.md)
-- [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md)
+### Fixed
 
-# [v0.63.0](../../compare/v0.62.2...v0.63.0) (2023-05-16)
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): SIA-R19 correctly searches for `id` in the full DOM tree again (instead of the subtree of the element). ([#1459](https://github.com/Siteimprove/alfa/pull/1459))
 
-Packages changed:
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md)
-- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md)
-- [@siteimprove/alfa-option](packages/alfa-option/CHANGELOG.md)
-- [@siteimprove/alfa-result](packages/alfa-result/CHANGELOG.md)
-- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md)
-- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md)
-- [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md)
+## [v0.65.1](../../compare/v0.65.0...v0.65.1) (2023-07-19)
 
-# [v0.62.2](../../compare/v0.62.1...v0.62.2) (2023-04-05)
+### Fixed
 
-Packages changed:
-- [@siteimprove/alfa-test](packages/alfa-test/CHANGELOG.md)
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): Issue where R75 would incorrectly flag some elements with invisible text ([#1456](https://github.com/Siteimprove/alfa/pull/1456))
 
-# [v0.62.1](../../compare/v0.62.0...v0.62.1) (2023-04-04)
+## [v0.65.0](../../compare/v0.64.0...v0.65.0) (2023-07-13)
 
-Packages changed:
-- [@siteimprove/alfa-test](packages/alfa-test/CHANGELOG.md)
+### Breaking
 
-# Older changes
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `List` and `Tuple` can now only contain other CSS `Value`. ([#1446](https://github.com/Siteimprove/alfa/pull/1446))
 
-These changes were made with an older release flow.
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): The `CALC` parameter of `Value` now defaults to `boolean` instead of `false`. ([#1443](https://github.com/Siteimprove/alfa/pull/1443))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): The resolvers for `Length` and `Percentage` are now wrapped in an object. ([#1443](https://github.com/Siteimprove/alfa/pull/1443))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md): Renamed public property `rectangle` to `box` which was overlooked in the last version ([#1440](https://github.com/Siteimprove/alfa/pull/1440))
+
+### Removed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md), [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md), [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md), [@siteimprove/alfa-http](packages/alfa-http/CHANGELOG.md), [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md), [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md), [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md): Many pieces of code are no longer exported. These were mostly internal exports that are no longer used in other files and should not impact intended usage of the packages. ([#1437](https://github.com/Siteimprove/alfa/pull/1437))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): The `Gradient.parseItem` helper has been removed as it wasn't used. ([#1447](https://github.com/Siteimprove/alfa/pull/1447))
+ 
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): The `@siteimprove/alfa-rules/FlattenedRules` export is no longer available. ([#1437](https://github.com/Siteimprove/alfa/pull/1437))
+
+### Added
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): An abstraction for `AnglePercentage` is now available. ([#1443](https://github.com/Siteimprove/alfa/pull/1443))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `Tuple` and `Value` can now be built of calculated values. ([#1446](https://github.com/Siteimprove/alfa/pull/1446))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): A `LengthPercentage` abstraction is now available. ([#1443](https://github.com/Siteimprove/alfa/pull/1443))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `Function.parse` now also accepts a predicate instead of just a name to compare to. ([#1448](https://github.com/Siteimprove/alfa/pull/1448))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): CSS colors now accept calculated values. ([#1448](https://github.com/Siteimprove/alfa/pull/1448))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `Value` can now resolve to a different `type` than the current one. ([#1443](https://github.com/Siteimprove/alfa/pull/1443))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): HSL and RGB colors now also accept the `none` keyword for any component when in modern syntax. ([#1448](https://github.com/Siteimprove/alfa/pull/1448))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md): Support for optional `box` everywhere when constructing an `Element`. ([#1440](https://github.com/Siteimprove/alfa/pull/1440))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md): A `Element.hasBox` predicate builder is now available. ([#1450](https://github.com/Siteimprove/alfa/pull/1450))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): All rules now have an explicit `Stability` tag. ([#1437](https://github.com/Siteimprove/alfa/pull/1437))
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): CSS colors now accept calculated values. ([#1448](https://github.com/Siteimprove/alfa/pull/1448))
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): SIA-R83 now has improved detection of containers large enough to not clip content. ([#1451](https://github.com/Siteimprove/alfa/pull/1451))
+- 
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): SIA-R13 is now inapplicable to `<iframe>` elements that are marked as decorative, following latest ACT rules changes. ([#1445](https://github.com/Siteimprove/alfa/pull/1445))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): `isVisible` now considers layout information. ([#1450](https://github.com/Siteimprove/alfa/pull/1450))
+
+
+## [v0.64.0](../../compare/v0.63.3...v0.64.0) (2023-06-21)
+
+### Breaking
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): New abstractions for calculatable numeric values (numbers, percentages, dimensions) are introduced and used in style properties. Currently, style properties only accept non-calculated numeric (except for some properties that already accepted calculated lengths or length-percentages and keep doing so). ([#1432](https://github.com/Siteimprove/alfa/pull/1432))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): The compound `Length` type has been removed from `alfa-style`. The `Length` type from `alfa-css/src/value/numeric` should be used instead. ([#1424](https://github.com/Siteimprove/alfa/pull/1424))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): the `NumberPercentage` abstraction, which doesn't exist in CSS, has been removed. ([#1432](https://github.com/Siteimprove/alfa/pull/1432))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): The `Resolver.percentage` helper has been removed. Instead, the `Percentage#resolve(base)` method (from `@siteimprove/alfa-css`) provides the same functionality. ([#1432](https://github.com/Siteimprove/alfa/pull/1432))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): Deprecated R34 and R36 ([#1428](https://github.com/Siteimprove/alfa/pull/1428))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md): The method `.elementDescendants()` on the classes `Document` and `Node` has been removed. In stead the function `Query.getElementDescendants()` should be used. ([#1425](https://github.com/Siteimprove/alfa/pull/1425))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): New abstractions for calculatable numeric values (numbers, percentages, dimensions) are introduced and used in style properties. Currently, style properties only accept non-calculated numeric (except for some properties that already accepted calculated lengths or length-percentages and keep doing so). ([#1432](https://github.com/Siteimprove/alfa/pull/1432))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): The redundant second type parameter (Unit category) of Dimensions has been removed and is now automatically inferred from the first parameter (type string representation). ([#1432](https://github.com/Siteimprove/alfa/pull/1432))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): The compound `Length` type has been removed from `alfa-style`. The `Length` type from `alfa-css/src/value/numeric` should be used instead. ([#1424](https://github.com/Siteimprove/alfa/pull/1424))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `Math.resolve` now returns a `Result<Numeric, string>` instead of an `Option`. ([#1416](https://github.com/Siteimprove/alfa/pull/1416))
+
+  - [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): No resolver is needed for `Math.resolve` on `Number` expressions.
+
+  - [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): Math expression converters (`.toLength`, …) now return a `Result<T, string>` instead of an `option<T>`.
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): The `Position.Center`, `Position.Horizontal`, `Position.Vertical` types have been grouped under the `Position.Keywords` namespace. ([#1431](https://github.com/Siteimprove/alfa/pull/1431))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `Value` now require a `resolve` method. ([#1416](https://github.com/Siteimprove/alfa/pull/1416))
+
+### Added
+
+- [@siteimprove/alfa-wcag](packages/alfa-wcag/CHANGELOG.md): `Criterion.fromURI` now accepts URI with `/WCAG/` or `/WCAG21/` paths. ([#1435](https://github.com/Siteimprove/alfa/pull/1435))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): a `Longhand.fromKeywords` helper is now available to define longhands whose value can only be a list of keywords. ([#1431](https://github.com/Siteimprove/alfa/pull/1431))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): `List` and `Tuple` CSS values are now exported from `@siteimprove/alfa-css`. ([#1416](https://github.com/Siteimprove/alfa/pull/1416))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): A `List.parseCommaSeparated` helper is now provided, taking a value parser as input and returning a parser for list of values separated by commas.
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): `List` now implement the `Functor` interface.
+
+- [@siteimprove/alfa-selective](packages/alfa-selective/CHANGELOG.md): `Selective.if()` now accepts any refinement and will refine to the intersection of its result and the value in the associated right side. ([#1432](https://github.com/Siteimprove/alfa/pull/1432))
+
+- [@siteimprove/alfa-rectangle](packages/alfa-rectangle/CHANGELOG.md): New package for working with rectangles ([#1427](https://github.com/Siteimprove/alfa/pull/1427))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md): Optional `Rectangle` property on `Element`. ([#1427](https://github.com/Siteimprove/alfa/pull/1427))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md): `Query` namespace with functions for querying element descendants and elements by id. ([#1413](https://github.com/Siteimprove/alfa/pull/1413))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): Most CSS value types now export a `Foo.Canonical` type which is the canonical representation of the type with calculations resolved, relative values absolutized, and dimensions converted to their canonical units. The `Canonical` type is normally the one used to represent computed values of style properties. ([#1432](https://github.com/Siteimprove/alfa/pull/1432))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `Value` type now accepts a second boolean type parameter indicating whether the value may or not contain unresolved calculation.
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `List` and `Tuple` CSS values are now exported from `@siteimprove/alfa-css`. ([#1416](https://github.com/Siteimprove/alfa/pull/1416))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): A `List.parseCommaSeparated` helper is now provided, taking a value parser as input and returning a parser for list of values separated by commas.
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `List` now implement the `Functor` interface.
+
+### Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): `background-position-x` and `background-position-y` now correctly accept keyword values. ([#1431](https://github.com/Siteimprove/alfa/pull/1431))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): `text-shadow` now correctly accept `none`, or a list of shadows.
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): SIA-R78 now correctly has a scope of "Page". ([#1434](https://github.com/Siteimprove/alfa/pull/1434))
+
+
+## [v0.63.3](../../compare/v0.63.2...v0.63.3) (2023-05-22)
+
+### Added
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): `Diagnostic.ElementDistsinguishable` is now exported. ([#1420](https://github.com/Siteimprove/alfa/pull/1420))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): Correctly export `DistinguishingProperty` as `Diagnostic.ElementDistinguishable.Property`
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): a typo in `Diagnostic.Contrast` export was fixed. ([#1420](https://github.com/Siteimprove/alfa/pull/1420))
+
+## [v0.63.2](../../compare/v0.63.1...v0.63.2) (2023-05-22)
+
+### Fixed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): Correctly exported the `ColorError` diagnostic. ([#1419](https://github.com/Siteimprove/alfa/pull/1419))
+
+## [v0.63.1](../../compare/v0.63.0...v0.63.1) (2023-05-17)
+
+### Fixed
+
+- [@siteimprove/alfa-http](packages/alfa-http/CHANGELOG.md): Added missing dependencies ([#1418](https://github.com/Siteimprove/alfa/pull/1418))
+
+- [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md): Added missing dependencies ([#1418](https://github.com/Siteimprove/alfa/pull/1418))
+
+## [v0.63.0](../../compare/v0.62.2...v0.63.0) (2023-05-16)
+
+### Breaking
+
+- [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md): Changed `Request#from`, `Response#from` and `Page#from` to return `Result<...>` ([#1395](https://github.com/Siteimprove/alfa/pull/1395))
+
+- [@siteimprove/alfa-option](packages/alfa-option/CHANGELOG.md): Moved `Maybe` type out of `Option` namespace ([#1402](https://github.com/Siteimprove/alfa/pull/1402))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `Linear.parse` and `Radial.parse` now require an item parser. ([#1412](https://github.com/Siteimprove/alfa/pull/1412))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `Math.resolve` now returns a `Result<Numeric, string>` instead of an `Option`. ([#1406](https://github.com/Siteimprove/alfa/pull/1406))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): No resolver is needed for `Math.resolve` on `Number` expressions.
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md): `hasUniqueId` is now directly a `Predicate` ([#1408](https://github.com/Siteimprove/alfa/pull/1408))
+
+- [@siteimprove/alfa-result](packages/alfa-result/CHANGELOG.md): Removed `Err#get` and `Ok#getErr` and added `Result#getUnsafe` and `Result#getErrUnsafe` ([#1395](https://github.com/Siteimprove/alfa/pull/1395))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): Deprecate SIA-R18, SIA-R66, and SIA-R69 version 1 ([#1415](https://github.com/Siteimprove/alfa/pull/1415))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): The way style properties are defined and registered has been changed, including some changes in names. ([#1404](https://github.com/Siteimprove/alfa/pull/1404))
+
+### Removed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): `Math.parseLengthNumberPercentage` is no longer available. ([#1406](https://github.com/Siteimprove/alfa/pull/1406))
+
+### Added
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md): `hasTabIndex` now also accepts number values ([#1409](https://github.com/Siteimprove/alfa/pull/1409))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): Diagnostic subclasses have been added to the public API ([#1400](https://github.com/Siteimprove/alfa/pull/1400))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): A `withDocumentElement` helper is now available. ([#1407](https://github.com/Siteimprove/alfa/pull/1407))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): New abstraction for math expressions ([#1406](https://github.com/Siteimprove/alfa/pull/1406))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): Deprecated rules SIA-DR62, SIA-DR91, SIA-DR92, SIA-DR93 and SIA-DR95 have been removed ([#1415](https://github.com/Siteimprove/alfa/pull/1415))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): `isAriaControlsRequired` has been renamed to `isAriaControlsOptional` ([#1394](https://github.com/Siteimprove/alfa/pull/1394))
+
+### Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md): more style properties now accept calculations and math expressions as their value. ([#1411](https://github.com/Siteimprove/alfa/pull/1411))
 
 ## [0.62.0](../../compare/v0.61.0...v0.62.0) (2023-03-29)
 
 ### Breaking
 
-- [@packages/alfa-slice](packages/alfa-slice): `Slice#array` and `Slice#offset` have been made private as direct access to these could result in invalid slices. Use of `Slice#first`, `Slice#get`, or the predefined parsers combinators from [@siteimprove/alfa-parser](packages/alfa-parser) should replace these. ([#1367](../../pull/1367))
+- [@siteimprove/alfa-slice](packages/alfa-slice): `Slice#array` and `Slice#offset` have been made private as direct access to these could result in invalid slices. Use of `Slice#first`, `Slice#get`, or the predefined parsers combinators from [@siteimprove/alfa-parser](packages/alfa-parser) should replace these. ([#1367](../../pull/1367))
 
-- [@siteimprove/alfa-act](packages/alfa-act): The `Q` type parameter, containing questions' metadata, is now enforced to have a meaningful shape everywhere; this should now break most usages since incorrect shape would result in `never` oracles. Rules that ask no questions now accept `any` as their oracle (since they never call it). ([#1376](../../pull/1376)) 
+- [@siteimprove/alfa-act](packages/alfa-act): The `Q` type parameter, containing questions' metadata, is now enforced to have a meaningful shape everywhere; this should not break most usages since incorrect shape would result in `never` oracles. Rules that ask no questions now accept `any` as their oracle (since they never call it). ([#1376](../../pull/1376)) 
 
 ### Changed
 
@@ -362,11 +512,11 @@ In addition to the following changes, this release also contains caching of seve
 
 ### Breaking
 
-- [@packages/alfa-rule](packages/alfa-rules): `getColors` (SIA-R66 and SIA-R69) now returns all problems it encounters when grabbing colors, instead of stopping at the first one. ([#1232](../../pull/1232))
+- [@siteimprove/alfa-rule](packages/alfa-rules): `getColors` (SIA-R66 and SIA-R69) now returns all problems it encounters when grabbing colors, instead of stopping at the first one. ([#1232](../../pull/1232))
 
 ### Added 
 
-- [@packages/alfa-selector](packages/alfa-selector): A `Context#withState` iterator is added, to list the elements of a context that match a given context state. ([#1231](../../pull/1231))
+- [@siteimprove/alfa-selector](packages/alfa-selector): A `Context#withState` iterator is added, to list the elements of a context that match a given context state. ([#1231](../../pull/1231))
 
 ### Fixed
 

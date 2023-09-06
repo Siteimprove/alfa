@@ -88,6 +88,7 @@ export default {
         "@siteimprove/alfa-sarif",
       ],
     },
+    { name: "Tooling", children: ["@siteimprove/alfa-toolchain"] },
     {
       name: "Type definitions",
       children: [
@@ -112,6 +113,7 @@ export default {
         "@siteimprove/alfa-highlight",
         "@siteimprove/alfa-math",
         "@siteimprove/alfa-parser",
+        "@siteimprove/alfa-rectangle",
         "@siteimprove/alfa-test",
         "@siteimprove/alfa-time",
       ],

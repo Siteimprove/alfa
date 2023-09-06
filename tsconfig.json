@@ -13,9 +13,5 @@
     "types": []
   },
   "files": [],
-  "references": [
-    { "path": "packages" },
-    { "path": "scratches" },
-    { "path": "scripts" }
-  ]
+  "references": [{ "path": "packages" }, { "path": "scratches" }]
 }

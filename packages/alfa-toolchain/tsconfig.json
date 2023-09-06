@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json.schemastore.org/tsconfig",
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["dom"],
+    "types": ["node"]
+  },
+  "files": [
+    "src/changeset/build-changelog.ts",
+    "src/changeset/changelog-global.ts",
+    "src/changeset/changelog-individual.ts",
+    "src/changeset/get-changeset-details.ts",
+    "src/changeset/helpers.ts",
+    "src/validation/validate-changesets.ts",
+    "src/index.ts",
+    "test/changeset/build-changelog.spec.tsx",
+    "test/changeset/get-changeset-details.spec.tsx"
+  ],
+  "references": [
+    { "path": "../alfa-map" },
+    { "path": "../alfa-result" },
+    { "path": "../alfa-test" }
+  ]
+}
