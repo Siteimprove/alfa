@@ -20,5 +20,6 @@
         "resolve-from"
       ]
     }
-  }
+  },
+  "validate-workspace-tsconfig": true
 }

@@ -5,6 +5,7 @@ import { hasExtractorConfig } from "./has-extractor-config";
 
 import { validateChangesets } from "./validate-changesets";
 import { validatePackageJson } from "./validate-package-json";
+import { validateWorkspaceTsconfig } from "./validate-workspace-tsconfig";
 
 const targetPath = process.argv[2] ?? ".";
 
@@ -22,8 +23,6 @@ async function main(cwd: string) {
 
   const packages = await getPackages(cwd);
 
-  console.dir(packages.packages[0]);
-
   if (config["validate-changesets"] ?? false) {
     errors.push(...(await validateChangesets(cwd)));
   }
@@ -37,6 +36,12 @@ async function main(cwd: string) {
   if (typeof config["validate-package-json"] === "object") {
     for (const pkg of packages.packages) {
       errors.push(...validatePackageJson(pkg, config["validate-package-json"]));
+    }
+  }
+
+  if (config["validate-workspace-tsconfig"]) {
+    for (const pkg of packages.packages) {
+      errors.push(...validateWorkspaceTsconfig(pkg));
     }
   }
 
