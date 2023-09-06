@@ -3,10 +3,10 @@ import { RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import { Set } from "@siteimprove/alfa-set";
-
 import { None, Option } from "@siteimprove/alfa-option";
-import { getBoundingBox } from "@siteimprove/alfa-style/src/element/element";
+import { Set } from "@siteimprove/alfa-set";
+import { Style } from "@siteimprove/alfa-style";
+
 import { expectation } from "../act/expectation";
 import { Group } from "../act/group";
 import { Question } from "../act/question";
@@ -18,6 +18,7 @@ import { isLargeText } from "../predicate";
 const { isElement } = Element;
 const { flatMap, map, takeWhile } = Iterable;
 const { min, max, round } = Math;
+const { getBoundingBox } = Style;
 
 /**
  * @deprecated This is only used in the deprecated R66v1 and R69v1.
