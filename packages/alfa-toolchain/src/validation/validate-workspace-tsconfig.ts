@@ -9,6 +9,7 @@ export function validateWorkspaceTsconfig({
   dir: string;
   packageJson: PackageJSON;
 }): Array<string> {
+  const name = packageJson.name;
   const errors: Array<string> = [];
 
   const internalDependencies: Array<string> = [];
@@ -39,7 +40,7 @@ export function validateWorkspaceTsconfig({
   for (const dependency of internalDependencies) {
     if (!references.includes(dependency)) {
       errors.push(
-        `Dependency ${dependency} is not referenced from ${packageJson.name}'s tsconfig.json`
+        `${name}: dependency ${dependency} is not referenced from tsconfig.json`
       );
     }
   }
@@ -47,7 +48,7 @@ export function validateWorkspaceTsconfig({
   for (const reference of references) {
     if (!internalDependencies.includes(reference)) {
       errors.push(
-        `Reference ${reference} from ${packageJson.name}'s tsconfig.json is not a dependency.`
+        `${name}: reference ${reference} from tsconfig.json is not a dependency.`
       );
     }
   }

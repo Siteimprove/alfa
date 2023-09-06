@@ -29,7 +29,7 @@ async function main(cwd: string) {
 
   if (config["has-api-extractor-config"] ?? false) {
     for (const pkg of packages.packages) {
-      errors.push(...hasExtractorConfig(pkg.dir));
+      errors.push(...hasExtractorConfig(pkg.packageJson.name, pkg.dir));
     }
   }
 

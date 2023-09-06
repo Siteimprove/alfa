@@ -13,6 +13,7 @@
   ],
   "references": [
     { "path": "../alfa-array" },
+    { "path": "../alfa-cache" },
     { "path": "../alfa-css" },
     { "path": "../alfa-dom" },
     { "path": "../alfa-equatable" },
@@ -23,6 +24,7 @@
     { "path": "../alfa-parser" },
     { "path": "../alfa-predicate" },
     { "path": "../alfa-result" },
+    { "path": "../alfa-sequence" },
     { "path": "../alfa-slice" },
     { "path": "../alfa-test" }
   ]

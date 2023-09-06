@@ -10,7 +10,6 @@
   "references": [
     { "path": "../alfa-equatable" },
     { "path": "../alfa-json" },
-    { "path": "../alfa-map" },
     { "path": "../alfa-option" },
     { "path": "../alfa-result" },
     { "path": "../alfa-slice" },

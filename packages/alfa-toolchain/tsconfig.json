@@ -21,7 +21,6 @@
     "test/changeset/get-changeset-details.spec.tsx"
   ],
   "references": [
-    { "path": "../alfa-map" },
     { "path": "../alfa-result" },
     { "path": "../alfa-test" }
   ]
