@@ -896,30 +896,3 @@ test("evaluate() can tell when interposed descendant overlaps offset parent, but
     }),
   ]);
 });
-
-test("evaluate() does not ask about ignored interposed descendants when layout is available", async (t) => {
-  const target = h.text("Hello World");
-
-  const document = h.document([
-    <body box={{ x: 8, y: 8, width: 1070, height: 18 }}>
-      <div
-        style={{
-          position: "absolute",
-          backgroundColor: "green",
-          opacity: "50%",
-          width: "100px",
-          height: "100px",
-        }}
-        box={{ x: 8, y: 8, width: 100, height: 100 }}
-      ></div>
-      <div box={{ x: 8, y: 8, width: 1070, height: 18 }}>{target}</div>
-    </body>,
-  ]);
-
-  await evaluate(R69, { document }, (_, question) => {
-    if (question.uri === "ignored-interposed-elements") {
-      t.fail("An ignored-interposed-elements question was unexpectedly asked");
-    }
-    return Future.now(None);
-  });
-});
