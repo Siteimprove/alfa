@@ -14,7 +14,7 @@ Individual changesets are expected to have the following shape (after the frontm
 [details]
 ```
 
-where `[title]` is a one line summary for the changes (the full text is called `summary` in changesets lingo, so we call that summary `title` instead), `[details]` is an arbitrary long detailed explanation, and `[kind]` is one of: `Breaking`, `Removed`, `Added`, `ChangeDd`, Fixed`.
+where `[title]` is a one line summary for the changes (the full text is called `summary` in changesets lingo, so we call that summary `title` instead), `[details]` is an arbitrary long detailed explanation, and `[kind]` is one of: `Breaking`, `Removed`, `Added`, `Changed`, Fixed`.
 
 `Breaking` and `Removed` kinds may only be used on major bumps (or minor bumps pre-1.0.0); `Added` kind may only be used on minor or major bumps (and should only be used on minor bumps); `Changed` and `Fixed` kinds can be used on any bump but should only be used on patch bumps.
 

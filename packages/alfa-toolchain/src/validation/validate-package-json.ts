@@ -16,6 +16,7 @@ interface JSON extends PackageJSON {
 }
 
 type Config = Partial<{
+  organisation: string;
   homepage: string;
   repo: string;
   bugs: string;
@@ -46,9 +47,12 @@ export function validatePackageJson(
   const name = packageJson.name;
 
   // name
-  if (!name.startsWith("@siteimprove")) {
+  if (
+    config.organisation !== undefined &&
+    !name.startsWith(`${config.organisation}/`)
+  ) {
     errors.push(
-      `${name}: package.json is not in the siteimprove organisation.`
+      `${name}: package.json is not in the ${config.organisation} organisation.`
     );
   }
 

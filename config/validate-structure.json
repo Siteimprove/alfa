@@ -1,7 +1,8 @@
 {
-  "validate-changesets": true,
   "has-api-extractor-config": true,
+  "validate-changesets": true,
   "validate-package-json": {
+    "organisation": "@siteimprove",
     "homepage": "https://alfa.siteimprove.com",
     "repo": "https://github.com/siteimprove/alfa.git",
     "bugs": "https://github.com/siteimprove/alfa/issues",
