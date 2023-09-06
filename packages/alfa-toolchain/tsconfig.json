@@ -14,6 +14,7 @@
     "src/validation/has-extractor-config.ts",
     "src/validation/validate-all.ts",
     "src/validation/validate-changesets.ts",
+    "src/validation/validate-package-json.ts",
     "src/index.ts",
     "test/changeset/build-changelog.spec.tsx",
     "test/changeset/get-changeset-details.spec.tsx"

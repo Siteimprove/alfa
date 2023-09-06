@@ -4,17 +4,15 @@ import * as path from "path";
 import { hasExtractorConfig } from "./has-extractor-config";
 
 import { validateChangesets } from "./validate-changesets";
+import { validatePackageJson } from "./validate-package-json";
 
 const targetPath = process.argv[2] ?? ".";
-
-enum Errors {
-  INVALID_CHANGESETS = 1,
-  MISSING_EXTRACTOR_CONFIG,
-}
 
 main(targetPath);
 
 async function main(cwd: string) {
+  const errors: Array<string> = [];
+
   const config = JSON.parse(
     fs.readFileSync(
       path.join(cwd, "config", "validate-structure.json"),
@@ -27,12 +25,24 @@ async function main(cwd: string) {
   console.dir(packages.packages[0]);
 
   if (config["validate-changesets"] ?? false) {
-    await validateChangesets(cwd, Errors.INVALID_CHANGESETS);
+    errors.push(...(await validateChangesets(cwd)));
   }
 
   if (config["has-api-extractor-config"] ?? false) {
     for (const pkg of packages.packages) {
-      hasExtractorConfig(pkg.dir, Errors.MISSING_EXTRACTOR_CONFIG);
+      errors.push(...hasExtractorConfig(pkg.dir));
     }
   }
+
+  if (typeof config["validate-package-json"] === "object") {
+    for (const pkg of packages.packages) {
+      errors.push(...validatePackageJson(pkg, config["validate-package-json"]));
+    }
+  }
+
+  for (const error of errors) {
+    console.error(error);
+  }
+
+  process.exit(errors.length);
 }
