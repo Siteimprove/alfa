@@ -11,6 +11,8 @@
     "src/changeset/changelog-individual.ts",
     "src/changeset/get-changeset-details.ts",
     "src/changeset/helpers.ts",
+    "src/validation/has-extractor-config.ts",
+    "src/validation/validate-all.ts",
     "src/validation/validate-changesets.ts",
     "src/index.ts",
     "test/changeset/build-changelog.spec.tsx",
