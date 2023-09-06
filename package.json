@@ -28,15 +28,15 @@
     "@microsoft/api-documenter": "^7.19.9",
     "@microsoft/api-extractor": "^7.29.5",
     "@siteimprove/alfa-toolchain": "workspace:^0.66.0",
-    "@types/async": "^3.2.5",
-    "@types/node": "^14.14.31",
+    "@types/async": "^3.2.20",
+    "@types/node": "^20.5.9",
     "async": "^3.2.1",
     "execa": "^5.1.1",
-    "knip": "^2.14.3",
+    "knip": "^2.21.2",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
     "prettier": "^2.7.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
-  "packageManager": "yarn@3.5.0"
+  "packageManager": "yarn@3.6.3"
 }
