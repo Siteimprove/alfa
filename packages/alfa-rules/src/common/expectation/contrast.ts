@@ -116,7 +116,11 @@ export function hasSufficientContrast(
     "ignored-interposed-elements",
     Group.of(interposedDescendants),
     target
-  ).answerIf(getIgnoredInterposedAnswer(parent, interposedDescendants, device));
+  ).answerIf(
+    getIntersectors(parent, interposedDescendants, device).map((intersectors) =>
+      interposedDescendants.subtract(intersectors)
+    )
+  );
 
   const foregrounds = Question.of("foreground-colors", target);
   const backgrounds = Question.of("background-colors", target);
@@ -228,41 +232,40 @@ export function contrast(foreground: RGB, background: RGB): number {
 }
 
 /**
- * @private
+ * Finds elements from a collection of candidate that intersect with a given element
  *
- * Tries to answer which interposed descendants can be ignored using layout.
- * If layout is missing `None` is returned meaning we cannot answer the question.
+ * @remarks
+ * If `candidates` is non-empty and just one element doesn't have layout `None` is returned
  */
-function getIgnoredInterposedAnswer(
-  targetParent: Element<string>,
-  interposedDescendants: Set<Element<string>>,
+function getIntersectors(
+  element: Element<string>,
+  candidates: Iterable<Element>,
   device: Device
-): Option<Iterable<Element<string>>> {
-  if (interposedDescendants.isEmpty()) {
-    return Option.of([]);
+): Option<Iterable<Element>> {
+  // If the collection of candidates is empty we don't need layout to determine that there are no intersectors
+  if (Iterable.isEmpty(candidates)) {
+    return Option.of(candidates);
   }
 
-  const targetBox = getBoundingBox(targetParent, device);
+  const elementBox = getBoundingBox(element, device);
 
-  // If the target doesn't have layout, we cannot answer the question
-  if (!targetBox.isSome()) {
+  // If just one of the elements involved doesn't have a bounding box, we regard that as an invalid state for deciding intersectors and return `None`
+  if (
+    !elementBox.isSome() ||
+    Iterable.some(candidates, (candidate) =>
+      getBoundingBox(candidate, device).isNone()
+    )
+  ) {
     return None;
   }
 
-  const ignoredInterposed: Array<Element<string>> = [];
-  for (const interposed of interposedDescendants) {
-    const interposedBox = getBoundingBox(interposed, device);
-
-    // If we encounter any interposed element without layout, we cannot answer the question
-    if (!interposedBox.isSome()) {
-      return None;
-    }
-
-    // If the interposed doesn't intersect the target, it can be ignored
-    if (!interposedBox.get().intersects(targetBox.get())) {
-      ignoredInterposed.push(interposed);
-    }
-  }
-
-  return Option.of(ignoredInterposed);
+  return Option.of(
+    Iterable.filter(
+      candidates,
+      (canditate) =>
+        elementBox
+          .get()
+          .intersects(getBoundingBox(canditate, device).getUnsafe()) // Precense of the box is guaranteed by the above check
+    )
+  );
 }
