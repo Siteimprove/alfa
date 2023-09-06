@@ -1,4 +1,6 @@
 import { getPackages } from "@manypkg/get-packages";
+import * as fs from "fs";
+import * as path from "path";
 import { hasExtractorConfig } from "./has-extractor-config";
 
 import { validateChangesets } from "./validate-changesets";
@@ -13,13 +15,24 @@ enum Errors {
 main(targetPath);
 
 async function main(cwd: string) {
+  const config = JSON.parse(
+    fs.readFileSync(
+      path.join(cwd, "config", "validate-structure.json"),
+      "utf-8"
+    )
+  );
+
   const packages = await getPackages(cwd);
 
   console.dir(packages.packages[0]);
 
-  await validateChangesets(cwd, Errors.INVALID_CHANGESETS);
+  if (config["validate-changesets"] ?? false) {
+    await validateChangesets(cwd, Errors.INVALID_CHANGESETS);
+  }
 
-  for (const pkg of packages.packages) {
-    hasExtractorConfig(pkg.dir, Errors.MISSING_EXTRACTOR_CONFIG);
+  if (config["has-api-extractor-config"] ?? false) {
+    for (const pkg of packages.packages) {
+      hasExtractorConfig(pkg.dir, Errors.MISSING_EXTRACTOR_CONFIG);
+    }
   }
 }
