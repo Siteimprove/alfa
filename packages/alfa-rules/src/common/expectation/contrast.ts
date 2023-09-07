@@ -235,7 +235,7 @@ export function contrast(foreground: RGB, background: RGB): number {
  * Finds elements from a collection of candidate that intersect with a given element
  *
  * @remarks
- * If `candidates` is non-empty and just one element doesn't have layout `None` is returned
+ * If either the element or one of the `candidates` doesn't have layout, we can't fully decide intersection and return `None`.
  */
 function getIntersectors(
   element: Element<string>,
