@@ -4,19 +4,19 @@ import { Future } from "@siteimprove/alfa-future";
 import { None } from "@siteimprove/alfa-option";
 import { test } from "@siteimprove/alfa-test";
 
-import { RGB, Percentage, Keyword } from "@siteimprove/alfa-css";
+import { Keyword, Percentage, RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Style } from "@siteimprove/alfa-style";
 
-import R69 from "../../src/sia-r69/rule";
 import { Contrast as Diagnostic } from "../../src/common/diagnostic/contrast";
 import { Contrast as Outcomes } from "../../src/common/outcome/contrast";
+import R69 from "../../src/sia-r69/rule";
 
 import { evaluate } from "../common/evaluate";
-import { passed, failed, cantTell, inapplicable } from "../common/outcome";
+import { cantTell, failed, inapplicable, passed } from "../common/outcome";
 
-import { oracle } from "../common/oracle";
 import { ColorError, ColorErrors } from "../../src/common/dom/get-colors";
+import { oracle } from "../common/oracle";
 
 const rgb = (r: number, g: number, b: number, a: number = 1) =>
   RGB.of(
@@ -842,6 +842,46 @@ test("evaluate() can tell when encountering an opaque background before an absol
     >
       {target}
     </div>,
+  ]);
+
+  t.deepEqual(await evaluate(R69, { document }), [
+    passed(R69, target, {
+      1: Outcomes.HasSufficientContrast(21, 4.5, [
+        Diagnostic.Pairing.of(
+          ["foreground", rgb(0, 0, 0)],
+          ["background", rgb(1, 1, 1)],
+          21
+        ),
+      ]),
+    }),
+  ]);
+});
+
+test("evaluate() can tell when interposed descendant overlaps offset parent, but does not overlap target", async (t) => {
+  const target = h.text("Hello World");
+
+  const document = h.document([
+    <body box={{ x: 8, y: 8, width: 1070, height: 126 }}>
+      <div
+        style={{
+          position: "absolute",
+          backgroundColor: "green",
+          opacity: "50%",
+          top: "100px",
+          left: "100px",
+          width: "100px",
+          height: "100px",
+        }}
+        box={{ x: 100, y: 100, width: 100, height: 100 }}
+      ></div>
+      <div box={{ x: 8, y: 8, width: 1070, height: 18 }}>{target}</div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+    </body>,
   ]);
 
   t.deepEqual(await evaluate(R69, { document }), [
