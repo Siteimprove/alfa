@@ -42,6 +42,8 @@ export class Context {
     // (undocumented)
     isActive(element: Element): boolean;
     // (undocumented)
+    isEmpty(): boolean;
+    // (undocumented)
     isFocused(element: Element): boolean;
     // (undocumented)
     isHovered(element: Element): boolean;

@@ -21,6 +21,10 @@ export class Context {
     this._state = state;
   }
 
+  public isEmpty(): boolean {
+    return this._state.isEmpty();
+  }
+
   public hasState(element: Element, state: Context.State): boolean {
     return this._state.get(element).some((found) => (found & state) !== 0);
   }
