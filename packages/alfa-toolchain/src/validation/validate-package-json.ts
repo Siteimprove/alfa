@@ -1,4 +1,5 @@
 import { PackageJSON } from "@changesets/types";
+import * as path from "path";
 
 /**
  * Extended PackageJSON type
@@ -76,9 +77,19 @@ export function validatePackageJson(
         `${name}: package.json does not have repository.url: "${config.repo}".`
       );
     }
-    if (!dir.endsWith(packageJson?.repository?.directory ?? "INVALID")) {
+    if (
+      !dir
+        // dir is built by @manypkg/get-packages with OS specific separator,
+        // but packageJson.repository.directory is stored with posix ones (/).
+        // So, we need to do some magic to convert formats.
+        .split(path.sep)
+        .join(path.posix.sep)
+        .endsWith(packageJson?.repository?.directory ?? "INVALID")
+    ) {
       errors.push(
-        `${name}: package.json repository.directory (${packageJson?.repository?.directory}) does not match its actual directory (${dir}).`
+        `${name}: package.json repository.directory (${
+          packageJson?.repository?.directory
+        }) does not match its actual directory (${dir.replace("\\", "/")}).`
       );
     }
   }
