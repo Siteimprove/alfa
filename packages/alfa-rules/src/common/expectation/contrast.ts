@@ -265,7 +265,7 @@ function getIntersectors(
       (canditate) =>
         elementBox
           .get()
-          .intersects(getBoundingBox(canditate, device).getUnsafe()) // Precense of the box is guaranteed by the above check
+          .intersects(getBoundingBox(canditate, device).getUnsafe()) // Presence of the box is guaranteed by the above check
     )
   );
 }
