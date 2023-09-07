@@ -249,7 +249,6 @@ function getIntersectors(
 
   const elementBox = getBoundingBox(element, device);
 
-  // If just one of the elements involved doesn't have a bounding box, we regard that as an invalid state for deciding intersectors and return `None`
   if (
     !elementBox.isSome() ||
     Iterable.some(candidates, (candidate) =>
