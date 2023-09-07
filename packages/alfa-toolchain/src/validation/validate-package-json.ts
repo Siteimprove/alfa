@@ -77,19 +77,14 @@ export function validatePackageJson(
         `${name}: package.json does not have repository.url: "${config.repo}".`
       );
     }
-    if (
-      !dir
-        // dir is built by @manypkg/get-packages with OS specific separator,
-        // but packageJson.repository.directory is stored with posix ones (/).
-        // So, we need to do some magic to convert formats.
-        .split(path.sep)
-        .join(path.posix.sep)
-        .endsWith(packageJson?.repository?.directory ?? "INVALID")
-    ) {
+
+    // dir is built by @manypkg/get-packages with OS specific separator,
+    // but packageJson.repository.directory is stored with posix ones (/).
+    // So, we need to do some magic to convert formats.
+    const posixDir = dir.split(path.sep).join(path.posix.sep);
+    if (!posixDir.endsWith(packageJson?.repository?.directory ?? "INVALID")) {
       errors.push(
-        `${name}: package.json repository.directory (${
-          packageJson?.repository?.directory
-        }) does not match its actual directory (${dir.replace("\\", "/")}).`
+        `${name}: package.json repository.directory (${packageJson?.repository?.directory}) does not match its actual directory (${posixDir}).`
       );
     }
   }
