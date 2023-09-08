@@ -23,6 +23,7 @@
     { "path": "../alfa-monad" },
     { "path": "../alfa-predicate" },
     { "path": "../alfa-reducer" },
+    { "path": "../alfa-refinement" },
     { "path": "../alfa-predicate" },
     { "path": "../alfa-test" },
     { "path": "../alfa-thunk" }

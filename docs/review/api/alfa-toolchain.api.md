@@ -5,6 +5,7 @@
 ```ts
 
 import type { ChangelogFunctions } from '@changesets/types';
+import { PackageJSON } from '@changesets/types';
 
 // @public (undocumented)
 const changelogFunctions: ChangelogFunctions;
@@ -16,6 +17,9 @@ declare namespace globalChangelog {
 }
 export { globalChangelog }
 
+// @public
+function hasExtractorConfig(name: string, dir: string): Array<string>;
+
 declare namespace individualChangelog {
     export {
         changelogFunctions as default
@@ -23,12 +27,40 @@ declare namespace individualChangelog {
 }
 export { individualChangelog }
 
-declare namespace validateChangesets {
-    export {
+// @public (undocumented)
+function validate(cwd: string): Promise<void>;
 
+// @public
+function validateChangesets(cwd: string): Promise<Array<string>>;
+
+// Warning: (ae-forgotten-export) The symbol "Config" needs to be exported by the entry point index.d.ts
+//
+// @public
+function validatePackageJson({ dir, packageJson, }: {
+    dir: string;
+    packageJson: JSON_2;
+}, config: Config): Array<string>;
+
+// @public (undocumented)
+function validateWorkspaceTsconfig({ dir, packageJson, }: {
+    dir: string;
+    packageJson: PackageJSON;
+}): Array<string>;
+
+declare namespace Validation {
+    export {
+        hasExtractorConfig,
+        validate,
+        validateChangesets,
+        validatePackageJson,
+        validateWorkspaceTsconfig
     }
 }
-export { validateChangesets }
+export { Validation }
+
+// Warnings were encountered during analysis:
+//
+// src/validation/validate-package-json.ts:43:5 - (ae-forgotten-export) The symbol "JSON" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
