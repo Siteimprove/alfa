@@ -58,6 +58,7 @@
 |  [@siteimprove/alfa-predicate](./alfa-predicate.md) |  |
 |  [@siteimprove/alfa-promise](./alfa-promise.md) | This package provides functionality for working with promises. |
 |  [@siteimprove/alfa-record](./alfa-record.md) |  |
+|  [@siteimprove/alfa-rectangle](./alfa-rectangle.md) |  |
 |  [@siteimprove/alfa-reducer](./alfa-reducer.md) |  |
 |  [@siteimprove/alfa-refinement](./alfa-refinement.md) |  |
 |  [@siteimprove/alfa-result](./alfa-result.md) |  |
@@ -74,6 +75,7 @@
 |  [@siteimprove/alfa-thenable](./alfa-thenable.md) |  |
 |  [@siteimprove/alfa-thunk](./alfa-thunk.md) |  |
 |  [@siteimprove/alfa-time](./alfa-time.md) |  |
+|  [@siteimprove/alfa-toolchain](./alfa-toolchain.md) |  |
 |  [@siteimprove/alfa-trampoline](./alfa-trampoline.md) |  |
 |  [@siteimprove/alfa-tree](./alfa-tree.md) |  |
 |  [@siteimprove/alfa-trilean](./alfa-trilean.md) |  |

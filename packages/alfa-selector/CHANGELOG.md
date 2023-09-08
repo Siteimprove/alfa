@@ -1,5 +1,11 @@
 # @siteimprove/alfa-selector
 
+## 0.67.0
+
+### Minor Changes
+
+- **Added:** A function `isEmpty` to `Context` class ([#1464](https://github.com/Siteimprove/alfa/pull/1464))
+
 ## 0.66.0
 
 ## 0.65.1

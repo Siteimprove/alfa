@@ -1,5 +1,13 @@
 # @siteimprove/alfa-aria
 
+## 0.67.0
+
+### Patch Changes
+
+- **Fixed:** Name from content now correctly includes shadow DOM. ([#1470](https://github.com/Siteimprove/alfa/pull/1470))
+
+  When the accessible name is computed from the descendants, slots and descendants inside a shadow DOM are correctly taken into account. This mimic what browsers are doing, and what the accessible name conputation group seems to be moving toward.
+
 ## 0.66.0
 
 ## 0.65.1

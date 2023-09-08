@@ -20,7 +20,7 @@ static of<N extends string = string>(namespace: Option<Namespace>, prefix: Optio
 |  attributes | Iterable&lt;[Attribute](./alfa-dom.attribute.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  children | Iterable&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; | <i>(Optional)</i> |
 |  style | [Option](./alfa-option.option.md)<!-- -->&lt;[Block](./alfa-dom.block.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  box | [Option](./alfa-option.option.md)<!-- -->&lt;Rectangle&gt; | <i>(Optional)</i> |
+|  box | [Option](./alfa-option.option.md)<!-- -->&lt;[Rectangle](./alfa-rectangle.rectangle.md)<!-- -->&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 
