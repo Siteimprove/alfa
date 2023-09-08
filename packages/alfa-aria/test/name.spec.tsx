@@ -1659,3 +1659,90 @@ test(`.from() only associates <label> elements with for attributes with the
 
   t.deepEqual(Name.from(bar, device).toJSON(), { type: "none" });
 });
+
+test(".from() looks for slotted descendants", (t) => {
+  const target = (
+    <button>
+      <slot name="content"></slot>
+    </button>
+  );
+
+  const _ = (
+    <div>
+      {h.shadow([target])}
+      <span slot="content">Hello</span>
+    </div>
+  );
+
+  t.deepEqual(getName(target), {
+    value: "Hello",
+    sources: [
+      {
+        element: "/div[1]/button[1]",
+        name: {
+          sources: [
+            {
+              element: "/div[1]/button[1]/span[1]",
+              name: {
+                sources: [{ text: "/div[1]/span[1]/text()[1]", type: "data" }],
+                value: "Hello",
+              },
+              type: "descendant",
+            },
+          ],
+          value: "Hello",
+        },
+        type: "descendant",
+      },
+    ],
+  });
+});
+
+test(".from() looks for shadow descendants", (t) => {
+  const target = (
+    <button>
+      {h.shadow([<slot name="content"></slot>])}
+      <span slot="content">Hello</span>
+    </button>
+  );
+
+  t.deepEqual(getName(target), {
+    value: "Hello",
+    sources: [
+      {
+        element: "/button[1]",
+        name: {
+          sources: [
+            {
+              element: "/button[1]/slot[1]",
+              name: {
+                sources: [
+                  {
+                    element: "/button[1]/span[1]",
+                    name: {
+                      sources: [
+                        { text: "/button[1]/span[1]/text()[1]", type: "data" },
+                      ],
+                      value: "Hello",
+                    },
+                    type: "descendant",
+                  },
+                ],
+                value: "Hello",
+              },
+              type: "descendant",
+            },
+          ],
+          value: "Hello",
+        },
+        type: "descendant",
+      },
+    ],
+  });
+});
+
+test(".from() does not recurse into content documents", (t) => {
+  const target = <button>{h.document([<span>Hello</span>])}</button>;
+
+  t.deepEqual(Name.from(target, Device.standard()).isNone(), true);
+});
