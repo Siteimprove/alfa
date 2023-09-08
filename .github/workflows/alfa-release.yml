@@ -1,4 +1,4 @@
-# Create a release for the Alfa repos.
+  # Create a release for the Alfa repos.
 #
 # WARNING! This workflow pushes to main which **does** trigger other workflow (build, scan, …)
 # WARNING! Therefore, there is a risk of creating infinite workflow loops if this workflow is
@@ -84,6 +84,8 @@ jobs:
 
       - name: Build global changelog
         run: yarn alfa-changelog
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Gather changes and update packages
         run: yarn changeset version
