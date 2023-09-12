@@ -80,7 +80,7 @@ jobs:
         run: yarn install --immutable
       - name: Build toolchain if needed
         run: |
-          [[ -d packages/alfa-toolchain ]] && yarn build packages/alfa-toolchain
+          [[ ! -d packages/alfa-toolchain ]] || yarn build packages/alfa-toolchain
 
       - name: Build global changelog
         run: yarn alfa-changelog
