@@ -199,10 +199,18 @@ export const UserAgent = h.sheet([
 
   h.rule.style("textarea", { whiteSpace: "pre-wrap" }),
 
-  // <button> element defaults applied consistently by browsers.
   h.rule.style("button", {
+    // <button> element defaults applied consistently by browsers.
     fontStyle: "normal",
     fontWeight: "400",
+    // <button> colors differ between browsers, additionally they can be
+    // overwritten by OS settings which we do not really have access to (although
+    // forced-color media query could help), so we default to the system color.
+    // as of 21.09.23, Chrome uses rgb(240, 240, 240) but Firefox uses
+    // rgb(233, 233, 233).
+    backgroundColor: "buttonface",
+    // color seems to rather consistently defaults to black, which is the default.
+    // color: "buttontext",
   }),
 
   /**
