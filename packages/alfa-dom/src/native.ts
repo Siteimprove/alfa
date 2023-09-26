@@ -204,7 +204,7 @@ export namespace Native {
     function toImportRule(rule: globalThis.CSSImportRule): ImportRule.JSON {
       return {
         type: "import",
-        rules: toSheet(rule.styleSheet).rules,
+        rules: rule.styleSheet === null ? [] : toSheet(rule.styleSheet).rules,
         condition: rule.media.mediaText === "" ? "all" : rule.media.mediaText,
         href: rule.href,
       };

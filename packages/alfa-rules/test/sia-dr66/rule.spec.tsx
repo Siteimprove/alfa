@@ -245,7 +245,7 @@ test("evaluate() passes text nodes in widgets with good contrast", async (t) => 
 
   const document = h.document([
     <html>
-      <button>{target}</button>
+      <button style={{ backgroundColor: "white" }}>{target}</button>
     </html>,
   ]);
 

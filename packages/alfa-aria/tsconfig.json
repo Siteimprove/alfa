@@ -50,9 +50,7 @@
   ],
   "references": [
     { "path": "../alfa-array" },
-    { "path": "../alfa-branched" },
     { "path": "../alfa-cache" },
-    { "path": "../alfa-compatibility" },
     { "path": "../alfa-device" },
     { "path": "../alfa-dom" },
     { "path": "../alfa-equatable" },
@@ -71,6 +69,7 @@
     { "path": "../alfa-set" },
     { "path": "../alfa-style" },
     { "path": "../alfa-table" },
+    { "path": "../alfa-test" },
     { "path": "../alfa-thunk" },
     { "path": "../alfa-tree" }
   ]

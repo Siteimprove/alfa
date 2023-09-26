@@ -5,6 +5,10 @@ on:
   # WARNING! Only use manual trigger to avoid creating infinite workflow loops.
   workflow_dispatch:
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   release:
     name: Release

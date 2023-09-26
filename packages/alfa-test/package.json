@@ -2,7 +2,7 @@
   "$schema": "http://json.schemastore.org/package",
   "name": "@siteimprove/alfa-test",
   "homepage": "https://alfa.siteimprove.com",
-  "version": "0.66.0",
+  "version": "0.67.0",
   "license": "MIT",
   "description": "A simple test library sitting on top of the built-in Node.js assert module",
   "repository": {
@@ -18,7 +18,7 @@
     "src/**/*.d.ts"
   ],
   "dependencies": {
-    "@types/node": "^14.14.31",
+    "@types/node": "^20.5.9",
     "chalk": "^4.1.2"
   },
   "publishConfig": {

@@ -336,6 +336,7 @@ export namespace Style {
   export type Inherited<N extends Name> = Longhands.Inherited<N>;
 
   export const {
+    getBoundingBox,
     getOffsetParent,
     getPositioningParent,
     hasBorder,

@@ -198,7 +198,7 @@ export namespace Name {
       public toJSON(): Descendant.JSON {
         return {
           type: "descendant",
-          element: this._element.path(),
+          element: this._element.path(Node.flatTree),
           name: this._name.toJSON(),
         };
       }
@@ -823,7 +823,7 @@ export namespace Name {
     state: State
   ): Option<Name> {
     const names: Sequence<readonly [string, Name]> = element
-      .children()
+      .children(Node.flatTree)
       .filter(or(isText, isElement))
       .collect((element) =>
         fromNode(element, device, state.recurse(true).descend(true)).map(

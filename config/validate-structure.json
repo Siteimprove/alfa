@@ -1,0 +1,26 @@
+{
+  "has-api-extractor-config": true,
+  "validate-changesets": true,
+  "validate-package-json": {
+    "organisation": "@siteimprove",
+    "homepage": "https://alfa.siteimprove.com",
+    "repo": "https://github.com/siteimprove/alfa.git",
+    "bugs": "https://github.com/siteimprove/alfa/issues",
+    "noExternalDeps": true,
+    "allowedExternalDeps": {
+      "@siteimprove/alfa-compatibility": ["browserslist"],
+      "@siteimprove/alfa-test": ["chalk"],
+      "@siteimprove/alfa-toolchain": [
+        "@changesets/assemble-release-plan",
+        "@changesets/config",
+        "@changesets/get-github-info",
+        "@changesets/git",
+        "@changesets/read",
+        "@manypkg/get-packages",
+        "@svitejs/changesets-changelog-github-compact",
+        "resolve-from"
+      ]
+    }
+  },
+  "validate-workspace-tsconfig": true
+}

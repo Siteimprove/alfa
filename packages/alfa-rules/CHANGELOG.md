@@ -1,5 +1,21 @@
 # @siteimprove/alfa-rules
 
+## 0.67.0
+
+### Minor Changes
+
+- **Breaking:** SIA-R6 is now deprecated, following ACT rules changes. ([#1461](https://github.com/Siteimprove/alfa/pull/1461))
+
+  The rule is still available as `Deprecated.DR6` for a while.
+
+- **Changed:** Color contrast rules, currently SIA-R66 and SIA-R69, can now tell which interposed elements can be ignored if layout is available. ([#1464](https://github.com/Siteimprove/alfa/pull/1464))
+
+  If layout is not available the rules keep the current behavior of asking a `ignored-interposed-elements` question.
+
+### Patch Changes
+
+- **Changed:** SIA-R54 now ignores targets with no element descendant. ([#1465](https://github.com/Siteimprove/alfa/pull/1465))
+
 ## 0.66.0
 
 ### Patch Changes

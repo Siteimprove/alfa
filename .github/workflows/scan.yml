@@ -16,6 +16,11 @@ concurrency:
   group: scan-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  packages: read
+  security-events: write
+
 jobs:
   analyze:
     name: Analyze

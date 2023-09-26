@@ -266,6 +266,7 @@
     { "path": "../alfa-aria" },
     { "path": "../alfa-array" },
     { "path": "../alfa-cache" },
+    { "path": "../alfa-cascade" },
     { "path": "../alfa-comparable" },
     { "path": "../alfa-css" },
     { "path": "../alfa-device" },

@@ -1,5 +1,13 @@
 # @siteimprove/alfa-style
 
+## 0.67.0
+
+### Minor Changes
+
+- **Added:** A function for getting the bounding box of an element given a device. ([#1464](https://github.com/Siteimprove/alfa/pull/1464))
+
+  This should be the only way of accessing an elements bounding box and prepares us for having device dependent boxes.
+
 ## 0.66.0
 
 ### Minor Changes

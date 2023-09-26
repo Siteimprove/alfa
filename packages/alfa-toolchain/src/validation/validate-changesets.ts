@@ -3,20 +3,14 @@ import { Err, Result } from "@siteimprove/alfa-result";
 
 import { Changeset } from "../changeset/get-changeset-details";
 
-const targetPath = process.argv[2] ?? ".";
-
-main();
-
-async function main() {
-  const changesets = await getChangeSets(targetPath);
-
-  const invalid = changesets
+/**
+ * Validate that all changesets have the expected structure.
+ *
+ * @public
+ */
+export async function validateChangesets(cwd: string): Promise<Array<string>> {
+  return (await getChangeSets(cwd))
     .map(Changeset.getDetails)
-    .filter<Err<string>>(Result.isErr);
-
-  invalid.forEach((error) => console.error(error.getErr()));
-
-  if (invalid.length > 0) {
-    process.exit(1);
-  }
+    .filter<Err<string>>(Result.isErr)
+    .map((err) => err.getErr());
 }

@@ -1,4 +1,4 @@
-# Create a release for the Alfa repos.
+  # Create a release for the Alfa repos.
 #
 # WARNING! This workflow pushes to main which **does** trigger other workflow (build, scan, …)
 # WARNING! Therefore, there is a risk of creating infinite workflow loops if this workflow is
@@ -80,10 +80,12 @@ jobs:
         run: yarn install --immutable
       - name: Build toolchain if needed
         run: |
-          [[ -d packages/alfa-toolchain ]] && yarn build packages/alfa-toolchain
+          [[ ! -d packages/alfa-toolchain ]] || yarn build packages/alfa-toolchain
 
       - name: Build global changelog
         run: yarn alfa-changelog
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: Gather changes and update packages
         run: yarn changeset version
@@ -93,7 +95,16 @@ jobs:
         # This is needed to push the correct git tag
         id: new
         run: |
-          echo "version=v$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
+          echo "version=$(grep \"version\": packages/alfa-*/package.json | cut -d\" -f 4 | sort -u)" >> $GITHUB_OUTPUT
+
+      - name: Hack around toplevel dependencies
+        # https://github.com/changesets/changesets/issues/1229
+        # Need to unescape the sed string to interpret ${VERSION} and re-escape it again.
+        run: sed -i 's/workspace:^[0-9\.]*/workspace:^'${VERSION}'/' package.json
+        env:
+          # Passing it as a variable rather than inline hardens against script injection.
+          # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
+          VERSION: ${{ steps.new.outputs.version }}
 
       - name: Update lockfile
         # Cross-workspaces references need to be updated.
@@ -121,13 +132,13 @@ jobs:
         run: |
           # Removed individual changesets, all changelog (global and local), all package.json (new version number), lockfile
           git add .changeset/ CHANGELOG.md **/CHANGELOG.md package.json **/package.json yarn.lock
-          git commit -m ${{ steps.new.outputs.version }}
+          git commit -m ${VERSION}
           git tag --annotate ${VERSION} --message=${VERSION}
           git push --follow-tags
         env:
           # Passing it as a variable rather than inline hardens against script injection.
           # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
-          VERSION: ${{ steps.new.outputs.version }}
+          VERSION: v${{ steps.new.outputs.version }}
 
       - name: Make npm release
         run: >
@@ -147,4 +158,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           # Passing it as a variable rather than inline hardens against script injection.
           # See https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable
-          VERSION: ${{ steps.new.outputs.version }}
+          VERSION: v${{ steps.new.outputs.version }}

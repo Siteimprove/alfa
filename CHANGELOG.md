@@ -1,5 +1,29 @@
 # Alfa changelog
 
+## [0.67.0](../../compare/v0.66.0...v0.67.0) (2023-09-08)
+
+### Breaking
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0670): SIA-R6 is now deprecated, following ACT rules changes. ([#1461](https://github.com/Siteimprove/alfa/pull/1461))
+
+### Added
+
+- [@siteimprove/alfa-selector](packages/alfa-selector/CHANGELOG.md#0670): A function `isEmpty` to `Context` class. ([#1464](https://github.com/Siteimprove/alfa/pull/1464))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0670): A function for getting the bounding box of an element given a device. ([#1464](https://github.com/Siteimprove/alfa/pull/1464))
+
+- [@siteimprove/alfa-toolchain](packages/alfa-toolchain/CHANGELOG.md#0670): Initial release of a package to handle the toolchain. ([#1462](https://github.com/Siteimprove/alfa/pull/1462))
+
+### Changed
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0670): Color contrast rules, currently SIA-R66 and SIA-R69, can now tell which interposed elements can be ignored if layout is available. ([#1464](https://github.com/Siteimprove/alfa/pull/1464))
+
+- [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md#0670): SIA-R54 now ignores targets with no element descendant. ([#1465](https://github.com/Siteimprove/alfa/pull/1465))
+
+### Fixed
+
+- [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md#0670): Name from content now correctly includes shadow DOM. ([#1470](https://github.com/Siteimprove/alfa/pull/1470))
+
 ## [v0.66.0](../../compare/v0.65.1...v0.66.0) (2023-08-09)
 
 ### Breaking

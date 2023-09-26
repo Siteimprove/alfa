@@ -32,6 +32,6 @@ jobs:
       - run: yarn dedupe --check
       - run: yarn build --quiet
       - run: yarn test
-      - run: yarn validate-changesets
+      - run: yarn validate-structure
       - run: yarn extract --quiet
       - run: yarn knip

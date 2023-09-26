@@ -89,6 +89,7 @@
     "test/node/query/element-id-map.spec.tsx"
   ],
   "references": [
+    { "path": "../alfa-array" },
     { "path": "../alfa-cache" },
     { "path": "../alfa-css" },
     { "path": "../alfa-earl" },

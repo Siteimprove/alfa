@@ -2,8 +2,10 @@ import { Cache } from "@siteimprove/alfa-cache";
 import { RGB } from "@siteimprove/alfa-css";
 import { Device } from "@siteimprove/alfa-device";
 import { Element, Node, Text } from "@siteimprove/alfa-dom";
-import { Set } from "@siteimprove/alfa-set";
 import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option } from "@siteimprove/alfa-option";
+import { Set } from "@siteimprove/alfa-set";
+import { Style } from "@siteimprove/alfa-style";
 
 import { expectation } from "../act/expectation";
 import { Group } from "../act/group";
@@ -16,6 +18,7 @@ import { isLargeText } from "../predicate";
 const { isElement } = Element;
 const { flatMap, map, takeWhile } = Iterable;
 const { min, max, round } = Math;
+const { getBoundingBox } = Style;
 
 /**
  * @deprecated This is only used in the deprecated R66v1 and R69v1.
@@ -113,7 +116,11 @@ export function hasSufficientContrast(
     "ignored-interposed-elements",
     Group.of(interposedDescendants),
     target
-  ).answerIf(interposedDescendants.isEmpty(), []);
+  ).answerIf(
+    getIntersectors(parent, interposedDescendants, device).map((intersectors) =>
+      interposedDescendants.subtract(intersectors)
+    )
+  );
 
   const foregrounds = Question.of("foreground-colors", target);
   const backgrounds = Question.of("background-colors", target);
@@ -222,4 +229,42 @@ export function contrast(foreground: RGB, background: RGB): number {
   const contrast = (max(lf, lb) + 0.05) / (min(lf, lb) + 0.05);
 
   return round(contrast * 100) / 100;
+}
+
+/**
+ * Finds elements from a collection of candidate that intersect with a given element
+ *
+ * @remarks
+ * If either the element or one of the `candidates` doesn't have layout, we can't fully decide intersection and return `None`.
+ */
+function getIntersectors(
+  element: Element<string>,
+  candidates: Iterable<Element>,
+  device: Device
+): Option<Iterable<Element>> {
+  // If the collection of candidates is empty we don't need layout to determine that there are no intersectors
+  if (Iterable.isEmpty(candidates)) {
+    return Option.of(candidates);
+  }
+
+  const elementBox = getBoundingBox(element, device);
+
+  if (
+    !elementBox.isSome() ||
+    Iterable.some(candidates, (candidate) =>
+      getBoundingBox(candidate, device).isNone()
+    )
+  ) {
+    return None;
+  }
+
+  return Option.of(
+    Iterable.filter(
+      candidates,
+      (canditate) =>
+        elementBox
+          .get()
+          .intersects(getBoundingBox(canditate, device).getUnsafe()) // Presence of the box is guaranteed by the above check
+    )
+  );
 }
