@@ -16,6 +16,13 @@ test("Box attribute gets turned into box property", (t) => {
   });
 });
 
+test("Element with box attribute without device has box property equal to `None`", (t) => {
+  const device = Device.standard();
+  const element = <div box={{ x: 12, y: 7, width: 3, height: 9 }}></div>;
+
+  t.deepEqual(element.getBoundingBox(device).isNone(), true);
+});
+
 test("Element without box attribute has box property equal to `None`", (t) => {
   const device = Device.standard();
   const element = <div></div>;

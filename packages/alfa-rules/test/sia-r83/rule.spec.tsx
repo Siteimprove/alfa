@@ -4,8 +4,9 @@ import { test } from "@siteimprove/alfa-test";
 
 import R83, { Outcomes } from "../../src/sia-r83/rule";
 
+import { Device } from "@siteimprove/alfa-device";
 import { evaluate } from "../common/evaluate";
-import { passed, failed, inapplicable } from "../common/outcome";
+import { failed, inapplicable, passed } from "../common/outcome";
 
 test("evaluate() passes a text node that truncates overflow using ellipsis", async (t) => {
   const target = h.text("Hello world");
@@ -462,9 +463,13 @@ test(`evaluate() passes a text node with fixed height and another property
 test(`evaluates() passes a text node horizontally overflowing its small
       parent and not clipped by its wide grand-parent`, async (t) => {
   const target = h.text("Hello world");
+  const device = Device.standard();
+
   const clipping = (
-    <div box={{ x: 0, y: 0, width: 200, height: 40 }}>
-      <span box={{ x: 10, y: 10, width: 50, height: 20 }}>{target}</span>
+    <div box={{ device, x: 0, y: 0, width: 200, height: 40 }}>
+      <span box={{ device, x: 10, y: 10, width: 50, height: 20 }}>
+        {target}
+      </span>
     </div>
   );
 
@@ -480,7 +485,7 @@ test(`evaluates() passes a text node horizontally overflowing its small
       ]),
     ]
   );
-  t.deepEqual(await evaluate(R83, { document }), [
+  t.deepEqual(await evaluate(R83, { document, device }), [
     passed(R83, target, {
       1: Outcomes.IsContainer(Option.of(clipping), None),
     }),
@@ -490,9 +495,13 @@ test(`evaluates() passes a text node horizontally overflowing its small
 test(`evaluate() passes a text node vertically overflowing its small
       parent and not clipped by its high grand-parent`, async (t) => {
   const target = h.text("Hello world");
+  const device = Device.standard();
+
   const clipping = (
-    <div box={{ x: 0, y: 0, width: 200, height: 40 }}>
-      <span box={{ x: 10, y: 10, width: 50, height: 20 }}>{target}</span>
+    <div box={{ device, x: 0, y: 0, width: 200, height: 40 }}>
+      <span box={{ device, x: 10, y: 10, width: 50, height: 20 }}>
+        {target}
+      </span>
     </div>
   );
 
@@ -508,7 +517,7 @@ test(`evaluate() passes a text node vertically overflowing its small
     ]
   );
 
-  t.deepEqual(await evaluate(R83, { document }), [
+  t.deepEqual(await evaluate(R83, { document, device }), [
     passed(R83, target, {
       1: Outcomes.IsContainer(None, Option.of(clipping)),
     }),

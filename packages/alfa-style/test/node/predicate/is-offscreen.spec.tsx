@@ -3,7 +3,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import * as predicate from "../../../src/node/predicate/is-offscreen";
 
-const isOffscreen = predicate.isOffscreen(Device.standard());
+const device = Device.standard();
+const isOffscreen = predicate.isOffscreen(device);
 
 /*************************************************************************
  *
@@ -14,7 +15,9 @@ const isOffscreen = predicate.isOffscreen(Device.standard());
 test(`isOffscreen() uses boxes when they are provided`, (t) => {
   // The element is actually on screen, but the box is lying to us.
   const element = (
-    <div box={{ x: -100, y: -100, width: 10, height: 10 }}>Hello world</div>
+    <div box={{ device, x: -100, y: -100, width: 10, height: 10 }}>
+      Hello world
+    </div>
   );
 
   t.deepEqual(isOffscreen(element), true);
@@ -22,7 +25,9 @@ test(`isOffscreen() uses boxes when they are provided`, (t) => {
 
 test(`isOffscreen() returns true for elements that are on the left of the viewport`, (t) => {
   const element = (
-    <div box={{ x: -100, y: 0, width: 10, height: 100 }}>Hello world</div>
+    <div box={{ device, x: -100, y: 0, width: 10, height: 100 }}>
+      Hello world
+    </div>
   );
 
   t.deepEqual(isOffscreen(element), true);
@@ -30,7 +35,7 @@ test(`isOffscreen() returns true for elements that are on the left of the viewpo
 
 test(`isOffscreen() returns true for elements that are on top of the viewport`, (t) => {
   const element = (
-    <div box={{ x: 0, y: -100, width: 100, height: 10 }}>Hello world</div>
+    <div box={{ device, x: 0, y: -100, width: 100, height: 10 }}>Hello world</div>
   );
 
   t.deepEqual(isOffscreen(element), true);
@@ -38,7 +43,7 @@ test(`isOffscreen() returns true for elements that are on top of the viewport`, 
 
 test(`isOffscreen() returns false for elements that are fully on screen`, (t) => {
   const element = (
-    <div box={{ x: 100, y: 0, width: 100, height: 10 }}>Hello world</div>
+    <div box={{ device, x: 100, y: 0, width: 100, height: 10 }}>Hello world</div>
   );
 
   t.deepEqual(isOffscreen(element), false);
@@ -46,7 +51,7 @@ test(`isOffscreen() returns false for elements that are fully on screen`, (t) =>
 
 test(`isOffscreen() returns false for elements that partially intersect the viewport on the left`, (t) => {
   const element = (
-    <div box={{ x: -100, y: 0, width: 101, height: 10 }}>Hello world</div>
+    <div box={{ device, x: -100, y: 0, width: 101, height: 10 }}>Hello world</div>
   );
 
   t.deepEqual(isOffscreen(element), false);
@@ -54,7 +59,7 @@ test(`isOffscreen() returns false for elements that partially intersect the view
 
 test(`isOffscreen() returns false for elements that partially intersect the viewport on the top`, (t) => {
   const element = (
-    <div box={{ x: 0, y: -100, width: 10, height: 101 }}>Hello world</div>
+    <div box={{ device, x: 0, y: -100, width: 10, height: 101 }}>Hello world</div>
   );
 
   t.deepEqual(isOffscreen(element), false);
@@ -62,7 +67,7 @@ test(`isOffscreen() returns false for elements that partially intersect the view
 
 test(`isOffscreen() returns false for elements that far away to the bottom of the page`, (t) => {
   const element = (
-    <div box={{ x: 100, y: 100000, width: 100, height: 10 }}>Hello world</div>
+    <div box={{ device, x: 100, y: 100000, width: 100, height: 10 }}>Hello world</div>
   );
 
   t.deepEqual(isOffscreen(element), false);
@@ -70,12 +75,12 @@ test(`isOffscreen() returns false for elements that far away to the bottom of th
 
 test(`isOffscreen() returns false for elements that can be brought on screen by horizontal scrolling`, (t) => {
   const element = (
-    <div box={{ x: 10000, y: 0, width: 100, height: 10 }}>Hello world</div>
+    <div box={{ device, x: 10000, y: 0, width: 100, height: 10 }}>Hello world</div>
   );
 
   const _ = (
     <div
-      box={{ x: 0, y: 0, width: 200, height: 10 }}
+      box={{ device, x: 0, y: 0, width: 200, height: 10 }}
       style={{ overflowX: "visible" }}
     >
       {element}
@@ -87,12 +92,12 @@ test(`isOffscreen() returns false for elements that can be brought on screen by 
 
 test(`isOffscreen() returns true for elements that cannot be brought on screen by horizontal scrolling`, (t) => {
   const element = (
-    <div box={{ x: 10000, y: 0, width: 100, height: 10 }}>Hello world</div>
+    <div box={{ device, x: 10000, y: 0, width: 100, height: 10 }}>Hello world</div>
   );
 
   const _ = (
     <div
-      box={{ x: 0, y: 0, width: 200, height: 10 }}
+      box={{ device, x: 0, y: 0, width: 200, height: 10 }}
       style={{ overflowX: "clip" }}
     >
       {element}
