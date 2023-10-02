@@ -2,6 +2,7 @@ import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Decoder } from "@siteimprove/alfa-encoding";
 import { Request, Response } from "@siteimprove/alfa-http";
+import { Option } from "@siteimprove/alfa-option";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
@@ -122,13 +123,14 @@ export namespace Page {
   }
 
   export function from(json: JSON): Result<Page, string> {
+    const device = Device.from(json.device);
     return Request.from(json.request).andThen((request) =>
       Response.from(json.response).map((response) =>
         Page.of(
           request,
           response,
-          Document.from(json.document),
-          Device.from(json.device)
+          Document.from(json.document, Option.of(device)),
+          device
         )
       )
     );

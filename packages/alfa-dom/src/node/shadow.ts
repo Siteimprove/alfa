@@ -1,6 +1,7 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
+import { Device } from "@siteimprove/alfa-device";
 import { Node } from "../node";
 import { Sheet } from "../style/sheet";
 import { Element } from "./element";
@@ -138,10 +139,14 @@ export namespace Shadow {
   /**
    * @internal
    */
-  export function fromShadow(json: JSON): Trampoline<Shadow> {
-    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
-      (children) =>
-        Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode)
+  export function fromShadow(
+    json: JSON,
+    device: Option<Device>
+  ): Trampoline<Shadow> {
+    return Trampoline.traverse(json.children ?? [], (child) =>
+      Node.fromNode(child, device)
+    ).map((children) =>
+      Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode)
     );
   }
 }

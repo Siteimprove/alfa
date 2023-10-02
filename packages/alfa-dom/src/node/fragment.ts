@@ -1,3 +1,5 @@
+import { Device } from "@siteimprove/alfa-device";
+import { Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 
 import { Node } from "../node";
@@ -54,10 +56,13 @@ export namespace Fragment {
   /**
    * @internal
    */
-  export function fromFragment(json: JSON): Trampoline<Fragment> {
-    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
-      (children) => Fragment.of(children)
-    );
+  export function fromFragment(
+    json: JSON,
+    device: Option<Device>
+  ): Trampoline<Fragment> {
+    return Trampoline.traverse(json.children ?? [], (child) =>
+      Node.fromNode(child, device)
+    ).map((children) => Fragment.of(children));
   }
 }
 

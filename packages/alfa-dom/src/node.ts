@@ -23,6 +23,7 @@ import {
   Type,
 } from ".";
 
+import { Device } from "@siteimprove/alfa-device";
 import * as predicate from "./node/predicate";
 import * as traversal from "./node/traversal";
 
@@ -319,33 +320,36 @@ export namespace Node {
     Traversal.nested
   );
 
-  export function from(json: Element.JSON): Element;
+  export function from(json: Element.JSON, device: Option<Device>): Element;
 
-  export function from(json: Attribute.JSON): Attribute;
+  export function from(json: Attribute.JSON, device: Option<Device>): Attribute;
 
-  export function from(json: Text.JSON): Text;
+  export function from(json: Text.JSON, device: Option<Device>): Text;
 
-  export function from(json: Comment.JSON): Comment;
+  export function from(json: Comment.JSON, device: Option<Device>): Comment;
 
-  export function from(json: Document.JSON): Document;
+  export function from(json: Document.JSON, device: Option<Device>): Document;
 
-  export function from(json: Type.JSON): Document;
+  export function from(json: Type.JSON, device: Option<Device>): Document;
 
-  export function from(json: Fragment.JSON): Fragment;
+  export function from(json: Fragment.JSON, device: Option<Device>): Fragment;
 
-  export function from(json: JSON): Node;
+  export function from(json: JSON, device: Option<Device>): Node;
 
-  export function from(json: JSON): Node {
-    return fromNode(json).run();
+  export function from(json: JSON, device: Option<Device>): Node {
+    return fromNode(json, device).run();
   }
 
   /**
    * @internal
    */
-  export function fromNode(json: JSON): Trampoline<Node> {
+  export function fromNode(
+    json: JSON,
+    device: Option<Device>
+  ): Trampoline<Node> {
     switch (json.type) {
       case "element":
-        return Element.fromElement(json as Element.JSON);
+        return Element.fromElement(json as Element.JSON, device);
 
       case "attribute":
         return Attribute.fromAttribute(json as Attribute.JSON);
@@ -357,13 +361,13 @@ export namespace Node {
         return Comment.fromComment(json as Comment.JSON);
 
       case "document":
-        return Document.fromDocument(json as Document.JSON);
+        return Document.fromDocument(json as Document.JSON, device);
 
       case "type":
         return Type.fromType(json as Type.JSON);
 
       case "fragment":
-        return Fragment.fromFragment(json as Fragment.JSON);
+        return Fragment.fromFragment(json as Fragment.JSON, device);
 
       default:
         throw new Error(`Unexpected node of type: ${json.type}`);

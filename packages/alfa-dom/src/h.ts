@@ -1,6 +1,7 @@
 import { None, Option } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
 
+import { Device } from "@siteimprove/alfa-device";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import {
   Attribute,
@@ -52,7 +53,8 @@ export namespace h {
     children: Array<Node | string> = [],
     style: Array<Declaration> | Record<string, string> = [],
     namespace?: Namespace,
-    box?: Rectangle
+    box?: Rectangle,
+    device?: Device
   ): Element<N> {
     attributes = Array.isArray(attributes)
       ? attributes
@@ -95,7 +97,8 @@ export namespace h {
         .filter(nor(Document.isDocument, Shadow.isShadow))
         .map((child) => (typeof child === "string" ? h.text(child) : child)),
       style.length === 0 ? None : Option.of(block),
-      Option.from(box)
+      Option.from(box),
+      Option.from(device)
     );
 
     if (content !== undefined) {

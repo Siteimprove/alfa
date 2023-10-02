@@ -1,3 +1,4 @@
+import { Device } from "@siteimprove/alfa-device";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Trampoline } from "@siteimprove/alfa-trampoline";
 import { Node } from "../node";
@@ -109,10 +110,13 @@ export namespace Document {
   /**
    * @internal
    */
-  export function fromDocument(json: JSON): Trampoline<Document> {
-    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
-      (children) => Document.of(children, json.style.map(Sheet.from))
-    );
+  export function fromDocument(
+    json: JSON,
+    device: Option<Device>
+  ): Trampoline<Document> {
+    return Trampoline.traverse(json.children ?? [], (child) =>
+      Node.fromNode(child, device)
+    ).map((children) => Document.of(children, json.style.map(Sheet.from)));
   }
 }
 

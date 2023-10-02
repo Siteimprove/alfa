@@ -1,3 +1,4 @@
+import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -34,7 +35,8 @@ export class Element<N extends string = string>
     attributes: Iterable<Attribute> = [],
     children: Iterable<Node> = [],
     style: Option<Block> = None,
-    box: Option<Rectangle> = None
+    box: Option<Rectangle> = None,
+    device: Option<Device> = None
   ): Element<N> {
     return new Element(
       namespace,
@@ -43,7 +45,8 @@ export class Element<N extends string = string>
       Array.from(attributes),
       Array.from(children),
       style,
-      box
+      box,
+      device
     );
   }
 
@@ -65,7 +68,8 @@ export class Element<N extends string = string>
     attributes: Array<Attribute>,
     children: Array<Node>,
     style: Option<Block>,
-    box: Option<Rectangle>
+    box: Option<Rectangle>,
+    device: Option<Device>
   ) {
     super(children, "element");
 
@@ -393,35 +397,39 @@ export namespace Element {
    * @internal
    */
   export function fromElement<N extends string = string>(
-    json: JSON<N>
+    json: JSON<N>,
+    device: Option<Device>
   ): Trampoline<Element<N>> {
-    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
-      (children) => {
-        const element = Element.of(
-          Option.from(json.namespace as Namespace | null),
-          Option.from(json.prefix),
-          json.name,
-          json.attributes.map((attribute) =>
-            Attribute.fromAttribute(attribute).run()
-          ),
-          children,
-          json.style?.length === 0
-            ? None
-            : Option.from(json.style).map(Block.from),
-          Option.from(json.box).map(Rectangle.from)
-        );
+    return Trampoline.traverse(json.children ?? [], (child) =>
+      Node.fromNode(child, device)
+    ).map((children) => {
+      const element = Element.of(
+        Option.from(json.namespace as Namespace | null),
+        Option.from(json.prefix),
+        json.name,
+        json.attributes.map((attribute) =>
+          Attribute.fromAttribute(attribute).run()
+        ),
+        children,
+        json.style?.length === 0
+          ? None
+          : Option.from(json.style).map(Block.from),
+        Option.from(json.box).map(Rectangle.from),
+        device
+      );
 
-        if (json.shadow !== null) {
-          element._attachShadow(Shadow.fromShadow(json.shadow).run());
-        }
-
-        if (json.content !== null) {
-          element._attachContent(Document.fromDocument(json.content).run());
-        }
-
-        return element;
+      if (json.shadow !== null) {
+        element._attachShadow(Shadow.fromShadow(json.shadow, device).run());
       }
-    );
+
+      if (json.content !== null) {
+        element._attachContent(
+          Document.fromDocument(json.content, device).run()
+        );
+      }
+
+      return element;
+    });
   }
 
   export const {
