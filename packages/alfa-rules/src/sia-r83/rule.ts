@@ -128,28 +128,35 @@ export default Rule.Atomic.of<Page, Text>({
               // this is not likely and just ignore it. This would only create
               // false negatives.
               horizontallyClippedBy.every(
-                hasBox((clippingBox) =>
-                  target
-                    .parent()
-                    .filter(isElement)
-                    .some(
-                      hasBox(
-                        (targetBox) => clippingBox.width >= 2 * targetBox.width
-                      )
-                    )
+                hasBox(
+                  (clippingBox) =>
+                    target
+                      .parent()
+                      .filter(isElement)
+                      .some(
+                        hasBox(
+                          (targetBox) =>
+                            clippingBox.width >= 2 * targetBox.width,
+                          device
+                        )
+                      ),
+                  device
                 )
               ) &&
               verticallyClippedBy.every(
-                hasBox((clippingBox) =>
-                  target
-                    .parent()
-                    .filter(isElement)
-                    .some(
-                      hasBox(
-                        (targetBox) =>
-                          clippingBox.height >= 2 * targetBox.height
-                      )
-                    )
+                hasBox(
+                  (clippingBox) =>
+                    target
+                      .parent()
+                      .filter(isElement)
+                      .some(
+                        hasBox(
+                          (targetBox) =>
+                            clippingBox.height >= 2 * targetBox.height,
+                          device
+                        )
+                      ),
+                  device
                 )
               )
                 ? Outcomes.IsContainer(

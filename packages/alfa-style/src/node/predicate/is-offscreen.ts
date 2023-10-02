@@ -29,7 +29,10 @@ export function isOffscreen(
       .get(context, Cache.empty)
       .get(node, () => {
         if (isElement(node)) {
-          if (node.box.isSome() && context === Context.empty()) {
+          if (
+            node.getBoundingBox(device).isSome() &&
+            context === Context.empty()
+          ) {
             return !isOnscreenLayout(node, device);
           } else {
             const style = Style.from(node, device, context);
@@ -72,12 +75,12 @@ function isOnscreenLayout(element: Element, device: Device): boolean {
     // rectangle extending the viewport to the bottom.
     // If yes, then the element can be brought into viewport by vertical scrolling
     // which, we assume, is not restricted.
-    hasBox((box) => box.intersects(extendedViewport)),
+    hasBox((box) => box.intersects(extendedViewport), device),
     // Next, we search whether the element is in the scrollable quadrant (extends
     // to the bottom and right), and has a positioning ancestor that creates
     // the needed horizontal scrolling.
     and(
-      hasBox((box) => box.intersects(scrollableQuadrant)),
+      hasBox((box) => box.intersects(scrollableQuadrant), device),
       hasPositioningParent(device, isOnscreenAndScrolling(device))
     )
   )(element);
@@ -100,7 +103,7 @@ function isOnscreenAndScrolling(device: Device): Predicate<Element> {
       or(
         and(
           // Does the element intersect the extended viewport?
-          hasBox((box) => box.intersects(extendedViewport)),
+          hasBox((box) => box.intersects(extendedViewport), device),
           // And does it create a scrollbar which can show the content to the right?
           hasComputedStyle(
             "overflow-x",

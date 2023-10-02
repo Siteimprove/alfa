@@ -1,3 +1,4 @@
+import { Cache } from "@siteimprove/alfa-cache";
 import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
@@ -55,11 +56,11 @@ export class Element<N extends string = string>
   private readonly _name: N;
   private readonly _attributes: Map<string, Attribute>;
   private readonly _style: Option<Block>;
-  private readonly _box: Option<Rectangle>;
   private _shadow: Option<Shadow> = None;
   private _content: Option<Document> = None;
   private readonly _id: Option<string>;
   private readonly _classes: Array<string>;
+  private readonly _boxes: Cache<Device, Rectangle>;
 
   private constructor(
     namespace: Option<Namespace>,
@@ -93,7 +94,9 @@ export class Element<N extends string = string>
       .map((attr) => attr.value.trim().split(/\s+/))
       .getOr([]);
 
-    this._box = box;
+    this._boxes = Cache.from(
+      device.isSome() && box.isSome() ? [[device.get(), box.get()]] : []
+    );
   }
 
   public get namespace(): Option<Namespace> {
@@ -145,8 +148,8 @@ export class Element<N extends string = string>
     return Sequence.from(this._classes);
   }
 
-  public get box(): Option<Rectangle> {
-    return this._box;
+  public getBoundingBox(device: Device): Option<Rectangle> {
+    return this._boxes.get(device);
   }
 
   public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
@@ -316,7 +319,7 @@ export class Element<N extends string = string>
       style: this._style.map((style) => style.toJSON()).getOr(null),
       shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
       content: this._content.map((content) => content.toJSON()).getOr(null),
-      box: this._box.map((box) => box.toJSON()).getOr(null),
+      box: null, // FIXME: An element doesn't have "a box" anymore, so it doesn't make sense to serialize it, but we still want the property so we can deserialize with a single box.
     };
   }
 

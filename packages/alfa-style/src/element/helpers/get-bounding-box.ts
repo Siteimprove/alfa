@@ -7,9 +7,6 @@ import { Context } from "@siteimprove/alfa-selector";
 /**
  * @public
  * Gets the bounding box, corresponding to a specific device, of an element
- *
- * @privateRemarks
- * We don't use the passed in device yet, but later we should use it to ensure the device used to collect the bounding box corresponds to the current device
  */
 export function getBoundingBox(
   element: Element,
@@ -21,5 +18,5 @@ export function getBoundingBox(
     return None;
   }
 
-  return element.box;
+  return element.getBoundingBox(device);
 }
