@@ -92,6 +92,7 @@
     { "path": "../alfa-array" },
     { "path": "../alfa-cache" },
     { "path": "../alfa-css" },
+    { "path": "../alfa-device" },
     { "path": "../alfa-earl" },
     { "path": "../alfa-equatable" },
     { "path": "../alfa-flags" },
