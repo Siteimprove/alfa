@@ -7,7 +7,12 @@ import { Result, Err } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { type Parser as CSSParser, Token } from "../../../syntax";
+import {
+  Comma,
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "../../../syntax";
 import { Value } from "../../value";
 
 import { Length, Percentage } from "../../numeric";
@@ -517,37 +522,29 @@ export namespace Radial {
     parseItemList: CSSParser<Array<Item>>
   ): CSSParser<Radial> {
     return map(
-      pair(
-        Token.parseFunction(
-          (fn) =>
-            fn.value === "radial-gradient" ||
-            fn.value === "repeating-radial-gradient"
-        ),
-        left(
-          delimited(
-            option(Token.parseWhitespace),
-            pair(
-              option(
-                left(
-                  either(
-                    pair(
-                      map(parseShape, (shape) => Option.of(shape)),
-                      option(
-                        delimited(option(Token.parseWhitespace), parsePosition)
-                      )
-                    ),
-                    map(
-                      parsePosition,
-                      (position) => [None, Option.of(position)] as const
-                    )
-                  ),
-                  delimited(option(Token.parseWhitespace), Token.parseComma)
+      Function.parse(
+        (fn) =>
+          fn.value === "radial-gradient" ||
+          fn.value === "repeating-radial-gradient",
+        pair(
+          option(
+            left(
+              either(
+                pair(
+                  map(parseShape, (shape) => Option.of(shape)),
+                  option(
+                    delimited(option(Token.parseWhitespace), parsePosition)
+                  )
+                ),
+                map(
+                  parsePosition,
+                  (position) => [None, Option.of(position)] as const
                 )
               ),
-              parseItemList
+              Comma.parse
             )
           ),
-          Token.parseCloseParenthesis
+          parseItemList
         )
       ),
       (result) => {
@@ -567,7 +564,7 @@ export namespace Radial {
           shape,
           position,
           items,
-          fn.value.startsWith("repeating")
+          fn.name.startsWith("repeating")
         );
       }
     );

@@ -5,7 +5,12 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { type Parser as CSSParser, Token } from "../../../syntax";
+import {
+  Comma,
+  Function,
+  type Parser as CSSParser,
+  Token,
+} from "../../../syntax";
 import { Value } from "../../value";
 
 import { Angle } from "../../numeric";
@@ -314,35 +319,17 @@ export namespace Linear {
     parseItemList: CSSParser<Array<Item>>
   ): CSSParser<Linear> {
     return map(
-      pair(
-        Token.parseFunction(
-          (fn) =>
-            fn.value === "linear-gradient" ||
-            fn.value === "repeating-linear-gradient"
-        ),
-        left(
-          delimited(
-            option(Token.parseWhitespace),
-            pair(
-              option(
-                left(
-                  parseDirection,
-                  delimited(option(Token.parseWhitespace), Token.parseComma)
-                )
-              ),
-              parseItemList
-            )
-          ),
-          Token.parseCloseParenthesis
-        )
+      Function.parse(
+        (fn) =>
+          fn.value === "linear-gradient" ||
+          fn.value === "repeating-linear-gradient",
+        pair(option(left(parseDirection, Comma.parse)), parseItemList)
       ),
-      (result) => {
-        const [fn, [direction, items]] = result;
-
+      ([fn, [direction, items]]) => {
         return Linear.of(
           direction.getOrElse(() => Side.of("bottom")),
           items,
-          fn.value.startsWith("repeating")
+          fn.name.startsWith("repeating")
         );
       }
     );
