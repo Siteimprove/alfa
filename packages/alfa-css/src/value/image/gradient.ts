@@ -10,6 +10,7 @@ import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Color } from "../color";
 import { Length, Percentage } from "../numeric";
+import { Value } from "../value";
 
 import { Linear } from "./gradient-linear";
 import { Radial } from "./gradient-radial";
@@ -35,13 +36,19 @@ export namespace Gradient {
    * {@link https://drafts.csswg.org/css-images/#color-stop}
    */
   export class Stop<
-    C extends Color = Color,
-    P extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
-  > implements Equatable, Hashable, Serializable
+      C extends Color = Color,
+      P extends Length.Fixed | Percentage.Fixed =
+        | Length.Fixed
+        | Percentage.Fixed
+      // CALC extends boolean = boolean
+    >
+    extends Value<"stop", false>
+    implements Equatable, Hashable, Serializable
   {
     public static of<
       C extends Color,
       P extends Length.Fixed | Percentage.Fixed
+      // CALC extends boolean = boolean
     >(color: C, position: Option<P> = None): Stop<C, P> {
       return new Stop(color, position);
     }
@@ -50,12 +57,9 @@ export namespace Gradient {
     private readonly _position: Option<P>;
 
     private constructor(color: C, position: Option<P>) {
+      super("stop", false);
       this._color = color;
       this._position = position;
-    }
-
-    public get type(): "stop" {
-      return "stop";
     }
 
     public get color(): C {
@@ -64,6 +68,11 @@ export namespace Gradient {
 
     public get position(): Option<P> {
       return this._position;
+    }
+
+    public resolve(): Stop.Canonical {
+      // @ts-ignore
+      return this;
     }
 
     public equals(value: unknown): value is this {
@@ -80,7 +89,7 @@ export namespace Gradient {
 
     public toJSON(): Stop.JSON {
       return {
-        type: "stop",
+        ...super.toJSON(),
         color: this._color.toJSON(),
         position: this._position
           .map((position) => position.toJSON())
@@ -100,40 +109,38 @@ export namespace Gradient {
       Color.Canonical,
       Percentage.Canonical | Length.Canonical
     >;
-    export interface JSON {
-      [key: string]: json.JSON;
-      type: "stop";
+    export interface JSON extends Value.JSON<"stop"> {
       color: Color.JSON;
       position: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
     }
-  }
 
-  /**
-   * {@link https://drafts.csswg.org/css-images/#typedef-linear-color-stop}
-   */
-  export const parseStop: CSSParser<Stop> = either(
-    map(
-      pair(
-        left(Color.parse, Token.parseWhitespace),
-        either(Length.parseBase, Percentage.parseBase)
+    /**
+     * {@link https://drafts.csswg.org/css-images/#typedef-linear-color-stop}
+     */
+    export const parse: CSSParser<Stop> = either(
+      map(
+        pair(
+          left(Color.parse, Token.parseWhitespace),
+          either(Length.parseBase, Percentage.parseBase)
+        ),
+        (result) => {
+          const [color, position] = result;
+          return Stop.of(color, Option.of(position));
+        }
       ),
-      (result) => {
-        const [color, position] = result;
-        return Stop.of(color, Option.of(position));
-      }
-    ),
-    map(
-      pair(
-        either(Length.parseBase, Percentage.parseBase),
-        right(Token.parseWhitespace, Color.parse)
+      map(
+        pair(
+          either(Length.parseBase, Percentage.parseBase),
+          right(Token.parseWhitespace, Color.parse)
+        ),
+        (result) => {
+          const [position, color] = result;
+          return Stop.of(color, Option.of(position));
+        }
       ),
-      (result) => {
-        const [position, color] = result;
-        return Stop.of(color, Option.of(position));
-      }
-    ),
-    map(Color.parse, (color) => Stop.of(color))
-  );
+      map(Color.parse, (color) => Stop.of(color))
+    );
+  }
 
   /**
    * {@link https://drafts.csswg.org/css-images/#color-transition-hint}
@@ -211,7 +218,7 @@ export namespace Gradient {
    */
   export const parseItemList: CSSParser<Array<Item>> = map(
     pair(
-      parseStop,
+      Stop.parse,
       oneOrMore(
         right(
           delimited(option(Token.parseWhitespace), Token.parseComma),
@@ -222,7 +229,7 @@ export namespace Gradient {
                 delimited(option(Token.parseWhitespace), Token.parseComma)
               )
             ),
-            parseStop
+            Stop.parse
           )
         )
       )
