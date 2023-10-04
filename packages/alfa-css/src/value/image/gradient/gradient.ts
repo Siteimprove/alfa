@@ -36,6 +36,8 @@ export namespace Gradient {
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-gradient}
    */
-  export const parse: CSSParser<Gradient> = (input) =>
-    either(Linear.parse(Item.parseList), Radial.parse(Item.parseList))(input);
+  export const parse: CSSParser<Gradient> = either(
+    Linear.parse(Item.parseList),
+    Radial.parse(Item.parseList)
+  );
 }
