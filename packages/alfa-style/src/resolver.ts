@@ -3,9 +3,7 @@ import {
   Image,
   Length,
   LengthPercentage,
-  Linear,
   Position,
-  Radial,
   Unit,
   URL,
 } from "@siteimprove/alfa-css";
@@ -81,7 +79,7 @@ export namespace Resolver {
     switch (gradient.kind) {
       case "linear":
         return Image.of(
-          Linear.of(
+          Gradient.Linear.of(
             gradient.direction.type === "angle"
               ? gradient.direction.withUnit("deg")
               : gradient.direction,
@@ -92,7 +90,7 @@ export namespace Resolver {
 
       case "radial":
         return Image.of(
-          Radial.of(
+          Gradient.Radial.of(
             gradientShape(gradient.shape, style),
             position(gradient.position, style),
             Iterable.map(gradient.items, (item) => gradientItem(item, style)),
@@ -124,13 +122,13 @@ export namespace Resolver {
     }
   }
 
-  function gradientShape(shape: Radial.Shape, style: Style) {
+  function gradientShape(shape: Gradient.Radial.Shape, style: Style) {
     switch (shape.type) {
       case "circle":
-        return Radial.Circle.of(shape.radius.resolve(length(style)));
+        return Gradient.Radial.Circle.of(shape.radius.resolve(length(style)));
 
       case "ellipse":
-        return Radial.Ellipse.of(
+        return Gradient.Radial.Ellipse.of(
           shape.horizontal.type === "length"
             ? shape.horizontal.resolve(length(style))
             : shape.horizontal,

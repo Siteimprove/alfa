@@ -1,9 +1,9 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Gradient, Lexer, Radial } from "../../../src";
+import { Gradient, Lexer } from "../../../src";
 
 function parse(input: string) {
-  return Radial.parse(Gradient.parseItemList)(Lexer.lex(input)).map(
+  return Gradient.Radial.parse(Gradient.Item.parseList)(Lexer.lex(input)).map(
     ([_, circle]) => circle.toJSON()
   );
 }

@@ -5,12 +5,14 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Value } from "../value";
+import { type Parser as CSSParser, Token } from "../../../syntax";
+import { Value } from "../../value";
 
-import { Angle } from "../numeric";
+import { Angle } from "../../numeric";
 
-import type { Gradient } from "./gradient";
+import { Hint } from "./hint";
+import { Item } from "./item";
+import { Stop } from "./stop";
 
 const { map, either, pair, option, left, right, delimited } = Parser;
 
@@ -20,10 +22,10 @@ const { map, either, pair, option, left, right, delimited } = Parser;
  * @public
  */
 export class Linear<
-  I extends Gradient.Item = Gradient.Item,
+  I extends Item = Item,
   D extends Linear.Direction = Linear.Direction
 > extends Value<"gradient", false> {
-  public static of<I extends Gradient.Item, D extends Linear.Direction>(
+  public static of<I extends Item, D extends Linear.Direction>(
     direction: D,
     items: Iterable<I>,
     repeats: boolean
@@ -108,14 +110,14 @@ export class Linear<
  */
 export namespace Linear {
   export type Canonical = Linear<
-    Gradient.Hint.Canonical | Gradient.Stop.Canonical,
+    Hint.Canonical | Stop.Canonical,
     Angle.Canonical | Linear.Side | Linear.Corner
   >;
 
   export interface JSON extends Value.JSON<"gradient"> {
     kind: "linear";
     direction: Direction.JSON;
-    items: Array<Gradient.Item.JSON>;
+    items: Array<Item.JSON>;
     repeats: boolean;
   }
 
@@ -309,7 +311,7 @@ export namespace Linear {
    * {@link https://drafts.csswg.org/css-images/#funcdef-linear-gradient}
    */
   export function parse(
-    parseItemList: CSSParser<Array<Gradient.Item>>
+    parseItemList: CSSParser<Array<Item>>
   ): CSSParser<Linear> {
     return map(
       pair(

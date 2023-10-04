@@ -7,14 +7,16 @@ import { Result, Err } from "@siteimprove/alfa-result";
 
 import * as json from "@siteimprove/alfa-json";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
-import { Value } from "../value";
+import { type Parser as CSSParser, Token } from "../../../syntax";
+import { Value } from "../../value";
 
-import { Length, Percentage } from "../numeric";
-import { Position } from "../position";
+import { Length, Percentage } from "../../numeric";
+import { Position } from "../../position";
 
-import type { Gradient } from "./gradient";
-import { Keyword } from "../keyword";
+import { Keyword } from "../../keyword";
+import { Hint } from "./hint";
+import { Item } from "./item";
+import { Stop } from "./stop";
 
 const { map, either, pair, option, left, right, delimited, take } = Parser;
 
@@ -24,12 +26,12 @@ const { map, either, pair, option, left, right, delimited, take } = Parser;
  * @public
  */
 export class Radial<
-  I extends Gradient.Item = Gradient.Item,
+  I extends Item = Item,
   S extends Radial.Shape = Radial.Shape,
   P extends Position.Fixed = Position.Fixed
 > extends Value<"gradient", false> {
   public static of<
-    I extends Gradient.Item = Gradient.Item,
+    I extends Item = Item,
     S extends Radial.Shape = Radial.Shape,
     P extends Position.Fixed = Position.Fixed
   >(
@@ -133,7 +135,7 @@ export class Radial<
  */
 export namespace Radial {
   export type Canonical = Radial<
-    Gradient.Hint.Canonical | Gradient.Stop.Canonical,
+    Hint.Canonical | Stop.Canonical,
     Radial.Circle.Canonical | Radial.Ellipse.Canonical | Radial.Extent,
     Position.Fixed
   >;
@@ -142,7 +144,7 @@ export namespace Radial {
     kind: "radial";
     shape: Shape.JSON;
     position: Position.JSON;
-    items: Array<Gradient.Item.JSON>;
+    items: Array<Item.JSON>;
     repeats: boolean;
   }
 
@@ -512,7 +514,7 @@ export namespace Radial {
    * {@link https://drafts.csswg.org/css-images/#funcdef-radial-gradient}
    */
   export function parse(
-    parseItemList: CSSParser<Array<Gradient.Item>>
+    parseItemList: CSSParser<Array<Item>>
   ): CSSParser<Radial> {
     return map(
       pair(
