@@ -12,16 +12,14 @@ import {
   Function,
   type Parser as CSSParser,
   Token,
-} from "../../../syntax";
-import { Value } from "../../value";
+} from "../../../../syntax/index";
 
-import { Length, Percentage } from "../../numeric";
-import { Position } from "../../position";
+import { Keyword } from "../../../keyword";
+import { Length, Percentage } from "../../../numeric";
+import { Position } from "../../../position";
+import { Value } from "../../../value";
 
-import { Keyword } from "../../keyword";
-import { Hint } from "./hint";
-import { Item } from "./item";
-import { Stop } from "./stop";
+import { Item } from "../item";
 
 const { map, either, pair, option, left, right, delimited, take } = Parser;
 
@@ -140,7 +138,7 @@ export class Radial<
  */
 export namespace Radial {
   export type Canonical = Radial<
-    Hint.Canonical | Stop.Canonical,
+    Item.Canonical,
     Radial.Circle.Canonical | Radial.Ellipse.Canonical | Radial.Extent,
     Position.Fixed
   >;

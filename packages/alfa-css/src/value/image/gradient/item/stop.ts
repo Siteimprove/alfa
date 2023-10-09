@@ -4,11 +4,11 @@ import { Serializable } from "@siteimprove/alfa-json";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Parser as CSSParser, Token } from "../../../syntax";
+import { Parser as CSSParser, Token } from "../../../../syntax/index";
 
-import { Color } from "../../color";
-import { Length, Percentage } from "../../numeric";
-import { Value } from "../../value";
+import { Color } from "../../../color/index";
+import { LengthPercentage } from "../../../numeric/index";
+import { Value } from "../../../value";
 
 const { either, pair, map, left, right } = Parser;
 
@@ -17,17 +17,15 @@ const { either, pair, map, left, right } = Parser;
  */
 export class Stop<
     C extends Color = Color,
-    P extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
-    // CALC extends boolean = boolean
+    P extends LengthPercentage = LengthPercentage
   >
-  extends Value<"stop", false>
+  extends Value<"stop", Value.HasCalculation<[C, P]>>
   implements Equatable, Hashable, Serializable
 {
-  public static of<
-    C extends Color,
-    P extends Length.Fixed | Percentage.Fixed
-    // CALC extends boolean = boolean
-  >(color: C, position: Option<P> = None): Stop<C, P> {
+  public static of<C extends Color, P extends LengthPercentage>(
+    color: C,
+    position: Option<P> = None
+  ): Stop<C, P> {
     return new Stop(color, position);
   }
 
@@ -35,7 +33,13 @@ export class Stop<
   private readonly _position: Option<P>;
 
   private constructor(color: C, position: Option<P>) {
-    super("stop", false);
+    super(
+      "stop",
+      (Value.hasCalculation(color) ||
+        position
+          .map(Value.hasCalculation)
+          .getOr(false)) as Value.HasCalculation<[C, P]>
+    );
     this._color = color;
     this._position = position;
   }
@@ -48,9 +52,11 @@ export class Stop<
     return this._position;
   }
 
-  public resolve(): Stop.Canonical {
-    // @ts-ignore
-    return this;
+  public resolve(resolver: Stop.Resolver): Stop.Canonical {
+    return new Stop(
+      this._color.resolve(),
+      this._position.map(LengthPercentage.resolve(resolver))
+    );
   }
 
   public equals(value: unknown): value is this {
@@ -81,13 +87,34 @@ export class Stop<
 }
 
 export namespace Stop {
-  export type Canonical = Stop<
+  export type Canonical = Stop<Color.Canonical, LengthPercentage.Canonical>;
+
+  export type PartiallyResolved = Stop<
     Color.Canonical,
-    Percentage.Canonical | Length.Canonical
+    LengthPercentage.PartiallyResolved
   >;
+
   export interface JSON extends Value.JSON<"stop"> {
     color: Color.JSON;
-    position: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
+    position: LengthPercentage.JSON | null;
+  }
+
+  export type Resolver = LengthPercentage.Resolver;
+
+  export type PartialResolver = LengthPercentage.PartialResolver;
+
+  export function partiallyResolve(
+    resolver: PartialResolver
+  ): (value: Stop) => PartiallyResolved {
+    return (value) =>
+      Stop.of(
+        value.color.resolve(),
+        value.position.map(LengthPercentage.partiallyResolve(resolver))
+      );
+  }
+
+  export function isStop(value: unknown): value is Stop {
+    return value instanceof Stop;
   }
 
   /**
@@ -95,20 +122,14 @@ export namespace Stop {
    */
   export const parse: CSSParser<Stop> = either(
     map(
-      pair(
-        left(Color.parse, Token.parseWhitespace),
-        either(Length.parseBase, Percentage.parseBase)
-      ),
+      pair(left(Color.parse, Token.parseWhitespace), LengthPercentage.parse),
       (result) => {
         const [color, position] = result;
         return Stop.of(color, Option.of(position));
       }
     ),
     map(
-      pair(
-        either(Length.parseBase, Percentage.parseBase),
-        right(Token.parseWhitespace, Color.parse)
-      ),
+      pair(LengthPercentage.parse, right(Token.parseWhitespace, Color.parse)),
       (result) => {
         const [position, color] = result;
         return Stop.of(color, Option.of(position));

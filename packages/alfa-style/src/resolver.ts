@@ -78,47 +78,21 @@ export namespace Resolver {
   ): Image<Gradient.Canonical> {
     switch (gradient.kind) {
       case "linear":
-        return Image.of(
-          Gradient.Linear.of(
-            gradient.direction.type === "angle"
-              ? gradient.direction.withUnit("deg")
-              : gradient.direction,
-            Iterable.map(gradient.items, (item) => gradientItem(item, style)),
-            gradient.repeats
-          )
-        );
+        return Gradient.Linear.partiallyResolve(length(style))(gradient);
 
       case "radial":
+        // @ts-ignore
         return Image.of(
           Gradient.Radial.of(
             gradientShape(gradient.shape, style),
             position(gradient.position, style),
-            Iterable.map(gradient.items, (item) => gradientItem(item, style)),
+            Iterable.map(
+              gradient.items,
+              Gradient.Item.partiallyResolve(length(style))
+            ),
             gradient.repeats
           )
         );
-    }
-  }
-
-  function gradientItem(item: Gradient.Item, style: Style) {
-    switch (item.type) {
-      case "stop":
-        return Gradient.Stop.of(
-          item.color.resolve(),
-          item.position.map((position) =>
-            position.type === "length"
-              ? position.resolve(length(style))
-              : position
-          )
-        );
-
-      case "hint": {
-        return Gradient.Hint.of(
-          item.position.type === "length"
-            ? item.position.resolve(length(style))
-            : item.position
-        );
-      }
     }
   }
 

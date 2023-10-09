@@ -2,11 +2,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { type Parser as CSSParser } from "../../../syntax";
 
-import * as hint from "./hint";
-import * as item from "./item";
-import * as linear from "./linear";
-import * as radial from "./radial";
-import * as stop from "./stop";
+import * as hint from "./item/hint";
+import * as item from "./item/item";
+import * as linear from "./linear/linear";
+import * as radial from "./radial/radial";
+import * as stop from "./item/stop";
 
 const { either } = Parser;
 
