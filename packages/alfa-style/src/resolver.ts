@@ -78,6 +78,7 @@ export namespace Resolver {
   ): Image<Gradient.Canonical> {
     switch (gradient.kind) {
       case "linear":
+        // @ts-ignore
         return Gradient.Linear.partiallyResolve(length(style))(gradient);
 
       case "radial":
