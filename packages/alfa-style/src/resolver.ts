@@ -25,8 +25,8 @@ export namespace Resolver {
    * Relative lengths resolution depends on another length which is passed as
    * part of a Style:
    * * viewport dimensions are fetch from style.device;
-   * * root relative depend on style.root().computed("font-size");
-   * * other relative unit depend on style.computed("font-size");
+   * * root relative units depend on style.root().computed("font-size");
+   * * other relative units depend on style.computed("font-size");
    *
    * In nearly all cases, the style is the element's own style, except for
    * resolving font-size itself, in which case the parent's style is used.
@@ -87,42 +87,6 @@ export namespace Resolver {
         // @ts-ignore
         return Image.of(
           Gradient.Radial.partiallyResolve(length(style))(gradient)
-        );
-    }
-  }
-
-  export function position(
-    position: Position.Fixed,
-    style: Style
-  ): Position.Fixed {
-    return Position.of(
-      positionComponent(position.horizontal, style),
-      positionComponent(position.vertical, style)
-    );
-  }
-
-  export function positionComponent<
-    S extends Position.Keywords.Horizontal | Position.Keywords.Vertical
-  >(
-    position: Position.Component.Fixed<S>,
-    style: Style
-  ): Position.Component.Fixed<S> {
-    switch (position.type) {
-      case "keyword":
-        return position;
-
-      case "side":
-        return Position.Side.of(
-          position.side,
-          position.offset.map((offset) => {
-            switch (offset.type) {
-              case "percentage":
-                return offset;
-
-              case "length":
-                return offset.resolve(Resolver.length(style));
-            }
-          })
         );
     }
   }
