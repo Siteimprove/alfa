@@ -1,10 +1,11 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { type Parser as CSSParser, Token } from "../../syntax";
+import { Function, type Parser as CSSParser, Token } from "../../syntax";
+
 import { Value } from "../value";
 
-const { map, right, either, left, delimited, option } = Parser;
+const { map, either } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#urls}
@@ -73,13 +74,7 @@ export namespace URL {
   export const parse: CSSParser<URL> = map(
     either(
       Token.parseURL(),
-      right(
-        Token.parseFunction("url"),
-        left(
-          delimited(option(Token.parseWhitespace), Token.parseString()),
-          Token.parseCloseParenthesis
-        )
-      )
+      map(Function.parse("url", Token.parseString()), ([_, url]) => url)
     ),
     (url) => URL.of(url.value)
   );

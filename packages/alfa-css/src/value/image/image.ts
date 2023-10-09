@@ -100,6 +100,6 @@ export namespace Image {
    */
   export const parse: CSSParser<Image> = map(
     either(URL.parse, Gradient.parse),
-    (image) => Image.of(image)
+    Image.of
   );
 }
