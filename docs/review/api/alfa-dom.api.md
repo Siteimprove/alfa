@@ -5,6 +5,7 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
+import { Device } from '@siteimprove/alfa-device';
 import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Flags } from '@siteimprove/alfa-flags';
@@ -235,7 +236,7 @@ export class Document extends Node<"document"> {
 // @public (undocumented)
 export namespace Document {
     // @internal (undocumented)
-    export function fromDocument(json: JSON): Trampoline<Document>;
+    export function fromDocument(json: JSON, device: Option<Device>): Trampoline<Document>;
     // (undocumented)
     export function isDocument(value: unknown): value is Document;
     // (undocumented)
@@ -262,13 +263,13 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get attributes(): Sequence<Attribute>;
     // (undocumented)
-    get box(): Option<Rectangle>;
-    // (undocumented)
     children(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
     get classes(): Sequence<string>;
     // (undocumented)
     get content(): Option<Document>;
+    // (undocumented)
+    getBoundingBox(device: Device): Option<Rectangle>;
     // (undocumented)
     get id(): Option<string>;
     // @internal (undocumented)
@@ -280,7 +281,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, box?: Option<Rectangle>): Element<N>;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, box?: Option<Rectangle>, device?: Option<Device>): Element<N>;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -302,7 +303,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
 // @public (undocumented)
 export namespace Element {
     // @internal (undocumented)
-    export function fromElement<N extends string = string>(json: JSON<N>): Trampoline<Element<N>>;
+    export function fromElement<N extends string = string>(json: JSON<N>, device: Option<Device>): Trampoline<Element<N>>;
     // (undocumented)
     export function isElement(value: unknown): value is Element;
     // (undocumented)
@@ -398,7 +399,7 @@ export class Fragment extends Node<"fragment"> {
 // @public (undocumented)
 export namespace Fragment {
     // @internal (undocumented)
-    export function fromFragment(json: JSON): Trampoline<Fragment>;
+    export function fromFragment(json: JSON, device: Option<Device>): Trampoline<Fragment>;
     // (undocumented)
     export function isFragment(value: unknown): value is Fragment;
     // (undocumented)
@@ -442,7 +443,7 @@ export namespace GroupingRule {
 }
 
 // @public (undocumented)
-export function h<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, box?: Rectangle): Element<N>;
+export function h<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, box?: Rectangle, device?: Device): Element<N>;
 
 // @public (undocumented)
 export namespace h {
@@ -455,7 +456,7 @@ export namespace h {
     // (undocumented)
     export function document(children: Array<Node | string>, style?: Array<Sheet>): Document;
     // (undocumented)
-    export function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace, box?: Rectangle): Element<N>;
+    export function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace, box?: Rectangle, device?: Device): Element<N>;
     // (undocumented)
     export function fragment(children: Array<Node | string>): Fragment;
     // (undocumented)
@@ -494,7 +495,7 @@ function hasAttribute(predicate: Predicate<Attribute>): Predicate<Element>;
 function hasAttribute(name: string, value?: Predicate<string>): Predicate<Element>;
 
 // @public (undocumented)
-function hasBox(predicate?: Predicate<Rectangle>): Predicate<Element>;
+function hasBox(predicate: Predicate<Rectangle> | undefined, device: Device): Predicate<Element>;
 
 // @public (undocumented)
 function hasChild(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
@@ -896,26 +897,26 @@ export namespace Node {
         };
     }
     // (undocumented)
-    export function from(json: Element.JSON): Element;
+    export function from(json: Element.JSON, device: Option<Device>): Element;
     // (undocumented)
-    export function from(json: Attribute.JSON): Attribute;
+    export function from(json: Attribute.JSON, device: Option<Device>): Attribute;
     // (undocumented)
-    export function from(json: Text.JSON): Text;
+    export function from(json: Text.JSON, device: Option<Device>): Text;
     // (undocumented)
-    export function from(json: Comment.JSON): Comment;
+    export function from(json: Comment.JSON, device: Option<Device>): Comment;
     const flatTree: Traversal;
     const fullTree: Traversal;
     const composedNested: Traversal;
     // (undocumented)
-    export function from(json: Document.JSON): Document;
+    export function from(json: Document.JSON, device: Option<Device>): Document;
     // (undocumented)
-    export function from(json: Type.JSON): Document;
+    export function from(json: Type.JSON, device: Option<Device>): Document;
     // (undocumented)
-    export function from(json: Fragment.JSON): Fragment;
+    export function from(json: Fragment.JSON, device: Option<Device>): Fragment;
     // (undocumented)
-    export function from(json: JSON): Node;
+    export function from(json: JSON, device: Option<Device>): Node;
     // @internal (undocumented)
-    export function fromNode(json: JSON): Trampoline<Node>;
+    export function fromNode(json: JSON, device: Option<Device>): Trampoline<Node>;
     // (undocumented)
     export function isNode(value: unknown): value is Node;
     // (undocumented)
@@ -1086,7 +1087,7 @@ export class Shadow extends Node<"shadow"> {
 // @public (undocumented)
 export namespace Shadow {
     // @internal (undocumented)
-    export function fromShadow(json: JSON): Trampoline<Shadow>;
+    export function fromShadow(json: JSON, device: Option<Device>): Trampoline<Shadow>;
     // (undocumented)
     export function isShadow(value: unknown): value is Shadow;
     // (undocumented)
