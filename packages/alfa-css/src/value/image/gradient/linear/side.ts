@@ -61,6 +61,8 @@ export namespace Side {
 
   export type Canonical = Side;
 
+  export type Resolver = {};
+
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-side-or-corner}
    *

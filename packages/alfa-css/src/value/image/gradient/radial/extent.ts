@@ -8,13 +8,18 @@ import { Err, Result } from "@siteimprove/alfa-result";
 import { Parser as CSSParser, Token } from "../../../../syntax";
 
 import { Keyword } from "../../../keyword";
+import { Resolvable } from "../../../resolvable";
+import { Value } from "../../../value";
 
 const { map } = Parser;
 
 /**
  * @internal
  */
-export class Extent implements Equatable, Hashable, Serializable<Extent.JSON> {
+export class Extent
+  extends Value<"extent", false>
+  implements Equatable, Hashable, Serializable<Extent.JSON>
+{
   public static of(
     shape: Extent.Shape = Extent.Shape.Circle,
     size: Extent.Size = Extent.Size.FarthestCorner
@@ -26,12 +31,9 @@ export class Extent implements Equatable, Hashable, Serializable<Extent.JSON> {
   private readonly _size: Extent.Size;
 
   private constructor(shape: Extent.Shape, size: Extent.Size) {
+    super("extent", false);
     this._shape = shape;
     this._size = size;
-  }
-
-  public get type(): "extent" {
-    return "extent";
   }
 
   public get shape(): Extent.Shape {
@@ -40,6 +42,10 @@ export class Extent implements Equatable, Hashable, Serializable<Extent.JSON> {
 
   public get size(): Extent.Size {
     return this._size;
+  }
+
+  public resolve(): Extent.Canonical {
+    return this;
   }
 
   public equals(value: Extent): boolean;
@@ -60,7 +66,7 @@ export class Extent implements Equatable, Hashable, Serializable<Extent.JSON> {
 
   public toJSON(): Extent.JSON {
     return {
-      type: "extent",
+      ...super.toJSON(),
       shape: this._shape,
       size: this._size,
     };
@@ -87,21 +93,21 @@ export namespace Extent {
     FarthestCorner = "farthest-corner",
   }
 
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "extent";
+  export interface JSON extends Value.JSON<"extent"> {
     shape: `${Shape}`;
     size: `${Size}`;
   }
 
   export type Canonical = Extent;
 
+  export type Resolver = {};
+
   const parseShape = map(
     Keyword.parse("circle", "ellipse"),
     (keyword) => keyword.value as Extent.Shape
   );
 
-  const parseSize: CSSParser<Size> = map(
+  const parseSize = map(
     Keyword.parse(
       "closest-side",
       "farthest-side",

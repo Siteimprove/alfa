@@ -1,37 +1,41 @@
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 import { Err, Result } from "@siteimprove/alfa-result";
-import { Parser as CSSParser, Token } from "../../../../syntax";
-import { Keyword } from "../../../keyword";
 
+import { Parser as CSSParser, Token } from "../../../../syntax";
+
+import { Keyword } from "../../../keyword";
 import { Length } from "../../../numeric";
+import { Resolvable } from "../../../resolvable";
+import { Value } from "../../../value";
 
 /**
  * {@link https://drafts.csswg.org/css-images/#valdef-ending-shape-circle}
  *
  * @internal
  */
-export class Circle<R extends Length.Fixed = Length.Fixed>
+export class Circle<R extends Length = Length>
+  extends Value<"circle", Value.HasCalculation<[R]>>
   implements Equatable, Hashable, Serializable<Circle.JSON>
 {
-  public static of<R extends Length.Fixed>(radius: R): Circle<R> {
+  public static of<R extends Length>(radius: R): Circle<R> {
     return new Circle(radius);
   }
 
   private readonly _radius: R;
 
   private constructor(radius: R) {
+    super("circle", Value.hasCalculation(radius));
     this._radius = radius;
-  }
-
-  public get type(): "circle" {
-    return "circle";
   }
 
   public get radius(): R {
     return this._radius;
+  }
+
+  public resolve(resolver: Circle.Resolver): Circle.Canonical {
+    return new Circle(this._radius.resolve(resolver));
   }
 
   public equals(value: Circle): boolean;
@@ -48,7 +52,7 @@ export class Circle<R extends Length.Fixed = Length.Fixed>
 
   public toJSON(): Circle.JSON {
     return {
-      type: "circle",
+      ...super.toJSON(),
       radius: this._radius.toJSON(),
     };
   }
@@ -63,19 +67,23 @@ export class Circle<R extends Length.Fixed = Length.Fixed>
  */
 export namespace Circle {
   export type Canonical = Circle<Length.Canonical>;
-  export interface JSON {
-    [key: string]: json.JSON;
-    type: "circle";
-    radius: Length.Fixed.JSON;
+  export interface JSON extends Value.JSON<"circle"> {
+    radius: Length.JSON;
+  }
+
+  export type Resolver = Length.Resolver;
+
+  export function isCircle(value: unknown): value is Circle {
+    return value instanceof Circle;
   }
 
   const parseShape = Keyword.parse("circle");
 
-  const parseRadius = Length.parseBase;
+  const parseRadius = Length.parse;
 
   export const parse: CSSParser<Circle> = (input) => {
     let shape: Keyword<"circle"> | undefined;
-    let radius: Length.Fixed | undefined;
+    let radius: Length | undefined;
 
     while (true) {
       for ([input] of Token.parseWhitespace(input)) {

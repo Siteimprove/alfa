@@ -84,6 +84,8 @@ export namespace Corner {
 
   export type Canonical = Corner;
 
+  export type Resolver = {};
+
   const parseCorner = <S1, S2>(
     side1: CSSParser<S1>,
     side2: CSSParser<S2>

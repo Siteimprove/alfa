@@ -31,6 +31,8 @@ export type Angle<U extends Unit.Angle = Unit.Angle> =
 export namespace Angle {
   export type Canonical = Fixed<"deg">;
 
+  export type Resolver = {};
+
   /**
    * Angles that are the result of a calculation.
    */

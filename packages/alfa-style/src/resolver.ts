@@ -79,41 +79,15 @@ export namespace Resolver {
     switch (gradient.kind) {
       case "linear":
         // @ts-ignore
-        return Gradient.Linear.partiallyResolve(length(style))(gradient);
+        return Image.of(
+          Gradient.Linear.partiallyResolve(length(style))(gradient)
+        );
 
       case "radial":
         // @ts-ignore
         return Image.of(
-          Gradient.Radial.of(
-            gradientShape(gradient.shape, style),
-            position(gradient.position, style),
-            Iterable.map(
-              gradient.items,
-              Gradient.Item.partiallyResolve(length(style))
-            ),
-            gradient.repeats
-          )
+          Gradient.Radial.partiallyResolve(length(style))(gradient)
         );
-    }
-  }
-
-  function gradientShape(shape: Gradient.Radial.Shape, style: Style) {
-    switch (shape.type) {
-      case "circle":
-        return Gradient.Radial.Circle.of(shape.radius.resolve(length(style)));
-
-      case "ellipse":
-        return Gradient.Radial.Ellipse.of(
-          shape.horizontal.type === "length"
-            ? shape.horizontal.resolve(length(style))
-            : shape.horizontal,
-          shape.vertical.type === "length"
-            ? shape.vertical.resolve(length(style))
-            : shape.vertical
-        );
-
-      case "extent":
-        return shape;
     }
   }
 

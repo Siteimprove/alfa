@@ -20,6 +20,8 @@ export namespace Direction {
 
   export type Canonical = Angle.Canonical | Corner.Canonical | Side.Canonical;
 
+  export type Resolver = Angle.Resolver & Corner.Resolver & Side.Resolver;
+
   /**
    * @internal
    */

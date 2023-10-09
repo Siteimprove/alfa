@@ -1,5 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
-import { Option, None } from "@siteimprove/alfa-option";
+import { Iterable } from "@siteimprove/alfa-iterable";
+import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import {
@@ -28,12 +29,12 @@ const { map, either, pair, option, left, right, delimited, take } = Parser;
 export class Radial<
   I extends Item = Item,
   S extends Shape = Shape,
-  P extends Position.Fixed = Position.Fixed
-> extends Value<"gradient", false> {
+  P extends Position = Position
+> extends Value<"gradient", Value.HasCalculation<[I, S, P]>> {
   public static of<
     I extends Item = Item,
     S extends Shape = Shape,
-    P extends Position.Fixed = Position.Fixed
+    P extends Position = Position
   >(
     shape: S,
     position: P,
@@ -54,7 +55,14 @@ export class Radial<
     items: Iterable<I>,
     repeats: boolean
   ) {
-    super("gradient", false);
+    super(
+      "gradient",
+      Value.hasCalculation(
+        shape,
+        position,
+        ...items
+      ) as unknown as Value.HasCalculation<[I, S, P]>
+    );
     this._shape = shape;
     this._position = position;
     this._items = [...items];
@@ -81,8 +89,13 @@ export class Radial<
     return this._repeats;
   }
 
-  public resolve(): Radial<I, S, P> {
-    return this;
+  public resolve(resolver: Radial.Resolver): Radial.Canonical {
+    return new Radial(
+      this._shape.resolve(resolver),
+      this._position.resolve(resolver),
+      this._items.map(Item.resolve(resolver)),
+      this._repeats
+    );
   }
 
   public equals(value: Radial): boolean;
@@ -148,9 +161,33 @@ export namespace Radial {
     repeats: boolean;
   }
 
+  export type Resolver = Item.Resolver & Shape.Resolver & Position.Resolver;
+
+  export type PartiallyResolved = Radial<
+    Item.PartiallyResolved,
+    Shape.PartiallyResolved,
+    Position.PartiallyResolved
+  >;
+
+  export type PartialResolver = Item.PartialResolver &
+    Shape.PartialResolver &
+    Position.PartialResolver;
+
+  export function partiallyResolve(
+    resolver: PartialResolver
+  ): (value: Radial) => PartiallyResolved {
+    return (value) =>
+      Radial.of(
+        Shape.partiallyResolve(resolver)(value.shape),
+        Position.partiallyResolve(resolver)(value.position),
+        Iterable.map(value.items, Item.partiallyResolve(resolver)),
+        value.repeats
+      );
+  }
+
   const parsePosition = right(
     delimited(option(Token.parseWhitespace), Keyword.parse("at")),
-    Position.parseBase(false /* legacySyntax */)
+    Position.parse(false /* legacySyntax */)
   );
 
   /**

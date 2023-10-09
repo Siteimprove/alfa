@@ -116,14 +116,14 @@ export class Linear<
 export namespace Linear {
   export type Canonical = Linear<Item.Canonical, Direction.Canonical>;
 
-  export type Resolver = Item.Resolver;
+  export type Resolver = Item.Resolver & Direction.Resolver;
 
   export type PartiallyResolved = Linear<
     Item.PartiallyResolved,
     Direction.Canonical
   >;
 
-  export type PartialResolver = Item.PartialResolver;
+  export type PartialResolver = Item.PartialResolver & Direction.Resolver;
 
   export function partiallyResolve(
     resolver: PartialResolver
