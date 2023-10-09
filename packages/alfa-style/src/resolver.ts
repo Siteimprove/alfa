@@ -59,17 +59,7 @@ export namespace Resolver {
     return { percentageBase: base, length: lengthResolver(style) };
   }
 
-  export function image(
-    image: Image,
-    style: Style
-  ): Image<URL | Gradient.Canonical> {
-    switch (image.image.type) {
-      case "url":
-        return Image.of(image.image);
-
-      case "gradient":
-        // @ts-ignore
-        return Image.of(Gradient.partiallyResolve(length(style))(gradient));
-    }
+  export function image(image: Image, style: Style): Image.PartiallyResolved {
+    return Image.partiallyResolve(length(style))(image);
   }
 }
