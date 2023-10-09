@@ -1,6 +1,4 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
@@ -17,10 +15,9 @@ const { option, separatedList } = Parser;
  *
  * @internal
  */
-export class Ellipse<R extends LengthPercentage = LengthPercentage>
-  extends Value<"ellipse", Value.HasCalculation<[R, R]>>
-  implements Equatable, Hashable, Serializable<Ellipse.JSON>
-{
+export class Ellipse<
+  R extends LengthPercentage = LengthPercentage
+> extends Value<"ellipse", Value.HasCalculation<[R, R]>> {
   public static of<R extends LengthPercentage>(
     horizontal: R,
     vertical: R

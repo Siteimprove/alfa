@@ -1,14 +1,10 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import * as json from "@siteimprove/alfa-json";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
 
 import { Parser as CSSParser, Token } from "../../../../syntax";
 
 import { Keyword } from "../../../keyword";
-import { Resolvable } from "../../../resolvable";
 import { Value } from "../../../value";
 
 const { map } = Parser;
@@ -16,10 +12,7 @@ const { map } = Parser;
 /**
  * @internal
  */
-export class Extent
-  extends Value<"extent", false>
-  implements Equatable, Hashable, Serializable<Extent.JSON>
-{
+export class Extent extends Value<"extent", false> {
   public static of(
     shape: Extent.Shape = Extent.Shape.Circle,
     size: Extent.Size = Extent.Size.FarthestCorner

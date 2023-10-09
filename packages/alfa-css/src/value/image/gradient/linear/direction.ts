@@ -1,7 +1,10 @@
 import { Parser } from "@siteimprove/alfa-parser";
 import { Slice } from "@siteimprove/alfa-slice";
+
 import { Token } from "../../../../syntax";
+
 import { Angle } from "../../../numeric";
+
 import { Corner } from "./corner";
 import { Side } from "./side";
 

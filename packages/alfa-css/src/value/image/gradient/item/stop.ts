@@ -1,13 +1,11 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Parser as CSSParser, Token } from "../../../../syntax/index";
 
-import { Color } from "../../../color/index";
-import { LengthPercentage } from "../../../numeric/index";
+import { Color } from "../../../color";
+import { LengthPercentage } from "../../../numeric";
 import { Value } from "../../../value";
 
 const { either, pair, map, left, right } = Parser;
@@ -16,12 +14,9 @@ const { either, pair, map, left, right } = Parser;
  * {@link https://drafts.csswg.org/css-images/#color-stop}
  */
 export class Stop<
-    C extends Color = Color,
-    P extends LengthPercentage = LengthPercentage
-  >
-  extends Value<"stop", Value.HasCalculation<[C, P]>>
-  implements Equatable, Hashable, Serializable
-{
+  C extends Color = Color,
+  P extends LengthPercentage = LengthPercentage
+> extends Value<"stop", Value.HasCalculation<[C, P]>> {
   public static of<C extends Color, P extends LengthPercentage>(
     color: C,
     position: Option<P> = None

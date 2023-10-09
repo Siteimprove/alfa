@@ -55,9 +55,13 @@ export class URL extends Value<"url", false> {
  * @public
  */
 export namespace URL {
+  export type Canonical = URL;
+
   export interface JSON extends Value.JSON<"url"> {
     url: string;
   }
+
+  export type Resolver = {};
 
   export function isURL(value: unknown): value is URL {
     return value instanceof URL;

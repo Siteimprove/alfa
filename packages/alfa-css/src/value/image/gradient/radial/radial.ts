@@ -19,7 +19,7 @@ import { Item } from "../item";
 import { Extent } from "./extent";
 import { Shape } from "./shape";
 
-const { map, either, pair, option, left, right, delimited, take } = Parser;
+const { map, either, pair, option, left, right, delimited } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-images/#radial-gradients}

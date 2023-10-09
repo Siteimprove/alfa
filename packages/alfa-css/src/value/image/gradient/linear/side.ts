@@ -1,9 +1,10 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+
 import { Token } from "../../../../syntax";
+
 import { Value } from "../../../value";
+
 import { Position } from "./position";
 
 const { map, either, option, right } = Parser;
@@ -11,10 +12,7 @@ const { map, either, option, right } = Parser;
 /**
  * @internal
  */
-export class Side
-  extends Value<"side", false>
-  implements Equatable, Hashable, Serializable
-{
+export class Side extends Value<"side", false> {
   public static of(side: Position.Vertical | Position.Horizontal): Side {
     return new Side(side);
   }

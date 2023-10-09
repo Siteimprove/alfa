@@ -1,25 +1,21 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 
-import * as json from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Parser as CSSParser } from "../../../../syntax/index";
+import { Parser as CSSParser } from "../../../../syntax";
 
-import { LengthPercentage } from "../../../numeric/index";
-import { Resolvable } from "../../../resolvable";
+import { LengthPercentage } from "../../../numeric";
 import { Value } from "../../../value";
 
-const { either, map } = Parser;
+const { map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-images/#color-transition-hint}
  */
-export class Hint<P extends LengthPercentage = LengthPercentage>
-  extends Value<"hint", Value.HasCalculation<[P]>>
-  implements Equatable, Hashable, Serializable
-{
+export class Hint<P extends LengthPercentage = LengthPercentage> extends Value<
+  "hint",
+  Value.HasCalculation<[P]>
+> {
   public static of<P extends LengthPercentage>(position: P): Hint<P> {
     return new Hint(position);
   }

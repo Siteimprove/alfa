@@ -1,22 +1,18 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
 import { Hash } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Token } from "../../../../syntax";
+
+import { type Parser as CSSParser, Token } from "../../../../syntax";
+
 import { Value } from "../../../value";
+
 import { Position } from "./position";
 
-import type { Parser as CSSParser } from "../../../../syntax";
-
-const { map, either, pair, option, left, right } = Parser;
+const { map, either, pair, option, right } = Parser;
 
 /**
  * @internal
  */
-export class Corner
-  extends Value<"corner", false>
-  implements Equatable, Serializable
-{
+export class Corner extends Value<"corner", false> {
   public static of(
     vertical: Position.Vertical,
     horizontal: Position.Horizontal

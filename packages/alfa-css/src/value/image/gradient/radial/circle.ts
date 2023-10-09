@@ -1,13 +1,10 @@
-import { Equatable } from "@siteimprove/alfa-equatable";
-import { Hash, Hashable } from "@siteimprove/alfa-hash";
-import { Serializable } from "@siteimprove/alfa-json";
+import { Hash } from "@siteimprove/alfa-hash";
 import { Err, Result } from "@siteimprove/alfa-result";
 
 import { Parser as CSSParser, Token } from "../../../../syntax";
 
 import { Keyword } from "../../../keyword";
 import { Length } from "../../../numeric";
-import { Resolvable } from "../../../resolvable";
 import { Value } from "../../../value";
 
 /**
@@ -15,10 +12,10 @@ import { Value } from "../../../value";
  *
  * @internal
  */
-export class Circle<R extends Length = Length>
-  extends Value<"circle", Value.HasCalculation<[R]>>
-  implements Equatable, Hashable, Serializable<Circle.JSON>
-{
+export class Circle<R extends Length = Length> extends Value<
+  "circle",
+  Value.HasCalculation<[R]>
+> {
   public static of<R extends Length>(radius: R): Circle<R> {
     return new Circle(radius);
   }
