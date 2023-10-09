@@ -185,6 +185,7 @@ export namespace Radial {
       );
   }
 
+  /** @public */
   export function isRadial(value: unknown): value is Radial {
     return value instanceof Radial;
   }

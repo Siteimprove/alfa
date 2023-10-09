@@ -3,11 +3,10 @@ import { Selective } from "@siteimprove/alfa-selective";
 
 import { type Parser as CSSParser } from "../../../syntax";
 
-import * as hint from "./item/hint";
-import * as item from "./item/item";
-import * as linear from "./linear/linear";
-import * as radial from "./radial/radial";
-import * as stop from "./item/stop";
+import * as item from "./item/";
+
+import * as linear from "./linear/";
+import * as radial from "./radial/";
 
 const { either } = Parser;
 
@@ -26,13 +25,10 @@ export namespace Gradient {
 
   export type JSON = Linear.JSON | Radial.JSON;
 
-  export import Hint = hint.Hint;
-
   export import Item = item.Item;
 
   export import Linear = linear.Linear;
   export import Radial = radial.Radial;
-  export import Stop = stop.Stop;
 
   export type Resolver = Linear.Resolver & Radial.Resolver;
 

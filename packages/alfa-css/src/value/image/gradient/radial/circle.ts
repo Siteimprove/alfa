@@ -70,10 +70,6 @@ export namespace Circle {
 
   export type Resolver = Length.Resolver;
 
-  export function isCircle(value: unknown): value is Circle {
-    return value instanceof Circle;
-  }
-
   const parseShape = Keyword.parse("circle");
 
   const parseRadius = Length.parse;

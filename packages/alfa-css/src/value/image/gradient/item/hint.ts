@@ -75,10 +75,6 @@ export namespace Hint {
       Hint.of(LengthPercentage.partiallyResolve(resolver)(value.position));
   }
 
-  export function isHint(value: unknown): value is Hint {
-    return value instanceof Hint;
-  }
-
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-linear-color-hint}
    */

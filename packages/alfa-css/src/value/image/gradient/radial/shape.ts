@@ -28,10 +28,6 @@ export namespace Shape {
 
   export type Resolver = Circle.Resolver & Ellipse.Resolver & Extent.Resolver;
 
-  export function resolve(resolver: Resolver): (value: Shape) => Canonical {
-    return (value) => value.resolve(resolver);
-  }
-
   export type PartiallyResolved =
     | Circle.Canonical
     | Ellipse.PartiallyResolved

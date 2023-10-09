@@ -3,6 +3,9 @@ import { Token } from "./token";
 
 const { option, delimited } = Parser;
 
+/**
+ * @public
+ */
 export namespace Comma {
   /**
    * @remarks
