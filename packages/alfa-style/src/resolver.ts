@@ -58,8 +58,4 @@ export namespace Resolver {
   ): LengthPercentage.Resolver {
     return { percentageBase: base, length: lengthResolver(style) };
   }
-
-  export function image(image: Image, style: Style): Image.PartiallyResolved {
-    return Image.partiallyResolve(length(style))(image);
-  }
 }
