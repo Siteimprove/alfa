@@ -1,4 +1,5 @@
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import { type Parser as CSSParser } from "../../../syntax";
 
@@ -32,6 +33,24 @@ export namespace Gradient {
   export import Linear = linear.Linear;
   export import Radial = radial.Radial;
   export import Stop = stop.Stop;
+
+  export type Resolver = Linear.Resolver & Radial.Resolver;
+
+  export type PartiallyResolved =
+    | Linear.PartiallyResolved
+    | Radial.PartiallyResolved;
+
+  export type PartialResolver = Linear.PartialResolver & Radial.PartialResolver;
+
+  export function partiallyResolve(
+    resolver: PartialResolver
+  ): (value: Gradient) => PartiallyResolved {
+    return (value) =>
+      Selective.of(value)
+        .if(Linear.isLinear, Linear.partiallyResolve(resolver))
+        .else(Radial.partiallyResolve(resolver))
+        .get();
+  }
 
   /**
    * {@link https://drafts.csswg.org/css-images/#typedef-gradient}

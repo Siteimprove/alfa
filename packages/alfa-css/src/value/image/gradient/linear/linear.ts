@@ -116,6 +116,13 @@ export class Linear<
 export namespace Linear {
   export type Canonical = Linear<Item.Canonical, Direction.Canonical>;
 
+  export interface JSON extends Value.JSON<"gradient"> {
+    kind: "linear";
+    direction: Direction.JSON;
+    items: Array<Item.JSON>;
+    repeats: boolean;
+  }
+
   export type Resolver = Item.Resolver & Direction.Resolver;
 
   export type PartiallyResolved = Linear<
@@ -136,11 +143,8 @@ export namespace Linear {
       );
   }
 
-  export interface JSON extends Value.JSON<"gradient"> {
-    kind: "linear";
-    direction: Direction.JSON;
-    items: Array<Item.JSON>;
-    repeats: boolean;
+  export function isLinear(value: unknown): value is Linear {
+    return value instanceof Linear;
   }
 
   /**

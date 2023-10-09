@@ -68,26 +68,8 @@ export namespace Resolver {
         return Image.of(image.image);
 
       case "gradient":
-        return gradient(image.image, style);
-    }
-  }
-
-  function gradient(
-    gradient: Gradient,
-    style: Style
-  ): Image<Gradient.Canonical> {
-    switch (gradient.kind) {
-      case "linear":
         // @ts-ignore
-        return Image.of(
-          Gradient.Linear.partiallyResolve(length(style))(gradient)
-        );
-
-      case "radial":
-        // @ts-ignore
-        return Image.of(
-          Gradient.Radial.partiallyResolve(length(style))(gradient)
-        );
+        return Image.of(Gradient.partiallyResolve(length(style))(gradient));
     }
   }
 }

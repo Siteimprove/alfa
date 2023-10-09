@@ -185,6 +185,10 @@ export namespace Radial {
       );
   }
 
+  export function isRadial(value: unknown): value is Radial {
+    return value instanceof Radial;
+  }
+
   const parsePosition = right(
     delimited(option(Token.parseWhitespace), Keyword.parse("at")),
     Position.parse(false /* legacySyntax */)
