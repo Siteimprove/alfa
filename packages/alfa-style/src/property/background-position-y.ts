@@ -1,4 +1,4 @@
-import { List, Percentage, Position } from "@siteimprove/alfa-css";
+import { Keyword, List, Percentage, Position } from "@siteimprove/alfa-css";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
@@ -15,15 +15,19 @@ export namespace Specified {
 type Computed = List<Computed.Item>;
 
 namespace Computed {
-  export type Item = Position.Component<Position.Keywords.Vertical, "px">;
+  export type Item =
+    Position.Component.PartiallyResolved<Position.Keywords.Vertical>;
 }
 
-const parse = List.parseCommaSeparated(Position.Component.parseVertical);
+const parse = List.parseCommaSeparated(Position.Component.parseVertical(true));
 
 /**
  * @internal
  */
-export const initialItem = Percentage.of(0);
+export const initialItem: Computed.Item = Position.Side.of(
+  Keyword.of("top"),
+  Percentage.of(0)
+);
 
 /**
  * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/background-position}
@@ -34,6 +38,6 @@ export default Longhand.of<Specified, Computed>(
   parse,
   (value, style) =>
     value.map((positions) =>
-      positions.map((position) => Resolver.positionComponent(position, style))
+      positions.map(Position.Component.partiallyResolve(Resolver.length(style)))
     )
 );

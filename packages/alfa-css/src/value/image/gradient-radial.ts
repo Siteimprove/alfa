@@ -26,12 +26,12 @@ const { map, either, pair, option, left, right, delimited, take } = Parser;
 export class Radial<
   I extends Gradient.Item = Gradient.Item,
   S extends Radial.Shape = Radial.Shape,
-  P extends Position = Position
+  P extends Position.Fixed = Position.Fixed
 > extends Value<"gradient", false> {
   public static of<
     I extends Gradient.Item = Gradient.Item,
     S extends Radial.Shape = Radial.Shape,
-    P extends Position = Position
+    P extends Position.Fixed = Position.Fixed
   >(
     shape: S,
     position: P,
@@ -135,7 +135,7 @@ export namespace Radial {
   export type Canonical = Radial<
     Gradient.Hint.Canonical | Gradient.Stop.Canonical,
     Radial.Circle.Canonical | Radial.Ellipse.Canonical | Radial.Extent,
-    Position.Canonical
+    Position.Fixed
   >;
 
   export interface JSON extends Value.JSON<"gradient"> {
@@ -365,7 +365,7 @@ export namespace Radial {
 
   const parsePosition = right(
     delimited(option(Token.parseWhitespace), Keyword.parse("at")),
-    Position.parse(false /* legacySyntax */)
+    Position.parseBase(false /* legacySyntax */)
   );
 
   const parseCircleShape = Keyword.parse("circle");

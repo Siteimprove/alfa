@@ -18,13 +18,12 @@ const { map, option, pair, right } = Parser;
  */
 export class Ellipse<
   R extends Radius = Radius,
-  P extends Position = Position
+  P extends Position.Fixed = Position.Fixed
 > extends BasicShape<"ellipse"> {
-  public static of<R extends Radius = Radius, P extends Position = Position>(
-    rx: R,
-    ry: R,
-    center: P
-  ): Ellipse<R, P> {
+  public static of<
+    R extends Radius = Radius,
+    P extends Position.Fixed = Position.Fixed
+  >(rx: R, ry: R, center: P): Ellipse<R, P> {
     return new Ellipse(rx, ry, center);
   }
 
@@ -113,7 +112,7 @@ export namespace Ellipse {
             option(Token.parseWhitespace),
             right(
               Keyword.parse("at"),
-              right(Token.parseWhitespace, Position.parse())
+              right(Token.parseWhitespace, Position.parseBase())
             )
           )
         )

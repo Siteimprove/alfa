@@ -18,9 +18,9 @@ const { map, option, pair, right } = Parser;
  */
 export class Circle<
   R extends Radius = Radius,
-  P extends Position = Position
+  P extends Position.Fixed = Position.Fixed
 > extends BasicShape<"circle"> {
-  public static of<R extends Radius, P extends Position>(
+  public static of<R extends Radius, P extends Position.Fixed>(
     radius: R,
     center: P
   ): Circle<R, P> {
@@ -100,7 +100,7 @@ export namespace Circle {
             option(Token.parseWhitespace),
             right(
               Keyword.parse("at"),
-              right(Token.parseWhitespace, Position.parse())
+              right(Token.parseWhitespace, Position.parseBase())
             )
           )
         )

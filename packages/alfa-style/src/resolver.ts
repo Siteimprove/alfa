@@ -145,9 +145,9 @@ export namespace Resolver {
   }
 
   export function position(
-    position: Position,
+    position: Position.Fixed,
     style: Style
-  ): Position.Canonical {
+  ): Position.Fixed {
     return Position.of(
       positionComponent(position.horizontal, style),
       positionComponent(position.vertical, style)
@@ -157,16 +157,12 @@ export namespace Resolver {
   export function positionComponent<
     S extends Position.Keywords.Horizontal | Position.Keywords.Vertical
   >(
-    position: Position.Component<S>,
+    position: Position.Component.Fixed<S>,
     style: Style
-  ): Position.Component.Canonical<S> {
+  ): Position.Component.Fixed<S> {
     switch (position.type) {
       case "keyword":
-      case "percentage":
         return position;
-
-      case "length":
-        return position.resolve(Resolver.length(style));
 
       case "side":
         return Position.Side.of(
