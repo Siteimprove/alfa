@@ -7,11 +7,7 @@ test("#cascaded() parses `background: red`", (t) => {
   const element = <div style={{ background: `red` }} />;
 
   t.deepEqual(cascaded(element, "background-color"), {
-    value: {
-      type: "color",
-      format: "named",
-      color: "red",
-    },
+    value: { type: "color", format: "named", color: "red" },
     source: h.declaration("background", "red").toJSON(),
   });
 });
@@ -25,10 +21,7 @@ test(`#cascaded() parses \`background: url("foo.png")\``, (t) => {
       values: [
         {
           type: "image",
-          image: {
-            type: "url",
-            url: "foo.png",
-          },
+          image: { type: "url", url: "foo.png" },
         },
       ],
       separator: ", ",
@@ -45,9 +38,9 @@ test(`#cascaded() parses \`background: 12px\``, (t) => {
       type: "list",
       values: [
         {
-          type: "length",
-          value: 12,
-          unit: "px",
+          type: "side",
+          side: { type: "keyword", value: "left" },
+          offset: { type: "length", value: 12, unit: "px" },
         },
       ],
       separator: ", ",
@@ -58,12 +51,7 @@ test(`#cascaded() parses \`background: 12px\``, (t) => {
   t.deepEqual(cascaded(element, "background-position-y"), {
     value: {
       type: "list",
-      values: [
-        {
-          type: "keyword",
-          value: "center",
-        },
-      ],
+      values: [{ type: "keyword", value: "center" }],
       separator: ", ",
     },
     source: h.declaration("background", `12px`).toJSON(),
@@ -78,9 +66,9 @@ test(`#cascaded() parses \`background: 12px 0\``, (t) => {
       type: "list",
       values: [
         {
-          type: "length",
-          value: 12,
-          unit: "px",
+          type: "side",
+          side: { type: "keyword", value: "left" },
+          offset: { type: "length", value: 12, unit: "px" },
         },
       ],
       separator: ", ",
@@ -93,9 +81,9 @@ test(`#cascaded() parses \`background: 12px 0\``, (t) => {
       type: "list",
       values: [
         {
-          type: "length",
-          value: 0,
-          unit: "px",
+          type: "side",
+          side: { type: "keyword", value: "top" },
+          offset: { type: "length", value: 0, unit: "px" },
         },
       ],
       separator: ", ",
@@ -110,12 +98,7 @@ test(`#cascaded() parses \`background: 0 / cover\``, (t) => {
   t.deepEqual(cascaded(element, "background-size"), {
     value: {
       type: "list",
-      values: [
-        {
-          type: "keyword",
-          value: "cover",
-        },
-      ],
+      values: [{ type: "keyword", value: "cover" }],
       separator: ", ",
     },
     source: h.declaration("background", `0 / cover`).toJSON(),

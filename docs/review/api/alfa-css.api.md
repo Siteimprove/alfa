@@ -259,7 +259,7 @@ export namespace Box {
 // Warning: (ae-forgotten-export) The symbol "BasicShape" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export class Circle<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"circle"> {
+export class Circle<R extends Radius = Radius, P extends Position.Fixed = Position.Fixed> extends BasicShape<"circle"> {
     // (undocumented)
     get center(): P;
     // (undocumented)
@@ -269,7 +269,7 @@ export class Circle<R extends Radius = Radius, P extends Position = Position> ex
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<R extends Radius, P extends Position>(radius: R, center: P): Circle<R, P>;
+    static of<R extends Radius, P extends Position.Fixed>(radius: R, center: P): Circle<R, P>;
     // (undocumented)
     get radius(): R;
     // (undocumented)
@@ -526,7 +526,7 @@ namespace Dimension_2 {
 }
 
 // @public (undocumented)
-export class Ellipse<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"ellipse"> {
+export class Ellipse<R extends Radius = Radius, P extends Position.Fixed = Position.Fixed> extends BasicShape<"ellipse"> {
     // (undocumented)
     get center(): P;
     // (undocumented)
@@ -536,7 +536,7 @@ export class Ellipse<R extends Radius = Radius, P extends Position = Position> e
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<R extends Radius = Radius, P extends Position = Position>(rx: R, ry: R, center: P): Ellipse<R, P>;
+    static of<R extends Radius = Radius, P extends Position.Fixed = Position.Fixed>(rx: R, ry: R, center: P): Ellipse<R, P>;
     // (undocumented)
     resolve(): Ellipse<R, P>;
     // (undocumented)
@@ -1128,7 +1128,7 @@ namespace Length_2 {
 }
 
 // @public (undocumented)
-export type LengthPercentage<U extends Unit.Length = Unit.Length> = LengthPercentage.Calculated | Length.Calculated | Length.Fixed<U> | Percentage.Calculated | Percentage.Fixed;
+export type LengthPercentage<U extends Unit.Length = Unit.Length, CALC extends boolean = boolean> = CALC extends true ? LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated : CALC extends false ? Length.Fixed<U> | Percentage.Fixed : LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated | Length.Fixed<U> | Percentage.Fixed;
 
 // @public (undocumented)
 export namespace LengthPercentage {
@@ -1189,7 +1189,9 @@ export namespace LengthPercentage {
     // (undocumented)
     export type Resolver = Length.Resolver & Percentage.Resolver<"length", Canonical>;
     const // (undocumented)
-    parse: Parser_2<Slice<Token>, LengthPercentage<Unit.Length>, string, []>;
+    parse: Parser_2<Slice<Token>, Length.Calculated | Length.Fixed<Unit.Length> | Calculated | Percentage.Calculated<Base.Numeric.Type> | Percentage.Fixed<Base.Numeric.Type>, string, []>;
+    const // @internal (undocumented)
+    parseBase: Parser<LengthPercentage<Unit.Length, false>>;
         {};
 }
 
@@ -2016,129 +2018,63 @@ export namespace Polygon {
 }
 
 // @public (undocumented)
-export class Position<H extends Position.Component<Position.Keywords.Horizontal> = Position.Component<Position.Keywords.Horizontal>, V extends Position.Component<Position.Keywords.Vertical> = Position.Component<Position.Keywords.Vertical>> extends Value<"position", false> {
+export class Position<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>, CALC extends boolean = boolean> extends Value<"position", CALC> implements Resolvable<Position.Canonical<H, V>, Position.Resolver> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    get horizontal(): H;
+    get horizontal(): HC;
     // (undocumented)
-    static of<H extends Position.Component<Position.Keywords.Horizontal>, V extends Position.Component<Position.Keywords.Vertical>>(horizontal: H, vertical: V): Position<H, V>;
+    static of<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>>(horizontal: HC, vertical: VC): Position<H, V, HC, VC, Value.HasCalculation<[HC, VC]>>;
     // (undocumented)
-    resolve(): Position<H, V>;
+    resolve(resolver: Position.Resolver): Position.Canonical<H, V>;
     // (undocumented)
     toJSON(): Position.JSON;
     // (undocumented)
     toString(): string;
     // (undocumented)
-    get vertical(): V;
+    get vertical(): VC;
 }
 
 // @public (undocumented)
 export namespace Position {
+    // Warning: (ae-forgotten-export) The symbol "Keywords" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "Component" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
-    export type Canonical = Position<Component.Canonical<Keywords.Horizontal>, Component.Canonical<Keywords.Vertical>>;
-    // (undocumented)
-    export type Component<S extends Keywords.Horizontal | Keywords.Vertical = Keywords.Horizontal | Keywords.Vertical, U extends Unit.Length = Unit.Length> = Keywords.Center | Offset<U> | Side<S, Offset<U>>;
-    // (undocumented)
-    export namespace Component {
-        // (undocumented)
-        export type Canonical<S extends Keywords.Horizontal | Keywords.Vertical> = Percentage.Canonical | Keywords.Center | Length.Canonical | Side.Canonical<S>;
-        // (undocumented)
-        export type JSON = Keyword.JSON | Length.Fixed.JSON | Percentage.Fixed.JSON | Side.JSON;
-        const // Warning: (ae-incompatible-release-tags) The symbol "parseHorizontal" is marked as @public, but its signature references "Type" which is marked as @internal
-        //
-        // (undocumented)
-        parseHorizontal: Parser_2<Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
-        const // Warning: (ae-incompatible-release-tags) The symbol "parseVertical" is marked as @public, but its signature references "Type" which is marked as @internal
-        //
-        // (undocumented)
-        parseVertical: Parser_2<Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length> | Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
-    }
+    export type Canonical<H extends Keywords.Horizontal = Keywords.Horizontal, V extends Keywords.Vertical = Keywords.Vertical> = Position<H, V, Component_2.Canonical<H>, Component_2.Canonical<V>, false>;
+    // @internal (undocumented)
+    export type Fixed<H extends Keywords.Horizontal = Keywords.Horizontal, V extends Keywords.Vertical = Keywords.Vertical> = Position<H, V, Component_2.Fixed<H>, Component_2.Fixed<V>, false>;
     // (undocumented)
     export interface JSON extends Value.JSON<"position"> {
         // (undocumented)
-        horizontal: Component.JSON;
+        horizontal: Component_2.JSON;
         // (undocumented)
-        vertical: Component.JSON;
+        vertical: Component_2.JSON;
     }
-    // (undocumented)
-    export namespace Keywords {
-        // (undocumented)
-        export type Center = Keyword<"center">;
-        const // @internal (undocumented)
-        parseCenter: Parser<Keyword<"center">>;
-        // (undocumented)
-        export type Horizontal = Keyword<"left"> | Keyword<"right">;
-        const // @internal (undocumented)
-        parseVertical: Parser<Keyword.ToKeywords<"top" | "bottom">>;
-        // (undocumented)
-        export type Vertical = Keyword<"top"> | Keyword<"bottom">;
-        const // @internal (undocumented)
-        parseHorizontal: Parser<Keyword.ToKeywords<"right" | "left">>;
-    }
-    // (undocumented)
-    export type Offset<U extends Unit.Length = Unit.Length> = Length.Fixed<U> | Percentage.Fixed;
-    // (undocumented)
-    export namespace Offset {
-        const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Type" which is marked as @internal
-        //
-        // (undocumented)
-        parse: Parser_2<Slice<Token>, Percentage.Fixed<import("../calculation/numeric").Numeric.Type> | Length.Fixed<Unit.Length>, string, []>;
-    }
-    // (undocumented)
     export function parse(legacySyntax?: boolean): Parser<Position>;
+    import Keywords = keywords.Keywords;
+    import Side = side.Side;
+    import Component = component.Component;
+    // @internal (undocumented)
+    export function parseBase(legacySyntax?: boolean): Parser<Fixed>;
     // (undocumented)
-    export class Side<S extends Keywords.Vertical | Keywords.Horizontal = Keywords.Vertical | Keywords.Horizontal, O extends Offset = Offset> extends Value<"side", false> {
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        hash(hash: Hash): void;
-        // (undocumented)
-        isCenter(): boolean;
-        // (undocumented)
-        static of<S extends Keywords.Vertical | Keywords.Horizontal, O extends Offset>(side: S, offset?: Option<O>): Side<S, O>;
-        // (undocumented)
-        get offset(): Option<O>;
-        // (undocumented)
-        resolve(): Side<S, O>;
-        // (undocumented)
-        get side(): S;
-        // (undocumented)
-        toJSON(): Side.JSON;
-        // (undocumented)
-        toString(): string;
-    }
+    export function partiallyResolve<H extends Keywords.Horizontal, V extends Keywords.Vertical>(resolver: PartialResolver): (value: Position<H, V>) => PartiallyResolved<H, V>;
     // (undocumented)
-    export namespace Side {
+    export type PartiallyResolved<H extends Keywords.Horizontal = Keywords.Horizontal, V extends Keywords.Vertical = Keywords.Vertical> = Position<H, V, Component_2.PartiallyResolved<H>, Component_2.PartiallyResolved<V>>;
+    // (undocumented)
+    export type PartialResolver = Component_2.PartialResolver;
+    export interface Resolver extends Length.Resolver {
         // (undocumented)
-        export type Canonical<S extends Keywords.Vertical | Keywords.Horizontal> = Side<S, Percentage.Canonical | Length.Canonical>;
+        percentageHBase: Length.Canonical;
         // (undocumented)
-        export interface JSON extends Value.JSON<"side"> {
-            // (undocumented)
-            offset: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
-            // (undocumented)
-            side: Keyword.JSON;
-        }
-        const // (undocumented)
-        parseHorizontalKeywordValue: Parser<Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>>;
-        const // (undocumented)
-        parseHorizontalKeyword: Parser<Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>>;
-        const // (undocumented)
-        parseVerticalKeywordValue: Parser<Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>>;
-        const // (undocumented)
-        parseVerticalKeyword: Parser<Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>>;
-        const // (undocumented)
-        parseHorizontal: Parser_2<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"right" | "left">, Offset<Unit.Length>>, string, []>;
-        const // (undocumented)
-        parseVertical: Parser_2<Slice<Token>, Keyword<"center"> | Side<Keyword.ToKeywords<"top" | "bottom">, Offset<Unit.Length>>, string, []>;
+        percentageVBase: Length.Canonical;
     }
-        {};
 }
 
 // @public (undocumented)
-export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Shape = Radial.Shape, P extends Position = Position> extends Value<"gradient", false> {
+export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Shape = Radial.Shape, P extends Position.Fixed = Position.Fixed> extends Value<"gradient", false> {
     // (undocumented)
     equals(value: Radial): boolean;
     // (undocumented)
@@ -2150,7 +2086,7 @@ export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Sh
     // (undocumented)
     get kind(): "radial";
     // (undocumented)
-    static of<I extends Gradient.Item = Gradient.Item, S extends Radial.Shape = Radial.Shape, P extends Position = Position>(shape: S, position: P, items: Iterable<I>, repeats: boolean): Radial<I, S, P>;
+    static of<I extends Gradient.Item = Gradient.Item, S extends Radial.Shape = Radial.Shape, P extends Position.Fixed = Position.Fixed>(shape: S, position: P, items: Iterable<I>, repeats: boolean): Radial<I, S, P>;
     // (undocumented)
     get position(): P;
     // (undocumented)
@@ -2168,7 +2104,7 @@ export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Sh
 // @public (undocumented)
 export namespace Radial {
     // (undocumented)
-    export type Canonical = Radial<Gradient.Hint.Canonical | Gradient.Stop.Canonical, Radial.Circle.Canonical | Radial.Ellipse.Canonical | Radial.Extent, Position.Canonical>;
+    export type Canonical = Radial<Gradient.Hint.Canonical | Gradient.Stop.Canonical, Radial.Circle.Canonical | Radial.Ellipse.Canonical | Radial.Extent, Position.Fixed>;
     // (undocumented)
     export class Circle<R extends Length.Fixed = Length.Fixed> implements Equatable, Hashable, Serializable<Circle.JSON> {
         // (undocumented)

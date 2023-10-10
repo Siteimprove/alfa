@@ -47,7 +47,7 @@ test(`background() serialises a complex single layer background`, (t) => {
 
   t.deepEqual(
     background(style),
-    "rgb(100% 0% 0%) url(a) 10px center / 50% auto space no-repeat fixed content-box padding-box"
+    "rgb(100% 0% 0%) url(a) left 10px center / 50% auto space no-repeat fixed content-box padding-box"
   );
 });
 

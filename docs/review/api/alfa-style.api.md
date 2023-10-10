@@ -19,6 +19,7 @@ import { Image } from '@siteimprove/alfa-css';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
 import { Keyword } from '@siteimprove/alfa-css';
+import { Keywords } from '@siteimprove/alfa-css/src/value/position/keywords';
 import { Length } from '@siteimprove/alfa-css';
 import { LengthPercentage } from '@siteimprove/alfa-css';
 import { List } from '@siteimprove/alfa-css';
@@ -40,6 +41,7 @@ import { Rotate } from '@siteimprove/alfa-css';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Shadow } from '@siteimprove/alfa-css';
 import { Shape } from '@siteimprove/alfa-css';
+import { Side } from '@siteimprove/alfa-css/src/value/position/side';
 import { Slice } from '@siteimprove/alfa-slice';
 import { String as String_2 } from '@siteimprove/alfa-css';
 import { Text } from '@siteimprove/alfa-dom';
@@ -180,8 +182,8 @@ export namespace Longhands {
         readonly "background-color": Longhand<Color, Color.Canonical>;
         readonly "background-image": Longhand<List<import("./property/background-image").Specified.Item, boolean>, List<Image | Keyword<"none">, boolean>>;
         readonly "background-origin": Longhand<List<Box, boolean>, List<Box, boolean>>;
-        readonly "background-position-x": Longhand<List<import("./property/background-position-x").Specified.Item, boolean>, List<Position | (Length<"px"> | Percentage.Fixed<Numeric.Type>) | Position<Position, Length<"px"> | Percentage.Fixed<Numeric.Type>>, boolean>>;
-        readonly "background-position-y": Longhand<List<import("./property/background-position-y").Specified.Item, boolean>, List<Position | (Length<"px"> | Percentage.Fixed<Numeric.Type>) | Position<Position, Length<"px"> | Percentage.Fixed<Numeric.Type>>, boolean>>;
+        readonly "background-position-x": Longhand<List<import("./property/background-position-x").Specified.Item, boolean>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Horizontal>, boolean>>;
+        readonly "background-position-y": Longhand<List<import("./property/background-position-y").Specified.Item, boolean>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Vertical>, boolean>>;
         readonly "background-repeat-x": Longhand<List<import("./property/background-repeat-x").Specified.Item, boolean>, List<import("./property/background-repeat-x").Specified.Item, boolean>>;
         readonly "background-repeat-y": Longhand<List<import("./property/background-repeat-x").Specified.Item, boolean>, List<import("./property/background-repeat-x").Specified.Item, boolean>>;
         readonly "background-size": Longhand<List<import("./property/background-size").Specified.Item, boolean>, List<Tuple<[LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">], boolean> | Keyword<"cover"> | Keyword<"contain">, boolean>>;
@@ -301,9 +303,9 @@ export namespace Resolver {
     // (undocumented)
     export function lengthPercentage(base: Length.Canonical, style: Style): LengthPercentage.Resolver;
     // (undocumented)
-    export function position(position: Position, style: Style): Position.Canonical;
+    export function position(position: Position.Fixed, style: Style): Position.Fixed;
     // (undocumented)
-    export function positionComponent<S extends Position.Keywords.Horizontal | Position.Keywords.Vertical>(position: Position.Component<S>, style: Style): Position.Component.Canonical<S>;
+    export function positionComponent<S extends Position.Keywords.Horizontal | Position.Keywords.Vertical>(position: Position.Component.Fixed<S>, style: Style): Position.Component.Fixed<S>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts
