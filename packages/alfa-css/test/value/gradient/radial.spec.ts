@@ -3,13 +3,13 @@ import { test } from "@siteimprove/alfa-test";
 import { Gradient, Lexer } from "../../../src";
 
 function parse(input: string) {
-  return Gradient.Radial.parse(Gradient.Item.parseList)(Lexer.lex(input)).map(
-    ([_, circle]) => circle.toJSON()
-  );
+  return Gradient.Radial.parse(Gradient.Item.parseList)(Lexer.lex(input))
+    .getUnsafe()[1]
+    .toJSON();
 }
 
 test("parse() parses a radial gradient with no shape or position", (t) => {
-  t.deepEqual(parse("radial-gradient(red, blue)").getUnsafe(), {
+  t.deepEqual(parse("radial-gradient(red, blue)"), {
     type: "gradient",
     kind: "radial",
     shape: {
@@ -53,7 +53,7 @@ test("parse() parses a radial gradient with no shape or position", (t) => {
 });
 
 test("parse() parses a radial gradient with an extent", (t) => {
-  t.deepEqual(parse("radial-gradient(closest-side, red, blue)").getUnsafe(), {
+  t.deepEqual(parse("radial-gradient(closest-side, red, blue)"), {
     type: "gradient",
     kind: "radial",
     shape: {
@@ -98,9 +98,7 @@ test("parse() parses a radial gradient with an extent", (t) => {
 
 test("parse() parses a radial gradient with an extent and a position", (t) => {
   t.deepEqual(
-    parse(
-      "radial-gradient(closest-side at bottom left, red, blue)"
-    ).getUnsafe(),
+    parse("radial-gradient(closest-side at bottom left, red, blue)"),
     {
       type: "gradient",
       kind: "radial",
@@ -156,7 +154,7 @@ test("parse() parses a radial gradient with an extent and a position", (t) => {
 test("parse() parses a radial gradient with a circle", (t) => {
   for (const input of ["1px", "1px circle", "circle 1px"]) {
     t.deepEqual(
-      parse(`radial-gradient(${input}, red, blue)`).getUnsafe(),
+      parse(`radial-gradient(${input}, red, blue)`),
       {
         type: "gradient",
         kind: "radial",
@@ -206,10 +204,37 @@ test("parse() parses a radial gradient with a circle", (t) => {
   }
 });
 
+test("parse() parses a radial gradient with a circle and calculated radius", (t) => {
+  t.deepEqual(
+    parse(`radial-gradient(calc(1px + 1px), red, blue)`).shape.radius,
+    {
+      type: "length",
+      math: {
+        type: "math expression",
+        expression: {
+          type: "value",
+          value: { type: "length", value: 2, unit: "px" },
+        },
+      },
+    },
+    `radial-gradient(calc(1px + 1px), red, blue)`
+  );
+});
+
+test("parse() rejects percentages in circle radius", (t) => {
+  for (const input of ["10%", "calc(1px + 10%)", "calc(10% + 1%)"]) {
+    t.deepEqual(
+      Gradient.Radial.parse(Gradient.Item.parseList)(Lexer.lex(input)).isErr(),
+      true,
+      input
+    );
+  }
+});
+
 test("parse() parses a radial gradient with an ellipse", (t) => {
   for (const input of ["1px 2px", "1px 2px ellipse", "ellipse 1px 2px"]) {
     t.deepEqual(
-      parse(`radial-gradient(${input}, red, blue)`).getUnsafe(),
+      parse(`radial-gradient(${input}, red, blue)`),
       {
         type: "gradient",
         kind: "radial",
@@ -271,7 +296,7 @@ test("parse() parses a radial gradient with a circular extent", (t) => {
     "farthest-corner circle",
   ]) {
     t.deepEqual(
-      parse(`radial-gradient(${input}, red, blue)`).getUnsafe(),
+      parse(`radial-gradient(${input}, red, blue)`),
       {
         type: "gradient",
         kind: "radial",
@@ -325,7 +350,7 @@ test("parse() parses a radial gradient with an elliptical extent", (t) => {
     "farthest-corner ellipse",
   ]) {
     t.deepEqual(
-      parse(`radial-gradient(${input}, red, blue)`).getUnsafe(),
+      parse(`radial-gradient(${input}, red, blue)`),
       {
         type: "gradient",
         kind: "radial",
