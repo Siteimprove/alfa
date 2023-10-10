@@ -18,6 +18,7 @@
     { "path": "../alfa-graph" },
     { "path": "../alfa-http" },
     { "path": "../alfa-json" },
+    { "path": "../alfa-option" },
     { "path": "../alfa-refinement" },
     { "path": "../alfa-result" },
     { "path": "../alfa-sarif" },
