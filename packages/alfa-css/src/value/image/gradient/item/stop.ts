@@ -2,7 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Parser as CSSParser, Token } from "../../../../syntax/index";
+import { Parser as CSSParser, Token } from "../../../../syntax";
 
 import { Color } from "../../../color";
 import { LengthPercentage } from "../../../numeric";

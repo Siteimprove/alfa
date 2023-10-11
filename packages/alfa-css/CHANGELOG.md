@@ -54,9 +54,9 @@
 
   It is mostly `Length | Percentage`, plus the mixed calculations (e.g. `calc(1em + 2px)`). It comes with the usual helper functions to parse and resolve it.
 
-- **Removed:** The `Index.parseItem` helper has been removed as it wasn't used. ([#1447](https://github.com/Siteimprove/alfa/pull/1447))
+- **Removed:** The `Gradient.parseItem` helper has been removed as it wasn't used. ([#1447](https://github.com/Siteimprove/alfa/pull/1447))
 
-  If need be, use `Parser.either(Index.parseHint, Index.parseStop)` instead.
+  If need be, use `Parser.either(Gradient.parseHint, Gradient.parseStop)` instead.
 
 - **Added:** `Function.parse` now also accepts a predicate instead of just a name to compare to. ([#1448](https://github.com/Siteimprove/alfa/pull/1448))
 
@@ -125,7 +125,7 @@
 
 - **Breaking:** `Linear.parse` and `Radial.parse` now require an item parser. ([#1412](https://github.com/Siteimprove/alfa/pull/1412))
 
-  Both gradient parsing functions where using `Index.parseItemList`, which created a circular dependency between the files. The circle has been broken by injecting the item list parser in the individual parser. To migrate, simply call `Linear.parse(Index.parseItemList)` instead of `Linear.parse` (same with `Radial`).
+  Both gradient parsing functions where using `Gradient.parseItemList`, which created a circular dependency between the files. The circle has been broken by injecting the item list parser in the individual parser. To migrate, simply call `Linear.parse(Gradient.parseItemList)` instead of `Linear.parse` (same with `Radial`).
 
 - **Breaking:** `Math.resolve` now returns a `Result<Numeric, string>` instead of an `Option`. ([#1406](https://github.com/Siteimprove/alfa/pull/1406))
 

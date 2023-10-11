@@ -75,7 +75,7 @@
 
 - [@siteimprove/alfa-aria](packages/alfa-aria/CHANGELOG.md), [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md), [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md), [@siteimprove/alfa-http](packages/alfa-http/CHANGELOG.md), [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md), [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md), [@siteimprove/alfa-web](packages/alfa-web/CHANGELOG.md): Many pieces of code are no longer exported. These were mostly internal exports that are no longer used in other files and should not impact intended usage of the packages. ([#1437](https://github.com/Siteimprove/alfa/pull/1437))
 
-- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): The `Index.parseItem` helper has been removed as it wasn't used. ([#1447](https://github.com/Siteimprove/alfa/pull/1447))
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md): The `Gradient.parseItem` helper has been removed as it wasn't used. ([#1447](https://github.com/Siteimprove/alfa/pull/1447))
  
 - [@siteimprove/alfa-rules](packages/alfa-rules/CHANGELOG.md): The `@siteimprove/alfa-rules/FlattenedRules` export is no longer available. ([#1437](https://github.com/Siteimprove/alfa/pull/1437))
 
@@ -1198,7 +1198,7 @@ In addition to the changes listed below, this release adjusts the compile target
 
 - [@siteimprove/alfa-thenable](packages/alfa-thenable): A new package is now available with types for modelling values that can be used in `await` expressions.
 
-- [@siteimprove/alfa-css](packages/alfa-css): Radial gradients are now available as a type of `Index`. ([#438](../../pull/438))
+- [@siteimprove/alfa-css](packages/alfa-css): Radial gradients are now available as a type of `Gradient`. ([#438](../../pull/438))
 
 ### Changed
 

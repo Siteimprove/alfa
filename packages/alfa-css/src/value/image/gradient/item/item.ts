@@ -1,6 +1,6 @@
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Comma, Parser as CSSParser } from "../../../../syntax/index";
+import { Comma, Parser as CSSParser } from "../../../../syntax";
 
 import { Hint } from "./hint";
 import { Stop } from "./stop";

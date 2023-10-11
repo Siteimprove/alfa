@@ -8,12 +8,11 @@ import {
   Function,
   type Parser as CSSParser,
   Token,
-} from "../../../../syntax/index";
+} from "../../../../syntax";
 
 import { Keyword } from "../../../keyword";
 import { Position } from "../../../position";
 import { Value } from "../../../value";
-import { Gradient } from "../gradient";
 
 import { Item } from "../item";
 

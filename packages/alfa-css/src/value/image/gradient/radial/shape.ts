@@ -16,6 +16,13 @@ const { either } = Parser;
 export type Shape = Circle | Ellipse | Extent;
 
 /**
+ * Radial gradient shapes
+ *
+ * @remarks
+ * The syntax inside a radial-gradient() function is significantly different
+ * from the basic shape functions circle() and ellipse(), so we cannot easily
+ * reuse the code.
+ *
  * @internal
  */
 export namespace Shape {

@@ -2,11 +2,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import {
-  Comma,
-  Function,
-  type Parser as CSSParser,
-} from "../../../../syntax/index";
+import { Comma, Function, type Parser as CSSParser } from "../../../../syntax";
 
 import { Value } from "../../../value";
 
