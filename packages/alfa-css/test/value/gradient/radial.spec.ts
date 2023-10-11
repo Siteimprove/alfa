@@ -289,6 +289,61 @@ test("parse() parses a radial gradient with an ellipse", (t) => {
   }
 });
 
+test("parse() parses a radial gradient with an ellispe and calculated radii, including length-percentage", (t) => {
+  t.deepEqual(
+    parse("radial-gradient(calc(1px + 0.2em) calc(1vh + 20%), red, blue)")
+      .shape,
+    {
+      type: "ellipse",
+      horizontal: {
+        type: "length",
+        math: {
+          type: "math expression",
+          expression: {
+            type: "calculation",
+            arguments: [
+              {
+                type: "sum",
+                operands: [
+                  {
+                    type: "value",
+                    value: { type: "length", value: 1, unit: "px" },
+                  },
+                  {
+                    type: "value",
+                    value: { type: "length", value: 0.2, unit: "em" },
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      },
+      vertical: {
+        type: "length-percentage",
+        math: {
+          type: "math expression",
+          expression: {
+            type: "calculation",
+            arguments: [
+              {
+                type: "sum",
+                operands: [
+                  {
+                    type: "value",
+                    value: { type: "length", value: 1, unit: "vh" },
+                  },
+                  { type: "value", value: { type: "percentage", value: 0.2 } },
+                ],
+              },
+            ],
+          },
+        },
+      },
+    }
+  );
+});
+
 test("parse() parses a radial gradient with a circular extent", (t) => {
   for (const input of [
     "circle",
