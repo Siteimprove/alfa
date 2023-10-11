@@ -11,7 +11,7 @@ import { Length, Percentage } from "../numeric";
 
 import { BasicShape } from "./basic-shape";
 
-const { either, map, filter, option, pair, right, separatedList, takeAtMost } =
+const { delimited, either, map, filter, option, pair, right, separatedList } =
   Parser;
 const { parseDelim, parseWhitespace } = Token;
 
@@ -172,11 +172,8 @@ export namespace Inset {
   const parseLengthPercentage = either(Length.parseBase, Percentage.parseBase);
 
   const parseOffsets = map(
-    pair(
-      parseLengthPercentage,
-      takeAtMost(right(option(Token.parseWhitespace), parseLengthPercentage), 3)
-    ),
-    ([top, [right = top, bottom = top, left = right]]) =>
+    separatedList(parseLengthPercentage, option(parseWhitespace), 1, 4),
+    ([top, right = top, bottom = top, left = right]) =>
       [top, right, bottom, left] as const
   );
 
@@ -187,13 +184,12 @@ export namespace Inset {
   );
 
   const parseRadii = map(
-    pair(
-      parseRadius,
-      takeAtMost(right(option(Token.parseWhitespace), parseRadius), 3)
-    ),
+    separatedList(parseRadius, option(parseWhitespace), 1, 4),
     ([
       topLeft,
-      [topRight = topLeft, bottomRight = topLeft, bottomLeft = topRight],
+      topRight = topLeft,
+      bottomRight = topLeft,
+      bottomLeft = topRight,
     ]) => [topLeft, topRight, bottomRight, bottomLeft] as const
   );
 
@@ -201,10 +197,7 @@ export namespace Inset {
     pair(
       parseRadii,
       option(
-        right(
-          option(parseWhitespace),
-          right(parseDelim("/"), right(option(parseWhitespace), parseRadii))
-        )
+        right(delimited(option(parseWhitespace), parseDelim("/")), parseRadii)
       )
     ),
     ([horizontal, vertical]) =>
