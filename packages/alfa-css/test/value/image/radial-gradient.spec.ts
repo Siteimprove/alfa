@@ -283,7 +283,7 @@ test("parse() parses a radial gradient with an ellipse", (t) => {
   }
 });
 
-test("parse() parses a radial gradient with an ellispe and calculated radii, including length-percentage", (t) => {
+test("parse() parses a radial gradient with an ellipse and calculated radii, including length-percentage", (t) => {
   t.deepEqual(
     parse("radial-gradient(calc(1px + 0.2em) calc(1vh + 20%), red, blue)")
       .shape,

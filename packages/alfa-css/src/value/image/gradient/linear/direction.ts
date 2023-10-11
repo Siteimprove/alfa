@@ -29,7 +29,7 @@ export namespace Direction {
    * @internal
    */
   export const parse = either<Slice<Token>, Direction, string>(
-    Angle.parseBase,
+    Angle.parse,
     // Corners must be parsed before sides as sides are also valid prefixes of
     // corners.
     Corner.parse,
