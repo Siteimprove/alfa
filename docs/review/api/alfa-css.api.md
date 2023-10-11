@@ -1140,7 +1140,7 @@ export namespace LengthPercentage {
     // (undocumented)
     export type Resolver = Length.Resolver & Percentage.Resolver<"length", Canonical>;
     const // (undocumented)
-    parse: Parser_2<Slice<Token>, Percentage.Fixed<Base.Numeric.Type> | Length.Fixed<Unit.Length> | Calculated | Length.Calculated | Percentage.Calculated<Base.Numeric.Type>, string, []>;
+    parse: Parser_2<Slice<Token>, Length.Calculated | Length.Fixed<Unit.Length> | Calculated | Percentage.Calculated<Base.Numeric.Type> | Percentage.Fixed<Base.Numeric.Type>, string, []>;
     const // @internal (undocumented)
     parseBase: Parser<LengthPercentage<Unit.Length, false>>;
         {};
