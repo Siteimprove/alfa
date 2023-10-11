@@ -24,7 +24,7 @@ const { parseComma, parseWhitespace } = Token;
 export class Polygon<
   F extends Polygon.Fill = Polygon.Fill,
   V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
-> extends BasicShape<"polygon"> {
+> extends BasicShape<"polygon", false> {
   public static of<
     F extends Polygon.Fill = Polygon.Fill,
     V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed

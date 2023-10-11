@@ -18,7 +18,7 @@ const { either, map, option, pair, take, right, delimited } = Parser;
  */
 export class Rectangle<
   O extends Length.Fixed | Rectangle.Auto = Length.Fixed | Rectangle.Auto
-> extends BasicShape<"rectangle"> {
+> extends BasicShape<"rectangle", false> {
   public static of<
     O extends Length.Fixed | Rectangle.Auto = Length.Fixed | Rectangle.Auto
   >(top: O, right: O, bottom: O, left: O): Rectangle<O> {

@@ -3,12 +3,12 @@ import { Value } from "../value";
 /**
  * @internal
  */
-export abstract class BasicShape<K extends string = string> extends Value<
-  "basic-shape",
-  false
-> {
+export abstract class BasicShape<
+  K extends string = string,
+  CALC extends boolean = boolean
+> extends Value<"basic-shape", CALC> {
   private readonly _kind: K;
-  protected constructor(kind: K, hasCalculation: false) {
+  protected constructor(kind: K, hasCalculation: CALC) {
     super("basic-shape", hasCalculation);
     this._kind = kind;
   }

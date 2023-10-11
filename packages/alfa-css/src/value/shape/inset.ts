@@ -11,7 +11,8 @@ import { Length, Percentage } from "../numeric";
 
 import { BasicShape } from "./basic-shape";
 
-const { either, map, filter, option, pair, right, takeAtMost } = Parser;
+const { either, map, filter, option, pair, right, separatedList, takeAtMost } =
+  Parser;
 const { parseDelim, parseWhitespace } = Token;
 
 /**
@@ -22,7 +23,7 @@ const { parseDelim, parseWhitespace } = Token;
 export class Inset<
   O extends Inset.Offset = Inset.Offset,
   C extends Inset.Corner = Inset.Corner
-> extends BasicShape<"inset"> {
+> extends BasicShape<"inset", false> {
   public static of<
     O extends Inset.Offset = Inset.Offset,
     C extends Inset.Corner = Inset.Corner

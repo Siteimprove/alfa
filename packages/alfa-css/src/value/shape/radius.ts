@@ -1,10 +1,12 @@
 import { Hash } from "@siteimprove/alfa-hash";
+import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import type { Parser as CSSParser } from "../../syntax";
 
 import { Keyword } from "../keyword";
-import { Length, Percentage } from "../numeric";
+import { LengthPercentage } from "../numeric";
+import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
 
@@ -16,12 +18,9 @@ const { either, map, filter } = Parser;
  * @public
  */
 export class Radius<
-  R extends Length.Fixed | Percentage.Fixed | Radius.Side =
-    | Length.Fixed
-    | Percentage.Fixed
-    | Radius.Side
-> extends BasicShape<"radius"> {
-  public static of<R extends Length.Fixed | Percentage.Fixed | Radius.Side>(
+  R extends LengthPercentage | Radius.Side = LengthPercentage | Radius.Side
+> extends BasicShape<"radius", Value.HasCalculation<[R]>> {
+  public static of<R extends LengthPercentage | Radius.Side>(
     value: R
   ): Radius<R> {
     return new Radius(value);
@@ -30,7 +29,7 @@ export class Radius<
   private readonly _value: R;
 
   private constructor(value: R) {
-    super("radius", false);
+    super("radius", Value.hasCalculation(value));
     this._value = value;
   }
 
@@ -38,8 +37,21 @@ export class Radius<
     return this._value;
   }
 
-  public resolve(): Radius<R> {
-    return this;
+  public resolve(resolver: Radius.Resolver): Radius.Canonical {
+    if (Keyword.isKeyword(this._value)) {
+      // TS lose the fact that if this._value is a Side, then this must be a
+      // Radius<Side>…
+      return this as Radius<Radius.Side>;
+    }
+
+    const resolved = LengthPercentage.resolve(resolver)(this._value);
+
+    return new Radius(
+      LengthPercentage.of(
+        Real.clamp(resolved.value, 0, Infinity),
+        resolved.unit
+      )
+    );
   }
 
   public equals(value: Radius): boolean;
@@ -70,8 +82,44 @@ export class Radius<
  * @public
  */
 export namespace Radius {
+  export type Canonical = Radius<LengthPercentage.Canonical | Side>;
+
   export interface JSON extends BasicShape.JSON<"radius"> {
-    value: Length.Fixed.JSON | Percentage.Fixed.JSON | Keyword.JSON;
+    value: LengthPercentage.JSON | Keyword.JSON;
+  }
+
+  export type Resolver = LengthPercentage.Resolver;
+
+  export type PartiallyResolved = Radius<
+    LengthPercentage.PartiallyResolved | Side
+  >;
+
+  export type PartialResolver = LengthPercentage.PartialResolver;
+
+  export function PartiallyResolve(
+    resolver: PartialResolver
+  ): (value: Radius) => PartiallyResolved {
+    return (value) => {
+      if (Keyword.isKeyword(value.value)) {
+        // TS lose the fact that if this._value is a Side, then this must be a
+        // Radius<Side>…
+        return value as Radius<Radius.Side>;
+      }
+
+      const resolved = LengthPercentage.partiallyResolve(resolver)(value.value);
+
+      if (resolved.hasCalculation()) {
+        return Radius.of(resolved);
+      }
+
+      const clamped = Real.clamp(resolved.value, 0, Infinity);
+
+      return Radius.of(
+        LengthPercentage.isPercentage(resolved)
+          ? LengthPercentage.of(clamped)
+          : LengthPercentage.of(clamped, resolved.unit)
+      );
+    };
   }
 
   export type Side = Side.Closest | Side.Farthest;
@@ -95,8 +143,9 @@ export namespace Radius {
   export const parse: CSSParser<Radius> = map(
     either(
       filter(
-        either(Length.parseBase, Percentage.parseBase),
-        ({ value }) => value >= 0,
+        LengthPercentage.parse,
+        // https://drafts.csswg.org/css-values/#calc-range
+        (value) => value.hasCalculation() || value.value >= 0,
         () => "Radius cannot be negative"
       ),
       Keyword.parse("closest-side", "farthest-side")

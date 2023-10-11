@@ -5,6 +5,7 @@ import { Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Position } from "../position";
+import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
 import { Radius } from "./radius";
@@ -18,9 +19,9 @@ const { map, option, pair, right } = Parser;
  */
 export class Circle<
   R extends Radius = Radius,
-  P extends Position.Fixed = Position.Fixed
-> extends BasicShape<"circle"> {
-  public static of<R extends Radius, P extends Position.Fixed>(
+  P extends Position = Position
+> extends BasicShape<"circle", Value.HasCalculation<[R, P]>> {
+  public static of<R extends Radius, P extends Position>(
     radius: R,
     center: P
   ): Circle<R, P> {
@@ -31,7 +32,7 @@ export class Circle<
   private readonly _center: P;
 
   private constructor(radius: R, center: P) {
-    super("circle", false);
+    super("circle", Value.hasCalculation(radius, center));
     this._radius = radius;
     this._center = center;
   }
@@ -44,8 +45,11 @@ export class Circle<
     return this._center;
   }
 
-  public resolve(): Circle<R, P> {
-    return this;
+  public resolve(resolver: Circle.Resolver): Circle.Canonical {
+    return new Circle(
+      this._radius.resolve(resolver),
+      this._center.resolve(resolver)
+    );
   }
 
   public equals(value: Circle): boolean;
@@ -81,9 +85,31 @@ export class Circle<
  * @public
  */
 export namespace Circle {
+  export type Canonical = Circle<Radius.Canonical, Position.Canonical>;
+
   export interface JSON extends BasicShape.JSON<"circle"> {
     radius: Radius.JSON;
     center: Position.JSON;
+  }
+
+  export type Resolver = Radius.Resolver & Position.Resolver;
+
+  export type PartiallyResolved = Circle<
+    Radius.PartiallyResolved,
+    Position.PartiallyResolved
+  >;
+
+  export type PartialResolver = Radius.PartialResolver &
+    Position.PartialResolver;
+
+  export function partiallyResolved(
+    resolver: PartialResolver
+  ): (value: Circle) => PartiallyResolved {
+    return (value) =>
+      Circle.of(
+        Radius.PartiallyResolve(resolver)(value.radius),
+        Position.partiallyResolve(resolver)(value.center)
+      );
   }
 
   export function isCircle(value: unknown): value is Circle {
@@ -100,7 +126,7 @@ export namespace Circle {
             option(Token.parseWhitespace),
             right(
               Keyword.parse("at"),
-              right(Token.parseWhitespace, Position.parseBase())
+              right(Token.parseWhitespace, Position.parse())
             )
           )
         )
