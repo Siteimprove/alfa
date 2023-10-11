@@ -10,40 +10,22 @@ test("parse() parses a radial gradient with no shape or position", (t) => {
   t.deepEqual(parse("radial-gradient(red, blue)"), {
     type: "gradient",
     kind: "radial",
-    shape: {
-      type: "extent",
-      shape: "circle",
-      size: "farthest-corner",
-    },
+    shape: { type: "extent", shape: "circle", size: "farthest-corner" },
     position: {
       type: "position",
-      horizontal: {
-        type: "keyword",
-        value: "center",
-      },
-      vertical: {
-        type: "keyword",
-        value: "center",
-      },
+      horizontal: { type: "keyword", value: "center" },
+      vertical: { type: "keyword", value: "center" },
     },
     items: [
       {
         type: "stop",
+        color: { type: "color", format: "named", color: "red" },
         position: null,
-        color: {
-          type: "color",
-          format: "named",
-          color: "red",
-        },
       },
       {
         type: "stop",
+        color: { type: "color", format: "named", color: "blue" },
         position: null,
-        color: {
-          type: "color",
-          format: "named",
-          color: "blue",
-        },
       },
     ],
     repeats: false,
@@ -54,40 +36,22 @@ test("parse() parses a radial gradient with an extent", (t) => {
   t.deepEqual(parse("radial-gradient(closest-side, red, blue)"), {
     type: "gradient",
     kind: "radial",
-    shape: {
-      type: "extent",
-      shape: "circle",
-      size: "closest-side",
-    },
+    shape: { type: "extent", shape: "circle", size: "closest-side" },
     position: {
       type: "position",
-      horizontal: {
-        type: "keyword",
-        value: "center",
-      },
-      vertical: {
-        type: "keyword",
-        value: "center",
-      },
+      horizontal: { type: "keyword", value: "center" },
+      vertical: { type: "keyword", value: "center" },
     },
     items: [
       {
         type: "stop",
+        color: { type: "color", format: "named", color: "red" },
         position: null,
-        color: {
-          type: "color",
-          format: "named",
-          color: "red",
-        },
       },
       {
         type: "stop",
+        color: { type: "color", format: "named", color: "blue" },
         position: null,
-        color: {
-          type: "color",
-          format: "named",
-          color: "blue",
-        },
       },
     ],
     repeats: false,
@@ -100,48 +64,30 @@ test("parse() parses a radial gradient with an extent and a position", (t) => {
     {
       type: "gradient",
       kind: "radial",
-      shape: {
-        type: "extent",
-        shape: "circle",
-        size: "closest-side",
-      },
+      shape: { type: "extent", shape: "circle", size: "closest-side" },
       position: {
         type: "position",
         horizontal: {
           type: "side",
-          side: {
-            type: "keyword",
-            value: "left",
-          },
+          side: { type: "keyword", value: "left" },
           offset: null,
         },
         vertical: {
           type: "side",
-          side: {
-            type: "keyword",
-            value: "bottom",
-          },
+          side: { type: "keyword", value: "bottom" },
           offset: null,
         },
       },
       items: [
         {
           type: "stop",
+          color: { type: "color", format: "named", color: "red" },
           position: null,
-          color: {
-            type: "color",
-            format: "named",
-            color: "red",
-          },
         },
         {
           type: "stop",
+          color: { type: "color", format: "named", color: "blue" },
           position: null,
-          color: {
-            type: "color",
-            format: "named",
-            color: "blue",
-          },
         },
       ],
       repeats: false,
@@ -158,41 +104,23 @@ test("parse() parses a radial gradient with a circle", (t) => {
         kind: "radial",
         shape: {
           type: "circle",
-          radius: {
-            type: "length",
-            value: 1,
-            unit: "px",
-          },
+          radius: { type: "length", value: 1, unit: "px" },
         },
         position: {
           type: "position",
-          horizontal: {
-            type: "keyword",
-            value: "center",
-          },
-          vertical: {
-            type: "keyword",
-            value: "center",
-          },
+          horizontal: { type: "keyword", value: "center" },
+          vertical: { type: "keyword", value: "center" },
         },
         items: [
           {
             type: "stop",
+            color: { type: "color", format: "named", color: "red" },
             position: null,
-            color: {
-              type: "color",
-              format: "named",
-              color: "red",
-            },
           },
           {
             type: "stop",
+            color: { type: "color", format: "named", color: "blue" },
             position: null,
-            color: {
-              type: "color",
-              format: "named",
-              color: "blue",
-            },
           },
         ],
         repeats: false,
@@ -234,46 +162,24 @@ test("parse() parses a radial gradient with an ellipse", (t) => {
         kind: "radial",
         shape: {
           type: "ellipse",
-          horizontal: {
-            type: "length",
-            value: 1,
-            unit: "px",
-          },
-          vertical: {
-            type: "length",
-            value: 2,
-            unit: "px",
-          },
+          horizontal: { type: "length", value: 1, unit: "px" },
+          vertical: { type: "length", value: 2, unit: "px" },
         },
         position: {
           type: "position",
-          horizontal: {
-            type: "keyword",
-            value: "center",
-          },
-          vertical: {
-            type: "keyword",
-            value: "center",
-          },
+          horizontal: { type: "keyword", value: "center" },
+          vertical: { type: "keyword", value: "center" },
         },
         items: [
           {
             type: "stop",
+            color: { type: "color", format: "named", color: "red" },
             position: null,
-            color: {
-              type: "color",
-              format: "named",
-              color: "red",
-            },
           },
           {
             type: "stop",
+            color: { type: "color", format: "named", color: "blue" },
             position: null,
-            color: {
-              type: "color",
-              format: "named",
-              color: "blue",
-            },
           },
         ],
         repeats: false,
@@ -349,40 +255,22 @@ test("parse() parses a radial gradient with a circular extent", (t) => {
       {
         type: "gradient",
         kind: "radial",
-        shape: {
-          type: "extent",
-          shape: "circle",
-          size: "farthest-corner",
-        },
+        shape: { type: "extent", shape: "circle", size: "farthest-corner" },
         position: {
           type: "position",
-          horizontal: {
-            type: "keyword",
-            value: "center",
-          },
-          vertical: {
-            type: "keyword",
-            value: "center",
-          },
+          horizontal: { type: "keyword", value: "center" },
+          vertical: { type: "keyword", value: "center" },
         },
         items: [
           {
             type: "stop",
+            color: { type: "color", format: "named", color: "red" },
             position: null,
-            color: {
-              type: "color",
-              format: "named",
-              color: "red",
-            },
           },
           {
             type: "stop",
+            color: { type: "color", format: "named", color: "blue" },
             position: null,
-            color: {
-              type: "color",
-              format: "named",
-              color: "blue",
-            },
           },
         ],
         repeats: false,
@@ -403,40 +291,22 @@ test("parse() parses a radial gradient with an elliptical extent", (t) => {
       {
         type: "gradient",
         kind: "radial",
-        shape: {
-          type: "extent",
-          shape: "ellipse",
-          size: "farthest-corner",
-        },
+        shape: { type: "extent", shape: "ellipse", size: "farthest-corner" },
         position: {
           type: "position",
-          horizontal: {
-            type: "keyword",
-            value: "center",
-          },
-          vertical: {
-            type: "keyword",
-            value: "center",
-          },
+          horizontal: { type: "keyword", value: "center" },
+          vertical: { type: "keyword", value: "center" },
         },
         items: [
           {
             type: "stop",
+            color: { type: "color", format: "named", color: "red" },
             position: null,
-            color: {
-              type: "color",
-              format: "named",
-              color: "red",
-            },
           },
           {
             type: "stop",
+            color: { type: "color", format: "named", color: "blue" },
             position: null,
-            color: {
-              type: "color",
-              format: "named",
-              color: "blue",
-            },
           },
         ],
         repeats: false,

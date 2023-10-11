@@ -121,6 +121,7 @@
     "test/value/color/hsl.spec.ts",
     "test/value/color/rgb.spec.ts",
     "test/value/color/named.spec.ts",
+    "test/value/image/image.spec.ts",
     "test/value/image/linear-gradient.spec.ts",
     "test/value/image/radial-gradient.spec.ts",
     "test/value/numeric/angle.spec.ts",
