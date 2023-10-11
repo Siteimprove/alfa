@@ -1,6 +1,10 @@
 {
   "$schema": "http://json.schemastore.org/tsconfig",
   "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "@siteimprove/alfa-dom"
+  },
   "files": [
     "native.ts",
     "src/index.ts",
@@ -8,7 +12,7 @@
     "src/page.ts",
     "src/resource.ts",
     "src/site.ts",
-    "test/page.spec.ts"
+    "test/page.spec.tsx"
   ],
   "references": [
     { "path": "../alfa-device" },

@@ -307,7 +307,7 @@ export class Element<N extends string = string>
     return path;
   }
 
-  public toJSON(): Element.JSON<N> {
+  public toJSON(options?: Node.SerializationOptions): Element.JSON<N> {
     return {
       ...super.toJSON(),
       namespace: this._namespace.getOr(null),
@@ -319,7 +319,7 @@ export class Element<N extends string = string>
       style: this._style.map((style) => style.toJSON()).getOr(null),
       shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
       content: this._content.map((content) => content.toJSON()).getOr(null),
-      box: null, // FIXME: An element doesn't have "a box" anymore, so it doesn't make sense to serialize it, but we still want the property so we can deserialize with a single box.
+      box: Option.from(options).flatMap(o => this._boxes.get(o.device)).map(box => box.toJSON()).getOr(null)
     };
   }
 

@@ -58,9 +58,9 @@ export class Document extends Node<"document"> {
     return "/";
   }
 
-  public toJSON(): Document.JSON {
+  public toJSON(options?: Node.SerializationOptions): Document.JSON {
     return {
-      ...super.toJSON(),
+      ...super.toJSON(options),
       style: this._style.map((sheet) => sheet.toJSON()),
     };
   }
