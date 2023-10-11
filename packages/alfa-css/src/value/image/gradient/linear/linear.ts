@@ -150,23 +150,19 @@ export namespace Linear {
   /**
    * {@link https://drafts.csswg.org/css-images/#funcdef-linear-gradient}
    */
-  export function parse(
-    parseItemList: CSSParser<Array<Item>>
-  ): CSSParser<Linear> {
-    return map(
-      Function.parse(
-        (fn) =>
-          fn.value === "linear-gradient" ||
-          fn.value === "repeating-linear-gradient",
-        pair(option(left(Direction.parse, Comma.parse)), parseItemList)
-      ),
-      ([fn, [direction, items]]) => {
-        return Linear.of(
-          direction.getOrElse(() => Side.of("bottom")),
-          items,
-          fn.name.startsWith("repeating")
-        );
-      }
-    );
-  }
+  export const parse: CSSParser<Linear> = map(
+    Function.parse(
+      (fn) =>
+        fn.value === "linear-gradient" ||
+        fn.value === "repeating-linear-gradient",
+      pair(option(left(Direction.parse, Comma.parse)), Item.parseList)
+    ),
+    ([fn, [direction, items]]) => {
+      return Linear.of(
+        direction.getOrElse(() => Side.of("bottom")),
+        items,
+        fn.name.startsWith("repeating")
+      );
+    }
+  );
 }
