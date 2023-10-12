@@ -228,7 +228,7 @@ export class Document extends Node<"document"> {
     // (undocumented)
     get style(): Iterable<Sheet>;
     // (undocumented)
-    toJSON(): Document.JSON;
+    toJSON(options?: Node.SerializationOptions): Document.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -295,7 +295,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     tabIndex(): Option<number>;
     // (undocumented)
-    toJSON(): Element.JSON<N>;
+    toJSON(options?: Node.SerializationOptions): Element.JSON<N>;
     // (undocumented)
     toString(): string;
 }
@@ -798,7 +798,7 @@ export namespace NamespaceRule {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
+export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>, sarif.Serializable<sarif.Location> {
     protected constructor(children: Array<Node>, type: T);
     // (undocumented)
     equals(value: Node): boolean;
@@ -904,11 +904,11 @@ export namespace Node {
     export function from(json: Text.JSON, device: Option<Device>): Text;
     // (undocumented)
     export function from(json: Comment.JSON, device: Option<Device>): Comment;
+    // (undocumented)
+    export function from(json: Document.JSON, device: Option<Device>): Document;
     const flatTree: Traversal;
     const fullTree: Traversal;
     const composedNested: Traversal;
-    // (undocumented)
-    export function from(json: Document.JSON, device: Option<Device>): Document;
     // (undocumented)
     export function from(json: Type.JSON, device: Option<Device>): Document;
     // (undocumented)
@@ -921,6 +921,11 @@ export namespace Node {
     export function isNode(value: unknown): value is Node;
     // (undocumented)
     export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
+    }
+    // (undocumented)
+    export interface SerializationOptions {
+        // (undocumented)
+        device: Device;
     }
     // (undocumented)
     export class Traversal extends Flags<Traversal.Flag> {
