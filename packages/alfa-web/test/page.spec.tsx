@@ -1,7 +1,7 @@
 import { test } from "@siteimprove/alfa-test";
 
 import { Device } from "@siteimprove/alfa-device";
-import { Document, Element, h } from "@siteimprove/alfa-dom";
+import { Document, h } from "@siteimprove/alfa-dom";
 import { Request, Response } from "@siteimprove/alfa-http";
 
 import { Page } from "../src/page";
@@ -50,10 +50,8 @@ test(".toJSON() serializes correct box", (t) => {
     </div>,
   ]);
 
-  const page = Page.of(Request.empty(), Response.empty(), document, device);
-
   t.deepEqual(
-    page
+    Page.of(Request.empty(), Response.empty(), document, device)
       .toJSON()
       .document.children?.filter((x) => x.type === "element")
       .map((x) => x.box),
