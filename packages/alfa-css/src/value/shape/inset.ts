@@ -226,26 +226,27 @@ export namespace Inset {
     ]) => [topLeft, topRight, bottomRight, bottomLeft] as const
   );
 
-  const parseCorners = map(
-    pair(
-      parseRadii,
-      option(
-        right(delimited(option(parseWhitespace), parseDelim("/")), parseRadii)
-      )
-    ),
-    ([horizontal, vertical]) =>
-      vertical
-        .map(
-          (vertical) =>
-            [
-              [horizontal[0], vertical[0]],
-              [horizontal[1], vertical[1]],
-              [horizontal[2], vertical[2]],
-              [horizontal[3], vertical[3]],
-            ] as const
+  const parseCorners: CSSParser<readonly [Corner, Corner, Corner, Corner]> =
+    map(
+      pair(
+        parseRadii,
+        option(
+          right(delimited(option(parseWhitespace), parseDelim("/")), parseRadii)
         )
-        .getOr(horizontal)
-  );
+      ),
+      ([horizontal, vertical]) =>
+        vertical
+          .map(
+            (vertical) =>
+              [
+                [horizontal[0], vertical[0]],
+                [horizontal[1], vertical[1]],
+                [horizontal[2], vertical[2]],
+                [horizontal[3], vertical[3]],
+              ] as const
+          )
+          .getOr(horizontal)
+    );
 
   export const parse: CSSParser<Inset> = map(
     Function.parse(
@@ -263,7 +264,7 @@ export namespace Inset {
         )
       )
     ),
-    ([_, [offsets, corners]]) => Inset.of<Offset, Corner>(offsets, corners)
+    ([_, [offsets, corners]]) => Inset.of(offsets, corners)
   );
 }
 
