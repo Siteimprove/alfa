@@ -244,8 +244,7 @@ export interface Node {
 export namespace Node {
   export interface JSON<T extends string = string> extends tree.Node.JSON<T> {}
 
-  export interface SerializationOptions
-  {
+  export interface SerializationOptions  {
     device: Device
   }
 
