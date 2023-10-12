@@ -16,7 +16,7 @@ export namespace Specified {
   export type Item = Keyword<"none"> | Image;
 }
 
-type Computed = List<Keyword<"none"> | Image.Canonical>;
+type Computed = List<Keyword<"none"> | Image.PartiallyResolved>;
 
 /**
  * @internal
@@ -41,8 +41,7 @@ export default Longhand.of<Specified, Computed>(
     value.map((images) =>
       images.map((image) =>
         Selective.of(image)
-          .if(Image.isImage, (image) => Resolver.image(image, style))
-          .else((image) => image)
+          .if(Image.isImage, Image.partiallyResolve(Resolver.length(style)))
           .get()
       )
     )
