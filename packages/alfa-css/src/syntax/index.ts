@@ -1,4 +1,5 @@
 export * from "./block";
+export * from "./comma";
 export * from "./component";
 export * from "./declaration";
 export * from "./function";

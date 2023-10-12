@@ -91,6 +91,8 @@ export namespace Angle {
     export function of<U extends Unit.Angle>(value: Angle_2<U>): Fixed<U>;
     // (undocumented)
     export function of(value: Math_2<"angle">): Calculated;
+    // (undocumented)
+    export type Resolver = {};
     const // (undocumented)
     parse: Parser<Angle>;
     const // @internal (undocumented)
@@ -320,6 +322,12 @@ export namespace Color {
     parse: Parser_2<Slice<Token>, Color, string, []>;
     // (undocumented)
     export function system(keyword: System.Keyword): System;
+}
+
+// @public (undocumented)
+export namespace Comma {
+    const // (undocumented)
+    parse: Parser_2<Slice<Token>, Token.Comma, string, []>;
 }
 
 // @public (undocumented)
@@ -603,93 +611,28 @@ namespace Function_2 {
 export { Function_2 as Function }
 
 // @public (undocumented)
-export type Gradient = Linear | Radial;
+export type Gradient = Gradient.Linear | Gradient.Radial;
 
 // @public (undocumented)
 export namespace Gradient {
+    // Warning: (ae-forgotten-export) The symbol "Linear" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "Radial" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
     export type Canonical = Linear.Canonical | Radial.Canonical;
     // (undocumented)
-    export class Hint<P extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> implements Equatable, Hashable, Serializable {
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        hash(hash: Hash): void;
-        // (undocumented)
-        static of<P extends Length.Fixed | Percentage.Fixed>(position: P): Hint<P>;
-        // (undocumented)
-        get position(): P;
-        // (undocumented)
-        toJSON(): Hint.JSON;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "hint";
-    }
-    // (undocumented)
-    export namespace Hint {
-        // (undocumented)
-        export type Canonical = Hint<Percentage.Canonical | Length.Canonical>;
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            position: Length.Fixed.JSON | Percentage.Fixed.JSON;
-            // (undocumented)
-            type: "hint";
-        }
-    }
-    // (undocumented)
-    export type Item = Stop | Hint;
-    const // (undocumented)
-    parseStop: Parser<Stop>;
-    // (undocumented)
-    export namespace Item {
-        // (undocumented)
-        export type JSON = Stop.JSON | Hint.JSON;
-    }
-    // (undocumented)
     export type JSON = Linear.JSON | Radial.JSON;
-    const // (undocumented)
-    parseHint: Parser<Hint>;
+    import Item = item.Item;
+    import Linear = linear.Linear;
+    import Radial = radial.Radial;
     // (undocumented)
-    export class Stop<C extends Color = Color, P extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> implements Equatable, Hashable, Serializable {
-        // (undocumented)
-        get color(): C;
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        hash(hash: Hash): void;
-        // (undocumented)
-        static of<C extends Color, P extends Length.Fixed | Percentage.Fixed>(color: C, position?: Option<P>): Stop<C, P>;
-        // (undocumented)
-        get position(): Option<P>;
-        // (undocumented)
-        toJSON(): Stop.JSON;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "stop";
-    }
+    export function partiallyResolve(resolver: PartialResolver): (value: Gradient) => PartiallyResolved;
     // (undocumented)
-    export namespace Stop {
-        // (undocumented)
-        export type Canonical = Stop<Color.Canonical, Percentage.Canonical | Length.Canonical>;
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            color: Color.JSON;
-            // (undocumented)
-            position: Length.Fixed.JSON | Percentage.Fixed.JSON | null;
-            // (undocumented)
-            type: "stop";
-        }
-    }
-    const // (undocumented)
-    parseItemList: Parser<Array<Item>>;
+    export type PartiallyResolved = Linear.PartiallyResolved | Radial.PartiallyResolved;
+    // (undocumented)
+    export type PartialResolver = Linear.PartialResolver & Radial.PartialResolver;
+    // (undocumented)
+    export type Resolver = Linear.Resolver & Radial.Resolver;
     const // (undocumented)
     parse: Parser<Gradient>;
 }
@@ -789,7 +732,7 @@ export namespace HSL {
 }
 
 // @public (undocumented)
-export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"image", false> {
+export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"image", Value.HasCalculation<[I]>> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -799,7 +742,7 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"ima
     // (undocumented)
     static of<I extends URL | Gradient>(image: I): Image<I>;
     // (undocumented)
-    resolve(): Image<I>;
+    resolve(resolver: Image.Resolver): Image.Canonical;
     // (undocumented)
     toJSON(): Image.JSON;
     // (undocumented)
@@ -809,7 +752,7 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<"ima
 // @public (undocumented)
 export namespace Image {
     // (undocumented)
-    export type Canonical = Image<URL | Gradient.Canonical>;
+    export type Canonical = Image<URL.Canonical | Gradient.Canonical>;
     // (undocumented)
     export function isImage<I extends URL | Gradient>(value: unknown): value is Image<I>;
     // (undocumented)
@@ -817,6 +760,14 @@ export namespace Image {
         // (undocumented)
         image: URL.JSON | Gradient.JSON;
     }
+    // (undocumented)
+    export function partiallyResolve(resolver: PartialResolver): (value: Image) => PartiallyResolved;
+    // (undocumented)
+    export type PartiallyResolved = Image<URL.Canonical | Gradient.PartiallyResolved>;
+    // (undocumented)
+    export type PartialResolver = URL.Resolver & Gradient.PartialResolver;
+    // (undocumented)
+    export type Resolver = URL.Resolver & Gradient.Resolver;
     const // (undocumented)
     parse: Parser<Image>;
 }
@@ -1199,135 +1150,6 @@ export namespace LengthPercentage {
 export namespace Lexer {
     // (undocumented)
     export function lex(input: string): Slice<Token>;
-}
-
-// @public (undocumented)
-export class Linear<I extends Gradient.Item = Gradient.Item, D extends Linear.Direction = Linear.Direction> extends Value<"gradient", false> {
-    // (undocumented)
-    get direction(): D;
-    // (undocumented)
-    equals(value: Linear): boolean;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    get items(): Iterable<I>;
-    // (undocumented)
-    get kind(): "linear";
-    // (undocumented)
-    static of<I extends Gradient.Item, D extends Linear.Direction>(direction: D, items: Iterable<I>, repeats: boolean): Linear<I, D>;
-    // (undocumented)
-    get repeats(): boolean;
-    // (undocumented)
-    resolve(): Linear<I, D>;
-    // (undocumented)
-    toJSON(): Linear.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace Linear {
-    // (undocumented)
-    export type Canonical = Linear<Gradient.Hint.Canonical | Gradient.Stop.Canonical, Angle.Canonical | Linear.Side | Linear.Corner>;
-    // (undocumented)
-    export class Corner implements Equatable, Serializable {
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        hash(hash: Hash): void;
-        // (undocumented)
-        get horizontal(): Position.Horizontal;
-        // (undocumented)
-        static of(vertical: Position.Vertical, horizontal: Position.Horizontal): Corner;
-        // (undocumented)
-        toJSON(): Corner.JSON;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "corner";
-        // (undocumented)
-        get vertical(): Position.Vertical;
-    }
-    // (undocumented)
-    export namespace Corner {
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            horizontal: Position.Horizontal;
-            // (undocumented)
-            type: "corner";
-            // (undocumented)
-            vertical: Position.Vertical;
-        }
-    }
-    // (undocumented)
-    export type Direction = Angle.Fixed | Side | Corner;
-    // (undocumented)
-    export namespace Direction {
-        // (undocumented)
-        export type JSON = Angle.Fixed.JSON | Side.JSON | Corner.JSON;
-    }
-    // (undocumented)
-    export interface JSON extends Value.JSON<"gradient"> {
-        // (undocumented)
-        direction: Direction.JSON;
-        // (undocumented)
-        items: Array<Gradient.Item.JSON>;
-        // (undocumented)
-        kind: "linear";
-        // (undocumented)
-        repeats: boolean;
-    }
-    // (undocumented)
-    export function parse(parseItemList: Parser<Array<Gradient.Item>>): Parser<Linear>;
-    // (undocumented)
-    export type Position = Position.Vertical | Position.Horizontal;
-    // (undocumented)
-    export namespace Position {
-        // (undocumented)
-        export type Horizontal = "left" | "right";
-        // (undocumented)
-        export type Vertical = "top" | "bottom";
-        const // (undocumented)
-        parseVertical: Parser_2<Slice<Token>, Vertical, string, []>;
-        const // (undocumented)
-        parseHorizontal: Parser_2<Slice<Token>, Horizontal, string, []>;
-        const // (undocumented)
-        parse: Parser_2<Slice<Token>, Vertical | Horizontal, string, []>;
-    }
-    // (undocumented)
-    export class Side implements Equatable, Hashable, Serializable {
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        hash(hash: Hash): void;
-        // (undocumented)
-        static of(side: Position.Vertical | Position.Horizontal): Side;
-        // (undocumented)
-        get side(): Position.Vertical | Position.Horizontal;
-        // (undocumented)
-        toJSON(): Side.JSON;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "side";
-    }
-    // (undocumented)
-    export namespace Side {
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            side: Position.Vertical | Position.Horizontal;
-            // (undocumented)
-            type: "side";
-        }
-    }
 }
 
 // @public (undocumented)
@@ -2070,185 +1892,6 @@ export namespace Position {
         percentageHBase: Length.Canonical;
         // (undocumented)
         percentageVBase: Length.Canonical;
-    }
-}
-
-// @public (undocumented)
-export class Radial<I extends Gradient.Item = Gradient.Item, S extends Radial.Shape = Radial.Shape, P extends Position.Fixed = Position.Fixed> extends Value<"gradient", false> {
-    // (undocumented)
-    equals(value: Radial): boolean;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    get items(): Iterable<I>;
-    // (undocumented)
-    get kind(): "radial";
-    // (undocumented)
-    static of<I extends Gradient.Item = Gradient.Item, S extends Radial.Shape = Radial.Shape, P extends Position.Fixed = Position.Fixed>(shape: S, position: P, items: Iterable<I>, repeats: boolean): Radial<I, S, P>;
-    // (undocumented)
-    get position(): P;
-    // (undocumented)
-    get repeats(): boolean;
-    // (undocumented)
-    resolve(): Radial<I, S, P>;
-    // (undocumented)
-    get shape(): S;
-    // (undocumented)
-    toJSON(): Radial.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-export namespace Radial {
-    // (undocumented)
-    export type Canonical = Radial<Gradient.Hint.Canonical | Gradient.Stop.Canonical, Radial.Circle.Canonical | Radial.Ellipse.Canonical | Radial.Extent, Position.Fixed>;
-    // (undocumented)
-    export class Circle<R extends Length.Fixed = Length.Fixed> implements Equatable, Hashable, Serializable<Circle.JSON> {
-        // (undocumented)
-        equals(value: Circle): boolean;
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        hash(hash: Hash): void;
-        // (undocumented)
-        static of<R extends Length.Fixed>(radius: R): Circle<R>;
-        // (undocumented)
-        get radius(): R;
-        // (undocumented)
-        toJSON(): Circle.JSON;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "circle";
-    }
-    // (undocumented)
-    export namespace Circle {
-        // (undocumented)
-        export type Canonical = Circle<Length.Canonical>;
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            radius: Length.Fixed.JSON;
-            // (undocumented)
-            type: "circle";
-        }
-    }
-    // (undocumented)
-    export class Ellipse<R extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> implements Equatable, Hashable, Serializable<Ellipse.JSON> {
-        // (undocumented)
-        equals(value: Ellipse): boolean;
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        hash(hash: Hash): void;
-        // (undocumented)
-        get horizontal(): R;
-        // (undocumented)
-        static of<R extends Length.Fixed | Percentage.Fixed>(horizontal: R, vertical: R): Ellipse<R>;
-        // (undocumented)
-        toJSON(): Ellipse.JSON;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "ellipse";
-        // (undocumented)
-        get vertical(): R;
-    }
-    // (undocumented)
-    export namespace Ellipse {
-        // (undocumented)
-        export type Canonical = Ellipse<Percentage.Canonical | Length.Canonical>;
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            horizontal: Length.Fixed.JSON | Percentage.Fixed.JSON;
-            // (undocumented)
-            type: "ellipse";
-            // (undocumented)
-            vertical: Length.Fixed.JSON | Percentage.Fixed.JSON;
-        }
-    }
-    // (undocumented)
-    export class Extent implements Equatable, Hashable, Serializable<Extent.JSON> {
-        // (undocumented)
-        equals(value: Extent): boolean;
-        // (undocumented)
-        equals(value: unknown): value is this;
-        // (undocumented)
-        hash(hash: Hash): void;
-        // (undocumented)
-        static of(shape?: Extent.Shape, size?: Extent.Size): Extent;
-        // (undocumented)
-        get shape(): Extent.Shape;
-        // (undocumented)
-        get size(): Extent.Size;
-        // (undocumented)
-        toJSON(): Extent.JSON;
-        // (undocumented)
-        toString(): string;
-        // (undocumented)
-        get type(): "extent";
-    }
-    // (undocumented)
-    export namespace Extent {
-        // (undocumented)
-        export interface JSON {
-            // (undocumented)
-            [key: string]: json.JSON;
-            // (undocumented)
-            shape: `${Shape}`;
-            // (undocumented)
-            size: `${Size}`;
-            // (undocumented)
-            type: "extent";
-        }
-        // (undocumented)
-        export enum Shape {
-            // (undocumented)
-            Circle = "circle",
-            // (undocumented)
-            Ellipse = "ellipse"
-        }
-        // (undocumented)
-        export enum Size {
-            // (undocumented)
-            ClosestCorner = "closest-corner",
-            // (undocumented)
-            ClosestSide = "closest-side",
-            // (undocumented)
-            FarthestCorner = "farthest-corner",
-            // (undocumented)
-            FarthestSide = "farthest-side"
-        }
-    }
-    // (undocumented)
-    export interface JSON extends Value.JSON<"gradient"> {
-        // (undocumented)
-        items: Array<Gradient.Item.JSON>;
-        // (undocumented)
-        kind: "radial";
-        // (undocumented)
-        position: Position.JSON;
-        // (undocumented)
-        repeats: boolean;
-        // (undocumented)
-        shape: Shape.JSON;
-    }
-    // (undocumented)
-    export function parse(parseItemList: Parser<Array<Gradient.Item>>): Parser<Radial>;
-    // (undocumented)
-    export type Shape = Circle | Ellipse | Extent;
-    // (undocumented)
-    export namespace Shape {
-        // (undocumented)
-        export type JSON = Circle.JSON | Ellipse.JSON | Extent.JSON;
     }
 }
 
@@ -3629,12 +3272,16 @@ export class URL extends Value<"url", false> {
 // @public (undocumented)
 export namespace URL {
     // (undocumented)
+    export type Canonical = URL;
+    // (undocumented)
     export function isURL(value: unknown): value is URL;
     // (undocumented)
     export interface JSON extends Value.JSON<"url"> {
         // (undocumented)
         url: string;
     }
+    // (undocumented)
+    export type Resolver = {};
     const // (undocumented)
     parse: Parser<URL>;
 }

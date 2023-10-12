@@ -1,7 +1,9 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import type { Parser as CSSParser } from "../../syntax";
+
 import { Value } from "../value";
 
 import { URL } from "./url";
@@ -16,7 +18,7 @@ const { map, either } = Parser;
  */
 export class Image<I extends URL | Gradient = URL | Gradient> extends Value<
   "image",
-  false
+  Value.HasCalculation<[I]>
 > {
   public static of<I extends URL | Gradient>(image: I): Image<I> {
     return new Image(image);
@@ -25,7 +27,7 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<
   private readonly _image: I;
 
   private constructor(image: I) {
-    super("image", false);
+    super("image", Value.hasCalculation(image));
     this._image = image;
   }
 
@@ -33,8 +35,8 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<
     return this._image;
   }
 
-  public resolve(): Image<I> {
-    return this;
+  public resolve(resolver: Image.Resolver): Image.Canonical {
+    return new Image(this._image.resolve(resolver));
   }
 
   public equals(value: unknown): value is this {
@@ -61,10 +63,30 @@ export class Image<I extends URL | Gradient = URL | Gradient> extends Value<
  * @public
  */
 export namespace Image {
-  export type Canonical = Image<URL | Gradient.Canonical>;
+  export type Canonical = Image<URL.Canonical | Gradient.Canonical>;
+
+  export type Resolver = URL.Resolver & Gradient.Resolver;
 
   export interface JSON extends Value.JSON<"image"> {
     image: URL.JSON | Gradient.JSON;
+  }
+
+  export type PartiallyResolved = Image<
+    URL.Canonical | Gradient.PartiallyResolved
+  >;
+
+  export type PartialResolver = URL.Resolver & Gradient.PartialResolver;
+
+  export function partiallyResolve(
+    resolver: PartialResolver
+  ): (value: Image) => PartiallyResolved {
+    return (value) =>
+      Image.of(
+        Selective.of(value.image)
+          .if(URL.isURL, (url) => url.resolve())
+          .else(Gradient.partiallyResolve(resolver))
+          .get()
+      );
   }
 
   export function isImage<I extends URL | Gradient>(
@@ -78,6 +100,6 @@ export namespace Image {
    */
   export const parse: CSSParser<Image> = map(
     either(URL.parse, Gradient.parse),
-    (image) => Image.of(image)
+    Image.of
   );
 }
