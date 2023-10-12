@@ -14,7 +14,6 @@ import { Device } from '@siteimprove/alfa-device';
 import { Element } from '@siteimprove/alfa-dom';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Functor } from '@siteimprove/alfa-functor';
-import { Gradient } from '@siteimprove/alfa-css';
 import { Image } from '@siteimprove/alfa-css';
 import { Iterable as Iterable_2 } from '@siteimprove/alfa-iterable';
 import * as json from '@siteimprove/alfa-json';
@@ -180,7 +179,7 @@ export namespace Longhands {
         readonly "background-attachment": Longhand<List<import("./property/background-attachment").Specified.Item, boolean>, List<import("./property/background-attachment").Specified.Item, boolean>>;
         readonly "background-clip": Longhand<List<Box, boolean>, List<Box, boolean>>;
         readonly "background-color": Longhand<Color, Color.Canonical>;
-        readonly "background-image": Longhand<List<import("./property/background-image").Specified.Item, boolean>, List<Image | Keyword<"none">, boolean>>;
+        readonly "background-image": Longhand<List<import("./property/background-image").Specified.Item, boolean>, List<Image.PartiallyResolved | Keyword<"none">, boolean>>;
         readonly "background-origin": Longhand<List<Box, boolean>, List<Box, boolean>>;
         readonly "background-position-x": Longhand<List<import("./property/background-position-x").Specified.Item, boolean>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Horizontal>, boolean>>;
         readonly "background-position-y": Longhand<List<import("./property/background-position-y").Specified.Item, boolean>, List<Keywords.Center | Side.PartiallyResolved<Keywords.Vertical>, boolean>>;
@@ -204,7 +203,7 @@ export namespace Longhands {
         readonly "border-image-outset": Longhand<Specified_2, Tuple<[top: Length | Number_2, right: Length | Number_2, bottom: Length | Number_2, left: Length | Number_2], boolean>>;
         readonly "border-image-repeat": Longhand<Specified_4, Specified_4>;
         readonly "border-image-slice": Longhand<Specified_6, Specified_6>;
-        readonly "border-image-source": Longhand<Specified_8, Image | Keyword<"none">>;
+        readonly "border-image-source": Longhand<Specified_8, Image.PartiallyResolved | Keyword<"none">>;
         readonly "border-image-width": Longhand<Specified_9, Tuple<[top: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">, right: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">, bottom: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">, left: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">], boolean>>;
         readonly "border-inline-end-color": Longhand<Color, Color.Canonical>;
         readonly "border-inline-end-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
@@ -297,15 +296,9 @@ export namespace Longhands {
 // @internal
 export namespace Resolver {
     // (undocumented)
-    export function image(image: Image, style: Style): Image<URL | Gradient.Canonical>;
-    // (undocumented)
     export function length(style: Style): Length.Resolver;
     // (undocumented)
     export function lengthPercentage(base: Length.Canonical, style: Style): LengthPercentage.Resolver;
-    // (undocumented)
-    export function position(position: Position.Fixed, style: Style): Position.Fixed;
-    // (undocumented)
-    export function positionComponent<S extends Position.Keywords.Horizontal | Position.Keywords.Vertical>(position: Position.Component.Fixed<S>, style: Style): Position.Component.Fixed<S>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Name" needs to be exported by the entry point index.d.ts

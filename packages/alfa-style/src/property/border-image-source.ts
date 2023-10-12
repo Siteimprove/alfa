@@ -1,5 +1,6 @@
 import { Image, Keyword } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
@@ -11,7 +12,7 @@ const { either } = Parser;
  */
 export type Specified = Keyword<"none"> | Image;
 
-type Computed = Keyword<"none"> | Image.Canonical;
+type Computed = Keyword<"none"> | Image.PartiallyResolved;
 
 /**
  * @internal
@@ -26,13 +27,9 @@ export default Longhand.of<Specified, Computed>(
   Keyword.of("none"),
   parse,
   (value, style) =>
-    value.map((image) => {
-      switch (image.type) {
-        case "keyword":
-          return image;
-
-        case "image":
-          return Resolver.image(image, style);
-      }
-    })
+    value.map((image) =>
+      Selective.of(image)
+        .if(Image.isImage, Image.partiallyResolve(Resolver.length(style)))
+        .get()
+    )
 );
