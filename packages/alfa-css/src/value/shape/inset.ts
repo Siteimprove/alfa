@@ -7,9 +7,11 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
-import { Length, Percentage } from "../numeric";
+import { LengthPercentage } from "../numeric";
+import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
+import { Corner } from "./corner";
 
 const { delimited, either, map, filter, option, pair, right, separatedList } =
   Parser;
@@ -22,11 +24,11 @@ const { parseDelim, parseWhitespace } = Token;
  */
 export class Inset<
   O extends Inset.Offset = Inset.Offset,
-  C extends Inset.Corner = Inset.Corner
-> extends BasicShape<"inset", false> {
+  C extends Corner = Corner
+> extends BasicShape<"inset", HasCalculation<O, C>> {
   public static of<
     O extends Inset.Offset = Inset.Offset,
-    C extends Inset.Corner = Inset.Corner
+    C extends Corner = Corner
   >(
     offsets: readonly [O, O, O, O],
     corners: Option<readonly [C, C, C, C]>
@@ -41,7 +43,13 @@ export class Inset<
     offsets: readonly [O, O, O, O],
     corners: Option<readonly [C, C, C, C]>
   ) {
-    super("inset", false);
+    super(
+      "inset",
+      (Value.hasCalculation(...offsets) ||
+        corners.some((corners) =>
+          corners.some(Corner.hasCalculation)
+        )) as unknown as HasCalculation<O, C>
+    );
     this._offsets = offsets;
     this._corners = corners;
   }
@@ -86,8 +94,25 @@ export class Inset<
     return this._corners.map((corners) => corners[3]);
   }
 
-  public resolve(): Inset<O, C> {
-    return this;
+  public resolve(resolver: Inset.Resolver): Inset.Canonical {
+    // map is losing the length of the arrays
+    return new Inset(
+      this._offsets.map(LengthPercentage.resolve(resolver)) as [
+        LengthPercentage.Canonical,
+        LengthPercentage.Canonical,
+        LengthPercentage.Canonical,
+        LengthPercentage.Canonical
+      ],
+      this._corners.map(
+        (corners) =>
+          corners.map(Corner.resolve(resolver)) as [
+            Corner.Canonical,
+            Corner.Canonical,
+            Corner.Canonical,
+            Corner.Canonical
+          ]
+      )
+    );
   }
 
   public equals(value: Inset): boolean;
@@ -157,11 +182,7 @@ export class Inset<
  * @public
  */
 export namespace Inset {
-  export type Offset = Length.Fixed | Percentage.Fixed;
-
-  export type Radius = Length.Fixed | Percentage.Fixed;
-
-  export type Corner = Radius | readonly [Radius, Radius];
+  export type Canonical = Inset<LengthPercentage.Canonical, Corner.Canonical>;
 
   export interface JSON<O extends Offset = Offset, C extends Corner = Corner>
     extends BasicShape.JSON<"inset"> {
@@ -169,17 +190,29 @@ export namespace Inset {
     corners: Option.JSON<readonly [C, C, C, C]>;
   }
 
-  const parseLengthPercentage = either(Length.parseBase, Percentage.parseBase);
+  export type Offset = LengthPercentage;
+
+  export type Resolver = LengthPercentage.Resolver;
+
+  export type PartiallyResolved = Inset<
+    LengthPercentage.PartiallyResolved,
+    Corner.PartiallyResolved
+  >;
+
+  export function isInset(value: unknown): value is Inset {
+    return value instanceof Inset;
+  }
 
   const parseOffsets = map(
-    separatedList(parseLengthPercentage, option(parseWhitespace), 1, 4),
+    separatedList(LengthPercentage.parse, option(parseWhitespace), 1, 4),
     ([top, right = top, bottom = top, left = right]) =>
       [top, right, bottom, left] as const
   );
 
   const parseRadius = filter(
-    parseLengthPercentage,
-    ({ value }) => value >= 0,
+    LengthPercentage.parse,
+    // https://drafts.csswg.org/css-values/#calc-range
+    (value) => value.hasCalculation() || value.value >= 0,
     () => "Radius cannot be negative"
   );
 
@@ -233,3 +266,19 @@ export namespace Inset {
     ([_, [offsets, corners]]) => Inset.of<Offset, Corner>(offsets, corners)
   );
 }
+
+/**
+ * Putting this in the Inset namespace clashes with the one in the parent
+ * Value namespace that it inherit from (through the classes of the same names)
+ */
+type HasCalculation<
+  O extends Inset.Offset,
+  C extends Corner
+> = Value.HasCalculation<
+  [
+    O,
+    // It seems we can't really spread ...[R1, R2] in a conditional.
+    C extends readonly [infer R extends LengthPercentage, any] ? R : C,
+    C extends readonly [any, infer R extends LengthPercentage] ? R : C
+  ]
+>;
