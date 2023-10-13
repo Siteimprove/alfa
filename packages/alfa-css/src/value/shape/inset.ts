@@ -199,6 +199,31 @@ export namespace Inset {
     Corner.PartiallyResolved
   >;
 
+  export type PartialResolver = LengthPercentage.PartialResolver;
+
+  export function partiallyResolve(
+    resolver: PartialResolver
+  ): (value: Inset) => PartiallyResolved {
+    return (value) =>
+      Inset.of(
+        value.offsets.map(LengthPercentage.partiallyResolve(resolver)) as [
+          LengthPercentage.PartiallyResolved,
+          LengthPercentage.PartiallyResolved,
+          LengthPercentage.PartiallyResolved,
+          LengthPercentage.PartiallyResolved
+        ],
+        value.corners.map(
+          (corners) =>
+            corners.map(Corner.partiallyResolve(resolver)) as [
+              Corner.PartiallyResolved,
+              Corner.PartiallyResolved,
+              Corner.PartiallyResolved,
+              Corner.PartiallyResolved
+            ]
+        )
+      );
+  }
+
   export function isInset(value: unknown): value is Inset {
     return value instanceof Inset;
   }

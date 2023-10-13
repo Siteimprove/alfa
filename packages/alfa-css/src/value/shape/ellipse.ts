@@ -122,7 +122,7 @@ export namespace Ellipse {
   export type PartialResolver = Radius.PartialResolver &
     Position.PartialResolver;
 
-  export function partiallyResolved(
+  export function partiallyResolve(
     resolver: PartialResolver
   ): (value: Ellipse) => PartiallyResolved {
     return (value) =>

@@ -1,6 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
+import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Value } from "../value";
@@ -23,7 +24,7 @@ const { either } = Parser;
 export class Shape<
   S extends Shape.Basic = Shape.Basic,
   B extends Box.Geometry = Box.Geometry
-> extends Value<"shape", false> {
+> extends Value<"shape", Value.HasCalculation<[S]>> {
   public static of<
     S extends Shape.Basic = Shape.Basic,
     B extends Box.Geometry = Box.Geometry
@@ -35,7 +36,7 @@ export class Shape<
   private readonly _box: B;
 
   private constructor(shape: S, box: B) {
-    super("shape", false);
+    super("shape", Value.hasCalculation(shape));
     this._shape = shape;
     this._box = box;
   }
@@ -48,8 +49,8 @@ export class Shape<
     return this._box;
   }
 
-  public resolve(): Shape<S, B> {
-    return this;
+  public resolve(resolver: Shape.Resolver): Shape.Canonical {
+    return new Shape(this._shape.resolve(resolver), this._box);
   }
 
   public equals(value: Shape): boolean;
@@ -85,30 +86,90 @@ export class Shape<
  * @public
  */
 export namespace Shape {
+  export type Canonical = Shape<Basic.Canonical, Box.Geometry>;
+
   /**
    * {@link https://drafts.csswg.org/css-shapes/#typedef-basic-shape}
    */
   export type Basic = Circle | Ellipse | Inset | Polygon | Rectangle;
 
-  export interface JSON extends Value.JSON<"shape"> {
-    shape:
+  namespace Basic {
+    export type Canonical =
+      | Circle.Canonical
+      | Ellipse.Canonical
+      | Inset.Canonical
+      | Polygon.Canonical
+      | Rectangle.Canonical;
+
+    export type JSON =
       | Circle.JSON
       | Ellipse.JSON
       | Inset.JSON
       | Polygon.JSON
       | Rectangle.JSON;
+
+    export type Resolver = Circle.Resolver &
+      Ellipse.Resolver &
+      Inset.Resolver &
+      Polygon.Resolver &
+      Rectangle.Resolver;
+
+    export type PartiallyResolved =
+      | Circle.PartiallyResolved
+      | Ellipse.PartiallyResolved
+      | Inset.PartiallyResolved
+      | Polygon.PartiallyResolved
+      | Rectangle.Canonical;
+
+    export type PartialResolver = Circle.PartialResolver &
+      Ellipse.PartialResolver &
+      Inset.PartialResolver &
+      Polygon.PartialResolver &
+      Rectangle.Resolver;
+
+    export function partiallyResolve(
+      resolver: PartialResolver
+    ): (value: Basic) => PartiallyResolved {
+      return (value) =>
+        Selective.of(value)
+          .if(Circle.isCircle, Circle.partiallyResolve(resolver))
+          .if(Ellipse.isEllipse, Ellipse.partiallyResolve(resolver))
+          .if(Inset.isInset, Inset.partiallyResolve(resolver))
+          .if(Polygon.isPolygon, Polygon.partiallyResolve(resolver))
+          .else((rectangle) => rectangle.resolve(resolver))
+          .get();
+    }
+
+    /**
+     * @remarks
+     * This does not parse the deprecated `rect()` shape.
+     *
+     * @internal
+     */
+    export const parse = either<
+      Slice<Token>,
+      Circle | Ellipse | Inset | Polygon,
+      string
+    >(Circle.parse, Ellipse.parse, Inset.parse, Polygon.parse);
+  }
+
+  export interface JSON extends Value.JSON<"shape"> {
+    shape: Basic.JSON;
     box: Box.Geometry.JSON;
   }
 
-  /**
-   * @remarks
-   * This does not parse the deprecated `rect()` shape.
-   */
-  const parseBasicShape = either<
-    Slice<Token>,
-    Circle | Ellipse | Inset | Polygon,
-    string
-  >(Circle.parse, Ellipse.parse, Inset.parse, Polygon.parse);
+  export type Resolver = Basic.Resolver;
+
+  export type PartiallyResolved = Shape<Basic.PartiallyResolved, Box.Geometry>;
+
+  export type PartialResolver = Basic.PartialResolver;
+
+  export function partiallyResolve(
+    resolver: PartialResolver
+  ): (value: Shape) => PartiallyResolved {
+    return (value) =>
+      Shape.of(Basic.partiallyResolve(resolver)(value.shape), value.box);
+  }
 
   /**
    * @remarks
@@ -130,7 +191,7 @@ export namespace Shape {
       skipWhitespace();
 
       if (shape === undefined) {
-        const result = parseBasicShape(input);
+        const result = Basic.parse(input);
 
         if (result.isOk()) {
           [input, shape] = result.get();

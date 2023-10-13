@@ -102,7 +102,7 @@ export namespace Circle {
   export type PartialResolver = Radius.PartialResolver &
     Position.PartialResolver;
 
-  export function partiallyResolved(
+  export function partiallyResolve(
     resolver: PartialResolver
   ): (value: Circle) => PartiallyResolved {
     return (value) =>

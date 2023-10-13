@@ -148,6 +148,10 @@ export namespace Polygon {
       );
   }
 
+  export function isPolygon(value: unknown): value is Polygon {
+    return value instanceof Polygon;
+  }
+
   const parseVertex = separated(
     LengthPercentage.parse,
     parseWhitespace,
