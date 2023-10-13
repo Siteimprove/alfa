@@ -236,7 +236,7 @@ export class Document extends Node<"document"> {
 // @public (undocumented)
 export namespace Document {
     // @internal (undocumented)
-    export function fromDocument(json: JSON, device: Option<Device>): Trampoline<Document>;
+    export function fromDocument(json: JSON, device?: Device): Trampoline<Document>;
     // (undocumented)
     export function isDocument(value: unknown): value is Document;
     // (undocumented)
@@ -303,7 +303,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
 // @public (undocumented)
 export namespace Element {
     // @internal (undocumented)
-    export function fromElement<N extends string = string>(json: JSON<N>, device: Option<Device>): Trampoline<Element<N>>;
+    export function fromElement<N extends string = string>(json: JSON<N>, device?: Device): Trampoline<Element<N>>;
     // (undocumented)
     export function isElement(value: unknown): value is Element;
     // (undocumented)
@@ -399,7 +399,7 @@ export class Fragment extends Node<"fragment"> {
 // @public (undocumented)
 export namespace Fragment {
     // @internal (undocumented)
-    export function fromFragment(json: JSON, device: Option<Device>): Trampoline<Fragment>;
+    export function fromFragment(json: JSON, device?: Device): Trampoline<Fragment>;
     // (undocumented)
     export function isFragment(value: unknown): value is Fragment;
     // (undocumented)
@@ -897,26 +897,26 @@ export namespace Node {
         };
     }
     // (undocumented)
-    export function from(json: Element.JSON, device: Option<Device>): Element;
+    export function from(json: Element.JSON, device?: Device): Element;
     // (undocumented)
-    export function from(json: Attribute.JSON, device: Option<Device>): Attribute;
+    export function from(json: Attribute.JSON, device?: Device): Attribute;
     // (undocumented)
-    export function from(json: Text.JSON, device: Option<Device>): Text;
+    export function from(json: Text.JSON, device?: Device): Text;
     // (undocumented)
-    export function from(json: Comment.JSON, device: Option<Device>): Comment;
+    export function from(json: Comment.JSON, device?: Device): Comment;
     // (undocumented)
-    export function from(json: Document.JSON, device: Option<Device>): Document;
+    export function from(json: Document.JSON, device?: Device): Document;
     const flatTree: Traversal;
     const fullTree: Traversal;
     const composedNested: Traversal;
     // (undocumented)
-    export function from(json: Type.JSON, device: Option<Device>): Document;
+    export function from(json: Type.JSON, device?: Device): Document;
     // (undocumented)
-    export function from(json: Fragment.JSON, device: Option<Device>): Fragment;
+    export function from(json: Fragment.JSON, device?: Device): Fragment;
     // (undocumented)
-    export function from(json: JSON, device: Option<Device>): Node;
+    export function from(json: JSON, device?: Device): Node;
     // @internal (undocumented)
-    export function fromNode(json: JSON, device: Option<Device>): Trampoline<Node>;
+    export function fromNode(json: JSON, device?: Device): Trampoline<Node>;
     // (undocumented)
     export function isNode(value: unknown): value is Node;
     // (undocumented)
@@ -1092,7 +1092,7 @@ export class Shadow extends Node<"shadow"> {
 // @public (undocumented)
 export namespace Shadow {
     // @internal (undocumented)
-    export function fromShadow(json: JSON, device: Option<Device>): Trampoline<Shadow>;
+    export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow>;
     // (undocumented)
     export function isShadow(value: unknown): value is Shadow;
     // (undocumented)

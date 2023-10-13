@@ -324,23 +324,23 @@ export namespace Node {
     Traversal.nested
   );
 
-  export function from(json: Element.JSON, device: Option<Device>): Element;
+  export function from(json: Element.JSON, device?: Device): Element;
 
-  export function from(json: Attribute.JSON, device: Option<Device>): Attribute;
+  export function from(json: Attribute.JSON, device?: Device): Attribute;
 
-  export function from(json: Text.JSON, device: Option<Device>): Text;
+  export function from(json: Text.JSON, device?: Device): Text;
 
-  export function from(json: Comment.JSON, device: Option<Device>): Comment;
+  export function from(json: Comment.JSON, device?: Device): Comment;
 
-  export function from(json: Document.JSON, device: Option<Device>): Document;
+  export function from(json: Document.JSON, device?: Device): Document;
 
-  export function from(json: Type.JSON, device: Option<Device>): Document;
+  export function from(json: Type.JSON, device?: Device): Document;
 
-  export function from(json: Fragment.JSON, device: Option<Device>): Fragment;
+  export function from(json: Fragment.JSON, device?: Device): Fragment;
 
-  export function from(json: JSON, device: Option<Device>): Node;
+  export function from(json: JSON, device?: Device): Node;
 
-  export function from(json: JSON, device: Option<Device>): Node {
+  export function from(json: JSON, device?: Device): Node {
     return fromNode(json, device).run();
   }
 
@@ -349,7 +349,7 @@ export namespace Node {
    */
   export function fromNode(
     json: JSON,
-    device: Option<Device>
+    device?: Device
   ): Trampoline<Node> {
     switch (json.type) {
       case "element":

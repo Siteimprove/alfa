@@ -319,7 +319,13 @@ export class Element<N extends string = string>
       style: this._style.map((style) => style.toJSON()).getOr(null),
       shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
       content: this._content.map((content) => content.toJSON()).getOr(null),
-      box: Option.from(options).flatMap(o => this._boxes.get(o.device)).map(box => box.toJSON()).getOr(null)
+      box:
+        options?.device === undefined
+          ? null
+          : this._boxes
+              .get(options.device)
+              .map((box) => box.toJSON())
+              .getOr(null),
     };
   }
 
@@ -401,7 +407,7 @@ export namespace Element {
    */
   export function fromElement<N extends string = string>(
     json: JSON<N>,
-    device: Option<Device>
+    device?: Device
   ): Trampoline<Element<N>> {
     return Trampoline.traverse(json.children ?? [], (child) =>
       Node.fromNode(child, device)
@@ -418,7 +424,7 @@ export namespace Element {
           ? None
           : Option.from(json.style).map(Block.from),
         Option.from(json.box).map(Rectangle.from),
-        device
+        Option.from(device)
       );
 
       if (json.shadow !== null) {

@@ -58,7 +58,7 @@ export namespace Fragment {
    */
   export function fromFragment(
     json: JSON,
-    device: Option<Device>
+    device?: Device
   ): Trampoline<Fragment> {
     return Trampoline.traverse(json.children ?? [], (child) =>
       Node.fromNode(child, device)

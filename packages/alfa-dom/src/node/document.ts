@@ -112,7 +112,7 @@ export namespace Document {
    */
   export function fromDocument(
     json: JSON,
-    device: Option<Device>
+    device?: Device
   ): Trampoline<Document> {
     return Trampoline.traverse(json.children ?? [], (child) =>
       Node.fromNode(child, device)

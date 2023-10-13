@@ -126,12 +126,7 @@ export namespace Page {
     const device = Device.from(json.device);
     return Request.from(json.request).andThen((request) =>
       Response.from(json.response).map((response) =>
-        Page.of(
-          request,
-          response,
-          Document.from(json.document, Option.of(device)),
-          device
-        )
+        Page.of(request, response, Document.from(json.document, device), device)
       )
     );
   }
