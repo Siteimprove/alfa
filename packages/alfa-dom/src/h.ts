@@ -39,7 +39,7 @@ export function h<N extends string = string>(
   children?: Array<Node | string>,
   style?: Array<Declaration> | Record<string, string>,
   box?: Rectangle,
-  device?: Device
+  device: Device = Device.standard()
 ): Element<N> {
   return h.element(name, attributes, children, style, undefined, box, device);
 }

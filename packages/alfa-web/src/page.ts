@@ -2,7 +2,6 @@ import { Device } from "@siteimprove/alfa-device";
 import { Document } from "@siteimprove/alfa-dom";
 import { Decoder } from "@siteimprove/alfa-encoding";
 import { Request, Response } from "@siteimprove/alfa-http";
-import { Option } from "@siteimprove/alfa-option";
 
 import * as earl from "@siteimprove/alfa-earl";
 import * as json from "@siteimprove/alfa-json";
