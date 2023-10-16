@@ -13,8 +13,7 @@ import { Value } from "../value";
 import { BasicShape } from "./basic-shape";
 import { Corner } from "./corner";
 
-const { delimited, either, map, filter, option, pair, right, separatedList } =
-  Parser;
+const { delimited, map, filter, option, pair, right, separatedList } = Parser;
 const { parseDelim, parseWhitespace } = Token;
 
 /**

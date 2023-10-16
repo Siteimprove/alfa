@@ -9,8 +9,7 @@ import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
 
-const { either, map, option, pair, take, right, delimited, separatedList } =
-  Parser;
+const { either, map, option, separatedList } = Parser;
 
 /**
  * {@link https://drafts.fxtf.org/css-masking/#funcdef-clip-rect}
