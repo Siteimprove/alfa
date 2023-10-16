@@ -2287,7 +2287,7 @@ export namespace Shape {
         // Warning: (ae-forgotten-export) The symbol "Keywords" needs to be exported by the entry point index.d.ts
         //
         // @internal (undocumented)
-        parse: Parser_2<Slice<Token>, Inset<Inset.Offset, Corner_2> | Circle<Radius<LengthPercentage | import("./radius").Radius.Side>, Position<import("../position/keywords").Keywords.Horizontal, import("../position/keywords").Keywords.Vertical, Component_2<import("../position/keywords").Keywords.Horizontal>, Component_2<import("../position/keywords").Keywords.Vertical>>> | Ellipse<Radius<LengthPercentage | import("./radius").Radius.Side>, Position<import("../position/keywords").Keywords.Horizontal, import("../position/keywords").Keywords.Vertical, Component_2<import("../position/keywords").Keywords.Horizontal>, Component_2<import("../position/keywords").Keywords.Vertical>>> | Polygon<Polygon.Fill, LengthPercentage>, string, []>;
+        parse: Parser_2<Slice<Token>, Circle<Radius<LengthPercentage | import("./radius").Radius.Side>, Position<import("../position/keywords").Keywords.Horizontal, import("../position/keywords").Keywords.Vertical, Component_2<import("../position/keywords").Keywords.Horizontal>, Component_2<import("../position/keywords").Keywords.Vertical>>> | Ellipse<Radius<LengthPercentage | import("./radius").Radius.Side>, Position<import("../position/keywords").Keywords.Horizontal, import("../position/keywords").Keywords.Vertical, Component_2<import("../position/keywords").Keywords.Horizontal>, Component_2<import("../position/keywords").Keywords.Vertical>>> | Inset<Inset.Offset, Corner_2> | Polygon<Polygon.Fill, LengthPercentage>, string, []>;
     }
     // (undocumented)
     export type Canonical = Shape<Basic.Canonical, Box.Geometry>;
