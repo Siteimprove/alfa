@@ -8,11 +8,11 @@ const config: KnipConfig = {
       ignoreDependencies: ["prettier"],
     },
     "packages/*": {
-      entry: "src/index.ts!",
+      entry: ["src/index.ts!", "test/**/*.ts", "test/**/*.tsx"],
       project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
     },
     "packages/alfa-device": {
-      entry: ["src/index.ts!", "native.ts!"],
+      entry: ["src/index.ts!", "native.ts!", "test/**/*.ts", "test/**/*.tsx"],
       project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
     },
     "packages/alfa-dom": {
@@ -22,11 +22,13 @@ const config: KnipConfig = {
         "jsx.ts!",
         "jsx-runtime.ts!",
         "native.ts!",
+        "test/**/*.ts",
+        "test/**/*.tsx",
       ],
       project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
     },
     "packages/alfa-web": {
-      entry: ["src/index.ts!", "native.ts!"],
+      entry: ["src/index.ts!", "native.ts!", "test/**/*.ts", "test/**/*.tsx"],
       project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
     },
   },
