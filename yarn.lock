@@ -1770,7 +1770,7 @@ __metadata:
     "@types/node": ^20.5.9
     async: ^3.2.1
     execa: ^5.1.1
-    knip: =2.31.0
+    knip: =2.32.0
     minimist: ^1.2.6
     package-dependency-graph: ^1.14.4
     prettier: ^2.7.1
@@ -4132,9 +4132,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knip@npm:=2.31.0":
-  version: 2.31.0
-  resolution: "knip@npm:2.31.0"
+"knip@npm:=2.32.0":
+  version: 2.32.0
+  resolution: "knip@npm:2.32.0"
   dependencies:
     "@ericcornelissen/bash-parser": ^0.5.2
     "@npmcli/map-workspaces": ^3.0.4
@@ -4155,7 +4155,7 @@ __metadata:
     zod-validation-error: ^1.5.0
   bin:
     knip: dist/cli.js
-  checksum: da5004df7ef4d4011af12797095a0e8880dc9fb5e3e283b64d58c415f69881badfceff7b8deeafee6b919a8d9cab68d4a5a9ceba729b9b4ee45c714c226c678d
+  checksum: 4c1d0d5675a7dab4a9ff22bb0f696d3a32416394009c0e445a2a311d7742254d59d6303f3fd77d28b98b84f85aa1ed3790c135eb2c8b8374c8018d6d588b8c47
   languageName: node
   linkType: hard
 
