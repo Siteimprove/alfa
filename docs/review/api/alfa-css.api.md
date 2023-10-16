@@ -1110,7 +1110,7 @@ namespace Length_2 {
 }
 
 // @public (undocumented)
-export type LengthPercentage<U extends Unit.Length = Unit.Length, CALC extends boolean = boolean> = CALC extends true ? LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated : CALC extends false ? Length.Fixed<U> | Percentage.Fixed : LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated | Length.Fixed<U> | Percentage.Fixed;
+export type LengthPercentage<U extends Unit.Length = Unit.Length> = LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated | Length.Fixed<U> | Percentage.Fixed;
 
 // @public (undocumented)
 export namespace LengthPercentage {
@@ -1171,9 +1171,7 @@ export namespace LengthPercentage {
     // (undocumented)
     export type Resolver = Length.Resolver & Percentage.Resolver<"length", Canonical>;
     const // (undocumented)
-    parse: Parser_2<Slice<Token>, Length.Calculated | Length.Fixed<Unit.Length> | Calculated | Percentage.Calculated<Base.Numeric.Type> | Percentage.Fixed<Base.Numeric.Type>, string, []>;
-    const // @internal (undocumented)
-    parseBase: Parser<LengthPercentage<Unit.Length, false>>;
+    parse: Parser_2<Slice<Token>, LengthPercentage<Unit.Length>, string, []>;
         {};
 }
 
