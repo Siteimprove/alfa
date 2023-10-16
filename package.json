@@ -32,7 +32,7 @@
     "@types/node": "^20.5.9",
     "async": "^3.2.1",
     "execa": "^5.1.1",
-    "knip": "^2.21.2",
+    "knip": "^2.33.4",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
     "prettier": "^2.7.1",
