@@ -10,7 +10,7 @@ import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
 
-const { either, map, filter } = Parser;
+const { either, filter, map } = Parser;
 
 /**
  * {@link https://drafts.csswg.org/css-shapes/#typedef-shape-radius}

@@ -13,8 +13,7 @@ import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
 
-const { either, left, map, option, pair, right, separated, separatedList } =
-  Parser;
+const { left, map, option, pair, right, separated, separatedList } = Parser;
 const { parseComma, parseWhitespace } = Token;
 
 /**
