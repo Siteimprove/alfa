@@ -1,5 +1,8 @@
 import type { KnipConfig } from "knip";
 
+const entry = ["src/index.ts!", "test/**/*.ts", "test/**/*.tsx"];
+const project = ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"];
+
 const config: KnipConfig = {
   workspaces: {
     ".": {
@@ -7,28 +10,13 @@ const config: KnipConfig = {
       project: ["scripts/**/*.ts", "scripts/**/*.js"],
       ignoreDependencies: ["prettier"],
     },
-    "packages/*": {
-      entry: "src/index.ts!",
-      project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
-    },
-    "packages/alfa-device": {
-      entry: ["src/index.ts!", "native.ts!"],
-      project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
-    },
+    "packages/*": { entry, project },
+    "packages/alfa-device": { entry: [...entry, "native.ts!"], project },
     "packages/alfa-dom": {
-      entry: [
-        "src/index.ts!",
-        "h.ts!",
-        "jsx.ts!",
-        "jsx-runtime.ts!",
-        "native.ts!",
-      ],
-      project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
+      entry: [...entry, "h.ts!", "jsx.ts!", "jsx-runtime.ts!", "native.ts!"],
+      project,
     },
-    "packages/alfa-web": {
-      entry: ["src/index.ts!", "native.ts!"],
-      project: ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"],
-    },
+    "packages/alfa-web": { entry: [...entry, "native.ts!"], project },
   },
 };
 
