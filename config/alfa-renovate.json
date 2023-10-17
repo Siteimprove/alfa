@@ -2,18 +2,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": [
     "Renovate config for Alfa and related project",
-    "* npm access (via siteimprove/renovate-config:npm)",
     "* Automerge minor/patch dependencies that pass tests, weekly",
-    "* Open PR for Alfa dependencies asap",
     "* Open PR for other dependencies weekly, grouped together"
   ],
   "reviewers": ["team:alfa-owners"],
   "dependencyDashboard": true,
   "packageRules": [
-    {
-      "groupName": "Alfa",
-      "matchPackagePrefixes": ["@siteimprove/alfa"]
-    },
     {
       "groupName": "Other deps (major)",
       "matchPackagePatterns": ["*"],
@@ -30,5 +24,5 @@
       "schedule": ["on Sunday"]
     }
   ],
-  "extends": ["config:base", "github>siteimprove/renovate-config:npm"]
+  "extends": ["config:base"]
 }
