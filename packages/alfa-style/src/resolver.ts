@@ -1,13 +1,4 @@
-import {
-  Gradient,
-  Image,
-  Length,
-  LengthPercentage,
-  Position,
-  Unit,
-  URL,
-} from "@siteimprove/alfa-css";
-import { Iterable } from "@siteimprove/alfa-iterable";
+import { Length, LengthPercentage, Unit } from "@siteimprove/alfa-css";
 import { Mapper } from "@siteimprove/alfa-mapper";
 
 import { Style } from "./style";

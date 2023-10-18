@@ -19,19 +19,12 @@ const { either, map } = Parser;
 /**
  * @public
  */
-export type LengthPercentage<
-  U extends Unit.Length = Unit.Length,
-  CALC extends boolean = boolean
-> = CALC extends true
-  ? LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated
-  : CALC extends false
-  ? Length.Fixed<U> | Percentage.Fixed
-  :
-      | LengthPercentage.Calculated
-      | Length.Calculated
-      | Percentage.Calculated
-      | Length.Fixed<U>
-      | Percentage.Fixed;
+export type LengthPercentage<U extends Unit.Length = Unit.Length> =
+  | LengthPercentage.Calculated
+  | Length.Calculated
+  | Percentage.Calculated
+  | Length.Fixed<U>
+  | Percentage.Fixed;
 
 /**
  * @public
@@ -257,10 +250,4 @@ export namespace LengthPercentage {
       of
     )
   );
-
-  /**
-   * @internal
-   */
-  export const parseBase: CSSParser<LengthPercentage<Unit.Length, false>> =
-    either(Length.parseBase, Percentage.parseBase);
 }

@@ -8,12 +8,12 @@ import { Parser } from "@siteimprove/alfa-parser";
 import { Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
-import { Length, Percentage } from "../numeric";
+import { LengthPercentage } from "../numeric";
+import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
 
-const { either, left, map, option, pair, right, separated, separatedList } =
-  Parser;
+const { left, map, option, pair, right, separated, separatedList } = Parser;
 const { parseComma, parseWhitespace } = Token;
 
 /**
@@ -23,11 +23,11 @@ const { parseComma, parseWhitespace } = Token;
  */
 export class Polygon<
   F extends Polygon.Fill = Polygon.Fill,
-  V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
-> extends BasicShape<"polygon"> {
+  V extends LengthPercentage = LengthPercentage
+> extends BasicShape<"polygon", Value.HasCalculation<[V]>> {
   public static of<
     F extends Polygon.Fill = Polygon.Fill,
-    V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
+    V extends LengthPercentage = LengthPercentage
   >(fill: Option<F>, vertices: Iterable<Polygon.Vertex<V>>): Polygon<F, V> {
     return new Polygon(fill, Array.from(vertices));
   }
@@ -36,7 +36,13 @@ export class Polygon<
   private readonly _vertices: Array<Polygon.Vertex<V>>;
 
   private constructor(fill: Option<F>, vertices: Array<Polygon.Vertex<V>>) {
-    super("polygon", false);
+    super(
+      "polygon",
+      vertices.reduce(
+        (calc, vertex) => calc || Value.hasCalculation(...vertex),
+        false
+      ) as unknown as Value.HasCalculation<[V]>
+    );
     this._fill = fill;
     this._vertices = vertices;
   }
@@ -49,8 +55,17 @@ export class Polygon<
     return this._vertices;
   }
 
-  public resolve(): Polygon<F, V> {
-    return this;
+  public resolve(resolver: Polygon.Resolver): Polygon.Canonical {
+    return new Polygon(
+      this._fill,
+      this._vertices.map(
+        (vertex) =>
+          // map loses the fact that vertex has exactly two elements.
+          vertex.map(
+            LengthPercentage.resolve(resolver)
+          ) as unknown as Polygon.Vertex<LengthPercentage.Canonical>
+      )
+    );
   }
 
   public equals(value: Polygon): boolean;
@@ -90,26 +105,56 @@ export class Polygon<
  * @public
  */
 export namespace Polygon {
+  export type Canonical = Polygon<Fill, LengthPercentage.Canonical>;
+
   export type Fill = Keyword<"nonzero"> | Keyword<"evenodd">;
 
-  export type Vertex<
-    V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
-  > = readonly [V, V];
+  export type Vertex<V extends LengthPercentage = LengthPercentage> = readonly [
+    V,
+    V
+  ];
 
   export interface JSON<
     F extends Fill = Fill,
-    V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed
+    V extends LengthPercentage = LengthPercentage
   > extends BasicShape.JSON<"polygon"> {
     fill: Option.JSON<F>;
     vertices: Array<Serializable.ToJSON<Vertex<V>>>;
   }
 
-  const parseLengthPercentage = either(Length.parseBase, Percentage.parseBase);
+  export type Resolver = LengthPercentage.Resolver;
+
+  export type PartiallyResolved = Polygon<
+    Fill,
+    LengthPercentage.PartiallyResolved
+  >;
+
+  export type PartialResolver = LengthPercentage.PartialResolver;
+
+  export function partiallyResolve(
+    resolver: PartialResolver
+  ): (value: Polygon) => PartiallyResolved {
+    return (value) =>
+      Polygon.of(
+        value.fill,
+        value.vertices.map(
+          (vertex) =>
+            // map loses the fact that vertex has exactly two elements.
+            vertex.map(
+              LengthPercentage.partiallyResolve(resolver)
+            ) as unknown as Polygon.Vertex<LengthPercentage.Canonical>
+        )
+      );
+  }
+
+  export function isPolygon(value: unknown): value is Polygon {
+    return value instanceof Polygon;
+  }
 
   const parseVertex = separated(
-    parseLengthPercentage,
+    LengthPercentage.parse,
     parseWhitespace,
-    parseLengthPercentage
+    LengthPercentage.parse
   );
 
   export const parse: CSSParser<Polygon> = map(

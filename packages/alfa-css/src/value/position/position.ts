@@ -1,6 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
+import { Slice } from "@siteimprove/alfa-slice";
 
 import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
@@ -31,10 +32,9 @@ export class Position<
     H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal,
     V extends Position.Keywords.Vertical = Position.Keywords.Vertical,
     HC extends Position.Component<H> = Position.Component<H>,
-    VC extends Position.Component<V> = Position.Component<V>,
-    CALC extends boolean = boolean
+    VC extends Position.Component<V> = Position.Component<V>
   >
-  extends Value<"position", CALC>
+  extends Value<"position", Value.HasCalculation<[HC, VC]>>
   implements Resolvable<Position.Canonical<H, V>, Position.Resolver>
 {
   public static of<
@@ -42,20 +42,15 @@ export class Position<
     V extends Position.Keywords.Vertical = Position.Keywords.Vertical,
     HC extends Position.Component<H> = Position.Component<H>,
     VC extends Position.Component<V> = Position.Component<V>
-  >(
-    horizontal: HC,
-    vertical: VC
-  ): Position<H, V, HC, VC, Value.HasCalculation<[HC, VC]>> {
-    const calculation = (horizontal.hasCalculation() ||
-      vertical.hasCalculation()) as Value.HasCalculation<[HC, VC]>;
-    return new Position(horizontal, vertical, calculation);
+  >(horizontal: HC, vertical: VC): Position<H, V, HC, VC> {
+    return new Position(horizontal, vertical);
   }
 
   private readonly _horizontal: HC;
   private readonly _vertical: VC;
 
-  private constructor(horizontal: HC, vertical: VC, calculation: CALC) {
-    super("position", calculation);
+  private constructor(horizontal: HC, vertical: VC) {
+    super("position", Value.hasCalculation(horizontal, vertical));
     this._horizontal = horizontal;
     this._vertical = vertical;
   }
@@ -77,8 +72,7 @@ export class Position<
       Position.Component.resolve<V>({
         length: resolver.length,
         percentageBase: resolver.percentageVBase,
-      })(this._vertical),
-      false
+      })(this._vertical)
     );
   }
 
@@ -114,7 +108,7 @@ export namespace Position {
   export type Canonical<
     H extends Keywords.Horizontal = Keywords.Horizontal,
     V extends Keywords.Vertical = Keywords.Vertical
-  > = Position<H, V, Component.Canonical<H>, Component.Canonical<V>, false>;
+  > = Position<H, V, Component.Canonical<H>, Component.Canonical<V>>;
 
   export type PartiallyResolved<
     H extends Keywords.Horizontal = Keywords.Horizontal,
@@ -125,14 +119,6 @@ export namespace Position {
     Component.PartiallyResolved<H>,
     Component.PartiallyResolved<V>
   >;
-
-  /**
-   * @internal
-   */
-  export type Fixed<
-    H extends Keywords.Horizontal = Keywords.Horizontal,
-    V extends Keywords.Vertical = Keywords.Vertical
-  > = Position<H, V, Component.Fixed<H>, Component.Fixed<V>, false>;
 
   export interface JSON extends Value.JSON<"position"> {
     horizontal: Component.JSON;
@@ -194,14 +180,14 @@ export namespace Position {
    *   - 2 tokens: H V | H v | h V | h v | V H   <- Obs! no V h | v H | v h
    *   - 1 token:  H | V | h
    */
-  const mapHV = <CALC extends boolean>([horizontal, vertical]: [
-    Component<Keywords.Horizontal, Unit.Length, CALC>,
-    Component<Keywords.Vertical, Unit.Length, CALC>
+  const mapHV = ([horizontal, vertical]: [
+    Component<Keywords.Horizontal>,
+    Component<Keywords.Vertical>
   ]) => Position.of(horizontal, vertical);
 
-  const mapVH = <CALC extends boolean>([vertical, horizontal]: [
-    Component<Keywords.Vertical, Unit.Length, CALC>,
-    Component<Keywords.Horizontal, Unit.Length, CALC>
+  const mapVH = ([vertical, horizontal]: [
+    Component<Keywords.Vertical>,
+    Component<Keywords.Horizontal>
   ]) => Position.of(horizontal, vertical);
 
   const {
@@ -211,125 +197,89 @@ export namespace Position {
     parseVerticalKeyword,
   } = Side;
 
-  const parse4 = <CALC extends boolean>(withCalculation: CALC) =>
-    either(
-      map(
-        pair(
-          parseHorizontalKeywordValue(withCalculation),
-          right(
-            Token.parseWhitespace,
-            parseVerticalKeywordValue(withCalculation)
-          )
-        ),
-        mapHV
+  const parse4 = either(
+    map(
+      pair(
+        parseHorizontalKeywordValue,
+        right(Token.parseWhitespace, parseVerticalKeywordValue)
       ),
-      map(
-        pair(
-          parseVerticalKeywordValue(withCalculation),
-          right(
-            Token.parseWhitespace,
-            parseHorizontalKeywordValue(withCalculation)
-          )
-        ),
-        mapVH
-      )
-    );
+      mapHV
+    ),
+    map(
+      pair(
+        parseVerticalKeywordValue,
+        right(Token.parseWhitespace, parseHorizontalKeywordValue)
+      ),
+      mapVH
+    )
+  );
 
   // Hh V | H Vv | Vv H | V Hh
-  const parse3 = <CALC extends boolean>(withCalculation: CALC) =>
-    either(
-      map(
-        either(
-          pair(
-            parseHorizontalKeywordValue(withCalculation),
-            right(Token.parseWhitespace, parseVerticalKeyword(withCalculation))
-          ),
-          pair(
-            parseHorizontalKeyword(withCalculation),
-            right(
-              Token.parseWhitespace,
-              parseVerticalKeywordValue(withCalculation)
-            )
-          )
+  const parse3 = either(
+    map(
+      either(
+        pair(
+          parseHorizontalKeywordValue,
+          right(Token.parseWhitespace, parseVerticalKeyword)
         ),
-        mapHV
+        pair(
+          parseHorizontalKeyword,
+          right(Token.parseWhitespace, parseVerticalKeywordValue)
+        )
       ),
-      map(
-        either(
-          pair(
-            parseVerticalKeywordValue(withCalculation),
-            right(
-              Token.parseWhitespace,
-              parseHorizontalKeyword(withCalculation)
-            )
-          ),
-          pair(
-            parseVerticalKeyword(withCalculation),
-            right(
-              Token.parseWhitespace,
-              parseHorizontalKeywordValue(withCalculation)
-            )
-          )
+      mapHV
+    ),
+    map(
+      either(
+        pair(
+          parseVerticalKeywordValue,
+          right(Token.parseWhitespace, parseHorizontalKeyword)
         ),
-        mapVH
-      )
-    );
+        pair(
+          parseVerticalKeyword,
+          right(Token.parseWhitespace, parseHorizontalKeywordValue)
+        )
+      ),
+      mapVH
+    )
+  );
 
   // H V | H v | h V | h v | V H = (H | h) (V | v) | V H
-  const parse2 = <CALC extends boolean>(withCalculation: CALC) =>
-    either(
-      map(
-        pair(
-          either(
-            parseHorizontalKeyword(withCalculation),
-            Component.parseOffset(Keyword.of("left"), withCalculation)
-          ),
-          right(
-            Token.parseWhitespace,
-            either(
-              parseVerticalKeyword(withCalculation),
-              Component.parseOffset(Keyword.of("top"), withCalculation)
-            )
-          )
+  const parse2 = either(
+    map(
+      pair(
+        either(
+          parseHorizontalKeyword,
+          Component.parseOffset(Keyword.of("left"))
         ),
-        mapHV
+        right(
+          Token.parseWhitespace,
+          either(parseVerticalKeyword, Component.parseOffset(Keyword.of("top")))
+        )
       ),
-      map(
-        pair(
-          parseVerticalKeyword(withCalculation),
-          right(Token.parseWhitespace, parseHorizontalKeyword(withCalculation))
-        ),
-        mapVH
-      )
-    );
-
-  type withCalculation<CALC extends boolean> = Position<
-    Keywords.Horizontal,
-    Keywords.Vertical,
-    Component<Keywords.Horizontal, Unit.Length, CALC>,
-    Component<Keywords.Vertical, Unit.Length, CALC>,
-    CALC
-  >;
+      mapHV
+    ),
+    map(
+      pair(
+        parseVerticalKeyword,
+        right(Token.parseWhitespace, parseHorizontalKeyword)
+      ),
+      mapVH
+    )
+  );
 
   // H | V | h
-  const parse1 = <CALC extends boolean>(withCalculation: CALC) =>
-    either(
-      map(
-        parseHorizontalKeyword(withCalculation),
-        (horizontal) =>
-          Position.of(horizontal, Keyword.of("center")) as withCalculation<CALC>
-      ),
-      map(
-        parseVerticalKeyword(withCalculation),
-        (vertical) =>
-          Position.of(Keyword.of("center"), vertical) as withCalculation<CALC>
-      ),
-      map(
-        Component.parseOffset(Keyword.of("left"), withCalculation),
-        (horizontal) =>
-          Position.of(horizontal, Keyword.of("center")) as withCalculation<CALC>
-      )
-    );
+  const parse1 = either<Slice<Token>, Position, string>(
+    map(parseHorizontalKeyword, (horizontal) =>
+      Position.of(horizontal, Keyword.of("center"))
+    ),
+    map(parseVerticalKeyword, (vertical) =>
+      Position.of(Keyword.of("center"), vertical)
+    ),
+    map(Component.parseOffset(Keyword.of("left")), (horizontal) =>
+      Position.of(horizontal, Keyword.of("center"))
+    )
+  );
 
   /**
    * Parse a position, optionally accepting legacy 3-values syntax.
@@ -342,26 +292,10 @@ export namespace Position {
    */
   export function parse(legacySyntax: boolean = false): CSSParser<Position> {
     return either(
-      parse4(true),
-      legacySyntax
-        ? parse3(true)
-        : () => Err.of("Three-value syntax is not allowed"),
-      parse2(true),
-      parse1(true)
-    );
-  }
-
-  /**
-   * @internal
-   */
-  export function parseBase(legacySyntax: boolean = false): CSSParser<Fixed> {
-    return either(
-      parse4(false),
-      legacySyntax
-        ? parse3(false)
-        : () => Err.of("Three-value syntax is not allowed"),
-      parse2(false),
-      parse1(false)
+      parse4,
+      legacySyntax ? parse3 : () => Err.of("Three-value syntax is not allowed"),
+      parse2,
+      parse1
     );
   }
 }

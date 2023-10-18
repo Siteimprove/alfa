@@ -1,14 +1,15 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 
-import { Function, type Parser as CSSParser, Token } from "../../syntax";
+import { Comma, Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Length } from "../numeric";
+import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
 
-const { either, map, option, pair, take, right, delimited } = Parser;
+const { either, map, option, separatedList } = Parser;
 
 /**
  * {@link https://drafts.fxtf.org/css-masking/#funcdef-clip-rect}
@@ -17,11 +18,14 @@ const { either, map, option, pair, take, right, delimited } = Parser;
  * @deprecated Deprecated as of CSS Masking Module Level 1
  */
 export class Rectangle<
-  O extends Length.Fixed | Rectangle.Auto = Length.Fixed | Rectangle.Auto
-> extends BasicShape<"rectangle"> {
-  public static of<
-    O extends Length.Fixed | Rectangle.Auto = Length.Fixed | Rectangle.Auto
-  >(top: O, right: O, bottom: O, left: O): Rectangle<O> {
+  O extends Length | Rectangle.Auto = Length | Rectangle.Auto
+> extends BasicShape<"rectangle", Value.HasCalculation<[O, O, O, O]>> {
+  public static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(
+    top: O,
+    right: O,
+    bottom: O,
+    left: O
+  ): Rectangle<O> {
     return new Rectangle(top, right, bottom, left);
   }
 
@@ -31,7 +35,7 @@ export class Rectangle<
   public readonly _left: O;
 
   private constructor(top: O, right: O, bottom: O, left: O) {
-    super("rectangle", false);
+    super("rectangle", Value.hasCalculation(top, right, bottom, left));
     this._top = top;
     this._right = right;
     this._bottom = bottom;
@@ -54,8 +58,13 @@ export class Rectangle<
     return this._left;
   }
 
-  public resolve(): Rectangle<O> {
-    return this;
+  public resolve(resolver: Rectangle.Resolver): Rectangle.Canonical {
+    return new Rectangle(
+      this._top.resolve(resolver),
+      this._right.resolve(resolver),
+      this._bottom.resolve(resolver),
+      this._left.resolve(resolver)
+    );
   }
 
   public equals(value: Rectangle): boolean;
@@ -100,42 +109,33 @@ export class Rectangle<
  * @deprecated Deprecated as of CSS Masking Module Level 1
  */
 export namespace Rectangle {
+  export type Canonical = Rectangle<Length.Canonical | Auto>;
+
   export type Auto = Keyword<"auto">;
 
   export interface JSON extends BasicShape.JSON<"rectangle"> {
-    top: Length.Fixed.JSON | Keyword.JSON;
-    right: Length.Fixed.JSON | Keyword.JSON;
-    bottom: Length.Fixed.JSON | Keyword.JSON;
-    left: Length.Fixed.JSON | Keyword.JSON;
+    top: Length.JSON | Keyword.JSON;
+    right: Length.JSON | Keyword.JSON;
+    bottom: Length.JSON | Keyword.JSON;
+    left: Length.JSON | Keyword.JSON;
   }
+
+  export type Resolver = Length.Resolver;
 
   export function isRectangle(value: unknown): value is Rectangle {
     return value instanceof Rectangle;
   }
 
-  const parseLengthAuto = either(Length.parseBase, Keyword.parse("auto"));
+  const parseLengthAuto = either(Length.parse, Keyword.parse("auto"));
 
   export const parse: CSSParser<Rectangle> = map(
     Function.parse(
       "rect",
       either(
-        pair(
-          parseLengthAuto,
-          take(right(option(Token.parseWhitespace), parseLengthAuto), 3)
-        ),
-        pair(
-          parseLengthAuto,
-          take(
-            right(
-              delimited(option(Token.parseWhitespace), Token.parseComma),
-              parseLengthAuto
-            ),
-            3
-          )
-        )
+        separatedList(parseLengthAuto, option(Token.parseWhitespace), 4, 4),
+        separatedList(parseLengthAuto, Comma.parse, 4, 4)
       )
     ),
-    ([_, [top, [right, bottom, left]]]) =>
-      Rectangle.of(top, right, bottom, left)
+    ([_, [top, right, bottom, left]]) => Rectangle.of(top, right, bottom, left)
   );
 }
