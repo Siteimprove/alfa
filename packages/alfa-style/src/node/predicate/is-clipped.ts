@@ -18,6 +18,10 @@ const { isElement, hasBox } = Element;
 const { not, or, test } = Predicate;
 const { and } = Refinement;
 
+// function show(msg: string): (_: any, res: boolean) => void {
+//   return (_, res) => console.log(`${msg}: ${res}`);
+// }
+
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 /**
@@ -105,6 +109,7 @@ function isClippedBySize(
     const y = style.computed("overflow-y").value.value;
     const width = style.computed("width").value;
     const height = style.computed("height").value;
+    const overflows = test(canOverflow(device), element);
 
     // Does the element always show a scrollbar, no matter whether there is
     // enough room in it to show the content?
@@ -115,7 +120,7 @@ function isClippedBySize(
       ["height", y, height],
     ] as const) {
       // Is the element reduced to nothingness in this axis?
-      if (overflow === "visible") {
+      if (overflow === "visible" && overflows) {
         // The content overflows in this axis, go to next axis.
         continue;
       }
@@ -295,4 +300,26 @@ function isClipping(elementBox: Rectangle, device: Device): Predicate<Element> {
       )
     )(ancestor);
   };
+}
+
+/**
+ * Check if an element scales to its specified dimensions
+ *
+ * @remarks
+ * Replaced elements are not rendered by CSS directly. Instead, they have
+ * natural dimension (e.g., an image size) and specified ones (e.g., the width
+ * CSS property). Negotiation between the two computes a concrete size with which
+ * the element is effectively render. In practice, the concrete size is often
+ * the specified one, and while the rendering may result in smaller or larger
+ * object, it is also often fitting quite well.
+ * {@link https://drafts.csswg.org/css-images/#sizing}
+ *
+ * @privateRemarks
+ * For now, we mostly use this to discard the check on overflow for <img>.
+ * <img> seem to be always rendered at their specified size, if any. This is
+ * especially important here for tracking pixels whose specified size is 0
+ * and we need to treat them as invisible.
+ */
+function canOverflow(device: Device): Predicate<Element> {
+  return not(Element.hasName("img"));
 }
