@@ -7,7 +7,7 @@ import { Value } from "../../../value";
 
 import { Position } from "./position";
 
-const { map, either, option, right } = Parser;
+const { map, option, right } = Parser;
 
 /**
  * @internal

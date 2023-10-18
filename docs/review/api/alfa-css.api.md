@@ -232,7 +232,7 @@ export namespace Box {
 // Warning: (ae-forgotten-export) The symbol "BasicShape" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export class Circle<R extends Radius = Radius, P extends Position.Fixed = Position.Fixed> extends BasicShape<"circle"> {
+export class Circle<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"circle", Value.HasCalculation<[R, P]>> {
     // (undocumented)
     get center(): P;
     // (undocumented)
@@ -242,11 +242,11 @@ export class Circle<R extends Radius = Radius, P extends Position.Fixed = Positi
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<R extends Radius, P extends Position.Fixed>(radius: R, center: P): Circle<R, P>;
+    static of<R extends Radius, P extends Position>(radius: R, center: P): Circle<R, P>;
     // (undocumented)
     get radius(): R;
     // (undocumented)
-    resolve(): Circle<R, P>;
+    resolve(resolver: Circle.Resolver): Circle.Canonical;
     // (undocumented)
     toJSON(): Circle.JSON;
     // (undocumented)
@@ -256,6 +256,8 @@ export class Circle<R extends Radius = Radius, P extends Position.Fixed = Positi
 // @public (undocumented)
 export namespace Circle {
     // (undocumented)
+    export type Canonical = Circle<Radius.Canonical, Position.Canonical>;
+    // (undocumented)
     export function isCircle(value: unknown): value is Circle;
     // (undocumented)
     export interface JSON extends BasicShape.JSON<"circle"> {
@@ -264,6 +266,14 @@ export namespace Circle {
         // (undocumented)
         radius: Radius.JSON;
     }
+    // (undocumented)
+    export function partiallyResolve(resolver: PartialResolver): (value: Circle) => PartiallyResolved;
+    // (undocumented)
+    export type PartiallyResolved = Circle<Radius.PartiallyResolved, Position.PartiallyResolved>;
+    // (undocumented)
+    export type PartialResolver = Radius.PartialResolver & Position.PartialResolver;
+    // (undocumented)
+    export type Resolver = Radius.Resolver & Position.Resolver;
     const // (undocumented)
     parse: Parser<Circle>;
 }
@@ -476,7 +486,7 @@ export namespace Dimension {
 }
 
 // @public (undocumented)
-export class Ellipse<R extends Radius = Radius, P extends Position.Fixed = Position.Fixed> extends BasicShape<"ellipse"> {
+export class Ellipse<R extends Radius = Radius, P extends Position = Position> extends BasicShape<"ellipse", Value.HasCalculation<[R, P]>> {
     // (undocumented)
     get center(): P;
     // (undocumented)
@@ -486,9 +496,9 @@ export class Ellipse<R extends Radius = Radius, P extends Position.Fixed = Posit
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<R extends Radius = Radius, P extends Position.Fixed = Position.Fixed>(rx: R, ry: R, center: P): Ellipse<R, P>;
+    static of<R extends Radius = Radius, P extends Position = Position>(rx: R, ry: R, center: P): Ellipse<R, P>;
     // (undocumented)
-    resolve(): Ellipse<R, P>;
+    resolve(resolver: Ellipse.Resolver): Ellipse.Canonical;
     // (undocumented)
     get rx(): R;
     // (undocumented)
@@ -502,6 +512,8 @@ export class Ellipse<R extends Radius = Radius, P extends Position.Fixed = Posit
 // @public (undocumented)
 export namespace Ellipse {
     // (undocumented)
+    export type Canonical = Ellipse<Radius.Canonical, Position.Canonical>;
+    // (undocumented)
     export function isEllipse(value: unknown): value is Ellipse;
     // (undocumented)
     export interface JSON extends BasicShape.JSON<"ellipse"> {
@@ -512,6 +524,14 @@ export namespace Ellipse {
         // (undocumented)
         ry: Radius.JSON;
     }
+    // (undocumented)
+    export function partiallyResolve(resolver: PartialResolver): (value: Ellipse) => PartiallyResolved;
+    // (undocumented)
+    export type PartiallyResolved = Ellipse<Radius.PartiallyResolved, Position.PartiallyResolved>;
+    // (undocumented)
+    export type PartialResolver = Radius.PartialResolver & Position.PartialResolver;
+    // (undocumented)
+    export type Resolver = Radius.Resolver & Position.Resolver;
     const // (undocumented)
     parse: Parser<Ellipse>;
 }
@@ -714,8 +734,11 @@ export namespace Image {
     parse: Parser<Image>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "Corner_2" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "HasCalculation" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export class Inset<O extends Inset.Offset = Inset.Offset, C extends Inset.Corner = Inset.Corner> extends BasicShape<"inset"> {
+export class Inset<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2> extends BasicShape<"inset", HasCalculation<O, C>> {
     // (undocumented)
     get bottom(): O;
     // (undocumented)
@@ -733,11 +756,11 @@ export class Inset<O extends Inset.Offset = Inset.Offset, C extends Inset.Corner
     // (undocumented)
     get left(): O;
     // (undocumented)
-    static of<O extends Inset.Offset = Inset.Offset, C extends Inset.Corner = Inset.Corner>(offsets: readonly [O, O, O, O], corners: Option<readonly [C, C, C, C]>): Inset<O, C>;
+    static of<O extends Inset.Offset = Inset.Offset, C extends Corner_2 = Corner_2>(offsets: readonly [O, O, O, O], corners: Option<readonly [C, C, C, C]>): Inset<O, C>;
     // (undocumented)
     get offsets(): readonly [O, O, O, O];
     // (undocumented)
-    resolve(): Inset<O, C>;
+    resolve(resolver: Inset.Resolver): Inset.Canonical;
     // (undocumented)
     get right(): O;
     // (undocumented)
@@ -755,18 +778,26 @@ export class Inset<O extends Inset.Offset = Inset.Offset, C extends Inset.Corner
 // @public (undocumented)
 export namespace Inset {
     // (undocumented)
-    export type Corner = Radius | readonly [Radius, Radius];
+    export type Canonical = Inset<LengthPercentage.Canonical, Corner_2.Canonical>;
     // (undocumented)
-    export interface JSON<O extends Offset = Offset, C extends Corner = Corner> extends BasicShape.JSON<"inset"> {
+    export function isInset(value: unknown): value is Inset;
+    // (undocumented)
+    export interface JSON<O extends Offset = Offset, C extends Corner_2 = Corner_2> extends BasicShape.JSON<"inset"> {
         // (undocumented)
         corners: Option.JSON<readonly [C, C, C, C]>;
         // (undocumented)
         offsets: Serializable.ToJSON<readonly [O, O, O, O]>;
     }
     // (undocumented)
-    export type Offset = Length.Fixed | Percentage.Fixed;
+    export type Offset = LengthPercentage;
     // (undocumented)
-    export type Radius = Length.Fixed | Percentage.Fixed;
+    export function partiallyResolve(resolver: PartialResolver): (value: Inset) => PartiallyResolved;
+    // (undocumented)
+    export type PartiallyResolved = Inset<LengthPercentage.PartiallyResolved, Corner_2.PartiallyResolved>;
+    // (undocumented)
+    export type PartialResolver = LengthPercentage.PartialResolver;
+    // (undocumented)
+    export type Resolver = LengthPercentage.Resolver;
     const // (undocumented)
     parse: Parser<Inset>;
 }
@@ -967,7 +998,7 @@ export namespace Length {
 }
 
 // @public (undocumented)
-export type LengthPercentage<U extends Unit.Length = Unit.Length, CALC extends boolean = boolean> = CALC extends true ? LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated : CALC extends false ? Length.Fixed<U> | Percentage.Fixed : LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated | Length.Fixed<U> | Percentage.Fixed;
+export type LengthPercentage<U extends Unit.Length = Unit.Length> = LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated | Length.Fixed<U> | Percentage.Fixed;
 
 // @public (undocumented)
 export namespace LengthPercentage {
@@ -1028,9 +1059,7 @@ export namespace LengthPercentage {
     // (undocumented)
     export type Resolver = Length.Resolver & Percentage.Resolver<"length", Canonical>;
     const // (undocumented)
-    parse: Parser_2<Slice<Token>, Length.Calculated | Length.Fixed<Unit.Length> | Calculated | Percentage.Calculated<Base.Numeric.Type> | Percentage.Fixed<Base.Numeric.Type>, string, []>;
-    const // @internal (undocumented)
-    parseBase: Parser<LengthPercentage<Unit.Length, false>>;
+    parse: Parser_2<Slice<Token>, LengthPercentage<Unit.Length>, string, []>;
         {};
 }
 
@@ -1594,7 +1623,7 @@ export namespace Perspective {
 }
 
 // @public (undocumented)
-export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> extends BasicShape<"polygon"> {
+export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage> extends BasicShape<"polygon", Value.HasCalculation<[V]>> {
     // (undocumented)
     equals(value: Polygon): boolean;
     // (undocumented)
@@ -1604,9 +1633,9 @@ export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fix
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
+    static of<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage>(fill: Option<F>, vertices: Iterable_2<Polygon.Vertex<V>>): Polygon<F, V>;
     // (undocumented)
-    resolve(): Polygon<F, V>;
+    resolve(resolver: Polygon.Resolver): Polygon.Canonical;
     // (undocumented)
     toJSON(): Polygon.JSON<F, V>;
     // (undocumented)
@@ -1618,22 +1647,37 @@ export class Polygon<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fix
 // @public (undocumented)
 export namespace Polygon {
     // (undocumented)
+    export type Canonical = Polygon<Fill, LengthPercentage.Canonical>;
+    // (undocumented)
     export type Fill = Keyword<"nonzero"> | Keyword<"evenodd">;
     // (undocumented)
-    export interface JSON<F extends Fill = Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> extends BasicShape.JSON<"polygon"> {
+    export function isPolygon(value: unknown): value is Polygon;
+    // (undocumented)
+    export interface JSON<F extends Fill = Fill, V extends LengthPercentage = LengthPercentage> extends BasicShape.JSON<"polygon"> {
         // (undocumented)
         fill: Option.JSON<F>;
         // (undocumented)
         vertices: Array_2<Serializable.ToJSON<Vertex<V>>>;
     }
     // (undocumented)
-    export type Vertex<V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> = readonly [V, V];
+    export function partiallyResolve(resolver: PartialResolver): (value: Polygon) => PartiallyResolved;
+    // (undocumented)
+    export type PartiallyResolved = Polygon<Fill, LengthPercentage.PartiallyResolved>;
+    // (undocumented)
+    export type PartialResolver = LengthPercentage.PartialResolver;
+    // (undocumented)
+    export type Resolver = LengthPercentage.Resolver;
+    // (undocumented)
+    export type Vertex<V extends LengthPercentage = LengthPercentage> = readonly [
+    V,
+    V
+    ];
     const // (undocumented)
     parse: Parser<Polygon>;
 }
 
 // @public (undocumented)
-export class Position<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>, CALC extends boolean = boolean> extends Value<"position", CALC> implements Resolvable<Position.Canonical<H, V>, Position.Resolver> {
+export class Position<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>> extends Value<"position", Value.HasCalculation<[HC, VC]>> implements Resolvable<Position.Canonical<H, V>, Position.Resolver> {
     // (undocumented)
     equals(value: unknown): value is this;
     // (undocumented)
@@ -1641,7 +1685,7 @@ export class Position<H extends Position.Keywords.Horizontal = Position.Keywords
     // (undocumented)
     get horizontal(): HC;
     // (undocumented)
-    static of<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>>(horizontal: HC, vertical: VC): Position<H, V, HC, VC, Value.HasCalculation<[HC, VC]>>;
+    static of<H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal, V extends Position.Keywords.Vertical = Position.Keywords.Vertical, HC extends Position.Component<H> = Position.Component<H>, VC extends Position.Component<V> = Position.Component<V>>(horizontal: HC, vertical: VC): Position<H, V, HC, VC>;
     // (undocumented)
     resolve(resolver: Position.Resolver): Position.Canonical<H, V>;
     // (undocumented)
@@ -1658,9 +1702,7 @@ export namespace Position {
     // Warning: (ae-forgotten-export) The symbol "Component_2" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    export type Canonical<H extends Keywords.Horizontal = Keywords.Horizontal, V extends Keywords.Vertical = Keywords.Vertical> = Position<H, V, Component_2.Canonical<H>, Component_2.Canonical<V>, false>;
-    // @internal (undocumented)
-    export type Fixed<H extends Keywords.Horizontal = Keywords.Horizontal, V extends Keywords.Vertical = Keywords.Vertical> = Position<H, V, Component_2.Fixed<H>, Component_2.Fixed<V>, false>;
+    export type Canonical<H extends Keywords.Horizontal = Keywords.Horizontal, V extends Keywords.Vertical = Keywords.Vertical> = Position<H, V, Component_2.Canonical<H>, Component_2.Canonical<V>>;
     // (undocumented)
     export interface JSON extends Value.JSON<"position"> {
         // (undocumented)
@@ -1672,8 +1714,6 @@ export namespace Position {
     import Keywords = keywords.Keywords;
     import Side = side.Side;
     import Component = component.Component;
-    // @internal (undocumented)
-    export function parseBase(legacySyntax?: boolean): Parser<Fixed>;
     // (undocumented)
     export function partiallyResolve<H extends Keywords.Horizontal, V extends Keywords.Vertical>(resolver: PartialResolver): (value: Position<H, V>) => PartiallyResolved<H, V>;
     // (undocumented)
@@ -1689,7 +1729,7 @@ export namespace Position {
 }
 
 // @public (undocumented)
-export class Radius<R extends Length.Fixed | Percentage.Fixed | Radius.Side = Length.Fixed | Percentage.Fixed | Radius.Side> extends BasicShape<"radius"> {
+export class Radius<R extends LengthPercentage | Radius.Side = LengthPercentage | Radius.Side> extends BasicShape<"radius", Value.HasCalculation<[R]>> {
     // (undocumented)
     equals(value: Radius): boolean;
     // (undocumented)
@@ -1697,9 +1737,9 @@ export class Radius<R extends Length.Fixed | Percentage.Fixed | Radius.Side = Le
     // (undocumented)
     hash(hash: Hash): void;
     // (undocumented)
-    static of<R extends Length.Fixed | Percentage.Fixed | Radius.Side>(value: R): Radius<R>;
+    static of<R extends LengthPercentage | Radius.Side>(value: R): Radius<R>;
     // (undocumented)
-    resolve(): Radius<R>;
+    resolve(resolver: Radius.Resolver): Radius.Canonical;
     // (undocumented)
     toJSON(): Radius.JSON;
     // (undocumented)
@@ -1711,12 +1751,22 @@ export class Radius<R extends Length.Fixed | Percentage.Fixed | Radius.Side = Le
 // @public (undocumented)
 export namespace Radius {
     // (undocumented)
+    export type Canonical = Radius<LengthPercentage.Canonical | Side>;
+    // (undocumented)
     export function isRadius(value: unknown): value is Radius;
     // (undocumented)
     export interface JSON extends BasicShape.JSON<"radius"> {
         // (undocumented)
-        value: Length.Fixed.JSON | Percentage.Fixed.JSON | Keyword.JSON;
+        value: LengthPercentage.JSON | Keyword.JSON;
     }
+    // (undocumented)
+    export function PartiallyResolve(resolver: PartialResolver): (value: Radius) => PartiallyResolved;
+    // (undocumented)
+    export type PartiallyResolved = Radius<LengthPercentage.PartiallyResolved | Side>;
+    // (undocumented)
+    export type PartialResolver = LengthPercentage.PartialResolver;
+    // (undocumented)
+    export type Resolver = LengthPercentage.Resolver;
     // (undocumented)
     export type Side = Side.Closest | Side.Farthest;
     // (undocumented)
@@ -1731,7 +1781,7 @@ export namespace Radius {
 }
 
 // @public @deprecated (undocumented)
-export class Rectangle<O extends Length.Fixed | Rectangle.Auto = Length.Fixed | Rectangle.Auto> extends BasicShape<"rectangle"> {
+export class Rectangle<O extends Length | Rectangle.Auto = Length | Rectangle.Auto> extends BasicShape<"rectangle", Value.HasCalculation<[O, O, O, O]>> {
     // (undocumented)
     get bottom(): O;
     // (undocumented)
@@ -1747,9 +1797,9 @@ export class Rectangle<O extends Length.Fixed | Rectangle.Auto = Length.Fixed | 
     // (undocumented)
     readonly _left: O;
     // (undocumented)
-    static of<O extends Length.Fixed | Rectangle.Auto = Length.Fixed | Rectangle.Auto>(top: O, right: O, bottom: O, left: O): Rectangle<O>;
+    static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(top: O, right: O, bottom: O, left: O): Rectangle<O>;
     // (undocumented)
-    resolve(): Rectangle<O>;
+    resolve(resolver: Rectangle.Resolver): Rectangle.Canonical;
     // (undocumented)
     get right(): O;
     // (undocumented)
@@ -1769,18 +1819,22 @@ export namespace Rectangle {
     // (undocumented)
     export type Auto = Keyword<"auto">;
     // (undocumented)
+    export type Canonical = Rectangle<Length.Canonical | Auto>;
+    // (undocumented)
     export function isRectangle(value: unknown): value is Rectangle;
     // (undocumented)
     export interface JSON extends BasicShape.JSON<"rectangle"> {
         // (undocumented)
-        bottom: Length.Fixed.JSON | Keyword.JSON;
+        bottom: Length.JSON | Keyword.JSON;
         // (undocumented)
-        left: Length.Fixed.JSON | Keyword.JSON;
+        left: Length.JSON | Keyword.JSON;
         // (undocumented)
-        right: Length.Fixed.JSON | Keyword.JSON;
+        right: Length.JSON | Keyword.JSON;
         // (undocumented)
-        top: Length.Fixed.JSON | Keyword.JSON;
+        top: Length.JSON | Keyword.JSON;
     }
+    // (undocumented)
+    export type Resolver = Length.Resolver;
     const // (undocumented)
     parse: Parser<Rectangle>;
 }
@@ -1981,7 +2035,7 @@ export namespace Shadow {
 }
 
 // @public (undocumented)
-export class Shape<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry> extends Value<"shape", false> {
+export class Shape<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry> extends Value<"shape", Value.HasCalculation<[S]>> {
     // (undocumented)
     get box(): B;
     // (undocumented)
@@ -1993,7 +2047,7 @@ export class Shape<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry =
     // (undocumented)
     static of<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry>(shape: S, box: B): Shape<S, B>;
     // (undocumented)
-    resolve(): Shape<S, B>;
+    resolve(resolver: Shape.Resolver): Shape.Canonical;
     // (undocumented)
     get shape(): S;
     // (undocumented)
@@ -2007,14 +2061,45 @@ export namespace Shape {
     // (undocumented)
     export type Basic = Circle | Ellipse | Inset | Polygon | Rectangle;
     // (undocumented)
+    export namespace Basic {
+        // (undocumented)
+        export type Canonical = Circle.Canonical | Ellipse.Canonical | Inset.Canonical | Polygon.Canonical | Rectangle.Canonical;
+        // (undocumented)
+        export type JSON = Circle.JSON | Ellipse.JSON | Inset.JSON | Polygon.JSON | Rectangle.JSON;
+        // (undocumented)
+        export function partiallyResolve(resolver: PartialResolver): (value: Basic) => PartiallyResolved;
+        // (undocumented)
+        export type PartiallyResolved = Circle.PartiallyResolved | Ellipse.PartiallyResolved | Inset.PartiallyResolved | Polygon.PartiallyResolved | Rectangle.Canonical;
+        // (undocumented)
+        export type PartialResolver = Circle.PartialResolver & Ellipse.PartialResolver & Inset.PartialResolver & Polygon.PartialResolver & Rectangle.Resolver;
+        // (undocumented)
+        export type Resolver = Circle.Resolver & Ellipse.Resolver & Inset.Resolver & Polygon.Resolver & Rectangle.Resolver;
+        const // Warning: (ae-forgotten-export) The symbol "Keywords" needs to be exported by the entry point index.d.ts
+        // Warning: (ae-forgotten-export) The symbol "Keywords" needs to be exported by the entry point index.d.ts
+        //
+        // @internal (undocumented)
+        parse: Parser_2<Slice<Token>, Circle<Radius<LengthPercentage | import("./radius").Radius.Side>, Position<import("../position/keywords").Keywords.Horizontal, import("../position/keywords").Keywords.Vertical, Component_2<import("../position/keywords").Keywords.Horizontal>, Component_2<import("../position/keywords").Keywords.Vertical>>> | Ellipse<Radius<LengthPercentage | import("./radius").Radius.Side>, Position<import("../position/keywords").Keywords.Horizontal, import("../position/keywords").Keywords.Vertical, Component_2<import("../position/keywords").Keywords.Horizontal>, Component_2<import("../position/keywords").Keywords.Vertical>>> | Inset<Inset.Offset, Corner_2> | Polygon<Polygon.Fill, LengthPercentage>, string, []>;
+    }
+    // (undocumented)
+    export type Canonical = Shape<Basic.Canonical, Box.Geometry>;
+    // (undocumented)
     export interface JSON extends Value.JSON<"shape"> {
         // (undocumented)
         box: Box.Geometry.JSON;
         // (undocumented)
-        shape: Circle.JSON | Ellipse.JSON | Inset.JSON | Polygon.JSON | Rectangle.JSON;
+        shape: Basic.JSON;
     }
+    // (undocumented)
+    export function partiallyResolve(resolver: PartialResolver): (value: Shape) => PartiallyResolved;
+    // (undocumented)
+    export type PartiallyResolved = Shape<Basic.PartiallyResolved, Box.Geometry>;
+    // (undocumented)
+    export type PartialResolver = Basic.PartialResolver;
+    // (undocumented)
+    export type Resolver = Basic.Resolver;
     const // (undocumented)
     parse: Parser<Shape<Circle | Ellipse | Inset | Polygon>>;
+        {};
 }
 
 // @public (undocumented)
