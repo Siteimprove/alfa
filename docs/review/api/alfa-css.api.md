@@ -734,7 +734,7 @@ export namespace Image {
     parse: Parser<Image>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Corner" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Corner_2" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "HasCalculation" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -998,9 +998,7 @@ export namespace Length {
 }
 
 // @public (undocumented)
-
-export type LengthPercentage<U extends Unit.Length = Unit.Length, CALC extends boolean = boolean> = CALC extends true ? LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated : CALC extends false ? Length.Fixed<U> | Percentage.Fixed : LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated | Length.Fixed<U> | Percentage.Fixed;
-
+export type LengthPercentage<U extends Unit.Length = Unit.Length> = LengthPercentage.Calculated | Length.Calculated | Percentage.Calculated | Length.Fixed<U> | Percentage.Fixed;
 
 // @public (undocumented)
 export namespace LengthPercentage {
