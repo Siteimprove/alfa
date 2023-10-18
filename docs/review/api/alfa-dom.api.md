@@ -324,7 +324,7 @@ export namespace Element {
         // (undocumented)
         style: Block.JSON | null;
     }
-    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
+    const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     hasAttribute: typeof predicate_3.hasAttribute, // (undocumented)
@@ -407,17 +407,6 @@ export namespace Fragment {
 }
 
 // @public (undocumented)
-function getElementDescendants(node: Node, options?: Node.Traversal): Sequence<Element>;
-
-// @public
-function getElementIdMap(node: Node): Map_2<string, Element>;
-
-// Warning: (ae-forgotten-export) The symbol "Options" needs to be exported by the entry point index.d.ts
-//
-// @public
-function getNodesBetween(node1: Node, node2: Node, includeOptions?: Options, treeOptions?: Node.Traversal): Sequence<Node>;
-
-// @public (undocumented)
 export abstract class GroupingRule extends Rule {
     protected constructor(rules: Array<Rule>);
     // (undocumented)
@@ -488,76 +477,6 @@ export namespace h {
 }
 
 // @public (undocumented)
-function hasAttribute(predicate: Predicate<Attribute>): Predicate<Element>;
-
-// @public (undocumented)
-function hasAttribute(name: string, value?: Predicate<string>): Predicate<Element>;
-
-// @public (undocumented)
-function hasBox(predicate?: Predicate<Rectangle>): Predicate<Element>;
-
-// @public (undocumented)
-function hasChild(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-function hasDescendant(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-function hasDisplaySize(valueOrPredicate: number | Predicate<number>): Predicate<Element>;
-
-// @public (undocumented)
-function hasId(predicate?: Predicate<string>): Predicate<Element>;
-
-// @public (undocumented)
-function hasId(id: string, ...rest: Array<string>): Predicate<Element>;
-
-// @public (undocumented)
-function hasId(ids: Iterable_2<string>): Predicate<Element>;
-
-// @public (undocumented)
-function hasInclusiveDescendant(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
-
-// Warning: (ae-incompatible-release-tags) The symbol "hasInputType" is marked as @public, but its signature references "InputType" which is marked as @internal
-//
-// @public (undocumented)
-function hasInputType(predicate: Predicate<InputType>): Predicate<Element>;
-
-// Warning: (ae-incompatible-release-tags) The symbol "hasInputType" is marked as @public, but its signature references "InputType" which is marked as @internal
-//
-// @public (undocumented)
-function hasInputType(inputType: InputType, ...rest: Array<InputType>): Predicate<Element>;
-
-// @public (undocumented)
-function hasName<N extends string = string>(predicate: Refinement<string, N>): Refinement<Attribute, Attribute<N>>;
-
-// @public (undocumented)
-function hasName<N extends string = string>(name: N, ...rest: Array<N>): Refinement<Attribute, Attribute<N>>;
-
-// @public (undocumented)
-function hasName_2<N extends string = string>(predicate: Refinement<string, N>): Refinement<Element, Element<N>>;
-
-// @public (undocumented)
-function hasName_2<N extends string = string>(name: N, ...rest: Array<N>): Refinement<Element, Element<N>>;
-
-// @public (undocumented)
-function hasNamespace(predicate: Predicate<Namespace>): Predicate<Element>;
-
-// @public (undocumented)
-function hasNamespace(namespace: Namespace, ...rest: Array<Namespace>): Predicate<Element>;
-
-// @public (undocumented)
-function hasTabIndex(predicate?: Predicate<number>): Predicate<Element>;
-
-// @public (undocumented)
-function hasTabIndex(value: number, ...rest: Array_2<number>): Predicate<Element>;
-
-// @public (undocumented)
-function hasTextContent(predicate?: Predicate<string>, options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-const hasUniqueId: Predicate<Element>;
-
-// @public (undocumented)
 export class ImportRule extends ConditionRule {
     // (undocumented)
     get href(): string;
@@ -589,47 +508,6 @@ export namespace ImportRule {
         type: "import";
     }
 }
-
-// @internal (undocumented)
-type InputType = "hidden" | "search" | "tel" | "url" | "email" | "password" | "date" | "month" | "week" | "time" | "datetime-local" | "number" | "range" | "color" | "checkbox" | "radio" | "file" | "submit" | "image" | "reset" | "button" | "text";
-
-// Warning: (ae-incompatible-release-tags) The symbol "inputType" is marked as @public, but its signature references "InputType" which is marked as @internal
-//
-// @public (undocumented)
-function inputType(element: Element<"input">): InputType;
-
-// @public (undocumented)
-function isActuallyDisabled(element: Element): boolean;
-
-// @public (undocumented)
-function isBrowsingContextContainer(element: Element): boolean;
-
-// @public
-function isContent(options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-function isDocumentElement(value: unknown): value is Element<"html">;
-
-// @public (undocumented)
-function isDraggable(element: Element): boolean;
-
-// @public (undocumented)
-function isEditingHost(element: Element): boolean;
-
-// @public
-function isFallback(node: Node): boolean;
-
-// @public (undocumented)
-function isReplaced(element: Element): element is Element<"audio" | "canvas" | "embed" | "iframe" | "img" | "input" | "object" | "video">;
-
-// @public (undocumented)
-function isRoot(options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-function isScopedTo(name: string, ...rest: Array<string>): Predicate<Element>;
-
-// @public (undocumented)
-function isSuggestedFocusable(element: Element): boolean;
 
 // @public (undocumented)
 export function jsx<N extends string = string>(name: N, properties?: jsx.Properties | null, ...children: jsx.Children): Element<N>;
@@ -942,7 +820,7 @@ export namespace Node {
     //
     // (undocumented)
     getNodesBetween: typeof traversal.getNodesBetween;
-    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
+    const // Warning: (ae-forgotten-export) The symbol "predicate_2" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     hasChild: typeof predicate_2.hasChild, // (undocumented)

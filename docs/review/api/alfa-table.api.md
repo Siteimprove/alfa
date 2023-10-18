@@ -251,12 +251,6 @@ export namespace Group {
     isGroup: Refinement<unknown, Column.Group | Row.Group, []>;
 }
 
-// @public (undocumented)
-function hasElement(predicate: Predicate<Element>): Predicate<Cell>;
-
-// @public (undocumented)
-function hasElement(element: Element): Predicate<Cell>;
-
 // Warning: (ae-incompatible-release-tags) The symbol "Row" is marked as @public, but its signature references "Anchored" which is marked as @internal
 //
 // @public (undocumented)

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": [
+    "Renovate config for Alfa and related project",
+    "* Automerge minor/patch dependencies that pass tests, weekly",
+    "* Open PR for other dependencies weekly, grouped together"
+  ],
+  "reviewers": ["team:alfa-owners"],
+  "dependencyDashboard": true,
+  "packageRules": [
+    {
+      "groupName": "Other deps (major)",
+      "matchPackagePatterns": ["*"],
+      "excludePackagePrefixes": ["@siteimprove/alfa"],
+      "schedule": ["before 3am on Monday"]
+    },
+    {
+      "groupName": "Other deps (minor/patch)",
+      "matchPackagePatterns": ["*"],
+      "excludePackagePrefixes": ["@siteimprove/alfa"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true,
+      "schedule": ["on Sunday"]
+    }
+  ],
+  "extends": ["config:base"]
+}
