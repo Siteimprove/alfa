@@ -60,7 +60,7 @@ export { Validation }
 
 // Warnings were encountered during analysis:
 //
-// src/validation/validate-package-json.ts:43:5 - (ae-forgotten-export) The symbol "JSON" needs to be exported by the entry point index.d.ts
+// src/validation/validate-package-json.ts:43:5 - (ae-forgotten-export) The symbol "JSON_2" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
