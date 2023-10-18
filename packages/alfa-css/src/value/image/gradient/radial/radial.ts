@@ -150,7 +150,7 @@ export namespace Radial {
   export type Canonical = Radial<
     Item.Canonical,
     Shape.Canonical,
-    Position.Fixed
+    Position.Canonical
   >;
 
   export interface JSON extends Value.JSON<"gradient"> {

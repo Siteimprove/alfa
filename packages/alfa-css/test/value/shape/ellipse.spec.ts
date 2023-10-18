@@ -1,25 +1,67 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer } from "../../../src/syntax/lexer";
-import { Ellipse } from "../../../src/value/shape/ellipse";
+import { Ellipse, Lexer } from "../../../src";
 
 function parse(input: string) {
-  return Ellipse.parse(Lexer.lex(input)).map(([_, ellipse]) =>
-    ellipse.toJSON()
-  );
+  return Ellipse.parse(Lexer.lex(input)).getUnsafe()[1].toJSON();
 }
 
 test("parse() parses an ellipse", (t) => {
-  t.deepEqual(parse("ellipse(1px 3px at right)").getUnsafe(), {
+  t.deepEqual(parse("ellipse(1px 3px at right)"), {
+    type: "basic-shape",
+    kind: "ellipse",
+    rx: {
+      type: "basic-shape",
+      kind: "radius",
+      value: { type: "length", value: 1, unit: "px" },
+    },
+    ry: {
+      type: "basic-shape",
+      kind: "radius",
+      value: { type: "length", value: 3, unit: "px" },
+    },
+    center: {
+      type: "position",
+      vertical: { type: "keyword", value: "center" },
+      horizontal: {
+        type: "side",
+        offset: null,
+        side: { type: "keyword", value: "right" },
+      },
+    },
+  });
+});
+
+test("parse() accepts calculated radii", (t) => {
+  t.deepEqual(parse("ellipse(calc(1em - 10%) calc(1px + 1ch) at right)"), {
     type: "basic-shape",
     kind: "ellipse",
     rx: {
       type: "basic-shape",
       kind: "radius",
       value: {
-        type: "length",
-        value: 1,
-        unit: "px",
+        type: "length-percentage",
+        math: {
+          type: "math expression",
+          expression: {
+            type: "calculation",
+            arguments: [
+              {
+                type: "sum",
+                operands: [
+                  {
+                    type: "value",
+                    value: { type: "length", value: 1, unit: "em" },
+                  },
+                  {
+                    type: "value",
+                    value: { type: "percentage", value: -0.1 },
+                  },
+                ],
+              },
+            ],
+          },
+        },
       },
     },
     ry: {
@@ -27,23 +69,36 @@ test("parse() parses an ellipse", (t) => {
       kind: "radius",
       value: {
         type: "length",
-        value: 3,
-        unit: "px",
+        math: {
+          type: "math expression",
+          expression: {
+            type: "calculation",
+            arguments: [
+              {
+                type: "sum",
+                operands: [
+                  {
+                    type: "value",
+                    value: { type: "length", value: 1, unit: "px" },
+                  },
+                  {
+                    type: "value",
+                    value: { type: "length", value: 1, unit: "ch" },
+                  },
+                ],
+              },
+            ],
+          },
+        },
       },
     },
     center: {
       type: "position",
-      vertical: {
-        type: "keyword",
-        value: "center",
-      },
+      vertical: { type: "keyword", value: "center" },
       horizontal: {
         type: "side",
         offset: null,
-        side: {
-          type: "keyword",
-          value: "right",
-        },
+        side: { type: "keyword", value: "right" },
       },
     },
   });

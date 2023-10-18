@@ -19,7 +19,7 @@ namespace Computed {
     Position.Component.PartiallyResolved<Position.Keywords.Vertical>;
 }
 
-const parse = List.parseCommaSeparated(Position.Component.parseVertical(true));
+const parse = List.parseCommaSeparated(Position.Component.parseVertical);
 
 /**
  * @internal
