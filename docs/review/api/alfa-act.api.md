@@ -138,7 +138,7 @@ export namespace Outcome {
         // (undocumented)
         export function isApplicable<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Applicable<I, T, Q, S>;
     }
-    // Warning: (ae-incompatible-release-tags) The symbol "CantTell" is marked as @public, but its signature references "Value" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "CantTell" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
     export class CantTell<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.CantTell> {
@@ -178,7 +178,7 @@ export namespace Outcome {
         export function isCantTell<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is CantTell<I, T, Q, S>;
         // (undocumented)
         export function isCantTell<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is CantTell<I, T, Q, S>;
-        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
+        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Outcome" which is marked as @internal
         //
         // (undocumented)
         export interface JSON<T> extends Outcome.JSON<Value.CantTell> {
@@ -201,7 +201,7 @@ export namespace Outcome {
             "@id": string;
         };
     }
-    // Warning: (ae-incompatible-release-tags) The symbol "Failed" is marked as @public, but its signature references "Value" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "Failed" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
     export class Failed<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Failed> {
@@ -249,7 +249,7 @@ export namespace Outcome {
         export function isFailed<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is Failed<I, T, Q, S>;
         // (undocumented)
         export function isFailed<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Failed<I, T, Q, S>;
-        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
+        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Outcome" which is marked as @internal
         //
         // (undocumented)
         export interface JSON<T> extends Outcome.JSON<Value.Failed> {
@@ -268,7 +268,7 @@ export namespace Outcome {
     const // (undocumented)
     failed: typeof Failed.of, // (undocumented)
     isFailed: typeof Failed.isFailed;
-    // Warning: (ae-incompatible-release-tags) The symbol "Inapplicable" is marked as @public, but its signature references "Value" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "Inapplicable" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
     export class Inapplicable<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Inapplicable> {
@@ -301,7 +301,7 @@ export namespace Outcome {
         export function isInapplicable<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is Inapplicable<I, T, Q, S>;
         // (undocumented)
         export function isInapplicable<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Inapplicable<I, T, Q, S>;
-        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
+        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Outcome" which is marked as @internal
         //
         // (undocumented)
         export interface JSON extends Outcome.JSON<Value.Inapplicable> {
@@ -310,7 +310,7 @@ export namespace Outcome {
     const // (undocumented)
     cantTell: typeof CantTell.of, // (undocumented)
     isCantTell: typeof CantTell.isCantTell;
-    // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
     export interface JSON<V extends Value = Value> {
@@ -332,7 +332,7 @@ export namespace Outcome {
     }
     const // (undocumented)
     isApplicable: typeof Applicable.isApplicable;
-    // Warning: (ae-incompatible-release-tags) The symbol "Passed" is marked as @public, but its signature references "Value" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "Passed" is marked as @public, but its signature references "Outcome" which is marked as @internal
     //
     // (undocumented)
     export class Passed<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> extends Outcome<I, T, Q, S, Value.Passed> {
@@ -377,7 +377,7 @@ export namespace Outcome {
         export function isPassed<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is Passed<I, T, Q, S>;
         // (undocumented)
         export function isPassed<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Passed<I, T, Q, S>;
-        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Value" which is marked as @internal
+        // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Outcome" which is marked as @internal
         //
         // (undocumented)
         export interface JSON<T> extends Outcome.JSON<Value.Passed> {

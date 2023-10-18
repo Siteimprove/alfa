@@ -5,7 +5,6 @@
 ```ts
 
 import { Array as Array_2 } from '@siteimprove/alfa-array';
-import { Device } from '@siteimprove/alfa-device';
 import * as earl from '@siteimprove/alfa-earl';
 import { Equatable } from '@siteimprove/alfa-equatable';
 import { Flags } from '@siteimprove/alfa-flags';
@@ -228,7 +227,7 @@ export class Document extends Node<"document"> {
     // (undocumented)
     get style(): Iterable<Sheet>;
     // (undocumented)
-    toJSON(options?: Node.SerializationOptions): Document.JSON;
+    toJSON(): Document.JSON;
     // (undocumented)
     toString(): string;
 }
@@ -236,7 +235,7 @@ export class Document extends Node<"document"> {
 // @public (undocumented)
 export namespace Document {
     // @internal (undocumented)
-    export function fromDocument(json: JSON, device?: Device): Trampoline<Document>;
+    export function fromDocument(json: JSON): Trampoline<Document>;
     // (undocumented)
     export function isDocument(value: unknown): value is Document;
     // (undocumented)
@@ -263,13 +262,13 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get attributes(): Sequence<Attribute>;
     // (undocumented)
+    get box(): Option<Rectangle>;
+    // (undocumented)
     children(options?: Node.Traversal): Sequence<Node>;
     // (undocumented)
     get classes(): Sequence<string>;
     // (undocumented)
     get content(): Option<Document>;
-    // (undocumented)
-    getBoundingBox(device: Device): Option<Rectangle>;
     // (undocumented)
     get id(): Option<string>;
     // @internal (undocumented)
@@ -281,7 +280,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     get namespace(): Option<Namespace>;
     // (undocumented)
-    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, box?: Option<Rectangle>, device?: Option<Device>): Element<N>;
+    static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable_2<Attribute>, children?: Iterable_2<Node>, style?: Option<Block>, box?: Option<Rectangle>): Element<N>;
     // (undocumented)
     parent(options?: Node.Traversal): Option<Node>;
     // (undocumented)
@@ -295,7 +294,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
     // (undocumented)
     tabIndex(): Option<number>;
     // (undocumented)
-    toJSON(options?: Node.SerializationOptions): Element.JSON<N>;
+    toJSON(): Element.JSON<N>;
     // (undocumented)
     toString(): string;
 }
@@ -303,7 +302,7 @@ export class Element<N extends string = string> extends Node<"element"> implemen
 // @public (undocumented)
 export namespace Element {
     // @internal (undocumented)
-    export function fromElement<N extends string = string>(json: JSON<N>, device?: Device): Trampoline<Element<N>>;
+    export function fromElement<N extends string = string>(json: JSON<N>): Trampoline<Element<N>>;
     // (undocumented)
     export function isElement(value: unknown): value is Element;
     // (undocumented)
@@ -325,7 +324,7 @@ export namespace Element {
         // (undocumented)
         style: Block.JSON | null;
     }
-    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
+    const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     hasAttribute: typeof predicate_3.hasAttribute, // (undocumented)
@@ -399,24 +398,13 @@ export class Fragment extends Node<"fragment"> {
 // @public (undocumented)
 export namespace Fragment {
     // @internal (undocumented)
-    export function fromFragment(json: JSON, device?: Device): Trampoline<Fragment>;
+    export function fromFragment(json: JSON): Trampoline<Fragment>;
     // (undocumented)
     export function isFragment(value: unknown): value is Fragment;
     // (undocumented)
     export interface JSON extends Node.JSON<"fragment"> {
     }
 }
-
-// @public (undocumented)
-function getElementDescendants(node: Node, options?: Node.Traversal): Sequence<Element>;
-
-// @public
-function getElementIdMap(node: Node): Map_2<string, Element>;
-
-// Warning: (ae-forgotten-export) The symbol "Options" needs to be exported by the entry point index.d.ts
-//
-// @public
-function getNodesBetween(node1: Node, node2: Node, includeOptions?: Options, treeOptions?: Node.Traversal): Sequence<Node>;
 
 // @public (undocumented)
 export abstract class GroupingRule extends Rule {
@@ -443,7 +431,7 @@ export namespace GroupingRule {
 }
 
 // @public (undocumented)
-export function h<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, box?: Rectangle, device?: Device): Element<N>;
+export function h<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, box?: Rectangle): Element<N>;
 
 // @public (undocumented)
 export namespace h {
@@ -456,7 +444,7 @@ export namespace h {
     // (undocumented)
     export function document(children: Array<Node | string>, style?: Array<Sheet>): Document;
     // (undocumented)
-    export function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace, box?: Rectangle, device?: Device): Element<N>;
+    export function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace, box?: Rectangle): Element<N>;
     // (undocumented)
     export function fragment(children: Array<Node | string>): Fragment;
     // (undocumented)
@@ -487,76 +475,6 @@ export namespace h {
     // (undocumented)
     export function type<N extends string = string>(name: N, publicId?: string, systemId?: string): Type<N>;
 }
-
-// @public (undocumented)
-function hasAttribute(predicate: Predicate<Attribute>): Predicate<Element>;
-
-// @public (undocumented)
-function hasAttribute(name: string, value?: Predicate<string>): Predicate<Element>;
-
-// @public (undocumented)
-function hasBox(predicate: Predicate<Rectangle> | undefined, device: Device): Predicate<Element>;
-
-// @public (undocumented)
-function hasChild(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-function hasDescendant(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-function hasDisplaySize(valueOrPredicate: number | Predicate<number>): Predicate<Element>;
-
-// @public (undocumented)
-function hasId(predicate?: Predicate<string>): Predicate<Element>;
-
-// @public (undocumented)
-function hasId(id: string, ...rest: Array<string>): Predicate<Element>;
-
-// @public (undocumented)
-function hasId(ids: Iterable_2<string>): Predicate<Element>;
-
-// @public (undocumented)
-function hasInclusiveDescendant(predicate: Predicate<Node>, options?: Node.Traversal): Predicate<Node>;
-
-// Warning: (ae-incompatible-release-tags) The symbol "hasInputType" is marked as @public, but its signature references "InputType" which is marked as @internal
-//
-// @public (undocumented)
-function hasInputType(predicate: Predicate<InputType>): Predicate<Element>;
-
-// Warning: (ae-incompatible-release-tags) The symbol "hasInputType" is marked as @public, but its signature references "InputType" which is marked as @internal
-//
-// @public (undocumented)
-function hasInputType(inputType: InputType, ...rest: Array<InputType>): Predicate<Element>;
-
-// @public (undocumented)
-function hasName<N extends string = string>(predicate: Refinement<string, N>): Refinement<Attribute, Attribute<N>>;
-
-// @public (undocumented)
-function hasName<N extends string = string>(name: N, ...rest: Array<N>): Refinement<Attribute, Attribute<N>>;
-
-// @public (undocumented)
-function hasName_2<N extends string = string>(predicate: Refinement<string, N>): Refinement<Element, Element<N>>;
-
-// @public (undocumented)
-function hasName_2<N extends string = string>(name: N, ...rest: Array<N>): Refinement<Element, Element<N>>;
-
-// @public (undocumented)
-function hasNamespace(predicate: Predicate<Namespace>): Predicate<Element>;
-
-// @public (undocumented)
-function hasNamespace(namespace: Namespace, ...rest: Array<Namespace>): Predicate<Element>;
-
-// @public (undocumented)
-function hasTabIndex(predicate?: Predicate<number>): Predicate<Element>;
-
-// @public (undocumented)
-function hasTabIndex(value: number, ...rest: Array_2<number>): Predicate<Element>;
-
-// @public (undocumented)
-function hasTextContent(predicate?: Predicate<string>, options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-const hasUniqueId: Predicate<Element>;
 
 // @public (undocumented)
 export class ImportRule extends ConditionRule {
@@ -590,47 +508,6 @@ export namespace ImportRule {
         type: "import";
     }
 }
-
-// @internal (undocumented)
-type InputType = "hidden" | "search" | "tel" | "url" | "email" | "password" | "date" | "month" | "week" | "time" | "datetime-local" | "number" | "range" | "color" | "checkbox" | "radio" | "file" | "submit" | "image" | "reset" | "button" | "text";
-
-// Warning: (ae-incompatible-release-tags) The symbol "inputType" is marked as @public, but its signature references "InputType" which is marked as @internal
-//
-// @public (undocumented)
-function inputType(element: Element<"input">): InputType;
-
-// @public (undocumented)
-function isActuallyDisabled(element: Element): boolean;
-
-// @public (undocumented)
-function isBrowsingContextContainer(element: Element): boolean;
-
-// @public
-function isContent(options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-function isDocumentElement(value: unknown): value is Element<"html">;
-
-// @public (undocumented)
-function isDraggable(element: Element): boolean;
-
-// @public (undocumented)
-function isEditingHost(element: Element): boolean;
-
-// @public
-function isFallback(node: Node): boolean;
-
-// @public (undocumented)
-function isReplaced(element: Element): element is Element<"audio" | "canvas" | "embed" | "iframe" | "img" | "input" | "object" | "video">;
-
-// @public (undocumented)
-function isRoot(options?: Node.Traversal): Predicate<Node>;
-
-// @public (undocumented)
-function isScopedTo(name: string, ...rest: Array<string>): Predicate<Element>;
-
-// @public (undocumented)
-function isSuggestedFocusable(element: Element): boolean;
 
 // @public (undocumented)
 export function jsx<N extends string = string>(name: N, properties?: jsx.Properties | null, ...children: jsx.Children): Element<N>;
@@ -798,7 +675,7 @@ export namespace NamespaceRule {
 }
 
 // @public (undocumented)
-export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>, sarif.Serializable<sarif.Location> {
+export abstract class Node<T extends string = string> extends tree.Node<Node.Traversal.Flag, T> implements earl.Serializable<Node.EARL>, json.Serializable<tree.Node.JSON<T>>, sarif.Serializable<sarif.Location> {
     protected constructor(children: Array<Node>, type: T);
     // (undocumented)
     equals(value: Node): boolean;
@@ -897,35 +774,30 @@ export namespace Node {
         };
     }
     // (undocumented)
-    export function from(json: Element.JSON, device?: Device): Element;
+    export function from(json: Element.JSON): Element;
     // (undocumented)
-    export function from(json: Attribute.JSON, device?: Device): Attribute;
+    export function from(json: Attribute.JSON): Attribute;
     // (undocumented)
-    export function from(json: Text.JSON, device?: Device): Text;
+    export function from(json: Text.JSON): Text;
     // (undocumented)
-    export function from(json: Comment.JSON, device?: Device): Comment;
-    // (undocumented)
-    export function from(json: Document.JSON, device?: Device): Document;
+    export function from(json: Comment.JSON): Comment;
     const flatTree: Traversal;
     const fullTree: Traversal;
     const composedNested: Traversal;
     // (undocumented)
-    export function from(json: Type.JSON, device?: Device): Document;
+    export function from(json: Document.JSON): Document;
     // (undocumented)
-    export function from(json: Fragment.JSON, device?: Device): Fragment;
+    export function from(json: Type.JSON): Document;
     // (undocumented)
-    export function from(json: JSON, device?: Device): Node;
+    export function from(json: Fragment.JSON): Fragment;
+    // (undocumented)
+    export function from(json: JSON): Node;
     // @internal (undocumented)
-    export function fromNode(json: JSON, device?: Device): Trampoline<Node>;
+    export function fromNode(json: JSON): Trampoline<Node>;
     // (undocumented)
     export function isNode(value: unknown): value is Node;
     // (undocumented)
     export interface JSON<T extends string = string> extends tree.Node.JSON<T> {
-    }
-    // (undocumented)
-    export interface SerializationOptions {
-        // (undocumented)
-        device: Device;
     }
     // (undocumented)
     export class Traversal extends Flags<Traversal.Flag> {
@@ -948,7 +820,7 @@ export namespace Node {
     //
     // (undocumented)
     getNodesBetween: typeof traversal.getNodesBetween;
-    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
+    const // Warning: (ae-forgotten-export) The symbol "predicate_2" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     hasChild: typeof predicate_2.hasChild, // (undocumented)
@@ -1092,7 +964,7 @@ export class Shadow extends Node<"shadow"> {
 // @public (undocumented)
 export namespace Shadow {
     // @internal (undocumented)
-    export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow>;
+    export function fromShadow(json: JSON): Trampoline<Shadow>;
     // (undocumented)
     export function isShadow(value: unknown): value is Shadow;
     // (undocumented)

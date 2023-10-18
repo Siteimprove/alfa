@@ -53,6 +53,8 @@ export namespace Angle {
         hasUnit<U extends Unit.Angle>(unit: U): this is Fixed<U>;
         // (undocumented)
         static of<U extends Unit.Angle>(value: number, unit: U): Fixed<U>;
+        // Warning: (ae-forgotten-export) The symbol "Angle_2" needs to be exported by the entry point index.d.ts
+        //
         // (undocumented)
         static of<U extends Unit.Angle>(value: Angle_2<U>): Fixed<U>;
         // (undocumented)
@@ -98,37 +100,6 @@ export namespace Angle {
     const // @internal (undocumented)
     parseBase: Parser_2<Slice<Token>, Fixed<Unit.Angle>, string, []>;
         {};
-}
-
-// @public (undocumented)
-class Angle_2<U extends Unit.Angle = Unit.Angle> extends Dimension_2<"angle", U> {
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    hasUnit<U extends Unit.Angle>(unit: U): this is Angle_2<U>;
-    // (undocumented)
-    static of<U extends Unit.Angle>(value: number, unit: U): Angle_2<U>;
-    // (undocumented)
-    scale(factor: number): Angle_2<U>;
-    // (undocumented)
-    toJSON(): Angle_2.JSON<U>;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    withUnit<U extends Unit.Angle>(unit: U): Angle_2<U>;
-}
-
-// @public (undocumented)
-namespace Angle_2 {
-    // (undocumented)
-    function isAngle(value: unknown): value is Angle_2;
-    // (undocumented)
-    interface JSON<U extends Unit.Angle = Unit.Angle> extends Dimension_2.JSON<"angle", U> {
-    }
-    const // (undocumented)
-    parse: Parser<Angle_2>;
 }
 
 // @public (undocumented)
@@ -462,6 +433,7 @@ export namespace Dimension {
         export interface JSON<T extends Type = Type> extends Numeric.Calculated.JSON<T> {
         }
     }
+    // Warning: (ae-forgotten-export) The symbol "Numeric_2" needs to be exported by the entry point index.d.ts
     export abstract class Fixed<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends Dimensions<T>[1] = Dimensions<T>[1]> extends Numeric.Fixed<T> implements IDimension<T, false>, Convertible<Dimensions<T>[1]>, Comparable<Fixed<T>> {
         protected constructor(value: number, unit: U, type: T);
         // (undocumented)
@@ -511,36 +483,6 @@ export namespace Dimension {
     // (undocumented)
     export function isFixed(value: unknown): value is Fixed;
         {};
-}
-
-// Warning: (ae-forgotten-export) The symbol "ToDimension" needs to be exported by the entry point index.d.ts
-//
-// @public (undocumented)
-abstract class Dimension_2<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends ToDimension<T> = ToDimension<T>> extends Numeric_2<T> {
-    protected constructor(value: number, unit: U, type: T);
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hasUnit<V extends ToDimension<T>>(unit: V): this is Dimension_2<T, V>;
-    // (undocumented)
-    toJSON(): Dimension_2.JSON<T, U>;
-    // (undocumented)
-    get unit(): U;
-    // (undocumented)
-    protected readonly _unit: U;
-    // (undocumented)
-    abstract withUnit<V extends ToDimension<T>>(unit: V): Dimension_2<T, V>;
-}
-
-// @public (undocumented)
-namespace Dimension_2 {
-    // (undocumented)
-    function isDimension(value: unknown): value is Dimension_2;
-    // (undocumented)
-    interface JSON<T extends Numeric_2.Dimension = Numeric_2.Dimension, U extends ToDimension<T> = ToDimension<T>> extends Numeric_2.JSON<T> {
-        // (undocumented)
-        unit: U;
-    }
 }
 
 // @public (undocumented)
@@ -716,7 +658,7 @@ export class HSL<H extends Number_2.Fixed | Angle.Fixed = Number_2.Fixed | Angle
     get lightness(): Percentage.Fixed;
     // (undocumented)
     static of<H extends Number_2.Canonical | Angle.Canonical, A extends Number_2.Canonical | Percentage.Canonical, S extends Percentage, L extends Percentage>(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A>;
-    // Warning: (ae-forgotten-export) The symbol "ToCanonical" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "ToCanonical_2" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     static of<H extends Number_2 | Angle, A extends Number_2 | Percentage, S extends Percentage, L extends Percentage>(hue: H, saturation: S, lightness: L, alpha: A): HSL<ToCanonical_2<H>, ToCanonical_2<A>>;
@@ -792,7 +734,7 @@ export namespace Image {
     parse: Parser<Image>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Corner" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Corner_2" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "HasCalculation" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -888,6 +830,8 @@ export namespace Integer {
         equals(value: unknown): value is this;
         // (undocumented)
         hash(hash: Hash): void;
+        // Warning: (ae-forgotten-export) The symbol "Integer_2" needs to be exported by the entry point index.d.ts
+        //
         // (undocumented)
         static of(value: number | Integer_2): Fixed;
         // (undocumented)
@@ -927,31 +871,6 @@ export namespace Integer {
     const // @internal (undocumented)
     parseBase: Parser_2<Slice<Token>, Fixed, string, []>;
         {};
-}
-
-// @public (undocumented)
-class Integer_2 extends Numeric_2<"integer"> {
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    static of(value: number): Integer_2;
-    // (undocumented)
-    scale(factor: number): Integer_2;
-    // (undocumented)
-    toJSON(): Integer_2.JSON;
-}
-
-// @public (undocumented)
-namespace Integer_2 {
-    // (undocumented)
-    function isInteger(value: unknown): value is Integer_2;
-    // (undocumented)
-    interface JSON extends Numeric_2.JSON<"integer"> {
-    }
-    const // (undocumented)
-    parse: Parser<Integer_2>;
 }
 
 // @public (undocumented)
@@ -1028,6 +947,8 @@ export namespace Length {
         isViewportRelative(): this is Fixed<Unit.Length.Relative.Viewport>;
         // (undocumented)
         static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
+        // Warning: (ae-forgotten-export) The symbol "Length_2" needs to be exported by the entry point index.d.ts
+        //
         // (undocumented)
         static of<U extends Unit.Length>(value: Length_2<U>): Fixed<U>;
         resolve(resolver: Resolver): Canonical;
@@ -1074,39 +995,6 @@ export namespace Length {
     const // @internal (undocumented)
     parseBase: Parser_2<Slice<Token>, Fixed<Unit.Length>, string, []>;
         {};
-}
-
-// @public (undocumented)
-class Length_2<U extends Unit.Length = Unit.Length> extends Dimension_2<"length", U> {
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    hasUnit<U extends Unit.Length>(unit: U): this is Length_2<U>;
-    // (undocumented)
-    isRelative(): this is Length_2<Unit.Length.Relative>;
-    // (undocumented)
-    static of<U extends Unit.Length>(value: number, unit: U): Length_2<U>;
-    // (undocumented)
-    scale(factor: number): Length_2<U>;
-    // (undocumented)
-    toJSON(): Length_2.JSON<U>;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    withUnit<U extends Unit.Length>(unit: U): Length_2<U>;
-}
-
-// @public (undocumented)
-namespace Length_2 {
-    // (undocumented)
-    function isLength(value: unknown): value is Length_2;
-    // (undocumented)
-    interface JSON<U extends Unit.Length = Unit.Length> extends Dimension_2.JSON<"length", U> {
-    }
-    const // (undocumented)
-    parse: Parser<Length_2>;
 }
 
 // @public (undocumented)
@@ -1253,8 +1141,12 @@ class Math_2<out D extends Math_2.Dimension = Math_2.Dimension> {
     resolve(this: Math_2<"length">, resolver: Expression.LengthResolver): Result<Length_2<"px">, string>;
     // (undocumented)
     resolve(this: Math_2<"length-percentage">, resolver: Expression.Resolver<"px", Length_2<"px">>): Result<Length_2<"px">, string>;
+    // Warning: (ae-forgotten-export) The symbol "Number_3" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
     resolve(this: Math_2<"number">): Result<Number_3, string>;
+    // Warning: (ae-forgotten-export) The symbol "Percentage_2" needs to be exported by the entry point index.d.ts
+    //
     // (undocumented)
     resolve<T extends Numeric_2 = Percentage_2>(this: Math_2<"percentage">, resolver?: Expression.PercentageResolver<T>, hint?: T extends Angle_2 ? "angle" : "length"): Result<T, string>;
     // (undocumented)
@@ -1286,7 +1178,7 @@ namespace Math_2 {
         // (undocumented)
         type: "math expression";
     }
-    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Dimension" which is marked as @internal
+    const // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Math_2" which is marked as @internal
     //
     // (undocumented)
     parse: Parser_2<Slice<Token>, Math_2<Dimension>, string, []>;
@@ -1305,7 +1197,7 @@ namespace Math_2 {
 }
 export { Math_2 as Math }
 
-// Warning: (ae-forgotten-export) The symbol "Function" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Function_3" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
 export class Matrix extends Function_3<"matrix", false> implements Resolvable<Matrix.Canonical, never> {
@@ -1519,37 +1411,12 @@ namespace Number_2 {
 export { Number_2 as Number }
 
 // @public (undocumented)
-class Number_3 extends Numeric_2<"number"> {
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    static of(value: number): Number_3;
-    // (undocumented)
-    scale(factor: number): Number_3;
-    // (undocumented)
-    toJSON(): Number_3.JSON;
-}
-
-// @public (undocumented)
-namespace Number_3 {
-    // (undocumented)
-    function isNumber(value: unknown): value is Number_3;
-    // (undocumented)
-    interface JSON extends Numeric_2.JSON<"number"> {
-    }
-    const // (undocumented)
-    parseZero: Parser<Number_3>;
-    const // (undocumented)
-    parse: Parser<Number_3>;
-}
-
-// @public (undocumented)
 export type Numeric<T extends Numeric.Type = Numeric.Type> = Numeric.Calculated<T> | Numeric.Fixed<T>;
 
 // @public (undocumented)
 export namespace Numeric {
     export abstract class Calculated<T extends Type = Type, R extends Type = T> extends Value<T, true, R> implements INumeric<T, true, R> {
-        // Warning: (ae-incompatible-release-tags) The symbol "__constructor" is marked as @public, but its signature references "ToMath" which is marked as @internal
+        // Warning: (ae-incompatible-release-tags) The symbol "__constructor" is marked as @public, but its signature references "Numeric" which is marked as @internal
         protected constructor(math: ToMath<T>, type: T);
         // (undocumented)
         equals(value: unknown): value is this;
@@ -1557,11 +1424,11 @@ export namespace Numeric {
         hasCalculation(): this is Calculated<T, R>;
         // (undocumented)
         hash(hash: Hash): void;
-        // Warning: (ae-incompatible-release-tags) The symbol "math" is marked as @public, but its signature references "ToMath" which is marked as @internal
+        // Warning: (ae-incompatible-release-tags) The symbol "math" is marked as @public, but its signature references "Numeric" which is marked as @internal
         //
         // (undocumented)
         get math(): ToMath<T>;
-        // Warning: (ae-incompatible-release-tags) The symbol "_math" is marked as @public, but its signature references "ToMath" which is marked as @internal
+        // Warning: (ae-incompatible-release-tags) The symbol "_math" is marked as @public, but its signature references "Numeric" which is marked as @internal
         //
         // (undocumented)
         protected readonly _math: ToMath<T>;
@@ -1576,7 +1443,7 @@ export namespace Numeric {
     export namespace Calculated {
         // (undocumented)
         export interface JSON<T extends Type = Type> extends Value.JSON<T> {
-            // Warning: (ae-incompatible-release-tags) The symbol "math" is marked as @public, but its signature references "ToMath" which is marked as @internal
+            // Warning: (ae-incompatible-release-tags) The symbol "math" is marked as @public, but its signature references "Numeric" which is marked as @internal
             //
             // (undocumented)
             math: Serializable.ToJSON<ToMath<T>>;
@@ -1635,55 +1502,6 @@ export namespace Numeric {
     // (undocumented)
     export type Type = Numeric_2.Type | `${Numeric_2.Dimension}-percentage`;
         {};
-}
-
-// @public (undocumented)
-abstract class Numeric_2<T extends Numeric_2.Type = Numeric_2.Type> implements Equatable, Hashable, Serializable {
-    protected constructor(value: number, type: T);
-    static readonly Decimals = 7;
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    hash(hash: Hash): void;
-    // (undocumented)
-    abstract scale(factor: number): Numeric_2<T>;
-    // (undocumented)
-    toJSON(): Numeric_2.JSON<T>;
-    // (undocumented)
-    toString(): string;
-    // (undocumented)
-    get type(): T;
-    // (undocumented)
-    protected readonly _type: T;
-    // (undocumented)
-    get value(): number;
-    // (undocumented)
-    protected readonly _value: number;
-}
-
-// @public (undocumented)
-namespace Numeric_2 {
-    // (undocumented)
-    type Dimension = "angle" | "length";
-    // (undocumented)
-    function isNumeric(value: unknown): value is Numeric_2;
-    // Warning: (ae-incompatible-release-tags) The symbol "JSON" is marked as @public, but its signature references "Type" which is marked as @internal
-    //
-    // (undocumented)
-    interface JSON<T extends Type = Type> {
-        // (undocumented)
-        [key: string]: json.JSON;
-        // (undocumented)
-        type: T;
-        // (undocumented)
-        value: number;
-    }
-    // (undocumented)
-    type Ratio = "percentage";
-    // (undocumented)
-    type Scalar = "integer" | "number";
-    // @internal (undocumented)
-    type Type = Scalar | Ratio | Dimension;
 }
 
 // @public (undocumented)
@@ -1767,31 +1585,6 @@ export namespace Percentage {
     const // @internal (undocumented)
     parseBase: Parser_2<Slice<Token>, Fixed<Numeric_2.Type>, string, []>;
         {};
-}
-
-// @public (undocumented)
-class Percentage_2 extends Numeric_2<"percentage"> {
-    // (undocumented)
-    equals(value: unknown): value is this;
-    // (undocumented)
-    static of(value: number): Percentage_2;
-    // (undocumented)
-    scale(factor: number): Percentage_2;
-    // (undocumented)
-    toJSON(): Percentage_2.JSON;
-    // (undocumented)
-    toString(): string;
-}
-
-// @public (undocumented)
-namespace Percentage_2 {
-    // (undocumented)
-    function isPercentage(value: unknown): value is Percentage_2;
-    // (undocumented)
-    interface JSON extends Numeric_2.JSON<"percentage"> {
-    }
-    const // (undocumented)
-    parse: Parser<Percentage_2>;
 }
 
 // @public (undocumented)
@@ -1906,7 +1699,7 @@ export class Position<H extends Position.Keywords.Horizontal = Position.Keywords
 // @public (undocumented)
 export namespace Position {
     // Warning: (ae-forgotten-export) The symbol "Keywords" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "Component" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "Component_2" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     export type Canonical<H extends Keywords.Horizontal = Keywords.Horizontal, V extends Keywords.Vertical = Keywords.Vertical> = Position<H, V, Component_2.Canonical<H>, Component_2.Canonical<V>>;
@@ -2233,7 +2026,7 @@ export namespace Shadow {
         // (undocumented)
         withSpread: boolean;
     }
-    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Options" which is marked as @internal
+    // Warning: (ae-incompatible-release-tags) The symbol "parse" is marked as @public, but its signature references "Shadow" which is marked as @internal
     //
     // (undocumented)
     export function parse(options?: Options): Parser<Shadow>;

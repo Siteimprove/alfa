@@ -194,75 +194,6 @@ export namespace Feature {
 }
 
 // @public (undocumented)
-function hasAccessibleName<T extends Element_2 | Text_2>(device: Device, predicate?: Predicate<Name>): Predicate<T>;
-
-// @public (undocumented)
-function hasAccessibleName<T extends Element_2 | Text_2>(device: Device, name: string, ...rest: Array<string>): Predicate<T>;
-
-// @public (undocumented)
-function hasAttribute(predicate: Predicate<Attribute>): Predicate<Node>;
-
-// @public (undocumented)
-function hasAttribute(name: Attribute.Name, value?: Predicate<string>): Predicate<Node>;
-
-// @public (undocumented)
-function hasExplicitRole(predicate?: Predicate<Role>): Predicate<Element_2>;
-
-// @public (undocumented)
-function hasExplicitRole<N extends Role.Name>(name: N, ...rest: Array<N>): Predicate<Element_2>;
-
-// @public (undocumented)
-function hasHeadingLevel(device: Device, predicate?: Predicate<number>): Predicate<Element_2>;
-
-// @public (undocumented)
-function hasImplicitRole(predicate?: Predicate<Role>): Predicate<Element_2>;
-
-// @public (undocumented)
-function hasImplicitRole<N extends Role.Name>(name: N, ...rest: Array<N>): Predicate<Element_2>;
-
-// @public
-function hasIncorrectRoleWithoutName(device: Device): Predicate<Element_2>;
-
-// @public (undocumented)
-function hasName<N extends Role.Name>(refinement: Refinement<Role.Name, N>): Refinement<Role, Role<N>>;
-
-// @public (undocumented)
-function hasName(predicate: Predicate<Role.Name>): Predicate<Role>;
-
-// @public (undocumented)
-function hasName<N extends Role.Name>(name: N, ...rest: Array<N>): Refinement<Role, Role<N>>;
-
-// @public (undocumented)
-function hasName_2(predicate?: Predicate<Name>): Predicate<Node>;
-
-// @public (undocumented)
-function hasName_2(name: string, ...rest: Array<string>): Predicate<Node>;
-
-// @public (undocumented)
-function hasNonDefaultRole(element: Element_2): boolean;
-
-// @public (undocumented)
-function hasNonEmptyAccessibleName<T extends Element_2 | Text_2>(device: Device): Predicate<T>;
-
-// @public (undocumented)
-function hasRole(device: Device, predicate?: Predicate<Role>): Predicate<Element_2>;
-
-// @public (undocumented)
-function hasRole<N extends Role.Name>(device: Device, name: N, ...rest: Array<N>): Predicate<Element_2>;
-
-// @public (undocumented)
-function hasRole_2(predicate?: Predicate<Role>): Predicate<Node>;
-
-// @public (undocumented)
-function hasRole_2<N extends Role.Name>(name: N, ...rest: Array<N>): Predicate<Node>;
-
-// @public (undocumented)
-function hasValue(predicate: Predicate<string>): Predicate<Name>;
-
-// @public (undocumented)
-function hasValue(value: string, ...rest: Array<string>): Predicate<Name>;
-
-// @public (undocumented)
 export class Inert extends Node<"inert"> {
     // (undocumented)
     clone(): Inert;
@@ -275,24 +206,6 @@ export class Inert extends Node<"inert"> {
     // (undocumented)
     toString(): string;
 }
-
-// @public
-function isIgnored<T extends Node_2>(device: Device): Predicate<T>;
-
-// @public
-function isIncludedInTheAccessibilityTree<T extends Node_2>(device: Device): Predicate<T>;
-
-// @public
-const isMarkedDecorative: Predicate<Element_2>;
-
-// @public
-function isPerceivableForAll<T extends Node_2>(device: Device): Predicate<T>;
-
-// @public
-function isProgrammaticallyHidden(device: Device, context?: Context): Predicate<Element_2>;
-
-// @public
-const isSemanticallyDisabled: Predicate<Element_2>;
 
 // @public (undocumented)
 export class Name implements Equatable, Serializable<Name.JSON> {
@@ -666,7 +579,7 @@ export namespace Node {
         const // (undocumented)
         empty: Traversal;
     }
-    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
+    const // Warning: (ae-forgotten-export) The symbol "predicate_3" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     hasAttribute: typeof predicate_3.hasAttribute, // (undocumented)
@@ -720,7 +633,7 @@ export namespace Role {
     export function from(element: Element_2): Option<Role>;
     export function fromExplicit(element: Element_2): Option<Role>;
     export function fromImplicit(element: Element_2): Option<Role>;
-    // Warning: (ae-forgotten-export) The symbol "Members" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "Members_2" needs to be exported by the entry point index.d.ts
     export type Inherited<N extends Name> = N extends "roletype" | "none" ? never : Members_2<Roles[N]["inherited"]>;
     // (undocumented)
     export function isName(value: string): value is Name;
@@ -745,7 +658,7 @@ export namespace Role {
         [M in Inherited<N>]: SuperclassOf<M>;
     }[Inherited<N>];
     export type Widget = SubclassOf<"widget">;
-    const // Warning: (ae-forgotten-export) The symbol "predicate" needs to be exported by the entry point index.d.ts
+    const // Warning: (ae-forgotten-export) The symbol "predicate_2" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     hasName: typeof predicate_2.hasName;
