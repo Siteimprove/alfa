@@ -97,8 +97,6 @@ export namespace Angle {
     export type Resolver = {};
     const // (undocumented)
     parse: Parser<Angle>;
-    const // @internal (undocumented)
-    parseBase: Parser_2<Slice<Token>, Fixed<Unit.Angle>, string, []>;
         {};
 }
 
@@ -868,8 +866,6 @@ export namespace Integer {
     export function of(value: Math_2<"number">): Calculated;
     const // (undocumented)
     parse: Parser<Integer>;
-    const // @internal (undocumented)
-    parseBase: Parser_2<Slice<Token>, Fixed, string, []>;
         {};
 }
 
@@ -992,8 +988,6 @@ export namespace Length {
     export function resolver(emBase: Canonical, remBase: Canonical, vwBase: Canonical, vhBase: Canonical): Mapper<Fixed<Unit.Length.Relative>, Canonical>;
     const // (undocumented)
     parse: Parser<Length>;
-    const // @internal (undocumented)
-    parseBase: Parser_2<Slice<Token>, Fixed<Unit.Length>, string, []>;
         {};
 }
 
@@ -1404,8 +1398,6 @@ namespace Number_2 {
     parse: Parser<Number_2>;
     const // (undocumented)
     parseZero: Parser<Fixed>;
-    const // @internal (undocumented)
-    parseBase: Parser_2<Slice<Token>, Fixed, string, []>;
         {};
 }
 export { Number_2 as Number }
@@ -1582,8 +1574,6 @@ export namespace Percentage {
     }
     const // (undocumented)
     parse: Parser<Percentage>;
-    const // @internal (undocumented)
-    parseBase: Parser_2<Slice<Token>, Fixed<Numeric_2.Type>, string, []>;
         {};
 }
 
