@@ -49,6 +49,7 @@ import { Transform } from '@siteimprove/alfa-css';
 import { Tuple } from '@siteimprove/alfa-css';
 import { Unit } from '@siteimprove/alfa-css';
 import { URL } from '@siteimprove/alfa-css';
+import { Value as Value_2 } from '@siteimprove/alfa-css';
 
 // Warning: (ae-internal-missing-underscore) The name "Longhand" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -137,8 +138,8 @@ export namespace Longhands {
         readonly "border-image-outset": Longhand<Specified_2, Tuple<[top: Length | Number_2, right: Length | Number_2, bottom: Length | Number_2, left: Length | Number_2], boolean>>;
         readonly "border-image-repeat": Longhand<Specified_4, Specified_4>;
         readonly "border-image-slice": Longhand<Specified_6, Specified_6>;
-        readonly "border-image-source": Longhand<Specified_8, Image.PartiallyResolved | Keyword<"none">>;
-        readonly "border-image-width": Longhand<Specified_9, Tuple<[top: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">, right: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">, bottom: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">, left: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">], boolean>>;
+        readonly "border-image-source": Longhand<Specified_7, Image.PartiallyResolved | Keyword<"none">>;
+        readonly "border-image-width": Longhand<Specified_8, Tuple<[top: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">, right: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">, bottom: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">, left: Percentage.Canonical | Length | Number_2.Fixed | Keyword<"auto">], boolean>>;
         readonly "border-inline-end-color": Longhand<Color, Color.Canonical>;
         readonly "border-inline-end-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-inline-end-width": Longhand<Specified, Length>;
@@ -170,12 +171,12 @@ export namespace Longhands {
         readonly float: Longhand<Keyword.ToKeywords<"none" | "left" | "right">, Keyword.ToKeywords<"none" | "left" | "right">>;
         readonly "font-family": Longhand<List<String_2 | Keyword<"serif"> | Keyword<"sans-serif"> | Keyword<"cursive"> | Keyword<"fantasy"> | Keyword<"monospace">, boolean>, List<String_2 | Keyword<"serif"> | Keyword<"sans-serif"> | Keyword<"cursive"> | Keyword<"fantasy"> | Keyword<"monospace">, boolean>>;
         readonly "font-size": Longhand<LengthPercentage | Keyword<"medium"> | Keyword<"xx-small"> | Keyword<"x-small"> | Keyword<"small"> | Keyword<"large"> | Keyword<"x-large"> | Keyword<"xx-large"> | Keyword<"xxx-large"> | Keyword<"larger"> | Keyword<"smaller">, Length>;
-        readonly "font-stretch": Longhand<Specified_11, Percentage>;
+        readonly "font-stretch": Longhand<Specified_10, Percentage>;
         readonly "font-style": Longhand<Keyword.ToKeywords<"normal" | "italic" | "oblique">, Keyword.ToKeywords<"normal" | "italic" | "oblique">>;
         readonly "font-variant-caps": Longhand<Keyword.ToKeywords<"normal" | "small-caps" | "all-small-caps" | "petite-caps" | "all-petite-caps" | "unicase" | "titling-caps">, Keyword.ToKeywords<"normal" | "small-caps" | "all-small-caps" | "petite-caps" | "all-petite-caps" | "unicase" | "titling-caps">>;
-        readonly "font-variant-east-asian": Longhand<Specified_12, Specified_12>;
-        readonly "font-variant-ligatures": Longhand<Specified_13, Specified_13>;
-        readonly "font-variant-numeric": Longhand<Specified_14, Specified_14>;
+        readonly "font-variant-east-asian": Longhand<Specified_11, Specified_11>;
+        readonly "font-variant-ligatures": Longhand<Specified_12, Specified_12>;
+        readonly "font-variant-numeric": Longhand<Specified_13, Specified_13>;
         readonly "font-variant-position": Longhand<Keyword.ToKeywords<"sub" | "normal" | "super">, Keyword.ToKeywords<"sub" | "normal" | "super">>;
         readonly "font-weight": Longhand<Number_2 | Keyword<"normal"> | Keyword<"bold"> | Keyword<"bolder"> | Keyword<"lighter">, Number_2.Fixed>;
         readonly height: Longhand<Percentage | Length | Keyword<"auto">, Percentage.Canonical | Length | Keyword<"auto">>;
@@ -486,9 +487,9 @@ export namespace Value {
 // src/longhands.ts:203:7 - (ae-incompatible-release-tags) The symbol ""border-image-repeat"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:204:7 - (ae-forgotten-export) The symbol "Specified_6" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:204:7 - (ae-incompatible-release-tags) The symbol ""border-image-slice"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:205:7 - (ae-forgotten-export) The symbol "Specified_8" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:205:7 - (ae-forgotten-export) The symbol "Specified_7" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:205:7 - (ae-incompatible-release-tags) The symbol ""border-image-source"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:206:7 - (ae-forgotten-export) The symbol "Specified_9" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:206:7 - (ae-forgotten-export) The symbol "Specified_8" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:206:7 - (ae-incompatible-release-tags) The symbol ""border-image-width"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:207:7 - (ae-incompatible-release-tags) The symbol ""border-inline-end-color"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:208:7 - (ae-incompatible-release-tags) The symbol ""border-inline-end-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
@@ -521,15 +522,15 @@ export namespace Value {
 // src/longhands.ts:235:7 - (ae-incompatible-release-tags) The symbol "float" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:236:7 - (ae-incompatible-release-tags) The symbol ""font-family"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:237:7 - (ae-incompatible-release-tags) The symbol ""font-size"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:238:7 - (ae-forgotten-export) The symbol "Specified_11" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:238:7 - (ae-forgotten-export) The symbol "Specified_10" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:238:7 - (ae-incompatible-release-tags) The symbol ""font-stretch"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:239:7 - (ae-incompatible-release-tags) The symbol ""font-style"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:240:7 - (ae-incompatible-release-tags) The symbol ""font-variant-caps"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:241:7 - (ae-forgotten-export) The symbol "Specified_12" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:241:7 - (ae-forgotten-export) The symbol "Specified_11" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:241:7 - (ae-incompatible-release-tags) The symbol ""font-variant-east-asian"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:242:7 - (ae-forgotten-export) The symbol "Specified_13" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:242:7 - (ae-forgotten-export) The symbol "Specified_12" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:242:7 - (ae-incompatible-release-tags) The symbol ""font-variant-ligatures"" is marked as @public, but its signature references "Longhand" which is marked as @internal
-// src/longhands.ts:243:7 - (ae-forgotten-export) The symbol "Specified_14" needs to be exported by the entry point index.d.ts
+// src/longhands.ts:243:7 - (ae-forgotten-export) The symbol "Specified_13" needs to be exported by the entry point index.d.ts
 // src/longhands.ts:243:7 - (ae-incompatible-release-tags) The symbol ""font-variant-numeric"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:244:7 - (ae-incompatible-release-tags) The symbol ""font-variant-position"" is marked as @public, but its signature references "Longhand" which is marked as @internal
 // src/longhands.ts:245:7 - (ae-incompatible-release-tags) The symbol ""font-weight"" is marked as @public, but its signature references "Longhand" which is marked as @internal
