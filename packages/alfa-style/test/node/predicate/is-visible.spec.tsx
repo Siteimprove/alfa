@@ -313,3 +313,17 @@ test(`isVisible() returns true for text with the same color as their background 
 
   t.equal(isVisible(text), true);
 });
+
+test(`isVisible() consider that images' concrete dimensions are the specified ones`, (t) => {
+  const img = (
+    <img src="foo.jpg" style={{ width: "0px", overflow: "visible" }} />
+  );
+  const div = (
+    <div style={{ width: "0px", overflow: "visible" }}>Hello World</div>
+  );
+
+  h.document([img, div]);
+
+  t.equal(isVisible(img), false);
+  t.equal(isVisible(div), true);
+});
