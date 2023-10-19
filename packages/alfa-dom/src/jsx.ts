@@ -2,6 +2,7 @@ import { h } from "./h";
 
 import { Element, Node } from ".";
 
+import { Device } from "@siteimprove/alfa-device";
 import { Rectangle } from "@siteimprove/alfa-rectangle";
 import * as dom from ".";
 
@@ -18,6 +19,7 @@ export function jsx<N extends string = string>(
   const attributes: Record<string, string | boolean> = {};
   const style: Record<string, string> = {};
   let box: Rectangle | undefined = undefined;
+  let device: Device | undefined = undefined;
 
   for (const [name, value] of entries(properties ?? {})) {
     if (value === null || value === undefined) {
@@ -33,7 +35,11 @@ export function jsx<N extends string = string>(
         continue;
 
       case "box":
-        box = Rectangle.from(value as Rectangle.JSON);
+        const deviceAndBox = value as { device: Device } & Rectangle.JSON;
+
+        box = Rectangle.from(deviceAndBox);
+        device = deviceAndBox.device;
+
         continue;
 
       default:
@@ -46,7 +52,8 @@ export function jsx<N extends string = string>(
     attributes,
     (children as Array<jsx.Child>).flat(Infinity),
     style,
-    box
+    box,
+    device
   );
 }
 

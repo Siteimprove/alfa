@@ -40,6 +40,7 @@
     "@siteimprove/alfa-array": "workspace:^0.67.0",
     "@siteimprove/alfa-cache": "workspace:^0.67.0",
     "@siteimprove/alfa-css": "workspace:^0.67.0",
+    "@siteimprove/alfa-device": "workspace:^0.67.0",
     "@siteimprove/alfa-earl": "workspace:^0.67.0",
     "@siteimprove/alfa-equatable": "workspace:^0.67.0",
     "@siteimprove/alfa-flags": "workspace:^0.67.0",

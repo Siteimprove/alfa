@@ -859,9 +859,10 @@ test("evaluate() can tell when encountering an opaque background before an absol
 
 test("evaluate() can tell when interposed descendant overlaps offset parent, but does not overlap target", async (t) => {
   const target = h.text("Hello World");
+  const device = Device.standard();
 
   const document = h.document([
-    <body box={{ x: 8, y: 8, width: 1070, height: 126 }}>
+    <body box={{ device, x: 8, y: 8, width: 1070, height: 126 }}>
       <div
         style={{
           position: "absolute",
@@ -872,9 +873,9 @@ test("evaluate() can tell when interposed descendant overlaps offset parent, but
           width: "100px",
           height: "100px",
         }}
-        box={{ x: 100, y: 100, width: 100, height: 100 }}
+        box={{ device, x: 100, y: 100, width: 100, height: 100 }}
       ></div>
-      <div box={{ x: 8, y: 8, width: 1070, height: 18 }}>{target}</div>
+      <div box={{ device, x: 8, y: 8, width: 1070, height: 18 }}>{target}</div>
       <br />
       <br />
       <br />
@@ -884,7 +885,7 @@ test("evaluate() can tell when interposed descendant overlaps offset parent, but
     </body>,
   ]);
 
-  t.deepEqual(await evaluate(R69, { document }), [
+  t.deepEqual(await evaluate(R69, { document, device }), [
     passed(R69, target, {
       1: Outcomes.HasSufficientContrast(21, 4.5, [
         Diagnostic.Pairing.of(

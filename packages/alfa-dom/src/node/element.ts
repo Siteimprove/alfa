@@ -1,3 +1,5 @@
+import { Cache } from "@siteimprove/alfa-cache";
+import { Device } from "@siteimprove/alfa-device";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option, Some } from "@siteimprove/alfa-option";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -34,7 +36,8 @@ export class Element<N extends string = string>
     attributes: Iterable<Attribute> = [],
     children: Iterable<Node> = [],
     style: Option<Block> = None,
-    box: Option<Rectangle> = None
+    box: Option<Rectangle> = None,
+    device: Option<Device> = None
   ): Element<N> {
     return new Element(
       namespace,
@@ -43,7 +46,8 @@ export class Element<N extends string = string>
       Array.from(attributes),
       Array.from(children),
       style,
-      box
+      box,
+      device
     );
   }
 
@@ -52,11 +56,11 @@ export class Element<N extends string = string>
   private readonly _name: N;
   private readonly _attributes: Map<string, Attribute>;
   private readonly _style: Option<Block>;
-  private readonly _box: Option<Rectangle>;
   private _shadow: Option<Shadow> = None;
   private _content: Option<Document> = None;
   private readonly _id: Option<string>;
   private readonly _classes: Array<string>;
+  private readonly _boxes: Cache<Device, Rectangle>;
 
   private constructor(
     namespace: Option<Namespace>,
@@ -65,7 +69,8 @@ export class Element<N extends string = string>
     attributes: Array<Attribute>,
     children: Array<Node>,
     style: Option<Block>,
-    box: Option<Rectangle>
+    box: Option<Rectangle>,
+    device: Option<Device>
   ) {
     super(children, "element");
 
@@ -89,7 +94,9 @@ export class Element<N extends string = string>
       .map((attr) => attr.value.trim().split(/\s+/))
       .getOr([]);
 
-    this._box = box;
+    this._boxes = Cache.from(
+      device.isSome() && box.isSome() ? [[device.get(), box.get()]] : []
+    );
   }
 
   public get namespace(): Option<Namespace> {
@@ -141,8 +148,8 @@ export class Element<N extends string = string>
     return Sequence.from(this._classes);
   }
 
-  public get box(): Option<Rectangle> {
-    return this._box;
+  public getBoundingBox(device: Device): Option<Rectangle> {
+    return this._boxes.get(device);
   }
 
   public parent(options: Node.Traversal = Node.Traversal.empty): Option<Node> {
@@ -300,7 +307,7 @@ export class Element<N extends string = string>
     return path;
   }
 
-  public toJSON(): Element.JSON<N> {
+  public toJSON(options?: Node.SerializationOptions): Element.JSON<N> {
     return {
       ...super.toJSON(),
       namespace: this._namespace.getOr(null),
@@ -312,7 +319,13 @@ export class Element<N extends string = string>
       style: this._style.map((style) => style.toJSON()).getOr(null),
       shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
       content: this._content.map((content) => content.toJSON()).getOr(null),
-      box: this._box.map((box) => box.toJSON()).getOr(null),
+      box:
+        options?.device === undefined
+          ? null
+          : this._boxes
+              .get(options.device)
+              .map((box) => box.toJSON())
+              .getOr(null),
     };
   }
 
@@ -393,35 +406,39 @@ export namespace Element {
    * @internal
    */
   export function fromElement<N extends string = string>(
-    json: JSON<N>
+    json: JSON<N>,
+    device?: Device
   ): Trampoline<Element<N>> {
-    return Trampoline.traverse(json.children ?? [], Node.fromNode).map(
-      (children) => {
-        const element = Element.of(
-          Option.from(json.namespace as Namespace | null),
-          Option.from(json.prefix),
-          json.name,
-          json.attributes.map((attribute) =>
-            Attribute.fromAttribute(attribute).run()
-          ),
-          children,
-          json.style?.length === 0
-            ? None
-            : Option.from(json.style).map(Block.from),
-          Option.from(json.box).map(Rectangle.from)
-        );
+    return Trampoline.traverse(json.children ?? [], (child) =>
+      Node.fromNode(child, device)
+    ).map((children) => {
+      const element = Element.of(
+        Option.from(json.namespace as Namespace | null),
+        Option.from(json.prefix),
+        json.name,
+        json.attributes.map((attribute) =>
+          Attribute.fromAttribute(attribute).run()
+        ),
+        children,
+        json.style?.length === 0
+          ? None
+          : Option.from(json.style).map(Block.from),
+        Option.from(json.box).map(Rectangle.from),
+        Option.from(device)
+      );
 
-        if (json.shadow !== null) {
-          element._attachShadow(Shadow.fromShadow(json.shadow).run());
-        }
-
-        if (json.content !== null) {
-          element._attachContent(Document.fromDocument(json.content).run());
-        }
-
-        return element;
+      if (json.shadow !== null) {
+        element._attachShadow(Shadow.fromShadow(json.shadow, device).run());
       }
-    );
+
+      if (json.content !== null) {
+        element._attachContent(
+          Document.fromDocument(json.content, device).run()
+        );
+      }
+
+      return element;
+    });
   }
 
   export const {

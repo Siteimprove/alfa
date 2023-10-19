@@ -5,7 +5,6 @@ import { Element, Node, Text } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { None, Option } from "@siteimprove/alfa-option";
 import { Set } from "@siteimprove/alfa-set";
-import { Style } from "@siteimprove/alfa-style";
 
 import { expectation } from "../act/expectation";
 import { Group } from "../act/group";
@@ -18,7 +17,6 @@ import { isLargeText } from "../predicate";
 const { isElement } = Element;
 const { flatMap, map, takeWhile } = Iterable;
 const { min, max, round } = Math;
-const { getBoundingBox } = Style;
 
 /**
  * @deprecated This is only used in the deprecated R66v1 and R69v1.
@@ -247,12 +245,12 @@ function getIntersectors(
     return Option.of(candidates);
   }
 
-  const elementBox = getBoundingBox(element, device);
+  const elementBox = element.getBoundingBox(device);
 
   if (
     !elementBox.isSome() ||
     Iterable.some(candidates, (candidate) =>
-      getBoundingBox(candidate, device).isNone()
+      candidate.getBoundingBox(device).isNone()
     )
   ) {
     return None;
@@ -264,7 +262,7 @@ function getIntersectors(
       (canditate) =>
         elementBox
           .get()
-          .intersects(getBoundingBox(canditate, device).getUnsafe()) // Presence of the box is guaranteed by the above check
+          .intersects(canditate.getBoundingBox(device).getUnsafe()) // Presence of the box is guaranteed by the above check
     )
   );
 }

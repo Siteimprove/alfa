@@ -123,7 +123,7 @@ function isClippedBySize(
 
       if (
         context === Context.empty() &&
-        element.box.some((box) => box[axis] === 0)
+        element.getBoundingBox(device).some((box) => box[axis] === 0)
       ) {
         // The element's box is squished in this axis.
         return true;
@@ -143,7 +143,7 @@ function isClippedBySize(
 
         if (
           context === Context.empty() &&
-          element.box.some((box) => box[axis] <= 1)
+          element.getBoundingBox(device).some((box) => box[axis] <= 1)
         ) {
           return true;
         }
@@ -243,8 +243,10 @@ function isClippedByMasking(
  */
 function isClippedByMovingAway(device: Device): Predicate<Element> {
   return (element) => {
-    return hasBox((elementBox) =>
-      hasPositioningParent(device, isClipping(elementBox, device))(element)
+    return hasBox(
+      (elementBox) =>
+        hasPositioningParent(device, isClipping(elementBox, device))(element),
+      device
     )(element);
   };
 }
@@ -269,26 +271,26 @@ function isClipping(elementBox: Rectangle, device: Device): Predicate<Element> {
       // case where the ancestor itself is clipped away is handled by the global
       // recurrence in isClipped.
       // This doesn't handle corner cases of 1×1px intersections.
-      not(hasBox(elementBox.intersects.bind(elementBox))),
+      not(hasBox(elementBox.intersects.bind(elementBox), device)),
       or(
         // The element is to the left, and clipped away.
         and(
-          hasBox((ancestorBox) => elementBox.right < ancestorBox.left),
+          hasBox((ancestorBox) => elementBox.right < ancestorBox.left, device),
           hasComputedStyle("overflow-x", isNotVisible, device)
         ),
         // The element is to the right and cannot be scrolled to.
         and(
-          hasBox((ancestorBox) => elementBox.left > ancestorBox.right),
+          hasBox((ancestorBox) => elementBox.left > ancestorBox.right, device),
           hasComputedStyle("overflow-x", isNoScroll, device)
         ),
         // The element is above, and clipped away.
         and(
-          hasBox((ancestorBox) => elementBox.bottom < ancestorBox.top),
+          hasBox((ancestorBox) => elementBox.bottom < ancestorBox.top, device),
           hasComputedStyle("overflow-y", isNotVisible, device)
         ),
         // The element is below and cannot be scrolled to.
         and(
-          hasBox((ancestorBox) => elementBox.top > ancestorBox.bottom),
+          hasBox((ancestorBox) => elementBox.top > ancestorBox.bottom, device),
           hasComputedStyle("overflow-y", isNoScroll, device)
         ),
         // The ancestor doesn't clip, let's search for the next one.
