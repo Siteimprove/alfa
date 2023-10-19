@@ -187,13 +187,4 @@ export namespace Angle {
     map<Slice<Token>, BaseAngle, Fixed, string>(BaseAngle.parse, of),
     map(Math.parseAngle, of)
   );
-
-  // TODO: temporary helper needed during migration
-  /**
-   * @internal
-   */
-  export const parseBase = map<Slice<Token>, BaseAngle, Fixed, string>(
-    BaseAngle.parse,
-    of
-  );
 }

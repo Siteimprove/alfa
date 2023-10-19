@@ -198,13 +198,4 @@ export namespace Percentage {
     map<Slice<Token>, BasePercentage, Fixed, string>(BasePercentage.parse, of),
     map(Math.parsePercentage, of)
   );
-
-  // TODO: temporary helper needed during migration
-  /**
-   * @internal
-   */
-  export const parseBase = map<Slice<Token>, BasePercentage, Fixed, string>(
-    BasePercentage.parse,
-    of
-  );
 }

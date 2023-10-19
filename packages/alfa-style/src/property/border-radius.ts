@@ -1,4 +1,4 @@
-import { Length, Percentage, Token, Tuple } from "@siteimprove/alfa-css";
+import { LengthPercentage, Token, Tuple } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 
 import { Shorthand } from "../shorthand";
@@ -11,10 +11,7 @@ const { delimited, either, map, option, pair, right, takeBetween } = Parser;
 const parse = map(
   pair(
     takeBetween(
-      delimited(
-        option(Token.parseWhitespace),
-        either(Length.parse, Percentage.parseBase)
-      ),
+      delimited(option(Token.parseWhitespace), LengthPercentage.parse),
       1,
       4
     ),
@@ -22,10 +19,7 @@ const parse = map(
       right(
         Token.parseDelim("/"),
         takeBetween(
-          delimited(
-            option(Token.parseWhitespace),
-            either(Length.parse, Percentage.parseBase)
-          ),
+          delimited(option(Token.parseWhitespace), LengthPercentage.parse),
           1,
           4
         )
