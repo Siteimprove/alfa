@@ -18,10 +18,6 @@ const { isElement, hasBox } = Element;
 const { not, or, test } = Predicate;
 const { and } = Refinement;
 
-// function show(msg: string): (_: any, res: boolean) => void {
-//   return (_, res) => console.log(`${msg}: ${res}`);
-// }
-
 const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 /**
