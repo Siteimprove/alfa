@@ -4,7 +4,7 @@
 
 ## Column.JSON.x property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 x: number;

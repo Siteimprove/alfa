@@ -5,7 +5,7 @@
 ## Text namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Text 

@@ -4,12 +4,12 @@
 
 ## Selector.Before.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Before;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Before](./alfa-selector.selector.before.md)
 

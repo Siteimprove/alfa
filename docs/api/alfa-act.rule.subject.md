@@ -4,10 +4,10 @@
 
 ## Rule.Subject type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Subject<R> = R extends Rule<any, any, any, infer S> ? S : never;
 ```
-<b>References:</b> [Rule](./alfa-act.rule.md)
+**References:** [Rule](./alfa-act.rule.md)
 

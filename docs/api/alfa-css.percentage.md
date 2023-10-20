@@ -6,10 +6,10 @@
 
 [https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Percentage = Percentage.Calculated | Percentage.Fixed;
 ```
-<b>References:</b> [Percentage.Calculated](./alfa-css.percentage.calculated.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
+**References:** [Percentage.Calculated](./alfa-css.percentage.calculated.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
 

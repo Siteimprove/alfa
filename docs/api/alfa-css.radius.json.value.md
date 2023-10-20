@@ -4,8 +4,8 @@
 
 ## Radius.JSON.value property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-value: Length.Fixed.JSON | Percentage.Fixed.JSON | Keyword.JSON;
+value: LengthPercentage.JSON | Keyword.JSON;
 ```

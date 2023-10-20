@@ -4,7 +4,7 @@
 
 ## Slice.slice() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 slice(start: number, end?: number): Slice<T>;
@@ -15,9 +15,9 @@ slice(start: number, end?: number): Slice<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  start | number |  |
-|  end | number | <i>(Optional)</i> |
+|  end | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

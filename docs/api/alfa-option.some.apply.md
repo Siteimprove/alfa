@@ -4,7 +4,7 @@
 
 ## Some.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
@@ -14,9 +14,9 @@ apply<U>(mapper: Option<Mapper<T, U>>): Option<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Option](./alfa-option.option.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+|  mapper | Option&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
+Option&lt;U&gt;
 

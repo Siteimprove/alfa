@@ -4,12 +4,12 @@
 
 ## Request.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Request.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Request.JSON](./alfa-http.request.json.md)
 

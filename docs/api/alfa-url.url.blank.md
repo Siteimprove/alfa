@@ -6,12 +6,12 @@
 
 [https://tools.ietf.org/html/rfc6694\#section-3](https://tools.ietf.org/html/rfc6694#section-3)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static blank(): URL;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [URL](./alfa-url.url.md)
 

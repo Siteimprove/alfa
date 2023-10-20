@@ -6,7 +6,7 @@
 
 [https://en.wikipedia.org/wiki/Matrix\_(mathematics)](https://en.wikipedia.org/wiki/Matrix_(mathematics))
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Matrix = Array<Array<number>>;

@@ -4,7 +4,7 @@
 
 ## Result.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U>): Result<U, E>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U>): Result<U, E>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;
 

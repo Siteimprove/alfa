@@ -4,7 +4,7 @@
 
 ## Site.resources property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get resources(): Graph<R>;

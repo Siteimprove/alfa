@@ -4,10 +4,10 @@
 
 ## Percentage.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Canonical = Fixed;
 ```
-<b>References:</b> [Fixed](./alfa-css.percentage.fixed.md)
+**References:** [Fixed](./alfa-css.percentage.fixed.md)
 

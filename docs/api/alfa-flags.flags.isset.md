@@ -6,7 +6,7 @@
 
 Test whether a given flag is present (or set) in the set of flags
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isSet: (flag: F) => boolean;

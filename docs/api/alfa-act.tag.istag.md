@@ -4,7 +4,7 @@
 
 ## Tag.isTag() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isTag<T extends string>(value: unknown, type?: T): value is Tag<T>;
@@ -15,9 +15,9 @@ function isTag<T extends string>(value: unknown, type?: T): value is Tag<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-|  type | T | <i>(Optional)</i> |
+|  type | T | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Tag](./alfa-act.tag.md)<!-- -->&lt;T&gt;
 

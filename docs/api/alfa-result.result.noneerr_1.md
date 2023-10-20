@@ -4,7 +4,7 @@
 
 ## Result.noneErr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 noneErr(predicate: Predicate<E>): boolean;
@@ -14,9 +14,9 @@ noneErr(predicate: Predicate<E>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;E&gt; |  |
+|  predicate | Predicate&lt;E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

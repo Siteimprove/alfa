@@ -4,7 +4,7 @@
 
 ## Map\_2.forEach() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 forEach(callback: Callback<V, void, [key: K]>): void;
@@ -14,9 +14,9 @@ forEach(callback: Callback<V, void, [key: K]>): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;V, void, \[key: K\]&gt; |  |
+|  callback | Callback&lt;V, void, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

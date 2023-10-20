@@ -4,7 +4,7 @@
 
 ## h.sheet() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function sheet(rules: Array<Rule>, disabled?: boolean, condition?: string): Sheet;
@@ -14,11 +14,11 @@ function sheet(rules: Array<Rule>, disabled?: boolean, condition?: string): Shee
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rules | Array&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
-|  disabled | boolean | <i>(Optional)</i> |
-|  condition | string | <i>(Optional)</i> |
+|  rules | Array&lt;Rule&gt; |  |
+|  disabled | boolean | _(Optional)_ |
+|  condition | string | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sheet](./alfa-dom.sheet.md)
+Sheet
 

@@ -4,7 +4,7 @@
 
 ## Rotate.angle property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get angle(): Angle.Canonical;

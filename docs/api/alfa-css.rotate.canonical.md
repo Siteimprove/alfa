@@ -4,10 +4,10 @@
 
 ## Rotate.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Canonical = Rotate;
 ```
-<b>References:</b> [Rotate](./alfa-css.rotate.md)
+**References:** [Rotate](./alfa-css.rotate.md)
 

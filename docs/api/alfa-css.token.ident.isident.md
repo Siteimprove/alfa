@@ -4,7 +4,7 @@
 
 ## Token.Ident.isIdent() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isIdent(value: unknown): value is Ident;
@@ -16,7 +16,7 @@ function isIdent(value: unknown): value is Ident;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Ident](./alfa-css.token.ident.md)
 

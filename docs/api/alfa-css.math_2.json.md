@@ -4,7 +4,7 @@
 
 ## Math\_2.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON 

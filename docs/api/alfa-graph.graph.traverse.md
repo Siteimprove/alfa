@@ -4,7 +4,7 @@
 
 ## Graph.traverse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 traverse(root: T, traversal?: Graph.Traversal): Sequence<[node: T, parent: T]>;
@@ -15,9 +15,9 @@ traverse(root: T, traversal?: Graph.Traversal): Sequence<[node: T, parent: T]>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  root | T |  |
-|  traversal | [Graph.Traversal](./alfa-graph.graph.traversal.md) | <i>(Optional)</i> |
+|  traversal | [Graph.Traversal](./alfa-graph.graph.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;\[node: T, parent: T\]&gt;
+Sequence&lt;\[node: T, parent: T\]&gt;
 

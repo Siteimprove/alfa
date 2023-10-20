@@ -4,7 +4,7 @@
 
 ## Language.JSON.region property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 region: Region.JSON | null;

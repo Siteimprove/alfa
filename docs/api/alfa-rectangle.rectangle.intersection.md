@@ -4,7 +4,7 @@
 
 ## Rectangle.intersection() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function intersection(...rectangles: Array<Rectangle>): Rectangle;
@@ -16,7 +16,7 @@ function intersection(...rectangles: Array<Rectangle>): Rectangle;
 |  --- | --- | --- |
 |  rectangles | Array&lt;[Rectangle](./alfa-rectangle.rectangle.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Rectangle](./alfa-rectangle.rectangle.md)
 

@@ -4,10 +4,10 @@
 
 ## Tuple.Rest type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Rest<T extends Tuple> = T extends readonly [infer _, ...infer R] ? R : Empty;
 ```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
+**References:** [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
 

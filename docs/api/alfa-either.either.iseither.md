@@ -4,7 +4,7 @@
 
 ## Either.isEither() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isEither<L, R>(value: Iterable<L | R>): value is Either<L, R>;
@@ -16,7 +16,7 @@ function isEither<L, R>(value: Iterable<L | R>): value is Either<L, R>;
 |  --- | --- | --- |
 |  value | Iterable&lt;L \| R&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;
 

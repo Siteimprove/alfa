@@ -4,10 +4,10 @@
 
 ## Style.Inherited type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Inherited<N extends Name> = Longhands.Inherited<N>;
 ```
-<b>References:</b> [Longhands.Inherited](./alfa-style.longhands.inherited.md)
+**References:** [Longhands.Inherited](./alfa-style.longhands.inherited.md)
 

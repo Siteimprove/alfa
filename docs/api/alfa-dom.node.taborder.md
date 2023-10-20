@@ -8,12 +8,12 @@ Construct a sequence of descendants of this node sorted by tab index. Only nodes
 
 [https://html.spec.whatwg.org/\#tabindex-value](https://html.spec.whatwg.org/#tabindex-value)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tabOrder(): Sequence<Element>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Element](./alfa-dom.element.md)<!-- -->&gt;
+Sequence&lt;Element&gt;
 

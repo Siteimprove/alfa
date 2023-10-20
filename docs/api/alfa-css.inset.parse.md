@@ -4,7 +4,7 @@
 
 ## Inset.parse variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<Inset>

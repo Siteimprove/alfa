@@ -4,7 +4,7 @@
 
 ## Style.hasCascadedValueDeclaredInInlineStyleOf variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasCascadedValueDeclaredInInlineStyleOf: typeof element.hasCascadedValueDeclaredInInlineStyleOf

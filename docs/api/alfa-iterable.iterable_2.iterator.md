@@ -4,7 +4,7 @@
 
 ## Iterable\_2.iterator() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function iterator<T>(iterable: Iterable<T>): Iterator<T>;
@@ -14,9 +14,9 @@ function iterator<T>(iterable: Iterable<T>): Iterator<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Iterator&lt;T&gt;
 

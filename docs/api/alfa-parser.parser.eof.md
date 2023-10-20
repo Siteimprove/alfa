@@ -9,7 +9,7 @@
 > Use `end()`
 > 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 eof: typeof end

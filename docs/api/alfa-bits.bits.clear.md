@@ -4,7 +4,7 @@
 
 ## Bits.clear() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function clear(bits: number, i: number): number;
@@ -17,7 +17,7 @@ function clear(bits: number, i: number): number;
 |  bits | number |  |
 |  i | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

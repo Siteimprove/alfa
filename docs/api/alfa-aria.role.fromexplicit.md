@@ -6,7 +6,7 @@
 
 Get the role explicitly assigned to an element, if any.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function fromExplicit(element: Element): Option<Role>;
@@ -16,9 +16,9 @@ function fromExplicit(element: Element): Option<Role>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Role](./alfa-aria.role.md)<!-- -->&gt;
+Option&lt;[Role](./alfa-aria.role.md)<!-- -->&gt;
 

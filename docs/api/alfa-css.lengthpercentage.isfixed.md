@@ -4,7 +4,7 @@
 
 ## LengthPercentage.isFixed() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isFixed(value: unknown): value is Length.Fixed;
@@ -16,7 +16,7 @@ export function isFixed(value: unknown): value is Length.Fixed;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Length.Fixed](./alfa-css.length.fixed.md)
 

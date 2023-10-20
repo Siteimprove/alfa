@@ -4,12 +4,12 @@
 
 ## Rule.toSARIF() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toSARIF(): sarif.ReportingDescriptor;
 ```
-<b>Returns:</b>
+**Returns:**
 
 sarif.ReportingDescriptor
 

@@ -4,7 +4,7 @@
 
 ## Shape.parse variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<Shape<Circle | Ellipse | Inset | Polygon>>

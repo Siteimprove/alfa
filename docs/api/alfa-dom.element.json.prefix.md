@@ -4,7 +4,7 @@
 
 ## Element.JSON.prefix property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 prefix: string | null;

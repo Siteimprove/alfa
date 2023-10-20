@@ -4,12 +4,12 @@
 
 ## Cookies.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty(): Cookies;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Cookies](./alfa-http.cookies.md)
 

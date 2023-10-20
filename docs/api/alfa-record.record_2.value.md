@@ -4,8 +4,10 @@
 
 ## Record\_2.Value type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Value<T> = T[Key<T>];
 ```
+**References:** [Key](./alfa-record.record_2.key.md)
+

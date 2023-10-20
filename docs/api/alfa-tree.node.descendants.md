@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#concept-tree-descendant](https://dom.spec.whatwg.org/#concept-tree-descendant)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 descendants(options?: Flags<F>): Sequence<Node<F>>;
@@ -16,9 +16,9 @@ descendants(options?: Flags<F>): Sequence<Node<F>>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
+Sequence&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
 

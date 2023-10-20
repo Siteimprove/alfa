@@ -4,7 +4,7 @@
 
 ## Branched.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from<T, B = never>(values: Iterable<readonly [T, Iterable<B>]>): Branched<T, B>;
@@ -16,7 +16,7 @@ function from<T, B = never>(values: Iterable<readonly [T, Iterable<B>]>): Branch
 |  --- | --- | --- |
 |  values | Iterable&lt;readonly \[T, Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;
 

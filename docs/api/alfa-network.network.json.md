@@ -4,7 +4,7 @@
 
 ## Network.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON<N, E> = Array<[
@@ -12,5 +12,5 @@ type JSON<N, E> = Array<[
         Array<[Serializable.ToJSON<N>, Array<Serializable.ToJSON<E>>]>
     ]>;
 ```
-<b>References:</b> [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
+**References:** [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
 

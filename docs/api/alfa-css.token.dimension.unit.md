@@ -4,7 +4,7 @@
 
 ## Token.Dimension.unit property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get unit(): string;

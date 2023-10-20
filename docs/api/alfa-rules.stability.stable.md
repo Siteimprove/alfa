@@ -6,7 +6,7 @@
 
 For stable rules. These rules follow the same basic principles and are reasonably stable; their changes are tracked by normal semver numbering.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Stable: Stability<"stable">

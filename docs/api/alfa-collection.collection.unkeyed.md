@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Unkeyed 

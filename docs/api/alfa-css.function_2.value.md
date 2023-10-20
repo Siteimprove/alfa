@@ -4,7 +4,7 @@
 
 ## Function\_2.value property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get value(): Array<Token>;

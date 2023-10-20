@@ -4,10 +4,10 @@
 
 ## Angle.Fixed.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<U extends Unit.Angle = Unit.Angle> extends Dimension.Fixed.JSON<"angle", U> 
 ```
-<b>Extends:</b> [Dimension.Fixed.JSON](./alfa-css.dimension.fixed.json.md)<!-- -->&lt;"angle", U&gt;
+**Extends:** [Dimension.Fixed.JSON](./alfa-css.dimension.fixed.json.md)<!-- -->&lt;"angle", U&gt;
 

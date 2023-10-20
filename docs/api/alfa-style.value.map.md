@@ -4,7 +4,7 @@
 
 ## Value.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U, [source: Option<Declaration>]>): Value<U>;
@@ -14,9 +14,9 @@ map<U>(mapper: Mapper<T, U, [source: Option<Declaration>]>): Value<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[source: [Option](./alfa-option.option.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt;\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[source: Option&lt;Declaration&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Value](./alfa-style.value.md)<!-- -->&lt;U&gt;
 

@@ -4,7 +4,7 @@
 
 ## Token.Decimal.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: number): Decimal;
@@ -16,7 +16,7 @@ static of(value: number): Decimal;
 |  --- | --- | --- |
 |  value | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Decimal](./alfa-xpath.token.decimal.md)
 

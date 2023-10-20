@@ -1,5 +1,13 @@
 # @siteimprove/alfa-tree
 
+## 0.68.0
+
+### Minor Changes
+
+- **Added:** Optional serialization options type parameter added to abstract `Node` class. ([#1474](https://github.com/Siteimprove/alfa/pull/1474))
+
+  This is passed to the `Serializable` interface to allow implementers to supply the serialization options type.
+
 ## 0.67.0
 
 ## 0.66.0

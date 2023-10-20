@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-color/\#typedef-hex-color](https://drafts.csswg.org/css-color/#typedef-hex-color)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<Hex>

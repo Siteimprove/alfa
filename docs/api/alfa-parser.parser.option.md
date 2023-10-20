@@ -4,7 +4,7 @@
 
 ## Parser.option() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function option<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Option<T>, E, A>;
@@ -16,7 +16,7 @@ function option<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, 
 |  --- | --- | --- |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, [Option](./alfa-option.option.md)<!-- -->&lt;T&gt;, E, A&gt;
+[Parser](./alfa-parser.parser.md)<!-- -->&lt;I, Option&lt;T&gt;, E, A&gt;
 

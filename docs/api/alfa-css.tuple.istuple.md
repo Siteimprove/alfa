@@ -4,7 +4,7 @@
 
 ## Tuple.isTuple() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isTuple<T extends Array<Value>>(value: unknown): value is Tuple<T>;
@@ -16,7 +16,7 @@ function isTuple<T extends Array<Value>>(value: unknown): value is Tuple<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Tuple](./alfa-css.tuple.md)<!-- -->&lt;T&gt;
 

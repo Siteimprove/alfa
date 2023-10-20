@@ -4,7 +4,7 @@
 
 ## List.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: List<List<T>>): List<T>;
@@ -16,7 +16,7 @@ flatten<T>(this: List<List<T>>): List<T>;
 |  --- | --- | --- |
 |  this | [List](./alfa-list.list.md)<!-- -->&lt;[List](./alfa-list.list.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

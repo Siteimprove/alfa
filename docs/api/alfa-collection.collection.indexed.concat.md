@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.concat() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 concat(iterable: Iterable<T>): Indexed<T>;
@@ -16,7 +16,7 @@ concat(iterable: Iterable<T>): Indexed<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

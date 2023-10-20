@@ -4,7 +4,7 @@
 
 ## Dimension.IDimension.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(resolver?: unknown): Fixed<Dimensions<T>[0], Dimensions<T>[2]>;
@@ -14,9 +14,9 @@ resolve(resolver?: unknown): Fixed<Dimensions<T>[0], Dimensions<T>[2]>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | unknown | <i>(Optional)</i> |
+|  resolver | unknown | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.dimension.fixed.md)<!-- -->&lt;Dimensions&lt;T&gt;\[0\], Dimensions&lt;T&gt;\[2\]&gt;
 

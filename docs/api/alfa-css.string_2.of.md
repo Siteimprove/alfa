@@ -4,7 +4,7 @@
 
 ## String\_2.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: string): String;
@@ -16,7 +16,7 @@ static of(value: string): String;
 |  --- | --- | --- |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-String
+[String](./alfa-css.string_2.md)
 

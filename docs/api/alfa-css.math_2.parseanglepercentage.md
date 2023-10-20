@@ -4,7 +4,7 @@
 
 ## Math\_2.parseAnglePercentage variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseAnglePercentage: Parser<Slice<Token>, Math<"angle-percentage">, string, []>

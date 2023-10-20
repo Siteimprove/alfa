@@ -4,7 +4,7 @@
 
 ## Rule.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: NamespaceRule.JSON): NamespaceRule;
@@ -16,7 +16,7 @@ function from(json: NamespaceRule.JSON): NamespaceRule;
 |  --- | --- | --- |
 |  json | [NamespaceRule.JSON](./alfa-dom.namespacerule.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[NamespaceRule](./alfa-dom.namespacerule.md)
+NamespaceRule
 

@@ -4,7 +4,7 @@
 
 ## Selector.Not namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace Not 

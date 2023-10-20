@@ -4,7 +4,7 @@
 
 ## Collection.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Collection<U>>): Collection<U>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<T, Collection<U>>): Collection<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Collection](./alfa-collection.collection.md)<!-- -->&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Collection](./alfa-collection.collection.md)<!-- -->&lt;U&gt;
 

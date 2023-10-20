@@ -6,7 +6,7 @@
 
 [https://html.spec.whatwg.org/\#attr-th-scope](https://html.spec.whatwg.org/#attr-th-scope)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(element: Element): Scope;
@@ -16,9 +16,9 @@ function from(element: Element): Scope;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Scope](./alfa-table.scope.md)
 

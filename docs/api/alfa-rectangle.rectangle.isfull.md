@@ -4,12 +4,12 @@
 
 ## Rectangle.isFull() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isFull(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

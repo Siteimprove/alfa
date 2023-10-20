@@ -4,7 +4,7 @@
 
 ## Graph.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON<T> = Array<[
@@ -12,5 +12,5 @@ type JSON<T> = Array<[
         Array<Serializable.ToJSON<T>>
     ]>;
 ```
-<b>References:</b> [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
+**References:** [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
 

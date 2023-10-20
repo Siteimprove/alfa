@@ -4,8 +4,10 @@
 
 ## JSON\_2.Array type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Array = JSON[];
 ```
+**References:** [JSON](./alfa-json.json_2.md)
+

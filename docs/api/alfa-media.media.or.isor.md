@@ -4,7 +4,7 @@
 
 ## Media.Or.isOr() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isOr(value: unknown): value is Or;
@@ -16,7 +16,7 @@ function isOr(value: unknown): value is Or;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Or](./alfa-media.media.or.md)
 

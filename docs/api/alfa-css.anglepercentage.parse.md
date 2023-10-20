@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#angles](https://drafts.csswg.org/css-values/#angles)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: Parser<Slice<Token>, AnglePercentage<Unit.Angle>, string, []>

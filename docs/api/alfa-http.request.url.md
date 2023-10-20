@@ -6,7 +6,7 @@
 
 [https://fetch.spec.whatwg.org/\#dom-request-url](https://fetch.spec.whatwg.org/#dom-request-url)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get url(): URL;

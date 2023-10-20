@@ -4,7 +4,7 @@
 
 ## Language.Script.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: Script.Name): Script;
@@ -16,7 +16,7 @@ static of(name: Script.Name): Script;
 |  --- | --- | --- |
 |  name | [Script.Name](./alfa-iana.language.script.name.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Script](./alfa-iana.language.script.md)
 

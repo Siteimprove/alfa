@@ -4,7 +4,7 @@
 
 ## Rule.JSON.requirements property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 requirements: Array<Requirement.JSON>;

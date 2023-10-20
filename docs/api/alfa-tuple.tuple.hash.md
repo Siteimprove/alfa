@@ -4,7 +4,7 @@
 
 ## Tuple.hash() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function hash<T extends Tuple>(tuple: T, hash: Hash): void;
@@ -17,7 +17,7 @@ export function hash<T extends Tuple>(tuple: T, hash: Hash): void;
 |  tuple | T |  |
 |  hash | [Hash](./alfa-hash.hash.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

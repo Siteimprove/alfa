@@ -4,12 +4,12 @@
 
 ## Rotate.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): Rotate;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Rotate](./alfa-css.rotate.md)
 

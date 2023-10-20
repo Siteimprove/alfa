@@ -4,7 +4,7 @@
 
 ## Cons.slice() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 slice(start: number, end?: number): Sequence<T>;
@@ -15,9 +15,9 @@ slice(start: number, end?: number): Sequence<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  start | number |  |
-|  end | number | <i>(Optional)</i> |
+|  end | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+Sequence&lt;T&gt;
 

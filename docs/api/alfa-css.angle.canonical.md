@@ -4,10 +4,10 @@
 
 ## Angle.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Canonical = Fixed<"deg">;
 ```
-<b>References:</b> [Fixed](./alfa-css.angle.fixed.md)
+**References:** [Fixed](./alfa-css.angle.fixed.md)
 

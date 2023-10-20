@@ -6,7 +6,7 @@
 
 Test whether a given flag is present (or set) in the set of flags
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 has(flag: F): boolean;
@@ -18,7 +18,7 @@ has(flag: F): boolean;
 |  --- | --- | --- |
 |  flag | F |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

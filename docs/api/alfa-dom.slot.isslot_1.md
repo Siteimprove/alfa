@@ -4,7 +4,7 @@
 
 ## Slot.isSlot() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSlot(value: unknown): value is Slot;
@@ -16,7 +16,7 @@ function isSlot(value: unknown): value is Slot;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Slot](./alfa-dom.slot.md)
 

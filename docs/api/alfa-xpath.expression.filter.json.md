@@ -4,7 +4,7 @@
 
 ## Expression.Filter.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON 

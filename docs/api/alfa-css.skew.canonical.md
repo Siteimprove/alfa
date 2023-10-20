@@ -4,10 +4,10 @@
 
 ## Skew.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Canonical = Skew;
 ```
-<b>References:</b> [Skew](./alfa-css.skew.md)
+**References:** [Skew](./alfa-css.skew.md)
 

@@ -4,7 +4,7 @@
 
 ## Media.Feature.Height namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Height 

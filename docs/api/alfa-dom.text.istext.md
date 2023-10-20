@@ -4,7 +4,7 @@
 
 ## Text.isText() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isText(value: unknown): value is Text;
@@ -16,7 +16,7 @@ function isText(value: unknown): value is Text;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Text](./alfa-dom.text.md)
 

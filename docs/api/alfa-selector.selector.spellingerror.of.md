@@ -4,12 +4,12 @@
 
 ## Selector.SpellingError.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): SpellingError;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [SpellingError](./alfa-selector.selector.spellingerror.md)
 

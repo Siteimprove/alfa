@@ -4,7 +4,7 @@
 
 ## Parser.parse() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parse(input: string): Option<Expression>;
@@ -16,7 +16,7 @@ function parse(input: string): Option<Expression>;
 |  --- | --- | --- |
 |  input | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt;
+Option&lt;Expression&gt;
 

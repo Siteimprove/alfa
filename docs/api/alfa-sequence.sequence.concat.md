@@ -4,7 +4,7 @@
 
 ## Sequence.concat() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 concat(iterable: Iterable<T>): Sequence<T>;
@@ -16,7 +16,7 @@ concat(iterable: Iterable<T>): Sequence<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

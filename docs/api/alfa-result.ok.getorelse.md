@@ -4,12 +4,12 @@
 
 ## Ok.getOrElse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getOrElse(): T;
 ```
-<b>Returns:</b>
+**Returns:**
 
 T
 

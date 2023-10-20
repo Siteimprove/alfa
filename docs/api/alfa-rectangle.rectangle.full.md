@@ -4,12 +4,12 @@
 
 ## Rectangle.full() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static full(): Rectangle;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Rectangle](./alfa-rectangle.rectangle.md)
 

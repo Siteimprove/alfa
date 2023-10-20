@@ -4,7 +4,7 @@
 
 ## Lazy.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(thunk: Thunk<T>): Lazy<T>;
@@ -14,9 +14,9 @@ static of<T>(thunk: Thunk<T>): Lazy<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt; |  |
+|  thunk | Thunk&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;
 

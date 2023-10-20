@@ -4,7 +4,7 @@
 
 ## Diagnostic.empty variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 empty: Diagnostic

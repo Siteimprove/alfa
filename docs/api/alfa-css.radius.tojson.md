@@ -4,12 +4,12 @@
 
 ## Radius.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Radius.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Radius.JSON](./alfa-css.radius.json.md)
 

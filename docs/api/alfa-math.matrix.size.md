@@ -4,7 +4,7 @@
 
 ## Matrix.size() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function size(m: Matrix): [number, number];
@@ -16,7 +16,7 @@ function size(m: Matrix): [number, number];
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 \[number, number\]
 

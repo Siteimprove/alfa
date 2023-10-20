@@ -4,7 +4,7 @@
 
 ## NamespaceRule.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(namespace: string, prefix: Option<string>): NamespaceRule;
@@ -15,9 +15,9 @@ static of(namespace: string, prefix: Option<string>): NamespaceRule;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  namespace | string |  |
-|  prefix | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  prefix | Option&lt;string&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [NamespaceRule](./alfa-dom.namespacerule.md)
 

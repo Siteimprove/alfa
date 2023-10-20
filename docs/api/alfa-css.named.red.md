@@ -4,7 +4,7 @@
 
 ## Named.red property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get red(): Number.Fixed;

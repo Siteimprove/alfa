@@ -4,7 +4,7 @@
 
 ## Option.getOr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getOr<U>(value: U): T | U;
@@ -16,7 +16,7 @@ getOr<U>(value: U): T | U;
 |  --- | --- | --- |
 |  value | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 T \| U
 

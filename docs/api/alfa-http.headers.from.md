@@ -4,7 +4,7 @@
 
 ## Headers.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): Headers;
@@ -16,7 +16,7 @@ function from(json: JSON): Headers;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-http.headers.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Headers](./alfa-http.headers.md)
 

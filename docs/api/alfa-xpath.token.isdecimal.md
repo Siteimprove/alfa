@@ -4,7 +4,7 @@
 
 ## Token.isDecimal() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isDecimal(value: unknown): value is Decimal;
@@ -16,7 +16,7 @@ function isDecimal(value: unknown): value is Decimal;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Decimal](./alfa-xpath.token.decimal.md)
 

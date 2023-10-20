@@ -4,7 +4,7 @@
 
 ## Result.or() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 or<U, F>(result: Result<U, F>): Result<T | U, F>;
@@ -16,7 +16,7 @@ or<U, F>(result: Result<U, F>): Result<T | U, F>;
 |  --- | --- | --- |
 |  result | [Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;T \| U, F&gt;
 

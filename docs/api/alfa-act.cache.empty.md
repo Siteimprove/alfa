@@ -4,12 +4,12 @@
 
 ## Cache.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty(): Cache;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Cache](./alfa-act.cache.md)
 

@@ -4,7 +4,7 @@
 
 ## Flags.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Flags): boolean;
@@ -16,7 +16,7 @@ equals(value: Flags): boolean;
 |  --- | --- | --- |
 |  value | [Flags](./alfa-flags.flags.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

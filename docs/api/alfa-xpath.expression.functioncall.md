@@ -4,7 +4,7 @@
 
 ## Expression.FunctionCall namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace FunctionCall 

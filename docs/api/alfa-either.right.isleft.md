@@ -4,12 +4,12 @@
 
 ## Right.isLeft() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isLeft(): this is Left<never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-this is [Left](./alfa-either.left.md)<!-- -->&lt;never&gt;
+this is Left&lt;never&gt;
 

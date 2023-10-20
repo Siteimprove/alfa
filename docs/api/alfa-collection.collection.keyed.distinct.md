@@ -4,12 +4,12 @@
 
 ## Collection.Keyed.distinct() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 distinct(): Keyed<K, V>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;
 

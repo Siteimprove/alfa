@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.some() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 some(predicate: Predicate<V, [key: K]>): boolean;
@@ -14,9 +14,9 @@ some(predicate: Predicate<V, [key: K]>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
+|  predicate | Predicate&lt;V, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

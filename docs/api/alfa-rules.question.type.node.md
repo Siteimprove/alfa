@@ -4,7 +4,7 @@
 
 ## Question.Type.node property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 node: Option<Node>;

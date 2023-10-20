@@ -4,7 +4,7 @@
 
 ## Node.inclusiveAncestors() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
@@ -14,9 +14,9 @@ inclusiveAncestors(options?: Node.Traversal): Sequence<Node>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
+|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;
+Sequence&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;
 

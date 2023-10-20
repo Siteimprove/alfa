@@ -4,7 +4,7 @@
 
 ## Sequence.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U, [index: number]>): Sequence<U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U, [index: number]>): Sequence<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;
 

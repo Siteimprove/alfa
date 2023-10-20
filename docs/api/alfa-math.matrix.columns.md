@@ -4,7 +4,7 @@
 
 ## Matrix.columns() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function columns(m: Matrix): number;
@@ -16,7 +16,7 @@ function columns(m: Matrix): number;
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

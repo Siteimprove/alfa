@@ -6,10 +6,10 @@
 
 [https://drafts.csswg.org/css-values/\#integers](https://drafts.csswg.org/css-values/#integers)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Integer = Integer.Calculated | Integer.Fixed;
 ```
-<b>References:</b> [Integer.Calculated](./alfa-css.integer.calculated.md)<!-- -->, [Integer.Fixed](./alfa-css.integer.fixed.md)
+**References:** [Integer.Calculated](./alfa-css.integer.calculated.md)<!-- -->, [Integer.Fixed](./alfa-css.integer.fixed.md)
 

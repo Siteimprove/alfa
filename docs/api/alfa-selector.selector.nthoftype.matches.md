@@ -4,7 +4,7 @@
 
 ## Selector.NthOfType.matches() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 matches(element: Element): boolean;
@@ -14,9 +14,9 @@ matches(element: Element): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

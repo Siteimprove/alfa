@@ -4,12 +4,12 @@
 
 ## Circle.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Circle.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Circle.JSON](./alfa-css.circle.json.md)
 

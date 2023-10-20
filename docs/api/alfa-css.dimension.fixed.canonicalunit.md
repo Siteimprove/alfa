@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#canonical-unit](https://drafts.csswg.org/css-values/#canonical-unit)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get canonicalUnit(): Dimensions<T>[2];

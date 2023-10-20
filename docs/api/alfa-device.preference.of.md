@@ -4,7 +4,7 @@
 
 ## Preference.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<N extends Preference.Name>(name: N, value: Preference.Value<N>): Preference<N>;
@@ -17,7 +17,7 @@ static of<N extends Preference.Name>(name: N, value: Preference.Value<N>): Prefe
 |  name | N |  |
 |  value | [Preference.Value](./alfa-device.preference.value.md)<!-- -->&lt;N&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Preference](./alfa-device.preference.md)<!-- -->&lt;N&gt;
 

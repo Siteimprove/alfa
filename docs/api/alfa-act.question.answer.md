@@ -4,7 +4,7 @@
 
 ## Question.answer() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 answer(answer: ANSWER): T;
@@ -16,7 +16,7 @@ answer(answer: ANSWER): T;
 |  --- | --- | --- |
 |  answer | ANSWER |  |
 
-<b>Returns:</b>
+**Returns:**
 
 T
 

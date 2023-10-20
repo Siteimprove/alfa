@@ -4,7 +4,7 @@
 
 ## Page.JSON.request property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 request: Request.JSON;

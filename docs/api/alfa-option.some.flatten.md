@@ -4,7 +4,7 @@
 
 ## Some.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Some<Option<T>>): Option<T>;
@@ -14,9 +14,9 @@ flatten<T>(this: Some<Option<T>>): Option<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | [Some](./alfa-option.some.md)<!-- -->&lt;[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;&gt; |  |
+|  this | [Some](./alfa-option.some.md)<!-- -->&lt;Option&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

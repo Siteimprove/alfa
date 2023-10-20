@@ -4,7 +4,7 @@
 
 ## Element.isScopedTo variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isScopedTo: typeof predicate.isScopedTo

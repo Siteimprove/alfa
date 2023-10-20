@@ -4,7 +4,7 @@
 
 ## Media.Feature.Width.isWidth() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isWidth(value: unknown): value is Width;
@@ -16,7 +16,7 @@ function isWidth(value: unknown): value is Width;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is Width
 

@@ -4,7 +4,7 @@
 
 ## Option.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from<T>(value: T | null | undefined): Option<NonNullable<T>>;
@@ -16,7 +16,7 @@ function from<T>(value: T | null | undefined): Option<NonNullable<T>>;
 |  --- | --- | --- |
 |  value | T \| null \| undefined |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;NonNullable&lt;T&gt;&gt;
 

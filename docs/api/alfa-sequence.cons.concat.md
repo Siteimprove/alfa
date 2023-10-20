@@ -4,7 +4,7 @@
 
 ## Cons.concat() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 concat(iterable: Iterable<T>): Cons<T>;
@@ -16,7 +16,7 @@ concat(iterable: Iterable<T>): Cons<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
 

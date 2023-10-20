@@ -4,7 +4,7 @@
 
 ## Rectangle.area property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get area(): number;

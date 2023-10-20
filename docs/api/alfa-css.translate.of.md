@@ -4,7 +4,7 @@
 
 ## Translate.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<X extends LengthPercentage = LengthPercentage, Y extends LengthPercentage = LengthPercentage, Z extends Length = Length>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
@@ -18,7 +18,7 @@ static of<X extends LengthPercentage = LengthPercentage, Y extends LengthPercent
 |  y | Y |  |
 |  z | Z |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Translate](./alfa-css.translate.md)<!-- -->&lt;X, Y, Z&gt;
 

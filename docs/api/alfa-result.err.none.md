@@ -4,12 +4,12 @@
 
 ## Err.none() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 none(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

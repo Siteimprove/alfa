@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#concept-descendant-text-content](https://dom.spec.whatwg.org/#concept-descendant-text-content)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 textContent(options?: Node.Traversal): string;
@@ -16,9 +16,9 @@ textContent(options?: Node.Traversal): string;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Node.Traversal](./alfa-dom.node.traversal.md) | <i>(Optional)</i> |
+|  options | [Node.Traversal](./alfa-dom.node.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 string
 

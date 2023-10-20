@@ -6,7 +6,7 @@
 
 [https://en.wikipedia.org/wiki/Three-valued\_logic](https://en.wikipedia.org/wiki/Three-valued_logic)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Trilean = boolean | undefined;

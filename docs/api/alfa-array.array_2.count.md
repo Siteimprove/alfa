@@ -4,7 +4,7 @@
 
 ## Array\_2.count() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function count<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): number;
@@ -15,9 +15,9 @@ function count<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: numbe
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

@@ -6,7 +6,7 @@
 
 Fully resolves a length-percentage, when a full resolver is provided.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function resolve(resolver: Resolver): (value: LengthPercentage) => Canonical;
@@ -18,7 +18,7 @@ export function resolve(resolver: Resolver): (value: LengthPercentage) => Canoni
 |  --- | --- | --- |
 |  resolver | [Resolver](./alfa-css.lengthpercentage.resolver.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 (value: [LengthPercentage](./alfa-css.lengthpercentage.md)<!-- -->) =&gt; [Canonical](./alfa-css.lengthpercentage.canonical.md)
 

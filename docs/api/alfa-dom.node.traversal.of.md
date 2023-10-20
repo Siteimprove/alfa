@@ -4,7 +4,7 @@
 
 ## Node.Traversal.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(...flags: Array<Traversal.Flag>): Traversal;
@@ -16,7 +16,7 @@ static of(...flags: Array<Traversal.Flag>): Traversal;
 |  --- | --- | --- |
 |  flags | Array&lt;[Traversal.Flag](./alfa-dom.node.traversal.flag.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Traversal](./alfa-dom.node.traversal.md)
 

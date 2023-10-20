@@ -6,7 +6,7 @@
 
 The chapters of all criteria.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Chapter = keyof Criteria;

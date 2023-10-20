@@ -4,7 +4,7 @@
 
 ## Graph.neighbors() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 neighbors(node: T): Iterable<T>;
@@ -16,7 +16,7 @@ neighbors(node: T): Iterable<T>;
 |  --- | --- | --- |
 |  node | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Iterable&lt;T&gt;
 

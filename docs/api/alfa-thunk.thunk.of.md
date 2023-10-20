@@ -4,7 +4,7 @@
 
 ## Thunk.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function of<T>(value: T): Thunk<T>;
@@ -16,7 +16,7 @@ function of<T>(value: T): Thunk<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt;
 

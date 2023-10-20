@@ -4,7 +4,7 @@
 
 ## Name.Source.Reference.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(attribute: Attribute, name: Name): Reference;
@@ -14,10 +14,10 @@ static of(attribute: Attribute, name: Name): Reference;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  attribute | [Attribute](./alfa-dom.attribute.md) |  |
+|  attribute | Attribute |  |
 |  name | [Name](./alfa-aria.name.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Reference](./alfa-aria.name.source.reference.md)
 

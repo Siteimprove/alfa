@@ -4,7 +4,7 @@
 
 ## Perspective.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(resolver: Perspective.Resolver): Perspective.Canonical;
@@ -16,7 +16,7 @@ resolve(resolver: Perspective.Resolver): Perspective.Canonical;
 |  --- | --- | --- |
 |  resolver | [Perspective.Resolver](./alfa-css.perspective.resolver.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Perspective.Canonical](./alfa-css.perspective.canonical.md)
 

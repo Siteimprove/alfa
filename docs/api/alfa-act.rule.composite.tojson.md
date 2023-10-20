@@ -4,12 +4,12 @@
 
 ## Rule.Composite.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Composite.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Composite.JSON](./alfa-act.rule.composite.json.md)
 

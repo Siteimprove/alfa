@@ -4,10 +4,10 @@
 
 ## Integer.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Canonical = Fixed;
 ```
-<b>References:</b> [Fixed](./alfa-css.integer.fixed.md)
+**References:** [Fixed](./alfa-css.integer.fixed.md)
 

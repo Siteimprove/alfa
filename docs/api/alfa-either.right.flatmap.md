@@ -4,7 +4,7 @@
 
 ## Right.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<L, T>(mapper: Mapper<R, Either<L, T>>): Either<L, T>;
@@ -14,9 +14,9 @@ flatMap<L, T>(mapper: Mapper<R, Either<L, T>>): Either<L, T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, [Either](./alfa-either.either.md)<!-- -->&lt;L, T&gt;&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, Either&lt;L, T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Either](./alfa-either.either.md)<!-- -->&lt;L, T&gt;
+Either&lt;L, T&gt;
 

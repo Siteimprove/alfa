@@ -4,7 +4,7 @@
 
 ## HSL.JSON.alpha property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 alpha: Number.Fixed.JSON | Percentage.Fixed.JSON;

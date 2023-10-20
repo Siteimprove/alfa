@@ -4,7 +4,7 @@
 
 ## Name.Source.Label namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Label 

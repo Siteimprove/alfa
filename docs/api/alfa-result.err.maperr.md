@@ -4,7 +4,7 @@
 
 ## Err.mapErr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 mapErr<F>(mapper: Mapper<E, F>): Err<F>;
@@ -16,7 +16,7 @@ mapErr<F>(mapper: Mapper<E, F>): Err<F>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;E, F&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Err](./alfa-result.err.md)<!-- -->&lt;F&gt;
 

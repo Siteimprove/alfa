@@ -4,7 +4,7 @@
 
 ## Iterable\_2.reduceWhile() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function reduceWhile<T, U = T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
@@ -14,12 +14,12 @@ function reduceWhile<T, U = T>(iterable: Iterable<T>, predicate: Predicate<T, [i
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
-|  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
+|  reducer | Reducer&lt;T, U, \[index: number\]&gt; |  |
 |  accumulator | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 U
 

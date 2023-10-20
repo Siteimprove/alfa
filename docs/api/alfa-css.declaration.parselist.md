@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-syntax/\#parse-a-list-of-declarations](https://drafts.csswg.org/css-syntax/#parse-a-list-of-declarations)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseList: CSSParser<Iterable<Declaration>>

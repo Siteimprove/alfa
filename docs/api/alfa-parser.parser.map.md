@@ -4,7 +4,7 @@
 
 ## Parser.map() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function map<I, T, U, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, mapper: Mapper<T, U>): Parser<I, U, E, A>;
@@ -17,7 +17,7 @@ function map<I, T, U, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, 
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, U, E, A&gt;
 

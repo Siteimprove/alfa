@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Node` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(owner: dom.Node, children: Array<Node>, type: T);
@@ -16,7 +16,7 @@ protected constructor(owner: dom.Node, children: Array<Node>, type: T);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  owner | dom.[Node](./alfa-dom.node.md) |  |
+|  owner | [dom.Node](./alfa-dom.node.md) |  |
 |  children | Array&lt;[Node](./alfa-aria.node.md)<!-- -->&gt; |  |
 |  type | T |  |
 

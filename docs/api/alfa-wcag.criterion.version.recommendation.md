@@ -6,7 +6,7 @@
 
 The current version of the WCAG Recommendation.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Recommendation = "2.1"

@@ -4,7 +4,7 @@
 
 ## Sequence.isSequence() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSequence<T>(value: Iterable<T>): value is Sequence<T>;
@@ -16,7 +16,7 @@ function isSequence<T>(value: Iterable<T>): value is Sequence<T>;
 |  --- | --- | --- |
 |  value | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

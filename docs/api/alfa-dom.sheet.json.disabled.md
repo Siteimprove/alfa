@@ -4,7 +4,7 @@
 
 ## Sheet.JSON.disabled property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 disabled: boolean;

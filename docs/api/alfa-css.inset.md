@@ -5,11 +5,18 @@
 ## Inset namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Inset 
 ```
+
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [isInset(value)](./alfa-css.inset.isinset.md) |  |
+|  [partiallyResolve(resolver)](./alfa-css.inset.partiallyresolve.md) |  |
 
 ## Interfaces
 
@@ -27,7 +34,9 @@ export declare namespace Inset
 
 |  Type Alias | Description |
 |  --- | --- |
-|  [Corner](./alfa-css.inset.corner.md) |  |
+|  [Canonical](./alfa-css.inset.canonical.md) |  |
 |  [Offset](./alfa-css.inset.offset.md) |  |
-|  [Radius](./alfa-css.inset.radius.md) |  |
+|  [PartiallyResolved](./alfa-css.inset.partiallyresolved.md) |  |
+|  [PartialResolver](./alfa-css.inset.partialresolver.md) |  |
+|  [Resolver](./alfa-css.inset.resolver.md) |  |
 

@@ -4,16 +4,16 @@
 
 ## Matrix.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Function.JSON<"matrix"> 
 ```
-<b>Extends:</b> Function.JSON&lt;"matrix"&gt;
+**Extends:** Function.JSON&lt;"matrix"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [values](./alfa-css.matrix.json.values.md) |  | [Values](./alfa-css.matrix.values.md)<!-- -->&lt;Number.Fixed.JSON&gt; |  |
+|  [values](./alfa-css.matrix.json.values.md) |  | [Values](./alfa-css.matrix.values.md)<!-- -->&lt;[Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md)<!-- -->&gt; |  |
 

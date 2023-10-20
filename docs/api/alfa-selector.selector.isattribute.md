@@ -4,7 +4,7 @@
 
 ## Selector.isAttribute() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isAttribute(value: unknown): value is Attribute;
@@ -16,7 +16,7 @@ export function isAttribute(value: unknown): value is Attribute;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Attribute](./alfa-selector.selector.attribute.md)
 

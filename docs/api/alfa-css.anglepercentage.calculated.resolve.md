@@ -4,7 +4,7 @@
 
 ## AnglePercentage.Calculated.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(resolver: Resolver): Canonical;
@@ -16,7 +16,7 @@ resolve(resolver: Resolver): Canonical;
 |  --- | --- | --- |
 |  resolver | [Resolver](./alfa-css.anglepercentage.resolver.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Canonical](./alfa-css.anglepercentage.canonical.md)
 

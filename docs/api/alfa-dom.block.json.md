@@ -4,10 +4,10 @@
 
 ## Block.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON = Array<Declaration.JSON>;
 ```
-<b>References:</b> [Declaration.JSON](./alfa-dom.declaration.json.md)
+**References:** [Declaration.JSON](./alfa-dom.declaration.json.md)
 

@@ -4,7 +4,7 @@
 
 ## Version.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Version): boolean;
@@ -16,7 +16,7 @@ equals(value: Version): boolean;
 |  --- | --- | --- |
 |  value | [Version](./alfa-rules.version.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

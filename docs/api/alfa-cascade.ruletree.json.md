@@ -4,10 +4,10 @@
 
 ## RuleTree.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON = Array<Node.JSON>;
 ```
-<b>References:</b> [Node.JSON](./alfa-cascade.ruletree.node.json.md)
+**References:** [Node.JSON](./alfa-cascade.ruletree.node.json.md)
 

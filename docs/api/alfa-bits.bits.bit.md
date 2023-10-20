@@ -4,7 +4,7 @@
 
 ## Bits.bit() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function bit(i: number): number;
@@ -16,7 +16,7 @@ function bit(i: number): number;
 |  --- | --- | --- |
 |  i | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

@@ -4,12 +4,12 @@
 
 ## Cell.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract toJSON(): Cell.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Cell.JSON](./alfa-table.cell.json.md)
 

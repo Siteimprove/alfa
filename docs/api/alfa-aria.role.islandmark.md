@@ -6,12 +6,12 @@
 
 Check if this role is a landmark.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isLandmark(): this is Role<Role.Landmark>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Role](./alfa-aria.role.md)<!-- -->&lt;[Role.Landmark](./alfa-aria.role.landmark.md)<!-- -->&gt;
 

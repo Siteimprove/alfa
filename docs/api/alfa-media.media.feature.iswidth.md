@@ -4,7 +4,7 @@
 
 ## Media.Feature.isWidth variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isWidth: typeof Width.isWidth

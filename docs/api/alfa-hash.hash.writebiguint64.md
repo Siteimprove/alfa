@@ -4,7 +4,7 @@
 
 ## Hash.writeBigUint64() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeBigUint64(data: bigint): this;
@@ -16,7 +16,7 @@ writeBigUint64(data: bigint): this;
 |  --- | --- | --- |
 |  data | bigint |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

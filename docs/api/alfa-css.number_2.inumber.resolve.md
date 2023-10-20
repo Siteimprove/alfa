@@ -4,12 +4,12 @@
 
 ## Number\_2.INumber.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): Canonical;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Canonical
+[Canonical](./alfa-css.number_2.canonical.md)
 

@@ -4,12 +4,12 @@
 
 ## Media.Query.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Query.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Query.JSON](./alfa-media.media.query.json.md)
 

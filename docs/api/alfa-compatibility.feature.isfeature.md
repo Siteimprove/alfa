@@ -4,7 +4,7 @@
 
 ## Feature.isFeature() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isFeature(feature: string): feature is Name;
@@ -16,7 +16,7 @@ function isFeature(feature: string): feature is Name;
 |  --- | --- | --- |
 |  feature | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 feature is [Name](./alfa-compatibility.feature.name.md)
 

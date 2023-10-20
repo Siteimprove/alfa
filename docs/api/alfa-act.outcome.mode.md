@@ -6,7 +6,7 @@
 
 [https://www.w3.org/TR/EARL10-Schema/\#TestMode](https://www.w3.org/TR/EARL10-Schema/#TestMode)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 enum Mode 

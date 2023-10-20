@@ -4,7 +4,7 @@
 
 ## Attribute.namespace property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get namespace(): Option<Namespace>;

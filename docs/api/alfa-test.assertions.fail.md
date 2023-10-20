@@ -6,7 +6,7 @@
 
 [https://nodejs.org/api/assert.html\#assert\_assert\_fail\_message](https://nodejs.org/api/assert.html#assert_assert_fail_message)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 fail(message?: string): never;
@@ -16,9 +16,9 @@ fail(message?: string): never;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  message | string | <i>(Optional)</i> |
+|  message | string | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 never
 

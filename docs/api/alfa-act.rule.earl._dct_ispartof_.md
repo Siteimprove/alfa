@@ -4,7 +4,7 @@
 
 ## Rule.EARL."dct:isPartOf" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "dct:isPartOf": {

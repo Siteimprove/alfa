@@ -4,7 +4,7 @@
 
 ## h.rule.page() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function page(selector: string, declarations: Array<Declaration> | Record<string, string>): PageRule;
@@ -15,9 +15,9 @@ function page(selector: string, declarations: Array<Declaration> | Record<string
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  selector | string |  |
-|  declarations | Array&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; \| Record&lt;string, string&gt; |  |
+|  declarations | Array&lt;Declaration&gt; \| Record&lt;string, string&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[PageRule](./alfa-dom.pagerule.md)
+PageRule
 

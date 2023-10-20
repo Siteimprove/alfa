@@ -6,7 +6,7 @@
 
 Parse if the result satisfies the predicate or refinement.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parseIf<I, T, E, U extends T = T, A extends Array<unknown> = []>(refinement: Refinement<T, U>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, U, E, A>;
@@ -16,11 +16,11 @@ function parseIf<I, T, E, U extends T = T, A extends Array<unknown> = []>(refine
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 |  ifError | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, U, E, A&gt;
 

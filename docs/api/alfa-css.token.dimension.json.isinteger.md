@@ -4,7 +4,7 @@
 
 ## Token.Dimension.JSON.isInteger property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isInteger: boolean;

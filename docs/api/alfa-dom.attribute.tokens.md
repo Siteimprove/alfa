@@ -6,7 +6,7 @@
 
 [https://html.spec.whatwg.org/\#space-separated-tokens](https://html.spec.whatwg.org/#space-separated-tokens)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tokens(separator?: string | RegExp): Sequence<string>;
@@ -16,9 +16,9 @@ tokens(separator?: string | RegExp): Sequence<string>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  separator | string \| RegExp | <i>(Optional)</i> |
+|  separator | string \| RegExp | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;string&gt;
+Sequence&lt;string&gt;
 

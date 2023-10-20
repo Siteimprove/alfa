@@ -4,7 +4,7 @@
 
 ## Language.JSON.script property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 script: Script.JSON | null;

@@ -8,7 +8,7 @@ Compute a unit vector corresponding to a vector.
 
 [https://en.wikipedia.org/wiki/Unit\_vector](https://en.wikipedia.org/wiki/Unit_vector)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function normalize(v: Vector): Vector;
@@ -20,7 +20,7 @@ function normalize(v: Vector): Vector;
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Vector](./alfa-math.vector.md)
 

@@ -4,7 +4,7 @@
 
 ## Value.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract resolve(resolver?: unknown): Value<R, false>;
@@ -14,9 +14,9 @@ abstract resolve(resolver?: unknown): Value<R, false>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | unknown | <i>(Optional)</i> |
+|  resolver | unknown | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Value](./alfa-css.value.md)<!-- -->&lt;R, false&gt;
 

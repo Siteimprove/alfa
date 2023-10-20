@@ -4,7 +4,7 @@
 
 ## Future.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U>): Future<U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U>): Future<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;U&gt;
 

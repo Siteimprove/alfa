@@ -5,7 +5,7 @@
 ## NamespaceRule namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace NamespaceRule 

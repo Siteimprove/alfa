@@ -4,7 +4,7 @@
 
 ## Number\_2.parseZero variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseZero: CSSParser<Fixed>

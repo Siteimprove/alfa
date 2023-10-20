@@ -4,7 +4,7 @@
 
 ## Token.parseString variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseString: Parser<Slice<Token>, String, string, []>

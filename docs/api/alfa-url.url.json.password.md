@@ -4,7 +4,7 @@
 
 ## URL.JSON.password property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 password: string | null;

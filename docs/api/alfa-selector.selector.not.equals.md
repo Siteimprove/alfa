@@ -4,7 +4,7 @@
 
 ## Selector.Not.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Not): boolean;
@@ -16,7 +16,7 @@ equals(value: Not): boolean;
 |  --- | --- | --- |
 |  value | [Not](./alfa-selector.selector.not.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

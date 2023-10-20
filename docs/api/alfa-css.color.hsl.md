@@ -4,7 +4,7 @@
 
 ## Color.hsl() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function hsl<H extends Number.Canonical | Angle.Canonical, A extends Number.Canonical | Percentage.Canonical>(hue: H, saturation: Percentage, lightness: Percentage, alpha: A): HSL<H, A>;
@@ -15,11 +15,11 @@ function hsl<H extends Number.Canonical | Angle.Canonical, A extends Number.Cano
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  hue | H |  |
-|  saturation | [Percentage](./alfa-css.percentage.md) |  |
-|  lightness | [Percentage](./alfa-css.percentage.md) |  |
+|  saturation | Percentage |  |
+|  lightness | Percentage |  |
 |  alpha | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[HSL](./alfa-css.hsl.md)<!-- -->&lt;H, A&gt;
+HSL&lt;H, A&gt;
 

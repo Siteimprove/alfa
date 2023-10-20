@@ -6,12 +6,12 @@
 
 [https://url.spec.whatwg.org/\#is-special](https://url.spec.whatwg.org/#is-special)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isSpecial(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

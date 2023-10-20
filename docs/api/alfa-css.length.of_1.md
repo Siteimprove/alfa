@@ -4,7 +4,7 @@
 
 ## Length.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of<U extends Unit.Length>(value: BaseLength<U>): Fixed<U>;
@@ -16,7 +16,7 @@ export function of<U extends Unit.Length>(value: BaseLength<U>): Fixed<U>;
 |  --- | --- | --- |
 |  value | BaseLength&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;U&gt;
 

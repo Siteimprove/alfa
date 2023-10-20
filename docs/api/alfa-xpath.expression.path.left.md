@@ -4,7 +4,7 @@
 
 ## Expression.Path.left property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get left(): Expression;

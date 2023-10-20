@@ -4,7 +4,7 @@
 
 ## Language.script variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 script: typeof Script.of

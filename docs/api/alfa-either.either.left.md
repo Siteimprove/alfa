@@ -4,7 +4,7 @@
 
 ## Either.left() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function left<L, R = never>(value: L): Either<L, R>;
@@ -16,7 +16,7 @@ function left<L, R = never>(value: L): Either<L, R>;
 |  --- | --- | --- |
 |  value | L |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;
 

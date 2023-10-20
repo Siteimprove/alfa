@@ -4,12 +4,12 @@
 
 ## Viewport.standard() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function standard(): Viewport;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Viewport](./alfa-device.viewport.md)
 

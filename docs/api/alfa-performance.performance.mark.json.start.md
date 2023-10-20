@@ -4,7 +4,7 @@
 
 ## Performance.Mark.JSON.start property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 start: number;

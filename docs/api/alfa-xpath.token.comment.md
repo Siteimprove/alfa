@@ -4,7 +4,7 @@
 
 ## Token.Comment namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Comment 

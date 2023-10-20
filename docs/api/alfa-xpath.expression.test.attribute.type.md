@@ -4,7 +4,7 @@
 
 ## Expression.Test.Attribute.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get type(): "kind";

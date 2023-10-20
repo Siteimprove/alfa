@@ -4,7 +4,7 @@
 
 ## Element.isContent variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isContent: typeof predicate.isContent

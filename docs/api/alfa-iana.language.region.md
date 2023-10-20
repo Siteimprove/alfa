@@ -4,7 +4,7 @@
 
 ## Language.region variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 region: typeof Region.of

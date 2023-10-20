@@ -4,12 +4,12 @@
 
 ## Some.getOr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getOr(): T;
 ```
-<b>Returns:</b>
+**Returns:**
 
 T
 

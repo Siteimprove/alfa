@@ -4,10 +4,8 @@
 
 ## Rectangle.Auto type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Auto = Keyword<"auto">;
 ```
-<b>References:</b> [Keyword](./alfa-css.keyword.md)
-

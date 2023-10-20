@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Unkeyed<Mapper<T, U>>): Unkeyed<U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Unkeyed<Mapper<T, U>>): Unkeyed<U>;
 |  --- | --- | --- |
 |  mapper | [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;U&gt;
 

@@ -4,7 +4,7 @@
 
 ## Selector.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface JSON<T extends string = string> 

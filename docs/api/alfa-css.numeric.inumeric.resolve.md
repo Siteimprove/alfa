@@ -4,7 +4,7 @@
 
 ## Numeric.INumeric.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(resolver?: unknown): Fixed<R>;
@@ -14,9 +14,9 @@ resolve(resolver?: unknown): Fixed<R>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | unknown | <i>(Optional)</i> |
+|  resolver | unknown | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;R&gt;
 

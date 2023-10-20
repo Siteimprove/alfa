@@ -4,7 +4,7 @@
 
 ## Rule.Composite.isComposite() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isComposite<I, T extends Hashable, Q extends Question.Metadata>(value: unknown): value is Composite<I, T, Q>;
@@ -16,7 +16,7 @@ function isComposite<I, T extends Hashable, Q extends Question.Metadata>(value: 
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Composite](./alfa-act.rule.composite.md)<!-- -->&lt;I, T, Q&gt;
 

@@ -4,7 +4,7 @@
 
 ## Array\_2.reject() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function reject<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): Array<Exclude<T, U>>;
@@ -15,9 +15,9 @@ function reject<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  refinement | Refinement&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;Exclude&lt;T, U&gt;&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

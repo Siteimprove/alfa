@@ -4,7 +4,7 @@
 
 ## JSON\_2.stringify() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function stringify(value: JSON): string;
@@ -14,9 +14,9 @@ function stringify(value: JSON): string;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | JSON |  |
+|  value | [JSON](./alfa-json.json_2.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 string
 

@@ -4,7 +4,7 @@
 
 ## Rectangle.intersects() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 intersects(other: Rectangle): boolean;
@@ -16,7 +16,7 @@ intersects(other: Rectangle): boolean;
 |  --- | --- | --- |
 |  other | [Rectangle](./alfa-rectangle.rectangle.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

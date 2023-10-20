@@ -4,7 +4,7 @@
 
 ## Token.isOpenComment variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isOpenComment: typeof OpenComment.isOpenComment

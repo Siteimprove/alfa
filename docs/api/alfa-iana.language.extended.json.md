@@ -4,12 +4,12 @@
 
 ## Language.Extended.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Subtag.JSON<"extended", Name> 
 ```
-<b>Extends:</b> [Subtag.JSON](./alfa-iana.language.subtag.json.md)<!-- -->&lt;"extended", [Name](./alfa-iana.language.extended.name.md)<!-- -->&gt;
+**Extends:** [Subtag.JSON](./alfa-iana.language.subtag.json.md)<!-- -->&lt;"extended", [Name](./alfa-iana.language.extended.name.md)<!-- -->&gt;
 
 ## Properties
 

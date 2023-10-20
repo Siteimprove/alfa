@@ -4,12 +4,12 @@
 
 ## Rule.Composite.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Rule.JSON 
 ```
-<b>Extends:</b> [Rule.JSON](./alfa-act.rule.json.md)
+**Extends:** [Rule.JSON](./alfa-act.rule.json.md)
 
 ## Properties
 

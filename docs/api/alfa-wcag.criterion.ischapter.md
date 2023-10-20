@@ -4,7 +4,7 @@
 
 ## Criterion.isChapter() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isChapter(value: string): value is Chapter;
@@ -16,7 +16,7 @@ function isChapter(value: string): value is Chapter;
 |  --- | --- | --- |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Chapter](./alfa-wcag.criterion.chapter.md)
 

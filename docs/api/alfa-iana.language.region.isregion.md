@@ -4,7 +4,7 @@
 
 ## Language.Region.isRegion() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRegion(value: unknown): value is Region;
@@ -16,7 +16,7 @@ function isRegion(value: unknown): value is Region;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Region](./alfa-iana.language.region.md)
 

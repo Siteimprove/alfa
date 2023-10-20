@@ -4,7 +4,7 @@
 
 ## Document.isDocument() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isDocument(value: unknown): value is Document;
@@ -16,7 +16,7 @@ function isDocument(value: unknown): value is Document;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Document](./alfa-dom.document.md)
 

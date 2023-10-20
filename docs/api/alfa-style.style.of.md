@@ -4,7 +4,7 @@
 
 ## Style.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(styleDeclarations: Iterable<Declaration>, device: Device, parent?: Option<Style>): Style;
@@ -14,11 +14,11 @@ static of(styleDeclarations: Iterable<Declaration>, device: Device, parent?: Opt
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  styleDeclarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
-|  device | [Device](./alfa-device.device.md) |  |
-|  parent | [Option](./alfa-option.option.md)<!-- -->&lt;[Style](./alfa-style.style.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  styleDeclarations | Iterable&lt;Declaration&gt; |  |
+|  device | Device |  |
+|  parent | Option&lt;[Style](./alfa-style.style.md)<!-- -->&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Style](./alfa-style.style.md)
 

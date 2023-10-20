@@ -4,7 +4,7 @@
 
 ## Refinement.isBigInt() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isBigInt(value: unknown): value is bigint;
@@ -16,7 +16,7 @@ export function isBigInt(value: unknown): value is bigint;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is bigint
 

@@ -4,17 +4,17 @@
 
 ## Cell.Header.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Cell.JSON 
 ```
-<b>Extends:</b> [Cell.JSON](./alfa-table.cell.json.md)
+**Extends:** [Cell.JSON](./alfa-table.cell.json.md)
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [scope](./alfa-table.cell.header.json.scope.md) |  | [Scope](./alfa-table.scope.md) |  |
+|  [scope](./alfa-table.cell.header.json.scope.md) |  | Scope |  |
 |  [type](./alfa-table.cell.header.json.type.md) |  | "header" |  |
 

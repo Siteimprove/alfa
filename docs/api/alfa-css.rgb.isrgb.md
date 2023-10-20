@@ -4,7 +4,7 @@
 
 ## RGB.isRGB() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRGB<C extends Number.Canonical | Percentage.Canonical, A extends Number.Canonical | Percentage.Canonical>(value: unknown): value is RGB<C, A>;
@@ -16,7 +16,7 @@ function isRGB<C extends Number.Canonical | Percentage.Canonical, A extends Numb
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [RGB](./alfa-css.rgb.md)<!-- -->&lt;C, A&gt;
 

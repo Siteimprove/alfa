@@ -4,7 +4,7 @@
 
 ## RuleTree.Node.selector property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get selector(): Selector;

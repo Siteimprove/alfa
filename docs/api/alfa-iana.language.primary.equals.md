@@ -4,7 +4,7 @@
 
 ## Language.Primary.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Primary): boolean;
@@ -16,7 +16,7 @@ equals(value: Primary): boolean;
 |  --- | --- | --- |
 |  value | [Primary](./alfa-iana.language.primary.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

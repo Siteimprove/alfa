@@ -6,7 +6,7 @@
 
 The keys of all rules This looks like: "R1" \| "R2" \| …
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Keys = keyof RulesObject;

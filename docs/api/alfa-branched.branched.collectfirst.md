@@ -4,7 +4,7 @@
 
 ## Branched.collectFirst() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 collectFirst<U>(mapper: Mapper<T, Option<U>, [Iterable<B>]>): Option<U>;
@@ -14,9 +14,9 @@ collectFirst<U>(mapper: Mapper<T, Option<U>, [Iterable<B>]>): Option<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[Iterable&lt;B&gt;\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Option&lt;U&gt;, \[Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
+Option&lt;U&gt;
 

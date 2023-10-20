@@ -4,12 +4,12 @@
 
 ## Selector.Complex.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Selector.JSON<"complex"> 
 ```
-<b>Extends:</b> [Selector.JSON](./alfa-selector.selector.json.md)<!-- -->&lt;"complex"&gt;
+**Extends:** [Selector.JSON](./alfa-selector.selector.json.md)<!-- -->&lt;"complex"&gt;
 
 ## Properties
 

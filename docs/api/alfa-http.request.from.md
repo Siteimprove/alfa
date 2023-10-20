@@ -4,7 +4,7 @@
 
 ## Request.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): Result<Request, string>;
@@ -16,7 +16,7 @@ function from(json: JSON): Result<Request, string>;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-http.request.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;[Request](./alfa-http.request.md)<!-- -->, string&gt;
+Result&lt;[Request](./alfa-http.request.md)<!-- -->, string&gt;
 

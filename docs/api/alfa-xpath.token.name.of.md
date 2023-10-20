@@ -4,7 +4,7 @@
 
 ## Token.Name.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(prefix: Option<string>, value: string): Name;
@@ -14,10 +14,10 @@ static of(prefix: Option<string>, value: string): Name;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  prefix | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  prefix | Option&lt;string&gt; |  |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Name](./alfa-xpath.token.name.md)
 

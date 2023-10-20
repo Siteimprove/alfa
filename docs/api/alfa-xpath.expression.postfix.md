@@ -4,10 +4,10 @@
 
 ## Expression.Postfix type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Postfix = Primary | Filter;
 ```
-<b>References:</b> [Primary](./alfa-xpath.expression.primary.md)<!-- -->, [Filter](./alfa-xpath.expression.filter.md)
+**References:** [Primary](./alfa-xpath.expression.primary.md)<!-- -->, [Filter](./alfa-xpath.expression.filter.md)
 

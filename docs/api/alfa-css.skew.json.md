@@ -4,12 +4,12 @@
 
 ## Skew.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Function.JSON<"skew"> 
 ```
-<b>Extends:</b> Function.JSON&lt;"skew"&gt;
+**Extends:** Function.JSON&lt;"skew"&gt;
 
 ## Properties
 

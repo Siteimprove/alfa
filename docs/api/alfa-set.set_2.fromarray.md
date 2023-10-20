@@ -4,7 +4,7 @@
 
 ## Set\_2.fromArray() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function fromArray<T>(array: ReadonlyArray<T>): Set<T>;
@@ -16,7 +16,7 @@ function fromArray<T>(array: ReadonlyArray<T>): Set<T>;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Set&lt;T&gt;
+[Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;
 

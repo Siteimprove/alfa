@@ -4,7 +4,7 @@
 
 ## Block.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(declarations: Iterable<Declaration>): Block;
@@ -14,9 +14,9 @@ static of(declarations: Iterable<Declaration>): Block;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  declarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
+|  declarations | Iterable&lt;Declaration&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Block](./alfa-dom.block.md)
 

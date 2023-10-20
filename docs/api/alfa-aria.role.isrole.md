@@ -4,7 +4,7 @@
 
 ## Role.isRole() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRole<N extends Name>(value: unknown, name?: N): value is Role<Name>;
@@ -15,9 +15,9 @@ function isRole<N extends Name>(value: unknown, name?: N): value is Role<Name>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-|  name | N | <i>(Optional)</i> |
+|  name | N | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Role](./alfa-aria.role.md)<!-- -->&lt;[Name](./alfa-aria.role.name.md)<!-- -->&gt;
 

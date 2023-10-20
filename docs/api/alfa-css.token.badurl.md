@@ -4,7 +4,7 @@
 
 ## Token.badURL variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 badURL: typeof BadURL.of

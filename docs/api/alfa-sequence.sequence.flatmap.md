@@ -4,7 +4,7 @@
 
 ## Sequence.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>): Sequence<U>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<T, Sequence<U>, [index: number]>): Sequence<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;
 

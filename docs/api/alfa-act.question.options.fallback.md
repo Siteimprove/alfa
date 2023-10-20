@@ -4,7 +4,7 @@
 
 ## Question.Options.fallback property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly fallback?: Option<A>;

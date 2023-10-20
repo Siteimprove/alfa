@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-color/\#typedef-system-color](https://drafts.csswg.org/css-color/#typedef-system-color)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<System>

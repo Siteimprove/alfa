@@ -6,8 +6,10 @@
 
 [https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Number = Number.Calculated | Number.Fixed;
 ```
+**References:** [Number.Calculated](./alfa-css.number_2.calculated.md)<!-- -->, [Number.Fixed](./alfa-css.number_2.fixed.md)
+

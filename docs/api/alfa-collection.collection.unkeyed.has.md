@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed.has() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 has(value: T): boolean;
@@ -16,7 +16,7 @@ has(value: T): boolean;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

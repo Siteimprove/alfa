@@ -4,7 +4,7 @@
 
 ## Hash.writeUint8() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeUint8(data: number): this;
@@ -16,7 +16,7 @@ writeUint8(data: number): this;
 |  --- | --- | --- |
 |  data | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

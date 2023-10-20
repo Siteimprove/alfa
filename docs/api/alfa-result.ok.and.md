@@ -4,7 +4,7 @@
 
 ## Ok.and() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 and<U, F>(result: Result<U, F>): Result<U, F>;
@@ -14,9 +14,9 @@ and<U, F>(result: Result<U, F>): Result<U, F>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  result | [Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt; |  |
+|  result | Result&lt;U, F&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;
+Result&lt;U, F&gt;
 

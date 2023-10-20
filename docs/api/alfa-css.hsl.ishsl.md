@@ -4,7 +4,7 @@
 
 ## HSL.isHSL() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isHSL<H extends Number.Fixed | Angle.Fixed, A extends Number.Fixed | Percentage.Fixed>(value: unknown): value is HSL<H, A>;
@@ -16,7 +16,7 @@ function isHSL<H extends Number.Fixed | Angle.Fixed, A extends Number.Fixed | Pe
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [HSL](./alfa-css.hsl.md)<!-- -->&lt;H, A&gt;
 

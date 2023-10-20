@@ -4,7 +4,7 @@
 
 ## Right.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<L, R>(this: Right<Either<L, R>>): Either<L, R>;
@@ -14,9 +14,9 @@ flatten<L, R>(this: Right<Either<L, R>>): Either<L, R>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | [Right](./alfa-either.right.md)<!-- -->&lt;[Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;&gt; |  |
+|  this | [Right](./alfa-either.right.md)<!-- -->&lt;Either&lt;L, R&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;
+Either&lt;L, R&gt;
 

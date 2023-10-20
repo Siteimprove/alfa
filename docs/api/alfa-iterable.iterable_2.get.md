@@ -4,7 +4,7 @@
 
 ## Iterable\_2.get() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function get<T>(iterable: Iterable<T>, index: number): Option<T>;
@@ -14,10 +14,10 @@ function get<T>(iterable: Iterable<T>, index: number): Option<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 |  index | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Question.Typeof type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Typeof<U extends Uri> = Type[TypeName<U>];

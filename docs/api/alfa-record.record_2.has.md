@@ -4,7 +4,7 @@
 
 ## Record\_2.has() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 has(key: string): key is Record.Key<T>;
@@ -16,7 +16,7 @@ has(key: string): key is Record.Key<T>;
 |  --- | --- | --- |
 |  key | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-key is Record.Key&lt;T&gt;
+key is [Record.Key](./alfa-record.record_2.key.md)<!-- -->&lt;T&gt;
 

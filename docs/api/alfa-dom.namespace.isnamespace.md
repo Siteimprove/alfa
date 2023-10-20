@@ -4,7 +4,7 @@
 
 ## Namespace.isNamespace() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isNamespace(value: string): value is Namespace;
@@ -16,7 +16,7 @@ function isNamespace(value: string): value is Namespace;
 |  --- | --- | --- |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Namespace](./alfa-dom.namespace.md)
 

@@ -4,7 +4,7 @@
 
 ## Iterable\_2.isIterable() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isIterable<T>(value: unknown): value is Iterable<T>;
@@ -16,7 +16,7 @@ function isIterable<T>(value: unknown): value is Iterable<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Iterable&lt;T&gt;
+value is [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

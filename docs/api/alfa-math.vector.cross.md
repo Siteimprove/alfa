@@ -8,7 +8,7 @@ Compute the cross product of two 3-dimensional vectors.
 
 [https://en.wikipedia.org/wiki/Cross\_product](https://en.wikipedia.org/wiki/Cross_product)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function cross(v: Vector, u: Vector): Vector;
@@ -21,7 +21,7 @@ function cross(v: Vector, u: Vector): Vector;
 |  v | [Vector](./alfa-math.vector.md) |  |
 |  u | [Vector](./alfa-math.vector.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Vector](./alfa-math.vector.md)
 

@@ -4,7 +4,7 @@
 
 ## Set\_2.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Set<Mapper<T, U>>): Set<U>;
@@ -14,9 +14,9 @@ apply<U>(mapper: Set<Mapper<T, U>>): Set<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | Set&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+|  mapper | [Set](./alfa-set.set_2.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Set&lt;U&gt;
+[Set](./alfa-set.set_2.md)<!-- -->&lt;U&gt;
 

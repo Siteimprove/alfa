@@ -4,7 +4,7 @@
 
 ## Diagnostic.isDiagnostic() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isDiagnostic(value: unknown): value is Diagnostic;
@@ -16,7 +16,7 @@ function isDiagnostic(value: unknown): value is Diagnostic;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Diagnostic](./alfa-act.diagnostic.md)
 

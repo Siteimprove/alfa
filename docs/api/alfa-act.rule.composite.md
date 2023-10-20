@@ -4,7 +4,7 @@
 
 ## Rule.Composite namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Composite 

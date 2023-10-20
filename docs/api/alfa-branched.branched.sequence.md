@@ -4,7 +4,7 @@
 
 ## Branched.sequence() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function sequence<T, B>(values: Iterable<Branched<T, B>>): Branched<Iterable<T>, B>;
@@ -16,7 +16,7 @@ function sequence<T, B>(values: Iterable<Branched<T, B>>): Branched<Iterable<T>,
 |  --- | --- | --- |
 |  values | Iterable&lt;[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;Iterable&lt;T&gt;, B&gt;
 

@@ -4,7 +4,7 @@
 
 ## Media.Value.discrete variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 discrete: typeof Discrete.of

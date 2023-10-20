@@ -4,12 +4,12 @@
 
 ## Left.teeRight() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 teeRight(): Left<L>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Left](./alfa-either.left.md)<!-- -->&lt;L&gt;
 

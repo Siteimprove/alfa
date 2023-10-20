@@ -4,7 +4,7 @@
 
 ## Promise\_2 type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Promise<T> = globalThis.Promise<T>;

@@ -4,7 +4,7 @@
 
 ## Stability.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<S extends string>(stability: S): Stability<S>;
@@ -16,7 +16,7 @@ static of<S extends string>(stability: S): Stability<S>;
 |  --- | --- | --- |
 |  stability | S |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Stability](./alfa-rules.stability.md)<!-- -->&lt;S&gt;
 

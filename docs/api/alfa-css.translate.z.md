@@ -4,7 +4,7 @@
 
 ## Translate.z property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get z(): Z;

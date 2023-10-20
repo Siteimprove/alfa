@@ -4,7 +4,7 @@
 
 ## Token.Number.JSON.isSigned property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isSigned: boolean;

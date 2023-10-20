@@ -4,7 +4,7 @@
 
 ## Browser.Release.browser property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get browser(): N;

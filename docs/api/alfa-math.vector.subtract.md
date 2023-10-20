@@ -4,7 +4,7 @@
 
 ## Vector.subtract() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function subtract(v: Vector, u: Vector): Vector;
@@ -17,7 +17,7 @@ function subtract(v: Vector, u: Vector): Vector;
 |  v | [Vector](./alfa-math.vector.md) |  |
 |  u | [Vector](./alfa-math.vector.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Vector](./alfa-math.vector.md)
 

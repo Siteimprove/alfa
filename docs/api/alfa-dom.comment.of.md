@@ -4,7 +4,7 @@
 
 ## Comment.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(data: string): Comment;
@@ -16,7 +16,7 @@ static of(data: string): Comment;
 |  --- | --- | --- |
 |  data | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comment](./alfa-dom.comment.md)
 

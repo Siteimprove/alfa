@@ -6,10 +6,10 @@
 
 [https://drafts.csswg.org/selectors/\#selector](https://drafts.csswg.org/selectors/#selector)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Selector = Selector.Simple | Selector.Compound | Selector.Complex | Selector.Relative | Selector.List;
 ```
-<b>References:</b> [Selector.Simple](./alfa-selector.selector.simple.md)<!-- -->, [Selector.Compound](./alfa-selector.selector.compound.md)<!-- -->, [Selector.Complex](./alfa-selector.selector.complex.md)<!-- -->, [Selector.Relative](./alfa-selector.selector.relative.md)<!-- -->, [Selector.List](./alfa-selector.selector.list.md)
+**References:** [Selector.Simple](./alfa-selector.selector.simple.md)<!-- -->, [Selector.Compound](./alfa-selector.selector.compound.md)<!-- -->, [Selector.Complex](./alfa-selector.selector.complex.md)<!-- -->, [Selector.Relative](./alfa-selector.selector.relative.md)<!-- -->, [Selector.List](./alfa-selector.selector.list.md)
 

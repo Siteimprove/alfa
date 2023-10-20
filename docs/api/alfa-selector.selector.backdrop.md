@@ -6,12 +6,12 @@
 
 [https://fullscreen.spec.whatwg.org/\#::backdrop-pseudo-element](https://fullscreen.spec.whatwg.org/#::backdrop-pseudo-element)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Backdrop extends Pseudo.Element<"backdrop"> 
 ```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"backdrop"&gt;
+**Extends:** [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"backdrop"&gt;
 
 ## Methods
 

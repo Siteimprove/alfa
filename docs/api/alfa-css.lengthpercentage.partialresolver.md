@@ -4,10 +4,10 @@
 
 ## LengthPercentage.PartialResolver type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type PartialResolver = Length.Resolver;
 ```
-<b>References:</b> [Length.Resolver](./alfa-css.length.resolver.md)
+**References:** [Length.Resolver](./alfa-css.length.resolver.md)
 

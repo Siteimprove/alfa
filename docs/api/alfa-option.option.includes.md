@@ -4,7 +4,7 @@
 
 ## Option.includes() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 includes(value: T): this is Some<T>;
@@ -16,7 +16,7 @@ includes(value: T): this is Some<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-this is [Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
+this is Some&lt;T&gt;
 

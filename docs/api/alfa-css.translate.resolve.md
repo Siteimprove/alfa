@@ -4,7 +4,7 @@
 
 ## Translate.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(resolver: Translate.Resolver): Translate.Canonical;
@@ -16,7 +16,7 @@ resolve(resolver: Translate.Resolver): Translate.Canonical;
 |  --- | --- | --- |
 |  resolver | [Translate.Resolver](./alfa-css.translate.resolver.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Translate.Canonical](./alfa-css.translate.canonical.md)
 

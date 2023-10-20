@@ -4,7 +4,7 @@
 
 ## Right.reduce() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reduce<T>(reducer: Reducer<R, T>, accumulator: T): T;
@@ -14,10 +14,10 @@ reduce<T>(reducer: Reducer<R, T>, accumulator: T): T;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;R, T&gt; |  |
+|  reducer | Reducer&lt;R, T&gt; |  |
 |  accumulator | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 T
 

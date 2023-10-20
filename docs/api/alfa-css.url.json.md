@@ -4,12 +4,12 @@
 
 ## URL.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Value.JSON<"url"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"url"&gt;
+**Extends:** [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"url"&gt;
 
 ## Properties
 

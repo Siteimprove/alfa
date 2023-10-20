@@ -4,7 +4,7 @@
 
 ## Cons.sortWith() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 sortWith(comparer: Comparer<T>): Sequence<T>;
@@ -16,7 +16,7 @@ sortWith(comparer: Comparer<T>): Sequence<T>;
 |  --- | --- | --- |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+Sequence&lt;T&gt;
 

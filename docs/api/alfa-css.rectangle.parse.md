@@ -4,7 +4,7 @@
 
 ## Rectangle.parse variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<Rectangle>

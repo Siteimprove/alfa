@@ -4,7 +4,7 @@
 
 ## Column.group variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 group: typeof Group.of

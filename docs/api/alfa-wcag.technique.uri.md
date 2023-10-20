@@ -6,10 +6,10 @@
 
 The URI of the technique with the specified name.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type URI<N extends Name = Name> = Techniques[N]["uri"];
 ```
-<b>References:</b> [Name](./alfa-wcag.technique.name.md)
+**References:** [Name](./alfa-wcag.technique.name.md)
 

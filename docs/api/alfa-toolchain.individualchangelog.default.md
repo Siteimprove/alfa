@@ -5,7 +5,7 @@
 ## individualChangelog.default variable
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 changelogFunctions: ChangelogFunctions

@@ -4,7 +4,7 @@
 
 ## Parser.filter() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function filter<I, T, U extends T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, refinement: Refinement<T, U>, ifError: Mapper<T, E>): Parser<I, U, E, A>;
@@ -15,10 +15,10 @@ function filter<I, T, U extends T, E, A extends Array<unknown> = []>(parser: Par
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 |  ifError | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, U, E, A&gt;
 

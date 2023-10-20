@@ -4,7 +4,7 @@
 
 ## Media.Value.Bound.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(value: T, isInclusive: boolean): Bound<T>;
@@ -17,7 +17,7 @@ static of<T>(value: T, isInclusive: boolean): Bound<T>;
 |  value | T |  |
 |  isInclusive | boolean |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Bound](./alfa-media.media.value.bound.md)<!-- -->&lt;T&gt;
 

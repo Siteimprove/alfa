@@ -6,12 +6,12 @@
 
 The type of the input of rules
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Input = {
         [K in Keys]: act.Rule.Input<RulesObject[K]>;
     }[Keys];
 ```
-<b>References:</b> [Rule.Input](./alfa-act.rule.input.md)
+**References:** [act.Rule.Input](./alfa-act.rule.input.md)
 

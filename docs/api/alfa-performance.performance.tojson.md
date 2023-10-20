@@ -4,12 +4,12 @@
 
 ## Performance.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Performance.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Performance.JSON](./alfa-performance.performance.json.md)
 

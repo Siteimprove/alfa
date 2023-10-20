@@ -4,7 +4,7 @@
 
 ## Selector.Attribute.JSON.modifier property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 modifier: string | null;

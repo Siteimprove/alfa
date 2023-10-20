@@ -4,7 +4,7 @@
 
 ## Graph.isGraph() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isGraph<T>(value: unknown): value is Graph<T>;
@@ -16,7 +16,7 @@ function isGraph<T>(value: unknown): value is Graph<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

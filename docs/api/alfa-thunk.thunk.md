@@ -5,7 +5,7 @@
 ## Thunk type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Thunk<T = void> = () => T;

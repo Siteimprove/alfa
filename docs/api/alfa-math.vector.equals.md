@@ -4,7 +4,7 @@
 
 ## Vector.equals() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function equals(v: Vector, u: Vector, e: number): boolean;
@@ -18,7 +18,7 @@ function equals(v: Vector, u: Vector, e: number): boolean;
 |  u | [Vector](./alfa-math.vector.md) |  |
 |  e | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

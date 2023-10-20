@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Fixed` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(value: number, type: T);

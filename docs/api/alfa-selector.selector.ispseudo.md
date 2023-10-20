@@ -4,7 +4,7 @@
 
 ## Selector.isPseudo() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isPseudo(value: unknown): value is Pseudo;
@@ -16,7 +16,7 @@ export function isPseudo(value: unknown): value is Pseudo;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Pseudo](./alfa-selector.selector.pseudo.md)
 

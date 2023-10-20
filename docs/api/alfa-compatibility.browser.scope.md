@@ -4,10 +4,10 @@
 
 ## Browser.Scope type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Scope<N extends Name = Name> = Iterable<Release<N>>;
 ```
-<b>References:</b> [Name](./alfa-compatibility.browser.name.md)<!-- -->, [Release](./alfa-compatibility.browser.release.md)
+**References:** [Name](./alfa-compatibility.browser.name.md)<!-- -->, [Release](./alfa-compatibility.browser.release.md)
 

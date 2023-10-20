@@ -4,7 +4,7 @@
 
 ## Hex.JSON.value property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 value: number;

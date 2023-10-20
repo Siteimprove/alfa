@@ -4,7 +4,7 @@
 
 ## Rotate.z property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get z(): Number.Canonical;

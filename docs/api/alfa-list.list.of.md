@@ -4,7 +4,7 @@
 
 ## List.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(...values: Array<T>): List<T>;
@@ -16,7 +16,7 @@ static of<T>(...values: Array<T>): List<T>;
 |  --- | --- | --- |
 |  values | Array&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Element` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(name: N);

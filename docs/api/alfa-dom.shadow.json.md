@@ -4,12 +4,12 @@
 
 ## Shadow.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Node.JSON 
 ```
-<b>Extends:</b> [Node.JSON](./alfa-dom.node.json.md)
+**Extends:** [Node.JSON](./alfa-dom.node.json.md)
 
 ## Properties
 

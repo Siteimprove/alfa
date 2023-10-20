@@ -4,7 +4,7 @@
 
 ## Branched.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Branched<U, B>, [Iterable<B>]>): Branched<U, B>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<T, Branched<U, B>, [Iterable<B>]>): Branched<U, B>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Branched](./alfa-branched.branched.md)<!-- -->&lt;U, B&gt;, \[Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;U, B&gt;
 

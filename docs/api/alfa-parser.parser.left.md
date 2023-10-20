@@ -4,7 +4,7 @@
 
 ## Parser.left() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function left<I, T, U, E, A extends Array<unknown> = []>(left: Parser<I, T, E, A>, right: Parser<I, U, E, A>): Parser<I, T, E, A>;
@@ -17,7 +17,7 @@ function left<I, T, U, E, A extends Array<unknown> = []>(left: Parser<I, T, E, A
 |  left | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 |  right | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, U, E, A&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
 

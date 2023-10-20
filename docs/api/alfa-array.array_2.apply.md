@@ -4,7 +4,7 @@
 
 ## Array\_2.apply() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function apply<T, U>(array: ReadonlyArray<T>, mapper: ReadonlyArray<Mapper<T, U>>): Array<U>;
@@ -17,7 +17,7 @@ function apply<T, U>(array: ReadonlyArray<T>, mapper: ReadonlyArray<Mapper<T, U>
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  mapper | ReadonlyArray&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;U&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;U&gt;
 

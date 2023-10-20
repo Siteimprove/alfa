@@ -4,7 +4,7 @@
 
 ## Circle.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<R extends Radius, P extends Position>(radius: R, center: P): Circle<R, P>;
@@ -17,7 +17,7 @@ static of<R extends Radius, P extends Position>(radius: R, center: P): Circle<R,
 |  radius | R |  |
 |  center | P |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Circle](./alfa-css.circle.md)<!-- -->&lt;R, P&gt;
 

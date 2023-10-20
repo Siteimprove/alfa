@@ -4,7 +4,7 @@
 
 ## Option.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Option<Option<T>>): Option<T>;
@@ -16,7 +16,7 @@ flatten<T>(this: Option<Option<T>>): Option<T>;
 |  --- | --- | --- |
 |  this | [Option](./alfa-option.option.md)<!-- -->&lt;[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

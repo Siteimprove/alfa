@@ -4,7 +4,7 @@
 
 ## Selector.Relative.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Relative): boolean;
@@ -16,7 +16,7 @@ equals(value: Relative): boolean;
 |  --- | --- | --- |
 |  value | [Relative](./alfa-selector.selector.relative.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

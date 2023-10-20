@@ -4,7 +4,7 @@
 
 ## List.reject() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reject<U extends T>(refinement: Refinement<T, U, [index: number]>): List<Exclude<T, U>>;
@@ -14,9 +14,9 @@ reject<U extends T>(refinement: Refinement<T, U, [index: number]>): List<Exclude
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  refinement | Refinement&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

@@ -8,10 +8,10 @@ Extract the computed type a named property.
 
 [https://drafts.csswg.org/css-cascade/\#computed](https://drafts.csswg.org/css-cascade/#computed)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Computed<N extends Name> = Longhand.Computed<Property[N]>;
 ```
-<b>References:</b> [Name](./alfa-style.longhands.name.md)<!-- -->, [Property](./alfa-style.longhands.property.md)
+**References:** [Name](./alfa-style.longhands.name.md)<!-- -->, [Property](./alfa-style.longhands.property.md)
 

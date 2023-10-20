@@ -4,12 +4,12 @@
 
 ## Page.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Page.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Page.JSON](./alfa-web.page.json.md)
 

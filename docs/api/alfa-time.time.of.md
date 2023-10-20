@@ -4,7 +4,7 @@
 
 ## Time.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(epoch: number): Time;
@@ -16,7 +16,7 @@ static of(epoch: number): Time;
 |  --- | --- | --- |
 |  epoch | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Time](./alfa-time.time.md)
 

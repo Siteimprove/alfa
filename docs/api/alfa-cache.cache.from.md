@@ -4,7 +4,7 @@
 
 ## Cache.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from<K extends object, V>(iterable: Iterable<readonly [K, V]>): Cache<K, V>;
@@ -16,7 +16,7 @@ function from<K extends object, V>(iterable: Iterable<readonly [K, V]>): Cache<K
 |  --- | --- | --- |
 |  iterable | Iterable&lt;readonly \[K, V\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Cache](./alfa-cache.cache.md)<!-- -->&lt;K, V&gt;
 

@@ -4,7 +4,7 @@
 
 ## Selector.isPseudoClass variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isPseudoClass: typeof Pseudo.isClass

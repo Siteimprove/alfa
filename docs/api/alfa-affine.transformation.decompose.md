@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/css-transforms-2/\#decomposing-a-3d-matrix](https://drafts.csswg.org/css-transforms-2/#decomposing-a-3d-matrix)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 decompose(): Option<Transformation.Components>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Transformation.Components](./alfa-affine.transformation.components.md)<!-- -->&gt;
+Option&lt;[Transformation.Components](./alfa-affine.transformation.components.md)<!-- -->&gt;
 

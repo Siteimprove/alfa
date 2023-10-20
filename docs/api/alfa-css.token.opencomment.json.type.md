@@ -4,7 +4,7 @@
 
 ## Token.OpenComment.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "open-comment";

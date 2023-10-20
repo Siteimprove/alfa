@@ -4,7 +4,7 @@
 
 ## Display.JSON.scan property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 scan: `${Scan}`;

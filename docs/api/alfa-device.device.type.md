@@ -4,7 +4,7 @@
 
 ## Device.Type enum
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 enum Type 

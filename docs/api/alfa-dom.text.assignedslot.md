@@ -4,12 +4,12 @@
 
 ## Text.assignedSlot() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 assignedSlot(): Option<Slot>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Slot](./alfa-dom.slot.md)<!-- -->&gt;
+Option&lt;Slot&gt;
 

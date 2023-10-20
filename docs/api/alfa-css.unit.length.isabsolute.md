@@ -4,7 +4,7 @@
 
 ## Unit.Length.isAbsolute() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isAbsolute(unit: string): unit is Absolute;
@@ -16,7 +16,7 @@ function isAbsolute(unit: string): unit is Absolute;
 |  --- | --- | --- |
 |  unit | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 unit is [Absolute](./alfa-css.unit.length.absolute.md)
 

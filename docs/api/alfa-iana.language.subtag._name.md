@@ -4,7 +4,7 @@
 
 ## Language.Subtag.\_name property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _name: N;

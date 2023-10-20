@@ -4,7 +4,7 @@
 
 ## Element.JSON.shadow property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 shadow: Shadow.JSON | null;

@@ -4,7 +4,7 @@
 
 ## Token.URL.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: string): URL;
@@ -16,7 +16,7 @@ static of(value: string): URL;
 |  --- | --- | --- |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [URL](./alfa-css.token.url.md)
 

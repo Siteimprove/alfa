@@ -4,7 +4,7 @@
 
 ## Set\_2.forEach() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 forEach(callback: Callback<T>): void;
@@ -14,9 +14,9 @@ forEach(callback: Callback<T>): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+|  callback | Callback&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

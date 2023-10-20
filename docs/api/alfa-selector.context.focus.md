@@ -4,7 +4,7 @@
 
 ## Context.focus() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static focus(element: Element): Context;
@@ -14,9 +14,9 @@ static focus(element: Element): Context;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Context](./alfa-selector.context.md)
 

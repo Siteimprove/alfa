@@ -4,12 +4,12 @@
 
 ## Token.Semicolon.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Semicolon.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Semicolon.JSON](./alfa-css.token.semicolon.json.md)
 

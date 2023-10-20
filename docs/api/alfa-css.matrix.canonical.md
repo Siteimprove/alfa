@@ -4,10 +4,10 @@
 
 ## Matrix.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Canonical = Matrix;
 ```
-<b>References:</b> [Matrix](./alfa-css.matrix.md)
+**References:** [Matrix](./alfa-css.matrix.md)
 

@@ -4,7 +4,7 @@
 
 ## Thenable.flatMap() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function flatMap<T, U, E = unknown, F = E>(thenable: Thenable<T, E>, mapper: Mapper<T, Thenable<U, F>>): Thenable<U, E | F>;
@@ -17,7 +17,7 @@ function flatMap<T, U, E = unknown, F = E>(thenable: Thenable<T, E>, mapper: Map
 |  thenable | [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;U, F&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;U, E \| F&gt;
 

@@ -4,7 +4,7 @@
 
 ## URL.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(scheme: string, username?: Option<string>, password?: Option<string>, host?: Option<string>, port?: Option<number>, path?: Iterable<string>, query?: Option<string>, fragment?: Option<string>, cannotBeABase?: boolean): URL;
@@ -15,16 +15,16 @@ static of(scheme: string, username?: Option<string>, password?: Option<string>, 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  scheme | string |  |
-|  username | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
-|  password | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
-|  host | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
-|  port | [Option](./alfa-option.option.md)<!-- -->&lt;number&gt; | <i>(Optional)</i> |
-|  path | Iterable&lt;string&gt; | <i>(Optional)</i> |
-|  query | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
-|  fragment | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
-|  cannotBeABase | boolean | <i>(Optional)</i> |
+|  username | Option&lt;string&gt; | _(Optional)_ |
+|  password | Option&lt;string&gt; | _(Optional)_ |
+|  host | Option&lt;string&gt; | _(Optional)_ |
+|  port | Option&lt;number&gt; | _(Optional)_ |
+|  path | Iterable&lt;string&gt; | _(Optional)_ |
+|  query | Option&lt;string&gt; | _(Optional)_ |
+|  fragment | Option&lt;string&gt; | _(Optional)_ |
+|  cannotBeABase | boolean | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [URL](./alfa-url.url.md)
 

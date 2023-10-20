@@ -6,7 +6,7 @@
 
 [https://url.spec.whatwg.org/\#special-scheme](https://url.spec.whatwg.org/#special-scheme)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSpecialScheme(scheme: string): boolean;
@@ -18,7 +18,7 @@ function isSpecialScheme(scheme: string): boolean;
 |  --- | --- | --- |
 |  scheme | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

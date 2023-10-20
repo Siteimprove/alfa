@@ -4,7 +4,7 @@
 
 ## Branched.reject() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reject<U extends T>(refinement: Refinement<T, U, [Iterable<B>]>): Branched<Exclude<T, U>, B>;
@@ -14,9 +14,9 @@ reject<U extends T>(refinement: Refinement<T, U, [Iterable<B>]>): Branched<Exclu
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[Iterable&lt;B&gt;\]&gt; |  |
+|  refinement | Refinement&lt;T, U, \[Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;Exclude&lt;T, U&gt;, B&gt;
 

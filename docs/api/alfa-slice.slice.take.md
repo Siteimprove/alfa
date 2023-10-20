@@ -4,7 +4,7 @@
 
 ## Slice.take() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 take(count: number): Slice<T>;
@@ -16,7 +16,7 @@ take(count: number): Slice<T>;
 |  --- | --- | --- |
 |  count | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

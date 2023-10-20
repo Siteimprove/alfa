@@ -4,7 +4,7 @@
 
 ## Set\_2.delete() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 delete(value: T): Set<T>;
@@ -16,7 +16,7 @@ delete(value: T): Set<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Set&lt;T&gt;
+[Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;
 

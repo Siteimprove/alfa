@@ -4,7 +4,7 @@
 
 ## Node.hasName variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasName: typeof predicate.hasName

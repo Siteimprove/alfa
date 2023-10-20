@@ -4,7 +4,7 @@
 
 ## Iterable\_2.map() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function map<T, U = T>(iterable: Iterable<T>, mapper: Mapper<T, U, [index: number]>): Iterable<U>;
@@ -14,10 +14,10 @@ function map<T, U = T>(iterable: Iterable<T>, mapper: Mapper<T, U, [index: numbe
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;U&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;U&gt;
 

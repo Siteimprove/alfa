@@ -4,7 +4,7 @@
 
 ## Node.closest() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 closest(predicate: Predicate<Node>, options?: Node.Traversal): Option<Node>;
@@ -14,10 +14,10 @@ closest(predicate: Predicate<Node>, options?: Node.Traversal): Option<Node>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->&gt; |  |
-|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
+|  predicate | Predicate&lt;[Node](./alfa-aria.node.md)<!-- -->&gt; |  |
+|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;
+Option&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;
 

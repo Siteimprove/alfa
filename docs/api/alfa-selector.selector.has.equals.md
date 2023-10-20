@@ -4,7 +4,7 @@
 
 ## Selector.Has.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Has): boolean;
@@ -16,7 +16,7 @@ equals(value: Has): boolean;
 |  --- | --- | --- |
 |  value | [Has](./alfa-selector.selector.has.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

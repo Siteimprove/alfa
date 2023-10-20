@@ -4,7 +4,7 @@
 
 ## Bits.take() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function take(bits: number, n: number): number;
@@ -17,7 +17,7 @@ function take(bits: number, n: number): number;
 |  bits | number |  |
 |  n | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

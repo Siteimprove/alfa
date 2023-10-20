@@ -1,5 +1,7 @@
 # @siteimprove/alfa-performance
 
+## 0.68.0
+
 ## 0.67.0
 
 ## 0.66.0

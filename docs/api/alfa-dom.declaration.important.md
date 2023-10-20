@@ -4,7 +4,7 @@
 
 ## Declaration.important property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get important(): boolean;

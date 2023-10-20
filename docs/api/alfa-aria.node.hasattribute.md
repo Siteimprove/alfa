@@ -4,7 +4,7 @@
 
 ## Node.hasAttribute variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasAttribute: typeof predicate.hasAttribute

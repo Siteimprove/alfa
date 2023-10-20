@@ -4,7 +4,7 @@
 
 ## Record\_2.set() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 set<K extends Record.Key<T>>(key: K, value: T[K]): Record<T>;
@@ -17,7 +17,7 @@ set<K extends Record.Key<T>>(key: K, value: T[K]): Record<T>;
 |  key | K |  |
 |  value | T\[K\] |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Record&lt;T&gt;
+[Record](./alfa-record.record_2.md)<!-- -->&lt;T&gt;
 

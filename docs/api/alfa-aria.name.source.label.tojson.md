@@ -4,12 +4,12 @@
 
 ## Name.Source.Label.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Label.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Label.JSON](./alfa-aria.name.source.label.json.md)
 

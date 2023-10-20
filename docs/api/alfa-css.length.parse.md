@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#lengths](https://drafts.csswg.org/css-values/#lengths)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<Length>

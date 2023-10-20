@@ -4,7 +4,7 @@
 
 ## Builder.ContextItem\_base variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 ContextItem_base: {

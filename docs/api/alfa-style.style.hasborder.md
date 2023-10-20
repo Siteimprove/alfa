@@ -4,7 +4,7 @@
 
 ## Style.hasBorder variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasBorder: typeof element.hasBorder

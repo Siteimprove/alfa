@@ -4,7 +4,7 @@
 
 ## Token.AtKeyword.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: string): AtKeyword;
@@ -16,7 +16,7 @@ static of(value: string): AtKeyword;
 |  --- | --- | --- |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [AtKeyword](./alfa-css.token.atkeyword.md)
 

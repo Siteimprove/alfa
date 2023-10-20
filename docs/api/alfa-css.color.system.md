@@ -4,7 +4,7 @@
 
 ## Color.system() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function system(keyword: System.Keyword): System;
@@ -16,7 +16,7 @@ function system(keyword: System.Keyword): System;
 |  --- | --- | --- |
 |  keyword | [System.Keyword](./alfa-css.system.keyword.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[System](./alfa-css.system.md)
+System
 

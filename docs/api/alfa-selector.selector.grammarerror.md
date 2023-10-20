@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/css-pseudo-4/\#selectordef-grammar-error](https://drafts.csswg.org/css-pseudo-4/#selectordef-grammar-error)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class GrammarError extends Pseudo.Element<"grammar-error"> 
 ```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"grammar-error"&gt;
+**Extends:** [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"grammar-error"&gt;
 
 ## Methods
 

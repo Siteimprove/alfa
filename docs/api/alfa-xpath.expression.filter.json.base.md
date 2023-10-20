@@ -4,7 +4,7 @@
 
 ## Expression.Filter.JSON.base property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 base: Expression.JSON;

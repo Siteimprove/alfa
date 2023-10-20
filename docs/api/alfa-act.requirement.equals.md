@@ -4,7 +4,7 @@
 
 ## Requirement.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Requirement): boolean;
@@ -16,7 +16,7 @@ equals(value: Requirement): boolean;
 |  --- | --- | --- |
 |  value | [Requirement](./alfa-act.requirement.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

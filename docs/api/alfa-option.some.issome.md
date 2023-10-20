@@ -4,7 +4,7 @@
 
 ## Some.isSome() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSome<T>(value: Iterable<T>): value is Some<T>;
@@ -16,7 +16,7 @@ function isSome<T>(value: Iterable<T>): value is Some<T>;
 |  --- | --- | --- |
 |  value | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
 

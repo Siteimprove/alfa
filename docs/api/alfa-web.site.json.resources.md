@@ -4,7 +4,7 @@
 
 ## Site.JSON.resources property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resources: Graph.JSON<R>;

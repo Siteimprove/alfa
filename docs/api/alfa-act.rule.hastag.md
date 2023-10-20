@@ -4,7 +4,7 @@
 
 ## Rule.hasTag() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasTag(tag: Tag): boolean;
@@ -14,9 +14,9 @@ hasTag(tag: Tag): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  tag | [Tag](./alfa-act.tag.md) |  |
+|  tag | Tag |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

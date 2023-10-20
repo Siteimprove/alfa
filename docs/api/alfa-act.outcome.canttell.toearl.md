@@ -4,12 +4,12 @@
 
 ## Outcome.CantTell.toEARL() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toEARL(): CantTell.EARL;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [CantTell.EARL](./alfa-act.outcome.canttell.earl.md)
 

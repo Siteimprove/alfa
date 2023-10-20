@@ -4,7 +4,7 @@
 
 ## Question.Type."string\[\]" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "string[]": Iterable<string>;

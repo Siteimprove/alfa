@@ -4,7 +4,7 @@
 
 ## Tuple.JSON.values property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 values: Serializable.ToJSON<T>;

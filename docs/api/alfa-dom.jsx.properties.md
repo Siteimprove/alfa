@@ -4,7 +4,7 @@
 
 ## jsx.Properties interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface Properties 
@@ -14,5 +14,5 @@ interface Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [style?](./alfa-dom.jsx.properties.style.md) |  | Record&lt;string, string&gt; | <p><i>(Optional)</i> An optional record of CSS property names and their associated values. This works similarly to the <code>style</code> property in React.</p><p>[https://reactjs.org/docs/dom-elements.html\#style](https://reactjs.org/docs/dom-elements.html#style)</p> |
+|  [style?](./alfa-dom.jsx.properties.style.md) |  | Record&lt;string, string&gt; | <p>_(Optional)_ An optional record of CSS property names and their associated values. This works similarly to the <code>style</code> property in React.</p><p>[https://reactjs.org/docs/dom-elements.html\#style](https://reactjs.org/docs/dom-elements.html#style)</p> |
 

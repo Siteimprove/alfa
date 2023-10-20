@@ -4,7 +4,7 @@
 
 ## Rule.tags property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get tags(): ReadonlyArray<Tag>;

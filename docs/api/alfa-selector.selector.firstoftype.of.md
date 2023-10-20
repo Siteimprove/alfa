@@ -4,12 +4,12 @@
 
 ## Selector.FirstOfType.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): FirstOfType;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [FirstOfType](./alfa-selector.selector.firstoftype.md)
 

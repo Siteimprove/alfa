@@ -4,12 +4,12 @@
 
 ## Numeric.Calculated.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<T extends Type = Type> extends Value.JSON<T> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;T&gt;
+**Extends:** [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;T&gt;
 
 ## Properties
 

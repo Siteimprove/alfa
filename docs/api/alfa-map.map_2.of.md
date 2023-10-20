@@ -4,7 +4,7 @@
 
 ## Map\_2.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<K, V>(...entries: Array<readonly [K, V]>): Map<K, V>;
@@ -16,7 +16,7 @@ static of<K, V>(...entries: Array<readonly [K, V]>): Map<K, V>;
 |  --- | --- | --- |
 |  entries | Array&lt;readonly \[K, V\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Map&lt;K, V&gt;
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;
 

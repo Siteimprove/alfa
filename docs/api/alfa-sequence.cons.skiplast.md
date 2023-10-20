@@ -4,7 +4,7 @@
 
 ## Cons.skipLast() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 skipLast(count: number): Sequence<T>;
@@ -16,7 +16,7 @@ skipLast(count: number): Sequence<T>;
 |  --- | --- | --- |
 |  count | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+Sequence&lt;T&gt;
 

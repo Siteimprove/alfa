@@ -4,7 +4,7 @@
 
 ## Token.Character.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "character";

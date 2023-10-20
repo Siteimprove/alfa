@@ -4,7 +4,7 @@
 
 ## Element.attribute() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<N>>): Option<Attribute<N>>;
@@ -14,9 +14,9 @@ attribute<N extends Attribute.Name>(refinement: Refinement<Attribute, Attribute<
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;[Attribute](./alfa-aria.attribute.md)<!-- -->, [Attribute](./alfa-aria.attribute.md)<!-- -->&lt;N&gt;&gt; |  |
+|  refinement | Refinement&lt;Attribute, Attribute&lt;N&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Attribute](./alfa-aria.attribute.md)<!-- -->&lt;N&gt;&gt;
+Option&lt;Attribute&lt;N&gt;&gt;
 

@@ -6,10 +6,10 @@
 
 [https://www.w3.org/TR/xpath-31/\#terminal-symbols](https://www.w3.org/TR/xpath-31/#terminal-symbols)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Token = Token.Integer | Token.Decimal | Token.Double | Token.String | Token.Comment | Token.Name | Token.Character;
 ```
-<b>References:</b> [Token.Integer](./alfa-xpath.token.integer.md)<!-- -->, [Token.Decimal](./alfa-xpath.token.decimal.md)<!-- -->, [Token.Double](./alfa-xpath.token.double.md)<!-- -->, [Token.String](./alfa-xpath.token.string.md)<!-- -->, [Token.Comment](./alfa-xpath.token.comment.md)<!-- -->, [Token.Name](./alfa-xpath.token.name.md)<!-- -->, [Token.Character](./alfa-xpath.token.character.md)
+**References:** [Token.Integer](./alfa-xpath.token.integer.md)<!-- -->, [Token.Decimal](./alfa-xpath.token.decimal.md)<!-- -->, [Token.Double](./alfa-xpath.token.double.md)<!-- -->, [Token.String](./alfa-xpath.token.string.md)<!-- -->, [Token.Comment](./alfa-xpath.token.comment.md)<!-- -->, [Token.Name](./alfa-xpath.token.name.md)<!-- -->, [Token.Character](./alfa-xpath.token.character.md)
 

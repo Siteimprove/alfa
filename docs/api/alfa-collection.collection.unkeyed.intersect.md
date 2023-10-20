@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed.intersect() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 intersect(iterable: Iterable<T>): Unkeyed<T>;
@@ -16,7 +16,7 @@ intersect(iterable: Iterable<T>): Unkeyed<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

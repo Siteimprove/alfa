@@ -4,7 +4,7 @@
 
 ## Token.Double.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: number): Double;
@@ -16,7 +16,7 @@ static of(value: number): Double;
 |  --- | --- | --- |
 |  value | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Double](./alfa-xpath.token.double.md)
 

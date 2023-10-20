@@ -4,12 +4,12 @@
 
 ## Group.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Group.JSON<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Group.JSON](./alfa-rules.group.json.md)<!-- -->&lt;T&gt;
 

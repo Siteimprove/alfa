@@ -4,7 +4,7 @@
 
 ## Iterable\_2.prepend() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function prepend<T>(iterable: Iterable<T>, value: T): Iterable<T>;
@@ -14,10 +14,10 @@ function prepend<T>(iterable: Iterable<T>, value: T): Iterable<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;T&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

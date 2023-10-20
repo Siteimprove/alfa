@@ -4,7 +4,7 @@
 
 ## Iterable\_2.first() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function first<T>(iterable: Iterable<T>): Option<T>;
@@ -14,9 +14,9 @@ function first<T>(iterable: Iterable<T>): Option<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

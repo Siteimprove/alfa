@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `ConditionRule` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(condition: string, rules: Array<Rule>);
@@ -17,5 +17,5 @@ protected constructor(condition: string, rules: Array<Rule>);
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  condition | string |  |
-|  rules | Array&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
+|  rules | Array&lt;Rule&gt; |  |
 

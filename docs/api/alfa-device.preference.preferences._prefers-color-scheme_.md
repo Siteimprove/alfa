@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/mediaqueries-5/\#prefers-color-scheme](https://drafts.csswg.org/mediaqueries-5/#prefers-color-scheme)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "prefers-color-scheme": "no-preference" | "light" | "dark";

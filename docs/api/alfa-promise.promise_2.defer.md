@@ -4,7 +4,7 @@
 
 ## Promise\_2.defer() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function defer<T>(continuation: Continuation<T, void, [reject: Callback<unknown>]>): Promise<T>;
@@ -14,9 +14,9 @@ function defer<T>(continuation: Continuation<T, void, [reject: Callback<unknown>
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  continuation | [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;T, void, \[reject: [Callback](./alfa-callback.callback.md)<!-- -->&lt;unknown&gt;\]&gt; |  |
+|  continuation | Continuation&lt;T, void, \[reject: Callback&lt;unknown&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Promise&lt;T&gt;
+[Promise](./alfa-promise.promise_2.md)<!-- -->&lt;T&gt;
 

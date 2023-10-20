@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/mediaqueries-5/\#prefers-contrast](https://drafts.csswg.org/mediaqueries-5/#prefers-contrast)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "prefers-contrast": "no-preference" | "high" | "low";

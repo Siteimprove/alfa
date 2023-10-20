@@ -4,7 +4,7 @@
 
 ## Map\_2.fromArray() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function fromArray<K, V>(array: ReadonlyArray<readonly [K, V]>): Map<K, V>;
@@ -16,7 +16,7 @@ function fromArray<K, V>(array: ReadonlyArray<readonly [K, V]>): Map<K, V>;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;readonly \[K, V\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Map&lt;K, V&gt;
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;
 

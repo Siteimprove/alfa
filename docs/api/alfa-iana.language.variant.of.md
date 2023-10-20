@@ -4,7 +4,7 @@
 
 ## Language.Variant.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: Variant.Name): Variant;
@@ -16,7 +16,7 @@ static of(name: Variant.Name): Variant;
 |  --- | --- | --- |
 |  name | [Variant.Name](./alfa-iana.language.variant.name.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Variant](./alfa-iana.language.variant.md)
 

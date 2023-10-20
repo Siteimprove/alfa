@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Outcome` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(outcome: V, rule: Rule<I, T, Q, S>, mode: Outcome.Mode);
@@ -17,6 +17,6 @@ protected constructor(outcome: V, rule: Rule<I, T, Q, S>, mode: Outcome.Mode);
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  outcome | V |  |
-|  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+|  rule | Rule&lt;I, T, Q, S&gt; |  |
 |  mode | [Outcome.Mode](./alfa-act.outcome.mode.md) |  |
 

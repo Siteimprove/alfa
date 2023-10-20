@@ -4,7 +4,7 @@
 
 ## Token.isCloseSquareBracket variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isCloseSquareBracket: typeof CloseSquareBracket.isCloseSquareBracket

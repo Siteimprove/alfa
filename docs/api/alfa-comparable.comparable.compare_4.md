@@ -6,7 +6,7 @@
 
 Compare two comparable values.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function compare<T extends Comparable<U>, U = T>(a: T, b: U): Comparison;
@@ -19,7 +19,7 @@ function compare<T extends Comparable<U>, U = T>(a: T, b: U): Comparison;
 |  a | T |  |
 |  b | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

@@ -4,7 +4,7 @@
 
 ## Headers.isHeaders() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isHeaders(value: unknown): value is Headers;
@@ -16,7 +16,7 @@ function isHeaders(value: unknown): value is Headers;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Headers](./alfa-http.headers.md)
 

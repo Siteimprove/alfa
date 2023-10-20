@@ -4,7 +4,7 @@
 
 ## FNV.write() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 write(data: Uint8Array): this;
@@ -16,7 +16,7 @@ write(data: Uint8Array): this;
 |  --- | --- | --- |
 |  data | Uint8Array |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

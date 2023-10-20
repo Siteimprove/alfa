@@ -4,7 +4,7 @@
 
 ## Column.Group.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON 

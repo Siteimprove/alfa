@@ -4,7 +4,7 @@
 
 ## Node.isChildOf() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isChildOf(node: Node, options?: Node.Traversal): boolean;
@@ -15,9 +15,9 @@ isChildOf(node: Node, options?: Node.Traversal): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | [Node](./alfa-aria.node.md) |  |
-|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
+|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

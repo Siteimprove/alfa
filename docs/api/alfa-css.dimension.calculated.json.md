@@ -4,10 +4,10 @@
 
 ## Dimension.Calculated.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<T extends Type = Type> extends Numeric.Calculated.JSON<T> 
 ```
-<b>Extends:</b> [Numeric.Calculated.JSON](./alfa-css.numeric.calculated.json.md)<!-- -->&lt;T&gt;
+**Extends:** [Numeric.Calculated.JSON](./alfa-css.numeric.calculated.json.md)<!-- -->&lt;T&gt;
 

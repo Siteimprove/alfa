@@ -4,7 +4,7 @@
 
 ## Builder.Path.where() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 where(predicate: Builder): Path;
@@ -16,7 +16,7 @@ where(predicate: Builder): Path;
 |  --- | --- | --- |
 |  predicate | [Builder](./alfa-xpath.builder.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Path](./alfa-xpath.builder.path.md)
 

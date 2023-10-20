@@ -4,7 +4,7 @@
 
 ## URL.url property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get url(): string;

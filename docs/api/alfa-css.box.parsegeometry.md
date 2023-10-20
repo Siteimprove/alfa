@@ -4,7 +4,7 @@
 
 ## Box.parseGeometry variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseGeometry: CSSParser<Geometry>

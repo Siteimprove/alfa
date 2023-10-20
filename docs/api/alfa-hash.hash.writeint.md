@@ -4,7 +4,7 @@
 
 ## Hash.writeInt() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeInt(data: number, size?: 8 | 16 | 32, signed?: boolean): this;
@@ -15,10 +15,10 @@ writeInt(data: number, size?: 8 | 16 | 32, signed?: boolean): this;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | number |  |
-|  size | 8 \| 16 \| 32 | <i>(Optional)</i> |
-|  signed | boolean | <i>(Optional)</i> |
+|  size | 8 \| 16 \| 32 | _(Optional)_ |
+|  signed | boolean | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

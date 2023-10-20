@@ -4,7 +4,7 @@
 
 ## Future.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Future<Future<T>>): Future<T>;
@@ -16,7 +16,7 @@ flatten<T>(this: Future<Future<T>>): Future<T>;
 |  --- | --- | --- |
 |  this | [Future](./alfa-future.future.md)<!-- -->&lt;[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

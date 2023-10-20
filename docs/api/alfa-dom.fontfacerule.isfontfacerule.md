@@ -4,7 +4,7 @@
 
 ## FontFaceRule.isFontFaceRule() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isFontFaceRule(value: unknown): value is FontFaceRule;
@@ -16,7 +16,7 @@ function isFontFaceRule(value: unknown): value is FontFaceRule;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [FontFaceRule](./alfa-dom.fontfacerule.md)
 

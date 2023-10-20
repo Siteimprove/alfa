@@ -4,7 +4,7 @@
 
 ## Shadow.host property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get host(): Option<Element>;

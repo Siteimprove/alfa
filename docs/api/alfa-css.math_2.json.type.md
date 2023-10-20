@@ -4,7 +4,7 @@
 
 ## Math\_2.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "math expression";

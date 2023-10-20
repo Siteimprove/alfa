@@ -5,10 +5,8 @@
 ## Parser type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Parser<V> = alfaParser<Slice<Token>, V, string>;
 ```
-<b>References:</b> [alfaParser](./alfa-parser.parser.md)<!-- -->, [Slice](./alfa-slice.slice.md)<!-- -->, [Token](./alfa-css.token.md)
-

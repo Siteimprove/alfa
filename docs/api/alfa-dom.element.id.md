@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#concept-id](https://dom.spec.whatwg.org/#concept-id)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get id(): Option<string>;

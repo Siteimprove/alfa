@@ -4,7 +4,7 @@
 
 ## Media.Feature.Height.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: Value<Length.Fixed>): Height;
@@ -16,7 +16,7 @@ static of(value: Value<Length.Fixed>): Height;
 |  --- | --- | --- |
 |  value | [Value](./alfa-media.media.value.md)<!-- -->&lt;[Length.Fixed](./alfa-css.length.fixed.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Height
 

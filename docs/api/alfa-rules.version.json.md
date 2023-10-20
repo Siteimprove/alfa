@@ -4,12 +4,12 @@
 
 ## Version.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<N extends number = number> extends Tag.JSON<"version"> 
 ```
-<b>Extends:</b> [Tag.JSON](./alfa-act.tag.json.md)<!-- -->&lt;"version"&gt;
+**Extends:** [Tag.JSON](./alfa-act.tag.json.md)<!-- -->&lt;"version"&gt;
 
 ## Properties
 

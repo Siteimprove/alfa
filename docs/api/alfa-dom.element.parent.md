@@ -4,7 +4,7 @@
 
 ## Element.parent() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parent(options?: Node.Traversal): Option<Node>;
@@ -14,9 +14,9 @@ parent(options?: Node.Traversal): Option<Node>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Node.Traversal](./alfa-dom.node.traversal.md) | <i>(Optional)</i> |
+|  options | [Node.Traversal](./alfa-dom.node.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-dom.node.md)<!-- -->&gt;
+Option&lt;Node&gt;
 

@@ -4,7 +4,7 @@
 
 ## Language.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "language";

@@ -4,7 +4,7 @@
 
 ## Array\_2.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from<T>(iterable: Iterable<T>): Array<T>;
@@ -16,9 +16,9 @@ function from<T>(iterable: Iterable<T>): Array<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;T&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 
 ## Remarks
 

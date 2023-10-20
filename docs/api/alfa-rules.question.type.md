@@ -6,7 +6,7 @@
 
 Maps the `type` parameter of questions to the expected type of the answer.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface Type 
@@ -16,10 +16,10 @@ interface Type
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["color\[\]"](./alfa-rules.question.type._color___.md) |  | Iterable&lt;[RGB](./alfa-css.rgb.md)<!-- -->&gt; |  |
-|  ["node\[\]"](./alfa-rules.question.type._node___.md) |  | Iterable&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; |  |
+|  ["color\[\]"](./alfa-rules.question.type._color___.md) |  | Iterable&lt;RGB&gt; |  |
+|  ["node\[\]"](./alfa-rules.question.type._node___.md) |  | Iterable&lt;Node&gt; |  |
 |  ["string\[\]"](./alfa-rules.question.type._string___.md) |  | Iterable&lt;string&gt; |  |
 |  [boolean](./alfa-rules.question.type.boolean.md) |  | boolean |  |
-|  [node](./alfa-rules.question.type.node.md) |  | [Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; |  |
+|  [node](./alfa-rules.question.type.node.md) |  | Option&lt;Node&gt; |  |
 |  [string](./alfa-rules.question.type.string.md) |  | string |  |
 

@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/mediaqueries/\#media-query-modifier](https://drafts.csswg.org/mediaqueries/#media-query-modifier)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export enum Modifier 

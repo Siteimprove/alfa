@@ -6,7 +6,7 @@
 
 [https://en.wikipedia.org/wiki/Matrix\_multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function multiply(m: Matrix, n: number | Matrix): Matrix;
@@ -19,7 +19,7 @@ function multiply(m: Matrix, n: number | Matrix): Matrix;
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 |  n | number \| [Matrix](./alfa-math.matrix.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Matrix](./alfa-math.matrix.md)
 

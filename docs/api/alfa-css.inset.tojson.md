@@ -4,12 +4,12 @@
 
 ## Inset.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Inset.JSON<O, C>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Inset.JSON](./alfa-css.inset.json.md)<!-- -->&lt;O, C&gt;
 

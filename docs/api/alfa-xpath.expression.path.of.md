@@ -4,7 +4,7 @@
 
 ## Expression.Path.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(left: Expression, right: Expression): Path;
@@ -17,7 +17,7 @@ static of(left: Expression, right: Expression): Path;
 |  left | [Expression](./alfa-xpath.expression.md) |  |
 |  right | [Expression](./alfa-xpath.expression.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Path](./alfa-xpath.expression.path.md)
 

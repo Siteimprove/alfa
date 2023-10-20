@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#url-value](https://drafts.csswg.org/css-values/#url-value)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<URL>

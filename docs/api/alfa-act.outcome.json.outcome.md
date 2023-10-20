@@ -4,7 +4,7 @@
 
 ## Outcome.JSON.outcome property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 outcome: V;

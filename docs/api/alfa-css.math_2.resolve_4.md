@@ -4,7 +4,7 @@
 
 ## Math\_2.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(this: Math<"number">): Result<Number, string>;
@@ -14,9 +14,9 @@ resolve(this: Math<"number">): Result<Number, string>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Math&lt;"number"&gt; |  |
+|  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"number"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;Number, string&gt;
+Result&lt;Number, string&gt;
 

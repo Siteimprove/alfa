@@ -4,7 +4,7 @@
 
 ## Document."@context" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "@context"?: Context;

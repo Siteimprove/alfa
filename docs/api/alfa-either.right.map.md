@@ -4,7 +4,7 @@
 
 ## Right.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<T>(mapper: Mapper<R, T>): Right<T>;
@@ -16,7 +16,7 @@ map<T>(mapper: Mapper<R, T>): Right<T>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Right](./alfa-either.right.md)<!-- -->&lt;T&gt;
 

@@ -6,12 +6,12 @@
 
 ToKeywords<!-- -->&lt;<!-- -->"a" \| "b" \| "c"<!-- -->&gt; === Keyword<!-- -->&lt;<!-- -->"a"<!-- -->&gt; \| Keyword<!-- -->&lt;<!-- -->"b"<!-- -->&gt; \| Keyword<!-- -->&lt;<!-- -->"c"<!-- -->&gt;
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type ToKeywords<Words extends string> = {
         [K in Words]: Keyword<K>;
     }[Words];
 ```
-<b>References:</b> [Keyword](./alfa-css.keyword.md)
+**References:** [Keyword](./alfa-css.keyword.md)
 

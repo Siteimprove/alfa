@@ -4,7 +4,7 @@
 
 ## Headers.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(headers: Iterable<Header>): Headers;
@@ -14,9 +14,9 @@ static of(headers: Iterable<Header>): Headers;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  headers | Iterable&lt;[Header](./alfa-http.header.md)<!-- -->&gt; |  |
+|  headers | Iterable&lt;Header&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Headers](./alfa-http.headers.md)
 

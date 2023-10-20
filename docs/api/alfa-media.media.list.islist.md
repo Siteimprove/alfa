@@ -4,7 +4,7 @@
 
 ## Media.List.isList() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isList(value: unknown): value is List;
@@ -16,7 +16,7 @@ function isList(value: unknown): value is List;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [List](./alfa-media.media.list.md)
 

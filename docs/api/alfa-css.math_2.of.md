@@ -4,7 +4,7 @@
 
 ## Math\_2.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(expression: Expression): Math;
@@ -16,7 +16,7 @@ static of(expression: Expression): Math;
 |  --- | --- | --- |
 |  expression | Expression |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Math
+[Math](./alfa-css.math_2.md)
 

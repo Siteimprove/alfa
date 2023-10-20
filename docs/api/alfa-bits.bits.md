@@ -5,7 +5,7 @@
 ## Bits namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Bits 

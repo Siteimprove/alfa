@@ -4,7 +4,7 @@
 
 ## ImportRule.queries property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get queries(): Media.List;

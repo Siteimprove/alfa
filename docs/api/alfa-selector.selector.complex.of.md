@@ -4,7 +4,7 @@
 
 ## Selector.Complex.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(combinator: Combinator, left: Simple | Compound | Complex, right: Simple | Compound): Complex;
@@ -18,7 +18,7 @@ static of(combinator: Combinator, left: Simple | Compound | Complex, right: Simp
 |  left | [Simple](./alfa-selector.selector.simple.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md) |  |
 |  right | [Simple](./alfa-selector.selector.simple.md) \| [Compound](./alfa-selector.selector.compound.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Complex](./alfa-selector.selector.complex.md)
 

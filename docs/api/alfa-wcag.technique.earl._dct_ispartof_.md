@@ -4,7 +4,7 @@
 
 ## Technique.EARL."dct:isPartOf" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "dct:isPartOf": "https://www.w3.org/WAI/WCAG21/Techniques/";

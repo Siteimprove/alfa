@@ -4,7 +4,7 @@
 
 ## Node.Traversal namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Traversal 

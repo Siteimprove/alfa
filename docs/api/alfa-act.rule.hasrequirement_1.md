@@ -4,7 +4,7 @@
 
 ## Rule.hasRequirement() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasRequirement(predicate: Predicate<Requirement>): boolean;
@@ -14,9 +14,9 @@ hasRequirement(predicate: Predicate<Requirement>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Requirement](./alfa-act.requirement.md)<!-- -->&gt; |  |
+|  predicate | Predicate&lt;Requirement&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

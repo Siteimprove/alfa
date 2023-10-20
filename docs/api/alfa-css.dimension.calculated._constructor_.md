@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Calculated` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(math: Numeric.ToMath<T>, type: T);

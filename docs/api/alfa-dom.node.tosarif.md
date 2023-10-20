@@ -4,12 +4,12 @@
 
 ## Node.toSARIF() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toSARIF(): sarif.Location;
 ```
-<b>Returns:</b>
+**Returns:**
 
 sarif.Location
 

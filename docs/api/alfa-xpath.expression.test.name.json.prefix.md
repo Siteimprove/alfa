@@ -4,7 +4,7 @@
 
 ## Expression.Test.Name.JSON.prefix property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 prefix: string | null;

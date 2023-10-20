@@ -5,7 +5,7 @@
 ## Rule.Event namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Event 

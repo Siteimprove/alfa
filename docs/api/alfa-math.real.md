@@ -6,7 +6,7 @@
 
 [https://en.wikipedia.org/wiki/Real\_number](https://en.wikipedia.org/wiki/Real_number)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Real 

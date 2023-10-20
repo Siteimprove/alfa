@@ -4,7 +4,7 @@
 
 ## Rectangle.isRectangle() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRectangle(value: unknown): value is Rectangle;
@@ -16,7 +16,7 @@ function isRectangle(value: unknown): value is Rectangle;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Rectangle](./alfa-rectangle.rectangle.md)
 

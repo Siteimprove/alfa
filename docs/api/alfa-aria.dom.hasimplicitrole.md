@@ -4,7 +4,7 @@
 
 ## DOM.hasImplicitRole variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasImplicitRole: typeof dom.hasImplicitRole

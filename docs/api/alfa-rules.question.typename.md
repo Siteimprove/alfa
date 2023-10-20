@@ -4,7 +4,7 @@
 
 ## Question.TypeName type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type TypeName<U extends Uri> = Data[U]["type"];

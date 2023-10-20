@@ -4,12 +4,12 @@
 
 ## Transformation.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty(): Transformation;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Transformation](./alfa-affine.transformation.md)
 

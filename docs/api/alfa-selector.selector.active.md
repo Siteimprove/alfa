@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#active-pseudo](https://drafts.csswg.org/selectors/#active-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Active extends Pseudo.Class<"active"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"active"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"active"&gt;
 
 ## Methods
 

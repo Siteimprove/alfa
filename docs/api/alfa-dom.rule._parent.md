@@ -4,7 +4,7 @@
 
 ## Rule.\_parent property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected _parent: Option<Rule>;

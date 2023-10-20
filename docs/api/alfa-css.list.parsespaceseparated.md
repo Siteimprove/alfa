@@ -4,7 +4,7 @@
 
 ## List.parseSpaceSeparated variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseSpaceSeparated: <V extends Value<string, boolean, string>>(parseValue: CSSParser<V>, lower?: number, upper?: number) => CSSParser<List<V, boolean>>

@@ -4,7 +4,7 @@
 
 ## Selector.Pseudo.Class.JSON.name property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 name: N;

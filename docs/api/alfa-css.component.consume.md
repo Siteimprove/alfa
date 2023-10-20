@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-syntax/\#consume-a-component-value](https://drafts.csswg.org/css-syntax/#consume-a-component-value)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 consume: CSSParser<Component>

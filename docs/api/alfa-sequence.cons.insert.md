@@ -4,7 +4,7 @@
 
 ## Cons.insert() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 insert(index: number, value: T): Cons<T>;
@@ -17,7 +17,7 @@ insert(index: number, value: T): Cons<T>;
 |  index | number |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
 

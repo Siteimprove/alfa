@@ -4,12 +4,12 @@
 
 ## AnglePercentage.IAnglePercentage interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface IAnglePercentage<CALC extends boolean = boolean> extends Value<"angle-percentage", CALC, "angle">, Resolvable<Canonical, Resolver> 
 ```
-<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;"angle-percentage", CALC, "angle"&gt;, Resolvable&lt;[Canonical](./alfa-css.anglepercentage.canonical.md)<!-- -->, [Resolver](./alfa-css.anglepercentage.resolver.md)<!-- -->&gt;
+**Extends:** Value&lt;"angle-percentage", CALC, "angle"&gt;, Resolvable&lt;[Canonical](./alfa-css.anglepercentage.canonical.md)<!-- -->, [Resolver](./alfa-css.anglepercentage.resolver.md)<!-- -->&gt;
 
 ## Methods
 

@@ -4,7 +4,7 @@
 
 ## Cons.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U, [index: number]>): Cons<U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U, [index: number]>): Cons<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Cons](./alfa-sequence.cons.md)<!-- -->&lt;U&gt;
 

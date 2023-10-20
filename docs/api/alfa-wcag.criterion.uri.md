@@ -6,12 +6,12 @@
 
 The URI of the specified criterion.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type URI<C extends Chapter = Chapter, V extends Version = Version> = Criteria[C]["versions"] extends Iterable<infer T> ? T extends readonly [V, {
         readonly uri: infer U;
     }] ? U : never : never;
 ```
-<b>References:</b> [Chapter](./alfa-wcag.criterion.chapter.md)<!-- -->, [Version](./alfa-wcag.criterion.version.md)
+**References:** [Chapter](./alfa-wcag.criterion.chapter.md)<!-- -->, [Version](./alfa-wcag.criterion.version.md)
 

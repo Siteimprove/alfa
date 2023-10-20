@@ -4,7 +4,7 @@
 
 ## Trilean.every() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function every<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): Trilean;
@@ -17,7 +17,7 @@ function every<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): Tri
 |  iterable | Iterable&lt;T&gt; |  |
 |  predicate | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Trilean](./alfa-trilean.trilean.md)
 

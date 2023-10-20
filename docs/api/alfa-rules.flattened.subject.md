@@ -6,12 +6,12 @@
 
 The type of the subjects of questions asked by rules
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Subject = {
         [K in Keys]: act.Rule.Subject<RulesObject[K]>;
     }[Keys];
 ```
-<b>References:</b> [Rule.Subject](./alfa-act.rule.subject.md)
+**References:** [act.Rule.Subject](./alfa-act.rule.subject.md)
 

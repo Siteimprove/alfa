@@ -4,7 +4,7 @@
 
 ## Cache.merge() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 merge(iterable: Iterable<readonly [K, V]>): this;
@@ -16,7 +16,7 @@ merge(iterable: Iterable<readonly [K, V]>): this;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;readonly \[K, V\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

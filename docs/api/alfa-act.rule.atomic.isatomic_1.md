@@ -4,7 +4,7 @@
 
 ## Rule.Atomic.isAtomic() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isAtomic<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Atomic<I, T, Q, S>;
@@ -16,7 +16,7 @@ function isAtomic<I, T extends Hashable, Q extends Question.Metadata, S>(value: 
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Atomic](./alfa-act.rule.atomic.md)<!-- -->&lt;I, T, Q, S&gt;
 

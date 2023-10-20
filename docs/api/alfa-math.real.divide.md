@@ -4,7 +4,7 @@
 
 ## Real.divide() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function divide(p: number, d: number): number;
@@ -17,7 +17,7 @@ function divide(p: number, d: number): number;
 |  p | number |  |
 |  d | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

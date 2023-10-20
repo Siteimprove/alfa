@@ -4,12 +4,12 @@
 
 ## Selector.Marker.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Marker;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Marker](./alfa-selector.selector.marker.md)
 

@@ -4,7 +4,7 @@
 
 ## Math\_2.isNumber() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isNumber(value: unknown): value is Math<"number">;
@@ -16,7 +16,7 @@ function isNumber(value: unknown): value is Math<"number">;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Math&lt;"number"&gt;
+value is [Math](./alfa-css.math_2.md)<!-- -->&lt;"number"&gt;
 

@@ -4,7 +4,7 @@
 
 ## Unit.Length.isRelative() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRelative(unit: string): unit is Relative;
@@ -16,7 +16,7 @@ function isRelative(unit: string): unit is Relative;
 |  --- | --- | --- |
 |  unit | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 unit is [Relative](./alfa-css.unit.length.relative.md)
 

@@ -4,7 +4,7 @@
 
 ## Thenable.reject() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function reject<E>(error: E): Thenable<never, E>;
@@ -16,7 +16,7 @@ function reject<E>(error: E): Thenable<never, E>;
 |  --- | --- | --- |
 |  error | E |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;never, E&gt;
 

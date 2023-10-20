@@ -4,7 +4,7 @@
 
 ## Polygon.JSON.fill property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 fill: Option.JSON<F>;

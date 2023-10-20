@@ -4,10 +4,10 @@
 
 ## Style.Computed type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Computed<N extends Name> = Longhands.Computed<N>;
 ```
-<b>References:</b> [Longhands.Computed](./alfa-style.longhands.computed.md)
+**References:** [Longhands.Computed](./alfa-style.longhands.computed.md)
 

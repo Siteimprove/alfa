@@ -4,7 +4,7 @@
 
 ## Result.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function of<T, E>(value: T): Result<T, E>;
@@ -16,7 +16,7 @@ function of<T, E>(value: T): Result<T, E>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
 

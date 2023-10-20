@@ -4,7 +4,7 @@
 
 ## Name.Source.Label.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(attribute: Attribute): Label;
@@ -14,9 +14,9 @@ static of(attribute: Attribute): Label;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  attribute | [Attribute](./alfa-dom.attribute.md) |  |
+|  attribute | Attribute |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Label](./alfa-aria.name.source.label.md)
 

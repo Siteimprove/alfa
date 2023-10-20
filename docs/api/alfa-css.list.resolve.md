@@ -4,7 +4,7 @@
 
 ## List.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>, false>;
@@ -14,9 +14,9 @@ resolve(resolver?: Resolvable.Resolver<V>): List<Resolvable.Resolved<V>, false>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | Resolvable.Resolver&lt;V&gt; | <i>(Optional)</i> |
+|  resolver | Resolvable.Resolver&lt;V&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-css.list.md)<!-- -->&lt;Resolvable.Resolved&lt;V&gt;, false&gt;
 

@@ -4,10 +4,8 @@
 
 ## Gradient.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON = Linear.JSON | Radial.JSON;
 ```
-<b>References:</b> [Linear.JSON](./alfa-css.linear.json.md)<!-- -->, [Radial.JSON](./alfa-css.radial.json.md)
-

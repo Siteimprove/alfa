@@ -4,7 +4,7 @@
 
 ## Expression.FunctionCall.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(prefix: Option<string>, name: string, arity: number, parameters: Array<Expression>): FunctionCall;
@@ -14,12 +14,12 @@ static of(prefix: Option<string>, name: string, arity: number, parameters: Array
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  prefix | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  prefix | Option&lt;string&gt; |  |
 |  name | string |  |
 |  arity | number |  |
 |  parameters | Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [FunctionCall](./alfa-xpath.expression.functioncall.md)
 

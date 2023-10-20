@@ -4,7 +4,7 @@
 
 ## Selector.Cue namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace Cue 

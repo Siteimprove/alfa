@@ -4,12 +4,12 @@
 
 ## Token.OpenSquareBracket.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): OpenSquareBracket.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [OpenSquareBracket.JSON](./alfa-css.token.opensquarebracket.json.md)
 

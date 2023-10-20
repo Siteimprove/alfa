@@ -4,7 +4,7 @@
 
 ## Tuple.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of<T extends Tuple>(...values: T): T;
@@ -16,7 +16,7 @@ export function of<T extends Tuple>(...values: T): T;
 |  --- | --- | --- |
 |  values | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 T
 

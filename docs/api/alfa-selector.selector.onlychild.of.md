@@ -4,12 +4,12 @@
 
 ## Selector.OnlyChild.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): OnlyChild;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [OnlyChild](./alfa-selector.selector.onlychild.md)
 

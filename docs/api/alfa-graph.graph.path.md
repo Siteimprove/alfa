@@ -4,7 +4,7 @@
 
 ## Graph.path() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 path(from: T, to: T, traversal?: Graph.Traversal): Sequence<T>;
@@ -16,9 +16,9 @@ path(from: T, to: T, traversal?: Graph.Traversal): Sequence<T>;
 |  --- | --- | --- |
 |  from | T |  |
 |  to | T |  |
-|  traversal | [Graph.Traversal](./alfa-graph.graph.traversal.md) | <i>(Optional)</i> |
+|  traversal | [Graph.Traversal](./alfa-graph.graph.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+Sequence&lt;T&gt;
 

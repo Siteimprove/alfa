@@ -4,7 +4,7 @@
 
 ## Selector.NthLastChild namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace NthLastChild 

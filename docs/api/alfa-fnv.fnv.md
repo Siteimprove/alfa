@@ -5,12 +5,12 @@
 ## FNV class
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class FNV extends Hash 
 ```
-<b>Extends:</b> [Hash](./alfa-hash.hash.md)
+**Extends:** [Hash](./alfa-hash.hash.md)
 
 ## Methods
 

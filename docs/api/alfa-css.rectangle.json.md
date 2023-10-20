@@ -4,19 +4,19 @@
 
 ## Rectangle.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends BasicShape.JSON<"rectangle"> 
 ```
-<b>Extends:</b> BasicShape.JSON&lt;"rectangle"&gt;
+**Extends:** BasicShape.JSON&lt;"rectangle"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [bottom](./alfa-css.rectangle.json.bottom.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
-|  [left](./alfa-css.rectangle.json.left.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
-|  [right](./alfa-css.rectangle.json.right.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
-|  [top](./alfa-css.rectangle.json.top.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
+|  [bottom](./alfa-css.rectangle.json.bottom.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
+|  [left](./alfa-css.rectangle.json.left.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
+|  [right](./alfa-css.rectangle.json.right.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
+|  [top](./alfa-css.rectangle.json.top.md) |  | [Length.JSON](./alfa-css.length.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
 

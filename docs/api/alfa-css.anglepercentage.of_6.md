@@ -4,7 +4,7 @@
 
 ## AnglePercentage.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of(value: Math<"percentage">): Percentage.Calculated;
@@ -16,7 +16,7 @@ export function of(value: Math<"percentage">): Percentage.Calculated;
 |  --- | --- | --- |
 |  value | Math&lt;"percentage"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Percentage.Calculated](./alfa-css.percentage.calculated.md)
 

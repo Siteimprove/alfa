@@ -4,7 +4,7 @@
 
 ## Iterable\_2.reject() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function reject<T, U extends T>(iterable: Iterable<T>, refinement: Refinement<T, U, [index: number]>): Iterable<Exclude<T, U>>;
@@ -14,10 +14,10 @@ function reject<T, U extends T>(iterable: Iterable<T>, refinement: Refinement<T,
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  refinement | Refinement&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;Exclude&lt;T, U&gt;&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

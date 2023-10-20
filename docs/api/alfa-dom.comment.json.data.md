@@ -4,7 +4,7 @@
 
 ## Comment.JSON.data property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 data: string;

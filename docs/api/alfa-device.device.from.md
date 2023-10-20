@@ -4,7 +4,7 @@
 
 ## Device.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): Device;
@@ -16,7 +16,7 @@ function from(json: JSON): Device;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-device.device.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Device](./alfa-device.device.md)
 

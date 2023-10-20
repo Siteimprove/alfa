@@ -4,7 +4,7 @@
 
 ## Question.\_type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _type: TYPE;

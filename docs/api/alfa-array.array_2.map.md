@@ -4,7 +4,7 @@
 
 ## Array\_2.map() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function map<T, U = T>(array: ReadonlyArray<T>, mapper: Mapper<T, U, [index: number]>): Array<U>;
@@ -17,7 +17,7 @@ function map<T, U = T>(array: ReadonlyArray<T>, mapper: Mapper<T, U, [index: num
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;U&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;U&gt;
 

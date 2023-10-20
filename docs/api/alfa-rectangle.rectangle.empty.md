@@ -4,12 +4,12 @@
 
 ## Rectangle.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty(): Rectangle;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Rectangle](./alfa-rectangle.rectangle.md)
 

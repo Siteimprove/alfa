@@ -4,26 +4,26 @@
 
 ## Selector.Selector class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract class Selector<T extends string = string> implements Iterable<Simple | Compound | Complex | Relative>, Equatable, Serializable 
 ```
-<b>Implements:</b> Iterable&lt;[Simple](./alfa-selector.selector.simple.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md) \| [Relative](./alfa-selector.selector.relative.md)<!-- -->&gt;, [Equatable](./alfa-equatable.equatable.md)<!-- -->, [Serializable](./alfa-json.serializable.md)
+**Implements:** Iterable&lt;[Simple](./alfa-selector.selector.simple.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md) \| [Relative](./alfa-selector.selector.relative.md)<!-- -->&gt;, Equatable, Serializable
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [type](./alfa-selector.selector.selector.type.md) | <code>readonly</code> | T |  |
+|  [type](./alfa-selector.selector.selector.type.md) | <p><code>abstract</code></p><p><code>readonly</code></p> | T |  |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [\[Symbol.iterator\]()](./alfa-selector.selector.selector._symbol.iterator_.md) |  |  |
-|  [equals(value)](./alfa-selector.selector.selector.equals.md) |  |  |
-|  [equals(value)](./alfa-selector.selector.selector.equals_1.md) |  |  |
-|  [matches(element, context)](./alfa-selector.selector.selector.matches.md) |  | [https://drafts.csswg.org/selectors/\#match](https://drafts.csswg.org/selectors/#match) |
-|  [toJSON()](./alfa-selector.selector.selector.tojson.md) |  |  |
+|  [\[Symbol.iterator\]()](./alfa-selector.selector.selector._symbol.iterator_.md) | <code>abstract</code> |  |
+|  [equals(value)](./alfa-selector.selector.selector.equals.md) | <code>abstract</code> |  |
+|  [equals(value)](./alfa-selector.selector.selector.equals_1.md) | <code>abstract</code> |  |
+|  [matches(element, context)](./alfa-selector.selector.selector.matches.md) | <code>abstract</code> | [https://drafts.csswg.org/selectors/\#match](https://drafts.csswg.org/selectors/#match) |
+|  [toJSON()](./alfa-selector.selector.selector.tojson.md) | <code>abstract</code> |  |
 

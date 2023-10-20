@@ -4,12 +4,12 @@
 
 ## Shape.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Shape.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Shape.JSON](./alfa-css.shape.json.md)
 

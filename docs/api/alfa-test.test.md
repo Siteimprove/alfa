@@ -5,7 +5,7 @@
 ## test() function
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function test(name: string, assertion: (assert: Assertions) => void | Promise<void>): Promise<void>;
@@ -18,7 +18,7 @@ export declare function test(name: string, assertion: (assert: Assertions) => vo
 |  name | string |  |
 |  assertion | (assert: [Assertions](./alfa-test.assertions.md)<!-- -->) =&gt; void \| Promise&lt;void&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;void&gt;
 

@@ -4,12 +4,12 @@
 
 ## Name.Source.Data.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Data.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Data.JSON](./alfa-aria.name.source.data.json.md)
 

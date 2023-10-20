@@ -8,7 +8,7 @@ This namespace defines types and functions for working with conformance- related
 
 [https://www.w3.org/TR/WCAG/\#conformance](https://www.w3.org/TR/WCAG/#conformance)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Conformance 

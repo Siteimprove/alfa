@@ -4,7 +4,7 @@
 
 ## Table.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(table: Table): boolean;
@@ -16,7 +16,7 @@ equals(table: Table): boolean;
 |  --- | --- | --- |
 |  table | [Table](./alfa-table.table.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

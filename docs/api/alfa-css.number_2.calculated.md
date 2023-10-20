@@ -5,7 +5,7 @@
 ## Number\_2.Calculated namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace Calculated 

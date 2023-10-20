@@ -4,7 +4,7 @@
 
 ## Result.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
 |  --- | --- | --- |
 |  mapper | [Result](./alfa-result.result.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;, E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;
 

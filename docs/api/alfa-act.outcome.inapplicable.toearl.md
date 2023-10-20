@@ -4,12 +4,12 @@
 
 ## Outcome.Inapplicable.toEARL() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toEARL(): Inapplicable.EARL;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Inapplicable.EARL](./alfa-act.outcome.inapplicable.earl.md)
 

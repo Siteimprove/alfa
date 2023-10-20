@@ -4,7 +4,7 @@
 
 ## Tuple.reduceUntil() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function reduceUntil<T extends Tuple, U>(tuple: T, predicate: Predicate<Item<T>, [index: number]>, reducer: Reducer<Item<T>, U, [index: number]>, accumulator: U): U;
@@ -15,11 +15,11 @@ export function reduceUntil<T extends Tuple, U>(tuple: T, predicate: Predicate<I
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: number\]&gt; |  |
-|  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: number\]&gt; |  |
+|  reducer | Reducer&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt; |  |
 |  accumulator | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 U
 

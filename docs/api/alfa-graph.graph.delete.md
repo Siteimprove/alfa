@@ -4,7 +4,7 @@
 
 ## Graph.delete() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 delete(node: T): Graph<T>;
@@ -16,7 +16,7 @@ delete(node: T): Graph<T>;
 |  --- | --- | --- |
 |  node | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

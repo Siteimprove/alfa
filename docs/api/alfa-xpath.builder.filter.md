@@ -4,12 +4,12 @@
 
 ## Builder.Filter class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Filter extends Filter_base 
 ```
-<b>Extends:</b> Filter\_base
+**Extends:** Filter\_base
 
 ## Methods
 

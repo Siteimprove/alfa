@@ -4,7 +4,7 @@
 
 ## Longhands.isName() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isName(name: string): name is Name;
@@ -16,7 +16,7 @@ export function isName(name: string): name is Name;
 |  --- | --- | --- |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 name is [Name](./alfa-style.longhands.name.md)
 

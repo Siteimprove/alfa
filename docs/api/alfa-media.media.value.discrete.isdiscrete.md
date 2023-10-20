@@ -4,7 +4,7 @@
 
 ## Media.Value.Discrete.isDiscrete() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isDiscrete<T>(value: unknown): value is Discrete<T>;
@@ -16,7 +16,7 @@ function isDiscrete<T>(value: unknown): value is Discrete<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Discrete](./alfa-media.media.value.discrete.md)<!-- -->&lt;T&gt;
 

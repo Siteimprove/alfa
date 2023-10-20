@@ -4,7 +4,7 @@
 
 ## Media.Value.minimumRange variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 minimumRange: typeof Range.minimum

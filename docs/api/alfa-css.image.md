@@ -5,7 +5,7 @@
 ## Image namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Image 
@@ -16,6 +16,7 @@ export declare namespace Image
 |  Function | Description |
 |  --- | --- |
 |  [isImage(value)](./alfa-css.image.isimage.md) |  |
+|  [partiallyResolve(resolver)](./alfa-css.image.partiallyresolve.md) |  |
 
 ## Interfaces
 
@@ -34,4 +35,7 @@ export declare namespace Image
 |  Type Alias | Description |
 |  --- | --- |
 |  [Canonical](./alfa-css.image.canonical.md) |  |
+|  [PartiallyResolved](./alfa-css.image.partiallyresolved.md) |  |
+|  [PartialResolver](./alfa-css.image.partialresolver.md) |  |
+|  [Resolver](./alfa-css.image.resolver.md) |  |
 

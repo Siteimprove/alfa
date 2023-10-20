@@ -4,7 +4,7 @@
 
 ## Device.hash() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hash(hash: Hash): void;
@@ -16,7 +16,7 @@ hash(hash: Hash): void;
 |  --- | --- | --- |
 |  hash | [Hash](./alfa-hash.hash.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

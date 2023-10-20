@@ -4,7 +4,7 @@
 
 ## Token.isSemicolon variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isSemicolon: typeof Semicolon.isSemicolon

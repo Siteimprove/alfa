@@ -6,12 +6,12 @@
 
 \* QUESTION: questions' metadata type; has the shape { URI: \[T, A\] } where URI is the question URI, T a representation of the expected return type, and A the actual return type. Example: { "q1": \["boolean", boolean\], "q2": \["number?", number \| undefined\], }
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Oracle<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT> = (rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, question: {
     [URI in keyof QUESTION]: Question<QUESTION[URI][0], SUBJECT, TARGET, QUESTION[URI][1], unknown, URI extends string ? URI : never>;
 }[keyof QUESTION]) => Future<Option<QUESTION[keyof QUESTION][1]>>;
 ```
-<b>References:</b> [Hashable](./alfa-hash.hashable.md)<!-- -->, [Question.Metadata](./alfa-act.question.metadata.md)<!-- -->, [Rule](./alfa-act.rule.md)<!-- -->, [Question](./alfa-act.question.md)<!-- -->, [Future](./alfa-future.future.md)<!-- -->, [Option](./alfa-option.option.md)
+**References:** [Question.Metadata](./alfa-act.question.metadata.md)
 

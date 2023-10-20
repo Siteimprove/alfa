@@ -4,7 +4,7 @@
 
 ## Technique.isTechnique() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isTechnique(value: unknown): value is Technique;
@@ -16,7 +16,7 @@ function isTechnique(value: unknown): value is Technique;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Technique](./alfa-wcag.technique.md)
 

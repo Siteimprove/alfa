@@ -4,7 +4,7 @@
 
 ## Emitter.contraMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 contraMap<U>(mapper: Mapper<U, T>): Emitter<U>;
@@ -16,7 +16,7 @@ contraMap<U>(mapper: Mapper<U, T>): Emitter<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;U, T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Emitter](./alfa-emitter.emitter.md)<!-- -->&lt;U&gt;
 

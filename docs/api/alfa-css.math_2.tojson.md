@@ -4,12 +4,12 @@
 
 ## Math\_2.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Math.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Math.JSON
+[Math.JSON](./alfa-css.math_2.json.md)
 

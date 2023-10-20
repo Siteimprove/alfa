@@ -4,12 +4,12 @@
 
 ## Some.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Some.JSON<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Some.JSON](./alfa-option.some.json.md)<!-- -->&lt;T&gt;
 

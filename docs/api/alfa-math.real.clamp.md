@@ -6,7 +6,7 @@
 
 Clamp a real between a lower and an upper value.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function clamp(p: number, l: number, u: number): number;
@@ -20,7 +20,7 @@ function clamp(p: number, l: number, u: number): number;
 |  l | number |  |
 |  u | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

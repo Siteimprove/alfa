@@ -4,7 +4,7 @@
 
 ## Group.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T extends Hashable>(members: Iterable<T>): Group<T>;
@@ -16,7 +16,7 @@ static of<T extends Hashable>(members: Iterable<T>): Group<T>;
 |  --- | --- | --- |
 |  members | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Group](./alfa-rules.group.md)<!-- -->&lt;T&gt;
 

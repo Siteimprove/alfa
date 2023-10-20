@@ -4,10 +4,10 @@
 
 ## evaluate.Options interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface Options extends Node.Traversal 
 ```
-<b>Extends:</b> [Node.Traversal](./alfa-dom.node.traversal.md)
+**Extends:** [Node.Traversal](./alfa-dom.node.traversal.md)
 

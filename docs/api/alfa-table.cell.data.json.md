@@ -4,12 +4,12 @@
 
 ## Cell.Data.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Cell.JSON 
 ```
-<b>Extends:</b> [Cell.JSON](./alfa-table.cell.json.md)
+**Extends:** [Cell.JSON](./alfa-table.cell.json.md)
 
 ## Properties
 

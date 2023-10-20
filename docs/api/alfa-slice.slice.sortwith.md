@@ -4,7 +4,7 @@
 
 ## Slice.sortWith() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 sortWith(comparer: Comparer<T>): Slice<T>;
@@ -16,7 +16,7 @@ sortWith(comparer: Comparer<T>): Slice<T>;
 |  --- | --- | --- |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

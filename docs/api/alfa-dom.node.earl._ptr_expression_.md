@@ -4,7 +4,7 @@
 
 ## Node.EARL."ptr:expression" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "ptr:expression": string;

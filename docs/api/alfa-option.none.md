@@ -5,7 +5,7 @@
 ## None variable
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 None: None

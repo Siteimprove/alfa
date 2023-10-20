@@ -4,7 +4,7 @@
 
 ## Column.Group.anchor property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get anchor(): Slot;

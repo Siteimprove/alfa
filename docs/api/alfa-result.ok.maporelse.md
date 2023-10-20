@@ -4,7 +4,7 @@
 
 ## Ok.mapOrElse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 mapOrElse<U>(ok: Mapper<T, U>): U;
@@ -16,7 +16,7 @@ mapOrElse<U>(ok: Mapper<T, U>): U;
 |  --- | --- | --- |
 |  ok | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 U
 

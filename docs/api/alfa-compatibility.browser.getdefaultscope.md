@@ -4,12 +4,12 @@
 
 ## Browser.getDefaultScope() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function getDefaultScope(): Scope;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Scope](./alfa-compatibility.browser.scope.md)
 

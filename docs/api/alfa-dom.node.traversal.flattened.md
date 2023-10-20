@@ -8,7 +8,7 @@ When set, traverse the flattened element tree rooted at the node.
 
 [https://drafts.csswg.org/css-scoping/\#flat-tree](https://drafts.csswg.org/css-scoping/#flat-tree)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flattened: Flag

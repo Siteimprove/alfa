@@ -4,7 +4,7 @@
 
 ## Vector.divide() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function divide(v: Vector, d: number): Vector;
@@ -17,7 +17,7 @@ function divide(v: Vector, d: number): Vector;
 |  v | [Vector](./alfa-math.vector.md) |  |
 |  d | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Vector](./alfa-math.vector.md)
 

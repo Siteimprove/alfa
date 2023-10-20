@@ -4,7 +4,7 @@
 
 ## PageRule.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(selector: string, declarations: Iterable<Declaration>): PageRule;
@@ -15,9 +15,9 @@ static of(selector: string, declarations: Iterable<Declaration>): PageRule;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  selector | string |  |
-|  declarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
+|  declarations | Iterable&lt;Declaration&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [PageRule](./alfa-dom.pagerule.md)
 

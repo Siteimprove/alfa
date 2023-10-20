@@ -4,7 +4,7 @@
 
 ## Attribute.isAttribute() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isAttribute(value: unknown): value is Attribute;
@@ -16,7 +16,7 @@ function isAttribute(value: unknown): value is Attribute;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Attribute](./alfa-dom.attribute.md)
 

@@ -4,7 +4,7 @@
 
 ## Cookie.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: string, value: string): Cookie;
@@ -17,7 +17,7 @@ static of(name: string, value: string): Cookie;
 |  name | string |  |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Cookie](./alfa-http.cookie.md)
 

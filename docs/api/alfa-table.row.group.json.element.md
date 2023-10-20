@@ -4,7 +4,7 @@
 
 ## Row.Group.JSON.element property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 element: string;

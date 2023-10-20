@@ -4,12 +4,12 @@
 
 ## Tuple.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Tuple.JSON<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Tuple.JSON](./alfa-css.tuple.json.md)<!-- -->&lt;T&gt;
 

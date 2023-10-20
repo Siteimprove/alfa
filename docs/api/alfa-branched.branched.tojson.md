@@ -4,12 +4,12 @@
 
 ## Branched.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Branched.JSON<T, B>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Branched.JSON](./alfa-branched.branched.json.md)<!-- -->&lt;T, B&gt;
 

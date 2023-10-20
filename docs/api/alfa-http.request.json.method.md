@@ -4,7 +4,7 @@
 
 ## Request.JSON.method property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 method: string;

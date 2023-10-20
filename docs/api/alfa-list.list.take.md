@@ -4,7 +4,7 @@
 
 ## List.take() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 take(count: number): List<T>;
@@ -16,7 +16,7 @@ take(count: number): List<T>;
 |  --- | --- | --- |
 |  count | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

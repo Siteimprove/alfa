@@ -4,7 +4,7 @@
 
 ## Token.Function.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: string): Function;
@@ -16,7 +16,7 @@ static of(value: string): Function;
 |  --- | --- | --- |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Function](./alfa-css.token.function.md)
 

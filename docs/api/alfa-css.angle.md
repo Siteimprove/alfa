@@ -6,10 +6,10 @@
 
 [https://drafts.csswg.org/css-values/\#numbers](https://drafts.csswg.org/css-values/#numbers)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Angle<U extends Unit.Angle = Unit.Angle> = Angle.Calculated | Angle.Fixed<U>;
 ```
-<b>References:</b> [Unit.Angle](./alfa-css.unit.angle.md)<!-- -->, [Angle.Calculated](./alfa-css.angle.calculated.md)<!-- -->, [Angle.Fixed](./alfa-css.angle.fixed.md)
+**References:** [Unit.Angle](./alfa-css.unit.angle.md)<!-- -->, [Angle.Calculated](./alfa-css.angle.calculated.md)<!-- -->, [Angle.Fixed](./alfa-css.angle.fixed.md)
 

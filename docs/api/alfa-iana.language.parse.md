@@ -4,7 +4,7 @@
 
 ## Language.parse() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parse(input: string): Result<Language, string>;
@@ -16,7 +16,7 @@ function parse(input: string): Result<Language, string>;
 |  --- | --- | --- |
 |  input | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;[Language](./alfa-iana.language.md)<!-- -->, string&gt;
+Result&lt;[Language](./alfa-iana.language.md)<!-- -->, string&gt;
 

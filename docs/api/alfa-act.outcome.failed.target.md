@@ -4,7 +4,7 @@
 
 ## Outcome.Failed.target property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get target(): T;

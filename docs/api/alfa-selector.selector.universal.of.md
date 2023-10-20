@@ -4,7 +4,7 @@
 
 ## Selector.Universal.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(namespace: Option<string>): Universal;
@@ -14,9 +14,9 @@ static of(namespace: Option<string>): Universal;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  namespace | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  namespace | Option&lt;string&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Universal](./alfa-selector.selector.universal.md)
 

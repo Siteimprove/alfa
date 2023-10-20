@@ -4,7 +4,7 @@
 
 ## Err.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<E>(error: E): Err<E>;
@@ -16,7 +16,7 @@ static of<E>(error: E): Err<E>;
 |  --- | --- | --- |
 |  error | E |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
 

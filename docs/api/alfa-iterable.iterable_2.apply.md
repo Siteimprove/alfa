@@ -4,7 +4,7 @@
 
 ## Iterable\_2.apply() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function apply<T, U>(iterable: Iterable<T>, mapper: Iterable<Mapper<T, U>>): Iterable<U>;
@@ -14,10 +14,10 @@ function apply<T, U>(iterable: Iterable<T>, mapper: Iterable<Mapper<T, U>>): Ite
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  mapper | Iterable&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  mapper | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;U&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;U&gt;
 

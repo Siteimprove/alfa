@@ -4,10 +4,10 @@
 
 ## Perspective.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Canonical = Perspective<Length.Canonical>;
 ```
-<b>References:</b> [Perspective](./alfa-css.perspective.md)<!-- -->, [Length.Canonical](./alfa-css.length.canonical.md)
+**References:** [Perspective](./alfa-css.perspective.md)<!-- -->, [Length.Canonical](./alfa-css.length.canonical.md)
 

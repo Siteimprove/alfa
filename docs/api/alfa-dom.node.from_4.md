@@ -4,10 +4,10 @@
 
 ## Node.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-function from(json: Document.JSON): Document;
+function from(json: Document.JSON, device?: Device): Document;
 ```
 
 ## Parameters
@@ -15,8 +15,9 @@ function from(json: Document.JSON): Document;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [Document.JSON](./alfa-dom.document.json.md) |  |
+|  device | Device | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Document](./alfa-dom.document.md)
+Document
 

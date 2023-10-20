@@ -4,7 +4,7 @@
 
 ## Predicate.test() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function test<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, value: T, ...args: A): boolean;
@@ -18,7 +18,7 @@ function test<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, valu
 |  value | T |  |
 |  args | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

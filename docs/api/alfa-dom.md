@@ -11,27 +11,32 @@
 |  [Attribute](./alfa-dom.attribute.md) |  |
 |  [Block](./alfa-dom.block.md) |  |
 |  [Comment](./alfa-dom.comment.md) |  |
-|  [ConditionRule](./alfa-dom.conditionrule.md) |  |
 |  [Declaration](./alfa-dom.declaration.md) |  |
 |  [Document](./alfa-dom.document.md) |  |
 |  [Element](./alfa-dom.element.md) |  |
 |  [FontFaceRule](./alfa-dom.fontfacerule.md) |  |
 |  [Fragment](./alfa-dom.fragment.md) |  |
-|  [GroupingRule](./alfa-dom.groupingrule.md) |  |
 |  [ImportRule](./alfa-dom.importrule.md) |  |
 |  [KeyframeRule](./alfa-dom.keyframerule.md) |  |
 |  [KeyframesRule](./alfa-dom.keyframesrule.md) |  |
 |  [MediaRule](./alfa-dom.mediarule.md) |  |
 |  [NamespaceRule](./alfa-dom.namespacerule.md) |  |
-|  [Node](./alfa-dom.node.md) |  |
 |  [PageRule](./alfa-dom.pagerule.md) |  |
-|  [Rule](./alfa-dom.rule.md) |  |
 |  [Shadow](./alfa-dom.shadow.md) |  |
 |  [Sheet](./alfa-dom.sheet.md) |  |
 |  [StyleRule](./alfa-dom.stylerule.md) |  |
 |  [SupportsRule](./alfa-dom.supportsrule.md) |  |
 |  [Text](./alfa-dom.text.md) |  |
 |  [Type](./alfa-dom.type.md) |  |
+
+## Abstract Classes
+
+|  Abstract Class | Description |
+|  --- | --- |
+|  [ConditionRule](./alfa-dom.conditionrule.md) |  |
+|  [GroupingRule](./alfa-dom.groupingrule.md) |  |
+|  [Node](./alfa-dom.node.md) |  |
+|  [Rule](./alfa-dom.rule.md) |  |
 
 ## Enumerations
 
@@ -43,7 +48,7 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [h(name, attributes, children, style, box)](./alfa-dom.h.md) |  |
+|  [h(name, attributes, children, style, box, device)](./alfa-dom.h.md) |  |
 |  [jsx(name, properties, children)](./alfa-dom.jsx.md) |  |
 
 ## Interfaces

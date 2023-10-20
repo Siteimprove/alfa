@@ -4,12 +4,12 @@
 
 ## Circle.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends BasicShape.JSON<"circle"> 
 ```
-<b>Extends:</b> BasicShape.JSON&lt;"circle"&gt;
+**Extends:** BasicShape.JSON&lt;"circle"&gt;
 
 ## Properties
 

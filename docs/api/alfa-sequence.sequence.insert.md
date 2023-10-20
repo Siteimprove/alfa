@@ -4,7 +4,7 @@
 
 ## Sequence.insert() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 insert(index: number, value: T): Sequence<T>;
@@ -17,7 +17,7 @@ insert(index: number, value: T): Sequence<T>;
 |  index | number |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

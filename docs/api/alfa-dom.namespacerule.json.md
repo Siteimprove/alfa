@@ -4,12 +4,12 @@
 
 ## NamespaceRule.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Rule.JSON 
 ```
-<b>Extends:</b> [Rule.JSON](./alfa-dom.rule.json.md)
+**Extends:** [Rule.JSON](./alfa-dom.rule.json.md)
 
 ## Properties
 

@@ -4,7 +4,7 @@
 
 ## Tuple.collect() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function collect<T extends Tuple, U>(tuple: T, mapper: Mapper<Item<T>, Option<U>, [index: number]>): Array<U>;
@@ -15,9 +15,9 @@ export function collect<T extends Tuple, U>(tuple: T, mapper: Mapper<Item<T>, Op
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, Option&lt;U&gt;, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Array&lt;U&gt;
 

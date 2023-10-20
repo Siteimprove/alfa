@@ -4,7 +4,7 @@
 
 ## Set\_2.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Set<U>>): Set<U>;
@@ -14,9 +14,9 @@ flatMap<U>(mapper: Mapper<T, Set<U>>): Set<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Set&lt;U&gt;&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Set](./alfa-set.set_2.md)<!-- -->&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Set&lt;U&gt;
+[Set](./alfa-set.set_2.md)<!-- -->&lt;U&gt;
 

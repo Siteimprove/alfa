@@ -6,7 +6,7 @@
 
 Check if this role supports the specified attribute.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isAttributeSupported(name: Attribute.Name): boolean;
@@ -18,7 +18,7 @@ isAttributeSupported(name: Attribute.Name): boolean;
 |  --- | --- | --- |
 |  name | [Attribute.Name](./alfa-aria.attribute.name.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

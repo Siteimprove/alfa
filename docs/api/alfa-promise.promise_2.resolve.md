@@ -4,7 +4,7 @@
 
 ## Promise\_2.resolve() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function resolve<T>(value: T): Promise<T>;
@@ -16,7 +16,7 @@ function resolve<T>(value: T): Promise<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Promise&lt;T&gt;
+[Promise](./alfa-promise.promise_2.md)<!-- -->&lt;T&gt;
 

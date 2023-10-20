@@ -6,7 +6,7 @@
 
 The names of all global attributes.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Global = Members<Roles["roletype"]["attributes"]>[0];

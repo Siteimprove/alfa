@@ -4,7 +4,7 @@
 
 ## Expression.String namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace String 

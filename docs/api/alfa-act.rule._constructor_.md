@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Rule` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(uri: string, requirements: Array<Requirement>, tags: Array<Tag>, evaluator: Rule.Evaluate<I, T, Q, S>);
@@ -17,7 +17,7 @@ protected constructor(uri: string, requirements: Array<Requirement>, tags: Array
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  uri | string |  |
-|  requirements | Array&lt;[Requirement](./alfa-act.requirement.md)<!-- -->&gt; |  |
-|  tags | Array&lt;[Tag](./alfa-act.tag.md)<!-- -->&gt; |  |
+|  requirements | Array&lt;Requirement&gt; |  |
+|  tags | Array&lt;Tag&gt; |  |
 |  evaluator | [Rule.Evaluate](./alfa-act.rule.evaluate.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 

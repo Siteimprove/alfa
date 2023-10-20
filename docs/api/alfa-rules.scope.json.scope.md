@@ -4,7 +4,7 @@
 
 ## Scope.JSON.scope property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 scope: S;

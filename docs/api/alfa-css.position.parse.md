@@ -4,21 +4,23 @@
 
 ## Position.parse() function
 
+Parse a position, optionally accepting legacy 3-values syntax.
+
 [https://drafts.csswg.org/css-values/\#typedef-position](https://drafts.csswg.org/css-values/#typedef-position) [https://drafts.csswg.org/css-backgrounds/\#typedef-bg-position](https://drafts.csswg.org/css-backgrounds/#typedef-bg-position)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-export function parse(legacySyntax?: boolean): CSSParser<Position>;
+function parse(legacySyntax?: boolean): CSSParser<Position>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  legacySyntax | boolean | <i>(Optional)</i> |
+|  legacySyntax | boolean | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Position](./alfa-css.position.md)<!-- -->&gt;
 

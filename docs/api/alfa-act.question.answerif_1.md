@@ -4,7 +4,7 @@
 
 ## Question.answerIf() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 answerIf(predicate: Predicate<SUBJECT, [context: CONTEXT]>, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
@@ -14,10 +14,10 @@ answerIf(predicate: Predicate<SUBJECT, [context: CONTEXT]>, answer: ANSWER): Que
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;SUBJECT, \[context: CONTEXT\]&gt; |  |
+|  predicate | Predicate&lt;SUBJECT, \[context: CONTEXT\]&gt; |  |
 |  answer | ANSWER |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;
 

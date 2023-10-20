@@ -6,7 +6,7 @@
 
 Whether the node is frozen.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected _frozen: boolean;

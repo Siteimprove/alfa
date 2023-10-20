@@ -4,7 +4,7 @@
 
 ## Row.Group.y property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get y(): number;

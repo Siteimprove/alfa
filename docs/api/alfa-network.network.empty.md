@@ -4,12 +4,12 @@
 
 ## Network.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty<N, E>(): Network<N, E>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

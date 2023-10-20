@@ -4,12 +4,12 @@
 
 ## Reducer.concat() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function concat<T>(): Reducer<Iterable<T>, Iterable<T>>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;Iterable&lt;T&gt;, Iterable&lt;T&gt;&gt;
 

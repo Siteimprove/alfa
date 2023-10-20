@@ -4,12 +4,12 @@
 
 ## Stability.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<S extends string = string> extends Tag.JSON<"stability"> 
 ```
-<b>Extends:</b> [Tag.JSON](./alfa-act.tag.json.md)<!-- -->&lt;"stability"&gt;
+**Extends:** [Tag.JSON](./alfa-act.tag.json.md)<!-- -->&lt;"stability"&gt;
 
 ## Properties
 

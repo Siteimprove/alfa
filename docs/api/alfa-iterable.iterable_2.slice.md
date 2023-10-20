@@ -4,7 +4,7 @@
 
 ## Iterable\_2.slice() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function slice<T>(iterable: Iterable<T>, start: number, end?: number): Iterable<T>;
@@ -14,11 +14,11 @@ function slice<T>(iterable: Iterable<T>, start: number, end?: number): Iterable<
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 |  start | number |  |
-|  end | number | <i>(Optional)</i> |
+|  end | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;T&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

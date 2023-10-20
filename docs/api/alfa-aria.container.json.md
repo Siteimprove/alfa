@@ -4,12 +4,12 @@
 
 ## Container.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Node.JSON<"container"> 
 ```
-<b>Extends:</b> [Node.JSON](./alfa-aria.node.json.md)<!-- -->&lt;"container"&gt;
+**Extends:** [Node.JSON](./alfa-aria.node.json.md)<!-- -->&lt;"container"&gt;
 
 ## Properties
 

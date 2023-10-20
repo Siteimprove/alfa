@@ -4,8 +4,8 @@
 
 ## Position.vertical property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-get vertical(): V;
+get vertical(): VC;
 ```

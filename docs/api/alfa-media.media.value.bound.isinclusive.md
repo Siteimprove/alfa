@@ -4,7 +4,7 @@
 
 ## Media.Value.Bound.isInclusive property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get isInclusive(): boolean;

@@ -4,7 +4,7 @@
 
 ## Headers.add() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 add(header: Header): Headers;
@@ -14,9 +14,9 @@ add(header: Header): Headers;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  header | [Header](./alfa-http.header.md) |  |
+|  header | Header |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Headers](./alfa-http.headers.md)
 

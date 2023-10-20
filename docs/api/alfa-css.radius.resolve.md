@@ -4,12 +4,19 @@
 
 ## Radius.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-resolve(): Radius<R>;
+resolve(resolver: Radius.Resolver): Radius.Canonical;
 ```
-<b>Returns:</b>
 
-[Radius](./alfa-css.radius.md)<!-- -->&lt;R&gt;
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Radius.Resolver](./alfa-css.radius.resolver.md) |  |
+
+**Returns:**
+
+[Radius.Canonical](./alfa-css.radius.canonical.md)
 

@@ -1,5 +1,7 @@
 # @siteimprove/alfa-xpath
 
+## 0.68.0
+
 ## 0.67.0
 
 ## 0.66.0

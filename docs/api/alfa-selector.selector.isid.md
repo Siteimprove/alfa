@@ -4,7 +4,7 @@
 
 ## Selector.isId() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isId(value: unknown): value is Id;
@@ -16,7 +16,7 @@ export function isId(value: unknown): value is Id;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Id](./alfa-selector.selector.id.md)
 

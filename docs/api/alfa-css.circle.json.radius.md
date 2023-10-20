@@ -4,7 +4,7 @@
 
 ## Circle.JSON.radius property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 radius: Radius.JSON;

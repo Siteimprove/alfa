@@ -8,10 +8,10 @@ Extract the cascaded type of a named property.
 
 [https://drafts.csswg.org/css-cascade/\#cascaded](https://drafts.csswg.org/css-cascade/#cascaded)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Cascaded<N extends Name> = Declared<N>;
 ```
-<b>References:</b> [Name](./alfa-style.longhands.name.md)<!-- -->, [Declared](./alfa-style.longhands.declared.md)
+**References:** [Name](./alfa-style.longhands.name.md)<!-- -->, [Declared](./alfa-style.longhands.declared.md)
 

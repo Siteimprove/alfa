@@ -4,7 +4,7 @@
 
 ## Query.getElementIdMap variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getElementIdMap: typeof elementIdMap.getElementIdMap

@@ -4,10 +4,10 @@
 
 ## Inset.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-static of<O extends Inset.Offset = Inset.Offset, C extends Inset.Corner = Inset.Corner>(offsets: readonly [O, O, O, O], corners: Option<readonly [C, C, C, C]>): Inset<O, C>;
+static of<O extends Inset.Offset = Inset.Offset, C extends Corner = Corner>(offsets: readonly [O, O, O, O], corners: Option<readonly [C, C, C, C]>): Inset<O, C>;
 ```
 
 ## Parameters
@@ -15,9 +15,9 @@ static of<O extends Inset.Offset = Inset.Offset, C extends Inset.Corner = Inset.
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  offsets | readonly \[O, O, O, O\] |  |
-|  corners | [Option](./alfa-option.option.md)<!-- -->&lt;readonly \[C, C, C, C\]&gt; |  |
+|  corners | Option&lt;readonly \[C, C, C, C\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Inset](./alfa-css.inset.md)<!-- -->&lt;O, C&gt;
 

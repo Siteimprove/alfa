@@ -4,12 +4,12 @@
 
 ## Selector.GrammarError.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): GrammarError;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [GrammarError](./alfa-selector.selector.grammarerror.md)
 

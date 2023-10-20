@@ -4,7 +4,7 @@
 
 ## Selector.Relative.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(combinator: Combinator, selector: Simple | Compound | Complex): Relative;
@@ -17,7 +17,7 @@ static of(combinator: Combinator, selector: Simple | Compound | Complex): Relati
 |  combinator | [Combinator](./alfa-selector.selector.combinator.md) |  |
 |  selector | [Simple](./alfa-selector.selector.simple.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Relative](./alfa-selector.selector.relative.md)
 

@@ -4,7 +4,7 @@
 
 ## RuleTree.Node.children property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get children(): Array<Node>;

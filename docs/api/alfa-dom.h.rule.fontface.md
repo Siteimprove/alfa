@@ -4,7 +4,7 @@
 
 ## h.rule.fontFace() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function fontFace(declarations: Array<Declaration> | Record<string, string>): FontFaceRule;
@@ -14,9 +14,9 @@ function fontFace(declarations: Array<Declaration> | Record<string, string>): Fo
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  declarations | Array&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; \| Record&lt;string, string&gt; |  |
+|  declarations | Array&lt;Declaration&gt; \| Record&lt;string, string&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[FontFaceRule](./alfa-dom.fontfacerule.md)
+FontFaceRule
 

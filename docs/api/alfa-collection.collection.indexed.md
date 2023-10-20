@@ -4,7 +4,7 @@
 
 ## Collection.Indexed namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Indexed 

@@ -4,7 +4,7 @@
 
 ## Branched.reject() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reject(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B>;
@@ -14,9 +14,9 @@ reject(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
+|  predicate | Predicate&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;
 

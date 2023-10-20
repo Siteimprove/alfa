@@ -4,12 +4,12 @@
 
 ## Document.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Node.JSON<"document"> 
 ```
-<b>Extends:</b> [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"document"&gt;
+**Extends:** [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"document"&gt;
 
 ## Properties
 

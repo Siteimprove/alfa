@@ -4,7 +4,7 @@
 
 ## Some.every() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 every(predicate: Predicate<T>): boolean;
@@ -14,9 +14,9 @@ every(predicate: Predicate<T>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

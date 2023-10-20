@@ -4,7 +4,7 @@
 
 ## Comparable.compareComparable() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function compareComparable<T extends Comparable<U>, U = T>(a: T, b: U): Comparison;
@@ -17,7 +17,7 @@ function compareComparable<T extends Comparable<U>, U = T>(a: T, b: U): Comparis
 |  a | T |  |
 |  b | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

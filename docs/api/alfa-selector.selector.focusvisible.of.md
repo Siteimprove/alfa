@@ -4,12 +4,12 @@
 
 ## Selector.FocusVisible.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): FocusVisible;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [FocusVisible](./alfa-selector.selector.focusvisible.md)
 

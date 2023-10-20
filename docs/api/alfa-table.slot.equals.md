@@ -4,7 +4,7 @@
 
 ## Slot.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(slot: Slot): boolean;
@@ -16,7 +16,7 @@ equals(slot: Slot): boolean;
 |  --- | --- | --- |
 |  slot | [Slot](./alfa-table.slot.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

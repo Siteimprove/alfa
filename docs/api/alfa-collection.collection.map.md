@@ -4,7 +4,7 @@
 
 ## Collection.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U>): Collection<U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U>): Collection<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Collection](./alfa-collection.collection.md)<!-- -->&lt;U&gt;
 

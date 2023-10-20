@@ -4,7 +4,7 @@
 
 ## Builder.Path\_base variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Path_base: {

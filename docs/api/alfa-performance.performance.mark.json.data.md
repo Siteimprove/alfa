@@ -4,7 +4,7 @@
 
 ## Performance.Mark.JSON.data property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 data: Serializable.ToJSON<T>;

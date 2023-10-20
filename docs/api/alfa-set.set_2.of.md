@@ -4,7 +4,7 @@
 
 ## Set\_2.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(...values: Array<T>): Set<T>;
@@ -16,7 +16,7 @@ static of<T>(...values: Array<T>): Set<T>;
 |  --- | --- | --- |
 |  values | Array&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Set&lt;T&gt;
+[Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Percentage.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of(value: BasePercentage): Fixed;
@@ -16,7 +16,7 @@ export function of(value: BasePercentage): Fixed;
 |  --- | --- | --- |
 |  value | BasePercentage |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.percentage.fixed.md)
 

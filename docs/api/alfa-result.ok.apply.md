@@ -4,7 +4,7 @@
 
 ## Ok.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<E, U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
@@ -14,9 +14,9 @@ apply<E, U>(mapper: Result<Mapper<T, U>, E>): Result<U, E>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Result](./alfa-result.result.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;, E&gt; |  |
+|  mapper | Result&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;, E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;
+Result&lt;U, E&gt;
 

@@ -4,7 +4,7 @@
 
 ## Option.none() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 none<U extends T>(refinement: Refinement<T, U>): this is Option<Exclude<T, U>>;
@@ -14,9 +14,9 @@ none<U extends T>(refinement: Refinement<T, U>): this is Option<Exclude<T, U>>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this is [Option](./alfa-option.option.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

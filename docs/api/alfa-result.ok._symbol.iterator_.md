@@ -4,12 +4,12 @@
 
 ## Ok.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.iterator](): Generator<T, void, unknown>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Generator&lt;T, void, unknown&gt;
 

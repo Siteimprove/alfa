@@ -4,7 +4,7 @@
 
 ## Ellipse.isEllipse() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isEllipse(value: unknown): value is Ellipse;
@@ -16,7 +16,7 @@ function isEllipse(value: unknown): value is Ellipse;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Ellipse](./alfa-css.ellipse.md)
 

@@ -4,7 +4,7 @@
 
 ## Bits.test() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function test(bits: number, i: number): boolean;
@@ -17,7 +17,7 @@ function test(bits: number, i: number): boolean;
 |  bits | number |  |
 |  i | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

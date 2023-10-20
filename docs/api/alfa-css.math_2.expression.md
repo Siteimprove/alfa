@@ -4,7 +4,7 @@
 
 ## Math\_2.expression property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get expression(): Expression;

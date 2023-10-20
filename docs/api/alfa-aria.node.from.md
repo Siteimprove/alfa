@@ -4,7 +4,7 @@
 
 ## Node.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(node: dom.Node, device: Device): Node;
@@ -14,10 +14,10 @@ function from(node: dom.Node, device: Device): Node;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  node | dom.[Node](./alfa-dom.node.md) |  |
-|  device | [Device](./alfa-device.device.md) |  |
+|  node | [dom.Node](./alfa-dom.node.md) |  |
+|  device | Device |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Node](./alfa-aria.node.md)
 

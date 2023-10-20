@@ -4,7 +4,7 @@
 
 ## Right.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<L, T>(mapper: Either<L, Mapper<R, T>>): Either<L, T>;
@@ -14,9 +14,9 @@ apply<L, T>(mapper: Either<L, Mapper<R, T>>): Either<L, T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Either](./alfa-either.either.md)<!-- -->&lt;L, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt;&gt; |  |
+|  mapper | Either&lt;L, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Either](./alfa-either.either.md)<!-- -->&lt;L, T&gt;
+Either&lt;L, T&gt;
 

@@ -4,10 +4,8 @@
 
 ## Gradient.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Canonical = Linear.Canonical | Radial.Canonical;
 ```
-<b>References:</b> [Linear.Canonical](./alfa-css.linear.canonical.md)<!-- -->, [Radial.Canonical](./alfa-css.radial.canonical.md)
-

@@ -4,7 +4,7 @@
 
 ## Some.tee() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tee(callback: Callback<T>): this;
@@ -14,9 +14,9 @@ tee(callback: Callback<T>): this;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+|  callback | Callback&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

@@ -4,7 +4,7 @@
 
 ## Monad.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Monad<Monad<T>>): Monad<T>;
@@ -16,7 +16,7 @@ flatten<T>(this: Monad<Monad<T>>): Monad<T>;
 |  --- | --- | --- |
 |  this | [Monad](./alfa-monad.monad.md)<!-- -->&lt;[Monad](./alfa-monad.monad.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Monad](./alfa-monad.monad.md)<!-- -->&lt;T&gt;
 

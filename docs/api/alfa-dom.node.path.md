@@ -6,7 +6,7 @@
 
 Get an XPath that uniquely identifies the node across descendants of its root.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 path(options?: Node.Traversal): string;
@@ -16,9 +16,9 @@ path(options?: Node.Traversal): string;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Node.Traversal](./alfa-dom.node.traversal.md) | <i>(Optional)</i> |
+|  options | [Node.Traversal](./alfa-dom.node.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 string
 

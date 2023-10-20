@@ -4,7 +4,7 @@
 
 ## Trampoline.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Trampoline<Trampoline<T>>): Trampoline<T>;
@@ -16,7 +16,7 @@ flatten<T>(this: Trampoline<Trampoline<T>>): Trampoline<T>;
 |  --- | --- | --- |
 |  this | [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;
 

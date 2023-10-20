@@ -4,7 +4,7 @@
 
 ## h.attribute() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function attribute<N extends string = string>(name: N, value: string): Attribute<N>;
@@ -17,7 +17,7 @@ function attribute<N extends string = string>(name: N, value: string): Attribute
 |  name | N |  |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Attribute](./alfa-dom.attribute.md)<!-- -->&lt;N&gt;
+Attribute&lt;N&gt;
 

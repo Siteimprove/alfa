@@ -4,7 +4,7 @@
 
 ## Trilean.nand() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function nand<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
@@ -17,7 +17,7 @@ function nand<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Pr
 |  left | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt; |  |
 |  right | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;
 

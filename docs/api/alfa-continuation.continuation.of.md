@@ -4,7 +4,7 @@
 
 ## Continuation.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function of<T, R = void, A extends Array<unknown> = []>(value: T): Continuation<T, R, A>;
@@ -16,7 +16,7 @@ function of<T, R = void, A extends Array<unknown> = []>(value: T): Continuation<
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;T, R, A&gt;
 

@@ -4,12 +4,12 @@
 
 ## Slice.isEmpty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEmpty(): this is Slice<never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Slice](./alfa-slice.slice.md)<!-- -->&lt;never&gt;
 

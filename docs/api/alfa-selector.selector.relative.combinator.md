@@ -4,7 +4,7 @@
 
 ## Selector.Relative.combinator property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get combinator(): Combinator;

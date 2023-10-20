@@ -4,7 +4,7 @@
 
 ## Question.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>):
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, U, URI&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, U, URI&gt;
 

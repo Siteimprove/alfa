@@ -4,12 +4,12 @@
 
 ## Media.Feature.Width.boolean() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static boolean(): Width;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Width
 

@@ -4,7 +4,7 @@
 
 ## Rotate.parse variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: Parser<import("@siteimprove/alfa-slice").Slice<Token>, Rotate, string, []>

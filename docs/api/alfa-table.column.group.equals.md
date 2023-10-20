@@ -4,7 +4,7 @@
 
 ## Column.Group.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(group: Group): boolean;
@@ -16,7 +16,7 @@ equals(group: Group): boolean;
 |  --- | --- | --- |
 |  group | [Group](./alfa-table.column.group.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

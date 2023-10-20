@@ -4,12 +4,12 @@
 
 ## Fragment.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty(): Fragment;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Fragment](./alfa-dom.fragment.md)
 

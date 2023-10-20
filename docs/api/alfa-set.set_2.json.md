@@ -4,10 +4,10 @@
 
 ## Set\_2.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON<T> = Collection.Unkeyed.JSON<T>;
 ```
-<b>References:</b> [Collection.Unkeyed.JSON](./alfa-collection.collection.unkeyed.json.md)
+**References:** [Collection.Unkeyed.JSON](./alfa-collection.collection.unkeyed.json.md)
 

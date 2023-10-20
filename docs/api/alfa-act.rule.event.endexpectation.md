@@ -4,7 +4,7 @@
 
 ## Rule.Event.endExpectation() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function endExpectation<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "expectation">;
@@ -16,7 +16,7 @@ function endExpectation<I, T extends Hashable, Q extends Question.Metadata, S>(r
 |  --- | --- | --- |
 |  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S, "end", "expectation"&gt;
 

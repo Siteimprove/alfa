@@ -4,7 +4,7 @@
 
 ## Color.hex() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function hex(value: number): Hex;
@@ -16,7 +16,7 @@ function hex(value: number): Hex;
 |  --- | --- | --- |
 |  value | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Hex](./alfa-css.hex.md)
+Hex
 

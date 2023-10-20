@@ -4,7 +4,7 @@
 
 ## Column.Group.JSON.width property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 width: number;

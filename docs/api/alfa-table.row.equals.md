@@ -4,7 +4,7 @@
 
 ## Row.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(row: Row): boolean;
@@ -16,7 +16,7 @@ equals(row: Row): boolean;
 |  --- | --- | --- |
 |  row | [Row](./alfa-table.row.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

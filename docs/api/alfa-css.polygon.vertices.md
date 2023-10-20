@@ -4,7 +4,7 @@
 
 ## Polygon.vertices property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get vertices(): ReadonlyArray<Polygon.Vertex<V>>;

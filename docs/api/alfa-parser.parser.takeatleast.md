@@ -4,7 +4,7 @@
 
 ## Parser.takeAtLeast() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function takeAtLeast<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, lower: number): Parser<I, Array<T>, E, A>;
@@ -17,7 +17,7 @@ function takeAtLeast<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 |  lower | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, Array&lt;T&gt;, E, A&gt;
 

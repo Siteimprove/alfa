@@ -4,7 +4,7 @@
 
 ## Refinement.isUndefined() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isUndefined(value: unknown): value is undefined;
@@ -16,7 +16,7 @@ export function isUndefined(value: unknown): value is undefined;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is undefined
 

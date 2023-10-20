@@ -4,7 +4,7 @@
 
 ## Builder.Filter.where() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 where(predicate: Builder): Filter;
@@ -16,7 +16,7 @@ where(predicate: Builder): Filter;
 |  --- | --- | --- |
 |  predicate | [Builder](./alfa-xpath.builder.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Filter](./alfa-xpath.builder.filter.md)
 

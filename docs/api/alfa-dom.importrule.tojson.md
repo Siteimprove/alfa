@@ -4,12 +4,12 @@
 
 ## ImportRule.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): ImportRule.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [ImportRule.JSON](./alfa-dom.importrule.json.md)
 

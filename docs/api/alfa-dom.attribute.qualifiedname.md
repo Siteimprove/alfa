@@ -4,7 +4,7 @@
 
 ## Attribute.qualifiedName property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get qualifiedName(): string;

@@ -4,7 +4,7 @@
 
 ## Selector.NthLastChild.JSON.index property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 index: Nth.JSON;

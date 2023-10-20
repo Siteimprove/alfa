@@ -4,7 +4,7 @@
 
 ## Selector.Attribute.Modifier enum
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 enum Modifier 

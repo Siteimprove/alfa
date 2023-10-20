@@ -4,7 +4,7 @@
 
 ## Expression.Axis.JSON.test property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 test: Test.JSON | null;

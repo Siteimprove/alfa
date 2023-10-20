@@ -8,12 +8,12 @@ Extract the declared type of a named property.
 
 [https://drafts.csswg.org/css-cascade/\#declared](https://drafts.csswg.org/css-cascade/#declared)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Declared<N extends Name> = Parsed<N> | Longhand.Default;
 ```
-<b>References:</b> [Name](./alfa-style.longhands.name.md)<!-- -->, [Parsed](./alfa-style.longhands.parsed.md)
+**References:** [Name](./alfa-style.longhands.name.md)<!-- -->, [Parsed](./alfa-style.longhands.parsed.md)
 
 ## Remarks
 

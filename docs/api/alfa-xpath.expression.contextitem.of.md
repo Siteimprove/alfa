@@ -4,12 +4,12 @@
 
 ## Expression.ContextItem.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): ContextItem;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [ContextItem](./alfa-xpath.expression.contextitem.md)
 

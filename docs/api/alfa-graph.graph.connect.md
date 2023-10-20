@@ -4,7 +4,7 @@
 
 ## Graph.connect() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 connect(from: T, to: T): Graph<T>;
@@ -17,7 +17,7 @@ connect(from: T, to: T): Graph<T>;
 |  from | T |  |
 |  to | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

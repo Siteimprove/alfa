@@ -4,7 +4,7 @@
 
 ## Thenable.race() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function race<T, E = unknown>(...thenables: Array<Thenable<T, E>>): Thenable<T, E>;
@@ -16,7 +16,7 @@ function race<T, E = unknown>(...thenables: Array<Thenable<T, E>>): Thenable<T, 
 |  --- | --- | --- |
 |  thenables | Array&lt;[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;
 

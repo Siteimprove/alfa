@@ -4,12 +4,12 @@
 
 ## Future.toPromise() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toPromise(): Promise<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;T&gt;
 

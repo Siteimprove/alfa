@@ -6,7 +6,7 @@
 
 [https://drafts.css-houdini.org/css-typed-om/\#cssnumericvalue-match](https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isDimension<D extends Numeric.Dimension>(dimension: D): this is Math<D>;
@@ -18,7 +18,7 @@ isDimension<D extends Numeric.Dimension>(dimension: D): this is Math<D>;
 |  --- | --- | --- |
 |  dimension | D |  |
 
-<b>Returns:</b>
+**Returns:**
 
-this is Math&lt;D&gt;
+this is [Math](./alfa-css.math_2.md)<!-- -->&lt;D&gt;
 

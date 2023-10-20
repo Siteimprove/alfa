@@ -4,12 +4,12 @@
 
 ## Component.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.iterator](): Iterator<Token>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Iterator&lt;[Token](./alfa-css.token.md)<!-- -->&gt;
+Iterator&lt;Token&gt;
 

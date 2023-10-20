@@ -4,7 +4,7 @@
 
 ## Context.isFocused() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isFocused(element: Element): boolean;
@@ -14,9 +14,9 @@ isFocused(element: Element): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

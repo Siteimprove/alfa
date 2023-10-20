@@ -4,19 +4,19 @@
 
 ## Rotate.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Function.JSON<"rotate"> 
 ```
-<b>Extends:</b> Function.JSON&lt;"rotate"&gt;
+**Extends:** Function.JSON&lt;"rotate"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [angle](./alfa-css.rotate.json.angle.md) |  | [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md)<!-- -->&lt;"deg"&gt; |  |
-|  [x](./alfa-css.rotate.json.x.md) |  | Number.Fixed.JSON |  |
-|  [y](./alfa-css.rotate.json.y.md) |  | Number.Fixed.JSON |  |
-|  [z](./alfa-css.rotate.json.z.md) |  | Number.Fixed.JSON |  |
+|  [x](./alfa-css.rotate.json.x.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) |  |
+|  [y](./alfa-css.rotate.json.y.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) |  |
+|  [z](./alfa-css.rotate.json.z.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) |  |
 

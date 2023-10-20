@@ -4,7 +4,7 @@
 
 ## Iterable\_2.collect() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function collect<T, U>(iterable: Iterable<T>, mapper: Mapper<T, Option<U>, [index: number]>): Iterable<U>;
@@ -14,10 +14,10 @@ function collect<T, U>(iterable: Iterable<T>, mapper: Mapper<T, Option<U>, [inde
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Option&lt;U&gt;, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;U&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;U&gt;
 

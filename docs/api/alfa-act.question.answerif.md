@@ -4,7 +4,7 @@
 
 ## Question.answerIf() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 answerIf(condition: boolean, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
@@ -17,7 +17,7 @@ answerIf(condition: boolean, answer: ANSWER): Question<TYPE, SUBJECT, CONTEXT, A
 |  condition | boolean |  |
 |  answer | ANSWER |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;
 

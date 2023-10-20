@@ -6,7 +6,7 @@
 
 [https://url.spec.whatwg.org/\#concept-url-equals](https://url.spec.whatwg.org/#concept-url-equals)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: URL): boolean;
@@ -18,7 +18,7 @@ equals(value: URL): boolean;
 |  --- | --- | --- |
 |  value | [URL](./alfa-url.url.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

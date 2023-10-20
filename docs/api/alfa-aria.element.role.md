@@ -4,7 +4,7 @@
 
 ## Element.role property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get role(): Option<Role>;

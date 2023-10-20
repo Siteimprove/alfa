@@ -4,7 +4,7 @@
 
 ## Circle.radius property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get radius(): R;

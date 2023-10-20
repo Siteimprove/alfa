@@ -4,7 +4,7 @@
 
 ## Media.Type.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: string): Type;
@@ -16,7 +16,7 @@ static of(name: string): Type;
 |  --- | --- | --- |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Type](./alfa-media.media.type.md)
 

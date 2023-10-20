@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Indexed<U>, [index: number]>): Indexed<U>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<T, Indexed<U>, [index: number]>): Indexed<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;
 

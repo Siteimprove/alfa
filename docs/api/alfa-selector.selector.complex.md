@@ -4,7 +4,7 @@
 
 ## Selector.Complex namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace Complex 

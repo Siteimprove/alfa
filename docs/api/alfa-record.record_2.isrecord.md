@@ -4,7 +4,7 @@
 
 ## Record\_2.isRecord() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRecord<T>(value: unknown): value is Record<T>;
@@ -16,7 +16,7 @@ function isRecord<T>(value: unknown): value is Record<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Record&lt;T&gt;
+value is [Record](./alfa-record.record_2.md)<!-- -->&lt;T&gt;
 

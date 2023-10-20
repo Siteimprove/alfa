@@ -4,7 +4,7 @@
 
 ## Map\_2.fromIterable() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function fromIterable<K, V>(iterable: Iterable<readonly [K, V]>): Map<K, V>;
@@ -16,7 +16,7 @@ function fromIterable<K, V>(iterable: Iterable<readonly [K, V]>): Map<K, V>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;readonly \[K, V\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Map&lt;K, V&gt;
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;
 

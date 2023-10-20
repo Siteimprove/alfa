@@ -4,7 +4,7 @@
 
 ## Media.List.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(queries: Iterable<Query>): List;
@@ -16,7 +16,7 @@ static of(queries: Iterable<Query>): List;
 |  --- | --- | --- |
 |  queries | Iterable&lt;[Query](./alfa-media.media.query.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-media.media.list.md)
 

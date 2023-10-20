@@ -4,7 +4,7 @@
 
 ## Tuple.includes() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function includes<T extends Tuple>(tuple: T, value: Item<T>): boolean;
@@ -17,7 +17,7 @@ export function includes<T extends Tuple>(tuple: T, value: Item<T>): boolean;
 |  tuple | T |  |
 |  value | [Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

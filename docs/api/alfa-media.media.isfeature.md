@@ -4,7 +4,7 @@
 
 ## Media.isFeature variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isFeature: typeof Feature.isFeature

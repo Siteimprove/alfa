@@ -4,7 +4,7 @@
 
 ## Token.parseIdent() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parseIdent(query?: string | Predicate<Ident>): Parser<Slice<Token>, Ident, string, []>;
@@ -14,9 +14,9 @@ function parseIdent(query?: string | Predicate<Ident>): Parser<Slice<Token>, Ide
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  query | string \| [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Ident](./alfa-css.token.ident.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  query | string \| Predicate&lt;[Ident](./alfa-css.token.ident.md)<!-- -->&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Ident](./alfa-css.token.ident.md)<!-- -->, string, \[\]&gt;
+Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Ident](./alfa-css.token.ident.md)<!-- -->, string, \[\]&gt;
 

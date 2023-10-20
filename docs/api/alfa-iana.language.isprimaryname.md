@@ -4,7 +4,7 @@
 
 ## Language.isPrimaryName variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isPrimaryName: typeof Primary.isName

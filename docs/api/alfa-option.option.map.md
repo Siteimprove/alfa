@@ -4,7 +4,7 @@
 
 ## Option.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U>): Option<U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U>): Option<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

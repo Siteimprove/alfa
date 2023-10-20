@@ -4,7 +4,7 @@
 
 ## Named.value property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get value(): number;

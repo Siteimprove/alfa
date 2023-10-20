@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.skipLastUntil() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 skipLastUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
@@ -14,9 +14,9 @@ skipLastUntil(predicate: Predicate<T, [index: number]>): Indexed<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

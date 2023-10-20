@@ -4,10 +4,10 @@
 
 ## Outcome.Inapplicable.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Outcome.JSON<Value.Inapplicable> 
 ```
-<b>Extends:</b> [Outcome.JSON](./alfa-act.outcome.json.md)<!-- -->&lt;Value.Inapplicable&gt;
+**Extends:** [Outcome.JSON](./alfa-act.outcome.json.md)<!-- -->&lt;Value.Inapplicable&gt;
 

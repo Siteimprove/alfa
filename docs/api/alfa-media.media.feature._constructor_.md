@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Feature` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(value: Option<Value<T>>);
@@ -16,5 +16,5 @@ protected constructor(value: Option<Value<T>>);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | [Option](./alfa-option.option.md)<!-- -->&lt;[Value](./alfa-media.media.value.md)<!-- -->&lt;T&gt;&gt; |  |
+|  value | Option&lt;[Value](./alfa-media.media.value.md)<!-- -->&lt;T&gt;&gt; |  |
 

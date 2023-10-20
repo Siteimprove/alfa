@@ -4,12 +4,12 @@
 
 ## Graph.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Graph.JSON<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Graph.JSON](./alfa-graph.graph.json.md)<!-- -->&lt;T&gt;
 

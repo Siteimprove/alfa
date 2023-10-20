@@ -4,7 +4,7 @@
 
 ## Diagnostic.message property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get message(): string;

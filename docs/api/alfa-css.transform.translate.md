@@ -4,7 +4,7 @@
 
 ## Transform.translate() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function translate<X extends LengthPercentage, Y extends LengthPercentage, Z extends Length>(x: X, y: Y, z: Z): Translate<X, Y, Z>;
@@ -18,7 +18,7 @@ function translate<X extends LengthPercentage, Y extends LengthPercentage, Z ext
 |  y | Y |  |
 |  z | Z |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Translate](./alfa-css.translate.md)<!-- -->&lt;X, Y, Z&gt;
+Translate&lt;X, Y, Z&gt;
 

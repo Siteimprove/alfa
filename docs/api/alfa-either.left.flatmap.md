@@ -4,12 +4,12 @@
 
 ## Left.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap(): Left<L>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Left](./alfa-either.left.md)<!-- -->&lt;L&gt;
 

@@ -4,7 +4,7 @@
 
 ## Response.EARL."http:headers" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "http:headers": Headers.EARL;

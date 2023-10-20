@@ -4,7 +4,7 @@
 
 ## Rectangle.right property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get right(): O;

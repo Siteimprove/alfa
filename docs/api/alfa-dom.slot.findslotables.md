@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#find-slotables](https://dom.spec.whatwg.org/#find-slotables)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function findSlotables(slot: Slot): Iterable<Slotable>;
@@ -18,7 +18,7 @@ function findSlotables(slot: Slot): Iterable<Slotable>;
 |  --- | --- | --- |
 |  slot | [Slot](./alfa-dom.slot.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;[Slotable](./alfa-dom.slotable.md)<!-- -->&gt;
+Iterable&lt;Slotable&gt;
 

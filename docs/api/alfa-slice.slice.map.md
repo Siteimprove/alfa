@@ -4,7 +4,7 @@
 
 ## Slice.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U, [index: number]>): Slice<U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U, [index: number]>): Slice<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;
 

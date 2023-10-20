@@ -4,7 +4,7 @@
 
 ## Color.named() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function named<C extends Named.Color>(color: C): Named<C>;
@@ -16,7 +16,7 @@ function named<C extends Named.Color>(color: C): Named<C>;
 |  --- | --- | --- |
 |  color | C |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Named](./alfa-css.named.md)<!-- -->&lt;C&gt;
+Named&lt;C&gt;
 

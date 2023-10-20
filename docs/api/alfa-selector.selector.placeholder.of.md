@@ -4,12 +4,12 @@
 
 ## Selector.Placeholder.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Placeholder;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Placeholder](./alfa-selector.selector.placeholder.md)
 

@@ -4,7 +4,7 @@
 
 ## Selector.Slotted.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(selectors: Iterable<Simple | Compound>): Slotted;
@@ -16,7 +16,7 @@ static of(selectors: Iterable<Simple | Compound>): Slotted;
 |  --- | --- | --- |
 |  selectors | Iterable&lt;[Simple](./alfa-selector.selector.simple.md) \| [Compound](./alfa-selector.selector.compound.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slotted](./alfa-selector.selector.slotted.md)
 

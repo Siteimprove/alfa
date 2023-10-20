@@ -4,7 +4,7 @@
 
 ## Selector.List.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: List): boolean;
@@ -16,7 +16,7 @@ equals(value: List): boolean;
 |  --- | --- | --- |
 |  value | [List](./alfa-selector.selector.list.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

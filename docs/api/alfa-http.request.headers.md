@@ -6,7 +6,7 @@
 
 [https://fetch.spec.whatwg.org/\#dom-request-headers](https://fetch.spec.whatwg.org/#dom-request-headers)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get headers(): Headers;

@@ -4,7 +4,7 @@
 
 ## Group.EARL."@type" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "@type": ["ptr:Pointer", "ptr:PointersGroup", "ptr:RelatedPointers"];

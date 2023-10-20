@@ -4,12 +4,12 @@
 
 ## Selector.Active.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Active;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Active](./alfa-selector.selector.active.md)
 

@@ -6,12 +6,12 @@
 
 The type of the targets of rules
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Target = {
         [K in Keys]: act.Rule.Target<RulesObject[K]>;
     }[Keys];
 ```
-<b>References:</b> [Rule.Target](./alfa-act.rule.target.md)
+**References:** [act.Rule.Target](./alfa-act.rule.target.md)
 

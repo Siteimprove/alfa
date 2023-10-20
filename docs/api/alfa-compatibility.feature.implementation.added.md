@@ -4,7 +4,7 @@
 
 ## Feature.Implementation.added property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly added: Browser.Version<I> | true;

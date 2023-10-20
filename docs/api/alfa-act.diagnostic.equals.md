@@ -4,7 +4,7 @@
 
 ## Diagnostic.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Diagnostic): boolean;
@@ -16,7 +16,7 @@ equals(value: Diagnostic): boolean;
 |  --- | --- | --- |
 |  value | [Diagnostic](./alfa-act.diagnostic.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -4,12 +4,12 @@
 
 ## Set\_2.toArray() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toArray(): Array<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Array&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Name.hasValue variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasValue: typeof predicate.hasValue

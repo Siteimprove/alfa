@@ -4,7 +4,7 @@
 
 ## Feature.isImplementer() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isImplementer<N extends Name>(feature: N, browser: Browser.Name): browser is Implementer<N>;
@@ -17,7 +17,7 @@ function isImplementer<N extends Name>(feature: N, browser: Browser.Name): brows
 |  feature | N |  |
 |  browser | [Browser.Name](./alfa-compatibility.browser.name.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 browser is [Implementer](./alfa-compatibility.feature.implementer.md)<!-- -->&lt;N&gt;
 

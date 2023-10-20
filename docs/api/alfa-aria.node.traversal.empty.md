@@ -4,7 +4,7 @@
 
 ## Node.Traversal.empty variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 empty: Traversal

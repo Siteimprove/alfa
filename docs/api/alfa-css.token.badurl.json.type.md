@@ -4,7 +4,7 @@
 
 ## Token.BadURL.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "bad-url";

@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-color/\#valdef-color-currentcolor](https://drafts.csswg.org/css-color/#valdef-color-currentcolor)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<Current>

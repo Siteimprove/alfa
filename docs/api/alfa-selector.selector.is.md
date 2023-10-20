@@ -4,7 +4,7 @@
 
 ## Selector.Is namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace Is 

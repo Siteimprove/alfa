@@ -4,7 +4,7 @@
 
 ## RuleTree.add() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 add(rules: Iterable<{
@@ -18,9 +18,9 @@ add(rules: Iterable<{
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rules | Iterable&lt;{ rule: [Rule](./alfa-dom.rule.md)<!-- -->; selector: [Selector](./alfa-selector.selector.md)<!-- -->; declarations: Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt;; }&gt; |  |
+|  rules | Iterable&lt;{ rule: Rule; selector: Selector; declarations: Iterable&lt;Declaration&gt;; }&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[RuleTree.Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt;
+Option&lt;[RuleTree.Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt;
 

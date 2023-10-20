@@ -4,12 +4,12 @@
 
 ## Shadow.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Shadow.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Shadow.JSON](./alfa-css.shadow.json.md)
 

@@ -4,12 +4,12 @@
 
 ## Token.CloseComment.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): CloseComment;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [CloseComment](./alfa-css.token.closecomment.md)
 

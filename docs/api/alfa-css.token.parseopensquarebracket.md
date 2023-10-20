@@ -4,7 +4,7 @@
 
 ## Token.parseOpenSquareBracket variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseOpenSquareBracket: Parser<Slice<Token>, OpenSquareBracket, string, []>

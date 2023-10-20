@@ -4,12 +4,19 @@
 
 ## Image.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-resolve(): Image<I>;
+resolve(resolver: Image.Resolver): Image.Canonical;
 ```
-<b>Returns:</b>
 
-[Image](./alfa-css.image.md)<!-- -->&lt;I&gt;
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Image.Resolver](./alfa-css.image.resolver.md) |  |
+
+**Returns:**
+
+[Image.Canonical](./alfa-css.image.canonical.md)
 

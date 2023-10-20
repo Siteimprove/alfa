@@ -4,7 +4,7 @@
 
 ## RGB.JSON.green property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 green: Number.Fixed.JSON | Percentage.Fixed.JSON;

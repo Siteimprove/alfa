@@ -4,7 +4,7 @@
 
 ## Selector.Relative namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace Relative 

@@ -4,7 +4,7 @@
 
 ## Token.ident variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 ident: typeof Ident.of

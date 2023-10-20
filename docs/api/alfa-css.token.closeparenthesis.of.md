@@ -4,12 +4,12 @@
 
 ## Token.CloseParenthesis.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): CloseParenthesis;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [CloseParenthesis](./alfa-css.token.closeparenthesis.md)
 

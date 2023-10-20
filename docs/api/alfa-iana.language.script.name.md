@@ -4,7 +4,7 @@
 
 ## Language.Script.Name type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Name = keyof Languages["script"];

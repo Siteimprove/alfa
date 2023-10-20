@@ -6,7 +6,7 @@
 
 Check if an unknown value implements the [Comparable](./alfa-comparable.comparable.md) interface.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isComparable<T>(value: unknown): value is Comparable<T>;
@@ -18,7 +18,7 @@ function isComparable<T>(value: unknown): value is Comparable<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Comparable](./alfa-comparable.comparable.md)<!-- -->&lt;T&gt;
 

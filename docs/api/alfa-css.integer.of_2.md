@@ -4,7 +4,7 @@
 
 ## Integer.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of(value: Calculation<"number">): Calculated;
@@ -16,7 +16,7 @@ export function of(value: Calculation<"number">): Calculated;
 |  --- | --- | --- |
 |  value | Calculation&lt;"number"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Calculated](./alfa-css.integer.calculated.md)
 

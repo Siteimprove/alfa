@@ -9,7 +9,7 @@
 > Use SIA-R66 version 2 instead
 > 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 _default: Rule.Atomic<Page, Text, Question.Metadata, Text>

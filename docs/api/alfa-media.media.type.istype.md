@@ -4,7 +4,7 @@
 
 ## Media.Type.isType() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isType(value: unknown): value is Type;
@@ -16,7 +16,7 @@ function isType(value: unknown): value is Type;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Type](./alfa-media.media.type.md)
 

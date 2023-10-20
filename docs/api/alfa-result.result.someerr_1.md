@@ -4,7 +4,7 @@
 
 ## Result.someErr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 someErr(predicate: Predicate<E>): this is Err<E>;
@@ -14,9 +14,9 @@ someErr(predicate: Predicate<E>): this is Err<E>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;E&gt; |  |
+|  predicate | Predicate&lt;E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-this is [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
+this is Err&lt;E&gt;
 

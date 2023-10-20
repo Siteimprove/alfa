@@ -4,7 +4,7 @@
 
 ## Result.noneErr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 noneErr<F extends E>(refinement: Refinement<E, F>): this is Result<T, Exclude<E, F>>;
@@ -14,9 +14,9 @@ noneErr<F extends E>(refinement: Refinement<E, F>): this is Result<T, Exclude<E,
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;E, F&gt; |  |
+|  refinement | Refinement&lt;E, F&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this is [Result](./alfa-result.result.md)<!-- -->&lt;T, Exclude&lt;E, F&gt;&gt;
 

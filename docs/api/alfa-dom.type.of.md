@@ -4,7 +4,7 @@
 
 ## Type.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<N extends string = string>(name: N, publicId?: Option<string>, systemId?: Option<string>): Type<N>;
@@ -15,10 +15,10 @@ static of<N extends string = string>(name: N, publicId?: Option<string>, systemI
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | N |  |
-|  publicId | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
-|  systemId | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
+|  publicId | Option&lt;string&gt; | _(Optional)_ |
+|  systemId | Option&lt;string&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Type](./alfa-dom.type.md)<!-- -->&lt;N&gt;
 

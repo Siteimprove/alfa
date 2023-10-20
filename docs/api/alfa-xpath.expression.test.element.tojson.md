@@ -4,12 +4,12 @@
 
 ## Expression.Test.Element.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Element.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Element.JSON](./alfa-xpath.expression.test.element.json.md)
 

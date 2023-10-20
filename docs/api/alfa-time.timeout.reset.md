@@ -4,7 +4,7 @@
 
 ## Timeout.reset() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reset(time?: Time): Timeout;
@@ -14,9 +14,9 @@ reset(time?: Time): Timeout;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  time | [Time](./alfa-time.time.md) | <i>(Optional)</i> |
+|  time | [Time](./alfa-time.time.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Timeout](./alfa-time.timeout.md)
 

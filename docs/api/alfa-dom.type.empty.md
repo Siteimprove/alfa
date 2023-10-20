@@ -4,12 +4,12 @@
 
 ## Type.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty(): Type;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Type](./alfa-dom.type.md)
 

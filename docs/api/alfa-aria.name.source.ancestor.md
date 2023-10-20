@@ -4,7 +4,7 @@
 
 ## Name.Source.Ancestor namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Ancestor 

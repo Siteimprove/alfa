@@ -4,7 +4,7 @@
 
 ## Keyword.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T extends string>(value: T): Keyword<T>;
@@ -16,7 +16,7 @@ static of<T extends string>(value: T): Keyword<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Keyword](./alfa-css.keyword.md)<!-- -->&lt;T&gt;
 

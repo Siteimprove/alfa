@@ -4,7 +4,7 @@
 
 ## Lazy.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Lazy<U>>): Lazy<U>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<T, Lazy<U>>): Lazy<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;U&gt;
 

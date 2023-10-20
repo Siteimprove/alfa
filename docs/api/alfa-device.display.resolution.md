@@ -6,7 +6,7 @@
 
 [https://www.w3.org/TR/mediaqueries/\#resolution](https://www.w3.org/TR/mediaqueries/#resolution)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get resolution(): number;

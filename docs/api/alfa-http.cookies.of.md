@@ -4,7 +4,7 @@
 
 ## Cookies.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(cookies: Iterable<Cookie>): Cookies;
@@ -14,9 +14,9 @@ static of(cookies: Iterable<Cookie>): Cookies;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  cookies | Iterable&lt;[Cookie](./alfa-http.cookie.md)<!-- -->&gt; |  |
+|  cookies | Iterable&lt;Cookie&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Cookies](./alfa-http.cookies.md)
 

@@ -4,10 +4,10 @@
 
 ## Headers.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Array<Header.JSON> 
 ```
-<b>Extends:</b> Array&lt;[Header.JSON](./alfa-http.header.json.md)<!-- -->&gt;
+**Extends:** Array&lt;[Header.JSON](./alfa-http.header.json.md)<!-- -->&gt;
 

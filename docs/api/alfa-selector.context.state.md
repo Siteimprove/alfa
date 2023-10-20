@@ -4,7 +4,7 @@
 
 ## Context.State enum
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 enum State 

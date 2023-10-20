@@ -4,12 +4,12 @@
 
 ## Rule.toEARL() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toEARL(): Rule.EARL;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Rule.EARL](./alfa-act.rule.earl.md)
 

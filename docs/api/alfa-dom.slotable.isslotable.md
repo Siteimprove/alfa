@@ -4,7 +4,7 @@
 
 ## Slotable.isSlotable() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSlotable(value: unknown): value is Slotable;
@@ -16,7 +16,7 @@ function isSlotable(value: unknown): value is Slotable;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Slotable](./alfa-dom.slotable.md)
 

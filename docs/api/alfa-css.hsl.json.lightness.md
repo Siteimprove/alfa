@@ -4,7 +4,7 @@
 
 ## HSL.JSON.lightness property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 lightness: Percentage.Fixed.JSON;

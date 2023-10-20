@@ -4,7 +4,7 @@
 
 ## Media.Feature.isHeight variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isHeight: typeof Height.isHeight

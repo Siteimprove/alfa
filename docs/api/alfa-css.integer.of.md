@@ -4,7 +4,7 @@
 
 ## Integer.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of(value: number): Fixed;
@@ -16,7 +16,7 @@ export function of(value: number): Fixed;
 |  --- | --- | --- |
 |  value | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.integer.fixed.md)
 

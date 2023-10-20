@@ -4,12 +4,12 @@
 
 ## Selector.Relative.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Relative.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Relative.JSON](./alfa-selector.selector.relative.json.md)
 

@@ -4,7 +4,7 @@
 
 ## Trampoline.tee() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tee(callback: Callback<T>): Trampoline<T>;
@@ -14,9 +14,9 @@ tee(callback: Callback<T>): Trampoline<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+|  callback | Callback&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Media.Condition.isCondition() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isCondition(value: unknown): value is Condition;
@@ -16,7 +16,7 @@ function isCondition(value: unknown): value is Condition;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Condition](./alfa-media.media.condition.md)
 

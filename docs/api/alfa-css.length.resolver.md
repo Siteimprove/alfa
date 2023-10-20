@@ -4,7 +4,7 @@
 
 ## Length.Resolver interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface Resolver 

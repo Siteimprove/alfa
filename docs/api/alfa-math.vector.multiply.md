@@ -4,7 +4,7 @@
 
 ## Vector.multiply() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function multiply(v: Vector, s: number): Vector;
@@ -17,7 +17,7 @@ function multiply(v: Vector, s: number): Vector;
 |  v | [Vector](./alfa-math.vector.md) |  |
 |  s | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Vector](./alfa-math.vector.md)
 

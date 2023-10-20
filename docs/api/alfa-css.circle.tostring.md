@@ -4,12 +4,12 @@
 
 ## Circle.toString() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toString(): string;
 ```
-<b>Returns:</b>
+**Returns:**
 
 string
 

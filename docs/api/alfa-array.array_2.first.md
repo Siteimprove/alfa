@@ -4,7 +4,7 @@
 
 ## Array\_2.first() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function first<T>(array: ReadonlyArray<T>): Option<T>;
@@ -16,7 +16,7 @@ function first<T>(array: ReadonlyArray<T>): Option<T>;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

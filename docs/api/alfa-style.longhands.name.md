@@ -4,10 +4,10 @@
 
 ## Longhands.Name type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Name = keyof Property;
 ```
-<b>References:</b> [Property](./alfa-style.longhands.property.md)
+**References:** [Property](./alfa-style.longhands.property.md)
 

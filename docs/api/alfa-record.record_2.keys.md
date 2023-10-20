@@ -4,12 +4,12 @@
 
 ## Record\_2.keys() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 keys(): Iterable<Record.Key<T>>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;Record.Key&lt;T&gt;&gt;
+Iterable&lt;[Record.Key](./alfa-record.record_2.key.md)<!-- -->&lt;T&gt;&gt;
 

@@ -4,7 +4,7 @@
 
 ## Scale.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(x: Number, y: Number): Scale;
@@ -17,7 +17,7 @@ static of(x: Number, y: Number): Scale;
 |  x | Number |  |
 |  y | Number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Scale](./alfa-css.scale.md)
 

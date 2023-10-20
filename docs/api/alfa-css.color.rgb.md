@@ -4,7 +4,7 @@
 
 ## Color.rgb() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function rgb<C extends Number.Canonical | Percentage.Canonical, A extends Number.Canonical | Percentage.Canonical>(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
@@ -19,7 +19,7 @@ function rgb<C extends Number.Canonical | Percentage.Canonical, A extends Number
 |  blue | C |  |
 |  alpha | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[RGB](./alfa-css.rgb.md)<!-- -->&lt;C, A&gt;
+RGB&lt;C, A&gt;
 

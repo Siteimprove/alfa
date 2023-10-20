@@ -4,7 +4,7 @@
 
 ## Tuple.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T, Value.HasCalculation<T>>;
@@ -16,7 +16,7 @@ static of<T extends Array<Value>>(...values: Readonly<T>): Tuple<T, Value.HasCal
 |  --- | --- | --- |
 |  values | Readonly&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Tuple](./alfa-css.tuple.md)<!-- -->&lt;T, Value.HasCalculation&lt;T&gt;&gt;
 

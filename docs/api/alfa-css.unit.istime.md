@@ -4,7 +4,7 @@
 
 ## Unit.isTime() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isTime(unit: string): unit is Time;
@@ -16,7 +16,7 @@ function isTime(unit: string): unit is Time;
 |  --- | --- | --- |
 |  unit | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 unit is [Time](./alfa-css.unit.time.md)
 

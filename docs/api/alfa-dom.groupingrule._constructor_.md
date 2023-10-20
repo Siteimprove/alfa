@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `GroupingRule` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(rules: Array<Rule>);
@@ -16,5 +16,5 @@ protected constructor(rules: Array<Rule>);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rules | Array&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
+|  rules | Array&lt;Rule&gt; |  |
 

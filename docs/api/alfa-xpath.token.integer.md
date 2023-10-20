@@ -4,7 +4,7 @@
 
 ## Token.Integer namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Integer 

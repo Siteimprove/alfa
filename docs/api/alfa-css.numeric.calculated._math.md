@@ -4,7 +4,7 @@
 
 ## Numeric.Calculated.\_math property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _math: ToMath<T>;

@@ -4,7 +4,7 @@
 
 ## Predicate.nand() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function nand<T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T, A>>): Predicate<T, A>;
@@ -16,7 +16,7 @@ function nand<T, A extends Array<unknown> = []>(...predicates: Array<Predicate<T
 |  --- | --- | --- |
 |  predicates | Array&lt;[Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;
 

@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#visited-pseudo](https://drafts.csswg.org/selectors/#visited-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Visited extends Pseudo.Class<"visited"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"visited"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"visited"&gt;
 
 ## Methods
 

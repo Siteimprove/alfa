@@ -4,12 +4,12 @@
 
 ## Outcome.Passed.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Passed.JSON<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Passed.JSON](./alfa-act.outcome.passed.json.md)<!-- -->&lt;T&gt;
 

@@ -6,7 +6,7 @@
 
 A vector representing \[xy, xz, yz\] skewing.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 skew: Vector;

@@ -4,7 +4,7 @@
 
 ## Token.Colon.isColon() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isColon(value: unknown): value is Colon;
@@ -16,7 +16,7 @@ function isColon(value: unknown): value is Colon;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Colon](./alfa-css.token.colon.md)
 

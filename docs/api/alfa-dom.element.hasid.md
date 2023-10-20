@@ -4,7 +4,7 @@
 
 ## Element.hasId variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasId: typeof predicate.hasId

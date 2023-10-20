@@ -4,7 +4,7 @@
 
 ## Collection.Keyed namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Keyed 

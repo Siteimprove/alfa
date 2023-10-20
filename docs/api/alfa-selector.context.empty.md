@@ -4,12 +4,12 @@
 
 ## Context.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty(): Context;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Context](./alfa-selector.context.md)
 

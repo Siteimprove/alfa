@@ -4,10 +4,10 @@
 
 ## Style.Initial type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Initial<N extends Name> = Longhands.Initial<N>;
 ```
-<b>References:</b> [Longhands.Initial](./alfa-style.longhands.initial.md)
+**References:** [Longhands.Initial](./alfa-style.longhands.initial.md)
 

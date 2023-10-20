@@ -4,10 +4,10 @@
 
 ## Translate.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Canonical = Translate<LengthPercentage.Canonical, LengthPercentage.Canonical, Length.Canonical>;
 ```
-<b>References:</b> [Translate](./alfa-css.translate.md)<!-- -->, [LengthPercentage.Canonical](./alfa-css.lengthpercentage.canonical.md)<!-- -->, [Length.Canonical](./alfa-css.length.canonical.md)
+**References:** [Translate](./alfa-css.translate.md)<!-- -->, [LengthPercentage.Canonical](./alfa-css.lengthpercentage.canonical.md)<!-- -->, [Length.Canonical](./alfa-css.length.canonical.md)
 

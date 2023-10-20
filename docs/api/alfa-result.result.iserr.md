@@ -4,7 +4,7 @@
 
 ## Result.isErr() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isErr<T, E>(value: Iterable<T>): value is Err<E>;
@@ -16,7 +16,7 @@ function isErr<T, E>(value: Iterable<T>): value is Err<E>;
 |  --- | --- | --- |
 |  value | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
+value is Err&lt;E&gt;
 

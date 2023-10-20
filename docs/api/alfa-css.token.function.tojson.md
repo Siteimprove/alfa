@@ -4,12 +4,12 @@
 
 ## Token.Function.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Function.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Function.JSON](./alfa-css.token.function.json.md)
 

@@ -4,7 +4,7 @@
 
 ## Tuple.equals() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function equals<T extends Tuple>(a: T, b: T): boolean;
@@ -17,7 +17,7 @@ export function equals<T extends Tuple>(a: T, b: T): boolean;
 |  a | T |  |
 |  b | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

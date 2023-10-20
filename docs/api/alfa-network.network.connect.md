@@ -4,7 +4,7 @@
 
 ## Network.connect() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 connect(from: N, to: N, ...edges: Array<E>): Network<N, E>;
@@ -18,7 +18,7 @@ connect(from: N, to: N, ...edges: Array<E>): Network<N, E>;
 |  to | N |  |
 |  edges | Array&lt;E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

@@ -4,7 +4,7 @@
 
 ## Ok.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T, E>(this: Ok<Result<T, E>>): Result<T, E>;
@@ -14,9 +14,9 @@ flatten<T, E>(this: Ok<Result<T, E>>): Result<T, E>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | [Ok](./alfa-result.ok.md)<!-- -->&lt;[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;&gt; |  |
+|  this | [Ok](./alfa-result.ok.md)<!-- -->&lt;Result&lt;T, E&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
+Result&lt;T, E&gt;
 

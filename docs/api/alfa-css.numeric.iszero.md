@@ -4,7 +4,7 @@
 
 ## Numeric.isZero() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isZero(value: Fixed): boolean;
@@ -16,7 +16,7 @@ export function isZero(value: Fixed): boolean;
 |  --- | --- | --- |
 |  value | [Fixed](./alfa-css.numeric.fixed.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

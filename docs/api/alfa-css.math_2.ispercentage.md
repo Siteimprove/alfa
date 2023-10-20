@@ -4,7 +4,7 @@
 
 ## Math\_2.isPercentage() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isPercentage(value: unknown): value is Math<"percentage">;
@@ -16,7 +16,7 @@ function isPercentage(value: unknown): value is Math<"percentage">;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Math&lt;"percentage"&gt;
+value is [Math](./alfa-css.math_2.md)<!-- -->&lt;"percentage"&gt;
 

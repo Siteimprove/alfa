@@ -4,7 +4,7 @@
 
 ## Array\_2.compare() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function compare<T extends Comparable<U>, U = T>(a: ReadonlyArray<T>, b: Iterable<U>): Comparison;
@@ -17,7 +17,7 @@ function compare<T extends Comparable<U>, U = T>(a: ReadonlyArray<T>, b: Iterabl
 |  a | ReadonlyArray&lt;T&gt; |  |
 |  b | Iterable&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

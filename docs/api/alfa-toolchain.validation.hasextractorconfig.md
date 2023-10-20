@@ -6,7 +6,7 @@
 
 Checks that a directory includes an API extractor config file.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function hasExtractorConfig(name: string, dir: string): Array<string>;
@@ -19,7 +19,7 @@ export declare function hasExtractorConfig(name: string, dir: string): Array<str
 |  name | string |  |
 |  dir | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Array&lt;string&gt;
 

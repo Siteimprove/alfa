@@ -4,7 +4,7 @@
 
 ## deprecatedRules.DR34 variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 _default: Rule.Atomic<Page, Element<string>, Question.Metadata, Element<string>>

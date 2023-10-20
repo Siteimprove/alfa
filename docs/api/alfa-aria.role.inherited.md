@@ -6,10 +6,10 @@
 
 The inherited roles for the specified role.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Inherited<N extends Name> = N extends "roletype" | "none" ? never : Members<Roles[N]["inherited"]>;
 ```
-<b>References:</b> [Name](./alfa-aria.role.name.md)
+**References:** [Name](./alfa-aria.role.name.md)
 

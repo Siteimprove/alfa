@@ -4,7 +4,7 @@
 
 ## Media.Not.isNot() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isNot(value: unknown): value is Not;
@@ -16,7 +16,7 @@ function isNot(value: unknown): value is Not;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Not](./alfa-media.media.not.md)
 

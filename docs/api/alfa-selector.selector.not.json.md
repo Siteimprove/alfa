@@ -4,12 +4,12 @@
 
 ## Selector.Not.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Pseudo.Class.JSON<"not"> 
 ```
-<b>Extends:</b> [Pseudo.Class.JSON](./alfa-selector.selector.pseudo.class.json.md)<!-- -->&lt;"not"&gt;
+**Extends:** [Pseudo.Class.JSON](./alfa-selector.selector.pseudo.class.json.md)<!-- -->&lt;"not"&gt;
 
 ## Properties
 

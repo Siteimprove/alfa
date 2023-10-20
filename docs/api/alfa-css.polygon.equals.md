@@ -4,7 +4,7 @@
 
 ## Polygon.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Polygon): boolean;
@@ -16,7 +16,7 @@ equals(value: Polygon): boolean;
 |  --- | --- | --- |
 |  value | [Polygon](./alfa-css.polygon.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

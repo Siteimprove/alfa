@@ -4,12 +4,12 @@
 
 ## List.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): List.JSON<V>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [List.JSON](./alfa-css.list.json.md)<!-- -->&lt;V&gt;
 

@@ -6,17 +6,17 @@
 
 [https://www.w3.org/TR/json-ld/\#dfn-context-definition](https://www.w3.org/TR/json-ld/#dfn-context-definition)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface Context extends JSON.Object 
 ```
-<b>Extends:</b> JSON.Object
+**Extends:** JSON.Object
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@base"?](./alfa-json-ld.context.__base_.md) |  | string | <i>(Optional)</i> |
-|  ["@version"?](./alfa-json-ld.context.__version_.md) |  | 1.1 | <i>(Optional)</i> |
+|  ["@base"?](./alfa-json-ld.context.__base_.md) |  | string | _(Optional)_ |
+|  ["@version"?](./alfa-json-ld.context.__version_.md) |  | 1.1 | _(Optional)_ |
 

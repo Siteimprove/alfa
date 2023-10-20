@@ -4,7 +4,7 @@
 
 ## Selector.Part.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(idents: Iterable<Token.Ident>): Part;
@@ -16,7 +16,7 @@ static of(idents: Iterable<Token.Ident>): Part;
 |  --- | --- | --- |
 |  idents | Iterable&lt;[Token.Ident](./alfa-css.token.ident.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Part](./alfa-selector.selector.part.md)
 

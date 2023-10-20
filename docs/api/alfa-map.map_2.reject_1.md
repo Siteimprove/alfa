@@ -4,7 +4,7 @@
 
 ## Map\_2.reject() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reject(predicate: Predicate<V, [key: K]>): Map<K, V>;
@@ -14,9 +14,9 @@ reject(predicate: Predicate<V, [key: K]>): Map<K, V>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
+|  predicate | Predicate&lt;V, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Map&lt;K, V&gt;
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;
 

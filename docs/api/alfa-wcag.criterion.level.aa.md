@@ -6,12 +6,12 @@
 
 All criteria of level AA.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type AA<V extends Version = Version.Recommendation> = Of<"AA", V>;
 ```
-<b>References:</b> [Version](./alfa-wcag.criterion.version.md)<!-- -->, [Version.Recommendation](./alfa-wcag.criterion.version.recommendation.md)
+**References:** [Version](./alfa-wcag.criterion.version.md)<!-- -->, [Version.Recommendation](./alfa-wcag.criterion.version.recommendation.md)
 
 ## Remarks
 

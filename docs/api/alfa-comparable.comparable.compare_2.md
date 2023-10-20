@@ -6,7 +6,7 @@
 
 Compare two big integers.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function compare(a: bigint, b: bigint): Comparison;
@@ -19,7 +19,7 @@ function compare(a: bigint, b: bigint): Comparison;
 |  a | bigint |  |
 |  b | bigint |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

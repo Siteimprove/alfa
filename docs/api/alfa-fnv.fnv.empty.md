@@ -4,12 +4,12 @@
 
 ## FNV.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty(): Hash;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Hash](./alfa-hash.hash.md)
 

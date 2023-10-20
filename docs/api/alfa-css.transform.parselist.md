@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-transforms/\#typedef-transform-list](https://drafts.csswg.org/css-transforms/#typedef-transform-list)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseList: import("../../syntax").Parser<List<Transform, boolean>>

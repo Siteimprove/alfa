@@ -4,7 +4,7 @@
 
 ## Refinement.isNull() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isNull(value: unknown): value is null;
@@ -16,7 +16,7 @@ export function isNull(value: unknown): value is null;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is null
 

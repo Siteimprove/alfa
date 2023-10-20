@@ -4,7 +4,7 @@
 
 ## Element.JSON.name property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 name: string | null;

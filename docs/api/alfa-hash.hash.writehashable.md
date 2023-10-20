@@ -4,7 +4,7 @@
 
 ## Hash.writeHashable() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeHashable(data: Hashable): this;
@@ -14,9 +14,9 @@ writeHashable(data: Hashable): this;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  data | [Hashable](./alfa-hash.hashable.md) |  |
+|  data | Hashable |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

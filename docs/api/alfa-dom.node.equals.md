@@ -4,7 +4,7 @@
 
 ## Node.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Node): boolean;
@@ -16,7 +16,7 @@ equals(value: Node): boolean;
 |  --- | --- | --- |
 |  value | [Node](./alfa-dom.node.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

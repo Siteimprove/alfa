@@ -4,7 +4,7 @@
 
 ## MediaRule.isMediaRule() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isMediaRule(value: unknown): value is MediaRule;
@@ -16,7 +16,7 @@ function isMediaRule(value: unknown): value is MediaRule;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [MediaRule](./alfa-dom.mediarule.md)
 

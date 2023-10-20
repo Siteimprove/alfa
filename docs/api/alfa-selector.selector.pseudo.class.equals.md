@@ -4,7 +4,7 @@
 
 ## Selector.Pseudo.Class.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Class): boolean;
@@ -16,7 +16,7 @@ equals(value: Class): boolean;
 |  --- | --- | --- |
 |  value | [Class](./alfa-selector.selector.pseudo.class.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

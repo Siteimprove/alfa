@@ -4,12 +4,12 @@
 
 ## Media.Or.iterator() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 iterator(): Iterator<Feature>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Iterator&lt;[Feature](./alfa-media.media.feature.md)<!-- -->&gt;
 

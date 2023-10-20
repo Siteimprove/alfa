@@ -4,12 +4,12 @@
 
 ## Record\_2.toArray() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toArray(): Array<Record.Entry<T>>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;Record.Entry&lt;T&gt;&gt;
+Array&lt;[Record.Entry](./alfa-record.record_2.entry.md)<!-- -->&lt;T&gt;&gt;
 

@@ -6,12 +6,12 @@
 
 [https://html.spec.whatwg.org/\#void-elements](https://html.spec.whatwg.org/#void-elements)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isVoid(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

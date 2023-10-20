@@ -4,7 +4,7 @@
 
 ## Sequence.isCons() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isCons<T>(value: unknown): value is Cons<T>;
@@ -16,7 +16,7 @@ function isCons<T>(value: unknown): value is Cons<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is [Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
+value is Cons&lt;T&gt;
 

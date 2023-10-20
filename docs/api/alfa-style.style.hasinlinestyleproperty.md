@@ -4,7 +4,7 @@
 
 ## Style.hasInlineStyleProperty variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasInlineStyleProperty: typeof element.hasInlineStyleProperty

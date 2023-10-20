@@ -4,10 +4,10 @@
 
 ## Style.Specified type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Specified<N extends Name> = Longhands.Specified<N>;
 ```
-<b>References:</b> [Longhands.Specified](./alfa-style.longhands.specified.md)
+**References:** [Longhands.Specified](./alfa-style.longhands.specified.md)
 

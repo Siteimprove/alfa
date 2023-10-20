@@ -4,12 +4,12 @@
 
 ## Expression.Test.Text.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Text;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Text](./alfa-xpath.expression.test.text.md)
 

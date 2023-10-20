@@ -4,9 +4,9 @@
 
 ## alfa-hash package
 
-## Classes
+## Abstract Classes
 
-|  Class | Description |
+|  Abstract Class | Description |
 |  --- | --- |
 |  [Hash](./alfa-hash.hash.md) |  |
 

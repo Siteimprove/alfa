@@ -4,7 +4,7 @@
 
 ## Collection.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Collection<Mapper<T, U>>): Collection<U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Collection<Mapper<T, U>>): Collection<U>;
 |  --- | --- | --- |
 |  mapper | [Collection](./alfa-collection.collection.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Collection](./alfa-collection.collection.md)<!-- -->&lt;U&gt;
 

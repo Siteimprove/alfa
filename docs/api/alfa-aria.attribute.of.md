@@ -4,7 +4,7 @@
 
 ## Attribute.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<N extends Attribute.Name>(name: N, value: string): Attribute<N>;
@@ -17,7 +17,7 @@ static of<N extends Attribute.Name>(name: N, value: string): Attribute<N>;
 |  name | N |  |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Attribute](./alfa-aria.attribute.md)<!-- -->&lt;N&gt;
 

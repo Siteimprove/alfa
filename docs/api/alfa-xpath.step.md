@@ -5,7 +5,7 @@
 ## step() function
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function step(left: Builder<Expression.Step | Expression.Path>, right: Builder<Expression.Step>): Builder.Path;
@@ -18,7 +18,7 @@ export declare function step(left: Builder<Expression.Step | Expression.Path>, r
 |  left | [Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Step](./alfa-xpath.expression.step.md) \| [Expression.Path](./alfa-xpath.expression.path.md)<!-- -->&gt; |  |
 |  right | [Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Step](./alfa-xpath.expression.step.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Builder.Path](./alfa-xpath.builder.path.md)
 

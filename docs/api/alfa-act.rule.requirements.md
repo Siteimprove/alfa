@@ -4,7 +4,7 @@
 
 ## Rule.requirements property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get requirements(): ReadonlyArray<Requirement>;

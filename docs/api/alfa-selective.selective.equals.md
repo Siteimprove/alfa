@@ -4,7 +4,7 @@
 
 ## Selective.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<S, T>(value: Selective<S, T>): boolean;
@@ -16,7 +16,7 @@ equals<S, T>(value: Selective<S, T>): boolean;
 |  --- | --- | --- |
 |  value | [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

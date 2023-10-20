@@ -4,7 +4,7 @@
 
 ## Expression.Axis.axis property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get axis(): Axis.Type;

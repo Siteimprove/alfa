@@ -4,7 +4,7 @@
 
 ## Vector.size() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function size(v: Vector): number;
@@ -16,7 +16,7 @@ function size(v: Vector): number;
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

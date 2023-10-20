@@ -6,7 +6,7 @@
 
 Convertible units are sets of units where each unit within a given set can be converted to another unit within the same set. With the exception of relative lengths, all units defined in CSS are convertible.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface Convertible<U extends string> 

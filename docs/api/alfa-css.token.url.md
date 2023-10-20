@@ -4,7 +4,7 @@
 
 ## Token.url variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 url: typeof URL.of

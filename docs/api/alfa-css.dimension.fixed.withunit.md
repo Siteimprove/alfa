@@ -4,7 +4,7 @@
 
 ## Dimension.Fixed.withUnit() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract withUnit<V extends Dimensions<T>[1]>(unit: V): Fixed<T, V>;
@@ -16,7 +16,7 @@ abstract withUnit<V extends Dimensions<T>[1]>(unit: V): Fixed<T, V>;
 |  --- | --- | --- |
 |  unit | V |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.dimension.fixed.md)<!-- -->&lt;T, V&gt;
 

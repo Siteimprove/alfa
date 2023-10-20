@@ -6,7 +6,7 @@
 
 For deprecated rules. These rules are deprecated and will be removed permanently after some grace period.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Deprecated: Stability<"deprecated">

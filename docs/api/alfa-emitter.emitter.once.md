@@ -4,12 +4,12 @@
 
 ## Emitter.once() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 once(): Promise<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;T&gt;
 

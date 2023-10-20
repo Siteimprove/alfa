@@ -5,7 +5,7 @@
 ## Validation.validate() function
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function validate(cwd: string): Promise<void>;
@@ -17,7 +17,7 @@ export declare function validate(cwd: string): Promise<void>;
 |  --- | --- | --- |
 |  cwd | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;void&gt;
 

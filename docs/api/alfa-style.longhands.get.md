@@ -4,7 +4,7 @@
 
 ## Longhands.get() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function get<N extends Name>(name: N): Property[N];
@@ -16,7 +16,7 @@ export function get<N extends Name>(name: N): Property[N];
 |  --- | --- | --- |
 |  name | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Property](./alfa-style.longhands.property.md)<!-- -->\[N\]
 

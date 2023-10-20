@@ -4,7 +4,7 @@
 
 ## Style.isVisible variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isVisible: typeof node.isVisible

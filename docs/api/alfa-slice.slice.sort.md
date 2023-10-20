@@ -4,7 +4,7 @@
 
 ## Slice.sort() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 sort<T extends Comparable<T>>(this: Slice<T>): Slice<T>;
@@ -16,7 +16,7 @@ sort<T extends Comparable<T>>(this: Slice<T>): Slice<T>;
 |  --- | --- | --- |
 |  this | [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

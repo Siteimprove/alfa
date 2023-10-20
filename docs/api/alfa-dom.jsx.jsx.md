@@ -6,7 +6,7 @@
 
 [https://www.typescriptlang.org/docs/handbook/jsx.html](https://www.typescriptlang.org/docs/handbook/jsx.html)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace JSX 

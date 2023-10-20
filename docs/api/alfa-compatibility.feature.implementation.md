@@ -4,7 +4,7 @@
 
 ## Feature.Implementation interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface Implementation<N extends Name = Name, I extends Implementer<N> = Implementer<N>> 
@@ -15,5 +15,5 @@ interface Implementation<N extends Name = Name, I extends Implementer<N> = Imple
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [added](./alfa-compatibility.feature.implementation.added.md) | <code>readonly</code> | [Browser.Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;I&gt; \| true |  |
-|  [removed?](./alfa-compatibility.feature.implementation.removed.md) | <code>readonly</code> | [Browser.Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;I&gt; | <i>(Optional)</i> |
+|  [removed?](./alfa-compatibility.feature.implementation.removed.md) | <code>readonly</code> | [Browser.Version](./alfa-compatibility.browser.version.md)<!-- -->&lt;I&gt; | _(Optional)_ |
 

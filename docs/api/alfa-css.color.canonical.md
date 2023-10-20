@@ -4,10 +4,10 @@
 
 ## Color.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Canonical = Current | System | RGB.Canonical;
 ```
-<b>References:</b> [Current](./alfa-css.current.md)<!-- -->, [System](./alfa-css.system.md)<!-- -->, [RGB.Canonical](./alfa-css.rgb.canonical.md)
+**References:** [RGB.Canonical](./alfa-css.rgb.canonical.md)
 

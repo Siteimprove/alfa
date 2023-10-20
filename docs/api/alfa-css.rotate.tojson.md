@@ -4,12 +4,12 @@
 
 ## Rotate.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Rotate.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Rotate.JSON](./alfa-css.rotate.json.md)
 

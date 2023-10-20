@@ -4,7 +4,7 @@
 
 ## Selector.Relative.selector property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get selector(): Simple | Compound | Complex;

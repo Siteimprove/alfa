@@ -4,7 +4,7 @@
 
 ## Scope.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Scope): boolean;
@@ -16,7 +16,7 @@ equals(value: Scope): boolean;
 |  --- | --- | --- |
 |  value | [Scope](./alfa-rules.scope.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

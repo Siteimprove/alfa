@@ -4,7 +4,7 @@
 
 ## Token.isString() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isString(value: unknown): value is String;
@@ -16,7 +16,7 @@ function isString(value: unknown): value is String;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [String](./alfa-xpath.token.string.md)
 

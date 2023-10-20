@@ -4,7 +4,7 @@
 
 ## Tuple.every() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function every<T extends Tuple>(tuple: T, predicate: Predicate<Item<T>, [index: number]>): boolean;
@@ -15,9 +15,9 @@ export function every<T extends Tuple>(tuple: T, predicate: Predicate<Item<T>, [
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -4,7 +4,7 @@
 
 ## Table.groups property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get groups(): Sequence<Group>;

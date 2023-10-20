@@ -6,12 +6,12 @@
 
 Check if this role is a widget.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isWidget(): this is Role<Role.Widget>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Role](./alfa-aria.role.md)<!-- -->&lt;[Role.Widget](./alfa-aria.role.widget.md)<!-- -->&gt;
 

@@ -4,7 +4,7 @@
 
 ## Token.Character.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: number): Character;
@@ -16,7 +16,7 @@ static of(value: number): Character;
 |  --- | --- | --- |
 |  value | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Character](./alfa-xpath.token.character.md)
 

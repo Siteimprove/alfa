@@ -4,7 +4,7 @@
 
 ## Question.Options.diagnostic property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly diagnostic?: Diagnostic;

@@ -4,12 +4,12 @@
 
 ## Question.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Question.JSON<TYPE, SUBJECT, CONTEXT, ANSWER, URI>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Question.JSON](./alfa-act.question.json.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, URI&gt;
 

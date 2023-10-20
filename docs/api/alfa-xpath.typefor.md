@@ -5,10 +5,10 @@
 ## TypeFor type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type TypeFor<V extends Value> = Descriptor.For<V, Type>;
 ```
-<b>References:</b> [Value](./alfa-xpath.value.md)<!-- -->, [Type](./alfa-xpath.type.md)
+**References:** [Value](./alfa-xpath.value.md)<!-- -->, [Type](./alfa-xpath.type.md)
 

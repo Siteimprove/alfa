@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.filter() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 filter<U extends T>(refinement: Refinement<T, U, [index: number]>): Indexed<U>;
@@ -14,9 +14,9 @@ filter<U extends T>(refinement: Refinement<T, U, [index: number]>): Indexed<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  refinement | Refinement&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;
 

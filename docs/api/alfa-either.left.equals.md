@@ -4,7 +4,7 @@
 
 ## Left.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<L>(value: Left<L>): boolean;
@@ -16,7 +16,7 @@ equals<L>(value: Left<L>): boolean;
 |  --- | --- | --- |
 |  value | [Left](./alfa-either.left.md)<!-- -->&lt;L&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

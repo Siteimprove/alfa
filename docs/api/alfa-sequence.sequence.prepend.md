@@ -4,7 +4,7 @@
 
 ## Sequence.prepend() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 prepend(value: T): Sequence<T>;
@@ -16,7 +16,7 @@ prepend(value: T): Sequence<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

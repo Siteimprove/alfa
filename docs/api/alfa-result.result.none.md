@@ -4,7 +4,7 @@
 
 ## Result.none() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 none<U extends T>(refinement: Refinement<T, U>): this is Result<Exclude<T, U>, E>;
@@ -14,9 +14,9 @@ none<U extends T>(refinement: Refinement<T, U>): this is Result<Exclude<T, U>, E
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this is [Result](./alfa-result.result.md)<!-- -->&lt;Exclude&lt;T, U&gt;, E&gt;
 

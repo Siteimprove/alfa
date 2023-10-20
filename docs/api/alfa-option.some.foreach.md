@@ -4,7 +4,7 @@
 
 ## Some.forEach() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 forEach(mapper: Mapper<T, void>): void;
@@ -16,7 +16,7 @@ forEach(mapper: Mapper<T, void>): void;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, void&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

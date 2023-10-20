@@ -4,12 +4,12 @@
 
 ## LengthPercentage.ILengthPercentage interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface ILengthPercentage<CALC extends boolean = boolean> extends Value<"length-percentage", CALC, "length">, Resolvable<Length.Canonical, Resolver> 
 ```
-<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;"length-percentage", CALC, "length"&gt;, Resolvable&lt;[Length.Canonical](./alfa-css.length.canonical.md)<!-- -->, [Resolver](./alfa-css.lengthpercentage.resolver.md)<!-- -->&gt;
+**Extends:** Value&lt;"length-percentage", CALC, "length"&gt;, Resolvable&lt;[Length.Canonical](./alfa-css.length.canonical.md)<!-- -->, [Resolver](./alfa-css.lengthpercentage.resolver.md)<!-- -->&gt;
 
 ## Methods
 

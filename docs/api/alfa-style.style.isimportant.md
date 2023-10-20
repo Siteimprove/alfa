@@ -4,7 +4,7 @@
 
 ## Style.isImportant variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isImportant: typeof element.isImportant

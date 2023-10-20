@@ -4,7 +4,7 @@
 
 ## Selector.Pseudo.Class.matches() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 matches(element: dom.Element, context?: Context): boolean;
@@ -14,10 +14,10 @@ matches(element: dom.Element, context?: Context): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | dom.[Element](./alfa-dom.element.md) |  |
-|  context | [Context](./alfa-selector.context.md) | <i>(Optional)</i> |
+|  element | [dom.Element](./alfa-dom.element.md) |  |
+|  context | Context | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

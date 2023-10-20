@@ -4,7 +4,7 @@
 
 ## Question.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string, options?: act.Question.Options<Typeof<U>>): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U>;
@@ -16,10 +16,10 @@ export function of<S, U extends Uri = Uri>(uri: U, subject: S, message?: string,
 |  --- | --- | --- |
 |  uri | U |  |
 |  subject | S |  |
-|  message | string | <i>(Optional)</i> |
-|  options | act.[Question.Options](./alfa-act.question.options.md)<!-- -->&lt;Typeof&lt;U&gt;&gt; | <i>(Optional)</i> |
+|  message | string | _(Optional)_ |
+|  options | [act.Question.Options](./alfa-act.question.options.md)<!-- -->&lt;Typeof&lt;U&gt;&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-act.[Question](./alfa-act.question.md)<!-- -->&lt;TypeName&lt;U&gt;, S, S, Typeof&lt;U&gt;, Typeof&lt;U&gt;, U&gt;
+[act.Question](./alfa-act.question.md)<!-- -->&lt;TypeName&lt;U&gt;, S, S, Typeof&lt;U&gt;, Typeof&lt;U&gt;, U&gt;
 

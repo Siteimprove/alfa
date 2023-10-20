@@ -4,7 +4,7 @@
 
 ## Iterable\_2 type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Iterable<T> = globalThis.Iterable<T>;

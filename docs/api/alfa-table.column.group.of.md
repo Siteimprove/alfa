@@ -4,7 +4,7 @@
 
 ## Column.Group.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(element: Element, x: number, width: number): Group;
@@ -14,11 +14,11 @@ static of(element: Element, x: number, width: number): Group;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 |  x | number |  |
 |  width | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Group](./alfa-table.column.group.md)
 

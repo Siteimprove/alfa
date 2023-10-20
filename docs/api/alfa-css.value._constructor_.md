@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Value` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(type: T, hasCalculation: CALC);

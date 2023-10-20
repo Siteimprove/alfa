@@ -4,7 +4,7 @@
 
 ## Header.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Header): boolean;
@@ -16,7 +16,7 @@ equals(value: Header): boolean;
 |  --- | --- | --- |
 |  value | [Header](./alfa-http.header.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

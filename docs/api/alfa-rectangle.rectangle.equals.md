@@ -4,7 +4,7 @@
 
 ## Rectangle.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: this): boolean;
@@ -16,7 +16,7 @@ equals(value: this): boolean;
 |  --- | --- | --- |
 |  value | this |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

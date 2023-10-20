@@ -4,7 +4,7 @@
 
 ## URL.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(url: string): URL;
@@ -16,7 +16,7 @@ static of(url: string): URL;
 |  --- | --- | --- |
 |  url | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [URL](./alfa-css.url.md)
 

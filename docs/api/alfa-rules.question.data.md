@@ -4,7 +4,7 @@
 
 ## Question.Data variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Data: {

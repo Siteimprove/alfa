@@ -4,7 +4,7 @@
 
 ## Selector.Id.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: string): Id;
@@ -16,7 +16,7 @@ static of(name: string): Id;
 |  --- | --- | --- |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Id](./alfa-selector.selector.id.md)
 

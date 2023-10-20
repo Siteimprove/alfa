@@ -4,7 +4,7 @@
 
 ## Either.teeLeft() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 teeLeft(callback: Callback<L>): Either<L, R>;
@@ -14,9 +14,9 @@ teeLeft(callback: Callback<L>): Either<L, R>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;L&gt; |  |
+|  callback | Callback&lt;L&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;
 

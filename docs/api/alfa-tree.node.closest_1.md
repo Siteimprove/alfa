@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#dom-element-closest](https://dom.spec.whatwg.org/#dom-element-closest)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 closest(predicate: Predicate<Node<F>>, options?: Flags<F>): Option<Node<F>>;
@@ -16,10 +16,10 @@ closest(predicate: Predicate<Node<F>>, options?: Flags<F>): Option<Node<F>>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt; |  |
-|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+|  predicate | Predicate&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt; |  |
+|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
+Option&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
 

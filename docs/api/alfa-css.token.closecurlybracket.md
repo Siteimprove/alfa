@@ -4,7 +4,7 @@
 
 ## Token.closeCurlyBracket variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 closeCurlyBracket: typeof CloseCurlyBracket.of

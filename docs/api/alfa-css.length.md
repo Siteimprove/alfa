@@ -5,10 +5,10 @@
 ## Length type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Length<U extends Unit.Length = Unit.Length> = Length.Calculated | Length.Fixed<U>;
 ```
-<b>References:</b> [Unit.Length](./alfa-css.unit.length.md)<!-- -->, [Length.Calculated](./alfa-css.length.calculated.md)<!-- -->, [Length.Fixed](./alfa-css.length.fixed.md)
+**References:** [Unit.Length](./alfa-css.unit.length.md)<!-- -->, [Length.Calculated](./alfa-css.length.calculated.md)<!-- -->, [Length.Fixed](./alfa-css.length.fixed.md)
 

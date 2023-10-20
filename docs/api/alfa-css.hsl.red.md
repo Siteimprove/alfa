@@ -4,7 +4,7 @@
 
 ## HSL.red property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get red(): Percentage.Fixed;

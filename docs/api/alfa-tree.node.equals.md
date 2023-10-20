@@ -4,7 +4,7 @@
 
 ## Node.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Node<F>): boolean;
@@ -16,7 +16,7 @@ equals(value: Node<F>): boolean;
 |  --- | --- | --- |
 |  value | [Node](./alfa-tree.node.md)<!-- -->&lt;F&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

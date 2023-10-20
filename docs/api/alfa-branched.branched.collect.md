@@ -4,7 +4,7 @@
 
 ## Branched.collect() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 collect<U>(mapper: Mapper<T, Option<U>, [Iterable<B>]>): Branched<U, B>;
@@ -14,9 +14,9 @@ collect<U>(mapper: Mapper<T, Option<U>, [Iterable<B>]>): Branched<U, B>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[Iterable&lt;B&gt;\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Option&lt;U&gt;, \[Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;U, B&gt;
 

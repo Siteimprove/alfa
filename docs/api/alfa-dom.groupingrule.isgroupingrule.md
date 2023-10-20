@@ -4,7 +4,7 @@
 
 ## GroupingRule.isGroupingRule() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isGroupingRule(value: unknown): value is GroupingRule;
@@ -16,7 +16,7 @@ function isGroupingRule(value: unknown): value is GroupingRule;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [GroupingRule](./alfa-dom.groupingrule.md)
 

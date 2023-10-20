@@ -4,7 +4,7 @@
 
 ## List.zip() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 zip<U>(iterable: Iterable<U>): List<[T, U]>;
@@ -16,7 +16,7 @@ zip<U>(iterable: Iterable<U>): List<[T, U]>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;\[T, U\]&gt;
 

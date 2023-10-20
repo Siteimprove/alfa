@@ -4,7 +4,7 @@
 
 ## Outcome.isApplicable variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isApplicable: typeof Applicable.isApplicable

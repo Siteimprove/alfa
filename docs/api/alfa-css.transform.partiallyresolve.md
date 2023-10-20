@@ -4,7 +4,7 @@
 
 ## Transform.partiallyResolve() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function partiallyResolve(resolver: PartialResolver): (value: Transform) => PartiallyResolved;
@@ -16,7 +16,7 @@ function partiallyResolve(resolver: PartialResolver): (value: Transform) => Part
 |  --- | --- | --- |
 |  resolver | [PartialResolver](./alfa-css.transform.partialresolver.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 (value: [Transform](./alfa-css.transform.md)<!-- -->) =&gt; [PartiallyResolved](./alfa-css.transform.partiallyresolved.md)
 

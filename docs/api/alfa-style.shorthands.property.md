@@ -4,10 +4,10 @@
 
 ## Shorthands.Property type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Property = typeof shortHands;
 ```
-<b>References:</b> [shortHands](./alfa-style.shorthands.shorthands.md)
+**References:** [shortHands](./alfa-style.shorthands.shorthands.md)
 

@@ -4,9 +4,9 @@
 
 ## alfa-future package
 
-## Classes
+## Abstract Classes
 
-|  Class | Description |
+|  Abstract Class | Description |
 |  --- | --- |
 |  [Future](./alfa-future.future.md) | [http://blog.higher-order.com/assets/trampolines.pdf](http://blog.higher-order.com/assets/trampolines.pdf) |
 

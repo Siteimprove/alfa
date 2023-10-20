@@ -4,7 +4,7 @@
 
 ## Future.now() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function now<T>(value: T): Future<T>;
@@ -16,7 +16,7 @@ function now<T>(value: T): Future<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

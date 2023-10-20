@@ -4,7 +4,7 @@
 
 ## Response.isResponse() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isResponse(value: unknown): value is Response;
@@ -16,7 +16,7 @@ function isResponse(value: unknown): value is Response;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Response](./alfa-http.response.md)
 

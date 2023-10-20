@@ -6,12 +6,12 @@
 
 [https://html.spec.whatwg.org/\#empty-cell](https://html.spec.whatwg.org/#empty-cell)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEmpty(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

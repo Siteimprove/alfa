@@ -4,12 +4,12 @@
 
 ## Element.clone() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 clone(): Element;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Element](./alfa-aria.element.md)
 

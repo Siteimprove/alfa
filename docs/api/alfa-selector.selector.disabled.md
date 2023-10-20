@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#enableddisabled](https://drafts.csswg.org/selectors/#enableddisabled) [https://html.spec.whatwg.org/multipage\#selector-disabled](https://html.spec.whatwg.org/multipage#selector-disabled)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Disabled extends Pseudo.Class<"disabled"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"disabled"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"disabled"&gt;
 
 ## Methods
 

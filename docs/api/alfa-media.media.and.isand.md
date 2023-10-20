@@ -4,7 +4,7 @@
 
 ## Media.And.isAnd() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isAnd(value: unknown): value is And;
@@ -16,7 +16,7 @@ function isAnd(value: unknown): value is And;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [And](./alfa-media.media.and.md)
 

@@ -4,7 +4,7 @@
 
 ## Token.delim variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 delim: typeof Delim.of

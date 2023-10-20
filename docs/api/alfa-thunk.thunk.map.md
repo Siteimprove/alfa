@@ -4,7 +4,7 @@
 
 ## Thunk.map() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function map<T, U>(thunk: Thunk<T>, mapper: Mapper<T, U>): Thunk<U>;
@@ -17,7 +17,7 @@ function map<T, U>(thunk: Thunk<T>, mapper: Mapper<T, U>): Thunk<U>;
 |  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;U&gt;
 

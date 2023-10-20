@@ -4,7 +4,7 @@
 
 ## Name.Source.Descendant.element property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get element(): Element;

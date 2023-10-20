@@ -4,7 +4,7 @@
 
 ## Generator\_2.map() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function map<T, U, R, N>(generator: Generator<T, R, N>, mapper: Mapper<T, U>): Generator<U, R, N>;
@@ -14,10 +14,10 @@ function map<T, U, R, N>(generator: Generator<T, R, N>, mapper: Mapper<T, U>): G
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  generator | Generator&lt;T, R, N&gt; |  |
+|  generator | [Generator](./alfa-generator.generator_2.md)<!-- -->&lt;T, R, N&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Generator&lt;U, R, N&gt;
+[Generator](./alfa-generator.generator_2.md)<!-- -->&lt;U, R, N&gt;
 

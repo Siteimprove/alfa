@@ -4,10 +4,10 @@
 
 ## AnglePercentage.Resolver type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Resolver = Percentage.Resolver<"angle", Canonical>;
 ```
-<b>References:</b> [Percentage.Resolver](./alfa-css.percentage.resolver.md)<!-- -->, [Canonical](./alfa-css.anglepercentage.canonical.md)
+**References:** [Percentage.Resolver](./alfa-css.percentage.resolver.md)<!-- -->, [Canonical](./alfa-css.anglepercentage.canonical.md)
 

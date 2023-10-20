@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.find() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 find(predicate: Predicate<V, [key: K]>): Option<V>;
@@ -14,9 +14,9 @@ find(predicate: Predicate<V, [key: K]>): Option<V>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
+|  predicate | Predicate&lt;V, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;V&gt;
+Option&lt;V&gt;
 

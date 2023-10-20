@@ -4,7 +4,7 @@
 
 ## Media.Value.Discrete.value property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get value(): T;

@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#concept-tree-next-sibling](https://dom.spec.whatwg.org/#concept-tree-next-sibling)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 next(options?: Flags<F>): Option<Node<F>>;
@@ -16,9 +16,9 @@ next(options?: Flags<F>): Option<Node<F>>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
+Option&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;&gt;
 

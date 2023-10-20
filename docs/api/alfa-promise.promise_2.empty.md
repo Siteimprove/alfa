@@ -4,12 +4,12 @@
 
 ## Promise\_2.empty() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function empty(): Promise<void>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Promise&lt;void&gt;
+[Promise](./alfa-promise.promise_2.md)<!-- -->&lt;void&gt;
 

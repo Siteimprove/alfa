@@ -4,7 +4,7 @@
 
 ## Outcome.Passed.EARL."earl:result" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "earl:result": {

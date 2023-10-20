@@ -4,12 +4,12 @@
 
 ## Token.CloseSquareBracket.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): CloseSquareBracket;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [CloseSquareBracket](./alfa-css.token.closesquarebracket.md)
 

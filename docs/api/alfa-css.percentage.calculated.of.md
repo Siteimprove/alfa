@@ -4,7 +4,7 @@
 
 ## Percentage.Calculated.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: Math<"percentage">): Calculated;
@@ -16,7 +16,7 @@ static of(value: Math<"percentage">): Calculated;
 |  --- | --- | --- |
 |  value | Math&lt;"percentage"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Calculated](./alfa-css.percentage.calculated.md)
 

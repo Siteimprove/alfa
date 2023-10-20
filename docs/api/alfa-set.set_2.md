@@ -5,7 +5,7 @@
 ## Set\_2 namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Set 

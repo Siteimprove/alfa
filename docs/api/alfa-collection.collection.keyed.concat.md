@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.concat() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 concat(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
@@ -16,7 +16,7 @@ concat(iterable: Iterable<readonly [K, V]>): Keyed<K, V>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;readonly \[K, V\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;
 

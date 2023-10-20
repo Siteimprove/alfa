@@ -4,7 +4,7 @@
 
 ## Expression.Filter.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(base: Expression, predicates: Array<Expression>): Filter;
@@ -17,7 +17,7 @@ static of(base: Expression, predicates: Array<Expression>): Filter;
 |  base | [Expression](./alfa-xpath.expression.md) |  |
 |  predicates | Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Filter](./alfa-xpath.expression.filter.md)
 

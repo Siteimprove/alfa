@@ -4,7 +4,7 @@
 
 ## Monad.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U>): Monad<U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U>): Monad<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Monad](./alfa-monad.monad.md)<!-- -->&lt;U&gt;
 

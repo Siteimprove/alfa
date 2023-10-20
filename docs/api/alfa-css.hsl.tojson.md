@@ -4,12 +4,12 @@
 
 ## HSL.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): HSL.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [HSL.JSON](./alfa-css.hsl.json.md)
 

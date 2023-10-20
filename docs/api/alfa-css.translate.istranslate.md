@@ -4,7 +4,7 @@
 
 ## Translate.isTranslate() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isTranslate<X extends LengthPercentage, Y extends LengthPercentage, Z extends Length>(value: unknown): value is Translate<X, Y, Z>;
@@ -16,7 +16,7 @@ function isTranslate<X extends LengthPercentage, Y extends LengthPercentage, Z e
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Translate](./alfa-css.translate.md)<!-- -->&lt;X, Y, Z&gt;
 

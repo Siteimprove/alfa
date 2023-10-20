@@ -4,7 +4,7 @@
 
 ## Math\_2.parseLength variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseLength: Parser<Slice<Token>, Math<"length">, string, []>

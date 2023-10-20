@@ -4,7 +4,7 @@
 
 ## AnglePercentage.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of<U extends Unit.Angle>(value: Base.Angle<U>): Angle.Fixed<U>;
@@ -16,7 +16,7 @@ export function of<U extends Unit.Angle>(value: Base.Angle<U>): Angle.Fixed<U>;
 |  --- | --- | --- |
 |  value | Base.Angle&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Angle.Fixed](./alfa-css.angle.fixed.md)<!-- -->&lt;U&gt;
 

@@ -4,12 +4,12 @@
 
 ## Ok.teeErr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 teeErr(): Ok<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
 

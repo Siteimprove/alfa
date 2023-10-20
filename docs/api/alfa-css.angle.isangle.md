@@ -4,7 +4,7 @@
 
 ## Angle.isAngle() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isAngle(value: unknown): value is Angle;
@@ -16,7 +16,7 @@ export function isAngle(value: unknown): value is Angle;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Angle](./alfa-css.angle.md)
 

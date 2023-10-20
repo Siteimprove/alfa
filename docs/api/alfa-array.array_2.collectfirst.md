@@ -4,7 +4,7 @@
 
 ## Array\_2.collectFirst() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function collectFirst<T, U>(array: ReadonlyArray<T>, mapper: Mapper<T, Option<U>, [index: number]>): Option<U>;
@@ -15,9 +15,9 @@ function collectFirst<T, U>(array: ReadonlyArray<T>, mapper: Mapper<T, Option<U>
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Option&lt;U&gt;, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
+Option&lt;U&gt;
 

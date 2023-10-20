@@ -4,7 +4,7 @@
 
 ## Token.Integer.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: number): Integer;
@@ -16,7 +16,7 @@ static of(value: number): Integer;
 |  --- | --- | --- |
 |  value | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Integer](./alfa-xpath.token.integer.md)
 

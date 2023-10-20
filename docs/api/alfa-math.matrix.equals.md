@@ -4,7 +4,7 @@
 
 ## Matrix.equals() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function equals(m: Matrix, n: Matrix, e?: number): boolean;
@@ -16,9 +16,9 @@ function equals(m: Matrix, n: Matrix, e?: number): boolean;
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 |  n | [Matrix](./alfa-math.matrix.md) |  |
-|  e | number | <i>(Optional)</i> |
+|  e | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

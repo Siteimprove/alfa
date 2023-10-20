@@ -4,7 +4,7 @@
 
 ## SupportsRule.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(condition: string, rules: Iterable<Rule>): SupportsRule;
@@ -15,9 +15,9 @@ static of(condition: string, rules: Iterable<Rule>): SupportsRule;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  condition | string |  |
-|  rules | Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
+|  rules | Iterable&lt;Rule&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [SupportsRule](./alfa-dom.supportsrule.md)
 

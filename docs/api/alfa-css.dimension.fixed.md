@@ -4,7 +4,7 @@
 
 ## Dimension.Fixed namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace Fixed 

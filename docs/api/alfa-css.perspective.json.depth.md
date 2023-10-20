@@ -4,7 +4,7 @@
 
 ## Perspective.JSON.depth property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 depth: Length.JSON;

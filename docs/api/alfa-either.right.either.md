@@ -4,7 +4,7 @@
 
 ## Right.either() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 either<T>(left: unknown, right: Mapper<R, T>): T;
@@ -17,7 +17,7 @@ either<T>(left: unknown, right: Mapper<R, T>): T;
 |  left | unknown |  |
 |  right | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;R, T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 T
 

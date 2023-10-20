@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [key: K]>): Keyed<K, U>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<V, Keyed<K, U>, [key: K]>): Keyed<K, U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, U&gt;, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, U&gt;
 

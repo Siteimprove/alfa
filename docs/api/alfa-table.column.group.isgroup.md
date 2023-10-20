@@ -4,7 +4,7 @@
 
 ## Column.Group.isGroup() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isGroup(value: unknown): value is Group;
@@ -16,7 +16,7 @@ function isGroup(value: unknown): value is Group;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Group](./alfa-table.column.group.md)
 

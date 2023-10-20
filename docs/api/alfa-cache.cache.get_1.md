@@ -4,7 +4,7 @@
 
 ## Cache.get() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get<U extends V = V>(key: K, ifMissing: Mapper<this, U>): V;
@@ -17,7 +17,7 @@ get<U extends V = V>(key: K, ifMissing: Mapper<this, U>): V;
 |  key | K |  |
 |  ifMissing | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;this, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 V
 

@@ -6,7 +6,7 @@
 
 \* I: type of Input for rules \* T: possible types of test targets \* Q: questions' metadata type \* S: possible types of questions' subject.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class Audit<I, T extends Hashable, Q extends Question.Metadata = {}, S = T> 

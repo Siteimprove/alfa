@@ -4,10 +4,10 @@
 
 ## Media.List.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON = Array<Query.JSON>;
 ```
-<b>References:</b> [Query.JSON](./alfa-media.media.query.json.md)
+**References:** [Query.JSON](./alfa-media.media.query.json.md)
 

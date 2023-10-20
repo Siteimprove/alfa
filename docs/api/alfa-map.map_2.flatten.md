@@ -4,7 +4,7 @@
 
 ## Map\_2.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<K, V>(this: Map<K, Map<K, V>>): Map<K, V>;
@@ -14,11 +14,11 @@ flatten<K, V>(this: Map<K, Map<K, V>>): Map<K, V>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Map&lt;K, Map&lt;K, V&gt;&gt; |  |
+|  this | [Map](./alfa-map.map_2.md)<!-- -->&lt;K, [Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Map&lt;K, V&gt;
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;
 
 ## Remarks
 

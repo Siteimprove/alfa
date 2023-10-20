@@ -4,12 +4,12 @@
 
 ## Selector.Disabled.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Disabled;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Disabled](./alfa-selector.selector.disabled.md)
 

@@ -4,7 +4,7 @@
 
 ## Refinement.isBoolean() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isBoolean(value: unknown): value is boolean;
@@ -16,7 +16,7 @@ export function isBoolean(value: unknown): value is boolean;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is boolean
 

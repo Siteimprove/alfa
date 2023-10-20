@@ -4,7 +4,7 @@
 
 ## Slice.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(array: ReadonlyArray<T>, start?: number, end?: number): Slice<T>;
@@ -15,10 +15,10 @@ static of<T>(array: ReadonlyArray<T>, start?: number, end?: number): Slice<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  start | number | <i>(Optional)</i> |
-|  end | number | <i>(Optional)</i> |
+|  start | number | _(Optional)_ |
+|  end | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

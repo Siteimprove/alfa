@@ -4,7 +4,7 @@
 
 ## Text.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(data: string): Text;
@@ -16,7 +16,7 @@ static of(data: string): Text;
 |  --- | --- | --- |
 |  data | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Text](./alfa-dom.text.md)
 

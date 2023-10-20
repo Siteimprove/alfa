@@ -4,7 +4,7 @@
 
 ## Some.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(value: T): Some<T>;
@@ -16,7 +16,7 @@ static of<T>(value: T): Some<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
 

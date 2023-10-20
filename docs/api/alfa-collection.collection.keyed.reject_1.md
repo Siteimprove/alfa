@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.reject() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reject(predicate: Predicate<V, [key: K]>): Keyed<K, V>;
@@ -14,9 +14,9 @@ reject(predicate: Predicate<V, [key: K]>): Keyed<K, V>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
+|  predicate | Predicate&lt;V, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;
 

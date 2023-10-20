@@ -4,7 +4,7 @@
 
 ## Refinement.isString() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isString(value: unknown): value is string;
@@ -16,7 +16,7 @@ export function isString(value: unknown): value is string;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is string
 

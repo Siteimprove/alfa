@@ -4,7 +4,7 @@
 
 ## Map\_2.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<V, U, [key: K]>): Map<K, U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<V, U, [key: K]>): Map<K, U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Map&lt;K, U&gt;
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, U&gt;
 

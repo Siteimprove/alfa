@@ -4,7 +4,7 @@
 
 ## Named.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<C extends Named.Color>(color: C): Named<C>;
@@ -16,7 +16,7 @@ static of<C extends Named.Color>(color: C): Named<C>;
 |  --- | --- | --- |
 |  color | C |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Named](./alfa-css.named.md)<!-- -->&lt;C&gt;
 

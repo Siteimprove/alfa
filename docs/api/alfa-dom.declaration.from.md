@@ -4,7 +4,7 @@
 
 ## Declaration.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): Declaration;
@@ -16,7 +16,7 @@ function from(json: JSON): Declaration;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-dom.declaration.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Declaration](./alfa-dom.declaration.md)
 

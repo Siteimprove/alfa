@@ -4,7 +4,7 @@
 
 ## Numeric.isFixed() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isFixed(value: unknown): value is Fixed;
@@ -16,7 +16,7 @@ export function isFixed(value: unknown): value is Fixed;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Fixed](./alfa-css.numeric.fixed.md)
 

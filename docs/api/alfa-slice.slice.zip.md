@@ -4,7 +4,7 @@
 
 ## Slice.zip() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 zip<U>(iterable: Iterable<U>): Slice<[T, U]>;
@@ -16,7 +16,7 @@ zip<U>(iterable: Iterable<U>): Slice<[T, U]>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;\[T, U\]&gt;
 

@@ -4,7 +4,7 @@
 
 ## Keyword.isKeyword() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isKeyword(key: string): key is Keyword;
@@ -16,7 +16,7 @@ function isKeyword(key: string): key is Keyword;
 |  --- | --- | --- |
 |  key | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 key is [Keyword](./alfa-json-ld.keyword.md)
 

@@ -4,7 +4,7 @@
 
 ## HSL.JSON.hue property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hue: Number.Fixed.JSON | Angle.Fixed.JSON;

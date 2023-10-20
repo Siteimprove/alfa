@@ -4,7 +4,7 @@
 
 ## Element.isDocumentElement variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isDocumentElement: typeof predicate.isDocumentElement

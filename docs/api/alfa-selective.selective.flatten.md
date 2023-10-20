@@ -4,7 +4,7 @@
 
 ## Selective.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<S, T>(this: Selective<S, Selective<S, T>>): Selective<S, T>;
@@ -16,7 +16,7 @@ flatten<S, T>(this: Selective<S, Selective<S, T>>): Selective<S, T>;
 |  --- | --- | --- |
 |  this | [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Site.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<R extends Resource = Resource> 

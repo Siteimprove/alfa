@@ -4,20 +4,20 @@
 
 ## Polygon.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-static of<F extends Polygon.Fill = Polygon.Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed>(fill: Option<F>, vertices: Iterable<Polygon.Vertex<V>>): Polygon<F, V>;
+static of<F extends Polygon.Fill = Polygon.Fill, V extends LengthPercentage = LengthPercentage>(fill: Option<F>, vertices: Iterable<Polygon.Vertex<V>>): Polygon<F, V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  fill | [Option](./alfa-option.option.md)<!-- -->&lt;F&gt; |  |
+|  fill | Option&lt;F&gt; |  |
 |  vertices | Iterable&lt;[Polygon.Vertex](./alfa-css.polygon.vertex.md)<!-- -->&lt;V&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Polygon](./alfa-css.polygon.md)<!-- -->&lt;F, V&gt;
 

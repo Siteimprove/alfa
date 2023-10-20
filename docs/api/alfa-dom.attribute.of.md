@@ -4,7 +4,7 @@
 
 ## Attribute.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, value: string): Attribute<N>;
@@ -14,12 +14,12 @@ static of<N extends string = string>(namespace: Option<Namespace>, prefix: Optio
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  namespace | [Option](./alfa-option.option.md)<!-- -->&lt;[Namespace](./alfa-dom.namespace.md)<!-- -->&gt; |  |
-|  prefix | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  namespace | Option&lt;Namespace&gt; |  |
+|  prefix | Option&lt;string&gt; |  |
 |  name | N |  |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Attribute](./alfa-dom.attribute.md)<!-- -->&lt;N&gt;
 

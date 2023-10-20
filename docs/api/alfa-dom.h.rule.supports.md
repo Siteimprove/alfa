@@ -4,7 +4,7 @@
 
 ## h.rule.supports() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function supports(condition: string, rules: Array<Rule>): SupportsRule;
@@ -15,9 +15,9 @@ function supports(condition: string, rules: Array<Rule>): SupportsRule;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  condition | string |  |
-|  rules | Array&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
+|  rules | Array&lt;Rule&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[SupportsRule](./alfa-dom.supportsrule.md)
+SupportsRule
 

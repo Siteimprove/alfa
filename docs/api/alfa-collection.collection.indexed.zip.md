@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.zip() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 zip<U>(iterable: Iterable<U>): Indexed<[T, U]>;
@@ -16,7 +16,7 @@ zip<U>(iterable: Iterable<U>): Indexed<[T, U]>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;\[T, U\]&gt;
 

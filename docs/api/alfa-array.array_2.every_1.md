@@ -4,7 +4,7 @@
 
 ## Array\_2.every() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function every<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): boolean;
@@ -15,9 +15,9 @@ function every<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: numbe
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

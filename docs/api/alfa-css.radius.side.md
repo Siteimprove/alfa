@@ -4,10 +4,10 @@
 
 ## Radius.Side type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Side = Side.Closest | Side.Farthest;
 ```
-<b>References:</b> [Side.Closest](./alfa-css.radius.side.closest.md)<!-- -->, [Side.Farthest](./alfa-css.radius.side.farthest.md)
+**References:** [Side.Closest](./alfa-css.radius.side.closest.md)<!-- -->, [Side.Farthest](./alfa-css.radius.side.farthest.md)
 

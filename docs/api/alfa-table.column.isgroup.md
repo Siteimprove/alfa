@@ -4,7 +4,7 @@
 
 ## Column.isGroup variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isGroup: typeof Group.isGroup

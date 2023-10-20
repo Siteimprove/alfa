@@ -4,7 +4,7 @@
 
 ## Resource.isResource() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isResource(value: unknown): value is Resource;
@@ -16,7 +16,7 @@ function isResource(value: unknown): value is Resource;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Resource](./alfa-web.resource.md)
 

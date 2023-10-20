@@ -4,7 +4,7 @@
 
 ## Unit.isViewportRelativeLength variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isViewportRelativeLength: typeof Length.isViewportRelative

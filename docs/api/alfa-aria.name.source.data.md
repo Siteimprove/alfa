@@ -4,7 +4,7 @@
 
 ## Name.Source.Data namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Data 

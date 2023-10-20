@@ -4,7 +4,7 @@
 
 ## Comparable.compareString() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function compareString(a: string, b: string): Comparison;
@@ -17,7 +17,7 @@ function compareString(a: string, b: string): Comparison;
 |  a | string |  |
 |  b | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

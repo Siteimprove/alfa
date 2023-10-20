@@ -4,7 +4,7 @@
 
 ## List.takeLast() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 takeLast(count?: number): List<T>;
@@ -14,9 +14,9 @@ takeLast(count?: number): List<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  count | number | <i>(Optional)</i> |
+|  count | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

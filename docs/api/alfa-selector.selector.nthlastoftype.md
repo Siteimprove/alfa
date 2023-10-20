@@ -4,7 +4,7 @@
 
 ## Selector.NthLastOfType namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace NthLastOfType 

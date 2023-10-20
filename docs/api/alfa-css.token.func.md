@@ -4,7 +4,7 @@
 
 ## Token.func variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 func: typeof Function.of

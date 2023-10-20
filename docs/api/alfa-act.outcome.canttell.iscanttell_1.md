@@ -4,7 +4,7 @@
 
 ## Outcome.CantTell.isCantTell() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isCantTell<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is CantTell<I, T, Q, S>;
@@ -16,7 +16,7 @@ function isCantTell<I, T extends Hashable, Q extends Question.Metadata, S>(value
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [CantTell](./alfa-act.outcome.canttell.md)<!-- -->&lt;I, T, Q, S&gt;
 

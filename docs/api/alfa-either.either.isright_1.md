@@ -4,7 +4,7 @@
 
 ## Either.isRight() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRight<R>(value: unknown): value is Right<R>;
@@ -16,7 +16,7 @@ function isRight<R>(value: unknown): value is Right<R>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is [Right](./alfa-either.right.md)<!-- -->&lt;R&gt;
+value is Right&lt;R&gt;
 

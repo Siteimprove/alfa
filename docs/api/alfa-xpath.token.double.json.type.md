@@ -4,7 +4,7 @@
 
 ## Token.Double.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "double";

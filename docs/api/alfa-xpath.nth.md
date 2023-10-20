@@ -5,7 +5,7 @@
 ## nth() function
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function nth(i: number): Builder<Expression.Integer>;
@@ -17,7 +17,7 @@ export declare function nth(i: number): Builder<Expression.Integer>;
 |  --- | --- | --- |
 |  i | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Builder](./alfa-xpath.builder.md)<!-- -->&lt;[Expression.Integer](./alfa-xpath.expression.integer.md)<!-- -->&gt;
 

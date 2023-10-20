@@ -5,17 +5,29 @@
 ## Shape namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Shape 
 ```
+
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [partiallyResolve(resolver)](./alfa-css.shape.partiallyresolve.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-css.shape.json.md) |  |
+
+## Namespaces
+
+|  Namespace | Description |
+|  --- | --- |
+|  [Basic](./alfa-css.shape.basic.md) |  |
 
 ## Variables
 
@@ -28,4 +40,8 @@ export declare namespace Shape
 |  Type Alias | Description |
 |  --- | --- |
 |  [Basic](./alfa-css.shape.basic.md) | [https://drafts.csswg.org/css-shapes/\#typedef-basic-shape](https://drafts.csswg.org/css-shapes/#typedef-basic-shape) |
+|  [Canonical](./alfa-css.shape.canonical.md) |  |
+|  [PartiallyResolved](./alfa-css.shape.partiallyresolved.md) |  |
+|  [PartialResolver](./alfa-css.shape.partialresolver.md) |  |
+|  [Resolver](./alfa-css.shape.resolver.md) |  |
 

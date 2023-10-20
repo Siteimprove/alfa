@@ -4,7 +4,7 @@
 
 ## Future.sequence() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function sequence<T>(futures: Iterable<Future<T>>): Future<Iterable<T>>;
@@ -16,7 +16,7 @@ function sequence<T>(futures: Iterable<Future<T>>): Future<Iterable<T>>;
 |  --- | --- | --- |
 |  futures | Iterable&lt;[Future](./alfa-future.future.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;Iterable&lt;T&gt;&gt;
 

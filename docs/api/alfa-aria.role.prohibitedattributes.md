@@ -6,7 +6,7 @@
 
 Get all attributes prohibited on this role and its inherited (ancestors) roles.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get prohibitedAttributes(): ReadonlyArray<Attribute.Name>;

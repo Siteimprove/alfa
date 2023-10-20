@@ -4,7 +4,7 @@
 
 ## Monad.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Monad<U>>): Monad<U>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<T, Monad<U>>): Monad<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Monad](./alfa-monad.monad.md)<!-- -->&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Monad](./alfa-monad.monad.md)<!-- -->&lt;U&gt;
 

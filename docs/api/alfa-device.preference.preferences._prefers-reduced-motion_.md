@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/mediaqueries-5/\#prefers-reduced-motion](https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-motion)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "prefers-reduced-motion": "no-preference" | "reduce";

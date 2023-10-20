@@ -4,7 +4,7 @@
 
 ## Future.defer() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function defer<T>(continuation: Continuation<T>): Future<T>;
@@ -14,9 +14,9 @@ function defer<T>(continuation: Continuation<T>): Future<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  continuation | [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;T&gt; |  |
+|  continuation | Continuation&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

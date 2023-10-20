@@ -4,7 +4,7 @@
 
 ## Element.isEditingHost variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEditingHost: typeof predicate.isEditingHost

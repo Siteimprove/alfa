@@ -4,7 +4,7 @@
 
 ## Selector.Type.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(namespace: Option<string>, name: string): Type;
@@ -14,10 +14,10 @@ static of(namespace: Option<string>, name: string): Type;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  namespace | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  namespace | Option&lt;string&gt; |  |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Type](./alfa-selector.selector.type.md)
 

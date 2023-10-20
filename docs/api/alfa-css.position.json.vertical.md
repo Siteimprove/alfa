@@ -4,7 +4,7 @@
 
 ## Position.JSON.vertical property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 vertical: Component.JSON;

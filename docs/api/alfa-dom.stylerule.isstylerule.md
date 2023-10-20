@@ -4,7 +4,7 @@
 
 ## StyleRule.isStyleRule() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isStyleRule(value: unknown): value is StyleRule;
@@ -16,7 +16,7 @@ function isStyleRule(value: unknown): value is StyleRule;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [StyleRule](./alfa-dom.stylerule.md)
 

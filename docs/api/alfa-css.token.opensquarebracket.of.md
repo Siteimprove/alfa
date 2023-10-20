@@ -4,12 +4,12 @@
 
 ## Token.OpenSquareBracket.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): OpenSquareBracket;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [OpenSquareBracket](./alfa-css.token.opensquarebracket.md)
 

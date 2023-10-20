@@ -4,7 +4,7 @@
 
 ## Media.or variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 or: typeof Or.of

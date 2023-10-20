@@ -4,7 +4,7 @@
 
 ## Matrix.JSON.values property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 values: Values<Number.Fixed.JSON>;

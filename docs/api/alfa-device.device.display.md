@@ -4,7 +4,7 @@
 
 ## Device.display property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get display(): Display;

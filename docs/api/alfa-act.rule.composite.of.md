@@ -4,7 +4,7 @@
 
 ## Rule.Composite.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(properties: {
@@ -20,9 +20,9 @@ static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(proper
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  properties | { uri: string; requirements?: Iterable&lt;[Requirement](./alfa-act.requirement.md)<!-- -->&gt;; tags?: Iterable&lt;[Tag](./alfa-act.tag.md)<!-- -->&gt;; composes: Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;&gt;; evaluate: [Composite.Evaluate](./alfa-act.rule.composite.evaluate.md)<!-- -->&lt;I, T, Q, S&gt;; } |  |
+|  properties | { uri: string; requirements?: Iterable&lt;Requirement&gt;; tags?: Iterable&lt;Tag&gt;; composes: Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;&gt;; evaluate: [Composite.Evaluate](./alfa-act.rule.composite.evaluate.md)<!-- -->&lt;I, T, Q, S&gt;; } |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Composite](./alfa-act.rule.composite.md)<!-- -->&lt;I, T, Q, S&gt;
 

@@ -4,16 +4,16 @@
 
 ## Radius.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends BasicShape.JSON<"radius"> 
 ```
-<b>Extends:</b> BasicShape.JSON&lt;"radius"&gt;
+**Extends:** BasicShape.JSON&lt;"radius"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [value](./alfa-css.radius.json.value.md) |  | [Length.Fixed.JSON](./alfa-css.length.fixed.json.md) \| [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
+|  [value](./alfa-css.radius.json.value.md) |  | [LengthPercentage.JSON](./alfa-css.lengthpercentage.json.md) \| [Keyword.JSON](./alfa-css.keyword.json.md) |  |
 

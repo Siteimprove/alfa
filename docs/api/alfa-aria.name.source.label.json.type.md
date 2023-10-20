@@ -4,7 +4,7 @@
 
 ## Name.Source.Label.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "label";

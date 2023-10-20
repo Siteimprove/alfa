@@ -4,7 +4,7 @@
 
 ## Question.Uri type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Uri = keyof typeof Data;

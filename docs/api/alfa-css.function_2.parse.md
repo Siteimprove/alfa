@@ -4,7 +4,7 @@
 
 ## Function\_2.parse variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: <T>(query?: string | Predicate<Token.Function>, body?: CSSParser<T> | undefined) => Parser<Slice<Token>, readonly [Function, T], string, []>

@@ -4,12 +4,12 @@
 
 ## Number\_2.Fixed.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Fixed.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Fixed.JSON
+[Fixed.JSON](./alfa-css.number_2.fixed.json.md)
 

@@ -4,7 +4,7 @@
 
 ## Outcome.Failed.JSON.expectations property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 expectations: Array<[string, Result.JSON<Diagnostic.JSON>]>;

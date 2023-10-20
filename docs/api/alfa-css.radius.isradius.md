@@ -4,7 +4,7 @@
 
 ## Radius.isRadius() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRadius(value: unknown): value is Radius;
@@ -16,7 +16,7 @@ function isRadius(value: unknown): value is Radius;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Radius](./alfa-css.radius.md)
 

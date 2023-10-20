@@ -4,7 +4,7 @@
 
 ## Record\_2.every() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 every(predicate: Predicate<Record.Value<T>, [Record.Key<T>]>): boolean;
@@ -14,9 +14,9 @@ every(predicate: Predicate<Record.Value<T>, [Record.Key<T>]>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;Record.Value&lt;T&gt;, \[Record.Key&lt;T&gt;\]&gt; |  |
+|  predicate | Predicate&lt;[Record.Value](./alfa-record.record_2.value.md)<!-- -->&lt;T&gt;, \[[Record.Key](./alfa-record.record_2.key.md)<!-- -->&lt;T&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -4,7 +4,7 @@
 
 ## Cons.sort() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 sort<T extends Comparable<T>>(this: Sequence<T>): Sequence<T>;
@@ -14,9 +14,9 @@ sort<T extends Comparable<T>>(this: Sequence<T>): Sequence<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt; |  |
+|  this | Sequence&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+Sequence&lt;T&gt;
 

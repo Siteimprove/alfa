@@ -4,7 +4,7 @@
 
 ## Context.withState() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 withState(state: Context.State): Iterable<Element>;
@@ -16,7 +16,7 @@ withState(state: Context.State): Iterable<Element>;
 |  --- | --- | --- |
 |  state | [Context.State](./alfa-selector.context.state.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;[Element](./alfa-dom.element.md)<!-- -->&gt;
+Iterable&lt;Element&gt;
 

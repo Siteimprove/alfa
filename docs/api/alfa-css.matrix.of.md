@@ -4,7 +4,7 @@
 
 ## Matrix.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(...values: Matrix.Values<Number>): Matrix;
@@ -16,7 +16,7 @@ static of(...values: Matrix.Values<Number>): Matrix;
 |  --- | --- | --- |
 |  values | [Matrix.Values](./alfa-css.matrix.values.md)<!-- -->&lt;Number&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Matrix](./alfa-css.matrix.md)
 

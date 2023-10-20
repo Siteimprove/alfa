@@ -4,7 +4,7 @@
 
 ## RGB.green property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get green(): C;

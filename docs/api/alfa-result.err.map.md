@@ -4,12 +4,12 @@
 
 ## Err.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map(): Err<E>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
 

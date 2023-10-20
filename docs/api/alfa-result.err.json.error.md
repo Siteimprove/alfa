@@ -4,7 +4,7 @@
 
 ## Err.JSON.error property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 error: Serializable.ToJSON<E>;

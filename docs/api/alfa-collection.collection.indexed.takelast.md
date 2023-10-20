@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.takeLast() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 takeLast(count: number): Indexed<T>;
@@ -16,7 +16,7 @@ takeLast(count: number): Indexed<T>;
 |  --- | --- | --- |
 |  count | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

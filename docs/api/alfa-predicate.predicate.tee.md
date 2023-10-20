@@ -4,7 +4,7 @@
 
 ## Predicate.tee() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function tee<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, callback: Callback<T, void, [result: boolean, ...args: A]>): Predicate<T, A>;
@@ -15,9 +15,9 @@ function tee<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, callb
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt; |  |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, void, \[result: boolean, ...args: A\]&gt; |  |
+|  callback | Callback&lt;T, void, \[result: boolean, ...args: A\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, A&gt;
 

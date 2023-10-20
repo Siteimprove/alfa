@@ -4,7 +4,7 @@
 
 ## Ellipse.JSON.center property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 center: Position.JSON;

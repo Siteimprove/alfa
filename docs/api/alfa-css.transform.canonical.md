@@ -4,10 +4,10 @@
 
 ## Transform.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Canonical = Matrix.Canonical | Perspective.Canonical | Rotate.Canonical | Scale.Canonical | Skew.Canonical | Translate.Canonical;
 ```
-<b>References:</b> [Matrix.Canonical](./alfa-css.matrix.canonical.md)<!-- -->, [Perspective.Canonical](./alfa-css.perspective.canonical.md)<!-- -->, [Rotate.Canonical](./alfa-css.rotate.canonical.md)<!-- -->, [Scale.Canonical](./alfa-css.scale.canonical.md)<!-- -->, [Skew.Canonical](./alfa-css.skew.canonical.md)<!-- -->, [Translate.Canonical](./alfa-css.translate.canonical.md)
+**References:** [Matrix.Canonical](./alfa-css.matrix.canonical.md)<!-- -->, [Perspective.Canonical](./alfa-css.perspective.canonical.md)<!-- -->, [Rotate.Canonical](./alfa-css.rotate.canonical.md)<!-- -->, [Scale.Canonical](./alfa-css.scale.canonical.md)<!-- -->, [Skew.Canonical](./alfa-css.skew.canonical.md)<!-- -->, [Translate.Canonical](./alfa-css.translate.canonical.md)
 

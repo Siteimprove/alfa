@@ -4,10 +4,10 @@
 
 ## Node.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-function from(json: Fragment.JSON): Fragment;
+function from(json: Fragment.JSON, device?: Device): Fragment;
 ```
 
 ## Parameters
@@ -15,8 +15,9 @@ function from(json: Fragment.JSON): Fragment;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [Fragment.JSON](./alfa-dom.fragment.json.md) |  |
+|  device | Device | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Fragment](./alfa-dom.fragment.md)
+Fragment
 

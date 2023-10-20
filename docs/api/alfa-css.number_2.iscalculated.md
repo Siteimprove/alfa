@@ -4,7 +4,7 @@
 
 ## Number\_2.isCalculated() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isCalculated(value: unknown): value is Calculated;
@@ -16,7 +16,7 @@ export function isCalculated(value: unknown): value is Calculated;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Calculated
+value is [Calculated](./alfa-css.number_2.calculated.md)
 

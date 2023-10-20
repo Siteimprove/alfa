@@ -4,7 +4,7 @@
 
 ## Expression.Axis.test property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get test(): Option<Test>;

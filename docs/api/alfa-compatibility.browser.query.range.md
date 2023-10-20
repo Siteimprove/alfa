@@ -4,10 +4,10 @@
 
 ## Browser.Query.Range type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Range<N extends Name> = readonly [N, Comparator, Version<N>] | readonly [N, Version<N>, Version<N>];
 ```
-<b>References:</b> [Name](./alfa-compatibility.browser.name.md)<!-- -->, [Comparator](./alfa-compatibility.browser.query.comparator.md)<!-- -->, [Version](./alfa-compatibility.browser.version.md)
+**References:** [Name](./alfa-compatibility.browser.name.md)<!-- -->, [Comparator](./alfa-compatibility.browser.query.comparator.md)<!-- -->, [Version](./alfa-compatibility.browser.version.md)
 

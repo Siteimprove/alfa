@@ -4,12 +4,12 @@
 
 ## Numeric.Fixed.isZero() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isZero(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

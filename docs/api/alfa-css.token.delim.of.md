@@ -4,7 +4,7 @@
 
 ## Token.Delim.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: number): Delim;
@@ -16,7 +16,7 @@ static of(value: number): Delim;
 |  --- | --- | --- |
 |  value | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Delim](./alfa-css.token.delim.md)
 

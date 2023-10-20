@@ -5,11 +5,18 @@
 ## Polygon namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Polygon 
 ```
+
+## Functions
+
+|  Function | Description |
+|  --- | --- |
+|  [isPolygon(value)](./alfa-css.polygon.ispolygon.md) |  |
+|  [partiallyResolve(resolver)](./alfa-css.polygon.partiallyresolve.md) |  |
 
 ## Interfaces
 
@@ -27,6 +34,10 @@ export declare namespace Polygon
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [Canonical](./alfa-css.polygon.canonical.md) |  |
 |  [Fill](./alfa-css.polygon.fill.md) |  |
+|  [PartiallyResolved](./alfa-css.polygon.partiallyresolved.md) |  |
+|  [PartialResolver](./alfa-css.polygon.partialresolver.md) |  |
+|  [Resolver](./alfa-css.polygon.resolver.md) |  |
 |  [Vertex](./alfa-css.polygon.vertex.md) |  |
 

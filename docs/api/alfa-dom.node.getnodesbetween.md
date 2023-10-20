@@ -4,7 +4,7 @@
 
 ## Node.getNodesBetween variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getNodesBetween: typeof traversal.getNodesBetween

@@ -4,7 +4,7 @@
 
 ## Iterable\_2.takeLast() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function takeLast<T>(iterable: Iterable<T>, count?: number): Iterable<T>;
@@ -14,10 +14,10 @@ function takeLast<T>(iterable: Iterable<T>, count?: number): Iterable<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  count | number | <i>(Optional)</i> |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  count | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;T&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

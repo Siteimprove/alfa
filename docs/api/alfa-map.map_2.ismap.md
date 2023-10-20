@@ -4,7 +4,7 @@
 
 ## Map\_2.isMap() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isMap<K, V>(value: Iterable<readonly [K, V]>): value is Map<K, V>;
@@ -16,7 +16,7 @@ function isMap<K, V>(value: Iterable<readonly [K, V]>): value is Map<K, V>;
 |  --- | --- | --- |
 |  value | Iterable&lt;readonly \[K, V\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Map&lt;K, V&gt;
+value is [Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;
 

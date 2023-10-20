@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.collect() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 collect<U>(mapper: Mapper<V, Option<U>, [key: K]>): Keyed<K, U>;
@@ -14,9 +14,9 @@ collect<U>(mapper: Mapper<V, Option<U>, [key: K]>): Keyed<K, U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[key: K\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, Option&lt;U&gt;, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, U&gt;
 

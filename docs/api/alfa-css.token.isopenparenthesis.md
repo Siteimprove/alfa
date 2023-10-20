@@ -4,7 +4,7 @@
 
 ## Token.isOpenParenthesis variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isOpenParenthesis: typeof OpenParenthesis.isOpenParenthesis

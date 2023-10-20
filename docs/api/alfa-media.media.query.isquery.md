@@ -4,7 +4,7 @@
 
 ## Media.Query.isQuery() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isQuery(value: unknown): value is Query;
@@ -16,7 +16,7 @@ function isQuery(value: unknown): value is Query;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Query](./alfa-media.media.query.md)
 

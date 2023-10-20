@@ -4,7 +4,7 @@
 
 ## Media.Feature.Width.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: Value<Length.Fixed>): Width;
@@ -16,7 +16,7 @@ static of(value: Value<Length.Fixed>): Width;
 |  --- | --- | --- |
 |  value | [Value](./alfa-media.media.value.md)<!-- -->&lt;[Length.Fixed](./alfa-css.length.fixed.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Width
 

@@ -4,7 +4,7 @@
 
 ## Trilean.fold() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function fold<T, A extends Array<unknown> = [], V = T, W = T, X = T>(predicate: Predicate<T, A>, ifTrue: Mapper<T, V>, ifFalse: Mapper<T, W>, ifUndefined: Mapper<T, X>, value: T, ...args: A): V | W | X;
@@ -21,7 +21,7 @@ function fold<T, A extends Array<unknown> = [], V = T, W = T, X = T>(predicate: 
 |  value | T |  |
 |  args | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
 V \| W \| X
 

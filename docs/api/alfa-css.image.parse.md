@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-images/\#typedef-image](https://drafts.csswg.org/css-images/#typedef-image)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<Image>

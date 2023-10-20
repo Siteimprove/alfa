@@ -4,7 +4,7 @@
 
 ## Token.Dimension.isDimension() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isDimension(value: unknown): value is Dimension;
@@ -16,7 +16,7 @@ function isDimension(value: unknown): value is Dimension;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Dimension](./alfa-css.token.dimension.md)
 

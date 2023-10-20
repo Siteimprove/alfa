@@ -4,7 +4,7 @@
 
 ## Network.isNetwork() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isNetwork<N, E>(value: Iterable<readonly [N, Iterable<readonly [N, Iterable<E>]>]>): value is Network<N, E>;
@@ -16,7 +16,7 @@ function isNetwork<N, E>(value: Iterable<readonly [N, Iterable<readonly [N, Iter
 |  --- | --- | --- |
 |  value | Iterable&lt;readonly \[N, Iterable&lt;readonly \[N, Iterable&lt;E&gt;\]&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

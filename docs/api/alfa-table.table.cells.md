@@ -4,7 +4,7 @@
 
 ## Table.cells property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get cells(): Sequence<Cell>;

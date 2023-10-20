@@ -4,7 +4,7 @@
 
 ## Array\_2.get() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function get<T>(array: ReadonlyArray<T>, index: number): Option<T>;
@@ -17,7 +17,7 @@ function get<T>(array: ReadonlyArray<T>, index: number): Option<T>;
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  index | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

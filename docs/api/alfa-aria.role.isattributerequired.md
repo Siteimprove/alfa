@@ -6,7 +6,7 @@
 
 Check if this role requires the specified attribute.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isAttributeRequired(name: Attribute.Name): boolean;
@@ -18,7 +18,7 @@ isAttributeRequired(name: Attribute.Name): boolean;
 |  --- | --- | --- |
 |  name | [Attribute.Name](./alfa-aria.attribute.name.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -4,7 +4,7 @@
 
 ## Numeric.Fixed.compare() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 compare(value: Fixed<T>): Comparison;
@@ -16,7 +16,7 @@ compare(value: Fixed<T>): Comparison;
 |  --- | --- | --- |
 |  value | [Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

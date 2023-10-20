@@ -4,10 +4,8 @@
 
 ## Inset.Offset type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-type Offset = Length.Fixed | Percentage.Fixed;
+type Offset = LengthPercentage;
 ```
-<b>References:</b> [Length.Fixed](./alfa-css.length.fixed.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
-

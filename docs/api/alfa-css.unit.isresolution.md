@@ -4,7 +4,7 @@
 
 ## Unit.isResolution() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isResolution(unit: string): unit is Resolution;
@@ -16,7 +16,7 @@ function isResolution(unit: string): unit is Resolution;
 |  --- | --- | --- |
 |  unit | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 unit is [Resolution](./alfa-css.unit.resolution.md)
 

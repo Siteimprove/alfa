@@ -4,7 +4,7 @@
 
 ## LengthPercentage.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of<U extends Unit.Length>(value: number, unit: U): Length.Fixed<U>;
@@ -17,7 +17,7 @@ export function of<U extends Unit.Length>(value: number, unit: U): Length.Fixed<
 |  value | number |  |
 |  unit | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Length.Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;U&gt;
 

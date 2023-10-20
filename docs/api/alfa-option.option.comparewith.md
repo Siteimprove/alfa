@@ -4,7 +4,7 @@
 
 ## Option.compareWith() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
@@ -17,7 +17,7 @@ compareWith<U = T>(option: Option<U>, comparer: Comparer<T, U>): Comparison;
 |  option | [Option](./alfa-option.option.md)<!-- -->&lt;U&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

@@ -4,7 +4,7 @@
 
 ## Trampoline.delay() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function delay<T>(thunk: Thunk<T>): Trampoline<T>;
@@ -14,9 +14,9 @@ function delay<T>(thunk: Thunk<T>): Trampoline<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt; |  |
+|  thunk | Thunk&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;
 

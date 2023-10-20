@@ -4,7 +4,7 @@
 
 ## Selective.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(value: T): Selective<T>;
@@ -16,7 +16,7 @@ static of<T>(value: T): Selective<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;T&gt;
 

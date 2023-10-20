@@ -4,7 +4,7 @@
 
 ## Selector.Compound namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace Compound 

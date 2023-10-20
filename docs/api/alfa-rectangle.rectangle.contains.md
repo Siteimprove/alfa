@@ -4,7 +4,7 @@
 
 ## Rectangle.contains() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 contains(other: Rectangle): boolean;
@@ -16,7 +16,7 @@ contains(other: Rectangle): boolean;
 |  --- | --- | --- |
 |  other | [Rectangle](./alfa-rectangle.rectangle.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

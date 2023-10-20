@@ -4,12 +4,12 @@
 
 ## Length.ILength.hasCalculation() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasCalculation(): this is Calculated;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Calculated](./alfa-css.length.calculated.md)
 

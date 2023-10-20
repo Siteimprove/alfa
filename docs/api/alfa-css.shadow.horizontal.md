@@ -4,7 +4,7 @@
 
 ## Shadow.horizontal property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get horizontal(): H;

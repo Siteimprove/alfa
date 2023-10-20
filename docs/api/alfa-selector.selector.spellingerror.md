@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/css-pseudo-4/\#selectordef-spelling-error](https://drafts.csswg.org/css-pseudo-4/#selectordef-spelling-error)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class SpellingError extends Pseudo.Element<"spelling-error"> 
 ```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"spelling-error"&gt;
+**Extends:** [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"spelling-error"&gt;
 
 ## Methods
 

@@ -4,7 +4,7 @@
 
 ## RuleTree.Node.JSON.declarations property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 declarations: Array<Declaration.JSON>;

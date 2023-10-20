@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#time](https://drafts.csswg.org/css-values/#time)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 time: Converter<Unit.Time>

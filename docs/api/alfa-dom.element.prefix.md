@@ -4,7 +4,7 @@
 
 ## Element.prefix property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get prefix(): Option<string>;

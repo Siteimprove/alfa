@@ -4,12 +4,12 @@
 
 ## Scope.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<S extends string = string> extends Tag.JSON<"scope"> 
 ```
-<b>Extends:</b> [Tag.JSON](./alfa-act.tag.json.md)<!-- -->&lt;"scope"&gt;
+**Extends:** [Tag.JSON](./alfa-act.tag.json.md)<!-- -->&lt;"scope"&gt;
 
 ## Properties
 

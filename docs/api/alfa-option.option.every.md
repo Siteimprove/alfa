@@ -4,7 +4,7 @@
 
 ## Option.every() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 every<U extends T>(refinement: Refinement<T, U>): this is Option<U>;
@@ -14,9 +14,9 @@ every<U extends T>(refinement: Refinement<T, U>): this is Option<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this is [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

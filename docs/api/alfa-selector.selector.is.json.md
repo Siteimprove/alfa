@@ -4,12 +4,12 @@
 
 ## Selector.Is.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Pseudo.Class.JSON<"is"> 
 ```
-<b>Extends:</b> [Pseudo.Class.JSON](./alfa-selector.selector.pseudo.class.json.md)<!-- -->&lt;"is"&gt;
+**Extends:** [Pseudo.Class.JSON](./alfa-selector.selector.pseudo.class.json.md)<!-- -->&lt;"is"&gt;
 
 ## Properties
 

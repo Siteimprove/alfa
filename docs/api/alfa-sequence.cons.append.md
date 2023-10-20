@@ -4,7 +4,7 @@
 
 ## Cons.append() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 append(value: T): Cons<T>;
@@ -16,7 +16,7 @@ append(value: T): Cons<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
 

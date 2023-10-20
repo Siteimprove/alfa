@@ -4,12 +4,12 @@
 
 ## Right.right() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 right(): Option<R>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;R&gt;
+Option&lt;R&gt;
 

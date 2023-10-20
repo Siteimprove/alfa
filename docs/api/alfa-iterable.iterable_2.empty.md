@@ -4,12 +4,12 @@
 
 ## Iterable\_2.empty() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function empty<T>(): Iterable<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;T&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

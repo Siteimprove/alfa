@@ -4,12 +4,12 @@
 
 ## Token.Decimal.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Decimal.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Decimal.JSON](./alfa-xpath.token.decimal.json.md)
 

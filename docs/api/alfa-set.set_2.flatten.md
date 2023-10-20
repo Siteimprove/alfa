@@ -4,7 +4,7 @@
 
 ## Set\_2.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Set<Set<T>>): Set<T>;
@@ -14,9 +14,9 @@ flatten<T>(this: Set<Set<T>>): Set<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Set&lt;Set&lt;T&gt;&gt; |  |
+|  this | [Set](./alfa-set.set_2.md)<!-- -->&lt;[Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Set&lt;T&gt;
+[Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;
 

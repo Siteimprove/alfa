@@ -4,7 +4,7 @@
 
 ## Cell.\_height property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _height: number;

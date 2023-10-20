@@ -4,7 +4,7 @@
 
 ## Criterion.EARL."dct:title" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "dct:title": string;

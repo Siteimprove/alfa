@@ -6,12 +6,12 @@
 
 [https://html.spec.whatwg.org/\#dom-tabindex](https://html.spec.whatwg.org/#dom-tabindex)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tabIndex(): Option<number>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;number&gt;
+Option&lt;number&gt;
 

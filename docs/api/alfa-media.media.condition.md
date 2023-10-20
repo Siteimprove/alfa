@@ -6,10 +6,10 @@
 
 [https://drafts.csswg.org/mediaqueries/\#media-condition](https://drafts.csswg.org/mediaqueries/#media-condition)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Condition = And | Or | Not;
 ```
-<b>References:</b> [And](./alfa-media.media.and.md)<!-- -->, [Or](./alfa-media.media.or.md)<!-- -->, [Not](./alfa-media.media.not.md)
+**References:** [And](./alfa-media.media.and.md)<!-- -->, [Or](./alfa-media.media.or.md)<!-- -->, [Not](./alfa-media.media.not.md)
 

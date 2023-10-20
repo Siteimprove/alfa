@@ -4,7 +4,7 @@
 
 ## Monad.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Monad<Mapper<T, U>>): Monad<U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Monad<Mapper<T, U>>): Monad<U>;
 |  --- | --- | --- |
 |  mapper | [Monad](./alfa-monad.monad.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Monad](./alfa-monad.monad.md)<!-- -->&lt;U&gt;
 

@@ -4,7 +4,7 @@
 
 ## Viewport.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): Viewport;
@@ -16,7 +16,7 @@ function from(json: JSON): Viewport;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-device.viewport.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Viewport](./alfa-device.viewport.md)
 

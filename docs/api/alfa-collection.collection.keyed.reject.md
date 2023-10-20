@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.reject() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reject<U extends V>(refinement: Refinement<V, U, [key: K]>): Keyed<K, Exclude<V, U>>;
@@ -14,9 +14,9 @@ reject<U extends V>(refinement: Refinement<V, U, [key: K]>): Keyed<K, Exclude<V,
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
+|  refinement | Refinement&lt;V, U, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, Exclude&lt;V, U&gt;&gt;
 

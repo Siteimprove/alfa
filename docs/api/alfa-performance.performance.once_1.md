@@ -4,7 +4,7 @@
 
 ## Performance.once() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 once(listener: Callback<Performance.Entry<T>>): this;
@@ -14,9 +14,9 @@ once(listener: Callback<Performance.Entry<T>>): this;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  listener | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Performance.Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt;&gt; |  |
+|  listener | Callback&lt;[Performance.Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

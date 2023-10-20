@@ -4,12 +4,12 @@
 
 ## Display.standard() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function standard(): Display;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Display](./alfa-device.display.md)
 

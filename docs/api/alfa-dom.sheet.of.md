@@ -4,7 +4,7 @@
 
 ## Sheet.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(rules: Iterable<Rule>, disabled?: boolean, condition?: Option<string>): Sheet;
@@ -14,11 +14,11 @@ static of(rules: Iterable<Rule>, disabled?: boolean, condition?: Option<string>)
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rules | Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
-|  disabled | boolean | <i>(Optional)</i> |
-|  condition | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
+|  rules | Iterable&lt;Rule&gt; |  |
+|  disabled | boolean | _(Optional)_ |
+|  condition | Option&lt;string&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sheet](./alfa-dom.sheet.md)
 

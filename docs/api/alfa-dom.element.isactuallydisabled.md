@@ -4,7 +4,7 @@
 
 ## Element.isActuallyDisabled variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isActuallyDisabled: typeof predicate.isActuallyDisabled

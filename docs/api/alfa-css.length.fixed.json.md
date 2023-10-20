@@ -4,10 +4,10 @@
 
 ## Length.Fixed.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<U extends Unit.Length = Unit.Length> extends Dimension.Fixed.JSON<"length", U> 
 ```
-<b>Extends:</b> [Dimension.Fixed.JSON](./alfa-css.dimension.fixed.json.md)<!-- -->&lt;"length", U&gt;
+**Extends:** [Dimension.Fixed.JSON](./alfa-css.dimension.fixed.json.md)<!-- -->&lt;"length", U&gt;
 

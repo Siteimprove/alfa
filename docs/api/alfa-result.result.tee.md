@@ -4,7 +4,7 @@
 
 ## Result.tee() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tee(callback: Callback<T>): Result<T, E>;
@@ -14,9 +14,9 @@ tee(callback: Callback<T>): Result<T, E>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+|  callback | Callback&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
 

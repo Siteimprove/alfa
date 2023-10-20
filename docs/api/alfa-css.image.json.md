@@ -4,12 +4,12 @@
 
 ## Image.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Value.JSON<"image"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"image"&gt;
+**Extends:** [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"image"&gt;
 
 ## Properties
 

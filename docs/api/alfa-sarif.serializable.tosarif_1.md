@@ -4,7 +4,7 @@
 
 ## Serializable.toSARIF() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function toSARIF(value: unknown): Option<SARIF>;
@@ -16,7 +16,7 @@ function toSARIF(value: unknown): Option<SARIF>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[SARIF](./alfa-sarif.sarif.md)<!-- -->&gt;
+Option&lt;[SARIF](./alfa-sarif.sarif.md)<!-- -->&gt;
 

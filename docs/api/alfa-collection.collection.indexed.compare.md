@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.compare() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 compare<T>(this: Indexed<Comparable<T>>, iterable: Iterable<T>): Comparison;
@@ -14,10 +14,10 @@ compare<T>(this: Indexed<Comparable<T>>, iterable: Iterable<T>): Comparison;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;[Comparable](./alfa-comparable.comparable.md)<!-- -->&lt;T&gt;&gt; |  |
+|  this | [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;Comparable&lt;T&gt;&gt; |  |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

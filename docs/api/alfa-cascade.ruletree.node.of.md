@@ -4,7 +4,7 @@
 
 ## RuleTree.Node.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(rule: Rule, selector: Selector, declarations: Iterable<Declaration>, children: Array<Node>, parent: Option<Node>): Node;
@@ -14,13 +14,13 @@ static of(rule: Rule, selector: Selector, declarations: Iterable<Declaration>, c
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-dom.rule.md) |  |
-|  selector | [Selector](./alfa-selector.selector.md) |  |
-|  declarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
+|  rule | Rule |  |
+|  selector | Selector |  |
+|  declarations | Iterable&lt;Declaration&gt; |  |
 |  children | Array&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt; |  |
-|  parent | [Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt; |  |
+|  parent | Option&lt;[Node](./alfa-cascade.ruletree.node.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Node](./alfa-cascade.ruletree.node.md)
 

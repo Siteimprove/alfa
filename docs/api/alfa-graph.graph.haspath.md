@@ -4,7 +4,7 @@
 
 ## Graph.hasPath() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasPath(from: T, to: T): boolean;
@@ -17,7 +17,7 @@ hasPath(from: T, to: T): boolean;
 |  from | T |  |
 |  to | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

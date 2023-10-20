@@ -4,12 +4,12 @@
 
 ## Integer.Fixed.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Fixed.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Fixed.JSON](./alfa-css.integer.fixed.json.md)
 

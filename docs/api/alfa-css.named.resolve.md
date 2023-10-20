@@ -4,12 +4,12 @@
 
 ## Named.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): RGB.Canonical;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [RGB.Canonical](./alfa-css.rgb.canonical.md)
 

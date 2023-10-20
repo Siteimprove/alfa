@@ -10,7 +10,7 @@ So, instead, we need to apply act.Rule.Input on each individual type of the unio
 
 We first construct the object type (<!-- -->{<!-- -->R1: Atomic<!-- -->&lt;<!-- -->…<!-- -->&gt;<!-- -->, R2: …<!-- -->}<!-- -->) and its keys ("R1" \| "R2" \| …) Next, for each extractor, we iterate it over the values of the object type and only keep the resulting values. The unions are then automatically collapsed as we want them.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type RulesObject = typeof rules;

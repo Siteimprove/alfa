@@ -4,7 +4,7 @@
 
 ## Media.Feature.Height.isHeight() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isHeight(value: Feature): value is Height;
@@ -16,7 +16,7 @@ function isHeight(value: Feature): value is Height;
 |  --- | --- | --- |
 |  value | [Feature](./alfa-media.media.feature.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is Height
 

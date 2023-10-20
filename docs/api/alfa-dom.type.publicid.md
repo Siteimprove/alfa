@@ -4,7 +4,7 @@
 
 ## Type.publicId property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get publicId(): Option<string>;

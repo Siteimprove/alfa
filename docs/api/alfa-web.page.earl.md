@@ -4,12 +4,12 @@
 
 ## Page.EARL interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface EARL extends earl.EARL 
 ```
-<b>Extends:</b> earl.[EARL](./alfa-earl.earl.md)
+**Extends:** [earl.EARL](./alfa-earl.earl.md)
 
 ## Properties
 

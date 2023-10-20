@@ -4,7 +4,7 @@
 
 ## List.JSON.values property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 values: Array<Serializable.ToJSON<V>>;

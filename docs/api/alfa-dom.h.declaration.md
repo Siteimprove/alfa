@@ -4,7 +4,7 @@
 
 ## h.declaration() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function declaration(name: string, value: string, important?: boolean): Declaration;
@@ -16,9 +16,9 @@ function declaration(name: string, value: string, important?: boolean): Declarat
 |  --- | --- | --- |
 |  name | string |  |
 |  value | string |  |
-|  important | boolean | <i>(Optional)</i> |
+|  important | boolean | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Declaration](./alfa-dom.declaration.md)
+Declaration
 

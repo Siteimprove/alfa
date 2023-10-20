@@ -4,12 +4,12 @@
 
 ## Comment.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Node.JSON<"comment"> 
 ```
-<b>Extends:</b> [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"comment"&gt;
+**Extends:** [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"comment"&gt;
 
 ## Properties
 

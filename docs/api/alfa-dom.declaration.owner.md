@@ -4,7 +4,7 @@
 
 ## Declaration.owner property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get owner(): Option<Element>;

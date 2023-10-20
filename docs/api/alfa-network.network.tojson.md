@@ -4,12 +4,12 @@
 
 ## Network.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Network.JSON<N, E>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Network.JSON](./alfa-network.network.json.md)<!-- -->&lt;N, E&gt;
 

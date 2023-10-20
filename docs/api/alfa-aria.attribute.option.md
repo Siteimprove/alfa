@@ -6,12 +6,12 @@
 
 The type of the options allowed by the specified attribute.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Option<N extends Name = Name> = Members<Attributes[N]["options"]>;
 ```
-<b>References:</b> [Name](./alfa-aria.attribute.name.md)
+**References:** [Name](./alfa-aria.attribute.name.md)
 
 ## Remarks
 

@@ -4,10 +4,10 @@
 
 ## Collection.Indexed.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON<T> = Array<Serializable.ToJSON<T>>;
 ```
-<b>References:</b> [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
+**References:** [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
 

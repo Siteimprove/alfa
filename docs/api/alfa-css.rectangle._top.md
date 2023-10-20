@@ -4,7 +4,7 @@
 
 ## Rectangle.\_top property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly _top: O;

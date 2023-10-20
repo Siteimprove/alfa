@@ -4,12 +4,12 @@
 
 ## Browser.Version type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Version<N extends Name> = N extends Name ? keyof Browsers[N]["releases"] : never;
 ```
-<b>References:</b> [Name](./alfa-compatibility.browser.name.md)
+**References:** [Name](./alfa-compatibility.browser.name.md)
 
 ## Remarks
 

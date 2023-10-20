@@ -4,7 +4,7 @@
 
 ## Device.JSON.viewport property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 viewport: Viewport.JSON;

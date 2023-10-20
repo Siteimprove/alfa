@@ -4,7 +4,7 @@
 
 ## Body.EARL."cnt:characterEncoding" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "cnt:characterEncoding": "utf-8";

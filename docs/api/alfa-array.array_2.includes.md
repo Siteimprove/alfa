@@ -4,7 +4,7 @@
 
 ## Array\_2.includes() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function includes<T>(array: ReadonlyArray<T>, value: T): boolean;
@@ -17,7 +17,7 @@ function includes<T>(array: ReadonlyArray<T>, value: T): boolean;
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

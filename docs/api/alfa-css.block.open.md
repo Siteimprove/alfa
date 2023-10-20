@@ -6,10 +6,10 @@
 
 The tokens that are allowed to open a block.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Open = Token.OpenParenthesis | Token.OpenSquareBracket | Token.OpenCurlyBracket;
 ```
-<b>References:</b> [Token.OpenParenthesis](./alfa-css.token.openparenthesis.md)<!-- -->, [Token.OpenSquareBracket](./alfa-css.token.opensquarebracket.md)<!-- -->, [Token.OpenCurlyBracket](./alfa-css.token.opencurlybracket.md)
+**References:** [Token.OpenParenthesis](./alfa-css.token.openparenthesis.md)<!-- -->, [Token.OpenSquareBracket](./alfa-css.token.opensquarebracket.md)<!-- -->, [Token.OpenCurlyBracket](./alfa-css.token.opencurlybracket.md)
 

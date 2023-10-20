@@ -4,10 +4,10 @@
 
 ## Expression.Test type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Test = Test.Kind | Test.Name;
 ```
-<b>References:</b> [Test.Kind](./alfa-xpath.expression.test.kind.md)<!-- -->, [Test.Name](./alfa-xpath.expression.test.name.md)
+**References:** [Test.Kind](./alfa-xpath.expression.test.kind.md)<!-- -->, [Test.Name](./alfa-xpath.expression.test.name.md)
 

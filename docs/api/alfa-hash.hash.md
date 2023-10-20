@@ -5,12 +5,12 @@
 ## Hash class
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare abstract class Hash implements Equatable, Hashable 
 ```
-<b>Implements:</b> [Equatable](./alfa-equatable.equatable.md)<!-- -->, [Hashable](./alfa-hash.hashable.md)
+**Implements:** Equatable, Hashable
 
 ## Constructors
 
@@ -24,9 +24,9 @@ export declare abstract class Hash implements Equatable, Hashable
 |  --- | --- | --- |
 |  [equals(value)](./alfa-hash.hash.equals.md) |  |  |
 |  [equals(value)](./alfa-hash.hash.equals_1.md) |  |  |
-|  [finish()](./alfa-hash.hash.finish.md) |  | Get the current hash value as a 32-bit integer. |
+|  [finish()](./alfa-hash.hash.finish.md) | <code>abstract</code> | Get the current hash value as a 32-bit integer. |
 |  [hash(hash)](./alfa-hash.hash.hash.md) |  |  |
-|  [write(data)](./alfa-hash.hash.write.md) |  |  |
+|  [write(data)](./alfa-hash.hash.write.md) | <code>abstract</code> |  |
 |  [writeBigInt(data, size, signed)](./alfa-hash.hash.writebigint.md) |  |  |
 |  [writeBigInt64(data)](./alfa-hash.hash.writebigint64.md) |  |  |
 |  [writeBigUint64(data)](./alfa-hash.hash.writebiguint64.md) |  |  |

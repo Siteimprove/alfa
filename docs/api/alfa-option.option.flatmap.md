@@ -4,7 +4,7 @@
 
 ## Option.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<T, Option<U>>): Option<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

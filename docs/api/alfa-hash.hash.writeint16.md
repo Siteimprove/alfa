@@ -4,7 +4,7 @@
 
 ## Hash.writeInt16() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeInt16(data: number): this;
@@ -16,7 +16,7 @@ writeInt16(data: number): this;
 |  --- | --- | --- |
 |  data | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

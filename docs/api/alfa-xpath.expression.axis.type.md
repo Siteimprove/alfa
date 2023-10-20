@@ -4,7 +4,7 @@
 
 ## Expression.Axis.Type type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Type = "ancestor" | "ancestor-or-self" | "attribute" | "child" | "descendant" | "descendant-or-self" | "following" | "following-sibling" | "parent" | "preceding" | "preceding-sibling" | "self";

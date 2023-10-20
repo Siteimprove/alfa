@@ -4,7 +4,7 @@
 
 ## Shadow.JSON.color property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 color: Color.JSON;

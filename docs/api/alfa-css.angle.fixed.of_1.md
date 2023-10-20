@@ -4,7 +4,7 @@
 
 ## Angle.Fixed.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<U extends Unit.Angle>(value: BaseAngle<U>): Fixed<U>;
@@ -16,7 +16,7 @@ static of<U extends Unit.Angle>(value: BaseAngle<U>): Fixed<U>;
 |  --- | --- | --- |
 |  value | BaseAngle&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.angle.fixed.md)<!-- -->&lt;U&gt;
 

@@ -4,7 +4,7 @@
 
 ## Network.isNetwork() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isNetwork<N, E>(value: unknown): value is Network<N, E>;
@@ -16,7 +16,7 @@ function isNetwork<N, E>(value: unknown): value is Network<N, E>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

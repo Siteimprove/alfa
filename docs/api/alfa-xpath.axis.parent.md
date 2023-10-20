@@ -4,7 +4,7 @@
 
 ## axis.parent() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parent(name?: string): Builder.Axis;
@@ -14,9 +14,9 @@ function parent(name?: string): Builder.Axis;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | string | <i>(Optional)</i> |
+|  name | string | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Builder.Axis](./alfa-xpath.builder.axis.md)
 

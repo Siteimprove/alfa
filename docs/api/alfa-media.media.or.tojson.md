@@ -4,12 +4,12 @@
 
 ## Media.Or.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Or.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Or.JSON](./alfa-media.media.or.json.md)
 

@@ -4,7 +4,7 @@
 
 ## Row.isRow() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRow(value: unknown): value is Row;
@@ -16,7 +16,7 @@ function isRow(value: unknown): value is Row;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Row](./alfa-table.row.md)
 

@@ -4,7 +4,7 @@
 
 ## Slice.trimTrailing() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 trimTrailing(predicate: Predicate<T, [index: number]>): Slice<T>;
@@ -14,9 +14,9 @@ trimTrailing(predicate: Predicate<T, [index: number]>): Slice<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

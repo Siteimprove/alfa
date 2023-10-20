@@ -4,7 +4,7 @@
 
 ## Array\_2.filter() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function filter<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): Array<T>;
@@ -15,9 +15,9 @@ function filter<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: numb
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;T&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 

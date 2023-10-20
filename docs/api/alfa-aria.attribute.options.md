@@ -4,7 +4,7 @@
 
 ## Attribute.options property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get options(): Sequence<Attribute.Option<N>>;

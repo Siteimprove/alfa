@@ -4,7 +4,7 @@
 
 ## Array\_2.size() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function size<T>(array: ReadonlyArray<T>): number;
@@ -16,7 +16,7 @@ function size<T>(array: ReadonlyArray<T>): number;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

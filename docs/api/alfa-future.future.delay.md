@@ -4,7 +4,7 @@
 
 ## Future.delay() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function delay<T>(thunk: Thunk<T>): Future<T>;
@@ -14,9 +14,9 @@ function delay<T>(thunk: Thunk<T>): Future<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt; |  |
+|  thunk | Thunk&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

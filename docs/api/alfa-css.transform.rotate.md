@@ -4,7 +4,7 @@
 
 ## Transform.rotate() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function rotate(x: Number, y: Number, z: Number, angle: Angle): Rotate;
@@ -17,9 +17,9 @@ function rotate(x: Number, y: Number, z: Number, angle: Angle): Rotate;
 |  x | Number |  |
 |  y | Number |  |
 |  z | Number |  |
-|  angle | [Angle](./alfa-css.angle.md) |  |
+|  angle | Angle |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Rotate](./alfa-css.rotate.md)
+Rotate
 

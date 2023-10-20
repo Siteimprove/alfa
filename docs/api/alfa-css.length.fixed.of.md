@@ -4,7 +4,7 @@
 
 ## Length.Fixed.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
@@ -17,7 +17,7 @@ static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
 |  value | number |  |
 |  unit | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;U&gt;
 

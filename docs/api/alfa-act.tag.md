@@ -5,7 +5,7 @@
 ## Tag namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Tag 

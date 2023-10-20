@@ -8,7 +8,7 @@ Compute the determinant of a non-empty, square matrix.
 
 [https://en.wikipedia.org/wiki/Determinant](https://en.wikipedia.org/wiki/Determinant) [https://en.wikipedia.org/wiki/Laplace\_expansion](https://en.wikipedia.org/wiki/Laplace_expansion)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function determinant(m: Matrix): number;
@@ -20,7 +20,7 @@ function determinant(m: Matrix): number;
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

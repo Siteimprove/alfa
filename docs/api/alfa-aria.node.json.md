@@ -4,12 +4,12 @@
 
 ## Node.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<T extends string = string> extends tree.Node.JSON<T> 
 ```
-<b>Extends:</b> tree.[Node.JSON](./alfa-tree.node.json.md)<!-- -->&lt;T&gt;
+**Extends:** [tree.Node.JSON](./alfa-tree.node.json.md)<!-- -->&lt;T&gt;
 
 ## Properties
 

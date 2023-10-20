@@ -4,7 +4,7 @@
 
 ## Math\_2.parseLengthPercentage variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseLengthPercentage: Parser<Slice<Token>, Math<"length-percentage">, string, []>

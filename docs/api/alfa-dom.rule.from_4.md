@@ -4,7 +4,7 @@
 
 ## Rule.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: PageRule.JSON): PageRule;
@@ -16,7 +16,7 @@ function from(json: PageRule.JSON): PageRule;
 |  --- | --- | --- |
 |  json | [PageRule.JSON](./alfa-dom.pagerule.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[PageRule](./alfa-dom.pagerule.md)
+PageRule
 

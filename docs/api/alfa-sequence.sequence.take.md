@@ -4,7 +4,7 @@
 
 ## Sequence.take() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 take(count: number): Sequence<T>;
@@ -16,7 +16,7 @@ take(count: number): Sequence<T>;
 |  --- | --- | --- |
 |  count | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

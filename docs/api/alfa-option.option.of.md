@@ -4,7 +4,7 @@
 
 ## Option.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function of<T>(value: T): Some<T>;
@@ -16,7 +16,7 @@ function of<T>(value: T): Some<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
+Some&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Emitter.emit() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 emit(event: T): boolean;
@@ -16,7 +16,7 @@ emit(event: T): boolean;
 |  --- | --- | --- |
 |  event | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

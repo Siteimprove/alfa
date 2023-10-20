@@ -4,7 +4,7 @@
 
 ## Parser.end() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function end<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>): Parser<I, void, E>;
@@ -16,7 +16,7 @@ function end<I extends Iterable<unknown>, E>(ifError: Mapper<I extends Iterable<
 |  --- | --- | --- |
 |  ifError | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;I extends Iterable&lt;infer T&gt; ? T : unknown, E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, void, E&gt;
 

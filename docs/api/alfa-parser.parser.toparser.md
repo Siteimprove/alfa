@@ -4,7 +4,7 @@
 
 ## Parser.toParser() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function toParser<I, T, A extends Array<unknown> = []>(infallible: Parser.Infallible<I, T, A>): Parser<I, T, never, A>;
@@ -16,7 +16,7 @@ function toParser<I, T, A extends Array<unknown> = []>(infallible: Parser.Infall
 |  --- | --- | --- |
 |  infallible | [Parser.Infallible](./alfa-parser.parser.infallible.md)<!-- -->&lt;I, T, A&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, never, A&gt;
 

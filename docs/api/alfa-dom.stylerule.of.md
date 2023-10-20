@@ -4,7 +4,7 @@
 
 ## StyleRule.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(selector: string, declarations: Iterable<Declaration>, hint?: boolean): StyleRule;
@@ -15,10 +15,10 @@ static of(selector: string, declarations: Iterable<Declaration>, hint?: boolean)
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  selector | string |  |
-|  declarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
-|  hint | boolean | <i>(Optional)</i> |
+|  declarations | Iterable&lt;Declaration&gt; |  |
+|  hint | boolean | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [StyleRule](./alfa-dom.stylerule.md)
 

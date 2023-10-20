@@ -4,7 +4,7 @@
 
 ## Stability.JSON.stability property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 stability: S;

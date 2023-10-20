@@ -4,7 +4,7 @@
 
 ## Rule.Event.rule property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get rule(): Rule<INPUT, TARGET, QUESTION, SUBJECT>;

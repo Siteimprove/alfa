@@ -4,7 +4,7 @@
 
 ## Network.hasPath() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasPath(from: N, to: N): boolean;
@@ -17,7 +17,7 @@ hasPath(from: N, to: N): boolean;
 |  from | N |  |
 |  to | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

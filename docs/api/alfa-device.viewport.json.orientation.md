@@ -4,7 +4,7 @@
 
 ## Viewport.JSON.orientation property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 orientation: `${Orientation}`;

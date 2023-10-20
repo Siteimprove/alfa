@@ -4,7 +4,7 @@
 
 ## Expression.FunctionCall.JSON.parameters property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parameters: Array<Expression.JSON>;

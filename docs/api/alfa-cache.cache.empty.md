@@ -4,12 +4,12 @@
 
 ## Cache.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty<K extends object, V>(): Cache<K, V>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Cache](./alfa-cache.cache.md)<!-- -->&lt;K, V&gt;
 

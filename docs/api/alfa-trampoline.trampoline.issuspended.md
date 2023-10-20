@@ -4,12 +4,12 @@
 
 ## Trampoline.isSuspended() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract isSuspended(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

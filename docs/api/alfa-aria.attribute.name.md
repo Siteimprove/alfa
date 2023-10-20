@@ -4,7 +4,7 @@
 
 ## Attribute.Name type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Name = keyof Attributes;

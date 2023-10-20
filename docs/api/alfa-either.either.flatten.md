@@ -4,7 +4,7 @@
 
 ## Either.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<L, R>(this: Either<L, Either<L, R>>): Either<L, R>;
@@ -16,7 +16,7 @@ flatten<L, R>(this: Either<L, Either<L, R>>): Either<L, R>;
 |  --- | --- | --- |
 |  this | [Either](./alfa-either.either.md)<!-- -->&lt;L, [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Either](./alfa-either.either.md)<!-- -->&lt;L, R&gt;
 

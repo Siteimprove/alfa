@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#font-relative-lengths](https://drafts.csswg.org/css-values/#font-relative-lengths)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Font = "em" | "ex" | "ch" | "rem";

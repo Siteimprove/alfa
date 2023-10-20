@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/css-pseudo-4/\#selectordef-selection](https://drafts.csswg.org/css-pseudo-4/#selectordef-selection)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Selection extends Pseudo.Element<"selection"> 
 ```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"selection"&gt;
+**Extends:** [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"selection"&gt;
 
 ## Methods
 

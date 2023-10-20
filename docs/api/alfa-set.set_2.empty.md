@@ -4,12 +4,12 @@
 
 ## Set\_2.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty<T>(): Set<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Set&lt;T&gt;
+[Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;
 

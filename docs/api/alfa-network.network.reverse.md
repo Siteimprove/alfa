@@ -4,12 +4,12 @@
 
 ## Network.reverse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reverse(): Network<N, E>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

@@ -4,7 +4,7 @@
 
 ## Language.variants property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get variants(): Iterable<Language.Variant>;

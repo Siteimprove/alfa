@@ -4,7 +4,7 @@
 
 ## Role.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<N extends Role.Name>(name: N): Role<N>;
@@ -16,7 +16,7 @@ static of<N extends Role.Name>(name: N): Role<N>;
 |  --- | --- | --- |
 |  name | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Role](./alfa-aria.role.md)<!-- -->&lt;N&gt;
 

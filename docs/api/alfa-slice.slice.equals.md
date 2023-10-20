@@ -4,7 +4,7 @@
 
 ## Slice.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<T>(value: Slice<T>): boolean;
@@ -16,7 +16,7 @@ equals<T>(value: Slice<T>): boolean;
 |  --- | --- | --- |
 |  value | [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

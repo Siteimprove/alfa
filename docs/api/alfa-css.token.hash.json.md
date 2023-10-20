@@ -4,7 +4,7 @@
 
 ## Token.Hash.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON 

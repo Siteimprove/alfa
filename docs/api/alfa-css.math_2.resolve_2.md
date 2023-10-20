@@ -4,7 +4,7 @@
 
 ## Math\_2.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(this: Math<"length">, resolver: Expression.LengthResolver): Result<Length<"px">, string>;
@@ -14,10 +14,10 @@ resolve(this: Math<"length">, resolver: Expression.LengthResolver): Result<Lengt
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Math&lt;"length"&gt; |  |
+|  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"length"&gt; |  |
 |  resolver | Expression.LengthResolver |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;Length&lt;"px"&gt;, string&gt;
+Result&lt;Length&lt;"px"&gt;, string&gt;
 

@@ -4,12 +4,12 @@
 
 ## Selector.Root.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Root;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Root](./alfa-selector.selector.root.md)
 

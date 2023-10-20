@@ -6,7 +6,7 @@
 
 Checks that a package.json file has the correct fields and structure.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function validatePackageJson({ dir, packageJson, }: {
@@ -22,7 +22,7 @@ export declare function validatePackageJson({ dir, packageJson, }: {
 |  { dir, packageJson, } | { dir: string; packageJson: JSON; } |  |
 |  config | Config |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Array&lt;string&gt;
 

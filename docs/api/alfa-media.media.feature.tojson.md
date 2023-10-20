@@ -4,12 +4,12 @@
 
 ## Media.Feature.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Feature.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Feature.JSON](./alfa-media.media.feature.json.md)
 

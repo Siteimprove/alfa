@@ -4,7 +4,7 @@
 
 ## Transformation.perspective() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function perspective(d: number): Transformation;
@@ -16,7 +16,7 @@ function perspective(d: number): Transformation;
 |  --- | --- | --- |
 |  d | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Transformation](./alfa-affine.transformation.md)
 

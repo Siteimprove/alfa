@@ -4,12 +4,12 @@
 
 ## Record\_2.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.iterator](): Iterator<Record.Entry<T>>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Iterator&lt;Record.Entry&lt;T&gt;&gt;
+Iterator&lt;[Record.Entry](./alfa-record.record_2.entry.md)<!-- -->&lt;T&gt;&gt;
 

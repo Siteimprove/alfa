@@ -4,7 +4,7 @@
 
 ## List.every() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 every(predicate: Predicate<T, [index: number]>): boolean;
@@ -14,9 +14,9 @@ every(predicate: Predicate<T, [index: number]>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

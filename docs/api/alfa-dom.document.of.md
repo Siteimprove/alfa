@@ -4,7 +4,7 @@
 
 ## Document.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(children: Iterable<Node>, style?: Iterable<Sheet>): Document;
@@ -14,10 +14,10 @@ static of(children: Iterable<Node>, style?: Iterable<Sheet>): Document;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  children | Iterable&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; |  |
-|  style | Iterable&lt;[Sheet](./alfa-dom.sheet.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  children | Iterable&lt;Node&gt; |  |
+|  style | Iterable&lt;Sheet&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Document](./alfa-dom.document.md)
 

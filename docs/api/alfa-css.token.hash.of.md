@@ -4,7 +4,7 @@
 
 ## Token.Hash.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: string, isIdentifier: boolean): Hash;
@@ -17,7 +17,7 @@ static of(value: string, isIdentifier: boolean): Hash;
 |  value | string |  |
 |  isIdentifier | boolean |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Hash](./alfa-css.token.hash.md)
 

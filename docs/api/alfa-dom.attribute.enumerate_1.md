@@ -6,7 +6,7 @@
 
 [https://html.spec.whatwg.org/\#enumerated-attribute](https://html.spec.whatwg.org/#enumerated-attribute)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 enumerate<T extends string>(valid: T, ...rest: Array<T>): Option<T>;
@@ -19,7 +19,7 @@ enumerate<T extends string>(valid: T, ...rest: Array<T>): Option<T>;
 |  valid | T |  |
 |  rest | Array&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

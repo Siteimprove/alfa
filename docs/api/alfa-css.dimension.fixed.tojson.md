@@ -4,12 +4,12 @@
 
 ## Dimension.Fixed.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Fixed.JSON<T, U>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Fixed.JSON](./alfa-css.dimension.fixed.json.md)<!-- -->&lt;T, U&gt;
 

@@ -4,7 +4,7 @@
 
 ## Body.isBody() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isBody(value: unknown): value is Body;
@@ -16,7 +16,7 @@ function isBody(value: unknown): value is Body;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Body](./alfa-http.body.md)
 

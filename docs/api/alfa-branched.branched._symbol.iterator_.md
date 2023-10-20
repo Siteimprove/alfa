@@ -4,12 +4,12 @@
 
 ## Branched.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.iterator](): Iterator<[T, Iterable<B>]>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Iterator&lt;\[T, Iterable&lt;B&gt;\]&gt;
 

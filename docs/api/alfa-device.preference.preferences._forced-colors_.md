@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/mediaqueries-5/\#forced-colors](https://drafts.csswg.org/mediaqueries-5/#forced-colors)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "forced-colors": "none" | "active";

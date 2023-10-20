@@ -4,7 +4,7 @@
 
 ## Graph.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from<T>(iterable: Iterable<readonly [T, Iterable<T>]>): Graph<T>;
@@ -16,7 +16,7 @@ function from<T>(iterable: Iterable<readonly [T, Iterable<T>]>): Graph<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;readonly \[T, Iterable&lt;T&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

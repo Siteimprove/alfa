@@ -4,12 +4,12 @@
 
 ## Selector.Attribute.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Attribute.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Attribute.JSON](./alfa-selector.selector.attribute.json.md)
 

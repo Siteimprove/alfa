@@ -4,7 +4,7 @@
 
 ## Diagnostic.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(message: string): Diagnostic;
@@ -16,7 +16,7 @@ static of(message: string): Diagnostic;
 |  --- | --- | --- |
 |  message | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Diagnostic](./alfa-act.diagnostic.md)
 

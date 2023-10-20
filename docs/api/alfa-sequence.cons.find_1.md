@@ -4,7 +4,7 @@
 
 ## Cons.find() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 find(predicate: Predicate<T, [index: number]>): Option<T>;
@@ -14,9 +14,9 @@ find(predicate: Predicate<T, [index: number]>): Option<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

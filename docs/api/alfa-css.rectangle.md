@@ -9,7 +9,7 @@
 > Deprecated as of CSS Masking Module Level 1
 > 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Rectangle 
@@ -38,4 +38,6 @@ export declare namespace Rectangle
 |  Type Alias | Description |
 |  --- | --- |
 |  [Auto](./alfa-css.rectangle.auto.md) |  |
+|  [Canonical](./alfa-css.rectangle.canonical.md) |  |
+|  [Resolver](./alfa-css.rectangle.resolver.md) |  |
 

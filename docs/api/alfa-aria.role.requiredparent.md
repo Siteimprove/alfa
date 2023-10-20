@@ -6,7 +6,7 @@
 
 Get the required parent of this role.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get requiredParent(): ReadonlyArray<ReadonlyArray<Role.Name>>;

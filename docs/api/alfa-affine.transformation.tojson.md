@@ -4,12 +4,12 @@
 
 ## Transformation.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Transformation.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Transformation.JSON](./alfa-affine.transformation.json.md)
 

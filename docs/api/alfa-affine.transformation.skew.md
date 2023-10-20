@@ -4,7 +4,7 @@
 
 ## Transformation.skew() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function skew(a: number, b: number): Transformation;
@@ -17,7 +17,7 @@ function skew(a: number, b: number): Transformation;
 |  a | number |  |
 |  b | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Transformation](./alfa-affine.transformation.md)
 

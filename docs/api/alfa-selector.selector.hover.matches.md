@@ -4,7 +4,7 @@
 
 ## Selector.Hover.matches() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 matches(element: Element, context?: Context): boolean;
@@ -14,10 +14,10 @@ matches(element: Element, context?: Context): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
-|  context | [Context](./alfa-selector.context.md) | <i>(Optional)</i> |
+|  element | Element |  |
+|  context | Context | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

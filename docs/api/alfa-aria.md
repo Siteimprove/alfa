@@ -15,9 +15,14 @@ This package provides functionality for working with [ARIA](https://www.w3.org/T
 |  [Element](./alfa-aria.element.md) |  |
 |  [Inert](./alfa-aria.inert.md) |  |
 |  [Name](./alfa-aria.name.md) |  |
-|  [Node](./alfa-aria.node.md) | [https://w3c.github.io/aria/\#accessibility\_tree](https://w3c.github.io/aria/#accessibility_tree) |
 |  [Role](./alfa-aria.role.md) |  |
 |  [Text](./alfa-aria.text.md) |  |
+
+## Abstract Classes
+
+|  Abstract Class | Description |
+|  --- | --- |
+|  [Node](./alfa-aria.node.md) | [https://w3c.github.io/aria/\#accessibility\_tree](https://w3c.github.io/aria/#accessibility_tree) |
 
 ## Interfaces
 

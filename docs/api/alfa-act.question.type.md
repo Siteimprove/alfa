@@ -4,7 +4,7 @@
 
 ## Question.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get type(): TYPE;

@@ -4,7 +4,7 @@
 
 ## Shadow.isShadow() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isShadow(value: unknown): value is Shadow;
@@ -16,7 +16,7 @@ function isShadow(value: unknown): value is Shadow;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Shadow](./alfa-dom.shadow.md)
 

@@ -4,12 +4,19 @@
 
 ## Shape.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-resolve(): Shape<S, B>;
+resolve(resolver: Shape.Resolver): Shape.Canonical;
 ```
-<b>Returns:</b>
 
-[Shape](./alfa-css.shape.md)<!-- -->&lt;S, B&gt;
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Shape.Resolver](./alfa-css.shape.resolver.md) |  |
+
+**Returns:**
+
+[Shape.Canonical](./alfa-css.shape.canonical.md)
 

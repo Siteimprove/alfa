@@ -5,10 +5,8 @@
 ## Color type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Color = Hex | Named | HSL | RGB | Current | System;
 ```
-<b>References:</b> [Hex](./alfa-css.hex.md)<!-- -->, [Named](./alfa-css.named.md)<!-- -->, [HSL](./alfa-css.hsl.md)<!-- -->, [RGB](./alfa-css.rgb.md)<!-- -->, [Current](./alfa-css.current.md)<!-- -->, [System](./alfa-css.system.md)
-

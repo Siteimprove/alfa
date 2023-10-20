@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON<K, V> = Array<[
@@ -12,5 +12,5 @@ type JSON<K, V> = Array<[
             Serializable.ToJSON<V>
         ]>;
 ```
-<b>References:</b> [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
+**References:** [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
 

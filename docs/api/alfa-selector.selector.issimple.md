@@ -4,7 +4,7 @@
 
 ## Selector.isSimple() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isSimple(value: unknown): value is Simple;
@@ -16,7 +16,7 @@ export function isSimple(value: unknown): value is Simple;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Simple](./alfa-selector.selector.simple.md)
 

@@ -4,12 +4,12 @@
 
 ## Shadow.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Value.JSON<"shadow"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"shadow"&gt;
+**Extends:** [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"shadow"&gt;
 
 ## Properties
 

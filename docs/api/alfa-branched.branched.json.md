@@ -4,7 +4,7 @@
 
 ## Branched.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON<T, B = never> = Array<[
@@ -12,5 +12,5 @@ type JSON<T, B = never> = Array<[
         Array<Serializable.ToJSON<B>>
     ]>;
 ```
-<b>References:</b> [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
+**References:** [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
 

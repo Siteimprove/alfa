@@ -4,7 +4,7 @@
 
 ## Token.Whitespace.isWhitespace() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isWhitespace(value: unknown): value is Whitespace;
@@ -16,7 +16,7 @@ function isWhitespace(value: unknown): value is Whitespace;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Whitespace](./alfa-css.token.whitespace.md)
 

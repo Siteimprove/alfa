@@ -4,7 +4,7 @@
 
 ## Value.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract equals(value: unknown): value is this;
@@ -16,7 +16,7 @@ abstract equals(value: unknown): value is this;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is this
 

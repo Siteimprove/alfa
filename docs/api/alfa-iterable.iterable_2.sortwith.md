@@ -4,7 +4,7 @@
 
 ## Iterable\_2.sortWith() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function sortWith<T>(iterable: Iterable<T>, comparer: Comparer<T>): Iterable<T>;
@@ -14,10 +14,10 @@ function sortWith<T>(iterable: Iterable<T>, comparer: Comparer<T>): Iterable<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;T&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

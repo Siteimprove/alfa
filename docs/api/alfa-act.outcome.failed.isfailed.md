@@ -4,7 +4,7 @@
 
 ## Outcome.Failed.isFailed() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isFailed<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is Failed<I, T, Q, S>;
@@ -16,7 +16,7 @@ function isFailed<I, T extends Hashable, Q extends Question.Metadata, S>(value: 
 |  --- | --- | --- |
 |  value | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Failed](./alfa-act.outcome.failed.md)<!-- -->&lt;I, T, Q, S&gt;
 

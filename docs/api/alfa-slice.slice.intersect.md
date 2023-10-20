@@ -4,7 +4,7 @@
 
 ## Slice.intersect() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 intersect(iterable: Iterable<T>): Slice<T>;
@@ -16,7 +16,7 @@ intersect(iterable: Iterable<T>): Slice<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Token.URL.isURL() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isURL(value: unknown): value is URL;
@@ -16,7 +16,7 @@ function isURL(value: unknown): value is URL;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [URL](./alfa-css.token.url.md)
 

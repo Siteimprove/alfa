@@ -6,10 +6,10 @@
 
 [https://drafts.csswg.org/selectors/\#simple](https://drafts.csswg.org/selectors/#simple)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Simple = Type | Universal | Attribute | Class | Id | Pseudo;
 ```
-<b>References:</b> [Type](./alfa-selector.selector.type.md)<!-- -->, [Universal](./alfa-selector.selector.universal.md)<!-- -->, [Attribute](./alfa-selector.selector.attribute.md)<!-- -->, [Class](./alfa-selector.selector.class.md)<!-- -->, [Id](./alfa-selector.selector.id.md)<!-- -->, [Pseudo](./alfa-selector.selector.pseudo.md)
+**References:** [Type](./alfa-selector.selector.type.md)<!-- -->, [Universal](./alfa-selector.selector.universal.md)<!-- -->, [Attribute](./alfa-selector.selector.attribute.md)<!-- -->, [Class](./alfa-selector.selector.class.md)<!-- -->, [Id](./alfa-selector.selector.id.md)<!-- -->, [Pseudo](./alfa-selector.selector.pseudo.md)
 

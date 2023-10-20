@@ -8,10 +8,10 @@ Extract the specified type of a named property.
 
 [https://drafts.csswg.org/css-cascade/\#specified](https://drafts.csswg.org/css-cascade/#specified)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Specified<N extends Name> = Parsed<N> | Computed<N>;
 ```
-<b>References:</b> [Name](./alfa-style.longhands.name.md)<!-- -->, [Parsed](./alfa-style.longhands.parsed.md)<!-- -->, [Computed](./alfa-style.longhands.computed.md)
+**References:** [Name](./alfa-style.longhands.name.md)<!-- -->, [Parsed](./alfa-style.longhands.parsed.md)<!-- -->, [Computed](./alfa-style.longhands.computed.md)
 

@@ -4,7 +4,7 @@
 
 ## Trampoline.isTrampoline() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isTrampoline<T>(value: unknown): value is Trampoline<T>;
@@ -16,7 +16,7 @@ function isTrampoline<T>(value: unknown): value is Trampoline<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;
 

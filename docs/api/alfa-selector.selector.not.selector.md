@@ -4,7 +4,7 @@
 
 ## Selector.Not.selector property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get selector(): Simple | Compound | Complex | List<Simple | Compound | Complex>;

@@ -4,7 +4,7 @@
 
 ## Left.reduce() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reduce<T>(reducer: unknown, accumulator: T): T;
@@ -17,7 +17,7 @@ reduce<T>(reducer: unknown, accumulator: T): T;
 |  reducer | unknown |  |
 |  accumulator | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 T
 

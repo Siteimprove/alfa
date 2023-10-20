@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.prepend() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 prepend(value: T): Indexed<T>;
@@ -16,7 +16,7 @@ prepend(value: T): Indexed<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

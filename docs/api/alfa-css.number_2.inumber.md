@@ -4,12 +4,12 @@
 
 ## Number\_2.INumber interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface INumber<CALC extends boolean = boolean> extends Value<"number", CALC>, Resolvable<Canonical, never> 
 ```
-<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;"number", CALC&gt;, Resolvable&lt;Canonical, never&gt;
+**Extends:** Value&lt;"number", CALC&gt;, Resolvable&lt;[Canonical](./alfa-css.number_2.canonical.md)<!-- -->, never&gt;
 
 ## Methods
 

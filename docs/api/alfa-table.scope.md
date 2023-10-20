@@ -5,7 +5,7 @@
 ## Scope type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Scope = "row" | "row-group" | "column" | "column-group" | "auto";

@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Node` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(children: Array<Node<F>>, type: T);

@@ -4,7 +4,7 @@
 
 ## Parser.separated() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function separated<I, T, U, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, separator: Parser<I, unknown, E, A>): Parser<I, [T, T], E, A>;
@@ -17,7 +17,7 @@ function separated<I, T, U, E, A extends Array<unknown> = []>(parser: Parser<I, 
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 |  separator | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, \[T, T\], E, A&gt;
 

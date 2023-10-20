@@ -4,7 +4,7 @@
 
 ## ConditionRule.isConditionRule() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isConditionRule(value: unknown): value is ConditionRule;
@@ -16,7 +16,7 @@ function isConditionRule(value: unknown): value is ConditionRule;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [ConditionRule](./alfa-dom.conditionrule.md)
 

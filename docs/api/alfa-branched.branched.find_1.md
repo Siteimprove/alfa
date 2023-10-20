@@ -4,7 +4,7 @@
 
 ## Branched.find() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 find(predicate: Predicate<T, [Iterable<B>]>): Option<T>;
@@ -14,9 +14,9 @@ find(predicate: Predicate<T, [Iterable<B>]>): Option<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
+|  predicate | Predicate&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

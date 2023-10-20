@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Indexed<Mapper<T, U>>): Indexed<U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Indexed<Mapper<T, U>>): Indexed<U>;
 |  --- | --- | --- |
 |  mapper | [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;
 

@@ -4,10 +4,10 @@
 
 ## jsx.JSX.Element type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Element<N extends string = string> = dom.Element<N>;
 ```
-<b>References:</b> [Element](./alfa-dom.element.md)
+**References:** [dom.Element](./alfa-dom.element.md)
 

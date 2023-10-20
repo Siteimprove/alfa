@@ -4,12 +4,12 @@
 
 ## Err.tee() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tee(): Err<E>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
 

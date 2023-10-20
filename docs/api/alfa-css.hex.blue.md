@@ -4,7 +4,7 @@
 
 ## Hex.blue property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get blue(): Number.Fixed;

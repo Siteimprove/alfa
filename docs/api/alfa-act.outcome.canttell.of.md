@@ -4,7 +4,7 @@
 
 ## Outcome.CantTell.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, target: T, diagnostic: Diagnostic, mode: Mode): CantTell<I, T, Q, S>;
@@ -14,12 +14,12 @@ static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+|  rule | Rule&lt;I, T, Q, S&gt; |  |
 |  target | T |  |
-|  diagnostic | [Diagnostic](./alfa-act.diagnostic.md) |  |
+|  diagnostic | Diagnostic |  |
 |  mode | [Mode](./alfa-act.outcome.mode.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [CantTell](./alfa-act.outcome.canttell.md)<!-- -->&lt;I, T, Q, S&gt;
 

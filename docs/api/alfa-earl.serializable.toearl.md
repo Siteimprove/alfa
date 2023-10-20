@@ -4,7 +4,7 @@
 
 ## Serializable.toEARL() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function toEARL<T extends EARL>(value: Serializable<T>): Some<T>;
@@ -16,7 +16,7 @@ function toEARL<T extends EARL>(value: Serializable<T>): Some<T>;
 |  --- | --- | --- |
 |  value | [Serializable](./alfa-earl.serializable.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
+Some&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Browser.Query.isRange() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRange<N extends Name>(query: Query<N>): query is Range<N>;
@@ -16,7 +16,7 @@ function isRange<N extends Name>(query: Query<N>): query is Range<N>;
 |  --- | --- | --- |
 |  query | [Query](./alfa-compatibility.browser.query.md)<!-- -->&lt;N&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 query is [Range](./alfa-compatibility.browser.query.range.md)<!-- -->&lt;N&gt;
 

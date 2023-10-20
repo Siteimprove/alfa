@@ -4,10 +4,10 @@
 
 ## Tuple.Has type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Has<T extends Tuple, I extends number> = Get<T, I> extends never ? false : true;
 ```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Get](./alfa-tuple.tuple.get.md)
+**References:** [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Get](./alfa-tuple.tuple.get.md)
 

@@ -4,7 +4,7 @@
 
 ## Iterable\_2.set() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function set<T>(iterable: Iterable<T>, index: number, value: T): Iterable<T>;
@@ -14,11 +14,11 @@ function set<T>(iterable: Iterable<T>, index: number, value: T): Iterable<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 |  index | number |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;T&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

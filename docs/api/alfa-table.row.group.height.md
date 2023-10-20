@@ -4,7 +4,7 @@
 
 ## Row.Group.height property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get height(): number;

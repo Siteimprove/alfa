@@ -4,12 +4,12 @@
 
 ## jsx.Children type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Children = (Child | Children)[];
 ```
-<b>References:</b> [Child](./alfa-dom.jsx.child.md)<!-- -->, [Children](./alfa-dom.jsx.children.md)
+**References:** [Child](./alfa-dom.jsx.child.md)<!-- -->, [Children](./alfa-dom.jsx.children.md)
 
 ## Remarks
 

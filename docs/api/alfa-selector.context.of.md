@@ -4,7 +4,7 @@
 
 ## Context.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(state: Iterable<[Element, Context.State]>): Context;
@@ -14,9 +14,9 @@ static of(state: Iterable<[Element, Context.State]>): Context;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  state | Iterable&lt;\[[Element](./alfa-dom.element.md)<!-- -->, [Context.State](./alfa-selector.context.state.md)<!-- -->\]&gt; |  |
+|  state | Iterable&lt;\[Element, [Context.State](./alfa-selector.context.state.md)<!-- -->\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Context](./alfa-selector.context.md)
 

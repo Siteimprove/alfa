@@ -4,7 +4,7 @@
 
 ## Token.parseCloseParenthesis variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseCloseParenthesis: Parser<Slice<Token>, CloseParenthesis, string, []>

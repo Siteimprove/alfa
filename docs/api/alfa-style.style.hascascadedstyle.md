@@ -4,7 +4,7 @@
 
 ## Style.hasCascadedStyle variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasCascadedStyle: typeof element.hasCascadedStyle

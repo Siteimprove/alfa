@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/css-pseudo/\#selectordef-before](https://drafts.csswg.org/css-pseudo/#selectordef-before)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Before extends Pseudo.Element<"before"> 
 ```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"before"&gt;
+**Extends:** [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"before"&gt;
 
 ## Methods
 

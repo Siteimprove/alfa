@@ -4,12 +4,12 @@
 
 ## Node.toEARL() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toEARL(): Node.EARL;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Node.EARL](./alfa-dom.node.earl.md)
 

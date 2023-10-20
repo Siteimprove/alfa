@@ -4,7 +4,7 @@
 
 ## Token.parseWhitespace variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseWhitespace: Parser<Slice<Token>, Whitespace, string, []>

@@ -4,7 +4,7 @@
 
 ## Rule.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: FontFaceRule.JSON): FontFaceRule;
@@ -16,7 +16,7 @@ function from(json: FontFaceRule.JSON): FontFaceRule;
 |  --- | --- | --- |
 |  json | [FontFaceRule.JSON](./alfa-dom.fontfacerule.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[FontFaceRule](./alfa-dom.fontfacerule.md)
+FontFaceRule
 

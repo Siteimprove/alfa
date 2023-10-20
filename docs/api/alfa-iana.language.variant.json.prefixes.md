@@ -4,7 +4,7 @@
 
 ## Language.Variant.JSON.prefixes property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 prefixes: Array<string>;

@@ -6,10 +6,8 @@
 
 [https://drafts.csswg.org/css-color/\#currentcolor-color](https://drafts.csswg.org/css-color/#currentcolor-color)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Current = Keyword<"currentcolor">;
 ```
-<b>References:</b> [Keyword](./alfa-css.keyword.md)
-

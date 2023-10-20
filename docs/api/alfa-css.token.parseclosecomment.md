@@ -4,7 +4,7 @@
 
 ## Token.parseCloseComment variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseCloseComment: Parser<Slice<Token>, CloseComment, string, []>

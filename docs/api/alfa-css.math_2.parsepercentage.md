@@ -4,7 +4,7 @@
 
 ## Math\_2.parsePercentage variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parsePercentage: Parser<Slice<Token>, Math<"percentage">, string, []>

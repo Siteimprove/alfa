@@ -4,7 +4,7 @@
 
 ## Unit.isFontRelativeLength variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isFontRelativeLength: typeof Length.isFontRelative

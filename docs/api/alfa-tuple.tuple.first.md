@@ -4,10 +4,10 @@
 
 ## Tuple.First type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type First<T extends Tuple> = T extends readonly [infer H, ...infer _] ? H : never;
 ```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)
+**References:** [Tuple](./alfa-tuple.tuple.md)
 

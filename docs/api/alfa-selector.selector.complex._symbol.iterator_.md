@@ -4,12 +4,12 @@
 
 ## Selector.Complex.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.iterator](): Iterator<Complex>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Iterator&lt;[Complex](./alfa-selector.selector.complex.md)<!-- -->&gt;
 

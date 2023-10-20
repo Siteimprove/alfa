@@ -4,12 +4,12 @@
 
 ## Collection.Keyed.isEmpty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEmpty(): this is Keyed<K, never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, never&gt;
 

@@ -4,7 +4,7 @@
 
 ## Fragment.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(children: Iterable<Node>): Fragment;
@@ -14,9 +14,9 @@ static of(children: Iterable<Node>): Fragment;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  children | Iterable&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; |  |
+|  children | Iterable&lt;Node&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fragment](./alfa-dom.fragment.md)
 

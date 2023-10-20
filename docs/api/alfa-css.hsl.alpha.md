@@ -4,7 +4,7 @@
 
 ## HSL.alpha property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get alpha(): A;

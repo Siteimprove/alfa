@@ -4,7 +4,7 @@
 
 ## Longhands.Property type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Property = typeof longHands;

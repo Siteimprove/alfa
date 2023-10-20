@@ -4,7 +4,7 @@
 
 ## Token.Double.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get type(): "double";

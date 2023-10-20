@@ -6,7 +6,7 @@
 
 [https://fetch.spec.whatwg.org/\#dom-response-status](https://fetch.spec.whatwg.org/#dom-response-status)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get status(): number;

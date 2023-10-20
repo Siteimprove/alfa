@@ -4,7 +4,7 @@
 
 ## Option.some() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 some(predicate: Predicate<T>): this is Some<T>;
@@ -14,9 +14,9 @@ some(predicate: Predicate<T>): this is Some<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-this is [Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
+this is Some&lt;T&gt;
 

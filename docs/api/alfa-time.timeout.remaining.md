@@ -4,7 +4,7 @@
 
 ## Timeout.remaining() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 remaining(now?: number): number;
@@ -14,9 +14,9 @@ remaining(now?: number): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  now | number | <i>(Optional)</i> |
+|  now | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

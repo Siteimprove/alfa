@@ -6,7 +6,7 @@
 
 [https://url.spec.whatwg.org/\#concept-url-port](https://url.spec.whatwg.org/#concept-url-port)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get port(): Option<number>;

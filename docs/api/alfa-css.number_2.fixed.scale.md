@@ -4,7 +4,7 @@
 
 ## Number\_2.Fixed.scale() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 scale(factor: number): Fixed;
@@ -16,7 +16,7 @@ scale(factor: number): Fixed;
 |  --- | --- | --- |
 |  factor | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Fixed
+[Fixed](./alfa-css.number_2.fixed.md)
 

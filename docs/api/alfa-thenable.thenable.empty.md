@@ -4,12 +4,12 @@
 
 ## Thenable.empty() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function empty(): Thenable<void, never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;void, never&gt;
 

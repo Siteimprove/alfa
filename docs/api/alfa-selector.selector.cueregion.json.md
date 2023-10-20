@@ -4,12 +4,12 @@
 
 ## Selector.CueRegion.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Pseudo.Element.JSON<"cue-region"> 
 ```
-<b>Extends:</b> [Pseudo.Element.JSON](./alfa-selector.selector.pseudo.element.json.md)<!-- -->&lt;"cue-region"&gt;
+**Extends:** [Pseudo.Element.JSON](./alfa-selector.selector.pseudo.element.json.md)<!-- -->&lt;"cue-region"&gt;
 
 ## Properties
 

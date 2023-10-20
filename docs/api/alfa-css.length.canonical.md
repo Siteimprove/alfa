@@ -4,10 +4,10 @@
 
 ## Length.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Canonical = Fixed<"px">;
 ```
-<b>References:</b> [Fixed](./alfa-css.length.fixed.md)
+**References:** [Fixed](./alfa-css.length.fixed.md)
 

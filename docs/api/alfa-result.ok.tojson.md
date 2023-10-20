@@ -4,12 +4,12 @@
 
 ## Ok.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Ok.JSON<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Ok.JSON](./alfa-result.ok.json.md)<!-- -->&lt;T&gt;
 

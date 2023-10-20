@@ -4,7 +4,7 @@
 
 ## Value.\_hasCalculation property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _hasCalculation: CALC;

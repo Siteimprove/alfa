@@ -4,7 +4,7 @@
 
 ## Selector.Part.JSON.idents property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 idents: Array<Token.Ident.JSON>;

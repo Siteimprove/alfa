@@ -4,7 +4,7 @@
 
 ## Node.attribute() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 attribute<N extends Attribute.Name>(name: N): Option<Attribute<N>>;
@@ -16,7 +16,7 @@ attribute<N extends Attribute.Name>(name: N): Option<Attribute<N>>;
 |  --- | --- | --- |
 |  name | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Attribute](./alfa-aria.attribute.md)<!-- -->&lt;N&gt;&gt;
+Option&lt;Attribute&lt;N&gt;&gt;
 

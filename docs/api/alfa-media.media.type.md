@@ -4,7 +4,7 @@
 
 ## Media.type variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: typeof Type.of

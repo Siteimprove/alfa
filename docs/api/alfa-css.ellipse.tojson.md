@@ -4,12 +4,12 @@
 
 ## Ellipse.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Ellipse.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Ellipse.JSON](./alfa-css.ellipse.json.md)
 

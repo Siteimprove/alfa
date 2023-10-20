@@ -4,12 +4,12 @@
 
 ## List.rest() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 rest(): List<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

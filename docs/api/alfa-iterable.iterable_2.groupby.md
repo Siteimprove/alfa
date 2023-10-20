@@ -4,7 +4,7 @@
 
 ## Iterable\_2.groupBy() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function groupBy<T, K>(iterable: Iterable<T>, grouper: Mapper<T, K, [index: number]>): Iterable<[K, Iterable<T>]>;
@@ -14,10 +14,10 @@ function groupBy<T, K>(iterable: Iterable<T>, grouper: Mapper<T, K, [index: numb
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 |  grouper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, K, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;\[K, Iterable&lt;T&gt;\]&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;\[K, [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;\]&gt;
 

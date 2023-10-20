@@ -4,7 +4,7 @@
 
 ## Question.JSON.context property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 context: Serializable.ToJSON<CONTEXT>;

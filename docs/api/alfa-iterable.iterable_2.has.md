@@ -4,7 +4,7 @@
 
 ## Iterable\_2.has() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function has<T>(iterable: Iterable<T>, index: number): boolean;
@@ -14,10 +14,10 @@ function has<T>(iterable: Iterable<T>, index: number): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 |  index | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

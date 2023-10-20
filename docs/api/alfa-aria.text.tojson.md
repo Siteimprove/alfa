@@ -4,12 +4,12 @@
 
 ## Text.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Text.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Text.JSON](./alfa-aria.text.json.md)
 

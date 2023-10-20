@@ -4,12 +4,12 @@
 
 ## Role.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Role.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Role.JSON](./alfa-aria.role.json.md)
 

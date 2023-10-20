@@ -4,7 +4,7 @@
 
 ## Slice.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Slice<U>, [index: number]>): Slice<U>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<T, Slice<U>, [index: number]>): Slice<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;
 

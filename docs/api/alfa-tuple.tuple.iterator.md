@@ -4,7 +4,7 @@
 
 ## Tuple.iterator() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function iterator<T extends Tuple>(tuple: T): Iterator<Item<T>>;
@@ -16,7 +16,7 @@ export function iterator<T extends Tuple>(tuple: T): Iterator<Item<T>>;
 |  --- | --- | --- |
 |  tuple | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Iterator&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;&gt;
 

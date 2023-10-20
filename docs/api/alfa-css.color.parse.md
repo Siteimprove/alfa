@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-color/\#typedef-color](https://drafts.csswg.org/css-color/#typedef-color)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: Parser<Slice<Token>, Color, string, []>

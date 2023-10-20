@@ -4,7 +4,7 @@
 
 ## Token.Comment.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: string): Comment;
@@ -16,7 +16,7 @@ static of(value: string): Comment;
 |  --- | --- | --- |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comment](./alfa-xpath.token.comment.md)
 

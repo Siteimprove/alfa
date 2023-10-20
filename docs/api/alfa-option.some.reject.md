@@ -4,7 +4,7 @@
 
 ## Some.reject() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
@@ -14,9 +14,9 @@ reject<U extends T>(refinement: Refinement<T, U>): Option<Exclude<T, U>>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
+Option&lt;Exclude&lt;T, U&gt;&gt;
 

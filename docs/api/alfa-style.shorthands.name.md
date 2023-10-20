@@ -4,10 +4,10 @@
 
 ## Shorthands.Name type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Name = keyof Property;
 ```
-<b>References:</b> [Property](./alfa-style.shorthands.property.md)
+**References:** [Property](./alfa-style.shorthands.property.md)
 

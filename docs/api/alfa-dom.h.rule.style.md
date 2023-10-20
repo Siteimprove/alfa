@@ -4,7 +4,7 @@
 
 ## h.rule.style() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function style(selector: string, declarations: Array<Declaration> | Record<string, string>, hint?: boolean): StyleRule;
@@ -15,10 +15,10 @@ function style(selector: string, declarations: Array<Declaration> | Record<strin
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  selector | string |  |
-|  declarations | Array&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; \| Record&lt;string, string&gt; |  |
-|  hint | boolean | <i>(Optional)</i> |
+|  declarations | Array&lt;Declaration&gt; \| Record&lt;string, string&gt; |  |
+|  hint | boolean | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[StyleRule](./alfa-dom.stylerule.md)
+StyleRule
 

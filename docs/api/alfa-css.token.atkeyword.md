@@ -4,7 +4,7 @@
 
 ## Token.atKeyword variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 atKeyword: typeof AtKeyword.of

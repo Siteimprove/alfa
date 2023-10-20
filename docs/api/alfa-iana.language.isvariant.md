@@ -4,7 +4,7 @@
 
 ## Language.isVariant variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isVariant: typeof Variant.isVariant

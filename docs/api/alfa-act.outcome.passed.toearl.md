@@ -4,12 +4,12 @@
 
 ## Outcome.Passed.toEARL() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toEARL(): Passed.EARL;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Passed.EARL](./alfa-act.outcome.passed.earl.md)
 

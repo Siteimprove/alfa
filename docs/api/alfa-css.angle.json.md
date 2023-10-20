@@ -4,10 +4,10 @@
 
 ## Angle.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type JSON = Calculated.JSON | Fixed.JSON;
 ```
-<b>References:</b> [Calculated.JSON](./alfa-css.angle.calculated.json.md)<!-- -->, [Fixed.JSON](./alfa-css.angle.fixed.json.md)
+**References:** [Calculated.JSON](./alfa-css.angle.calculated.json.md)<!-- -->, [Fixed.JSON](./alfa-css.angle.fixed.json.md)
 

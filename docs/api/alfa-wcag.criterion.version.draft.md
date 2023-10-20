@@ -6,7 +6,7 @@
 
 The current version of the WCAG Working Draft.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Draft = "2.2"

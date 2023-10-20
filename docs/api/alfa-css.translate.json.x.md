@@ -4,7 +4,7 @@
 
 ## Translate.JSON.x property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 x: LengthPercentage.JSON;

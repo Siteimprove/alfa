@@ -4,7 +4,7 @@
 
 ## Token.String.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get type(): "string";

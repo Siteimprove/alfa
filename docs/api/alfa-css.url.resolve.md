@@ -4,12 +4,12 @@
 
 ## URL.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): URL;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [URL](./alfa-css.url.md)
 

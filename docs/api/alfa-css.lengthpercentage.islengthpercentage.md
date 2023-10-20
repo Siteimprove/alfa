@@ -4,7 +4,7 @@
 
 ## LengthPercentage.isLengthPercentage() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isLengthPercentage(value: unknown): value is LengthPercentage;
@@ -16,7 +16,7 @@ export function isLengthPercentage(value: unknown): value is LengthPercentage;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [LengthPercentage](./alfa-css.lengthpercentage.md)
 

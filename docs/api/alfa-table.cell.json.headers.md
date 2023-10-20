@@ -4,7 +4,7 @@
 
 ## Cell.JSON.headers property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 headers: Array<Slot.JSON>;

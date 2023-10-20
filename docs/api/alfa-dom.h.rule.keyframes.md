@@ -4,7 +4,7 @@
 
 ## h.rule.keyframes() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function keyframes(name: string, rules: Array<Rule>): KeyframesRule;
@@ -15,9 +15,9 @@ function keyframes(name: string, rules: Array<Rule>): KeyframesRule;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-|  rules | Array&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
+|  rules | Array&lt;Rule&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[KeyframesRule](./alfa-dom.keyframesrule.md)
+KeyframesRule
 

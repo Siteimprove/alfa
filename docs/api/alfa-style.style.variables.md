@@ -4,7 +4,7 @@
 
 ## Style.variables property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get variables(): Map<string, Value<Slice<Token>>>;
