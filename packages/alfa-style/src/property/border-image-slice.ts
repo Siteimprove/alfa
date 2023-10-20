@@ -16,7 +16,7 @@ const { either, filter } = Parser;
 
 type NoFill<T extends Value> = Tuple<[top: T, right: T, bottom: T, left: T]>;
 type WithFill<T extends Value> = Tuple<
-  [top: T, right: T, bottom: T, left: T, Keyword<"fill">]
+  [top: T, right: T, bottom: T, left: T, fill: Keyword<"fill">]
 >;
 type ImageSlice<T extends Value> = NoFill<T> | WithFill<T>;
 

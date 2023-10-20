@@ -6,4 +6,4 @@
 
 These where temporary helpers during migration to calculated values.
 
-Use `fiter(Value.parse, value => !value.hasCalculation(), () => "Calculation not allowed")` instead.
+Use `filter(Value.parse, value => !value.hasCalculation(), () => "Calculation not allowed")` instead.
