@@ -68,7 +68,7 @@ export class Page
     return {
       request: this._request.toJSON(),
       response: this._response.toJSON(),
-      document: this._document.toJSON(),
+      document: this._document.toJSON({ device: this._device }),
       device: this._device.toJSON(),
     };
   }
@@ -122,14 +122,10 @@ export namespace Page {
   }
 
   export function from(json: JSON): Result<Page, string> {
+    const device = Device.from(json.device);
     return Request.from(json.request).andThen((request) =>
       Response.from(json.response).map((response) =>
-        Page.of(
-          request,
-          response,
-          Document.from(json.document),
-          Device.from(json.device)
-        )
+        Page.of(request, response, Document.from(json.document, device), device)
       )
     );
   }

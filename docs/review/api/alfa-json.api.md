@@ -24,9 +24,9 @@ namespace JSON_2 {
 export { JSON_2 as JSON }
 
 // @public (undocumented)
-export interface Serializable<T extends JSON_2 = JSON_2> {
+export interface Serializable<T extends JSON_2 = JSON_2, OPTIONS extends unknown = unknown> {
     // (undocumented)
-    toJSON(): T;
+    toJSON(options?: OPTIONS): T;
 }
 
 // @public (undocumented)
@@ -36,9 +36,9 @@ export namespace Serializable {
     // (undocumented)
     export type ToJSON<T> = T extends Serializable<infer U> ? U : T extends JSON_2 ? T : JSON_2;
     // (undocumented)
-    export function toJSON<T extends JSON_2>(value: Serializable<T>): T;
+    export function toJSON<T extends JSON_2, OPTIONS extends unknown = unknown>(value: Serializable<T>, options?: OPTIONS): T;
     // (undocumented)
-    export function toJSON<T>(value: T): ToJSON<T>;
+    export function toJSON<T, OPTIONS extends unknown = unknown>(value: T, options?: OPTIONS): ToJSON<T>;
 }
 
 // (No @packageDocumentation comment for this package)

@@ -35,7 +35,6 @@ import { Percentage } from '@siteimprove/alfa-css';
 import { Position } from '@siteimprove/alfa-css';
 import { Predicate } from '@siteimprove/alfa-predicate';
 import { Rectangle } from '@siteimprove/alfa-css';
-import { Rectangle as Rectangle_2 } from '@siteimprove/alfa-rectangle';
 import { Rotate } from '@siteimprove/alfa-css';
 import { Serializable } from '@siteimprove/alfa-json';
 import { Shadow } from '@siteimprove/alfa-css';
@@ -374,7 +373,6 @@ export namespace Style {
     const // Warning: (ae-forgotten-export) The symbol "element" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    getBoundingBox: typeof element.getBoundingBox, // (undocumented)
     getOffsetParent: typeof element.getOffsetParent, // (undocumented)
     getPositioningParent: typeof element.getPositioningParent, // (undocumented)
     hasBorder: typeof element.hasBorder, // (undocumented)

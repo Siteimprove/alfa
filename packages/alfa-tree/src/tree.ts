@@ -32,12 +32,14 @@ export abstract class Node<
   // The list of flags allowed to control tree traversal.
   F extends Flags.allFlags,
   // The type
-  T extends string = string
+  T extends string = string,
+  // The options for serialization
+  S extends unknown = unknown
 > implements
     Iterable<Node<F>>,
     Equatable,
     Hashable,
-    json.Serializable<Node.JSON<T>>
+    json.Serializable<Node.JSON<T>, S>
 {
   protected readonly _children: Array<Node<F>>;
   protected _parent: Option<Node<F>> = None;
@@ -374,10 +376,10 @@ export abstract class Node<
     hash.writeObject(this);
   }
 
-  public toJSON(): Node.JSON<T> {
+  public toJSON(options?: S): Node.JSON<T> {
     return {
       type: this._type,
-      children: this._children.map((child) => child.toJSON()),
+      children: this._children.map((child) => child.toJSON(options)),
     };
   }
 

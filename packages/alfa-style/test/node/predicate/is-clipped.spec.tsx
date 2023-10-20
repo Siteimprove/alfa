@@ -4,7 +4,8 @@ import { test } from "@siteimprove/alfa-test";
 
 import * as predicate from "../../../src/node/predicate/is-clipped";
 
-const isClipped = predicate.isClipped(Device.standard());
+const device = Device.standard();
+const isClipped = predicate.isClipped(device);
 
 function target(
   style: { [prop: string]: string },
@@ -20,7 +21,7 @@ function boxed(
 ): Element {
   return (
     // The actual position of the element doesn't matter.
-    <div box={{ x: 10, y: 10, ...box }} style={style}>
+    <div box={{ device, x: 10, y: 10, ...box }} style={style}>
       {child ?? "Hello World"}
     </div>
   );
