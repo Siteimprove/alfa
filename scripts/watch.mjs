@@ -1,7 +1,7 @@
-const ts = require("typescript");
+import ts from "typescript";
 
-const { flags } = require("./common/flags");
-const { host } = require("./common/host");
+import { flags } from "./common/flags.mjs";
+import { host } from "./common/host.mjs";
 
 const watcher = ts.createSolutionBuilderWithWatch(host, ["tsconfig.json"], {
   force: flags.force,
