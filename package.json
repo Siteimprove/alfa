@@ -11,11 +11,11 @@
   },
   "bugs": "https://github.com/siteimprove/alfa/issues",
   "scripts": {
-    "build": "node --max-old-space-size=8192 scripts/build.js --pretty",
-    "clean": "node scripts/clean.js --pretty",
-    "test": "node scripts/test.js --pretty",
-    "watch": "node scripts/watch.js --pretty",
-    "extract": "node scripts/api-extractor.js --pretty",
+    "build": "node --max-old-space-size=8192 scripts/build.mjs --pretty",
+    "clean": "node scripts/clean.mjs --pretty",
+    "test": "node scripts/test.mjs --pretty",
+    "watch": "node scripts/watch.mjs --pretty",
+    "extract": "node scripts/api-extractor.mjs --pretty",
     "document": "api-documenter generate -i docs/data/api -o docs/api",
     "dependency-graph": "package-dependency-graph --config config/package-dependency-graph.ts --exclude-node_modules --graphviz --dot docs/dependency-graph.dot --png docs/dependency-graph.png",
     "knip": "knip --config config/knip.ts"
@@ -31,12 +31,12 @@
     "@types/async": "^3.2.20",
     "@types/node": "^20.5.9",
     "async": "^3.2.1",
-    "execa": "^5.1.1",
+    "execa": "^8.0.0",
     "knip": "^2.33.4",
     "minimist": "^1.2.6",
     "package-dependency-graph": "^1.14.4",
-    "prettier": "^2.7.1",
+    "prettier": "^3.0.0",
     "typescript": "^5.2.2"
   },
-  "packageManager": "yarn@3.6.4"
+  "packageManager": "yarn@4.0.0"
 }

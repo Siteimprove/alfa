@@ -1,15 +1,15 @@
-const ts = require("typescript");
+import ts from "typescript";
 
-const { system } = require("./system");
-const { flags } = require("./flags");
+import { system } from "./system.mjs";
+import { flags } from "./flags.mjs";
 const verboseStatusReporter = ts.createBuilderStatusReporter;
 
 /**
  * @type {ts.DiagnosticReporter}
  */
-exports.diagnostic = ts.createDiagnosticReporter(system, flags.pretty);
+export const diagnostic = ts.createDiagnosticReporter(system, flags.pretty);
 
-exports.status = {
+export const status = {
   /**
    * @type {ts.DiagnosticReporter}
    */
@@ -37,7 +37,7 @@ function minimalStatusReporter(system, _) {
   return function (diag) {
     if (!first) {
       // Move cursor up one line and 13 to the left and erase
-      system.write("\033[1A\033[13D\033[K");
+      system.write("\x1B[1A\x1B[13D\x1B[K");
     }
 
     const frame = frames[frameIndex % frames.length];

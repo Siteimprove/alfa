@@ -1,10 +1,9 @@
-const path = require("path");
+import * as path from "path";
 
-const { Extractor, ExtractorConfig } = require("@microsoft/api-extractor");
-
-const { system } = require("./common/system");
-const { flags } = require("./common/flags");
-const { builder } = require("./common/builder");
+import { Extractor, ExtractorConfig } from "@microsoft/api-extractor";
+import { system } from "./common/system.mjs";
+import { flags } from "./common/flags.mjs";
+import { builder } from "./common/builder.mjs";
 
 const status = builder.build(flags.project);
 
@@ -25,7 +24,7 @@ function extract(root = "packages") {
     let file;
     try {
       file = require.resolve(
-        path.resolve(project, "config", "api-extractor.json")
+        path.resolve(project, "config", "api-extractor.json"),
       );
     } catch {
       continue;
