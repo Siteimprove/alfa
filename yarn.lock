@@ -609,9 +609,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pnpm/npm-resolver@npm:16.0.11":
-  version: 16.0.11
-  resolution: "@pnpm/npm-resolver@npm:16.0.11"
+"@pnpm/npm-resolver@npm:16.0.12":
+  version: 16.0.12
+  resolution: "@pnpm/npm-resolver@npm:16.0.12"
   dependencies:
     "@pnpm/core-loggers": 9.0.3
     "@pnpm/error": 5.0.2
@@ -623,7 +623,7 @@ __metadata:
     "@zkochan/retry": ^0.2.0
     encode-registry: ^3.0.1
     load-json-file: ^6.2.0
-    lru-cache: ^9.1.2
+    lru-cache: ^10.0.1
     normalize-path: ^3.0.0
     p-limit: ^3.1.0
     p-memoize: 4.0.1
@@ -632,11 +632,11 @@ __metadata:
     ramda: "npm:@pnpm/ramda@0.28.1"
     rename-overwrite: ^4.0.3
     semver: ^7.5.4
-    ssri: 10.0.4
+    ssri: 10.0.5
     version-selector-type: ^3.0.0
   peerDependencies:
     "@pnpm/logger": ^5.0.0
-  checksum: b0f0e2ab104b3cbef698ebf79bc0d2fbc0b4750136c6d543ceea61e2f53c98a8316cf07b2d4d29745db169ae10ab84942696cd43bfc944871b21d9308c1f7cd6
+  checksum: 779c1c53e64a3b1d63073cfbe398a2de3818b6173beba59a80bb447d771f2c3b8e1e562946dd789db1e0d65bce0576d33b6c57246ed0b6afd0d1af8875efda56
   languageName: node
   linkType: hard
 
@@ -665,15 +665,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pnpm/workspace.pkgs-graph@npm:2.0.7":
-  version: 2.0.7
-  resolution: "@pnpm/workspace.pkgs-graph@npm:2.0.7"
+"@pnpm/workspace.pkgs-graph@npm:2.0.8":
+  version: 2.0.8
+  resolution: "@pnpm/workspace.pkgs-graph@npm:2.0.8"
   dependencies:
     "@pnpm/npm-package-arg": ^1.0.0
-    "@pnpm/npm-resolver": 16.0.11
+    "@pnpm/npm-resolver": 16.0.12
     "@pnpm/resolve-workspace-range": 5.0.1
     ramda: "npm:@pnpm/ramda@0.28.1"
-  checksum: c3e040816678978ae1a79e6d9ac1e5a57a5f3a81721a65627ac26ab54587812daedb02526822a9e0078f620ccb13254ac937dcb1b1755e15778fb9ade65cfe13
+  checksum: 6d04ffbcb4f15e00847e22132e9df6d472dd45407ea7bed66079e4b715903a0c0b6bb90f8f4347b7565287d574f8ddc354f1aded33ac7eb3d955aca155c7f536
   languageName: node
   linkType: hard
 
@@ -1989,9 +1989,9 @@ __metadata:
   linkType: hard
 
 "@types/async@npm:^3.2.20":
-  version: 3.2.21
-  resolution: "@types/async@npm:3.2.21"
-  checksum: 8c547e0f9c28d95687f04eac65332607e7c16ec231ce75e6a7273816c32d9d09c6fe14c0205eb577f2310b5d02bd55a9752f9fc7d7fba5957169a31c76aacc92
+  version: 3.2.22
+  resolution: "@types/async@npm:3.2.22"
+  checksum: 2b3371563b1a87ec8c3d3b79c20e114260440460ead8636d5e937d1e670464229d9a73ff22c2c3c5077e842ae5bf4102b33c90853cde159961f5705bc9b3accb
   languageName: node
   linkType: hard
 
@@ -2012,11 +2012,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:^20.5.9":
-  version: 20.8.6
-  resolution: "@types/node@npm:20.8.6"
+  version: 20.8.7
+  resolution: "@types/node@npm:20.8.7"
   dependencies:
     undici-types: ~5.25.1
-  checksum: ccfb7ac482c5a96edeb239893c5c099f5257fcc2ed9ae62fefdfbc782b79e16dbc2af9a85b379665237bf759904b44ca2be68e75d239e0297882aad42f61905c
+  checksum: 2173c0c03daefcb60c03a61b1371b28c8fe412e7a40dc6646458b809d14a85fbc7aeb369d957d57f0aaaafd99964e77436f29b3b579232d8f2b20c58abbd1d25
   languageName: node
   linkType: hard
 
@@ -2035,9 +2035,9 @@ __metadata:
   linkType: hard
 
 "@types/sarif@npm:^2.1.4":
-  version: 2.1.5
-  resolution: "@types/sarif@npm:2.1.5"
-  checksum: 6fb813f6988b3416dfd38388dd6af07eedf7d62b288b8cd576f0eb9bd2b26523d7905cee78f4f6316eb3181472bb028caac282e4eb1b2d0042dc7ee2cbbf37c5
+  version: 2.1.6
+  resolution: "@types/sarif@npm:2.1.6"
+  checksum: 51ab1ea2caa79e4ac047a949c7fd1791b992727fff33ff5507eaac89842010635415eb606701f28abccadbfb39a9b8b9c4e964e5d50df8c6247edb62da6776bc
   languageName: node
   linkType: hard
 
@@ -4388,14 +4388,14 @@ __metadata:
   linkType: hard
 
 "knip@npm:^2.33.4":
-  version: 2.33.4
-  resolution: "knip@npm:2.33.4"
+  version: 2.37.0
+  resolution: "knip@npm:2.37.0"
   dependencies:
     "@ericcornelissen/bash-parser": ^0.5.2
     "@npmcli/map-workspaces": ^3.0.4
     "@pkgjs/parseargs": 0.11.0
     "@pnpm/logger": 5.0.0
-    "@pnpm/workspace.pkgs-graph": 2.0.7
+    "@pnpm/workspace.pkgs-graph": 2.0.8
     "@snyk/github-codeowners": ^1.1.0
     chalk: ^5.2.0
     easy-table: ^1.2.0
@@ -4410,10 +4410,10 @@ __metadata:
     summary: ^2.1.0
     typescript: ^5.0.2
     zod: 3.22.4
-    zod-validation-error: ^1.5.0
+    zod-validation-error: 2.0.0
   bin:
     knip: dist/cli.js
-  checksum: 876ca1967e1e105f7f900dcec823b8324cc0fb4c7c4b4b036db5fdd7fac29328dad1571e093d0e7ad0e615d60b66d1c0c773f93fb0a4b072b8c754e0476ff0c6
+  checksum: a2924c0444c6c6d2fae30435ea7acbcd7fda7b928b4284624fe78f3686424659af8b995376805892ebab4fee1f78862b6a36f13df86f8dc60ba041aa24437d81
   languageName: node
   linkType: hard
 
@@ -4501,6 +4501,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lru-cache@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "lru-cache@npm:10.0.1"
+  checksum: 06f8d0e1ceabd76bb6f644a26dbb0b4c471b79c7b514c13c6856113879b3bf369eb7b497dad4ff2b7e2636db202412394865b33c332100876d838ad1372f0181
+  languageName: node
+  linkType: hard
+
 "lru-cache@npm:^4.0.1":
   version: 4.1.5
   resolution: "lru-cache@npm:4.1.5"
@@ -4524,13 +4531,6 @@ __metadata:
   version: 10.0.0
   resolution: "lru-cache@npm:10.0.0"
   checksum: 18f101675fe283bc09cda0ef1e3cc83781aeb8373b439f086f758d1d91b28730950db785999cd060d3c825a8571c03073e8c14512b6655af2188d623031baf50
-  languageName: node
-  linkType: hard
-
-"lru-cache@npm:^9.1.2":
-  version: 9.1.2
-  resolution: "lru-cache@npm:9.1.2"
-  checksum: d3415634be3908909081fc4c56371a8d562d9081eba70543d86871b978702fffd0e9e362b83921b27a29ae2b37b90f55675aad770a54ac83bb3e4de5049d4b15
   languageName: node
   linkType: hard
 
@@ -4824,17 +4824,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minipass@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "minipass@npm:5.0.0"
-  checksum: 425dab288738853fded43da3314a0b5c035844d6f3097a8e3b5b29b328da8f3c1af6fc70618b32c29ff906284cf6406b6841376f21caaadd0793c1d5a6a620ea
-  languageName: node
-  linkType: hard
-
 "minipass@npm:^5.0.0 || ^6.0.2":
   version: 6.0.2
   resolution: "minipass@npm:6.0.2"
   checksum: d140b91f4ab2e5ce5a9b6c468c0e82223504acc89114c1a120d4495188b81fedf8cade72a9f4793642b4e66672f990f1e0d902dd858485216a07cd3c8a62fac9
+  languageName: node
+  linkType: hard
+
+"minipass@npm:^7.0.3":
+  version: 7.0.4
+  resolution: "minipass@npm:7.0.4"
+  checksum: 87585e258b9488caf2e7acea242fd7856bbe9a2c84a7807643513a338d66f368c7d518200ad7b70a508664d408aa000517647b2930c259a8b1f9f0984f344a21
   languageName: node
   linkType: hard
 
@@ -6038,12 +6038,12 @@ resolve@~1.19.0:
   languageName: node
   linkType: hard
 
-"ssri@npm:10.0.4":
-  version: 10.0.4
-  resolution: "ssri@npm:10.0.4"
+"ssri@npm:10.0.5":
+  version: 10.0.5
+  resolution: "ssri@npm:10.0.5"
   dependencies:
-    minipass: ^5.0.0
-  checksum: fb14da9f8a72b04eab163eb13a9dda11d5962cd2317f85457c4e0b575e9a6e0e3a6a87b5bf122c75cb36565830cd5f263fb457571bf6f1587eb5f95d095d6165
+    minipass: ^7.0.3
+  checksum: 0a31b65f21872dea1ed3f7c200d7bc1c1b91c15e419deca14f282508ba917cbb342c08a6814c7f68ca4ca4116dd1a85da2bbf39227480e50125a1ceffeecb750
   languageName: node
   linkType: hard
 
@@ -6953,12 +6953,12 @@ resolve@~1.19.0:
   languageName: node
   linkType: hard
 
-"zod-validation-error@npm:^1.5.0":
-  version: 1.5.0
-  resolution: "zod-validation-error@npm:1.5.0"
+"zod-validation-error@npm:2.0.0":
+  version: 2.0.0
+  resolution: "zod-validation-error@npm:2.0.0"
   peerDependencies:
     zod: ^3.18.0
-  checksum: a1b0b96468057cd52991810b2f05b3305e2f4fdfc976c66469924d3e32038bdceef37f315ec0c745bea26cf98f5bbc5893659dd5e6ded6b9a8f04cbf59814cad
+  checksum: 850395855c7dc7102577a52673d1a6f26d7da65a9857ebb6399e1359002601c2abc272d47aa4aed47e493596b89082f4f63b64ae4955787f46da828273a27fe7
   languageName: node
   linkType: hard
 
