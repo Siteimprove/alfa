@@ -4,6 +4,7 @@ import {
   Percentage,
   Token,
   Tuple,
+  Value,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err, Result } from "@siteimprove/alfa-result";
@@ -13,37 +14,22 @@ import { Longhand } from "../longhand";
 
 const { either, filter } = Parser;
 
+type NoFill<T extends Value> = Tuple<[top: T, right: T, bottom: T, left: T]>;
+type WithFill<T extends Value> = Tuple<
+  [top: T, right: T, bottom: T, left: T, fill: Keyword<"fill">]
+>;
+type ImageSlice<T extends Value> = NoFill<T> | WithFill<T>;
+
 /**
  * @internal
  */
-export type Specified =
-  | Tuple<
-      [
-        top: Specified.Item,
-        right: Specified.Item,
-        bottom: Specified.Item,
-        left: Specified.Item
-      ]
-    >
-  | Tuple<
-      [
-        top: Specified.Item,
-        right: Specified.Item,
-        bottom: Specified.Item,
-        left: Specified.Item,
-        fill: Keyword<"fill">
-      ]
-    >;
-
-namespace Specified {
-  export type Item = Number.Fixed | Percentage.Fixed;
-}
+export type Specified = ImageSlice<Number | Percentage>;
 
 type Computed = Specified;
 
 const parseItem = filter(
-  either(Number.parseBase, Percentage.parseBase),
-  (size) => size.value >= 0,
+  either(Number.parse, Percentage.parse),
+  (size) => size.hasCalculation() || size.value >= 0,
   () => `Negative sizes are not allowed`
 );
 
@@ -53,10 +39,10 @@ const parseFill = Keyword.parse("fill");
  * @internal
  */
 export const parse: Parser<Slice<Token>, Specified, string> = (input) => {
-  let top: Specified.Item | undefined;
-  let right: Specified.Item | undefined;
-  let bottom: Specified.Item | undefined;
-  let left: Specified.Item | undefined;
+  let top: Number | Percentage | undefined;
+  let right: Number | Percentage | undefined;
+  let bottom: Number | Percentage | undefined;
+  let left: Number | Percentage | undefined;
   let fill: Keyword<"fill"> | undefined;
 
   while (true) {

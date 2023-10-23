@@ -169,13 +169,4 @@ export namespace Integer {
     map<Slice<Token>, BaseInteger, Fixed, string>(BaseInteger.parse, of),
     map(Calculation.parseNumber, of)
   );
-
-  // TODO: temporary helper needed during migration
-  /**
-   * @internal
-   */
-  export const parseBase = map<Slice<Token>, BaseInteger, Fixed, string>(
-    BaseInteger.parse,
-    of
-  );
 }

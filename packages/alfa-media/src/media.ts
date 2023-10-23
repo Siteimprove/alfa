@@ -25,20 +25,21 @@ import * as json from "@siteimprove/alfa-json";
 import { Resolver } from "./resolver";
 
 const {
-  either,
   delimited,
+  either,
   end,
+  filter,
   left,
-  right,
   map,
   mapResult,
+  oneOrMore,
   option,
   pair,
-  oneOrMore,
-  zeroOrMore,
-  takeUntil,
+  right,
   separated,
   separatedList,
+  takeUntil,
+  zeroOrMore,
 } = Parser;
 
 const { property, equals } = Predicate;
@@ -485,10 +486,17 @@ export namespace Media {
 
   /**
    * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-value}
+   *
+   * @remarks
+   * We currently do not support calculations in media queries
    */
   const parseFeatureValue = either(
     either(
-      Number.parseBase,
+      filter(
+        Number.parse,
+        (number) => !number.hasCalculation(),
+        () => "Calculations no supported in media queries"
+      ),
       map(Token.parseIdent(), (ident) => Keyword.of(ident.value.toLowerCase()))
     ),
     either(
@@ -500,7 +508,11 @@ export namespace Media {
         ),
         ([left, right]) => Percentage.of(left.value / right.value)
       ),
-      Length.parseBase
+      filter(
+        Length.parse,
+        (length) => !length.hasCalculation(),
+        () => "Calculations no supported in media queries"
+      )
     )
   );
 

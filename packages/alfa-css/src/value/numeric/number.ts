@@ -156,13 +156,4 @@ export namespace Number {
     Fixed,
     string
   >(BaseNumber.parseZero, of);
-
-  // TODO: temporary helper needed during migration
-  /**
-   * @internal
-   */
-  export const parseBase = map<Slice<Token>, BaseNumber, Fixed, string>(
-    BaseNumber.parse,
-    of
-  );
 }

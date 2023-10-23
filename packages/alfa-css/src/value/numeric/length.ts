@@ -266,13 +266,4 @@ export namespace Length {
     map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, of),
     map(Math.parseLength, of)
   );
-
-  // TODO: temporary helper needed during migration to calculated values.
-  /**
-   * @internal
-   */
-  export const parseBase = map<Slice<Token>, BaseLength, Fixed, string>(
-    BaseLength.parse,
-    of
-  );
 }
