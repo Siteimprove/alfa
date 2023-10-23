@@ -6,8 +6,8 @@ const project = ["src/**/*.ts!", "test/**/*.ts", "test/**/*.tsx"];
 const config: KnipConfig = {
   workspaces: {
     ".": {
-      entry: ["scripts/*.js"],
-      project: ["scripts/**/*.ts", "scripts/**/*.js"],
+      entry: ["scripts/*.mjs"],
+      project: ["scripts/**/*.ts", "scripts/**/*.mjs"],
       ignoreDependencies: ["prettier"],
     },
     "packages/*": { entry, project },
