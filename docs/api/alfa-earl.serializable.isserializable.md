@@ -4,7 +4,7 @@
 
 ## Serializable.isSerializable() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSerializable<T extends EARL>(value: unknown): value is Serializable<T>;
@@ -16,7 +16,7 @@ function isSerializable<T extends EARL>(value: unknown): value is Serializable<T
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Serializable](./alfa-earl.serializable.md)<!-- -->&lt;T&gt;
 

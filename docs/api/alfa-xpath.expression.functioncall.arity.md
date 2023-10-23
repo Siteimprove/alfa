@@ -4,7 +4,7 @@
 
 ## Expression.FunctionCall.arity property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get arity(): number;

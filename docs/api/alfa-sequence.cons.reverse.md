@@ -4,12 +4,12 @@
 
 ## Cons.reverse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reverse(): Sequence<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+Sequence&lt;T&gt;
 

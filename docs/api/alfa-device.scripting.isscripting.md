@@ -4,7 +4,7 @@
 
 ## Scripting.isScripting() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isScripting(value: unknown): value is Scripting;
@@ -16,7 +16,7 @@ function isScripting(value: unknown): value is Scripting;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Scripting](./alfa-device.scripting.md)
 

@@ -4,7 +4,7 @@
 
 ## Language.Region.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: Region.Name): Region;
@@ -16,7 +16,7 @@ static of(name: Region.Name): Region;
 |  --- | --- | --- |
 |  name | [Region.Name](./alfa-iana.language.region.name.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Region](./alfa-iana.language.region.md)
 

@@ -4,7 +4,7 @@
 
 ## Question.JSON.fallback property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 fallback: Option.JSON<ANSWER>;

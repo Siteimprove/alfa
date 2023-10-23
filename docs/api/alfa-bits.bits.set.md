@@ -4,7 +4,7 @@
 
 ## Bits.set() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function set(bits: number, i: number): number;
@@ -17,7 +17,7 @@ function set(bits: number, i: number): number;
 |  bits | number |  |
 |  i | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

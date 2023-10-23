@@ -4,7 +4,7 @@
 
 ## Array\_2.sortWith() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function sortWith<T>(array: Array<T>, comparer: Comparer<T>): Array<T>;
@@ -14,10 +14,10 @@ function sortWith<T>(array: Array<T>, comparer: Comparer<T>): Array<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  array | Array&lt;T&gt; |  |
+|  array | [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;T&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 

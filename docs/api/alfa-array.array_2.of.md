@@ -4,7 +4,7 @@
 
 ## Array\_2.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function of<T>(...values: Array<T>): Array<T>;
@@ -14,9 +14,9 @@ function of<T>(...values: Array<T>): Array<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  values | Array&lt;T&gt; |  |
+|  values | [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;T&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 

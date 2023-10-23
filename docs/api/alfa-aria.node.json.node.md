@@ -4,7 +4,7 @@
 
 ## Node.JSON.node property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 node: string;

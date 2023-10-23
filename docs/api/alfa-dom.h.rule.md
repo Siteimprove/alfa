@@ -4,7 +4,7 @@
 
 ## h.rule namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace rule 

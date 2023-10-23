@@ -4,12 +4,12 @@
 
 ## Branched.distinct() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 distinct(): Branched<T, B>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;
 

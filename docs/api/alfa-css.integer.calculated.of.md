@@ -4,7 +4,7 @@
 
 ## Integer.Calculated.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: Calculation<"number">): Calculated;
@@ -16,7 +16,7 @@ static of(value: Calculation<"number">): Calculated;
 |  --- | --- | --- |
 |  value | Calculation&lt;"number"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Calculated](./alfa-css.integer.calculated.md)
 

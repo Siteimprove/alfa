@@ -4,7 +4,7 @@
 
 ## Slice.isSlice() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSlice<T>(value: unknown): value is Slice<T>;
@@ -16,7 +16,7 @@ function isSlice<T>(value: unknown): value is Slice<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

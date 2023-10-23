@@ -4,7 +4,7 @@
 
 ## Selector.Slotted.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Slotted): boolean;
@@ -16,7 +16,7 @@ equals(value: Slotted): boolean;
 |  --- | --- | --- |
 |  value | [Slotted](./alfa-selector.selector.slotted.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

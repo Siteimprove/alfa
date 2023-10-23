@@ -4,7 +4,7 @@
 
 ## Preference.isPreference() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isPreference<N extends Name>(value: unknown, name?: N): value is Preference<N>;
@@ -15,9 +15,9 @@ export function isPreference<N extends Name>(value: unknown, name?: N): value is
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-|  name | N | <i>(Optional)</i> |
+|  name | N | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Preference](./alfa-device.preference.md)<!-- -->&lt;N&gt;
 

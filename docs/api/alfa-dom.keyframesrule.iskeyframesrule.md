@@ -4,7 +4,7 @@
 
 ## KeyframesRule.isKeyframesRule() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isKeyframesRule(value: unknown): value is KeyframesRule;
@@ -16,7 +16,7 @@ function isKeyframesRule(value: unknown): value is KeyframesRule;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [KeyframesRule](./alfa-dom.keyframesrule.md)
 

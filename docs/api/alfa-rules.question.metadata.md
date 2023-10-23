@@ -6,7 +6,7 @@
 
 Maps the `uri` parameter of questions to their `type` parameter and the expected type of answers.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Metadata = {

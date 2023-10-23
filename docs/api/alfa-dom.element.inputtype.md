@@ -4,7 +4,7 @@
 
 ## Element.inputType variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 inputType: typeof helpers.inputType

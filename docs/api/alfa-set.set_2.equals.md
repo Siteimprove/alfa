@@ -4,7 +4,7 @@
 
 ## Set\_2.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<T>(value: Set<T>): boolean;
@@ -14,9 +14,9 @@ equals<T>(value: Set<T>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Set&lt;T&gt; |  |
+|  value | [Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

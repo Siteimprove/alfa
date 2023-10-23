@@ -4,7 +4,7 @@
 
 ## Performance.elapsed() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 elapsed(now?: number): number;
@@ -14,9 +14,9 @@ elapsed(now?: number): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  now | number | <i>(Optional)</i> |
+|  now | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

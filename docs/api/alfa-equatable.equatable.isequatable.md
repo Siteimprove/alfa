@@ -6,7 +6,7 @@
 
 Check if an unknown value implements the [Equatable](./alfa-equatable.equatable.md) interface.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isEquatable(value: unknown): value is Equatable;
@@ -18,7 +18,7 @@ function isEquatable(value: unknown): value is Equatable;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Equatable](./alfa-equatable.equatable.md)
 

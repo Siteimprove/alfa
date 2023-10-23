@@ -8,7 +8,7 @@ Compute the modulus of a division of two reals.
 
 [https://en.wikipedia.org/wiki/Modulo\_operation](https://en.wikipedia.org/wiki/Modulo_operation)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function modulo(p: number, d: number): number;
@@ -21,7 +21,7 @@ function modulo(p: number, d: number): number;
 |  p | number |  |
 |  d | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

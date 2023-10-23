@@ -4,12 +4,12 @@
 
 ## Hash.writeNull() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeNull(): this;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this
 

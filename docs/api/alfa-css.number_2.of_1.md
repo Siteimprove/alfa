@@ -4,7 +4,7 @@
 
 ## Number\_2.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of(value: BaseNumber): Fixed;
@@ -16,7 +16,7 @@ export function of(value: BaseNumber): Fixed;
 |  --- | --- | --- |
 |  value | BaseNumber |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Fixed
+[Fixed](./alfa-css.number_2.fixed.md)
 

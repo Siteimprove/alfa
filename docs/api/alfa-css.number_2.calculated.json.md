@@ -4,10 +4,10 @@
 
 ## Number\_2.Calculated.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Numeric.Calculated.JSON<"number"> 
 ```
-<b>Extends:</b> [Numeric.Calculated.JSON](./alfa-css.numeric.calculated.json.md)<!-- -->&lt;"number"&gt;
+**Extends:** [Numeric.Calculated.JSON](./alfa-css.numeric.calculated.json.md)<!-- -->&lt;"number"&gt;
 

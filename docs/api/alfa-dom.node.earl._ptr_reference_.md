@@ -4,7 +4,7 @@
 
 ## Node.EARL."ptr:reference" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "ptr:reference"?: {

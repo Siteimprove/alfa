@@ -4,7 +4,7 @@
 
 ## Device.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(type: Device.Type, viewport: Viewport, display: Display, scripting?: Scripting, preferences?: Iterable<Preference>): Device;
@@ -15,12 +15,12 @@ static of(type: Device.Type, viewport: Viewport, display: Display, scripting?: S
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  type | [Device.Type](./alfa-device.device.type.md) |  |
-|  viewport | [Viewport](./alfa-device.viewport.md) |  |
-|  display | [Display](./alfa-device.display.md) |  |
-|  scripting | [Scripting](./alfa-device.scripting.md) | <i>(Optional)</i> |
-|  preferences | Iterable&lt;[Preference](./alfa-device.preference.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  viewport | Viewport |  |
+|  display | Display |  |
+|  scripting | Scripting | _(Optional)_ |
+|  preferences | Iterable&lt;Preference&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Device](./alfa-device.device.md)
 

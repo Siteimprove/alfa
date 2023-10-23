@@ -4,7 +4,7 @@
 
 ## Tag.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<T extends string = string> 

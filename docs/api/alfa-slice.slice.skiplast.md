@@ -4,7 +4,7 @@
 
 ## Slice.skipLast() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 skipLast(count: number): Slice<T>;
@@ -16,7 +16,7 @@ skipLast(count: number): Slice<T>;
 |  --- | --- | --- |
 |  count | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Outcome.isInapplicable variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isInapplicable: typeof Inapplicable.isInapplicable

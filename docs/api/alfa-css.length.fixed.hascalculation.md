@@ -4,12 +4,12 @@
 
 ## Length.Fixed.hasCalculation() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasCalculation(): this is never;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is never
 

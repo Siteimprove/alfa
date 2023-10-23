@@ -4,7 +4,7 @@
 
 ## Rule.hasRequirement() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasRequirement(requirement: Requirement): boolean;
@@ -14,9 +14,9 @@ hasRequirement(requirement: Requirement): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  requirement | [Requirement](./alfa-act.requirement.md) |  |
+|  requirement | Requirement |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

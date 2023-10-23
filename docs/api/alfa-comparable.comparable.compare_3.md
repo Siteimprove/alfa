@@ -6,7 +6,7 @@
 
 Compare two booleans.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function compare(a: boolean, b: boolean): Comparison;
@@ -19,7 +19,7 @@ function compare(a: boolean, b: boolean): Comparison;
 |  a | boolean |  |
 |  b | boolean |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

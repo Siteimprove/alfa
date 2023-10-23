@@ -4,10 +4,10 @@
 
 ## Style.Cascaded type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Cascaded<N extends Name> = Longhands.Cascaded<N>;
 ```
-<b>References:</b> [Longhands.Cascaded](./alfa-style.longhands.cascaded.md)
+**References:** [Longhands.Cascaded](./alfa-style.longhands.cascaded.md)
 

@@ -4,10 +4,10 @@
 
 ## LengthPercentage.Resolver type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Resolver = Length.Resolver & Percentage.Resolver<"length", Canonical>;
 ```
-<b>References:</b> [Length.Resolver](./alfa-css.length.resolver.md)<!-- -->, [Percentage.Resolver](./alfa-css.percentage.resolver.md)<!-- -->, [Canonical](./alfa-css.lengthpercentage.canonical.md)
+**References:** [Length.Resolver](./alfa-css.length.resolver.md)<!-- -->, [Percentage.Resolver](./alfa-css.percentage.resolver.md)<!-- -->, [Canonical](./alfa-css.lengthpercentage.canonical.md)
 

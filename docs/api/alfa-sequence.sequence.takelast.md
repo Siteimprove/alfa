@@ -4,7 +4,7 @@
 
 ## Sequence.takeLast() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 takeLast(count: number): Sequence<T>;
@@ -16,7 +16,7 @@ takeLast(count: number): Sequence<T>;
 |  --- | --- | --- |
 |  count | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

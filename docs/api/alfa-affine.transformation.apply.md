@@ -4,7 +4,7 @@
 
 ## Transformation.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply(transformation: Transformation): Transformation;
@@ -16,7 +16,7 @@ apply(transformation: Transformation): Transformation;
 |  --- | --- | --- |
 |  transformation | [Transformation](./alfa-affine.transformation.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Transformation](./alfa-affine.transformation.md)
 

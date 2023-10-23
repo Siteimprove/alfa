@@ -4,7 +4,7 @@
 
 ## Branched.find() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 find<U extends T>(refinement: Refinement<T, U, [Iterable<B>]>): Option<U>;
@@ -14,9 +14,9 @@ find<U extends T>(refinement: Refinement<T, U, [Iterable<B>]>): Option<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[Iterable&lt;B&gt;\]&gt; |  |
+|  refinement | Refinement&lt;T, U, \[Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
+Option&lt;U&gt;
 

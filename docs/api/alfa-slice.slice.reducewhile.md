@@ -4,7 +4,7 @@
 
 ## Slice.reduceWhile() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reduceWhile<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
@@ -14,11 +14,11 @@ reduceWhile<U>(predicate: Predicate<T, [index: number]>, reducer: Reducer<T, U, 
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
-|  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
+|  reducer | Reducer&lt;T, U, \[index: number\]&gt; |  |
 |  accumulator | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 U
 

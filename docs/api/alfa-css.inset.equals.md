@@ -4,7 +4,7 @@
 
 ## Inset.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Inset): boolean;
@@ -16,7 +16,7 @@ equals(value: Inset): boolean;
 |  --- | --- | --- |
 |  value | [Inset](./alfa-css.inset.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

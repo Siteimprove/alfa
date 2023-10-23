@@ -4,7 +4,7 @@
 
 ## List.join() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 join(separator: string): string;
@@ -16,7 +16,7 @@ join(separator: string): string;
 |  --- | --- | --- |
 |  separator | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 string
 

@@ -4,7 +4,7 @@
 
 ## Selector.Compound.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Compound): boolean;
@@ -16,7 +16,7 @@ equals(value: Compound): boolean;
 |  --- | --- | --- |
 |  value | [Compound](./alfa-selector.selector.compound.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

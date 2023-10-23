@@ -6,12 +6,12 @@
 
 Check if this role is non-abstract.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isConcrete(): this is Role<Role.Concrete>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Role](./alfa-aria.role.md)<!-- -->&lt;[Role.Concrete](./alfa-aria.role.concrete.md)<!-- -->&gt;
 

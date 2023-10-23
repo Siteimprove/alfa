@@ -4,12 +4,12 @@
 
 ## Token.OpenComment.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): OpenComment;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [OpenComment](./alfa-css.token.opencomment.md)
 

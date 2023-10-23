@@ -4,17 +4,17 @@
 
 ## Scale.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Function.JSON<"scale"> 
 ```
-<b>Extends:</b> Function.JSON&lt;"scale"&gt;
+**Extends:** Function.JSON&lt;"scale"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [x](./alfa-css.scale.json.x.md) |  | Number.Fixed.JSON |  |
-|  [y](./alfa-css.scale.json.y.md) |  | Number.Fixed.JSON |  |
+|  [x](./alfa-css.scale.json.x.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) |  |
+|  [y](./alfa-css.scale.json.y.md) |  | [Number.Fixed.JSON](./alfa-css.number_2.fixed.json.md) |  |
 

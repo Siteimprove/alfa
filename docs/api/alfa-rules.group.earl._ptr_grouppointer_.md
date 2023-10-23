@@ -4,7 +4,7 @@
 
 ## Group.EARL."ptr:groupPointer" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "ptr:groupPointer": {

@@ -4,7 +4,7 @@
 
 ## Branched.branch() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 branch(value: T, ...branches: Array<B>): Branched<T, B>;
@@ -17,7 +17,7 @@ branch(value: T, ...branches: Array<B>): Branched<T, B>;
 |  value | T |  |
 |  branches | Array&lt;B&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;
 

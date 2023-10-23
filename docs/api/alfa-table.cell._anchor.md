@@ -4,7 +4,7 @@
 
 ## Cell.\_anchor property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _anchor: Slot;

@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.tee() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tee<A extends Array<unknown> = []>(callback: Callback<Indexed<T>, void, [...args: A]>, ...args: A): Indexed<T>;
@@ -14,10 +14,10 @@ tee<A extends Array<unknown> = []>(callback: Callback<Indexed<T>, void, [...args
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt; |  |
+|  callback | Callback&lt;[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt; |  |
 |  args | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

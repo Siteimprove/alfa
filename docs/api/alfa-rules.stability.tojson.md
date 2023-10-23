@@ -4,12 +4,12 @@
 
 ## Stability.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Stability.JSON<S>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Stability.JSON](./alfa-rules.stability.json.md)<!-- -->&lt;S&gt;
 

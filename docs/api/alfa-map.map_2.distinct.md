@@ -4,14 +4,14 @@
 
 ## Map\_2.distinct() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 distinct(): Map<K, V>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Map&lt;K, V&gt;
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;
 
 ## Remarks
 

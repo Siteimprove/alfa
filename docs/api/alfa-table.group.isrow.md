@@ -4,7 +4,7 @@
 
 ## Group.isRow variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isRow: typeof Row.Group.isGroup

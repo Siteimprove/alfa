@@ -4,12 +4,12 @@
 
 ## Selector.List.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Selector.JSON<"list"> 
 ```
-<b>Extends:</b> [Selector.JSON](./alfa-selector.selector.json.md)<!-- -->&lt;"list"&gt;
+**Extends:** [Selector.JSON](./alfa-selector.selector.json.md)<!-- -->&lt;"list"&gt;
 
 ## Properties
 

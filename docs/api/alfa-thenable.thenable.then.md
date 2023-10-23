@@ -4,7 +4,7 @@
 
 ## Thenable.then() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 then(resolved: Callback<T>, rejected: Callback<E>): void;
@@ -14,10 +14,10 @@ then(resolved: Callback<T>, rejected: Callback<E>): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolved | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
-|  rejected | [Callback](./alfa-callback.callback.md)<!-- -->&lt;E&gt; |  |
+|  resolved | Callback&lt;T&gt; |  |
+|  rejected | Callback&lt;E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

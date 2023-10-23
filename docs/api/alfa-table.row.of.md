@@ -4,7 +4,7 @@
 
 ## Row.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(y: number): Row;
@@ -16,7 +16,7 @@ static of(y: number): Row;
 |  --- | --- | --- |
 |  y | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Row](./alfa-table.row.md)
 

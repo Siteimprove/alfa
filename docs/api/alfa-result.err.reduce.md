@@ -4,7 +4,7 @@
 
 ## Err.reduce() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reduce<U>(reducer: unknown, accumulator: U): U;
@@ -17,7 +17,7 @@ reduce<U>(reducer: unknown, accumulator: U): U;
 |  reducer | unknown |  |
 |  accumulator | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 U
 

@@ -4,7 +4,7 @@
 
 ## Column.isColumn() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isColumn(value: unknown): value is Column;
@@ -16,7 +16,7 @@ function isColumn(value: unknown): value is Column;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Column](./alfa-table.column.md)
 

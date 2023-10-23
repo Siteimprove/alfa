@@ -4,12 +4,12 @@
 
 ## Selector.Hover.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Hover;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Hover](./alfa-selector.selector.hover.md)
 

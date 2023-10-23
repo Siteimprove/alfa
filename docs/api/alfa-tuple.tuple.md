@@ -5,7 +5,7 @@
 ## Tuple type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Tuple<T extends ReadonlyArray<unknown> = ReadonlyArray<unknown>> = T;

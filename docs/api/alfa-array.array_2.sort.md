@@ -4,7 +4,7 @@
 
 ## Array\_2.sort() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function sort<T extends Comparable<T>>(array: Array<T>): Array<T>;
@@ -14,9 +14,9 @@ function sort<T extends Comparable<T>>(array: Array<T>): Array<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  array | Array&lt;T&gt; |  |
+|  array | [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;T&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 

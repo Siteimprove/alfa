@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed.concat() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 concat(iterable: Iterable<T>): Unkeyed<T>;
@@ -16,7 +16,7 @@ concat(iterable: Iterable<T>): Unkeyed<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

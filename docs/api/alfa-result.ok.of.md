@@ -4,7 +4,7 @@
 
 ## Ok.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(value: T): Ok<T>;
@@ -16,7 +16,7 @@ static of<T>(value: T): Ok<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
 

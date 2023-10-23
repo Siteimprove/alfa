@@ -4,7 +4,7 @@
 
 ## Option.isSome() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSome<T>(value: unknown): value is Some<T>;
@@ -16,7 +16,7 @@ function isSome<T>(value: unknown): value is Some<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is [Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
+value is Some&lt;T&gt;
 

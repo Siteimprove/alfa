@@ -4,10 +4,10 @@
 
 ## Shadow.Resolver type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Resolver = Length.Resolver;
 ```
-<b>References:</b> [Length.Resolver](./alfa-css.length.resolver.md)
+**References:** [Length.Resolver](./alfa-css.length.resolver.md)
 

@@ -6,10 +6,10 @@
 
 The names of all widget roles.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Widget = SubclassOf<"widget">;
 ```
-<b>References:</b> [SubclassOf](./alfa-aria.role.subclassof.md)
+**References:** [SubclassOf](./alfa-aria.role.subclassof.md)
 

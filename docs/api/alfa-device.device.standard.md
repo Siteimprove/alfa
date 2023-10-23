@@ -4,12 +4,12 @@
 
 ## Device.standard() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function standard(): Device;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Device](./alfa-device.device.md)
 

@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<K, V>(this: Keyed<K, Keyed<K, V>>): Keyed<K, V>;
@@ -16,7 +16,7 @@ flatten<K, V>(this: Keyed<K, Keyed<K, V>>): Keyed<K, V>;
 |  --- | --- | --- |
 |  this | [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;
 

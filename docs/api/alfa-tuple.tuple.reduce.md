@@ -4,7 +4,7 @@
 
 ## Tuple.reduce() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function reduce<T extends Tuple, U>(tuple: T, reducer: Reducer<Item<T>, U, [index: number]>, accumulator: U): U;
@@ -15,10 +15,10 @@ export function reduce<T extends Tuple, U>(tuple: T, reducer: Reducer<Item<T>, U
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
-|  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt; |  |
+|  reducer | Reducer&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt; |  |
 |  accumulator | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 U
 

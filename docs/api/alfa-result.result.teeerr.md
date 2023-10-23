@@ -4,7 +4,7 @@
 
 ## Result.teeErr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 teeErr(callback: Callback<E>): Result<T, E>;
@@ -14,9 +14,9 @@ teeErr(callback: Callback<E>): Result<T, E>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;E&gt; |  |
+|  callback | Callback&lt;E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
 

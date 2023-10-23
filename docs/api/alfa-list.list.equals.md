@@ -4,7 +4,7 @@
 
 ## List.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<T>(value: List<T>): boolean;
@@ -16,7 +16,7 @@ equals<T>(value: List<T>): boolean;
 |  --- | --- | --- |
 |  value | [List](./alfa-list.list.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

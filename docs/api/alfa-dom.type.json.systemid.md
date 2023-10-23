@@ -4,7 +4,7 @@
 
 ## Type.JSON.systemId property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 systemId: string | null;

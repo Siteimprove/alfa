@@ -4,7 +4,7 @@
 
 ## Refinement.isSymbol() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isSymbol(value: unknown): value is symbol;
@@ -16,7 +16,7 @@ export function isSymbol(value: unknown): value is symbol;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is symbol
 

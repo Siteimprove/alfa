@@ -4,7 +4,7 @@
 
 ## Option.orElse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 orElse<U>(option: Thunk<Option<U>>): Option<T | U>;
@@ -14,9 +14,9 @@ orElse<U>(option: Thunk<Option<U>>): Option<T | U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  option | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;&gt; |  |
+|  option | Thunk&lt;[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;T \| U&gt;
 

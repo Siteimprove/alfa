@@ -4,7 +4,7 @@
 
 ## Token.parseDelim() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parseDelim(query?: string | number | Predicate<Delim>): Parser<Slice<Token>, Delim, string, []>;
@@ -14,9 +14,9 @@ function parseDelim(query?: string | number | Predicate<Delim>): Parser<Slice<To
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  query | string \| number \| [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Delim](./alfa-css.token.delim.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  query | string \| number \| Predicate&lt;[Delim](./alfa-css.token.delim.md)<!-- -->&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Delim](./alfa-css.token.delim.md)<!-- -->, string, \[\]&gt;
+Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [Delim](./alfa-css.token.delim.md)<!-- -->, string, \[\]&gt;
 

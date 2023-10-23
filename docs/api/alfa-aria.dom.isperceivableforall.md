@@ -4,7 +4,7 @@
 
 ## DOM.isPerceivableForAll variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isPerceivableForAll: typeof dom.isPerceivableForAll

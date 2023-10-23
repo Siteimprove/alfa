@@ -4,7 +4,7 @@
 
 ## Selector.Part.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Part): boolean;
@@ -16,7 +16,7 @@ equals(value: Part): boolean;
 |  --- | --- | --- |
 |  value | [Part](./alfa-selector.selector.part.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

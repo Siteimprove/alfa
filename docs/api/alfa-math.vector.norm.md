@@ -8,7 +8,7 @@ Compute the norm of a vector.
 
 [https://en.wikipedia.org/wiki/Norm\_(mathematics)](https://en.wikipedia.org/wiki/Norm_(mathematics))
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function norm(v: Vector): number;
@@ -20,7 +20,7 @@ function norm(v: Vector): number;
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

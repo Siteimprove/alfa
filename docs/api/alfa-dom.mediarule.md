@@ -5,7 +5,7 @@
 ## MediaRule namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace MediaRule 

@@ -4,7 +4,7 @@
 
 ## HSL.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<H extends Number | Angle, A extends Number | Percentage, S extends Percentage, L extends Percentage>(hue: H, saturation: S, lightness: L, alpha: A): HSL<ToCanonical<H>, ToCanonical<A>>;
@@ -19,7 +19,7 @@ static of<H extends Number | Angle, A extends Number | Percentage, S extends Per
 |  lightness | L |  |
 |  alpha | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [HSL](./alfa-css.hsl.md)<!-- -->&lt;ToCanonical&lt;H&gt;, ToCanonical&lt;A&gt;&gt;
 

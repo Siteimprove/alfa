@@ -4,12 +4,12 @@
 
 ## Map\_2.values() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 values(): Iterable<V>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Iterable&lt;V&gt;
 

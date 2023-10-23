@@ -4,12 +4,12 @@
 
 ## Graph.isEmpty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEmpty(): this is Graph<never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Graph](./alfa-graph.graph.md)<!-- -->&lt;never&gt;
 

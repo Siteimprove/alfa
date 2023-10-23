@@ -4,7 +4,7 @@
 
 ## h.fragment() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function fragment(children: Array<Node | string>): Fragment;
@@ -14,9 +14,9 @@ function fragment(children: Array<Node | string>): Fragment;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  children | Array&lt;[Node](./alfa-dom.node.md) \| string&gt; |  |
+|  children | Array&lt;Node \| string&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Fragment](./alfa-dom.fragment.md)
+Fragment
 

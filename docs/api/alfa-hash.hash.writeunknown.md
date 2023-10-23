@@ -4,7 +4,7 @@
 
 ## Hash.writeUnknown() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeUnknown(data: unknown): this;
@@ -16,7 +16,7 @@ writeUnknown(data: unknown): this;
 |  --- | --- | --- |
 |  data | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

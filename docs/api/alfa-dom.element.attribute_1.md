@@ -4,7 +4,7 @@
 
 ## Element.attribute() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 attribute<A extends string = string>(predicate: Predicate<Attribute<A>>): Option<Attribute<A>>;
@@ -14,9 +14,9 @@ attribute<A extends string = string>(predicate: Predicate<Attribute<A>>): Option
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Attribute](./alfa-dom.attribute.md)<!-- -->&lt;A&gt;&gt; |  |
+|  predicate | Predicate&lt;Attribute&lt;A&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Attribute](./alfa-dom.attribute.md)<!-- -->&lt;A&gt;&gt;
+Option&lt;Attribute&lt;A&gt;&gt;
 

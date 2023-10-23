@@ -4,7 +4,7 @@
 
 ## Media.Value.Discrete.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(value: T): Discrete<T>;
@@ -16,7 +16,7 @@ static of<T>(value: T): Discrete<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Discrete](./alfa-media.media.value.discrete.md)<!-- -->&lt;T&gt;
 

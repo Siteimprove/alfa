@@ -4,7 +4,7 @@
 
 ## Array\_2.subtract() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function subtract<T>(array: ReadonlyArray<T>, ...iterables: Array<Iterable<T>>): Array<T>;
@@ -15,9 +15,9 @@ function subtract<T>(array: ReadonlyArray<T>, ...iterables: Array<Iterable<T>>):
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  iterables | Array&lt;Iterable&lt;T&gt;&gt; |  |
+|  iterables | [Array](./alfa-array.array_2.md)<!-- -->&lt;Iterable&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;T&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 

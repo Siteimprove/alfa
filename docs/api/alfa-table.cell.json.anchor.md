@@ -4,7 +4,7 @@
 
 ## Cell.JSON.anchor property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 anchor: Slot.JSON;

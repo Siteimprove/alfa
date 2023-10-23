@@ -6,10 +6,10 @@
 
 The title of the specified criterion.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Title<C extends Chapter = Chapter> = Criteria[C]["title"];
 ```
-<b>References:</b> [Chapter](./alfa-wcag.criterion.chapter.md)
+**References:** [Chapter](./alfa-wcag.criterion.chapter.md)
 

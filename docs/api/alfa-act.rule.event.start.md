@@ -4,7 +4,7 @@
 
 ## Rule.Event.start() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function start<I, T extends Hashable, Q extends Question.Metadata, S, N extends string = string>(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "start", N>;
@@ -17,7 +17,7 @@ function start<I, T extends Hashable, Q extends Question.Metadata, S, N extends 
 |  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 |  name | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S, "start", N&gt;
 

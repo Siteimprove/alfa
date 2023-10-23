@@ -4,7 +4,7 @@
 
 ## Node.isNode() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isNode(value: unknown): value is Node;
@@ -16,7 +16,7 @@ function isNode(value: unknown): value is Node;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Node](./alfa-dom.node.md)
 

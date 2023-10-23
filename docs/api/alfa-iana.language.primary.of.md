@@ -4,7 +4,7 @@
 
 ## Language.Primary.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: Primary.Name): Primary;
@@ -16,7 +16,7 @@ static of(name: Primary.Name): Primary;
 |  --- | --- | --- |
 |  name | [Primary.Name](./alfa-iana.language.primary.name.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Primary](./alfa-iana.language.primary.md)
 

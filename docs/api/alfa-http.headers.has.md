@@ -4,7 +4,7 @@
 
 ## Headers.has() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 has(name: string): boolean;
@@ -16,7 +16,7 @@ has(name: string): boolean;
 |  --- | --- | --- |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

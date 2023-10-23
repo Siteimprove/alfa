@@ -4,7 +4,7 @@
 
 ## Tuple.forEach() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function forEach<T extends Tuple>(tuple: T, callback: Callback<Item<T>, void, [index: number]>): void;
@@ -15,9 +15,9 @@ export function forEach<T extends Tuple>(tuple: T, callback: Callback<Item<T>, v
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, void, \[index: number\]&gt; |  |
+|  callback | Callback&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, void, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

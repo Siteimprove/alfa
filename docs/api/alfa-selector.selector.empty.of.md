@@ -4,12 +4,12 @@
 
 ## Selector.Empty.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Empty;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Empty](./alfa-selector.selector.empty.md)
 

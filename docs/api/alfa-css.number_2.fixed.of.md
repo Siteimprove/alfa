@@ -4,7 +4,7 @@
 
 ## Number\_2.Fixed.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: number | BaseNumber): Fixed;
@@ -16,7 +16,7 @@ static of(value: number | BaseNumber): Fixed;
 |  --- | --- | --- |
 |  value | number \| BaseNumber |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Fixed
+[Fixed](./alfa-css.number_2.fixed.md)
 

@@ -4,7 +4,7 @@
 
 ## Value.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>): Value<U>;
@@ -14,9 +14,9 @@ flatMap<U>(mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>): Value<U>
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Value](./alfa-style.value.md)<!-- -->&lt;U&gt;, \[source: [Option](./alfa-option.option.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt;\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Value](./alfa-style.value.md)<!-- -->&lt;U&gt;, \[source: Option&lt;Declaration&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Value](./alfa-style.value.md)<!-- -->&lt;U&gt;
 

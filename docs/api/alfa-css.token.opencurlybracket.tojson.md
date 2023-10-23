@@ -4,12 +4,12 @@
 
 ## Token.OpenCurlyBracket.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): OpenCurlyBracket.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [OpenCurlyBracket.JSON](./alfa-css.token.opencurlybracket.json.md)
 

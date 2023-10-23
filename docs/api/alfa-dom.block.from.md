@@ -4,7 +4,7 @@
 
 ## Block.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): Block;
@@ -16,7 +16,7 @@ function from(json: JSON): Block;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-dom.block.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Block](./alfa-dom.block.md)
 

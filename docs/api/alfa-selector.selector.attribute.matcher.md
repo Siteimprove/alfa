@@ -4,7 +4,7 @@
 
 ## Selector.Attribute.Matcher enum
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 enum Matcher 

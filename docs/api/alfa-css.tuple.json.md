@@ -4,12 +4,12 @@
 
 ## Tuple.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<T extends Array<Value>> extends Value.JSON<"tuple"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"tuple"&gt;
+**Extends:** [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"tuple"&gt;
 
 ## Properties
 

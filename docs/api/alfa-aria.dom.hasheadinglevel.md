@@ -4,7 +4,7 @@
 
 ## DOM.hasHeadingLevel variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasHeadingLevel: typeof dom.hasHeadingLevel

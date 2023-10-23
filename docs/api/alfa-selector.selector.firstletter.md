@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/css-pseudo-4/\#first-letter-pseudo](https://drafts.csswg.org/css-pseudo-4/#first-letter-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class FirstLetter extends Pseudo.Element<"first-letter"> 
 ```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"first-letter"&gt;
+**Extends:** [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"first-letter"&gt;
 
 ## Methods
 

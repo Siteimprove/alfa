@@ -4,7 +4,7 @@
 
 ## Map\_2.reduce() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reduce<R>(reducer: Reducer<V, R, [key: K]>, accumulator: R): R;
@@ -14,10 +14,10 @@ reduce<R>(reducer: Reducer<V, R, [key: K]>, accumulator: R): R;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;V, R, \[key: K\]&gt; |  |
+|  reducer | Reducer&lt;V, R, \[key: K\]&gt; |  |
 |  accumulator | R |  |
 
-<b>Returns:</b>
+**Returns:**
 
 R
 

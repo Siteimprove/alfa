@@ -4,7 +4,7 @@
 
 ## Hash.writeBigInt() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeBigInt(data: bigint, size?: 64, signed?: boolean): this;
@@ -15,10 +15,10 @@ writeBigInt(data: bigint, size?: 64, signed?: boolean): this;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | bigint |  |
-|  size | 64 | <i>(Optional)</i> |
-|  signed | boolean | <i>(Optional)</i> |
+|  size | 64 | _(Optional)_ |
+|  signed | boolean | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

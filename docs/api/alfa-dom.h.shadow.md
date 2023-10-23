@@ -4,7 +4,7 @@
 
 ## h.shadow() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function shadow(children: Array<Node | string>, style?: Array<Sheet>, mode?: Shadow.Mode): Shadow;
@@ -14,11 +14,11 @@ function shadow(children: Array<Node | string>, style?: Array<Sheet>, mode?: Sha
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  children | Array&lt;[Node](./alfa-dom.node.md) \| string&gt; |  |
-|  style | Array&lt;[Sheet](./alfa-dom.sheet.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  mode | [Shadow.Mode](./alfa-dom.shadow.mode.md) | <i>(Optional)</i> |
+|  children | Array&lt;Node \| string&gt; |  |
+|  style | Array&lt;Sheet&gt; | _(Optional)_ |
+|  mode | [Shadow.Mode](./alfa-dom.shadow.mode.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Shadow](./alfa-dom.shadow.md)
+Shadow
 

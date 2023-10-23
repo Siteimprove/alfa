@@ -4,12 +4,12 @@
 
 ## Length.Fixed.isViewportRelative() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isViewportRelative(): this is Fixed<Unit.Length.Relative.Viewport>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;[Unit.Length.Relative.Viewport](./alfa-css.unit.length.relative.viewport.md)<!-- -->&gt;
 

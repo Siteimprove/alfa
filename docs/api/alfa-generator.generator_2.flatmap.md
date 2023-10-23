@@ -4,7 +4,7 @@
 
 ## Generator\_2.flatMap() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function flatMap<T, U, R, N>(generator: Generator<T, R, N>, mapper: Mapper<T, Generator<U, R, N>>): Generator<U, R, N>;
@@ -14,10 +14,10 @@ function flatMap<T, U, R, N>(generator: Generator<T, R, N>, mapper: Mapper<T, Ge
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  generator | Generator&lt;T, R, N&gt; |  |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Generator&lt;U, R, N&gt;&gt; |  |
+|  generator | [Generator](./alfa-generator.generator_2.md)<!-- -->&lt;T, R, N&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Generator](./alfa-generator.generator_2.md)<!-- -->&lt;U, R, N&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Generator&lt;U, R, N&gt;
+[Generator](./alfa-generator.generator_2.md)<!-- -->&lt;U, R, N&gt;
 

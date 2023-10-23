@@ -4,7 +4,7 @@
 
 ## Slice.set() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 set(index: number, value: T): Slice<T>;
@@ -17,7 +17,7 @@ set(index: number, value: T): Slice<T>;
 |  index | number |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

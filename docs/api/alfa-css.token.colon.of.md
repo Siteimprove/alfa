@@ -4,12 +4,12 @@
 
 ## Token.Colon.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Colon;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Colon](./alfa-css.token.colon.md)
 

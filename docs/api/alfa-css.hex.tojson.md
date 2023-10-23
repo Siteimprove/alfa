@@ -4,12 +4,12 @@
 
 ## Hex.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Hex.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Hex.JSON](./alfa-css.hex.json.md)
 

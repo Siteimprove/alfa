@@ -4,7 +4,7 @@
 
 ## Header.EARL."http:fieldValue" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "http:fieldValue": string;

@@ -4,12 +4,12 @@
 
 ## Err.and() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 and(): Err<E>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
 

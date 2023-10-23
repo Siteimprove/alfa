@@ -4,12 +4,12 @@
 
 ## Length.Fixed.isFontRelative() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isFontRelative(): this is Fixed<Unit.Length.Relative.Font>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;[Unit.Length.Relative.Font](./alfa-css.unit.length.relative.font.md)<!-- -->&gt;
 

@@ -4,7 +4,7 @@
 
 ## Value.JSON.source property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 source: Declaration.JSON | null;

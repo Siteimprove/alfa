@@ -4,7 +4,7 @@
 
 ## Record\_2.Key type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Key<T> = Extract<keyof T, string>;

@@ -4,7 +4,7 @@
 
 ## Array\_2.toJSON() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function toJSON<T>(array: ReadonlyArray<T>): Array<Serializable.ToJSON<T>>;
@@ -16,7 +16,7 @@ function toJSON<T>(array: ReadonlyArray<T>): Array<Serializable.ToJSON<T>>;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;&gt;
 

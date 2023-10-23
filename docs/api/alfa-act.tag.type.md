@@ -4,7 +4,7 @@
 
 ## Tag.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract get type(): T;

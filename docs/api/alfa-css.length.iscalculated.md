@@ -4,7 +4,7 @@
 
 ## Length.isCalculated() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isCalculated(value: unknown): value is Calculated;
@@ -16,7 +16,7 @@ export function isCalculated(value: unknown): value is Calculated;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Calculated](./alfa-css.length.calculated.md)
 

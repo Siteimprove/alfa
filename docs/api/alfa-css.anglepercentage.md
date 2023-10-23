@@ -5,10 +5,10 @@
 ## AnglePercentage type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type AnglePercentage<U extends Unit.Angle = Unit.Angle> = AnglePercentage.Calculated | Angle.Calculated | Angle.Fixed<U> | Percentage.Calculated | Percentage.Fixed;
 ```
-<b>References:</b> [Unit.Angle](./alfa-css.unit.angle.md)<!-- -->, [AnglePercentage.Calculated](./alfa-css.anglepercentage.calculated.md)<!-- -->, [Angle.Calculated](./alfa-css.angle.calculated.md)<!-- -->, [Angle.Fixed](./alfa-css.angle.fixed.md)<!-- -->, [Percentage.Calculated](./alfa-css.percentage.calculated.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
+**References:** [Unit.Angle](./alfa-css.unit.angle.md)<!-- -->, [AnglePercentage.Calculated](./alfa-css.anglepercentage.calculated.md)<!-- -->, [Angle.Calculated](./alfa-css.angle.calculated.md)<!-- -->, [Angle.Fixed](./alfa-css.angle.fixed.md)<!-- -->, [Percentage.Calculated](./alfa-css.percentage.calculated.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
 

@@ -4,7 +4,7 @@
 
 ## Request.JSON.headers property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 headers: Headers.JSON;

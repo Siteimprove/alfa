@@ -4,7 +4,7 @@
 
 ## Cookies.isCookies() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isCookies(value: unknown): value is Cookies;
@@ -16,7 +16,7 @@ function isCookies(value: unknown): value is Cookies;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Cookies](./alfa-http.cookies.md)
 

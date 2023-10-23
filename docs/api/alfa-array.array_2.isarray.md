@@ -4,7 +4,7 @@
 
 ## Array\_2.isArray() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isArray<T>(value: Iterable<T>): value is Array<T>;
@@ -16,7 +16,7 @@ function isArray<T>(value: Iterable<T>): value is Array<T>;
 |  --- | --- | --- |
 |  value | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Array&lt;T&gt;
+value is [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 

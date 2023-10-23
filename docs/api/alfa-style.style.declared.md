@@ -4,10 +4,10 @@
 
 ## Style.Declared type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Declared<N extends Name> = Longhands.Declared<N>;
 ```
-<b>References:</b> [Longhands.Declared](./alfa-style.longhands.declared.md)
+**References:** [Longhands.Declared](./alfa-style.longhands.declared.md)
 

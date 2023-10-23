@@ -4,7 +4,7 @@
 
 ## Slot.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(x: number, y: number): Slot;
@@ -17,7 +17,7 @@ static of(x: number, y: number): Slot;
 |  x | number |  |
 |  y | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slot](./alfa-table.slot.md)
 

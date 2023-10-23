@@ -4,12 +4,12 @@
 
 ## Media.List.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.iterator](): Iterator<Query>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Iterator&lt;[Query](./alfa-media.media.query.md)<!-- -->&gt;
 

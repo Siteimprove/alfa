@@ -4,7 +4,7 @@
 
 ## Unit.Length.isViewportRelative() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isViewportRelative(unit: string): unit is Relative.Viewport;
@@ -16,7 +16,7 @@ function isViewportRelative(unit: string): unit is Relative.Viewport;
 |  --- | --- | --- |
 |  unit | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 unit is [Relative.Viewport](./alfa-css.unit.length.relative.viewport.md)
 

@@ -4,7 +4,7 @@
 
 ## Shorthands.shortHands variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 shortHands: {

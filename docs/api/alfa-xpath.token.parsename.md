@@ -4,7 +4,7 @@
 
 ## Token.parseName variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseName: (query?: string | Predicate<Name>) => Parser<Slice<Token>, Name, string, []>

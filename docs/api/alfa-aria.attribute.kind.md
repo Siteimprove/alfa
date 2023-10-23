@@ -6,10 +6,10 @@
 
 The kind of the specified attribute.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Kind<N extends Name = Name> = Attributes[N]["kind"];
 ```
-<b>References:</b> [Name](./alfa-aria.attribute.name.md)
+**References:** [Name](./alfa-aria.attribute.name.md)
 

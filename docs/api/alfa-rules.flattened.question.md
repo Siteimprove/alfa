@@ -6,10 +6,10 @@
 
 The type of the questions asked by rules
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Question = Question.Metadata;
 ```
-<b>References:</b> [Question.Metadata](./alfa-rules.question.metadata.md)
+**References:** [Question.Metadata](./alfa-rules.question.metadata.md)
 

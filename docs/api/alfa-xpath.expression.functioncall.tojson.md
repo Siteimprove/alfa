@@ -4,12 +4,12 @@
 
 ## Expression.FunctionCall.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): FunctionCall.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [FunctionCall.JSON](./alfa-xpath.expression.functioncall.json.md)
 

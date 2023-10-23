@@ -4,7 +4,7 @@
 
 ## Array\_2.prepend() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function prepend<T>(array: Array<T>, value: T): [T, ...Array<T>];
@@ -14,10 +14,10 @@ function prepend<T>(array: Array<T>, value: T): [T, ...Array<T>];
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  array | Array&lt;T&gt; |  |
+|  array | [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt; |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-\[T, ...Array&lt;T&gt;\]
+\[T, ...[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;\]
 

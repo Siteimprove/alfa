@@ -4,10 +4,10 @@
 
 ## Future.Maybe type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Maybe<T> = T | Future<T>;
 ```
-<b>References:</b> [Future](./alfa-future.future.md)
+**References:** [Future](./alfa-future.future.md)
 

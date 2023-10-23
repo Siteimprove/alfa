@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Unkeyed<Unkeyed<T>>): Unkeyed<T>;
@@ -16,7 +16,7 @@ flatten<T>(this: Unkeyed<Unkeyed<T>>): Unkeyed<T>;
 |  --- | --- | --- |
 |  this | [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;[Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

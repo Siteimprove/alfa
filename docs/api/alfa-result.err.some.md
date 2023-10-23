@@ -4,12 +4,12 @@
 
 ## Err.some() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 some(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

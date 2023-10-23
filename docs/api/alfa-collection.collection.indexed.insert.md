@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.insert() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 insert(index: number, value: T): Indexed<T>;
@@ -17,7 +17,7 @@ insert(index: number, value: T): Indexed<T>;
 |  index | number |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

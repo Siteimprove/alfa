@@ -4,7 +4,7 @@
 
 ## Slice.takeWhile() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Slice<U>;
@@ -14,9 +14,9 @@ takeWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): Slice<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  refinement | Refinement&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;
 

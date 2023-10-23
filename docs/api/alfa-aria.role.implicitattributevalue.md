@@ -6,7 +6,7 @@
 
 Get the implicit value of the specified attribute, if any.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 implicitAttributeValue(name: Attribute.Name): Option<string>;
@@ -18,7 +18,7 @@ implicitAttributeValue(name: Attribute.Name): Option<string>;
 |  --- | --- | --- |
 |  name | [Attribute.Name](./alfa-aria.attribute.name.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;string&gt;
+Option&lt;string&gt;
 

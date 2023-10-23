@@ -4,7 +4,7 @@
 
 ## Cell.isCell() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isCell(value: unknown): value is Cell;
@@ -16,7 +16,7 @@ function isCell(value: unknown): value is Cell;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Cell](./alfa-table.cell.md)
 

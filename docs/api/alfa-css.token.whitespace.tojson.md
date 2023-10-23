@@ -4,12 +4,12 @@
 
 ## Token.Whitespace.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Whitespace.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Whitespace.JSON](./alfa-css.token.whitespace.json.md)
 

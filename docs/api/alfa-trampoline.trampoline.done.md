@@ -4,7 +4,7 @@
 
 ## Trampoline.done() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function done<T>(value: T): Trampoline<T>;
@@ -16,7 +16,7 @@ function done<T>(value: T): Trampoline<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;
 

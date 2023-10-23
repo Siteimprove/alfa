@@ -4,7 +4,7 @@
 
 ## Array\_2.flatten() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function flatten<T>(array: ReadonlyArray<ReadonlyArray<T>>): Array<T>;
@@ -16,7 +16,7 @@ function flatten<T>(array: ReadonlyArray<ReadonlyArray<T>>): Array<T>;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;ReadonlyArray&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;T&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 

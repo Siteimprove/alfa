@@ -4,7 +4,7 @@
 
 ## Math\_2.isCalculation() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isCalculation(value: unknown): value is Math;
@@ -16,7 +16,7 @@ function isCalculation(value: unknown): value is Math;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Math
+value is [Math](./alfa-css.math_2.md)
 

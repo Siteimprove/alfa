@@ -4,12 +4,12 @@
 
 ## Rule.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract toJSON(): Rule.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Rule.JSON](./alfa-dom.rule.json.md)
 

@@ -6,12 +6,12 @@
 
 [https://html.spec.whatwg.org/\#enumerated-attribute](https://html.spec.whatwg.org/#enumerated-attribute)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 enumerate(): Option<string>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;string&gt;
+Option&lt;string&gt;
 

@@ -4,10 +4,10 @@
 
 ## Transform.PartialResolver type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type PartialResolver = Translate.PartialResolver;
 ```
-<b>References:</b> [Translate.PartialResolver](./alfa-css.translate.partialresolver.md)
+**References:** [Translate.PartialResolver](./alfa-css.translate.partialresolver.md)
 

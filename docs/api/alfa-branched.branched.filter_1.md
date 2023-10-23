@@ -4,7 +4,7 @@
 
 ## Branched.filter() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 filter(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B>;
@@ -14,9 +14,9 @@ filter(predicate: Predicate<T, [Iterable<B>]>): Branched<T, B>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
+|  predicate | Predicate&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;
 

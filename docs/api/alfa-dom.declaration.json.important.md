@@ -4,7 +4,7 @@
 
 ## Declaration.JSON.important property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 important: boolean;

@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/selectors/\#selector-combinator](https://drafts.csswg.org/selectors/#selector-combinator)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export enum Combinator 

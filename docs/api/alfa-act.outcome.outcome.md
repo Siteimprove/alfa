@@ -6,7 +6,7 @@
 
 [https://www.w3.org/TR/EARL10-Schema/\#outcome](https://www.w3.org/TR/EARL10-Schema/#outcome)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get outcome(): V;

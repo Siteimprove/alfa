@@ -4,7 +4,7 @@
 
 ## Element.isDraggable variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isDraggable: typeof predicate.isDraggable

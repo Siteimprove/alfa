@@ -4,7 +4,7 @@
 
 ## Rotate.y property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get y(): Number.Canonical;

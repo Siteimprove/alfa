@@ -5,10 +5,10 @@
 ## Value type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Value<T extends Type = Type> = Descriptor.Value<T>;
 ```
-<b>References:</b> [Type](./alfa-xpath.type.md)
+**References:** [Type](./alfa-xpath.type.md)
 

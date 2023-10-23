@@ -4,7 +4,7 @@
 
 ## Circle.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Circle): boolean;
@@ -16,7 +16,7 @@ equals(value: Circle): boolean;
 |  --- | --- | --- |
 |  value | [Circle](./alfa-css.circle.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

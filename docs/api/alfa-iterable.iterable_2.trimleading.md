@@ -4,7 +4,7 @@
 
 ## Iterable\_2.trimLeading() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function trimLeading<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>): Iterable<T>;
@@ -14,10 +14,10 @@ function trimLeading<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: n
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;T&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

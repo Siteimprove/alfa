@@ -4,7 +4,7 @@
 
 ## Name.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: string, sources?: Iterable<Name.Source>): Name;
@@ -15,9 +15,9 @@ static of(value: string, sources?: Iterable<Name.Source>): Name;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | string |  |
-|  sources | Iterable&lt;[Name.Source](./alfa-aria.name.source.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  sources | Iterable&lt;[Name.Source](./alfa-aria.name.source.md)<!-- -->&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Name](./alfa-aria.name.md)
 

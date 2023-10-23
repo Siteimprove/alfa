@@ -4,7 +4,7 @@
 
 ## Token.Comment.JSON.value property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 value: string;

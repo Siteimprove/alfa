@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#first-of-type-pseudo](https://drafts.csswg.org/selectors/#first-of-type-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class FirstOfType extends Pseudo.Class<"first-of-type"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"first-of-type"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"first-of-type"&gt;
 
 ## Methods
 

@@ -4,7 +4,7 @@
 
 ## Shape.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Shape): boolean;
@@ -16,7 +16,7 @@ equals(value: Shape): boolean;
 |  --- | --- | --- |
 |  value | [Shape](./alfa-css.shape.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -4,7 +4,7 @@
 
 ## Angle.Fixed.withUnit() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 withUnit<U extends Unit.Angle>(unit: U): Fixed<U>;
@@ -16,7 +16,7 @@ withUnit<U extends Unit.Angle>(unit: U): Fixed<U>;
 |  --- | --- | --- |
 |  unit | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.angle.fixed.md)<!-- -->&lt;U&gt;
 

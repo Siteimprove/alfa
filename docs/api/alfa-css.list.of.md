@@ -4,7 +4,7 @@
 
 ## List.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<V extends Value>(values: Iterable<V>, separator?: string): List<V, Value.HasCalculation<[V]>>;
@@ -15,9 +15,9 @@ static of<V extends Value>(values: Iterable<V>, separator?: string): List<V, Val
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  values | Iterable&lt;V&gt; |  |
-|  separator | string | <i>(Optional)</i> |
+|  separator | string | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-css.list.md)<!-- -->&lt;V, Value.HasCalculation&lt;\[V\]&gt;&gt;
 

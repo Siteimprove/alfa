@@ -4,7 +4,7 @@
 
 ## List.subtract() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 subtract(iterable: Iterable<T>): List<T>;
@@ -16,7 +16,7 @@ subtract(iterable: Iterable<T>): List<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

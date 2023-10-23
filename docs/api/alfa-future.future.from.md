@@ -4,7 +4,7 @@
 
 ## Future.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from<T>(promise: Promise<T> | Thunk<Promise<T>>): Future<T>;
@@ -14,9 +14,9 @@ function from<T>(promise: Promise<T> | Thunk<Promise<T>>): Future<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  promise | Promise&lt;T&gt; \| [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;Promise&lt;T&gt;&gt; |  |
+|  promise | Promise&lt;T&gt; \| Thunk&lt;Promise&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Builder.Axis.where() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 where(predicate: Builder): Axis;
@@ -16,7 +16,7 @@ where(predicate: Builder): Axis;
 |  --- | --- | --- |
 |  predicate | [Builder](./alfa-xpath.builder.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Axis](./alfa-xpath.builder.axis.md)
 

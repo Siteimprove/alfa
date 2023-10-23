@@ -4,7 +4,7 @@
 
 ## Right.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<R>(value: Right<R>): boolean;
@@ -16,7 +16,7 @@ equals<R>(value: Right<R>): boolean;
 |  --- | --- | --- |
 |  value | [Right](./alfa-either.right.md)<!-- -->&lt;R&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

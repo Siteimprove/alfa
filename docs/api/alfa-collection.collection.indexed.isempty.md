@@ -4,12 +4,12 @@
 
 ## Collection.Indexed.isEmpty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEmpty(): this is Indexed<never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;never&gt;
 

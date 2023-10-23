@@ -4,7 +4,7 @@
 
 ## Language.primary variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 primary: typeof Primary.of

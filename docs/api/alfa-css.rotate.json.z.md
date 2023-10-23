@@ -4,7 +4,7 @@
 
 ## Rotate.JSON.z property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 z: Number.Fixed.JSON;

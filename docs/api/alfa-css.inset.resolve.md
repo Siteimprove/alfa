@@ -4,12 +4,19 @@
 
 ## Inset.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-resolve(): Inset<O, C>;
+resolve(resolver: Inset.Resolver): Inset.Canonical;
 ```
-<b>Returns:</b>
 
-[Inset](./alfa-css.inset.md)<!-- -->&lt;O, C&gt;
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Inset.Resolver](./alfa-css.inset.resolver.md) |  |
+
+**Returns:**
+
+[Inset.Canonical](./alfa-css.inset.canonical.md)
 

@@ -4,7 +4,7 @@
 
 ## h.document() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function document(children: Array<Node | string>, style?: Array<Sheet>): Document;
@@ -14,10 +14,10 @@ function document(children: Array<Node | string>, style?: Array<Sheet>): Documen
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  children | Array&lt;[Node](./alfa-dom.node.md) \| string&gt; |  |
-|  style | Array&lt;[Sheet](./alfa-dom.sheet.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  children | Array&lt;Node \| string&gt; |  |
+|  style | Array&lt;Sheet&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Document](./alfa-dom.document.md)
+Document
 

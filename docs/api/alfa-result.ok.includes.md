@@ -4,7 +4,7 @@
 
 ## Ok.includes() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 includes(value: T): boolean;
@@ -16,7 +16,7 @@ includes(value: T): boolean;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

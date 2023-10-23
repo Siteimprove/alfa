@@ -4,7 +4,7 @@
 
 ## Expression.Path.JSON.left property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 left: Expression.JSON;

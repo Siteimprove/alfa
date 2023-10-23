@@ -4,7 +4,7 @@
 
 ## Unit.isFrequency() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isFrequency(unit: string): unit is Frequency;
@@ -16,7 +16,7 @@ function isFrequency(unit: string): unit is Frequency;
 |  --- | --- | --- |
 |  unit | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 unit is [Frequency](./alfa-css.unit.frequency.md)
 

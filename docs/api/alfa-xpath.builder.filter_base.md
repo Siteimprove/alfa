@@ -4,7 +4,7 @@
 
 ## Builder.Filter\_base variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Filter_base: {

@@ -6,7 +6,7 @@
 
 Get all attributes required by this role and its inherited (ancestors) roles.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get requiredAttributes(): ReadonlyArray<Attribute.Name>;

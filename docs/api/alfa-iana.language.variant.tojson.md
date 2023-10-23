@@ -4,12 +4,12 @@
 
 ## Language.Variant.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Variant.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Variant.JSON](./alfa-iana.language.variant.json.md)
 

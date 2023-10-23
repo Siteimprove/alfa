@@ -4,12 +4,12 @@
 
 ## Outcome.Inapplicable.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Inapplicable.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Inapplicable.JSON](./alfa-act.outcome.inapplicable.json.md)
 

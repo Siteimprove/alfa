@@ -4,7 +4,7 @@
 
 ## Cascade.JSON.rules property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 rules: RuleTree.JSON;

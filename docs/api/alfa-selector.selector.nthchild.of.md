@@ -4,7 +4,7 @@
 
 ## Selector.NthChild.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(index: Nth): NthChild;
@@ -14,9 +14,9 @@ static of(index: Nth): NthChild;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  index | [Nth](./alfa-css.nth.md) |  |
+|  index | Nth |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [NthChild](./alfa-selector.selector.nthchild.md)
 

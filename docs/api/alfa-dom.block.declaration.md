@@ -4,7 +4,7 @@
 
 ## Block.declaration() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 declaration(predicate: string | Predicate<Declaration>): Option<Declaration>;
@@ -14,9 +14,9 @@ declaration(predicate: string | Predicate<Declaration>): Option<Declaration>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | string \| [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
+|  predicate | string \| Predicate&lt;Declaration&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt;
+Option&lt;Declaration&gt;
 

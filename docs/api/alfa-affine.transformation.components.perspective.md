@@ -6,7 +6,7 @@
 
 A quaternion representing \[x, y, z, w\] perspective.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 perspective: Vector;

@@ -4,12 +4,12 @@
 
 ## String\_2.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): String;
 ```
-<b>Returns:</b>
+**Returns:**
 
-String
+[String](./alfa-css.string_2.md)
 

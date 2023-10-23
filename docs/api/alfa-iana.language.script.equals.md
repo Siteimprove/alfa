@@ -4,7 +4,7 @@
 
 ## Language.Script.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Script): boolean;
@@ -16,7 +16,7 @@ equals(value: Script): boolean;
 |  --- | --- | --- |
 |  value | [Script](./alfa-iana.language.script.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

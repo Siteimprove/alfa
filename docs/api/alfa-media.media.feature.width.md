@@ -4,7 +4,7 @@
 
 ## Media.Feature.Width namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Width 

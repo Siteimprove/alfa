@@ -4,10 +4,10 @@
 
 ## Percentage.Fixed.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Numeric.Fixed.JSON<"percentage"> 
 ```
-<b>Extends:</b> [Numeric.Fixed.JSON](./alfa-css.numeric.fixed.json.md)<!-- -->&lt;"percentage"&gt;
+**Extends:** [Numeric.Fixed.JSON](./alfa-css.numeric.fixed.json.md)<!-- -->&lt;"percentage"&gt;
 

@@ -4,7 +4,7 @@
 
 ## Math\_2.parseAngle variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseAngle: Parser<Slice<Token>, Math<"angle">, string, []>

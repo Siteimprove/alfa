@@ -4,7 +4,7 @@
 
 ## Node.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<T extends string = string> 
@@ -14,6 +14,6 @@ interface JSON<T extends string = string>
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [children?](./alfa-tree.node.json.children.md) |  | Array&lt;[JSON](./alfa-tree.node.json.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  [children?](./alfa-tree.node.json.children.md) |  | Array&lt;[JSON](./alfa-tree.node.json.md)<!-- -->&gt; | _(Optional)_ |
 |  [type](./alfa-tree.node.json.type.md) |  | T |  |
 

@@ -4,7 +4,7 @@
 
 ## Selective.else() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 else<U>(mapper: Mapper<S, U>): Selective<never, T | U>;
@@ -16,7 +16,7 @@ else<U>(mapper: Mapper<S, U>): Selective<never, T | U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;never, T \| U&gt;
 

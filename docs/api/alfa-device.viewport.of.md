@@ -4,7 +4,7 @@
 
 ## Viewport.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(width: number, height?: number, orientation?: Viewport.Orientation): Viewport;
@@ -15,10 +15,10 @@ static of(width: number, height?: number, orientation?: Viewport.Orientation): V
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  width | number |  |
-|  height | number | <i>(Optional)</i> |
-|  orientation | [Viewport.Orientation](./alfa-device.viewport.orientation.md) | <i>(Optional)</i> |
+|  height | number | _(Optional)_ |
+|  orientation | [Viewport.Orientation](./alfa-device.viewport.orientation.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Viewport](./alfa-device.viewport.md)
 

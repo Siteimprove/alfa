@@ -4,7 +4,7 @@
 
 ## Token.isFunction variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isFunction: typeof Function.isFunction

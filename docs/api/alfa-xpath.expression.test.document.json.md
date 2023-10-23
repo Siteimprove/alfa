@@ -4,7 +4,7 @@
 
 ## Expression.Test.Document.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON 

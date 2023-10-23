@@ -4,7 +4,7 @@
 
 ## Table.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(element: Element, cells: Iterable<Cell>, groups: Iterable<Group>): Table;
@@ -14,11 +14,11 @@ static of(element: Element, cells: Iterable<Cell>, groups: Iterable<Group>): Tab
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
-|  cells | Iterable&lt;[Cell](./alfa-table.cell.md)<!-- -->&gt; |  |
-|  groups | Iterable&lt;[Group](./alfa-table.group.md)<!-- -->&gt; |  |
+|  element | Element |  |
+|  cells | Iterable&lt;Cell&gt; |  |
+|  groups | Iterable&lt;Group&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Table](./alfa-table.table.md)
 

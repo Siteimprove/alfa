@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.collectFirst() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 collectFirst<U>(mapper: Mapper<V, Option<U>, [key: K]>): Option<U>;
@@ -14,9 +14,9 @@ collectFirst<U>(mapper: Mapper<V, Option<U>, [key: K]>): Option<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[key: K\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, Option&lt;U&gt;, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
+Option&lt;U&gt;
 

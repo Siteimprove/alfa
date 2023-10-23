@@ -4,7 +4,7 @@
 
 ## Language.isScriptName variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isScriptName: typeof Script.isName

@@ -6,10 +6,10 @@
 
 The names of all landmark roles.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Landmark = SubclassOf<"landmark">;
 ```
-<b>References:</b> [SubclassOf](./alfa-aria.role.subclassof.md)
+**References:** [SubclassOf](./alfa-aria.role.subclassof.md)
 

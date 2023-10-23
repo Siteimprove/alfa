@@ -4,7 +4,7 @@
 
 ## Result.some() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 some(predicate: Predicate<T>): this is Ok<T>;
@@ -14,9 +14,9 @@ some(predicate: Predicate<T>): this is Ok<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-this is [Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
+this is Ok&lt;T&gt;
 

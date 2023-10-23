@@ -4,7 +4,7 @@
 
 ## Network.delete() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 delete(node: N): Network<N, E>;
@@ -16,7 +16,7 @@ delete(node: N): Network<N, E>;
 |  --- | --- | --- |
 |  node | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

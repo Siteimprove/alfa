@@ -4,7 +4,7 @@
 
 ## Tuple.values property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get values(): Readonly<T>;

@@ -4,7 +4,7 @@
 
 ## Emitter.on() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 on(listener: Callback<T>): this;
@@ -14,9 +14,9 @@ on(listener: Callback<T>): this;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  listener | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+|  listener | Callback&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

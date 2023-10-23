@@ -8,7 +8,7 @@ Compute the transpose of a matrix.
 
 [https://en.wikipedia.org/wiki/Transpose](https://en.wikipedia.org/wiki/Transpose)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function transpose(m: Matrix): Matrix;
@@ -20,7 +20,7 @@ function transpose(m: Matrix): Matrix;
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Matrix](./alfa-math.matrix.md)
 

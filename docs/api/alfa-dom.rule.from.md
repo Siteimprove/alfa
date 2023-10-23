@@ -4,7 +4,7 @@
 
 ## Rule.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: StyleRule.JSON): StyleRule;
@@ -16,7 +16,7 @@ function from(json: StyleRule.JSON): StyleRule;
 |  --- | --- | --- |
 |  json | [StyleRule.JSON](./alfa-dom.stylerule.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[StyleRule](./alfa-dom.stylerule.md)
+StyleRule
 

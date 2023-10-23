@@ -4,7 +4,7 @@
 
 ## Sequence.fromArray() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function fromArray<T>(array: ReadonlyArray<T>): Sequence<T>;
@@ -16,7 +16,7 @@ function fromArray<T>(array: ReadonlyArray<T>): Sequence<T>;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

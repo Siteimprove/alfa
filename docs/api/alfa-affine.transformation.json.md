@@ -4,7 +4,7 @@
 
 ## Transformation.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON = Array<Array<number>>;

@@ -4,7 +4,7 @@
 
 ## Device.JSON.preferences property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 preferences: Array<Preference.JSON>;

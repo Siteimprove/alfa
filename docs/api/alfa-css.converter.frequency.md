@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#frequency](https://drafts.csswg.org/css-values/#frequency)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 frequency: Converter<Unit.Frequency>

@@ -4,7 +4,7 @@
 
 ## Iterable\_2.findLast() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function findLast<T, U extends T>(iterable: Iterable<T>, refinement: Refinement<T, U, [index: number]>): Option<U>;
@@ -14,10 +14,10 @@ function findLast<T, U extends T>(iterable: Iterable<T>, refinement: Refinement<
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  refinement | Refinement&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
+Option&lt;U&gt;
 

@@ -4,12 +4,12 @@
 
 ## Outcome.Inapplicable.EARL interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface EARL extends Outcome.EARL 
 ```
-<b>Extends:</b> [Outcome.EARL](./alfa-act.outcome.earl.md)
+**Extends:** [Outcome.EARL](./alfa-act.outcome.earl.md)
 
 ## Properties
 

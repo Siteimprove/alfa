@@ -4,7 +4,7 @@
 
 ## Map\_2.find() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 find<U extends V>(refinement: Refinement<V, U, [key: K]>): Option<U>;
@@ -14,9 +14,9 @@ find<U extends V>(refinement: Refinement<V, U, [key: K]>): Option<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
+|  refinement | Refinement&lt;V, U, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
+Option&lt;U&gt;
 

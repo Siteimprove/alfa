@@ -4,7 +4,7 @@
 
 ## Rectangle.\_right property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly _right: O;

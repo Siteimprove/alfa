@@ -4,7 +4,7 @@
 
 ## Parser.take() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function take<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, count: number): Parser<I, Array<T>, E, A>;
@@ -17,7 +17,7 @@ function take<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 |  count | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, Array&lt;T&gt;, E, A&gt;
 

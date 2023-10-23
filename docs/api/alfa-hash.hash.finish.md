@@ -6,12 +6,12 @@
 
 Get the current hash value as a 32-bit integer.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract finish(): number;
 ```
-<b>Returns:</b>
+**Returns:**
 
 number
 

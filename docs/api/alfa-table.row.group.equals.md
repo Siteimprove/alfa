@@ -4,7 +4,7 @@
 
 ## Row.Group.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(group: this): boolean;
@@ -16,7 +16,7 @@ equals(group: this): boolean;
 |  --- | --- | --- |
 |  group | this |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

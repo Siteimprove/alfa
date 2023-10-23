@@ -4,12 +4,12 @@
 
 ## Cons.isEmpty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEmpty(): this is Sequence<never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-this is [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;never&gt;
+this is Sequence&lt;never&gt;
 

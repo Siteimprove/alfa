@@ -4,7 +4,7 @@
 
 ## System.Keyword type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Keyword = "canvas" | "canvastext" | "linktext" | "visitedtext" | "activetext" | "buttonface" | "buttontext" | "field" | "fieldtext" | "highlight" | "highlighttext" | "graytext";

@@ -4,7 +4,7 @@
 
 ## Media.Feature.\_value property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _value: Option<Value<T>>;

@@ -4,12 +4,12 @@
 
 ## ConditionRule.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends GroupingRule.JSON 
 ```
-<b>Extends:</b> [GroupingRule.JSON](./alfa-dom.groupingrule.json.md)
+**Extends:** [GroupingRule.JSON](./alfa-dom.groupingrule.json.md)
 
 ## Properties
 

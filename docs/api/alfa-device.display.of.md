@@ -4,7 +4,7 @@
 
 ## Display.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(resolution: number, scan?: Display.Scan): Display;
@@ -15,9 +15,9 @@ static of(resolution: number, scan?: Display.Scan): Display;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  resolution | number |  |
-|  scan | [Display.Scan](./alfa-device.display.scan.md) | <i>(Optional)</i> |
+|  scan | [Display.Scan](./alfa-device.display.scan.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Display](./alfa-device.display.md)
 

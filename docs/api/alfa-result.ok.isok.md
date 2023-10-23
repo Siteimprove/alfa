@@ -4,7 +4,7 @@
 
 ## Ok.isOk() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isOk<T>(value: Iterable<T>): value is Ok<T>;
@@ -16,7 +16,7 @@ function isOk<T>(value: Iterable<T>): value is Ok<T>;
 |  --- | --- | --- |
 |  value | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
 

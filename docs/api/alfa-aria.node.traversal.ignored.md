@@ -6,7 +6,7 @@
 
 When set, traverse both exposed and ignored nodes.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 ignored: Flag

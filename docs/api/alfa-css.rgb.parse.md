@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-color/\#funcdef-rgb](https://drafts.csswg.org/css-color/#funcdef-rgb)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<RGB>

@@ -4,7 +4,7 @@
 
 ## Slot.compare() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 compare(slot: Slot): Comparison;
@@ -16,7 +16,7 @@ compare(slot: Slot): Comparison;
 |  --- | --- | --- |
 |  slot | [Slot](./alfa-table.slot.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

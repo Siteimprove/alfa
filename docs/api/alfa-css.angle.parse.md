@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#number-value](https://drafts.csswg.org/css-values/#number-value)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<Angle>

@@ -4,7 +4,7 @@
 
 ## Expression.Test.Element.JSON.kind property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 kind: "element";

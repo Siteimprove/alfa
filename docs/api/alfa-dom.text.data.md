@@ -4,7 +4,7 @@
 
 ## Text.data property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get data(): string;

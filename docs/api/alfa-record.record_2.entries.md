@@ -4,12 +4,12 @@
 
 ## Record\_2.entries() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 entries(): Iterable<Record.Entry<T>>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;Record.Entry&lt;T&gt;&gt;
+Iterable&lt;[Record.Entry](./alfa-record.record_2.entry.md)<!-- -->&lt;T&gt;&gt;
 

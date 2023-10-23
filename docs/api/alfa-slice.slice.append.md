@@ -4,7 +4,7 @@
 
 ## Slice.append() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 append(value: T): Slice<T>;
@@ -16,7 +16,7 @@ append(value: T): Slice<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

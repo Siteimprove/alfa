@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/css-scoping-1/\#selectordef-host](https://drafts.csswg.org/css-scoping-1/#selectordef-host)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Host extends Pseudo.Class<"host"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"host"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"host"&gt;
 
 ## Methods
 

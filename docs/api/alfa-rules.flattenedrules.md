@@ -6,7 +6,7 @@
 
 A list of all available rules joined under a single type. The type of each rule is not preserved in the list as the types have been flattened.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 FlattenedRules: Sequence<Flattened.Rule>

@@ -4,7 +4,7 @@
 
 ## Node.root() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 root(options?: Node.Traversal): Node;
@@ -14,9 +14,9 @@ root(options?: Node.Traversal): Node;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
+|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Node](./alfa-aria.node.md)
 

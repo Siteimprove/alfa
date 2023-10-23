@@ -4,7 +4,7 @@
 
 ## AnglePercentage.Calculated.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: Math<"angle-percentage">): Calculated;
@@ -16,7 +16,7 @@ static of(value: Math<"angle-percentage">): Calculated;
 |  --- | --- | --- |
 |  value | Math&lt;"angle-percentage"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Calculated](./alfa-css.anglepercentage.calculated.md)
 

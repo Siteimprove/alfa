@@ -4,12 +4,12 @@
 
 ## Ok.get() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get(): T;
 ```
-<b>Returns:</b>
+**Returns:**
 
 T
 

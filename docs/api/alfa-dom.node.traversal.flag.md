@@ -4,7 +4,7 @@
 
 ## Node.Traversal.Flag type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Flag = 0 | 1 | 2 | 4;

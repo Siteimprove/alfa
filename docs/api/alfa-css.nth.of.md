@@ -4,7 +4,7 @@
 
 ## Nth.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(step: number, offset?: number): Nth;
@@ -15,9 +15,9 @@ static of(step: number, offset?: number): Nth;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  step | number |  |
-|  offset | number | <i>(Optional)</i> |
+|  offset | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Nth](./alfa-css.nth.md)
 

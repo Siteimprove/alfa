@@ -4,7 +4,7 @@
 
 ## Expression.Test.Attribute namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Attribute 

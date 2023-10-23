@@ -4,7 +4,7 @@
 
 ## Translate.JSON.z property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 z: Length.JSON;

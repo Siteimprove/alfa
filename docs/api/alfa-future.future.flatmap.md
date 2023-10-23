@@ -4,7 +4,7 @@
 
 ## Future.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
@@ -16,7 +16,7 @@ abstract flatMap<U>(mapper: Mapper<T, Future<U>>): Future<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Future](./alfa-future.future.md)<!-- -->&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;U&gt;
 

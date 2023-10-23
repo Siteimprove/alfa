@@ -4,7 +4,7 @@
 
 ## Token.number variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 number: typeof Number.of

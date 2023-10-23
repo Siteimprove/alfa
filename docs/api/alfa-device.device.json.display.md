@@ -4,7 +4,7 @@
 
 ## Device.JSON.display property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 display: Display.JSON;

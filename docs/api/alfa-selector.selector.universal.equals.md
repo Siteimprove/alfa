@@ -4,7 +4,7 @@
 
 ## Selector.Universal.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Universal): boolean;
@@ -16,7 +16,7 @@ equals(value: Universal): boolean;
 |  --- | --- | --- |
 |  value | [Universal](./alfa-selector.selector.universal.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -4,7 +4,7 @@
 
 ## Graph.isGraph() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isGraph<T>(value: Iterable<readonly [T, Iterable<T>]>): value is Graph<T>;
@@ -16,7 +16,7 @@ function isGraph<T>(value: Iterable<readonly [T, Iterable<T>]>): value is Graph<
 |  --- | --- | --- |
 |  value | Iterable&lt;readonly \[T, Iterable&lt;T&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Future.isFuture() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isFuture<T>(value: AsyncIterable<T>): value is Future<T>;
@@ -16,7 +16,7 @@ function isFuture<T>(value: AsyncIterable<T>): value is Future<T>;
 |  --- | --- | --- |
 |  value | AsyncIterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

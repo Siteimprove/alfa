@@ -4,7 +4,7 @@
 
 ## Display.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): Display;
@@ -16,7 +16,7 @@ function from(json: JSON): Display;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-device.display.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Display](./alfa-device.display.md)
 

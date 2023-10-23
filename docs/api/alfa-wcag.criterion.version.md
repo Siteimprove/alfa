@@ -6,7 +6,7 @@
 
 The different versions of the WCAG.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Version = "2.0" | "2.1" | "2.2";

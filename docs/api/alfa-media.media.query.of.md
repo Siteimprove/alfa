@@ -4,7 +4,7 @@
 
 ## Media.Query.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(modifier: Option<Modifier>, type: Option<Type>, condition: Option<Feature | Condition>): Query;
@@ -14,11 +14,11 @@ static of(modifier: Option<Modifier>, type: Option<Type>, condition: Option<Feat
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  modifier | [Option](./alfa-option.option.md)<!-- -->&lt;[Modifier](./alfa-media.media.modifier.md)<!-- -->&gt; |  |
-|  type | [Option](./alfa-option.option.md)<!-- -->&lt;[Type](./alfa-media.media.type.md)<!-- -->&gt; |  |
-|  condition | [Option](./alfa-option.option.md)<!-- -->&lt;[Feature](./alfa-media.media.feature.md) \| [Condition](./alfa-media.media.condition.md)<!-- -->&gt; |  |
+|  modifier | Option&lt;[Modifier](./alfa-media.media.modifier.md)<!-- -->&gt; |  |
+|  type | Option&lt;[Type](./alfa-media.media.type.md)<!-- -->&gt; |  |
+|  condition | Option&lt;[Feature](./alfa-media.media.feature.md) \| [Condition](./alfa-media.media.condition.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Query](./alfa-media.media.query.md)
 

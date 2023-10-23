@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#concept-tree-index](https://dom.spec.whatwg.org/#concept-tree-index)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 index(options?: Flags<F>): number;
@@ -16,9 +16,9 @@ index(options?: Flags<F>): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

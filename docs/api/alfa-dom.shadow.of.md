@@ -4,7 +4,7 @@
 
 ## Shadow.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode): Shadow;
@@ -14,11 +14,11 @@ static of(children: Iterable<Node>, style?: Iterable<Sheet>, mode?: Shadow.Mode)
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  children | Iterable&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; |  |
-|  style | Iterable&lt;[Sheet](./alfa-dom.sheet.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  mode | [Shadow.Mode](./alfa-dom.shadow.mode.md) | <i>(Optional)</i> |
+|  children | Iterable&lt;Node&gt; |  |
+|  style | Iterable&lt;Sheet&gt; | _(Optional)_ |
+|  mode | [Shadow.Mode](./alfa-dom.shadow.mode.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Shadow](./alfa-dom.shadow.md)
 

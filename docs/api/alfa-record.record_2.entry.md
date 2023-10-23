@@ -4,10 +4,12 @@
 
 ## Record\_2.Entry type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Entry<T> = {
         [K in Key<T>]: [K, T[K]];
     }[Key<T>];
 ```
+**References:** [Key](./alfa-record.record_2.key.md)
+

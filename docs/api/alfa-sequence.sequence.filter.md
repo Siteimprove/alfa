@@ -4,7 +4,7 @@
 
 ## Sequence.filter() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 filter<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<U>;
@@ -14,9 +14,9 @@ filter<U extends T>(refinement: Refinement<T, U, [index: number]>): Sequence<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  refinement | Refinement&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;
 

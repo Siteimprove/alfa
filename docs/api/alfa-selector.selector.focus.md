@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#focus-pseudo](https://drafts.csswg.org/selectors/#focus-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Focus extends Pseudo.Class<"focus"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"focus"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"focus"&gt;
 
 ## Methods
 

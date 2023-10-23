@@ -4,10 +4,10 @@
 
 ## RGB.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Canonical = RGB<Percentage.Canonical, Percentage.Canonical>;
 ```
-<b>References:</b> [RGB](./alfa-css.rgb.md)<!-- -->, [Percentage.Canonical](./alfa-css.percentage.canonical.md)
+**References:** [RGB](./alfa-css.rgb.md)<!-- -->, [Percentage.Canonical](./alfa-css.percentage.canonical.md)
 

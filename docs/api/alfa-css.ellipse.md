@@ -5,7 +5,7 @@
 ## Ellipse namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Ellipse 
@@ -16,6 +16,7 @@ export declare namespace Ellipse
 |  Function | Description |
 |  --- | --- |
 |  [isEllipse(value)](./alfa-css.ellipse.isellipse.md) |  |
+|  [partiallyResolve(resolver)](./alfa-css.ellipse.partiallyresolve.md) |  |
 
 ## Interfaces
 
@@ -28,4 +29,13 @@ export declare namespace Ellipse
 |  Variable | Description |
 |  --- | --- |
 |  [parse](./alfa-css.ellipse.parse.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.ellipse.canonical.md) |  |
+|  [PartiallyResolved](./alfa-css.ellipse.partiallyresolved.md) |  |
+|  [PartialResolver](./alfa-css.ellipse.partialresolver.md) |  |
+|  [Resolver](./alfa-css.ellipse.resolver.md) |  |
 

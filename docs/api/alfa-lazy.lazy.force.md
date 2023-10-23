@@ -4,7 +4,7 @@
 
 ## Lazy.force() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static force<T>(value: T): Lazy<T>;
@@ -16,7 +16,7 @@ static force<T>(value: T): Lazy<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;
 

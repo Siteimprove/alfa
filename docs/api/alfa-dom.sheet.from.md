@@ -4,7 +4,7 @@
 
 ## Sheet.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): Sheet;
@@ -16,7 +16,7 @@ function from(json: JSON): Sheet;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-dom.sheet.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sheet](./alfa-dom.sheet.md)
 

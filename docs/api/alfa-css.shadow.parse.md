@@ -4,7 +4,7 @@
 
 ## Shadow.parse() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parse(options?: Options): CSSParser<Shadow>;
@@ -14,9 +14,9 @@ function parse(options?: Options): CSSParser<Shadow>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | Options | <i>(Optional)</i> |
+|  options | Options | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[Shadow](./alfa-css.shadow.md)<!-- -->&gt;
 

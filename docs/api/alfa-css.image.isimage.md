@@ -4,7 +4,7 @@
 
 ## Image.isImage() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isImage<I extends URL | Gradient>(value: unknown): value is Image<I>;
@@ -16,7 +16,7 @@ function isImage<I extends URL | Gradient>(value: unknown): value is Image<I>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Image](./alfa-css.image.md)<!-- -->&lt;I&gt;
 

@@ -4,7 +4,7 @@
 
 ## Headers.EARL."@context" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "@context": {

@@ -4,7 +4,7 @@
 
 ## FontFaceRule.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(declarations: Iterable<Declaration>): FontFaceRule;
@@ -14,9 +14,9 @@ static of(declarations: Iterable<Declaration>): FontFaceRule;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  declarations | Iterable&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; |  |
+|  declarations | Iterable&lt;Declaration&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [FontFaceRule](./alfa-dom.fontfacerule.md)
 

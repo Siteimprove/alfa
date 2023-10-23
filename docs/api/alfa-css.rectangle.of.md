@@ -4,10 +4,10 @@
 
 ## Rectangle.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-static of<O extends Length.Fixed | Rectangle.Auto = Length.Fixed | Rectangle.Auto>(top: O, right: O, bottom: O, left: O): Rectangle<O>;
+static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(top: O, right: O, bottom: O, left: O): Rectangle<O>;
 ```
 
 ## Parameters
@@ -19,7 +19,7 @@ static of<O extends Length.Fixed | Rectangle.Auto = Length.Fixed | Rectangle.Aut
 |  bottom | O |  |
 |  left | O |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Rectangle](./alfa-css.rectangle.md)<!-- -->&lt;O&gt;
 

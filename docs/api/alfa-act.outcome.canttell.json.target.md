@@ -4,7 +4,7 @@
 
 ## Outcome.CantTell.JSON.target property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 target: json.Serializable.ToJSON<T>;

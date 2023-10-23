@@ -4,7 +4,7 @@
 
 ## Result.getErrOr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getErrOr<F>(error: F): E | F;
@@ -16,7 +16,7 @@ getErrOr<F>(error: F): E | F;
 |  --- | --- | --- |
 |  error | F |  |
 
-<b>Returns:</b>
+**Returns:**
 
 E \| F
 

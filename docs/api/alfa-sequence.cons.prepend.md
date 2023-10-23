@@ -4,7 +4,7 @@
 
 ## Cons.prepend() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 prepend(value: T): Cons<T>;
@@ -16,7 +16,7 @@ prepend(value: T): Cons<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
 

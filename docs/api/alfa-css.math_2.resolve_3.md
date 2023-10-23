@@ -4,7 +4,7 @@
 
 ## Math\_2.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(this: Math<"length-percentage">, resolver: Expression.Resolver<"px", Length<"px">>): Result<Length<"px">, string>;
@@ -14,10 +14,10 @@ resolve(this: Math<"length-percentage">, resolver: Expression.Resolver<"px", Len
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Math&lt;"length-percentage"&gt; |  |
+|  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"length-percentage"&gt; |  |
 |  resolver | Expression.Resolver&lt;"px", Length&lt;"px"&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;Length&lt;"px"&gt;, string&gt;
+Result&lt;Length&lt;"px"&gt;, string&gt;
 

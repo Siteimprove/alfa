@@ -4,10 +4,8 @@
 
 ## Polygon.Fill type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Fill = Keyword<"nonzero"> | Keyword<"evenodd">;
 ```
-<b>References:</b> [Keyword](./alfa-css.keyword.md)
-

@@ -6,7 +6,7 @@
 
 Removes a list of flags from the set, and return a new one.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 remove(...flags: Array<F>): this;
@@ -18,7 +18,7 @@ remove(...flags: Array<F>): this;
 |  --- | --- | --- |
 |  flags | Array&lt;F&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

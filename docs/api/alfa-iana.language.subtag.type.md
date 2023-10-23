@@ -6,7 +6,7 @@
 
 [https://tools.ietf.org/html/bcp47\#section-3.1.3](https://tools.ietf.org/html/bcp47#section-3.1.3)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract get type(): T;

@@ -4,12 +4,12 @@
 
 ## Group.toEARL() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toEARL(): Group.EARL;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Group.EARL](./alfa-rules.group.earl.md)
 

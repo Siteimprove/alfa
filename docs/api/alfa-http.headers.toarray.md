@@ -4,12 +4,12 @@
 
 ## Headers.toArray() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toArray(): Array<Header>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;[Header](./alfa-http.header.md)<!-- -->&gt;
+Array&lt;Header&gt;
 

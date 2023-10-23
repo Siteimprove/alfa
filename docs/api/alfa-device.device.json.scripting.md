@@ -4,7 +4,7 @@
 
 ## Device.JSON.scripting property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 scripting: Scripting.JSON;

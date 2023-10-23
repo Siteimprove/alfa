@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#angles](https://drafts.csswg.org/css-values/#angles)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Angle = "deg" | "grad" | "rad" | "turn";

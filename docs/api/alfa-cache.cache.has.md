@@ -4,7 +4,7 @@
 
 ## Cache.has() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 has(key: K): boolean;
@@ -16,7 +16,7 @@ has(key: K): boolean;
 |  --- | --- | --- |
 |  key | K |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

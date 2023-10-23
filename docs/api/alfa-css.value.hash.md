@@ -4,7 +4,7 @@
 
 ## Value.hash() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract hash(hash: Hash): void;
@@ -16,7 +16,7 @@ abstract hash(hash: Hash): void;
 |  --- | --- | --- |
 |  hash | [Hash](./alfa-hash.hash.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

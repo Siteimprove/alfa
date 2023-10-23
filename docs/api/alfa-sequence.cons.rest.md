@@ -4,12 +4,12 @@
 
 ## Cons.rest() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 rest(): Sequence<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+Sequence&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Array\_2.append() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function append<T>(array: Array<T>, value: T): [...Array<T>, T];
@@ -14,10 +14,10 @@ function append<T>(array: Array<T>, value: T): [...Array<T>, T];
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  array | Array&lt;T&gt; |  |
+|  array | [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt; |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-\[...Array&lt;T&gt;, T\]
+\[...[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;, T\]
 

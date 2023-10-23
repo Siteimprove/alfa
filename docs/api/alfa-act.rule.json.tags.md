@@ -4,7 +4,7 @@
 
 ## Rule.JSON.tags property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tags: Array<Tag.JSON>;

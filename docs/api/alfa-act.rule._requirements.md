@@ -4,7 +4,7 @@
 
 ## Rule.\_requirements property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _requirements: Array<Requirement>;

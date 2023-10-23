@@ -4,7 +4,7 @@
 
 ## Selector.Type.namespace property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get namespace(): Option<string>;

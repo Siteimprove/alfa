@@ -4,7 +4,7 @@
 
 ## Name.State.JSON.visited property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 visited: Array<string>;

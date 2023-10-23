@@ -4,7 +4,7 @@
 
 ## Parser.reject() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function reject<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, predicate: Predicate<T>, ifError: Mapper<T, E>): Parser<I, T, E, A>;
@@ -15,10 +15,10 @@ function reject<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T&gt; |  |
 |  ifError | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
 

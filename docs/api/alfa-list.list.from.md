@@ -4,7 +4,7 @@
 
 ## List.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from<T>(iterable: Iterable<T>): List<T>;
@@ -16,7 +16,7 @@ function from<T>(iterable: Iterable<T>): List<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Browser.Query.isSingle() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSingle<N extends Name>(query: Query<N>): query is Single<N>;
@@ -16,7 +16,7 @@ function isSingle<N extends Name>(query: Query<N>): query is Single<N>;
 |  --- | --- | --- |
 |  query | [Query](./alfa-compatibility.browser.query.md)<!-- -->&lt;N&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 query is [Single](./alfa-compatibility.browser.query.single.md)<!-- -->&lt;N&gt;
 

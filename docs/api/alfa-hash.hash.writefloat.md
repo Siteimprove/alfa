@@ -4,7 +4,7 @@
 
 ## Hash.writeFloat() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeFloat(data: number, size?: 32 | 64): this;
@@ -15,9 +15,9 @@ writeFloat(data: number, size?: 32 | 64): this;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  data | number |  |
-|  size | 32 \| 64 | <i>(Optional)</i> |
+|  size | 32 \| 64 | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

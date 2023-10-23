@@ -4,7 +4,7 @@
 
 ## Expression.Axis namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Axis 

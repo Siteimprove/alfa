@@ -4,7 +4,7 @@
 
 ## Thenable.flatten() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function flatten<T, E = unknown, F = E>(thenable: Thenable<Thenable<T, F>, E>): Thenable<T, E | F>;
@@ -16,7 +16,7 @@ function flatten<T, E = unknown, F = E>(thenable: Thenable<Thenable<T, F>, E>): 
 |  --- | --- | --- |
 |  thenable | [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, F&gt;, E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E \| F&gt;
 

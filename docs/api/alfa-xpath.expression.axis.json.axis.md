@@ -4,7 +4,7 @@
 
 ## Expression.Axis.JSON.axis property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 axis: string;

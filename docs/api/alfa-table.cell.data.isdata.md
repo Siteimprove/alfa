@@ -4,7 +4,7 @@
 
 ## Cell.Data.isData() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isData(value: unknown): value is Data;
@@ -16,7 +16,7 @@ function isData(value: unknown): value is Data;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Data](./alfa-table.cell.data.md)
 

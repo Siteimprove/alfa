@@ -4,12 +4,12 @@
 
 ## Integer.Fixed.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): this;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this
 

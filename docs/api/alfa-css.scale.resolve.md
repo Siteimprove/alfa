@@ -4,12 +4,12 @@
 
 ## Scale.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): Scale;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Scale](./alfa-css.scale.md)
 

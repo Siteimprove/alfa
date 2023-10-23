@@ -8,10 +8,10 @@ The flattened type of all rules. Target, questions, … are a union of all the p
 
 This is a super-type of the individual type of each rule.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Rule = act.Rule<Input, Target, Question, Subject>;
 ```
-<b>References:</b> [Rule](./alfa-act.rule.md)<!-- -->, [Input](./alfa-rules.flattened.input.md)<!-- -->, [Target](./alfa-rules.flattened.target.md)<!-- -->, [Question](./alfa-rules.flattened.question.md)<!-- -->, [Subject](./alfa-rules.flattened.subject.md)
+**References:** [act.Rule](./alfa-act.rule.md)<!-- -->, [Input](./alfa-rules.flattened.input.md)<!-- -->, [Target](./alfa-rules.flattened.target.md)<!-- -->, [Question](./alfa-rules.flattened.question.md)<!-- -->, [Subject](./alfa-rules.flattened.subject.md)
 

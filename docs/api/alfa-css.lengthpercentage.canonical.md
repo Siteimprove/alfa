@@ -4,10 +4,10 @@
 
 ## LengthPercentage.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Canonical = Length.Canonical;
 ```
-<b>References:</b> [Length.Canonical](./alfa-css.length.canonical.md)
+**References:** [Length.Canonical](./alfa-css.length.canonical.md)
 

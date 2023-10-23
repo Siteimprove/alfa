@@ -4,12 +4,19 @@
 
 ## Circle.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-resolve(): Circle<R, P>;
+resolve(resolver: Circle.Resolver): Circle.Canonical;
 ```
-<b>Returns:</b>
 
-[Circle](./alfa-css.circle.md)<!-- -->&lt;R, P&gt;
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Circle.Resolver](./alfa-css.circle.resolver.md) |  |
+
+**Returns:**
+
+[Circle.Canonical](./alfa-css.circle.canonical.md)
 

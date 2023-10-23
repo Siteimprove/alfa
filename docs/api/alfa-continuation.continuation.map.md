@@ -4,7 +4,7 @@
 
 ## Continuation.map() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function map<T, U, R = void, A extends Array<unknown> = []>(continuation: Continuation<T, R, A>, mapper: Mapper<T, U>): Continuation<U, R, A>;
@@ -17,7 +17,7 @@ function map<T, U, R = void, A extends Array<unknown> = []>(continuation: Contin
 |  continuation | [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;T, R, A&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Continuation](./alfa-continuation.continuation.md)<!-- -->&lt;U, R, A&gt;
 

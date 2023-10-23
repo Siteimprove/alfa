@@ -5,44 +5,31 @@
 ## Position namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Position 
 ```
 
-## Classes
-
-|  Class | Description |
-|  --- | --- |
-|  [Side](./alfa-css.position.side.md) |  |
-
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [parse(legacySyntax)](./alfa-css.position.parse.md) | [https://drafts.csswg.org/css-values/\#typedef-position](https://drafts.csswg.org/css-values/#typedef-position) [https://drafts.csswg.org/css-backgrounds/\#typedef-bg-position](https://drafts.csswg.org/css-backgrounds/#typedef-bg-position) |
+|  [parse(legacySyntax)](./alfa-css.position.parse.md) | <p>Parse a position, optionally accepting legacy 3-values syntax.</p><p>[https://drafts.csswg.org/css-values/\#typedef-position](https://drafts.csswg.org/css-values/#typedef-position) [https://drafts.csswg.org/css-backgrounds/\#typedef-bg-position](https://drafts.csswg.org/css-backgrounds/#typedef-bg-position)</p> |
+|  [partiallyResolve(resolver)](./alfa-css.position.partiallyresolve.md) |  |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [JSON](./alfa-css.position.json.md) |  |
-
-## Namespaces
-
-|  Namespace | Description |
-|  --- | --- |
-|  [Component](./alfa-css.position.component.md) |  |
-|  [Keywords](./alfa-css.position.keywords.md) |  |
-|  [Offset](./alfa-css.position.offset.md) |  |
-|  [Side](./alfa-css.position.side.md) |  |
+|  [Resolver](./alfa-css.position.resolver.md) | Percentages are not resolved against the same base in both dimensions. |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
 |  [Canonical](./alfa-css.position.canonical.md) |  |
-|  [Component](./alfa-css.position.component.md) |  |
-|  [Offset](./alfa-css.position.offset.md) |  |
+|  [PartiallyResolved](./alfa-css.position.partiallyresolved.md) |  |
+|  [PartialResolver](./alfa-css.position.partialresolver.md) |  |
 

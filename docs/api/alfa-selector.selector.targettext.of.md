@@ -4,12 +4,12 @@
 
 ## Selector.TargetText.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): TargetText;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [TargetText](./alfa-selector.selector.targettext.md)
 

@@ -4,12 +4,12 @@
 
 ## Some.isNone() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isNone(): this is None;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [None](./alfa-option.none.md)
 

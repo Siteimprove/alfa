@@ -4,8 +4,8 @@
 
 ## Rectangle.JSON.bottom property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-bottom: Length.Fixed.JSON | Keyword.JSON;
+bottom: Length.JSON | Keyword.JSON;
 ```

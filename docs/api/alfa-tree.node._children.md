@@ -4,7 +4,7 @@
 
 ## Node.\_children property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _children: Array<Node<F>>;

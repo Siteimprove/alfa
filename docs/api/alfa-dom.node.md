@@ -5,7 +5,7 @@
 ## Node namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Node 
@@ -21,14 +21,14 @@ export declare namespace Node
 
 |  Function | Description |
 |  --- | --- |
-|  [from(json)](./alfa-dom.node.from.md) |  |
-|  [from(json)](./alfa-dom.node.from_1.md) |  |
-|  [from(json)](./alfa-dom.node.from_2.md) |  |
-|  [from(json)](./alfa-dom.node.from_3.md) |  |
-|  [from(json)](./alfa-dom.node.from_4.md) |  |
-|  [from(json)](./alfa-dom.node.from_5.md) |  |
-|  [from(json)](./alfa-dom.node.from_6.md) |  |
-|  [from(json)](./alfa-dom.node.from_7.md) |  |
+|  [from(json, device)](./alfa-dom.node.from.md) |  |
+|  [from(json, device)](./alfa-dom.node.from_1.md) |  |
+|  [from(json, device)](./alfa-dom.node.from_2.md) |  |
+|  [from(json, device)](./alfa-dom.node.from_3.md) |  |
+|  [from(json, device)](./alfa-dom.node.from_4.md) |  |
+|  [from(json, device)](./alfa-dom.node.from_5.md) |  |
+|  [from(json, device)](./alfa-dom.node.from_6.md) |  |
+|  [from(json, device)](./alfa-dom.node.from_7.md) |  |
 |  [isNode(value)](./alfa-dom.node.isnode.md) |  |
 
 ## Interfaces
@@ -37,6 +37,7 @@ export declare namespace Node
 |  --- | --- |
 |  [EARL](./alfa-dom.node.earl.md) |  |
 |  [JSON](./alfa-dom.node.json.md) |  |
+|  [SerializationOptions](./alfa-dom.node.serializationoptions.md) |  |
 
 ## Namespaces
 

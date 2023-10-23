@@ -4,12 +4,19 @@
 
 ## Document.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-toJSON(): Document.JSON;
+toJSON(options?: Node.SerializationOptions): Document.JSON;
 ```
-<b>Returns:</b>
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | [Node.SerializationOptions](./alfa-dom.node.serializationoptions.md) | _(Optional)_ |
+
+**Returns:**
 
 [Document.JSON](./alfa-dom.document.json.md)
 

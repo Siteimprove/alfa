@@ -4,7 +4,7 @@
 
 ## List.insert() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 insert(index: number, value: T): List<T>;
@@ -17,7 +17,7 @@ insert(index: number, value: T): List<T>;
 |  index | number |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

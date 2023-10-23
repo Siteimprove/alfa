@@ -4,7 +4,7 @@
 
 ## Style.isPositioned variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isPositioned: typeof element.isPositioned

@@ -4,7 +4,7 @@
 
 ## Iterable\_2.none() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function none<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>): boolean;
@@ -14,10 +14,10 @@ function none<T>(iterable: Iterable<T>, predicate: Predicate<T, [index: number]>
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

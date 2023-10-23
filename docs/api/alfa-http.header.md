@@ -5,7 +5,7 @@
 ## Header namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Header 

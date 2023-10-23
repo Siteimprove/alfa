@@ -4,7 +4,7 @@
 
 ## Record\_2.get() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get<K extends Record.Key<T>>(key: K): Option<T[K]>;
@@ -16,7 +16,7 @@ get<K extends Record.Key<T>>(key: K): Option<T[K]>;
 |  --- | --- | --- |
 |  key | K |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T\[K\]&gt;
+Option&lt;T\[K\]&gt;
 

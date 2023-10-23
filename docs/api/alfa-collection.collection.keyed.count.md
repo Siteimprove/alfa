@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.count() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 count(predicate: Predicate<V, [key: K]>): number;
@@ -14,9 +14,9 @@ count(predicate: Predicate<V, [key: K]>): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;V, \[key: K\]&gt; |  |
+|  predicate | Predicate&lt;V, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

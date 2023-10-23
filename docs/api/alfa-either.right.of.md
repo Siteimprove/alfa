@@ -4,7 +4,7 @@
 
 ## Right.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<R>(value: R): Right<R>;
@@ -16,7 +16,7 @@ static of<R>(value: R): Right<R>;
 |  --- | --- | --- |
 |  value | R |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Right](./alfa-either.right.md)<!-- -->&lt;R&gt;
 

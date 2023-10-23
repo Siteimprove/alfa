@@ -6,7 +6,7 @@
 
 Reduces a list of flags into a single number representing all of them (with only the corresponding bits set to 1).
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected static _reduce(...flags: Array<number>): number;
@@ -18,7 +18,7 @@ protected static _reduce(...flags: Array<number>): number;
 |  --- | --- | --- |
 |  flags | Array&lt;number&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

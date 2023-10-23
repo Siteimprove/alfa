@@ -4,7 +4,7 @@
 
 ## Scripting.enabled property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get enabled(): boolean;

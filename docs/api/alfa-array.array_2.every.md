@@ -4,7 +4,7 @@
 
 ## Array\_2.every() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function every<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T, U, [index: number]>): array is Array<U>;
@@ -15,9 +15,9 @@ function every<T, U extends T>(array: ReadonlyArray<T>, refinement: Refinement<T
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  refinement | Refinement&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-array is Array&lt;U&gt;
+array is [Array](./alfa-array.array_2.md)<!-- -->&lt;U&gt;
 

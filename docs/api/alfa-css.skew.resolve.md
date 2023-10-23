@@ -4,12 +4,12 @@
 
 ## Skew.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): Skew;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Skew](./alfa-css.skew.md)
 

@@ -4,7 +4,7 @@
 
 ## Header.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: string, value: string): Header;
@@ -17,7 +17,7 @@ static of(name: string, value: string): Header;
 |  name | string |  |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Header](./alfa-http.header.md)
 

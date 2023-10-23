@@ -4,7 +4,7 @@
 
 ## Shadow.JSON.spread property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 spread: Length.JSON;

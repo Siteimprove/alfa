@@ -4,7 +4,7 @@
 
 ## RuleTree.Node.JSON.rule property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 rule: Rule.JSON;

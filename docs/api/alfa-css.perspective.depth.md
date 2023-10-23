@@ -4,7 +4,7 @@
 
 ## Perspective.depth property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get depth(): D;

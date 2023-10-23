@@ -4,7 +4,7 @@
 
 ## Sequence.fromIterator() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function fromIterator<T>(iterator: Iterator<T>): Sequence<T>;
@@ -16,7 +16,7 @@ function fromIterator<T>(iterator: Iterator<T>): Sequence<T>;
 |  --- | --- | --- |
 |  iterator | Iterator&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Media.Not.JSON.condition property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 condition: Condition.JSON | Feature.JSON;

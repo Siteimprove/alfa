@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#empty-pseudo](https://drafts.csswg.org/selectors/#empty-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Empty extends Pseudo.Class<"empty"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"empty"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"empty"&gt;
 
 ## Methods
 

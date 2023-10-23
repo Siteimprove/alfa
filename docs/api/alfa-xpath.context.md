@@ -5,12 +5,12 @@
 ## context() function
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function context(): Builder.ContextItem;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Builder.ContextItem](./alfa-xpath.builder.contextitem.md)
 

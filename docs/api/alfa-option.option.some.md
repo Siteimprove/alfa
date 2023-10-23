@@ -4,7 +4,7 @@
 
 ## Option.some() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
@@ -14,9 +14,9 @@ some<U extends T>(refinement: Refinement<T, U>): this is Some<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-this is [Some](./alfa-option.some.md)<!-- -->&lt;U&gt;
+this is Some&lt;U&gt;
 

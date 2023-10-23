@@ -4,7 +4,7 @@
 
 ## Token.Character.JSON.value property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 value: number;

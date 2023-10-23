@@ -4,12 +4,12 @@
 
 ## RGB.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): RGB.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [RGB.JSON](./alfa-css.rgb.json.md)
 

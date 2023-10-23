@@ -4,7 +4,7 @@
 
 ## Nth.for() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 for(n: number): number;
@@ -16,7 +16,7 @@ for(n: number): number;
 |  --- | --- | --- |
 |  n | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

@@ -4,7 +4,7 @@
 
 ## Slice.tee() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tee<A extends Array<unknown> = []>(callback: Callback<this, void, [...args: A]>, ...args: A): this;
@@ -14,10 +14,10 @@ tee<A extends Array<unknown> = []>(callback: Callback<this, void, [...args: A]>,
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;this, void, \[...args: A\]&gt; |  |
+|  callback | Callback&lt;this, void, \[...args: A\]&gt; |  |
 |  args | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

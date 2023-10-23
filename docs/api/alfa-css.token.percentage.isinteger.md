@@ -4,7 +4,7 @@
 
 ## Token.Percentage.isInteger property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get isInteger(): boolean;

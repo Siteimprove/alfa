@@ -4,7 +4,7 @@
 
 ## Transform.skew() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function skew(x: Angle, y: Angle): Skew;
@@ -14,10 +14,10 @@ function skew(x: Angle, y: Angle): Skew;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  x | [Angle](./alfa-css.angle.md) |  |
-|  y | [Angle](./alfa-css.angle.md) |  |
+|  x | Angle |  |
+|  y | Angle |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Skew](./alfa-css.skew.md)
+Skew
 

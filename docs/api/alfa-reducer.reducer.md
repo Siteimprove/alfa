@@ -5,7 +5,7 @@
 ## Reducer type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Reducer<T, U = T, A extends Array<unknown> = []> = (accumulator: U, value: T, ...args: A) => U;

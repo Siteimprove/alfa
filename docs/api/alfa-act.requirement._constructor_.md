@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Requirement` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor();

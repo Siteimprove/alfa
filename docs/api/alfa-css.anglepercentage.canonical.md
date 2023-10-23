@@ -4,10 +4,10 @@
 
 ## AnglePercentage.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Canonical = Angle.Canonical;
 ```
-<b>References:</b> [Angle.Canonical](./alfa-css.angle.canonical.md)
+**References:** [Angle.Canonical](./alfa-css.angle.canonical.md)
 

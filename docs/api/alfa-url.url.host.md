@@ -6,7 +6,7 @@
 
 [https://url.spec.whatwg.org/\#concept-url-host](https://url.spec.whatwg.org/#concept-url-host)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get host(): Option<string>;

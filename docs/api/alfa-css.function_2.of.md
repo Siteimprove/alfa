@@ -4,7 +4,7 @@
 
 ## Function\_2.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: string, value: Iterable<Token>): Function;
@@ -15,9 +15,9 @@ static of(name: string, value: Iterable<Token>): Function;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-|  value | Iterable&lt;[Token](./alfa-css.token.md)<!-- -->&gt; |  |
+|  value | Iterable&lt;Token&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Function
+[Function](./alfa-css.function_2.md)
 

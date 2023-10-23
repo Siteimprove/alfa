@@ -4,12 +4,12 @@
 
 ## List.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.iterator](): Iterator<V>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Iterator&lt;V&gt;
 

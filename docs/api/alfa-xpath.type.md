@@ -5,10 +5,10 @@
 ## Type type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Type = Item.Type | Item.Sequence<Item.Type> | Item.Optional<Item.Type>;
 ```
-<b>References:</b> [Item.Type](./alfa-xpath.item.type.md)<!-- -->, [Item.Sequence](./alfa-xpath.item.sequence.md)<!-- -->, [Item.Optional](./alfa-xpath.item.optional.md)
+**References:** [Item.Type](./alfa-xpath.item.type.md)<!-- -->, [Item.Sequence](./alfa-xpath.item.sequence.md)<!-- -->, [Item.Optional](./alfa-xpath.item.optional.md)
 

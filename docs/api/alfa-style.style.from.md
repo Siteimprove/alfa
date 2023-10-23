@@ -4,7 +4,7 @@
 
 ## Style.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(element: Element, device: Device, context?: Context): Style;
@@ -14,11 +14,11 @@ function from(element: Element, device: Device, context?: Context): Style;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
-|  device | [Device](./alfa-device.device.md) |  |
-|  context | [Context](./alfa-selector.context.md) | <i>(Optional)</i> |
+|  element | Element |  |
+|  device | Device |  |
+|  context | Context | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Style](./alfa-style.style.md)
 

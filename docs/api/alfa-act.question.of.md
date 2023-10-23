@@ -4,7 +4,7 @@
 
 ## Question.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(type: TYPE, uri: URI, message: string, subject: SUBJECT, context: CONTEXT, options?: Question.Options<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI>;
@@ -19,9 +19,9 @@ static of<TYPE, SUBJECT, CONTEXT, ANSWER, URI extends string = string>(type: TYP
 |  message | string |  |
 |  subject | SUBJECT |  |
 |  context | CONTEXT |  |
-|  options | [Question.Options](./alfa-act.question.options.md)<!-- -->&lt;ANSWER&gt; | <i>(Optional)</i> |
+|  options | [Question.Options](./alfa-act.question.options.md)<!-- -->&lt;ANSWER&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI&gt;
 

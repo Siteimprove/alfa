@@ -4,10 +4,10 @@
 
 ## Image.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-type Canonical = Image<URL | Gradient.Canonical>;
+type Canonical = Image<URL.Canonical | Gradient.Canonical>;
 ```
-<b>References:</b> [Image](./alfa-css.image.md)<!-- -->, [URL](./alfa-css.url.md)<!-- -->, [Gradient.Canonical](./alfa-css.gradient.canonical.md)
+**References:** [Image](./alfa-css.image.md)<!-- -->, [URL.Canonical](./alfa-css.url.canonical.md)<!-- -->, [Gradient.Canonical](./alfa-css.gradient.canonical.md)
 

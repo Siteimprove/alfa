@@ -4,10 +4,10 @@
 
 ## Translate.PartiallyResolved type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type PartiallyResolved = Translate<LengthPercentage.PartiallyResolved, LengthPercentage.PartiallyResolved, Length.Canonical>;
 ```
-<b>References:</b> [Translate](./alfa-css.translate.md)<!-- -->, [LengthPercentage.PartiallyResolved](./alfa-css.lengthpercentage.partiallyresolved.md)<!-- -->, [Length.Canonical](./alfa-css.length.canonical.md)
+**References:** [Translate](./alfa-css.translate.md)<!-- -->, [LengthPercentage.PartiallyResolved](./alfa-css.lengthpercentage.partiallyresolved.md)<!-- -->, [Length.Canonical](./alfa-css.length.canonical.md)
 

@@ -4,7 +4,7 @@
 
 ## Token.closeParenthesis variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 closeParenthesis: typeof CloseParenthesis.of

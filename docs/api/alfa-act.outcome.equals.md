@@ -4,7 +4,7 @@
 
 ## Outcome.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<I, T extends Hashable, Q extends Question.Metadata, S, V extends Outcome.Value = Outcome.Value>(value: Outcome<I, T, Q, S, V>): boolean;
@@ -16,7 +16,7 @@ equals<I, T extends Hashable, Q extends Question.Metadata, S, V extends Outcome.
 |  --- | --- | --- |
 |  value | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S, V&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

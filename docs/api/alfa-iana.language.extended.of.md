@@ -4,7 +4,7 @@
 
 ## Language.Extended.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: Extended.Name): Extended;
@@ -16,7 +16,7 @@ static of(name: Extended.Name): Extended;
 |  --- | --- | --- |
 |  name | [Extended.Name](./alfa-iana.language.extended.name.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Extended](./alfa-iana.language.extended.md)
 

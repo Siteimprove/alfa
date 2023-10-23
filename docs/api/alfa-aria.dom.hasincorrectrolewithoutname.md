@@ -4,7 +4,7 @@
 
 ## DOM.hasIncorrectRoleWithoutName variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasIncorrectRoleWithoutName: typeof dom.hasIncorrectRoleWithoutName

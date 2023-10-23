@@ -4,7 +4,7 @@
 
 ## Selector.NthLastOfType.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(index: Nth): NthLastOfType;
@@ -14,9 +14,9 @@ static of(index: Nth): NthLastOfType;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  index | [Nth](./alfa-css.nth.md) |  |
+|  index | Nth |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [NthLastOfType](./alfa-selector.selector.nthlastoftype.md)
 

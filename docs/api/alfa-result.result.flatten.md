@@ -4,7 +4,7 @@
 
 ## Result.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
@@ -16,7 +16,7 @@ flatten<T, E>(this: Result<Result<T, E>, E>): Result<T, E>;
 |  --- | --- | --- |
 |  this | [Result](./alfa-result.result.md)<!-- -->&lt;[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;, E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
 

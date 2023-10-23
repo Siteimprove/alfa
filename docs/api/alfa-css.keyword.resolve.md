@@ -4,12 +4,12 @@
 
 ## Keyword.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): Keyword<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Keyword](./alfa-css.keyword.md)<!-- -->&lt;T&gt;
 

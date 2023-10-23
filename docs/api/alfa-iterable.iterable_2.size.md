@@ -4,7 +4,7 @@
 
 ## Iterable\_2.size() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function size<T>(iterable: Iterable<T>): number;
@@ -14,9 +14,9 @@ function size<T>(iterable: Iterable<T>): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

@@ -5,10 +5,10 @@
 ## Dimension type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Dimension<T extends Type = Type> = Dimension.Calculated<T> | Dimension.Fixed<Dimensions<T>[0]>;
 ```
-<b>References:</b> [Dimension.Calculated](./alfa-css.dimension.calculated.md)<!-- -->, [Dimension.Fixed](./alfa-css.dimension.fixed.md)
+**References:** [Dimension.Calculated](./alfa-css.dimension.calculated.md)<!-- -->, [Dimension.Fixed](./alfa-css.dimension.fixed.md)
 

@@ -4,7 +4,7 @@
 
 ## Preference.unset() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function unset<N extends Name>(name: N): Value<N>;
@@ -16,7 +16,7 @@ export function unset<N extends Name>(name: N): Value<N>;
 |  --- | --- | --- |
 |  name | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Value](./alfa-device.preference.value.md)<!-- -->&lt;N&gt;
 

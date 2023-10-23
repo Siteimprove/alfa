@@ -4,7 +4,7 @@
 
 ## Trilean.xor() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function xor<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Predicate<T, A>): Predicate<T, A>;
@@ -17,7 +17,7 @@ function xor<T, A extends Array<unknown> = []>(left: Predicate<T, A>, right: Pre
 |  left | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt; |  |
 |  right | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;
 

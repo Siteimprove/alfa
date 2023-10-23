@@ -4,7 +4,7 @@
 
 ## Err.includesErr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 includesErr(error: E): boolean;
@@ -16,7 +16,7 @@ includesErr(error: E): boolean;
 |  --- | --- | --- |
 |  error | E |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

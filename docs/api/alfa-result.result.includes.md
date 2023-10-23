@@ -4,7 +4,7 @@
 
 ## Result.includes() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 includes(value: T): this is Ok<T>;
@@ -16,7 +16,7 @@ includes(value: T): this is Ok<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-this is [Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
+this is Ok&lt;T&gt;
 

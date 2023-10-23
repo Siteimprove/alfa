@@ -4,7 +4,7 @@
 
 ## Percentage.Fixed.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<R extends BaseNumeric.Type = BaseNumeric.Type>(value: number | BasePercentage): Fixed<R>;
@@ -16,7 +16,7 @@ static of<R extends BaseNumeric.Type = BaseNumeric.Type>(value: number | BasePer
 |  --- | --- | --- |
 |  value | number \| BasePercentage |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;R&gt;
 

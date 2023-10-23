@@ -4,7 +4,7 @@
 
 ## Sequence.has() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 has(index: number): boolean;
@@ -16,7 +16,7 @@ has(index: number): boolean;
 |  --- | --- | --- |
 |  index | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

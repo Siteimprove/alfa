@@ -4,7 +4,7 @@
 
 ## Tag.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Tag): boolean;
@@ -16,7 +16,7 @@ equals(value: Tag): boolean;
 |  --- | --- | --- |
 |  value | [Tag](./alfa-act.tag.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -4,7 +4,7 @@
 
 ## Record\_2.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Record<T>): boolean;
@@ -14,9 +14,9 @@ equals(value: Record<T>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Record&lt;T&gt; |  |
+|  value | [Record](./alfa-record.record_2.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

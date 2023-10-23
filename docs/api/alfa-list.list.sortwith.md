@@ -4,7 +4,7 @@
 
 ## List.sortWith() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 sortWith(comparer: Comparer<T>): List<T>;
@@ -16,7 +16,7 @@ sortWith(comparer: Comparer<T>): List<T>;
 |  --- | --- | --- |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

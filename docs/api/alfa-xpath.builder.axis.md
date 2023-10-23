@@ -4,12 +4,12 @@
 
 ## Builder.Axis class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Axis extends Axis_base 
 ```
-<b>Extends:</b> Axis\_base
+**Extends:** Axis\_base
 
 ## Methods
 

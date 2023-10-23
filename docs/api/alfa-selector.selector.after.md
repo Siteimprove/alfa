@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/css-pseudo/\#selectordef-after](https://drafts.csswg.org/css-pseudo/#selectordef-after)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class After extends Pseudo.Element<"after"> 
 ```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"after"&gt;
+**Extends:** [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"after"&gt;
 
 ## Methods
 

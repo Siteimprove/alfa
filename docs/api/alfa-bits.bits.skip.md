@@ -4,7 +4,7 @@
 
 ## Bits.skip() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function skip(bits: number, n: number): number;
@@ -17,7 +17,7 @@ function skip(bits: number, n: number): number;
 |  bits | number |  |
 |  n | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

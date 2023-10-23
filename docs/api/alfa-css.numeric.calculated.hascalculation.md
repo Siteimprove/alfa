@@ -4,12 +4,12 @@
 
 ## Numeric.Calculated.hasCalculation() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasCalculation(): this is Calculated<T, R>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Calculated](./alfa-css.numeric.calculated.md)<!-- -->&lt;T, R&gt;
 

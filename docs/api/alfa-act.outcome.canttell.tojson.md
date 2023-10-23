@@ -4,12 +4,12 @@
 
 ## Outcome.CantTell.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): CantTell.JSON<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [CantTell.JSON](./alfa-act.outcome.canttell.json.md)<!-- -->&lt;T&gt;
 

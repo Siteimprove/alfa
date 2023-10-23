@@ -1,5 +1,38 @@
 # @siteimprove/alfa-css
 
+## 0.68.0
+
+### Minor Changes
+
+- **Added:** `Position` now accept calculations in any of their components. ([#1454](https://github.com/Siteimprove/alfa/pull/1454))
+
+  To fully resolve a `Position`, the resolver needs both a length resolver, and two percentage bases, one for each dimension.
+  To partially resolve a `Position`, only a length resolver is needed.
+
+- **Breaking:** `Position.Component` cannot be raw `LengthPercentage` anymore. ([#1454](https://github.com/Siteimprove/alfa/pull/1454))
+
+  Instead, they must always be a full `Position.Side` (or the "center" keyword) i.e. include an explicit side to count from. This side is automatically added when parsing raw `LengthPercentage`.
+
+- **Added:** CSS `Shape` now accept calculated values ([#1478](https://github.com/Siteimprove/alfa/pull/1478))
+
+  Shapes that accept length-percentage are only partially resolved at compute time.
+
+- **Added:** CSS `Image` are now calculatable. ([#1477](https://github.com/Siteimprove/alfa/pull/1477))
+
+  The components that accept `<length-percentage>` (e.g. elliptical radial gradients' radii) are only partially resolved at compute time and may thus still contain calculations.
+
+- **Breaking:** `Gradient.Linear.parse`, `Gradient.Radial.parse`, and `Gradient.parse` now don't require an item list parser. ([#1477](https://github.com/Siteimprove/alfa/pull/1477))
+
+- **Changed:** The `Position` type requires more type parameters. ([#1454](https://github.com/Siteimprove/alfa/pull/1454))
+
+  Instead of just accepting the horizontal and vertical components, the type now also requires the horizontal and vertical keywords list (as first and second parameter). The components parameter default to `Position.Component<H>` (reps. `V`) for keywords `H` (resp. `V`).
+
+- **Removed:** The unused `Side.isCenter()` predicate is no longer available. ([#1454](https://github.com/Siteimprove/alfa/pull/1454))
+
+### Patch Changes
+
+- **Added:** `Position.Side.of` now also accepts an optional offset, as well as an `Option<offset>`. ([#1454](https://github.com/Siteimprove/alfa/pull/1454))
+
 ## 0.67.0
 
 ## 0.66.0

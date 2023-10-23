@@ -4,7 +4,7 @@
 
 ## Perspective.isPerspective() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isPerspective<D extends Length.Fixed>(value: unknown): value is Perspective<D>;
@@ -16,7 +16,7 @@ function isPerspective<D extends Length.Fixed>(value: unknown): value is Perspec
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Perspective](./alfa-css.perspective.md)<!-- -->&lt;D&gt;
 

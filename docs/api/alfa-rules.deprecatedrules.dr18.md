@@ -9,7 +9,7 @@
 > Use SIA-R18 version 2 instead
 > 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 _default: Rule.Atomic<Page, Attribute<string>, {}, Attribute<string>>

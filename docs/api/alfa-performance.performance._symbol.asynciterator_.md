@@ -4,12 +4,12 @@
 
 ## Performance.\[Symbol.asyncIterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.asyncIterator](): AsyncIterator<Performance.Entry<T>>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 AsyncIterator&lt;[Performance.Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt;&gt;
 

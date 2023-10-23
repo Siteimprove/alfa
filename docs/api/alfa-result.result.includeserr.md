@@ -4,7 +4,7 @@
 
 ## Result.includesErr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 includesErr(error: E): this is Err<E>;
@@ -16,7 +16,7 @@ includesErr(error: E): this is Err<E>;
 |  --- | --- | --- |
 |  error | E |  |
 
-<b>Returns:</b>
+**Returns:**
 
-this is [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
+this is Err&lt;E&gt;
 

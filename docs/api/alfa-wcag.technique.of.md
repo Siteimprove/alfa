@@ -4,7 +4,7 @@
 
 ## Technique.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<N extends Technique.Name>(name: N): Technique<N>;
@@ -16,7 +16,7 @@ static of<N extends Technique.Name>(name: N): Technique<N>;
 |  --- | --- | --- |
 |  name | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Technique](./alfa-wcag.technique.md)<!-- -->&lt;N&gt;
 

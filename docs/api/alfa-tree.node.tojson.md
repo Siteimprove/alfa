@@ -4,12 +4,19 @@
 
 ## Node.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-toJSON(): Node.JSON<T>;
+toJSON(options?: S): Node.JSON<T>;
 ```
-<b>Returns:</b>
+
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  options | S | _(Optional)_ |
+
+**Returns:**
 
 [Node.JSON](./alfa-tree.node.json.md)<!-- -->&lt;T&gt;
 

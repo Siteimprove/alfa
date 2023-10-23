@@ -4,7 +4,7 @@
 
 ## Rule.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: KeyframesRule.JSON): KeyframesRule;
@@ -16,7 +16,7 @@ function from(json: KeyframesRule.JSON): KeyframesRule;
 |  --- | --- | --- |
 |  json | [KeyframesRule.JSON](./alfa-dom.keyframesrule.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[KeyframesRule](./alfa-dom.keyframesrule.md)
+KeyframesRule
 

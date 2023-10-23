@@ -4,7 +4,7 @@
 
 ## Style.isRendered variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isRendered: typeof node.isRendered

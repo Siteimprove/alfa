@@ -4,7 +4,7 @@
 
 ## Image.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<I extends URL | Gradient>(image: I): Image<I>;
@@ -16,7 +16,7 @@ static of<I extends URL | Gradient>(image: I): Image<I>;
 |  --- | --- | --- |
 |  image | I |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Image](./alfa-css.image.md)<!-- -->&lt;I&gt;
 

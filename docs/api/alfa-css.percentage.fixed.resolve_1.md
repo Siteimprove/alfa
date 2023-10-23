@@ -4,7 +4,7 @@
 
 ## Percentage.Fixed.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R, T>): T;
@@ -16,7 +16,7 @@ resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R, T>): T;
 |  --- | --- | --- |
 |  resolver | [Resolver](./alfa-css.percentage.resolver.md)<!-- -->&lt;R, T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 T
 

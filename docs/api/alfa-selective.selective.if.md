@@ -4,7 +4,7 @@
 
 ## Selective.if() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 if<P, Q extends P, U>(refinement: Refinement<P, Q>, mapper: Mapper<S & Q, U>): Selective<Exclude<S, Q>, T | U>;
@@ -14,10 +14,10 @@ if<P, Q extends P, U>(refinement: Refinement<P, Q>, mapper: Mapper<S & Q, U>): S
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;P, Q&gt; |  |
+|  refinement | Refinement&lt;P, Q&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S &amp; Q, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;Exclude&lt;S, Q&gt;, T \| U&gt;
 

@@ -4,12 +4,12 @@
 
 ## Selector.Compound.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Compound.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Compound.JSON](./alfa-selector.selector.compound.json.md)
 

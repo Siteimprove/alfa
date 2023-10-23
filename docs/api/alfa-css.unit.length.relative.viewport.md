@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#viewport-relative-lengths](https://drafts.csswg.org/css-values/#viewport-relative-lengths)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Viewport = "vw" | "vh" | "vmin" | "vmax";

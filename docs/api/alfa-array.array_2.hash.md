@@ -4,7 +4,7 @@
 
 ## Array\_2.hash() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function hash<T>(array: ReadonlyArray<T>, hash: Hash): void;
@@ -17,7 +17,7 @@ function hash<T>(array: ReadonlyArray<T>, hash: Hash): void;
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  hash | [Hash](./alfa-hash.hash.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

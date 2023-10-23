@@ -4,7 +4,7 @@
 
 ## Value.JSON.value property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 value: Serializable.ToJSON<T>;

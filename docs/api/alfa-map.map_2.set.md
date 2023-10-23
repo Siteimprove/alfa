@@ -4,7 +4,7 @@
 
 ## Map\_2.set() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 set(key: K, value: V): Map<K, V>;
@@ -17,7 +17,7 @@ set(key: K, value: V): Map<K, V>;
 |  key | K |  |
 |  value | V |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Map&lt;K, V&gt;
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;
 

@@ -4,10 +4,10 @@
 
 ## Performance.Entry.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON<T> = Mark.JSON<T> | Measure.JSON<T>;
 ```
-<b>References:</b> [Mark.JSON](./alfa-performance.performance.mark.json.md)<!-- -->, [Measure.JSON](./alfa-performance.performance.measure.json.md)
+**References:** [Mark.JSON](./alfa-performance.performance.mark.json.md)<!-- -->, [Measure.JSON](./alfa-performance.performance.measure.json.md)
 

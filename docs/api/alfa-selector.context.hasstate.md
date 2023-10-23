@@ -4,7 +4,7 @@
 
 ## Context.hasState() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasState(element: Element, state: Context.State): boolean;
@@ -14,10 +14,10 @@ hasState(element: Element, state: Context.State): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 |  state | [Context.State](./alfa-selector.context.state.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

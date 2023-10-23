@@ -4,7 +4,7 @@
 
 ## Trampoline.sequence() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function sequence<T>(futures: Iterable<Trampoline<T>>): Trampoline<Iterable<T>>;
@@ -16,7 +16,7 @@ function sequence<T>(futures: Iterable<Trampoline<T>>): Trampoline<Iterable<T>>;
 |  --- | --- | --- |
 |  futures | Iterable&lt;[Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;Iterable&lt;T&gt;&gt;
 

@@ -6,12 +6,12 @@
 
 The names of all abstract roles.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Abstract = {
         [N in Name]: Roles[N]["abstract"] extends true ? N : never;
     }[Name];
 ```
-<b>References:</b> [Name](./alfa-aria.role.name.md)
+**References:** [Name](./alfa-aria.role.name.md)
 

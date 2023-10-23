@@ -4,10 +4,10 @@
 
 ## Node.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-function from(json: Comment.JSON): Comment;
+function from(json: Comment.JSON, device?: Device): Comment;
 ```
 
 ## Parameters
@@ -15,8 +15,9 @@ function from(json: Comment.JSON): Comment;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [Comment.JSON](./alfa-dom.comment.json.md) |  |
+|  device | Device | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Comment](./alfa-dom.comment.md)
+Comment
 

@@ -4,12 +4,12 @@
 
 ## Branched.toArray() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toArray(): Array<[T, Array<B>]>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Array&lt;\[T, Array&lt;B&gt;\]&gt;
 

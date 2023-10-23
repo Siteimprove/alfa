@@ -4,7 +4,7 @@
 
 ## Iterable\_2.reverse() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function reverse<T>(iterable: Iterable<T>): Iterable<T>;
@@ -14,9 +14,9 @@ function reverse<T>(iterable: Iterable<T>): Iterable<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;T&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

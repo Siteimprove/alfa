@@ -4,7 +4,7 @@
 
 ## Rectangle.width property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get width(): number;

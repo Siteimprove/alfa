@@ -4,7 +4,7 @@
 
 ## Iterable\_2.toJSON() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function toJSON<T>(iterable: Iterable<T>): Array<Serializable.ToJSON<T>>;
@@ -14,9 +14,9 @@ function toJSON<T>(iterable: Iterable<T>): Array<Serializable.ToJSON<T>>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Array&lt;[Serializable.ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;&gt;
 

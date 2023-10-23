@@ -4,7 +4,7 @@
 
 ## Generator\_2.reduce() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function reduce<T, U, R, N>(generator: Generator<T, R, N>, reducer: Reducer<T, U>, accumulator: U): U;
@@ -14,11 +14,11 @@ function reduce<T, U, R, N>(generator: Generator<T, R, N>, reducer: Reducer<T, U
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  generator | Generator&lt;T, R, N&gt; |  |
-|  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U&gt; |  |
+|  generator | [Generator](./alfa-generator.generator_2.md)<!-- -->&lt;T, R, N&gt; |  |
+|  reducer | Reducer&lt;T, U&gt; |  |
 |  accumulator | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 U
 

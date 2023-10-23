@@ -4,7 +4,7 @@
 
 ## Array\_2.isEmpty() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isEmpty<T>(array: ReadonlyArray<T>): array is Array<never>;
@@ -16,7 +16,7 @@ function isEmpty<T>(array: ReadonlyArray<T>): array is Array<never>;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-array is Array&lt;never&gt;
+array is [Array](./alfa-array.array_2.md)<!-- -->&lt;never&gt;
 

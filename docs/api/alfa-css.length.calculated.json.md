@@ -4,10 +4,10 @@
 
 ## Length.Calculated.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Dimension.Calculated.JSON<"length"> 
 ```
-<b>Extends:</b> [Dimension.Calculated.JSON](./alfa-css.dimension.calculated.json.md)<!-- -->&lt;"length"&gt;
+**Extends:** [Dimension.Calculated.JSON](./alfa-css.dimension.calculated.json.md)<!-- -->&lt;"length"&gt;
 

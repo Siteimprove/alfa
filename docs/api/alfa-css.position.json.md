@@ -4,17 +4,17 @@
 
 ## Position.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-export interface JSON extends Value.JSON<"position"> 
+interface JSON extends Value.JSON<"position"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"position"&gt;
+**Extends:** [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"position"&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [horizontal](./alfa-css.position.json.horizontal.md) |  | [Component.JSON](./alfa-css.position.component.json.md) |  |
-|  [vertical](./alfa-css.position.json.vertical.md) |  | [Component.JSON](./alfa-css.position.component.json.md) |  |
+|  [horizontal](./alfa-css.position.json.horizontal.md) |  | Component.JSON |  |
+|  [vertical](./alfa-css.position.json.vertical.md) |  | Component.JSON |  |
 

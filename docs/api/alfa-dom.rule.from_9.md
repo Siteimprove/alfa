@@ -4,7 +4,7 @@
 
 ## Rule.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): Rule;
@@ -16,7 +16,7 @@ function from(json: JSON): Rule;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-dom.rule.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Rule](./alfa-dom.rule.md)
 

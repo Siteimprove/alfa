@@ -4,7 +4,7 @@
 
 ## Media.Value.Bound.hasValue() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasValue<U extends T>(refinement: Refinement<T, U>): this is Bound<U>;
@@ -14,9 +14,9 @@ hasValue<U extends T>(refinement: Refinement<T, U>): this is Bound<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this is [Bound](./alfa-media.media.value.bound.md)<!-- -->&lt;U&gt;
 

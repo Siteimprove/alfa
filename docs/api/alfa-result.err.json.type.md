@@ -4,7 +4,7 @@
 
 ## Err.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "err";

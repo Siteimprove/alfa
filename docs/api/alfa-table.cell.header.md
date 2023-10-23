@@ -4,7 +4,7 @@
 
 ## Cell.header variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 header: typeof Header.of

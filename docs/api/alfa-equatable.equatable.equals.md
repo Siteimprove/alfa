@@ -6,7 +6,7 @@
 
 Check if two unknown values are equal.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function equals(a: unknown, b: unknown): boolean;
@@ -19,7 +19,7 @@ function equals(a: unknown, b: unknown): boolean;
 |  a | unknown |  |
 |  b | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

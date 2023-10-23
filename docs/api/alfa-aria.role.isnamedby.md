@@ -6,7 +6,7 @@
 
 Check if this role supports naming by the specified method.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isNamedBy(method: Role.NamedBy): boolean;
@@ -18,7 +18,7 @@ isNamedBy(method: Role.NamedBy): boolean;
 |  --- | --- | --- |
 |  method | [Role.NamedBy](./alfa-aria.role.namedby.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

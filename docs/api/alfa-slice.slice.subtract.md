@@ -4,7 +4,7 @@
 
 ## Slice.subtract() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 subtract(iterable: Iterable<T>): Slice<T>;
@@ -16,7 +16,7 @@ subtract(iterable: Iterable<T>): Slice<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

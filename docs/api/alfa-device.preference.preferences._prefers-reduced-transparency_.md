@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/mediaqueries-5/\#prefers-reduced-transparency](https://drafts.csswg.org/mediaqueries-5/#prefers-reduced-transparency)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "prefers-reduced-transparency": "no-preference" | "reduce";

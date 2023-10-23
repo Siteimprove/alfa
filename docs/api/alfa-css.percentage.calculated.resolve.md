@@ -4,12 +4,12 @@
 
 ## Percentage.Calculated.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): Fixed<"percentage">;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;"percentage"&gt;
 

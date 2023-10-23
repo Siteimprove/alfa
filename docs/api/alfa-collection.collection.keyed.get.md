@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.get() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get(key: K): Option<V>;
@@ -16,7 +16,7 @@ get(key: K): Option<V>;
 |  --- | --- | --- |
 |  key | K |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;V&gt;
+Option&lt;V&gt;
 

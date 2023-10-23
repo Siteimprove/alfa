@@ -4,7 +4,7 @@
 
 ## Media.query variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 query: typeof Query.of

@@ -4,7 +4,7 @@
 
 ## List.groupBy() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>>;
@@ -16,7 +16,7 @@ groupBy<K>(grouper: Mapper<T, K>): Map<K, List<T>>;
 |  --- | --- | --- |
 |  grouper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, K&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Map&lt;K, [List](./alfa-list.list.md)<!-- -->&lt;T&gt;&gt;
 

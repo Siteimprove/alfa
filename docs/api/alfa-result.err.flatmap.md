@@ -4,12 +4,12 @@
 
 ## Err.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap(): Err<E>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Err](./alfa-result.err.md)<!-- -->&lt;E&gt;
 

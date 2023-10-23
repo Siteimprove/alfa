@@ -6,7 +6,7 @@
 
 An immutable record of individual rules. The type of each individual rule is preserved in the record.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Rules: Record<typeof rules>

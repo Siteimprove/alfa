@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.sortWith() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 sortWith<T, U extends T = T>(this: Indexed<U>, comparer: Comparer<T>): Indexed<U>;
@@ -17,7 +17,7 @@ sortWith<T, U extends T = T>(this: Indexed<U>, comparer: Comparer<T>): Indexed<U
 |  this | [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;
 

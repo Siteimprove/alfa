@@ -4,7 +4,7 @@
 
 ## Page.isPage() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isPage(value: unknown): value is Page;
@@ -16,7 +16,7 @@ function isPage(value: unknown): value is Page;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Page](./alfa-web.page.md)
 

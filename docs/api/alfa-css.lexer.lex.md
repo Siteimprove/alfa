@@ -4,7 +4,7 @@
 
 ## Lexer.lex() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function lex(input: string): Slice<Token>;
@@ -16,7 +16,7 @@ function lex(input: string): Slice<Token>;
 |  --- | --- | --- |
 |  input | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;
+Slice&lt;Token&gt;
 

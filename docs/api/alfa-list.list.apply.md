@@ -4,7 +4,7 @@
 
 ## List.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: List<Mapper<T, U>>): List<U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: List<Mapper<T, U>>): List<U>;
 |  --- | --- | --- |
 |  mapper | [List](./alfa-list.list.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;U&gt;
 

@@ -4,7 +4,7 @@
 
 ## Style.hasSpecifiedStyle variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasSpecifiedStyle: typeof element.hasSpecifiedStyle

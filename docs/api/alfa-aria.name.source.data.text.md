@@ -4,7 +4,7 @@
 
 ## Name.Source.Data.text property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get text(): Text;

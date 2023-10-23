@@ -4,12 +4,12 @@
 
 ## Hash.writeUndefined() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeUndefined(): this;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this
 

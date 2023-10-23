@@ -4,7 +4,7 @@
 
 ## SupportsRule.isSupportsRue() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSupportsRue(value: unknown): value is SupportsRule;
@@ -16,7 +16,7 @@ function isSupportsRue(value: unknown): value is SupportsRule;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [SupportsRule](./alfa-dom.supportsrule.md)
 

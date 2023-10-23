@@ -4,7 +4,7 @@
 
 ## Audit.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(input: I, rules: Iterable<Rule<I, T, Q, S>>, oracle?: Oracle<I, T, Q, S>): Audit<I, T, Q, S>;
@@ -15,10 +15,10 @@ static of<I, T extends Hashable, Q extends Question.Metadata = {}, S = T>(input:
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  input | I |  |
-|  rules | Iterable&lt;[Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;&gt; |  |
-|  oracle | [Oracle](./alfa-act.oracle.md)<!-- -->&lt;I, T, Q, S&gt; | <i>(Optional)</i> |
+|  rules | Iterable&lt;Rule&lt;I, T, Q, S&gt;&gt; |  |
+|  oracle | [Oracle](./alfa-act.oracle.md)<!-- -->&lt;I, T, Q, S&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Audit](./alfa-act.audit.md)<!-- -->&lt;I, T, Q, S&gt;
 

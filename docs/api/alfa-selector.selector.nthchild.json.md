@@ -4,12 +4,12 @@
 
 ## Selector.NthChild.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Pseudo.Class.JSON<"nth-child"> 
 ```
-<b>Extends:</b> [Pseudo.Class.JSON](./alfa-selector.selector.pseudo.class.json.md)<!-- -->&lt;"nth-child"&gt;
+**Extends:** [Pseudo.Class.JSON](./alfa-selector.selector.pseudo.class.json.md)<!-- -->&lt;"nth-child"&gt;
 
 ## Properties
 

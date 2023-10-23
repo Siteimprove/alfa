@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#slotable-name](https://dom.spec.whatwg.org/#slotable-name)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function name(slotable: Slotable): string;
@@ -18,7 +18,7 @@ function name(slotable: Slotable): string;
 |  --- | --- | --- |
 |  slotable | [Slotable](./alfa-dom.slotable.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 string
 

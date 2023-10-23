@@ -6,7 +6,7 @@
 
 Compare two numbers.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function compare(a: number, b: number): Comparison;
@@ -19,7 +19,7 @@ function compare(a: number, b: number): Comparison;
 |  a | number |  |
 |  b | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

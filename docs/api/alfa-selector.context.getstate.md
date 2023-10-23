@@ -4,7 +4,7 @@
 
 ## Context.getState() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getState(element: Element): Context.State;
@@ -14,9 +14,9 @@ getState(element: Element): Context.State;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Context.State](./alfa-selector.context.state.md)
 

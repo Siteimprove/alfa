@@ -1,5 +1,17 @@
 # @siteimprove/alfa-dom
 
+## 0.68.0
+
+### Minor Changes
+
+- **Breaking:** `Element#of` now requires the device used when scraping a page in order to store a box. ([#1474](https://github.com/Siteimprove/alfa/pull/1474))
+
+  This ensures that the boxes of the elements will be stored with and only be accessible for the same device instance. If no device is provided, no box is stored with the element.
+
+- **Added:** `Document#toJSON` now optionally accepts serialization options containing device. ([#1474](https://github.com/Siteimprove/alfa/pull/1474))
+
+  The options will be passed down to all children of the document and used by `Element` to serialize the box corresponding to the device.
+
 ## 0.67.0
 
 ## 0.66.0

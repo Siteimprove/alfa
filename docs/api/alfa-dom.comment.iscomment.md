@@ -4,7 +4,7 @@
 
 ## Comment.isComment() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isComment(value: unknown): value is Comment;
@@ -16,7 +16,7 @@ function isComment(value: unknown): value is Comment;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Comment](./alfa-dom.comment.md)
 

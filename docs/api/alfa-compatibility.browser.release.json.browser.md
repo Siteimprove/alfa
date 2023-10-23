@@ -4,7 +4,7 @@
 
 ## Browser.Release.JSON.browser property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 browser: string;

@@ -4,7 +4,7 @@
 
 ## Cons.collect() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Sequence<U>;
@@ -14,9 +14,9 @@ collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Sequence<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Option&lt;U&gt;, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;
+Sequence&lt;U&gt;
 

@@ -6,7 +6,7 @@
 
 Check if this role either is, or is a subclass of, the role with the specified name.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 is<N extends Role.Name>(name: N): this is Role<N | Role.SubclassOf<N>>;
@@ -18,7 +18,7 @@ is<N extends Role.Name>(name: N): this is Role<N | Role.SubclassOf<N>>;
 |  --- | --- | --- |
 |  name | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this is [Role](./alfa-aria.role.md)<!-- -->&lt;N \| [Role.SubclassOf](./alfa-aria.role.subclassof.md)<!-- -->&lt;N&gt;&gt;
 

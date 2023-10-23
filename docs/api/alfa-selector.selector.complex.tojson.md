@@ -4,12 +4,12 @@
 
 ## Selector.Complex.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Complex.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Complex.JSON](./alfa-selector.selector.complex.json.md)
 

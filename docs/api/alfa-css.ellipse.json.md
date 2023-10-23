@@ -4,12 +4,12 @@
 
 ## Ellipse.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends BasicShape.JSON<"ellipse"> 
 ```
-<b>Extends:</b> BasicShape.JSON&lt;"ellipse"&gt;
+**Extends:** BasicShape.JSON&lt;"ellipse"&gt;
 
 ## Properties
 

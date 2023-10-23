@@ -4,7 +4,7 @@
 
 ## Media.Value.range variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 range: typeof Range.of

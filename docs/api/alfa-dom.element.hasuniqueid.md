@@ -4,7 +4,7 @@
 
 ## Element.hasUniqueId variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasUniqueId: Predicate<Element<string>>

@@ -4,10 +4,10 @@
 
 ## Cookies.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Array<Cookie.JSON> 
 ```
-<b>Extends:</b> Array&lt;[Cookie.JSON](./alfa-http.cookie.json.md)<!-- -->&gt;
+**Extends:** Array&lt;[Cookie.JSON](./alfa-http.cookie.json.md)<!-- -->&gt;
 

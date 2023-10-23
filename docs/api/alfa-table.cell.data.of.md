@@ -4,7 +4,7 @@
 
 ## Cell.Data.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(element: Element, anchor: Slot, width: number, height: number, headers?: Iterable<Slot>): Data;
@@ -14,13 +14,13 @@ static of(element: Element, anchor: Slot, width: number, height: number, headers
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
-|  anchor | [Slot](./alfa-table.slot.md) |  |
+|  element | Element |  |
+|  anchor | Slot |  |
 |  width | number |  |
 |  height | number |  |
-|  headers | Iterable&lt;[Slot](./alfa-table.slot.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  headers | Iterable&lt;Slot&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Data](./alfa-table.cell.data.md)
 

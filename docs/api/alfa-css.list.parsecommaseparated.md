@@ -4,7 +4,7 @@
 
 ## List.parseCommaSeparated variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseCommaSeparated: <V extends Value<string, boolean, string>>(parseValue: CSSParser<V>, lower?: number, upper?: number) => CSSParser<List<V, boolean>>

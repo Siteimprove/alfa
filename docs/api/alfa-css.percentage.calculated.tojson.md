@@ -4,12 +4,12 @@
 
 ## Percentage.Calculated.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Calculated.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Calculated.JSON](./alfa-css.percentage.calculated.json.md)
 

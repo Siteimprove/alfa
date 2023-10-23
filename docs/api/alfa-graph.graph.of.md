@@ -4,7 +4,7 @@
 
 ## Graph.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(nodes: Map<T, Set<T>>): Graph<T>;
@@ -16,7 +16,7 @@ static of<T>(nodes: Map<T, Set<T>>): Graph<T>;
 |  --- | --- | --- |
 |  nodes | Map&lt;T, Set&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

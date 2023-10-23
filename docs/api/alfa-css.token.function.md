@@ -4,7 +4,7 @@
 
 ## Token.Function namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Function 

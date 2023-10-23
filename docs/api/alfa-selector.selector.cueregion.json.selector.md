@@ -4,7 +4,7 @@
 
 ## Selector.CueRegion.JSON.selector property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 selector: Option.JSON<Selector>;

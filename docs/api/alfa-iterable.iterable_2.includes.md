@@ -4,7 +4,7 @@
 
 ## Iterable\_2.includes() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function includes<T>(iterable: Iterable<T>, value: T): boolean;
@@ -14,10 +14,10 @@ function includes<T>(iterable: Iterable<T>, value: T): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

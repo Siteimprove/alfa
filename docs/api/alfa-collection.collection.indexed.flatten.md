@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Indexed<Indexed<T>>): Indexed<T>;
@@ -16,7 +16,7 @@ flatten<T>(this: Indexed<Indexed<T>>): Indexed<T>;
 |  --- | --- | --- |
 |  this | [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;[Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

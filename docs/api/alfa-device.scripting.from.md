@@ -4,7 +4,7 @@
 
 ## Scripting.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): Scripting;
@@ -16,7 +16,7 @@ function from(json: JSON): Scripting;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-device.scripting.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Scripting](./alfa-device.scripting.md)
 

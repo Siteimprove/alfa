@@ -5,8 +5,10 @@
 ## JSON\_2 type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type JSON = string | number | boolean | null | JSON.Array | JSON.Object;
 ```
+**References:** [JSON.Array](./alfa-json.json_2.array.md)<!-- -->, [JSON.Object](./alfa-json.json_2.object.md)
+

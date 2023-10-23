@@ -4,7 +4,7 @@
 
 ## Media.And.left property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get left(): Feature | Condition;

@@ -4,7 +4,7 @@
 
 ## Promise\_2.reject() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function reject<T>(error: unknown): Promise<T>;
@@ -16,7 +16,7 @@ function reject<T>(error: unknown): Promise<T>;
 |  --- | --- | --- |
 |  error | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Promise&lt;T&gt;
+[Promise](./alfa-promise.promise_2.md)<!-- -->&lt;T&gt;
 

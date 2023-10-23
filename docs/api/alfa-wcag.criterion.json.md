@@ -4,12 +4,12 @@
 
 ## Criterion.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Requirement.JSON 
 ```
-<b>Extends:</b> [Requirement.JSON](./alfa-act.requirement.json.md)
+**Extends:** [Requirement.JSON](./alfa-act.requirement.json.md)
 
 ## Properties
 

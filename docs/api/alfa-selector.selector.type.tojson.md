@@ -4,12 +4,12 @@
 
 ## Selector.Type.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Type.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Type.JSON](./alfa-selector.selector.type.json.md)
 

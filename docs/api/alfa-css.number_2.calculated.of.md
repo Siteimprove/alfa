@@ -4,7 +4,7 @@
 
 ## Number\_2.Calculated.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: Math<"number">): Calculated;
@@ -16,7 +16,7 @@ static of(value: Math<"number">): Calculated;
 |  --- | --- | --- |
 |  value | Math&lt;"number"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Calculated
+[Calculated](./alfa-css.number_2.calculated.md)
 

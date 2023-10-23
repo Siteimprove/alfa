@@ -4,7 +4,7 @@
 
 ## Cell.isData variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isData: typeof Data.isData

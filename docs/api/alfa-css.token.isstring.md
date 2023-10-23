@@ -4,7 +4,7 @@
 
 ## Token.isString variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isString: typeof String.isString

@@ -4,7 +4,7 @@
 
 ## FontFaceRule.JSON.style property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 style: Block.JSON;

@@ -5,7 +5,7 @@
 ## FontFaceRule namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace FontFaceRule 

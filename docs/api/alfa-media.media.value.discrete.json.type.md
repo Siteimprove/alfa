@@ -4,7 +4,7 @@
 
 ## Media.Value.Discrete.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "discrete";

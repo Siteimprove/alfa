@@ -4,7 +4,7 @@
 
 ## Token.String namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace String 

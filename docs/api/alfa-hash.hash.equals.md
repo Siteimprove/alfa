@@ -4,7 +4,7 @@
 
 ## Hash.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Hash): boolean;
@@ -16,7 +16,7 @@ equals(value: Hash): boolean;
 |  --- | --- | --- |
 |  value | [Hash](./alfa-hash.hash.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

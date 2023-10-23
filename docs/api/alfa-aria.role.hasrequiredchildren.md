@@ -6,12 +6,12 @@
 
 Check if this role has required children.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasRequiredChildren(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

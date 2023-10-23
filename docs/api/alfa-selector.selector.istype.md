@@ -4,7 +4,7 @@
 
 ## Selector.isType() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isType(value: unknown): value is Type;
@@ -16,7 +16,7 @@ export function isType(value: unknown): value is Type;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Type](./alfa-selector.selector.type.md)
 

@@ -4,7 +4,7 @@
 
 ## Collection.size property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly size: number;

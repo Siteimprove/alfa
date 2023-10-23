@@ -4,10 +4,10 @@
 
 ## Node.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-function from(json: Attribute.JSON): Attribute;
+function from(json: Attribute.JSON, device?: Device): Attribute;
 ```
 
 ## Parameters
@@ -15,8 +15,9 @@ function from(json: Attribute.JSON): Attribute;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  json | [Attribute.JSON](./alfa-dom.attribute.json.md) |  |
+|  device | Device | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Attribute](./alfa-dom.attribute.md)
+Attribute
 

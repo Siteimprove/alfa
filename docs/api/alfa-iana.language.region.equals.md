@@ -4,7 +4,7 @@
 
 ## Language.Region.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Region): boolean;
@@ -16,7 +16,7 @@ equals(value: Region): boolean;
 |  --- | --- | --- |
 |  value | [Region](./alfa-iana.language.region.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -5,7 +5,7 @@
 ## Style namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Style 
@@ -27,7 +27,6 @@ export declare namespace Style
 
 |  Variable | Description |
 |  --- | --- |
-|  [getBoundingBox](./alfa-style.style.getboundingbox.md) |  |
 |  [getOffsetParent](./alfa-style.style.getoffsetparent.md) |  |
 |  [getPositioningParent](./alfa-style.style.getpositioningparent.md) |  |
 |  [hasBorder](./alfa-style.style.hasborder.md) |  |

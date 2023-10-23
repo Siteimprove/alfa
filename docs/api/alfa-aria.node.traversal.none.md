@@ -4,7 +4,7 @@
 
 ## Node.Traversal.none variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 none: Flag

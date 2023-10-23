@@ -6,10 +6,10 @@
 
 [https://drafts.fxtf.org/css-masking/\#typedef-geometry-box](https://drafts.fxtf.org/css-masking/#typedef-geometry-box)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Geometry = Shape | Keyword<"fill-box"> | Keyword<"stroke-box"> | Keyword<"view-box">;
 ```
-<b>References:</b> [Shape](./alfa-css.box.shape.md)<!-- -->, [Keyword](./alfa-css.keyword.md)
+**References:** [Shape](./alfa-css.box.shape.md)
 

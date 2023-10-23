@@ -4,7 +4,7 @@
 
 ## Selector.Slotted namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace Slotted 

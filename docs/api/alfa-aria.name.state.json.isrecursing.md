@@ -4,7 +4,7 @@
 
 ## Name.State.JSON.isRecursing property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isRecursing: boolean;

@@ -4,12 +4,12 @@
 
 ## Language.Primary.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Subtag.JSON<"primary", Name> 
 ```
-<b>Extends:</b> [Subtag.JSON](./alfa-iana.language.subtag.json.md)<!-- -->&lt;"primary", [Name](./alfa-iana.language.primary.name.md)<!-- -->&gt;
+**Extends:** [Subtag.JSON](./alfa-iana.language.subtag.json.md)<!-- -->&lt;"primary", [Name](./alfa-iana.language.primary.name.md)<!-- -->&gt;
 
 ## Properties
 

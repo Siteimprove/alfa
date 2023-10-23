@@ -4,7 +4,7 @@
 
 ## Iterable\_2.compare() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function compare<T extends Comparable<U>, U = T>(a: Iterable<T>, b: Iterable<U>): Comparison;
@@ -14,10 +14,10 @@ function compare<T extends Comparable<U>, U = T>(a: Iterable<T>, b: Iterable<U>)
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  a | Iterable&lt;T&gt; |  |
-|  b | Iterable&lt;U&gt; |  |
+|  a | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  b | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

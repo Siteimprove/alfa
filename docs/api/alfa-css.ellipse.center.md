@@ -4,7 +4,7 @@
 
 ## Ellipse.center property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get center(): P;

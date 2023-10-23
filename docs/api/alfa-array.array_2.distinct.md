@@ -4,7 +4,7 @@
 
 ## Array\_2.distinct() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function distinct<T>(array: ReadonlyArray<T>): Array<T>;
@@ -16,7 +16,7 @@ function distinct<T>(array: ReadonlyArray<T>): Array<T>;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;T&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 

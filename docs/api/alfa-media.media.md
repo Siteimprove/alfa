@@ -5,7 +5,7 @@
 ## Media namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Media 
@@ -16,12 +16,17 @@ export declare namespace Media
 |  Class | Description |
 |  --- | --- |
 |  [And](./alfa-media.media.and.md) |  |
-|  [Feature](./alfa-media.media.feature.md) | [https://drafts.csswg.org/mediaqueries/\#media-feature](https://drafts.csswg.org/mediaqueries/#media-feature) |
 |  [List](./alfa-media.media.list.md) | [https://drafts.csswg.org/mediaqueries/\#media-query-list](https://drafts.csswg.org/mediaqueries/#media-query-list) |
 |  [Not](./alfa-media.media.not.md) |  |
 |  [Or](./alfa-media.media.or.md) |  |
 |  [Query](./alfa-media.media.query.md) | [https://drafts.csswg.org/mediaqueries/\#media-query](https://drafts.csswg.org/mediaqueries/#media-query) |
 |  [Type](./alfa-media.media.type.md) | [https://drafts.csswg.org/mediaqueries/\#media-type](https://drafts.csswg.org/mediaqueries/#media-type) |
+
+## Abstract Classes
+
+|  Abstract Class | Description |
+|  --- | --- |
+|  [Feature](./alfa-media.media.feature.md) | [https://drafts.csswg.org/mediaqueries/\#media-feature](https://drafts.csswg.org/mediaqueries/#media-feature) |
 
 ## Enumerations
 

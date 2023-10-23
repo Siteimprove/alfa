@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Question` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(type: TYPE, uri: URI, message: string, diagnostic: Diagnostic, fallback: Option<ANSWER>, subject: SUBJECT, context: CONTEXT, quester: Mapper<ANSWER, T>);
@@ -19,8 +19,8 @@ protected constructor(type: TYPE, uri: URI, message: string, diagnostic: Diagnos
 |  type | TYPE |  |
 |  uri | URI |  |
 |  message | string |  |
-|  diagnostic | [Diagnostic](./alfa-act.diagnostic.md) |  |
-|  fallback | [Option](./alfa-option.option.md)<!-- -->&lt;ANSWER&gt; |  |
+|  diagnostic | Diagnostic |  |
+|  fallback | Option&lt;ANSWER&gt; |  |
 |  subject | SUBJECT |  |
 |  context | CONTEXT |  |
 |  quester | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;ANSWER, T&gt; |  |

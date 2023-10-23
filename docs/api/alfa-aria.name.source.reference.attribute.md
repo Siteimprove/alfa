@@ -4,7 +4,7 @@
 
 ## Name.Source.Reference.attribute property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get attribute(): Attribute;

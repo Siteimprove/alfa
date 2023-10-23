@@ -4,12 +4,12 @@
 
 ## Media.Not.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.iterator](): Iterator<Feature>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Iterator&lt;[Feature](./alfa-media.media.feature.md)<!-- -->&gt;
 

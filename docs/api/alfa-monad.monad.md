@@ -5,12 +5,12 @@
 ## Monad interface
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface Monad<T> extends Functor<T>, Applicative<T> 
 ```
-<b>Extends:</b> [Functor](./alfa-functor.functor.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative.md)<!-- -->&lt;T&gt;
+**Extends:** [Functor](./alfa-functor.functor.md)<!-- -->&lt;T&gt;, [Applicative](./alfa-applicative.applicative.md)<!-- -->&lt;T&gt;
 
 ## Methods
 

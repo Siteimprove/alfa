@@ -4,7 +4,7 @@
 
 ## Transform.resolve() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function resolve(resolver: Resolver): (value: Transform) => Canonical;
@@ -16,7 +16,7 @@ function resolve(resolver: Resolver): (value: Transform) => Canonical;
 |  --- | --- | --- |
 |  resolver | [Resolver](./alfa-css.transform.resolver.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 (value: [Transform](./alfa-css.transform.md)<!-- -->) =&gt; [Canonical](./alfa-css.transform.canonical.md)
 

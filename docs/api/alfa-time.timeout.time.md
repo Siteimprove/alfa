@@ -4,7 +4,7 @@
 
 ## Timeout.time property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get time(): Time;

@@ -4,7 +4,7 @@
 
 ## Outcome.failed variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 failed: typeof Failed.of

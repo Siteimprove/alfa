@@ -4,7 +4,7 @@
 
 ## Dimension.Fixed.JSON.unit property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 unit: U;

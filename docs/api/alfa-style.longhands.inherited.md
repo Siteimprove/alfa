@@ -6,10 +6,10 @@
 
 Extract the inherited type of a named property.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Inherited<N extends Name> = Computed<N>;
 ```
-<b>References:</b> [Name](./alfa-style.longhands.name.md)<!-- -->, [Computed](./alfa-style.longhands.computed.md)
+**References:** [Name](./alfa-style.longhands.name.md)<!-- -->, [Computed](./alfa-style.longhands.computed.md)
 

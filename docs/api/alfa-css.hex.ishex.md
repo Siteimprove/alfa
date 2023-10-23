@@ -4,7 +4,7 @@
 
 ## Hex.isHex() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isHex(value: unknown): value is Hex;
@@ -16,7 +16,7 @@ function isHex(value: unknown): value is Hex;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Hex](./alfa-css.hex.md)
 

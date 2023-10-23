@@ -4,7 +4,7 @@
 
 ## Unit.isAbsoluteLength variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isAbsoluteLength: typeof Length.isAbsolute

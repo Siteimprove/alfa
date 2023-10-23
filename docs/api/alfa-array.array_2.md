@@ -4,7 +4,7 @@
 
 ## Array\_2 type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Array<T> = globalThis.Array<T>;

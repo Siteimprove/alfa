@@ -4,12 +4,12 @@
 
 ## Rule.Event.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Event.JSON<TYPE, NAME>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Event.JSON](./alfa-act.rule.event.json.md)<!-- -->&lt;TYPE, NAME&gt;
 

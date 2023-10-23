@@ -4,7 +4,7 @@
 
 ## Integer.isInteger() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isInteger(value: unknown): value is Integer;
@@ -16,7 +16,7 @@ export function isInteger(value: unknown): value is Integer;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Integer](./alfa-css.integer.md)
 

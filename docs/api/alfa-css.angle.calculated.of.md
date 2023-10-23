@@ -4,7 +4,7 @@
 
 ## Angle.Calculated.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: Math<"angle">): Calculated;
@@ -16,7 +16,7 @@ static of(value: Math<"angle">): Calculated;
 |  --- | --- | --- |
 |  value | Math&lt;"angle"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Calculated](./alfa-css.angle.calculated.md)
 

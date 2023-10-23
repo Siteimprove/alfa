@@ -6,7 +6,7 @@
 
 Adds a list of flags to the set, and return a new one.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 add(...flags: Array<F>): this;
@@ -18,7 +18,7 @@ add(...flags: Array<F>): this;
 |  --- | --- | --- |
 |  flags | Array&lt;F&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

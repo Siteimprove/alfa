@@ -4,7 +4,7 @@
 
 ## Media.Value.isDiscrete variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isDiscrete: typeof Discrete.isDiscrete

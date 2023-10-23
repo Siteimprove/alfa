@@ -4,12 +4,12 @@
 
 ## Hex.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Format.JSON<"hex"> 
 ```
-<b>Extends:</b> Format.JSON&lt;"hex"&gt;
+**Extends:** Format.JSON&lt;"hex"&gt;
 
 ## Properties
 

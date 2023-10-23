@@ -4,12 +4,12 @@
 
 ## Some.or() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 or(): Some<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
 

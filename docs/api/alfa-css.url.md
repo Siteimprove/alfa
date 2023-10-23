@@ -5,7 +5,7 @@
 ## URL namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace URL 
@@ -28,4 +28,11 @@ export declare namespace URL
 |  Variable | Description |
 |  --- | --- |
 |  [parse](./alfa-css.url.parse.md) | [https://drafts.csswg.org/css-values/\#url-value](https://drafts.csswg.org/css-values/#url-value) |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.url.canonical.md) |  |
+|  [Resolver](./alfa-css.url.resolver.md) |  |
 

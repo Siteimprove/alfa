@@ -4,10 +4,10 @@
 
 ## Sequence.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON<T> = Cons.JSON<T> | Nil.JSON;
 ```
-<b>References:</b> [Cons.JSON](./alfa-sequence.cons.json.md)<!-- -->, [Nil.JSON](./alfa-sequence.nil.json.md)
+**References:** [Cons.JSON](./alfa-sequence.cons.json.md)<!-- -->, [Nil.JSON](./alfa-sequence.nil.json.md)
 

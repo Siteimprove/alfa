@@ -4,7 +4,7 @@
 
 ## Selector.Compound.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(left: Simple, right: Simple | Compound): Compound;
@@ -17,7 +17,7 @@ static of(left: Simple, right: Simple | Compound): Compound;
 |  left | [Simple](./alfa-selector.selector.simple.md) |  |
 |  right | [Simple](./alfa-selector.selector.simple.md) \| [Compound](./alfa-selector.selector.compound.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Compound](./alfa-selector.selector.compound.md)
 

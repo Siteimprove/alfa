@@ -4,7 +4,7 @@
 
 ## Record\_2.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from<T>(entries: Iterable<Entry<T>>): Record<T>;
@@ -14,9 +14,9 @@ function from<T>(entries: Iterable<Entry<T>>): Record<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  entries | Iterable&lt;Entry&lt;T&gt;&gt; |  |
+|  entries | Iterable&lt;[Entry](./alfa-record.record_2.entry.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Record&lt;T&gt;
+[Record](./alfa-record.record_2.md)<!-- -->&lt;T&gt;
 

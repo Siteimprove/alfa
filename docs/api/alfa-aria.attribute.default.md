@@ -6,12 +6,12 @@
 
 The default value, if any, of the specified attribute.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Default<N extends Name = Name> = Exclude<Attributes[N]["default"], null>;
 ```
-<b>References:</b> [Name](./alfa-aria.attribute.name.md)
+**References:** [Name](./alfa-aria.attribute.name.md)
 
 ## Remarks
 

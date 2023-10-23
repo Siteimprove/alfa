@@ -4,7 +4,7 @@
 
 ## Result.andThen() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 andThen<U, F>(result: Mapper<T, Result<U, F>>): Result<U, E | F>;
@@ -16,7 +16,7 @@ andThen<U, F>(result: Mapper<T, Result<U, F>>): Result<U, E | F>;
 |  --- | --- | --- |
 |  result | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;U, E \| F&gt;
 

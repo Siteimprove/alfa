@@ -4,7 +4,7 @@
 
 ## Scale.parse variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: Parser<import("@siteimprove/alfa-slice").Slice<import("../../syntax").Token>, Scale, string, []>

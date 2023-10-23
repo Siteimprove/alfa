@@ -4,7 +4,7 @@
 
 ## Sequence.isNil() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isNil<T>(value: Iterable<T>): value is Nil;
@@ -16,7 +16,7 @@ function isNil<T>(value: Iterable<T>): value is Nil;
 |  --- | --- | --- |
 |  value | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Nil](./alfa-sequence.nil.md)
 

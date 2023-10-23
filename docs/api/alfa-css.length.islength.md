@@ -4,7 +4,7 @@
 
 ## Length.isLength() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isLength(value: unknown): value is Length;
@@ -16,7 +16,7 @@ export function isLength(value: unknown): value is Length;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Length](./alfa-css.length.md)
 

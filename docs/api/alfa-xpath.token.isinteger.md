@@ -4,7 +4,7 @@
 
 ## Token.isInteger() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isInteger(value: unknown): value is Integer;
@@ -16,7 +16,7 @@ function isInteger(value: unknown): value is Integer;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Integer](./alfa-xpath.token.integer.md)
 

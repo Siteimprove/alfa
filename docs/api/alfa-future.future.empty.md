@@ -4,12 +4,12 @@
 
 ## Future.empty() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function empty(): Future<void>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;void&gt;
 

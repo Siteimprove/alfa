@@ -4,7 +4,7 @@
 
 ## Name.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(node: Element | Text, device: Device): Option<Name>;
@@ -14,10 +14,10 @@ function from(node: Element | Text, device: Device): Option<Name>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  node | [Element](./alfa-dom.element.md) \| [Text](./alfa-dom.text.md) |  |
-|  device | [Device](./alfa-device.device.md) |  |
+|  node | Element \| Text |  |
+|  device | Device |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Name](./alfa-aria.name.md)<!-- -->&gt;
+Option&lt;[Name](./alfa-aria.name.md)<!-- -->&gt;
 

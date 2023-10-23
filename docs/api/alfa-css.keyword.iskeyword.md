@@ -4,7 +4,7 @@
 
 ## Keyword.isKeyword() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isKeyword(value: unknown): value is Keyword;
@@ -16,7 +16,7 @@ function isKeyword(value: unknown): value is Keyword;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Keyword](./alfa-css.keyword.md)
 

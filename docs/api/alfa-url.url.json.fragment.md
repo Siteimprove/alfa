@@ -4,7 +4,7 @@
 
 ## URL.JSON.fragment property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 fragment: string | null;

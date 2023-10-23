@@ -4,7 +4,7 @@
 
 ## h.text() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function text(data: string): Text;
@@ -16,7 +16,7 @@ function text(data: string): Text;
 |  --- | --- | --- |
 |  data | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Text](./alfa-dom.text.md)
+Text
 

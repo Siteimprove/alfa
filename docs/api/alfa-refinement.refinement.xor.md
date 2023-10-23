@@ -4,7 +4,7 @@
 
 ## Refinement.xor variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 xor: Xor

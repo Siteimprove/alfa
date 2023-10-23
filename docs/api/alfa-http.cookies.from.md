@@ -4,7 +4,7 @@
 
 ## Cookies.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): Cookies;
@@ -16,7 +16,7 @@ function from(json: JSON): Cookies;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-http.cookies.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Cookies](./alfa-http.cookies.md)
 

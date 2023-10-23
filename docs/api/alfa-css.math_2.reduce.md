@@ -4,7 +4,7 @@
 
 ## Math\_2.reduce() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reduce(resolver: Expression.Resolver): Math;
@@ -16,7 +16,7 @@ reduce(resolver: Expression.Resolver): Math;
 |  --- | --- | --- |
 |  resolver | Expression.Resolver |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Math
+[Math](./alfa-css.math_2.md)
 

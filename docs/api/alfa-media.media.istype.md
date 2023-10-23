@@ -4,7 +4,7 @@
 
 ## Media.isType variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isType: typeof Type.isType

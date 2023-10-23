@@ -4,7 +4,7 @@
 
 ## Array\_2.forEach() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function forEach<T>(array: ReadonlyArray<T>, callback: Callback<T, void, [index: number]>): void;
@@ -15,9 +15,9 @@ function forEach<T>(array: ReadonlyArray<T>, callback: Callback<T, void, [index:
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, void, \[index: number\]&gt; |  |
+|  callback | Callback&lt;T, void, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

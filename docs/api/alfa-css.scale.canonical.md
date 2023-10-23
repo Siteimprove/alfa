@@ -4,10 +4,10 @@
 
 ## Scale.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Canonical = Scale;
 ```
-<b>References:</b> [Scale](./alfa-css.scale.md)
+**References:** [Scale](./alfa-css.scale.md)
 

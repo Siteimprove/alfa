@@ -4,7 +4,7 @@
 
 ## Rectangle.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Rectangle): boolean;
@@ -16,7 +16,7 @@ equals(value: Rectangle): boolean;
 |  --- | --- | --- |
 |  value | [Rectangle](./alfa-css.rectangle.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

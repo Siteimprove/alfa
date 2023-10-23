@@ -4,7 +4,7 @@
 
 ## Some.filter() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 filter(predicate: Predicate<T>): Option<T>;
@@ -14,9 +14,9 @@ filter(predicate: Predicate<T>): Option<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

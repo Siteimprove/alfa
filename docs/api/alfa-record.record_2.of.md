@@ -4,7 +4,7 @@
 
 ## Record\_2.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(properties: T): Record<T>;
@@ -16,7 +16,7 @@ static of<T>(properties: T): Record<T>;
 |  --- | --- | --- |
 |  properties | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Record&lt;T&gt;
+[Record](./alfa-record.record_2.md)<!-- -->&lt;T&gt;
 

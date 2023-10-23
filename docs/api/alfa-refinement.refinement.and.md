@@ -4,7 +4,7 @@
 
 ## Refinement.and variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 and: And

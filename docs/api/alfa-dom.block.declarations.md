@@ -4,7 +4,7 @@
 
 ## Block.declarations property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get declarations(): Iterable<Declaration>;

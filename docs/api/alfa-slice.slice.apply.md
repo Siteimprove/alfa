@@ -4,7 +4,7 @@
 
 ## Slice.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Slice<Mapper<T, U>>): Slice<U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Slice<Mapper<T, U>>): Slice<U>;
 |  --- | --- | --- |
 |  mapper | [Slice](./alfa-slice.slice.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;U&gt;
 

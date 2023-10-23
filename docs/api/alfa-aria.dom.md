@@ -6,7 +6,7 @@
 
 Helpers and Predicates for accessibility aspects of DOM objects
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace DOM 

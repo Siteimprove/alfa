@@ -4,7 +4,7 @@
 
 ## Tuple.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>, false>;
@@ -14,9 +14,9 @@ resolve(resolver?: Tuple.Resolver<T>): Tuple<Tuple.Resolved<T>, false>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resolver | Tuple.Resolver&lt;T&gt; | <i>(Optional)</i> |
+|  resolver | Tuple.Resolver&lt;T&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Tuple](./alfa-css.tuple.md)<!-- -->&lt;Tuple.Resolved&lt;T&gt;, false&gt;
 

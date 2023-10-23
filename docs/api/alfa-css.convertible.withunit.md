@@ -4,7 +4,7 @@
 
 ## Convertible.withUnit() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 withUnit<V extends U>(unit: V): Convertible<V>;
@@ -16,7 +16,7 @@ withUnit<V extends U>(unit: V): Convertible<V>;
 |  --- | --- | --- |
 |  unit | V |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Convertible](./alfa-css.convertible.md)<!-- -->&lt;V&gt;
 

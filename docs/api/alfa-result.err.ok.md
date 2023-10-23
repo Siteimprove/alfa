@@ -4,12 +4,12 @@
 
 ## Err.ok() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 ok(): None;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [None](./alfa-option.none.md)
 

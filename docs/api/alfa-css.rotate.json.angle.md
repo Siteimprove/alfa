@@ -4,7 +4,7 @@
 
 ## Rotate.JSON.angle property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 angle: Angle.Fixed.JSON<"deg">;

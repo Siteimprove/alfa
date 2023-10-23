@@ -4,7 +4,7 @@
 
 ## Tuple.count() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function count<T extends Tuple>(tuple: T, predicate: Predicate<Item<T>, [index: number]>): number;
@@ -15,9 +15,9 @@ export function count<T extends Tuple>(tuple: T, predicate: Predicate<Item<T>, [
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

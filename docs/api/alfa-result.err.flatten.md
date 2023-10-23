@@ -4,7 +4,7 @@
 
 ## Err.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T, E>(this: Result<never, E>): Result<T, E>;
@@ -14,9 +14,9 @@ flatten<T, E>(this: Result<never, E>): Result<T, E>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | [Result](./alfa-result.result.md)<!-- -->&lt;never, E&gt; |  |
+|  this | Result&lt;never, E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
+Result&lt;T, E&gt;
 

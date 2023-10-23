@@ -4,7 +4,7 @@
 
 ## Browser.Release namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Release 

@@ -4,12 +4,12 @@
 
 ## Expression.Test.Comment.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Comment.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Comment.JSON](./alfa-xpath.expression.test.comment.json.md)
 

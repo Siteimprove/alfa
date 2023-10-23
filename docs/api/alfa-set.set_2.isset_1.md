@@ -4,7 +4,7 @@
 
 ## Set\_2.isSet() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSet<T>(value: unknown): value is Set<T>;
@@ -16,7 +16,7 @@ function isSet<T>(value: unknown): value is Set<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Set&lt;T&gt;
+value is [Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;
 

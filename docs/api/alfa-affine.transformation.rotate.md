@@ -4,7 +4,7 @@
 
 ## Transformation.rotate() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function rotate(a: number, u?: [number, number, number]): Transformation;
@@ -15,9 +15,9 @@ function rotate(a: number, u?: [number, number, number]): Transformation;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  a | number |  |
-|  u | \[number, number, number\] | <i>(Optional)</i> |
+|  u | \[number, number, number\] | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Transformation](./alfa-affine.transformation.md)
 

@@ -4,7 +4,7 @@
 
 ## Real.isReal() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isReal(value: unknown): value is number;
@@ -16,7 +16,7 @@ function isReal(value: unknown): value is number;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is number
 

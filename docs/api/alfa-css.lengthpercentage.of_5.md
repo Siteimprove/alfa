@@ -4,7 +4,7 @@
 
 ## LengthPercentage.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of(value: Math<"length-percentage">): Calculated;
@@ -16,7 +16,7 @@ export function of(value: Math<"length-percentage">): Calculated;
 |  --- | --- | --- |
 |  value | Math&lt;"length-percentage"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Calculated](./alfa-css.lengthpercentage.calculated.md)
 

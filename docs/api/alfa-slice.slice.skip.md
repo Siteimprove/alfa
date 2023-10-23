@@ -4,7 +4,7 @@
 
 ## Slice.skip() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 skip(count: number): Slice<T>;
@@ -16,7 +16,7 @@ skip(count: number): Slice<T>;
 |  --- | --- | --- |
 |  count | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-syntax/\#consume-a-function](https://drafts.csswg.org/css-syntax/#consume-a-function)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 consume: CSSParser<Function>

@@ -4,7 +4,7 @@
 
 ## Criterion.isCriterion() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isCriterion(value: unknown): value is Criterion;
@@ -16,7 +16,7 @@ function isCriterion(value: unknown): value is Criterion;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Criterion](./alfa-wcag.criterion.md)
 

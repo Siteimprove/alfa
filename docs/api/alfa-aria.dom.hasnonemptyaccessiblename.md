@@ -4,7 +4,7 @@
 
 ## DOM.hasNonEmptyAccessibleName variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasNonEmptyAccessibleName: typeof dom.hasNonEmptyAccessibleName

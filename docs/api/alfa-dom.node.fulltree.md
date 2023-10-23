@@ -6,7 +6,7 @@
 
 Traversal options to traverse all relevant nodes (flat tree and inside nested browsing container), a very frequent use case.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 fullTree: Traversal

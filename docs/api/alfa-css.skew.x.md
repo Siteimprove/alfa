@@ -4,7 +4,7 @@
 
 ## Skew.x property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get x(): Angle.Canonical;

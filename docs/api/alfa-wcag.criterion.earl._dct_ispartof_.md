@@ -4,7 +4,7 @@
 
 ## Criterion.EARL."dct:isPartOf" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "dct:isPartOf": "https://www.w3.org/TR/WCAG/";

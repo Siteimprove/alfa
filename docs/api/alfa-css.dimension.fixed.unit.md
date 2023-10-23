@@ -4,7 +4,7 @@
 
 ## Dimension.Fixed.unit property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get unit(): U;

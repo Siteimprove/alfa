@@ -4,7 +4,7 @@
 
 ## Trampoline.traverse() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function traverse<T, U>(values: Iterable<T>, mapper: Mapper<T, Trampoline<U>, [index: number]>): Trampoline<Iterable<U>>;
@@ -17,7 +17,7 @@ function traverse<T, U>(values: Iterable<T>, mapper: Mapper<T, Trampoline<U>, [i
 |  values | Iterable&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;Iterable&lt;U&gt;&gt;
 

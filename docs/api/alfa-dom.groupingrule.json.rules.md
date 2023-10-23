@@ -4,7 +4,7 @@
 
 ## GroupingRule.JSON.rules property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 rules: Array<Rule.JSON>;

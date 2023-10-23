@@ -4,12 +4,12 @@
 
 ## Keyword.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<T extends string = string> extends Value.JSON<"keyword"> 
 ```
-<b>Extends:</b> [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"keyword"&gt;
+**Extends:** [Value.JSON](./alfa-css.value.json.md)<!-- -->&lt;"keyword"&gt;
 
 ## Properties
 

@@ -4,7 +4,7 @@
 
 ## Vector.clone() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function clone(v: Vector): Vector;
@@ -16,7 +16,7 @@ function clone(v: Vector): Vector;
 |  --- | --- | --- |
 |  v | [Vector](./alfa-math.vector.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Vector](./alfa-math.vector.md)
 

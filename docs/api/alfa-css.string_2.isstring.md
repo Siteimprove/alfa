@@ -4,7 +4,7 @@
 
 ## String\_2.isString() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isString(value: unknown): value is String;
@@ -16,7 +16,7 @@ function isString(value: unknown): value is String;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is String
+value is [String](./alfa-css.string_2.md)
 

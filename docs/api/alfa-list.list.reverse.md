@@ -4,12 +4,12 @@
 
 ## List.reverse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reverse(): List<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

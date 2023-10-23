@@ -4,7 +4,7 @@
 
 ## Node.index() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 index(options?: Node.Traversal): number;
@@ -14,9 +14,9 @@ index(options?: Node.Traversal): number;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
+|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

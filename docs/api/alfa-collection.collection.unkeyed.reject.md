@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed.reject() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reject<U extends T>(refinement: Refinement<T, U>): Unkeyed<Exclude<T, U>>;
@@ -14,9 +14,9 @@ reject<U extends T>(refinement: Refinement<T, U>): Unkeyed<Exclude<T, U>>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

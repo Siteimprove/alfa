@@ -4,7 +4,7 @@
 
 ## Percentage.Resolver interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface Resolver<R extends BaseNumeric.Type, T extends Numeric.Fixed<R>> 

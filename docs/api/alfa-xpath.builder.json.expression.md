@@ -4,7 +4,7 @@
 
 ## Builder.JSON.expression property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 expression: Expression.JSON;

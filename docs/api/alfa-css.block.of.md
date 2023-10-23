@@ -4,7 +4,7 @@
 
 ## Block.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(token: Block.Open, value: Iterable<Token>): Block;
@@ -15,9 +15,9 @@ static of(token: Block.Open, value: Iterable<Token>): Block;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  token | [Block.Open](./alfa-css.block.open.md) |  |
-|  value | Iterable&lt;[Token](./alfa-css.token.md)<!-- -->&gt; |  |
+|  value | Iterable&lt;Token&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Block](./alfa-css.block.md)
 

@@ -4,12 +4,12 @@
 
 ## PageRule.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): PageRule.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [PageRule.JSON](./alfa-dom.pagerule.json.md)
 

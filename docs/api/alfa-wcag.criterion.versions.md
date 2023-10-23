@@ -6,7 +6,7 @@
 
 The versions in which this criterion is defined.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get versions(): Iterable<Criterion.Version>;

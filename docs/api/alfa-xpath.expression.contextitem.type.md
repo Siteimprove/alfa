@@ -4,7 +4,7 @@
 
 ## Expression.ContextItem.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get type(): "context-item";

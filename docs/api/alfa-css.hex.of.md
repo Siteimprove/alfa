@@ -4,7 +4,7 @@
 
 ## Hex.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: number): Hex;
@@ -16,7 +16,7 @@ static of(value: number): Hex;
 |  --- | --- | --- |
 |  value | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Hex](./alfa-css.hex.md)
 

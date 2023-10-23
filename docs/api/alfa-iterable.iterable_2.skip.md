@@ -4,7 +4,7 @@
 
 ## Iterable\_2.skip() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function skip<T>(iterable: Iterable<T>, count: number): Iterable<T>;
@@ -14,10 +14,10 @@ function skip<T>(iterable: Iterable<T>, count: number): Iterable<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 |  count | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;T&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

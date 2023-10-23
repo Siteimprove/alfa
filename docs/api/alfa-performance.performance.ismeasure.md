@@ -4,7 +4,7 @@
 
 ## Performance.isMeasure variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isMeasure: typeof Measure.isMeasure

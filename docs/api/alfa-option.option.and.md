@@ -4,7 +4,7 @@
 
 ## Option.and() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 and<U>(option: Option<U>): Option<U>;
@@ -16,7 +16,7 @@ and<U>(option: Option<U>): Option<U>;
 |  --- | --- | --- |
 |  option | [Option](./alfa-option.option.md)<!-- -->&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

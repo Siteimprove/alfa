@@ -4,7 +4,7 @@
 
 ## Slice.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from<T>(iterable: Iterable<T>): Slice<T>;
@@ -16,7 +16,7 @@ function from<T>(iterable: Iterable<T>): Slice<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

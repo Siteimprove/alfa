@@ -4,7 +4,7 @@
 
 ## Option.tee() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tee(callback: Callback<T>): Option<T>;
@@ -14,9 +14,9 @@ tee(callback: Callback<T>): Option<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+|  callback | Callback&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
 

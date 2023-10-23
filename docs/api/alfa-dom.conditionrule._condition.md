@@ -4,7 +4,7 @@
 
 ## ConditionRule.\_condition property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _condition: string;

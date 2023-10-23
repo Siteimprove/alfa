@@ -4,7 +4,7 @@
 
 ## Audit.evaluate() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable<Outcome<I, T, Q, S>>>;
@@ -14,9 +14,9 @@ evaluate(performance?: Performance<Rule.Event<I, T, Q, S>>): Future<Iterable<Out
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  performance | [Performance](./alfa-performance.performance.md)<!-- -->&lt;[Rule.Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S&gt;&gt; | <i>(Optional)</i> |
+|  performance | Performance&lt;[Rule.Event](./alfa-act.rule.event.md)<!-- -->&lt;I, T, Q, S&gt;&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Future](./alfa-future.future.md)<!-- -->&lt;Iterable&lt;[Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S&gt;&gt;&gt;
+Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;
 

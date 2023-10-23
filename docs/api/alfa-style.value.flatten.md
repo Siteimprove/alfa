@@ -4,7 +4,7 @@
 
 ## Value.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Value<Value<T>>): Value<T>;
@@ -16,7 +16,7 @@ flatten<T>(this: Value<Value<T>>): Value<T>;
 |  --- | --- | --- |
 |  this | [Value](./alfa-style.value.md)<!-- -->&lt;[Value](./alfa-style.value.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Value](./alfa-style.value.md)<!-- -->&lt;T&gt;
 

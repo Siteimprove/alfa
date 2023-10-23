@@ -4,12 +4,19 @@
 
 ## Position.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-resolve(): Position<H, V>;
+resolve(resolver: Position.Resolver): Position.Canonical<H, V>;
 ```
-<b>Returns:</b>
 
-[Position](./alfa-css.position.md)<!-- -->&lt;H, V&gt;
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Position.Resolver](./alfa-css.position.resolver.md) |  |
+
+**Returns:**
+
+[Position.Canonical](./alfa-css.position.canonical.md)<!-- -->&lt;H, V&gt;
 

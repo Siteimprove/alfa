@@ -4,12 +4,12 @@
 
 ## Selector.LastChild.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): LastChild;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [LastChild](./alfa-selector.selector.lastchild.md)
 

@@ -4,12 +4,19 @@
 
 ## Ellipse.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-resolve(): Ellipse<R, P>;
+resolve(resolver: Ellipse.Resolver): Ellipse.Canonical;
 ```
-<b>Returns:</b>
 
-[Ellipse](./alfa-css.ellipse.md)<!-- -->&lt;R, P&gt;
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Ellipse.Resolver](./alfa-css.ellipse.resolver.md) |  |
+
+**Returns:**
+
+[Ellipse.Canonical](./alfa-css.ellipse.canonical.md)
 

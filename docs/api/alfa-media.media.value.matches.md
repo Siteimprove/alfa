@@ -4,7 +4,7 @@
 
 ## Media.Value.matches() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 matches(value: T): boolean;
@@ -16,7 +16,7 @@ matches(value: T): boolean;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

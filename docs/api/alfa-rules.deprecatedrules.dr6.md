@@ -9,7 +9,7 @@
 > This rule has been deprecated because `xml:lang` attribute are not used anymore.
 > 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 _default: Rule.Atomic<Page, Element<string>, {}, Element<string>>

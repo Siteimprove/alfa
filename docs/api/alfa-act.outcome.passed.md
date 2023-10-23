@@ -4,7 +4,7 @@
 
 ## Outcome.passed variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 passed: typeof Passed.of

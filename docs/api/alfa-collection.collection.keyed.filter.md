@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.filter() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 filter<U extends V>(refinement: Refinement<V, U, [key: K]>): Keyed<K, U>;
@@ -14,9 +14,9 @@ filter<U extends V>(refinement: Refinement<V, U, [key: K]>): Keyed<K, U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
+|  refinement | Refinement&lt;V, U, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, U&gt;
 

@@ -4,12 +4,12 @@
 
 ## Perspective.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Function.JSON<"perspective"> 
 ```
-<b>Extends:</b> Function.JSON&lt;"perspective"&gt;
+**Extends:** Function.JSON&lt;"perspective"&gt;
 
 ## Properties
 

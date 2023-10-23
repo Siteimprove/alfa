@@ -4,7 +4,7 @@
 
 ## Table.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(element: Element): Table;
@@ -14,9 +14,9 @@ function from(element: Element): Table;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Table](./alfa-table.table.md)
 

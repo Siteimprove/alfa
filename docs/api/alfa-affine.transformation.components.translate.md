@@ -6,7 +6,7 @@
 
 A vector representing \[x, y, z\] translation.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 translate: Vector;

@@ -4,7 +4,7 @@
 
 ## URL.JSON.path property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 path: Array<string>;

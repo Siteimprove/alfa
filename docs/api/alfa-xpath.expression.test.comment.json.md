@@ -4,7 +4,7 @@
 
 ## Expression.Test.Comment.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON 

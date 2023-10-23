@@ -4,25 +4,26 @@
 
 ## Element.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable<Attribute>, children?: Iterable<Node>, style?: Option<Block>, box?: Option<Rectangle>): Element<N>;
+static of<N extends string = string>(namespace: Option<Namespace>, prefix: Option<string>, name: N, attributes?: Iterable<Attribute>, children?: Iterable<Node>, style?: Option<Block>, box?: Option<Rectangle>, device?: Option<Device>): Element<N>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  namespace | [Option](./alfa-option.option.md)<!-- -->&lt;[Namespace](./alfa-dom.namespace.md)<!-- -->&gt; |  |
-|  prefix | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  namespace | Option&lt;Namespace&gt; |  |
+|  prefix | Option&lt;string&gt; |  |
 |  name | N |  |
-|  attributes | Iterable&lt;[Attribute](./alfa-dom.attribute.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  children | Iterable&lt;[Node](./alfa-dom.node.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  style | [Option](./alfa-option.option.md)<!-- -->&lt;[Block](./alfa-dom.block.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  box | [Option](./alfa-option.option.md)<!-- -->&lt;[Rectangle](./alfa-rectangle.rectangle.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  attributes | Iterable&lt;Attribute&gt; | _(Optional)_ |
+|  children | Iterable&lt;Node&gt; | _(Optional)_ |
+|  style | Option&lt;Block&gt; | _(Optional)_ |
+|  box | Option&lt;Rectangle&gt; | _(Optional)_ |
+|  device | Option&lt;Device&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Element](./alfa-dom.element.md)<!-- -->&lt;N&gt;
 

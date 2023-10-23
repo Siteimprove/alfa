@@ -4,7 +4,7 @@
 
 ## Expression.Filter.base property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get base(): Expression;

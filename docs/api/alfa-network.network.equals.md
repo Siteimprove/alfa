@@ -4,7 +4,7 @@
 
 ## Network.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<N, E>(value: Network<N, E>): boolean;
@@ -16,7 +16,7 @@ equals<N, E>(value: Network<N, E>): boolean;
 |  --- | --- | --- |
 |  value | [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

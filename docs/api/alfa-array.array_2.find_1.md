@@ -4,7 +4,7 @@
 
 ## Array\_2.find() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function find<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number]>): Option<T>;
@@ -15,9 +15,9 @@ function find<T>(array: ReadonlyArray<T>, predicate: Predicate<T, [index: number
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

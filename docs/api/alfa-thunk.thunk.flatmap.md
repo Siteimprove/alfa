@@ -4,7 +4,7 @@
 
 ## Thunk.flatMap() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function flatMap<T, U>(thunk: Thunk<T>, mapper: Mapper<T, Thunk<U>>): Thunk<U>;
@@ -17,7 +17,7 @@ function flatMap<T, U>(thunk: Thunk<T>, mapper: Mapper<T, Thunk<U>>): Thunk<U>;
 |  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;T&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;U&gt;
 

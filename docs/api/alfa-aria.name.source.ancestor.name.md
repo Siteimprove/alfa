@@ -4,7 +4,7 @@
 
 ## Name.Source.Ancestor.name property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get name(): Name;

@@ -4,7 +4,7 @@
 
 ## Scale.JSON.y property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 y: Number.Fixed.JSON;

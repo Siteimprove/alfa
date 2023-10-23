@@ -4,7 +4,7 @@
 
 ## Percentage.isPercentage() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isPercentage(value: unknown): value is Percentage;
@@ -16,7 +16,7 @@ export function isPercentage(value: unknown): value is Percentage;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Percentage](./alfa-css.percentage.md)
 

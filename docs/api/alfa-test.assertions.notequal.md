@@ -6,7 +6,7 @@
 
 [https://nodejs.org/api/assert.html\#assert\_assert\_notequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_notequal_actual_expected_message)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 notEqual<T>(actual: T, expected: T, message?: string): void;
@@ -18,9 +18,9 @@ notEqual<T>(actual: T, expected: T, message?: string): void;
 |  --- | --- | --- |
 |  actual | T |  |
 |  expected | T |  |
-|  message | string | <i>(Optional)</i> |
+|  message | string | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

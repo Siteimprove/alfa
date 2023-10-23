@@ -4,7 +4,7 @@
 
 ## Result.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from<T, E = unknown>(thunk: Thunk<Promise<T>>): Promise<Result<T, E>>;
@@ -14,9 +14,9 @@ function from<T, E = unknown>(thunk: Thunk<Promise<T>>): Promise<Result<T, E>>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  thunk | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;Promise&lt;T&gt;&gt; |  |
+|  thunk | Thunk&lt;Promise&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;[Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;&gt;
 

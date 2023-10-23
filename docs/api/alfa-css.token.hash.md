@@ -4,7 +4,7 @@
 
 ## Token.hash variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hash: typeof Hash.of

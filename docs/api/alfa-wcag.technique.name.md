@@ -6,7 +6,7 @@
 
 The names of all techniques.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Name = keyof Techniques;

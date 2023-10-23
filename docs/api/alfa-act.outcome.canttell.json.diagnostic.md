@@ -4,7 +4,7 @@
 
 ## Outcome.CantTell.JSON.diagnostic property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 diagnostic: json.Serializable.ToJSON<Diagnostic>;

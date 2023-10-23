@@ -4,7 +4,7 @@
 
 ## Matrix.add() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function add(m: Matrix, n: Matrix): Matrix;
@@ -17,7 +17,7 @@ function add(m: Matrix, n: Matrix): Matrix;
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 |  n | [Matrix](./alfa-math.matrix.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Matrix](./alfa-math.matrix.md)
 

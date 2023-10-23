@@ -6,10 +6,10 @@
 
 Some percentages are resolved against boxes dimensions which we do not always have access to at compute time.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type PartiallyResolved = Canonical | Percentage.Canonical | LengthPercentage.Calculated;
 ```
-<b>References:</b> [Canonical](./alfa-css.lengthpercentage.canonical.md)<!-- -->, [Percentage.Canonical](./alfa-css.percentage.canonical.md)<!-- -->, [LengthPercentage.Calculated](./alfa-css.lengthpercentage.calculated.md)
+**References:** [Canonical](./alfa-css.lengthpercentage.canonical.md)<!-- -->, [Percentage.Canonical](./alfa-css.percentage.canonical.md)<!-- -->, [LengthPercentage.Calculated](./alfa-css.lengthpercentage.calculated.md)
 

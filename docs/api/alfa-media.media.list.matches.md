@@ -4,7 +4,7 @@
 
 ## Media.List.matches() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 matches(device: Device): boolean;
@@ -14,9 +14,9 @@ matches(device: Device): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  device | [Device](./alfa-device.device.md) |  |
+|  device | Device |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

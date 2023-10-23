@@ -4,7 +4,7 @@
 
 ## Ellipse.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Ellipse): boolean;
@@ -16,7 +16,7 @@ equals(value: Ellipse): boolean;
 |  --- | --- | --- |
 |  value | [Ellipse](./alfa-css.ellipse.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

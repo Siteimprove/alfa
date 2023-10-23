@@ -4,7 +4,7 @@
 
 ## Transform.scale() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function scale(x: Number, y: Number): Scale;
@@ -17,7 +17,7 @@ function scale(x: Number, y: Number): Scale;
 |  x | Number |  |
 |  y | Number |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Scale](./alfa-css.scale.md)
+Scale
 

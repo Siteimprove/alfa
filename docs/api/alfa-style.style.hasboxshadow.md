@@ -4,7 +4,7 @@
 
 ## Style.hasBoxShadow variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasBoxShadow: typeof element.hasBoxShadow

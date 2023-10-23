@@ -4,7 +4,7 @@
 
 ## HSL.lightness property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get lightness(): Percentage.Fixed;

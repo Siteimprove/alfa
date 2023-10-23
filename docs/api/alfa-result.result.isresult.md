@@ -4,7 +4,7 @@
 
 ## Result.isResult() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isResult<T, E>(value: Iterable<T>): value is Result<T, E>;
@@ -16,7 +16,7 @@ function isResult<T, E>(value: Iterable<T>): value is Result<T, E>;
 |  --- | --- | --- |
 |  value | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Result](./alfa-result.result.md)<!-- -->&lt;T, E&gt;
 

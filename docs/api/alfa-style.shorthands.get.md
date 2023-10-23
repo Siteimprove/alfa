@@ -4,7 +4,7 @@
 
 ## Shorthands.get() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function get<N extends Name>(name: N): Property[N];
@@ -16,7 +16,7 @@ function get<N extends Name>(name: N): Property[N];
 |  --- | --- | --- |
 |  name | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Property](./alfa-style.shorthands.property.md)<!-- -->\[N\]
 

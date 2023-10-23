@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Event` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 constructor(type: TYPE, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, name: NAME);

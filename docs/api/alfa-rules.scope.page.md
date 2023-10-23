@@ -6,7 +6,7 @@
 
 For rules that test failures at the page level. These rules only make sense to include in an audit if an entire page is available.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Page: Scope<"page">

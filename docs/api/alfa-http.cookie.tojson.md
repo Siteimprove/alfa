@@ -4,12 +4,12 @@
 
 ## Cookie.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Cookie.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Cookie.JSON](./alfa-http.cookie.json.md)
 

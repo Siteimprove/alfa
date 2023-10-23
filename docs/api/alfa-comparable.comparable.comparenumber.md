@@ -4,7 +4,7 @@
 
 ## Comparable.compareNumber() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function compareNumber(a: number, b: number): Comparison;
@@ -17,7 +17,7 @@ function compareNumber(a: number, b: number): Comparison;
 |  a | number |  |
 |  b | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

@@ -4,7 +4,7 @@
 
 ## Performance.Mark.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(data: T, start: number): Mark<T>;
@@ -17,7 +17,7 @@ static of<T>(data: T, start: number): Mark<T>;
 |  data | T |  |
 |  start | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Mark](./alfa-performance.performance.mark.md)<!-- -->&lt;T&gt;
 

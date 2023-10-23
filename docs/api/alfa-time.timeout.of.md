@@ -4,7 +4,7 @@
 
 ## Timeout.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(timeout: number, time?: Time): Timeout;
@@ -15,9 +15,9 @@ static of(timeout: number, time?: Time): Timeout;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  timeout | number |  |
-|  time | [Time](./alfa-time.time.md) | <i>(Optional)</i> |
+|  time | [Time](./alfa-time.time.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Timeout](./alfa-time.timeout.md)
 

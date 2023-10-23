@@ -6,7 +6,7 @@
 
 Resolves a calculation typed as an angle, length, length-percentage or number. Needs a resolver to handle relative lengths and percentages.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(this: Math<"angle">): Result<Angle<"deg">, string>;
@@ -16,9 +16,9 @@ resolve(this: Math<"angle">): Result<Angle<"deg">, string>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Math&lt;"angle"&gt; |  |
+|  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"angle"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;Angle&lt;"deg"&gt;, string&gt;
+Result&lt;Angle&lt;"deg"&gt;, string&gt;
 

@@ -4,7 +4,7 @@
 
 ## Text.name property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get name(): Option<Name>;

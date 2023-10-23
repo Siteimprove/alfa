@@ -4,7 +4,7 @@
 
 ## Page.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(request: Request, response: Response, document: Document, device: Device): Page;
@@ -14,12 +14,12 @@ static of(request: Request, response: Response, document: Document, device: Devi
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  request | [Request](./alfa-http.request.md) |  |
-|  response | [Response](./alfa-http.response.md) |  |
-|  document | [Document](./alfa-dom.document.md) |  |
-|  device | [Device](./alfa-device.device.md) |  |
+|  request | Request |  |
+|  response | Response |  |
+|  document | Document |  |
+|  device | Device |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Page](./alfa-web.page.md)
 

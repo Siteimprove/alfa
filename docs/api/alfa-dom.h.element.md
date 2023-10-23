@@ -4,10 +4,10 @@
 
 ## h.element() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace, box?: Rectangle): Element<N>;
+function element<N extends string = string>(name: N, attributes?: Array<Attribute> | Record<string, string | boolean>, children?: Array<Node | string>, style?: Array<Declaration> | Record<string, string>, namespace?: Namespace, box?: Rectangle, device?: Device): Element<N>;
 ```
 
 ## Parameters
@@ -15,13 +15,14 @@ function element<N extends string = string>(name: N, attributes?: Array<Attribut
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | N |  |
-|  attributes | Array&lt;[Attribute](./alfa-dom.attribute.md)<!-- -->&gt; \| Record&lt;string, string \| boolean&gt; | <i>(Optional)</i> |
-|  children | Array&lt;[Node](./alfa-dom.node.md) \| string&gt; | <i>(Optional)</i> |
-|  style | Array&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; \| Record&lt;string, string&gt; | <i>(Optional)</i> |
-|  namespace | [Namespace](./alfa-dom.namespace.md) | <i>(Optional)</i> |
-|  box | [Rectangle](./alfa-rectangle.rectangle.md) | <i>(Optional)</i> |
+|  attributes | Array&lt;Attribute&gt; \| Record&lt;string, string \| boolean&gt; | _(Optional)_ |
+|  children | Array&lt;Node \| string&gt; | _(Optional)_ |
+|  style | Array&lt;Declaration&gt; \| Record&lt;string, string&gt; | _(Optional)_ |
+|  namespace | Namespace | _(Optional)_ |
+|  box | Rectangle | _(Optional)_ |
+|  device | Device | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Element](./alfa-dom.element.md)<!-- -->&lt;N&gt;
+Element&lt;N&gt;
 

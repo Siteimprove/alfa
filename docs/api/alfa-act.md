@@ -13,8 +13,13 @@ This package provides functionality for implementing rules specified in the [ACT
 |  [Audit](./alfa-act.audit.md) | \* I: type of Input for rules \* T: possible types of test targets \* Q: questions' metadata type \* S: possible types of questions' subject. |
 |  [Cache](./alfa-act.cache.md) |  |
 |  [Diagnostic](./alfa-act.diagnostic.md) |  |
-|  [Outcome](./alfa-act.outcome.md) | I: type of Input for the associated rule T: type of the rule's test target Q: questions' metadata type S: possible types of questions' subject. |
 |  [Question](./alfa-act.question.md) | \* TYPE is a (JavaScript manipulable) representation of the expected type of answers. It allows oracles and such to act on it. It can be an Enum, an ID, a union of string literals, … \* SUBJECT is the subject of the question. \* CONTEXT is the context, some extra info added to help the subject make sense. By convention, the context is \*always\* the test target (or potential test target when questions are asked in Applicability). \* ANSWER is the expected type of the answer. \* T is the final result of the question, after transformation. This gives a monadic structure to the question and allow manipulation of the answer without breaking the Question structure. \* URI is a unique identifier for the question. |
+
+## Abstract Classes
+
+|  Abstract Class | Description |
+|  --- | --- |
+|  [Outcome](./alfa-act.outcome.md) | I: type of Input for the associated rule T: type of the rule's test target Q: questions' metadata type S: possible types of questions' subject. |
 |  [Requirement](./alfa-act.requirement.md) |  |
 |  [Rule](./alfa-act.rule.md) | \* I: type of Input for the rule \* T: type of the test targets \* Q: questions' metadata type \* S: possible types of questions' subject. |
 |  [Tag](./alfa-act.tag.md) |  |

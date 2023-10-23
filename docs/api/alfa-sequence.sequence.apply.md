@@ -4,7 +4,7 @@
 
 ## Sequence.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Sequence<Mapper<T, U>>): Sequence<U>;
 |  --- | --- | --- |
 |  mapper | [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;U&gt;
 

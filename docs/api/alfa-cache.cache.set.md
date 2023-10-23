@@ -4,7 +4,7 @@
 
 ## Cache.set() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 set(key: K, value: V): this;
@@ -17,7 +17,7 @@ set(key: K, value: V): this;
 |  key | K |  |
 |  value | V |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

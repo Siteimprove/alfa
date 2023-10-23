@@ -4,12 +4,12 @@
 
 ## Inset.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<O extends Offset = Offset, C extends Corner = Corner> extends BasicShape.JSON<"inset"> 
 ```
-<b>Extends:</b> BasicShape.JSON&lt;"inset"&gt;
+**Extends:** BasicShape.JSON&lt;"inset"&gt;
 
 ## Properties
 

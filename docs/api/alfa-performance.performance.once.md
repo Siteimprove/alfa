@@ -4,12 +4,12 @@
 
 ## Performance.once() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 once(): Promise<Performance.Entry<T>>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;[Performance.Entry](./alfa-performance.performance.entry.md)<!-- -->&lt;T&gt;&gt;
 

@@ -4,7 +4,7 @@
 
 ## Scale.isScale() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isScale(value: unknown): value is Scale;
@@ -16,7 +16,7 @@ function isScale(value: unknown): value is Scale;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Scale](./alfa-css.scale.md)
 

@@ -4,12 +4,12 @@
 
 ## Right.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Right.JSON<R>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Right.JSON](./alfa-either.right.json.md)<!-- -->&lt;R&gt;
 

@@ -4,7 +4,7 @@
 
 ## Element.JSON.box property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 box: Rectangle.JSON | null;

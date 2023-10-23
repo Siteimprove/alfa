@@ -4,7 +4,7 @@
 
 ## Branched.some() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 some(predicate: Predicate<T, [Iterable<B>]>): boolean;
@@ -14,9 +14,9 @@ some(predicate: Predicate<T, [Iterable<B>]>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
+|  predicate | Predicate&lt;T, \[Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

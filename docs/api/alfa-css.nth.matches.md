@@ -6,7 +6,7 @@
 
 Check if the given index matches the indices produced by this nth.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 matches(index: number): boolean;
@@ -18,7 +18,7 @@ matches(index: number): boolean;
 |  --- | --- | --- |
 |  index | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-syntax/\#consume-a-simple-block](https://drafts.csswg.org/css-syntax/#consume-a-simple-block)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 consume: CSSParser<Block>

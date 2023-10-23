@@ -4,7 +4,7 @@
 
 ## Map\_2.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<K, V>(value: Map<K, V>): boolean;
@@ -14,9 +14,9 @@ equals<K, V>(value: Map<K, V>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Map&lt;K, V&gt; |  |
+|  value | [Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

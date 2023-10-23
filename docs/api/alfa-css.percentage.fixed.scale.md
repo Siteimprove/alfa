@@ -4,7 +4,7 @@
 
 ## Percentage.Fixed.scale() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 scale(factor: number): Fixed<R>;
@@ -16,7 +16,7 @@ scale(factor: number): Fixed<R>;
 |  --- | --- | --- |
 |  factor | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.percentage.fixed.md)<!-- -->&lt;R&gt;
 

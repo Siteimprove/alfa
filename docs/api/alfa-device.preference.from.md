@@ -4,7 +4,7 @@
 
 ## Preference.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function from<N extends Name>(json: JSON): Preference<N>;
@@ -16,7 +16,7 @@ export function from<N extends Name>(json: JSON): Preference<N>;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-device.preference.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Preference](./alfa-device.preference.md)<!-- -->&lt;N&gt;
 

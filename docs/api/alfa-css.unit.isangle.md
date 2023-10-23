@@ -4,7 +4,7 @@
 
 ## Unit.isAngle() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isAngle(unit: string): unit is Angle;
@@ -16,7 +16,7 @@ function isAngle(unit: string): unit is Angle;
 |  --- | --- | --- |
 |  unit | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 unit is [Angle](./alfa-css.unit.angle.md)
 

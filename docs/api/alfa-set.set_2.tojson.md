@@ -4,12 +4,12 @@
 
 ## Set\_2.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Set.JSON<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Set.JSON&lt;T&gt;
+[Set.JSON](./alfa-set.set_2.json.md)<!-- -->&lt;T&gt;
 

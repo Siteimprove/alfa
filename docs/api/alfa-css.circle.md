@@ -5,7 +5,7 @@
 ## Circle namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Circle 
@@ -16,6 +16,7 @@ export declare namespace Circle
 |  Function | Description |
 |  --- | --- |
 |  [isCircle(value)](./alfa-css.circle.iscircle.md) |  |
+|  [partiallyResolve(resolver)](./alfa-css.circle.partiallyresolve.md) |  |
 
 ## Interfaces
 
@@ -28,4 +29,13 @@ export declare namespace Circle
 |  Variable | Description |
 |  --- | --- |
 |  [parse](./alfa-css.circle.parse.md) |  |
+
+## Type Aliases
+
+|  Type Alias | Description |
+|  --- | --- |
+|  [Canonical](./alfa-css.circle.canonical.md) |  |
+|  [PartiallyResolved](./alfa-css.circle.partiallyresolved.md) |  |
+|  [PartialResolver](./alfa-css.circle.partialresolver.md) |  |
+|  [Resolver](./alfa-css.circle.resolver.md) |  |
 

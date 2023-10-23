@@ -4,10 +4,8 @@
 
 ## Numeric.Type type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Type = BaseNumeric.Type | `${BaseNumeric.Dimension}-percentage`;
 ```
-<b>References:</b> [BaseNumeric.Type](./alfa-css.numeric.type.md)
-

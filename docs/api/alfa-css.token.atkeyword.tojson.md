@@ -4,12 +4,12 @@
 
 ## Token.AtKeyword.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): AtKeyword.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [AtKeyword.JSON](./alfa-css.token.atkeyword.json.md)
 

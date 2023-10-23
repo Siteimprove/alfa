@@ -4,12 +4,12 @@
 
 ## Expression.Filter.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Filter.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Filter.JSON](./alfa-xpath.expression.filter.json.md)
 

@@ -4,12 +4,12 @@
 
 ## Name.Source.Descendant.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.iterator](): Iterator<Node>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Iterator&lt;[Node](./alfa-dom.node.md)<!-- -->&gt;
+Iterator&lt;Node&gt;
 

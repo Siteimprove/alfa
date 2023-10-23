@@ -4,7 +4,7 @@
 
 ## Rule.Event.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<T extends Type = Type, N extends string = string> 

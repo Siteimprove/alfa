@@ -4,12 +4,12 @@
 
 ## Token.String.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): String.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [String.JSON](./alfa-xpath.token.string.json.md)
 

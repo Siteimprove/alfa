@@ -4,7 +4,7 @@
 
 ## Err.mapOrElse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 mapOrElse<U>(ok: unknown, err: Mapper<E, U>): U;
@@ -17,7 +17,7 @@ mapOrElse<U>(ok: unknown, err: Mapper<E, U>): U;
 |  ok | unknown |  |
 |  err | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;E, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 U
 

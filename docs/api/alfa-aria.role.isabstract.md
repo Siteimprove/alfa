@@ -6,12 +6,12 @@
 
 Check if this role is abstract.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isAbstract(): this is Role<Role.Abstract>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Role](./alfa-aria.role.md)<!-- -->&lt;[Role.Abstract](./alfa-aria.role.abstract.md)<!-- -->&gt;
 

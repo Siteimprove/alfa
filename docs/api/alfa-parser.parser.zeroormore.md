@@ -4,7 +4,7 @@
 
 ## Parser.zeroOrMore() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function zeroOrMore<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, Array<T>, E, A>;
@@ -16,7 +16,7 @@ function zeroOrMore<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T,
 |  --- | --- | --- |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, Array&lt;T&gt;, E, A&gt;
 

@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#hover-pseudo](https://drafts.csswg.org/selectors/#hover-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Hover extends Pseudo.Class<"hover"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"hover"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"hover"&gt;
 
 ## Methods
 

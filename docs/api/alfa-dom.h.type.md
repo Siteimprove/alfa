@@ -4,7 +4,7 @@
 
 ## h.type() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function type<N extends string = string>(name: N, publicId?: string, systemId?: string): Type<N>;
@@ -15,10 +15,10 @@ function type<N extends string = string>(name: N, publicId?: string, systemId?: 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | N |  |
-|  publicId | string | <i>(Optional)</i> |
-|  systemId | string | <i>(Optional)</i> |
+|  publicId | string | _(Optional)_ |
+|  systemId | string | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Type](./alfa-dom.type.md)<!-- -->&lt;N&gt;
+Type&lt;N&gt;
 

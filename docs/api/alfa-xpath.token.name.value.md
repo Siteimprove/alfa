@@ -4,7 +4,7 @@
 
 ## Token.Name.value property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get value(): string;

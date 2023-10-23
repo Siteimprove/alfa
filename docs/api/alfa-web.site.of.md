@@ -4,7 +4,7 @@
 
 ## Site.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<R extends Resource>(resources: Graph<R>): Site<R>;
@@ -14,9 +14,9 @@ static of<R extends Resource>(resources: Graph<R>): Site<R>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  resources | [Graph](./alfa-graph.graph.md)<!-- -->&lt;R&gt; |  |
+|  resources | Graph&lt;R&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Site](./alfa-web.site.md)<!-- -->&lt;R&gt;
 

@@ -4,7 +4,7 @@
 
 ## Tuple.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<T extends Array<Value>>(value: Tuple<T>): boolean;
@@ -16,7 +16,7 @@ equals<T extends Array<Value>>(value: Tuple<T>): boolean;
 |  --- | --- | --- |
 |  value | [Tuple](./alfa-css.tuple.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

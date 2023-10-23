@@ -4,7 +4,7 @@
 
 ## Result.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<T, Result<U, E>>): Result<U, E>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;U, E&gt;
 

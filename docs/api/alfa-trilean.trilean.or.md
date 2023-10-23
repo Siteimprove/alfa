@@ -4,7 +4,7 @@
 
 ## Trilean.or() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function or<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, Predicate<T, A>, ...Array<Predicate<T, A>>]): Predicate<T, A>;
@@ -16,7 +16,7 @@ function or<T, A extends Array<unknown> = []>(...predicates: [Predicate<T, A>, P
 |  --- | --- | --- |
 |  predicates | \[[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;, [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;, ...Array&lt;[Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;&gt;\] |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, A&gt;
 

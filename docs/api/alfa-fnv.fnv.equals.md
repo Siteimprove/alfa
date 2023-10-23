@@ -4,7 +4,7 @@
 
 ## FNV.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: FNV): boolean;
@@ -16,7 +16,7 @@ equals(value: FNV): boolean;
 |  --- | --- | --- |
 |  value | [FNV](./alfa-fnv.fnv.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

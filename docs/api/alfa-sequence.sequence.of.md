@@ -4,7 +4,7 @@
 
 ## Sequence.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function of<T>(head: T, tail?: Lazy<Sequence<T>>): Sequence<T>;
@@ -15,9 +15,9 @@ function of<T>(head: T, tail?: Lazy<Sequence<T>>): Sequence<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  head | T |  |
-|  tail | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;&gt; | <i>(Optional)</i> |
+|  tail | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

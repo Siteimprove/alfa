@@ -4,7 +4,7 @@
 
 ## Transform.matrix() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function matrix(...values: Matrix.Values<Number>): Matrix;
@@ -16,7 +16,7 @@ function matrix(...values: Matrix.Values<Number>): Matrix;
 |  --- | --- | --- |
 |  values | [Matrix.Values](./alfa-css.matrix.values.md)<!-- -->&lt;Number&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Matrix](./alfa-css.matrix.md)
+Matrix
 

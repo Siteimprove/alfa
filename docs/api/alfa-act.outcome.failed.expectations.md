@@ -4,7 +4,7 @@
 
 ## Outcome.Failed.expectations property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get expectations(): Record<{

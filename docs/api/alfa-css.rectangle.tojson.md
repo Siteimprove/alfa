@@ -4,12 +4,12 @@
 
 ## Rectangle.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Rectangle.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Rectangle.JSON](./alfa-css.rectangle.json.md)
 

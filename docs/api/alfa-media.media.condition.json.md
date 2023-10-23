@@ -4,10 +4,10 @@
 
 ## Media.Condition.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON = And.JSON | Or.JSON | Not.JSON;
 ```
-<b>References:</b> [And.JSON](./alfa-media.media.and.json.md)<!-- -->, [Or.JSON](./alfa-media.media.or.json.md)<!-- -->, [Not.JSON](./alfa-media.media.not.json.md)
+**References:** [And.JSON](./alfa-media.media.and.json.md)<!-- -->, [Or.JSON](./alfa-media.media.or.json.md)<!-- -->, [Not.JSON](./alfa-media.media.not.json.md)
 

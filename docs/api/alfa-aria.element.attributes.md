@@ -4,7 +4,7 @@
 
 ## Element.attributes property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get attributes(): ReadonlyArray<Attribute>;

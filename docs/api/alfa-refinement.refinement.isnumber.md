@@ -4,7 +4,7 @@
 
 ## Refinement.isNumber() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isNumber(value: unknown): value is number;
@@ -16,7 +16,7 @@ export function isNumber(value: unknown): value is number;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is number
 

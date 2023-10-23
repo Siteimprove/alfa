@@ -4,12 +4,12 @@
 
 ## Cookies.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.iterator](): Iterator<Cookie>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Iterator&lt;[Cookie](./alfa-http.cookie.md)<!-- -->&gt;
+Iterator&lt;Cookie&gt;
 

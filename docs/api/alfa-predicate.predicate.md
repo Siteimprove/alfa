@@ -5,7 +5,7 @@
 ## Predicate type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Predicate<T, A extends Array<unknown> = []> = (value: T, ...args: A) => boolean;

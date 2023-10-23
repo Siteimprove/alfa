@@ -4,7 +4,7 @@
 
 ## Element.attribute() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 attribute<A extends string = string>(name: A): Option<Attribute<A>>;
@@ -16,7 +16,7 @@ attribute<A extends string = string>(name: A): Option<Attribute<A>>;
 |  --- | --- | --- |
 |  name | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Attribute](./alfa-dom.attribute.md)<!-- -->&lt;A&gt;&gt;
+Option&lt;Attribute&lt;A&gt;&gt;
 

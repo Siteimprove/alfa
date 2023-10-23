@@ -4,7 +4,7 @@
 
 ## Token.comma variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 comma: typeof Comma.of

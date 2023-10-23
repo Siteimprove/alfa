@@ -4,7 +4,7 @@
 
 ## Array\_2.equals() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function equals<T>(a: ReadonlyArray<T>, b: ReadonlyArray<T>): boolean;
@@ -17,7 +17,7 @@ function equals<T>(a: ReadonlyArray<T>, b: ReadonlyArray<T>): boolean;
 |  a | ReadonlyArray&lt;T&gt; |  |
 |  b | ReadonlyArray&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

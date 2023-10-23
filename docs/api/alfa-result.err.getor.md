@@ -4,7 +4,7 @@
 
 ## Err.getOr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getOr<U>(value: U): U;
@@ -16,7 +16,7 @@ getOr<U>(value: U): U;
 |  --- | --- | --- |
 |  value | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 U
 

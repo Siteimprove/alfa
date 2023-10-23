@@ -4,7 +4,7 @@
 
 ## Inset.bottom property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get bottom(): O;

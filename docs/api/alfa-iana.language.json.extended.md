@@ -4,7 +4,7 @@
 
 ## Language.JSON.extended property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 extended: Extended.JSON | null;

@@ -4,7 +4,7 @@
 
 ## Collection.collect() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 collect<U>(mapper: Mapper<T, Option<U>>): Collection<U>;
@@ -14,9 +14,9 @@ collect<U>(mapper: Mapper<T, Option<U>>): Collection<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Option&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Collection](./alfa-collection.collection.md)<!-- -->&lt;U&gt;
 

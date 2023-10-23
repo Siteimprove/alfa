@@ -4,10 +4,10 @@
 
 ## Browser.Query type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Query<N extends Name = Name> = Query.Every<N> | Query.Single<N> | Query.Range<N>;
 ```
-<b>References:</b> [Name](./alfa-compatibility.browser.name.md)<!-- -->, [Query.Every](./alfa-compatibility.browser.query.every.md)<!-- -->, [Query.Single](./alfa-compatibility.browser.query.single.md)<!-- -->, [Query.Range](./alfa-compatibility.browser.query.range.md)
+**References:** [Name](./alfa-compatibility.browser.name.md)<!-- -->, [Query.Every](./alfa-compatibility.browser.query.every.md)<!-- -->, [Query.Single](./alfa-compatibility.browser.query.single.md)<!-- -->, [Query.Range](./alfa-compatibility.browser.query.range.md)
 

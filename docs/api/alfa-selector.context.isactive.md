@@ -4,7 +4,7 @@
 
 ## Context.isActive() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isActive(element: Element): boolean;
@@ -14,9 +14,9 @@ isActive(element: Element): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

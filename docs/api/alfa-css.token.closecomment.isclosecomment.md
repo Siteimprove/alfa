@@ -4,7 +4,7 @@
 
 ## Token.CloseComment.isCloseComment() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isCloseComment(value: unknown): value is CloseComment;
@@ -16,7 +16,7 @@ function isCloseComment(value: unknown): value is CloseComment;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [CloseComment](./alfa-css.token.closecomment.md)
 

@@ -4,7 +4,7 @@
 
 ## Selector.List.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T extends Simple | Compound | Complex | Relative>(left: T, right: T | List<T>): List<T>;
@@ -17,7 +17,7 @@ static of<T extends Simple | Compound | Complex | Relative>(left: T, right: T | 
 |  left | T |  |
 |  right | T \| [List](./alfa-selector.selector.list.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-selector.selector.list.md)<!-- -->&lt;T&gt;
 

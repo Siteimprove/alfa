@@ -5,7 +5,7 @@
 ## Serializable namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Serializable 
@@ -16,8 +16,8 @@ export declare namespace Serializable
 |  Function | Description |
 |  --- | --- |
 |  [isSerializable(value)](./alfa-json.serializable.isserializable.md) |  |
-|  [toJSON(value)](./alfa-json.serializable.tojson.md) |  |
-|  [toJSON(value)](./alfa-json.serializable.tojson_1.md) |  |
+|  [toJSON(value, options)](./alfa-json.serializable.tojson.md) |  |
+|  [toJSON(value, options)](./alfa-json.serializable.tojson_1.md) |  |
 
 ## Type Aliases
 

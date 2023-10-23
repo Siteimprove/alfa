@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#first-child-pseudo](https://drafts.csswg.org/selectors/#first-child-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class FirstChild extends Pseudo.Class<"first-child"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"first-child"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"first-child"&gt;
 
 ## Methods
 

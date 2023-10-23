@@ -4,7 +4,7 @@
 
 ## Iterable\_2.intersect() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function intersect<T>(iterable: Iterable<T>, ...iterables: Array<Iterable<T>>): Iterable<T>;
@@ -14,10 +14,10 @@ function intersect<T>(iterable: Iterable<T>, ...iterables: Array<Iterable<T>>): 
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  iterables | Array&lt;Iterable&lt;T&gt;&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  iterables | Array&lt;[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;T&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

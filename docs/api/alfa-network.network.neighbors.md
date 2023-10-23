@@ -4,7 +4,7 @@
 
 ## Network.neighbors() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 neighbors(node: N): Iterable<[N, Iterable<E>]>;
@@ -16,7 +16,7 @@ neighbors(node: N): Iterable<[N, Iterable<E>]>;
 |  --- | --- | --- |
 |  node | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Iterable&lt;\[N, Iterable&lt;E&gt;\]&gt;
 

@@ -4,7 +4,7 @@
 
 ## Technique.isName() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isName(value: string): value is Name;
@@ -16,7 +16,7 @@ function isName(value: string): value is Name;
 |  --- | --- | --- |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Name](./alfa-wcag.technique.name.md)
 

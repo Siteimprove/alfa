@@ -4,7 +4,7 @@
 
 ## Cache.get() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, ifMissing: Thunk<Future<Iterable<Outcome<I, T, Q, S>>>>): Future<Iterable<Outcome<I, T, Q, S>>>;
@@ -14,10 +14,10 @@ get<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
-|  ifMissing | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;[Future](./alfa-future.future.md)<!-- -->&lt;Iterable&lt;[Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S&gt;&gt;&gt;&gt; |  |
+|  rule | Rule&lt;I, T, Q, S&gt; |  |
+|  ifMissing | Thunk&lt;Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Future](./alfa-future.future.md)<!-- -->&lt;Iterable&lt;[Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S&gt;&gt;&gt;
+Future&lt;Iterable&lt;Outcome&lt;I, T, Q, S&gt;&gt;&gt;
 

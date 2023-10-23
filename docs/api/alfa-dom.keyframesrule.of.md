@@ -4,7 +4,7 @@
 
 ## KeyframesRule.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: string, rules: Iterable<Rule>): KeyframesRule;
@@ -15,9 +15,9 @@ static of(name: string, rules: Iterable<Rule>): KeyframesRule;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-|  rules | Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
+|  rules | Iterable&lt;Rule&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [KeyframesRule](./alfa-dom.keyframesrule.md)
 

@@ -5,7 +5,7 @@
 ## Nil variable
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Nil: Nil

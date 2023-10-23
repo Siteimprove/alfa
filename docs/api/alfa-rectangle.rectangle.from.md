@@ -4,7 +4,7 @@
 
 ## Rectangle.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: Rectangle.JSON): Rectangle;
@@ -16,7 +16,7 @@ function from(json: Rectangle.JSON): Rectangle;
 |  --- | --- | --- |
 |  json | [Rectangle.JSON](./alfa-rectangle.rectangle.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Rectangle](./alfa-rectangle.rectangle.md)
 

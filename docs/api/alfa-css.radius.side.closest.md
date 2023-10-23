@@ -6,10 +6,8 @@
 
 [https://drafts.csswg.org/css-shapes/\#closest-side](https://drafts.csswg.org/css-shapes/#closest-side)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Closest = Keyword<"closest-side">;
 ```
-<b>References:</b> [Keyword](./alfa-css.keyword.md)
-

@@ -4,7 +4,7 @@
 
 ## Length.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of(value: Math<"length">): Calculated;
@@ -16,7 +16,7 @@ export function of(value: Math<"length">): Calculated;
 |  --- | --- | --- |
 |  value | Math&lt;"length"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Calculated](./alfa-css.length.calculated.md)
 

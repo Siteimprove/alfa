@@ -4,12 +4,12 @@
 
 ## Token.CloseCurlyBracket.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): CloseCurlyBracket;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [CloseCurlyBracket](./alfa-css.token.closecurlybracket.md)
 

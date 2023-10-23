@@ -5,7 +5,7 @@
 ## Radius namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Radius 
@@ -16,6 +16,7 @@ export declare namespace Radius
 |  Function | Description |
 |  --- | --- |
 |  [isRadius(value)](./alfa-css.radius.isradius.md) |  |
+|  [PartiallyResolve(resolver)](./alfa-css.radius.partiallyresolve.md) |  |
 
 ## Interfaces
 
@@ -39,5 +40,9 @@ export declare namespace Radius
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [Canonical](./alfa-css.radius.canonical.md) |  |
+|  [PartiallyResolved](./alfa-css.radius.partiallyresolved.md) |  |
+|  [PartialResolver](./alfa-css.radius.partialresolver.md) |  |
+|  [Resolver](./alfa-css.radius.resolver.md) |  |
 |  [Side](./alfa-css.radius.side.md) |  |
 

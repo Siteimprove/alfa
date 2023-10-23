@@ -4,7 +4,7 @@
 
 ## Map\_2.delete() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 delete(key: K): Map<K, V>;
@@ -16,7 +16,7 @@ delete(key: K): Map<K, V>;
 |  --- | --- | --- |
 |  key | K |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Map&lt;K, V&gt;
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;
 

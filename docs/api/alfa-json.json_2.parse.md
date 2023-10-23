@@ -4,7 +4,7 @@
 
 ## JSON\_2.parse() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parse(value: string): JSON;
@@ -16,7 +16,7 @@ function parse(value: string): JSON;
 |  --- | --- | --- |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-JSON
+[JSON](./alfa-json.json_2.md)
 

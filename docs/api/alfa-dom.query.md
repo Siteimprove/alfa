@@ -5,7 +5,7 @@
 ## Query namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Query 

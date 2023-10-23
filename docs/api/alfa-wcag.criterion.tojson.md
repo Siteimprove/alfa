@@ -4,12 +4,12 @@
 
 ## Criterion.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Criterion.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Criterion.JSON](./alfa-wcag.criterion.json.md)
 

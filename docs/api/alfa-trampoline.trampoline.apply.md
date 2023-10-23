@@ -4,7 +4,7 @@
 
 ## Trampoline.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Trampoline<Mapper<T, U>>): Trampoline<U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Trampoline<Mapper<T, U>>): Trampoline<U>;
 |  --- | --- | --- |
 |  mapper | [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;U&gt;
 

@@ -6,12 +6,12 @@
 
 Check if this role is presentational.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isPresentational(): this is Role<Role.Presentational>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Role](./alfa-aria.role.md)<!-- -->&lt;[Role.Presentational](./alfa-aria.role.presentational.md)<!-- -->&gt;
 

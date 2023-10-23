@@ -4,12 +4,12 @@
 
 ## Language.Variant.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Subtag.JSON<"variant", Name> 
 ```
-<b>Extends:</b> [Subtag.JSON](./alfa-iana.language.subtag.json.md)<!-- -->&lt;"variant", [Name](./alfa-iana.language.variant.name.md)<!-- -->&gt;
+**Extends:** [Subtag.JSON](./alfa-iana.language.subtag.json.md)<!-- -->&lt;"variant", [Name](./alfa-iana.language.variant.name.md)<!-- -->&gt;
 
 ## Properties
 

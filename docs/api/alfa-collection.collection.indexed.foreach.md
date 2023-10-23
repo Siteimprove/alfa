@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.forEach() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 forEach(callback: Callback<T, void, [index: number]>): void;
@@ -14,9 +14,9 @@ forEach(callback: Callback<T, void, [index: number]>): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, void, \[index: number\]&gt; |  |
+|  callback | Callback&lt;T, void, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

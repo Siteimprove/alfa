@@ -4,7 +4,7 @@
 
 ## Lexer.lex() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function lex(input: string): Array<Token>;
@@ -16,7 +16,7 @@ function lex(input: string): Array<Token>;
 |  --- | --- | --- |
 |  input | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;[Token](./alfa-xpath.token.md)<!-- -->&gt;
+Array&lt;Token&gt;
 

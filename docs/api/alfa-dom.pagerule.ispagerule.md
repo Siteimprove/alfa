@@ -4,7 +4,7 @@
 
 ## PageRule.isPageRule() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isPageRule(value: unknown): value is PageRule;
@@ -16,7 +16,7 @@ function isPageRule(value: unknown): value is PageRule;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [PageRule](./alfa-dom.pagerule.md)
 

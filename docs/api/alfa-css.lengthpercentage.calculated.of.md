@@ -4,7 +4,7 @@
 
 ## LengthPercentage.Calculated.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: Math<"length-percentage">): Calculated;
@@ -16,7 +16,7 @@ static of(value: Math<"length-percentage">): Calculated;
 |  --- | --- | --- |
 |  value | Math&lt;"length-percentage"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Calculated](./alfa-css.lengthpercentage.calculated.md)
 

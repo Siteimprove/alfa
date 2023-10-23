@@ -5,7 +5,7 @@
 ## Cookies namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Cookies 

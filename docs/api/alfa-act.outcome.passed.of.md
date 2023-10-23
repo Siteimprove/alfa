@@ -4,7 +4,7 @@
 
 ## Outcome.Passed.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, target: T, expectations: Record<{
@@ -16,12 +16,12 @@ static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+|  rule | Rule&lt;I, T, Q, S&gt; |  |
 |  target | T |  |
-|  expectations | Record&lt;{ \[key: string\]: [Result](./alfa-result.result.md)<!-- -->&lt;[Diagnostic](./alfa-act.diagnostic.md)<!-- -->&gt;; }&gt; |  |
+|  expectations | Record&lt;{ \[key: string\]: Result&lt;Diagnostic&gt;; }&gt; |  |
 |  mode | [Mode](./alfa-act.outcome.mode.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Passed](./alfa-act.outcome.passed.md)<!-- -->&lt;I, T, Q, S&gt;
 

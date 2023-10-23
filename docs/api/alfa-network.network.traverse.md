@@ -4,7 +4,7 @@
 
 ## Network.traverse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 traverse(root: N, traversal?: Network.Traversal): Sequence<[node: N, edges: Iterable<E>, parent: N]>;
@@ -15,9 +15,9 @@ traverse(root: N, traversal?: Network.Traversal): Sequence<[node: N, edges: Iter
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  root | N |  |
-|  traversal | [Network.Traversal](./alfa-network.network.traversal.md) | <i>(Optional)</i> |
+|  traversal | [Network.Traversal](./alfa-network.network.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;\[node: N, edges: Iterable&lt;E&gt;, parent: N\]&gt;
+Sequence&lt;\[node: N, edges: Iterable&lt;E&gt;, parent: N\]&gt;
 

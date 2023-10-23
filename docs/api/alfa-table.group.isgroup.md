@@ -4,7 +4,7 @@
 
 ## Group.isGroup variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isGroup: Refinement<unknown, Column.Group | Row.Group, []>

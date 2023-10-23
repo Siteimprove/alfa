@@ -4,7 +4,7 @@
 
 ## Comparable.compareBoolean() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function compareBoolean(a: boolean, b: boolean): Comparison;
@@ -17,7 +17,7 @@ function compareBoolean(a: boolean, b: boolean): Comparison;
 |  a | boolean |  |
 |  b | boolean |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

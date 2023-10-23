@@ -4,7 +4,7 @@
 
 ## Branched.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T, B>(this: Branched<Branched<T, B>, B>): Branched<T, B>;
@@ -16,7 +16,7 @@ flatten<T, B>(this: Branched<Branched<T, B>, B>): Branched<T, B>;
 |  --- | --- | --- |
 |  this | [Branched](./alfa-branched.branched.md)<!-- -->&lt;[Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;, B&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;T, B&gt;
 

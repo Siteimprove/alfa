@@ -4,7 +4,7 @@
 
 ## Node.hasChild variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasChild: typeof predicate.hasChild

@@ -4,7 +4,7 @@
 
 ## Parser.parseIf() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parseIf<I, T, E, A extends Array<unknown> = []>(predicate: Predicate<T>, parser: Parser<I, T, E, A>, ifError: Mapper<T, E>): Parser<I, T, E, A>;
@@ -14,11 +14,11 @@ function parseIf<I, T, E, A extends Array<unknown> = []>(predicate: Predicate<T>
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T&gt; |  |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 |  ifError | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, E&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
 

@@ -4,7 +4,7 @@
 
 ## Promise\_2.isPromise() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isPromise<T>(value: unknown): value is Promise<T>;
@@ -16,7 +16,7 @@ function isPromise<T>(value: unknown): value is Promise<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Promise&lt;T&gt;
+value is [Promise](./alfa-promise.promise_2.md)<!-- -->&lt;T&gt;
 

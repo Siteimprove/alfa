@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#last-of-type-pseudo](https://drafts.csswg.org/selectors/#last-of-type-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class LastOfType extends Pseudo.Class<"last-of-type"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"last-of-type"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"last-of-type"&gt;
 
 ## Methods
 

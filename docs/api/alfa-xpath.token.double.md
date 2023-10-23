@@ -4,7 +4,7 @@
 
 ## Token.Double namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Double 

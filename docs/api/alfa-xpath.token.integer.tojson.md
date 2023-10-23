@@ -4,12 +4,12 @@
 
 ## Token.Integer.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Integer.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Integer.JSON](./alfa-xpath.token.integer.json.md)
 

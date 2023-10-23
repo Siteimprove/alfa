@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.slice() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 slice(start: number, end?: number): Indexed<T>;
@@ -15,9 +15,9 @@ slice(start: number, end?: number): Indexed<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  start | number |  |
-|  end | number | <i>(Optional)</i> |
+|  end | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

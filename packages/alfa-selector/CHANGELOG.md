@@ -1,5 +1,7 @@
 # @siteimprove/alfa-selector
 
+## 0.68.0
+
 ## 0.67.0
 
 ### Minor Changes

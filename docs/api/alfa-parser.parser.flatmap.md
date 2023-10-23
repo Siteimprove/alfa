@@ -4,7 +4,7 @@
 
 ## Parser.flatMap() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function flatMap<I, T, U, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, mapper: Mapper<T, Parser<I, U, E, A>>): Parser<I, U, E, A>;
@@ -17,7 +17,7 @@ function flatMap<I, T, U, E, A extends Array<unknown> = []>(parser: Parser<I, T,
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, U, E, A&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, U, E, A&gt;
 

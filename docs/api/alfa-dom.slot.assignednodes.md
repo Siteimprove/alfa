@@ -8,12 +8,12 @@ Get the slotables assigned to this slot.
 
 [https://html.spec.whatwg.org/\#dom-slot-assignednodes](https://html.spec.whatwg.org/#dom-slot-assignednodes)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 assignedNodes(): Iterable<Slotable>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;[Slotable](./alfa-dom.slotable.md)<!-- -->&gt;
+Iterable&lt;Slotable&gt;
 

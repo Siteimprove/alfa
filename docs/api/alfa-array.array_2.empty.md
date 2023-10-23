@@ -4,12 +4,12 @@
 
 ## Array\_2.empty() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function empty<T = never>(): Array<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;T&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 

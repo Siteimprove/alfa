@@ -4,7 +4,7 @@
 
 ## Perspective.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<D extends Length>(depth: D): Perspective<D>;
@@ -16,7 +16,7 @@ static of<D extends Length>(depth: D): Perspective<D>;
 |  --- | --- | --- |
 |  depth | D |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Perspective](./alfa-css.perspective.md)<!-- -->&lt;D&gt;
 

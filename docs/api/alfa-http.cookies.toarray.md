@@ -4,12 +4,12 @@
 
 ## Cookies.toArray() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toArray(): Array<Cookie>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;[Cookie](./alfa-http.cookie.md)<!-- -->&gt;
+Array&lt;Cookie&gt;
 

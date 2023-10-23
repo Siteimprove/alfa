@@ -4,7 +4,7 @@
 
 ## Hashable.isHashable() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isHashable(value: unknown): value is Hashable;
@@ -16,7 +16,7 @@ function isHashable(value: unknown): value is Hashable;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Hashable](./alfa-hash.hashable.md)
 

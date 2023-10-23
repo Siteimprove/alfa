@@ -4,7 +4,7 @@
 
 ## Style.getPositioningParent variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getPositioningParent: typeof element.getPositioningParent

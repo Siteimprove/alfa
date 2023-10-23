@@ -4,12 +4,12 @@
 
 ## Text.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Node.JSON<"text"> 
 ```
-<b>Extends:</b> [Node.JSON](./alfa-aria.node.json.md)<!-- -->&lt;"text"&gt;
+**Extends:** [Node.JSON](./alfa-aria.node.json.md)<!-- -->&lt;"text"&gt;
 
 ## Properties
 

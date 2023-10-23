@@ -4,7 +4,7 @@
 
 ## Numeric.Calculated.JSON.math property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 math: Serializable.ToJSON<ToMath<T>>;

@@ -4,12 +4,12 @@
 
 ## Left.get() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get(): L;
 ```
-<b>Returns:</b>
+**Returns:**
 
 L
 

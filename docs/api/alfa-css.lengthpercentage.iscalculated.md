@@ -4,7 +4,7 @@
 
 ## LengthPercentage.isCalculated() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isCalculated(value: unknown): value is Calculated | Length.Calculated | Percentage.Calculated;
@@ -16,7 +16,7 @@ export function isCalculated(value: unknown): value is Calculated | Length.Calcu
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Calculated](./alfa-css.lengthpercentage.calculated.md) \| [Length.Calculated](./alfa-css.length.calculated.md) \| [Percentage.Calculated](./alfa-css.percentage.calculated.md)
 

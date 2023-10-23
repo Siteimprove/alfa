@@ -4,7 +4,7 @@
 
 ## Parser.teeErr() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function teeErr<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>, callback: Callback<E, void, A>): Parser<I, T, E, A>;
@@ -15,9 +15,9 @@ function teeErr<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;E, void, A&gt; |  |
+|  callback | Callback&lt;E, void, A&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
 

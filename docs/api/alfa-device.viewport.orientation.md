@@ -4,7 +4,7 @@
 
 ## Viewport.Orientation enum
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 enum Orientation 

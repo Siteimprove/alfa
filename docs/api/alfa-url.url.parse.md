@@ -6,7 +6,7 @@
 
 [https://url.spec.whatwg.org/\#concept-url-parser](https://url.spec.whatwg.org/#concept-url-parser)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parse(url: string, base?: string | URL): Result<URL, string>;
@@ -17,11 +17,11 @@ function parse(url: string, base?: string | URL): Result<URL, string>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  url | string |  |
-|  base | string \| [URL](./alfa-url.url.md) | <i>(Optional)</i> |
+|  base | string \| [URL](./alfa-url.url.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;[URL](./alfa-url.url.md)<!-- -->, string&gt;
+Result&lt;[URL](./alfa-url.url.md)<!-- -->, string&gt;
 
 ## Remarks
 

@@ -4,7 +4,7 @@
 
 ## Scope.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<S extends string>(scope: S): Scope<S>;
@@ -16,7 +16,7 @@ static of<S extends string>(scope: S): Scope<S>;
 |  --- | --- | --- |
 |  scope | S |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Scope](./alfa-rules.scope.md)<!-- -->&lt;S&gt;
 

@@ -4,7 +4,7 @@
 
 ## Scope.scope property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get scope(): S;

@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#only-child-pseudo](https://drafts.csswg.org/selectors/#only-child-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class OnlyChild extends Pseudo.Class<"only-child"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"only-child"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"only-child"&gt;
 
 ## Methods
 

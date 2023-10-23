@@ -4,7 +4,7 @@
 
 ## Comparable.compareBigInt() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function compareBigInt(a: bigint, b: bigint): Comparison;
@@ -17,7 +17,7 @@ function compareBigInt(a: bigint, b: bigint): Comparison;
 |  a | bigint |  |
 |  b | bigint |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

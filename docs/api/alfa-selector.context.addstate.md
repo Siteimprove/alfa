@@ -4,7 +4,7 @@
 
 ## Context.addState() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 addState(element: Element, state: Context.State): Context;
@@ -14,10 +14,10 @@ addState(element: Element, state: Context.State): Context;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 |  state | [Context.State](./alfa-selector.context.state.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Context](./alfa-selector.context.md)
 

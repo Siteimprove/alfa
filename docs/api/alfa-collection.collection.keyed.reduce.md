@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.reduce() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reduce<U>(reducer: Reducer<V, U, [key: K]>, accumulator: U): U;
@@ -14,10 +14,10 @@ reduce<U>(reducer: Reducer<V, U, [key: K]>, accumulator: U): U;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;V, U, \[key: K\]&gt; |  |
+|  reducer | Reducer&lt;V, U, \[key: K\]&gt; |  |
 |  accumulator | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 U
 

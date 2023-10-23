@@ -4,7 +4,7 @@
 
 ## Trilean.test() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function test<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, value: T, ...args: A): Trilean;
@@ -18,7 +18,7 @@ function test<T, A extends Array<unknown> = []>(predicate: Predicate<T, A>, valu
 |  value | T |  |
 |  args | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Trilean](./alfa-trilean.trilean.md)
 

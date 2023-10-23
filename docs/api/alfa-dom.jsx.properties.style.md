@@ -8,7 +8,7 @@ An optional record of CSS property names and their associated values. This works
 
 [https://reactjs.org/docs/dom-elements.html\#style](https://reactjs.org/docs/dom-elements.html#style)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 style?: Record<string, string>;

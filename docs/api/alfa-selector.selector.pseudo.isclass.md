@@ -4,7 +4,7 @@
 
 ## Selector.Pseudo.isClass() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isClass(value: unknown): value is Class;
@@ -16,7 +16,7 @@ function isClass(value: unknown): value is Class;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Class](./alfa-selector.selector.pseudo.class.md)
 

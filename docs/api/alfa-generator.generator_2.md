@@ -4,7 +4,7 @@
 
 ## Generator\_2 type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Generator<T, R = void, N = undefined> = globalThis.Generator<T, R, N>;

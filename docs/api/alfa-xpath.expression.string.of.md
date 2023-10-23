@@ -4,7 +4,7 @@
 
 ## Expression.String.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: string): String;
@@ -16,7 +16,7 @@ static of(value: string): String;
 |  --- | --- | --- |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [String](./alfa-xpath.expression.string.md)
 

@@ -4,7 +4,7 @@
 
 ## Selector.Id namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace Id 

@@ -4,7 +4,7 @@
 
 ## Lazy.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Lazy<Lazy<T>>): Lazy<T>;
@@ -16,7 +16,7 @@ flatten<T>(this: Lazy<Lazy<T>>): Lazy<T>;
 |  --- | --- | --- |
 |  this | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;[Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt;
 

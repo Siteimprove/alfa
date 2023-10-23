@@ -4,7 +4,7 @@
 
 ## Unit.Length.isFontRelative() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isFontRelative(unit: string): unit is Relative.Font;
@@ -16,7 +16,7 @@ function isFontRelative(unit: string): unit is Relative.Font;
 |  --- | --- | --- |
 |  unit | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 unit is [Relative.Font](./alfa-css.unit.length.relative.font.md)
 

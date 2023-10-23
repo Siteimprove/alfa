@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/css-pseudo-4/\#marker-pseudo](https://drafts.csswg.org/css-pseudo-4/#marker-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Marker extends Pseudo.Element<"marker"> 
 ```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"marker"&gt;
+**Extends:** [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"marker"&gt;
 
 ## Methods
 

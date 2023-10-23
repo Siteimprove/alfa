@@ -4,7 +4,7 @@
 
 ## Collection.tee() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tee<A extends Array<unknown> = []>(callback: Callback<Collection<T>, void, [...args: A]>, ...args: A): Collection<T>;
@@ -14,10 +14,10 @@ tee<A extends Array<unknown> = []>(callback: Callback<Collection<T>, void, [...a
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt; |  |
+|  callback | Callback&lt;[Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt; |  |
 |  args | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;
 

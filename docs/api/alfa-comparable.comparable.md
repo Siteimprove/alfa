@@ -6,7 +6,7 @@
 
 This namespace provides additional functions for the [Comparable](./alfa-comparable.comparable.md) interface.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Comparable 

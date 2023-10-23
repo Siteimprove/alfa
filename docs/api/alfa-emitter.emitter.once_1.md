@@ -4,7 +4,7 @@
 
 ## Emitter.once() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 once(listener: Callback<T>): this;
@@ -14,9 +14,9 @@ once(listener: Callback<T>): this;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  listener | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+|  listener | Callback&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

@@ -4,7 +4,7 @@
 
 ## Media.List.queries property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get queries(): Iterable<Query>;

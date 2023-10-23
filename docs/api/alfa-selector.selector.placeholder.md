@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/css-pseudo-4/\#placeholder-pseudo](https://drafts.csswg.org/css-pseudo-4/#placeholder-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Placeholder extends Pseudo.Element<"placeholder"> 
 ```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"placeholder"&gt;
+**Extends:** [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"placeholder"&gt;
 
 ## Methods
 

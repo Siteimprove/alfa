@@ -4,7 +4,7 @@
 
 ## Rule.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: MediaRule.JSON): MediaRule;
@@ -16,7 +16,7 @@ function from(json: MediaRule.JSON): MediaRule;
 |  --- | --- | --- |
 |  json | [MediaRule.JSON](./alfa-dom.mediarule.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[MediaRule](./alfa-dom.mediarule.md)
+MediaRule
 

@@ -4,7 +4,7 @@
 
 ## Branched.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Branched<Mapper<T, U>, B>): Branched<U, B>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Branched<Mapper<T, U>, B>): Branched<U, B>;
 |  --- | --- | --- |
 |  mapper | [Branched](./alfa-branched.branched.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;, B&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;U, B&gt;
 

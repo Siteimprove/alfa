@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#dom-element-closest](https://dom.spec.whatwg.org/#dom-element-closest)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 closest<T extends Node<F>>(refinement: Refinement<Node<F>, T>, options?: Flags<F>): Option<T>;
@@ -16,10 +16,10 @@ closest<T extends Node<F>>(refinement: Refinement<Node<F>, T>, options?: Flags<F
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;, T&gt; |  |
-|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+|  refinement | Refinement&lt;[Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;, T&gt; |  |
+|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

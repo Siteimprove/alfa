@@ -4,7 +4,7 @@
 
 ## Node.isRootOf() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isRootOf(node: Node, options?: Node.Traversal): boolean;
@@ -15,9 +15,9 @@ isRootOf(node: Node, options?: Node.Traversal): boolean;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  node | [Node](./alfa-dom.node.md) |  |
-|  options | [Node.Traversal](./alfa-dom.node.traversal.md) | <i>(Optional)</i> |
+|  options | [Node.Traversal](./alfa-dom.node.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

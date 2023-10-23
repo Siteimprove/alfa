@@ -6,7 +6,7 @@
 
 Check if one value is less than or equal to another.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isLessThanOrEqual<T>(a: Comparable<T>, b: T): boolean;
@@ -19,7 +19,7 @@ function isLessThanOrEqual<T>(a: Comparable<T>, b: T): boolean;
 |  a | [Comparable](./alfa-comparable.comparable.md)<!-- -->&lt;T&gt; |  |
 |  b | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

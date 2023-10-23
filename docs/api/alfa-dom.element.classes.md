@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#concept-class](https://dom.spec.whatwg.org/#concept-class)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get classes(): Sequence<string>;

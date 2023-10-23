@@ -4,7 +4,7 @@
 
 ## Cell.\_element property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _element: Element;

@@ -4,7 +4,7 @@
 
 ## Array\_2.iterator() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function iterator<T>(array: ReadonlyArray<T>): Iterator<T>;
@@ -16,7 +16,7 @@ function iterator<T>(array: ReadonlyArray<T>): Iterator<T>;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Iterator&lt;T&gt;
 

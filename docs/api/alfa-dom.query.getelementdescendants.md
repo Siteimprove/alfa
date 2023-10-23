@@ -4,7 +4,7 @@
 
 ## Query.getElementDescendants variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getElementDescendants: typeof elementDescendants.getElementDescendants

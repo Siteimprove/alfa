@@ -4,7 +4,7 @@
 
 ## Expression.Test.Element.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: Option<string>): Element;
@@ -14,9 +14,9 @@ static of(name: Option<string>): Element;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  name | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; |  |
+|  name | Option&lt;string&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Element](./alfa-xpath.expression.test.element.md)
 

@@ -4,7 +4,7 @@
 
 ## Rule.Event.JSON.rule property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 rule: Rule.JSON;

@@ -4,7 +4,7 @@
 
 ## Name.Source.Reference namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Reference 

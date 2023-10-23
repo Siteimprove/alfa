@@ -4,7 +4,7 @@
 
 ## Collection.filter() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 filter(predicate: Predicate<T>): Collection<T>;
@@ -14,9 +14,9 @@ filter(predicate: Predicate<T>): Collection<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;
 

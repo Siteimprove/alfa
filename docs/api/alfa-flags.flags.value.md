@@ -6,7 +6,7 @@
 
 A compact representation of the set of flags as a number
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get value(): number;

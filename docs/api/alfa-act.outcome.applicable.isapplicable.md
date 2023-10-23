@@ -4,7 +4,7 @@
 
 ## Outcome.Applicable.isApplicable() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isApplicable<I, T extends Hashable, Q extends Question.Metadata, S>(value: Outcome<I, T, Q, S>): value is Applicable<I, T, Q, S>;
@@ -16,7 +16,7 @@ function isApplicable<I, T extends Hashable, Q extends Question.Metadata, S>(val
 |  --- | --- | --- |
 |  value | [Outcome](./alfa-act.outcome.md)<!-- -->&lt;I, T, Q, S&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Applicable](./alfa-act.outcome.applicable.md)<!-- -->&lt;I, T, Q, S&gt;
 

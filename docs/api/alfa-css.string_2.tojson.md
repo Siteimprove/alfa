@@ -4,12 +4,12 @@
 
 ## String\_2.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): String.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
-String.JSON
+[String.JSON](./alfa-css.string_2.json.md)
 

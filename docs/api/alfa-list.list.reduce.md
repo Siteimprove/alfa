@@ -4,7 +4,7 @@
 
 ## List.reduce() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
@@ -14,10 +14,10 @@ reduce<U>(reducer: Reducer<T, U, [index: number]>, accumulator: U): U;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  reducer | [Reducer](./alfa-reducer.reducer.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  reducer | Reducer&lt;T, U, \[index: number\]&gt; |  |
 |  accumulator | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 U
 

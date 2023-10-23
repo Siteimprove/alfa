@@ -6,7 +6,7 @@
 
 Applies an `Option` valued mapper to each item in the collection, dropping the `None`<!-- -->s and unwrapping the `Some`<!-- -->s
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Indexed<U>;
@@ -16,9 +16,9 @@ collect<U>(mapper: Mapper<T, Option<U>, [index: number]>): Indexed<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;, \[index: number\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Option&lt;U&gt;, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;U&gt;
 

@@ -4,12 +4,12 @@
 
 ## Map\_2.toArray() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toArray(): Array<[K, V]>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Array&lt;\[K, V\]&gt;
 

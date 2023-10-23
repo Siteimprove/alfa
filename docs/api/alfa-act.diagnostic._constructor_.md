@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Diagnostic` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(message: string);

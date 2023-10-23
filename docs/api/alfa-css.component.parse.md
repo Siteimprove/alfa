@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-syntax/\#parse-component-value](https://drafts.csswg.org/css-syntax/#parse-component-value)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: Parser<Slice<Token>, Component, string, []>

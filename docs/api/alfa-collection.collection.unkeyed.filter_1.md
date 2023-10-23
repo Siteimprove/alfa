@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed.filter() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 filter(predicate: Predicate<T>): Unkeyed<T>;
@@ -14,9 +14,9 @@ filter(predicate: Predicate<T>): Unkeyed<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

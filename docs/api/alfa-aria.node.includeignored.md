@@ -6,7 +6,7 @@
 
 Traversal options to include ignored nodes in the traversal.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 includeIgnored: Traversal

@@ -6,7 +6,7 @@
 
 [https://www.w3.org/TR/mediaqueries/\#height](https://www.w3.org/TR/mediaqueries/#height)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get height(): number;

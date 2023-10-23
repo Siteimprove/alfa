@@ -4,7 +4,7 @@
 
 ## Selector.List.right property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get right(): T | List<T>;

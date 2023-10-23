@@ -4,7 +4,7 @@
 
 ## Refinement.isObject() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isObject(value: unknown): value is {
@@ -18,7 +18,7 @@ export function isObject(value: unknown): value is {
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is { \[key: string\]: unknown; }
 

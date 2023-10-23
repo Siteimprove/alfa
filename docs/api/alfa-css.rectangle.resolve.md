@@ -4,12 +4,19 @@
 
 ## Rectangle.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-resolve(): Rectangle<O>;
+resolve(resolver: Rectangle.Resolver): Rectangle.Canonical;
 ```
-<b>Returns:</b>
 
-[Rectangle](./alfa-css.rectangle.md)<!-- -->&lt;O&gt;
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Rectangle.Resolver](./alfa-css.rectangle.resolver.md) |  |
+
+**Returns:**
+
+[Rectangle.Canonical](./alfa-css.rectangle.canonical.md)
 

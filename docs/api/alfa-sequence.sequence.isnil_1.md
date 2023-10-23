@@ -4,7 +4,7 @@
 
 ## Sequence.isNil() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isNil(value: unknown): value is Nil;
@@ -16,7 +16,7 @@ function isNil(value: unknown): value is Nil;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Nil](./alfa-sequence.nil.md)
 

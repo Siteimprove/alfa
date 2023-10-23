@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-syntax/\#consume-a-declaration](https://drafts.csswg.org/css-syntax/#consume-a-declaration)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 consume: CSSParser<Declaration>

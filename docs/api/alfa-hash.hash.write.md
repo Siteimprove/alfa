@@ -4,7 +4,7 @@
 
 ## Hash.write() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract write(data: Uint8Array): this;
@@ -16,7 +16,7 @@ abstract write(data: Uint8Array): this;
 |  --- | --- | --- |
 |  data | Uint8Array |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

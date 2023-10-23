@@ -4,7 +4,7 @@
 
 ## Feature.Implementation.removed property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly removed?: Browser.Version<I>;

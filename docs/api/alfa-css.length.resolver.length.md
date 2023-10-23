@@ -4,7 +4,7 @@
 
 ## Length.Resolver.length property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 length: Mapper<Fixed<Unit.Length.Relative>, Canonical>;

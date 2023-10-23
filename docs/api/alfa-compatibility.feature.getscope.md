@@ -4,7 +4,7 @@
 
 ## Feature.getScope() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function getScope<N extends Name>(feature: N, scope?: Browser.Scope): Browser.Scope<Implementer<N>>;
@@ -15,9 +15,9 @@ function getScope<N extends Name>(feature: N, scope?: Browser.Scope): Browser.Sc
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  feature | N |  |
-|  scope | [Browser.Scope](./alfa-compatibility.browser.scope.md) | <i>(Optional)</i> |
+|  scope | [Browser.Scope](./alfa-compatibility.browser.scope.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Browser.Scope](./alfa-compatibility.browser.scope.md)<!-- -->&lt;[Implementer](./alfa-compatibility.feature.implementer.md)<!-- -->&lt;N&gt;&gt;
 

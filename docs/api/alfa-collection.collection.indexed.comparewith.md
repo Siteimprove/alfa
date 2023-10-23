@@ -4,7 +4,7 @@
 
 ## Collection.Indexed.compareWith() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 compareWith<U = T>(iterable: Iterable<U>, comparer: Comparer<T, U, [index: number]>): Comparison;
@@ -17,7 +17,7 @@ compareWith<U = T>(iterable: Iterable<U>, comparer: Comparer<T, U, [index: numbe
 |  iterable | Iterable&lt;U&gt; |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

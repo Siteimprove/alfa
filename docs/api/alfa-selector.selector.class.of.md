@@ -4,7 +4,7 @@
 
 ## Selector.Class.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: string): Class;
@@ -16,7 +16,7 @@ static of(name: string): Class;
 |  --- | --- | --- |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Class](./alfa-selector.selector.class.md)
 

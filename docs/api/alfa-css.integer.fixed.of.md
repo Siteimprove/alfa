@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#css-round-to-the-nearest-integer](https://drafts.csswg.org/css-values/#css-round-to-the-nearest-integer)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: number | BaseInteger): Fixed;
@@ -18,7 +18,7 @@ static of(value: number | BaseInteger): Fixed;
 |  --- | --- | --- |
 |  value | number \| BaseInteger |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.integer.fixed.md)
 

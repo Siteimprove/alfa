@@ -6,7 +6,7 @@
 
 Round a real to a given number of decimals.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function round(p: number, n?: number): number;
@@ -17,9 +17,9 @@ function round(p: number, n?: number): number;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  p | number |  |
-|  n | number | <i>(Optional)</i> |
+|  n | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

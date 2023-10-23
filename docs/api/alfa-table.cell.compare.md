@@ -4,7 +4,7 @@
 
 ## Cell.compare() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 compare(anchored: Anchored): Comparison;
@@ -16,7 +16,7 @@ compare(anchored: Anchored): Comparison;
 |  --- | --- | --- |
 |  anchored | Anchored |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

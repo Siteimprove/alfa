@@ -4,7 +4,7 @@
 
 ## List.skipWhile() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 skipWhile(predicate: Predicate<T, [index: number]>): List<T>;
@@ -14,9 +14,9 @@ skipWhile(predicate: Predicate<T, [index: number]>): List<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

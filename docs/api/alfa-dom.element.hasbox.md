@@ -4,7 +4,7 @@
 
 ## Element.hasBox variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasBox: typeof predicate.hasBox

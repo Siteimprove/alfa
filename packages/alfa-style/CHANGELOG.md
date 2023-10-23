@@ -1,5 +1,29 @@
 # @siteimprove/alfa-style
 
+## 0.68.0
+
+### Minor Changes
+
+- **Breaking:** Function `getBoundingBox` was removed. ([#1474](https://github.com/Siteimprove/alfa/pull/1474))
+
+  Use `Element#getBoundingBox` instead.
+
+- **Added:** CSS `Shape` now accept calculated values ([#1478](https://github.com/Siteimprove/alfa/pull/1478))
+
+  Shapes that accept length-percentage are only partially resolved at compute time.
+
+- **Added:** CSS `Image` are now calculatable. ([#1477](https://github.com/Siteimprove/alfa/pull/1477))
+
+  The components that accept `<length-percentage>` (e.g. elliptical radial gradients' radii) are only partially resolved at compute time and may thus still contain calculations.
+
+### Patch Changes
+
+- **Fixed:** `<img>` elements are now considered as respecting their specified dimensions ([#1485](https://github.com/Siteimprove/alfa/pull/1485))
+
+  `<img>` elements whose `width` or `height` is specified are now considered to respect it when computing their concrete dimensions (i.e., they rescale rather than overflow, independently from the `overflow` property).
+
+  This is especially meaningful for tracking pixels with specified dimensions of 0 that are now correctly considered as invisible.
+
 ## 0.67.0
 
 ### Minor Changes

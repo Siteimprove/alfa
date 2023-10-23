@@ -4,7 +4,7 @@
 
 ## Expression.Filter.predicates property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get predicates(): Iterable<Expression>;

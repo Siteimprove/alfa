@@ -4,10 +4,10 @@
 
 ## Position.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-export type Canonical = Position<Component.Canonical<Keywords.Horizontal>, Component.Canonical<Keywords.Vertical>>;
+type Canonical<H extends Keywords.Horizontal = Keywords.Horizontal, V extends Keywords.Vertical = Keywords.Vertical> = Position<H, V, Component.Canonical<H>, Component.Canonical<V>>;
 ```
-<b>References:</b> [Position](./alfa-css.position.md)<!-- -->, [Component.Canonical](./alfa-css.position.component.canonical.md)<!-- -->, [Keywords.Horizontal](./alfa-css.position.keywords.horizontal.md)<!-- -->, [Keywords.Vertical](./alfa-css.position.keywords.vertical.md)
+**References:** [Position](./alfa-css.position.md)
 

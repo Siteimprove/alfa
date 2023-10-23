@@ -4,7 +4,7 @@
 
 ## Branched.filter() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 filter<U extends T>(refinement: Refinement<T, U, [Iterable<B>]>): Branched<U, B>;
@@ -14,9 +14,9 @@ filter<U extends T>(refinement: Refinement<T, U, [Iterable<B>]>): Branched<U, B>
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[Iterable&lt;B&gt;\]&gt; |  |
+|  refinement | Refinement&lt;T, U, \[Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Branched](./alfa-branched.branched.md)<!-- -->&lt;U, B&gt;
 

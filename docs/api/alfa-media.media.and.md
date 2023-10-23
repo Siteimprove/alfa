@@ -4,7 +4,7 @@
 
 ## Media.and variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 and: typeof And.of

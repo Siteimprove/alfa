@@ -4,12 +4,12 @@
 
 ## Named.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Format.JSON<"named"> 
 ```
-<b>Extends:</b> Format.JSON&lt;"named"&gt;
+**Extends:** Format.JSON&lt;"named"&gt;
 
 ## Properties
 

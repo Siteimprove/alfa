@@ -4,7 +4,7 @@
 
 ## Token.Number.isNumber() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isNumber(value: unknown): value is Number;
@@ -16,7 +16,7 @@ function isNumber(value: unknown): value is Number;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Number](./alfa-css.token.number.md)
 

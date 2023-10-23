@@ -4,10 +4,10 @@
 
 ## Radius.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-static of<R extends Length.Fixed | Percentage.Fixed | Radius.Side>(value: R): Radius<R>;
+static of<R extends LengthPercentage | Radius.Side>(value: R): Radius<R>;
 ```
 
 ## Parameters
@@ -16,7 +16,7 @@ static of<R extends Length.Fixed | Percentage.Fixed | Radius.Side>(value: R): Ra
 |  --- | --- | --- |
 |  value | R |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Radius](./alfa-css.radius.md)<!-- -->&lt;R&gt;
 

@@ -4,7 +4,7 @@
 
 ## Performance.mark variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 mark: typeof Mark.of

@@ -4,12 +4,12 @@
 
 ## Dimension.IDimension.hasCalculation() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasCalculation(): this is Calculated<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Calculated](./alfa-css.dimension.calculated.md)<!-- -->&lt;T&gt;
 

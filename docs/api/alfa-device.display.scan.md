@@ -4,7 +4,7 @@
 
 ## Display.Scan enum
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 enum Scan 

@@ -4,10 +4,10 @@
 
 ## Translate.PartialResolver type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type PartialResolver = LengthPercentage.PartialResolver & Length.Resolver;
 ```
-<b>References:</b> [LengthPercentage.PartialResolver](./alfa-css.lengthpercentage.partialresolver.md)<!-- -->, [Length.Resolver](./alfa-css.length.resolver.md)
+**References:** [LengthPercentage.PartialResolver](./alfa-css.lengthpercentage.partialresolver.md)<!-- -->, [Length.Resolver](./alfa-css.length.resolver.md)
 

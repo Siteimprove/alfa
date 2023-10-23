@@ -4,7 +4,7 @@
 
 ## Set\_2.filter() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 filter<U extends T>(refinement: Refinement<T, U>): Set<U>;
@@ -14,9 +14,9 @@ filter<U extends T>(refinement: Refinement<T, U>): Set<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Set&lt;U&gt;
+[Set](./alfa-set.set_2.md)<!-- -->&lt;U&gt;
 

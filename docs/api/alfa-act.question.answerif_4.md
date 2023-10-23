@@ -4,7 +4,7 @@
 
 ## Question.answerIf() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 answerIf(answer: Result<ANSWER, unknown>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
@@ -14,9 +14,9 @@ answerIf(answer: Result<ANSWER, unknown>): Question<TYPE, SUBJECT, CONTEXT, ANSW
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  answer | [Result](./alfa-result.result.md)<!-- -->&lt;ANSWER, unknown&gt; |  |
+|  answer | Result&lt;ANSWER, unknown&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;
 

@@ -4,7 +4,7 @@
 
 ## RuleTree.Node namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Node 

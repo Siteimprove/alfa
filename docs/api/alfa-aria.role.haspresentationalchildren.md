@@ -6,12 +6,12 @@
 
 Check if this role has presentational children.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasPresentationalChildren(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

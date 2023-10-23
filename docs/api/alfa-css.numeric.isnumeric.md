@@ -4,7 +4,7 @@
 
 ## Numeric.isNumeric() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isNumeric(value: unknown): value is Numeric;
@@ -16,7 +16,7 @@ export function isNumeric(value: unknown): value is Numeric;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Numeric](./alfa-css.numeric.md)
 

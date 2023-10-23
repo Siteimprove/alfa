@@ -4,7 +4,7 @@
 
 ## Token.isDimension variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isDimension: typeof Dimension.isDimension

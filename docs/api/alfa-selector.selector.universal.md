@@ -4,7 +4,7 @@
 
 ## Selector.Universal namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export namespace Universal 

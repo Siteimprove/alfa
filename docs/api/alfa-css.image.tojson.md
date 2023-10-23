@@ -4,12 +4,12 @@
 
 ## Image.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Image.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Image.JSON](./alfa-css.image.json.md)
 

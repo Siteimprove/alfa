@@ -4,7 +4,7 @@
 
 ## List.slice() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 slice(start: number, end?: number): List<T>;
@@ -15,9 +15,9 @@ slice(start: number, end?: number): List<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  start | number |  |
-|  end | number | <i>(Optional)</i> |
+|  end | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

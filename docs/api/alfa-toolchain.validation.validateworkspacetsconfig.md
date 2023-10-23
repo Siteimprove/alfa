@@ -5,7 +5,7 @@
 ## Validation.validateWorkspaceTsconfig() function
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function validateWorkspaceTsconfig({ dir, packageJson, }: {
@@ -20,7 +20,7 @@ export declare function validateWorkspaceTsconfig({ dir, packageJson, }: {
 |  --- | --- | --- |
 |  { dir, packageJson, } | { dir: string; packageJson: PackageJSON; } |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Array&lt;string&gt;
 

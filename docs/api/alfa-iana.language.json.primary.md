@@ -4,7 +4,7 @@
 
 ## Language.JSON.primary property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 primary: Primary.JSON;

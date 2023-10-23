@@ -4,7 +4,7 @@
 
 ## DOM.hasAccessibleName variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasAccessibleName: typeof dom.hasAccessibleName

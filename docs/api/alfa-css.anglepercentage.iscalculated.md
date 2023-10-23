@@ -4,7 +4,7 @@
 
 ## AnglePercentage.isCalculated() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isCalculated(value: unknown): value is Calculated | Angle.Calculated | Percentage.Calculated;
@@ -16,7 +16,7 @@ export function isCalculated(value: unknown): value is Calculated | Angle.Calcul
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Calculated](./alfa-css.anglepercentage.calculated.md) \| [Angle.Calculated](./alfa-css.angle.calculated.md) \| [Percentage.Calculated](./alfa-css.percentage.calculated.md)
 

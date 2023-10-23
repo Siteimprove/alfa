@@ -4,12 +4,12 @@
 
 ## Name.sourceNodes() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 sourceNodes(): Iterable<Node>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;[Node](./alfa-dom.node.md)<!-- -->&gt;
+Iterable&lt;Node&gt;
 

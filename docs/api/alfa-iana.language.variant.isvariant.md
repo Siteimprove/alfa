@@ -4,7 +4,7 @@
 
 ## Language.Variant.isVariant() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isVariant(value: unknown): value is Variant;
@@ -16,7 +16,7 @@ function isVariant(value: unknown): value is Variant;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Variant](./alfa-iana.language.variant.md)
 

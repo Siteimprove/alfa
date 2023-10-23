@@ -4,12 +4,12 @@
 
 ## Angle.IAngle interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface IAngle<CALC extends boolean = boolean> extends Value<"angle", CALC>, Resolvable<Canonical, never> 
 ```
-<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;"angle", CALC&gt;, Resolvable&lt;[Canonical](./alfa-css.angle.canonical.md)<!-- -->, never&gt;
+**Extends:** Value&lt;"angle", CALC&gt;, Resolvable&lt;[Canonical](./alfa-css.angle.canonical.md)<!-- -->, never&gt;
 
 ## Methods
 

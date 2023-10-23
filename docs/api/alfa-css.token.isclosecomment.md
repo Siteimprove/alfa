@@ -4,7 +4,7 @@
 
 ## Token.isCloseComment variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isCloseComment: typeof CloseComment.isCloseComment

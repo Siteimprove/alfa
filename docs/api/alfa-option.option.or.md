@@ -4,7 +4,7 @@
 
 ## Option.or() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 or<U>(option: Option<U>): Option<T | U>;
@@ -16,7 +16,7 @@ or<U>(option: Option<U>): Option<T | U>;
 |  --- | --- | --- |
 |  option | [Option](./alfa-option.option.md)<!-- -->&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;T \| U&gt;
 

@@ -4,10 +4,10 @@
 
 ## Serializable.toJSON() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-function toJSON<T>(value: T): ToJSON<T>;
+function toJSON<T, OPTIONS extends unknown = unknown>(value: T, options?: OPTIONS): ToJSON<T>;
 ```
 
 ## Parameters
@@ -15,8 +15,9 @@ function toJSON<T>(value: T): ToJSON<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
+|  options | OPTIONS | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [ToJSON](./alfa-json.serializable.tojson.md)<!-- -->&lt;T&gt;
 

@@ -4,12 +4,12 @@
 
 ## Left.left() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 left(): Option<L>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;L&gt;
+Option&lt;L&gt;
 

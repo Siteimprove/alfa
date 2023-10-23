@@ -4,7 +4,7 @@
 
 ## List.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U extends Value>(mapper: Mapper<V, U>): List<U, U extends Value<string, false> ? false : true>;
@@ -16,7 +16,7 @@ map<U extends Value>(mapper: Mapper<V, U>): List<U, U extends Value<string, fals
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[List](./alfa-css.list.md)<!-- -->&lt;U, U extends [Value](./alfa-css.value.md)<!-- -->&lt;string, false&gt; ? false : true&gt;
+[List](./alfa-css.list.md)<!-- -->&lt;U, U extends Value&lt;string, false&gt; ? false : true&gt;
 

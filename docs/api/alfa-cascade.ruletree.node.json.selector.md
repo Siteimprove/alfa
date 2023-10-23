@@ -4,7 +4,7 @@
 
 ## RuleTree.Node.JSON.selector property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 selector: Selector.JSON;

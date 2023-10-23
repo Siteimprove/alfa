@@ -4,12 +4,12 @@
 
 ## Browser.Release.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Release.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Release.JSON](./alfa-compatibility.browser.release.json.md)
 

@@ -4,7 +4,7 @@
 
 ## Nth.step property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get step(): number;

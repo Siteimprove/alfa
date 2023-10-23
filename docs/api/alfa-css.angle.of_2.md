@@ -4,7 +4,7 @@
 
 ## Angle.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of(value: Math<"angle">): Calculated;
@@ -16,7 +16,7 @@ export function of(value: Math<"angle">): Calculated;
 |  --- | --- | --- |
 |  value | Math&lt;"angle"&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Calculated](./alfa-css.angle.calculated.md)
 

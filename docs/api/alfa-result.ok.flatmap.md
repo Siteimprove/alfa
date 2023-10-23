@@ -4,7 +4,7 @@
 
 ## Ok.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U, F>(mapper: Mapper<T, Result<U, F>>): Result<U, F>;
@@ -14,9 +14,9 @@ flatMap<U, F>(mapper: Mapper<T, Result<U, F>>): Result<U, F>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, Result&lt;U, F&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;
+Result&lt;U, F&gt;
 

@@ -4,12 +4,12 @@
 
 ## Selector.NthLastOfType.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): NthLastOfType.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [NthLastOfType.JSON](./alfa-selector.selector.nthlastoftype.json.md)
 

@@ -4,7 +4,7 @@
 
 ## Column.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(x: number): Column;
@@ -16,7 +16,7 @@ static of(x: number): Column;
 |  --- | --- | --- |
 |  x | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Column](./alfa-table.column.md)
 

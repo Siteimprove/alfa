@@ -4,7 +4,7 @@
 
 ## Clone.clone() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function clone<T extends Clone<T>>(value: Clone<T>): T;
@@ -16,7 +16,7 @@ function clone<T extends Clone<T>>(value: Clone<T>): T;
 |  --- | --- | --- |
 |  value | [Clone](./alfa-clone.clone.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 T
 

@@ -6,12 +6,12 @@
 
 [https://url.spec.whatwg.org/\#concept-url-serializer](https://url.spec.whatwg.org/#concept-url-serializer)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toString(): string;
 ```
-<b>Returns:</b>
+**Returns:**
 
 string
 

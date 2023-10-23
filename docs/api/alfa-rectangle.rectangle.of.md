@@ -4,7 +4,7 @@
 
 ## Rectangle.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(x: number, y: number, width: number, height: number): Rectangle;
@@ -19,7 +19,7 @@ static of(x: number, y: number, width: number, height: number): Rectangle;
 |  width | number |  |
 |  height | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Rectangle](./alfa-rectangle.rectangle.md)
 

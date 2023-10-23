@@ -4,7 +4,7 @@
 
 ## Set\_2.filter() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 filter(predicate: Predicate<T>): Set<T>;
@@ -14,9 +14,9 @@ filter(predicate: Predicate<T>): Set<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Set&lt;T&gt;
+[Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;
 

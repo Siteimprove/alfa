@@ -4,7 +4,7 @@
 
 ## Future.tee() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tee(callback: Callback<T>): Future<T>;
@@ -14,9 +14,9 @@ tee(callback: Callback<T>): Future<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+|  callback | Callback&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Future](./alfa-future.future.md)<!-- -->&lt;T&gt;
 

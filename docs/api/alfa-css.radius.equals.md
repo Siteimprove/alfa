@@ -4,7 +4,7 @@
 
 ## Radius.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Radius): boolean;
@@ -16,7 +16,7 @@ equals(value: Radius): boolean;
 |  --- | --- | --- |
 |  value | [Radius](./alfa-css.radius.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

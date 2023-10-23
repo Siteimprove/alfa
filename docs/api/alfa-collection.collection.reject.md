@@ -4,7 +4,7 @@
 
 ## Collection.reject() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reject<U extends T>(refinement: Refinement<T, U>): Collection<Exclude<T, U>>;
@@ -14,9 +14,9 @@ reject<U extends T>(refinement: Refinement<T, U>): Collection<Exclude<T, U>>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Collection](./alfa-collection.collection.md)<!-- -->&lt;Exclude&lt;T, U&gt;&gt;
 

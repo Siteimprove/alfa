@@ -4,7 +4,7 @@
 
 ## Question.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<TYPE, SUBJECT, CONTEXT, ANSWER, T>(this: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>;
@@ -16,7 +16,7 @@ flatten<TYPE, SUBJECT, CONTEXT, ANSWER, T>(this: Question<TYPE, SUBJECT, CONTEXT
 |  --- | --- | --- |
 |  this | [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T&gt;
 

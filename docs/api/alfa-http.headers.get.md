@@ -4,7 +4,7 @@
 
 ## Headers.get() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get(name: string): Option<Header>;
@@ -16,7 +16,7 @@ get(name: string): Option<Header>;
 |  --- | --- | --- |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Header](./alfa-http.header.md)<!-- -->&gt;
+Option&lt;Header&gt;
 

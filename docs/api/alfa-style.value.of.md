@@ -4,7 +4,7 @@
 
 ## Value.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(value: T, source?: Option<Declaration>): Value<T>;
@@ -15,9 +15,9 @@ static of<T>(value: T, source?: Option<Declaration>): Value<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | T |  |
-|  source | [Option](./alfa-option.option.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  source | Option&lt;Declaration&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Value](./alfa-style.value.md)<!-- -->&lt;T&gt;
 

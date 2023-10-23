@@ -4,7 +4,7 @@
 
 ## Preference.Name type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Name = keyof Preferences;

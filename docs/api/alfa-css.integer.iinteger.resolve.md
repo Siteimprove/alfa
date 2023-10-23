@@ -4,12 +4,12 @@
 
 ## Integer.IInteger.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): Canonical;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Canonical](./alfa-css.integer.canonical.md)
 

@@ -6,7 +6,7 @@
 
 [https://url.spec.whatwg.org/\#concept-url-path](https://url.spec.whatwg.org/#concept-url-path)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get path(): Sequence<string>;

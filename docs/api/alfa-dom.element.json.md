@@ -4,12 +4,12 @@
 
 ## Element.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<N extends string = string> extends Node.JSON<"element"> 
 ```
-<b>Extends:</b> [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"element"&gt;
+**Extends:** [Node.JSON](./alfa-dom.node.json.md)<!-- -->&lt;"element"&gt;
 
 ## Properties
 

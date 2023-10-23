@@ -4,7 +4,7 @@
 
 ## Tuple.Filter type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Filter<T extends Tuple, U extends Item<T>> = T extends readonly [
@@ -12,5 +12,5 @@ export type Filter<T extends Tuple, U extends Item<T>> = T extends readonly [
         ...infer R
     ] ? H extends U ? [H, ...Filter<R, U>] : Filter<R, U> : Empty;
 ```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Item](./alfa-tuple.tuple.item.md)<!-- -->, [Filter](./alfa-tuple.tuple.filter.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
+**References:** [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Item](./alfa-tuple.tuple.item.md)<!-- -->, [Filter](./alfa-tuple.tuple.filter.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)
 

@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#concept-tree-parent](https://dom.spec.whatwg.org/#concept-tree-parent)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parent(options?: Node.Traversal): Option<Node>;
@@ -16,9 +16,9 @@ parent(options?: Node.Traversal): Option<Node>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
+|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;
+Option&lt;[Node](./alfa-aria.node.md)<!-- -->&gt;
 

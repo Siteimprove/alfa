@@ -6,7 +6,7 @@
 
 [https://drafts.css-houdini.org/css-typed-om/\#cssnumericvalue-match](https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isDimensionPercentage<D extends Numeric.Dimension>(dimension: D): this is Math<`${D}-percentage`>;
@@ -18,7 +18,7 @@ isDimensionPercentage<D extends Numeric.Dimension>(dimension: D): this is Math<`
 |  --- | --- | --- |
 |  dimension | D |  |
 
-<b>Returns:</b>
+**Returns:**
 
-this is Math&lt;\`${D}-percentage\`&gt;
+this is [Math](./alfa-css.math_2.md)<!-- -->&lt;\`${D}-percentage\`&gt;
 

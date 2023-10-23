@@ -4,7 +4,7 @@
 
 ## Media.Value.Range.isRange() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRange<T>(value: unknown): value is Range<T>;
@@ -16,7 +16,7 @@ function isRange<T>(value: unknown): value is Range<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Range](./alfa-media.media.value.range.md)<!-- -->&lt;T&gt;
 

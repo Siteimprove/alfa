@@ -4,7 +4,7 @@
 
 ## Matrix.isSquare() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSquare(m: Matrix): boolean;
@@ -16,7 +16,7 @@ function isSquare(m: Matrix): boolean;
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

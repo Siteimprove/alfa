@@ -4,7 +4,7 @@
 
 ## Selector.NthLastChild.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: NthLastChild): boolean;
@@ -16,7 +16,7 @@ equals(value: NthLastChild): boolean;
 |  --- | --- | --- |
 |  value | [NthLastChild](./alfa-selector.selector.nthlastchild.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

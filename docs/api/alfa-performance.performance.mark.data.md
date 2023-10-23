@@ -4,7 +4,7 @@
 
 ## Performance.Mark.data property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get data(): T;

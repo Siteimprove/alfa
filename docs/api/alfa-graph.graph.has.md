@@ -4,7 +4,7 @@
 
 ## Graph.has() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 has(node: T): boolean;
@@ -16,7 +16,7 @@ has(node: T): boolean;
 |  --- | --- | --- |
 |  node | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

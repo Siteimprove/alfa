@@ -4,7 +4,7 @@
 
 ## Value.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Value<Mapper<T, U>>): Value<U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Value<Mapper<T, U>>): Value<U>;
 |  --- | --- | --- |
 |  mapper | [Value](./alfa-style.value.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Value](./alfa-style.value.md)<!-- -->&lt;U&gt;
 

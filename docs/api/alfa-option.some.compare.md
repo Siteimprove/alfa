@@ -4,7 +4,7 @@
 
 ## Some.compare() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 compare<T>(this: Option<Comparable<T>>, option: Option<T>): Comparison;
@@ -14,10 +14,10 @@ compare<T>(this: Option<Comparable<T>>, option: Option<T>): Comparison;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | [Option](./alfa-option.option.md)<!-- -->&lt;[Comparable](./alfa-comparable.comparable.md)<!-- -->&lt;T&gt;&gt; |  |
-|  option | [Option](./alfa-option.option.md)<!-- -->&lt;T&gt; |  |
+|  this | Option&lt;Comparable&lt;T&gt;&gt; |  |
+|  option | Option&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Comparison](./alfa-comparable.comparison.md)
 

@@ -4,7 +4,7 @@
 
 ## Expression.FunctionCall.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "function-call";

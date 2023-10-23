@@ -4,12 +4,12 @@
 
 ## Token.Comma.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Comma;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Comma](./alfa-css.token.comma.md)
 

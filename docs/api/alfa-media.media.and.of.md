@@ -4,7 +4,7 @@
 
 ## Media.And.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(left: Feature | Condition, right: Feature | Condition): And;
@@ -17,7 +17,7 @@ static of(left: Feature | Condition, right: Feature | Condition): And;
 |  left | [Feature](./alfa-media.media.feature.md) \| [Condition](./alfa-media.media.condition.md) |  |
 |  right | [Feature](./alfa-media.media.feature.md) \| [Condition](./alfa-media.media.condition.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [And](./alfa-media.media.and.md)
 

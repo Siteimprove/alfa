@@ -4,7 +4,7 @@
 
 ## Selector.Pseudo.isElement() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isElement(value: unknown): value is Element;
@@ -16,7 +16,7 @@ function isElement(value: unknown): value is Element;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Element](./alfa-selector.selector.pseudo.element.md)
 

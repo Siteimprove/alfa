@@ -6,7 +6,7 @@
 
 The names of all presentational roles.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Presentational = "presentation" | "none";

@@ -4,7 +4,7 @@
 
 ## Name.Source.Reference.JSON.attribute property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 attribute: string;

@@ -4,7 +4,7 @@
 
 ## Bits.popCount() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function popCount(bits: number): number;
@@ -16,7 +16,7 @@ function popCount(bits: number): number;
 |  --- | --- | --- |
 |  bits | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

@@ -4,12 +4,12 @@
 
 ## Comment.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty(): Comment;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Comment](./alfa-dom.comment.md)
 

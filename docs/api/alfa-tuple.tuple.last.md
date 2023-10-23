@@ -4,10 +4,10 @@
 
 ## Tuple.Last type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Last<T extends Tuple> = T extends readonly [infer H, ...infer R] ? R extends Empty ? H : Last<R> : never;
 ```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)<!-- -->, [Last](./alfa-tuple.tuple.last.md)
+**References:** [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Empty](./alfa-tuple.tuple.empty.md)<!-- -->, [Last](./alfa-tuple.tuple.last.md)
 

@@ -6,7 +6,7 @@
 
 [https://encoding.spec.whatwg.org/\#dom-textdecoder-decode](https://encoding.spec.whatwg.org/#dom-textdecoder-decode) [https://encoding.spec.whatwg.org/\#utf-8-decoder](https://encoding.spec.whatwg.org/#utf-8-decoder)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function decode(input: Uint8Array): string;
@@ -18,7 +18,7 @@ function decode(input: Uint8Array): string;
 |  --- | --- | --- |
 |  input | Uint8Array |  |
 
-<b>Returns:</b>
+**Returns:**
 
 string
 

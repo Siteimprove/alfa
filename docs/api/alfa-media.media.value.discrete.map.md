@@ -4,7 +4,7 @@
 
 ## Media.Value.Discrete.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U>): Discrete<U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U>): Discrete<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Discrete](./alfa-media.media.value.discrete.md)<!-- -->&lt;U&gt;
 

@@ -4,7 +4,7 @@
 
 ## Question.isQuestion() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isQuestion<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends string = string>(value: unknown): value is Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
@@ -16,7 +16,7 @@ function isQuestion<TYPE, SUBJECT, CONTEXT, ANSWER, T = ANSWER, URI extends stri
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;
 

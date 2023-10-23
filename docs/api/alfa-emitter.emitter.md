@@ -5,12 +5,12 @@
 ## Emitter class
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class Emitter<T> implements Functor.Invariant<T>, AsyncIterable<T> 
 ```
-<b>Implements:</b> [Functor.Invariant](./alfa-functor.functor.invariant.md)<!-- -->&lt;T&gt;, AsyncIterable&lt;T&gt;
+**Implements:** [Functor.Invariant](./alfa-functor.functor.invariant.md)<!-- -->&lt;T&gt;, AsyncIterable&lt;T&gt;
 
 ## Methods
 

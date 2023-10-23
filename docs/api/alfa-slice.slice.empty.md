@@ -4,12 +4,12 @@
 
 ## Slice.empty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static empty<T>(): Slice<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

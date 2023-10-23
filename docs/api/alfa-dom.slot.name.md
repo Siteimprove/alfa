@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#slot-name](https://dom.spec.whatwg.org/#slot-name)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function name(slot: Slot): string;
@@ -18,7 +18,7 @@ function name(slot: Slot): string;
 |  --- | --- | --- |
 |  slot | [Slot](./alfa-dom.slot.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 string
 

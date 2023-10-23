@@ -4,12 +4,12 @@
 
 ## Network.\[Symbol.iterator\]() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 [Symbol.iterator](): Iterator<[N, Iterable<[N, Iterable<E>]>]>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Iterator&lt;\[N, Iterable&lt;\[N, Iterable&lt;E&gt;\]&gt;\]&gt;
 

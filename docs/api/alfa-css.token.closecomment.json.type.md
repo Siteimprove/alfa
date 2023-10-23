@@ -4,7 +4,7 @@
 
 ## Token.CloseComment.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "close-comment";

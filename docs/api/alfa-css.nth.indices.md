@@ -4,12 +4,12 @@
 
 ## Nth.indices() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 indices(): Iterable<number>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Iterable&lt;number&gt;
 

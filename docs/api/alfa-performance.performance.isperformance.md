@@ -4,7 +4,7 @@
 
 ## Performance.isPerformance() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isPerformance<T>(value: unknown): value is Performance<T>;
@@ -16,7 +16,7 @@ function isPerformance<T>(value: unknown): value is Performance<T>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Performance](./alfa-performance.performance.md)<!-- -->&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Expression.Test.Element namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Element 

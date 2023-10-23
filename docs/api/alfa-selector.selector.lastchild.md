@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#last-child-pseudo](https://drafts.csswg.org/selectors/#last-child-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class LastChild extends Pseudo.Class<"last-child"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"last-child"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"last-child"&gt;
 
 ## Methods
 

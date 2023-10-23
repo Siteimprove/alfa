@@ -4,7 +4,7 @@
 
 ## Resource.response property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly response: Response;

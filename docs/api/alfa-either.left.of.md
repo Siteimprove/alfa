@@ -4,7 +4,7 @@
 
 ## Left.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<L>(value: L): Left<L>;
@@ -16,7 +16,7 @@ static of<L>(value: L): Left<L>;
 |  --- | --- | --- |
 |  value | L |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Left](./alfa-either.left.md)<!-- -->&lt;L&gt;
 

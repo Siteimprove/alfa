@@ -4,7 +4,7 @@
 
 ## Expression.FunctionCall.parameters property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get parameters(): Iterable<Expression>;

@@ -4,7 +4,7 @@
 
 ## Selective.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Selective<S, Mapper<T, U>>): Selective<S, U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Selective<S, Mapper<T, U>>): Selective<S, U>;
 |  --- | --- | --- |
 |  mapper | [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, U&gt;
 

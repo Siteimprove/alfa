@@ -5,12 +5,12 @@
 ## Applicative interface
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface Applicative<T> extends Functor<T> 
 ```
-<b>Extends:</b> [Functor](./alfa-functor.functor.md)<!-- -->&lt;T&gt;
+**Extends:** [Functor](./alfa-functor.functor.md)<!-- -->&lt;T&gt;
 
 ## Methods
 

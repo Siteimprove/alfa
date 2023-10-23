@@ -5,7 +5,7 @@
 ## Hashable namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Hashable 

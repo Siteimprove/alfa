@@ -4,7 +4,7 @@
 
 ## Trampoline.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
@@ -16,7 +16,7 @@ abstract flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Trampoline](./alfa-trampoline.trampoline.md)<!-- -->&lt;U&gt;
 

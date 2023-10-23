@@ -4,7 +4,7 @@
 
 ## List.skipLast() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 skipLast(count?: number): List<T>;
@@ -14,9 +14,9 @@ skipLast(count?: number): List<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  count | number | <i>(Optional)</i> |
+|  count | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

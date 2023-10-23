@@ -4,7 +4,7 @@
 
 ## Hash.writeJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeJSON(data: JSON): this;
@@ -16,7 +16,7 @@ writeJSON(data: JSON): this;
 |  --- | --- | --- |
 |  data | JSON |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

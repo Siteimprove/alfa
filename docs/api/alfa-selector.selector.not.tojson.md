@@ -4,12 +4,12 @@
 
 ## Selector.Not.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Not.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Not.JSON](./alfa-selector.selector.not.json.md)
 

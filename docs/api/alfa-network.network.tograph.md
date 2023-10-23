@@ -4,12 +4,12 @@
 
 ## Network.toGraph() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toGraph(): Graph<N>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Graph](./alfa-graph.graph.md)<!-- -->&lt;N&gt;
+Graph&lt;N&gt;
 

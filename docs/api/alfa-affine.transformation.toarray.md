@@ -4,12 +4,12 @@
 
 ## Transformation.toArray() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toArray(): Array<Array<number>>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Array&lt;Array&lt;number&gt;&gt;
 

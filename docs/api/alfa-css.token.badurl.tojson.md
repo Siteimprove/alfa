@@ -4,12 +4,12 @@
 
 ## Token.BadURL.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): BadURL.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [BadURL.JSON](./alfa-css.token.badurl.json.md)
 

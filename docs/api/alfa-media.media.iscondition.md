@@ -4,7 +4,7 @@
 
 ## Media.isCondition variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isCondition: typeof Condition.isCondition

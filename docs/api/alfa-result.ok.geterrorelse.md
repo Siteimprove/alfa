@@ -4,7 +4,7 @@
 
 ## Ok.getErrOrElse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getErrOrElse<F>(error: Thunk<F>): F;
@@ -14,9 +14,9 @@ getErrOrElse<F>(error: Thunk<F>): F;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  error | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;F&gt; |  |
+|  error | Thunk&lt;F&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 F
 

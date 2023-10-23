@@ -4,7 +4,7 @@
 
 ## Value.isValue() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isValue<T extends string>(value: unknown, type?: T): value is Value<T>;
@@ -15,9 +15,9 @@ function isValue<T extends string>(value: unknown, type?: T): value is Value<T>;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  value | unknown |  |
-|  type | T | <i>(Optional)</i> |
+|  type | T | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Value](./alfa-css.value.md)<!-- -->&lt;T&gt;
 

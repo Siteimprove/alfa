@@ -4,7 +4,7 @@
 
 ## Rule.Composite.Evaluate interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface Evaluate<I, T extends Hashable, Q extends Question.Metadata, S> 

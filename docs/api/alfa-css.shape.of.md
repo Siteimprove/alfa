@@ -4,7 +4,7 @@
 
 ## Shape.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geometry>(shape: S, box: B): Shape<S, B>;
@@ -17,7 +17,7 @@ static of<S extends Shape.Basic = Shape.Basic, B extends Box.Geometry = Box.Geom
 |  shape | S |  |
 |  box | B |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Shape](./alfa-css.shape.md)<!-- -->&lt;S, B&gt;
 

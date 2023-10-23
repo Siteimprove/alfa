@@ -4,12 +4,12 @@
 
 ## Sequence.first() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 first(): Option<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-color/\#funcdef-hsl](https://drafts.csswg.org/css-color/#funcdef-hsl)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<HSL>

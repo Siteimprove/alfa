@@ -4,7 +4,7 @@
 
 ## Device.preference() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 preference<N extends Preference.Name>(name: N): Preference<N>;
@@ -16,7 +16,7 @@ preference<N extends Preference.Name>(name: N): Preference<N>;
 |  --- | --- | --- |
 |  name | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Preference](./alfa-device.preference.md)<!-- -->&lt;N&gt;
+Preference&lt;N&gt;
 

@@ -4,7 +4,7 @@
 
 ## Request.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(method: string, url: URL, headers?: Headers, body?: ArrayBuffer): Request;
@@ -15,11 +15,11 @@ static of(method: string, url: URL, headers?: Headers, body?: ArrayBuffer): Requ
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  method | string |  |
-|  url | [URL](./alfa-url.url.md) |  |
-|  headers | [Headers](./alfa-http.headers.md) | <i>(Optional)</i> |
-|  body | ArrayBuffer | <i>(Optional)</i> |
+|  url | URL |  |
+|  headers | Headers | _(Optional)_ |
+|  body | ArrayBuffer | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Request](./alfa-http.request.md)
 

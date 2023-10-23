@@ -4,12 +4,12 @@
 
 ## Number\_2.INumber.hasCalculation() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasCalculation(): this is Calculated;
 ```
-<b>Returns:</b>
+**Returns:**
 
-this is Calculated
+this is [Calculated](./alfa-css.number_2.calculated.md)
 

@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-images/\#typedef-gradient](https://drafts.csswg.org/css-images/#typedef-gradient)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<Gradient>

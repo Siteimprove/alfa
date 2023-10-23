@@ -4,12 +4,12 @@
 
 ## Result.err() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 err(): Option<E>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;E&gt;
+Option&lt;E&gt;
 

@@ -4,7 +4,7 @@
 
 ## List.isList() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isList<V extends Value>(value: unknown): value is List<V>;
@@ -16,7 +16,7 @@ function isList<V extends Value>(value: unknown): value is List<V>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [List](./alfa-css.list.md)<!-- -->&lt;V&gt;
 

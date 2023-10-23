@@ -4,12 +4,12 @@
 
 ## Selector.Universal.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Universal.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Universal.JSON](./alfa-selector.selector.universal.json.md)
 

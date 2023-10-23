@@ -4,12 +4,12 @@
 
 ## SupportsRule.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): SupportsRule.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [SupportsRule.JSON](./alfa-dom.supportsrule.json.md)
 

@@ -4,12 +4,12 @@
 
 ## Result.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Result.JSON<T, E>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Result.JSON](./alfa-result.result.json.md)<!-- -->&lt;T, E&gt;
 

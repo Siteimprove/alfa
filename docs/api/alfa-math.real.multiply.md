@@ -4,7 +4,7 @@
 
 ## Real.multiply() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function multiply(p: number, q: number): number;
@@ -17,7 +17,7 @@ function multiply(p: number, q: number): number;
 |  p | number |  |
 |  q | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

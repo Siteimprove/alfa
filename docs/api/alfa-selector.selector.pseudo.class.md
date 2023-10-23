@@ -4,7 +4,7 @@
 
 ## Selector.Pseudo.Class namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Class 

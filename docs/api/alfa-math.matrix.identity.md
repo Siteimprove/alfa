@@ -4,7 +4,7 @@
 
 ## Matrix.identity() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function identity(n: number): Matrix;
@@ -16,7 +16,7 @@ function identity(n: number): Matrix;
 |  --- | --- | --- |
 |  n | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Matrix](./alfa-math.matrix.md)
 

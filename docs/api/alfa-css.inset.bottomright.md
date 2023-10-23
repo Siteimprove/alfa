@@ -4,7 +4,7 @@
 
 ## Inset.bottomRight property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get bottomRight(): Option<C>;

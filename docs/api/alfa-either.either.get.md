@@ -4,12 +4,12 @@
 
 ## Either.get() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get(): L | R;
 ```
-<b>Returns:</b>
+**Returns:**
 
 L \| R
 

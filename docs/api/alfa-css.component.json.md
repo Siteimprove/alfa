@@ -4,10 +4,10 @@
 
 ## Component.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON = Array<Token.JSON>;
 ```
-<b>References:</b> [Token.JSON](./alfa-css.token.json.md)
+**References:** [Token.JSON](./alfa-css.token.json.md)
 

@@ -6,7 +6,7 @@
 
 [https://nodejs.org/api/assert.html\#assert\_assert\_notdeepequal\_actual\_expected\_message](https://nodejs.org/api/assert.html#assert_assert_notdeepequal_actual_expected_message)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 notDeepEqual<T>(actual: T, expected: T, message?: string): void;
@@ -18,9 +18,9 @@ notDeepEqual<T>(actual: T, expected: T, message?: string): void;
 |  --- | --- | --- |
 |  actual | T |  |
 |  expected | T |  |
-|  message | string | <i>(Optional)</i> |
+|  message | string | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

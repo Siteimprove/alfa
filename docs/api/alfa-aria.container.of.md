@@ -4,7 +4,7 @@
 
 ## Container.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(owner: dom.Node, children?: Iterable<Node>, role?: Option<Role>): Container;
@@ -14,11 +14,11 @@ static of(owner: dom.Node, children?: Iterable<Node>, role?: Option<Role>): Cont
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  owner | dom.[Node](./alfa-dom.node.md) |  |
-|  children | Iterable&lt;[Node](./alfa-aria.node.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  role | [Option](./alfa-option.option.md)<!-- -->&lt;[Role](./alfa-aria.role.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  owner | [dom.Node](./alfa-dom.node.md) |  |
+|  children | Iterable&lt;Node&gt; | _(Optional)_ |
+|  role | Option&lt;Role&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Container](./alfa-aria.container.md)
 

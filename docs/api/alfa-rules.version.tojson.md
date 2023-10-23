@@ -4,12 +4,12 @@
 
 ## Version.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Version.JSON<N>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Version.JSON](./alfa-rules.version.json.md)<!-- -->&lt;N&gt;
 

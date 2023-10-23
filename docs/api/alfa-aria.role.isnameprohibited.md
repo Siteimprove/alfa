@@ -6,12 +6,12 @@
 
 Check if this role prohibits naming.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isNameProhibited(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

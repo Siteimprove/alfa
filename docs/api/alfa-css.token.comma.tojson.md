@@ -4,12 +4,12 @@
 
 ## Token.Comma.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Comma.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Comma.JSON](./alfa-css.token.comma.json.md)
 

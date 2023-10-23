@@ -4,7 +4,7 @@
 
 ## Token.OpenCurlyBracket.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get type(): "open-curly-bracket";

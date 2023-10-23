@@ -4,7 +4,7 @@
 
 ## Thenable.resolve() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function resolve<T>(value: T): Thenable<T, never>;
@@ -16,7 +16,7 @@ function resolve<T>(value: T): Thenable<T, never>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, never&gt;
 

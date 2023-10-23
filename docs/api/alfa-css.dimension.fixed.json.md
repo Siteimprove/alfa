@@ -4,12 +4,12 @@
 
 ## Dimension.Fixed.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<T extends Type = Type, U extends Dimensions<T>[1] = Dimensions<T>[1]> extends Numeric.Fixed.JSON<T> 
 ```
-<b>Extends:</b> [Numeric.Fixed.JSON](./alfa-css.numeric.fixed.json.md)<!-- -->&lt;T&gt;
+**Extends:** [Numeric.Fixed.JSON](./alfa-css.numeric.fixed.json.md)<!-- -->&lt;T&gt;
 
 ## Properties
 

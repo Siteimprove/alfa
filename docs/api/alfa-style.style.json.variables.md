@@ -4,7 +4,7 @@
 
 ## Style.JSON.variables property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 variables: Array<[string, Value.JSON]>;

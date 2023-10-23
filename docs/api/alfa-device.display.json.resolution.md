@@ -4,7 +4,7 @@
 
 ## Display.JSON.resolution property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolution: number;

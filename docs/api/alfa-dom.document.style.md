@@ -4,7 +4,7 @@
 
 ## Document.style property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get style(): Iterable<Sheet>;

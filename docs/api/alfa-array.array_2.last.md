@@ -4,7 +4,7 @@
 
 ## Array\_2.last() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function last<T>(array: ReadonlyArray<T>): Option<T>;
@@ -16,7 +16,7 @@ function last<T>(array: ReadonlyArray<T>): Option<T>;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

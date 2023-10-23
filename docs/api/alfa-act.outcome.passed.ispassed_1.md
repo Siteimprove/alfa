@@ -4,7 +4,7 @@
 
 ## Outcome.Passed.isPassed() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isPassed<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Passed<I, T, Q, S>;
@@ -16,7 +16,7 @@ function isPassed<I, T extends Hashable, Q extends Question.Metadata, S>(value: 
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Passed](./alfa-act.outcome.passed.md)<!-- -->&lt;I, T, Q, S&gt;
 

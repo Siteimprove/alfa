@@ -4,12 +4,12 @@
 
 ## Diagnostic.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Diagnostic.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Diagnostic.JSON](./alfa-act.diagnostic.json.md)
 

@@ -4,12 +4,12 @@
 
 ## Node.EARL interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface EARL extends earl.EARL 
 ```
-<b>Extends:</b> earl.[EARL](./alfa-earl.earl.md)
+**Extends:** [earl.EARL](./alfa-earl.earl.md)
 
 ## Properties
 
@@ -18,5 +18,5 @@ interface EARL extends earl.EARL
 |  ["@context"](./alfa-dom.node.earl.__context_.md) |  | { ptr: "http://www.w3.org/2009/pointers\#"; } |  |
 |  ["@type"](./alfa-dom.node.earl.__type_.md) |  | \[ "ptr:Pointer", "ptr:SinglePointer", "ptr:ExpressionPointer", "ptr:XPathPointer" \] |  |
 |  ["ptr:expression"](./alfa-dom.node.earl._ptr_expression_.md) |  | string |  |
-|  ["ptr:reference"?](./alfa-dom.node.earl._ptr_reference_.md) |  | { "@id": string; } | <i>(Optional)</i> |
+|  ["ptr:reference"?](./alfa-dom.node.earl._ptr_reference_.md) |  | { "@id": string; } | _(Optional)_ |
 

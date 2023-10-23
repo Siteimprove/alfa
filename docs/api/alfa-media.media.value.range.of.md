@@ -4,7 +4,7 @@
 
 ## Media.Value.Range.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<T>(minimum: Bound<T>, maximum: Bound<T>): Range<T>;
@@ -17,7 +17,7 @@ static of<T>(minimum: Bound<T>, maximum: Bound<T>): Range<T>;
 |  minimum | [Bound](./alfa-media.media.value.bound.md)<!-- -->&lt;T&gt; |  |
 |  maximum | [Bound](./alfa-media.media.value.bound.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Range](./alfa-media.media.value.range.md)<!-- -->&lt;T&gt;
 

@@ -4,12 +4,12 @@
 
 ## Rule.inclusiveAncestors() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 inclusiveAncestors(): Iterable<Rule>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt;
 

@@ -4,7 +4,7 @@
 
 ## Predicate.equals() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function equals<T>(...values: Array<T>): Predicate<unknown>;
@@ -16,7 +16,7 @@ function equals<T>(...values: Array<T>): Predicate<unknown>;
 |  --- | --- | --- |
 |  values | Array&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;unknown&gt;
 

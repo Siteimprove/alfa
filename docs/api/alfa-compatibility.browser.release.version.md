@@ -4,7 +4,7 @@
 
 ## Browser.Release.version property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get version(): V;

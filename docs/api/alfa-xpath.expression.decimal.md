@@ -4,7 +4,7 @@
 
 ## Expression.Decimal namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Decimal 

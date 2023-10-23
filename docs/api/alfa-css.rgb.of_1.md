@@ -4,7 +4,7 @@
 
 ## RGB.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<C extends Number | Percentage, A extends Number | Percentage>(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>>;
@@ -19,7 +19,7 @@ static of<C extends Number | Percentage, A extends Number | Percentage>(red: C, 
 |  blue | C |  |
 |  alpha | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [RGB](./alfa-css.rgb.md)<!-- -->&lt;ToCanonical&lt;C&gt;, ToCanonical&lt;A&gt;&gt;
 

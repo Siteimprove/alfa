@@ -4,12 +4,12 @@
 
 ## Builder.ContextItem class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class ContextItem extends ContextItem_base 
 ```
-<b>Extends:</b> ContextItem\_base
+**Extends:** ContextItem\_base
 
 ## Methods
 

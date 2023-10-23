@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<U>(mapper: Mapper<T, Unkeyed<U>>): Unkeyed<U>;
@@ -16,7 +16,7 @@ flatMap<U>(mapper: Mapper<T, Unkeyed<U>>): Unkeyed<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;U&gt;
 

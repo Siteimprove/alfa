@@ -4,7 +4,7 @@
 
 ## Context.isHovered() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isHovered(element: Element): boolean;
@@ -14,9 +14,9 @@ isHovered(element: Element): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

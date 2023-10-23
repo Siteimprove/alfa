@@ -4,7 +4,7 @@
 
 ## Preference.Preferences interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface Preferences 

@@ -4,7 +4,7 @@
 
 ## Rule.Atomic namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Atomic 

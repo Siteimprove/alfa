@@ -4,7 +4,7 @@
 
 ## Element.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(owner: dom.Node, role?: Option<Role>, name?: Option<Name>, attributes?: Iterable<Attribute>, children?: Iterable<Node>): Element;
@@ -14,13 +14,13 @@ static of(owner: dom.Node, role?: Option<Role>, name?: Option<Name>, attributes?
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  owner | dom.[Node](./alfa-dom.node.md) |  |
-|  role | [Option](./alfa-option.option.md)<!-- -->&lt;[Role](./alfa-aria.role.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  name | [Option](./alfa-option.option.md)<!-- -->&lt;[Name](./alfa-aria.name.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  attributes | Iterable&lt;[Attribute](./alfa-aria.attribute.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  children | Iterable&lt;[Node](./alfa-aria.node.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  owner | [dom.Node](./alfa-dom.node.md) |  |
+|  role | Option&lt;Role&gt; | _(Optional)_ |
+|  name | Option&lt;Name&gt; | _(Optional)_ |
+|  attributes | Iterable&lt;Attribute&gt; | _(Optional)_ |
+|  children | Iterable&lt;Node&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Element](./alfa-aria.element.md)
 

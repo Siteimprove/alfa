@@ -4,7 +4,7 @@
 
 ## Numeric.Calculated.math property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get math(): ToMath<T>;

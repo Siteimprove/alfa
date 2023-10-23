@@ -4,7 +4,7 @@
 
 ## Ok.tee() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tee(callback: Callback<T>): Ok<T>;
@@ -14,9 +14,9 @@ tee(callback: Callback<T>): Ok<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+|  callback | Callback&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Ok](./alfa-result.ok.md)<!-- -->&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Media.Or.JSON.right property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 right: Feature.JSON | Condition.JSON;

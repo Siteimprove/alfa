@@ -4,7 +4,7 @@
 
 ## Set\_2.intersect() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 intersect(iterable: Iterable<T>): Set<T>;
@@ -16,7 +16,7 @@ intersect(iterable: Iterable<T>): Set<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Set&lt;T&gt;
+[Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed.delete() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 delete(value: T): Unkeyed<T>;
@@ -16,7 +16,7 @@ delete(value: T): Unkeyed<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

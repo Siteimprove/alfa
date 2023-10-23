@@ -4,12 +4,12 @@
 
 ## Err.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Err.JSON<E>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Err.JSON](./alfa-result.err.json.md)<!-- -->&lt;E&gt;
 

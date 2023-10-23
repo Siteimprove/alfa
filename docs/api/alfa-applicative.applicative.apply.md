@@ -4,7 +4,7 @@
 
 ## Applicative.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Applicative<Mapper<T, U>>): Applicative<U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Applicative<Mapper<T, U>>): Applicative<U>;
 |  --- | --- | --- |
 |  mapper | [Applicative](./alfa-applicative.applicative.md)<!-- -->&lt;[Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Applicative](./alfa-applicative.applicative.md)<!-- -->&lt;U&gt;
 

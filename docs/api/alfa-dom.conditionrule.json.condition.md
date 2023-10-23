@@ -4,7 +4,7 @@
 
 ## ConditionRule.JSON.condition property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 condition: string;

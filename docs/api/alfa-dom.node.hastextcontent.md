@@ -4,7 +4,7 @@
 
 ## Node.hasTextContent variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasTextContent: typeof predicate.hasTextContent

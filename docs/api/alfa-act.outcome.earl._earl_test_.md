@@ -4,7 +4,7 @@
 
 ## Outcome.EARL."earl:test" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "earl:test": {

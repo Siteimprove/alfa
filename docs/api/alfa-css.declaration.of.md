@@ -4,7 +4,7 @@
 
 ## Declaration.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: string, value: Iterable<Token>, important?: boolean): Declaration;
@@ -15,10 +15,10 @@ static of(name: string, value: Iterable<Token>, important?: boolean): Declaratio
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-|  value | Iterable&lt;[Token](./alfa-css.token.md)<!-- -->&gt; |  |
-|  important | boolean | <i>(Optional)</i> |
+|  value | Iterable&lt;Token&gt; |  |
+|  important | boolean | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Declaration](./alfa-css.declaration.md)
 

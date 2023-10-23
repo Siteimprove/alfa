@@ -4,7 +4,7 @@
 
 ## MediaRule.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(condition: string, rules: Iterable<Rule>): MediaRule;
@@ -15,9 +15,9 @@ static of(condition: string, rules: Iterable<Rule>): MediaRule;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  condition | string |  |
-|  rules | Iterable&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
+|  rules | Iterable&lt;Rule&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [MediaRule](./alfa-dom.mediarule.md)
 

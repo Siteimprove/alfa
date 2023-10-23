@@ -4,7 +4,7 @@
 
 ## AnglePercentage.isAnglePercentage() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isAnglePercentage(value: unknown): value is AnglePercentage;
@@ -16,7 +16,7 @@ export function isAnglePercentage(value: unknown): value is AnglePercentage;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [AnglePercentage](./alfa-css.anglepercentage.md)
 

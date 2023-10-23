@@ -1,5 +1,47 @@
 # Alfa changelog
 
+## [0.68.0](../../compare/v0.67.0...v0.68.0) (2023-10-20)
+
+### Breaking
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0680): Function `getBoundingBox` was removed. ([#1474](https://github.com/Siteimprove/alfa/pull/1474))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0680): `Element#of` now requires the device used when scraping a page in order to store a box. ([#1474](https://github.com/Siteimprove/alfa/pull/1474))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0680): `Position.Component` cannot be raw `LengthPercentage` anymore. ([#1454](https://github.com/Siteimprove/alfa/pull/1454))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0680): `Gradient.Linear.parse`, `Gradient.Radial.parse`, and `Gradient.parse` now don't require an item list parser. ([#1477](https://github.com/Siteimprove/alfa/pull/1477))
+
+### Removed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0680): The unused `Side.isCenter()` predicate is no longer available. ([#1454](https://github.com/Siteimprove/alfa/pull/1454))
+
+### Added
+
+- [@siteimprove/alfa-json](packages/alfa-json/CHANGELOG.md#0680): `Serializable` interface now optionally accepts serialization options. ([#1474](https://github.com/Siteimprove/alfa/pull/1474))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0680): `Position` now accept calculations in any of their components. ([#1454](https://github.com/Siteimprove/alfa/pull/1454))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0680), [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0680): CSS `Shape` now accept calculated values. ([#1478](https://github.com/Siteimprove/alfa/pull/1478))
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0680), [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0680): CSS `Image` are now calculatable. ([#1477](https://github.com/Siteimprove/alfa/pull/1477))
+
+- [@siteimprove/alfa-tree](packages/alfa-tree/CHANGELOG.md#0680): Optional serialization options type parameter added to abstract `Node` class. ([#1474](https://github.com/Siteimprove/alfa/pull/1474))
+
+- [@siteimprove/alfa-dom](packages/alfa-dom/CHANGELOG.md#0680): `Document#toJSON` now optionally accepts serialization options containing device. ([#1474](https://github.com/Siteimprove/alfa/pull/1474))
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0680): `Position.Side.of` now also accepts an optional offset, as well as an `Option<offset>`. ([#1454](https://github.com/Siteimprove/alfa/pull/1454))
+
+### Changed
+
+- [@siteimprove/alfa-css](packages/alfa-css/CHANGELOG.md#0680): The `Position` type requires more type parameters. ([#1454](https://github.com/Siteimprove/alfa/pull/1454))
+
+- [@siteimprove/alfa-cascade](packages/alfa-cascade/CHANGELOG.md#0680): `<button>`'s `background-color` now defaults to `buttonface`. ([#1472](https://github.com/Siteimprove/alfa/pull/1472))
+
+### Fixed
+
+- [@siteimprove/alfa-style](packages/alfa-style/CHANGELOG.md#0680): `<img>` elements are now considered as respecting their specified dimensions. ([#1485](https://github.com/Siteimprove/alfa/pull/1485))
+
 ## [0.67.0](../../compare/v0.66.0...v0.67.0) (2023-09-08)
 
 ### Breaking

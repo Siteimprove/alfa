@@ -4,7 +4,7 @@
 
 ## Outcome.Inapplicable.isInapplicable() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isInapplicable<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Inapplicable<I, T, Q, S>;
@@ -16,7 +16,7 @@ function isInapplicable<I, T extends Hashable, Q extends Question.Metadata, S>(v
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Inapplicable](./alfa-act.outcome.inapplicable.md)<!-- -->&lt;I, T, Q, S&gt;
 

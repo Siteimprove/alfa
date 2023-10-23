@@ -6,12 +6,12 @@
 
 [https://www.w3.org/TR/wai-aria/\#global\_states](https://www.w3.org/TR/wai-aria/#global_states)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isGlobal(): this is Attribute<Attribute.Global>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Attribute](./alfa-aria.attribute.md)<!-- -->&lt;[Attribute.Global](./alfa-aria.attribute.global.md)<!-- -->&gt;
 

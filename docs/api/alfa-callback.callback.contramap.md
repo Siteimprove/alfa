@@ -4,7 +4,7 @@
 
 ## Callback.contraMap() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function contraMap<T, R, U, A extends Array<unknown> = []>(callback: Callback<T, R, A>, mapper: Mapper<U, T>): Callback<U, R, A>;
@@ -17,7 +17,7 @@ function contraMap<T, R, U, A extends Array<unknown> = []>(callback: Callback<T,
 |  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, R, A&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;U, T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Callback](./alfa-callback.callback.md)<!-- -->&lt;U, R, A&gt;
 

@@ -4,7 +4,7 @@
 
 ## Future.then() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 then(callback: Callback<T>): void;
@@ -14,9 +14,9 @@ then(callback: Callback<T>): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T&gt; |  |
+|  callback | Callback&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

@@ -6,12 +6,12 @@
 
 Remove the fragment portion of this URL.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 withoutFragment(): URL;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [URL](./alfa-url.url.md)
 

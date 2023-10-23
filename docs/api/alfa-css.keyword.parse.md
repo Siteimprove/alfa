@@ -4,7 +4,7 @@
 
 ## Keyword.parse() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parse<T extends string>(...keywords: Array<T>): CSSParser<ToKeywords<T>>;
@@ -16,7 +16,7 @@ function parse<T extends string>(...keywords: Array<T>): CSSParser<ToKeywords<T>
 |  --- | --- | --- |
 |  keywords | Array&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [CSSParser](./alfa-css.parser.md)<!-- -->&lt;[ToKeywords](./alfa-css.keyword.tokeywords.md)<!-- -->&lt;T&gt;&gt;
 

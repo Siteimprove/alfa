@@ -4,7 +4,7 @@
 
 ## Array\_2.search() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function search<T>(array: ReadonlyArray<T>, value: T, comparer: Comparer<T>): number;
@@ -18,7 +18,7 @@ function search<T>(array: ReadonlyArray<T>, value: T, comparer: Comparer<T>): nu
 |  value | T |  |
 |  comparer | [Comparer](./alfa-comparable.comparer.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

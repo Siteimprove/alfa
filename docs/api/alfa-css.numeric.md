@@ -5,10 +5,10 @@
 ## Numeric type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Numeric<T extends Numeric.Type = Numeric.Type> = Numeric.Calculated<T> | Numeric.Fixed<T>;
 ```
-<b>References:</b> [Numeric.Type](./alfa-css.numeric.type.md)<!-- -->, [Numeric.Calculated](./alfa-css.numeric.calculated.md)<!-- -->, [Numeric.Fixed](./alfa-css.numeric.fixed.md)
+**References:** [Numeric.Type](./alfa-css.numeric.type.md)<!-- -->, [Numeric.Calculated](./alfa-css.numeric.calculated.md)<!-- -->, [Numeric.Fixed](./alfa-css.numeric.fixed.md)
 

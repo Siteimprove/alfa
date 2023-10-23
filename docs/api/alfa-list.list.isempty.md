@@ -4,12 +4,12 @@
 
 ## List.isEmpty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEmpty(): this is List<never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [List](./alfa-list.list.md)<!-- -->&lt;never&gt;
 

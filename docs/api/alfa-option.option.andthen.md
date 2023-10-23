@@ -4,7 +4,7 @@
 
 ## Option.andThen() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
@@ -16,7 +16,7 @@ andThen<U>(option: Mapper<T, Option<U>>): Option<U>;
 |  --- | --- | --- |
 |  option | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
 

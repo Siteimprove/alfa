@@ -4,8 +4,10 @@
 
 ## Number\_2.Canonical type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Canonical = Fixed;
 ```
+**References:** [Fixed](./alfa-css.number_2.fixed.md)
+

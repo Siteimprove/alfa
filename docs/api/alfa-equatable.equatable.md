@@ -6,7 +6,7 @@
 
 This namespace provides additional types and functions for the [Equatable](./alfa-equatable.equatable.md) interface.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Equatable 

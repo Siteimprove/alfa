@@ -4,7 +4,7 @@
 
 ## Name.Source.Descendant namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Descendant 

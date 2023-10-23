@@ -4,7 +4,7 @@
 
 ## Element.hasInputType variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasInputType: typeof predicate.hasInputType

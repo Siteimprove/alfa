@@ -4,7 +4,7 @@
 
 ## Language.Variant.isName() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isName(name: string): name is Name;
@@ -16,7 +16,7 @@ function isName(name: string): name is Name;
 |  --- | --- | --- |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 name is [Name](./alfa-iana.language.variant.name.md)
 

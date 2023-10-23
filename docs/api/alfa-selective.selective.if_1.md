@@ -4,7 +4,7 @@
 
 ## Selective.if() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 if<U>(predicate: Predicate<S>, mapper: Mapper<S, U>): Selective<S, T | U>;
@@ -14,10 +14,10 @@ if<U>(predicate: Predicate<S>, mapper: Mapper<S, U>): Selective<S, T | U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;S&gt; |  |
+|  predicate | Predicate&lt;S&gt; |  |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;S, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Selective](./alfa-selective.selective.md)<!-- -->&lt;S, T \| U&gt;
 

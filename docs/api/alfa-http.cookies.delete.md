@@ -4,7 +4,7 @@
 
 ## Cookies.delete() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 delete(name: string): Cookies;
@@ -16,7 +16,7 @@ delete(name: string): Cookies;
 |  --- | --- | --- |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Cookies](./alfa-http.cookies.md)
 

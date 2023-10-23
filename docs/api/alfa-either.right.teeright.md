@@ -4,7 +4,7 @@
 
 ## Right.teeRight() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 teeRight(callback: Callback<R>): Right<R>;
@@ -14,9 +14,9 @@ teeRight(callback: Callback<R>): Right<R>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;R&gt; |  |
+|  callback | Callback&lt;R&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Right](./alfa-either.right.md)<!-- -->&lt;R&gt;
 

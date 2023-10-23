@@ -4,7 +4,7 @@
 
 ## Slice.concat() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 concat(iterable: Iterable<T>): Slice<T>;
@@ -16,7 +16,7 @@ concat(iterable: Iterable<T>): Slice<T>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

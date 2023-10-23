@@ -4,7 +4,7 @@
 
 ## Serializable.toSARIF() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function toSARIF<T extends SARIF>(value: Serializable<T>): Some<T>;
@@ -16,7 +16,7 @@ function toSARIF<T extends SARIF>(value: Serializable<T>): Some<T>;
 |  --- | --- | --- |
 |  value | [Serializable](./alfa-sarif.serializable.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Some](./alfa-option.some.md)<!-- -->&lt;T&gt;
+Some&lt;T&gt;
 

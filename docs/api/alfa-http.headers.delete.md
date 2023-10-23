@@ -4,7 +4,7 @@
 
 ## Headers.delete() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 delete(name: string): Headers;
@@ -16,7 +16,7 @@ delete(name: string): Headers;
 |  --- | --- | --- |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Headers](./alfa-http.headers.md)
 

@@ -4,7 +4,7 @@
 
 ## Token.colon variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 colon: typeof Colon.of

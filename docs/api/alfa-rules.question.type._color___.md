@@ -4,7 +4,7 @@
 
 ## Question.Type."color\[\]" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "color[]": Iterable<RGB>;

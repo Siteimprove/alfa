@@ -4,12 +4,12 @@
 
 ## Value.hasCalculation() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasCalculation(): this is Value<T, true, R>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Value](./alfa-css.value.md)<!-- -->&lt;T, true, R&gt;
 

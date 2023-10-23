@@ -4,12 +4,12 @@
 
 ## Map\_2.isEmpty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEmpty(): this is Map<K, never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-this is Map&lt;K, never&gt;
+this is [Map](./alfa-map.map_2.md)<!-- -->&lt;K, never&gt;
 

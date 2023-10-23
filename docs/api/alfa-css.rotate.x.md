@@ -4,7 +4,7 @@
 
 ## Rotate.x property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get x(): Number.Canonical;

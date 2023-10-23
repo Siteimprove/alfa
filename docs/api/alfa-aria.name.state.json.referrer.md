@@ -4,7 +4,7 @@
 
 ## Name.State.JSON.referrer property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 referrer: string | null;

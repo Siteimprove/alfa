@@ -4,12 +4,12 @@
 
 ## Container.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Container.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Container.JSON](./alfa-aria.container.json.md)
 

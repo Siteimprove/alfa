@@ -4,7 +4,7 @@
 
 ## Page.response property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get response(): Response;

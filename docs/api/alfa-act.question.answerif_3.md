@@ -4,7 +4,7 @@
 
 ## Question.answerIf() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 answerIf(answer: Result<ANSWER, Diagnostic>, merger?: Mapper<Diagnostic, Diagnostic, [Diagnostic]>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
@@ -14,10 +14,10 @@ answerIf(answer: Result<ANSWER, Diagnostic>, merger?: Mapper<Diagnostic, Diagnos
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  answer | [Result](./alfa-result.result.md)<!-- -->&lt;ANSWER, [Diagnostic](./alfa-act.diagnostic.md)<!-- -->&gt; |  |
-|  merger | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;[Diagnostic](./alfa-act.diagnostic.md)<!-- -->, [Diagnostic](./alfa-act.diagnostic.md)<!-- -->, \[[Diagnostic](./alfa-act.diagnostic.md)<!-- -->\]&gt; | <i>(Optional)</i> |
+|  answer | Result&lt;ANSWER, Diagnostic&gt; |  |
+|  merger | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;Diagnostic, Diagnostic, \[Diagnostic\]&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;
 

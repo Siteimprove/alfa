@@ -4,7 +4,7 @@
 
 ## Builder.Axis\_base variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 Axis_base: {

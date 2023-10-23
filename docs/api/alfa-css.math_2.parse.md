@@ -4,7 +4,7 @@
 
 ## Math\_2.parse variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: Parser<Slice<Token>, Math<Dimension>, string, []>

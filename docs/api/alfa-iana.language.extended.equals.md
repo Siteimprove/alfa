@@ -4,7 +4,7 @@
 
 ## Language.Extended.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Extended): boolean;
@@ -16,7 +16,7 @@ equals(value: Extended): boolean;
 |  --- | --- | --- |
 |  value | [Extended](./alfa-iana.language.extended.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

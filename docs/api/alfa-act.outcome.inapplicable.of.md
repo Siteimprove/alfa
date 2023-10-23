@@ -4,7 +4,7 @@
 
 ## Outcome.Inapplicable.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T, Q, S>, mode: Mode): Inapplicable<I, T, Q, S>;
@@ -14,10 +14,10 @@ static of<I, T extends Hashable, Q extends Question.Metadata, S>(rule: Rule<I, T
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt; |  |
+|  rule | Rule&lt;I, T, Q, S&gt; |  |
 |  mode | [Mode](./alfa-act.outcome.mode.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Inapplicable](./alfa-act.outcome.inapplicable.md)<!-- -->&lt;I, T, Q, S&gt;
 

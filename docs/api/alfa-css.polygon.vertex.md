@@ -4,10 +4,11 @@
 
 ## Polygon.Vertex type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-type Vertex<V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> = readonly [V, V];
+type Vertex<V extends LengthPercentage = LengthPercentage> = readonly [
+        V,
+        V
+    ];
 ```
-<b>References:</b> [Length.Fixed](./alfa-css.length.fixed.md)<!-- -->, [Percentage.Fixed](./alfa-css.percentage.fixed.md)
-

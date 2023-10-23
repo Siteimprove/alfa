@@ -4,7 +4,7 @@
 
 ## Token.parseOpenParenthesis variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseOpenParenthesis: Parser<Slice<Token>, OpenParenthesis, string, []>

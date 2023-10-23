@@ -4,7 +4,7 @@
 
 ## Cell.Data.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(cell: Data): boolean;
@@ -16,7 +16,7 @@ equals(cell: Data): boolean;
 |  --- | --- | --- |
 |  cell | [Data](./alfa-table.cell.data.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

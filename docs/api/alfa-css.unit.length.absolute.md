@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-values/\#absolute-lengths](https://drafts.csswg.org/css-values/#absolute-lengths)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Absolute = "cm" | "mm" | "Q" | "in" | "pc" | "pt" | "px";

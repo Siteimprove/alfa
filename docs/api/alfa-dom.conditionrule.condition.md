@@ -4,7 +4,7 @@
 
 ## ConditionRule.condition property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get condition(): string;

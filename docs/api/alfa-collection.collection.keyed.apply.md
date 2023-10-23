@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Keyed<K, Mapper<V, U>>): Keyed<K, U>;
@@ -16,7 +16,7 @@ apply<U>(mapper: Keyed<K, Mapper<V, U>>): Keyed<K, U>;
 |  --- | --- | --- |
 |  mapper | [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, U&gt;
 

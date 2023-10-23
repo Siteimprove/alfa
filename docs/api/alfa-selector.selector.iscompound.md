@@ -4,7 +4,7 @@
 
 ## Selector.isCompound() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isCompound(value: unknown): value is Compound;
@@ -16,7 +16,7 @@ export function isCompound(value: unknown): value is Compound;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Compound](./alfa-selector.selector.compound.md)
 

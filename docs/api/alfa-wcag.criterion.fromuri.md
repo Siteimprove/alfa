@@ -4,7 +4,7 @@
 
 ## Criterion.fromURI() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function fromURI(uri: string): Option<Criterion>;
@@ -16,7 +16,7 @@ function fromURI(uri: string): Option<Criterion>;
 |  --- | --- | --- |
 |  uri | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Criterion](./alfa-wcag.criterion.md)<!-- -->&gt;
+Option&lt;[Criterion](./alfa-wcag.criterion.md)<!-- -->&gt;
 

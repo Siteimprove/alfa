@@ -4,7 +4,7 @@
 
 ## Stability.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Stability): boolean;
@@ -16,7 +16,7 @@ equals(value: Stability): boolean;
 |  --- | --- | --- |
 |  value | [Stability](./alfa-rules.stability.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -4,7 +4,7 @@
 
 ## Shadow.JSON.isInset property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isInset: boolean;

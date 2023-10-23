@@ -6,7 +6,7 @@
 
 Constructs a new instance of the `Cell` class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(element: Element, anchor: Slot, width: number, height: number, headers: Array<Slot>);
@@ -16,9 +16,9 @@ protected constructor(element: Element, anchor: Slot, width: number, height: num
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
-|  anchor | [Slot](./alfa-table.slot.md) |  |
+|  element | Element |  |
+|  anchor | Slot |  |
 |  width | number |  |
 |  height | number |  |
-|  headers | Array&lt;[Slot](./alfa-table.slot.md)<!-- -->&gt; |  |
+|  headers | Array&lt;Slot&gt; |  |
 

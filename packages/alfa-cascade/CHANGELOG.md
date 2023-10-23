@@ -1,5 +1,13 @@
 # @siteimprove/alfa-cascade
 
+## 0.68.0
+
+### Patch Changes
+
+- **Changed:** `<button>`'s `background-color` now defaults to `buttonface`. ([#1472](https://github.com/Siteimprove/alfa/pull/1472))
+
+  `<button>` elements default `background-color` is somewhat different between user-agents. Rather than picking one, we use the system `buttonface` color instead. This notably opens way to handle it with a branched value, possibly also detecting whether we are in forced colors mode.
+
 ## 0.67.0
 
 ## 0.66.0

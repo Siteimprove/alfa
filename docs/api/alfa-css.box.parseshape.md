@@ -4,7 +4,7 @@
 
 ## Box.parseShape variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parseShape: CSSParser<Shape>

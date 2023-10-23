@@ -4,7 +4,7 @@
 
 ## Name.State namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace State 

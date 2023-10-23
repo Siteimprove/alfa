@@ -4,7 +4,7 @@
 
 ## Length.Fixed.hasUnit() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasUnit<U extends Unit.Length>(unit: U): this is Fixed<U>;
@@ -16,7 +16,7 @@ hasUnit<U extends Unit.Length>(unit: U): this is Fixed<U>;
 |  --- | --- | --- |
 |  unit | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this is [Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;U&gt;
 

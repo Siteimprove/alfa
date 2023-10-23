@@ -6,16 +6,16 @@
 
 [https://www.w3.org/TR/json-ld/\#dfn-json-ld-document](https://www.w3.org/TR/json-ld/#dfn-json-ld-document)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface Document extends JSON.Object 
 ```
-<b>Extends:</b> JSON.Object
+**Extends:** JSON.Object
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  ["@context"?](./alfa-json-ld.document.__context_.md) |  | [Context](./alfa-json-ld.context.md) | <i>(Optional)</i> |
+|  ["@context"?](./alfa-json-ld.document.__context_.md) |  | [Context](./alfa-json-ld.context.md) | _(Optional)_ |
 

@@ -4,7 +4,7 @@
 
 ## Outcome.isPassed variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isPassed: typeof Passed.isPassed

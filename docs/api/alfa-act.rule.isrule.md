@@ -4,7 +4,7 @@
 
 ## Rule.isRule() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRule<I, T extends Hashable, Q extends Question.Metadata, S>(value: unknown): value is Rule<I, T, Q, S>;
@@ -16,7 +16,7 @@ function isRule<I, T extends Hashable, Q extends Question.Metadata, S>(value: un
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Rule](./alfa-act.rule.md)<!-- -->&lt;I, T, Q, S&gt;
 

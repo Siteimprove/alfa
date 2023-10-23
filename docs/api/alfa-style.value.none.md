@@ -4,7 +4,7 @@
 
 ## Value.none() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 none(predicate: Predicate<T, [source: Option<Declaration>]>): boolean;
@@ -14,9 +14,9 @@ none(predicate: Predicate<T, [source: Option<Declaration>]>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[source: [Option](./alfa-option.option.md)<!-- -->&lt;[Declaration](./alfa-dom.declaration.md)<!-- -->&gt;\]&gt; |  |
+|  predicate | Predicate&lt;T, \[source: Option&lt;Declaration&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

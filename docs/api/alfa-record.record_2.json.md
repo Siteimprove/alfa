@@ -4,12 +4,12 @@
 
 ## Record\_2.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON<T> = {
         [K in Key<T>]: Serializable.ToJSON<T[K]>;
     };
 ```
-<b>References:</b> [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
+**References:** [Key](./alfa-record.record_2.key.md)<!-- -->, [Serializable.ToJSON](./alfa-json.serializable.tojson.md)
 

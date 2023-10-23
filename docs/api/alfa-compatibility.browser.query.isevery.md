@@ -4,7 +4,7 @@
 
 ## Browser.Query.isEvery() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isEvery<N extends Name>(query: Query<N>): query is Every<N>;
@@ -16,7 +16,7 @@ function isEvery<N extends Name>(query: Query<N>): query is Every<N>;
 |  --- | --- | --- |
 |  query | [Query](./alfa-compatibility.browser.query.md)<!-- -->&lt;N&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 query is [Every](./alfa-compatibility.browser.query.every.md)<!-- -->&lt;N&gt;
 

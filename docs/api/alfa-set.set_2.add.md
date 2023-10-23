@@ -4,7 +4,7 @@
 
 ## Set\_2.add() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 add(value: T): Set<T>;
@@ -16,7 +16,7 @@ add(value: T): Set<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Set&lt;T&gt;
+[Set](./alfa-set.set_2.md)<!-- -->&lt;T&gt;
 

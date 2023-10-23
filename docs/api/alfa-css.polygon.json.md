@@ -4,12 +4,12 @@
 
 ## Polygon.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-interface JSON<F extends Fill = Fill, V extends Length.Fixed | Percentage.Fixed = Length.Fixed | Percentage.Fixed> extends BasicShape.JSON<"polygon"> 
+interface JSON<F extends Fill = Fill, V extends LengthPercentage = LengthPercentage> extends BasicShape.JSON<"polygon"> 
 ```
-<b>Extends:</b> BasicShape.JSON&lt;"polygon"&gt;
+**Extends:** BasicShape.JSON&lt;"polygon"&gt;
 
 ## Properties
 

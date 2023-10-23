@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/css-pseudo-4/\#selectordef-target-text](https://drafts.csswg.org/css-pseudo-4/#selectordef-target-text)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class TargetText extends Pseudo.Element<"target-text"> 
 ```
-<b>Extends:</b> [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"target-text"&gt;
+**Extends:** [Pseudo.Element](./alfa-selector.selector.pseudo.element.md)<!-- -->&lt;"target-text"&gt;
 
 ## Methods
 

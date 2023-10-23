@@ -4,7 +4,7 @@
 
 ## Selector.Selector.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract equals(value: Selector): boolean;
@@ -16,7 +16,7 @@ abstract equals(value: Selector): boolean;
 |  --- | --- | --- |
 |  value | Selector |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

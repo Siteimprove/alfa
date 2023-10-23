@@ -4,7 +4,7 @@
 
 ## Numeric.Fixed.scale() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract scale(factor: number): Fixed<T, R>;
@@ -16,7 +16,7 @@ abstract scale(factor: number): Fixed<T, R>;
 |  --- | --- | --- |
 |  factor | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.numeric.fixed.md)<!-- -->&lt;T, R&gt;
 

@@ -4,7 +4,7 @@
 
 ## Hex.alpha property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get alpha(): Number.Fixed;

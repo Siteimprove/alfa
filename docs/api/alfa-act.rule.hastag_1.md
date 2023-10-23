@@ -4,7 +4,7 @@
 
 ## Rule.hasTag() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasTag(predicate: Predicate<Tag>): boolean;
@@ -14,9 +14,9 @@ hasTag(predicate: Predicate<Tag>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[Tag](./alfa-act.tag.md)<!-- -->&gt; |  |
+|  predicate | Predicate&lt;Tag&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.includes() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 includes(value: V): boolean;
@@ -16,7 +16,7 @@ includes(value: V): boolean;
 |  --- | --- | --- |
 |  value | V |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

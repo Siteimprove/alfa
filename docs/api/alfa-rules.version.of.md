@@ -4,7 +4,7 @@
 
 ## Version.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<N extends number>(version: N): Version<N>;
@@ -16,7 +16,7 @@ static of<N extends number>(version: N): Version<N>;
 |  --- | --- | --- |
 |  version | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Version](./alfa-rules.version.md)<!-- -->&lt;N&gt;
 

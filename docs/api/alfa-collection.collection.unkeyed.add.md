@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed.add() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 add(value: T): Unkeyed<T>;
@@ -16,7 +16,7 @@ add(value: T): Unkeyed<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;T&gt;
 

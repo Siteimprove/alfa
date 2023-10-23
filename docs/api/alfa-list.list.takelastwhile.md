@@ -4,7 +4,7 @@
 
 ## List.takeLastWhile() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): List<U>;
@@ -14,9 +14,9 @@ takeLastWhile<U extends T>(refinement: Refinement<T, U, [index: number]>): List<
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U, \[index: number\]&gt; |  |
+|  refinement | Refinement&lt;T, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;U&gt;
 

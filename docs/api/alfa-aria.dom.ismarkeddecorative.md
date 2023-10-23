@@ -4,7 +4,7 @@
 
 ## DOM.isMarkedDecorative variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isMarkedDecorative: import("@siteimprove/alfa-predicate").Predicate<import("@siteimprove/alfa-dom").Element<string>>

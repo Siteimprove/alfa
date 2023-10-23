@@ -4,7 +4,7 @@
 
 ## Selector.NthOfType.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: NthOfType): boolean;
@@ -16,7 +16,7 @@ equals(value: NthOfType): boolean;
 |  --- | --- | --- |
 |  value | [NthOfType](./alfa-selector.selector.nthoftype.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

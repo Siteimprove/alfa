@@ -4,12 +4,12 @@
 
 ## Technique.EARL interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface EARL extends Requirement.EARL 
 ```
-<b>Extends:</b> [Requirement.EARL](./alfa-act.requirement.earl.md)
+**Extends:** [Requirement.EARL](./alfa-act.requirement.earl.md)
 
 ## Properties
 

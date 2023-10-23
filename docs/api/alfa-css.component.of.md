@@ -4,7 +4,7 @@
 
 ## Component.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: Iterable<Token>): Component;
@@ -14,9 +14,9 @@ static of(value: Iterable<Token>): Component;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  value | Iterable&lt;[Token](./alfa-css.token.md)<!-- -->&gt; |  |
+|  value | Iterable&lt;Token&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Component](./alfa-css.component.md)
 

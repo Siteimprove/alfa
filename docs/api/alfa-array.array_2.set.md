@@ -4,7 +4,7 @@
 
 ## Array\_2.set() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function set<T>(array: Array<T>, index: number, value: T): Array<T>;
@@ -14,11 +14,11 @@ function set<T>(array: Array<T>, index: number, value: T): Array<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  array | Array&lt;T&gt; |  |
+|  array | [Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt; |  |
 |  index | number |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;T&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 

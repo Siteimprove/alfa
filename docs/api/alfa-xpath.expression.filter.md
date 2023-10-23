@@ -4,7 +4,7 @@
 
 ## Expression.Filter namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Filter 

@@ -4,12 +4,12 @@
 
 ## Scale.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Scale.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Scale.JSON](./alfa-css.scale.json.md)
 

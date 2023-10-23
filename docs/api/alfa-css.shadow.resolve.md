@@ -4,7 +4,7 @@
 
 ## Shadow.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(resolver: Shadow.Resolver): Shadow.Canonical;
@@ -16,7 +16,7 @@ resolve(resolver: Shadow.Resolver): Shadow.Canonical;
 |  --- | --- | --- |
 |  resolver | [Shadow.Resolver](./alfa-css.shadow.resolver.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Shadow.Canonical](./alfa-css.shadow.canonical.md)
 

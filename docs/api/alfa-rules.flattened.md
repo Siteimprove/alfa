@@ -5,7 +5,7 @@
 ## Flattened namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Flattened 

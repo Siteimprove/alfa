@@ -4,7 +4,7 @@
 
 ## Option.isNone() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isNone(value: unknown): value is None;
@@ -16,7 +16,7 @@ function isNone(value: unknown): value is None;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [None](./alfa-option.none.md)
 

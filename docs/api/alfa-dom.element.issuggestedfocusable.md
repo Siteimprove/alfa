@@ -4,7 +4,7 @@
 
 ## Element.isSuggestedFocusable variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isSuggestedFocusable: typeof predicate.isSuggestedFocusable

@@ -5,12 +5,12 @@
 ## Inert class
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class Inert extends Node<"inert"> 
 ```
-<b>Extends:</b> [Node](./alfa-aria.node.md)<!-- -->&lt;"inert"&gt;
+**Extends:** Node&lt;"inert"&gt;
 
 ## Methods
 

@@ -4,7 +4,7 @@
 
 ## Hash.writeNumber() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeNumber(data: number): this;
@@ -16,7 +16,7 @@ writeNumber(data: number): this;
 |  --- | --- | --- |
 |  data | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

@@ -4,7 +4,7 @@
 
 ## Circle.isCircle() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isCircle(value: unknown): value is Circle;
@@ -16,7 +16,7 @@ function isCircle(value: unknown): value is Circle;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Circle](./alfa-css.circle.md)
 

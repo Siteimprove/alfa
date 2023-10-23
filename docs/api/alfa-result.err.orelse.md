@@ -4,7 +4,7 @@
 
 ## Err.orElse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 orElse<U, F>(result: Thunk<Result<U, F>>): Result<U, F>;
@@ -14,9 +14,9 @@ orElse<U, F>(result: Thunk<Result<U, F>>): Result<U, F>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  result | [Thunk](./alfa-thunk.thunk.md)<!-- -->&lt;[Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;&gt; |  |
+|  result | Thunk&lt;Result&lt;U, F&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt;
+Result&lt;U, F&gt;
 

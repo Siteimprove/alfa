@@ -4,10 +4,10 @@
 
 ## Box.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type JSON = Keyword.JSON<"border-box"> | Keyword.JSON<"padding-box"> | Keyword.JSON<"content-box">;
 ```
-<b>References:</b> [Keyword.JSON](./alfa-css.keyword.json.md)
+**References:** [Keyword.JSON](./alfa-css.keyword.json.md)
 

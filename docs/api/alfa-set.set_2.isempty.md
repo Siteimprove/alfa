@@ -4,12 +4,12 @@
 
 ## Set\_2.isEmpty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEmpty(): this is Set<never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-this is Set&lt;never&gt;
+this is [Set](./alfa-set.set_2.md)<!-- -->&lt;never&gt;
 

@@ -4,7 +4,7 @@
 
 ## Requirement.uri property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract get uri(): string;

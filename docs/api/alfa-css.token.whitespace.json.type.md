@@ -4,7 +4,7 @@
 
 ## Token.Whitespace.JSON.type property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type: "whitespace";

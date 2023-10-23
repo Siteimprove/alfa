@@ -4,7 +4,7 @@
 
 ## StyleRule.JSON.selector property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 selector: string;

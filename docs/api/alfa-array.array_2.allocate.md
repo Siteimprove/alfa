@@ -4,7 +4,7 @@
 
 ## Array\_2.allocate() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function allocate<T>(capacity: number): Array<T>;
@@ -16,7 +16,7 @@ function allocate<T>(capacity: number): Array<T>;
 |  --- | --- | --- |
 |  capacity | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;T&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;T&gt;
 

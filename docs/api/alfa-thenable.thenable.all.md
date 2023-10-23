@@ -4,7 +4,7 @@
 
 ## Thenable.all() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function all<T, E = unknown>(...thenables: Array<Thenable<T, E>>): Thenable<Array<T>, E>;
@@ -16,7 +16,7 @@ function all<T, E = unknown>(...thenables: Array<Thenable<T, E>>): Thenable<Arra
 |  --- | --- | --- |
 |  thenables | Array&lt;[Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;Array&lt;T&gt;, E&gt;
 

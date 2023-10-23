@@ -4,7 +4,7 @@
 
 ## Token.Percentage.isPercentage() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isPercentage(value: unknown): value is Percentage;
@@ -16,7 +16,7 @@ function isPercentage(value: unknown): value is Percentage;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Percentage](./alfa-css.token.percentage.md)
 

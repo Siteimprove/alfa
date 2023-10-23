@@ -4,7 +4,7 @@
 
 ## Cons.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Sequence<Sequence<T>>): Sequence<T>;
@@ -14,9 +14,9 @@ flatten<T>(this: Sequence<Sequence<T>>): Sequence<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;&gt; |  |
+|  this | Sequence&lt;Sequence&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
+Sequence&lt;T&gt;
 

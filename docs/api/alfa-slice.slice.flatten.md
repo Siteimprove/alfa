@@ -4,7 +4,7 @@
 
 ## Slice.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Slice<Slice<T>>): Slice<T>;
@@ -16,7 +16,7 @@ flatten<T>(this: Slice<Slice<T>>): Slice<T>;
 |  --- | --- | --- |
 |  this | [Slice](./alfa-slice.slice.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Slice](./alfa-slice.slice.md)<!-- -->&lt;T&gt;
 

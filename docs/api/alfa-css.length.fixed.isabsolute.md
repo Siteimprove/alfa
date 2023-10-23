@@ -4,12 +4,12 @@
 
 ## Length.Fixed.isAbsolute() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isAbsolute(): this is Fixed<Unit.Length.Absolute>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;[Unit.Length.Absolute](./alfa-css.unit.length.absolute.md)<!-- -->&gt;
 

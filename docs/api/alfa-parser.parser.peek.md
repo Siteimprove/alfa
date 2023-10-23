@@ -4,7 +4,7 @@
 
 ## Parser.peek() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function peek<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
@@ -16,7 +16,7 @@ function peek<I, T, E, A extends Array<unknown> = []>(parser: Parser<I, T, E, A>
 |  --- | --- | --- |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
 

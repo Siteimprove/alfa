@@ -4,7 +4,7 @@
 
 ## Style.hasOutline variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasOutline: typeof element.hasOutline

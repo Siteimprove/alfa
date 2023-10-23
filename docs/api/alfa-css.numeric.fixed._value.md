@@ -4,7 +4,7 @@
 
 ## Numeric.Fixed.\_value property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _value: number;

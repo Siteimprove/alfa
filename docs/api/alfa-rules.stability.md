@@ -5,7 +5,7 @@
 ## Stability namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Stability 

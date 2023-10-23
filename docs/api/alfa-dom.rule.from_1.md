@@ -4,7 +4,7 @@
 
 ## Rule.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: ImportRule.JSON): ImportRule;
@@ -16,7 +16,7 @@ function from(json: ImportRule.JSON): ImportRule;
 |  --- | --- | --- |
 |  json | [ImportRule.JSON](./alfa-dom.importrule.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[ImportRule](./alfa-dom.importrule.md)
+ImportRule
 

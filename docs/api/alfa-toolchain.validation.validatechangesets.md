@@ -6,7 +6,7 @@
 
 Validate that all changesets have the expected structure.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function validateChangesets(cwd: string): Promise<Array<string>>;
@@ -18,7 +18,7 @@ export declare function validateChangesets(cwd: string): Promise<Array<string>>;
 |  --- | --- | --- |
 |  cwd | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Promise&lt;Array&lt;string&gt;&gt;
 

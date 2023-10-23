@@ -4,7 +4,7 @@
 
 ## Network.edges() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 edges(from: N, to: N): Iterable<E>;
@@ -17,7 +17,7 @@ edges(from: N, to: N): Iterable<E>;
 |  from | N |  |
 |  to | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 Iterable&lt;E&gt;
 

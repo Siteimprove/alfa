@@ -6,7 +6,7 @@
 
 [https://fetch.spec.whatwg.org/\#dom-body-body](https://fetch.spec.whatwg.org/#dom-body-body)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get body(): ArrayBuffer;

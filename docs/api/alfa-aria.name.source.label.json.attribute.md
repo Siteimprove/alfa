@@ -4,7 +4,7 @@
 
 ## Name.Source.Label.JSON.attribute property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 attribute: string;

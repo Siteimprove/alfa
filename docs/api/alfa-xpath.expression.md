@@ -5,10 +5,10 @@
 ## Expression type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Expression = Expression.Primary | Expression.Path | Expression.Axis | Expression.Filter;
 ```
-<b>References:</b> [Expression.Primary](./alfa-xpath.expression.primary.md)<!-- -->, [Expression.Path](./alfa-xpath.expression.path.md)<!-- -->, [Expression.Axis](./alfa-xpath.expression.axis.md)<!-- -->, [Expression.Filter](./alfa-xpath.expression.filter.md)
+**References:** [Expression.Primary](./alfa-xpath.expression.primary.md)<!-- -->, [Expression.Path](./alfa-xpath.expression.path.md)<!-- -->, [Expression.Axis](./alfa-xpath.expression.axis.md)<!-- -->, [Expression.Filter](./alfa-xpath.expression.filter.md)
 

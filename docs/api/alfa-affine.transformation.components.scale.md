@@ -6,7 +6,7 @@
 
 A vector representing \[x, y, z\] scaling.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 scale: Vector;

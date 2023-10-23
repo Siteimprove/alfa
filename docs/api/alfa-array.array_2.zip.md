@@ -4,7 +4,7 @@
 
 ## Array\_2.zip() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function zip<T, U = T>(array: ReadonlyArray<T>, iterable: Iterable<U>): Array<[T, U]>;
@@ -17,7 +17,7 @@ function zip<T, U = T>(array: ReadonlyArray<T>, iterable: Iterable<U>): Array<[T
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  iterable | Iterable&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Array&lt;\[T, U\]&gt;
+[Array](./alfa-array.array_2.md)<!-- -->&lt;\[T, U\]&gt;
 

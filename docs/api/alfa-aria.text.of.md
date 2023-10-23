@@ -4,7 +4,7 @@
 
 ## Text.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(owner: dom.Node, name: Option<Name>): Text;
@@ -14,10 +14,10 @@ static of(owner: dom.Node, name: Option<Name>): Text;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  owner | dom.[Node](./alfa-dom.node.md) |  |
-|  name | [Option](./alfa-option.option.md)<!-- -->&lt;[Name](./alfa-aria.name.md)<!-- -->&gt; |  |
+|  owner | [dom.Node](./alfa-dom.node.md) |  |
+|  name | Option&lt;Name&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Text](./alfa-aria.text.md)
 

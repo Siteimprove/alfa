@@ -4,7 +4,7 @@
 
 ## Set\_2.get() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get(value: T): Option<T>;
@@ -16,7 +16,7 @@ get(value: T): Option<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

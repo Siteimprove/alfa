@@ -4,7 +4,7 @@
 
 ## Trilean.some() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function some<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): Trilean;
@@ -17,7 +17,7 @@ function some<T>(iterable: Iterable<T>, predicate: Predicate<T, [number]>): Tril
 |  iterable | Iterable&lt;T&gt; |  |
 |  predicate | [Predicate](./alfa-trilean.trilean.predicate.md)<!-- -->&lt;T, \[number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Trilean](./alfa-trilean.trilean.md)
 

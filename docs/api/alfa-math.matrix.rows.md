@@ -4,7 +4,7 @@
 
 ## Matrix.rows() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function rows(m: Matrix): number;
@@ -16,7 +16,7 @@ function rows(m: Matrix): number;
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 number
 

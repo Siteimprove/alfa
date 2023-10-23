@@ -6,7 +6,7 @@
 
 [https://encoding.spec.whatwg.org/\#textdecoder](https://encoding.spec.whatwg.org/#textdecoder)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Decoder 

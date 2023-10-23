@@ -4,7 +4,7 @@
 
 ## Cookie.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Cookie): boolean;
@@ -16,7 +16,7 @@ equals(value: Cookie): boolean;
 |  --- | --- | --- |
 |  value | [Cookie](./alfa-http.cookie.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

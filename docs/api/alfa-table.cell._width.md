@@ -4,7 +4,7 @@
 
 ## Cell.\_width property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected readonly _width: number;

@@ -6,7 +6,7 @@
 
 Check if a value of an unknown type is equal to this.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: unknown): value is this;
@@ -18,7 +18,7 @@ equals(value: unknown): value is this;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is this
 

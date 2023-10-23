@@ -4,7 +4,7 @@
 
 ## List.JSON.separator property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 separator: string;

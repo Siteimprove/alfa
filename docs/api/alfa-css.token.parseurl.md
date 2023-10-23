@@ -4,7 +4,7 @@
 
 ## Token.parseURL() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function parseURL(predicate?: Predicate<URL>): Parser<Slice<Token>, URL, string, []>;
@@ -14,9 +14,9 @@ function parseURL(predicate?: Predicate<URL>): Parser<Slice<Token>, URL, string,
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;[URL](./alfa-css.token.url.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  predicate | Predicate&lt;[URL](./alfa-css.token.url.md)<!-- -->&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Parser](./alfa-parser.parser.md)<!-- -->&lt;[Slice](./alfa-slice.slice.md)<!-- -->&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [URL](./alfa-css.token.url.md)<!-- -->, string, \[\]&gt;
+Parser&lt;Slice&lt;[Token](./alfa-css.token.md)<!-- -->&gt;, [URL](./alfa-css.token.url.md)<!-- -->, string, \[\]&gt;
 

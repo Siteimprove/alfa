@@ -4,7 +4,7 @@
 
 ## Sequence.takeWhile() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
@@ -14,9 +14,9 @@ takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T, \[index: number\]&gt; |  |
+|  predicate | Predicate&lt;T, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

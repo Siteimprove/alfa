@@ -4,7 +4,7 @@
 
 ## ImportRule.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(href: string, sheet: Sheet, condition?: Option<string>): ImportRule;
@@ -15,10 +15,10 @@ static of(href: string, sheet: Sheet, condition?: Option<string>): ImportRule;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  href | string |  |
-|  sheet | [Sheet](./alfa-dom.sheet.md) |  |
-|  condition | [Option](./alfa-option.option.md)<!-- -->&lt;string&gt; | <i>(Optional)</i> |
+|  sheet | Sheet |  |
+|  condition | Option&lt;string&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [ImportRule](./alfa-dom.importrule.md)
 

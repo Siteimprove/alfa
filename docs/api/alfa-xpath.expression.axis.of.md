@@ -4,7 +4,7 @@
 
 ## Expression.Axis.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(axis: Axis.Type, test?: Option<Test>, predicates?: Array<Expression>): Axis;
@@ -15,10 +15,10 @@ static of(axis: Axis.Type, test?: Option<Test>, predicates?: Array<Expression>):
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  axis | [Axis.Type](./alfa-xpath.expression.axis.type.md) |  |
-|  test | [Option](./alfa-option.option.md)<!-- -->&lt;[Test](./alfa-xpath.expression.test.md)<!-- -->&gt; | <i>(Optional)</i> |
-|  predicates | Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt; | <i>(Optional)</i> |
+|  test | Option&lt;[Test](./alfa-xpath.expression.test.md)<!-- -->&gt; | _(Optional)_ |
+|  predicates | Array&lt;[Expression](./alfa-xpath.expression.md)<!-- -->&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Axis](./alfa-xpath.expression.axis.md)
 

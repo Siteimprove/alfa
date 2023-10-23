@@ -4,7 +4,7 @@
 
 ## Sequence.append() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 append(value: T): Sequence<T>;
@@ -16,7 +16,7 @@ append(value: T): Sequence<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

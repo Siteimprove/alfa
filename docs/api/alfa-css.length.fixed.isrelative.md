@@ -4,12 +4,12 @@
 
 ## Length.Fixed.isRelative() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isRelative(): this is Fixed<Unit.Length.Relative>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;[Unit.Length.Relative](./alfa-css.unit.length.relative.md)<!-- -->&gt;
 

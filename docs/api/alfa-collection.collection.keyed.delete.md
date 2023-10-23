@@ -4,7 +4,7 @@
 
 ## Collection.Keyed.delete() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 delete(key: K, value: V): Keyed<K, V>;
@@ -17,7 +17,7 @@ delete(key: K, value: V): Keyed<K, V>;
 |  key | K |  |
 |  value | V |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Keyed](./alfa-collection.collection.keyed.md)<!-- -->&lt;K, V&gt;
 

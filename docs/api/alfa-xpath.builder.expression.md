@@ -4,7 +4,7 @@
 
 ## Builder.expression property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly expression: T;

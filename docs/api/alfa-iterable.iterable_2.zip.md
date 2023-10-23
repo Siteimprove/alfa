@@ -4,7 +4,7 @@
 
 ## Iterable\_2.zip() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function zip<T, U = T>(a: Iterable<T>, b: Iterable<U>): Iterable<[T, U]>;
@@ -14,10 +14,10 @@ function zip<T, U = T>(a: Iterable<T>, b: Iterable<U>): Iterable<[T, U]>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  a | Iterable&lt;T&gt; |  |
-|  b | Iterable&lt;U&gt; |  |
+|  a | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  b | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;\[T, U\]&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;\[T, U\]&gt;
 

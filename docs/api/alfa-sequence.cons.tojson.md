@@ -4,12 +4,12 @@
 
 ## Cons.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Cons.JSON<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Cons.JSON](./alfa-sequence.cons.json.md)<!-- -->&lt;T&gt;
 

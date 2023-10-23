@@ -4,12 +4,12 @@
 
 ## Record\_2.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Record.JSON<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Record.JSON&lt;T&gt;
+[Record.JSON](./alfa-record.record_2.json.md)<!-- -->&lt;T&gt;
 

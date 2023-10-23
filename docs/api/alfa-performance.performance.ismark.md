@@ -4,7 +4,7 @@
 
 ## Performance.isMark variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isMark: typeof Mark.isMark

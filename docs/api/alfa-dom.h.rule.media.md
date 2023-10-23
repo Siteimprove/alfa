@@ -4,7 +4,7 @@
 
 ## h.rule.media() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function media(condition: string, rules: Array<Rule>): MediaRule;
@@ -15,9 +15,9 @@ function media(condition: string, rules: Array<Rule>): MediaRule;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  condition | string |  |
-|  rules | Array&lt;[Rule](./alfa-dom.rule.md)<!-- -->&gt; |  |
+|  rules | Array&lt;Rule&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[MediaRule](./alfa-dom.mediarule.md)
+MediaRule
 

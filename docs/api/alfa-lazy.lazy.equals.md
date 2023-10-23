@@ -4,7 +4,7 @@
 
 ## Lazy.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<T>(value: Lazy<T>): boolean;
@@ -16,7 +16,7 @@ equals<T>(value: Lazy<T>): boolean;
 |  --- | --- | --- |
 |  value | [Lazy](./alfa-lazy.lazy.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

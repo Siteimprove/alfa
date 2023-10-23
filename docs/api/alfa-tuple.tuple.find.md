@@ -4,7 +4,7 @@
 
 ## Tuple.find() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function find<T extends Tuple, U extends Item<T>>(tuple: T, refinement: Refinement<Item<T>, U, [index: number]>): Option<U>;
@@ -15,9 +15,9 @@ export function find<T extends Tuple, U extends Item<T>>(tuple: T, refinement: R
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tuple | T |  |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt; |  |
+|  refinement | Refinement&lt;[Item](./alfa-tuple.tuple.item.md)<!-- -->&lt;T&gt;, U, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;U&gt;
+Option&lt;U&gt;
 

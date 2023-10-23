@@ -6,7 +6,7 @@
 
 [https://drafts.csswg.org/css-syntax/\#parse-a-declaration](https://drafts.csswg.org/css-syntax/#parse-a-declaration)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 parse: CSSParser<Declaration>

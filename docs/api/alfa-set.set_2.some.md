@@ -4,7 +4,7 @@
 
 ## Set\_2.some() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 some(predicate: Predicate<T>): boolean;
@@ -14,9 +14,9 @@ some(predicate: Predicate<T>): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  predicate | [Predicate](./alfa-predicate.predicate.md)<!-- -->&lt;T&gt; |  |
+|  predicate | Predicate&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

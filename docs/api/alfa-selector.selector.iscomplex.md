@@ -4,7 +4,7 @@
 
 ## Selector.isComplex() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isComplex(value: unknown): value is Complex;
@@ -16,7 +16,7 @@ export function isComplex(value: unknown): value is Complex;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Complex](./alfa-selector.selector.complex.md)
 

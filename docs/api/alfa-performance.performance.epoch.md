@@ -4,7 +4,7 @@
 
 ## Performance.epoch property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get epoch(): number;

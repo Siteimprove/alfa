@@ -5,7 +5,7 @@
 ## SARIF type
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type SARIF = sarif.Artifact | sarif.Location | sarif.Log | sarif.ReportingDescriptor | sarif.Result;

@@ -4,7 +4,7 @@
 
 ## Language.Subtag namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Subtag 

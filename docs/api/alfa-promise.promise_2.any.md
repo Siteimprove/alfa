@@ -4,7 +4,7 @@
 
 ## Promise\_2.any() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function any<T>(...promises: Array<Promise<T>>): Promise<T>;
@@ -14,9 +14,9 @@ function any<T>(...promises: Array<Promise<T>>): Promise<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  promises | Array&lt;Promise&lt;T&gt;&gt; |  |
+|  promises | Array&lt;[Promise](./alfa-promise.promise_2.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Promise&lt;T&gt;
+[Promise](./alfa-promise.promise_2.md)<!-- -->&lt;T&gt;
 

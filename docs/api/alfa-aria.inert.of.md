@@ -4,7 +4,7 @@
 
 ## Inert.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(owner: dom.Node): Inert;
@@ -14,9 +14,9 @@ static of(owner: dom.Node): Inert;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  owner | dom.[Node](./alfa-dom.node.md) |  |
+|  owner | [dom.Node](./alfa-dom.node.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Inert](./alfa-aria.inert.md)
 

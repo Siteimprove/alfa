@@ -4,7 +4,7 @@
 
 ## Container.JSON.role property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 role: Role.Name | null;

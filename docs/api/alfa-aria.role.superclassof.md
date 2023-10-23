@@ -6,14 +6,14 @@
 
 All roles that are superclasses of the specified role.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type SuperclassOf<N extends Name> = N extends "roletype" | "none" ? never : Inherited<N> | {
         [M in Inherited<N>]: SuperclassOf<M>;
     }[Inherited<N>];
 ```
-<b>References:</b> [Name](./alfa-aria.role.name.md)<!-- -->, [Inherited](./alfa-aria.role.inherited.md)<!-- -->, [SuperclassOf](./alfa-aria.role.superclassof.md)
+**References:** [Name](./alfa-aria.role.name.md)<!-- -->, [Inherited](./alfa-aria.role.inherited.md)<!-- -->, [SuperclassOf](./alfa-aria.role.superclassof.md)
 
 ## Remarks
 

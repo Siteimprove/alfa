@@ -4,7 +4,7 @@
 
 ## Length.Fixed.scale() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 scale(factor: number): Fixed<U>;
@@ -16,7 +16,7 @@ scale(factor: number): Fixed<U>;
 |  --- | --- | --- |
 |  factor | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.length.fixed.md)<!-- -->&lt;U&gt;
 

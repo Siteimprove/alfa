@@ -4,7 +4,7 @@
 
 ## Page.JSON.device property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 device: Device.JSON;

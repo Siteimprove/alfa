@@ -4,7 +4,7 @@
 
 ## Node.hasRole variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasRole: typeof predicate.hasRole

@@ -4,7 +4,7 @@
 
 ## Cell.headers property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get headers(): Sequence<Slot>;

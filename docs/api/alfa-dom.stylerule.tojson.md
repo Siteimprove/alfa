@@ -4,12 +4,12 @@
 
 ## StyleRule.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): StyleRule.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [StyleRule.JSON](./alfa-dom.stylerule.json.md)
 

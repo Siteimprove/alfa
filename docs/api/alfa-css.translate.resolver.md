@@ -4,10 +4,10 @@
 
 ## Translate.Resolver type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Resolver = LengthPercentage.Resolver;
 ```
-<b>References:</b> [LengthPercentage.Resolver](./alfa-css.lengthpercentage.resolver.md)
+**References:** [LengthPercentage.Resolver](./alfa-css.lengthpercentage.resolver.md)
 

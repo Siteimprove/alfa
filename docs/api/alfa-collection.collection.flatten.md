@@ -4,7 +4,7 @@
 
 ## Collection.flatten() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatten<T>(this: Collection<Collection<T>>): Collection<T>;
@@ -16,7 +16,7 @@ flatten<T>(this: Collection<Collection<T>>): Collection<T>;
 |  --- | --- | --- |
 |  this | [Collection](./alfa-collection.collection.md)<!-- -->&lt;[Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Collection](./alfa-collection.collection.md)<!-- -->&lt;T&gt;
 

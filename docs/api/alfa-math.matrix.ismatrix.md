@@ -4,7 +4,7 @@
 
 ## Matrix.isMatrix() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isMatrix(value: unknown): value is Matrix;
@@ -16,7 +16,7 @@ function isMatrix(value: unknown): value is Matrix;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Matrix](./alfa-math.matrix.md)
 

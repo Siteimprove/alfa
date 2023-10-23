@@ -4,12 +4,12 @@
 
 ## Left.apply() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply(): Left<L>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Left](./alfa-either.left.md)<!-- -->&lt;L&gt;
 

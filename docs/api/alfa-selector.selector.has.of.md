@@ -4,7 +4,7 @@
 
 ## Selector.Has.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(selector: Simple | Compound | Complex | List<Simple | Compound | Complex>): Has;
@@ -16,7 +16,7 @@ static of(selector: Simple | Compound | Complex | List<Simple | Compound | Compl
 |  --- | --- | --- |
 |  selector | [Simple](./alfa-selector.selector.simple.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md) \| [List](./alfa-selector.selector.list.md)<!-- -->&lt;[Simple](./alfa-selector.selector.simple.md) \| [Compound](./alfa-selector.selector.compound.md) \| [Complex](./alfa-selector.selector.complex.md)<!-- -->&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Has](./alfa-selector.selector.has.md)
 

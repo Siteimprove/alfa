@@ -6,7 +6,7 @@
 
 Apply a map of functions to each corresponding value of this map.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 apply<U>(mapper: Map<K, Mapper<V, U>>): Map<K, U>;
@@ -16,11 +16,11 @@ apply<U>(mapper: Map<K, Mapper<V, U>>): Map<K, U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | Map&lt;K, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U&gt;&gt; |  |
+|  mapper | [Map](./alfa-map.map_2.md)<!-- -->&lt;K, [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, U&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Map&lt;K, U&gt;
+[Map](./alfa-map.map_2.md)<!-- -->&lt;K, U&gt;
 
 ## Remarks
 

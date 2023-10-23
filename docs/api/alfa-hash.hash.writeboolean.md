@@ -4,7 +4,7 @@
 
 ## Hash.writeBoolean() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 writeBoolean(data: boolean): this;
@@ -16,7 +16,7 @@ writeBoolean(data: boolean): this;
 |  --- | --- | --- |
 |  data | boolean |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this
 

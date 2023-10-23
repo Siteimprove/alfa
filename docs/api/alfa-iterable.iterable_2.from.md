@@ -4,7 +4,7 @@
 
 ## Iterable\_2.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from<T>(arrayLike: ArrayLike<T>): Iterable<T>;
@@ -16,7 +16,7 @@ function from<T>(arrayLike: ArrayLike<T>): Iterable<T>;
 |  --- | --- | --- |
 |  arrayLike | ArrayLike&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Iterable&lt;T&gt;
+[Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt;
 

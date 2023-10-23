@@ -4,7 +4,7 @@
 
 ## Token.Name namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Name 

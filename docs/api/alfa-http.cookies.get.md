@@ -4,7 +4,7 @@
 
 ## Cookies.get() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get(name: string): Option<Cookie>;
@@ -16,7 +16,7 @@ get(name: string): Option<Cookie>;
 |  --- | --- | --- |
 |  name | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Cookie](./alfa-http.cookie.md)<!-- -->&gt;
+Option&lt;Cookie&gt;
 

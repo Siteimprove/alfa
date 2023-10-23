@@ -4,7 +4,7 @@
 
 ## Transformation.translate() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function translate(tx: number, ty?: number, tz?: number): Transformation;
@@ -15,10 +15,10 @@ function translate(tx: number, ty?: number, tz?: number): Transformation;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  tx | number |  |
-|  ty | number | <i>(Optional)</i> |
-|  tz | number | <i>(Optional)</i> |
+|  ty | number | _(Optional)_ |
+|  tz | number | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Transformation](./alfa-affine.transformation.md)
 

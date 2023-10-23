@@ -4,7 +4,7 @@
 
 ## Inset.offsets property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get offsets(): readonly [O, O, O, O];

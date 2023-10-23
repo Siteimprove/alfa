@@ -19,7 +19,6 @@
 |  [Image](./alfa-css.image.md) | [https://drafts.csswg.org/css-values/\#images](https://drafts.csswg.org/css-values/#images) |
 |  [Inset](./alfa-css.inset.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-inset](https://drafts.csswg.org/css-shapes/#funcdef-inset) |
 |  [Keyword](./alfa-css.keyword.md) | [https://drafts.csswg.org/css-values/\#keywords](https://drafts.csswg.org/css-values/#keywords) |
-|  [Linear](./alfa-css.linear.md) | [https://drafts.csswg.org/css-images/\#linear-gradients](https://drafts.csswg.org/css-images/#linear-gradients) |
 |  [List](./alfa-css.list.md) |  |
 |  [Math\_2](./alfa-css.math_2.md) | [https://drafts.csswg.org/css-values/\#math](https://drafts.csswg.org/css-values/#math) |
 |  [Matrix](./alfa-css.matrix.md) |  |
@@ -28,7 +27,6 @@
 |  [Perspective](./alfa-css.perspective.md) |  |
 |  [Polygon](./alfa-css.polygon.md) | [https://drafts.csswg.org/css-shapes/\#funcdef-polygon](https://drafts.csswg.org/css-shapes/#funcdef-polygon) |
 |  [Position](./alfa-css.position.md) | [https://drafts.csswg.org/css-values/\#position](https://drafts.csswg.org/css-values/#position) |
-|  [Radial](./alfa-css.radial.md) | [https://drafts.csswg.org/css-images/\#radial-gradients](https://drafts.csswg.org/css-images/#radial-gradients) |
 |  [Radius](./alfa-css.radius.md) | [https://drafts.csswg.org/css-shapes/\#typedef-shape-radius](https://drafts.csswg.org/css-shapes/#typedef-shape-radius) |
 |  [Rectangle](./alfa-css.rectangle.md) | [https://drafts.fxtf.org/css-masking/\#funcdef-clip-rect](https://drafts.fxtf.org/css-masking/#funcdef-clip-rect) |
 |  [RGB](./alfa-css.rgb.md) |  |
@@ -41,6 +39,11 @@
 |  [Translate](./alfa-css.translate.md) |  |
 |  [Tuple](./alfa-css.tuple.md) |  |
 |  [URL](./alfa-css.url.md) | [https://drafts.csswg.org/css-values/\#urls](https://drafts.csswg.org/css-values/#urls) |
+
+## Abstract Classes
+
+|  Abstract Class | Description |
+|  --- | --- |
 |  [Value](./alfa-css.value.md) | \* T: a string representation of the type stored in the value, e.g. "length", "color", … \* CALC: whether the numeric values in this may include calculation or not. When CALC is true, the value hasn't been resolved. It does not necessarily contain calculation; when CALC is false, the value has been fully resolved and is guaranteed without calculations. \* R: a string representation of the type stored in the resolved value. This differs from T, typically, for dimension-percentage values that are resolved as dimensions only. |
 
 ## Interfaces
@@ -59,6 +62,7 @@
 |  [Box](./alfa-css.box.md) |  |
 |  [Circle](./alfa-css.circle.md) |  |
 |  [Color](./alfa-css.color.md) |  |
+|  [Comma](./alfa-css.comma.md) |  |
 |  [Component](./alfa-css.component.md) |  |
 |  [Converter](./alfa-css.converter.md) |  |
 |  [Current](./alfa-css.current.md) |  |
@@ -76,7 +80,6 @@
 |  [Length](./alfa-css.length.md) |  |
 |  [LengthPercentage](./alfa-css.lengthpercentage.md) |  |
 |  [Lexer](./alfa-css.lexer.md) |  |
-|  [Linear](./alfa-css.linear.md) |  |
 |  [List](./alfa-css.list.md) |  |
 |  [Math\_2](./alfa-css.math_2.md) |  |
 |  [Matrix](./alfa-css.matrix.md) |  |
@@ -88,7 +91,6 @@
 |  [Perspective](./alfa-css.perspective.md) |  |
 |  [Polygon](./alfa-css.polygon.md) |  |
 |  [Position](./alfa-css.position.md) |  |
-|  [Radial](./alfa-css.radial.md) |  |
 |  [Radius](./alfa-css.radius.md) |  |
 |  [Rectangle](./alfa-css.rectangle.md) |  |
 |  [RGB](./alfa-css.rgb.md) |  |

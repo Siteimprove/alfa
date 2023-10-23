@@ -4,7 +4,7 @@
 
 ## Iterable\_2.join() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function join<T>(iterable: Iterable<T>, separator: string): string;
@@ -14,10 +14,10 @@ function join<T>(iterable: Iterable<T>, separator: string): string;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
 |  separator | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 string
 

@@ -4,10 +4,10 @@
 
 ## Tuple.Item type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Item<T extends Tuple> = T[number];
 ```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)
+**References:** [Tuple](./alfa-tuple.tuple.md)
 

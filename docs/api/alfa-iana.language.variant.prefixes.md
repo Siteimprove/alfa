@@ -6,7 +6,7 @@
 
 [https://tools.ietf.org/html/bcp47\#section-3.1.8](https://tools.ietf.org/html/bcp47#section-3.1.8)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get prefixes(): ReadonlyArray<string>;

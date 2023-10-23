@@ -4,10 +4,10 @@
 
 ## AnglePercentage.JSON type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type JSON = Calculated.JSON | Angle.Calculated.JSON | Angle.Fixed.JSON | Percentage.Calculated.JSON | Percentage.Fixed.JSON;
 ```
-<b>References:</b> [Calculated.JSON](./alfa-css.anglepercentage.calculated.json.md)<!-- -->, [Angle.Calculated.JSON](./alfa-css.angle.calculated.json.md)<!-- -->, [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md)<!-- -->, [Percentage.Calculated.JSON](./alfa-css.percentage.calculated.json.md)<!-- -->, [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
+**References:** [Calculated.JSON](./alfa-css.anglepercentage.calculated.json.md)<!-- -->, [Angle.Calculated.JSON](./alfa-css.angle.calculated.json.md)<!-- -->, [Angle.Fixed.JSON](./alfa-css.angle.fixed.json.md)<!-- -->, [Percentage.Calculated.JSON](./alfa-css.percentage.calculated.json.md)<!-- -->, [Percentage.Fixed.JSON](./alfa-css.percentage.fixed.json.md)
 

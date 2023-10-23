@@ -4,7 +4,7 @@
 
 ## Iterable\_2.forEach() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function forEach<T>(iterable: Iterable<T>, callback: Callback<T, void, [index: number]>): void;
@@ -14,10 +14,10 @@ function forEach<T>(iterable: Iterable<T>, callback: Callback<T, void, [index: n
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;T&gt; |  |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, void, \[index: number\]&gt; |  |
+|  iterable | [Iterable](./alfa-iterable.iterable_2.md)<!-- -->&lt;T&gt; |  |
+|  callback | Callback&lt;T, void, \[index: number\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

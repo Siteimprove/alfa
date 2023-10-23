@@ -5,7 +5,7 @@
 ## Math\_2 namespace
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare namespace Math 

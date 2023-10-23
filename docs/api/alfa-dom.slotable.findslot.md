@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#find-a-slot](https://dom.spec.whatwg.org/#find-a-slot)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function findSlot(slotable: Slotable): Option<Slot>;
@@ -18,7 +18,7 @@ function findSlot(slotable: Slotable): Option<Slot>;
 |  --- | --- | --- |
 |  slotable | [Slotable](./alfa-dom.slotable.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;[Slot](./alfa-dom.slot.md)<!-- -->&gt;
+Option&lt;Slot&gt;
 

@@ -4,12 +4,12 @@
 
 ## Selector.Host.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Host;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Host](./alfa-selector.selector.host.md)
 

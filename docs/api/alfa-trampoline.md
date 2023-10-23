@@ -4,9 +4,9 @@
 
 ## alfa-trampoline package
 
-## Classes
+## Abstract Classes
 
-|  Class | Description |
+|  Abstract Class | Description |
 |  --- | --- |
 |  [Trampoline](./alfa-trampoline.trampoline.md) | [http://blog.higher-order.com/assets/trampolines.pdf](http://blog.higher-order.com/assets/trampolines.pdf) |
 

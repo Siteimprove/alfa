@@ -4,7 +4,7 @@
 
 ## Media.Value.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U>): Value<U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U>): Value<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Value](./alfa-media.media.value.md)<!-- -->&lt;U&gt;
 

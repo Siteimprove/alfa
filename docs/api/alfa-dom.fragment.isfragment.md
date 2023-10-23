@@ -4,7 +4,7 @@
 
 ## Fragment.isFragment() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isFragment(value: unknown): value is Fragment;
@@ -16,7 +16,7 @@ function isFragment(value: unknown): value is Fragment;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Fragment](./alfa-dom.fragment.md)
 

@@ -4,7 +4,7 @@
 
 ## Ok.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U>): Ok<U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U>): Ok<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Ok](./alfa-result.ok.md)<!-- -->&lt;U&gt;
 

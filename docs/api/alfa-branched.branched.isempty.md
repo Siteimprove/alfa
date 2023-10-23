@@ -4,12 +4,12 @@
 
 ## Branched.isEmpty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEmpty(): this is Branched<never, B>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Branched](./alfa-branched.branched.md)<!-- -->&lt;never, B&gt;
 

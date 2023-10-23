@@ -4,7 +4,7 @@
 
 ## Language.Primary.isPrimary() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isPrimary(value: unknown): value is Primary;
@@ -16,7 +16,7 @@ function isPrimary(value: unknown): value is Primary;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Primary](./alfa-iana.language.primary.md)
 

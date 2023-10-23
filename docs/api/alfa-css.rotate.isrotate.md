@@ -4,7 +4,7 @@
 
 ## Rotate.isRotate() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isRotate(value: unknown): value is Rotate;
@@ -16,7 +16,7 @@ function isRotate(value: unknown): value is Rotate;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Rotate](./alfa-css.rotate.md)
 

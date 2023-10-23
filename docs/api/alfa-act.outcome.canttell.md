@@ -4,7 +4,7 @@
 
 ## Outcome.cantTell variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 cantTell: typeof CantTell.of

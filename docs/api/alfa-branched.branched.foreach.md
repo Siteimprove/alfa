@@ -4,7 +4,7 @@
 
 ## Branched.forEach() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 forEach(callback: Callback<T, void, [Iterable<B>]>): void;
@@ -14,9 +14,9 @@ forEach(callback: Callback<T, void, [Iterable<B>]>): void;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;T, void, \[Iterable&lt;B&gt;\]&gt; |  |
+|  callback | Callback&lt;T, void, \[Iterable&lt;B&gt;\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

@@ -4,7 +4,7 @@
 
 ## Selector.Complex.left property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get left(): Simple | Compound | Complex;

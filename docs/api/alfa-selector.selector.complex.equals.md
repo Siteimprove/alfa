@@ -4,7 +4,7 @@
 
 ## Selector.Complex.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Complex): boolean;
@@ -16,7 +16,7 @@ equals(value: Complex): boolean;
 |  --- | --- | --- |
 |  value | [Complex](./alfa-selector.selector.complex.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

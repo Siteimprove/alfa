@@ -4,10 +4,10 @@
 
 ## Tuple.Reject type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export type Reject<T extends Tuple, U extends Item<T>> = Filter<T, Exclude<Item<T>, U>>;
 ```
-<b>References:</b> [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Item](./alfa-tuple.tuple.item.md)<!-- -->, [Filter](./alfa-tuple.tuple.filter.md)
+**References:** [Tuple](./alfa-tuple.tuple.md)<!-- -->, [Item](./alfa-tuple.tuple.item.md)<!-- -->, [Filter](./alfa-tuple.tuple.filter.md)
 

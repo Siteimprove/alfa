@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#root-pseudo](https://drafts.csswg.org/selectors/#root-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Root extends Pseudo.Class<"root"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"root"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"root"&gt;
 
 ## Methods
 

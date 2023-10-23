@@ -4,7 +4,7 @@
 
 ## Skew.isSkew() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isSkew(value: unknown): value is Skew;
@@ -16,7 +16,7 @@ function isSkew(value: unknown): value is Skew;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Skew](./alfa-css.skew.md)
 

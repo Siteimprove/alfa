@@ -6,7 +6,7 @@
 
 [https://dom.spec.whatwg.org/\#concept-tree-root](https://dom.spec.whatwg.org/#concept-tree-root)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 root(options?: Flags<F>): Node<F>;
@@ -16,9 +16,9 @@ root(options?: Flags<F>): Node<F>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | <i>(Optional)</i> |
+|  options | [Flags](./alfa-flags.flags.md)<!-- -->&lt;F&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Node](./alfa-tree.node.md)<!-- -->&lt;F&gt;
 

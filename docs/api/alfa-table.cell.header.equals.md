@@ -4,7 +4,7 @@
 
 ## Cell.Header.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(cell: Header): boolean;
@@ -16,7 +16,7 @@ equals(cell: Header): boolean;
 |  --- | --- | --- |
 |  cell | [Header](./alfa-table.cell.header.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

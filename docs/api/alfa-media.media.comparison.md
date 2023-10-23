@@ -4,7 +4,7 @@
 
 ## Media.Comparison enum
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export enum Comparison 

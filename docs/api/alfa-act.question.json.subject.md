@@ -4,7 +4,7 @@
 
 ## Question.JSON.subject property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 subject: Serializable.ToJSON<SUBJECT>;

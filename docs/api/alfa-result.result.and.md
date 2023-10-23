@@ -4,7 +4,7 @@
 
 ## Result.and() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 and<U, F>(result: Result<U, F>): Result<U, E | F>;
@@ -16,7 +16,7 @@ and<U, F>(result: Result<U, F>): Result<U, E | F>;
 |  --- | --- | --- |
 |  result | [Result](./alfa-result.result.md)<!-- -->&lt;U, F&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Result](./alfa-result.result.md)<!-- -->&lt;U, E \| F&gt;
 

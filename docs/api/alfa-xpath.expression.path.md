@@ -4,7 +4,7 @@
 
 ## Expression.Path namespace
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 namespace Path 

@@ -4,12 +4,12 @@
 
 ## Sheet.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Sheet.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Sheet.JSON](./alfa-dom.sheet.json.md)
 

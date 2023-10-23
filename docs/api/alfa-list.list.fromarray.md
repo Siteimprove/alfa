@@ -4,7 +4,7 @@
 
 ## List.fromArray() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function fromArray<T>(array: ReadonlyArray<T>): List<T>;
@@ -16,7 +16,7 @@ function fromArray<T>(array: ReadonlyArray<T>): List<T>;
 |  --- | --- | --- |
 |  array | ReadonlyArray&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

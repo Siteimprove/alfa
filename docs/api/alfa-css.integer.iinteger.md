@@ -4,12 +4,12 @@
 
 ## Integer.IInteger interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface IInteger<CALC extends boolean = boolean> extends Value<"number", CALC>, Resolvable<Canonical, never> 
 ```
-<b>Extends:</b> [Value](./alfa-css.value.md)<!-- -->&lt;"number", CALC&gt;, Resolvable&lt;[Canonical](./alfa-css.integer.canonical.md)<!-- -->, never&gt;
+**Extends:** Value&lt;"number", CALC&gt;, Resolvable&lt;[Canonical](./alfa-css.integer.canonical.md)<!-- -->, never&gt;
 
 ## Methods
 

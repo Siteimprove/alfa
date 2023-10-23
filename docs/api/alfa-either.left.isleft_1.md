@@ -4,7 +4,7 @@
 
 ## Left.isLeft() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isLeft<L>(value: unknown): value is Left<L>;
@@ -16,7 +16,7 @@ function isLeft<L>(value: unknown): value is Left<L>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Left](./alfa-either.left.md)<!-- -->&lt;L&gt;
 

@@ -6,7 +6,7 @@
 
 Check if an unknown value implements the [Thenable](./alfa-thenable.thenable.md) interface.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isThenable<T, E = unknown>(value: unknown): value is Thenable<T, E>;
@@ -18,7 +18,7 @@ function isThenable<T, E = unknown>(value: unknown): value is Thenable<T, E>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Thenable](./alfa-thenable.thenable.md)<!-- -->&lt;T, E&gt;
 

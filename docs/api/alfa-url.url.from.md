@@ -4,7 +4,7 @@
 
 ## URL.from() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function from(json: JSON): URL;
@@ -16,7 +16,7 @@ function from(json: JSON): URL;
 |  --- | --- | --- |
 |  json | [JSON](./alfa-url.url.json.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [URL](./alfa-url.url.md)
 

@@ -4,7 +4,7 @@
 
 ## Network.has() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 has(node: N): boolean;
@@ -16,7 +16,7 @@ has(node: N): boolean;
 |  --- | --- | --- |
 |  node | N |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

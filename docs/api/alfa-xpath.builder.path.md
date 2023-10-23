@@ -4,12 +4,12 @@
 
 ## Builder.Path class
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Path extends Path_base 
 ```
-<b>Extends:</b> Path\_base
+**Extends:** Path\_base
 
 ## Methods
 

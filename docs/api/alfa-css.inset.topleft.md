@@ -4,7 +4,7 @@
 
 ## Inset.topLeft property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get topLeft(): Option<C>;

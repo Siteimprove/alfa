@@ -8,7 +8,7 @@ When set, traverse the node in shadow-including tree order.
 
 [https://dom.spec.whatwg.org/\#concept-shadow-including-tree-order](https://dom.spec.whatwg.org/#concept-shadow-including-tree-order)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 composed: Flag

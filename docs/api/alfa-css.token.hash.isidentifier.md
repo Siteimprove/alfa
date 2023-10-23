@@ -4,7 +4,7 @@
 
 ## Token.Hash.isIdentifier property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get isIdentifier(): boolean;

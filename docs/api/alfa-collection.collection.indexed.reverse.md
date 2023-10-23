@@ -4,12 +4,12 @@
 
 ## Collection.Indexed.reverse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reverse(): Indexed<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Indexed](./alfa-collection.collection.indexed.md)<!-- -->&lt;T&gt;
 

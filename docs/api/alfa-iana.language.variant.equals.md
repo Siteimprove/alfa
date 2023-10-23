@@ -4,7 +4,7 @@
 
 ## Language.Variant.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Variant): boolean;
@@ -16,7 +16,7 @@ equals(value: Variant): boolean;
 |  --- | --- | --- |
 |  value | [Variant](./alfa-iana.language.variant.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -4,12 +4,12 @@
 
 ## Feature.Implementer type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 type Implementer<N extends Name> = N extends Name ? keyof Features[N]["support"] : never;
 ```
-<b>References:</b> [Name](./alfa-compatibility.feature.name.md)
+**References:** [Name](./alfa-compatibility.feature.name.md)
 
 ## Remarks
 

@@ -4,12 +4,19 @@
 
 ## Polygon.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
-resolve(): Polygon<F, V>;
+resolve(resolver: Polygon.Resolver): Polygon.Canonical;
 ```
-<b>Returns:</b>
 
-[Polygon](./alfa-css.polygon.md)<!-- -->&lt;F, V&gt;
+## Parameters
+
+|  Parameter | Type | Description |
+|  --- | --- | --- |
+|  resolver | [Polygon.Resolver](./alfa-css.polygon.resolver.md) |  |
+
+**Returns:**
+
+[Polygon.Canonical](./alfa-css.polygon.canonical.md)
 

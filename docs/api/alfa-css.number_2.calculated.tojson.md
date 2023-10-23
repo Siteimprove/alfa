@@ -4,12 +4,12 @@
 
 ## Number\_2.Calculated.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Calculated.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
-Calculated.JSON
+[Calculated.JSON](./alfa-css.number_2.calculated.json.md)
 

@@ -4,12 +4,12 @@
 
 ## Graph.reverse() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 reverse(): Graph<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt;
 

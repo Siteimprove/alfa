@@ -4,7 +4,7 @@
 
 ## Rule.Composite.JSON.composes property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 composes: Array<Rule.JSON>;

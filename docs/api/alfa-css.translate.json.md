@@ -4,12 +4,12 @@
 
 ## Translate.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON extends Function.JSON<"translate"> 
 ```
-<b>Extends:</b> Function.JSON&lt;"translate"&gt;
+**Extends:** Function.JSON&lt;"translate"&gt;
 
 ## Properties
 

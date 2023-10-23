@@ -4,7 +4,7 @@
 
 ## Context.isVisited() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isVisited(element: Element): boolean;
@@ -14,9 +14,9 @@ isVisited(element: Element): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  element | [Element](./alfa-dom.element.md) |  |
+|  element | Element |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

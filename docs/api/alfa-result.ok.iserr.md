@@ -4,12 +4,12 @@
 
 ## Ok.isErr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isErr(): this is Err<never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
-this is [Err](./alfa-result.err.md)<!-- -->&lt;never&gt;
+this is Err&lt;never&gt;
 

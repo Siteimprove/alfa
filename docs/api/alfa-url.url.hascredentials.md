@@ -6,12 +6,12 @@
 
 [https://url.spec.whatwg.org/\#include-credentials](https://url.spec.whatwg.org/#include-credentials)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasCredentials(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

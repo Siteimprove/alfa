@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#the-focus-visible-pseudo](https://drafts.csswg.org/selectors/#the-focus-visible-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class FocusVisible extends Pseudo.Class<"focus-visible"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"focus-visible"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"focus-visible"&gt;
 
 ## Methods
 

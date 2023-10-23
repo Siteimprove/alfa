@@ -4,7 +4,7 @@
 
 ## Graph.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals<T>(value: Graph<T>): boolean;
@@ -16,7 +16,7 @@ equals<T>(value: Graph<T>): boolean;
 |  --- | --- | --- |
 |  value | [Graph](./alfa-graph.graph.md)<!-- -->&lt;T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

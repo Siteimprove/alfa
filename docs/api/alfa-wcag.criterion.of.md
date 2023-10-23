@@ -4,7 +4,7 @@
 
 ## Criterion.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<C extends Criterion.Chapter>(chapter: C): Criterion<C>;
@@ -16,7 +16,7 @@ static of<C extends Criterion.Chapter>(chapter: C): Criterion<C>;
 |  --- | --- | --- |
 |  chapter | C |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Criterion](./alfa-wcag.criterion.md)<!-- -->&lt;C&gt;
 

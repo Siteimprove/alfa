@@ -4,7 +4,7 @@
 
 ## Percentage.Resolver.percentageBase property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 percentageBase: T;

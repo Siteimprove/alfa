@@ -12,7 +12,7 @@ The final result of the interview is either a final answer (Left), or a diagnost
 
 In both cases, we also record whether the oracle was actually used; this is useful to record the mode (auto/semi-auto) of the outcome.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function conduct<INPUT, TARGET extends Hashable, QUESTION extends Question.Metadata, SUBJECT, ANSWER>(interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>, rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>, oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>, oracleUsed?: boolean): Future<Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>>>;
@@ -23,11 +23,11 @@ function conduct<INPUT, TARGET extends Hashable, QUESTION extends Question.Metad
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  interview | [Interview](./alfa-act.interview.md)<!-- -->&lt;QUESTION, SUBJECT, TARGET, ANSWER&gt; |  |
-|  rule | [Rule](./alfa-act.rule.md)<!-- -->&lt;INPUT, TARGET, QUESTION, SUBJECT&gt; |  |
+|  rule | Rule&lt;INPUT, TARGET, QUESTION, SUBJECT&gt; |  |
 |  oracle | [Oracle](./alfa-act.oracle.md)<!-- -->&lt;INPUT, TARGET, QUESTION, SUBJECT&gt; |  |
-|  oracleUsed | boolean | <i>(Optional)</i> |
+|  oracleUsed | boolean | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Future](./alfa-future.future.md)<!-- -->&lt;[Either](./alfa-either.either.md)<!-- -->&lt;[Tuple](./alfa-tuple.tuple.md)<!-- -->&lt;\[ANSWER, boolean\]&gt;, [Tuple](./alfa-tuple.tuple.md)<!-- -->&lt;\[[Diagnostic](./alfa-act.diagnostic.md)<!-- -->, boolean\]&gt;&gt;&gt;
+Future&lt;Either&lt;Tuple&lt;\[ANSWER, boolean\]&gt;, Tuple&lt;\[Diagnostic, boolean\]&gt;&gt;&gt;
 

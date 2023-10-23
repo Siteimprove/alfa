@@ -4,7 +4,7 @@
 
 ## Transformation.Components interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface Components 
@@ -14,9 +14,9 @@ interface Components
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [perspective](./alfa-affine.transformation.components.perspective.md) |  | [Vector](./alfa-math.vector.md) | A quaternion representing \[x, y, z, w\] perspective. |
-|  [rotate](./alfa-affine.transformation.components.rotate.md) |  | [Vector](./alfa-math.vector.md) | A quaternion representing \[x, y, z, w\] rotation. |
-|  [scale](./alfa-affine.transformation.components.scale.md) |  | [Vector](./alfa-math.vector.md) | A vector representing \[x, y, z\] scaling. |
-|  [skew](./alfa-affine.transformation.components.skew.md) |  | [Vector](./alfa-math.vector.md) | A vector representing \[xy, xz, yz\] skewing. |
-|  [translate](./alfa-affine.transformation.components.translate.md) |  | [Vector](./alfa-math.vector.md) | A vector representing \[x, y, z\] translation. |
+|  [perspective](./alfa-affine.transformation.components.perspective.md) |  | Vector | A quaternion representing \[x, y, z, w\] perspective. |
+|  [rotate](./alfa-affine.transformation.components.rotate.md) |  | Vector | A quaternion representing \[x, y, z, w\] rotation. |
+|  [scale](./alfa-affine.transformation.components.scale.md) |  | Vector | A vector representing \[x, y, z\] scaling. |
+|  [skew](./alfa-affine.transformation.components.skew.md) |  | Vector | A vector representing \[xy, xz, yz\] skewing. |
+|  [translate](./alfa-affine.transformation.components.translate.md) |  | Vector | A vector representing \[x, y, z\] translation. |
 

@@ -4,12 +4,12 @@
 
 ## Percentage.Calculated.hasCalculation() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 hasCalculation(): this is Calculated<R>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Calculated](./alfa-css.percentage.calculated.md)<!-- -->&lt;R&gt;
 

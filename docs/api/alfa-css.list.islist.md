@@ -4,7 +4,7 @@
 
 ## List.isList() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isList<V extends Value>(value: Iterable<V>): value is List<V>;
@@ -16,7 +16,7 @@ function isList<V extends Value>(value: Iterable<V>): value is List<V>;
 |  --- | --- | --- |
 |  value | Iterable&lt;V&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [List](./alfa-css.list.md)<!-- -->&lt;V&gt;
 

@@ -4,12 +4,12 @@
 
 ## Media.Value.Bound.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Bound.JSON<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Bound.JSON](./alfa-media.media.value.bound.json.md)<!-- -->&lt;T&gt;
 

@@ -4,12 +4,12 @@
 
 ## Collection.isEmpty() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isEmpty(): this is Collection<never>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this is [Collection](./alfa-collection.collection.md)<!-- -->&lt;never&gt;
 

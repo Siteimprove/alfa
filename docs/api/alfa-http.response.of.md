@@ -4,7 +4,7 @@
 
 ## Response.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(url: URL, status: number, headers?: Headers, body?: ArrayBuffer): Response;
@@ -14,12 +14,12 @@ static of(url: URL, status: number, headers?: Headers, body?: ArrayBuffer): Resp
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  url | [URL](./alfa-url.url.md) |  |
+|  url | URL |  |
 |  status | number |  |
-|  headers | [Headers](./alfa-http.headers.md) | <i>(Optional)</i> |
-|  body | ArrayBuffer | <i>(Optional)</i> |
+|  headers | Headers | _(Optional)_ |
+|  body | ArrayBuffer | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Response](./alfa-http.response.md)
 

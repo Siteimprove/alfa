@@ -4,7 +4,7 @@
 
 ## Declaration.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(name: string, value: string, important?: boolean): Declaration;
@@ -16,9 +16,9 @@ static of(name: string, value: string, important?: boolean): Declaration;
 |  --- | --- | --- |
 |  name | string |  |
 |  value | string |  |
-|  important | boolean | <i>(Optional)</i> |
+|  important | boolean | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [Declaration](./alfa-dom.declaration.md)
 

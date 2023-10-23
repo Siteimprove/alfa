@@ -4,7 +4,7 @@
 
 ## Vector.isVector() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isVector(value: unknown): value is Vector;
@@ -16,7 +16,7 @@ function isVector(value: unknown): value is Vector;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Vector](./alfa-math.vector.md)
 

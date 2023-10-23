@@ -4,7 +4,7 @@
 
 ## Map\_2.flatMap() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 flatMap<L, U>(mapper: Mapper<V, Map<L, U>, [key: K]>): Map<L, U>;
@@ -14,11 +14,11 @@ flatMap<L, U>(mapper: Mapper<V, Map<L, U>, [key: K]>): Map<L, U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, Map&lt;L, U&gt;, \[key: K\]&gt; |  |
+|  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;V, [Map](./alfa-map.map_2.md)<!-- -->&lt;L, U&gt;, \[key: K\]&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-Map&lt;L, U&gt;
+[Map](./alfa-map.map_2.md)<!-- -->&lt;L, U&gt;
 
 ## Remarks
 

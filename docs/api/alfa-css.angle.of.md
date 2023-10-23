@@ -4,7 +4,7 @@
 
 ## Angle.of() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function of<U extends Unit.Angle>(value: number, unit: U): Fixed<U>;
@@ -17,7 +17,7 @@ export function of<U extends Unit.Angle>(value: number, unit: U): Fixed<U>;
 |  value | number |  |
 |  unit | U |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Fixed](./alfa-css.angle.fixed.md)<!-- -->&lt;U&gt;
 

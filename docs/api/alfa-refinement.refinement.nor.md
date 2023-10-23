@@ -4,7 +4,7 @@
 
 ## Refinement.nor variable
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 nor: Nor

@@ -4,7 +4,7 @@
 
 ## Rule.EARL."@type" property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 "@type": ["earl:TestCriterion", "earl:TestCase"];

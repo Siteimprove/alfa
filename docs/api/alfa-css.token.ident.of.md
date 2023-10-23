@@ -4,7 +4,7 @@
 
 ## Token.Ident.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: string): Ident;
@@ -16,7 +16,7 @@ static of(value: string): Ident;
 |  --- | --- | --- |
 |  value | string |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Ident](./alfa-css.token.ident.md)
 

@@ -8,7 +8,7 @@ Compute the inverse of an invertible matrix.
 
 [https://en.wikipedia.org/wiki/Invertible\_matrix](https://en.wikipedia.org/wiki/Invertible_matrix) [https://en.wikipedia.org/wiki/Cramers\_rule](https://en.wikipedia.org/wiki/Cramers_rule)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function inverse(m: Matrix): Matrix;
@@ -20,7 +20,7 @@ function inverse(m: Matrix): Matrix;
 |  --- | --- | --- |
 |  m | [Matrix](./alfa-math.matrix.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Matrix](./alfa-math.matrix.md)
 

@@ -4,12 +4,12 @@
 
 ## Option.empty() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function empty<T>(): None;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [None](./alfa-option.none.md)
 

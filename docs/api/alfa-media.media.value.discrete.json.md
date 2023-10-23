@@ -4,7 +4,7 @@
 
 ## Media.Value.Discrete.JSON interface
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 interface JSON<T> 

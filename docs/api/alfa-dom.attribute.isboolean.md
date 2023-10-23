@@ -6,12 +6,12 @@
 
 [https://html.spec.whatwg.org/\#boolean-attribute](https://html.spec.whatwg.org/#boolean-attribute)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 isBoolean(): boolean;
 ```
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

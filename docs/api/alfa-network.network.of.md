@@ -4,7 +4,7 @@
 
 ## Network.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of<N, E>(nodes: Map<N, Map<N, Set<E>>>): Network<N, E>;
@@ -16,7 +16,7 @@ static of<N, E>(nodes: Map<N, Map<N, Set<E>>>): Network<N, E>;
 |  --- | --- | --- |
 |  nodes | Map&lt;N, Map&lt;N, Set&lt;E&gt;&gt;&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Network](./alfa-network.network.md)<!-- -->&lt;N, E&gt;
 

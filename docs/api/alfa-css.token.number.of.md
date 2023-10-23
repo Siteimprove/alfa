@@ -4,7 +4,7 @@
 
 ## Token.Number.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(value: number, isInteger: boolean, isSigned: boolean): Number;
@@ -18,7 +18,7 @@ static of(value: number, isInteger: boolean, isSigned: boolean): Number;
 |  isInteger | boolean |  |
 |  isSigned | boolean |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Number](./alfa-css.token.number.md)
 

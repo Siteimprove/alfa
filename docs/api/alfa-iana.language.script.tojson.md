@@ -4,12 +4,12 @@
 
 ## Language.Script.toJSON() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): Script.JSON;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Script.JSON](./alfa-iana.language.script.json.md)
 

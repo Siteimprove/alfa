@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#focus-within-pseudo](https://drafts.csswg.org/selectors/#focus-within-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class FocusWithin extends Pseudo.Class<"focus-within"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"focus-within"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"focus-within"&gt;
 
 ## Methods
 

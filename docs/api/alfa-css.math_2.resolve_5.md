@@ -4,7 +4,7 @@
 
 ## Math\_2.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve<T extends Numeric = Percentage>(this: Math<"percentage">, resolver?: Expression.PercentageResolver<T>, hint?: T extends Angle ? "angle" : "length"): Result<T, string>;
@@ -14,11 +14,11 @@ resolve<T extends Numeric = Percentage>(this: Math<"percentage">, resolver?: Exp
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  this | Math&lt;"percentage"&gt; |  |
-|  resolver | Expression.PercentageResolver&lt;T&gt; | <i>(Optional)</i> |
-|  hint | T extends Angle ? "angle" : "length" | <i>(Optional)</i> |
+|  this | [Math](./alfa-css.math_2.md)<!-- -->&lt;"percentage"&gt; |  |
+|  resolver | Expression.PercentageResolver&lt;T&gt; | _(Optional)_ |
+|  hint | T extends Angle ? "angle" : "length" | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Result](./alfa-result.result.md)<!-- -->&lt;T, string&gt;
+Result&lt;T, string&gt;
 

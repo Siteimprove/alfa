@@ -4,7 +4,7 @@
 
 ## Media.Feature.Height.isHeight() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isHeight(value: unknown): value is Height;
@@ -16,7 +16,7 @@ function isHeight(value: unknown): value is Height;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is Height
 

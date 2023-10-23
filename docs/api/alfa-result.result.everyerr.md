@@ -4,7 +4,7 @@
 
 ## Result.everyErr() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 everyErr<F extends E>(refinement: Refinement<E, F>): this is Result<T, F>;
@@ -14,9 +14,9 @@ everyErr<F extends E>(refinement: Refinement<E, F>): this is Result<T, F>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;E, F&gt; |  |
+|  refinement | Refinement&lt;E, F&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 this is [Result](./alfa-result.result.md)<!-- -->&lt;T, F&gt;
 

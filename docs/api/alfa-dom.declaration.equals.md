@@ -6,7 +6,7 @@
 
 Parent rule or owner element are ignored for declaration equality.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: unknown): value is this;
@@ -18,7 +18,7 @@ equals(value: unknown): value is this;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is this
 

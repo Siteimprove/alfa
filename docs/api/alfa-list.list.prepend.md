@@ -4,7 +4,7 @@
 
 ## List.prepend() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 prepend(value: T): List<T>;
@@ -16,7 +16,7 @@ prepend(value: T): List<T>;
 |  --- | --- | --- |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [List](./alfa-list.list.md)<!-- -->&lt;T&gt;
 

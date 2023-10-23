@@ -4,7 +4,7 @@
 
 ## Media.Value.Range.JSON.maximum property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 maximum: Bound.JSON<T> | null;

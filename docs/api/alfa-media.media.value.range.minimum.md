@@ -4,7 +4,7 @@
 
 ## Media.Value.Range.minimum property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get minimum(): Option<Bound<T>>;

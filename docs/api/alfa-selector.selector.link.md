@@ -6,12 +6,12 @@
 
 [https://drafts.csswg.org/selectors/\#link-pseudo](https://drafts.csswg.org/selectors/#link-pseudo)
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export class Link extends Pseudo.Class<"link"> 
 ```
-<b>Extends:</b> [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"link"&gt;
+**Extends:** [Pseudo.Class](./alfa-selector.selector.pseudo.class.md)<!-- -->&lt;"link"&gt;
 
 ## Methods
 

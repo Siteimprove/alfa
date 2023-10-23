@@ -4,12 +4,12 @@
 
 ## Trampoline.iterator() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 iterator(): Iterator<T>;
 ```
-<b>Returns:</b>
+**Returns:**
 
 Iterator&lt;T&gt;
 

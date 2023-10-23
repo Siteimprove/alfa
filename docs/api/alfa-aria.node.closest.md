@@ -4,7 +4,7 @@
 
 ## Node.closest() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 closest<T extends Node>(refinement: Refinement<Node, T>, options?: Node.Traversal): Option<T>;
@@ -14,10 +14,10 @@ closest<T extends Node>(refinement: Refinement<Node, T>, options?: Node.Traversa
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;[Node](./alfa-aria.node.md)<!-- -->, T&gt; |  |
-|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | <i>(Optional)</i> |
+|  refinement | Refinement&lt;[Node](./alfa-aria.node.md)<!-- -->, T&gt; |  |
+|  options | [Node.Traversal](./alfa-aria.node.traversal.md) | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
-[Option](./alfa-option.option.md)<!-- -->&lt;T&gt;
+Option&lt;T&gt;
 

@@ -4,7 +4,7 @@
 
 ## RGB.red property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get red(): C;

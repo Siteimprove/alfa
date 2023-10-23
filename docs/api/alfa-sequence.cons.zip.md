@@ -4,7 +4,7 @@
 
 ## Cons.zip() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 zip<U>(iterable: Iterable<U>): Sequence<[T, U]>;
@@ -16,7 +16,7 @@ zip<U>(iterable: Iterable<U>): Sequence<[T, U]>;
 |  --- | --- | --- |
 |  iterable | Iterable&lt;U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
-[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;\[T, U\]&gt;
+Sequence&lt;\[T, U\]&gt;
 

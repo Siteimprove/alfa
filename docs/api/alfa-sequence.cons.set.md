@@ -4,7 +4,7 @@
 
 ## Cons.set() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 set(index: number, value: T): Cons<T>;
@@ -17,7 +17,7 @@ set(index: number, value: T): Cons<T>;
 |  index | number |  |
 |  value | T |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Cons](./alfa-sequence.cons.md)<!-- -->&lt;T&gt;
 

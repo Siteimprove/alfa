@@ -4,7 +4,7 @@
 
 ## Scripting.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(enabled: boolean): Scripting;
@@ -16,7 +16,7 @@ static of(enabled: boolean): Scripting;
 |  --- | --- | --- |
 |  enabled | boolean |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Scripting](./alfa-device.scripting.md)
 

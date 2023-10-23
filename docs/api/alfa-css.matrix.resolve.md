@@ -4,12 +4,12 @@
 
 ## Matrix.resolve() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 resolve(): Matrix;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Matrix](./alfa-css.matrix.md)
 

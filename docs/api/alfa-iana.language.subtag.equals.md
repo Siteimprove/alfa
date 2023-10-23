@@ -4,7 +4,7 @@
 
 ## Language.Subtag.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 abstract equals<T extends string, N extends string>(value: Subtag<T, N>): boolean;
@@ -16,7 +16,7 @@ abstract equals<T extends string, N extends string>(value: Subtag<T, N>): boolea
 |  --- | --- | --- |
 |  value | [Subtag](./alfa-iana.language.subtag.md)<!-- -->&lt;T, N&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

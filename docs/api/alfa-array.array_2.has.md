@@ -4,7 +4,7 @@
 
 ## Array\_2.has() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function has<T>(array: ReadonlyArray<T>, index: number): boolean;
@@ -17,7 +17,7 @@ function has<T>(array: ReadonlyArray<T>, index: number): boolean;
 |  array | ReadonlyArray&lt;T&gt; |  |
 |  index | number |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

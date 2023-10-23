@@ -4,7 +4,7 @@
 
 ## AnglePercentage.isFixed() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isFixed(value: unknown): value is Angle.Fixed;
@@ -16,7 +16,7 @@ export function isFixed(value: unknown): value is Angle.Fixed;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
 value is [Angle.Fixed](./alfa-css.angle.fixed.md)
 

@@ -6,7 +6,7 @@
 
 Ensure that this [Selective](./alfa-selective.selective.md) is exhaustively matched, returning its resulting value.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 exhaust<T>(this: Selective<never, T>): T;
@@ -18,7 +18,7 @@ exhaust<T>(this: Selective<never, T>): T;
 |  --- | --- | --- |
 |  this | [Selective](./alfa-selective.selective.md)<!-- -->&lt;never, T&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 T
 

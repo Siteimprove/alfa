@@ -4,7 +4,7 @@
 
 ## Question.answerIf() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 answerIf(answer: Option<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
@@ -14,9 +14,9 @@ answerIf(answer: Option<ANSWER>): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, UR
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  answer | [Option](./alfa-option.option.md)<!-- -->&lt;ANSWER&gt; |  |
+|  answer | Option&lt;ANSWER&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Question](./alfa-act.question.md)<!-- -->&lt;TYPE, SUBJECT, CONTEXT, ANSWER, T, URI&gt;
 

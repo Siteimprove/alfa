@@ -4,7 +4,7 @@
 
 ## Media.Value.Range.map() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 map<U>(mapper: Mapper<T, U>): Range<U>;
@@ -16,7 +16,7 @@ map<U>(mapper: Mapper<T, U>): Range<U>;
 |  --- | --- | --- |
 |  mapper | [Mapper](./alfa-mapper.mapper.md)<!-- -->&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Range](./alfa-media.media.value.range.md)<!-- -->&lt;U&gt;
 

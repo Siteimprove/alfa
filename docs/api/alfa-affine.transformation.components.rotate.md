@@ -6,7 +6,7 @@
 
 A quaternion representing \[x, y, z, w\] rotation.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 rotate: Vector;

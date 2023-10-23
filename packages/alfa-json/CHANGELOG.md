@@ -1,5 +1,13 @@
 # @siteimprove/alfa-json
 
+## 0.68.0
+
+### Minor Changes
+
+- **Added:** `Serializable` interface now optionally accepts serialization options. ([#1474](https://github.com/Siteimprove/alfa/pull/1474))
+
+  When implementing the interface a type parameter can be supplied and `toJSON` can optionally take an object of that type that can be used for changing the serialization behavior.
+
 ## 0.67.0
 
 ## 0.66.0

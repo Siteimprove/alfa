@@ -4,7 +4,7 @@
 
 ## Sequence.tee() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 tee<A extends Array<unknown> = []>(callback: Callback<Sequence<T>, void, [...args: A]>, ...args: A): Sequence<T>;
@@ -14,10 +14,10 @@ tee<A extends Array<unknown> = []>(callback: Callback<Sequence<T>, void, [...arg
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callback | [Callback](./alfa-callback.callback.md)<!-- -->&lt;[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt; |  |
+|  callback | Callback&lt;[Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;, void, \[...args: A\]&gt; |  |
 |  args | A |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Sequence](./alfa-sequence.sequence.md)<!-- -->&lt;T&gt;
 

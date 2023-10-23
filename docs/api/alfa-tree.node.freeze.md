@@ -6,12 +6,12 @@
 
 Freeze the node. This prevents further expansion of the node hierarchy, meaning that the node can no longer be passed as a child to a parent node.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 freeze(): this;
 ```
-<b>Returns:</b>
+**Returns:**
 
 this
 

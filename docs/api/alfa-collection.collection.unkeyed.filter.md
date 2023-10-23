@@ -4,7 +4,7 @@
 
 ## Collection.Unkeyed.filter() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 filter<U extends T>(refinement: Refinement<T, U>): Unkeyed<U>;
@@ -14,9 +14,9 @@ filter<U extends T>(refinement: Refinement<T, U>): Unkeyed<U>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  refinement | [Refinement](./alfa-refinement.refinement.md)<!-- -->&lt;T, U&gt; |  |
+|  refinement | Refinement&lt;T, U&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Unkeyed](./alfa-collection.collection.unkeyed.md)<!-- -->&lt;U&gt;
 

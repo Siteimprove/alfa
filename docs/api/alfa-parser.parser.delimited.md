@@ -4,7 +4,7 @@
 
 ## Parser.delimited() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function delimited<I, T, E, A extends Array<unknown> = []>(delimiter: Parser<I, unknown, E, A>, parser: Parser<I, T, E, A>): Parser<I, T, E, A>;
@@ -17,7 +17,7 @@ function delimited<I, T, E, A extends Array<unknown> = []>(delimiter: Parser<I, 
 |  delimiter | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, unknown, E, A&gt; |  |
 |  parser | [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt; |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [Parser](./alfa-parser.parser.md)<!-- -->&lt;I, T, E, A&gt;
 

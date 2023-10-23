@@ -5,7 +5,7 @@
 ## Foldable interface
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface Foldable<T> 

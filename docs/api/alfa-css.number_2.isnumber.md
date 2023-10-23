@@ -4,7 +4,7 @@
 
 ## Number\_2.isNumber() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export function isNumber(value: unknown): value is Number;
@@ -16,7 +16,7 @@ export function isNumber(value: unknown): value is Number;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Number
+value is [Number](./alfa-css.number_2.md)
 

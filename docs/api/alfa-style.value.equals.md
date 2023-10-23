@@ -4,7 +4,7 @@
 
 ## Value.equals() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 equals(value: Value): boolean;
@@ -16,7 +16,7 @@ equals(value: Value): boolean;
 |  --- | --- | --- |
 |  value | [Value](./alfa-style.value.md) |  |
 
-<b>Returns:</b>
+**Returns:**
 
 boolean
 

@@ -4,7 +4,7 @@
 
 ## Map\_2.isMap() function
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 function isMap<K, V>(value: unknown): value is Map<K, V>;
@@ -16,7 +16,7 @@ function isMap<K, V>(value: unknown): value is Map<K, V>;
 |  --- | --- | --- |
 |  value | unknown |  |
 
-<b>Returns:</b>
+**Returns:**
 
-value is Map&lt;K, V&gt;
+value is [Map](./alfa-map.map_2.md)<!-- -->&lt;K, V&gt;
 

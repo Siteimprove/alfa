@@ -4,12 +4,12 @@
 
 ## Selector.Backdrop.of() method
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static of(): Backdrop;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [Backdrop](./alfa-selector.selector.backdrop.md)
 
