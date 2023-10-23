@@ -32,10 +32,12 @@ export class Corner extends Value<"corner", false> {
     this._horizontal = horizontal;
   }
 
+  /** @public */
   public get vertical(): Position.Vertical {
     return this._vertical;
   }
 
+  /** @public */
   public get horizontal(): Position.Horizontal {
     return this._horizontal;
   }

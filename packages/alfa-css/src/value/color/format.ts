@@ -24,6 +24,7 @@ export abstract class Format<F extends string = string>
     this._format = format;
   }
 
+  /** @public */
   public get format(): F {
     return this._format;
   }

@@ -27,6 +27,7 @@ export class Circle<R extends Length = Length> extends Value<
     this._radius = radius;
   }
 
+  /** @public */
   public get radius(): R {
     return this._radius;
   }
