@@ -28,8 +28,8 @@
     "@siteimprove/alfa-refinement": "workspace:^0.68.0"
   },
   "devDependencies": {
-    "prettier": "^2.7.1",
-    "puppeteer": "^19.9.1"
+    "prettier": "^3.0.0",
+    "puppeteer": "^21.0.0"
   },
   "publishConfig": {
     "access": "public",

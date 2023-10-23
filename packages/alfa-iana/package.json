@@ -29,8 +29,8 @@
   },
   "devDependencies": {
     "@siteimprove/alfa-test": "workspace:^0.68.0",
-    "axios": "^0.27.2",
-    "prettier": "^2.7.1"
+    "axios": "^1.0.0",
+    "prettier": "^3.0.0"
   },
   "publishConfig": {
     "access": "public",
