@@ -37,7 +37,7 @@ export function format(name: string, error: Error): string {
       "\n" +
       error.message.replace(
         "Input A expected to strictly deep-equal input B:\n",
-        ""
+        "",
       );
 
     message += error.message;
@@ -47,7 +47,7 @@ export function format(name: string, error: Error): string {
 
   const output = `
 ${chalk.underline(`${file}(${line},${column}):`)} ${chalk.bold(
-    name.trim().replace(/\s+/g, " ")
+    name.trim().replace(/\s+/g, " "),
   )}
 ${message}
   `;
