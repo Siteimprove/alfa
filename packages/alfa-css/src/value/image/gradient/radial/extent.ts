@@ -29,10 +29,12 @@ export class Extent extends Value<"extent", false> {
     this._size = size;
   }
 
+  /** @public */
   public get shape(): Extent.Shape {
     return this._shape;
   }
 
+  /** @public */
   public get size(): Extent.Size {
     return this._size;
   }

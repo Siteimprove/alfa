@@ -24,6 +24,7 @@ export class Side extends Value<"side", false> {
     this._side = side;
   }
 
+  /** @public */
   public get side(): Position.Vertical | Position.Horizontal {
     return this._side;
   }
