@@ -21,8 +21,8 @@ export type AnglePercentage<U extends Unit.Angle = Unit.Angle> =
   | AnglePercentage.Calculated
   | Angle.Calculated
   | Angle.Fixed<U>
-  | Percentage.Calculated
-  | Percentage.Fixed;
+  | Percentage.Calculated<"angle">
+  | Percentage.Fixed<"angle">;
 
 /**
  * @public

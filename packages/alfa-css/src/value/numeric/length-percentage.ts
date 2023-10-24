@@ -21,9 +21,9 @@ const { either, map } = Parser;
 export type LengthPercentage<U extends Unit.Length = Unit.Length> =
   | LengthPercentage.Calculated
   | Length.Calculated
-  | Percentage.Calculated
   | Length.Fixed<U>
-  | Percentage.Fixed;
+  | Percentage.Calculated<"length">
+  | Percentage.Fixed<"length">;
 
 /**
  * @public
