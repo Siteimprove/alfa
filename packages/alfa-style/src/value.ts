@@ -1,4 +1,5 @@
 import { Applicative } from "@siteimprove/alfa-applicative";
+import type { Resolvable, Value as CSSValue } from "@siteimprove/alfa-css";
 import { Declaration } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Functor } from "@siteimprove/alfa-functor";
@@ -46,12 +47,22 @@ export class Value<T = unknown>
     return new Value(mapper(this._value, this._source), this._source);
   }
 
+  public resolve<T extends CSSValue>(
+    this: Value<T>,
+    resolver?: Resolvable.Resolver<T>,
+  ): Value<Resolvable.Resolved<T>> {
+    return new Value(
+      this._value.resolve(resolver) as Resolvable.Resolved<T>,
+      this._source,
+    );
+  }
+
   public apply<U>(mapper: Value<Mapper<T, U>>): Value<U> {
     return mapper.map((mapper) => mapper(this._value));
   }
 
   public flatMap<U>(
-    mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>
+    mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>,
   ): Value<U> {
     return mapper(this._value, this._source);
   }

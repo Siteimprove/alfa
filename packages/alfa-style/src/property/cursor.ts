@@ -129,6 +129,6 @@ const parse = map(
 export default Longhand.of<Specified, Computed>(
   Tuple.of(List.of([], ","), Keyword.of("auto")),
   parse,
-  (value) => value.map((value) => value.resolve()),
+  (value) => value.resolve(),
   { inherits: true },
 );

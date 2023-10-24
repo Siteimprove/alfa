@@ -111,5 +111,5 @@ export default Longhand.of<Specified, Computed>(
     Percentage.of(1),
   ),
   parse,
-  (value) => value.map((tuple) => tuple.resolve()),
+  (value) => value.resolve(),
 );
