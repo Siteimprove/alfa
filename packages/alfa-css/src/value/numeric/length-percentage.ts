@@ -22,9 +22,9 @@ const { either, map } = Parser;
 export type LengthPercentage<U extends Unit.Length = Unit.Length> =
   | LengthPercentage.Calculated
   | Length.Calculated
-  | Percentage.Calculated
+  | Percentage.Calculated<"length">
   | Length.Fixed<U>
-  | Percentage.Fixed;
+  | Percentage.Fixed<"length">;
 
 /**
  * @public
@@ -74,11 +74,11 @@ export namespace LengthPercentage {
             percentage: (value) =>
               Base.Length.of(
                 resolver.percentageBase.value,
-                /* this is "px"! */ resolver.percentageBase.unit
+                /* this is "px"! */ resolver.percentageBase.unit,
               ).scale(value.value),
           })
           // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not resolve ${this._math} as a length`)
+          .getUnsafe(`Could not resolve ${this._math} as a length`),
       );
     }
 
@@ -121,7 +121,7 @@ export namespace LengthPercentage {
    * Fully resolves a length-percentage, when a full resolver is provided.
    */
   export function resolve(
-    resolver: Resolver
+    resolver: Resolver,
   ): (value: LengthPercentage) => Canonical {
     return (value) =>
       // We need to break down the union to help TS find the correct overload
@@ -144,7 +144,7 @@ export namespace LengthPercentage {
    * calculations have to stay as they are.
    */
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: LengthPercentage) => PartiallyResolved {
     return (value) =>
       Selective.of(value)
@@ -154,7 +154,7 @@ export namespace LengthPercentage {
   }
 
   export function isLengthPercentage(
-    value: unknown
+    value: unknown,
   ): value is LengthPercentage {
     return (
       value instanceof Calculated ||
@@ -164,7 +164,7 @@ export namespace LengthPercentage {
   }
 
   export function isCalculated(
-    value: unknown
+    value: unknown,
   ): value is Calculated | Length.Calculated | Percentage.Calculated {
     return (
       value instanceof Calculated ||
@@ -183,11 +183,11 @@ export namespace LengthPercentage {
 
   export function of<U extends Unit.Length>(
     value: number,
-    unit: U
+    unit: U,
   ): Length.Fixed<U>;
 
   export function of<U extends Unit.Length>(
-    value: Base.Length<U>
+    value: Base.Length<U>,
   ): Length.Fixed<U>;
 
   export function of(value: number): Percentage.Fixed;
@@ -208,7 +208,7 @@ export namespace LengthPercentage {
       | Math<"length">
       | Math<"length-percentage">
       | Math<"percentage">,
-    unit?: U
+    unit?: U,
   ): LengthPercentage<U> {
     if (typeof value === "number") {
       if (unit === undefined) {
@@ -247,7 +247,7 @@ export namespace LengthPercentage {
     Percentage.parse,
     map<Slice<Token>, Math<"length-percentage">, Calculated, string>(
       Math.parseLengthPercentage,
-      of
-    )
+      of,
+    ),
   );
 }

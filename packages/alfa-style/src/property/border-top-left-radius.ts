@@ -10,17 +10,10 @@ type Specified = Tuple<
   [horizontal: LengthPercentage, vertical: LengthPercentage]
 >;
 
-/**
- * @remarks
- * TODO: percentages resolve relative to the dimensions of the containing block,
- *       which we do not handle.
- *       This results in length-percentage calculations leaking to computed
- *       values, which is a bit annoying.
- */
 type Computed = Tuple<
   [
     horizontal: LengthPercentage.PartiallyResolved,
-    vertical: LengthPercentage.PartiallyResolved
+    vertical: LengthPercentage.PartiallyResolved,
   ]
 >;
 
@@ -28,9 +21,9 @@ const parse = map(
   takeBetween(
     delimited(option(Token.parseWhitespace), LengthPercentage.parse),
     1,
-    2
+    2,
   ),
-  ([horizontal, vertical = horizontal]) => Tuple.of(horizontal, vertical)
+  ([horizontal, vertical = horizontal]) => Tuple.of(horizontal, vertical),
 );
 
 /**
@@ -42,11 +35,9 @@ export default Longhand.of<Specified, Computed>(
   parse,
   (value, style) =>
     value.map(({ values: [h, v] }) =>
-      // Percentages are relative to the size of the border box, which we don't
-      // really handle currently.
       Tuple.of(
         LengthPercentage.partiallyResolve(Resolver.length(style))(h),
-        LengthPercentage.partiallyResolve(Resolver.length(style))(v)
-      )
-    )
+        LengthPercentage.partiallyResolve(Resolver.length(style))(v),
+      ),
+    ),
 );
