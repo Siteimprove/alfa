@@ -11,7 +11,6 @@ import {
 import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Resolvable } from "../resolvable";
-import { Value } from "../value";
 
 import { Numeric } from "./numeric";
 
@@ -22,7 +21,9 @@ const { either, map } = Parser;
  *
  * @public
  */
-export type Percentage = Percentage.Calculated | Percentage.Fixed;
+export type Percentage<R extends BaseNumeric.Type = BaseNumeric.Type> =
+  | Percentage.Calculated<R>
+  | Percentage.Fixed<R>;
 
 /**
  * {@link https://drafts.csswg.org/css-values/#numbers}
@@ -37,7 +38,8 @@ export namespace Percentage {
    */
   export class Calculated<R extends BaseNumeric.Type = BaseNumeric.Type>
     extends Numeric.Calculated<"percentage", "percentage" | R>
-    implements IPercentage<true, R>
+    implements
+      Resolvable<Canonical | Numeric.Fixed<R>, Resolver<R, Numeric.Fixed<R>>>
   {
     public static of(value: Math<"percentage">): Calculated {
       return new Calculated(value);
@@ -56,13 +58,13 @@ export namespace Percentage {
     public resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R, T>): T;
 
     public resolve<T extends Numeric.Fixed<R>>(
-      resolver?: Resolver<R, T>
+      resolver?: Resolver<R, T>,
     ): Fixed<R> | T {
       const percentage = Fixed.of<R>(
         this._math
           .resolve()
           // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not fully resolve ${this} as a percentage`)
+          .getUnsafe(`Could not fully resolve ${this} as a percentage`),
       );
       return resolver === undefined
         ? percentage
@@ -93,13 +95,14 @@ export namespace Percentage {
    */
   export class Fixed<R extends BaseNumeric.Type = BaseNumeric.Type>
     extends Numeric.Fixed<"percentage", "percentage" | R>
-    implements IPercentage<false, R>
+    implements
+      Resolvable<Canonical | Numeric.Fixed<R>, Resolver<R, Numeric.Fixed<R>>>
   {
     public static of<R extends BaseNumeric.Type = BaseNumeric.Type>(
-      value: number | BasePercentage
+      value: number | BasePercentage,
     ): Fixed<R> {
       return new Fixed(
-        BasePercentage.isPercentage(value) ? value.value : value
+        BasePercentage.isPercentage(value) ? value.value : value,
       );
     }
 
@@ -112,7 +115,7 @@ export namespace Percentage {
     public resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R, T>): T;
 
     public resolve<T extends Numeric.Fixed<R>>(
-      resolver?: Resolver<R, T>
+      resolver?: Resolver<R, T>,
     ): Fixed<"percentage"> | T {
       return resolver === undefined
         ? this
@@ -148,20 +151,9 @@ export namespace Percentage {
 
   export interface Resolver<
     R extends BaseNumeric.Type,
-    T extends Numeric.Fixed<R>
+    T extends Numeric.Fixed<R>,
   > {
     percentageBase: T;
-  }
-
-  interface IPercentage<
-    CALC extends boolean = boolean,
-    R extends BaseNumeric.Type = BaseNumeric.Type
-  > extends Value<"percentage", CALC, "percentage" | R>,
-      Resolvable<Canonical | Numeric.Fixed<R>, Resolver<R, Numeric.Fixed<R>>> {
-    hasCalculation(): this is Calculated<R>;
-    resolve<T extends Numeric.Fixed<R>>(
-      resolver?: Resolver<R, T>
-    ): Fixed<"percentage"> | T;
   }
 
   export function isCalculated(value: unknown): value is Calculated {
@@ -183,7 +175,7 @@ export namespace Percentage {
   export function of(value: Math<"percentage">): Calculated;
 
   export function of(
-    value: number | BasePercentage | Math<"percentage">
+    value: number | BasePercentage | Math<"percentage">,
   ): Percentage {
     return Selective.of(value)
       .if(Math.isPercentage, Calculated.of)
@@ -196,6 +188,6 @@ export namespace Percentage {
    */
   export const parse: CSSParser<Percentage> = either(
     map<Slice<Token>, BasePercentage, Fixed, string>(BasePercentage.parse, of),
-    map(Math.parsePercentage, of)
+    map(Math.parsePercentage, of),
   );
 }

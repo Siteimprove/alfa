@@ -33,7 +33,7 @@ export namespace Numeric {
    */
   export abstract class Calculated<T extends Type = Type, R extends Type = T>
     extends Value<T, true, R>
-    implements INumeric<T, true, R>
+    implements Resolvable<Fixed<R>, never>
   {
     protected readonly _math: ToMath<T>;
 
@@ -83,7 +83,7 @@ export namespace Numeric {
    */
   export abstract class Fixed<T extends Type = Type, R extends Type = T>
     extends Value<T, false, R>
-    implements INumeric<T, false, R>, Comparable<Fixed>
+    implements Resolvable<Fixed<R>, never>, Comparable<Fixed>
   {
     protected readonly _value: number;
 
@@ -142,16 +142,6 @@ export namespace Numeric {
   }
 
   export type Type = BaseNumeric.Type | `${BaseNumeric.Dimension}-percentage`;
-
-  interface INumeric<
-    T extends Type = Type,
-    CALC extends boolean = boolean,
-    R extends Type = T
-  > extends Value<T, CALC, R>,
-      Resolvable<Fixed<R>, unknown> {
-    hasCalculation(): this is Calculated<T, R>;
-    resolve(resolver?: unknown): Fixed<R>;
-  }
 
   export function isCalculated(value: unknown): value is Calculated {
     return value instanceof Calculated;
