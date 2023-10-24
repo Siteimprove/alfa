@@ -7,6 +7,7 @@ import {
   URL,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import { Longhand } from "../longhand";
 
@@ -57,7 +58,11 @@ namespace Specified {
 
 type Specified = Tuple<[List<Specified.Custom>, Specified.Builtin]>;
 
-type Computed = Specified;
+type Computed = Tuple<[List<Computed.Custom>, Specified.Builtin]>;
+
+namespace Computed {
+  export type Custom = URL | Tuple<[URL, Number.Canonical, Number.Canonical]>;
+}
 
 const parseBuiltin = Keyword.parse(
   "auto",
@@ -95,26 +100,26 @@ const parseBuiltin = Keyword.parse(
   "row-resize",
   "all-scroll",
   "zoom-in",
-  "zoom-out"
+  "zoom-out",
 );
 
 const parseCustom = map(
   pair(
     URL.parse,
-    option(right(parseWhitespace, separated(Number.parse, parseWhitespace)))
+    option(right(parseWhitespace, separated(Number.parse, parseWhitespace))),
   ),
   ([url, coordinates]) =>
-    coordinates.isSome() ? Tuple.of(url, ...coordinates.get()) : url
+    coordinates.isSome() ? Tuple.of(url, ...coordinates.get()) : url,
 );
 
 const parseCustomList = map(
   zeroOrMore(left(parseCustom, pair(parseComma, option(parseWhitespace)))),
-  (list) => List.of(list, ",")
+  (list) => List.of(list, ","),
 );
 
 const parse = map(
   separated(parseCustomList, option(parseWhitespace), parseBuiltin),
-  ([custom, fallback]) => Tuple.of(custom, fallback)
+  ([custom, fallback]) => Tuple.of(custom, fallback),
 );
 
 /**
@@ -124,6 +129,6 @@ const parse = map(
 export default Longhand.of<Specified, Computed>(
   Tuple.of(List.of([], ","), Keyword.of("auto")),
   parse,
-  (value) => value,
-  { inherits: true }
+  (value) => value.map((value) => value.resolve()),
+  { inherits: true },
 );
