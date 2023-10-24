@@ -104,8 +104,7 @@ export namespace LengthPercentage {
   // Absolute lengths are just translated into another absolute unit.
   // Math expression have their own resolver, using this one when encountering
   // a relative length.
-  export type Resolver = Length.Resolver &
-    Percentage.Resolver<"length", Canonical>;
+  export type Resolver = Length.Resolver & Percentage.Resolver<"length">;
 
   export type PartialResolver = Length.Resolver;
 

@@ -87,7 +87,7 @@ export namespace AnglePercentage {
 
   // In order to resolve a percentage, we need a base (=100%)
   // There are no relative angles, so these are easy to resolve.
-  export type Resolver = Percentage.Resolver<"angle", Canonical>;
+  export type Resolver = Percentage.Resolver<"angle">;
 
   export function isAnglePercentage(value: unknown): value is AnglePercentage {
     return (

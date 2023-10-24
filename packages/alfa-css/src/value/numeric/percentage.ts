@@ -12,6 +12,10 @@ import { type Parser as CSSParser, Token } from "../../syntax";
 
 import { Resolvable } from "../resolvable";
 
+import type { Angle } from "./angle";
+import type { Integer } from "./integer";
+import type { Length } from "./length";
+import type { Number } from "./number";
 import { Numeric } from "./numeric";
 
 const { either, map } = Parser;
@@ -38,8 +42,7 @@ export namespace Percentage {
    */
   export class Calculated<R extends BaseNumeric.Type = BaseNumeric.Type>
     extends Numeric.Calculated<"percentage", "percentage" | R>
-    implements
-      Resolvable<Canonical | Numeric.Fixed<R>, Resolver<R, Numeric.Fixed<R>>>
+    implements Resolvable<Canonical | Canonicals[R], Resolver<R>>
   {
     public static of(value: Math<"percentage">): Calculated {
       return new Calculated(value);
@@ -55,10 +58,10 @@ export namespace Percentage {
 
     public resolve(): Fixed<"percentage">;
 
-    public resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R, T>): T;
+    public resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R>): T;
 
     public resolve<T extends Numeric.Fixed<R>>(
-      resolver?: Resolver<R, T>,
+      resolver?: Resolver<R>,
     ): Fixed<R> | T {
       const percentage = Fixed.of<R>(
         this._math
@@ -95,8 +98,7 @@ export namespace Percentage {
    */
   export class Fixed<R extends BaseNumeric.Type = BaseNumeric.Type>
     extends Numeric.Fixed<"percentage", "percentage" | R>
-    implements
-      Resolvable<Canonical | Numeric.Fixed<R>, Resolver<R, Numeric.Fixed<R>>>
+    implements Resolvable<Canonical | Canonicals[R], Resolver<R>>
   {
     public static of<R extends BaseNumeric.Type = BaseNumeric.Type>(
       value: number | BasePercentage,
@@ -112,13 +114,13 @@ export namespace Percentage {
 
     public resolve(): Fixed<"percentage">;
 
-    public resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R, T>): T;
+    public resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R>): T;
 
     public resolve<T extends Numeric.Fixed<R>>(
-      resolver?: Resolver<R, T>,
+      resolver?: Resolver<R>,
     ): Fixed<"percentage"> | T {
       return resolver === undefined
-        ? this
+        ? (this as Fixed<"percentage">)
         : // since we don't know much about percentageBase, scale defaults to
           // the abstract one on Numeric and loses its actual type which needs
           // to be asserted again.
@@ -149,11 +151,8 @@ export namespace Percentage {
     export interface JSON extends Numeric.Fixed.JSON<"percentage"> {}
   }
 
-  export interface Resolver<
-    R extends BaseNumeric.Type,
-    T extends Numeric.Fixed<R>,
-  > {
-    percentageBase: T;
+  export interface Resolver<R extends BaseNumeric.Type> {
+    percentageBase: Canonicals[R];
   }
 
   export function isCalculated(value: unknown): value is Calculated {
@@ -191,3 +190,11 @@ export namespace Percentage {
     map(Math.parsePercentage, of),
   );
 }
+
+type Canonicals = {
+  integer: Integer.Canonical;
+  number: Number.Canonical;
+  percentage: Percentage.Canonical;
+  angle: Angle.Canonical;
+  length: Length.Canonical;
+};
