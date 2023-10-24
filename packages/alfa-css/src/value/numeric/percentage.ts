@@ -32,7 +32,7 @@ export type Percentage<R extends BaseNumeric.Type = BaseNumeric.Type> =
  * @public
  */
 export namespace Percentage {
-  export type Canonical = Fixed;
+  export type Canonical = Fixed<"percentage">;
 
   /**
    * Percentages that are the result of a calculation.
@@ -53,7 +53,7 @@ export namespace Percentage {
       return true;
     }
 
-    public resolve(): Fixed<"percentage">;
+    public resolve(): Canonical;
 
     public resolve<T extends Numeric.Fixed<R>>(resolver: Resolver<R, T>): T;
 
