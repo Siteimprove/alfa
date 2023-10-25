@@ -1,7 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
-import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Function, type Parser as CSSParser, Token } from "../../syntax";
@@ -60,10 +59,10 @@ export class RGB<
     A extends Number | Percentage<"percentage">,
   >(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>> {
     return new RGB(
-      resolveComponent(red),
-      resolveComponent(green),
-      resolveComponent(blue),
-      resolveComponent(alpha),
+      red.resolve() as ToCanonical<C>,
+      green.resolve() as ToCanonical<C>,
+      blue.resolve() as ToCanonical<C>,
+      alpha.resolve() as ToCanonical<A>,
     );
   }
 
@@ -266,15 +265,4 @@ export namespace RGB {
       );
     },
   );
-}
-
-function resolveComponent<T extends Number | Percentage<"percentage">>(
-  component: T,
-): ToCanonical<T> {
-  return Selective.of(component)
-    .if(Percentage.isPercentage, (percentage) =>
-      Percentage.isCalculated(percentage) ? percentage.resolve() : percentage,
-    )
-    .else((value) => value.resolve())
-    .get() as ToCanonical<T>;
 }

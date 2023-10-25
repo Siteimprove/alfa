@@ -1,7 +1,6 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Selective } from "@siteimprove/alfa-selective";
 
 import { Function, type Parser as CSSParser, Token } from "../../syntax";
 import { Keyword } from "../keyword";
@@ -20,7 +19,7 @@ type ToCanonical<T extends Angle | Number | Percentage<"percentage">> =
     ? Angle.Canonical
     : T extends Number
     ? Number.Canonical
-    : T extends Percentage<"percentage">
+    : T extends Percentage
     ? Percentage.Canonical
     : Angle.Canonical | Number.Canonical | Percentage.Canonical;
 
@@ -64,10 +63,10 @@ export class HSL<
     alpha: A,
   ): HSL<ToCanonical<H>, ToCanonical<A>> {
     return new HSL(
-      resolveComponent(hue),
-      resolveComponent(saturation),
-      resolveComponent(lightness),
-      resolveComponent(alpha),
+      hue.resolve() as ToCanonical<H>,
+      saturation.resolve(),
+      lightness.resolve(),
+      alpha.resolve() as ToCanonical<A>,
     );
   }
 
@@ -318,15 +317,4 @@ function hueToRgb(t1: number, t2: number, hue: number): number {
   }
 
   return t1;
-}
-
-function resolveComponent<T extends Angle | Number | Percentage<"percentage">>(
-  component: T,
-): ToCanonical<T> {
-  return Selective.of(component)
-    .if(Percentage.isPercentage, (percentage) =>
-      Percentage.isCalculated(percentage) ? percentage.resolve() : percentage,
-    )
-    .else((value) => value.resolve())
-    .get() as ToCanonical<T>;
 }
