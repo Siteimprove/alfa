@@ -14,25 +14,24 @@ const { delimited, option, map, separatedList } = Parser;
 /**
  * @public
  */
-export class List<V extends Value, CALC extends boolean = boolean>
-  extends Value<"list", CALC>
+export class List<V extends Value>
+  extends Value<"list", Value.HasCalculation<[V]>>
   implements
     Iterable<V>,
-    Resolvable<List<Resolvable.Resolved<V>, false>, Resolvable.Resolver<V>>
+    Resolvable<List<Resolvable.Resolved<V>>, Resolvable.Resolver<V>>
 {
   public static of<V extends Value>(
     values: Iterable<V>,
-    separator = " "
-  ): List<V, Value.HasCalculation<[V]>> {
-    const array = Array.from(values);
-    return new List(array, separator, Value.hasCalculation(...array));
+    separator = " ",
+  ): List<V> {
+    return new List(Array.from(values), separator);
   }
 
   private readonly _values: Array<V>;
   private readonly _separator: string;
 
-  private constructor(values: Array<V>, separator: string, calculation: CALC) {
-    super("list", calculation);
+  private constructor(values: Array<V>, separator: string) {
+    super("list", Value.hasCalculation(...values));
     this._values = values;
     this._separator = separator;
   }
@@ -42,22 +41,15 @@ export class List<V extends Value, CALC extends boolean = boolean>
   }
 
   public resolve(
-    resolver?: Resolvable.Resolver<V>
-  ): List<Resolvable.Resolved<V>, false> {
+    resolver?: Resolvable.Resolver<V>,
+  ): List<Resolvable.Resolved<V>> {
     return this.map(
-      (value) => value.resolve(resolver) as Resolvable.Resolved<V>
+      (value) => value.resolve(resolver) as Resolvable.Resolved<V>,
     );
   }
 
-  public map<U extends Value>(
-    mapper: Mapper<V, U>
-  ): List<U, U extends Value<string, false> ? false : true> {
-    const array = this._values.map(mapper);
-    const calculation = array.some((value) =>
-      value.hasCalculation()
-    ) as U extends Value<string, false> ? false : true;
-
-    return new List(array, this._separator, calculation);
+  public map<U extends Value>(mapper: Mapper<V, U>): List<U> {
+    return new List(this._values.map(mapper), this._separator);
   }
 
   public equals<T extends Value>(value: List<T>): boolean;
@@ -88,7 +80,7 @@ export class List<V extends Value, CALC extends boolean = boolean>
     return {
       ...super.toJSON(),
       values: this._values.map(
-        (value) => value.toJSON() as Serializable.ToJSON<V>
+        (value) => value.toJSON() as Serializable.ToJSON<V>,
       ),
       separator: this._separator,
     };
@@ -121,11 +113,11 @@ export namespace List {
     separator: string,
     parseSeparator: CSSParser<any>,
     lower: number,
-    upper: number
+    upper: number,
   ): CSSParser<List<V>> {
     return map(
       separatedList(parseValue, parseSeparator, lower, upper),
-      (values) => List.of(values, separator)
+      (values) => List.of(values, separator),
     );
   }
 
@@ -136,12 +128,12 @@ export namespace List {
   export const parseCommaSeparated = <V extends Value>(
     parseValue: CSSParser<V>,
     lower: number = 1,
-    upper: number = Infinity
+    upper: number = Infinity,
   ) => parse(parseValue, ", ", parseComma, lower, upper);
 
   export const parseSpaceSeparated = <V extends Value>(
     parseValue: CSSParser<V>,
     lower: number = 1,
-    upper: number = Infinity
+    upper: number = Infinity,
   ) => parse(parseValue, " ", parseSpace, lower, upper);
 }

@@ -16,7 +16,7 @@ export namespace Resolvable {
    */
   export type Resolved<V extends Value> = V extends Resolvable<infer U, unknown>
     ? U
-    : V;
+    : never;
 
   /**
    * @privateRemarks
