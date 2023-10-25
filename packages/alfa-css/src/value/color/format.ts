@@ -1,5 +1,4 @@
 import { Real } from "@siteimprove/alfa-math";
-import { Selective } from "@siteimprove/alfa-selective";
 
 import { Number, Percentage } from "../numeric";
 import type { Resolvable } from "../resolvable";
