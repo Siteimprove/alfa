@@ -30,7 +30,7 @@ jobs:
 
       - name: "Set up Node"
         if: env.PR_COMMAND_WILL_RUN == 'true'
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           # We use versions 18 and 20 in the integrate workflow
           node-version: 18
