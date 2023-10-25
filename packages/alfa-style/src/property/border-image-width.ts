@@ -1,13 +1,12 @@
 import {
   Keyword,
-  Length,
+  LengthPercentage,
   Number,
-  Numeric,
-  Percentage,
   Token,
   Tuple,
 } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import { Longhand } from "../longhand";
 import { Resolver } from "../resolver";
@@ -23,12 +22,12 @@ export type Specified = Tuple<
     top: Specified.Item,
     right: Specified.Item,
     bottom: Specified.Item,
-    left: Specified.Item
+    left: Specified.Item,
   ]
 >;
 
 namespace Specified {
-  export type Item = Length | Percentage | Number | Keyword<"auto">;
+  export type Item = LengthPercentage | Number | Keyword<"auto">;
 }
 
 type Computed = Tuple<
@@ -36,14 +35,13 @@ type Computed = Tuple<
     top: Computed.Item,
     right: Computed.Item,
     bottom: Computed.Item,
-    left: Computed.Item
+    left: Computed.Item,
   ]
 >;
 
 namespace Computed {
   export type Item =
-    | Length.Canonical
-    | Percentage.Canonical
+    | LengthPercentage.PartiallyResolved
     | Number.Canonical
     | Keyword<"auto">;
 }
@@ -57,18 +55,18 @@ export const parse = map(
       option(Token.parseWhitespace),
       either(
         filter(
-          either(Length.parse, either(Percentage.parse, Number.parse)),
+          either(LengthPercentage.parse, Number.parse),
           (size) => size.hasCalculation() || size.value >= 0,
-          () => `Negative sizes are not allowed`
+          () => `Negative sizes are not allowed`,
         ),
-        Keyword.parse("auto")
-      )
+        Keyword.parse("auto"),
+      ),
     ),
     1,
-    4
+    4,
   ),
   ([top, right = top, bottom = top, left = right]) =>
-    Tuple.of(top, right, bottom, left)
+    Tuple.of(top, right, bottom, left),
 );
 
 /**
@@ -82,11 +80,16 @@ export default Longhand.of<Specified, Computed>(
     value.map(({ values: [t, r, b, l] }) => {
       const resolver = resolve(style);
       return Tuple.of(resolver(t), resolver(r), resolver(b), resolver(l));
-    })
+    }),
 );
 
 function resolve(style: Style): (specified: Specified.Item) => Computed.Item {
-  const resolver = Resolver.length(style);
   return (specified) =>
-    Numeric.isNumeric(specified) ? specified.resolve(resolver) : specified;
+    Selective.of(specified)
+      .if(
+        LengthPercentage.isLengthPercentage,
+        LengthPercentage.partiallyResolve(Resolver.length(style)),
+      )
+      .if(Number.isNumber, (num) => num.resolve())
+      .get();
 }

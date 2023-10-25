@@ -1,4 +1,5 @@
 import { Real } from "@siteimprove/alfa-math";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import { Number, Percentage } from "../numeric";
 import type { Resolvable } from "../resolvable";
@@ -55,10 +56,10 @@ export namespace Format {
 
   function toPercentage(
     channel: Number.Canonical | Percentage.Canonical,
-    max: number
+    max: number,
   ): Percentage.Canonical {
-    return Percentage.of(
-      Real.clamp(channel.value / (Number.isNumber(channel) ? max : 1), 0, 1)
+    return Percentage.of<"percentage">(
+      Real.clamp(channel.value / (Number.isNumber(channel) ? max : 1), 0, 1),
     );
   }
 
@@ -69,12 +70,12 @@ export namespace Format {
     red: Number.Canonical | Percentage.Canonical,
     green: Number.Canonical | Percentage.Canonical,
     blue: Number.Canonical | Percentage.Canonical,
-    alpha: Number.Canonical | Percentage.Canonical
+    alpha: Number.Canonical | Percentage.Canonical,
   ): [
     Percentage.Canonical,
     Percentage.Canonical,
     Percentage.Canonical,
-    Percentage.Canonical
+    Percentage.Canonical,
   ] {
     return [
       toPercentage(red, 0xff),

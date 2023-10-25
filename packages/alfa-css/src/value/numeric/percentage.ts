@@ -76,7 +76,7 @@ export namespace Percentage {
       return true;
     }
 
-    public resolve(this: Calculated<"percentage">): Canonical;
+    public resolve(): Canonical;
 
     public resolve<T extends Canonicals[H]>(resolver: Resolver<H>): T;
 
@@ -132,7 +132,7 @@ export namespace Percentage {
       super(value, "percentage");
     }
 
-    public resolve(this: Fixed<"percentage">): Canonical;
+    public resolve(): Canonical;
 
     public resolve<T extends Canonicals[H]>(resolver: Resolver<H>): T;
 

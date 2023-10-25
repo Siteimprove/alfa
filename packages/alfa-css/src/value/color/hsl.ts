@@ -1,6 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Real } from "@siteimprove/alfa-math";
 import { Parser } from "@siteimprove/alfa-parser";
+import { Selective } from "@siteimprove/alfa-selective";
 
 import { Function, type Parser as CSSParser, Token } from "../../syntax";
 import { Keyword } from "../keyword";
@@ -14,72 +15,75 @@ const { pair, map, either, option, right, take, delimited } = Parser;
 
 // We cannot easily use Resolvable.Resolved because Percentage may resolve to
 // anything depending on the base, here we want to keep them as percentages.
-type ToCanonical<T extends Angle | Number | Percentage> = T extends Angle
-  ? Angle.Canonical
-  : T extends Number
-  ? Number.Canonical
-  : T extends Percentage
-  ? Percentage.Canonical
-  : Angle.Canonical | Number.Canonical | Percentage.Canonical;
+type ToCanonical<T extends Angle | Number | Percentage<"percentage">> =
+  T extends Angle
+    ? Angle.Canonical
+    : T extends Number
+    ? Number.Canonical
+    : T extends Percentage<"percentage">
+    ? Percentage.Canonical
+    : Angle.Canonical | Number.Canonical | Percentage.Canonical;
 
 /**
  * @public
  */
 export class HSL<
   H extends Number.Fixed | Angle.Fixed = Number.Fixed | Angle.Fixed,
-  A extends Number.Fixed | Percentage.Fixed = Number.Fixed | Percentage.Fixed
+  A extends Number.Fixed | Percentage.Fixed<"percentage"> =
+    | Number.Fixed
+    | Percentage.Fixed<"percentage">,
 > extends Format<"hsl"> {
   public static of<
     H extends Number.Canonical | Angle.Canonical,
     A extends Number.Canonical | Percentage.Canonical,
-    S extends Percentage,
-    L extends Percentage
+    S extends Percentage<"percentage">,
+    L extends Percentage<"percentage">,
   >(hue: H, saturation: S, lightness: L, alpha: A): HSL<H, A>;
 
   public static of<
     H extends Number | Angle,
-    A extends Number | Percentage,
-    S extends Percentage,
-    L extends Percentage
+    A extends Number | Percentage<"percentage">,
+    S extends Percentage<"percentage">,
+    L extends Percentage<"percentage">,
   >(
     hue: H,
     saturation: S,
     lightness: L,
-    alpha: A
+    alpha: A,
   ): HSL<ToCanonical<H>, ToCanonical<A>>;
 
   public static of<
     H extends Number | Angle,
-    A extends Number | Percentage,
-    S extends Percentage,
-    L extends Percentage
+    A extends Number | Percentage<"percentage">,
+    S extends Percentage<"percentage">,
+    L extends Percentage<"percentage">,
   >(
     hue: H,
     saturation: S,
     lightness: L,
-    alpha: A
+    alpha: A,
   ): HSL<ToCanonical<H>, ToCanonical<A>> {
     return new HSL(
-      hue.resolve() as ToCanonical<H>,
-      saturation.resolve(),
-      lightness.resolve(),
-      alpha.resolve() as ToCanonical<A>
+      resolveComponent(hue),
+      resolveComponent(saturation),
+      resolveComponent(lightness),
+      resolveComponent(alpha),
     );
   }
 
   private readonly _hue: H;
-  private readonly _saturation: Percentage.Fixed;
-  private readonly _lightness: Percentage.Fixed;
-  private readonly _red: Percentage.Fixed;
-  private readonly _green: Percentage.Fixed;
-  private readonly _blue: Percentage.Fixed;
+  private readonly _saturation: Percentage.Canonical;
+  private readonly _lightness: Percentage.Canonical;
+  private readonly _red: Percentage.Canonical;
+  private readonly _green: Percentage.Canonical;
+  private readonly _blue: Percentage.Canonical;
   private readonly _alpha: A;
 
   private constructor(
     hue: H,
-    saturation: Percentage.Fixed,
-    lightness: Percentage.Fixed,
-    alpha: A
+    saturation: Percentage.Canonical,
+    lightness: Percentage.Canonical,
+    alpha: A,
   ) {
     super("hsl");
     this._hue = hue;
@@ -92,35 +96,35 @@ export class HSL<
     const [red, green, blue] = hslToRgb(
       Real.modulo(degrees, 360) / 60,
       Real.clamp(saturation.value, 0, 1),
-      Real.clamp(lightness.value, 0, 1)
+      Real.clamp(lightness.value, 0, 1),
     );
 
-    this._red = Percentage.of(red);
-    this._green = Percentage.of(green);
-    this._blue = Percentage.of(blue);
+    this._red = Percentage.of<"percentage">(red);
+    this._green = Percentage.of<"percentage">(green);
+    this._blue = Percentage.of<"percentage">(blue);
   }
 
   public get hue(): H {
     return this._hue;
   }
 
-  public get saturation(): Percentage.Fixed {
+  public get saturation(): Percentage.Canonical {
     return this._saturation;
   }
 
-  public get lightness(): Percentage.Fixed {
+  public get lightness(): Percentage.Canonical {
     return this._lightness;
   }
 
-  public get red(): Percentage.Fixed {
+  public get red(): Percentage.Canonical {
     return this._red;
   }
 
-  public get green(): Percentage.Fixed {
+  public get green(): Percentage.Canonical {
     return this._green;
   }
 
-  public get blue(): Percentage.Fixed {
+  public get blue(): Percentage.Canonical {
     return this._blue;
   }
 
@@ -130,7 +134,7 @@ export class HSL<
 
   public resolve(): RGB.Canonical {
     return RGB.of(
-      ...Format.resolve(this.red, this.green, this.blue, this.alpha)
+      ...Format.resolve(this.red, this.green, this.blue, this.alpha),
     );
   }
 
@@ -182,7 +186,7 @@ export namespace HSL {
 
   export function isHSL<
     H extends Number.Fixed | Angle.Fixed,
-    A extends Number.Fixed | Percentage.Fixed
+    A extends Number.Fixed | Percentage.Fixed,
   >(value: unknown): value is HSL<H, A> {
     return value instanceof HSL;
   }
@@ -190,7 +194,7 @@ export namespace HSL {
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlpha = either(Number.parse, Percentage.parse);
+  const parseAlpha = either(Number.parse, Percentage.parse<"percentage">);
 
   /**
    * {@link https://drafts.csswg.org/css-color/#typedef-hue}
@@ -200,30 +204,32 @@ export namespace HSL {
   const orNone = <T>(parser: CSSParser<T>) =>
     either(
       parser,
-      map(Keyword.parse("none"), () => Percentage.of(0))
+      map(Keyword.parse("none"), () => Percentage.of<"percentage">(0)),
     );
 
   const parseTriplet = (
     separator: CSSParser<any>,
-    acceptNone: boolean = false
+    acceptNone: boolean = false,
   ) =>
     map(
       pair(
         acceptNone
           ? either(
               parseHue,
-              map(Keyword.parse("none"), () => Number.of(0))
+              map(Keyword.parse("none"), () => Number.of(0)),
             )
           : parseHue,
         take(
           right(
             separator,
-            acceptNone ? orNone(Percentage.parse) : Percentage.parse
+            acceptNone
+              ? orNone(Percentage.parse<"percentage">)
+              : Percentage.parse<"percentage">,
           ),
-          2
-        )
+          2,
+        ),
       ),
-      ([h, [s, l]]) => [h, s, l] as const
+      ([h, [s, l]]) => [h, s, l] as const,
     );
 
   /**
@@ -238,9 +244,9 @@ export namespace HSL {
     option(
       right(
         delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-        orNone(parseAlpha)
-      )
-    )
+        orNone(parseAlpha),
+      ),
+    ),
   );
 
   const parseLegacy = pair(
@@ -248,9 +254,9 @@ export namespace HSL {
     option(
       right(
         delimited(option(Token.parseWhitespace), Token.parseComma),
-        parseAlpha
-      )
-    )
+        parseAlpha,
+      ),
+    ),
   );
   /**
    * {@link https://drafts.csswg.org/css-color/#funcdef-hsl}
@@ -258,7 +264,7 @@ export namespace HSL {
   export const parse: CSSParser<HSL> = map(
     Function.parse(
       (fn) => fn.value === "hsl" || fn.value === "hsla",
-      either(parseLegacy, parseModern)
+      either(parseLegacy, parseModern),
     ),
     (result) => {
       const [, [[hue, saturation, lightness], alpha]] = result;
@@ -267,9 +273,9 @@ export namespace HSL {
         hue,
         saturation,
         lightness,
-        alpha.getOrElse(() => Number.of(1))
+        alpha.getOrElse(() => Number.of(1)),
       );
-    }
+    },
   );
 }
 
@@ -279,7 +285,7 @@ export namespace HSL {
 function hslToRgb(
   hue: number,
   saturation: number,
-  lightness: number
+  lightness: number,
 ): [number, number, number] {
   const t2 =
     lightness <= 0.5
@@ -312,4 +318,15 @@ function hueToRgb(t1: number, t2: number, hue: number): number {
   }
 
   return t1;
+}
+
+function resolveComponent<T extends Angle | Number | Percentage<"percentage">>(
+  component: T,
+): ToCanonical<T> {
+  return Selective.of(component)
+    .if(Percentage.isPercentage, (percentage) =>
+      Percentage.isCalculated(percentage) ? percentage.resolve() : percentage,
+    )
+    .else((value) => value.resolve())
+    .get() as ToCanonical<T>;
 }

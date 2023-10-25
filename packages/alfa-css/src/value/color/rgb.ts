@@ -1,6 +1,7 @@
 import { Hash } from "@siteimprove/alfa-hash";
 import { Parser } from "@siteimprove/alfa-parser";
 import { Err } from "@siteimprove/alfa-result";
+import { Selective } from "@siteimprove/alfa-selective";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { Function, type Parser as CSSParser, Token } from "../../syntax";
@@ -14,7 +15,7 @@ const { pair, map, either, option, right, take, delimited } = Parser;
 
 // We cannot easily use Resolvable.Resolved because Percentage may resolve to
 // anything depending on the base, here we want to keep them as percentages.
-type ToCanonical<T extends Number | Percentage> = T extends Number
+type ToCanonical<T extends Number | Percentage<"percentage">> = T extends Number
   ? Number.Canonical
   : T extends Percentage
   ? Percentage.Canonical
@@ -39,30 +40,30 @@ export class RGB<
   // instantiation process (?)
   C extends Number.Canonical | Percentage.Canonical =
     | Number.Canonical
-    | Percentage.Fixed,
+    | Percentage.Fixed<"percentage">,
   A extends Number.Canonical | Percentage.Canonical =
     | Number.Canonical
-    | Percentage.Fixed
+    | Percentage.Fixed<"percentage">,
 > extends Format<"rgb"> {
   public static of<
     C extends Number.Canonical | Percentage.Canonical,
-    A extends Number.Canonical | Percentage.Canonical
+    A extends Number.Canonical | Percentage.Canonical,
   >(red: C, green: C, blue: C, alpha: A): RGB<C, A>;
 
   public static of<
-    C extends Number | Percentage,
-    A extends Number | Percentage
+    C extends Number | Percentage<"percentage">,
+    A extends Number | Percentage<"percentage">,
   >(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>>;
 
   public static of<
-    C extends Number | Percentage,
-    A extends Number | Percentage
+    C extends Number | Percentage<"percentage">,
+    A extends Number | Percentage<"percentage">,
   >(red: C, green: C, blue: C, alpha: A): RGB<ToCanonical<C>, ToCanonical<A>> {
     return new RGB(
-      red.resolve() as ToCanonical<C>,
-      green.resolve() as ToCanonical<C>,
-      blue.resolve() as ToCanonical<C>,
-      alpha.resolve() as ToCanonical<A>
+      resolveComponent(red),
+      resolveComponent(green),
+      resolveComponent(blue),
+      resolveComponent(alpha),
     );
   }
 
@@ -97,7 +98,7 @@ export class RGB<
 
   public resolve(): RGB.Canonical {
     return new RGB(
-      ...Format.resolve(this._red, this._green, this._blue, this._alpha)
+      ...Format.resolve(this._red, this._green, this._blue, this._alpha),
     );
   }
 
@@ -151,7 +152,7 @@ export namespace RGB {
 
   export function isRGB<
     C extends Number.Canonical | Percentage.Canonical,
-    A extends Number.Canonical | Percentage.Canonical
+    A extends Number.Canonical | Percentage.Canonical,
   >(value: unknown): value is RGB<C, A> {
     return value instanceof RGB;
   }
@@ -163,26 +164,30 @@ export namespace RGB {
    *
    * {@link https://drafts.csswg.org/css-color/#typedef-alpha-value}
    */
-  const parseAlphaLegacy = either(Number.parse, Percentage.parse);
-  const parseAlphaModern = either<Slice<Token>, Number | Percentage, string>(
+  const parseAlphaLegacy = either(Number.parse, Percentage.parse<"percentage">);
+  const parseAlphaModern = either<
+    Slice<Token>,
+    Number | Percentage<"percentage">,
+    string
+  >(
     Number.parse,
-    Percentage.parse,
-    map(Keyword.parse("none"), () => Percentage.of(0))
+    Percentage.parse<"percentage">,
+    map(Keyword.parse("none"), () => Percentage.of<"percentage">(0)),
   );
 
   /**
    * Parses either a number/percentage or the keyword "none", reduces "none" to
    * the correct type, or fails if it is not allowed.
    */
-  const parseItem = <C extends Number | Percentage>(
+  const parseItem = <C extends Number | Percentage<"percentage">>(
     parser: CSSParser<C>,
-    ifNone?: C
+    ifNone?: C,
   ) =>
     either(
       parser,
       ifNone !== undefined
         ? map(Keyword.parse("none"), () => ifNone)
-        : () => Err.of("none is not accepted in legacy rbg syntax")
+        : () => Err.of("none is not accepted in legacy rbg syntax"),
     );
 
   /**
@@ -190,56 +195,56 @@ export namespace RGB {
    * In legacy syntax, they must be separated by a comma, in modern syntax by
    * whitespace.
    */
-  const parseTriplet = <C extends Number | Percentage>(
+  const parseTriplet = <C extends Number | Percentage<"percentage">>(
     parser: CSSParser<C>,
     separator: CSSParser<any>,
-    ifNone?: C
+    ifNone?: C,
   ) =>
     map(
       pair(
         parseItem(parser, ifNone),
-        take(right(separator, parseItem(parser, ifNone)), 2)
+        take(right(separator, parseItem(parser, ifNone)), 2),
       ),
-      ([r, [g, b]]) => [r, g, b] as const
+      ([r, [g, b]]) => [r, g, b] as const,
     );
 
-  const parseLegacyTriplet = <C extends Number | Percentage>(
-    parser: CSSParser<C>
+  const parseLegacyTriplet = <C extends Number | Percentage<"percentage">>(
+    parser: CSSParser<C>,
   ) =>
     parseTriplet(
       parser,
-      delimited(option(Token.parseWhitespace), Token.parseComma)
+      delimited(option(Token.parseWhitespace), Token.parseComma),
     );
 
   const parseLegacy = pair(
     either(
-      parseLegacyTriplet(Percentage.parse),
-      parseLegacyTriplet(Number.parse)
+      parseLegacyTriplet(Percentage.parse<"percentage">),
+      parseLegacyTriplet(Number.parse),
     ),
     option(
       right(
         delimited(option(Token.parseWhitespace), Token.parseComma),
-        parseAlphaLegacy
-      )
-    )
+        parseAlphaLegacy,
+      ),
+    ),
   );
 
-  const parseModernTriplet = <C extends Number | Percentage>(
+  const parseModernTriplet = <C extends Number | Percentage<"percentage">>(
     parser: CSSParser<C>,
-    ifNone: C
+    ifNone: C,
   ) => parseTriplet(parser, option(Token.parseWhitespace), ifNone);
 
   const parseModern = pair(
     either(
-      parseModernTriplet(Percentage.parse, Percentage.of(0)),
-      parseModernTriplet(Number.parse, Number.of(0))
+      parseModernTriplet(Percentage.parse, Percentage.of<"percentage">(0)),
+      parseModernTriplet(Number.parse, Number.of(0)),
     ),
     option(
       right(
         delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-        parseAlphaModern
-      )
-    )
+        parseAlphaModern,
+      ),
+    ),
   );
 
   /**
@@ -248,7 +253,7 @@ export namespace RGB {
   export const parse: CSSParser<RGB> = map(
     Function.parse(
       (fn) => fn.value === "rgb" || fn.value === "rgba",
-      either(parseLegacy, parseModern)
+      either(parseLegacy, parseModern),
     ),
     (result) => {
       const [, [[red, green, blue], alpha]] = result;
@@ -257,8 +262,19 @@ export namespace RGB {
         red,
         green,
         blue,
-        alpha.getOrElse(() => Number.of(1))
+        alpha.getOrElse(() => Number.of(1)),
       );
-    }
+    },
   );
+}
+
+function resolveComponent<T extends Number | Percentage<"percentage">>(
+  component: T,
+): ToCanonical<T> {
+  return Selective.of(component)
+    .if(Percentage.isPercentage, (percentage) =>
+      Percentage.isCalculated(percentage) ? percentage.resolve() : percentage,
+    )
+    .else((value) => value.resolve())
+    .get() as ToCanonical<T>;
 }

@@ -3,7 +3,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
 import * as Base from "../../calculation/numeric";
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
 import type { Resolvable } from "../resolvable";
@@ -88,6 +88,20 @@ export namespace AnglePercentage {
   // In order to resolve a percentage, we need a base (=100%)
   // There are no relative angles, so these are easy to resolve.
   export type Resolver = Percentage.Resolver<"angle">;
+
+  /**
+   * Fully resolves an angle-percentage, when a full resolver is provided.
+   */
+  export function resolve(
+    resolver: Resolver,
+  ): (value: AnglePercentage) => Canonical {
+    return (value) =>
+      // We need to break down the union to help TS find the correct overload
+      // of each component and correctly narrow the result.
+      Percentage.isPercentage(value)
+        ? value.resolve(resolver)
+        : value.resolve(resolver);
+  }
 
   export function isAnglePercentage(value: unknown): value is AnglePercentage {
     return (
@@ -176,9 +190,13 @@ export namespace AnglePercentage {
   /**
    * {@link https://drafts.csswg.org/css-values/#angles}
    */
-  export const parse = either<Slice<Token>, AnglePercentage, string>(
+  export const parse: CSSParser<AnglePercentage> = either<
+    Slice<Token>,
+    AnglePercentage,
+    string
+  >(
     Angle.parse,
-    Percentage.parse,
+    Percentage.parse<"angle">,
     map<Slice<Token>, Math<"angle-percentage">, Calculated, string>(
       Math.parseAnglePercentage,
       of,

@@ -4,7 +4,7 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
 import * as Base from "../../calculation/numeric";
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
 import type { Resolvable } from "../resolvable";
@@ -36,7 +36,7 @@ export namespace LengthPercentage {
    */
   export type PartiallyResolved =
     | Canonical
-    | Percentage.Canonical
+    | Percentage.PartiallyResolved<"length">
     | LengthPercentage.Calculated;
 
   /**
@@ -140,7 +140,7 @@ export namespace LengthPercentage {
     return (value) =>
       Selective.of(value)
         .if(Length.isLength, (value) => value.resolve(resolver))
-        .if(Percentage.isPercentage, (value) => value.resolve())
+        .if(Percentage.isPercentage, Percentage.partiallyResolve)
         .get();
   }
 
@@ -233,9 +233,13 @@ export namespace LengthPercentage {
   /**
    * {@link https://drafts.csswg.org/css-values/#lengths}
    */
-  export const parse = either<Slice<Token>, LengthPercentage, string>(
+  export const parse: CSSParser<LengthPercentage> = either<
+    Slice<Token>,
+    LengthPercentage,
+    string
+  >(
     Length.parse,
-    Percentage.parse,
+    Percentage.parse<"length">,
     map<Slice<Token>, Math<"length-percentage">, Calculated, string>(
       Math.parseLengthPercentage,
       of,
