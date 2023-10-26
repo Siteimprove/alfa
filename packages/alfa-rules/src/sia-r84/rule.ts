@@ -34,8 +34,8 @@ export default Rule.Atomic.of<Page, Element>({
             hasNamespace(Namespace.HTML),
             isVisible(device),
             isPossiblyScrollable(device),
-            not(isBrowsingContextContainer)
-          )
+            not(isBrowsingContextContainer),
+          ),
         );
       },
 
@@ -44,10 +44,10 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             Node.hasInclusiveDescendant(
               and(isElement, isTabbable(device)),
-              Node.flatTree
+              Node.flatTree,
             )(target),
             () => Outcomes.IsReachable,
-            () => Outcomes.IsNotReachable
+            () => Outcomes.IsNotReachable,
           ),
         };
       },
@@ -61,14 +61,14 @@ export default Rule.Atomic.of<Page, Element>({
 export namespace Outcomes {
   export const IsReachable = Ok.of(
     Diagnostic.of(
-      `The scrollable element is reachable through keyboard navigation`
-    )
+      `The scrollable element is reachable through keyboard navigation`,
+    ),
   );
 
   export const IsNotReachable = Err.of(
     Diagnostic.of(
-      `The scrollable element is not reachable through keyboard navigation`
-    )
+      `The scrollable element is not reachable through keyboard navigation`,
+    ),
   );
 }
 
@@ -93,7 +93,10 @@ function isPossiblyScrollable(device: Device): Predicate<Element> {
       ([axis, dimension]) =>
         style
           .computed(dimension)
-          .some((dimension) => dimension.value !== "auto") &&
+          .some(
+            (dimension) =>
+              dimension.hasCalculation() || dimension.value !== "auto",
+          ) &&
         style.computed(`overflow-${axis}` as const).some((overflow) => {
           switch (overflow.value) {
             case "auto":
@@ -112,7 +115,7 @@ function isPossiblyScrollable(device: Device): Predicate<Element> {
             default:
               return false;
           }
-        })
+        }),
     );
   };
 }

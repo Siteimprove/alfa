@@ -3,11 +3,10 @@ import { Slice } from "@siteimprove/alfa-slice";
 
 import { Math } from "../../calculation";
 import * as Base from "../../calculation/numeric";
-import { Token } from "../../syntax";
+import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
 import type { Resolvable } from "../resolvable";
-import { Value } from "../value";
 
 import { Dimension } from "./dimension";
 import { Angle } from "./angle";
@@ -22,8 +21,8 @@ export type AnglePercentage<U extends Unit.Angle = Unit.Angle> =
   | AnglePercentage.Calculated
   | Angle.Calculated
   | Angle.Fixed<U>
-  | Percentage.Calculated
-  | Percentage.Fixed;
+  | Percentage.Calculated<"angle">
+  | Percentage.Fixed<"angle">;
 
 /**
  * @public
@@ -36,7 +35,7 @@ export namespace AnglePercentage {
    */
   export class Calculated
     extends Dimension.Calculated<"angle-percentage">
-    implements IAnglePercentage<true>
+    implements Resolvable<Canonical, Resolver>
   {
     public static of(value: Math<"angle-percentage">): Calculated {
       return new Calculated(value);
@@ -61,11 +60,11 @@ export namespace AnglePercentage {
             percentage: (value) =>
               Base.Angle.of(
                 resolver.percentageBase.value,
-                /* this is "deg"! */ resolver.percentageBase.unit
+                /* this is "deg"! */ resolver.percentageBase.unit,
               ).scale(value.value),
           })
           // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not resolve ${this._math} as an angle`)
+          .getUnsafe(`Could not resolve ${this._math} as an angle`),
       );
     }
 
@@ -86,16 +85,23 @@ export namespace AnglePercentage {
     | Percentage.Calculated.JSON
     | Percentage.Fixed.JSON;
 
-  interface IAnglePercentage<CALC extends boolean = boolean>
-    extends Value<"angle-percentage", CALC, "angle">,
-      Resolvable<Canonical, Resolver> {
-    hasCalculation(): this is Calculated;
-    resolve(resolver: Resolver): Canonical;
-  }
-
   // In order to resolve a percentage, we need a base (=100%)
   // There are no relative angles, so these are easy to resolve.
-  export type Resolver = Percentage.Resolver<"angle", Canonical>;
+  export type Resolver = Percentage.Resolver<"angle">;
+
+  /**
+   * Fully resolves an angle-percentage, when a full resolver is provided.
+   */
+  export function resolve(
+    resolver: Resolver,
+  ): (value: AnglePercentage) => Canonical {
+    return (value) =>
+      // We need to break down the union to help TS find the correct overload
+      // of each component and correctly narrow the result.
+      Percentage.isPercentage(value)
+        ? value.resolve(resolver)
+        : value.resolve(resolver);
+  }
 
   export function isAnglePercentage(value: unknown): value is AnglePercentage {
     return (
@@ -106,7 +112,7 @@ export namespace AnglePercentage {
   }
 
   export function isCalculated(
-    value: unknown
+    value: unknown,
   ): value is Calculated | Angle.Calculated | Percentage.Calculated {
     return (
       value instanceof Calculated ||
@@ -125,11 +131,11 @@ export namespace AnglePercentage {
 
   export function of<U extends Unit.Angle>(
     value: number,
-    unit: U
+    unit: U,
   ): Angle.Fixed<U>;
 
   export function of<U extends Unit.Angle>(
-    value: Base.Angle<U>
+    value: Base.Angle<U>,
   ): Angle.Fixed<U>;
 
   export function of(value: number): Percentage.Fixed;
@@ -150,7 +156,7 @@ export namespace AnglePercentage {
       | Math<"angle">
       | Math<"angle-percentage">
       | Math<"percentage">,
-    unit?: U
+    unit?: U,
   ): AnglePercentage<U> {
     if (typeof value === "number") {
       if (unit === undefined) {
@@ -184,12 +190,16 @@ export namespace AnglePercentage {
   /**
    * {@link https://drafts.csswg.org/css-values/#angles}
    */
-  export const parse = either<Slice<Token>, AnglePercentage, string>(
+  export const parse: CSSParser<AnglePercentage> = either<
+    Slice<Token>,
+    AnglePercentage,
+    string
+  >(
     Angle.parse,
-    Percentage.parse,
+    Percentage.parse<"angle">,
     map<Slice<Token>, Math<"angle-percentage">, Calculated, string>(
       Math.parseAnglePercentage,
-      of
-    )
+      of,
+    ),
   );
 }

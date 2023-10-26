@@ -9,7 +9,6 @@ import { type Parser as CSSParser, Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
 
 import { Resolvable } from "../resolvable";
-import { Value } from "../value";
 
 import { Dimension } from "./dimension";
 
@@ -33,7 +32,7 @@ export namespace Length {
    */
   export class Calculated
     extends Dimension.Calculated<"length">
-    implements ILength<true>
+    implements Resolvable<Canonical, Resolver>
   {
     public static of(value: Math<"length">): Calculated {
       return new Calculated(value);
@@ -61,7 +60,7 @@ export namespace Length {
             },
           })
           // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not resolve ${this._math} as a length`)
+          .getUnsafe(`Could not resolve ${this._math} as a length`),
       );
     }
 
@@ -79,7 +78,7 @@ export namespace Length {
    */
   export class Fixed<U extends Unit.Length = Unit.Length>
     extends Dimension.Fixed<"length", U>
-    implements ILength<false>, Comparable<Fixed<U>>
+    implements Resolvable<Canonical, Resolver>, Comparable<Fixed<U>>
   {
     public static of<U extends Unit.Length>(value: number, unit: U): Fixed<U>;
 
@@ -87,7 +86,7 @@ export namespace Length {
 
     public static of<U extends Unit.Length>(
       value: number | BaseLength<U>,
-      unit?: U
+      unit?: U,
     ): Fixed<U> {
       if (typeof value === "number") {
         // The overloads ensure that unit is not undefined
@@ -160,13 +159,6 @@ export namespace Length {
 
   export type JSON = Calculated.JSON | Fixed.JSON;
 
-  interface ILength<CALC extends boolean = boolean>
-    extends Value<"length", CALC>,
-      Resolvable<Canonical, Resolver> {
-    hasCalculation(): this is Calculated;
-    resolve(resolver: Resolver): Canonical;
-  }
-
   // In order to resolve a length, we need to know how to resolve relative
   // lengths.
   // Absolute lengths are just translated into another absolute unit.
@@ -183,7 +175,7 @@ export namespace Length {
     emBase: Canonical,
     remBase: Canonical,
     vwBase: Canonical,
-    vhBase: Canonical
+    vhBase: Canonical,
   ): Mapper<Fixed<Unit.Length.Relative>, Canonical> {
     return (length) => {
       const { unit, value } = length;
@@ -245,7 +237,7 @@ export namespace Length {
 
   export function of<U extends Unit.Length>(
     value: number | BaseLength<U> | Math<"length">,
-    unit?: U
+    unit?: U,
   ): Length<U> {
     if (typeof value === "number") {
       // The overloads ensure that unit is not undefined
@@ -264,6 +256,6 @@ export namespace Length {
    */
   export const parse: CSSParser<Length> = either(
     map<Slice<Token>, BaseLength, Fixed, string>(BaseLength.parse, of),
-    map(Math.parseLength, of)
+    map(Math.parseLength, of),
   );
 }

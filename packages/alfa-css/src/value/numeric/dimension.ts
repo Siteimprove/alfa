@@ -5,7 +5,6 @@ import { Numeric as BaseNumeric } from "../../calculation/numeric";
 import { Convertible, Unit } from "../../unit";
 
 import type { Resolvable } from "../resolvable";
-import { Value } from "../value";
 
 import { Numeric } from "./numeric";
 
@@ -25,7 +24,7 @@ export namespace Dimension {
    */
   export abstract class Calculated<T extends Type = Type>
     extends Numeric.Calculated<T, Dimensions<T>[0]>
-    implements IDimension<T, true>
+    implements Resolvable<Fixed<Dimensions<T>[0], Dimensions<T>[2]>, unknown>
   {
     protected constructor(math: Numeric.ToMath<T>, type: T) {
       super(math, type);
@@ -36,7 +35,7 @@ export namespace Dimension {
     }
 
     public abstract resolve(
-      resolver?: unknown
+      resolver?: unknown,
     ): Fixed<Dimensions<T>[0], Dimensions<T>[2]>;
 
     public equals(value: unknown): value is this {
@@ -55,11 +54,11 @@ export namespace Dimension {
   export abstract class Fixed<
       T extends BaseNumeric.Dimension = BaseNumeric.Dimension,
       // The actual unit in which the dimension is expressed, e.g px, em, rad, …
-      U extends Dimensions<T>[1] = Dimensions<T>[1]
+      U extends Dimensions<T>[1] = Dimensions<T>[1],
     >
     extends Numeric.Fixed<T>
     implements
-      IDimension<T, false>,
+      Resolvable<Fixed<Dimensions<T>[0], Dimensions<T>[2]>, unknown>,
       Convertible<Dimensions<T>[1]>,
       Comparable<Fixed<T>>
   {
@@ -87,7 +86,7 @@ export namespace Dimension {
     }
 
     public abstract hasUnit<V extends Dimensions<T>[1]>(
-      unit: V
+      unit: V,
     ): this is Fixed<T, V>;
 
     public abstract withUnit<V extends Dimensions<T>[1]>(unit: V): Fixed<T, V>;
@@ -126,17 +125,10 @@ export namespace Dimension {
   export namespace Fixed {
     export interface JSON<
       T extends Type = Type,
-      U extends Dimensions<T>[1] = Dimensions<T>[1]
+      U extends Dimensions<T>[1] = Dimensions<T>[1],
     > extends Numeric.Fixed.JSON<T> {
       unit: U;
     }
-  }
-
-  interface IDimension<T extends Type = Type, CALC extends boolean = boolean>
-    extends Value<T, CALC, Dimensions<T>[0]>,
-      Resolvable<Fixed<Dimensions<T>[0], Dimensions<T>[2]>, unknown> {
-    hasCalculation(): this is Calculated<T>;
-    resolve(resolver?: unknown): Fixed<Dimensions<T>[0], Dimensions<T>[2]>;
   }
 
   export function isCalculated(value: unknown): value is Calculated {

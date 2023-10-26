@@ -2,9 +2,10 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Percentage } from "../../../src";
 
-import { parser, serializer } from "../../common/parse";
+import { parser, parserUnsafe, serializer } from "../../common/parse";
 
 const parse = parser(Percentage.parse);
+const parseUnsafe = parserUnsafe(Percentage.parse);
 const serialize = serializer(Percentage.parse);
 
 test("parse() accepts percentages", (t) => {
@@ -33,9 +34,12 @@ test("parse() rejects math expressions with only numbers", (t) => {
   t.deepEqual(parse("calc(10 + 1)").isErr(), true);
 });
 
-test("resolve() returns a bare value", (t) => {
-  t.deepEqual(parse("calc((12% + 9%) * 2)").getUnsafe().resolve().toJSON(), {
-    type: "percentage",
-    value: 0.42,
-  });
+test("partiallyResolve() returns a bare percentage", (t) => {
+  t.deepEqual(
+    Percentage.partiallyResolve(parseUnsafe("calc((12% + 9%) * 2)")).toJSON(),
+    {
+      type: "percentage",
+      value: 0.42,
+    },
+  );
 });

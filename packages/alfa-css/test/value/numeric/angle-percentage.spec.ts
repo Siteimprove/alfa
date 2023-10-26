@@ -2,9 +2,10 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Angle, AnglePercentage } from "../../../src";
 
-import { parser, serializer } from "../../common/parse";
+import { parser, parserUnsafe, serializer } from "../../common/parse";
 
 const parse = parser(AnglePercentage.parse);
+const parseUnsafe = parserUnsafe(AnglePercentage.parse);
 const serialize = serializer(AnglePercentage.parse);
 
 const resolver: AnglePercentage.Resolver = {
@@ -78,7 +79,7 @@ test("parse() rejects math expressions without angles", (t) => {
 });
 
 test("resolve() returns canonical angles", (t) => {
-  t.deepEqual(parse("1turn").getUnsafe().resolve(resolver).toJSON(), {
+  t.deepEqual(parseUnsafe("1turn").resolve(resolver).toJSON(), {
     type: "angle",
     value: 360,
     unit: "deg",
@@ -86,14 +87,15 @@ test("resolve() returns canonical angles", (t) => {
 });
 
 test("resolve() resolves angle calculations", (t) => {
-  t.deepEqual(
-    parse("calc(0.5turn + 90deg)").getUnsafe().resolve(resolver).toJSON(),
-    { type: "angle", value: 270, unit: "deg" }
-  );
+  t.deepEqual(parseUnsafe("calc(0.5turn + 90deg)").resolve(resolver).toJSON(), {
+    type: "angle",
+    value: 270,
+    unit: "deg",
+  });
 });
 
 test("resolve() resolves pure percentages", (t) => {
-  t.deepEqual(parse("50%").getUnsafe().resolve(resolver).toJSON(), {
+  t.deepEqual(parseUnsafe("50%").resolve(resolver).toJSON(), {
     type: "angle",
     value: 45,
     unit: "deg",
@@ -101,15 +103,17 @@ test("resolve() resolves pure percentages", (t) => {
 });
 
 test("resolve() resolves percentage calculations", (t) => {
-  t.deepEqual(
-    parse("calc((12% + 9%) * 2)").getUnsafe().resolve(resolver).toJSON(),
-    { type: "angle", value: 37.8, unit: "deg" }
-  );
+  t.deepEqual(parseUnsafe("calc((12% + 9%) * 2)").resolve(resolver).toJSON(), {
+    type: "angle",
+    value: 37.8,
+    unit: "deg",
+  });
 });
 
 test("resolve() resolves mix of angles and percentages", (t) => {
-  t.deepEqual(
-    parse("calc(0.5turn + 10%)").getUnsafe().resolve(resolver).toJSON(),
-    { type: "angle", value: 189, unit: "deg" }
-  );
+  t.deepEqual(parseUnsafe("calc(0.5turn + 10%)").resolve(resolver).toJSON(), {
+    type: "angle",
+    value: 189,
+    unit: "deg",
+  });
 });

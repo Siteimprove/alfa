@@ -8,7 +8,6 @@ import { type Parser as CSSParser, Token } from "../../syntax";
 import { Converter, Unit } from "../../unit";
 
 import { Resolvable } from "../resolvable";
-import { Value } from "../value";
 
 import { Dimension } from "./dimension";
 
@@ -38,7 +37,7 @@ export namespace Angle {
    */
   export class Calculated
     extends Dimension.Calculated<"angle">
-    implements IAngle<true>
+    implements Resolvable<Canonical, never>
   {
     public static of(value: Math<"angle">): Calculated {
       return new Calculated(value);
@@ -57,7 +56,7 @@ export namespace Angle {
         this._math
           .resolve()
           // Since the expression has been correctly typed, it should always resolve.
-          .getUnsafe(`Could not resolve ${this._math} as an angle`)
+          .getUnsafe(`Could not resolve ${this._math} as an angle`),
       );
     }
 
@@ -78,7 +77,7 @@ export namespace Angle {
    */
   export class Fixed<U extends Unit.Angle = Unit.Angle>
     extends Dimension.Fixed<"angle", U>
-    implements IAngle<false>, Comparable<Fixed<U>>
+    implements Resolvable<Canonical, never>, Comparable<Fixed<U>>
   {
     public static of<U extends Unit.Angle>(value: number, unit: U): Fixed<U>;
 
@@ -86,7 +85,7 @@ export namespace Angle {
 
     public static of<U extends Unit.Angle>(
       value: number | BaseAngle<U>,
-      unit?: U
+      unit?: U,
     ): Fixed<U> {
       if (typeof value === "number") {
         // The overloads ensure that unit is not undefined
@@ -139,13 +138,6 @@ export namespace Angle {
 
   export type JSON = Calculated.JSON | Fixed.JSON;
 
-  interface IAngle<CALC extends boolean = boolean>
-    extends Value<"angle", CALC>,
-      Resolvable<Canonical, never> {
-    hasCalculation(): this is Calculated;
-    resolve(): Canonical;
-  }
-
   export function isCalculated(value: unknown): value is Calculated {
     return value instanceof Calculated;
   }
@@ -166,7 +158,7 @@ export namespace Angle {
 
   export function of<U extends Unit.Angle>(
     value: number | BaseAngle<U> | Math<"angle">,
-    unit?: U
+    unit?: U,
   ): Angle<U> {
     if (typeof value === "number") {
       // The overloads ensure that unit is not undefined
@@ -185,6 +177,6 @@ export namespace Angle {
    */
   export const parse: CSSParser<Angle> = either(
     map<Slice<Token>, BaseAngle, Fixed, string>(BaseAngle.parse, of),
-    map(Math.parseAngle, of)
+    map(Math.parseAngle, of),
   );
 }
