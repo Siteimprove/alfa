@@ -4,9 +4,12 @@ import { Serializable } from "@siteimprove/alfa-json";
 
 import * as json from "@siteimprove/alfa-json";
 
-import type { Resolvable } from "./resolvable";
+import type { PartiallyResolvable, Resolvable } from "./resolvable";
 
 /**
+ * Representation of a CSS Value
+ *
+ * @remarks
  * * T: a string representation of the type stored in the value,
  *      e.g. "length", "color", …
  * * CALC: whether the numeric values in this may include calculation or not.
@@ -16,20 +19,22 @@ import type { Resolvable } from "./resolvable";
  * * R: a string representation of the type stored in the resolved value.
  *      This differs from T, typically, for dimension-percentage values that
  *      are resolved as dimensions only.
+ * * PR: a string representation of the type stored in the partially resolved value.
  *
  * @public
  */
-// This is the main Value class that is implemented by all CSS values, with or
-// without calculations.
 export abstract class Value<
-  T extends string = string,
-  CALC extends boolean = boolean,
-  R extends string = T
-> implements
+    T extends string = string,
+    CALC extends boolean = boolean,
+    R extends string = T,
+    PR extends string = R,
+  >
+  implements
     Equatable,
     Hashable,
     Serializable<Value.JSON<T>>,
-    Resolvable<Value<R, false>, Resolvable.Resolver<Value>>
+    Resolvable<Value<R, false>, Resolvable.Resolver<Value>>,
+    PartiallyResolvable<Value<PR>, Resolvable.PartialResolver<Value>>
 {
   private readonly _type: T;
   protected readonly _hasCalculation: CALC;
@@ -43,11 +48,15 @@ export abstract class Value<
     return this._type;
   }
 
-  public hasCalculation(): this is Value<T, true, R> {
+  public hasCalculation(): this is Value<T, true, R, PR> {
     return this._hasCalculation;
   }
 
   public abstract resolve(resolver?: unknown): Value<R, false>;
+
+  public partiallyResolve(resolver?: unknown): Value<PR> {
+    return this.resolve(resolver) as unknown as Value<PR>;
+  }
 
   public abstract equals(value: unknown): value is this;
 
@@ -71,7 +80,7 @@ export namespace Value {
 
   export function isValue<T extends string>(
     value: unknown,
-    type?: T
+    type?: T,
   ): value is Value<T> {
     return (
       value instanceof Value && (type === undefined || value.type === type)
