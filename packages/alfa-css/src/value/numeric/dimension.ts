@@ -4,7 +4,7 @@ import { Hash } from "@siteimprove/alfa-hash";
 import { Numeric as BaseNumeric } from "../../calculation/numeric";
 import { Convertible, Unit } from "../../unit";
 
-import type { Resolvable } from "../resolvable";
+import type { PartiallyResolvable, Resolvable } from "../resolvable";
 
 import { Numeric } from "./numeric";
 
@@ -15,15 +15,17 @@ export namespace Dimension {
   /**
    * Dimensions that are the result of a calculation.
    */
-  export abstract class Calculated<T extends Type = Type, R extends Type = T>
-    extends Numeric.Calculated<T, DBase[T]>
-    implements Resolvable<Fixed<DBase[T], DCanonicalUnit[DBase[T]]>, unknown>
+  export abstract class Calculated<T extends Type = Type, PR extends Type = T>
+    extends Numeric.Calculated<T, DBase[T], PR>
+    implements
+      Resolvable<Fixed<DBase[T], DCanonicalUnit[DBase[T]]>, unknown>,
+      PartiallyResolvable<any, any>
   {
     protected constructor(math: Numeric.ToMath<T>, type: T) {
       super(math, type);
     }
 
-    public hasCalculation(): this is Calculated<T> {
+    public hasCalculation(): this is Calculated<T, PR> {
       return true;
     }
 
