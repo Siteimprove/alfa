@@ -5,6 +5,7 @@ import { Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { Position } from "../position";
+import { PartiallyResolvable, Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
@@ -17,10 +18,12 @@ const { map, option, pair, right } = Parser;
  *
  * @public
  */
-export class Ellipse<
-  R extends Radius = Radius,
-  P extends Position = Position,
-> extends BasicShape<"ellipse", Value.HasCalculation<[R, P]>> {
+export class Ellipse<R extends Radius = Radius, P extends Position = Position>
+  extends BasicShape<"ellipse", Value.HasCalculation<[R, P]>>
+  implements
+    Resolvable<Ellipse.Canonical, Ellipse.Resolver>,
+    PartiallyResolvable<Ellipse.PartiallyResolved, Ellipse.PartialResolver>
+{
   public static of<R extends Radius = Radius, P extends Position = Position>(
     rx: R,
     ry: R,
@@ -66,6 +69,16 @@ export class Ellipse<
     );
   }
 
+  public partiallyResolve(
+    resolver: Ellipse.PartialResolver,
+  ): Ellipse.PartiallyResolved {
+    return new Ellipse(
+      this._rx.partiallyResolve(resolver),
+      this._ry.partiallyResolve(resolver),
+      this._center.partiallyResolve(resolver),
+    );
+  }
+
   public equals(value: Ellipse): boolean;
 
   public equals(value: unknown): value is this;
@@ -106,6 +119,11 @@ export class Ellipse<
 export namespace Ellipse {
   export type Canonical = Ellipse<Radius.Canonical, Position.Canonical>;
 
+  export type PartiallyResolved = Ellipse<
+    Radius.PartiallyResolved,
+    Position.PartiallyResolved
+  >;
+
   export interface JSON extends BasicShape.JSON<"ellipse"> {
     rx: Radius.JSON;
     ry: Radius.JSON;
@@ -114,24 +132,8 @@ export namespace Ellipse {
 
   export type Resolver = Radius.Resolver & Position.Resolver;
 
-  export type PartiallyResolved = Ellipse<
-    Radius.PartiallyResolved,
-    Position.PartiallyResolved
-  >;
-
   export type PartialResolver = Radius.PartialResolver &
     Position.PartialResolver;
-
-  export function partiallyResolve(
-    resolver: PartialResolver,
-  ): (value: Ellipse) => PartiallyResolved {
-    return (value) =>
-      Ellipse.of(
-        Radius.PartiallyResolve(resolver)(value.rx),
-        Radius.PartiallyResolve(resolver)(value.ry),
-        value.center.partiallyResolve(resolver),
-      );
-  }
 
   export function isEllipse(value: unknown): value is Ellipse {
     return value instanceof Ellipse;
