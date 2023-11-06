@@ -11,20 +11,13 @@ import { Numeric } from "./numeric";
 /**
  * @public
  */
-export type Dimension<T extends Type = Type> =
-  | Dimension.Calculated<T>
-  | Dimension.Fixed<Dimensions<T>[0]>;
-
-/**
- * @public
- */
 export namespace Dimension {
   /**
    * Dimensions that are the result of a calculation.
    */
-  export abstract class Calculated<T extends Type = Type>
-    extends Numeric.Calculated<T, Dimensions<T>[0]>
-    implements Resolvable<Fixed<Dimensions<T>[0], Dimensions<T>[2]>, unknown>
+  export abstract class Calculated<T extends Type = Type, R extends Type = T>
+    extends Numeric.Calculated<T, DBase[T]>
+    implements Resolvable<Fixed<DBase[T], DCanonicalUnit[DBase[T]]>, unknown>
   {
     protected constructor(math: Numeric.ToMath<T>, type: T) {
       super(math, type);
@@ -36,7 +29,7 @@ export namespace Dimension {
 
     public abstract resolve(
       resolver?: unknown,
-    ): Fixed<Dimensions<T>[0], Dimensions<T>[2]>;
+    ): Fixed<DBase[T], DCanonicalUnit[DBase[T]]>;
 
     public equals(value: unknown): value is this {
       return value instanceof Calculated && super.equals(value);
@@ -54,12 +47,12 @@ export namespace Dimension {
   export abstract class Fixed<
       T extends BaseNumeric.Dimension = BaseNumeric.Dimension,
       // The actual unit in which the dimension is expressed, e.g px, em, rad, …
-      U extends Dimensions<T>[1] = Dimensions<T>[1],
+      U extends DUnit[T] = DUnit[T],
     >
     extends Numeric.Fixed<T>
     implements
-      Resolvable<Fixed<Dimensions<T>[0], Dimensions<T>[2]>, unknown>,
-      Convertible<Dimensions<T>[1]>,
+      Resolvable<Fixed<T, DCanonicalUnit[T]>, unknown>,
+      Convertible<DUnit[T]>,
       Comparable<Fixed<T>>
   {
     protected readonly _unit: U;
@@ -80,18 +73,16 @@ export namespace Dimension {
     /**
      * {@link https://drafts.csswg.org/css-values/#canonical-unit}
      */
-    public get canonicalUnit(): Dimensions<T>[2] {
+    public get canonicalUnit(): DCanonicalUnit[T] {
       // The this.type test does not correctly narrow T, so we need to force typing.
-      return (this.type === "angle" ? "deg" : "px") as Dimensions<T>[2];
+      return (this.type === "angle" ? "deg" : "px") as DCanonicalUnit[T];
     }
 
-    public abstract hasUnit<V extends Dimensions<T>[1]>(
-      unit: V,
-    ): this is Fixed<T, V>;
+    public abstract hasUnit<V extends DUnit[T]>(unit: V): this is Fixed<T, V>;
 
-    public abstract withUnit<V extends Dimensions<T>[1]>(unit: V): Fixed<T, V>;
+    public abstract withUnit<V extends DUnit[T]>(unit: V): Fixed<T, V>;
 
-    public abstract resolve(resolver?: unknown): Fixed<T, Dimensions<T>[2]>;
+    public abstract resolve(resolver?: unknown): Fixed<T, DCanonicalUnit[T]>;
 
     public equals(value: unknown): value is this {
       return (
@@ -124,8 +115,8 @@ export namespace Dimension {
 
   export namespace Fixed {
     export interface JSON<
-      T extends Type = Type,
-      U extends Dimensions<T>[1] = Dimensions<T>[1],
+      T extends BaseNumeric.Dimension = BaseNumeric.Dimension,
+      U extends DUnit[T] = DUnit[T],
     > extends Numeric.Fixed.JSON<T> {
       unit: U;
     }
@@ -147,17 +138,14 @@ export namespace Dimension {
 type Type = BaseNumeric.Dimension | `${BaseNumeric.Dimension}-percentage`;
 
 /**
- * Helper type to turn a dimension or dimension-percentage type into its
+ * Helper types to turn a dimension or dimension-percentage type into its
  * components:
- * [base dimension, corresponding unit, canonical unit]
  */
-type Dimensions<T extends Type> = T extends "angle"
-  ? ["angle", Unit.Angle, "deg"]
-  : T extends "angle-percentage"
-  ? ["angle", Unit.Angle, "deg"]
-  : T extends "length"
-  ? ["length", Unit.Length, "px"]
-  : T extends "length-percentage"
-  ? ["length", Unit.Length, "px"]
-  : // We currently do not really support other dimensions
-    never;
+type DBase = {
+  angle: "angle";
+  "angle-percentage": "angle";
+  length: "length";
+  "length-percentage": "length";
+};
+type DUnit = { angle: Unit.Angle; length: Unit.Length };
+type DCanonicalUnit = { angle: "deg"; length: "px" };
