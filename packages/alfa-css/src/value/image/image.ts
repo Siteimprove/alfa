@@ -78,19 +78,19 @@ export namespace Image {
   export type PartialResolver = URL.Resolver & Gradient.PartialResolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Image) => PartiallyResolved {
     return (value) =>
       Image.of(
         Selective.of(value.image)
           .if(URL.isURL, (url) => url.resolve())
-          .else(Gradient.partiallyResolve(resolver))
-          .get()
+          .else((gradient) => gradient.partiallyResolve(resolver))
+          .get(),
       );
   }
 
   export function isImage<I extends URL | Gradient>(
-    value: unknown
+    value: unknown,
   ): value is Image<I> {
     return value instanceof Image;
   }
@@ -100,6 +100,6 @@ export namespace Image {
    */
   export const parse: CSSParser<Image> = map(
     either(URL.parse, Gradient.parse),
-    Image.of
+    Image.of,
   );
 }
