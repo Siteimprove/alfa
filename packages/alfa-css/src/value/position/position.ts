@@ -4,11 +4,10 @@ import { Err } from "@siteimprove/alfa-result";
 import { Slice } from "@siteimprove/alfa-slice";
 
 import { type Parser as CSSParser, Token } from "../../syntax";
-import { Unit } from "../../unit";
 
 import { Keyword } from "../keyword";
 import { Length } from "../numeric";
-import { Resolvable } from "../resolvable";
+import { PartiallyResolvable, Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import * as component from "./component";
@@ -32,16 +31,21 @@ export class Position<
     H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal,
     V extends Position.Keywords.Vertical = Position.Keywords.Vertical,
     HC extends Position.Component<H> = Position.Component<H>,
-    VC extends Position.Component<V> = Position.Component<V>
+    VC extends Position.Component<V> = Position.Component<V>,
   >
   extends Value<"position", Value.HasCalculation<[HC, VC]>>
-  implements Resolvable<Position.Canonical<H, V>, Position.Resolver>
+  implements
+    Resolvable<Position.Canonical<H, V>, Position.Resolver>,
+    PartiallyResolvable<
+      Position.PartiallyResolved<H, V>,
+      Position.PartialResolver
+    >
 {
   public static of<
     H extends Position.Keywords.Horizontal = Position.Keywords.Horizontal,
     V extends Position.Keywords.Vertical = Position.Keywords.Vertical,
     HC extends Position.Component<H> = Position.Component<H>,
-    VC extends Position.Component<V> = Position.Component<V>
+    VC extends Position.Component<V> = Position.Component<V>,
   >(horizontal: HC, vertical: VC): Position<H, V, HC, VC> {
     return new Position(horizontal, vertical);
   }
@@ -72,7 +76,16 @@ export class Position<
       Position.Component.resolve<V>({
         length: resolver.length,
         percentageBase: resolver.percentageVBase,
-      })(this._vertical)
+      })(this._vertical),
+    );
+  }
+
+  public partiallyResolve(
+    resolver: Position.PartialResolver,
+  ): Position.PartiallyResolved<H, V> {
+    return new Position(
+      Position.Component.partiallyResolve<H>(resolver)(this._horizontal),
+      Position.Component.partiallyResolve<V>(resolver)(this._vertical),
     );
   }
 
@@ -107,12 +120,12 @@ export class Position<
 export namespace Position {
   export type Canonical<
     H extends Keywords.Horizontal = Keywords.Horizontal,
-    V extends Keywords.Vertical = Keywords.Vertical
+    V extends Keywords.Vertical = Keywords.Vertical,
   > = Position<H, V, Component.Canonical<H>, Component.Canonical<V>>;
 
   export type PartiallyResolved<
     H extends Keywords.Horizontal = Keywords.Horizontal,
-    V extends Keywords.Vertical = Keywords.Vertical
+    V extends Keywords.Vertical = Keywords.Vertical,
   > = Position<
     H,
     V,
@@ -140,19 +153,6 @@ export namespace Position {
   }
 
   export type PartialResolver = Component.PartialResolver;
-
-  export function partiallyResolve<
-    H extends Keywords.Horizontal,
-    V extends Keywords.Vertical
-  >(
-    resolver: PartialResolver
-  ): (value: Position<H, V>) => PartiallyResolved<H, V> {
-    return (value) =>
-      Position.of(
-        Component.partiallyResolve<H>(resolver)(value.horizontal),
-        Component.partiallyResolve<V>(resolver)(value.vertical)
-      );
-  }
 
   /**
    * @remarks
@@ -182,12 +182,12 @@ export namespace Position {
    */
   const mapHV = ([horizontal, vertical]: [
     Component<Keywords.Horizontal>,
-    Component<Keywords.Vertical>
+    Component<Keywords.Vertical>,
   ]) => Position.of(horizontal, vertical);
 
   const mapVH = ([vertical, horizontal]: [
     Component<Keywords.Vertical>,
-    Component<Keywords.Horizontal>
+    Component<Keywords.Horizontal>,
   ]) => Position.of(horizontal, vertical);
 
   const {
@@ -201,17 +201,17 @@ export namespace Position {
     map(
       pair(
         parseHorizontalKeywordValue,
-        right(Token.parseWhitespace, parseVerticalKeywordValue)
+        right(Token.parseWhitespace, parseVerticalKeywordValue),
       ),
-      mapHV
+      mapHV,
     ),
     map(
       pair(
         parseVerticalKeywordValue,
-        right(Token.parseWhitespace, parseHorizontalKeywordValue)
+        right(Token.parseWhitespace, parseHorizontalKeywordValue),
       ),
-      mapVH
-    )
+      mapVH,
+    ),
   );
 
   // Hh V | H Vv | Vv H | V Hh
@@ -220,28 +220,28 @@ export namespace Position {
       either(
         pair(
           parseHorizontalKeywordValue,
-          right(Token.parseWhitespace, parseVerticalKeyword)
+          right(Token.parseWhitespace, parseVerticalKeyword),
         ),
         pair(
           parseHorizontalKeyword,
-          right(Token.parseWhitespace, parseVerticalKeywordValue)
-        )
+          right(Token.parseWhitespace, parseVerticalKeywordValue),
+        ),
       ),
-      mapHV
+      mapHV,
     ),
     map(
       either(
         pair(
           parseVerticalKeywordValue,
-          right(Token.parseWhitespace, parseHorizontalKeyword)
+          right(Token.parseWhitespace, parseHorizontalKeyword),
         ),
         pair(
           parseVerticalKeyword,
-          right(Token.parseWhitespace, parseHorizontalKeywordValue)
-        )
+          right(Token.parseWhitespace, parseHorizontalKeywordValue),
+        ),
       ),
-      mapVH
-    )
+      mapVH,
+    ),
   );
 
   // H V | H v | h V | h v | V H = (H | h) (V | v) | V H
@@ -250,35 +250,38 @@ export namespace Position {
       pair(
         either(
           parseHorizontalKeyword,
-          Component.parseOffset(Keyword.of("left"))
+          Component.parseOffset(Keyword.of("left")),
         ),
         right(
           Token.parseWhitespace,
-          either(parseVerticalKeyword, Component.parseOffset(Keyword.of("top")))
-        )
+          either(
+            parseVerticalKeyword,
+            Component.parseOffset(Keyword.of("top")),
+          ),
+        ),
       ),
-      mapHV
+      mapHV,
     ),
     map(
       pair(
         parseVerticalKeyword,
-        right(Token.parseWhitespace, parseHorizontalKeyword)
+        right(Token.parseWhitespace, parseHorizontalKeyword),
       ),
-      mapVH
-    )
+      mapVH,
+    ),
   );
 
   // H | V | h
   const parse1 = either<Slice<Token>, Position, string>(
     map(parseHorizontalKeyword, (horizontal) =>
-      Position.of(horizontal, Keyword.of("center"))
+      Position.of(horizontal, Keyword.of("center")),
     ),
     map(parseVerticalKeyword, (vertical) =>
-      Position.of(Keyword.of("center"), vertical)
+      Position.of(Keyword.of("center"), vertical),
     ),
     map(Component.parseOffset(Keyword.of("left")), (horizontal) =>
-      Position.of(horizontal, Keyword.of("center"))
-    )
+      Position.of(horizontal, Keyword.of("center")),
+    ),
   );
 
   /**
@@ -295,7 +298,7 @@ export namespace Position {
       parse4,
       legacySyntax ? parse3 : () => Err.of("Three-value syntax is not allowed"),
       parse2,
-      parse1
+      parse1,
     );
   }
 }

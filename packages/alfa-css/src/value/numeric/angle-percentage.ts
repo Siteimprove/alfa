@@ -85,11 +85,10 @@ export namespace AnglePercentage {
   /**
    * Fully resolves an angle-percentage, when a full resolver is provided.
    */
-  export function resolve(): (value: AnglePercentage) => Canonical {
-    return (value) =>
-      Percentage.isPercentage(value)
-        ? value.resolve({ percentageBase: Angle.of(360, "deg") })
-        : value.resolve();
+  export function resolve(value: AnglePercentage): Canonical {
+    return Percentage.isPercentage(value)
+      ? value.resolve({ percentageBase: Angle.of(360, "deg") })
+      : value.resolve();
   }
 
   export function isAnglePercentage(value: unknown): value is AnglePercentage {

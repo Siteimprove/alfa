@@ -91,7 +91,7 @@ test("resolve() resolves angle calculations", (t) => {
 });
 
 test("resolve() resolves pure percentages", (t) => {
-  t.deepEqual(parseUnsafe("50%").resolve().toJSON(), {
+  t.deepEqual(AnglePercentage.resolve(parseUnsafe("50%")).toJSON(), {
     type: "angle",
     value: 180,
     unit: "deg",
@@ -99,17 +99,23 @@ test("resolve() resolves pure percentages", (t) => {
 });
 
 test("resolve() resolves percentage calculations", (t) => {
-  t.deepEqual(parseUnsafe("calc((12% + 9%) * 2)").resolve().toJSON(), {
-    type: "angle",
-    value: 77.6,
-    unit: "deg",
-  });
+  t.deepEqual(
+    AnglePercentage.resolve(parseUnsafe("calc((12% + 9%) * 2)")).toJSON(),
+    {
+      type: "angle",
+      value: 151.2,
+      unit: "deg",
+    },
+  );
 });
 
 test("resolve() resolves mix of angles and percentages", (t) => {
-  t.deepEqual(parseUnsafe("calc(0.5turn + 10%)").resolve().toJSON(), {
-    type: "angle",
-    value: 216,
-    unit: "deg",
-  });
+  t.deepEqual(
+    AnglePercentage.resolve(parseUnsafe("calc(0.5turn + 10%)")).toJSON(),
+    {
+      type: "angle",
+      value: 216,
+      unit: "deg",
+    },
+  );
 });

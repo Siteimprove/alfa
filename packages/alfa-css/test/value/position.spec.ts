@@ -422,7 +422,7 @@ test(".resolve() fully resolves positions", (t) => {
           Length.of(16, "px"),
           Length.of(0, "px"),
           Length.of(0, "px"),
-          Length.of(0, "px")
+          Length.of(0, "px"),
         ),
         percentageHBase: Length.of(10, "px"),
         percentageVBase: Length.of(20, "px"),
@@ -440,38 +440,36 @@ test(".resolve() fully resolves positions", (t) => {
         side: { type: "keyword", value: "top" },
         offset: { type: "length", unit: "px", value: 4 },
       },
-    }
+    },
   );
 });
 
 test(".partiallyResolve() partially resolves positions", (t) => {
   const actual = Position.parse()(
-    Lexer.lex("left calc(1em + 1px) top calc(20% + 10%)")
+    Lexer.lex("left calc(1em + 1px) top calc(20% + 10%)"),
   )
     .map(([, position]) => position)
-    .getUnsafe();
-
-  t.deepEqual(
-    Position.partiallyResolve({
+    .getUnsafe()
+    .partiallyResolve({
       length: Length.resolver(
         Length.of(16, "px"),
         Length.of(0, "px"),
         Length.of(0, "px"),
-        Length.of(0, "px")
+        Length.of(0, "px"),
       ),
-    })(actual).toJSON(),
-    {
-      type: "position",
-      horizontal: {
-        type: "side",
-        side: { type: "keyword", value: "left" },
-        offset: { type: "length", unit: "px", value: 17 },
-      },
-      vertical: {
-        type: "side",
-        side: { type: "keyword", value: "top" },
-        offset: { type: "percentage", value: 0.3 },
-      },
-    }
-  );
+    });
+
+  t.deepEqual(actual.toJSON(), {
+    type: "position",
+    horizontal: {
+      type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: { type: "length", unit: "px", value: 17 },
+    },
+    vertical: {
+      type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: { type: "percentage", value: 0.3 },
+    },
+  });
 });
