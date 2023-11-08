@@ -1,13 +1,13 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Circle, Lexer } from "../../../src";
+import { Circle } from "../../../src";
+import { parser, serializer } from "../../common/parse";
 
-function parse(input: string) {
-  return Circle.parse(Lexer.lex(input)).getUnsafe()[1].toJSON();
-}
+const parseErr = parser(Circle.parse);
+const serialize = serializer(Circle.parse);
 
 test("parse() parses a circle with just a radius", (t) => {
-  t.deepEqual(parse("circle(farthest-side)"), {
+  t.deepEqual(serialize("circle(farthest-side)"), {
     type: "basic-shape",
     kind: "circle",
     radius: {
@@ -24,7 +24,7 @@ test("parse() parses a circle with just a radius", (t) => {
 });
 
 test("parse() parses a circle with just a center", (t) => {
-  t.deepEqual(parse("circle(at left)"), {
+  t.deepEqual(serialize("circle(at left)"), {
     type: "basic-shape",
     kind: "circle",
     radius: {
@@ -45,7 +45,7 @@ test("parse() parses a circle with just a center", (t) => {
 });
 
 test("parse() parses a circle with both radius and center", (t) => {
-  t.deepEqual(parse("circle(10px at left)"), {
+  t.deepEqual(serialize("circle(10px at left)"), {
     type: "basic-shape",
     kind: "circle",
     radius: {
@@ -66,11 +66,11 @@ test("parse() parses a circle with both radius and center", (t) => {
 });
 
 test("parse() fails if there is a negative radius", (t) => {
-  t.deepEqual(Circle.parse(Lexer.lex("circle(-1px)")).isErr(), true);
+  t.deepEqual(parseErr("circle(-1px)").isErr(), true);
 });
 
 test("parse() accepts calculated radius", (t) => {
-  t.deepEqual(parse("circle(calc(10px + 1%) at left)"), {
+  t.deepEqual(serialize("circle(calc(10px + 1%) at left)"), {
     type: "basic-shape",
     kind: "circle",
     radius: {
