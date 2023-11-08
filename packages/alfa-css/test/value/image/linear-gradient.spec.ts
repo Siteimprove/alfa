@@ -1,6 +1,6 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Gradient, Lexer } from "../../../src";
+import { Gradient } from "../../../src";
 import { serializer } from "../../common/parse";
 
 const serialize = serializer(Gradient.Linear.parse);
