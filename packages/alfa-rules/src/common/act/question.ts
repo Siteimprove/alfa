@@ -17,7 +17,6 @@ export namespace Question {
     "node[]": Iterable<Node>;
     "color[]": Iterable<RGB>;
     string: string;
-    "string[]": Iterable<string>;
   }
 
   type TypeName<U extends Uri> = Data[U]["type"];
@@ -55,7 +54,7 @@ export namespace Question {
     uri: U,
     subject: S,
     message?: string,
-    options?: act.Question.Options<Typeof<U>>
+    options?: act.Question.Options<Typeof<U>>,
   ): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U>;
 
   export function of<S, C, U extends Uri = Uri>(
@@ -63,7 +62,7 @@ export namespace Question {
     subject: S,
     context: C,
     message?: string,
-    options?: act.Question.Options<Typeof<U>>
+    options?: act.Question.Options<Typeof<U>>,
   ): act.Question<TypeName<U>, S, C, Typeof<U>, Typeof<U>, U>;
 
   export function of<S, U extends Uri = Uri>(
@@ -71,7 +70,7 @@ export namespace Question {
     subject: S,
     contextOrMessage?: S | string,
     messageOrOptions?: string | act.Question.Options<Typeof<U>>,
-    options: act.Question.Options<Typeof<U>> = {}
+    options: act.Question.Options<Typeof<U>> = {},
   ): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U> {
     let context: S = subject;
     let message: string;
@@ -99,7 +98,7 @@ export namespace Question {
       message,
       subject,
       context,
-      options
+      options,
     );
   }
 
@@ -188,10 +187,6 @@ export namespace Question {
       message: `Do these [role] landmarks have the same or equivalent content?`,
     },
     // R65
-    "visible-focus-classes": {
-      type: "string[]",
-      message: `Which classes have a visible focus indicator?`,
-    },
     "has-focus-indicator": {
       type: "boolean",
       message: `Does the element have a visible focus indicator?`,
