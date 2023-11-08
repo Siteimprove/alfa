@@ -30,6 +30,7 @@ export class Hint<P extends LengthPercentage = LengthPercentage>
     this._position = position;
   }
 
+  /** @public (knip) */
   public get position(): P {
     return this._position;
   }

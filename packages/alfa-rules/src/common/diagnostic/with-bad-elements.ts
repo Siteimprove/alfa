@@ -10,7 +10,7 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 export class WithBadElements extends Diagnostic implements Iterable<Element> {
   public static of(
     message: string,
-    errors: Iterable<Element> = []
+    errors: Iterable<Element> = [],
   ): WithBadElements {
     return new WithBadElements(message, Array.from(errors));
   }
@@ -64,12 +64,12 @@ export namespace WithBadElements {
   }
 
   export function isWithBadElements(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is WithBadElements;
 
   export function isWithBadElements(value: unknown): value is WithBadElements;
 
-  /** @public */
+  /** @public (knip) */
   export function isWithBadElements(value: unknown): value is WithBadElements {
     return value instanceof WithBadElements;
   }

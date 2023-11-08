@@ -38,10 +38,12 @@ export class Ellipse<R extends LengthPercentage = LengthPercentage>
     this._vertical = vertical;
   }
 
+  /** @public (knip) */
   public get horizontal(): R {
     return this._horizontal;
   }
 
+  /** @public (knip) */
   public get vertical(): R {
     return this._vertical;
   }

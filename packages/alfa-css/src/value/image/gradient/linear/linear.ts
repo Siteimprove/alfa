@@ -143,6 +143,7 @@ export namespace Linear {
 
   export type PartialResolver = Item.PartialResolver & Direction.Resolver;
 
+  /** @public (knip) */
   export function isLinear(value: unknown): value is Linear {
     return value instanceof Linear;
   }

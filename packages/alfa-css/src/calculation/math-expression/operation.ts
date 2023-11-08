@@ -29,7 +29,7 @@ const { isPercentage } = Percentage;
  */
 export abstract class Operation<
   T extends string = string,
-  O extends Array<Expression> = Array<Expression>
+  O extends Array<Expression> = Array<Expression>,
 > extends Expression<T> {
   protected readonly _operands: Readonly<O>;
 
@@ -53,7 +53,7 @@ export abstract class Operation<
       value._type === this._type &&
       value._operands.length === this._operands.length &&
       value._operands.every((operand: Expression, i: number) =>
-        operand.equals(this._operands[i])
+        operand.equals(this._operands[i]),
       )
     );
   }
@@ -87,7 +87,7 @@ export namespace Operation {
     protected constructor(
       type: T,
       operands: [Expression, Expression],
-      kind: Kind
+      kind: Kind,
     ) {
       super(type, operands, kind);
     }
@@ -108,10 +108,10 @@ export namespace Operation {
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>
+      resolver: Expression.Resolver<L, P>,
     ): Expression {
       const [fst, snd] = this._operands.map((operand) =>
-        operand.reduce(resolver)
+        operand.reduce(resolver),
       );
 
       if (Value.isValueExpression(fst) && Value.isValueExpression(snd)) {
@@ -154,7 +154,7 @@ export namespace Operation {
     }
   }
 
-  /** @public */
+  /** @public (knip) */
   export function isSumExpression(value: unknown): value is Sum {
     return value instanceof Sum;
   }
@@ -169,10 +169,10 @@ export namespace Operation {
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>
+      resolver: Expression.Resolver<L, P>,
     ): Expression {
       const [operand] = this._operands.map((operand) =>
-        operand.reduce(resolver)
+        operand.reduce(resolver),
       );
 
       if (Value.isValueExpression(operand)) {
@@ -229,10 +229,10 @@ export namespace Operation {
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>
+      resolver: Expression.Resolver<L, P>,
     ): Expression {
       const [fst, snd] = this._operands.map((operand) =>
-        operand.reduce(resolver)
+        operand.reduce(resolver),
       );
 
       if (Value.isValueExpression(fst) && Value.isValueExpression(snd)) {
@@ -276,7 +276,7 @@ export namespace Operation {
     }
   }
 
-  /** @public */
+  /** @public (knip) */
   export function isProductExpression(value: unknown): value is Product {
     return value instanceof Product;
   }
@@ -291,10 +291,10 @@ export namespace Operation {
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>
+      resolver: Expression.Resolver<L, P>,
     ): Expression {
       const [operand] = this._operands.map((operand) =>
-        operand.reduce(resolver)
+        operand.reduce(resolver),
       );
 
       if (Value.isValueExpression(operand)) {

@@ -192,7 +192,7 @@ export namespace Radial {
     Shape.PartialResolver &
     Position.PartialResolver;
 
-  /** @public */
+  /** @public (knip) */
   export function isRadial(value: unknown): value is Radial {
     return value instanceof Radial;
   }
