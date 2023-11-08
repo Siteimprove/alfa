@@ -4,8 +4,8 @@ import { Math } from "../../src";
 import { Length } from "../../src/calculation/numeric";
 import { parser, parserUnsafe, serializer } from "../common/parse";
 
-const parse = parser(Math.parse);
-const parseUnsafe = parserUnsafe(Math.parse);
+const parseErr = parser(Math.parse);
+const parse = parserUnsafe(Math.parse);
 const serialize = serializer(Math.parse);
 
 test(".parse() parses a max of one or more numbers or calculation", (t) => {
@@ -16,7 +16,7 @@ test(".parse() parses a max of one or more numbers or calculation", (t) => {
     ["1 + 2, 5, 2 * 3", 6],
     ["2, max(1, 4)", 4],
   ]) {
-    const calculation = parseUnsafe(`max(${list})`);
+    const calculation = parse(`max(${list})`);
 
     t(calculation.isNumber());
 
@@ -29,7 +29,7 @@ test(".parse() parses a max of one or more numbers or calculation", (t) => {
     });
   }
 
-  const error = parse("max()");
+  const error = parseErr("max()");
 
   t.deepEqual(error.isErr(), true);
 });
@@ -57,7 +57,7 @@ test(".parse() parses a max of absolute dimensions", (t) => {
 });
 
 test(".parse() does not reduce relative dimensions", (t) => {
-  const calculation = parseUnsafe("max(1em, 20px, 2*4px, 1vh + 20%)");
+  const calculation = parse("max(1em, 20px, 2*4px, 1vh + 20%)");
 
   t.deepEqual(calculation.toJSON(), {
     type: "math expression",
@@ -130,7 +130,7 @@ test(".parse() does not resolve percentages", (t) => {
 
 test("parse() accept mixed max if they can combine", (t) => {
   for (const list of ["1px, 10%", "10%, 1px"]) {
-    const calculation = parseUnsafe(`max(${list})`).reduce({
+    const calculation = parse(`max(${list})`).reduce({
       length: () => Length.of(0, "px"),
       percentage: (percent) => Length.of(percent.value * 16, "px"),
     });

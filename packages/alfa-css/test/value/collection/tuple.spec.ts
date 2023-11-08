@@ -23,14 +23,14 @@ test(".of() considers the list as calculated when one value is", (t) => {
   t.deepEqual(actual.hasCalculation(), true);
 });
 
-test("resolve() resolves all values in a list", (t) => {
+test("resolve() resolves all values in a tuple", (t) => {
   const actual = Tuple.of(relative, calculated, percent);
   const resolver = {
     length: Length.resolver(
       Length.of(16, "px"),
       Length.of(16, "px"),
       Length.of(16, "px"),
-      Length.of(16, "px")
+      Length.of(16, "px"),
     ),
     percentageBase: Length.of(20, "px"),
   };
