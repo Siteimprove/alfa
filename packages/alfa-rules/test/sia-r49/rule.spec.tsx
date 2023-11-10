@@ -23,7 +23,7 @@ test(`evaluate() passes an autoplaying <video> element that lasts more than 3
       oracle({
         "has-audio": true,
         "is-above-duration-threshold": true,
-      })
+      }),
     ),
     [
       passed(
@@ -32,9 +32,9 @@ test(`evaluate() passes an autoplaying <video> element that lasts more than 3
         {
           1: Outcomes.HasPerceivablePauseMechanism("video"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -54,7 +54,7 @@ test(`evaluate() passes an autoplaying <video> element that lasts more than 3
         "has-audio": true,
         "is-above-duration-threshold": true,
         "audio-control-mechanism": Option.of(controls),
-      })
+      }),
     ),
     [
       passed(
@@ -63,9 +63,9 @@ test(`evaluate() passes an autoplaying <video> element that lasts more than 3
         {
           1: Outcomes.HasPerceivablePauseMechanism("video"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -83,7 +83,7 @@ test(`evaluate() fails an autoplaying <video> element that lasts more than 3
         "has-audio": true,
         "is-above-duration-threshold": true,
         "audio-control-mechanism": None,
-      })
+      }),
     ),
     [
       failed(
@@ -92,9 +92,9 @@ test(`evaluate() fails an autoplaying <video> element that lasts more than 3
         {
           1: Outcomes.HasNoPauseMechanism("video"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -114,7 +114,7 @@ test(`evaluate() fails an autoplaying <video> element that lasts more than 3
         "has-audio": true,
         "is-above-duration-threshold": true,
         "audio-control-mechanism": Option.of(controls),
-      })
+      }),
     ),
     [
       failed(
@@ -123,9 +123,9 @@ test(`evaluate() fails an autoplaying <video> element that lasts more than 3
         {
           1: Outcomes.HasNonPerceivablePauseMechanism("video"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -145,7 +145,7 @@ test(`evaluate() fails an autoplaying <video> element that lasts more than 3
         "has-audio": true,
         "is-above-duration-threshold": true,
         "audio-control-mechanism": Option.of(controls),
-      })
+      }),
     ),
     [
       failed(
@@ -154,9 +154,9 @@ test(`evaluate() fails an autoplaying <video> element that lasts more than 3
         {
           1: Outcomes.HasNonPerceivablePauseMechanism("video"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -171,9 +171,9 @@ test("evaluate() can't tell when questions are left unanswered", async (t) => {
     await evaluate(
       R49,
       { document },
-      oracle({ "has-audio": true, "is-above-duration-threshold": true })
+      oracle({ "has-audio": true, "is-above-duration-threshold": true }),
     ),
-    [cantTell(R49, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R49, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -190,9 +190,9 @@ test("evaluate() is inapplicable to short videos", async (t) => {
     await evaluate(
       R49,
       { document },
-      oracle({ "has-audio": true, "is-above-duration-threshold": false })
+      oracle({ "has-audio": true, "is-above-duration-threshold": false }),
     ),
-    [inapplicable(R49, Outcome.Mode.SemiAuto)]
+    [inapplicable(R49, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -201,7 +201,7 @@ test("evaluate() is inapplicable to audio-less videos", async (t) => {
 
   t.deepEqual(
     await evaluate(R49, { document }, oracle({ "has-audio": false })),
-    [inapplicable(R49, Outcome.Mode.SemiAuto)]
+    [inapplicable(R49, Outcome.Mode.SemiAuto)],
   );
 });
 

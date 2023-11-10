@@ -15,5 +15,5 @@ export default Longhand.fromKeywords(
   "groove",
   "ridge",
   "inset",
-  "outset"
+  "outset",
 );

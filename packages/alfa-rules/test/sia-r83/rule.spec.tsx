@@ -25,7 +25,7 @@ test("evaluate() passes a text node that truncates overflow using ellipsis", asy
           textOverflow: "ellipsis",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -57,7 +57,7 @@ test(`evaluate() passes a text node that is non-statically positioned with a
           position: "absolute",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -89,7 +89,7 @@ test(`evaluate() passes a text node with a fixed absolute height set
           overflow: "hidden",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -113,7 +113,7 @@ test(`evaluate() passes a text node with a fixed relative height`, async (t) => 
           height: "1.2em",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -145,7 +145,7 @@ test(`evaluate() passes a text node that resets the white-space
             whiteSpace: "normal",
           }),
         ]),
-      ]
+      ],
     );
 
     t.deepEqual(await evaluate(R83, { document }), [
@@ -170,7 +170,7 @@ test(`evaluate() passes a text node with a scrolling ancestor inside a clipping 
         h.rule.style(".clipping", { overflowY: "hidden", height: "10px" }),
         h.rule.style(".scrolling", { overflowY: "scroll", height: "10px" }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -198,7 +198,7 @@ test(`evaluate() passes texts in a wrapping flex container`, async (t) => {
         h.rule.style(".clip", { overflowX: "hidden" }),
         h.rule.style(".flex", { display: "flex", flexWrap: "wrap" }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -224,7 +224,7 @@ test(`evaluates() passes a clipping element with font-relative height`, async (t
           height: "10px",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -250,7 +250,7 @@ test(`evaluates() passes a clipping element with font-relative width`, async (t)
           whiteSpace: "nowrap",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -278,7 +278,7 @@ test(`evaluate() passes a relatively positioned node with a handling static pare
         h.rule.style(".handle", { overflowX: "scroll" }),
         h.rule.style(".content", { whiteSpace: "nowrap" }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -311,7 +311,7 @@ test(`evaluates() checks wrapping of text nodes individually`, async (t) => {
         }),
         h.rule.style(".wrap", { whiteSpace: "normal" }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -341,7 +341,7 @@ test(`evaluate() passes text in <option> within a multi-line <select> element`, 
           overflow: "hidden",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -372,7 +372,7 @@ test(`evaluate() passes text in <option> within a <select> with a \`multiple\` a
           overflow: "hidden",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -398,7 +398,7 @@ test(`evaluate() passes a text node with fixed height set by a font-relative
           h.rule.style("div", { height: "10px", overflow: "hidden" }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -425,7 +425,7 @@ test(`evaluate() passes a text node with horizontal wrapping set by a font-relat
           }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -452,7 +452,7 @@ test(`evaluate() passes a text node with fixed height and another property
           h.rule.style("span", { color: "red" }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -483,7 +483,7 @@ test(`evaluates() passes a text node horizontally overflowing its small
           textOverflow: "ellipsis",
         }),
       ]),
-    ]
+    ],
   );
   t.deepEqual(await evaluate(R83, { document, device }), [
     passed(R83, target, {
@@ -514,7 +514,7 @@ test(`evaluate() passes a text node vertically overflowing its small
           height: "20px",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document, device }), [
@@ -538,7 +538,7 @@ test(`evaluate() fails a text node that clips overflow by not wrapping text
           whiteSpace: "nowrap",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -562,7 +562,7 @@ test(`evaluate() fails a text node that clips overflow and sets a fixed height
           height: "20px",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -586,7 +586,7 @@ test(`evaluate() fails a text node that clips overflow and sets a fixed height
           height: "1vh",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -618,7 +618,7 @@ test(`evaluate() fails a text node that is non-statically positioned with a
           position: "absolute",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -647,7 +647,7 @@ test(`evaluates() fails a text node overflowing its parent as text and clipped
           textOverflow: "ellipsis",
         }),
       ]),
-    ]
+    ],
   );
   t.deepEqual(await evaluate(R83, { document }), [
     failed(R83, target, {
@@ -670,7 +670,7 @@ test(`evaluate() fails a text node that is vertically clipped but horizontally w
           whiteSpace: "normal",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -699,7 +699,7 @@ test(`evaluate() fails a relatively positioned node clipped by a static parent`,
         h.rule.style(".relative", { position: "relative", left: "100px" }),
         h.rule.style(".clipping", { height: "5px", overflowY: "hidden" }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -720,7 +720,7 @@ test(`evaluate() fails a text node with fixed height set by a font-relative
           h.rule.style("div", { height: "10px", overflow: "hidden" }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -744,7 +744,7 @@ test(`evaluate() fails a text node with horizontal wrapping set by a font-relati
           }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [
@@ -766,7 +766,7 @@ test("evaluate() is inapplicable to a text node that is not visible", async (t) 
           whiteSpace: "nowrap",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
@@ -787,7 +787,7 @@ test(`evaluate() is inapplicable to a text node that is excluded from the
           whiteSpace: "nowrap",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
@@ -813,7 +813,7 @@ test(`evaluate() is inapplicable to text in <option> within a single line <selec
           overflow: "hidden",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
@@ -834,7 +834,7 @@ test(`evaluate() is inapplicable to a text node that would clip if it was non-
           whiteSpace: "nowrap",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);
@@ -852,7 +852,7 @@ test(`evaluate() ignores overflow on \`<body\`> element`, async (t) => {
         h.rule.style("body", { overflow: "hidden" }),
         h.rule.style("div", { whiteSpace: "nowrap" }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R83, { document }), [inapplicable(R83)]);

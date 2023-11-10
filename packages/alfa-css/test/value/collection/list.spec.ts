@@ -14,7 +14,7 @@ import {
 
 function parse<V extends Value>(
   str: string,
-  parser: Parser<Slice<Token>, V, string>
+  parser: Parser<Slice<Token>, V, string>,
 ): List<V> {
   return List.parseCommaSeparated(parser)(Lexer.lex(str)).getUnsafe()[1];
 }
@@ -48,7 +48,7 @@ test("resolve() resolves all values in a list", (t) => {
       Length.of(16, "px"),
       Length.of(16, "px"),
       Length.of(16, "px"),
-      Length.of(16, "px")
+      Length.of(16, "px"),
     ),
     percentageBase: Length.of(20, "px"),
   };

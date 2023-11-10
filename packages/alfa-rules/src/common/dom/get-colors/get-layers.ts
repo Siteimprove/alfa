@@ -79,7 +79,7 @@ export namespace Layer {
     context: Context = Context.empty(),
     // Possible override of the element's opacity.
     opacity?: number,
-    ignoredInterposedDescendants: Set<Element> = Set.empty()
+    ignoredInterposedDescendants: Set<Element> = Set.empty(),
   ): Result<Array<Layer>, ColorErrors<"layer">> {
     const cache =
       opacity === undefined
@@ -96,7 +96,7 @@ export namespace Layer {
           element,
           device,
           context,
-          opacity
+          opacity,
         );
 
         const layers: Array<Layer> = currentLayers.getOr([]);
@@ -109,7 +109,7 @@ export namespace Layer {
           layers.every(
             (layer) =>
               layer.opacity === 1 &&
-              layer.colors.every((color) => color.alpha.value === 1)
+              layer.colors.every((color) => color.alpha.value === 1),
           )
         ) {
           return Result.of<Array<Layer>, ColorErrors<"layer">>(layers);
@@ -121,8 +121,8 @@ export namespace Layer {
           errors.push(
             ColorError.nonStaticPosition(
               element,
-              style.computed("position").value
-            )
+              style.computed("position").value,
+            ),
           );
         }
 
@@ -133,12 +133,12 @@ export namespace Layer {
         const interposedDescendants = getInterposedDescendant(device, element)
           .reject(hasTransparentBackground(device))
           .reject(
-            ignoredInterposedDescendants.has.bind(ignoredInterposedDescendants)
+            ignoredInterposedDescendants.has.bind(ignoredInterposedDescendants),
           );
 
         if (!interposedDescendants.isEmpty()) {
           errors.push(
-            ColorError.interposedDescendants(element, interposedDescendants)
+            ColorError.interposedDescendants(element, interposedDescendants),
           );
         }
 
@@ -152,7 +152,7 @@ export namespace Layer {
             // The opacity override only applies to the last layer, so it is not
             // used in the recursive calls
             undefined,
-            ignoredInterposedDescendants
+            ignoredInterposedDescendants,
           );
 
           return errors.length === 0
@@ -173,16 +173,16 @@ export namespace Layer {
    */
   export function merge(
     backdrops: Array<Color.Resolved>,
-    layer: Layer
+    layer: Layer,
   ): Array<Color.Resolved> {
     return layer.colors.reduce(
       (layers, color) =>
         layers.concat(
           backdrops.map((backdrop) =>
-            Color.composite(color, backdrop, layer.opacity)
-          )
+            Color.composite(color, backdrop, layer.opacity),
+          ),
         ),
-      [] as Array<Color.Resolved>
+      [] as Array<Color.Resolved>,
     );
   }
 
@@ -196,7 +196,7 @@ export namespace Layer {
     device: Device,
     context: Context = Context.empty(),
     // Possible override of the element's opacity.
-    opacity?: number
+    opacity?: number,
   ): Result<Array<Layer>, Array<ColorError<"layer">>> {
     const style = Style.from(element, device, context);
     const backgroundColor = style.computed("background-color").value;
@@ -214,7 +214,7 @@ export namespace Layer {
       layers.push(Layer.of([color.get()], opacity));
     } else {
       errors.push(
-        ColorError.unresolvableBackgroundColor(element, backgroundColor)
+        ColorError.unresolvableBackgroundColor(element, backgroundColor),
       );
     }
 
@@ -227,7 +227,7 @@ export namespace Layer {
       // bail out if we encounter a background image.
       if (image.image.type === "url") {
         errors.push(
-          ColorError.externalBackgroundImage(element, backgroundImage)
+          ColorError.externalBackgroundImage(element, backgroundImage),
         );
         continue;
       }
@@ -256,8 +256,8 @@ export namespace Layer {
               ColorError.unresolvableGradientStop(
                 element,
                 backgroundImage,
-                item.color
-              )
+                item.color,
+              ),
             );
           }
         }

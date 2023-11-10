@@ -27,8 +27,8 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
             expectation(
               hasAudioTrack,
               () => Outcomes.HasDescriptiveAudio,
-              () => Outcomes.HasNoDescriptiveAudio
-            )
+              () => Outcomes.HasNoDescriptiveAudio,
+            ),
           ),
         };
       },
@@ -43,14 +43,14 @@ export namespace Outcomes {
   export const HasDescriptiveAudio = Ok.of(
     Diagnostic.of(
       `The \`<video>\` element has an audio track that describes its visual
-      information`
-    )
+      information`,
+    ),
   );
 
   export const HasNoDescriptiveAudio = Err.of(
     Diagnostic.of(
       `The \`<video>\` element does not have an audio track that describes its
-      visual information`
-    )
+      visual information`,
+    ),
   );
 }

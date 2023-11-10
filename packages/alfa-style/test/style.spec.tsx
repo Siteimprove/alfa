@@ -36,7 +36,7 @@ test("#cascaded() correctly handles duplicate properties", (t) => {
           h.declaration("color", "green"),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "color"), {
@@ -59,7 +59,7 @@ test("#cascaded() returns the most specific property value", (t) => {
         h.rule.style("div.foo", { color: "green" }),
         h.rule.style("div", { color: "red" }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "color"), {
@@ -93,7 +93,7 @@ test(`#cascaded() correctly handles an important declaration overriding inline
 
   h.document(
     [element],
-    [h.sheet([h.rule.style("div", { color: "red !important" })])]
+    [h.sheet([h.rule.style("div", { color: "red !important" })])],
   );
 
   t.deepEqual(cascaded(element, "color"), {
@@ -112,7 +112,7 @@ test(`#cascaded() correctly handles important inline styles overriding an
 
   h.document(
     [element],
-    [h.sheet([h.rule.style("div", { color: "red !important" })])]
+    [h.sheet([h.rule.style("div", { color: "red !important" })])],
   );
 
   t.deepEqual(cascaded(element, "color"), {
@@ -138,7 +138,7 @@ test(`#cascaded() correctly handles a shorthand declaration overriding a
           overflow: "hidden",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -163,7 +163,7 @@ test(`#cascaded() correctly handles a longhand declaration overriding a
           overflowX: "visible",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -187,7 +187,7 @@ test(`#cascaded() expands a var() function`, (t) => {
           overflowX: "var(--hidden)",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -210,7 +210,7 @@ test(`#cascaded() expands a var() function with a fallback`, (t) => {
           overflowX: "var(--hidden, hidden)",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -237,7 +237,7 @@ test(`#cascaded() expands a var() function with an inherited value`, (t) => {
           overflowX: "var(--hidden)",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -264,7 +264,7 @@ test(`#cascaded() prefers inheriting var() function over using fallback`, (t) =>
           overflowX: "var(--hidden, visible)",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -293,7 +293,7 @@ test(`#cascaded() expands a var() function with an overridden value`, (t) => {
           "--hidden": "visible",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -320,7 +320,7 @@ test(`#cascaded() expands a var() function with a value that contains another
           "--really-hidden": "hidden",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -346,7 +346,7 @@ test(`#cascaded() expands multiple var() functions in the same declaration`, (t)
           "--visible": "visible",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -379,7 +379,7 @@ test(`#cascaded() expands several var() function references to the same variable
           "--hidden": "hidden",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -411,7 +411,7 @@ test(`#cascaded() expands a var() function with a fallback with a var() function
           overflowX: "var(--foo, var(--bar, hidden))",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -436,7 +436,7 @@ test(`#cascaded() returns "unset" when a var() function variable isn't defined`,
           overflowX: "var(--visible)",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -459,7 +459,7 @@ test(`#cascaded() returns "unset" when a var() function fallback is empty`, (t) 
           overflowX: "var(--visible,)",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -485,7 +485,7 @@ test(`#cascaded() returns "unset" when declaration with a var() function is
           "--visible": "foo",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -510,7 +510,7 @@ test(`#cascaded() returns "unset" when a var() function is invalid`, (t) => {
           "--hidden": "var(foo)",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -536,7 +536,7 @@ test(`#cascaded() returns "unset" when var() functions contain cyclic references
           "--really-hidden": "var(--hidden)",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -562,7 +562,7 @@ test(`#cascaded() returns "unset" when a custom property referenced by a var()
           "--hidden": "initial",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -616,7 +616,7 @@ test(`#cascaded() returns "unset" when confronted with a billion laughs`, (t) =>
           "--prop30": "var(--prop29) var(--prop29)",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -660,7 +660,7 @@ test(`#cascaded() correctly resolves var() function references within context
           "--invalid": "red",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -698,7 +698,7 @@ test(`#cascaded() gives precedence to !important custom properties used in var()
           "--hidden": "visible",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -728,7 +728,7 @@ test(`#cascaded() does not fall back on the inherited value of a custom property
           "--hidden": "initial",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -759,7 +759,7 @@ test(`#cascaded() does not fall back on the inherited value of a custom property
           "--hidden": "initial",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -783,7 +783,7 @@ test(`#cascaded() accept spaces around variable name in a var() function`, (t) =
           overflowX: "var( --hidden )",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "overflow-x"), {
@@ -810,7 +810,7 @@ test(`#cascaded() resolves :hover style for an element`, (t) => {
           color: "blue",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "color", Context.hover(element)), {
@@ -847,7 +847,7 @@ test(`#cascaded() resolves :focus style for an element`, (t) => {
           color: "blue",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(cascaded(element, "color", Context.focus(element)), {

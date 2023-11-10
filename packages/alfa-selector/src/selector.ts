@@ -161,7 +161,7 @@ export namespace Selector {
    */
   const parseId = map(
     Token.parseHash((hash) => hash.isIdentifier),
-    (hash) => Id.of(hash.value)
+    (hash) => Id.of(hash.value),
   );
 
   /**
@@ -226,7 +226,7 @@ export namespace Selector {
 
   const parseClass = map(
     right(Token.parseDelim("."), Token.parseIdent()),
-    (ident) => Class.of(ident.value)
+    (ident) => Class.of(ident.value),
   );
 
   /**
@@ -235,9 +235,9 @@ export namespace Selector {
   const parseNamespace = map(
     left(
       option(either(Token.parseIdent(), Token.parseDelim("*"))),
-      Token.parseDelim("|")
+      Token.parseDelim("|"),
     ),
-    (token) => token.map((token) => token.toString()).getOr("")
+    (token) => token.map((token) => token.toString()).getOr(""),
   );
 
   /**
@@ -245,7 +245,7 @@ export namespace Selector {
    */
   const parseName = pair(
     option(parseNamespace),
-    map(Token.parseIdent(), (ident) => ident.value)
+    map(Token.parseIdent(), (ident) => ident.value),
   );
 
   /**
@@ -257,7 +257,7 @@ export namespace Selector {
       name: string,
       value: Option<string> = None,
       matcher: Option<Attribute.Matcher> = None,
-      modifier: Option<Attribute.Modifier> = None
+      modifier: Option<Attribute.Modifier> = None,
     ): Attribute {
       return new Attribute(namespace, name, value, matcher, modifier);
     }
@@ -273,7 +273,7 @@ export namespace Selector {
       name: string,
       value: Option<string>,
       matcher: Option<Attribute.Matcher>,
-      modifier: Option<Attribute.Modifier>
+      modifier: Option<Attribute.Modifier>,
     ) {
       super();
       this._namespace = namespace;
@@ -319,20 +319,20 @@ export namespace Selector {
           case "":
             predicate = and(
               property("name", equals(this._name)),
-              property("namespace", equals(None))
+              property("namespace", equals(None)),
             );
             break;
 
           default:
             predicate = and(
               property("name", equals(this._name)),
-              property("namespace", equals(namespace))
+              property("namespace", equals(namespace)),
             );
         }
 
         return Iterable.some(
           element.attributes,
-          and(predicate, (attribute) => this.matchesValue(attribute.value))
+          and(predicate, (attribute) => this.matchesValue(attribute.value)),
         );
       }
 
@@ -493,17 +493,17 @@ export namespace Selector {
             Token.parseDelim("|"),
             either(
               Token.parseDelim("^"),
-              either(Token.parseDelim("$"), Token.parseDelim("*"))
-            )
-          )
-        )
+              either(Token.parseDelim("$"), Token.parseDelim("*")),
+            ),
+          ),
+        ),
       ),
-      Token.parseDelim("=")
+      Token.parseDelim("="),
     ),
     (delim) =>
       delim.isSome()
         ? (`${delim.get()}=` as Attribute.Matcher)
-        : Attribute.Matcher.Equal
+        : Attribute.Matcher.Equal,
   );
 
   /**
@@ -511,7 +511,7 @@ export namespace Selector {
    */
   const parseModifier = either(
     map(Token.parseIdent("i"), () => Attribute.Modifier.CaseInsensitive),
-    map(Token.parseIdent("s"), () => Attribute.Modifier.CaseSensitive)
+    map(Token.parseIdent("s"), () => Attribute.Modifier.CaseSensitive),
   );
 
   /**
@@ -525,11 +525,11 @@ export namespace Selector {
         option(
           pair(
             pair(parseMatcher, either(Token.parseString(), Token.parseIdent())),
-            delimited(option(Token.parseWhitespace), option(parseModifier))
-          )
-        )
+            delimited(option(Token.parseWhitespace), option(parseModifier)),
+          ),
+        ),
       ),
-      Token.parseCloseSquareBracket
+      Token.parseCloseSquareBracket,
     ),
     (result) => {
       const [[namespace, name], rest] = result;
@@ -542,12 +542,12 @@ export namespace Selector {
           name,
           Option.of(value.value),
           Option.of(matcher),
-          modifier
+          modifier,
         );
       }
 
       return Attribute.of(namespace, name);
-    }
+    },
   );
 
   /**
@@ -639,7 +639,7 @@ export namespace Selector {
    * {@link https://drafts.csswg.org/selectors/#typedef-type-selector}
    */
   const parseType = map(parseName, ([namespace, name]) =>
-    Type.of(namespace, name)
+    Type.of(namespace, name),
   );
 
   /**
@@ -724,14 +724,14 @@ export namespace Selector {
    */
   const parseUniversal = map(
     left(option(parseNamespace), Token.parseDelim("*")),
-    (namespace) => Universal.of(namespace)
+    (namespace) => Universal.of(namespace),
   );
 
   export namespace Pseudo {
     export type JSON = Class.JSON | Element.JSON;
 
     export abstract class Class<
-      N extends string = string
+      N extends string = string,
     > extends Selector<"pseudo-class"> {
       protected readonly _name: N;
 
@@ -788,7 +788,7 @@ export namespace Selector {
     }
 
     export abstract class Element<
-      N extends string = string
+      N extends string = string,
     > extends Selector<"pseudo-element"> {
       protected readonly _name: N;
 
@@ -855,7 +855,7 @@ export namespace Selector {
 
   const parseNth = left(
     Nth.parse,
-    end((token) => `Unexpected token ${token}`)
+    end((token) => `Unexpected token ${token}`),
   );
 
   const parsePseudoClass = right(
@@ -948,8 +948,8 @@ export namespace Selector {
         }
 
         return Err.of(`Unknown pseudo-class :${fn.name}()`);
-      })
-    )
+      }),
+    ),
   );
 
   const parsePseudoElement = either(
@@ -968,24 +968,24 @@ export namespace Selector {
             return parseSelector(tokens).map(([, selector]) =>
               name === "cue"
                 ? (Cue.of(selector) as Pseudo.Element)
-                : CueRegion.of(selector)
+                : CueRegion.of(selector),
             );
 
           case "part":
             return separatedList(
               Token.parseIdent(),
-              Token.parseWhitespace
+              Token.parseWhitespace,
             )(tokens).map(([, idents]) => Part.of(idents));
 
           case "slotted":
             return separatedList(
               parseCompound,
-              Token.parseWhitespace
+              Token.parseWhitespace,
             )(tokens).map(([, selectors]) => Slotted.of(selectors));
         }
 
         return Err.of(`Unknown pseudo-element ::${name}()`);
-      })
+      }),
     ),
     // Non-functional pseudo-elements
     flatMap(
@@ -1004,7 +1004,7 @@ export namespace Selector {
 
               default:
                 return Err.of(
-                  `This pseudo-element is not allowed with single colon: ::${ident.value}`
+                  `This pseudo-element is not allowed with single colon: ::${ident.value}`,
                 );
             }
           }
@@ -1041,8 +1041,8 @@ export namespace Selector {
           }
 
           return Err.of(`Unknown pseudo-element ::${ident.value}`);
-        })
-    )
+        }),
+    ),
   );
 
   const parsePseudo = either(parsePseudoClass, parsePseudoElement);
@@ -1052,7 +1052,7 @@ export namespace Selector {
    */
   export class Is extends Pseudo.Class<"is"> {
     public static of(
-      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>
+      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
     ): Is {
       return new Is(selector);
     }
@@ -1064,7 +1064,7 @@ export namespace Selector {
       | List<Simple | Compound | Complex>;
 
     private constructor(
-      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>
+      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
     ) {
       super("is");
       this._selector = selector;
@@ -1113,7 +1113,7 @@ export namespace Selector {
    */
   export class Not extends Pseudo.Class<"not"> {
     public static of(
-      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>
+      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
     ): Not {
       return new Not(selector);
     }
@@ -1125,7 +1125,7 @@ export namespace Selector {
       | List<Simple | Compound | Complex>;
 
     private constructor(
-      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>
+      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
     ) {
       super("not");
       this._selector = selector;
@@ -1174,7 +1174,7 @@ export namespace Selector {
    */
   export class Has extends Pseudo.Class<"has"> {
     public static of(
-      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>
+      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
     ): Has {
       return new Has(selector);
     }
@@ -1186,7 +1186,7 @@ export namespace Selector {
       | List<Simple | Compound | Complex>;
 
     private constructor(
-      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>
+      selector: Simple | Compound | Complex | List<Simple | Compound | Complex>,
     ) {
       super("has");
       this._selector = selector;
@@ -1242,7 +1242,7 @@ export namespace Selector {
 
     public matches(
       element: Element,
-      context: Context = Context.empty()
+      context: Context = Context.empty(),
     ): boolean {
       return Hover._cache.get(element, Cache.empty).get(context, () => {
         // We assume that most of the time the context is near empty and thus it
@@ -1273,7 +1273,7 @@ export namespace Selector {
 
     public matches(
       element: Element,
-      context: Context = Context.empty()
+      context: Context = Context.empty(),
     ): boolean {
       return context.isActive(element);
     }
@@ -1293,7 +1293,7 @@ export namespace Selector {
 
     public matches(
       element: Element,
-      context: Context = Context.empty()
+      context: Context = Context.empty(),
     ): boolean {
       return context.isFocused(element);
     }
@@ -1315,7 +1315,7 @@ export namespace Selector {
 
     public matches(
       element: Element,
-      context: Context = Context.empty()
+      context: Context = Context.empty(),
     ): boolean {
       return FocusWithin._cache.get(element, Cache.empty).get(context, () => {
         // We assume that most of the time the context is near empty and thus it
@@ -1346,7 +1346,7 @@ export namespace Selector {
 
     public matches(
       element: Element,
-      context: Context = Context.empty()
+      context: Context = Context.empty(),
     ): boolean {
       // :focus-visible matches elements that are focused and where UA decides
       // focus should be shown. That is notably text fields and keyboard-focused
@@ -1373,7 +1373,7 @@ export namespace Selector {
 
     public matches(
       element: Element,
-      context: Context = Context.empty()
+      context: Context = Context.empty(),
     ): boolean {
       switch (element.name) {
         case "a":
@@ -1402,7 +1402,7 @@ export namespace Selector {
 
     public matches(
       element: Element,
-      context: Context = Context.empty()
+      context: Context = Context.empty(),
     ): boolean {
       switch (element.name) {
         case "a":
@@ -1432,7 +1432,7 @@ export namespace Selector {
 
     public matches(
       element: dom.Element,
-      context: Context = Context.empty()
+      context: Context = Context.empty(),
     ): boolean {
       return Element.isActuallyDisabled(element);
     }
@@ -1453,7 +1453,7 @@ export namespace Selector {
 
     public matches(
       element: dom.Element,
-      context: Context = Context.empty()
+      context: Context = Context.empty(),
     ): boolean {
       return test(
         and(
@@ -1464,11 +1464,11 @@ export namespace Selector {
             "textarea",
             "optgroup",
             "option",
-            "fieldset"
+            "fieldset",
           ),
-          not(Element.isActuallyDisabled)
+          not(Element.isActuallyDisabled),
         ),
-        element
+        element,
       );
     }
   }
@@ -2264,9 +2264,9 @@ export namespace Selector {
       parseType,
       either(
         parseAttribute,
-        either(parseId, either(parseUniversal, parsePseudo))
-      )
-    )
+        either(parseId, either(parseUniversal, parsePseudo)),
+      ),
+    ),
   );
 
   /**
@@ -2356,9 +2356,9 @@ export namespace Selector {
       return Iterable.reduce(
         selectors,
         (right, left) => Compound.of(left, right),
-        left as Simple | Compound
+        left as Simple | Compound,
       );
-    }
+    },
   );
 
   /**
@@ -2396,11 +2396,11 @@ export namespace Selector {
         map(Token.parseDelim(">"), () => Combinator.DirectDescendant),
         either(
           map(Token.parseDelim("~"), () => Combinator.Sibling),
-          map(Token.parseDelim("+"), () => Combinator.DirectSibling)
-        )
-      )
+          map(Token.parseDelim("+"), () => Combinator.DirectSibling),
+        ),
+      ),
     ),
-    map(Token.parseWhitespace, () => Combinator.Descendant)
+    map(Token.parseWhitespace, () => Combinator.Descendant),
   );
 
   /**
@@ -2410,7 +2410,7 @@ export namespace Selector {
     public static of(
       combinator: Combinator,
       left: Simple | Compound | Complex,
-      right: Simple | Compound
+      right: Simple | Compound,
     ): Complex {
       return new Complex(combinator, left, right);
     }
@@ -2422,7 +2422,7 @@ export namespace Selector {
     private constructor(
       combinator: Combinator,
       left: Simple | Compound | Complex,
-      right: Simple | Compound
+      right: Simple | Compound,
     ) {
       super();
       this._combinator = combinator;
@@ -2542,9 +2542,9 @@ export namespace Selector {
       return Iterable.reduce(
         selectors,
         (left, [combinator, right]) => Complex.of(combinator, left, right),
-        left as Simple | Compound | Complex
+        left as Simple | Compound | Complex,
       );
-    }
+    },
   );
 
   /**
@@ -2553,7 +2553,7 @@ export namespace Selector {
   export class Relative extends Selector<"relative"> {
     public static of(
       combinator: Combinator,
-      selector: Simple | Compound | Complex
+      selector: Simple | Compound | Complex,
     ): Relative {
       return new Relative(combinator, selector);
     }
@@ -2563,7 +2563,7 @@ export namespace Selector {
 
     private constructor(
       combinator: Combinator,
-      selector: Simple | Compound | Complex
+      selector: Simple | Compound | Complex,
     ) {
       super();
       this._combinator = combinator;
@@ -2644,11 +2644,11 @@ export namespace Selector {
       | Simple
       | Compound
       | Complex
-      | Relative
+      | Relative,
   > extends Selector<"list"> {
     public static of<T extends Simple | Compound | Complex | Relative>(
       left: T,
-      right: T | List<T>
+      right: T | List<T>,
     ): List<T> {
       return new List(left, right);
     }
@@ -2729,9 +2729,9 @@ export namespace Selector {
       zeroOrMore(
         right(
           delimited(option(Token.parseWhitespace), Token.parseComma),
-          parseComplex
-        )
-      )
+          parseComplex,
+        ),
+      ),
     ),
     (result) => {
       let [left, selectors] = result;
@@ -2741,14 +2741,14 @@ export namespace Selector {
       return Iterable.reduce(
         selectors,
         (right, left) => List.of(left, right),
-        left as Simple | Compound | Complex | List<Simple | Compound | Complex>
+        left as Simple | Compound | Complex | List<Simple | Compound | Complex>,
       );
-    }
+    },
   );
 
   parseSelector = left(
     parseList,
-    end((token) => `Unexpected token ${token}`)
+    end((token) => `Unexpected token ${token}`),
   );
 
   export const parse = parseSelector;

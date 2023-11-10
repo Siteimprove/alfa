@@ -22,7 +22,7 @@ export class Slice<T> implements Collection.Indexed<T> {
   public static of<T>(
     array: ReadonlyArray<T>,
     start: number = 0,
-    end: number = array.length
+    end: number = array.length,
   ): Slice<T> {
     start = clamp(start, array.length);
 
@@ -94,7 +94,7 @@ export class Slice<T> implements Collection.Indexed<T> {
   public reduceWhile<U>(
     predicate: Predicate<T, [index: number]>,
     reducer: Reducer<T, U, [index: number]>,
-    accumulator: U
+    accumulator: U,
   ): U {
     return Iterable.reduceWhile(this, predicate, reducer, accumulator);
   }
@@ -102,13 +102,13 @@ export class Slice<T> implements Collection.Indexed<T> {
   public reduceUntil<U>(
     predicate: Predicate<T, [index: number]>,
     reducer: Reducer<T, U, [index: number]>,
-    accumulator: U
+    accumulator: U,
   ): U {
     return Iterable.reduceUntil(this, predicate, reducer, accumulator);
   }
 
   public filter<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Slice<U>;
 
   public filter(predicate: Predicate<T, [index: number]>): Slice<T>;
@@ -120,7 +120,7 @@ export class Slice<T> implements Collection.Indexed<T> {
   }
 
   public reject<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Slice<Exclude<T, U>>;
 
   public reject(predicate: Predicate<T, [index: number]>): Slice<T>;
@@ -132,7 +132,7 @@ export class Slice<T> implements Collection.Indexed<T> {
   }
 
   public find<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Option<U>;
 
   public find(predicate: Predicate<T, [index: number]>): Option<T>;
@@ -152,7 +152,7 @@ export class Slice<T> implements Collection.Indexed<T> {
   }
 
   public collectFirst<U>(
-    mapper: Mapper<T, Option<U>, [index: number]>
+    mapper: Mapper<T, Option<U>, [index: number]>,
   ): Option<U> {
     return Iterable.collectFirst(this, mapper);
   }
@@ -270,7 +270,7 @@ export class Slice<T> implements Collection.Indexed<T> {
   }
 
   public takeWhile<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Slice<U>;
 
   public takeWhile(predicate: Predicate<T, [index: number]>): Slice<T>;
@@ -298,7 +298,7 @@ export class Slice<T> implements Collection.Indexed<T> {
   }
 
   public takeLastWhile<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Slice<U>;
 
   public takeLastWhile(predicate: Predicate<T, [index: number]>): Slice<T>;
@@ -387,7 +387,7 @@ export class Slice<T> implements Collection.Indexed<T> {
     return new Slice(
       this._array,
       this._offset + start,
-      clamp(end, this._length) - start
+      clamp(end, this._length) - start,
     );
   }
 
@@ -409,7 +409,7 @@ export class Slice<T> implements Collection.Indexed<T> {
 
   public sortWith<T, U extends T = T>(
     this: Slice<U>,
-    comparer: Comparer<T>
+    comparer: Comparer<T>,
   ): Slice<U>;
 
   public sortWith(comparer: Comparer<T>): Slice<T> {
@@ -420,14 +420,14 @@ export class Slice<T> implements Collection.Indexed<T> {
 
   public compare<T>(
     this: Slice<Comparable<T>>,
-    iterable: Iterable<T>
+    iterable: Iterable<T>,
   ): Comparison {
     return this.compareWith(iterable, compareComparable);
   }
 
   public compareWith<U = T>(
     iterable: Iterable<U>,
-    comparer: Comparer<T, U, [index: number]>
+    comparer: Comparer<T, U, [index: number]>,
   ): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
   }
@@ -452,7 +452,7 @@ export class Slice<T> implements Collection.Indexed<T> {
         if (
           !Equatable.equals(
             value._array[value._offset + i],
-            this._array[this._offset + i]
+            this._array[this._offset + i],
           )
         ) {
           return false;

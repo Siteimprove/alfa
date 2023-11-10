@@ -14,7 +14,8 @@ export class Headers
   implements
     Iterable<Header>,
     json.Serializable<Headers.JSON>,
-    earl.Serializable<Headers.EARL> {
+    earl.Serializable<Headers.EARL>
+{
   /**
    * @remarks
    * If the iterable contains headers with duplicate names, the last header with
@@ -22,7 +23,7 @@ export class Headers
    */
   public static of(headers: Iterable<Header>): Headers {
     return new Headers(
-      Map.from(Iterable.map(headers, (header) => [header.name, header]))
+      Map.from(Iterable.map(headers, (header) => [header.name, header])),
     );
   }
 

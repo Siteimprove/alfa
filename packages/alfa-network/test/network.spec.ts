@@ -89,7 +89,7 @@ test("#disconnect() disconnects two nodes in a network", (t) => {
       ["baz", [["foo", [3]]]],
       ["foo", [["bar", [1]]]],
       ["bar", []],
-    ]
+    ],
   );
 
   // foo
@@ -109,7 +109,7 @@ test("#disconnect() disconnects two nodes in a network", (t) => {
         ],
       ],
       ["bar", []],
-    ]
+    ],
   );
 });
 

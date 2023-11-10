@@ -37,7 +37,7 @@ export abstract class Cell
     anchor: Slot,
     width: number,
     height: number,
-    headers: Array<Slot>
+    headers: Array<Slot>,
   ) {
     this._element = element;
     this._anchor = anchor;
@@ -81,8 +81,8 @@ export abstract class Cell
     return this._element.children().none(
       or(
         isElement,
-        and(isText, (text) => text.data.trim().length > 0)
-      )
+        and(isText, (text) => text.data.trim().length > 0),
+      ),
     );
   }
 
@@ -137,14 +137,14 @@ export namespace Cell {
       anchor: Slot,
       width: number,
       height: number,
-      headers: Iterable<Slot> = []
+      headers: Iterable<Slot> = [],
     ): Data {
       return new Data(
         element,
         anchor,
         width,
         height,
-        Array.sort(Array.copy(Array.from(headers)))
+        Array.sort(Array.copy(Array.from(headers))),
       );
     }
 
@@ -153,7 +153,7 @@ export namespace Cell {
       anchor: Slot,
       width: number,
       height: number,
-      headers: Array<Slot>
+      headers: Array<Slot>,
     ) {
       super(element, anchor, width, height, headers);
     }
@@ -205,7 +205,7 @@ export namespace Cell {
       width: number,
       height: number,
       headers: Iterable<Slot> = [],
-      scope: Scope = "auto"
+      scope: Scope = "auto",
     ): Header {
       return new Header(
         element,
@@ -213,7 +213,7 @@ export namespace Cell {
         width,
         height,
         Array.sort(Array.copy(Array.from(headers))),
-        scope
+        scope,
       );
     }
 
@@ -225,7 +225,7 @@ export namespace Cell {
       width: number,
       height: number,
       headers: Array<Slot>,
-      scope: Scope
+      scope: Scope,
     ) {
       super(element, anchor, width, height, headers);
 

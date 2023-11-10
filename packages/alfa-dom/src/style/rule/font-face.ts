@@ -20,7 +20,7 @@ export class FontFaceRule extends Rule {
     super();
 
     this._style = Block.of(
-      declarations.filter((declaration) => declaration._attachParent(this))
+      declarations.filter((declaration) => declaration._attachParent(this)),
     );
   }
 

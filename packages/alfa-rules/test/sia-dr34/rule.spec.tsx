@@ -26,16 +26,16 @@ test(`evaluate() passes video with accurate descriptions track`, async (t) => {
         "is-video-streaming": false,
         "has-audio": false,
         "track-describes-video": true,
-      })
+      }),
     ),
     [
       passed(
         R34,
         target,
         { 1: Outcomes.HasDescriptionTrack },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -56,16 +56,16 @@ test(`evaluate() fails video with inaccurate descriptions track`, async (t) => {
         "is-video-streaming": false,
         "has-audio": false,
         "track-describes-video": false,
-      })
+      }),
     ),
     [
       failed(
         R34,
         target,
         { 1: Outcomes.HasNoDescriptionTrack },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -82,9 +82,9 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
     await evaluate(
       R34,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": false })
+      oracle({ "is-video-streaming": false, "has-audio": false }),
     ),
-    [cantTell(R34, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R34, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -113,9 +113,9 @@ test(`evaluate() is inapplicable to videos with audio`, async (t) => {
     await evaluate(
       R34,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": true })
+      oracle({ "is-video-streaming": false, "has-audio": true }),
     ),
-    [inapplicable(R34, Outcome.Mode.SemiAuto)]
+    [inapplicable(R34, Outcome.Mode.SemiAuto)],
   );
 });
 

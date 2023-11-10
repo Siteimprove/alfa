@@ -77,14 +77,14 @@ export abstract class Node<T extends string = string>
 
         if (Slot.isSlot(element)) {
           return Sequence.from(element.assignedNodes()).filter(
-            Element.isElement
+            Element.isElement,
           );
         }
 
         if (tabIndex.some((i) => i >= 0)) {
           return Sequence.of(
             element,
-            Lazy.of(() => element.children().flatMap(candidates))
+            Lazy.of(() => element.children().flatMap(candidates)),
           );
         }
       }
@@ -104,7 +104,7 @@ export abstract class Node<T extends string = string>
           }
 
           return a < b ? -1 : a > b ? 1 : 0;
-        })
+        }),
       )
       .flatMap((element) => {
         const tabIndex = element.tabIndex();
@@ -113,7 +113,7 @@ export abstract class Node<T extends string = string>
           if (tabIndex.some((i) => i >= 0)) {
             return Sequence.of(
               element,
-              Lazy.of(() => shadow.tabOrder())
+              Lazy.of(() => shadow.tabOrder()),
             );
           } else {
             return shadow.tabOrder();
@@ -233,7 +233,7 @@ export interface Node {
   index(options?: Node.Traversal): number;
   closest<T extends Node>(
     refinement: Refinement<Node, T>,
-    options?: Node.Traversal
+    options?: Node.Traversal,
   ): Option<T>;
   closest(predicate: Predicate<Node>, options?: Node.Traversal): Option<Node>;
 }
@@ -244,8 +244,8 @@ export interface Node {
 export namespace Node {
   export interface JSON<T extends string = string> extends tree.Node.JSON<T> {}
 
-  export interface SerializationOptions  {
-    device: Device
+  export interface SerializationOptions {
+    device: Device;
   }
 
   export interface EARL extends earl.EARL {
@@ -256,7 +256,7 @@ export namespace Node {
       "ptr:Pointer",
       "ptr:SinglePointer",
       "ptr:ExpressionPointer",
-      "ptr:XPathPointer"
+      "ptr:XPathPointer",
     ];
     "ptr:expression": string;
     "ptr:reference"?: {
@@ -321,7 +321,7 @@ export namespace Node {
    */
   export const composedNested = Traversal.of(
     Traversal.composed,
-    Traversal.nested
+    Traversal.nested,
   );
 
   export function from(json: Element.JSON, device?: Device): Element;
@@ -347,10 +347,7 @@ export namespace Node {
   /**
    * @internal
    */
-  export function fromNode(
-    json: JSON,
-    device?: Device
-  ): Trampoline<Node> {
+  export function fromNode(json: JSON, device?: Device): Trampoline<Node> {
     switch (json.type) {
       case "element":
         return Element.fromElement(json as Element.JSON, device);

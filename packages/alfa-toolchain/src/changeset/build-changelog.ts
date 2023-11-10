@@ -25,7 +25,7 @@ export namespace Changelog {
   export async function getBody(
     changesets: Array<NewChangesetWithCommit>,
     packages: Packages,
-    config: Config
+    config: Config,
   ): Promise<string> {
     // Build release plan (compute old and new versions for each package)
     const releasePlan = assembleReleasePlan(
@@ -33,13 +33,13 @@ export namespace Changelog {
       packages,
       config,
       undefined,
-      undefined
+      undefined,
     );
 
     // Check unicity of versions
     const { oldVersion, newVersion } = getOrDie(
       getVersions(releasePlan),
-      NON_UNIQUE_VERSION
+      NON_UNIQUE_VERSION,
     );
 
     // Check that changeset config.changelog[1].repo exists, so we can fetch
@@ -64,7 +64,7 @@ export namespace Changelog {
     // Build the body of the global changelog.
     return (
       `## [${newVersion}](../../compare/v${oldVersion}...v${newVersion}) (${new Date(
-        Date.now()
+        Date.now(),
       )
         .toISOString()
         .slice(0, 10)})` +
@@ -72,7 +72,7 @@ export namespace Changelog {
       Changelog.buildBody(
         details.map((detail, idx) => [detail, prLinks[idx]]),
         packages.packages,
-        newVersion
+        newVersion,
       )
     );
   }
@@ -92,7 +92,7 @@ export namespace Changelog {
 
   type ChangeSetDetailsWithLink = [
     changeset: Changeset.Details,
-    prLink: string | undefined
+    prLink: string | undefined,
   ];
 
   /**
@@ -105,7 +105,7 @@ export namespace Changelog {
   export function buildBody(
     changesets: ReadonlyArray<ChangeSetDetailsWithLink>,
     packages: ReadonlyArray<Package>,
-    newVersion: string
+    newVersion: string,
   ): string {
     const sorted: {
       [kind in Changeset.Kind]: Array<ChangeSetDetailsWithLink>;
@@ -117,7 +117,7 @@ export namespace Changelog {
       .map((kind) =>
         sorted[kind].length === 0
           ? ""
-          : buildGroup(kind, sorted[kind], packages, newVersion)
+          : buildGroup(kind, sorted[kind], packages, newVersion),
       )
       .filter((group) => group !== "")
       .join("\n\n")}`;
@@ -130,7 +130,7 @@ export namespace Changelog {
     kind: Changeset.Kind,
     changesets: ReadonlyArray<ChangeSetDetailsWithLink>,
     packages: ReadonlyArray<Package>,
-    newVersion: string
+    newVersion: string,
   ): string {
     return `### ${kind}\n\n${changesets
       .map(buildLine(packages, newVersion))
@@ -144,7 +144,7 @@ export namespace Changelog {
    */
   export function buildLine(
     packages: ReadonlyArray<Package>,
-    newVersion: string
+    newVersion: string,
   ): ([changeset, prLink]: ChangeSetDetailsWithLink) => string {
     return ([changeset, prLink]) =>
       `- ${changeset.packages
@@ -165,7 +165,7 @@ export namespace Changelog {
    */
   function linkToPackage(
     packages: ReadonlyArray<Package>,
-    newVersion: string
+    newVersion: string,
   ): (fullName: string) => string {
     return (fullName) => {
       // The non-null assertion is wrong if a package is deleted but still
@@ -178,11 +178,12 @@ export namespace Changelog {
           [key: string]: any;
         };
 
-      return `[${fullName}](${
-        // Harden the access against non-existent packages or invalid
-        // package.json; this still leaks an undefined in the Changelog.
-        packageJSON?.repository?.directory
-      }/CHANGELOG.md#${newVersion.replace(/\./g, "")})`;
+      return `[${fullName}](${// Harden the access against non-existent packages or invalid
+      // package.json; this still leaks an undefined in the Changelog.
+      packageJSON?.repository?.directory}/CHANGELOG.md#${newVersion.replace(
+        /\./g,
+        "",
+      )})`;
     };
   }
 
@@ -195,19 +196,19 @@ export namespace Changelog {
         return previous.flatMap(({ oldVersion, newVersion }) => {
           if (oldVersion !== "" && oldVersion !== current.oldVersion) {
             return Err.of(
-              "Not all packages have the same current version, aborting"
+              "Not all packages have the same current version, aborting",
             );
           }
           if (newVersion !== "" && newVersion !== current.newVersion) {
             return Err.of(
-              "Not all packages have the same future version, aborting"
+              "Not all packages have the same future version, aborting",
             );
           }
 
           return Ok.of(current);
         });
       },
-      Ok.of({ oldVersion: "", newVersion: "" })
+      Ok.of({ oldVersion: "", newVersion: "" }),
     );
   }
 
@@ -220,10 +221,10 @@ export namespace Changelog {
    */
   async function getPRlinks(
     changesets: Array<NewChangesetWithCommit>,
-    repo: string
+    repo: string,
   ): Promise<Array<string | undefined>> {
     return Promise.all(
-      changesets.map((changeset) => getPRLink(repo)(changeset.commit))
+      changesets.map((changeset) => getPRLink(repo)(changeset.commit)),
     );
   }
 
@@ -231,13 +232,13 @@ export namespace Changelog {
    * Get a markdown formatted link to the PR that added a given commit.
    */
   function getPRLink(
-    repo: string
+    repo: string,
   ): (commit: string | undefined) => Promise<string | undefined> {
     return async (commit) =>
       commit === undefined
         ? undefined
         : getInfo({ commit, repo }).then(
-            (info) => info?.links.pull ?? undefined
+            (info) => info?.links.pull ?? undefined,
           );
   }
 }

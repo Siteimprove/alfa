@@ -40,13 +40,13 @@ export default Rule.Atomic.of<Page, Element>({
             iframe.content
               .map((contentDocument) =>
                 getElementDescendants(contentDocument, Node.flatTree).filter(
-                  and(isVisible(device), isTabbable(device))
-                )
+                  and(isVisible(device), isTabbable(device)),
+                ),
               )
               .some((sequence) => {
                 tabbables = tabbables.set(iframe, sequence);
                 return !sequence.isEmpty();
-              })
+              }),
           );
       },
 
@@ -55,16 +55,16 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             test(
               hasTabIndex((tabindex) => tabindex >= 0),
-              target
+              target,
             ),
             () =>
               Outcomes.IsTabbable(
-                tabbables.get(target).getOr(Sequence.empty<Element>())
+                tabbables.get(target).getOr(Sequence.empty<Element>()),
               ),
             () =>
               Outcomes.IsNotTabbable(
-                tabbables.get(target).getOr(Sequence.empty<Element>())
-              )
+                tabbables.get(target).getOr(Sequence.empty<Element>()),
+              ),
           ),
         };
       },

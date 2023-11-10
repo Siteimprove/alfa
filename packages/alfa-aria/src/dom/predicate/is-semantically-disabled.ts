@@ -17,5 +17,5 @@ export const isSemanticallyDisabled: Predicate<Element> = or(
   // Alfa hub's definition uses the `:disabled` pseudo-class, which is
   // equivalent to "actually disabled" for HTML; we shortcut it here.
   Element.isActuallyDisabled,
-  Element.hasAttribute("aria-disabled", equals("true"))
+  Element.hasAttribute("aria-disabled", equals("true")),
 );

@@ -30,13 +30,14 @@ const { isBoolean, isFunction } = Refinement;
  * * URI is a unique identifier for the question.
  */
 export class Question<
-  TYPE,
-  SUBJECT,
-  CONTEXT,
-  ANSWER,
-  T = ANSWER,
-  URI extends string = string
-> implements
+    TYPE,
+    SUBJECT,
+    CONTEXT,
+    ANSWER,
+    T = ANSWER,
+    URI extends string = string,
+  >
+  implements
     Functor<T>,
     Applicative<T>,
     Monad<T>,
@@ -48,7 +49,7 @@ export class Question<
     message: string,
     subject: SUBJECT,
     context: CONTEXT,
-    options: Question.Options<ANSWER> = {}
+    options: Question.Options<ANSWER> = {},
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, ANSWER, URI> {
     const { fallback = None, diagnostic = Diagnostic.empty } = options;
 
@@ -60,7 +61,7 @@ export class Question<
       fallback,
       subject,
       context,
-      (answer) => answer
+      (answer) => answer,
     );
   }
 
@@ -81,7 +82,7 @@ export class Question<
     fallback: Option<ANSWER>,
     subject: SUBJECT,
     context: CONTEXT,
-    quester: Mapper<ANSWER, T>
+    quester: Mapper<ANSWER, T>,
   ) {
     this._type = type;
     this._uri = uri;
@@ -137,25 +138,25 @@ export class Question<
 
   public answerIf(
     condition: boolean,
-    answer: ANSWER
+    answer: ANSWER,
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 
   public answerIf(
     predicate: Predicate<SUBJECT, [context: CONTEXT]>,
-    answer: ANSWER
+    answer: ANSWER,
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 
   public answerIf(
-    answer: Option<ANSWER>
+    answer: Option<ANSWER>,
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 
   public answerIf(
     answer: Result<ANSWER, Diagnostic>,
-    merger?: Mapper<Diagnostic, Diagnostic, [Diagnostic]>
+    merger?: Mapper<Diagnostic, Diagnostic, [Diagnostic]>,
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 
   public answerIf(
-    answer: Result<ANSWER, unknown>
+    answer: Result<ANSWER, unknown>,
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI>;
 
   public answerIf(
@@ -164,7 +165,7 @@ export class Question<
       | Predicate<SUBJECT, [context: CONTEXT]>
       | Option<ANSWER>
       | Result<ANSWER, unknown>,
-    answerOrMerger?: ANSWER | Mapper<Diagnostic, Diagnostic, [Diagnostic]>
+    answerOrMerger?: ANSWER | Mapper<Diagnostic, Diagnostic, [Diagnostic]>,
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
     let condition = false;
     let answer: ANSWER;
@@ -214,7 +215,7 @@ export class Question<
           this._diagnostic,
           this._subject,
           this._context,
-          this.answer(answer!)
+          this.answer(answer!),
         )
       : new Question(
           this._type,
@@ -224,12 +225,12 @@ export class Question<
           this._fallback,
           this._subject,
           this._context,
-          this._quester
+          this._quester,
         );
   }
 
   public map<U>(
-    mapper: Mapper<T, U>
+    mapper: Mapper<T, U>,
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI> {
     return new Question(
       this._type,
@@ -239,18 +240,18 @@ export class Question<
       this._fallback,
       this._subject,
       this._context,
-      (answer) => mapper(this._quester(answer))
+      (answer) => mapper(this._quester(answer)),
     );
   }
 
   public apply<U>(
-    mapper: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Mapper<T, U>, URI>
+    mapper: Question<TYPE, SUBJECT, CONTEXT, ANSWER, Mapper<T, U>, URI>,
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI> {
     return mapper.flatMap((mapper) => this.map(mapper));
   }
 
   public flatMap<U>(
-    mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>
+    mapper: Mapper<T, Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI>>,
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI> {
     return new Question(
       this._type,
@@ -260,7 +261,7 @@ export class Question<
       this._fallback,
       this._subject,
       this._context,
-      (answer) => mapper(this._quester(answer))._quester(answer)
+      (answer) => mapper(this._quester(answer))._quester(answer),
     );
   }
 
@@ -271,7 +272,7 @@ export class Question<
       CONTEXT,
       ANSWER,
       Question<TYPE, SUBJECT, CONTEXT, ANSWER, T>
-    >
+    >,
   ): Question<TYPE, SUBJECT, CONTEXT, ANSWER, T> {
     return new Question(
       this._type,
@@ -281,7 +282,7 @@ export class Question<
       this._fallback,
       this._subject,
       this._context,
-      (answer) => this._quester(answer)._quester(answer)
+      (answer) => this._quester(answer)._quester(answer),
     );
   }
 
@@ -307,7 +308,7 @@ export namespace Question {
     SUBJECT,
     CONTEXT,
     ANSWER,
-    URI extends string = string
+    URI extends string = string,
   > {
     [key: string]: json.JSON;
     type: Serializable.ToJSON<TYPE>;
@@ -327,7 +328,7 @@ export namespace Question {
     CONTEXT,
     ANSWER,
     T = ANSWER,
-    URI extends string = string
+    URI extends string = string,
   >(value: unknown): value is Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
     return value instanceof Question;
   }
@@ -347,7 +348,7 @@ export namespace Question {
     CONTEXT,
     ANSWER,
     T = ANSWER,
-    URI extends string = string
+    URI extends string = string,
   > extends Question<TYPE, SUBJECT, CONTEXT, ANSWER, T, URI> {
     private readonly _answer: T;
 
@@ -358,7 +359,7 @@ export namespace Question {
       diagnostic: Diagnostic,
       subject: SUBJECT,
       context: CONTEXT,
-      answer: T
+      answer: T,
     ) {
       super(
         type,
@@ -368,7 +369,7 @@ export namespace Question {
         None,
         subject,
         context,
-        () => answer
+        () => answer,
       );
       this._answer = answer;
     }
@@ -383,7 +384,7 @@ export namespace Question {
      * rhetorical question is not lost as the question is transformed.
      */
     public map<U>(
-      mapper: Mapper<T, U>
+      mapper: Mapper<T, U>,
     ): Rhetorical<TYPE, SUBJECT, CONTEXT, ANSWER, U, URI> {
       return new Rhetorical(
         this._type,
@@ -392,7 +393,7 @@ export namespace Question {
         this._diagnostic,
         this._subject,
         this._context,
-        mapper(this._answer)
+        mapper(this._answer),
       );
     }
   }

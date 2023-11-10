@@ -58,7 +58,7 @@ export namespace Media {
 
   const parseModifier = either(
     map(Token.parseIdent("only"), () => Modifier.Only),
-    map(Token.parseIdent("not"), () => Modifier.Not)
+    map(Token.parseIdent("not"), () => Modifier.Not),
   );
 
   interface Matchable {
@@ -147,7 +147,7 @@ export namespace Media {
           return true;
       }
     }),
-    (ident) => Type.of(ident.value)
+    (ident) => Type.of(ident.value),
   );
 
   /**
@@ -215,7 +215,7 @@ export namespace Media {
 
     export function tryFrom(
       value: Option<Value<any>>,
-      name: string
+      name: string,
     ): Result<Feature, string> {
       switch (name) {
         case "width":
@@ -258,7 +258,7 @@ export namespace Media {
         } = device;
 
         const value = this._value.map((value) =>
-          value.map((length) => length.resolve(Resolver.length(device)))
+          value.map((length) => length.resolve(Resolver.length(device))),
         );
 
         return width > 0
@@ -271,13 +271,13 @@ export namespace Media {
       export function tryFrom(value: Option<Value>): Result<Width, string> {
         return value
           .map((value) =>
-            Value.Range.isRange(value) ? value.toLength() : value
+            Value.Range.isRange(value) ? value.toLength() : value,
           )
           .map((value) => {
             if (
               value.hasValue(Length.isLength) &&
               value.hasValue(
-                (value): value is Length.Fixed => !value.hasCalculation()
+                (value): value is Length.Fixed => !value.hasCalculation(),
               )
             ) {
               return Ok.of(Width.of(value));
@@ -323,7 +323,7 @@ export namespace Media {
         } = device;
 
         const value = this._value.map((value) =>
-          value.map((length) => length.resolve(Resolver.length(device)))
+          value.map((length) => length.resolve(Resolver.length(device))),
         );
 
         return height > 0
@@ -336,13 +336,13 @@ export namespace Media {
       export function tryFrom(value: Option<Value>): Result<Height, string> {
         return value
           .map((value) =>
-            Value.Range.isRange(value) ? value.toLength() : value
+            Value.Range.isRange(value) ? value.toLength() : value,
           )
           .map((value) => {
             if (
               value.hasValue(Length.isLength) &&
               value.hasValue(
-                (value): value is Length.Fixed => !value.hasCalculation()
+                (value): value is Length.Fixed => !value.hasCalculation(),
               )
             ) {
               return Ok.of(Height.of(value));
@@ -384,14 +384,14 @@ export namespace Media {
 
       public matches(device: Device): boolean {
         return this._value.every((value) =>
-          value.matches(Keyword.of(device.viewport.orientation))
+          value.matches(Keyword.of(device.viewport.orientation)),
         );
       }
     }
 
     namespace Orientation {
       export function tryFrom(
-        value: Option<Value<any>>
+        value: Option<Value<any>>,
       ): Result<Orientation, string> {
         return value
           .map((value) => {
@@ -400,8 +400,8 @@ export namespace Media {
               value.hasValue(
                 Refinement.and(
                   Keyword.isKeyword,
-                  property("value", equals("landscape", "portrait"))
-                )
+                  property("value", equals("landscape", "portrait")),
+                ),
               )
             ) {
               return Ok.of(Orientation.of(value));
@@ -440,7 +440,7 @@ export namespace Media {
 
     namespace Scripting {
       export function tryFrom(
-        value: Option<Value<any>>
+        value: Option<Value<any>>,
       ): Result<Scripting, string> {
         return value
           .map((value) => {
@@ -449,8 +449,8 @@ export namespace Media {
               value.hasValue(
                 Refinement.and(
                   Keyword.isKeyword,
-                  property("value", equals("none", "enabled", "initial-only"))
-                )
+                  property("value", equals("none", "enabled", "initial-only")),
+                ),
               )
             ) {
               return Ok.of(Scripting.of(value));
@@ -481,7 +481,7 @@ export namespace Media {
    * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-name}
    */
   const parseFeatureName = map(Token.parseIdent(), (ident) =>
-    ident.value.toLowerCase()
+    ident.value.toLowerCase(),
   );
 
   /**
@@ -495,25 +495,25 @@ export namespace Media {
       filter(
         Number.parse,
         (number) => !number.hasCalculation(),
-        () => "Calculations no supported in media queries"
+        () => "Calculations no supported in media queries",
       ),
-      map(Token.parseIdent(), (ident) => Keyword.of(ident.value.toLowerCase()))
+      map(Token.parseIdent(), (ident) => Keyword.of(ident.value.toLowerCase())),
     ),
     either(
       map(
         separated(
           Token.parseNumber((number) => number.isInteger),
           delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-          Token.parseNumber((number) => number.isInteger)
+          Token.parseNumber((number) => number.isInteger),
         ),
-        ([left, right]) => Percentage.of(left.value / right.value)
+        ([left, right]) => Percentage.of(left.value / right.value),
       ),
       filter(
         Length.parse,
         (length) => !length.hasCalculation(),
-        () => "Calculations no supported in media queries"
-      )
-    )
+        () => "Calculations no supported in media queries",
+      ),
+    ),
   );
 
   /**
@@ -523,7 +523,7 @@ export namespace Media {
     separated(
       parseFeatureName,
       delimited(option(Token.parseWhitespace), Token.parseColon),
-      parseFeatureValue
+      parseFeatureValue,
     ),
     ([name, value]) => {
       if (name.startsWith("min-") || name.startsWith("max-")) {
@@ -535,19 +535,19 @@ export namespace Media {
 
         return Feature.tryFrom(
           Option.of(range(Value.bound(value, /* isInclusive */ true))),
-          name
+          name,
         );
       } else {
         return Feature.tryFrom(Option.of(Value.discrete(value)), name);
       }
-    }
+    },
   );
 
   /**
    * {@link https://drafts.csswg.org/mediaqueries/#typedef-mf-boolean}
    */
   const parseFeatureBoolean = mapResult(parseFeatureName, (name) =>
-    Feature.tryFrom(None, name)
+    Feature.tryFrom(None, name),
   );
 
   /**
@@ -556,7 +556,7 @@ export namespace Media {
   const parseFeatureLessThan = map(
     right(Token.parseDelim("<"), option(Token.parseDelim("="))),
     (equal) =>
-      equal.isNone() ? Comparison.LessThan : Comparison.LessThanOrEqual
+      equal.isNone() ? Comparison.LessThan : Comparison.LessThanOrEqual,
   );
 
   /**
@@ -565,7 +565,7 @@ export namespace Media {
   const parseFeatureGreaterThan = map(
     right(Token.parseDelim(">"), option(Token.parseDelim("="))),
     (equal) =>
-      equal.isNone() ? Comparison.GreaterThan : Comparison.GreaterThanOrEqual
+      equal.isNone() ? Comparison.GreaterThan : Comparison.GreaterThanOrEqual,
   );
 
   /**
@@ -579,7 +579,7 @@ export namespace Media {
   const parseFeatureComparison = either(
     parseFeatureEqual,
     parseFeatureLessThan,
-    parseFeatureGreaterThan
+    parseFeatureGreaterThan,
   );
 
   /**
@@ -592,31 +592,31 @@ export namespace Media {
         map(
           pair(
             parseFeatureValue,
-            delimited(option(Token.parseWhitespace), parseFeatureLessThan)
+            delimited(option(Token.parseWhitespace), parseFeatureLessThan),
           ),
           ([value, comparison]) =>
             Value.bound(
               value,
-              /* isInclusive */ comparison === Comparison.LessThanOrEqual
-            )
+              /* isInclusive */ comparison === Comparison.LessThanOrEqual,
+            ),
         ),
         pair(
           delimited(option(Token.parseWhitespace), parseFeatureName),
           map(
             pair(
               delimited(option(Token.parseWhitespace), parseFeatureLessThan),
-              parseFeatureValue
+              parseFeatureValue,
             ),
             ([comparison, value]) =>
               Value.bound(
                 value,
-                /* isInclusive */ comparison === Comparison.LessThanOrEqual
-              )
-          )
-        )
+                /* isInclusive */ comparison === Comparison.LessThanOrEqual,
+              ),
+          ),
+        ),
       ),
       ([minimum, [name, maximum]]) =>
-        Feature.tryFrom(Option.of(Value.range(minimum, maximum)), name)
+        Feature.tryFrom(Option.of(Value.range(minimum, maximum)), name),
     ),
 
     // <mf-value> <mf-gt> <mf-name> <mf-gt> <mf-value>
@@ -625,31 +625,31 @@ export namespace Media {
         map(
           pair(
             parseFeatureValue,
-            delimited(option(Token.parseWhitespace), parseFeatureGreaterThan)
+            delimited(option(Token.parseWhitespace), parseFeatureGreaterThan),
           ),
           ([value, comparison]) =>
             Value.bound(
               value,
-              /* isInclusive */ comparison === Comparison.GreaterThanOrEqual
-            )
+              /* isInclusive */ comparison === Comparison.GreaterThanOrEqual,
+            ),
         ),
         pair(
           delimited(option(Token.parseWhitespace), parseFeatureName),
           map(
             pair(
               delimited(option(Token.parseWhitespace), parseFeatureGreaterThan),
-              parseFeatureValue
+              parseFeatureValue,
             ),
             ([comparison, value]) =>
               Value.bound(
                 value,
-                /* isInclusive */ comparison === Comparison.GreaterThanOrEqual
-              )
-          )
-        )
+                /* isInclusive */ comparison === Comparison.GreaterThanOrEqual,
+              ),
+          ),
+        ),
       ),
       ([maximum, [name, minimum]]) =>
-        Feature.tryFrom(Option.of(Value.range(minimum, maximum)), name)
+        Feature.tryFrom(Option.of(Value.range(minimum, maximum)), name),
     ),
 
     // <mf-name> <mf-comparison> <mf-value>
@@ -658,8 +658,8 @@ export namespace Media {
         parseFeatureName,
         pair(
           delimited(option(Token.parseWhitespace), parseFeatureComparison),
-          parseFeatureValue
-        )
+          parseFeatureValue,
+        ),
       ),
       ([name, [comparison, value]]) => {
         switch (comparison) {
@@ -668,10 +668,10 @@ export namespace Media {
               Option.of(
                 Value.range(
                   Value.bound(value, /* isInclude */ true),
-                  Value.bound(value, /* isInclude */ true)
-                )
+                  Value.bound(value, /* isInclude */ true),
+                ),
               ),
-              name
+              name,
             );
 
           case Comparison.LessThan:
@@ -681,11 +681,11 @@ export namespace Media {
                 Value.maximumRange(
                   Value.bound(
                     value,
-                    /* isInclusive */ comparison === Comparison.LessThanOrEqual
-                  )
-                )
+                    /* isInclusive */ comparison === Comparison.LessThanOrEqual,
+                  ),
+                ),
               ),
-              name
+              name,
             );
 
           case Comparison.GreaterThan:
@@ -696,14 +696,14 @@ export namespace Media {
                   Value.bound(
                     value,
                     /* isInclusive */ comparison ===
-                      Comparison.GreaterThanOrEqual
-                  )
-                )
+                      Comparison.GreaterThanOrEqual,
+                  ),
+                ),
               ),
-              name
+              name,
             );
         }
-      }
+      },
     ),
 
     // <mf-value> <mf-comparison> <mf-name>
@@ -712,8 +712,8 @@ export namespace Media {
         parseFeatureValue,
         pair(
           delimited(option(Token.parseWhitespace), parseFeatureComparison),
-          parseFeatureName
-        )
+          parseFeatureName,
+        ),
       ),
       ([value, [comparison, name]]) => {
         switch (comparison) {
@@ -722,10 +722,10 @@ export namespace Media {
               Option.of(
                 Value.range(
                   Value.bound(value, /* isInclude */ true),
-                  Value.bound(value, /* isInclude */ true)
-                )
+                  Value.bound(value, /* isInclude */ true),
+                ),
               ),
-              name
+              name,
             );
 
           case Comparison.LessThan:
@@ -735,11 +735,11 @@ export namespace Media {
                 Value.minimumRange(
                   Value.bound(
                     value,
-                    /* isInclusive */ comparison === Comparison.LessThanOrEqual
-                  )
-                )
+                    /* isInclusive */ comparison === Comparison.LessThanOrEqual,
+                  ),
+                ),
               ),
-              name
+              name,
             );
 
           case Comparison.GreaterThan:
@@ -750,15 +750,15 @@ export namespace Media {
                   Value.bound(
                     value,
                     /* isInclusive */ comparison ===
-                      Comparison.GreaterThanOrEqual
-                  )
-                )
+                      Comparison.GreaterThanOrEqual,
+                  ),
+                ),
               ),
-              name
+              name,
             );
         }
-      }
-    )
+      },
+    ),
   );
 
   /**
@@ -768,9 +768,9 @@ export namespace Media {
     Token.parseOpenParenthesis,
     delimited(
       option(Token.parseWhitespace),
-      either(parseFeatureRange, parseFeaturePlain, parseFeatureBoolean)
+      either(parseFeatureRange, parseFeaturePlain, parseFeatureBoolean),
     ),
-    Token.parseCloseParenthesis
+    Token.parseCloseParenthesis,
   );
 
   export interface Value<T = unknown>
@@ -814,7 +814,7 @@ export namespace Media {
       }
 
       public hasValue<U extends T>(
-        refinement: Refinement<T, U>
+        refinement: Refinement<T, U>,
       ): this is Discrete<U> {
         return refinement(this._value);
       }
@@ -861,7 +861,7 @@ export namespace Media {
 
       private constructor(
         minimum: Option<Bound<T>>,
-        maximum: Option<Bound<T>>
+        maximum: Option<Bound<T>>,
       ) {
         this._minimum = minimum;
         this._maximum = maximum;
@@ -878,7 +878,7 @@ export namespace Media {
       public map<U>(mapper: Mapper<T, U>): Range<U> {
         return new Range(
           this._minimum.map((bound) => bound.map(mapper)),
-          this._maximum.map((bound) => bound.map(mapper))
+          this._maximum.map((bound) => bound.map(mapper)),
         );
       }
 
@@ -886,10 +886,10 @@ export namespace Media {
         return this.map((bound) =>
           Refinement.and(
             Number.isNumber,
-            (value) => !value.hasCalculation() && value.value === 0
+            (value) => !value.hasCalculation() && value.value === 0,
           )(bound)
             ? Length.of(0, "px")
-            : bound
+            : bound,
         );
       }
 
@@ -930,7 +930,7 @@ export namespace Media {
       }
 
       public hasValue<U extends T>(
-        refinement: Refinement<T, U>
+        refinement: Refinement<T, U>,
       ): this is Discrete<U> {
         return (
           this._minimum.every((bound) => refinement(bound.value)) &&
@@ -995,7 +995,7 @@ export namespace Media {
       }
 
       public hasValue<U extends T>(
-        refinement: Refinement<T, U>
+        refinement: Refinement<T, U>,
       ): this is Bound<U> {
         return refinement(this._value);
       }
@@ -1024,7 +1024,7 @@ export namespace Media {
   {
     public static of(
       left: Feature | Condition,
-      right: Feature | Condition
+      right: Feature | Condition,
     ): And {
       return new And(left, right);
     }
@@ -1100,7 +1100,7 @@ export namespace Media {
   {
     public static of(
       left: Feature | Condition,
-      right: Feature | Condition
+      right: Feature | Condition,
     ): Or {
       return new Or(left, right);
     }
@@ -1259,11 +1259,11 @@ export namespace Media {
     delimited(
       Token.parseOpenParenthesis,
       delimited(option(Token.parseWhitespace), (input) =>
-        parseCondition(input)
+        parseCondition(input),
       ),
-      Token.parseCloseParenthesis
+      Token.parseCloseParenthesis,
     ),
-    parseFeature
+    parseFeature,
   );
 
   /**
@@ -1272,9 +1272,9 @@ export namespace Media {
   const parseNot = map(
     right(
       delimited(option(Token.parseWhitespace), Token.parseIdent("not")),
-      parseInParens
+      parseInParens,
     ),
-    not
+    not,
   );
 
   /**
@@ -1282,7 +1282,7 @@ export namespace Media {
    */
   const parseAnd = right(
     delimited(option(Token.parseWhitespace), Token.parseIdent("and")),
-    parseInParens
+    parseInParens,
   );
 
   /**
@@ -1290,7 +1290,7 @@ export namespace Media {
    */
   const parseOr = right(
     delimited(option(Token.parseWhitespace), Token.parseIdent("or")),
-    parseInParens
+    parseInParens,
   );
 
   /**
@@ -1304,18 +1304,18 @@ export namespace Media {
           parseInParens,
           either(
             map(oneOrMore(parseAnd), (queries) => [and, queries] as const),
-            map(oneOrMore(parseOr), (queries) => [or, queries] as const)
-          )
+            map(oneOrMore(parseOr), (queries) => [or, queries] as const),
+          ),
         ),
         ([left, [constructor, right]]) =>
           Iterable.reduce(
             right,
             (left, right) => constructor(left, right),
-            left
-          )
+            left,
+          ),
       ),
-      parseInParens
-    )
+      parseInParens,
+    ),
   );
 
   /**
@@ -1324,8 +1324,8 @@ export namespace Media {
   const parseConditionWithoutOr = either(
     parseNot,
     map(pair(parseInParens, zeroOrMore(parseAnd)), ([left, right]) =>
-      [left, ...right].reduce((left, right) => and(left, right))
-    )
+      [left, ...right].reduce((left, right) => and(left, right)),
+    ),
   );
 
   /**
@@ -1335,7 +1335,7 @@ export namespace Media {
     public static of(
       modifier: Option<Modifier>,
       type: Option<Type>,
-      condition: Option<Feature | Condition>
+      condition: Option<Feature | Condition>,
     ): Query {
       return new Query(modifier, type, condition);
     }
@@ -1347,7 +1347,7 @@ export namespace Media {
     private constructor(
       modifier: Option<Modifier>,
       type: Option<Type>,
-      condition: Option<Feature | Condition>
+      condition: Option<Feature | Condition>,
     ) {
       this._modifier = modifier;
       this._type = type;
@@ -1368,13 +1368,13 @@ export namespace Media {
 
     public matches(device: Device): boolean {
       const negated = this._modifier.some(
-        (modifier) => modifier === Modifier.Not
+        (modifier) => modifier === Modifier.Not,
       );
 
       const type = this._type.every((type) => type.matches(device));
 
       const condition = this.condition.every((condition) =>
-        condition.matches(device)
+        condition.matches(device),
       );
 
       return negated !== (type && condition);
@@ -1408,7 +1408,7 @@ export namespace Media {
 
       return this._condition
         .map((condition) =>
-          type === "" ? `${condition}` : `${type} and ${condition}`
+          type === "" ? `${condition}` : `${type} and ${condition}`,
         )
         .getOr(type);
     }
@@ -1435,26 +1435,26 @@ export namespace Media {
   const parseQuery = left(
     either(
       map(parseCondition, (condition) =>
-        Query.of(None, None, Option.of(condition))
+        Query.of(None, None, Option.of(condition)),
       ),
       map(
         pair(
           pair(
             option(delimited(option(Token.parseWhitespace), parseModifier)),
-            parseType
+            parseType,
           ),
           option(
             right(
               delimited(option(Token.parseWhitespace), Token.parseIdent("and")),
-              parseConditionWithoutOr
-            )
-          )
+              parseConditionWithoutOr,
+            ),
+          ),
         ),
         ([[modifier, type], condition]) =>
-          Query.of(modifier, Option.of(type), condition)
-      )
+          Query.of(modifier, Option.of(type), condition),
+      ),
     ),
-    end(() => `Unexpected token`)
+    end(() => `Unexpected token`),
   );
 
   /**
@@ -1518,7 +1518,7 @@ export namespace Media {
   const notAll = Query.of(
     Option.of(Modifier.Not),
     Option.of(Type.of("all")),
-    None
+    None,
   );
 
   /**
@@ -1531,21 +1531,21 @@ export namespace Media {
           Component.consume,
           either(
             Token.parseComma,
-            end(() => `Unexpected token`)
-          )
+            end(() => `Unexpected token`),
+          ),
         ),
-        (components) => Iterable.flatten(components)
+        (components) => Iterable.flatten(components),
       ),
-      Token.parseComma
+      Token.parseComma,
     ),
     (queries) =>
       List.of(
         Iterable.map(queries, (tokens) =>
           parseQuery(Slice.from(tokens).trim(Token.isWhitespace))
             .map(([, query]) => query)
-            .getOr(notAll)
-        )
-      )
+            .getOr(notAll),
+        ),
+      ),
   );
 
   export const parse = parseList;

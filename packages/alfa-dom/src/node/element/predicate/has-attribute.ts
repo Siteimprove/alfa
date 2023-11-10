@@ -9,7 +9,7 @@ const { property } = Predicate;
  * @public
  */
 export function hasAttribute(
-  predicate: Predicate<Attribute>
+  predicate: Predicate<Attribute>,
 ): Predicate<Element>;
 
 /**
@@ -17,12 +17,12 @@ export function hasAttribute(
  */
 export function hasAttribute(
   name: string,
-  value?: Predicate<string>
+  value?: Predicate<string>,
 ): Predicate<Element>;
 
 export function hasAttribute(
   nameOrPredicate: string | Predicate<Attribute>,
-  value: Predicate<string> = () => true
+  value: Predicate<string> = () => true,
 ): Predicate<Element> {
   if (typeof nameOrPredicate === "function") {
     return (element) => element.attribute(nameOrPredicate).isSome();

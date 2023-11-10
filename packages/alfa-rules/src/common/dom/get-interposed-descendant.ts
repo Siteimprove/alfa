@@ -25,7 +25,7 @@ const cache = Cache.empty<
 
 export function getInterposedDescendant(
   device: Device,
-  element: Element
+  element: Element,
 ): Sequence<Element> {
   const root = element.root(Node.flatTree);
 
@@ -38,15 +38,15 @@ export function getInterposedDescendant(
         .filter(
           and(
             isElement,
-            and(isPositioned(device, "absolute", "fixed"), isVisible(device))
-          )
+            and(isPositioned(device, "absolute", "fixed"), isVisible(device)),
+          ),
         )
         // Only keep the ones who have an offset parent
         .filter((element) => getOffsetParent(element, device).isSome())
         // Group the result by the offset parent
         // getOffsetParent is cached, so this is not expensive.
         // getOffsetParent is guaranteed to be Some by the previous filter.
-        .groupBy((element) => getOffsetParent(element, device).getUnsafe())
+        .groupBy((element) => getOffsetParent(element, device).getUnsafe()),
     )
     .get(element)
     .getOr(Sequence.empty());

@@ -19,14 +19,14 @@ export class Element extends Node<"element"> {
     role: Option<Role> = None,
     name: Option<Name> = None,
     attributes: Iterable<Attribute> = [],
-    children: Iterable<Node> = []
+    children: Iterable<Node> = [],
   ): Element {
     return new Element(
       owner,
       role,
       name,
       Array.from(attributes),
-      Array.from(children)
+      Array.from(children),
     );
   }
 
@@ -39,7 +39,7 @@ export class Element extends Node<"element"> {
     role: Option<Role>,
     name: Option<Name>,
     attributes: Array<Attribute>,
-    children: Array<Node>
+    children: Array<Node>,
   ) {
     super(owner, children, "element");
 
@@ -61,23 +61,23 @@ export class Element extends Node<"element"> {
   }
 
   public attribute<N extends Attribute.Name>(
-    refinement: Refinement<Attribute, Attribute<N>>
+    refinement: Refinement<Attribute, Attribute<N>>,
   ): Option<Attribute<N>>;
 
   public attribute(predicate: Predicate<Attribute>): Option<Attribute>;
 
   public attribute<N extends Attribute.Name>(
-    predicate: N
+    predicate: N,
   ): Option<Attribute<N>>;
 
   public attribute(
-    predicate: Attribute.Name | Predicate<Attribute>
+    predicate: Attribute.Name | Predicate<Attribute>,
   ): Option<Attribute> {
     return Iterable.find(
       this._attributes,
       typeof predicate === "string"
         ? (attribute) => attribute.name === predicate
-        : predicate
+        : predicate,
     );
   }
 
@@ -87,7 +87,7 @@ export class Element extends Node<"element"> {
       this._role,
       this._name,
       this._attributes,
-      (this._children as Array<Node>).map((child) => child.clone())
+      (this._children as Array<Node>).map((child) => child.clone()),
     );
   }
 

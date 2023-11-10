@@ -17,7 +17,7 @@ test("evaluate() passes a page with conditional rotation (transform) that does n
           h.rule.style("div", { transform: "rotateZ(1turn)" }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R44, { document }), [
@@ -36,7 +36,7 @@ test("evaluate() passes a page with conditional rotation (transform) not around 
           h.rule.style("div", { transform: "rotateX(90deg)" }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R44, { document }), [
@@ -55,7 +55,7 @@ test("evaluate() passes a page with conditional rotation (rotate) that does not 
           h.rule.style("div", { rotate: "z 1turn" }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R44, { document }), [
@@ -74,7 +74,7 @@ test("evaluate() passes a page with conditional rotation (rotate) not around the
           h.rule.style("div", { rotate: "1 1 0 90deg" }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R44, { document }), [
@@ -96,7 +96,7 @@ test("evaluate() fails a page with conditional matrix that restricts orientation
           }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R44, { document }), [
@@ -115,7 +115,7 @@ test("evaluate() fails a page with conditional rotation that restricts orientati
           h.rule.style("div", { rotate: "90deg" }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R44, { document }), [
@@ -133,7 +133,7 @@ test("evaluate() is inapplicable to invisible elements", async (t) => {
         ]),
         h.rule.style("div", { display: "none" }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R44, { document }), [inapplicable(R44)]);
@@ -148,7 +148,7 @@ test("evaluate() is inapplicable when `transform`/`rotate` is not used", async (
           h.rule.style("div", { color: "blue" }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R44, { document }), [inapplicable(R44)]);
@@ -157,7 +157,7 @@ test("evaluate() is inapplicable when `transform`/`rotate` is not used", async (
 test("evaluate() is inapplicable when `transform` is used unconditionally", async (t) => {
   const document = h.document(
     [<div>Hello</div>],
-    [h.sheet([h.rule.style("div", { transform: "rotateZ(1turn)" })])]
+    [h.sheet([h.rule.style("div", { transform: "rotateZ(1turn)" })])],
   );
 
   t.deepEqual(await evaluate(R44, { document }), [inapplicable(R44)]);
@@ -172,7 +172,7 @@ test("evaluate() is inapplicable when `transform` doesn't depend on orientation"
           h.rule.style("div", { transform: "rotateZ(1turn)" }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R44, { document }), [inapplicable(R44)]);
@@ -187,7 +187,7 @@ test("evaluate() is inapplicable when `transform` doesn't rotate content", async
           h.rule.style("div", { transform: "translateX(100px)" }),
         ]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R44, { document }), [inapplicable(R44)]);

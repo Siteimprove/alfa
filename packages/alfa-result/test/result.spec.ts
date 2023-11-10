@@ -14,7 +14,7 @@ test("#map() applies a function to an ok value", (t) => {
 test("#map() does nothing to an err value", (t) => {
   t.equal(
     err.map((n) => n + 2),
-    err
+    err,
   );
 });
 

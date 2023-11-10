@@ -12,7 +12,7 @@ test("Can test a failing block", async (t) => {
       error: (message) => {
         failed = true;
       },
-    }
+    },
   );
 
   t(failed);
@@ -30,7 +30,7 @@ test("Can test a passing block", async (t) => {
       error: (message) => {
         passed = false;
       },
-    }
+    },
   );
 
   t(passed);
@@ -48,7 +48,7 @@ test("Can test a block throwing errors", async (t) => {
       error: (message) => {
         failed = true;
       },
-    }
+    },
   );
 
   t(failed);

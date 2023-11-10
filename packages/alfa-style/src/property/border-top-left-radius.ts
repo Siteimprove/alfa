@@ -20,7 +20,7 @@ type Specified = Tuple<
 type Computed = Tuple<
   [
     horizontal: LengthPercentage.PartiallyResolved,
-    vertical: LengthPercentage.PartiallyResolved
+    vertical: LengthPercentage.PartiallyResolved,
   ]
 >;
 
@@ -28,9 +28,9 @@ const parse = map(
   takeBetween(
     delimited(option(Token.parseWhitespace), LengthPercentage.parse),
     1,
-    2
+    2,
   ),
-  ([horizontal, vertical = horizontal]) => Tuple.of(horizontal, vertical)
+  ([horizontal, vertical = horizontal]) => Tuple.of(horizontal, vertical),
 );
 
 /**
@@ -46,7 +46,7 @@ export default Longhand.of<Specified, Computed>(
       // really handle currently.
       Tuple.of(
         LengthPercentage.partiallyResolve(Resolver.length(style))(h),
-        LengthPercentage.partiallyResolve(Resolver.length(style))(v)
-      )
-    )
+        LengthPercentage.partiallyResolve(Resolver.length(style))(v),
+      ),
+    ),
 );

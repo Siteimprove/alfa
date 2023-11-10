@@ -70,8 +70,8 @@ export namespace Side {
   export const parse = map(
     right(
       Token.parseIdent("to"),
-      right(option(Token.parseWhitespace), Position.parse)
+      right(option(Token.parseWhitespace), Position.parse),
     ),
-    (side) => Side.of(side)
+    (side) => Side.of(side),
   );
 }

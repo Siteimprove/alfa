@@ -32,13 +32,13 @@ const cache = Cache.empty<
 
 export function audio(
   document: Document,
-  device: Device
+  device: Device,
 ): Sequence<Interview<Question.Metadata, Element, Element, Option<Element>>> {
   return cache.get(document, Cache.empty).get(device, () =>
     getElementDescendants(document, Node.fullTree)
       .filter(
         // Non-rendered <audio> are not playing
-        and(hasNamespace(Namespace.HTML), hasName("audio"), isRendered(device))
+        and(hasNamespace(Namespace.HTML), hasName("audio"), isRendered(device)),
       )
       .map((element) =>
         Question.of("is-audio-streaming", element).map((isStreaming) =>
@@ -49,13 +49,13 @@ export function audio(
                   ? Option.of(element)
                   : Question.of("play-button", element).map((playButton) =>
                       playButton.some(
-                        and(isElement, isPerceivableForAll(device))
+                        and(isElement, isPerceivableForAll(device)),
                       )
                         ? Option.of(element)
-                        : None
-                    )
-              )
-        )
-      )
+                        : None,
+                    ),
+              ),
+        ),
+      ),
   );
 }

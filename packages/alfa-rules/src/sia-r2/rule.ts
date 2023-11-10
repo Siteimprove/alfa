@@ -31,8 +31,8 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             hasNamespace(Namespace.HTML),
             hasRole(device, "img"),
-            isIncludedInTheAccessibilityTree(device)
-          )
+            isIncludedInTheAccessibilityTree(device),
+          ),
         );
       },
 
@@ -41,7 +41,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             hasNonEmptyAccessibleName(device)(target),
             () => Outcomes.HasAccessibleName,
-            () => Outcomes.HasNoAccessibleName
+            () => Outcomes.HasNoAccessibleName,
           ),
         };
       },
@@ -54,10 +54,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const HasAccessibleName = Ok.of(
-    Diagnostic.of(`The image has an accessible name`)
+    Diagnostic.of(`The image has an accessible name`),
   );
 
   export const HasNoAccessibleName = Err.of(
-    Diagnostic.of(`The image does not have an accessible name`)
+    Diagnostic.of(`The image does not have an accessible name`),
   );
 }

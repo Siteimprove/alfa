@@ -39,11 +39,11 @@ export default Rule.Atomic.of<Page, Element>({
               // Headings containing a link is also used for, e.g., list of news.
               not((heading) =>
                 getElementDescendants(heading).some(
-                  hasRole(device, "button", "link")
-                )
-              )
-            )
-          )
+                  hasRole(device, "button", "link"),
+                ),
+              ),
+            ),
+          ),
         );
 
         return headings;
@@ -71,9 +71,9 @@ export default Rule.Atomic.of<Page, Element>({
                   if (isLower) {
                     nextLevel = level;
                   }
-                }
-              )
-            )
+                },
+              ),
+            ),
           )
           // If there is no more heading with a small enough level,
           // go to the end of the document and record we did it
@@ -101,23 +101,23 @@ export default Rule.Atomic.of<Page, Element>({
               and(
                 isIncludedInTheAccessibilityTree(device),
                 isContent(Node.fullTree),
-                not(and(isText, (text) => text.data.trim() === ""))
-              )
+                not(and(isText, (text) => text.data.trim() === "")),
+              ),
             ),
             () =>
               Outcomes.hasContent(
                 // The link between end nad the type of next is lost by TS
                 end ? None : Some.of(next as Element),
                 currentLevel,
-                nextLevel
+                nextLevel,
               ),
             () =>
               Outcomes.hasNoContent(
                 // The link between end nad the type of next is lost by TS
                 end ? None : Some.of(next as Element),
                 currentLevel,
-                nextLevel
-              )
+                nextLevel,
+              ),
           ),
         };
       },
@@ -132,29 +132,29 @@ export namespace Outcomes {
   export const hasContent = (
     nextHeading: Option<Element>,
     currentLevel: number,
-    nextLevel: number
+    nextLevel: number,
   ) =>
     Ok.of(
       WithNextHeading.of(
         "There is content between this heading and the next",
         nextHeading,
         currentLevel,
-        nextLevel
-      )
+        nextLevel,
+      ),
     );
 
   export const hasNoContent = (
     nextHeading: Option<Element>,
     currentLevel: number,
-    nextLevel: number
+    nextLevel: number,
   ) =>
     Err.of(
       WithNextHeading.of(
         "There is no content between this heading and the next",
         nextHeading,
         currentLevel,
-        nextLevel
-      )
+        nextLevel,
+      ),
     );
 }
 
@@ -168,14 +168,14 @@ export class WithNextHeading extends Diagnostic {
     message: string,
     nextHeading: Option<Element>,
     currentLevel: number,
-    nextLevel: number
+    nextLevel: number,
   ): WithNextHeading;
 
   public static of(
     message: string,
     nextHeading?: Option<Element>,
     currentLevel?: number,
-    nextLevel?: number
+    nextLevel?: number,
   ): Diagnostic {
     return nextHeading === undefined ||
       currentLevel === undefined ||
@@ -192,7 +192,7 @@ export class WithNextHeading extends Diagnostic {
     message: string,
     nextHeading: Option<Element>,
     currentLevel: number,
-    nextLevel: number
+    nextLevel: number,
   ) {
     super(message);
     this._nextHeading = nextHeading;
@@ -254,7 +254,7 @@ export namespace WithNextHeading {
   }
 
   export function isWithNextHeading(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is WithNextHeading;
 
   export function isWithNextHeading(value: unknown): value is WithNextHeading;

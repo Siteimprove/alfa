@@ -10,7 +10,7 @@ function outset(
   top: number,
   right?: number,
   bottom?: number,
-  left?: number
+  left?: number,
 ): Serializable.ToJSON<Outset.Specified> {
   return {
     type: "tuple",

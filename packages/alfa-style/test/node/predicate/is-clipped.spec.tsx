@@ -9,7 +9,7 @@ const isClipped = predicate.isClipped(device);
 
 function target(
   style: { [prop: string]: string },
-  child?: Element | Text
+  child?: Element | Text,
 ): Element {
   return <div style={style}>{child ?? "Hello World"}</div>;
 }
@@ -17,7 +17,7 @@ function target(
 function boxed(
   box: { x?: number; y?: number; width: number; height: number },
   style: { [prop: string]: string },
-  child?: Element | Text
+  child?: Element | Text,
 ): Element {
   return (
     // The actual position of the element doesn't matter.
@@ -60,11 +60,11 @@ test(`isClipped() returns true when an element has no permanent scrollbar,
       for (const element of [
         boxed(
           { width: 1, height: 100 },
-          { overflowX: sameOverflow, overflowY: crossOverflow }
+          { overflowX: sameOverflow, overflowY: crossOverflow },
         ),
         boxed(
           { width: 100, height: 1 },
-          { overflowX: crossOverflow, overflowY: sameOverflow }
+          { overflowX: crossOverflow, overflowY: sameOverflow },
         ),
       ]) {
         t.deepEqual(isClipped(element), true);
@@ -79,11 +79,11 @@ test(`isClipped() returns false when an element has a permanent scrollbar,
     for (const element of [
       boxed(
         { width: 1, height: 100 },
-        { overflowX: overflow, overflowY: "scroll" }
+        { overflowX: overflow, overflowY: "scroll" },
       ),
       boxed(
         { width: 100, height: 1 },
-        { overflowX: "scroll", overflowY: overflow }
+        { overflowX: "scroll", overflowY: overflow },
       ),
     ]) {
       t.deepEqual(isClipped(element), false);
@@ -229,7 +229,7 @@ test(`isClipped() returns true for a text node with hidden overflow and a 100%
 
   const div = target(
     { overflow: "hidden", whiteSpace: "nowrap", textIndent: "100%" },
-    text
+    text,
   );
 
   t.equal(isClipped(text), true);
@@ -242,7 +242,7 @@ test(`isClipped() returns false for a text node with hidden overflow and a 20%
 
   const div = target(
     { overflow: "hidden", whiteSpace: "nowrap", textIndent: "20%" },
-    text
+    text,
   );
 
   t.equal(isClipped(text), false);
@@ -265,7 +265,7 @@ test(`isClipped() returns true for a text node with hidden overflow and a 999px
 
   const div = target(
     { overflow: "hidden", whiteSpace: "nowrap", textIndent: "999px" },
-    text
+    text,
   );
 
   t.equal(isClipped(text), true);
@@ -278,7 +278,7 @@ test(`isClipped() returns false for a text node with hidden overflow and a 20px
 
   const div = target(
     { overflow: "hidden", whiteSpace: "nowrap", textIndent: "20px" },
-    text
+    text,
   );
 
   t.equal(isClipped(text), false);
@@ -316,7 +316,7 @@ test(`isClipped() returns false for a relatively positioned element clipped by
 
 function container(
   style: { [prop: string]: string },
-  element: Element
+  element: Element,
 ): Element {
   return boxed({ x: 100, y: 100, width: 10, height: 10 }, style, element);
 }
@@ -372,7 +372,7 @@ test(`isClipped() returns false when an element is left of an ancestor showing h
   for (const element of [aboveLeft(), left(), belowLeft()]) {
     const _ = container(
       { overflowX: "visible", overflowY: "visible" },
-      element
+      element,
     );
 
     t.deepEqual(isClipped(element), false);
@@ -406,7 +406,7 @@ test(`isClipped() returns false when an element is above an ancestor showing ver
   for (const element of [aboveLeft(), above(), aboveRight()]) {
     const _ = container(
       { overflowX: "visible", overflowY: "visible" },
-      element
+      element,
     );
 
     t.deepEqual(isClipped(element), false);
@@ -509,11 +509,11 @@ test(`isClipped() returns true for an element with a fully clipped ancestor`, (t
     target({ height: "0px", width: "0px", overflow: "hidden" }, spanSize),
     target(
       { textIndent: "100%", whiteSpace: "nowrap", overflow: "hidden" },
-      spanIndent
+      spanIndent,
     ),
     target(
       { clip: "rect(1px, 1px, 1px, 1px)", position: "absolute" },
-      spanMask
+      spanMask,
     ),
   ]);
 
@@ -540,7 +540,7 @@ test("isClipped() returns false for an absolutely positioned element with a clip
           width: "0px",
         }),
       ]),
-    ]
+    ],
   );
 
   t.equal(isClipped(element), false);
@@ -577,7 +577,7 @@ test(`isClippedByMovingAway() only look at positioning ancestors`, (t) => {
           width: "0px",
         }),
       ]),
-    ]
+    ],
   );
 
   t.equal(isClipped(element), false);

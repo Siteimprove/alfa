@@ -27,7 +27,7 @@ export namespace Thenable {
    * interface.
    */
   export function isThenable<T, E = unknown>(
-    value: unknown
+    value: unknown,
   ): value is Thenable<T, E> {
     return isObject(value) && isFunction(value.then);
   }
@@ -49,7 +49,7 @@ export namespace Thenable {
   }
 
   export function defer<T, E = unknown>(
-    continuation: Continuation<T, void, [reject: Callback<E>]>
+    continuation: Continuation<T, void, [reject: Callback<E>]>,
   ): Thenable<T, E> {
     return new (class Thenable {
       then(resolve: Callback<T>, reject: Callback<E>) {
@@ -60,7 +60,7 @@ export namespace Thenable {
 
   export function map<T, U, E = unknown>(
     thenable: Thenable<T, E>,
-    mapper: Mapper<T, U>
+    mapper: Mapper<T, U>,
   ): Thenable<U, E> {
     return defer((resolved, rejected) => {
       thenable.then((value) => resolved(mapper(value)), rejected);
@@ -69,25 +69,25 @@ export namespace Thenable {
 
   export function apply<T, U, E = unknown, F = E>(
     thenable: Thenable<T, E>,
-    mapper: Thenable<Mapper<T, U>, F>
+    mapper: Thenable<Mapper<T, U>, F>,
   ): Thenable<U, E | F> {
     return flatMap(mapper, (mapper) => map(thenable, mapper));
   }
 
   export function flatMap<T, U, E = unknown, F = E>(
     thenable: Thenable<T, E>,
-    mapper: Mapper<T, Thenable<U, F>>
+    mapper: Mapper<T, Thenable<U, F>>,
   ): Thenable<U, E | F> {
     return defer((resolved, rejected) => {
       thenable.then(
         (value) => mapper(value).then(resolved, rejected),
-        rejected
+        rejected,
       );
     });
   }
 
   export function flatten<T, E = unknown, F = E>(
-    thenable: Thenable<Thenable<T, F>, E>
+    thenable: Thenable<Thenable<T, F>, E>,
   ): Thenable<T, E | F> {
     return flatMap(thenable, (thenable) => thenable);
   }
@@ -115,8 +115,8 @@ export namespace Thenable {
           },
           (error) => {
             reject(error);
-          }
-        )
+          },
+        ),
       );
     });
   }
@@ -144,8 +144,8 @@ export namespace Thenable {
             if (--unsettled === 0) {
               reject(errors);
             }
-          }
-        )
+          },
+        ),
       );
     });
   }
@@ -169,7 +169,7 @@ export namespace Thenable {
               unsettled = false;
               reject(error);
             }
-          }
+          },
         );
       }
     });

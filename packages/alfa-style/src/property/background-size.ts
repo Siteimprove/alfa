@@ -50,12 +50,12 @@ export const parse = either(
     pair(
       parseDimension,
       map(option(right(Token.parseWhitespace, parseDimension)), (y) =>
-        y.getOrElse(() => Keyword.of("auto"))
-      )
+        y.getOrElse(() => Keyword.of("auto")),
+      ),
     ),
-    ([x, y]) => Tuple.of(x, y)
+    ([x, y]) => Tuple.of(x, y),
   ),
-  Keyword.parse("contain", "cover")
+  Keyword.parse("contain", "cover"),
 );
 
 const parseList = List.parseCommaSeparated(parse);
@@ -88,8 +88,8 @@ export default Longhand.of<Specified, Computed>(
             : LengthPercentage.partiallyResolve(resolver)(x),
           Keyword.isKeyword(y)
             ? y
-            : LengthPercentage.partiallyResolve(resolver)(y)
+            : LengthPercentage.partiallyResolve(resolver)(y),
         );
-      })
-    )
+      }),
+    ),
 );

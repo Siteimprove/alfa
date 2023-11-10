@@ -21,16 +21,16 @@ const { hasComputedStyle } = Style;
  */
 export function isProgrammaticallyHidden(
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Element> {
   return or(
     hasComputedStyle(
       "visibility",
       (visibility) => visibility.value !== "visible",
       device,
-      context
+      context,
     ),
-    hasHiddenAncestors(device, context)
+    hasHiddenAncestors(device, context),
   );
 }
 
@@ -38,7 +38,7 @@ const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
 
 function hasHiddenAncestors(
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Node> {
   return (node) =>
     cache
@@ -55,18 +55,18 @@ function hasHiddenAncestors(
                   "display",
                   ({ values: [outside] }) => outside.value === "none",
                   device,
-                  context
+                  context,
                 ),
-                hasAttribute("aria-hidden", equals("true"))
-              )
+                hasAttribute("aria-hidden", equals("true")),
+              ),
             ),
             // Or its parent is programmatically hidden
             (node: Node) =>
               node
                 .parent(Node.fullTree)
-                .some(hasHiddenAncestors(device, context))
+                .some(hasHiddenAncestors(device, context)),
           ),
-          node
-        )
+          node,
+        ),
       );
 }

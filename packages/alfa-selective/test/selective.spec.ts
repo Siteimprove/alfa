@@ -36,14 +36,14 @@ test("#get() returns the value of a selective", (t) => {
     Selective.of("foo")
       .if(isFoo, () => "was foo")
       .get(),
-    "was foo"
+    "was foo",
   );
 
   t.equal(
     Selective.of("bar")
       .if(isFoo, () => "was foo")
       .get(),
-    "bar"
+    "bar",
   );
 });
 
@@ -53,7 +53,7 @@ test(`#map() applies a function to a matched selective value`, (t) => {
       .if(isFoo, () => "was foo")
       .map((string) => string.toUpperCase())
       .get(),
-    "WAS FOO"
+    "WAS FOO",
   );
 });
 
@@ -63,7 +63,7 @@ test(`#apply() applies a selective function to a selective value`, (t) => {
       .if(isFoo, () => 2)
       .apply(Selective.of("bar").if(isBar, () => (n: number) => n * 2))
       .get(),
-    4
+    4,
   );
 });
 
@@ -75,10 +75,10 @@ test(`#flatMap() applies a function to a matched selective value and flattens
       .flatMap((wasFoo) =>
         Selective.of("bar")
           .if(isBar, () => "was bar")
-          .map((wasBar) => `${wasFoo} and ${wasBar}`)
+          .map((wasBar) => `${wasFoo} and ${wasBar}`),
       )
       .get(),
-    "was foo and was bar"
+    "was foo and was bar",
   );
 });
 
@@ -88,6 +88,6 @@ test(`#flatten() unwraps a nested selective value`, (t) => {
       .else(() => Selective.of("bar"))
       .flatten()
       .get(),
-    "bar"
+    "bar",
   );
 });

@@ -36,7 +36,7 @@ export const parseAbsolute = Keyword.parse(
   "semi-expanded",
   "expanded",
   "extra-expanded",
-  "ultra-expanded"
+  "ultra-expanded",
 );
 
 const parse = either(Percentage.parse, parseAbsolute);
@@ -85,5 +85,5 @@ export default Longhand.of<Specified, Computed>(
     }),
   {
     inherits: true,
-  }
+  },
 );

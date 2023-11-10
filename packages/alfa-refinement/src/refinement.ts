@@ -51,13 +51,12 @@ export namespace Refinement {
 
   interface Not {
     <T, U extends T, A extends Array<unknown> = []>(
-      refinement: Refinement<T, U, A>
+      refinement: Refinement<T, U, A>,
     ): Refinement<T, Exclude<T, U>, A>;
 
-    <T, A extends Array<unknown> = []>(predicate: Predicate<T, A>): Predicate<
-      T,
-      A
-    >;
+    <T, A extends Array<unknown> = []>(
+      predicate: Predicate<T, A>,
+    ): Predicate<T, A>;
   }
 
   export const not = Predicate.not as Not;
@@ -65,17 +64,17 @@ export namespace Refinement {
   interface And {
     <T, U extends T, V extends U, A extends Array<unknown> = []>(
       left: Refinement<T, U, A>,
-      right: Refinement<U, V, A>
+      right: Refinement<U, V, A>,
     ): Refinement<T, V, A>;
 
     <T, U extends T, A extends Array<unknown> = []>(
       left: Refinement<T, U, A>,
-      right: Predicate<U, A>
+      right: Predicate<U, A>,
     ): Refinement<T, U, A>;
 
     <T, U extends T, A extends Array<unknown> = []>(
       left: Predicate<T, A>,
-      right: Refinement<T, U, A>
+      right: Refinement<T, U, A>,
     ): Refinement<T, U, A>;
 
     <T, A extends Array<unknown> = []>(
@@ -88,17 +87,17 @@ export namespace Refinement {
   interface Or {
     <T, U extends T, V extends T, A extends Array<unknown> = []>(
       left: Refinement<T, U, A>,
-      right: Refinement<T, V, A>
+      right: Refinement<T, V, A>,
     ): Refinement<T, U | V, A>;
 
     <T, U extends T, A extends Array<unknown> = []>(
       left: Refinement<T, U, A>,
-      right: Predicate<T, A>
+      right: Predicate<T, A>,
     ): Refinement<T, U | T, A>;
 
     <T, U extends T, A extends Array<unknown> = []>(
       left: Predicate<T, A>,
-      right: Refinement<T, U, A>
+      right: Refinement<T, U, A>,
     ): Refinement<T, U | T, A>;
 
     <T, A extends Array<unknown> = []>(
@@ -111,22 +110,22 @@ export namespace Refinement {
   interface Xor {
     <T, U extends T, V extends T, A extends Array<unknown> = []>(
       left: Refinement<T, U, A>,
-      right: Refinement<T, V, A>
+      right: Refinement<T, V, A>,
     ): Refinement<T, U | V, A>;
 
     <T, U extends T, A extends Array<unknown> = []>(
       left: Refinement<T, U, A>,
-      right: Predicate<T, A>
+      right: Predicate<T, A>,
     ): Refinement<T, U | T, A>;
 
     <T, U extends T, A extends Array<unknown> = []>(
       left: Predicate<T, A>,
-      right: Refinement<T, U, A>
+      right: Refinement<T, U, A>,
     ): Refinement<T, U | T, A>;
 
     <T, A extends Array<unknown> = []>(
       left: Predicate<T, A>,
-      right: Predicate<T, A>
+      right: Predicate<T, A>,
     ): Predicate<T, A>;
   }
 
@@ -135,22 +134,22 @@ export namespace Refinement {
   interface Nor {
     <T, U extends T, V extends T, A extends Array<unknown> = []>(
       left: Refinement<T, U, A>,
-      right: Refinement<T, V, A>
+      right: Refinement<T, V, A>,
     ): Refinement<T, Exclude<T, U | V>, A>;
 
     <T, U extends T, A extends Array<unknown> = []>(
       left: Refinement<T, U, A>,
-      right: Predicate<T, A>
+      right: Predicate<T, A>,
     ): Refinement<T, Exclude<T, U>, A>;
 
     <T, U extends T, A extends Array<unknown> = []>(
       left: Predicate<T, A>,
-      right: Refinement<T, U, A>
+      right: Refinement<T, U, A>,
     ): Refinement<T, Exclude<T, U>, A>;
 
     <T, A extends Array<unknown> = []>(
       left: Predicate<T, A>,
-      right: Predicate<T, A>
+      right: Predicate<T, A>,
     ): Predicate<T, A>;
   }
 
@@ -159,22 +158,22 @@ export namespace Refinement {
   interface Nand {
     <T, U extends T, V extends U, A extends Array<unknown> = []>(
       left: Refinement<T, U, A>,
-      right: Refinement<T, V, A>
+      right: Refinement<T, V, A>,
     ): Refinement<T, Exclude<T, U> | Exclude<T, V>, A>;
 
     <T, U extends T, A extends Array<unknown> = []>(
       left: Refinement<T, U, A>,
-      right: Predicate<T, A>
+      right: Predicate<T, A>,
     ): Predicate<T, A>;
 
     <T, U extends T, A extends Array<unknown> = []>(
       left: Predicate<T, A>,
-      right: Refinement<T, U, A>
+      right: Refinement<T, U, A>,
     ): Predicate<T, A>;
 
     <T, A extends Array<unknown> = []>(
       left: Predicate<T, A>,
-      right: Predicate<T, A>
+      right: Predicate<T, A>,
     ): Predicate<T, A>;
   }
 
@@ -221,7 +220,7 @@ export namespace Refinement {
   }
 
   export function isObject(
-    value: unknown
+    value: unknown,
   ): value is { [key: string]: unknown } {
     return typeof value === "object" && value !== null;
   }
@@ -230,7 +229,7 @@ export namespace Refinement {
     isString,
     or(
       isNumber,
-      or(isBigInt, or(isBoolean, or(isNull, or(isUndefined, isSymbol))))
-    )
+      or(isBigInt, or(isBoolean, or(isNull, or(isUndefined, isSymbol)))),
+    ),
   );
 }

@@ -76,7 +76,7 @@ export class Network<N, E>
     }
 
     return new Network(
-      nodes.delete(node).map((neighbors) => neighbors.delete(node))
+      nodes.delete(node).map((neighbors) => neighbors.delete(node)),
     );
   }
 
@@ -106,14 +106,14 @@ export class Network<N, E>
               from
                 .get(to)
                 .map((existing) =>
-                  edges.reduce((edges, edge) => edges.add(edge), existing)
+                  edges.reduce((edges, edge) => edges.add(edge), existing),
                 )
-                .getOrElse(() => Set.from(edges))
-            )
+                .getOrElse(() => Set.from(edges)),
+            ),
           )
           // The presence of from is guaranteed by the second test.
-          .getUnsafe()
-      )
+          .getUnsafe(),
+      ),
     );
   }
 
@@ -137,7 +137,7 @@ export class Network<N, E>
             for (let existing of from.get(to)) {
               existing = edges.reduce(
                 (edges, edge) => edges.delete(edge),
-                existing
+                existing,
               );
 
               if (existing.size === 0) {
@@ -150,14 +150,14 @@ export class Network<N, E>
             return from;
           })
           // The presence of from is guaranteed by the initial test.
-          .getUnsafe()
-      )
+          .getUnsafe(),
+      ),
     );
   }
 
   public traverse(
     root: N,
-    traversal: Network.Traversal = Network.DepthFirst
+    traversal: Network.Traversal = Network.DepthFirst,
   ): Sequence<[node: N, edges: Iterable<E>, parent: N]> {
     return Sequence.from(traversal(this, root));
   }
@@ -165,13 +165,13 @@ export class Network<N, E>
   public path(
     from: N,
     to: N,
-    traversal: Network.Traversal = Network.BreadthFirst
+    traversal: Network.Traversal = Network.BreadthFirst,
   ): Sequence<[node: N, edges: Iterable<E>]> {
     const parents = Map.from(
       Iterable.map(traversal(this, from), ([node, edges, parent]) => [
         node,
         [edges, parent] as const,
-      ])
+      ]),
     );
 
     const path: Array<[N, Iterable<E>]> = [];
@@ -266,7 +266,7 @@ export class Network<N, E>
       Iterable.map(this, ([node, neighbors]) => [
         node,
         Iterable.map(neighbors, ([node]) => node),
-      ])
+      ]),
     );
   }
 
@@ -306,12 +306,12 @@ export namespace Network {
   export type JSON<N, E> = Array<
     [
       Serializable.ToJSON<N>,
-      Array<[Serializable.ToJSON<N>, Array<Serializable.ToJSON<E>>]>
+      Array<[Serializable.ToJSON<N>, Array<Serializable.ToJSON<E>>]>,
     ]
   >;
 
   export function isNetwork<N, E>(
-    value: Iterable<readonly [N, Iterable<readonly [N, Iterable<E>]>]>
+    value: Iterable<readonly [N, Iterable<readonly [N, Iterable<E>]>]>,
   ): value is Network<N, E>;
 
   export function isNetwork<N, E>(value: unknown): value is Network<N, E>;
@@ -321,7 +321,7 @@ export namespace Network {
   }
 
   export function from<N, E>(
-    iterable: Iterable<readonly [N, Iterable<readonly [N, Iterable<E>]>]>
+    iterable: Iterable<readonly [N, Iterable<readonly [N, Iterable<E>]>]>,
   ): Network<N, E> {
     if (isNetwork(iterable)) {
       return iterable;
@@ -338,17 +338,18 @@ export namespace Network {
               if (set.size > 0) {
                 yield [node, set];
               }
-            })
+            }),
           ),
-        ])
-      )
+        ]),
+      ),
     );
   }
 
   export interface Traversal {
-    <N, E>(network: Network<N, E>, root: N): Iterable<
-      [node: N, edges: Iterable<E>, parent: N]
-    >;
+    <N, E>(
+      network: Network<N, E>,
+      root: N,
+    ): Iterable<[node: N, edges: Iterable<E>, parent: N]>;
   }
 
   /**
@@ -356,7 +357,7 @@ export namespace Network {
    */
   export const DepthFirst: Traversal = function* <N, E>(
     graph: Network<N, E>,
-    root: N
+    root: N,
   ) {
     const stack: Array<[node: N, edges: Iterable<E>, parent: N]> = [
       ...graph.neighbors(root),
@@ -386,7 +387,7 @@ export namespace Network {
    */
   export const BreadthFirst: Traversal = function* <N, E>(
     graph: Network<N, E>,
-    root: N
+    root: N,
   ) {
     const queue: Array<[node: N, edges: Iterable<E>, parent: N]> = [
       ...graph.neighbors(root),
@@ -394,7 +395,7 @@ export namespace Network {
 
     let seen = Set.of(
       root,
-      ...[...graph.neighbors(root)].map(([node]) => node)
+      ...[...graph.neighbors(root)].map(([node]) => node),
     );
 
     while (queue.length > 0) {

@@ -28,9 +28,9 @@ test(".fold() folds over the truth values of a refinement", (t) => {
         return value;
       },
       () => t.fail(),
-      "foo"
+      "foo",
     ),
-    "foo"
+    "foo",
   );
 
   t.equal(
@@ -38,9 +38,9 @@ test(".fold() folds over the truth values of a refinement", (t) => {
       (value): value is "foo" => value === "foo",
       () => t.fail(),
       (value) => value,
-      "bar"
+      "bar",
     ),
-    "bar"
+    "bar",
   );
 });
 
@@ -48,7 +48,7 @@ test(`.and() combines two refinements to a refinement that is true if both
       refinements are true`, (t) => {
   const p = Refinement.and<unknown, string, "foo">(
     (value): value is string => typeof value === "string",
-    (value): value is "foo" => value === "foo"
+    (value): value is "foo" => value === "foo",
   );
 
   t.equal(p("foo"), true);
@@ -61,7 +61,7 @@ test(`.or() combines two refinements to a refinement that is true if either
       refinement is true`, (t) => {
   const p = Refinement.or<string, "foo", "bar">(
     (value): value is "foo" => value === "foo",
-    (value): value is "bar" => value === "bar"
+    (value): value is "bar" => value === "bar",
   );
 
   t.equal(p("foo"), true);

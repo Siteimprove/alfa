@@ -36,8 +36,8 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
               .tee((lang) => {
                 programmaticLanguage = lang;
               })
-              .isOk()
-          )
+              .isOk(),
+          ),
         );
       },
 
@@ -51,16 +51,16 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata>({
                   () =>
                     Outcomes.HasCorrectLang(
                       programmaticLanguage,
-                      naturalLanguage
+                      naturalLanguage,
                     ),
                   () =>
                     Outcomes.HasIncorrectLang(
                       programmaticLanguage,
-                      naturalLanguage
-                    )
+                      naturalLanguage,
+                    ),
                 ),
-              (_) => Option.of(Outcomes.HasNoLanguage(programmaticLanguage))
-            )
+              (_) => Option.of(Outcomes.HasNoLanguage(programmaticLanguage)),
+            ),
           ),
         };
       },
@@ -77,8 +77,8 @@ export namespace Outcomes {
       Languages.of(
         `The document's \`lang\` attribute (${programmatic}) matches its language (${natural})`,
         programmatic,
-        natural
-      )
+        natural,
+      ),
     );
 
   export const HasIncorrectLang = (programmatic: Language, natural: Language) =>
@@ -86,16 +86,16 @@ export namespace Outcomes {
       Languages.of(
         `The document's \`lang\` attribute (${programmatic}) does not match its language (${natural})`,
         programmatic,
-        natural
-      )
+        natural,
+      ),
     );
 
   export const HasNoLanguage = (programmatic: Language) =>
     Err.of(
       Languages.of(
         "The document has no identifiable natural language",
-        programmatic
-      )
+        programmatic,
+      ),
     );
 }
 
@@ -106,7 +106,7 @@ export class Languages extends Diagnostic {
   public static of(
     message: string,
     programmatic: Language = Language.of(Language.Primary.of("en")),
-    natural?: Language
+    natural?: Language,
   ) {
     return new Languages(message, programmatic, Option.from(natural));
   }
@@ -117,7 +117,7 @@ export class Languages extends Diagnostic {
   private constructor(
     message: string,
     programmatic: Language,
-    natural: Option<Language>
+    natural: Option<Language>,
   ) {
     super(message);
     this._programmatic = programmatic;

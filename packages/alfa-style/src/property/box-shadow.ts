@@ -20,5 +20,5 @@ export default Longhand.of<Specified, Computed>(
   Keyword.of("none"),
   either(Keyword.parse("none"), parseList),
   (boxShadow, style) =>
-    boxShadow.map((value) => value.resolve(Resolver.length(style)))
+    boxShadow.map((value) => value.resolve(Resolver.length(style))),
 );

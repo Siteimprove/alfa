@@ -17,7 +17,7 @@ const { delimited, either, map, option, pair, right } = Parser;
 
 const parseSlash = delimited(
   option(Token.parseWhitespace),
-  Token.parseDelim("/")
+  Token.parseDelim("/"),
 );
 
 /**
@@ -41,13 +41,13 @@ const parseWidthOutset: Parser<
       either(
         map(
           pair(option(Width.parse), right(parseSlash, Outset.parse)),
-          ([width, outset]) => [width, Option.of(outset)]
+          ([width, outset]) => [width, Option.of(outset)],
         ),
-        map(Width.parse, (width) => [Option.of(width), None])
-      )
-    )
+        map(Width.parse, (width) => [Option.of(width), None]),
+      ),
+    ),
   ),
-  (result) => result.getOr([None, None])
+  (result) => result.getOr([None, None]),
 );
 
 const parse: Parser<
@@ -57,7 +57,7 @@ const parse: Parser<
     Slice.Specified | Keyword<"initial">,
     Width.Specified | Keyword<"initial">,
     Outset.Specified | Keyword<"initial">,
-    Repeat.Specified | Keyword<"initial">
+    Repeat.Specified | Keyword<"initial">,
   ],
   string
 > = (input) => {
@@ -135,5 +135,5 @@ export default Shorthand.of(
     ["border-image-width", width],
     ["border-image-outset", outset],
     ["border-image-repeat", repeat],
-  ])
+  ]),
 );

@@ -152,7 +152,7 @@ test("#cascaded() parses `text-decoration: underline solid red 2px`", (t) => {
 
   const declaration = h.declaration(
     "text-decoration",
-    "underline solid red 2px"
+    "underline solid red 2px",
   );
 
   t.deepEqual(cascaded(element, "text-decoration-line"), {

@@ -75,6 +75,6 @@ export namespace Angle {
 
   export const parse: CSSParser<Angle> = map(
     Token.parseDimension((dimension) => Unit.isAngle(dimension.unit)),
-    (dimension) => Angle.of(dimension.value, dimension.unit as Unit.Angle)
+    (dimension) => Angle.of(dimension.value, dimension.unit as Unit.Angle),
   );
 }

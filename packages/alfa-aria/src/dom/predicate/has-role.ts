@@ -12,7 +12,7 @@ import { hasName } from "../../role/predicate/has-name";
  */
 export function hasRole(
   device: Device,
-  predicate?: Predicate<Role>
+  predicate?: Predicate<Role>,
 ): Predicate<Element>;
 
 /**

@@ -58,8 +58,8 @@ export function inputType(element: Element<"input">): InputType {
         "image",
         "reset",
         "button",
-        "text"
-      )
+        "text",
+      ),
     )
     .getOr("text");
 }

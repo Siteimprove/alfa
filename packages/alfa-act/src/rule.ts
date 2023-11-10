@@ -37,11 +37,12 @@ const { flatten, reduce } = Iterable;
  * * S: possible types of questions' subject.
  */
 export abstract class Rule<
-  I,
-  T extends Hashable,
-  Q extends Question.Metadata = {},
-  S = T
-> implements
+    I,
+    T extends Hashable,
+    Q extends Question.Metadata = {},
+    S = T,
+  >
+  implements
     Equatable,
     Hashable,
     json.Serializable<Rule.JSON>,
@@ -57,7 +58,7 @@ export abstract class Rule<
     uri: string,
     requirements: Array<Requirement>,
     tags: Array<Tag>,
-    evaluator: Rule.Evaluate<I, T, Q, S>
+    evaluator: Rule.Evaluate<I, T, Q, S>,
   ) {
     this._uri = uri;
     this._requirements = requirements;
@@ -82,7 +83,7 @@ export abstract class Rule<
   public hasRequirement(predicate: Predicate<Requirement>): boolean;
 
   public hasRequirement(
-    requirementOrPredicate: Requirement | Predicate<Requirement>
+    requirementOrPredicate: Requirement | Predicate<Requirement>,
   ): boolean {
     const predicate = Requirement.isRequirement(requirementOrPredicate)
       ? (requirement: unknown) => requirementOrPredicate.equals(requirement)
@@ -107,13 +108,13 @@ export abstract class Rule<
     // A rule asking no questions, never calls its oracle, so it can be anything
     oracle: {} extends Q ? any : Oracle<I, T, Q, S> = () => Future.now(None),
     outcomes: Cache = Cache.empty(),
-    performance?: Performance<Rule.Event<I, T, Q, S>>
+    performance?: Performance<Rule.Event<I, T, Q, S>>,
   ): Future<Iterable<Outcome<I, T, Q, S>>> {
     return this._evaluate(input, oracle, outcomes, performance);
   }
 
   public equals<I, T extends Hashable, Q extends Question.Metadata, S>(
-    value: Rule<I, T, Q, S>
+    value: Rule<I, T, Q, S>,
   ): boolean;
 
   public equals(value: unknown): value is this;
@@ -185,7 +186,7 @@ export namespace Rule {
   export type Subject<R> = R extends Rule<any, any, any, infer S> ? S : never;
 
   export function isRule<I, T extends Hashable, Q extends Question.Metadata, S>(
-    value: unknown
+    value: unknown,
   ): value is Rule<I, T, Q, S> {
     return value instanceof Rule;
   }
@@ -216,14 +217,14 @@ export namespace Rule {
     I,
     T extends Hashable,
     Q extends Question.Metadata,
-    S
+    S,
   > {
     (
       input: Readonly<I>,
       // A rule asking no questions, never calls its oracle, so it can be anything
       oracle: {} extends Q ? any : Oracle<I, T, Q, S>,
       outcomes: Cache,
-      performance?: Performance<Event<I, T, Q, S>>
+      performance?: Performance<Event<I, T, Q, S>>,
     ): Future<Iterable<Outcome<I, T, Q, S>>>;
   }
 
@@ -231,13 +232,13 @@ export namespace Rule {
     I,
     T extends Hashable,
     Q extends Question.Metadata = {},
-    S = T
+    S = T,
   > extends Rule<I, T, Q, S> {
     public static of<
       I,
       T extends Hashable,
       Q extends Question.Metadata = {},
-      S = T
+      S = T,
     >(properties: {
       uri: string;
       requirements?: Iterable<Requirement>;
@@ -248,7 +249,7 @@ export namespace Rule {
         properties.uri,
         Array.from(properties.requirements ?? []),
         Array.from(properties.tags ?? []),
-        properties.evaluate
+        properties.evaluate,
       );
     }
 
@@ -256,7 +257,7 @@ export namespace Rule {
       uri: string,
       requirements: Array<Requirement>,
       tags: Array<Tag>,
-      evaluate: Atomic.Evaluate<I, T, Q, S>
+      evaluate: Atomic.Evaluate<I, T, Q, S>,
     ) {
       super(uri, requirements, tags, (input, oracle, outcomes, performance) =>
         outcomes.get(this, () => {
@@ -276,11 +277,11 @@ export namespace Rule {
 
           const { applicability, expectations } = evaluate(
             input,
-            rulePerformance
+            rulePerformance,
           );
 
           const startApplicability = performance?.mark(
-            Event.startApplicability(this)
+            Event.startApplicability(this),
           ).start;
           let startExpectation: number | undefined;
 
@@ -289,14 +290,11 @@ export namespace Rule {
               target.either<Tuple<[Option<T>, boolean]>>(
                 // We have a target, wrap it properly and return it.
                 ([target, oracleUsed]) =>
-                  Tuple.of(
-                    Maybe.toOption(target),
-                    oracleUsed
-                  ),
+                  Tuple.of(Maybe.toOption(target), oracleUsed),
                 // We have an unanswered question and return None
-                ([_, oracleUsed]) => Tuple.of(None, oracleUsed)
-              )
-            )
+                ([_, oracleUsed]) => Tuple.of(None, oracleUsed),
+              ),
+            ),
           )
             .map((targets) =>
               // We both need to keep with each target whether the oracle was used,
@@ -315,19 +313,18 @@ export namespace Rule {
                     cur.isSome()
                       ? acc.prepend(Tuple.of(cur.get(), isUsed))
                       : acc,
-                    wasUsed || isUsed
+                    wasUsed || isUsed,
                   ),
-                Tuple.of(Sequence.empty<Tuple<[T, boolean]>>(), false)
-              )
+                Tuple.of(Sequence.empty<Tuple<[T, boolean]>>(), false),
+              ),
             )
             .tee(() => {
               performance?.measure(
                 Event.endApplicability(this),
-                startApplicability
+                startApplicability,
               );
-              startExpectation = performance?.mark(
-                Event.startExpectation(this)
-              ).start;
+              startExpectation = performance?.mark(Event.startExpectation(this))
+                .start;
             })
             .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
               if (targets.isEmpty()) {
@@ -346,19 +343,19 @@ export namespace Rule {
                     Record.of(expectations(target)),
                     this,
                     oracle,
-                    oracleUsedInApplicability
-                  )
+                    oracleUsedInApplicability,
+                  ),
               ).tee(() => {
                 performance?.measure(
                   Event.endExpectation(this),
-                  startExpectation
+                  startExpectation,
                 );
               });
             })
             .tee(() => {
               performance?.measure(Event.end(this), startRule);
             });
-        })
+        }),
       );
     }
 
@@ -367,7 +364,7 @@ export namespace Rule {
         type: "atomic",
         uri: this._uri,
         requirements: this._requirements.map((requirement) =>
-          requirement.toJSON()
+          requirement.toJSON(),
         ),
         tags: this._tags.map((tag) => tag.toJSON()),
       };
@@ -383,7 +380,7 @@ export namespace Rule {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     > {
       (
         input: I,
@@ -391,9 +388,9 @@ export namespace Rule {
           mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
           measure: (
             name: string,
-            start?: number
+            start?: number,
           ) => Performance.Measure<Event<I, T, Q, S>>;
-        }
+        },
       ): {
         applicability(): Iterable<Interview<Q, S, T, Maybe<T>>>;
         expectations(target: T): {
@@ -406,21 +403,21 @@ export namespace Rule {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: Rule<I, T, Q, S>): value is Atomic<I, T, Q, S>;
 
     export function isAtomic<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is Atomic<I, T, Q, S>;
 
     export function isAtomic<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is Atomic<I, T, Q, S> {
       return value instanceof Atomic;
     }
@@ -432,13 +429,13 @@ export namespace Rule {
     I,
     T extends Hashable,
     Q extends Question.Metadata = {},
-    S = T
+    S = T,
   > extends Rule<I, T, Q, S> {
     public static of<
       I,
       T extends Hashable,
       Q extends Question.Metadata = {},
-      S = T
+      S = T,
     >(properties: {
       uri: string;
       requirements?: Iterable<Requirement>;
@@ -451,7 +448,7 @@ export namespace Rule {
         Array.from(properties.requirements ?? []),
         Array.from(properties.tags ?? []),
         Array.from(properties.composes),
-        properties.evaluate
+        properties.evaluate,
       );
     }
 
@@ -462,7 +459,7 @@ export namespace Rule {
       requirements: Array<Requirement>,
       tags: Array<Tag>,
       composes: Array<Rule<I, T, Q, S>>,
-      evaluate: Composite.Evaluate<I, T, Q, S>
+      evaluate: Composite.Evaluate<I, T, Q, S>,
     ) {
       super(uri, requirements, tags, (input, oracle, outcomes, performance) =>
         outcomes.get(this, () => {
@@ -481,7 +478,7 @@ export namespace Rule {
               : undefined;
 
           return Future.traverse(this._composes, (rule) =>
-            rule.evaluate(input, oracle, outcomes, performance)
+            rule.evaluate(input, oracle, outcomes, performance),
           )
             .map((outcomes) =>
               // We both need to keep with each outcome whether the oracle was used,
@@ -499,13 +496,13 @@ export namespace Rule {
                     Applicable.isApplicable<I, T, Q, S>(outcome)
                       ? acc.prepend(outcome)
                       : acc,
-                    wasUsed || outcome.isSemiAuto
+                    wasUsed || outcome.isSemiAuto,
                   ),
                 Tuple.of(
                   Sequence.empty<Outcome.Applicable<I, T, Q, S>>(),
-                  false
-                )
-              )
+                  false,
+                ),
+              ),
             )
             .flatMap<Iterable<Outcome<I, T, Q, S>>>(([targets, oracleUsed]) => {
               if (targets.isEmpty()) {
@@ -526,14 +523,14 @@ export namespace Rule {
                     Record.of(expectations(outcomes)),
                     this,
                     oracle,
-                    oracleUsed
-                  )
+                    oracleUsed,
+                  ),
               );
             })
             .tee(() => {
               performance?.measure(Event.end(this), startRule);
             });
-        })
+        }),
       );
 
       this._composes = composes;
@@ -548,7 +545,7 @@ export namespace Rule {
         type: "composite",
         uri: this._uri,
         requirements: this._requirements.map((requirement) =>
-          requirement.toJSON()
+          requirement.toJSON(),
         ),
         tags: this._tags.map((tag) => tag.toJSON()),
         composes: this._composes.map((rule) => rule.toJSON()),
@@ -567,7 +564,7 @@ export namespace Rule {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     > {
       (
         input: I,
@@ -575,9 +572,9 @@ export namespace Rule {
           mark: (name: string) => Performance.Mark<Event<I, T, Q, S>>;
           measure: (
             name: string,
-            start?: number
+            start?: number,
           ) => Performance.Measure<Event<I, T, Q, S>>;
-        }
+        },
       ): {
         expectations(outcomes: Sequence<Outcome.Applicable<I, T, Q, S>>): {
           [key: string]: Interview<Q, S, T, Maybe<Result<Diagnostic>>>;
@@ -587,19 +584,19 @@ export namespace Rule {
     export function isComposite<
       I,
       T extends Hashable,
-      Q extends Question.Metadata
+      Q extends Question.Metadata,
     >(value: Rule<I, T, Q>): value is Composite<I, T, Q>;
 
     export function isComposite<
       I,
       T extends Hashable,
-      Q extends Question.Metadata
+      Q extends Question.Metadata,
     >(value: unknown): value is Composite<I, T, Q>;
 
     export function isComposite<
       I,
       T extends Hashable,
-      Q extends Question.Metadata
+      Q extends Question.Metadata,
     >(value: unknown): value is Composite<I, T, Q> {
       return value instanceof Composite;
     }
@@ -616,7 +613,7 @@ export namespace Rule {
     QUESTION extends Question.Metadata,
     SUBJECT,
     TYPE extends Event.Type = Event.Type,
-    NAME extends string = string
+    NAME extends string = string,
   > implements Serializable<Event.JSON<TYPE, NAME>>
   {
     public static of<
@@ -625,11 +622,11 @@ export namespace Rule {
       QUESTION extends Question.Metadata,
       SUBJECT,
       TYPE extends Event.Type,
-      NAME extends string
+      NAME extends string,
     >(
       type: TYPE,
       rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
-      name: NAME
+      name: NAME,
     ): Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME> {
       return new Event(type, rule, name);
     }
@@ -641,7 +638,7 @@ export namespace Rule {
     constructor(
       type: TYPE,
       rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
-      name: NAME
+      name: NAME,
     ) {
       this._type = type;
       this._rule = rule;
@@ -688,9 +685,9 @@ export namespace Rule {
       QUESTION extends Question.Metadata,
       SUBJECT,
       TYPE extends Event.Type = Event.Type,
-      NAME extends string = string
+      NAME extends string = string,
     >(
-      value: unknown
+      value: unknown,
     ): value is Event<INPUT, TARGET, QUESTION, SUBJECT, TYPE, NAME> {
       return value instanceof Event;
     }
@@ -700,24 +697,24 @@ export namespace Rule {
       T extends Hashable,
       Q extends Question.Metadata,
       S,
-      N extends string = string
+      N extends string = string,
     >(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "start", N>;
 
     export function start<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "total">;
 
     export function start<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(
       rule: Rule<I, T, Q, S>,
-      name: string = "total"
+      name: string = "total",
     ): Event<I, T, Q, S, "start"> {
       return Event.of("start", rule, name);
     }
@@ -727,16 +724,16 @@ export namespace Rule {
       T extends Hashable,
       Q extends Question.Metadata,
       S,
-      N extends string = string
+      N extends string = string,
     >(rule: Rule<I, T, Q, S>, name: N): Event<I, T, Q, S, "end", N>;
 
     export function end<I, T extends Hashable, Q extends Question.Metadata, S>(
-      rule: Rule<I, T, Q, S>
+      rule: Rule<I, T, Q, S>,
     ): Event<I, T, Q, S, "end", "total">;
 
     export function end<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
-      name: string = "total"
+      name: string = "total",
     ): Event<I, T, Q, S, "end"> {
       return Event.of("end", rule, name);
     }
@@ -745,7 +742,7 @@ export namespace Rule {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "applicability"> {
       return Event.of("start", rule, "applicability");
     }
@@ -754,7 +751,7 @@ export namespace Rule {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "applicability"> {
       return Event.of("end", rule, "applicability");
     }
@@ -763,7 +760,7 @@ export namespace Rule {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "start", "expectation"> {
       return Event.of("start", rule, "expectation");
     }
@@ -772,7 +769,7 @@ export namespace Rule {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(rule: Rule<I, T, Q, S>): Event<I, T, Q, S, "end", "expectation"> {
       return Event.of("end", rule, "expectation");
     }
@@ -787,7 +784,7 @@ type Expectation<T> = Either<Tuple<[T, boolean]>, Tuple<[Diagnostic, boolean]>>;
 // the processing stops and later it is passed to the cantTell Outcome.
 function processExpectation(
   acc: Expectation<List<[string, Option<Result<Diagnostic>>]>>,
-  [id, expectation]: readonly [string, Expectation<Maybe<Result<Diagnostic>>>]
+  [id, expectation]: readonly [string, Expectation<Maybe<Result<Diagnostic>>>],
 ): Expectation<List<[string, Option<Result<Diagnostic>>]>> {
   return acc.either(
     // The accumulator only contains true result, keep going.
@@ -800,17 +797,17 @@ function processExpectation(
           Left.of(
             Tuple.of(
               accumulator.append([id, Maybe.toOption(result)]),
-              oracleUsedAccumulator || oracleUsed
-            )
+              oracleUsedAccumulator || oracleUsed,
+            ),
           ),
         // The current result is cantTell, abort.
         ([diagnostic, oracleUsed]) =>
-          Right.of(Tuple.of(diagnostic, oracleUsedAccumulator || oracleUsed))
+          Right.of(Tuple.of(diagnostic, oracleUsedAccumulator || oracleUsed)),
       ),
     // The accumulator already contains cantTell, skip.
     // Note that we only keep the mode of the first Expectation that cannot tell,
     // which is likely OK.
-    () => acc
+    () => acc,
   );
 }
 
@@ -822,19 +819,19 @@ function resolve<I, T extends Hashable, Q extends Question.Metadata, S>(
   rule: Rule<I, T, Q, S>,
   // A rule asking no questions, never calls its oracle, so it can be anything
   oracle: {} extends Q ? any : Oracle<I, T, Q, S>,
-  oracleUsedInApplicability: boolean
+  oracleUsedInApplicability: boolean,
 ): Future<Outcome.Applicable<I, T, Q, S>> {
   return Future.traverse(expectations, ([id, interview]) =>
     Interview.conduct(interview, rule, oracle).map(
-      (expectation) => [id, expectation] as const
-    )
+      (expectation) => [id, expectation] as const,
+    ),
   )
     .map((expectations) =>
       reduce(
         expectations,
         processExpectation,
-        Left.of(Tuple.of(List.empty(), oracleUsedInApplicability))
-      )
+        Left.of(Tuple.of(List.empty(), oracleUsedInApplicability)),
+      ),
     )
     .map((expectation) =>
       expectation.either(
@@ -843,11 +840,11 @@ function resolve<I, T extends Hashable, Q extends Question.Metadata, S>(
             rule,
             target,
             Record.from(expectations),
-            getMode(oracleUsed)
+            getMode(oracleUsed),
           ),
         ([diagnostic, oracleUsed]) =>
-          Outcome.CantTell.of(rule, target, diagnostic, getMode(oracleUsed))
-      )
+          Outcome.CantTell.of(rule, target, diagnostic, getMode(oracleUsed)),
+      ),
     );
 }
 

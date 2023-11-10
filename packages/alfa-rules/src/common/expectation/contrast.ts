@@ -25,7 +25,7 @@ export function hasSufficientContrastDeprecated(
   target: Text,
   device: Device,
   largeTextThreshold: number,
-  normalTextThreshold: number
+  normalTextThreshold: number,
 ) {
   // Associated Applicability should ensure that target have Element as parent.
   // Additionally, stray text nodes should not exist in our use case and we'd
@@ -33,10 +33,10 @@ export function hasSufficientContrastDeprecated(
   const parent = target.parent(Node.flatTree).getUnsafe() as Element;
 
   const foregrounds = Question.of("foreground-colors", target).answerIf(
-    getForeground(parent, device)
+    getForeground(parent, device),
   );
   const backgrounds = Question.of("background-colors", target).answerIf(
-    getBackground(parent, device)
+    getBackground(parent, device),
   );
 
   const threshold = isLargeText(device)(target)
@@ -52,9 +52,9 @@ export function hasSufficientContrastDeprecated(
           // Accept if  single pairing is good enough.
           highest >= threshold,
           () => Outcomes.HasSufficientContrast(highest, threshold, pairings),
-          () => Outcomes.HasInsufficientContrast(highest, threshold, pairings)
+          () => Outcomes.HasInsufficientContrast(highest, threshold, pairings),
         );
-      })
+      }),
     ),
   };
 }
@@ -66,7 +66,7 @@ export function hasSufficientContrast(
   target: Text,
   device: Device,
   largeTextThreshold: number,
-  normalTextThreshold: number
+  normalTextThreshold: number,
 ) {
   // Associated Applicability should ensure that target have Element as parent.
   // Additionally, stray text nodes should not exist in our use case and we'd
@@ -92,8 +92,8 @@ export function hasSufficientContrast(
         // "ignored-interposed-elements" for them.
         takeWhile(errors.errors, ColorError.isInterposedDescendants),
         // and keep the interposed elements.
-        (error) => error.positionedDescendants
-      )
+        (error) => error.positionedDescendants,
+      ),
     )
     .getOr<Array<Element>>([]);
   const background = getBackground(parent, device)
@@ -101,8 +101,8 @@ export function hasSufficientContrast(
     .map((errors) =>
       flatMap(
         takeWhile(errors.errors, ColorError.isInterposedDescendants),
-        (error) => error.positionedDescendants
-      )
+        (error) => error.positionedDescendants,
+      ),
     )
     .getOr<Array<Element>>([]);
 
@@ -113,11 +113,11 @@ export function hasSufficientContrast(
   const ignoredInterposedElements = Question.of(
     "ignored-interposed-elements",
     Group.of(interposedDescendants),
-    target
+    target,
   ).answerIf(
     getIntersectors(parent, interposedDescendants, device).map((intersectors) =>
-      interposedDescendants.subtract(intersectors)
-    )
+      interposedDescendants.subtract(intersectors),
+    ),
   );
 
   const foregrounds = Question.of("foreground-colors", target);
@@ -141,13 +141,13 @@ export function hasSufficientContrast(
                 device,
                 undefined,
                 undefined,
-                ignoredInterposed
-              )
+                ignoredInterposed,
+              ),
             )
             .map((backgrounds) => {
               const { pairings, highest } = getPairings(
                 foregrounds,
-                backgrounds
+                backgrounds,
               );
 
               return expectation(
@@ -156,9 +156,13 @@ export function hasSufficientContrast(
                 () =>
                   Outcomes.HasSufficientContrast(highest, threshold, pairings),
                 () =>
-                  Outcomes.HasInsufficientContrast(highest, threshold, pairings)
+                  Outcomes.HasInsufficientContrast(
+                    highest,
+                    threshold,
+                    pairings,
+                  ),
               );
-            })
+            }),
         );
     }),
   };
@@ -176,7 +180,7 @@ const cache = Cache.empty<Iterable<RGB>, Cache<Iterable<RGB>, Pairings>>();
  */
 function getPairings(
   foregrounds: Iterable<RGB>,
-  backgrounds: Iterable<RGB>
+  backgrounds: Iterable<RGB>,
 ): Pairings {
   return cache.get(foregrounds, Cache.empty).get(backgrounds, () => {
     const pairings = [
@@ -185,15 +189,15 @@ function getPairings(
           Diagnostic.Pairing.of<["foreground", "background"]>(
             ["foreground", foreground],
             ["background", background],
-            contrast(foreground, background)
-          )
-        )
+            contrast(foreground, background),
+          ),
+        ),
       ),
     ];
 
     const highest = pairings.reduce(
       (highest, pairing) => max(highest, pairing.contrast),
-      0
+      0,
     );
 
     return { pairings, highest };
@@ -238,7 +242,7 @@ export function contrast(foreground: RGB, background: RGB): number {
 function getIntersectors(
   element: Element<string>,
   candidates: Iterable<Element>,
-  device: Device
+  device: Device,
 ): Option<Iterable<Element>> {
   // If the collection of candidates is empty we don't need layout to determine that there are no intersectors
   if (Iterable.isEmpty(candidates)) {
@@ -250,7 +254,7 @@ function getIntersectors(
   if (
     !elementBox.isSome() ||
     Iterable.some(candidates, (candidate) =>
-      candidate.getBoundingBox(device).isNone()
+      candidate.getBoundingBox(device).isNone(),
     )
   ) {
     return None;
@@ -262,7 +266,7 @@ function getIntersectors(
       (canditate) =>
         elementBox
           .get()
-          .intersects(canditate.getBoundingBox(device).getUnsafe()) // Presence of the box is guaranteed by the above check
-    )
+          .intersects(canditate.getBoundingBox(device).getUnsafe()), // Presence of the box is guaranteed by the above check
+    ),
   );
 }

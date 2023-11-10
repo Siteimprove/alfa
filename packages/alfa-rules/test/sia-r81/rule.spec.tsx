@@ -51,7 +51,7 @@ test(`evaluate() fails two links that have the same name, but reference
       { document },
       oracle({
         "reference-equivalent-resources": false,
-      })
+      }),
     ),
     [
       failed(
@@ -60,9 +60,9 @@ test(`evaluate() fails two links that have the same name, but reference
         {
           1: Outcomes.ResolveDifferentResource,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -85,7 +85,7 @@ test(`evaluate() passes two links that have the same name and reference
       { document },
       oracle({
         "reference-equivalent-resources": true,
-      })
+      }),
     ),
     [
       passed(
@@ -94,9 +94,9 @@ test(`evaluate() passes two links that have the same name and reference
         {
           1: Outcomes.ResolveEquivalentResource,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -142,14 +142,14 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
       document,
       response: Response.of(
         URL.parse("https://somewhere.com/path/to/bar.html").getUnsafe(),
-        200
+        200,
       ),
     }),
     [
       passed(R81, Group.of(target), {
         1: Outcomes.ResolveSameResource,
       }),
-    ]
+    ],
   );
 });
 

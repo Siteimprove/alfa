@@ -15,7 +15,7 @@ test("evaluate() passes on large enough value", async (t) => {
     [],
     [h.text("Hello World")],
     [declaration],
-    Namespace.HTML
+    Namespace.HTML,
   );
 
   const document = h.document([target]);
@@ -29,7 +29,7 @@ test("evaluate() passes on large enough value", async (t) => {
         0.12,
         0.12,
         declaration,
-        target
+        target,
       ),
     }),
   ]);
@@ -42,7 +42,7 @@ test(`evaluate() ignores elements whose \`letter-spacing\` is never used`, async
     [],
     [h.text("Hello World")],
     [declaration],
-    Namespace.HTML
+    Namespace.HTML,
   );
 
   const document = h.document([
@@ -62,7 +62,7 @@ test(`evaluate() ignores elements whose \`letter-spacing\` is never used`, async
         0.125,
         0.12,
         declaration,
-        target
+        target,
       ),
     }),
   ]);
@@ -92,7 +92,7 @@ test(`evaluate() considers the latest \`font-size\``, async (t) => {
         0.15,
         0.12,
         declarations[1],
-        div
+        div,
       ),
     }),
   ]);
@@ -105,7 +105,7 @@ test("evaluate() fails on important small values", async (t) => {
     [],
     [h.text("Hello World")],
     [declaration],
-    Namespace.HTML
+    Namespace.HTML,
   );
 
   const document = h.document([target]);
@@ -119,7 +119,7 @@ test("evaluate() fails on important small values", async (t) => {
         0.1,
         0.12,
         declaration,
-        target
+        target,
       ),
     }),
   ]);
@@ -154,7 +154,7 @@ test("evaluate() is inapplicable on non important style", async (t) => {
 test("evaluate() is inapplicable on important cascaded styles", async (t) => {
   const document = h.document(
     [<div style={{ letterSpacing: "0.15em" }}>Hello World</div>],
-    [h.sheet([h.rule.style("div", { letterSpacing: "0.1em !important" })])]
+    [h.sheet([h.rule.style("div", { letterSpacing: "0.1em !important" })])],
   );
 
   t.deepEqual(await evaluate(R91, { document }), [inapplicable(R91)]);

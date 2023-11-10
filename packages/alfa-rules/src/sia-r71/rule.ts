@@ -25,7 +25,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return getElementDescendants(document, Node.fullTree).filter(
-          and(hasRole(device, "paragraph"), isVisible(device))
+          and(hasRole(device, "paragraph"), isVisible(device)),
         );
       },
 
@@ -34,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             test(isNotJustified(device), target),
             () => Outcomes.IsNotJustified,
-            () => Outcomes.IsJustified
+            () => Outcomes.IsJustified,
           ),
         };
       },
@@ -47,11 +47,11 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const IsNotJustified = Ok.of(
-    Diagnostic.of(`The text of the paragraph is not justified`)
+    Diagnostic.of(`The text of the paragraph is not justified`),
   );
 
   export const IsJustified = Err.of(
-    Diagnostic.of(`The text of the paragraph is justified`)
+    Diagnostic.of(`The text of the paragraph is justified`),
   );
 }
 
@@ -59,6 +59,6 @@ function isNotJustified(device: Device) {
   return hasComputedStyle(
     "text-align",
     (align) => align.value !== "justify",
-    device
+    device,
   );
 }

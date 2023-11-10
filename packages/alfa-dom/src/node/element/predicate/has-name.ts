@@ -9,7 +9,7 @@ const { equals } = Predicate;
  * @public
  */
 export function hasName<N extends string = string>(
-  predicate: Refinement<string, N>
+  predicate: Refinement<string, N>,
 ): Refinement<Element, Element<N>>;
 
 /**

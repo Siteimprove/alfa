@@ -9,7 +9,7 @@ const { map, option, delimited, takeBetween } = Parser;
 const parse = takeBetween(
   delimited(option(Token.parseWhitespace), Top.parse),
   1,
-  4
+  4,
 );
 
 /**
@@ -24,5 +24,5 @@ export default Shorthand.of(
     ["margin-right", right],
     ["margin-bottom", bottom],
     ["margin-left", left],
-  ])
+  ]),
 );

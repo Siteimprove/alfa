@@ -15,7 +15,7 @@ const { map } = Parser;
 export class Extent extends Value<"extent", false> {
   public static of(
     shape: Extent.Shape = Extent.Shape.Circle,
-    size: Extent.Size = Extent.Size.FarthestCorner
+    size: Extent.Size = Extent.Size.FarthestCorner,
   ): Extent {
     return new Extent(shape, size);
   }
@@ -99,7 +99,7 @@ export namespace Extent {
 
   const parseShape = map(
     Keyword.parse("circle", "ellipse"),
-    (keyword) => keyword.value as Extent.Shape
+    (keyword) => keyword.value as Extent.Shape,
   );
 
   const parseSize = map(
@@ -107,9 +107,9 @@ export namespace Extent {
       "closest-side",
       "farthest-side",
       "closest-corner",
-      "farthest-corner"
+      "farthest-corner",
     ),
-    (keyword) => keyword.value as Size
+    (keyword) => keyword.value as Size,
   );
 
   export const parse: CSSParser<Extent> = (input) => {

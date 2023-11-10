@@ -19,7 +19,7 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
     ratio: number,
     threshold: number,
     declaration: Declaration,
-    owner: Element
+    owner: Element,
   ): TextSpacing<N>;
 
   public static of<N extends Longhands.Name>(
@@ -30,7 +30,7 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
     ratio?: number,
     threshold?: number,
     declaration?: Declaration,
-    owner?: Element
+    owner?: Element,
   ): Diagnostic {
     return property === undefined
       ? Diagnostic.of(message)
@@ -42,7 +42,7 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
           ratio!,
           threshold!,
           declaration!,
-          owner!
+          owner!,
         );
   }
 
@@ -64,7 +64,7 @@ export class TextSpacing<N extends Longhands.Name> extends Diagnostic {
     ratio: number,
     threshold: number,
     declaration: Declaration,
-    owner: Element
+    owner: Element,
   ) {
     super(message);
     this._property = property;
@@ -160,16 +160,16 @@ export namespace TextSpacing {
   }
 
   export function isTextSpacing(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is TextSpacing<Longhands.Name>;
 
   export function isTextSpacing(
-    value: unknown
+    value: unknown,
   ): value is TextSpacing<Longhands.Name>;
 
   /** @public */
   export function isTextSpacing(
-    value: unknown
+    value: unknown,
   ): value is TextSpacing<Longhands.Name> {
     return value instanceof TextSpacing;
   }

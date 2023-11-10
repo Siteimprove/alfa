@@ -10,7 +10,8 @@ import { Resource } from "./resource";
  * @public
  */
 export class Site<R extends Resource = Resource>
-  implements json.Serializable<Site.JSON<R>> {
+  implements json.Serializable<Site.JSON<R>>
+{
   public static of<R extends Resource>(resources: Graph<R>): Site<R> {
     return new Site(resources);
   }

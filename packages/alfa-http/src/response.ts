@@ -23,7 +23,7 @@ export class Response
     url: URL,
     status: number,
     headers: Headers = Headers.empty(),
-    body: ArrayBuffer = new ArrayBuffer(0)
+    body: ArrayBuffer = new ArrayBuffer(0),
   ): Response {
     return new Response(url, status, headers, body);
   }
@@ -43,7 +43,7 @@ export class Response
     url: URL,
     status: number,
     headers: Headers,
-    body: ArrayBuffer
+    body: ArrayBuffer,
   ) {
     this._url = url;
     this._status = status;
@@ -146,8 +146,8 @@ export namespace Response {
         url,
         json.status,
         Headers.from(json.headers),
-        Encoder.encode(json.body)
-      )
+        Encoder.encode(json.body),
+      ),
     );
   }
 

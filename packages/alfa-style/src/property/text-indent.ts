@@ -24,5 +24,5 @@ export default Longhand.of<Specified, Computed>(
   LengthPercentage.parse,
   (textIndent, style) =>
     textIndent.map(LengthPercentage.partiallyResolve(Resolver.length(style))),
-  { inherits: true }
+  { inherits: true },
 );

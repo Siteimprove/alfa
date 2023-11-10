@@ -35,8 +35,8 @@ export default Rule.Atomic.of<Page, Attribute>({
           .filter(isIncludedInTheAccessibilityTree(device))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
-              property("name", aria.Attribute.isName)
-            )
+              property("name", aria.Attribute.isName),
+            ),
           );
       },
 
@@ -46,14 +46,14 @@ export default Rule.Atomic.of<Page, Attribute>({
             global.has(target.name as aria.Attribute.Name) ||
               test(
                 hasRole(device, (role) =>
-                  role.isAttributeSupported(target.name as aria.Attribute.Name)
+                  role.isAttributeSupported(target.name as aria.Attribute.Name),
                 ),
                 // Since the attribute was found on a element, it has a owner.
-                target.owner.getUnsafe()
+                target.owner.getUnsafe(),
               ) ||
               ariaHtmlAllowed(target),
             () => Outcomes.IsAllowed,
-            () => Outcomes.IsNotAllowed
+            () => Outcomes.IsNotAllowed,
           ),
         };
       },
@@ -77,7 +77,7 @@ function ariaHtmlAllowed(target: Attribute): boolean {
             "month",
             "password",
             "time",
-            "week"
+            "week",
           )(element) && Role.of("textbox").isAttributeSupported(attributeName)
         );
 
@@ -101,13 +101,13 @@ function ariaHtmlAllowed(target: Attribute): boolean {
 export namespace Outcomes {
   export const IsAllowed = Ok.of(
     Diagnostic.of(
-      `The attribute is allowed for the element on which it is specified`
-    )
+      `The attribute is allowed for the element on which it is specified`,
+    ),
   );
 
   export const IsNotAllowed = Err.of(
     Diagnostic.of(
-      `The attribute is not allowed for the element on which it is specified`
-    )
+      `The attribute is not allowed for the element on which it is specified`,
+    ),
   );
 }

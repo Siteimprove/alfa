@@ -67,9 +67,9 @@ test("parse() optionally refuses spread", (t) => {
   ]) {
     t.deepEqual(
       Shadow.parse({ withInset: true, withSpread: false })(
-        Lexer.lex(input)
+        Lexer.lex(input),
       ).isErr(),
-      true
+      true,
     );
   }
 });
@@ -113,9 +113,9 @@ test("parse() optionally refuses inset", (t) => {
   ]) {
     t.deepEqual(
       Shadow.parse({ withInset: false, withSpread: true })(
-        Lexer.lex(input)
+        Lexer.lex(input),
       ).isErr(),
-      true
+      true,
     );
   }
 });
@@ -187,7 +187,7 @@ test("parse() refuses inset or color between lengths", (t) => {
     "red 1px inset 2px 3px 4px",
   ]) {
     const result = Shadow.parse({ withInset: false, withSpread: true })(
-      Lexer.lex(input)
+      Lexer.lex(input),
     );
 
     // It either fails to parse, or fails to consume all tokens
@@ -202,13 +202,13 @@ test(".resolve() returns a canonical shadow", (t) => {
     Length.of(2, "vh"),
     Length.of(4, "rem"),
     Color.named("red"),
-    true
+    true,
   ).resolve({
     length: Length.resolver(
       Length.of(16, "px"),
       Length.of(10, "px"),
       Length.of(16, "px"),
-      Length.of(20, "px")
+      Length.of(20, "px"),
     ),
   });
 
@@ -232,7 +232,7 @@ test(".resolve() returns a canonical shadow", (t) => {
 
 test("parse() accepts calculations", (t) => {
   const actual = Shadow.parse({ withInset: false, withSpread: true })(
-    Lexer.lex("1em calc(1px + 1px) calc(1px + 2rem) calc(2*2px) red")
+    Lexer.lex("1em calc(1px + 1px) calc(1px + 2rem) calc(2*2px) red"),
   ).getUnsafe()[1];
 
   t.deepEqual(
@@ -242,7 +242,7 @@ test("parse() accepts calculations", (t) => {
           Length.of(16, "px"),
           Length.of(10, "px"),
           Length.of(16, "px"),
-          Length.of(20, "px")
+          Length.of(20, "px"),
         ),
       })
       .toJSON(),
@@ -261,6 +261,6 @@ test("parse() accepts calculations", (t) => {
         alpha: { type: "percentage", value: 1 },
       },
       isInset: false,
-    }
+    },
   );
 });

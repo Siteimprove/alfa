@@ -39,7 +39,7 @@ export namespace Gradient {
   export type PartialResolver = Linear.PartialResolver & Radial.PartialResolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Gradient) => PartiallyResolved {
     return (value) =>
       Selective.of(value)

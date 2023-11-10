@@ -17,7 +17,7 @@ const defaultDevice = Device.standard();
 export function evaluate<T extends Hashable, Q extends Question.Metadata, S>(
   rule: Rule<Page, T, Q, S>,
   page: Partial<Page>,
-  oracle: Oracle<Page, T, Q, S> = () => Future.now(None)
+  oracle: Oracle<Page, T, Q, S> = () => Future.now(None),
 ): Future<Array<Outcome.JSON>> {
   const {
     request = defaultRequest,

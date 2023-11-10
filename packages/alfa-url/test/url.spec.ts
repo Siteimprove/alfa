@@ -17,17 +17,20 @@ test(".parse() parses an absolute URL", (t) => {
 });
 
 test(".parse() parses a relative URL against a base URL", (t) => {
-  t.deepEqual(URL.parse("/page.html", "https://example.com/").getUnsafe().toJSON(), {
-    scheme: "https",
-    username: null,
-    password: null,
-    host: "example.com",
-    port: null,
-    path: ["page.html"],
-    query: null,
-    fragment: null,
-    cannotBeABase: false,
-  });
+  t.deepEqual(
+    URL.parse("/page.html", "https://example.com/").getUnsafe().toJSON(),
+    {
+      scheme: "https",
+      username: null,
+      password: null,
+      host: "example.com",
+      port: null,
+      path: ["page.html"],
+      query: null,
+      fragment: null,
+      cannotBeABase: false,
+    },
+  );
 });
 
 test(".parse() parses the about:blank URL", (t) => {

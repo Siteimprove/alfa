@@ -17,16 +17,16 @@ test("evaluate() passes images whose name is descriptive", async (t) => {
     await evaluate(
       R39,
       { document },
-      oracle({ "name-describes-purpose": true })
+      oracle({ "name-describes-purpose": true }),
     ),
     [
       passed(
         R39,
         target,
         { 1: Outcomes.NameIsDescriptive("img") },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -39,16 +39,16 @@ test("evaluate() passes images whose name is not descriptive", async (t) => {
     await evaluate(
       R39,
       { document },
-      oracle({ "name-describes-purpose": false })
+      oracle({ "name-describes-purpose": false }),
     ),
     [
       failed(
         R39,
         target,
         { 1: Outcomes.NameIsNotDescriptive("img") },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 

@@ -33,17 +33,17 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
               nor(hasAttribute("paused"), hasAttribute("muted")),
               or(
                 hasAttribute("src"),
-                Node.hasChild(and(isElement, hasName("source")))
-              )
-            )
+                Node.hasChild(and(isElement, hasName("source"))),
+              ),
+            ),
           )
           .map((element) => {
             const isAboveDurationThreshold = Question.of(
               "is-above-duration-threshold",
               element,
-              `Does the \`<${element.name}>\` element have a duration of more than 3 seconds?`
+              `Does the \`<${element.name}>\` element have a duration of more than 3 seconds?`,
             ).map((isAboveDurationThreshold) =>
-              isAboveDurationThreshold ? Option.of(element) : None
+              isAboveDurationThreshold ? Option.of(element) : None,
             );
 
             if (element.name === "audio") {
@@ -52,7 +52,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
               return Question.of(
                 "has-audio",
                 element,
-                `Does the \`<${element.name}>\` element contain audio?`
+                `Does the \`<${element.name}>\` element contain audio?`,
               ).map((hasAudio) => (hasAudio ? isAboveDurationThreshold : None));
             }
           });
@@ -63,13 +63,13 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "is-below-audio-duration-threshold",
             target,
-            `Does the \`<${target.name}>\` element have a total audio duration of less than 3 seconds?`
+            `Does the \`<${target.name}>\` element have a total audio duration of less than 3 seconds?`,
           ).map((isBelowAudioDurationThreshold) =>
             expectation(
               isBelowAudioDurationThreshold,
               () => Outcomes.DurationBelowThreshold(target.name),
-              () => Outcomes.DurationAboveThreshold(target.name)
-            )
+              () => Outcomes.DurationAboveThreshold(target.name),
+            ),
           ),
         };
       },
@@ -85,15 +85,15 @@ export namespace Outcomes {
     Ok.of(
       Diagnostic.of(
         `The total duration of audio output of the \`<${name}>\` element does
-        not exceed 3 seconds`
-      )
+        not exceed 3 seconds`,
+      ),
     );
 
   export const DurationAboveThreshold = (name: string) =>
     Err.of(
       Diagnostic.of(
         `The total duration of audio output of the \`<${name}>\` element exceeds
-        3 seconds`
-      )
+        3 seconds`,
+      ),
     );
 }

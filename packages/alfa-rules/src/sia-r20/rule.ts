@@ -20,8 +20,8 @@ export default Rule.Atomic.of<Page, Attribute>({
         return getElementDescendants(document, Node.composedNested).flatMap(
           (element) =>
             Sequence.from(element.attributes).filter((attribute) =>
-              attribute.name.startsWith("aria-")
-            )
+              attribute.name.startsWith("aria-"),
+            ),
         );
       },
 
@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             exists,
             () => Outcomes.IsDefined,
-            () => Outcomes.IsNotDefined
+            () => Outcomes.IsNotDefined,
           ),
         };
       },
@@ -47,6 +47,6 @@ export namespace Outcomes {
   export const IsDefined = Ok.of(Diagnostic.of(`The attribute is defined`));
 
   export const IsNotDefined = Err.of(
-    Diagnostic.of(`The attribute is not defined`)
+    Diagnostic.of(`The attribute is not defined`),
   );
 }

@@ -15,7 +15,7 @@ import { hasCascadedStyle } from "./has-cascaded-style";
 export function hasCascadedValueDeclaredInInlineStyleOf(
   context: Element,
   device: Device,
-  name: Longhands.Name
+  name: Longhands.Name,
 ): Predicate<Element> {
   return hasCascadedStyle(
     name,
@@ -27,9 +27,9 @@ export function hasCascadedValueDeclaredInInlineStyleOf(
             // if the cascaded value is exactly the declared one, not just a
             // similar one.
             .declaration((declared) => cascaded === declared)
-            .isSome()
-        )
+            .isSome(),
+        ),
       ),
-    device
+    device,
   );
 }
