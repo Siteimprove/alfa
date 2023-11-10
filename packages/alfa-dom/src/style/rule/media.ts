@@ -41,7 +41,7 @@ export class MediaRule extends ConditionRule {
   public toString(): string {
     const rules = join(
       map(this._rules, (rule) => indent(rule.toString())),
-      "\n\n"
+      "\n\n",
     );
 
     return `@media ${this._condition} {${rules === "" ? "" : `\n${rules}\n`}}`;
@@ -65,7 +65,7 @@ export namespace MediaRule {
    */
   export function fromMediaRule(json: JSON): Trampoline<MediaRule> {
     return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
-      MediaRule.of(json.condition, rules)
+      MediaRule.of(json.condition, rules),
     );
   }
 }

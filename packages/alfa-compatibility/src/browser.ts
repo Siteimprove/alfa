@@ -12,7 +12,7 @@ import { Browsers } from "./browser/data";
  */
 export type Browser<
   N extends Browser.Name = Browser.Name,
-  V extends Browser.Version<N> = Browser.Version<N>
+  V extends Browser.Version<N> = Browser.Version<N>,
 > = Browser.Release<N, V>;
 
 /**
@@ -31,14 +31,15 @@ export namespace Browser {
     : never;
 
   export class Release<N extends Name = Name, V extends Version<N> = Version<N>>
-    implements Serializable {
+    implements Serializable
+  {
     /**
      * @internal
      */
     public static of<N extends Name, V extends Version<N>>(
       browser: N,
       version: V,
-      date: number
+      date: number,
     ): Release<N, V> {
       return new Release(browser, version, date);
     }
@@ -104,7 +105,7 @@ export namespace Browser {
 
   export function isVersion<N extends Name>(
     browser: N,
-    version: string
+    version: string,
   ): version is Version<N> {
     return version in Browsers[browser].releases;
   }
@@ -136,16 +137,16 @@ export namespace Browser {
               [version]: Release.of(browser, version, date),
             };
           },
-          {} as Versions<N>
+          {} as Versions<N>,
         ),
       };
     },
-    {} as Releases
+    {} as Releases,
   );
 
   function getRelease<N extends Name, V extends Version<N>>(
     browser: N,
-    version: V
+    version: V,
   ): Release<N, V> {
     return (releases[browser] as Versions<N>)[version];
   }
@@ -167,19 +168,19 @@ export namespace Browser {
       | readonly [N, Version<N>, Version<N>];
 
     export function isEvery<N extends Name>(
-      query: Query<N>
+      query: Query<N>,
     ): query is Every<N> {
       return query.length === 1;
     }
 
     export function isSingle<N extends Name>(
-      query: Query<N>
+      query: Query<N>,
     ): query is Single<N> {
       return query.length === 2;
     }
 
     export function isRange<N extends Name>(
-      query: Query<N>
+      query: Query<N>,
     ): query is Range<N> {
       return query.length === 3;
     }
@@ -187,12 +188,12 @@ export namespace Browser {
 
   export function* query<N extends Name>(
     query: Query<N>,
-    scope: Scope = getDefaultScope()
+    scope: Scope = getDefaultScope(),
   ): Scope<N> {
     const browser = query[0];
     const support = Iterable.filter(
       scope,
-      (release): release is Release<N> => release.browser === browser
+      (release): release is Release<N> => release.browser === browser,
     );
 
     if (Query.isEvery(query)) {

@@ -15,7 +15,7 @@ export const isMarkedDecorative: Predicate<Element> = (element) => {
       .filter(Role.isName)
       .map(Role.of)
       .reject((role) => role.isAbstract())
-      .first()
+      .first(),
   );
 
   if (role.some((role) => role.isPresentational())) {

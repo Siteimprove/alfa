@@ -19,5 +19,5 @@ export default Shorthand.of(
     ["border-inline-end-color", color],
     ["border-inline-end-style", style],
     ["border-inline-end-width", width],
-  ])
+  ]),
 );

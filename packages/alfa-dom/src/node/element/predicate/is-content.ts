@@ -16,10 +16,10 @@ const { and } = Refinement;
  * @public
  */
 export function isContent(
-  options: Node.Traversal = Node.Traversal.empty
+  options: Node.Traversal = Node.Traversal.empty,
 ): Predicate<Node> {
   return or(
     (node) => node.children(options).isEmpty(),
-    and(Element.isElement, isReplaced)
+    and(Element.isElement, isReplaced),
   );
 }

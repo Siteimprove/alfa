@@ -10,7 +10,7 @@ test(".of() constructs a record from a set of properties", (t) => {
     [
       ["bar", 1],
       ["foo", "foo"],
-    ]
+    ],
   );
 });
 

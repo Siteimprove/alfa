@@ -22,8 +22,8 @@ export namespace Color {
                 color.red,
                 color.green,
                 color.blue,
-                Percentage.of(color.alpha.value)
-              )
+                Percentage.of(color.alpha.value),
+              ),
             );
           }
         }
@@ -34,8 +34,8 @@ export namespace Color {
               Percentage.of(0),
               Percentage.of(0),
               Percentage.of(0),
-              Percentage.of(1)
-            )
+              Percentage.of(1),
+            ),
           );
         }
 
@@ -47,8 +47,8 @@ export namespace Color {
             color.red,
             color.green,
             color.blue,
-            Percentage.of(color.alpha.value)
-          )
+            Percentage.of(color.alpha.value),
+          ),
         );
     }
   }
@@ -59,7 +59,7 @@ export namespace Color {
   export function composite(
     foreground: Resolved,
     background: Resolved,
-    opacity: number
+    opacity: number,
   ): Resolved {
     const foregroundOpacity = foreground.alpha.value * opacity;
 
@@ -79,7 +79,7 @@ export namespace Color {
       Percentage.of(red),
       Percentage.of(green),
       Percentage.of(blue),
-      Percentage.of(foregroundOpacity + alpha)
+      Percentage.of(foregroundOpacity + alpha),
     );
   }
 }

@@ -17,7 +17,7 @@ export namespace Serialise {
   // as the initial value of the property.
   export function borderShorthand(
     style: Style,
-    property: "color" | "style" | "width"
+    property: "color" | "style" | "width",
   ): readonly [Name, string] {
     const shorthand = `border-${property}` as const;
 
@@ -58,7 +58,7 @@ export namespace Serialise {
     return normalize(
       (["color", "style", "width"] as const)
         .map((property) => getLonghand(style, `outline-${property}`))
-        .join(" ")
+        .join(" "),
     );
   }
 
@@ -69,7 +69,7 @@ export namespace Serialise {
     return normalize(
       (["line", "color", "style", "thickness"] as const)
         .map((property) => getLonghand(style, `text-decoration-${property}`))
-        .join(" ")
+        .join(" "),
     );
   }
 
@@ -91,7 +91,7 @@ export namespace Serialise {
       const insetToString = isInset ? "inset" : "";
       const colorToString = Keyword.isKeyword(color) ? "" : `${color}`;
       const serialized = normalize(
-        `${horizontal.toString()} ${vertical.toString()} ${blurToString} ${spreadToString} ${colorToString} ${insetToString}`
+        `${horizontal.toString()} ${vertical.toString()} ${blurToString} ${spreadToString} ${colorToString} ${insetToString}`,
       );
       serializedShadows.push(serialized);
     }
@@ -115,7 +115,7 @@ export namespace Serialise {
     if (
       size.value.equals(Longhands.get("font-size").initial.value) &&
       family.value.values[0].equals(
-        Longhands.get("font-family").initial.values[0]
+        Longhands.get("font-family").initial.values[0],
       )
     ) {
       // Both mandatory properties are set to their initial values.
@@ -145,7 +145,7 @@ export namespace Serialise {
     function getValue<T>(
       array: ReadonlyArray<T>,
       n: number,
-      property?: Longhands.Name
+      property?: Longhands.Name,
     ): string {
       // Longhands with missing layers use the same value as their first layer
       const value = `${array?.[n] ?? array[0]}`;
@@ -225,7 +225,7 @@ export namespace Serialise {
         : `${imageValue} ${getPosition(n)} ${getRepeat(n)} ${getValue(
             attachment,
             n,
-            "background-attachment"
+            "background-attachment",
           )} ${getBoxes(n)}`;
     }
 

@@ -21,7 +21,7 @@ const rgb = (r: number, g: number, b: number, a: number = 1) =>
     Percentage.of(r),
     Percentage.of(g),
     Percentage.of(b),
-    Percentage.of(a)
+    Percentage.of(a),
   );
 
 test("evaluate() passes a text node that has sufficient contrast", async (t) => {
@@ -44,7 +44,7 @@ test("evaluate() passes a text node that has sufficient contrast", async (t) => 
         Diagnostic.Pairing.of(
           ["foreground", rgb(1, 1, 1)],
           ["background", rgb(0, 0, 0)],
-          21
+          21,
         ),
       ]),
     }),
@@ -85,7 +85,7 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
         Diagnostic.Pairing.of(
           ["foreground", rgb(1, 1, 1)],
           ["background", rgb(0.15, 0.15, 0.15)],
-          15.08
+          15.08,
         ),
       ]),
     }),
@@ -94,7 +94,7 @@ test("evaluate() correctly handles semi-transparent backgrounds", async (t) => {
         Diagnostic.Pairing.of(
           ["foreground", rgb(1, 1, 1)],
           ["background", rgb(0.5, 0.5, 0.5)],
-          3.98
+          3.98,
         ),
       ]),
     }),
@@ -134,7 +134,7 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
         Diagnostic.Pairing.of(
           ["foreground", rgb(0.85, 0.85, 0.85)],
           ["background", rgb(0, 0, 0)],
-          14.84
+          14.84,
         ),
       ]),
     }),
@@ -143,7 +143,7 @@ test("evaluate() correctly handles semi-transparent foregrounds", async (t) => {
         Diagnostic.Pairing.of(
           ["foreground", rgb(0.4, 0.4, 0.4)],
           ["background", rgb(0, 0, 0)],
-          3.66
+          3.66,
         ),
       ]),
     }),
@@ -171,7 +171,7 @@ test("evaluate() passes an 18pt text node with sufficient contrast", async (t) =
         Diagnostic.Pairing.of(
           ["foreground", rgb(0.3764706, 0.3764706, 0.3764706)],
           ["background", rgb(0, 0, 0)],
-          3.34
+          3.34,
         ),
       ]),
     }),
@@ -200,7 +200,7 @@ test("evaluate() passes an 14pt, bold text node with sufficient contrast", async
         Diagnostic.Pairing.of(
           ["foreground", rgb(0.3764706, 0.3764706, 0.3764706)],
           ["background", rgb(0, 0, 0)],
-          3.34
+          3.34,
         ),
       ]),
     }),
@@ -218,7 +218,7 @@ test("evaluate() passes a text node using the user agent default styles", async 
         Diagnostic.Pairing.of(
           ["foreground", rgb(0, 0, 0)],
           ["background", rgb(1, 1, 1)],
-          21
+          21,
         ),
       ]),
     }),
@@ -244,7 +244,7 @@ test("evaluate() correctly resolves the `currentcolor` keyword", async (t) => {
         Diagnostic.Pairing.of(
           ["foreground", rgb(1, 1, 1)],
           ["background", rgb(1, 1, 1)],
-          1
+          1,
         ),
       ]),
     }),
@@ -270,7 +270,7 @@ test("evaluate() correctly resolves the `currentcolor` keyword to the user agent
         Diagnostic.Pairing.of(
           ["foreground", rgb(0, 0, 0)],
           ["background", rgb(0, 0, 0)],
-          1
+          1,
         ),
       ]),
     }),
@@ -316,7 +316,7 @@ test("evaluate() passes text nodes in widgets with good contrast", async (t) => 
         Diagnostic.Pairing.of(
           ["foreground", rgb(0, 0, 0)],
           ["background", rgb(1, 1, 1)],
-          21
+          21,
         ),
       ]),
     }),
@@ -413,7 +413,7 @@ test("evaluate() passes when a background color with sufficient contrast is inpu
       { document },
       oracle({
         "background-colors": [rgb(1, 1, 1)],
-      })
+      }),
     ),
     [
       passed(
@@ -424,13 +424,13 @@ test("evaluate() passes when a background color with sufficient contrast is inpu
             Diagnostic.Pairing.of(
               ["foreground", rgb(0, 0, 0)],
               ["background", rgb(1, 1, 1)],
-              21
+              21,
             ),
           ]),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -454,7 +454,7 @@ test("evaluate() fails when a background color with insufficient contrast is inp
       { document },
       oracle({
         "background-colors": [rgb(0, 0, 0)],
-      })
+      }),
     ),
     [
       failed(
@@ -465,13 +465,13 @@ test("evaluate() fails when a background color with insufficient contrast is inp
             Diagnostic.Pairing.of(
               ["foreground", rgb(0, 0, 0)],
               ["background", rgb(0, 0, 0)],
-              1
+              1,
             ),
           ]),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -496,12 +496,12 @@ test("evaluate() passes when a linear gradient has sufficient contrast in the be
         Diagnostic.Pairing.of(
           ["foreground", rgb(0, 0, 0)],
           ["background", rgb(1, 1, 1)],
-          21
+          21,
         ),
         Diagnostic.Pairing.of(
           ["foreground", rgb(0, 0, 0)],
           ["background", rgb(0, 0, 0)],
-          1
+          1,
         ),
       ]),
     }),
@@ -529,12 +529,12 @@ test("evaluate() fails when a linear gradient has insufficient contrast in the b
         Diagnostic.Pairing.of(
           ["foreground", rgb(0, 0, 0)],
           ["background", rgb(0, 0, 0)],
-          1
+          1,
         ),
         Diagnostic.Pairing.of(
           ["foreground", rgb(0, 0, 0)],
           ["background", rgb(0, 0, 0)],
-          1
+          1,
         ),
       ]),
     }),
@@ -562,7 +562,7 @@ test(`evaluate() correctly merges semi-transparent background layers against a
         Diagnostic.Pairing.of(
           ["foreground", rgb(1, 1, 1)],
           ["background", rgb(0.25, 0.25, 0.25)],
-          10.41
+          10.41,
         ),
       ]),
     }),
@@ -588,7 +588,7 @@ test(`evaluate() cannot tell when a background has a fixed size`, async (t) => {
   const document = h.document([div]);
 
   const backgroundSize = Style.from(div, Device.standard()).computed(
-    "background-size"
+    "background-size",
   ).value;
 
   const diagnostic = ColorErrors.of([
@@ -606,7 +606,7 @@ test(`evaluate() cannot tell when encountering a text shadow`, async (t) => {
   const document = h.document([div]);
 
   const textShadow = Style.from(div, Device.standard()).computed(
-    "text-shadow"
+    "text-shadow",
   ).value;
   const diagnostic = ColorErrors.of([ColorError.textShadow(div, textShadow)]);
 
@@ -678,7 +678,7 @@ test(`evaluate() ignores transparent interposed element before
         Diagnostic.Pairing.of(
           ["foreground", rgb(0, 0, 0)],
           ["background", rgb(1, 1, 1)],
-          21
+          21,
         ),
       ]),
     }),
@@ -730,7 +730,7 @@ test("evaluate() can tell when encountering an opaque background before an absol
         Diagnostic.Pairing.of(
           ["foreground", rgb(0, 0, 0)],
           ["background", rgb(1, 1, 1)],
-          21
+          21,
         ),
       ]),
     }),

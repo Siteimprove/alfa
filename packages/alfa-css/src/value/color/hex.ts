@@ -49,7 +49,7 @@ export class Hex extends Format<"hex"> {
 
   public resolve(): RGB.Canonical {
     return RGB.of(
-      ...Format.resolve(this.red, this.green, this.blue, this.alpha)
+      ...Format.resolve(this.red, this.green, this.blue, this.alpha),
     );
   }
 
@@ -121,8 +121,8 @@ export namespace Hex {
           default:
             return hash.value;
         }
-      }
+      },
     ),
-    (hash) => Hex.of(parseInt(hash, 16))
+    (hash) => Hex.of(parseInt(hash, 16)),
   );
 }

@@ -26,7 +26,7 @@ export class Page
     request: Request,
     response: Response,
     document: Document,
-    device: Device
+    device: Device,
   ): Page {
     return new Page(request, response, document, device);
   }
@@ -40,7 +40,7 @@ export class Page
     request: Request,
     response: Response,
     document: Document,
-    device: Device
+    device: Device,
   ) {
     this._request = request;
     this._response = response;
@@ -125,8 +125,13 @@ export namespace Page {
     const device = Device.from(json.device);
     return Request.from(json.request).andThen((request) =>
       Response.from(json.response).map((response) =>
-        Page.of(request, response, Document.from(json.document, device), device)
-      )
+        Page.of(
+          request,
+          response,
+          Document.from(json.document, device),
+          device,
+        ),
+      ),
     );
   }
 

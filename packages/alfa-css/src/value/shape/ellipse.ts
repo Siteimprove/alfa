@@ -19,12 +19,12 @@ const { map, option, pair, right } = Parser;
  */
 export class Ellipse<
   R extends Radius = Radius,
-  P extends Position = Position
+  P extends Position = Position,
 > extends BasicShape<"ellipse", Value.HasCalculation<[R, P]>> {
   public static of<R extends Radius = Radius, P extends Position = Position>(
     rx: R,
     ry: R,
-    center: P
+    center: P,
   ): Ellipse<R, P> {
     return new Ellipse(rx, ry, center);
   }
@@ -39,7 +39,7 @@ export class Ellipse<
       // TS sees the first as Value.HasCalculation<[R, R, P]>
       Value.hasCalculation(rx, ry, center) as unknown as Value.HasCalculation<
         [R, P]
-      >
+      >,
     );
     this._rx = rx;
     this._ry = ry;
@@ -62,7 +62,7 @@ export class Ellipse<
     return new Ellipse(
       this._rx.resolve(resolver),
       this._ry.resolve(resolver),
-      this._center.resolve(resolver)
+      this._center.resolve(resolver),
     );
   }
 
@@ -123,13 +123,13 @@ export namespace Ellipse {
     Position.PartialResolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Ellipse) => PartiallyResolved {
     return (value) =>
       Ellipse.of(
         Radius.PartiallyResolve(resolver)(value.rx),
         Radius.PartiallyResolve(resolver)(value.ry),
-        Position.partiallyResolve(resolver)(value.center)
+        Position.partiallyResolve(resolver)(value.center),
       );
   }
 
@@ -147,11 +147,11 @@ export namespace Ellipse {
             option(Token.parseWhitespace),
             right(
               Keyword.parse("at"),
-              right(Token.parseWhitespace, Position.parse())
-            )
-          )
-        )
-      )
+              right(Token.parseWhitespace, Position.parse()),
+            ),
+          ),
+        ),
+      ),
     ),
     ([_, [radii, center]]) => {
       const [rx, ry] = radii.getOr([
@@ -162,8 +162,8 @@ export namespace Ellipse {
       return Ellipse.of(
         rx,
         ry,
-        center.getOr(Position.of(Keyword.of("center"), Keyword.of("center")))
+        center.getOr(Position.of(Keyword.of("center"), Keyword.of("center"))),
       );
-    }
+    },
   );
 }

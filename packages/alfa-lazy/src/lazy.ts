@@ -49,7 +49,7 @@ export class Lazy<T>
         }
 
         return Trampoline.done(mapper(value));
-      })
+      }),
     );
   }
 
@@ -65,7 +65,7 @@ export class Lazy<T>
         }
 
         return mapper(value)._value;
-      })
+      }),
     );
   }
 

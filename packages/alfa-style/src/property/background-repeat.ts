@@ -29,14 +29,14 @@ export const parse = either<
 >(
   map(
     pair(X.parse, option(delimited(option(Token.parseWhitespace), Y.parse))),
-    ([x, y]) => Tuple.of(x, y.getOr(x))
+    ([x, y]) => Tuple.of(x, y.getOr(x)),
   ),
   map(Keyword.parse("repeat-x"), () =>
-    Tuple.of(Keyword.of("repeat"), Keyword.of("no-repeat"))
+    Tuple.of(Keyword.of("repeat"), Keyword.of("no-repeat")),
   ),
   map(Keyword.parse("repeat-y"), () =>
-    Tuple.of(Keyword.of("no-repeat"), Keyword.of("repeat"))
-  )
+    Tuple.of(Keyword.of("no-repeat"), Keyword.of("repeat")),
+  ),
 );
 
 const parseList = List.parseCommaSeparated(parse);
@@ -62,5 +62,5 @@ export default Shorthand.of(
       ["background-repeat-x", List.of(xs, ", ")],
       ["background-repeat-y", List.of(ys, ", ")],
     ];
-  })
+  }),
 );

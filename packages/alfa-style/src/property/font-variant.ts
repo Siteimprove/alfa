@@ -21,7 +21,7 @@ export const parse: Parser<
     ["font-variant-caps", Longhand.Parsed<typeof Caps> | Keyword<"initial">],
     ["font-variant-east-asian", EastAsian.Specified | Keyword<"initial">],
     ["font-variant-ligatures", Ligatures.Specified | Keyword<"initial">],
-    ["font-variant-numeric", Numeric.Specified | Keyword<"initial">]
+    ["font-variant-numeric", Numeric.Specified | Keyword<"initial">],
   ],
   string
 > = (input) => {
@@ -216,7 +216,7 @@ export const parse: Parser<
           common,
           discretionary,
           historical,
-          contextual
+          contextual,
         ),
       ],
       [
@@ -226,7 +226,7 @@ export const parse: Parser<
           spacing,
           fraction,
           ordinal,
-          slashed
+          slashed,
         ),
       ],
     ],
@@ -244,5 +244,5 @@ export default Shorthand.of(
     "font-variant-ligatures",
     "font-variant-numeric",
   ],
-  parse
+  parse,
 );

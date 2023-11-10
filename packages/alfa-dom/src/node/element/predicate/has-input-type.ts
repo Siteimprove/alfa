@@ -12,7 +12,7 @@ const { and } = Refinement;
  * @public
  */
 export function hasInputType(
-  predicate: Predicate<InputType>
+  predicate: Predicate<InputType>,
 ): Predicate<Element>;
 
 /**
@@ -36,6 +36,6 @@ export function hasInputType(
   }
 
   return and(hasName("input"), (element) =>
-    test(predicate, inputType(element))
+    test(predicate, inputType(element)),
   );
 }

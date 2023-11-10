@@ -28,8 +28,8 @@ export default Rule.Atomic.of<Page, Element>({
                 .attribute("aria-live")
                 .some((attribute) => attribute.value === "assertive"),
             (element) =>
-              !getElementDescendants(element, dom.Node.fullTree).isEmpty()
-          )
+              !getElementDescendants(element, dom.Node.fullTree).isEmpty(),
+          ),
         );
       },
 
@@ -40,7 +40,7 @@ export default Rule.Atomic.of<Page, Element>({
               .attribute("aria-atomic")
               .some((attribute) => attribute.value.toLowerCase() === "true"),
             () => Outcomes.IsAtomic,
-            () => Outcomes.IsNotAtomic
+            () => Outcomes.IsNotAtomic,
           ),
         };
       },
@@ -53,10 +53,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const IsAtomic = Ok.of(
-    Diagnostic.of("The assertive region is atomic")
+    Diagnostic.of("The assertive region is atomic"),
   );
 
   export const IsNotAtomic = Err.of(
-    Diagnostic.of("The assertive region is not atomic")
+    Diagnostic.of("The assertive region is not atomic"),
   );
 }

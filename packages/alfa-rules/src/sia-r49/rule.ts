@@ -35,17 +35,17 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
               nor(hasAttribute("paused"), hasAttribute("muted")),
               or(
                 hasAttribute("src"),
-                Node.hasChild(and(isElement, hasName("source")))
-              )
-            )
+                Node.hasChild(and(isElement, hasName("source"))),
+              ),
+            ),
           )
           .map((element) => {
             const isAboveDurationThreshold = Question.of(
               "is-above-duration-threshold",
               element,
-              `Does the \`<${element.name}>\` element have a duration of more than 3 seconds?`
+              `Does the \`<${element.name}>\` element have a duration of more than 3 seconds?`,
             ).map((isAboveDurationThreshold) =>
-              isAboveDurationThreshold ? Option.of(element) : None
+              isAboveDurationThreshold ? Option.of(element) : None,
             );
 
             if (element.name === "audio") {
@@ -54,7 +54,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
               return Question.of(
                 "has-audio",
                 element,
-                `Does the \`<${element.name}>\` element contain audio?`
+                `Does the \`<${element.name}>\` element contain audio?`,
               ).map((hasAudio) => (hasAudio ? isAboveDurationThreshold : None));
             }
           });
@@ -65,7 +65,7 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "audio-control-mechanism",
             target,
-            `Where is the mechanism that can pause or stop the audio of the \`<${target.name}>\` element?`
+            `Where is the mechanism that can pause or stop the audio of the \`<${target.name}>\` element?`,
           )
             // If the applicable <video> or <audio> element uses native controls
             // we assume that the mechanism is the element itself.
@@ -85,15 +85,15 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
                           // <audio> element itself, in which case we assume the
                           // native controls provide accessible names, or it has
                           // a non-empty accessible name.
-                          or(equals(target), hasNonEmptyAccessibleName(device))
-                        )
-                      )
+                          or(equals(target), hasNonEmptyAccessibleName(device)),
+                        ),
+                      ),
                     ),
                     () => Outcomes.HasPerceivablePauseMechanism(target.name),
-                    () => Outcomes.HasNonPerceivablePauseMechanism(target.name)
+                    () => Outcomes.HasNonPerceivablePauseMechanism(target.name),
                   ),
-                () => Outcomes.HasNoPauseMechanism(target.name)
-              )
+                () => Outcomes.HasNoPauseMechanism(target.name),
+              ),
             ),
         };
       },
@@ -109,23 +109,23 @@ export namespace Outcomes {
     Ok.of(
       Diagnostic.of(
         `The \`<${name}>\` element has a mechanism to pause or stop audio and
-        the mechanism is perceivable`
-      )
+        the mechanism is perceivable`,
+      ),
     );
 
   export const HasNonPerceivablePauseMechanism = (name: string) =>
     Err.of(
       Diagnostic.of(
         `The \`<${name}>\` element has a mechanism to pause or stop audio but
-        the mechanism is not perceivable`
-      )
+        the mechanism is not perceivable`,
+      ),
     );
 
   export const HasNoPauseMechanism = (name: string) =>
     Err.of(
       Diagnostic.of(
         `The \`<${name}>\` element does not have a mechanism to pause or stop
-        audio`
-      )
+        audio`,
+      ),
     );
 }

@@ -20,7 +20,7 @@ const { isText } = Text;
 export function textWithInlinedImportantProperty(
   document: Document,
   device: Device,
-  property: Longhands.Name
+  property: Longhands.Name,
 ): Iterable<Element> {
   return (
     document
@@ -37,14 +37,16 @@ export function textWithInlinedImportantProperty(
               // A property is declared in a style attribute if
               // its declaration has an owner element
               source.some((declaration) => declaration.owner.isSome()),
-            device
+            device,
           ),
           // The computed value is important (`!important`)
           isImportant(device, property),
           // The element has visible text node children
           (element) =>
-            element.children(Node.fullTree).some(and(isText, isVisible(device)))
-        )
+            element
+              .children(Node.fullTree)
+              .some(and(isText, isVisible(device))),
+        ),
       )
   );
 }

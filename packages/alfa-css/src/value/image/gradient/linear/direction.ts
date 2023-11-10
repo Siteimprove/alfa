@@ -33,6 +33,6 @@ export namespace Direction {
     // Corners must be parsed before sides as sides are also valid prefixes of
     // corners.
     Corner.parse,
-    Side.parse
+    Side.parse,
   );
 }

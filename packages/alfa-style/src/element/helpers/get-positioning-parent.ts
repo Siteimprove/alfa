@@ -12,7 +12,7 @@ const { isElement } = Element;
  */
 export function getPositioningParent(
   element: Element,
-  device: Device
+  device: Device,
 ): Option<Element> {
   if (isPositioned(device, "relative", "static", "sticky")(element)) {
     return element.parent(Node.flatTree).filter(isElement);

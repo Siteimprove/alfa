@@ -69,7 +69,7 @@ export namespace Hint {
   export type PartialResolver = LengthPercentage.PartialResolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Hint) => PartiallyResolved {
     return (value) =>
       Hint.of(LengthPercentage.partiallyResolve(resolver)(value.position));

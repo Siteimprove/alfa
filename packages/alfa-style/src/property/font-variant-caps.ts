@@ -12,5 +12,5 @@ export default Longhand.fromKeywords(
   "petite-caps",
   "all-petite-caps",
   "unicase",
-  "titling-caps"
+  "titling-caps",
 );

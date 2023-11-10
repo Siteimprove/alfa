@@ -19,38 +19,38 @@ type Expectation<
   Q extends Question.Metadata,
   S,
   C,
-  D extends number = Interview.MaxDepth
+  D extends number = Interview.MaxDepth,
 > = Interview<Q, S, C, Maybe<Result<Diagnostic>>, D>;
 
 export function expectation(
   test: Trilean,
   ifTrue: Thunk<Maybe<Result<Diagnostic>>>,
   ifFalse: Thunk<Maybe<Result<Diagnostic>>>,
-  ifUnknown?: Thunk<Maybe<Result<Diagnostic>>>
+  ifUnknown?: Thunk<Maybe<Result<Diagnostic>>>,
 ): Maybe<Result<Diagnostic>>;
 
 export function expectation<
   Q extends Question.Metadata,
   S,
   C,
-  D extends number
+  D extends number,
 >(
   test: Trilean,
   ifTrue: Thunk<Expectation<Q, S, C, D>>,
   ifFalse: Thunk<Expectation<Q, S, C, D>>,
-  ifUnknown?: Thunk<Expectation<Q, S, C, D>>
+  ifUnknown?: Thunk<Expectation<Q, S, C, D>>,
 ): Expectation<Q, S, C, D>;
 
 export function expectation<
   Q extends Question.Metadata,
   S,
   C,
-  D extends number = Interview.MaxDepth
+  D extends number = Interview.MaxDepth,
 >(
   test: Trilean,
   ifTrue: Thunk<Expectation<Q, S, C, D>>,
   ifFalse: Thunk<Expectation<Q, S, C, D>>,
-  ifUnknown: Thunk<Expectation<Q, S, C, D>> = Thunk.of(None)
+  ifUnknown: Thunk<Expectation<Q, S, C, D>> = Thunk.of(None),
 ): Expectation<Q, S, C, D> {
   switch (test) {
     case true:

@@ -14,7 +14,7 @@ const { map } = Parser;
  * @public
  */
 export class Named<
-  C extends Named.Color = Named.Color
+  C extends Named.Color = Named.Color,
 > extends Format<"named"> {
   public static of<C extends Named.Color>(color: C): Named<C> {
     return new Named(color);
@@ -55,7 +55,7 @@ export class Named<
 
   public resolve(): RGB.Canonical {
     return RGB.of(
-      ...Format.resolve(this.red, this.green, this.blue, this.alpha)
+      ...Format.resolve(this.red, this.green, this.blue, this.alpha),
     );
   }
 
@@ -91,7 +91,7 @@ export namespace Named {
 
   export const parse: CSSParser<Named> = map(
     Token.parseIdent((ident) => ident.value.toLowerCase() in Colors),
-    (ident) => Named.of(ident.value.toLowerCase() as Color)
+    (ident) => Named.of(ident.value.toLowerCase() as Color),
   );
 }
 

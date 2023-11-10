@@ -41,14 +41,14 @@ test("parse() parses an inset with evenly rounded corners", (t) => {
           { type: "length", value: 1, unit: "px" },
         ],
       },
-    }
+    },
   );
 });
 
 test("parse() parses an inset with unevenly rounded corners", (t) => {
   t.deepEqual(
     parse(
-      "inset(1px 2px 3px 4px round 1px 1px 1px 1px / 2px 2px 2px 2px)"
+      "inset(1px 2px 3px 4px round 1px 1px 1px 1px / 2px 2px 2px 2px)",
     ).getUnsafe(),
     {
       type: "basic-shape",
@@ -80,7 +80,7 @@ test("parse() parses an inset with unevenly rounded corners", (t) => {
           ],
         ],
       },
-    }
+    },
   );
 });
 
@@ -149,7 +149,7 @@ test("parse() accepts calculated offsets and corners", (t) => {
     parse(
       `inset(${actual(1)} ${actual(2)} ${actual(3)} ${actual(4)} ` +
         `round ${actual(1)} ${actual(1)} ${actual(1)} ${actual(1)} ` +
-        `/ ${actual(2)} ${actual(2)} ${actual(2)} ${actual(2)})`
+        `/ ${actual(2)} ${actual(2)} ${actual(2)} ${actual(2)})`,
     ).getUnsafe(),
     {
       type: "basic-shape",
@@ -164,6 +164,6 @@ test("parse() accepts calculated offsets and corners", (t) => {
           [expected(1), expected(2)],
         ],
       },
-    }
+    },
   );
 });

@@ -21,7 +21,7 @@ test("gather() builds an empty map when there are no declarations", (t) => {
 test("gather() gather all declaration starting with --", (t) => {
   const actual = Variable.gather(
     [propFoo, varFoo("foo"), varBar("bar"), propBar],
-    shouldOverride
+    shouldOverride,
   );
 
   t.deepEqual(actual.toJSON(), [
@@ -50,7 +50,7 @@ test("gather() prefers the first declaration at same importance", (t) => {
       varFoo("not foo"),
       varBar("not bar", true),
     ],
-    shouldOverride
+    shouldOverride,
   );
 
   t.deepEqual(actual.toJSON(), [
@@ -74,7 +74,7 @@ test("gather() prefers the first declaration at same importance", (t) => {
 test("gather() prefers important declaration", (t) => {
   const actual = Variable.gather(
     [varFoo("not foo"), varFoo("foo", true)],
-    shouldOverride
+    shouldOverride,
   );
 
   t.deepEqual(actual.toJSON(), [
@@ -91,7 +91,7 @@ test("gather() prefers important declaration", (t) => {
 test("flatten() expands variable definitions", (t) => {
   const map = Variable.gather(
     [varFoo("var(--bar)"), varBar("hello")],
-    shouldOverride
+    shouldOverride,
   );
 
   t.deepEqual(Variable.flatten(map).toJSON(), [

@@ -7,5 +7,5 @@ import { Longhand } from "../longhand";
 export default Longhand.fromKeywords(
   { inherits: true },
   "separate",
-  "collapse"
+  "collapse",
 );

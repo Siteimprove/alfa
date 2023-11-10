@@ -25,7 +25,7 @@ test(".fold() folds over the truth values of a predicate", (t) => {
       () => "positive",
       () => "negative",
       () => "who knows?",
-      value
+      value,
     );
 
   t.equal(f(3), "positive");

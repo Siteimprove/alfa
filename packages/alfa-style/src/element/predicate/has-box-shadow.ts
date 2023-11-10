@@ -25,11 +25,11 @@ import { isVisibleShadow } from "./is-visible-shadow";
  */
 export function hasBoxShadow(
   device: Device,
-  context?: Context
+  context?: Context,
 ): Predicate<Element> {
   return (element) => {
     const shadow = Style.from(element, device, context).computed(
-      "box-shadow"
+      "box-shadow",
     ).value;
 
     return !Keyword.isKeyword(shadow) && Iterable.some(shadow, isVisibleShadow);

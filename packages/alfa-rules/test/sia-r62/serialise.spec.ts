@@ -10,7 +10,7 @@ const device = Device.standard();
 function mkStyle(properties: Array<[string, string]>): Style {
   return Style.of(
     properties.map(([name, value]) => Declaration.of(name, value)),
-    device
+    device,
   );
 }
 
@@ -47,7 +47,7 @@ test(`background() serialises a complex single layer background`, (t) => {
 
   t.deepEqual(
     background(style),
-    "rgb(100% 0% 0%) url(a) left 10px center / 50% auto space no-repeat fixed content-box padding-box"
+    "rgb(100% 0% 0%) url(a) left 10px center / 50% auto space no-repeat fixed content-box padding-box",
   );
 });
 
@@ -61,7 +61,7 @@ test(`background() keeps initial background-clip if needed`, (t) => {
 
   t.deepEqual(
     background(style),
-    "rgb(100% 0% 0%) url(a) fixed content-box border-box"
+    "rgb(100% 0% 0%) url(a) fixed content-box border-box",
   );
 });
 
@@ -75,7 +75,7 @@ test(`background() keeps initial background-origin if needed`, (t) => {
 
   t.deepEqual(
     background(style),
-    "rgb(100% 0% 0%) url(a) fixed padding-box content-box"
+    "rgb(100% 0% 0%) url(a) fixed padding-box content-box",
   );
 });
 
@@ -98,7 +98,7 @@ test(`background() mixes and matches layers`, (t) => {
 
   t.deepEqual(
     background(style),
-    "url(a) fixed border-box, url(b) content-box border-box"
+    "url(a) fixed border-box, url(b) content-box border-box",
   );
 });
 

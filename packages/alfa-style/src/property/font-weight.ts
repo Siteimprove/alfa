@@ -20,7 +20,7 @@ type Computed = Number.Canonical;
 
 const parse = either(
   Number.parse,
-  Keyword.parse("normal", "bold", "bolder", "lighter")
+  Keyword.parse("normal", "bold", "bolder", "lighter"),
 );
 
 /**
@@ -75,5 +75,5 @@ export default Longhand.of<Specified, Computed>(
     }),
   {
     inherits: true,
-  }
+  },
 );

@@ -17,6 +17,6 @@ export default Shorthand.of(
     ([start, end = start]) => [
       ["inset-block-start", start],
       ["inset-block-end", end],
-    ]
-  )
+    ],
+  ),
 );

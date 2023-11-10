@@ -23,14 +23,14 @@ const { parseDelim, parseWhitespace } = Token;
  */
 export class Inset<
   O extends Inset.Offset = Inset.Offset,
-  C extends Corner = Corner
+  C extends Corner = Corner,
 > extends BasicShape<"inset", HasCalculation<O, C>> {
   public static of<
     O extends Inset.Offset = Inset.Offset,
-    C extends Corner = Corner
+    C extends Corner = Corner,
   >(
     offsets: readonly [O, O, O, O],
-    corners: Option<readonly [C, C, C, C]>
+    corners: Option<readonly [C, C, C, C]>,
   ): Inset<O, C> {
     return new Inset(offsets, corners);
   }
@@ -40,14 +40,14 @@ export class Inset<
 
   private constructor(
     offsets: readonly [O, O, O, O],
-    corners: Option<readonly [C, C, C, C]>
+    corners: Option<readonly [C, C, C, C]>,
   ) {
     super(
       "inset",
       (Value.hasCalculation(...offsets) ||
         corners.some((corners) =>
-          corners.some(Corner.hasCalculation)
-        )) as unknown as HasCalculation<O, C>
+          corners.some(Corner.hasCalculation),
+        )) as unknown as HasCalculation<O, C>,
     );
     this._offsets = offsets;
     this._corners = corners;
@@ -100,7 +100,7 @@ export class Inset<
         LengthPercentage.Canonical,
         LengthPercentage.Canonical,
         LengthPercentage.Canonical,
-        LengthPercentage.Canonical
+        LengthPercentage.Canonical,
       ],
       this._corners.map(
         (corners) =>
@@ -108,9 +108,9 @@ export class Inset<
             Corner.Canonical,
             Corner.Canonical,
             Corner.Canonical,
-            Corner.Canonical
-          ]
-      )
+            Corner.Canonical,
+          ],
+      ),
     );
   }
 
@@ -201,7 +201,7 @@ export namespace Inset {
   export type PartialResolver = LengthPercentage.PartialResolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Inset) => PartiallyResolved {
     return (value) =>
       Inset.of(
@@ -209,7 +209,7 @@ export namespace Inset {
           LengthPercentage.PartiallyResolved,
           LengthPercentage.PartiallyResolved,
           LengthPercentage.PartiallyResolved,
-          LengthPercentage.PartiallyResolved
+          LengthPercentage.PartiallyResolved,
         ],
         value.corners.map(
           (corners) =>
@@ -217,9 +217,9 @@ export namespace Inset {
               Corner.PartiallyResolved,
               Corner.PartiallyResolved,
               Corner.PartiallyResolved,
-              Corner.PartiallyResolved
-            ]
-        )
+              Corner.PartiallyResolved,
+            ],
+        ),
       );
   }
 
@@ -230,14 +230,14 @@ export namespace Inset {
   const parseOffsets = map(
     separatedList(LengthPercentage.parse, option(parseWhitespace), 1, 4),
     ([top, right = top, bottom = top, left = right]) =>
-      [top, right, bottom, left] as const
+      [top, right, bottom, left] as const,
   );
 
   const parseRadius = filter(
     LengthPercentage.parse,
     // https://drafts.csswg.org/css-values/#calc-range
     (value) => value.hasCalculation() || value.value >= 0,
-    () => "Radius cannot be negative"
+    () => "Radius cannot be negative",
   );
 
   const parseRadii = map(
@@ -247,7 +247,7 @@ export namespace Inset {
       topRight = topLeft,
       bottomRight = topLeft,
       bottomLeft = topRight,
-    ]) => [topLeft, topRight, bottomRight, bottomLeft] as const
+    ]) => [topLeft, topRight, bottomRight, bottomLeft] as const,
   );
 
   const parseCorners: CSSParser<readonly [Corner, Corner, Corner, Corner]> =
@@ -255,8 +255,11 @@ export namespace Inset {
       pair(
         parseRadii,
         option(
-          right(delimited(option(parseWhitespace), parseDelim("/")), parseRadii)
-        )
+          right(
+            delimited(option(parseWhitespace), parseDelim("/")),
+            parseRadii,
+          ),
+        ),
       ),
       ([horizontal, vertical]) =>
         vertical
@@ -267,9 +270,9 @@ export namespace Inset {
                 [horizontal[1], vertical[1]],
                 [horizontal[2], vertical[2]],
                 [horizontal[3], vertical[3]],
-              ] as const
+              ] as const,
           )
-          .getOr(horizontal)
+          .getOr(horizontal),
     );
 
   export const parse: CSSParser<Inset> = map(
@@ -282,13 +285,13 @@ export namespace Inset {
             option(Token.parseWhitespace),
             right(
               Keyword.parse("round"),
-              right(Token.parseWhitespace, parseCorners)
-            )
-          )
-        )
-      )
+              right(Token.parseWhitespace, parseCorners),
+            ),
+          ),
+        ),
+      ),
     ),
-    ([_, [offsets, corners]]) => Inset.of(offsets, corners)
+    ([_, [offsets, corners]]) => Inset.of(offsets, corners),
   );
 }
 
@@ -298,12 +301,12 @@ export namespace Inset {
  */
 type HasCalculation<
   O extends Inset.Offset,
-  C extends Corner
+  C extends Corner,
 > = Value.HasCalculation<
   [
     O,
     // It seems we can't really spread ...[R1, R2] in a conditional.
     C extends readonly [infer R extends LengthPercentage, any] ? R : C,
-    C extends readonly [any, infer R extends LengthPercentage] ? R : C
+    C extends readonly [any, infer R extends LengthPercentage] ? R : C,
   ]
 >;

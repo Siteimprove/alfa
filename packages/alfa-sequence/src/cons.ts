@@ -27,7 +27,7 @@ const { compareComparable } = Comparable;
 export class Cons<T> implements Sequence<T> {
   public static of<T>(
     head: T,
-    tail: Lazy<Sequence<T>> = Lazy.force(Nil)
+    tail: Lazy<Sequence<T>> = Lazy.force(Nil),
   ): Cons<T> {
     return new Cons(head, tail);
   }
@@ -63,8 +63,8 @@ export class Cons<T> implements Sequence<T> {
     return new Cons(
       mapper(this._head, index),
       this._tail.map((tail) =>
-        Cons.isCons(tail) ? tail.map(mapper, index + 1) : Nil
-      )
+        Cons.isCons(tail) ? tail.map(mapper, index + 1) : Nil,
+      ),
     );
   }
 
@@ -73,7 +73,7 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public flatMap<U>(
-    mapper: Mapper<T, Sequence<U>, [index: number]>
+    mapper: Mapper<T, Sequence<U>, [index: number]>,
   ): Sequence<U>;
 
   /**
@@ -81,12 +81,12 @@ export class Cons<T> implements Sequence<T> {
    */
   public flatMap<U>(
     mapper: Mapper<T, Sequence<U>, [index: number]>,
-    index: number
+    index: number,
   ): Sequence<U>;
 
   public flatMap<U>(
     mapper: Mapper<T, Sequence<U>, [index: number]>,
-    index = 0
+    index = 0,
   ): Sequence<U> {
     let next: Cons<T> = this;
 
@@ -102,7 +102,7 @@ export class Cons<T> implements Sequence<T> {
             return Cons.isCons(right)
               ? left.concat(right.flatMap(mapper, index))
               : left;
-          })
+          }),
         );
       }
 
@@ -142,7 +142,7 @@ export class Cons<T> implements Sequence<T> {
   public reduceWhile<U>(
     predicate: Predicate<T, [index: number]>,
     reducer: Reducer<T, U, [index: number]>,
-    accumulator: U
+    accumulator: U,
   ): U {
     let next: Cons<T> = this;
     let index = 0;
@@ -165,13 +165,13 @@ export class Cons<T> implements Sequence<T> {
   public reduceUntil<U>(
     predicate: Predicate<T, [index: number]>,
     reducer: Reducer<T, U, [index: number]>,
-    accumulator: U
+    accumulator: U,
   ): U {
     return this.reduceWhile(not(predicate), reducer, accumulator);
   }
 
   public filter<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Sequence<U>;
 
   public filter(predicate: Predicate<T, [index: number]>): Sequence<T>;
@@ -181,12 +181,12 @@ export class Cons<T> implements Sequence<T> {
    */
   public filter(
     predicate: Predicate<T, [index: number]>,
-    index: number
+    index: number,
   ): Sequence<T>;
 
   public filter(
     predicate: Predicate<T, [index: number]>,
-    index = 0
+    index = 0,
   ): Sequence<T> {
     let next: Cons<T> = this;
 
@@ -195,8 +195,8 @@ export class Cons<T> implements Sequence<T> {
         return new Cons(
           next._head,
           next._tail.map((tail) =>
-            Cons.isCons(tail) ? tail.filter(predicate, index) : Nil
-          )
+            Cons.isCons(tail) ? tail.filter(predicate, index) : Nil,
+          ),
         );
       }
 
@@ -211,7 +211,7 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public reject<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Sequence<Exclude<T, U>>;
 
   public reject(predicate: Predicate<T, [index: number]>): Sequence<T>;
@@ -221,7 +221,7 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public find<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Option<U>;
 
   public find(predicate: Predicate<T, [index: number]>): Option<T>;
@@ -258,12 +258,12 @@ export class Cons<T> implements Sequence<T> {
    */
   public collect<U>(
     mapper: Mapper<T, Option<U>, [index: number]>,
-    index: number
+    index: number,
   ): Sequence<U>;
 
   public collect<U>(
     mapper: Mapper<T, Option<U>, [index: number]>,
-    index: number = 0
+    index: number = 0,
   ): Sequence<U> {
     let next: Cons<T> = this;
 
@@ -274,8 +274,8 @@ export class Cons<T> implements Sequence<T> {
         return new Cons(
           value.get(),
           next._tail.map((tail) =>
-            Cons.isCons(tail) ? tail.collect(mapper, index) : Nil
-          )
+            Cons.isCons(tail) ? tail.collect(mapper, index) : Nil,
+          ),
         );
       }
 
@@ -290,7 +290,7 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public collectFirst<U>(
-    mapper: Mapper<T, Option<U>, [index: number]>
+    mapper: Mapper<T, Option<U>, [index: number]>,
   ): Option<U> {
     let next: Cons<T> = this;
     let index = 0;
@@ -357,7 +357,7 @@ export class Cons<T> implements Sequence<T> {
   public count(predicate: Predicate<T, [index: number]>): number {
     return this.reduce(
       (count, value, index) => (predicate(value, index) ? count + 1 : count),
-      0
+      0,
     );
   }
 
@@ -384,8 +384,8 @@ export class Cons<T> implements Sequence<T> {
         return Cons.of(
           next._head,
           next._tail.map((tail) =>
-            Cons.isCons(tail) ? tail.distinct(seen.add(next._head)) : Nil
-          )
+            Cons.isCons(tail) ? tail.distinct(seen.add(next._head)) : Nil,
+          ),
         );
       }
     }
@@ -414,7 +414,7 @@ export class Cons<T> implements Sequence<T> {
 
     return new Cons(
       this._head,
-      this._tail.map((tail) => tail.set(index - 1, value))
+      this._tail.map((tail) => tail.set(index - 1, value)),
     );
   }
 
@@ -429,14 +429,14 @@ export class Cons<T> implements Sequence<T> {
 
     return new Cons(
       this._head,
-      this._tail.map((tail) => tail.set(index - 1, value))
+      this._tail.map((tail) => tail.set(index - 1, value)),
     );
   }
 
   public append(value: T): Cons<T> {
     return new Cons(
       this._head,
-      this._tail.map((tail) => tail.append(value))
+      this._tail.map((tail) => tail.append(value)),
     );
   }
 
@@ -450,7 +450,7 @@ export class Cons<T> implements Sequence<T> {
     if (Cons.isCons(sequence)) {
       return new Cons(
         this._head,
-        this._tail.map((tail) => tail.concat(sequence))
+        this._tail.map((tail) => tail.concat(sequence)),
       );
     }
 
@@ -479,7 +479,7 @@ export class Cons<T> implements Sequence<T> {
     if (Cons.isCons(sequence)) {
       return new Cons(
         [this._head, sequence._head],
-        this._tail.map((tail) => tail.zip(sequence.rest()))
+        this._tail.map((tail) => tail.zip(sequence.rest())),
       );
     }
 
@@ -514,13 +514,13 @@ export class Cons<T> implements Sequence<T> {
       count === 1
         ? Lazy.force(Nil)
         : this._tail.map((tail) =>
-            Cons.isCons(tail) ? tail.take(count - 1) : Nil
-          )
+            Cons.isCons(tail) ? tail.take(count - 1) : Nil,
+          ),
     );
   }
 
   public takeWhile<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Sequence<U>;
 
   public takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
@@ -536,12 +536,12 @@ export class Cons<T> implements Sequence<T> {
    */
   public takeUntil(
     predicate: Predicate<T, [index: number]>,
-    index: number
+    index: number,
   ): Sequence<T>;
 
   public takeUntil(
     predicate: Predicate<T, [index: number]>,
-    index = 0
+    index = 0,
   ): Sequence<T> {
     if (predicate(this._head, index)) {
       return Nil;
@@ -552,8 +552,8 @@ export class Cons<T> implements Sequence<T> {
       this._tail.map((tail) =>
         Cons.isCons(tail)
           ? tail.takeUntil(predicate, index + 1)
-          : tail.takeUntil(predicate)
-      )
+          : tail.takeUntil(predicate),
+      ),
     );
   }
 
@@ -562,7 +562,7 @@ export class Cons<T> implements Sequence<T> {
   }
 
   public takeLastWhile<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Sequence<U>;
 
   public takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
@@ -653,7 +653,7 @@ export class Cons<T> implements Sequence<T> {
   public reverse(): Sequence<T> {
     return this.reduce<Sequence<T>>(
       (reversed, value) => new Cons(value, Lazy.force(reversed)),
-      Nil
+      Nil,
     );
   }
 
@@ -682,7 +682,7 @@ export class Cons<T> implements Sequence<T> {
 
   public sortWith<T, U extends T = T>(
     this: Sequence<U>,
-    comparer: Comparer<T>
+    comparer: Comparer<T>,
   ): Sequence<U>;
 
   public sortWith(comparer: Comparer<T>): Sequence<T> {
@@ -691,27 +691,27 @@ export class Cons<T> implements Sequence<T> {
 
   public compare<T>(
     this: Sequence<Comparable<T>>,
-    iterable: Iterable<T>
+    iterable: Iterable<T>,
   ): Comparison {
     return this.compareWith(iterable, Comparable.compare);
   }
 
   public compareWith<U = T>(
     iterable: Iterable<U>,
-    comparer: Comparer<T, U, [index: number]>
+    comparer: Comparer<T, U, [index: number]>,
   ): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
   }
 
   public groupBy<K>(
-    grouper: Mapper<T, K, [index: number]>
+    grouper: Mapper<T, K, [index: number]>,
   ): Map<K, Sequence<T>> {
     return this.reduce((groups, value, index) => {
       const group = grouper(value, index);
 
       return groups.set(
         group,
-        new Cons(value, Lazy.force(groups.get(group).getOrElse(() => Nil)))
+        new Cons(value, Lazy.force(groups.get(group).getOrElse(() => Nil))),
       );
     }, Map.empty<K, Sequence<T>>()).map((group) => group.reverse());
   }

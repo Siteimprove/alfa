@@ -10,7 +10,7 @@ import { Rule } from "../rule";
 export class KeyframeRule extends Rule {
   public static of(
     key: string,
-    declarations: Iterable<Declaration>
+    declarations: Iterable<Declaration>,
   ): KeyframeRule {
     return new KeyframeRule(key, Array.from(declarations));
   }
@@ -23,7 +23,7 @@ export class KeyframeRule extends Rule {
 
     this._key = key;
     this._style = Block.of(
-      declarations.filter((declaration) => declaration._attachParent(this))
+      declarations.filter((declaration) => declaration._attachParent(this)),
     );
   }
 
@@ -71,7 +71,7 @@ export namespace KeyframeRule {
    */
   export function fromKeyframeRule(json: JSON): Trampoline<KeyframeRule> {
     return Trampoline.done(
-      KeyframeRule.of(json.key, json.style.map(Declaration.from))
+      KeyframeRule.of(json.key, json.style.map(Declaration.from)),
     );
   }
 }

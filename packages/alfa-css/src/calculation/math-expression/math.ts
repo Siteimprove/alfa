@@ -42,7 +42,7 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
       expression.reduce({
         length: (value) => value,
         percentage: (value) => value,
-      })
+      }),
     );
   }
 
@@ -69,7 +69,7 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
    * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
    */
   public isDimension<D extends Numeric.Dimension>(
-    dimension: D
+    dimension: D,
   ): this is Math<D> {
     return this._expression.kind.is(dimension);
   }
@@ -78,7 +78,7 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
    * {@link https://drafts.css-houdini.org/css-typed-om/#cssnumericvalue-match}
    */
   public isDimensionPercentage<D extends Numeric.Dimension>(
-    dimension: D
+    dimension: D,
   ): this is Math<`${D}-percentage`> {
     return (
       // dimension-percentage are not just (dimension | percentage) because the
@@ -112,17 +112,17 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
 
   public resolve(
     this: Math<"angle-percentage">,
-    resolver: Expression.PercentageResolver<Angle<"deg">>
+    resolver: Expression.PercentageResolver<Angle<"deg">>,
   ): Result<Angle<"deg">, string>;
 
   public resolve(
     this: Math<"length">,
-    resolver: Expression.LengthResolver
+    resolver: Expression.LengthResolver,
   ): Result<Length<"px">, string>;
 
   public resolve(
     this: Math<"length-percentage">,
-    resolver: Expression.Resolver<"px", Length<"px">>
+    resolver: Expression.Resolver<"px", Length<"px">>,
   ): Result<Length<"px">, string>;
 
   public resolve(this: Math<"number">): Result<Number, string>;
@@ -130,7 +130,7 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
   public resolve<T extends Numeric = Percentage>(
     this: Math<"percentage">,
     resolver?: Expression.PercentageResolver<T>,
-    hint?: T extends Angle ? "angle" : "length"
+    hint?: T extends Angle ? "angle" : "length",
   ): Result<T, string>;
 
   public resolve<T extends Numeric>(
@@ -139,7 +139,7 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
       | Expression.LengthResolver
       | Expression.Resolver<"px", Length<"px">>
       | Expression.PercentageResolver<T>,
-    hint?: T extends Angle ? "angle" : "length"
+    hint?: T extends Angle ? "angle" : "length",
   ): Result<Numeric, string> {
     // Since the expressions can theoretically contain arbitrarily units in them,
     // e.g. calc(1px * (3 deg / 1 rad)) is a length (even though in practice
@@ -191,7 +191,7 @@ export class Math<out D extends Math.Dimension = Math.Dimension> {
         return Err.of(e.message);
       } else {
         return Err.of(
-          `Unexpected error while resolving math expression ${this}`
+          `Unexpected error while resolving math expression ${this}`,
         );
       }
     }
@@ -253,17 +253,17 @@ export namespace Math {
 
   const parseCalc = map(
     CSSFunction.parse("calc", (input) => parseSum(input)),
-    ([, expression]) => Function.Calculation.of(expression)
+    ([, expression]) => Function.Calculation.of(expression),
   );
 
   const parseMax = mapResult(
     CSSFunction.parse("max", (input) =>
       separatedList(
         parseSum,
-        delimited(option(Token.parseWhitespace), Token.parseComma)
-      )(input)
+        delimited(option(Token.parseWhitespace), Token.parseComma),
+      )(input),
     ),
-    ([, args]) => Function.Max.of(...args)
+    ([, args]) => Function.Max.of(...args),
   );
 
   const parseFunction = either(parseCalc, parseMax);
@@ -277,16 +277,16 @@ export namespace Math {
         Number.parse,
         Percentage.parse,
         Length.parse,
-        Angle.parse
+        Angle.parse,
       ),
-      Value.of
+      Value.of,
     ),
     parseFunction,
     delimited(
       Token.parseOpenParenthesis,
       (input) => parseSum(input),
-      Token.parseCloseParenthesis
-    )
+      Token.parseCloseParenthesis,
+    ),
   );
 
   /**
@@ -301,12 +301,12 @@ export namespace Math {
             option(Token.parseWhitespace),
             either(
               map(Token.parseDelim("*"), () => false),
-              map(Token.parseDelim("/"), () => true)
-            )
+              map(Token.parseDelim("/"), () => true),
+            ),
           ),
-          parseValue
-        )
-      )
+          parseValue,
+        ),
+      ),
     ),
     ([left, result]) =>
       result
@@ -314,8 +314,8 @@ export namespace Math {
         .reduce(
           (left: Result<Expression, string>, right: Expression) =>
             left.flatMap((left) => Operation.Product.of(left, right)),
-          Result.of(left)
-        )
+          Result.of(left),
+        ),
   );
 
   /**
@@ -330,12 +330,12 @@ export namespace Math {
             Token.parseWhitespace,
             either(
               map(Token.parseDelim("+"), () => false),
-              map(Token.parseDelim("-"), () => true)
-            )
+              map(Token.parseDelim("-"), () => true),
+            ),
           ),
-          parseProduct
-        )
-      )
+          parseProduct,
+        ),
+      ),
     ),
     ([left, result]) =>
       result
@@ -343,8 +343,8 @@ export namespace Math {
         .reduce(
           (left: Result<Expression, string>, right: Expression) =>
             left.flatMap((left) => Operation.Sum.of(left, right)),
-          Result.of(left)
-        )
+          Result.of(left),
+        ),
   );
 
   export const parse = map(parseFunction, Math.of);
@@ -354,40 +354,40 @@ export namespace Math {
     parse,
     (calculation): calculation is Math<"angle"> =>
       calculation.isDimension("angle"),
-    () => `calc() expression must be of type "angle"`
+    () => `calc() expression must be of type "angle"`,
   );
 
   export const parseAnglePercentage = filter(
     parse,
     (calculation): calculation is Math<"angle-percentage"> =>
       calculation.isDimensionPercentage("angle"),
-    () => `calc() expression must be of type "angle" or "percentage"`
+    () => `calc() expression must be of type "angle" or "percentage"`,
   );
 
   export const parseLength = filter(
     parse,
     (calculation): calculation is Math<"length"> =>
       calculation.isDimension("length"),
-    () => `calc() expression must be of type "length"`
+    () => `calc() expression must be of type "length"`,
   );
 
   export const parseLengthPercentage = filter(
     parse,
     (calculation): calculation is Math<"length-percentage"> =>
       calculation.isDimensionPercentage("length"),
-    () => `calc() expression must be of type "length" or "percentage"`
+    () => `calc() expression must be of type "length" or "percentage"`,
   );
 
   export const parseNumber = filter(
     parse,
     (calculation): calculation is Math<"number"> => calculation.isNumber(),
-    () => `calc() expression must be of type "number"`
+    () => `calc() expression must be of type "number"`,
   );
 
   export const parsePercentage = filter(
     parse,
     (calculation): calculation is Math<"percentage"> =>
       calculation.isPercentage(),
-    () => `calc() expression must be of type "percentage"`
+    () => `calc() expression must be of type "percentage"`,
   );
 }

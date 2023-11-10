@@ -34,7 +34,7 @@ export namespace Promise {
   }
 
   export function defer<T>(
-    continuation: Continuation<T, void, [reject: Callback<unknown>]>
+    continuation: Continuation<T, void, [reject: Callback<unknown>]>,
   ): Promise<T> {
     return new builtin.Promise(continuation);
   }
@@ -60,8 +60,8 @@ export namespace Promise {
           },
           (error) => {
             reject(error);
-          }
-        )
+          },
+        ),
       );
     });
   }
@@ -87,8 +87,8 @@ export namespace Promise {
             if (--unsettled === 0) {
               reject(errors);
             }
-          }
-        )
+          },
+        ),
       );
     });
   }

@@ -7,7 +7,8 @@ import * as json from "@siteimprove/alfa-json";
  * @public
  */
 export abstract class Tag<T extends string = string>
-  implements Equatable, Serializable<Tag.JSON> {
+  implements Equatable, Serializable<Tag.JSON>
+{
   protected constructor() {}
 
   public abstract get type(): T;
@@ -38,7 +39,7 @@ export namespace Tag {
 
   export function isTag<T extends string>(
     value: unknown,
-    type?: T
+    type?: T,
   ): value is Tag<T> {
     return value instanceof Tag && (type === undefined || value.type === type);
   }

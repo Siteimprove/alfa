@@ -25,6 +25,6 @@ export default Shorthand.of(
       ["border-right-width", right],
       ["border-bottom-width", bottom],
       ["border-left-width", left],
-    ]
-  )
+    ],
+  ),
 );

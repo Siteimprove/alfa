@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return getElementDescendants(document, Node.fullTree).filter(
-          and(hasRole(device, "paragraph"), isVisible(device))
+          and(hasRole(device, "paragraph"), isVisible(device)),
         );
       },
 
@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             test(isNotItalic(device), target),
             () => Outcomes.IsNotItalic,
-            () => Outcomes.IsItalic
+            () => Outcomes.IsItalic,
           ),
         };
       },
@@ -45,11 +45,11 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const IsNotItalic = Ok.of(
-    Diagnostic.of(`The text of the paragraph is not all italic`)
+    Diagnostic.of(`The text of the paragraph is not all italic`),
   );
 
   export const IsItalic = Err.of(
-    Diagnostic.of(`The text of the paragraph is all italic`)
+    Diagnostic.of(`The text of the paragraph is all italic`),
   );
 }
 
@@ -57,6 +57,6 @@ function isNotItalic(device: Device) {
   return hasComputedStyle(
     "font-style",
     (style) => style.value !== "italic",
-    device
+    device,
   );
 }

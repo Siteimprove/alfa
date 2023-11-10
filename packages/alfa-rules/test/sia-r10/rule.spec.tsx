@@ -45,7 +45,7 @@ test("evaluate() fails autocomplete attribute with missing required term", async
   ]);
 });
 
-test("evaluate() passes autocomplete attribute with \`section-blue shipping name webauthn\`", async (t) => {
+test("evaluate() passes autocomplete attribute with `section-blue shipping name webauthn`", async (t) => {
   const element = <input autocomplete="section-blue shipping name webauthn" />;
   const target = element.attribute("autocomplete").getUnsafe();
 
@@ -58,7 +58,7 @@ test("evaluate() passes autocomplete attribute with \`section-blue shipping name
   ]);
 });
 
-test("evaluate() passes autocomplete attribute with \`section-blue shipping home tel webauthn\`", async (t) => {
+test("evaluate() passes autocomplete attribute with `section-blue shipping home tel webauthn`", async (t) => {
   const element = <input autocomplete="section-blue shipping name webauthn" />;
   const target = element.attribute("autocomplete").getUnsafe();
 

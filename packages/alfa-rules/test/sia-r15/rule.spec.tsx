@@ -55,7 +55,7 @@ test("evaluate() passes when two iframes embed equivalent resources", async (t) 
     await evaluate(
       R15,
       { document },
-      oracle({ "reference-equivalent-resources": true })
+      oracle({ "reference-equivalent-resources": true }),
     ),
     [
       passed(
@@ -64,9 +64,9 @@ test("evaluate() passes when two iframes embed equivalent resources", async (t) 
         {
           1: Outcomes.EmbedEquivalentResources,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -100,7 +100,7 @@ test("evaluate() fails when two iframes embed different resources", async (t) =>
     await evaluate(
       R15,
       { document },
-      oracle({ "reference-equivalent-resources": false })
+      oracle({ "reference-equivalent-resources": false }),
     ),
     [
       failed(
@@ -109,9 +109,9 @@ test("evaluate() fails when two iframes embed different resources", async (t) =>
         {
           1: Outcomes.EmbedDifferentResources,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -179,13 +179,13 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
       document,
       response: Response.of(
         URL.parse("https://somewhere.com/path/to/bar.html").getUnsafe(),
-        200
+        200,
       ),
     }),
     [
       passed(R15, Group.of(target), {
         1: Outcomes.EmbedSameResources,
       }),
-    ]
+    ],
   );
 });

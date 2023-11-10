@@ -44,7 +44,7 @@ const parse: Parser<
     RepeatY.Specified.Item?,
     Attachment.Specified.Item?,
     Origin.Specified.Item?,
-    Clip.Specified.Item?
+    Clip.Specified.Item?,
   ],
   string
 > = (input) => {
@@ -97,8 +97,8 @@ const parse: Parser<
             option(Token.parseWhitespace),
             right(
               delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-              Size.parse
-            )
+              Size.parse,
+            ),
           )(input);
 
           if (result.isOk()) {
@@ -144,7 +144,7 @@ const parse: Parser<
         {
           const result = delimited(
             option(Token.parseWhitespace),
-            Clip.parse
+            Clip.parse,
           )(input);
 
           if (result.isOk()) {
@@ -173,7 +173,7 @@ const parse: Parser<
     ].every((property) => property === undefined)
   ) {
     return Err.of(
-      `Expected one of color, image, position, repeat, attachment, origin, or clip`
+      `Expected one of color, image, position, repeat, attachment, origin, or clip`,
     );
   }
 
@@ -197,10 +197,10 @@ const parse: Parser<
 const parseList = filter(
   separatedList(
     parse,
-    delimited(option(Token.parseWhitespace), Token.parseComma)
+    delimited(option(Token.parseWhitespace), Token.parseComma),
   ),
   (layers) => [...layers].slice(0, -1).every((layer) => layer[0] === undefined),
-  () => "Only the last layer may contain a color"
+  () => "Only the last layer may contain a color",
 );
 
 /**
@@ -257,5 +257,5 @@ export default Shorthand.of(
       ["background-origin", List.of(origin, ", ")],
       ["background-clip", List.of(clip, ", ")],
     ];
-  })
+  }),
 );

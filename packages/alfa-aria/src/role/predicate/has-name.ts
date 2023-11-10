@@ -9,7 +9,7 @@ const { equals } = Predicate;
  * @public
  */
 export function hasName<N extends Role.Name>(
-  refinement: Refinement<Role.Name, N>
+  refinement: Refinement<Role.Name, N>,
 ): Refinement<Role, Role<N>>;
 
 /**

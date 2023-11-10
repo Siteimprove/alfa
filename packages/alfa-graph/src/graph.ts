@@ -68,7 +68,7 @@ export class Graph<T>
     }
 
     return new Graph(
-      nodes.delete(node).map((neighbors) => neighbors.delete(node))
+      nodes.delete(node).map((neighbors) => neighbors.delete(node)),
     );
   }
 
@@ -90,8 +90,8 @@ export class Graph<T>
           .get(from)
           .map((from) => from.add(to))
           // Presence of from is guaranteed by first test.
-          .getUnsafe()
-      )
+          .getUnsafe(),
+      ),
     );
   }
 
@@ -109,14 +109,14 @@ export class Graph<T>
           .get(from)
           .map((from) => from.delete(to))
           // presence of from is guaranteed by first test.
-          .getUnsafe()
-      )
+          .getUnsafe(),
+      ),
     );
   }
 
   public traverse(
     root: T,
-    traversal: Graph.Traversal = Graph.DepthFirst
+    traversal: Graph.Traversal = Graph.DepthFirst,
   ): Sequence<[node: T, parent: T]> {
     return Sequence.from(traversal(this, root));
   }
@@ -124,7 +124,7 @@ export class Graph<T>
   public path(
     from: T,
     to: T,
-    traversal: Graph.Traversal = Graph.BreadthFirst
+    traversal: Graph.Traversal = Graph.BreadthFirst,
   ): Sequence<T> {
     const parents = Map.from(traversal(this, from));
 
@@ -243,7 +243,7 @@ export namespace Graph {
   >;
 
   export function isGraph<T>(
-    value: Iterable<readonly [T, Iterable<T>]>
+    value: Iterable<readonly [T, Iterable<T>]>,
   ): value is Graph<T>;
 
   export function isGraph<T>(value: unknown): value is Graph<T>;
@@ -253,7 +253,7 @@ export namespace Graph {
   }
 
   export function from<T>(
-    iterable: Iterable<readonly [T, Iterable<T>]>
+    iterable: Iterable<readonly [T, Iterable<T>]>,
   ): Graph<T> {
     if (isGraph(iterable)) {
       return iterable;
@@ -264,8 +264,8 @@ export namespace Graph {
         Iterable.map(iterable, ([node, neighbours]) => [
           node,
           Set.from(neighbours),
-        ])
-      )
+        ]),
+      ),
     );
   }
 
@@ -278,7 +278,7 @@ export namespace Graph {
    */
   export const DepthFirst: Traversal = function* <T>(graph: Graph<T>, root: T) {
     const stack: Array<[node: T, parent: T]> = [...graph.neighbors(root)].map(
-      (node) => [node, root]
+      (node) => [node, root],
     );
 
     let seen = Set.of(root);
@@ -305,10 +305,10 @@ export namespace Graph {
    */
   export const BreadthFirst: Traversal = function* <T>(
     graph: Graph<T>,
-    root: T
+    root: T,
   ) {
     const queue: Array<[node: T, parent: T]> = [...graph.neighbors(root)].map(
-      (node) => [node, root]
+      (node) => [node, root],
     );
 
     let seen = Set.of(root, ...graph.neighbors(root));

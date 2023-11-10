@@ -301,7 +301,7 @@ test("Name test case 552", (t) => {
       h.sheet([
         h.rule.style("label:before", [Declaration.of("content", "fancy")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -331,7 +331,7 @@ test("Name test case 553", (t) => {
           Declaration.of("content", "attr(data-after)"),
         ]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -1140,7 +1140,7 @@ test("Name test case 659", (t) => {
         h.rule.style("label:before", [Declaration.of("content", "foo")]),
         h.rule.style("label:after", [Declaration.of("content", "baz")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -1172,7 +1172,7 @@ test("Name test case 660", (t) => {
         h.rule.style("label:before", [Declaration.of("content", "foo")]),
         h.rule.style("label:after", [Declaration.of("content", "baz")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -1204,7 +1204,7 @@ test("Name test case 661", (t) => {
         h.rule.style("label:before", [Declaration.of("content", "foo")]),
         h.rule.style("label:after", [Declaration.of("content", "baz")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -1236,7 +1236,7 @@ test("Name test case 662", (t) => {
         h.rule.style("label:before", [Declaration.of("content", "foo")]),
         h.rule.style("label:after", [Declaration.of("content", "baz")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -1268,7 +1268,7 @@ test("Name test case 663a", (t) => {
         h.rule.style("label:before", [Declaration.of("content", "foo")]),
         h.rule.style("label:after", [Declaration.of("content", "baz")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -2041,7 +2041,7 @@ test("Name test case 753", (t) => {
       h.sheet([
         h.rule.style("label:before", [Declaration.of("content", "fancy")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -2069,7 +2069,7 @@ test("Name test case 754", (t) => {
       h.sheet([
         h.rule.style("label:before", [Declaration.of("content", "fancy")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -2097,7 +2097,7 @@ test("Name test case 755", (t) => {
       h.sheet([
         h.rule.style("label:before", [Declaration.of("content", "fancy")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -2125,7 +2125,7 @@ test("Name test case 756", (t) => {
       h.sheet([
         h.rule.style("label:before", [Declaration.of("content", "fancy")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -2153,7 +2153,7 @@ test("Name test case 757", (t) => {
       h.sheet([
         h.rule.style("label:before", [Declaration.of("content", "fancy")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -2181,7 +2181,7 @@ test("Name test case 758", (t) => {
       h.sheet([
         h.rule.style("label:after", [Declaration.of("content", "fruit")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -2209,7 +2209,7 @@ test("Name test case 759", (t) => {
       h.sheet([
         h.rule.style("label:after", [Declaration.of("content", "fruit")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -2237,7 +2237,7 @@ test("Name test case 760", (t) => {
       h.sheet([
         h.rule.style("label:after", [Declaration.of("content", "fruit")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -2265,7 +2265,7 @@ test("Name test case 761", (t) => {
       h.sheet([
         h.rule.style("label:after", [Declaration.of("content", "fruit")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -2293,7 +2293,7 @@ test("Name test case 762", (t) => {
       h.sheet([
         h.rule.style("label:after", [Declaration.of("content", "fruit")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -3278,14 +3278,14 @@ test("Name from content", (t) => {
 
   const document = h.document(
     [testCase],
-    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])],
   );
 
   const target = getTarget(document, "test");
 
   t.notEqual(
     getName(target),
-    "My name is Eli the weird. (QED) Where are my marbles?"
+    "My name is Eli the weird. (QED) Where are my marbles?",
   );
 });
 
@@ -3335,14 +3335,14 @@ test("Name from content of labelledby element", (t) => {
 
   const document = h.document(
     [testCase],
-    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])],
   );
 
   const target = getTarget(document, "test");
 
   t.notEqual(
     getName(target),
-    "My name is Eli the weird. (QED) Where are my marbles?"
+    "My name is Eli the weird. (QED) Where are my marbles?",
   );
 });
 
@@ -3392,14 +3392,14 @@ test("Name from content of label", (t) => {
 
   const document = h.document(
     [testCase],
-    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])],
   );
 
   const target = getTarget(document, "test");
 
   t.notEqual(
     getName(target),
-    "My name is Eli the weird. (QED) Where are my marbles?"
+    "My name is Eli the weird. (QED) Where are my marbles?",
   );
 });
 
@@ -3465,7 +3465,7 @@ test("Name from content of labelledby elements one of which is hidden", (t) => {
 
   const document = h.document(
     [testCase],
-    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])],
   );
 
   const target = getTarget(document, "test");
@@ -3668,7 +3668,7 @@ test("Name file-label-inline-block-styles", (t) => {
         ]),
         h.rule.style("label:after", [Declaration.of("content", ".")]),
       ]),
-    ]
+    ],
   );
 
   const target = getTarget(document, "test");
@@ -3705,7 +3705,7 @@ test("Name file-label-inline-hidden-elements", (t) => {
 
   const document = h.document(
     [testCase],
-    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])],
   );
 
   const target = getTarget(document, "test");
@@ -3818,7 +3818,7 @@ test("Name link-mixed-content", (t) => {
 
   const document = h.document(
     [testCase],
-    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])]
+    [h.sheet([h.rule.style(".hidden", [Declaration.of("display", "none")])])],
   );
 
   const target = getTarget(document, "test");

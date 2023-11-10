@@ -81,12 +81,12 @@ export namespace Comparable {
    */
   export function compare<T extends Comparable<U>, U = T>(
     a: T,
-    b: U
+    b: U,
   ): Comparison;
 
   export function compare(
     a: string | number | bigint | boolean | Comparable<unknown>,
-    b: unknown
+    b: unknown,
   ): Comparison {
     if (isString(a)) {
       return compareString(a, b as string);
@@ -150,7 +150,7 @@ export namespace Comparable {
    */
   export function compareComparable<T extends Comparable<U>, U = T>(
     a: T,
-    b: U
+    b: U,
   ): Comparison {
     return a.compare(b);
   }
@@ -160,7 +160,7 @@ export namespace Comparable {
    */
   function comparePrimitive<T extends string | number | bigint | boolean>(
     a: T,
-    b: T
+    b: T,
   ): Comparison {
     if (a < b) {
       return Comparison.Less;

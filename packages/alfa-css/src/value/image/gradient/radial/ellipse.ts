@@ -16,11 +16,11 @@ const { option, separatedList } = Parser;
  * @internal
  */
 export class Ellipse<
-  R extends LengthPercentage = LengthPercentage
+  R extends LengthPercentage = LengthPercentage,
 > extends Value<"ellipse", Value.HasCalculation<[R, R]>> {
   public static of<R extends LengthPercentage>(
     horizontal: R,
-    vertical: R
+    vertical: R,
   ): Ellipse<R> {
     return new Ellipse(horizontal, vertical);
   }
@@ -45,7 +45,7 @@ export class Ellipse<
   public resolve(resolver: Ellipse.Resolver): Ellipse.Canonical {
     return new Ellipse(
       LengthPercentage.resolve(resolver)(this._horizontal),
-      LengthPercentage.resolve(resolver)(this._vertical)
+      LengthPercentage.resolve(resolver)(this._vertical),
     );
   }
 
@@ -96,12 +96,12 @@ export namespace Ellipse {
   export type PartialResolver = LengthPercentage.PartialResolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Ellipse) => PartiallyResolved {
     return (value) =>
       Ellipse.of(
         LengthPercentage.partiallyResolve(resolver)(value.horizontal),
-        LengthPercentage.partiallyResolve(resolver)(value.vertical)
+        LengthPercentage.partiallyResolve(resolver)(value.vertical),
       );
   }
 
@@ -115,7 +115,7 @@ export namespace Ellipse {
     LengthPercentage.parse,
     option(Token.parseWhitespace),
     2,
-    2
+    2,
   );
 
   export const parse: CSSParser<Ellipse> = (input) => {

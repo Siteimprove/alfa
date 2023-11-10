@@ -86,14 +86,14 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
           color: "#0000EE",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Ok.of(
     linkProperties.withPairings([
       ...defaultContrastPairings,
       makePairing(defaultLinkColor, defaultLinkColor, 1),
-    ])
+    ]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -101,7 +101,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
-        [addOutline(style)]
+        [addOutline(style)],
       ),
     }),
   ]);
@@ -133,7 +133,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
           color: "black",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -165,13 +165,13 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
           color: "black",
         }),
       ]),
-    ]
+    ],
   );
 
   const spanStyle = Err.of(
     noDistinguishingProperties
       .withPairings([makePairing(defaultTextColor, defaultTextColor, 1)])
-      .withStyle(["color", "rgb(0% 0% 0%)"])
+      .withStyle(["color", "rgb(0% 0% 0%)"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -179,7 +179,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
       1: Outcomes.IsDistinguishable(
         [defaultStyle, spanStyle],
         [hoverStyle, spanStyle],
-        [focusStyle, spanStyle]
+        [focusStyle, spanStyle],
       ),
     }),
   ]);
@@ -211,13 +211,13 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
           color: "#0000EE",
         }),
       ]),
-    ]
+    ],
   );
 
   const style = Ok.of(
     linkProperties.withPairings([
       makePairing(defaultLinkColor, defaultLinkColor, 1),
-    ])
+    ]),
   );
 
   const spanStyle = noDistinguishingProperties
@@ -229,7 +229,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element
       1: Outcomes.IsDistinguishable(
         [style, Err.of(spanStyle)],
         [addCursor(Ok.of(spanStyle)), addCursor(style)],
-        [addOutline(style), Err.of(spanStyle)]
+        [addOutline(style), Err.of(spanStyle)],
       ),
     }),
   ]);
@@ -259,7 +259,7 @@ test(`evaluate() is applicable to an <a> element when there is a <p> parent elem
           color: "#0000EE",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -288,7 +288,7 @@ test(`evaluate() is applicable to several <a> elements when there is a <p> paren
           color: "#0000EE",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -328,7 +328,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
           color: "rgba(255, 255, 255, 0.1)",
         }),
       ]),
-    ]
+    ],
   );
 
   // #000000 mixed with rgba(255, 255, 255, 0.1)
@@ -336,7 +336,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
     Percentage.of(0.1),
     Percentage.of(0.1),
     Percentage.of(0.1),
-    Percentage.of(1)
+    Percentage.of(1),
   );
 
   // #0000EE mixed with rgba(255, 255, 255, 0.1)
@@ -344,7 +344,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
     Percentage.of(0.1),
     Percentage.of(0.1),
     Percentage.of(0.94),
-    Percentage.of(1)
+    Percentage.of(1),
   );
 
   const style = Ok.of(
@@ -355,7 +355,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
           "linear-gradient(to right, rgb(0% 0% 0%) 50%, rgb(0% 0% 93.33333%) 50%)",
         ],
         ["color", "rgb(100% 100% 100% / 10%)"],
-        ["text-decoration", "underline"]
+        ["text-decoration", "underline"],
       )
       .withPairings([
         makePairing(defaultTextColor, offBlue, 2.44),
@@ -365,7 +365,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
         makePairing(offBlue, offBlue, 1),
         makePairing(offBlack, offBlack, 1),
       ])
-      .withDistinguishingProperties(["background", "text-decoration"])
+      .withDistinguishingProperties(["background", "text-decoration"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -373,7 +373,7 @@ test(`evaluate() is applicable to an <a> element with a <p> parent element that 
       1: Outcomes.IsDistinguishable(
         [style],
         [addCursor(style)],
-        [addOutline(style)]
+        [addOutline(style)],
       ),
     }),
   ]);
@@ -447,7 +447,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
           color: "#0000EE",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);
@@ -470,7 +470,7 @@ test(`evaluate() is inapplicable to an <a> element with a <p> parent element
           color: "#0000EE",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R62, { document }), [inapplicable(R62)]);

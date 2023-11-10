@@ -43,7 +43,7 @@ type Computed = Specified;
  */
 export const parseCommon = Keyword.parse(
   "common-ligatures",
-  "no-common-ligatures"
+  "no-common-ligatures",
 );
 
 /**
@@ -51,7 +51,7 @@ export const parseCommon = Keyword.parse(
  */
 export const parseDiscretionary = Keyword.parse(
   "discretionary-ligatures",
-  "no-discretionary-ligatures"
+  "no-discretionary-ligatures",
 );
 
 /**
@@ -59,7 +59,7 @@ export const parseDiscretionary = Keyword.parse(
  */
 export const parseHistorical = Keyword.parse(
   "historical-ligatures",
-  "no-historical-ligatures"
+  "no-historical-ligatures",
 );
 
 /**
@@ -71,7 +71,7 @@ export const parseContextual = Keyword.parse("contextual", "no-contextual");
  * @internal
  */
 const parseLigature: Parser<Slice<Token>, List<Specified.Item>, string> = (
-  input
+  input,
 ) => {
   let common: Specified.Common | undefined;
   let discretionary: Specified.Discretionary | undefined;
@@ -135,10 +135,10 @@ const parseLigature: Parser<Slice<Token>, List<Specified.Item>, string> = (
     input,
     List.of(
       [common, discretionary, historical, contextual].filter(
-        (value) => value !== undefined
+        (value) => value !== undefined,
         // filter doesn't narrow so we need to do it manually
       ) as Array<Specified.Item>,
-      " "
+      " ",
     ),
   ]);
 };
@@ -153,5 +153,5 @@ export default Longhand.of<Specified, Computed>(
   Keyword.of("normal"),
   parse,
   (ligatures) => ligatures,
-  { inherits: true }
+  { inherits: true },
 );

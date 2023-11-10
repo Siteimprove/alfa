@@ -9,17 +9,8 @@ import { Token } from "./token";
 import { Lexer } from "./lexer";
 
 const { fromCharCode } = String;
-const {
-  map,
-  either,
-  delimited,
-  option,
-  pair,
-  left,
-  right,
-  take,
-  zeroOrMore,
-} = parser.Parser;
+const { map, either, delimited, option, pair, left, right, take, zeroOrMore } =
+  parser.Parser;
 const { equals, property } = Predicate;
 
 /**
@@ -41,28 +32,28 @@ let parseExpression: parser.Parser<Slice<Token>, Expression, string>;
  * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-IntegerLiteral}
  */
 const parseIntegerLiteral = map(Token.parseInteger, (integer) =>
-  Expression.Integer.of(integer.value)
+  Expression.Integer.of(integer.value),
 );
 
 /**
  * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-DecimalLiteral}
  */
 const parseDecimalLiteral = map(Token.parseDecimal, (decimal) =>
-  Expression.Decimal.of(decimal.value)
+  Expression.Decimal.of(decimal.value),
 );
 
 /**
  * {@link https://www.w3.org/TR/xpath-31/#prod-xpath31-DoubleLiteral}
  */
 const parseDoubleLiteral = map(Token.parseDouble, (double) =>
-  Expression.Double.of(double.value)
+  Expression.Double.of(double.value),
 );
 
 /**
  * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-StringLiteral}
  */
 const parseStringLiteral = map(Token.parseString, (string) =>
-  Expression.String.of(string.value)
+  Expression.String.of(string.value),
 );
 
 /**
@@ -70,7 +61,7 @@ const parseStringLiteral = map(Token.parseString, (string) =>
  */
 const parseNumericLiteral = either(
   parseIntegerLiteral,
-  either(parseDecimalLiteral, parseDoubleLiteral)
+  either(parseDecimalLiteral, parseDoubleLiteral),
 );
 
 /**
@@ -84,14 +75,14 @@ const parseLiteral = either(parseNumericLiteral, parseStringLiteral);
 const parseParenthesizedExpression = delimited(
   Token.parseCharacter("("),
   (input) => parseExpression(input),
-  Token.parseCharacter(")")
+  Token.parseCharacter(")"),
 );
 
 /**
  * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-ContextItemExpr}
  */
 const parseContextItemExpression = map(Token.parseCharacter("."), () =>
-  Expression.ContextItem.of()
+  Expression.ContextItem.of(),
 );
 
 /**
@@ -99,7 +90,7 @@ const parseContextItemExpression = map(Token.parseCharacter("."), () =>
  */
 const parsePrimaryExpression = either(
   parseLiteral,
-  either(parseParenthesizedExpression, parseContextItemExpression)
+  either(parseParenthesizedExpression, parseContextItemExpression),
 );
 
 /**
@@ -112,7 +103,7 @@ const parseElementName = map(Token.parseName(), (name) => name.value);
  */
 const parseElementNameOrWildcard = either(
   parseElementName,
-  map(Token.parseCharacter("*"), (character) => fromCharCode(character.value))
+  map(Token.parseCharacter("*"), (character) => fromCharCode(character.value)),
 );
 
 /**
@@ -125,7 +116,7 @@ const parseAttributeName = map(Token.parseName(), (name) => name.value);
  */
 const parseAttributeNameOrWildcard = either(
   parseAttributeName,
-  map(Token.parseCharacter("*"), (character) => fromCharCode(character.value))
+  map(Token.parseCharacter("*"), (character) => fromCharCode(character.value)),
 );
 
 /**
@@ -139,9 +130,9 @@ const parseAttributeNameOrWildcard = either(
 const parseDocumentTest = map(
   pair(
     Token.parseName("document-node"),
-    pair(Token.parseCharacter("("), Token.parseCharacter(")"))
+    pair(Token.parseCharacter("("), Token.parseCharacter(")")),
   ),
-  () => Expression.Test.Document.of()
+  () => Expression.Test.Document.of(),
 );
 
 /**
@@ -152,10 +143,10 @@ const parseElementTest = map(
     Token.parseName("element"),
     right(
       Token.parseCharacter("("),
-      left(option(parseElementNameOrWildcard), Token.parseCharacter(")"))
-    )
+      left(option(parseElementNameOrWildcard), Token.parseCharacter(")")),
+    ),
   ),
-  (name) => Expression.Test.Element.of(name)
+  (name) => Expression.Test.Element.of(name),
 );
 
 /**
@@ -166,10 +157,10 @@ const parseAttributeTest = map(
     Token.parseName("attribute"),
     right(
       Token.parseCharacter("("),
-      left(option(parseAttributeNameOrWildcard), Token.parseCharacter(")"))
-    )
+      left(option(parseAttributeNameOrWildcard), Token.parseCharacter(")")),
+    ),
   ),
-  (name) => Expression.Test.Attribute.of(name)
+  (name) => Expression.Test.Attribute.of(name),
 );
 
 /**
@@ -178,9 +169,9 @@ const parseAttributeTest = map(
 const parseCommentTest = map(
   pair(
     Token.parseName("comment"),
-    pair(Token.parseCharacter("("), Token.parseCharacter(")"))
+    pair(Token.parseCharacter("("), Token.parseCharacter(")")),
   ),
-  () => Expression.Test.Comment.of()
+  () => Expression.Test.Comment.of(),
 );
 
 /**
@@ -189,9 +180,9 @@ const parseCommentTest = map(
 const parseTextTest = map(
   pair(
     Token.parseName("text"),
-    pair(Token.parseCharacter("("), Token.parseCharacter(")"))
+    pair(Token.parseCharacter("("), Token.parseCharacter(")")),
   ),
-  () => Expression.Test.Text.of()
+  () => Expression.Test.Text.of(),
 );
 
 /**
@@ -200,9 +191,9 @@ const parseTextTest = map(
 const parseAnyKindTest = map(
   pair(
     Token.parseName("node"),
-    pair(Token.parseCharacter("("), Token.parseCharacter(")"))
+    pair(Token.parseCharacter("("), Token.parseCharacter(")")),
   ),
-  () => Expression.Test.Node.of()
+  () => Expression.Test.Node.of(),
 );
 
 /**
@@ -215,11 +206,11 @@ const parseKindTest = map(
       parseAttributeTest,
       either(
         parseDocumentTest,
-        either(parseCommentTest, either(parseTextTest, parseAnyKindTest))
-      )
-    )
+        either(parseCommentTest, either(parseTextTest, parseAnyKindTest)),
+      ),
+    ),
   ),
-  (test) => Option.of(test)
+  (test) => Option.of(test),
 );
 
 /**
@@ -227,16 +218,16 @@ const parseKindTest = map(
  */
 const parseNameTest = either(
   map(Token.parseName(), (name) =>
-    Option.of(Expression.Test.Name.of(name.prefix, name.value))
+    Option.of(Expression.Test.Name.of(name.prefix, name.value)),
   ),
-  map(Token.parseCharacter("*"), () => None as Option<Expression.Test.Name>)
+  map(Token.parseCharacter("*"), () => None as Option<Expression.Test.Name>),
 );
 
 /**
  * {@link https://www.w3.org/TR/xpath-31/#doc-xpath31-NodeTest}
  */
 const parseNodeTest = map(either(parseKindTest, parseNameTest), (test) =>
-  test.isSome() ? Option.of(test.get()) : None
+  test.isSome() ? Option.of(test.get()) : None,
 );
 
 /**
@@ -252,13 +243,13 @@ const parseReverseAxis = left(
           "ancestor",
           "preceding-sibling",
           "preceding",
-          "ancestor-or-self"
-        )
-      )
+          "ancestor-or-self",
+        ),
+      ),
     ),
-    (name) => name.value as Expression.Axis.Type
+    (name) => name.value as Expression.Axis.Type,
   ),
-  take(Token.parseCharacter(":"), 2)
+  take(Token.parseCharacter(":"), 2),
 );
 
 /**
@@ -266,7 +257,7 @@ const parseReverseAxis = left(
  */
 const parseAbbreviatedReverseStep = map(
   take(Token.parseCharacter("."), 2),
-  () => Expression.Axis.of("parent", Option.of(Expression.Test.Node.of()))
+  () => Expression.Axis.of("parent", Option.of(Expression.Test.Node.of())),
 );
 
 /**
@@ -277,7 +268,7 @@ const parseReverseStep = either(
     const [axis, test] = result;
     return Expression.Axis.of(axis, test);
   }),
-  parseAbbreviatedReverseStep
+  parseAbbreviatedReverseStep,
 );
 
 /**
@@ -296,13 +287,13 @@ const parseForwardAxis = left(
           "descendant-or-self",
           "following-sibling",
           "following",
-          "namespace"
-        )
-      )
+          "namespace",
+        ),
+      ),
     ),
-    (name) => name.value as Expression.Axis.Type
+    (name) => name.value as Expression.Axis.Type,
   ),
-  take(Token.parseCharacter(":"), 2)
+  take(Token.parseCharacter(":"), 2),
 );
 
 /**
@@ -324,7 +315,7 @@ const parseAbbreviatedForwardStep = map(
     }
 
     return Expression.Axis.of("child", test);
-  }
+  },
 );
 
 /**
@@ -335,7 +326,7 @@ const parseForwardStep = either(
     const [axis, test] = result;
     return Expression.Axis.of(axis, test);
   }),
-  parseAbbreviatedForwardStep
+  parseAbbreviatedForwardStep,
 );
 
 /**
@@ -344,7 +335,7 @@ const parseForwardStep = either(
 const parsePredicate = delimited(
   Token.parseCharacter("["),
   (input) => parseExpression(input),
-  Token.parseCharacter("]")
+  Token.parseCharacter("]"),
 );
 
 /**
@@ -360,7 +351,7 @@ const parseAxisStep = map(
   (result) => {
     const [axis, predicates] = result;
     return Expression.Axis.of(axis.axis, axis.test, Array.from(predicates));
-  }
+  },
 );
 
 /**
@@ -376,7 +367,7 @@ const parsePostfixExpression = map(
     }
 
     return Expression.Filter.of(base, predicates);
-  }
+  },
 );
 
 /**
@@ -394,11 +385,11 @@ const parseRelativePathExpression = map(
       pair(
         either(
           map(take(Token.parseCharacter("//"), 2), () => true),
-          map(Token.parseCharacter("/"), () => false)
+          map(Token.parseCharacter("/"), () => false),
         ),
-        parseStepExpression
-      )
-    )
+        parseStepExpression,
+      ),
+    ),
   ),
   (result) => {
     const [left, right] = result;
@@ -407,15 +398,15 @@ const parseRelativePathExpression = map(
         right = Expression.Path.of(
           Expression.Axis.of(
             "descendant-or-self",
-            Option.of(Expression.Test.Node.of())
+            Option.of(Expression.Test.Node.of()),
           ),
-          right
+          right,
         );
       }
 
       return Expression.Path.of(left, right);
     }, left);
-  }
+  },
 );
 
 /**
@@ -433,11 +424,11 @@ const parsePathExpression = either(
           Expression.Path.of(
             Expression.Axis.of(
               "descendant-or-self",
-              Option.of(Expression.Test.Node.of())
+              Option.of(Expression.Test.Node.of()),
             ),
-            right
-          )
-        )
+            right,
+          ),
+        ),
     ),
     map(
       right(Token.parseCharacter("/"), option(parseRelativePathExpression)),
@@ -451,10 +442,10 @@ const parsePathExpression = either(
         }
 
         return left;
-      }
-    )
+      },
+    ),
   ),
-  parseRelativePathExpression
+  parseRelativePathExpression,
 );
 
 /**

@@ -9,7 +9,7 @@ import { Node } from "../../node";
  */
 export function hasHeadingLevel(
   device: Device,
-  predicate: Predicate<number> = (n) => !isNaN(n)
+  predicate: Predicate<number> = (n) => !isNaN(n),
 ): Predicate<Element> {
   return (element) =>
     Node.from(element, device)

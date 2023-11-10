@@ -49,7 +49,7 @@ export namespace Version {
 
   /** @public */
   export function isVersion<T extends string>(
-    value: unknown
+    value: unknown,
   ): value is Version {
     return value instanceof Version;
   }

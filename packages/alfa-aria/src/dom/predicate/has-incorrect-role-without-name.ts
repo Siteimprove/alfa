@@ -16,12 +16,12 @@ const { and, not, or } = Predicate;
  * @public
  */
 export function hasIncorrectRoleWithoutName(
-  device: Device
+  device: Device,
 ): Predicate<Element> {
   return and(
     hasSuspiciousRole,
     not(hasExplicitRole()),
-    not(hasAccessibleName(device))
+    not(hasAccessibleName(device)),
   );
 }
 
@@ -31,5 +31,5 @@ export function hasIncorrectRoleWithoutName(
  */
 const hasSuspiciousRole = or(
   hasName("form", "section"),
-  and(hasName("aside"), isScopedTo("article", "aside", "nav", "section"))
+  and(hasName("aside"), isScopedTo("article", "aside", "nav", "section")),
 );

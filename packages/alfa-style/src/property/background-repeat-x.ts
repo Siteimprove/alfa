@@ -36,5 +36,5 @@ export const initialItem = Keyword.of("repeat");
 export default Longhand.of<Specified, Computed>(
   List.of([initialItem]),
   parseList,
-  (value) => value
+  (value) => value,
 );

@@ -134,7 +134,7 @@ export class Leaf<T> implements Node<T> {
       value instanceof Leaf &&
       value._values.length === this._values.length &&
       value._values.every((value, i) =>
-        Equatable.equals(value, this._values[i])
+        Equatable.equals(value, this._values[i]),
       )
     );
   }
@@ -203,8 +203,8 @@ export class Branch<T> implements Node<T> {
   public map<U>(mapper: Mapper<T, U>): Branch<U> {
     return Branch.of(
       this._nodes.map(
-        (node) => (node as Node<T>).map(mapper) as Branch<U> | Leaf<U>
-      )
+        (node) => (node as Node<T>).map(mapper) as Branch<U> | Leaf<U>,
+      ),
     );
   }
 

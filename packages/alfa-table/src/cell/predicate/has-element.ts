@@ -16,7 +16,7 @@ export function hasElement(predicate: Predicate<Element>): Predicate<Cell>;
 export function hasElement(element: Element): Predicate<Cell>;
 
 export function hasElement(
-  elementOrPredicate: Element | Predicate<Element>
+  elementOrPredicate: Element | Predicate<Element>,
 ): Predicate<Cell> {
   let predicate: Predicate<Element>;
 

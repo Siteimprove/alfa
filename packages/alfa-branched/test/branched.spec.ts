@@ -34,7 +34,7 @@ test("#flatMap() flattens a branched value of both branchless and branched value
   const n = Branched.of<number, string>(1).branch(8, "foo");
 
   const m = n.flatMap((n) =>
-    Branched.of<number, string>(n + 2).branch(n + 4, "foo")
+    Branched.of<number, string>(n + 2).branch(n + 4, "foo"),
   );
 
   t.deepEqual(m.toArray(), [
@@ -47,7 +47,7 @@ test("#flatMap() keeps branched values when merged with branchless values", (t) 
   const n = Branched.of<number, string>(1).branch(8, "foo", "bar");
 
   const m = n.flatMap((n) =>
-    Branched.of<number, string>(n + 2).branch(n + 4, "foo")
+    Branched.of<number, string>(n + 2).branch(n + 4, "foo"),
   );
 
   t.deepEqual(m.toArray(), [
@@ -61,7 +61,7 @@ test("#flatMap() assigns unused branches to branchless values", (t) => {
   const n = Branched.of<number, string>(1).branch(8, "foo");
 
   const m = n.flatMap((n) =>
-    Branched.of<number, string>(n + 2, "bar").branch(n + 4, "foo")
+    Branched.of<number, string>(n + 2, "bar").branch(n + 4, "foo"),
   );
 
   t.deepEqual(m.toArray(), [
@@ -135,7 +135,7 @@ test(`.traverse() traverses an iterable of values and lifts them to a branched
     [
       [[1, 2, 3], ["foo"]],
       [[2, 4, 6], ["bar"]],
-    ]
+    ],
   );
 });
 
@@ -154,7 +154,7 @@ test(`.sequence() inverts an iterable of branched values to a branched value of
     [
       [[1, 3, 5], ["foo"]],
       [[2, 4, 5], ["bar"]],
-    ]
+    ],
   );
 });
 
@@ -166,6 +166,6 @@ test(`.sequence() inverts an iterable of branchless values to a branchless value
     Branched.sequence(ns)
       .map((values) => [...values])
       .toArray(),
-    [[[1, 2, 3], []]]
+    [[[1, 2, 3], []]],
   );
 });

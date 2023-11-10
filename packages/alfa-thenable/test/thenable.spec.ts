@@ -18,15 +18,15 @@ test("await a rejecting thenable", async (t) => {
 test(".map() applies a function to the value of a thenable", async (t) => {
   t.equal(
     await Thenable.map(Thenable.resolve(42), (x) => x.toString(10)),
-    "42"
+    "42",
   );
 });
 
 test(".flatMap() applies a function to the value of a thenable and flattens the result", async (t) => {
   t.equal(
     await Thenable.flatMap(Thenable.resolve(42), (x) =>
-      Thenable.resolve(x.toString(10))
+      Thenable.resolve(x.toString(10)),
     ),
-    "42"
+    "42",
   );
 });

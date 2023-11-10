@@ -52,22 +52,22 @@ export class Selective<S, T = never>
 
   public if<P, Q extends P, U>(
     refinement: Refinement<P, Q>,
-    mapper: Mapper<S & Q, U>
+    mapper: Mapper<S & Q, U>,
   ): Selective<Exclude<S, Q>, T | U>;
 
   public if<U>(
     predicate: Predicate<S>,
-    mapper: Mapper<S, U>
+    mapper: Mapper<S, U>,
   ): Selective<S, T | U>;
 
   public if<U>(
     predicate: Predicate<S>,
-    mapper: Mapper<S, U>
+    mapper: Mapper<S, U>,
   ): Selective<S, T | U> {
     return this._value.either(
       (value) =>
         predicate(value) ? new Selective<S, U>(Right.of(mapper(value))) : this,
-      () => this
+      () => this,
     );
   }
 
@@ -76,9 +76,9 @@ export class Selective<S, T = never>
       Right.of(
         this._value.either<T | U>(
           (value) => mapper(value),
-          (value) => value
-        )
-      )
+          (value) => value,
+        ),
+      ),
     );
   }
 

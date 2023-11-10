@@ -25,10 +25,10 @@ const parse = List.parseCommaSeparated(
     either(
       String.parse,
       map(separatedList(Token.parseIdent(), Token.parseWhitespace), (idents) =>
-        String.of(idents.map((ident) => ident.value).join(" "))
-      )
-    )
-  )
+        String.of(idents.map((ident) => ident.value).join(" ")),
+      ),
+    ),
+  ),
 );
 
 /**
@@ -41,5 +41,5 @@ export default Longhand.of<Specified, Computed>(
   (fontFamily) => fontFamily,
   {
     inherits: true,
-  }
+  },
 );

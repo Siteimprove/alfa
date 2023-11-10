@@ -35,11 +35,11 @@ export const hasUniqueId: Predicate<Element> = and(hasId(), (element) =>
       return new Set(
         Iterable.map(
           Iterable.filter(counts, ([, count]) => count === 1),
-          ([id]) => id
-        )
+          ([id]) => id,
+        ),
       );
     })
     // The initial hasId in the conjunction guarantee that there is one.
     // Still defaulting to an impossible one.
-    .has(element.id.getOr("impossible id due to spaces"))
+    .has(element.id.getOr("impossible id due to spaces")),
 );

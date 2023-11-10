@@ -41,7 +41,7 @@ export namespace Token {
     | Character.JSON;
 
   const parseFirst: Parser<Slice<Token>, Token, string> = (
-    input: Slice<Token>
+    input: Slice<Token>,
   ) =>
     input
       .first()
@@ -420,7 +420,7 @@ export namespace Token {
   }
 
   export const parseCharacter = (
-    query: string | Predicate<Character> = () => true
+    query: string | Predicate<Character> = () => true,
   ) => {
     let predicate: Predicate<Character>;
 

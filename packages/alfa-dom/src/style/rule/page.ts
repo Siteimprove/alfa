@@ -10,7 +10,7 @@ import { Rule } from "../rule";
 export class PageRule extends Rule {
   public static of(
     selector: string,
-    declarations: Iterable<Declaration>
+    declarations: Iterable<Declaration>,
   ): PageRule {
     return new PageRule(selector, Array.from(declarations));
   }
@@ -23,7 +23,7 @@ export class PageRule extends Rule {
 
     this._selector = selector;
     this._style = Block.of(
-      declarations.filter((declaration) => declaration._attachParent(this))
+      declarations.filter((declaration) => declaration._attachParent(this)),
     );
   }
 
@@ -71,7 +71,7 @@ export namespace PageRule {
    */
   export function fromPageRule(json: JSON): Trampoline<PageRule> {
     return Trampoline.done(
-      PageRule.of(json.selector, json.style.map(Declaration.from))
+      PageRule.of(json.selector, json.style.map(Declaration.from)),
     );
   }
 }

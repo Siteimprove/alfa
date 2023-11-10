@@ -37,11 +37,13 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               hasNamespace(Namespace.HTML, Namespace.SVG),
               hasRole(device, (role) => role.is("link")),
               isIncludedInTheAccessibilityTree(device),
-              hasNonEmptyAccessibleName(device)
-            )
+              hasNonEmptyAccessibleName(device),
+            ),
           )
           .groupBy((element) =>
-            Node.from(element, device).name.map((name) => normalize(name.value))
+            Node.from(element, device).name.map((name) =>
+              normalize(name.value),
+            ),
           )
           .filter((elements) => elements.size > 1)
           .map(Group.of)
@@ -67,14 +69,14 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               Question.of(
                 "reference-equivalent-resources",
                 target,
-                `Do the links resolve to equivalent resources?`
+                `Do the links resolve to equivalent resources?`,
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
                   () => Outcomes.ResolveEquivalentResource,
-                  () => Outcomes.ResolveDifferentResource
-                )
-              )
+                  () => Outcomes.ResolveDifferentResource,
+                ),
+              ),
           ),
         };
       },
@@ -87,16 +89,16 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
  */
 export namespace Outcomes {
   export const ResolveSameResource = Ok.of(
-    Diagnostic.of(`The links resolve to the same resource`)
+    Diagnostic.of(`The links resolve to the same resource`),
   );
 
   export const ResolveEquivalentResource = Ok.of(
-    Diagnostic.of(`The links resolve to equivalent resources`)
+    Diagnostic.of(`The links resolve to equivalent resources`),
   );
 
   export const ResolveDifferentResource = Err.of(
     Diagnostic.of(
-      `The links do not resolve to the same or equivalent resources`
-    )
+      `The links do not resolve to the same or equivalent resources`,
+    ),
   );
 }

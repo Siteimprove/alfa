@@ -17,6 +17,6 @@ export default Shorthand.of(
     ([start, end = start]) => [
       ["border-block-start-width", start],
       ["border-block-end-width", end],
-    ]
-  )
+    ],
+  ),
 );

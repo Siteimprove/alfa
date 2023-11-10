@@ -9,7 +9,7 @@ const base = Longhand.fromKeywords(
   { inherits: false },
   "none",
   "left",
-  "right"
+  "right",
 );
 
 /**

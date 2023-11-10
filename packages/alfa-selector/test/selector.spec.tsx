@@ -1107,7 +1107,7 @@ test("#matches() checks if an element matches a :link selector", (t) => {
     t.equal(
       selector.matches(element, Context.visit(element)),
       false,
-      element.toString()
+      element.toString(),
     );
   }
 
@@ -1129,7 +1129,7 @@ test("#matches() checks if an element matches a :visited selector", (t) => {
     t.equal(
       selector.matches(element, Context.visit(element)),
       true,
-      element.toString()
+      element.toString(),
     );
 
     // Only visited links match :link
