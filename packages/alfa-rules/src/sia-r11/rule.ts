@@ -32,8 +32,8 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             hasNamespace(Namespace.HTML),
             hasRole(device, (role) => role.is("link")),
-            isIncludedInTheAccessibilityTree(device)
-          )
+            isIncludedInTheAccessibilityTree(device),
+          ),
         );
       },
 
@@ -42,7 +42,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             hasNonEmptyAccessibleName(device)(target),
             () => Outcomes.HasName,
-            () => Outcomes.HasNoName
+            () => Outcomes.HasNoName,
           ),
         };
       },
@@ -55,10 +55,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const HasName = Ok.of(
-    Diagnostic.of(`The link has an accessible name`)
+    Diagnostic.of(`The link has an accessible name`),
   );
 
   export const HasNoName = Err.of(
-    Diagnostic.of(`The link does not have an accessible name`)
+    Diagnostic.of(`The link does not have an accessible name`),
   );
 }

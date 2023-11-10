@@ -27,7 +27,7 @@ export namespace Item {
   export type PartialResolver = Hint.PartialResolver & Stop.PartialResolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Item) => PartiallyResolved {
     return (value) =>
       Stop.isStop(value)
@@ -51,6 +51,6 @@ export namespace Item {
       }
 
       return items;
-    }
+    },
   );
 }

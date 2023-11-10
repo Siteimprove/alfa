@@ -33,7 +33,7 @@ test("evaluate() passes when some atomic rules are passing", async (t) => {
         "text-alternative": None,
         label: None,
         "track-describes-video": true,
-      })
+      }),
     ),
     [
       passed(
@@ -42,9 +42,9 @@ test("evaluate() passes when some atomic rules are passing", async (t) => {
         {
           1: Outcomes.HasAlternative,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -65,8 +65,8 @@ test("evaluate() can't tell when there are not enough answers to expectation", a
       oracle({
         "is-video-streaming": false,
         "has-audio": true,
-      })
+      }),
     ),
-    [cantTell(R38, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R38, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });

@@ -51,8 +51,8 @@ export namespace Slotable {
           shadow
             .descendants()
             .filter(Slot.isSlot)
-            .find((slot) => Slot.name(slot) === name)
-        )
+            .find((slot) => Slot.name(slot) === name),
+        ),
       );
   }
 }

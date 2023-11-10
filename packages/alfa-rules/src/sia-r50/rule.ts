@@ -31,7 +31,7 @@ export default Rule.Composite.of<Page, Element, Question.Metadata, Element>({
           1: expectation(
             Trilean.some(outcomes, isPassed),
             () => Outcomes.AutoplayGood,
-            () => Outcomes.AutoplayBad
+            () => Outcomes.AutoplayBad,
           ),
         };
       },
@@ -47,15 +47,15 @@ export namespace Outcomes {
     Diagnostic.of(
       `The total duration of the autoplaying audio output of the element either
       lasts no longer than 3 seconds or a mechanism to pause or stop the audio
-      is available`
-    )
+      is available`,
+    ),
   );
 
   export const AutoplayBad = Err.of(
     Diagnostic.of(
       `The total duration of the autoplaying audio output of the element lasts
       longer than 3 seconds and no mechanism to pause or stop the audio is
-      available`
-    )
+      available`,
+    ),
   );
 }

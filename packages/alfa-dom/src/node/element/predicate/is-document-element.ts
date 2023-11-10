@@ -14,6 +14,6 @@ const { and, test } = Refinement;
 export function isDocumentElement(value: unknown): value is Element<"html"> {
   return test(
     and(Element.isElement, and(hasName("html"), hasNamespace(Namespace.HTML))),
-    value
+    value,
   );
 }

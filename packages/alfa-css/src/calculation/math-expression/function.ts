@@ -19,7 +19,7 @@ const { isValueExpression } = Value;
  */
 export abstract class Function<
   T extends string = string,
-  A extends Array<Expression> = Array<Expression>
+  A extends Array<Expression> = Array<Expression>,
 > extends Expression<T> {
   protected readonly _args: Readonly<A>;
   protected readonly _kind: Kind;
@@ -45,7 +45,7 @@ export abstract class Function<
       value.type === this.type &&
       value._args.length === this._args.length &&
       value._args.every((arg: Expression, i: number) =>
-        arg.equals(this._args[i])
+        arg.equals(this._args[i]),
       )
     );
   }
@@ -73,7 +73,7 @@ export namespace Function {
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>
+      resolver: Expression.Resolver<L, P>,
     ): Expression {
       const reduced = this._args[0].reduce(resolver);
 
@@ -100,7 +100,7 @@ export namespace Function {
       // {@see https://drafts.csswg.org/css-values/#determine-the-type-of-a-calculation}
       const kind = expressions.reduce(
         (old, cur) => old.flatMap((kind) => kind.add(cur.kind)),
-        Result.of<Kind, string>(first.kind)
+        Result.of<Kind, string>(first.kind),
       );
 
       return kind.map((kind) => new Max([first, ...expressions], kind));
@@ -111,7 +111,7 @@ export namespace Function {
     }
 
     public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-      resolver: Expression.Resolver<L, P>
+      resolver: Expression.Resolver<L, P>,
     ): Expression {
       // We know from the guard in Max.of that all args have the same kind.
 
@@ -130,7 +130,7 @@ export namespace Function {
 
         if (values.every(isNumber)) {
           return Value.of(
-            Number.of(Math.max(...values.map((value) => value.value)))
+            Number.of(Math.max(...values.map((value) => value.value))),
           );
         }
 
@@ -138,17 +138,17 @@ export namespace Function {
           values.every(
             // The unit test is theoretically not needed since reduced angle values
             // should always be in the canonical unit (no relative angles)
-            (value) => isAngle(value) && value.hasUnit("deg")
+            (value) => isAngle(value) && value.hasUnit("deg"),
           )
         ) {
           return Value.of(
-            Angle.of(Math.max(...values.map((value) => value.value)), "deg")
+            Angle.of(Math.max(...values.map((value) => value.value)), "deg"),
           );
         }
 
         if (values.every((value) => isLength(value) && value.hasUnit("px"))) {
           return Value.of(
-            Length.of(Math.max(...values.map((value) => value.value)), "px")
+            Length.of(Math.max(...values.map((value) => value.value)), "px"),
           );
         }
         // reduced contains percentages or relative lengths, we just fall through

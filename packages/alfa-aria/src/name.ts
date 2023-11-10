@@ -408,7 +408,7 @@ export namespace Name {
       referrer: Option<Element>,
       referred: Option<Element>,
       isRecursing: boolean,
-      isDescending: boolean
+      isDescending: boolean,
     ) {
       this._visited = visited;
       this._referrer = referrer;
@@ -478,7 +478,7 @@ export namespace Name {
         this._referrer,
         this._referred,
         this._isRecursing,
-        this._isDescending
+        this._isDescending,
       );
     }
 
@@ -492,7 +492,7 @@ export namespace Name {
         this._referrer,
         this._referred,
         isRecursing,
-        this._isDescending
+        this._isDescending,
       );
     }
 
@@ -518,7 +518,7 @@ export namespace Name {
         Option.of(referrer),
         Option.of(referred),
         this._isRecursing,
-        this._isDescending
+        this._isDescending,
       );
     }
 
@@ -532,7 +532,7 @@ export namespace Name {
         this._referrer,
         this._referred,
         this._isRecursing,
-        isDescending
+        isDescending,
       );
     }
 
@@ -585,7 +585,7 @@ export namespace Name {
   export function fromNode(
     node: Element | Text,
     device: Device,
-    state: State
+    state: State,
   ): Option<Name> {
     // Construct a thunk with the computed name of the node. We first need to
     // decide whether or not we can pull the name of the node from the cache and
@@ -654,7 +654,7 @@ export namespace Name {
   export function fromElement(
     element: Element,
     device: Device,
-    state: State
+    state: State,
   ): Option<Name> {
     if (state.hasVisited(element)) {
       // While self-references are allowed, any other forms of circular
@@ -734,7 +734,7 @@ export namespace Name {
         return element
           .attribute("aria-labelledby")
           .flatMap((attribute) =>
-            fromReferences(attribute, element, device, state)
+            fromReferences(attribute, element, device, state),
           );
       },
 
@@ -765,7 +765,7 @@ export namespace Name {
         }
 
         return Feature.from(element.namespace.get(), element.name).flatMap(
-          (feature) => feature.name(element, device, state)
+          (feature) => feature.name(element, device, state),
         );
       },
 
@@ -797,7 +797,7 @@ export namespace Name {
         }
 
         return fromDescendants(element, device, state);
-      }
+      },
     );
   }
 
@@ -820,7 +820,7 @@ export namespace Name {
   export function fromDescendants(
     element: Element,
     device: Device,
-    state: State
+    state: State,
   ): Option<Name> {
     const names: Sequence<readonly [string, Name]> = element
       .children(Node.flatTree)
@@ -833,16 +833,16 @@ export namespace Name {
                 hasComputedStyle(
                   "display",
                   ({ values: [outside] }) => outside.value === "block",
-                  device
+                  device,
                 ),
-                element
+                element,
               )
             ) {
               return [` ${name.value} `, name];
             }
             return [name.value, name];
-          }
-        )
+          },
+        ),
       );
 
     const name = flatten(names.map(([value]) => value).join("")).trim();
@@ -854,8 +854,8 @@ export namespace Name {
     return Option.of(
       Name.of(
         name,
-        names.map(([, name]) => Source.descendant(element, name))
-      )
+        names.map(([, name]) => Source.descendant(element, name)),
+      ),
     );
   }
 
@@ -879,7 +879,7 @@ export namespace Name {
     attribute: Attribute,
     referrer: Element,
     device: Device,
-    state: State
+    state: State,
   ): Option<Name> {
     if (!attribute.owner.isSome()) {
       return None;
@@ -892,8 +892,8 @@ export namespace Name {
         fromNode(
           element,
           device,
-          state.reference(referrer, element).recurse(true).descend(false)
-        )
+          state.reference(referrer, element).recurse(true).descend(false),
+        ),
       );
 
     const name = flatten(names.map((name) => name.value).join(" "));
@@ -908,10 +908,10 @@ export namespace Name {
           attribute,
           Name.of(
             name,
-            names.flatMap((name) => Sequence.from(name.source))
-          )
+            names.flatMap((name) => Sequence.from(name.source)),
+          ),
         ),
-      ])
+      ]),
     );
   }
 

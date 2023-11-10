@@ -21,7 +21,7 @@ const offBlue = RGB.of(
   Percentage.of(0.1),
   Percentage.of(0.1),
   Percentage.of(0.837647),
-  Percentage.of(1)
+  Percentage.of(1),
 );
 
 // #000042 mixed with rgba(255, 255, 255, 0.1)
@@ -29,7 +29,7 @@ const offPurple = RGB.of(
   Percentage.of(0.1),
   Percentage.of(0.1),
   Percentage.of(0.3329412),
-  Percentage.of(1)
+  Percentage.of(1),
 );
 
 // #F9F9F1 mixed with rgba(255, 255, 255, 0.1)
@@ -37,7 +37,7 @@ const offWhite = RGB.of(
   Percentage.of(0.9788235),
   Percentage.of(0.9788235),
   Percentage.of(0.9505882),
-  Percentage.of(1)
+  Percentage.of(1),
 );
 
 test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 as a distinguishing feature`, async (t) => {
@@ -57,7 +57,7 @@ test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 
           cursor: "auto",
         }),
       ]),
-    ]
+    ],
   );
 
   const contrastPairings = [
@@ -66,17 +66,17 @@ test(`evaluate() passes an <a> element that has a difference in contrast of 3:1 
         Percentage.of(0.5803922),
         Percentage.of(0.5803922),
         Percentage.of(0.5803922),
-        Percentage.of(1)
+        Percentage.of(1),
       ),
       defaultLinkColor,
-      3.1
+      3.1,
     ),
   ];
 
   const style = Ok.of(
     noDistinguishingProperties
       .withPairings(contrastPairings)
-      .withDistinguishingProperties(["contrast"])
+      .withDistinguishingProperties(["contrast"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -108,7 +108,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
           cursor: "auto",
         }),
       ]),
-    ]
+    ],
   );
 
   // red mixed with rgba(255, 255, 255, .5)
@@ -116,7 +116,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
     Percentage.of(1),
     Percentage.of(1),
     Percentage.of(0.5),
-    Percentage.of(1)
+    Percentage.of(1),
   );
 
   // yellow mixed with rgba(255, 255, 255, .5)
@@ -124,7 +124,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
     Percentage.of(1),
     Percentage.of(0.5),
     Percentage.of(0.5),
-    Percentage.of(1)
+    Percentage.of(1),
   );
 
   // orange mixed with rgba(255, 255, 255, .5)
@@ -132,7 +132,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
     Percentage.of(1),
     Percentage.of(0.8235294),
     Percentage.of(0.5),
-    Percentage.of(1)
+    Percentage.of(1),
   );
 
   const contrastPairings = [
@@ -148,7 +148,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
         "linear-gradient(to right, rgb(100% 0% 0%) 20%, rgb(100% 64.70588000000001% 0%) 40%, rgb(100% 100% 0%) 100%)",
       ])
       .withPairings(contrastPairings)
-      .withDistinguishingProperties(["contrast"])
+      .withDistinguishingProperties(["contrast"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -180,7 +180,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
           cursor: "auto",
         }),
       ]),
-    ]
+    ],
   );
 
   const contrastPairings = [
@@ -195,7 +195,7 @@ test(`evaluate() passes an <a> element that is distinguishable from the <p> pare
         "linear-gradient(to right, rgb(97.64706% 97.64706% 94.5098%) 50%, rgb(0% 0% 81.96078%) 50%)",
       ])
       .withPairings(contrastPairings)
-      .withDistinguishingProperties(["contrast"])
+      .withDistinguishingProperties(["contrast"]),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -224,7 +224,7 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
           cursor: "auto",
         }),
       ]),
-    ]
+    ],
   );
 
   const contrastPairings = [
@@ -238,7 +238,7 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
         "background",
         "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%)",
       ])
-      .withPairings(contrastPairings)
+      .withPairings(contrastPairings),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [
@@ -267,7 +267,7 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
           cursor: "auto",
         }),
       ]),
-    ]
+    ],
   );
 
   const contrastPairings = [
@@ -282,9 +282,9 @@ test(`evaluate() fails an <a> element that is not distinguishable from the <p> p
           "background",
           "linear-gradient(to right, rgb(0% 0% 81.96078%) 50%, rgb(0% 0% 25.88235%) 50%)",
         ],
-        ["color", "rgb(100% 100% 100% / 10%)"]
+        ["color", "rgb(100% 100% 100% / 10%)"],
       )
-      .withPairings(contrastPairings)
+      .withPairings(contrastPairings),
   );
 
   t.deepEqual(await evaluate(R62, { document }), [

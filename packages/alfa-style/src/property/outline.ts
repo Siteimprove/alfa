@@ -66,5 +66,5 @@ export default Shorthand.of(
         ["outline-color", color ?? Keyword.of("initial")],
       ],
     ]);
-  }
+  },
 );

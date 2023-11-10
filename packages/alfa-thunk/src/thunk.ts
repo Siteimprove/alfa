@@ -20,7 +20,7 @@ export namespace Thunk {
 
   export function flatMap<T, U>(
     thunk: Thunk<T>,
-    mapper: Mapper<T, Thunk<U>>
+    mapper: Mapper<T, Thunk<U>>,
   ): Thunk<U> {
     return () => mapper(thunk())();
   }
@@ -28,7 +28,7 @@ export namespace Thunk {
   export function reduce<T, U>(
     thunk: Thunk<T>,
     reducer: Reducer<T, U>,
-    accumulator: U
+    accumulator: U,
   ): U {
     return reducer(accumulator, thunk());
   }

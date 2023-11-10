@@ -22,7 +22,7 @@ export class Rectangle
     x: number,
     y: number,
     width: number,
-    height: number
+    height: number,
   ): Rectangle {
     return new Rectangle(x, y, width, height);
   }
@@ -36,7 +36,7 @@ export class Rectangle
     -Infinity,
     -Infinity,
     Infinity,
-    Infinity
+    Infinity,
   );
   public static full(): Rectangle {
     return this._full;
@@ -166,7 +166,7 @@ export class Rectangle
       minLeft,
       minTop,
       maxRight - minLeft,
-      maxBottom - minTop
+      maxBottom - minTop,
     );
   }
 
@@ -192,7 +192,7 @@ export class Rectangle
       maxLeft,
       maxTop,
       minRight - maxLeft,
-      minBottom - maxTop
+      minBottom - maxTop,
     );
   }
 
@@ -252,14 +252,14 @@ export namespace Rectangle {
   export function union(...rectangles: Array<Rectangle>): Rectangle {
     return rectangles.reduce(
       (previous, current) => previous.union(current),
-      Rectangle.empty()
+      Rectangle.empty(),
     );
   }
 
   export function intersection(...rectangles: Array<Rectangle>): Rectangle {
     return rectangles.reduce(
       (previous, current) => previous.intersection(current),
-      Rectangle.full()
+      Rectangle.full(),
     );
   }
 }

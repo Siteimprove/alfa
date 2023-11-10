@@ -36,7 +36,7 @@ export default Rule.Atomic.of<Page, Element>({
       applicability() {
         return getElementDescendants(document, Node.composedNested)
           .filter(
-            and(hasNamespace(Namespace.HTML, Namespace.SVG), hasNonDefaultRole)
+            and(hasNamespace(Namespace.HTML, Namespace.SVG), hasNonDefaultRole),
           )
           .filter(isIncludedInTheAccessibilityTree(device));
       },
@@ -50,7 +50,7 @@ export default Rule.Atomic.of<Page, Element>({
 
 function hasRequiredValues(
   device: Device,
-  element: Element
+  element: Element,
 ): Result<RoleAndRequiredAttributes> {
   const node = aria.Node.from(element, device);
 
@@ -99,14 +99,14 @@ export class RoleAndRequiredAttributes extends Diagnostic {
     message: string,
     role: Role.Name,
     requiredAttributes: ReadonlyArray<aria.Attribute.Name>,
-    missingAttributes: ReadonlyArray<aria.Attribute.Name>
+    missingAttributes: ReadonlyArray<aria.Attribute.Name>,
   ): RoleAndRequiredAttributes;
 
   public static of(
     message: string,
     role?: Role.Name,
     requiredAttributes?: ReadonlyArray<aria.Attribute.Name>,
-    missingAttributes?: ReadonlyArray<aria.Attribute.Name>
+    missingAttributes?: ReadonlyArray<aria.Attribute.Name>,
   ): Diagnostic {
     return role === undefined
       ? Diagnostic.of(message)
@@ -115,7 +115,7 @@ export class RoleAndRequiredAttributes extends Diagnostic {
           role,
           // Presence is ensured by the overload
           requiredAttributes!,
-          missingAttributes!
+          missingAttributes!,
         );
   }
 
@@ -127,7 +127,7 @@ export class RoleAndRequiredAttributes extends Diagnostic {
     message: string,
     role: Role.Name,
     requiredAttributes: ReadonlyArray<aria.Attribute.Name>,
-    missingAttributes: ReadonlyArray<aria.Attribute.Name>
+    missingAttributes: ReadonlyArray<aria.Attribute.Name>,
   ) {
     super(message);
     this._role = role;
@@ -193,16 +193,16 @@ export namespace RoleAndRequiredAttributes {
   }
 
   export function isRoleAndRequiredAttributes(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is RoleAndRequiredAttributes;
 
   export function isRoleAndRequiredAttributes(
-    value: unknown
+    value: unknown,
   ): value is RoleAndRequiredAttributes;
 
   /**@public */
   export function isRoleAndRequiredAttributes(
-    value: unknown
+    value: unknown,
   ): value is RoleAndRequiredAttributes {
     return value instanceof RoleAndRequiredAttributes;
   }
@@ -215,33 +215,33 @@ export namespace Outcomes {
   export const HasAllStates = (
     role: Role.Name,
     required: ReadonlyArray<aria.Attribute.Name>,
-    missing: ReadonlyArray<aria.Attribute.Name>
+    missing: ReadonlyArray<aria.Attribute.Name>,
   ) =>
     Ok.of(
       RoleAndRequiredAttributes.of(
         "The element has all required states and properties",
         role,
         required,
-        missing
-      )
+        missing,
+      ),
     );
 
   export const HasNotAllStates = (
     role: Role.Name,
     required: ReadonlyArray<aria.Attribute.Name>,
-    missing: ReadonlyArray<aria.Attribute.Name>
+    missing: ReadonlyArray<aria.Attribute.Name>,
   ) =>
     Err.of(
       RoleAndRequiredAttributes.of(
         "The element does not have all required states and properties",
         role,
         required,
-        missing
-      )
+        missing,
+      ),
     );
 
   // This should never happen
   export const RuleError = Err.of(
-    RoleAndRequiredAttributes.of("", "generic", [], [])
+    RoleAndRequiredAttributes.of("", "generic", [], []),
   );
 }

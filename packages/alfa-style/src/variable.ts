@@ -37,13 +37,13 @@ export namespace Variable {
     declarations: Array<Declaration>,
     shouldOverride: <T>(
       previous: Option<Value<T>>,
-      next: Declaration
-    ) => boolean
+      next: Declaration,
+    ) => boolean,
   ): DefinitionMap {
     let currentVariables: DefinitionMap = Map.empty();
 
     for (const declaration of declarations.filter((declaration) =>
-      declaration.name.startsWith("--")
+      declaration.name.startsWith("--"),
     )) {
       const { name, value } = declaration;
       const previous = currentVariables.get(name);
@@ -51,7 +51,7 @@ export namespace Variable {
       if (shouldOverride(previous, declaration)) {
         currentVariables = currentVariables.set(
           name,
-          Value.of(Lexer.lex(value), Option.of(declaration))
+          Value.of(Lexer.lex(value), Option.of(declaration)),
         );
       }
     }
@@ -105,7 +105,7 @@ export namespace Variable {
     name: string,
     variables: DefinitionMap,
     fallback: Option<Slice<Token>> = None,
-    visited = Set.empty<string>()
+    visited = Set.empty<string>(),
   ): Option<Slice<Token>> {
     return (
       // If the variable is defined on the current definition map, get its value
@@ -128,9 +128,9 @@ export namespace Variable {
             // value. This substitution happens in the current style's context.
             .flatMap((tokens) =>
               substitute(tokens, variables, visited.add(name)).map(
-                ([tokens]) => tokens
-              )
-            )
+                ([tokens]) => tokens,
+              ),
+            ),
         )
     );
   }
@@ -158,7 +158,7 @@ export namespace Variable {
   export function substitute(
     tokens: Slice<Token>,
     variables: DefinitionMap,
-    visited = Set.empty<string>()
+    visited = Set.empty<string>(),
   ): Option<[tokens: Slice<Token>, substituted: boolean]> {
     const replaced: Array<Token> = [];
 
@@ -224,9 +224,9 @@ export namespace Variable {
       map(
         delimited(
           option(Token.parseWhitespace),
-          Token.parseIdent((ident) => ident.value.startsWith("--"))
+          Token.parseIdent((ident) => ident.value.startsWith("--")),
         ),
-        (ident) => ident.value
+        (ident) => ident.value,
       ),
       left(
         option(
@@ -234,12 +234,12 @@ export namespace Variable {
             pair(Token.parseComma, option(Token.parseWhitespace)),
             map(
               takeUntil(Component.consume, Token.parseCloseParenthesis),
-              (components) => Slice.of([...Iterable.flatten(components)])
-            )
-          )
+              (components) => Slice.of([...Iterable.flatten(components)]),
+            ),
+          ),
         ),
-        Token.parseCloseParenthesis
-      )
-    )
+        Token.parseCloseParenthesis,
+      ),
+    ),
   );
 }

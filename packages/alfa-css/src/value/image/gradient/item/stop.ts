@@ -15,11 +15,11 @@ const { either, pair, map, left, right } = Parser;
  */
 export class Stop<
   C extends Color = Color,
-  P extends LengthPercentage = LengthPercentage
+  P extends LengthPercentage = LengthPercentage,
 > extends Value<"stop", Value.HasCalculation<[C, P]>> {
   public static of<C extends Color, P extends LengthPercentage>(
     color: C,
-    position: Option<P> = None
+    position: Option<P> = None,
   ): Stop<C, P> {
     return new Stop(color, position);
   }
@@ -33,7 +33,7 @@ export class Stop<
       (Value.hasCalculation(color) ||
         position
           .map(Value.hasCalculation)
-          .getOr(false)) as Value.HasCalculation<[C, P]>
+          .getOr(false)) as Value.HasCalculation<[C, P]>,
     );
     this._color = color;
     this._position = position;
@@ -50,7 +50,7 @@ export class Stop<
   public resolve(resolver: Stop.Resolver): Stop.Canonical {
     return new Stop(
       this._color.resolve(),
-      this._position.map(LengthPercentage.resolve(resolver))
+      this._position.map(LengthPercentage.resolve(resolver)),
     );
   }
 
@@ -99,12 +99,12 @@ export namespace Stop {
   export type PartialResolver = LengthPercentage.PartialResolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Stop) => PartiallyResolved {
     return (value) =>
       Stop.of(
         value.color.resolve(),
-        value.position.map(LengthPercentage.partiallyResolve(resolver))
+        value.position.map(LengthPercentage.partiallyResolve(resolver)),
       );
   }
 
@@ -121,15 +121,15 @@ export namespace Stop {
       (result) => {
         const [color, position] = result;
         return Stop.of(color, Option.of(position));
-      }
+      },
     ),
     map(
       pair(LengthPercentage.parse, right(Token.parseWhitespace, Color.parse)),
       (result) => {
         const [position, color] = result;
         return Stop.of(color, Option.of(position));
-      }
+      },
     ),
-    map(Color.parse, (color) => Stop.of(color))
+    map(Color.parse, (color) => Stop.of(color)),
   );
 }

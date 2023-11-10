@@ -51,7 +51,7 @@ export const Nil: Nil = new (class Nil {
   public reduceWhile<U>(
     predicate: unknown,
     reducer: unknown,
-    accumulator: U
+    accumulator: U,
   ): U {
     return accumulator;
   }
@@ -59,7 +59,7 @@ export const Nil: Nil = new (class Nil {
   public reduceUntil<U>(
     predicate: unknown,
     reducer: unknown,
-    accumulator: U
+    accumulator: U,
   ): U {
     return accumulator;
   }
@@ -254,14 +254,14 @@ export const Nil: Nil = new (class Nil {
 
   public compare<T>(
     this: Sequence<Comparable<T>>,
-    iterable: Iterable<T>
+    iterable: Iterable<T>,
   ): Comparison {
     return this.compareWith(iterable, Comparable.compare);
   }
 
   public compareWith<T, U = T>(
     iterable: Iterable<U>,
-    comparer: Comparer<T, U, [index: number]>
+    comparer: Comparer<T, U, [index: number]>,
   ): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
   }

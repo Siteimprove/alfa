@@ -17,7 +17,7 @@ for (const box of ["block", "inline"] as const) {
 
       h.document(
         [element],
-        [h.sheet([h.rule.style("div", [h.declaration(property, "red")])])]
+        [h.sheet([h.rule.style("div", [h.declaration(property, "red")])])],
       );
 
       t.deepEqual(cascaded(element, property), {
@@ -35,7 +35,7 @@ for (const box of ["block", "inline"] as const) {
 
       h.document(
         [element],
-        [h.sheet([h.rule.style("div", [h.declaration(property, "red")])])]
+        [h.sheet([h.rule.style("div", [h.declaration(property, "red")])])],
       );
 
       const style = Style.from(element, device);

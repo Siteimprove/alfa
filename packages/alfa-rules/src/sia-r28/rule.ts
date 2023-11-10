@@ -31,8 +31,8 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             hasNamespace(Namespace.HTML),
             hasInputType("image"),
-            isIncludedInTheAccessibilityTree(device)
-          )
+            isIncludedInTheAccessibilityTree(device),
+          ),
         );
       },
 
@@ -42,10 +42,10 @@ export default Rule.Atomic.of<Page, Element>({
             test(
               // Rejecting default name
               hasAccessibleName(device, (name) => name.source.length !== 0),
-              target
+              target,
             ),
             () => Outcomes.HasAccessibleName,
-            () => Outcomes.HasNoAccessibleName
+            () => Outcomes.HasNoAccessibleName,
           ),
         };
       },
@@ -58,12 +58,14 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const HasAccessibleName = Ok.of(
-    Diagnostic.of(`The \`<input type="image">\` element has an accessible name`)
+    Diagnostic.of(
+      `The \`<input type="image">\` element has an accessible name`,
+    ),
   );
 
   export const HasNoAccessibleName = Err.of(
     Diagnostic.of(
-      `The \`<input type="image">\` element does not have an accessible name`
-    )
+      `The \`<input type="image">\` element does not have an accessible name`,
+    ),
   );
 }

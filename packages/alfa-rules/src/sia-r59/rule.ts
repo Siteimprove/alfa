@@ -32,14 +32,14 @@ export default Rule.Atomic.of<Page, Document>({
 
       expectations(target) {
         const hasHeadings = getElementDescendants(target, Node.flatTree).some(
-          and(hasNamespace(Namespace.HTML), hasRole(device, "heading"))
+          and(hasNamespace(Namespace.HTML), hasRole(device, "heading")),
         );
 
         return {
           1: expectation(
             hasHeadings,
             () => Outcomes.HasOneHeading,
-            () => Outcomes.HasNoHeadings
+            () => Outcomes.HasNoHeadings,
           ),
         };
       },
@@ -52,10 +52,10 @@ export default Rule.Atomic.of<Page, Document>({
  */
 export namespace Outcomes {
   export const HasOneHeading = Ok.of(
-    Diagnostic.of(`The document has at least one heading element`)
+    Diagnostic.of(`The document has at least one heading element`),
   );
 
   export const HasNoHeadings = Err.of(
-    Diagnostic.of(`The document does not have a heading element`)
+    Diagnostic.of(`The document does not have a heading element`),
   );
 }

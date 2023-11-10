@@ -13,6 +13,6 @@ test("#tokens() parses a space separated token list", (t) => {
 
   t.deepEqual(
     [...h.attribute("foo", "foo  bar\tbaz").tokens()],
-    ["foo", "bar", "baz"]
+    ["foo", "bar", "baz"],
   );
 });

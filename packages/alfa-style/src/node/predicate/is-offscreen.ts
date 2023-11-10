@@ -21,7 +21,7 @@ const cache = Cache.empty<Device, Cache<Context, Cache<Node, boolean>>>();
  */
 export function isOffscreen(
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Node> {
   return function isOffscreen(node): boolean {
     return cache
@@ -81,8 +81,8 @@ function isOnscreenLayout(element: Element, device: Device): boolean {
     // the needed horizontal scrolling.
     and(
       hasBox((box) => box.intersects(scrollableQuadrant), device),
-      hasPositioningParent(device, isOnscreenAndScrolling(device))
-    )
+      hasPositioningParent(device, isOnscreenAndScrolling(device)),
+    ),
   )(element);
 }
 
@@ -109,12 +109,12 @@ function isOnscreenAndScrolling(device: Device): Predicate<Element> {
             "overflow-x",
             (overflow) =>
               ["auto", "scroll", "visible"].includes(overflow.value),
-            device
-          )
+            device,
+          ),
         ),
         // Otherwise, jump to the positioning parent and try again.
-        hasPositioningParent(device, predicate)
-      )(element)
+        hasPositioningParent(device, predicate),
+      )(element),
     );
   };
 }

@@ -304,7 +304,7 @@ test("parse() accepts calculation in translateZ function", (t) => {
 
 test("parse() accepts calculation in translate3d function", (t) => {
   const actual = serialize(
-    "translate3d(calc(2px + 10%), calc(1em + 1px), calc(1em * 2))"
+    "translate3d(calc(2px + 10%), calc(1em + 1px), calc(1em * 2))",
   );
 
   t.deepEqual(actual, {
@@ -370,13 +370,13 @@ test("parse() accepts calculation in translate3d function", (t) => {
 
 test("resolve() resolves a Translate", (t) => {
   const actual = parserUnsafe(Translate.parse)(
-    "translate3d(calc(2px + 10%), calc(1em + 1px), calc(1em * 2))"
+    "translate3d(calc(2px + 10%), calc(1em + 1px), calc(1em * 2))",
   ).resolve({
     length: Length.resolver(
       Length.of(16, "px"),
       Length.of(16, "px"),
       Length.of(16, "px"),
-      Length.of(16, "px")
+      Length.of(16, "px"),
     ),
     percentageBase: Length.of(10, "px"),
   });

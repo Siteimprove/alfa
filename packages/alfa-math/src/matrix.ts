@@ -15,7 +15,7 @@ export namespace Matrix {
     return (
       Array.isArray(value) &&
       value.every(
-        (r) => Array.isArray(r) && r.every((v) => typeof v === "number")
+        (r) => Array.isArray(r) && r.every((v) => typeof v === "number"),
       )
     );
   }
@@ -34,7 +34,7 @@ export namespace Matrix {
       m.every(
         (r, i) =>
           r.length === n[i].length &&
-          r.every((v, j) => Real.equals(v, n[i][j], e))
+          r.every((v, j) => Real.equals(v, n[i][j], e)),
       )
     );
   }
@@ -83,8 +83,8 @@ export namespace Matrix {
       ? m.map((r) => r.map((v) => v * n))
       : m.map((r, i) =>
           n[0].map((_, j) =>
-            r.reduce((s, _, k) => s + m[i][k] * n?.[k]?.[j], 0)
-          )
+            r.reduce((s, _, k) => s + m[i][k] * n?.[k]?.[j], 0),
+          ),
         );
   }
 
@@ -162,8 +162,8 @@ export namespace Matrix {
         .map((r) =>
           r
             // Remove the j-th column
-            .filter((_, l) => l !== j)
-        )
+            .filter((_, l) => l !== j),
+        ),
     );
   }
 

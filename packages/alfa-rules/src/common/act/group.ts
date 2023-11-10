@@ -41,7 +41,7 @@ export class Group<T extends Hashable>
       value instanceof Group &&
       value._members.length === this._members.length &&
       value._members.every((member, i) =>
-        Equatable.equals(member, this._members[i])
+        Equatable.equals(member, this._members[i]),
       )
     );
   }
@@ -64,7 +64,7 @@ export class Group<T extends Hashable>
       "@type": ["ptr:Pointer", "ptr:PointersGroup", "ptr:RelatedPointers"],
       "ptr:groupPointer": {
         "@list": Array.collect(this._members, (member) =>
-          earl.Serializable.toEARL(member)
+          earl.Serializable.toEARL(member),
         ),
       },
     };
@@ -75,9 +75,9 @@ export class Group<T extends Hashable>
       logicalLocations: Array.flatMap(this._members, (member) =>
         sarif.Serializable.toSARIF(member)
           .map(
-            (location) => (location as sarif.Location).logicalLocations ?? []
+            (location) => (location as sarif.Location).logicalLocations ?? [],
           )
-          .getOr([])
+          .getOr([]),
       ),
     };
   }
@@ -100,7 +100,7 @@ export namespace Group {
   }
 
   export function isGroup<T extends Hashable>(
-    value: unknown
+    value: unknown,
   ): value is Group<T> {
     return value instanceof Group;
   }

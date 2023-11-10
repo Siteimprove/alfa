@@ -35,11 +35,11 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               hasName("iframe"),
               hasNamespace(Namespace.HTML),
               isIncludedInTheAccessibilityTree(device),
-              hasNonEmptyAccessibleName(device)
-            )
+              hasNonEmptyAccessibleName(device),
+            ),
           )
           .groupBy((iframe) =>
-            Node.from(iframe, device).name.map((name) => normalize(name.value))
+            Node.from(iframe, device).name.map((name) => normalize(name.value)),
           )
           .filter((elements) => elements.size > 1)
           .map(Group.of)
@@ -53,7 +53,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             i === 0 ||
             // ...or an element that embeds the same resource as the element
             // before it.
-            referenceSameResource(response.url)(element, elements[i - 1])
+            referenceSameResource(response.url)(element, elements[i - 1]),
         );
 
         return {
@@ -64,14 +64,14 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               Question.of(
                 "reference-equivalent-resources",
                 target,
-                "Do the <iframe> elements embed equivalent resources?"
+                "Do the <iframe> elements embed equivalent resources?",
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
                   () => Outcomes.EmbedEquivalentResources,
-                  () => Outcomes.EmbedDifferentResources
-                )
-              )
+                  () => Outcomes.EmbedDifferentResources,
+                ),
+              ),
           ),
         };
       },
@@ -84,16 +84,16 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
  */
 export namespace Outcomes {
   export const EmbedSameResources = Ok.of(
-    Diagnostic.of(`The \`<iframe>\` elements embed the same resource`)
+    Diagnostic.of(`The \`<iframe>\` elements embed the same resource`),
   );
 
   export const EmbedEquivalentResources = Ok.of(
-    Diagnostic.of(`The \`<iframe>\` elements embed equivalent resources`)
+    Diagnostic.of(`The \`<iframe>\` elements embed equivalent resources`),
   );
 
   export const EmbedDifferentResources = Err.of(
     Diagnostic.of(
-      `The \`<iframe>\` elements do not embed the same or equivalent resources`
-    )
+      `The \`<iframe>\` elements do not embed the same or equivalent resources`,
+    ),
   );
 }

@@ -13,6 +13,6 @@ export namespace Comma {
    */
   export const parse = delimited(
     option(Token.parseWhitespace),
-    Token.parseComma
+    Token.parseComma,
   );
 }

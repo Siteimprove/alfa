@@ -36,7 +36,7 @@ test("#map() does not run a suspended trampolined computation", (t) => {
 
 test("#flatMap() applies a function to the result of a trampolined computation and flattens the result", (t) => {
   const n = Trampoline.delay(() => 42).flatMap((n) =>
-    Trampoline.delay(() => n.toString())
+    Trampoline.delay(() => n.toString()),
   );
 
   t.equal(n.run(), "42");
@@ -77,7 +77,7 @@ test("#flatMap() does not overflow for long nested delay() chains", (t) => {
   function count(n: number, i = 0): Trampoline<number> {
     const t = Trampoline.delay(() => i);
     return t.flatMap((i) =>
-      i === n ? t : count(n, i + 1).flatMap((i) => count(n, i))
+      i === n ? t : count(n, i + 1).flatMap((i) => count(n, i)),
     );
   }
 

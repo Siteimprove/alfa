@@ -43,18 +43,18 @@ export default Rule.Atomic.of<Page, Attribute>({
                   "autocomplete",
                   (autocomplete) =>
                     normalize(autocomplete) !== "on" &&
-                    normalize(autocomplete) !== "off"
+                    normalize(autocomplete) !== "off",
                 ),
                 or(
                   isTabbable(device),
-                  hasRole(device, (role) => role.isWidget())
+                  hasRole(device, (role) => role.isWidget()),
                 ),
                 isPerceivableForAll(device),
                 (element) =>
                   Node.from(element, device)
                     .attribute("aria-disabled")
-                    .none((disabled) => disabled.value === "true")
-              )
+                    .none((disabled) => disabled.value === "true"),
+              ),
             )
             // The big second filter ensure that autocomplete exists
             .map((element) => element.attribute("autocomplete").getUnsafe())
@@ -66,7 +66,7 @@ export default Rule.Atomic.of<Page, Attribute>({
           1: expectation(
             isValidAutocomplete(target),
             () => Outcomes.HasValidValue,
-            () => Outcomes.HasNoValidValue
+            () => Outcomes.HasNoValidValue,
           ),
         };
       },
@@ -93,14 +93,14 @@ const isValidAutocomplete: Predicate<Attribute> = (autocomplete) => {
         // 3.
         either(
           unmodifiable, // 3.a
-          right(option(modifier) /*3.b.1*/, modifiable /*3.b.2*/)
+          right(option(modifier) /*3.b.1*/, modifiable /*3.b.2*/),
         ),
         right(
           option(webauthn), // 4.
-          end((token) => `Expected EOF, but got ${token}`)
-        )
-      )
-    )
+          end((token) => `Expected EOF, but got ${token}`),
+        ),
+      ),
+    ),
   );
 
   return parse(Slice.of(tokens)).isOk();
@@ -168,7 +168,7 @@ const modifiables = Array.from([
 const modifiers = Array.from(["home", "work", "mobile", "fax", "pager"]);
 
 const parseFirst: Parser<Slice<string>, string, string> = (
-  input: Slice<string>
+  input: Slice<string>,
 ) =>
   input
     .first()
@@ -176,12 +176,12 @@ const parseFirst: Parser<Slice<string>, string, string> = (
     .getOr(Err.of("No token left"));
 
 function parserOf(
-  tokens: Array<string>
+  tokens: Array<string>,
 ): Parser<Slice<string>, string, string> {
   return parseIf(
     (token): token is string => tokens.includes(token),
     parseFirst,
-    (token) => `Expected valid token, but got ${token}`
+    (token) => `Expected valid token, but got ${token}`,
   );
 }
 
@@ -190,7 +190,7 @@ const unmodifiable = parserOf(unmodifiables);
 const section: Parser<Slice<string>, string, string> = parseIf(
   (token): token is string => token.startsWith("section-"),
   parseFirst,
-  (token) => `Expected token beginning with \`section-\`, but got ${token}`
+  (token) => `Expected token beginning with \`section-\`, but got ${token}`,
 );
 const modifiable = parserOf(modifiables);
 const modifier = parserOf(modifiers);
@@ -201,9 +201,9 @@ const webauthn = parserOf(["webauthn"]);
  */
 export namespace Outcomes {
   export const HasValidValue = Ok.of(
-    Diagnostic.of(`The \`autocomplete\` attribute has a valid value`)
+    Diagnostic.of(`The \`autocomplete\` attribute has a valid value`),
   );
   export const HasNoValidValue = Err.of(
-    Diagnostic.of(`The \`autocomplete\` attribute does not have a valid value`)
+    Diagnostic.of(`The \`autocomplete\` attribute does not have a valid value`),
   );
 }

@@ -13,7 +13,7 @@ const parse = map(
     takeBetween(
       delimited(option(Token.parseWhitespace), LengthPercentage.parse),
       1,
-      4
+      4,
     ),
     option(
       right(
@@ -21,10 +21,10 @@ const parse = map(
         takeBetween(
           delimited(option(Token.parseWhitespace), LengthPercentage.parse),
           1,
-          4
-        )
-      )
-    )
+          4,
+        ),
+      ),
+    ),
   ),
   ([horizontal, vertical]) => {
     const [tlh, trh = tlh, brh = tlh, blh = trh] = horizontal;
@@ -46,7 +46,7 @@ const parse = map(
       Tuple.of(brh, brv),
       Tuple.of(blh, blv),
     ] as const;
-  }
+  },
 );
 
 export default Shorthand.of(
@@ -61,5 +61,5 @@ export default Shorthand.of(
     ["border-top-right-radius", topRight],
     ["border-bottom-right-radius", bottomRight],
     ["border-bottom-left-radius", bottomLeft],
-  ])
+  ]),
 );

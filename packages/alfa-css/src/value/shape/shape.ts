@@ -23,11 +23,11 @@ const { either } = Parser;
  */
 export class Shape<
   S extends Shape.Basic = Shape.Basic,
-  B extends Box.Geometry = Box.Geometry
+  B extends Box.Geometry = Box.Geometry,
 > extends Value<"shape", Value.HasCalculation<[S]>> {
   public static of<
     S extends Shape.Basic = Shape.Basic,
-    B extends Box.Geometry = Box.Geometry
+    B extends Box.Geometry = Box.Geometry,
   >(shape: S, box: B): Shape<S, B> {
     return new Shape(shape, box);
   }
@@ -128,7 +128,7 @@ export namespace Shape {
       Rectangle.Resolver;
 
     export function partiallyResolve(
-      resolver: PartialResolver
+      resolver: PartialResolver,
     ): (value: Basic) => PartiallyResolved {
       return (value) =>
         Selective.of(value)
@@ -165,7 +165,7 @@ export namespace Shape {
   export type PartialResolver = Basic.PartialResolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Shape) => PartiallyResolved {
     return (value) =>
       Shape.of(Basic.partiallyResolve(resolver)(value.shape), value.box);
@@ -176,7 +176,7 @@ export namespace Shape {
    * This does not parse the deprecated `rect()` shape.
    */
   export const parse: CSSParser<Shape<Circle | Ellipse | Inset | Polygon>> = (
-    input
+    input,
   ) => {
     let shape: Circle | Ellipse | Inset | Polygon | undefined;
     let box: Box.Geometry | undefined;

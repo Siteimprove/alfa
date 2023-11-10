@@ -26,14 +26,14 @@ export function validateWorkspaceTsconfig({
       if (packageJson[depType]?.[dependency].startsWith("workspace")) {
         internalDependencies.push(
           // Keep everything between last / and end of line.
-          dependency.replace(/.*\/(?<name>[a-z\-]*)$/, "$1")
+          dependency.replace(/.*\/(?<name>[a-z\-]*)$/, "$1"),
         );
       }
     }
   }
 
   const tsconfig = JSON.parse(
-    fs.readFileSync(path.join(dir, "tsconfig.json"), "utf-8")
+    fs.readFileSync(path.join(dir, "tsconfig.json"), "utf-8"),
   );
   const references = (tsconfig?.references ?? [])
     // Keep everything between last / and end of line.
@@ -43,7 +43,7 @@ export function validateWorkspaceTsconfig({
   for (const dependency of internalDependencies) {
     if (!references.includes(dependency)) {
       errors.push(
-        `${name}: dependency ${dependency} is not referenced from tsconfig.json`
+        `${name}: dependency ${dependency} is not referenced from tsconfig.json`,
       );
     }
   }
@@ -51,7 +51,7 @@ export function validateWorkspaceTsconfig({
   for (const reference of references) {
     if (!internalDependencies.includes(reference)) {
       errors.push(
-        `${name}: reference ${reference} from tsconfig.json is not a dependency.`
+        `${name}: reference ${reference} from tsconfig.json is not a dependency.`,
       );
     }
   }

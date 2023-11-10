@@ -64,7 +64,7 @@ export namespace Real {
   export function equals(
     a: number,
     b: number,
-    e: number = Number.EPSILON
+    e: number = Number.EPSILON,
   ): boolean {
     if (a === b) {
       return true;

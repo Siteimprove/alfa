@@ -26,9 +26,9 @@ const parsePrelude: Parser<
     // only "normal" and "small-caps" are accepted in font…
     [
       "font-variant-caps",
-      Keyword<"normal"> | Keyword<"small-caps"> | Keyword<"initial">
+      Keyword<"normal"> | Keyword<"small-caps"> | Keyword<"initial">,
     ],
-    ["font-weight", Longhand.Parsed<typeof Weight> | Keyword<"initial">]
+    ["font-weight", Longhand.Parsed<typeof Weight> | Keyword<"initial">],
   ],
   string
 > = (input) => {
@@ -100,12 +100,12 @@ const parse = pair(
       option(
         right(
           delimited(option(Token.parseWhitespace), Token.parseDelim("/")),
-          LineHeight.parseBase
-        )
+          LineHeight.parseBase,
+        ),
       ),
-      delimited(option(Token.parseWhitespace), Family.parseBase)
-    )
-  )
+      delimited(option(Token.parseWhitespace), Family.parseBase),
+    ),
+  ),
 );
 
 /**
@@ -131,5 +131,5 @@ export default Shorthand.of(
     ["font-size", size],
     ["line-height", lineHeight.getOr(Keyword.of("initial"))],
     ["font-family", family],
-  ])
+  ]),
 );

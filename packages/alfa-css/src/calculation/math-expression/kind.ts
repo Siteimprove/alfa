@@ -30,7 +30,7 @@ export class Kind implements Equatable, Serializable {
       angle: 0,
       percentage: 0,
     }),
-    None
+    None,
   );
 
   private readonly _kinds: Kind.Map;
@@ -58,7 +58,7 @@ export class Kind implements Equatable, Serializable {
   public is(
     kind?: Kind.Base,
     value: number = 1,
-    hinted: boolean = kind === "percentage"
+    hinted: boolean = kind === "percentage",
   ): boolean {
     for (const entry of this._kinds) {
       // this is not the dimension we're looking for, and it has power 0.
@@ -107,10 +107,10 @@ export class Kind implements Equatable, Serializable {
 
     if (
       [a._kinds, b._kinds].some(
-        (kinds) => kinds.get("percentage").getOr(0) !== 0
+        (kinds) => kinds.get("percentage").getOr(0) !== 0,
       ) &&
       [a._kinds, b._kinds].some((kinds) =>
-        kinds.some((value, kind) => kind !== "percentage" && value !== 0)
+        kinds.some((value, kind) => kind !== "percentage" && value !== 0),
       )
     ) {
       for (const hint of ["length", "angle"] as const) {
@@ -153,10 +153,10 @@ export class Kind implements Equatable, Serializable {
         b._kinds.reduce(
           (kinds, value, kind) =>
             kinds.set(kind, kinds.get(kind).getOr(0) + value),
-          a._kinds
+          a._kinds,
         ),
-        a._hint
-      )
+        a._hint,
+      ),
     );
   }
 
@@ -167,9 +167,9 @@ export class Kind implements Equatable, Serializable {
     return new Kind(
       this._kinds.reduce(
         (kinds, value, kind) => kinds.set(kind, -1 * value),
-        this._kinds
+        this._kinds,
       ),
-      None
+      None,
     );
   }
 
@@ -182,10 +182,10 @@ export class Kind implements Equatable, Serializable {
         .set(
           hint,
           this._kinds.get(hint).getOr(0) +
-            this._kinds.get("percentage").getOr(0)
+            this._kinds.get("percentage").getOr(0),
         )
         .set("percentage", 0),
-      Option.of(hint)
+      Option.of(hint),
     );
   }
 

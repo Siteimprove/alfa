@@ -56,7 +56,8 @@ test(".parse() parses a polygon with a fill rule", (t) => {
 });
 
 test(".parse() fails when there is an odd number of coordinates", (t) => {
-  t.deepEqual(parseErr("polygon(1px 0px 1px 1px 0px)").isErr(), true);
+  t.deepEqual(parseErr("polygon(1px 0px 1px 1px 0px)").isErr(), true,
+  );
 });
 
 test(".parse() accepts calculated vertices", (t) => {

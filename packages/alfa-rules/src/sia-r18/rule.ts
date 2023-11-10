@@ -32,8 +32,8 @@ export default Rule.Atomic.of<Page, Attribute>({
           .filter(isIncludedInTheAccessibilityTree(device))
           .flatMap((element) =>
             Sequence.from(element.attributes).filter(
-              property("name", aria.Attribute.isName)
-            )
+              property("name", aria.Attribute.isName),
+            ),
           );
       },
 
@@ -46,23 +46,23 @@ export default Rule.Atomic.of<Page, Attribute>({
             global.has(target.name as aria.Attribute.Name) ||
               test(
                 hasRole(device, (role) =>
-                  role.isAttributeSupported(target.name as aria.Attribute.Name)
+                  role.isAttributeSupported(target.name as aria.Attribute.Name),
                 ),
-                owner
+                owner,
               ) ||
               ariaHtmlAllowed(target),
             () => Outcomes.IsAllowed,
-            () => Outcomes.IsNotAllowed
+            () => Outcomes.IsNotAllowed,
           ),
           2: expectation(
             test(
               hasRole(device, (role) =>
-                role.isAttributeProhibited(target.name as aria.Attribute.Name)
+                role.isAttributeProhibited(target.name as aria.Attribute.Name),
               ),
-              owner
+              owner,
             ),
             () => Outcomes.IsProhibited,
-            () => Outcomes.IsNotProhibited
+            () => Outcomes.IsNotProhibited,
           ),
         };
       },
@@ -86,7 +86,7 @@ function ariaHtmlAllowed(target: Attribute): boolean {
             "month",
             "password",
             "time",
-            "week"
+            "week",
           )(element) && Role.of("textbox").isAttributeSupported(attributeName)
         );
 
@@ -110,25 +110,25 @@ function ariaHtmlAllowed(target: Attribute): boolean {
 export namespace Outcomes {
   export const IsAllowed = Ok.of(
     Diagnostic.of(
-      `The attribute is allowed for the element on which it is specified`
-    )
+      `The attribute is allowed for the element on which it is specified`,
+    ),
   );
 
   export const IsNotAllowed = Err.of(
     Diagnostic.of(
-      `The attribute is not allowed for the element on which it is specified`
-    )
+      `The attribute is not allowed for the element on which it is specified`,
+    ),
   );
 
   export const IsProhibited = Err.of(
     Diagnostic.of(
-      `The attribute is prohibited for the element on which it is specified`
-    )
+      `The attribute is prohibited for the element on which it is specified`,
+    ),
   );
 
   export const IsNotProhibited = Ok.of(
     Diagnostic.of(
-      `The attribute is not prohibited for the element on which it is specified`
-    )
+      `The attribute is not prohibited for the element on which it is specified`,
+    ),
   );
 }

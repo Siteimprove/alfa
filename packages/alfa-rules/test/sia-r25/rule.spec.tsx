@@ -21,16 +21,16 @@ test(`evaluate() passes video with descriptive audio`, async (t) => {
         "is-video-streaming": false,
         "has-audio": true,
         "has-description": true,
-      })
+      }),
     ),
     [
       passed(
         R25,
         target,
         { 1: Outcomes.HasInformativeAudio },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -47,16 +47,16 @@ test(`evaluate() fails video without descriptive audio`, async (t) => {
         "is-video-streaming": false,
         "has-audio": true,
         "has-description": false,
-      })
+      }),
     ),
     [
       failed(
         R25,
         target,
         { 1: Outcomes.HasNoInformativeAudio },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -69,9 +69,9 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
     await evaluate(
       R25,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": true })
+      oracle({ "is-video-streaming": false, "has-audio": true }),
     ),
-    [cantTell(R25, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R25, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -92,8 +92,8 @@ test(`evaluate() is inapplicable to audio-less videos`, async (t) => {
     await evaluate(
       R25,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": false })
+      oracle({ "is-video-streaming": false, "has-audio": false }),
     ),
-    [inapplicable(R25, Outcome.Mode.SemiAuto)]
+    [inapplicable(R25, Outcome.Mode.SemiAuto)],
   );
 });

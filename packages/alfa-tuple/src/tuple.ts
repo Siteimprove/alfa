@@ -46,7 +46,7 @@ export namespace Tuple {
 
   export function forEach<T extends Tuple>(
     tuple: T,
-    callback: Callback<Item<T>, void, [index: number]>
+    callback: Callback<Item<T>, void, [index: number]>,
   ): void {
     Array.forEach(tuple, callback);
   }
@@ -57,7 +57,7 @@ export namespace Tuple {
 
   export function map<T extends Tuple, U>(
     tuple: T,
-    mapper: Mapper<Item<T>, U, [index: number]>
+    mapper: Mapper<Item<T>, U, [index: number]>,
   ): Map<T, U> {
     return Array.map(tuple, mapper) as unknown as Map<T, U>;
   }
@@ -65,7 +65,7 @@ export namespace Tuple {
   export function reduce<T extends Tuple, U>(
     tuple: T,
     reducer: Reducer<Item<T>, U, [index: number]>,
-    accumulator: U
+    accumulator: U,
   ): U {
     return Array.reduce(tuple, reducer, accumulator);
   }
@@ -74,7 +74,7 @@ export namespace Tuple {
     tuple: T,
     predicate: Predicate<Item<T>, [index: number]>,
     reducer: Reducer<Item<T>, U, [index: number]>,
-    accumulator: U
+    accumulator: U,
   ): U {
     return Array.reduceWhile(tuple, predicate, reducer, accumulator);
   }
@@ -83,14 +83,14 @@ export namespace Tuple {
     tuple: T,
     predicate: Predicate<Item<T>, [index: number]>,
     reducer: Reducer<Item<T>, U, [index: number]>,
-    accumulator: U
+    accumulator: U,
   ): U {
     return Array.reduceUntil(tuple, predicate, reducer, accumulator);
   }
 
   export type Filter<T extends Tuple, U extends Item<T>> = T extends readonly [
     infer H,
-    ...infer R
+    ...infer R,
   ]
     ? H extends U
       ? [H, ...Filter<R, U>]
@@ -99,17 +99,17 @@ export namespace Tuple {
 
   export function filter<T extends Tuple, U extends Item<T>>(
     tuple: T,
-    refinement: Refinement<Item<T>, U, [index: number]>
+    refinement: Refinement<Item<T>, U, [index: number]>,
   ): Filter<T, U>;
 
   export function filter<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): Array<Item<T>>;
 
   export function filter<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): Array<Item<T>> {
     return Array.filter(tuple, predicate);
   }
@@ -121,51 +121,51 @@ export namespace Tuple {
 
   export function reject<T extends Tuple, U extends Item<T>>(
     tuple: T,
-    refinement: Refinement<Item<T>, U, [index: number]>
+    refinement: Refinement<Item<T>, U, [index: number]>,
   ): Reject<T, U>;
 
   export function reject<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): Array<Item<T>>;
 
   export function reject<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): Array<Item<T>> {
     return Array.filter(tuple, predicate);
   }
 
   export function find<T extends Tuple, U extends Item<T>>(
     tuple: T,
-    refinement: Refinement<Item<T>, U, [index: number]>
+    refinement: Refinement<Item<T>, U, [index: number]>,
   ): Option<U>;
 
   export function find<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): Option<Item<T>>;
 
   export function find<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): Option<Item<T>> {
     return Array.find(tuple, predicate);
   }
 
   export function findLast<T extends Tuple, U extends Item<T>>(
     tuple: T,
-    refinement: Refinement<Item<T>, U, [index: number]>
+    refinement: Refinement<Item<T>, U, [index: number]>,
   ): Option<U>;
 
   export function findLast<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): Option<Item<T>>;
 
   export function findLast<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): Option<Item<T>> {
     return Array.findLast(tuple, predicate);
   }
@@ -176,42 +176,42 @@ export namespace Tuple {
 
   export function collect<T extends Tuple, U>(
     tuple: T,
-    mapper: Mapper<Item<T>, Option<U>, [index: number]>
+    mapper: Mapper<Item<T>, Option<U>, [index: number]>,
   ): Array<U> {
     return Array.collect(tuple, mapper);
   }
 
   export function collectFirst<T extends Tuple, U>(
     tuple: T,
-    mapper: Mapper<Item<T>, Option<U>, [index: number]>
+    mapper: Mapper<Item<T>, Option<U>, [index: number]>,
   ): Option<U> {
     return Array.collectFirst(tuple, mapper);
   }
 
   export function some<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): boolean {
     return Array.some(tuple, predicate);
   }
 
   export function none<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): boolean {
     return Array.none(tuple, predicate);
   }
 
   export function every<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): boolean {
     return Array.every(tuple, predicate);
   }
 
   export function count<T extends Tuple>(
     tuple: T,
-    predicate: Predicate<Item<T>, [index: number]>
+    predicate: Predicate<Item<T>, [index: number]>,
   ): number {
     return Array.count(tuple, predicate);
   }
@@ -221,7 +221,7 @@ export namespace Tuple {
   type GetInner<
     T extends Tuple,
     I extends number,
-    S extends Tuple
+    S extends Tuple,
   > = T extends readonly [infer H, ...infer R]
     ? I extends Size<S>
       ? H
@@ -230,7 +230,7 @@ export namespace Tuple {
 
   export function get<T extends Tuple, I extends number>(
     tuple: T,
-    index: I
+    index: I,
   ): Option<Get<T, I>> {
     return Array.get(tuple, index) as Option<Get<T, I>>;
   }
@@ -241,7 +241,7 @@ export namespace Tuple {
 
   export function has<T extends Tuple, I extends number>(
     tuple: T,
-    index: I
+    index: I,
   ): Has<T, I> {
     return Array.has(tuple, index) as Has<T, I>;
   }
@@ -257,7 +257,7 @@ export namespace Tuple {
     T extends Tuple,
     I extends number,
     V,
-    S extends Tuple
+    S extends Tuple,
   > = T extends readonly [infer H, ...infer R]
     ? I extends Size<S>
       ? [V, ...R]
@@ -267,7 +267,7 @@ export namespace Tuple {
   export function set<T extends Tuple, I extends number, V>(
     tuple: T,
     index: I,
-    value: V
+    value: V,
   ): Set<T, I, V> {
     return Array.set(copy(tuple), index, value) as Set<T, I, V>;
   }
@@ -283,7 +283,7 @@ export namespace Tuple {
     T extends Tuple,
     I extends number,
     V,
-    S extends Tuple
+    S extends Tuple,
   > = I extends Size<T>
     ? Append<T, V>
     : T extends readonly [infer H, ...infer R]
@@ -295,7 +295,7 @@ export namespace Tuple {
   export function insert<T extends Tuple, I extends number, V>(
     tuple: T,
     index: I,
-    value: V
+    value: V,
   ): Insert<T, I, V> {
     return Array.insert(copy(tuple), index, value) as Insert<T, I, V>;
   }
@@ -310,7 +310,7 @@ export namespace Tuple {
 
   export function prepend<T extends Tuple, V>(
     tuple: T,
-    value: V
+    value: V,
   ): Prepend<T, V> {
     return Array.prepend(copy(tuple), value) as unknown as Prepend<T, V>;
   }
@@ -338,7 +338,7 @@ export namespace Tuple {
   type TakeInner<
     T extends Tuple,
     N extends number,
-    A extends Tuple
+    A extends Tuple,
   > = T extends readonly [infer H, ...infer R]
     ? N extends Size<A>
       ? A
@@ -350,7 +350,7 @@ export namespace Tuple {
   type SkipInner<
     T extends Tuple,
     N extends number,
-    A extends Tuple
+    A extends Tuple,
   > = T extends readonly [infer H, ...infer R]
     ? N extends Size<A>
       ? T
@@ -363,7 +363,7 @@ export namespace Tuple {
 
   export type Reverse<T extends Tuple> = T extends readonly [
     infer H,
-    ...infer R
+    ...infer R,
   ]
     ? [...Reverse<R>, H]
     : Empty;
@@ -371,7 +371,7 @@ export namespace Tuple {
   export function search<T extends Tuple>(
     tuple: T,
     value: Item<T>,
-    comparer: Comparer<Item<T>>
+    comparer: Comparer<Item<T>>,
   ): number {
     return Array.search(tuple, value, comparer);
   }

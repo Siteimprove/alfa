@@ -19,7 +19,7 @@ test(".consume() parses whitespace", (t) => {
     consume(lex(" "))
       .map(([, component]) => component.toJSON())
       .getUnsafe(),
-    [{ type: "whitespace" }]
+    [{ type: "whitespace" }],
   );
 });
 
@@ -35,7 +35,7 @@ test(".consume() parses empty parenthesis block", (t) => {
       {
         type: "close-parenthesis",
       },
-    ]
+    ],
   );
 });
 
@@ -56,7 +56,7 @@ test(".consume() parses function", (t) => {
       {
         type: "close-parenthesis",
       },
-    ]
+    ],
   );
 });
 
@@ -78,6 +78,6 @@ test(".parse() parses leading whitespaces", (t) => {
       {
         type: "close-parenthesis",
       },
-    ]
+    ],
   );
 });

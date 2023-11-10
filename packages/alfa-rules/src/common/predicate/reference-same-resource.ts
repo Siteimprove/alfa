@@ -6,7 +6,7 @@ import { URL } from "@siteimprove/alfa-url";
  * Check if two elements reference the same resource.
  */
 export function referenceSameResource(
-  base: URL
+  base: URL,
 ): Predicate<Element, [Element]> {
   return (a, b) => {
     if (a.name === b.name) {
@@ -20,9 +20,9 @@ export function referenceSameResource(
                 b
                   .attribute("href")
                   .some((b) =>
-                    URL.parse(b.value, base).some((b) => a.equals(b))
-                  )
-              )
+                    URL.parse(b.value, base).some((b) => a.equals(b)),
+                  ),
+              ),
             );
 
         case "iframe":
@@ -30,7 +30,7 @@ export function referenceSameResource(
             a
               .attribute("srcdoc")
               .some((a) =>
-                b.attribute("srcdoc").some((b) => a.value === b.value)
+                b.attribute("srcdoc").some((b) => a.value === b.value),
               ) ||
             a
               .attribute("src")
@@ -39,9 +39,9 @@ export function referenceSameResource(
                   b
                     .attribute("src")
                     .some((b) =>
-                      URL.parse(b.value, base).some((b) => a.equals(b))
-                    )
-                )
+                      URL.parse(b.value, base).some((b) => a.equals(b)),
+                    ),
+                ),
               )
           );
       }

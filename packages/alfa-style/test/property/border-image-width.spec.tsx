@@ -11,7 +11,7 @@ function width(
   top: number,
   right?: number,
   bottom?: number,
-  left?: number
+  left?: number,
 ): Serializable.ToJSON<Width.Specified> {
   return {
     type: "tuple",

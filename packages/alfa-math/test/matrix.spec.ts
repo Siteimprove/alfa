@@ -36,12 +36,12 @@ test(".add() adds two matrices of equal size", (t) => {
       [
         [2, 3],
         [4, 5],
-      ]
+      ],
     ),
     [
       [3, 5],
       [7, 9],
-    ]
+    ],
   );
 });
 
@@ -55,12 +55,12 @@ test(".subtract() subtracts two matrices of equal size", (t) => {
       [
         [2, 3],
         [4, 5],
-      ]
+      ],
     ),
     [
       [6, 1],
       [-3, 4],
-    ]
+    ],
   );
 });
 
@@ -71,12 +71,12 @@ test(".multiply() multiplies a matrix and a scalar", (t) => {
         [8, 4],
         [1, 9],
       ],
-      2
+      2,
     ),
     [
       [16, 8],
       [2, 18],
-    ]
+    ],
   );
 });
 
@@ -91,12 +91,12 @@ test(".multiply() multiplies two matrices", (t) => {
         [8, 4],
         [1, 9],
         [7, 3],
-      ]
+      ],
     ),
     [
       [89, 77],
       [31, 91],
-    ]
+    ],
   );
 });
 
@@ -110,7 +110,7 @@ test(".transpose() computes the tranpose of a matrix", (t) => {
       [8, 1],
       [4, 9],
       [3, 2],
-    ]
+    ],
   );
 });
 
@@ -120,7 +120,7 @@ test(".determinant() computes the determinant of a square matrix", (t) => {
       [8, 4],
       [1, 9],
     ]),
-    68
+    68,
   );
 });
 

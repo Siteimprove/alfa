@@ -45,7 +45,7 @@ test(`evaluate() passes a document whose first tabbable link references an
       { document },
       oracle({
         "internal-reference": Option.of(main),
-      })
+      }),
     ),
     [
       passed(
@@ -54,9 +54,9 @@ test(`evaluate() passes a document whose first tabbable link references an
         {
           1: Outcomes.FirstTabbableIsLinkToContent,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -79,7 +79,7 @@ test(`evaluate() fails a document whose first tabbable link does not
       { document },
       oracle({
         "internal-reference": None,
-      })
+      }),
     ),
     [
       failed(
@@ -88,9 +88,9 @@ test(`evaluate() fails a document whose first tabbable link does not
         {
           1: Outcomes.FirstTabbableIsNotInternalLink,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -109,7 +109,7 @@ test(`evaluate() passes a document whose first tabbable link references an
       { document },
       oracle({
         "is-start-of-main": true,
-      })
+      }),
     ),
     [
       passed(
@@ -118,9 +118,9 @@ test(`evaluate() passes a document whose first tabbable link references an
         {
           1: Outcomes.FirstTabbableIsLinkToContent,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -144,7 +144,7 @@ test(`evaluate() passes a document whose first tabbable link references an
       oracle({
         "internal-reference": Option.of(main),
         "is-start-of-main": true,
-      })
+      }),
     ),
     [
       passed(
@@ -153,9 +153,9 @@ test(`evaluate() passes a document whose first tabbable link references an
         {
           1: Outcomes.FirstTabbableIsLinkToContent,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -258,7 +258,7 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
           opacity: "0",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(
@@ -267,7 +267,7 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
       { document },
       oracle({
         "is-visible-when-focused": false,
-      })
+      }),
     ),
     [
       failed(
@@ -276,9 +276,9 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
         {
           1: Outcomes.FirstTabbableIsNotVisible,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -296,7 +296,7 @@ test(`evaluate() passes a document whose first tabbable link is visible`, async 
           opacity: "0",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(
@@ -305,7 +305,7 @@ test(`evaluate() passes a document whose first tabbable link is visible`, async 
       { document },
       oracle({
         "is-visible-when-focused": true,
-      })
+      }),
     ),
     [
       passed(
@@ -314,9 +314,9 @@ test(`evaluate() passes a document whose first tabbable link is visible`, async 
         {
           1: Outcomes.FirstTabbableIsLinkToContent,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -334,7 +334,7 @@ test(`evaluate() can´t tell if the first tabbable link of a document is not vis
           opacity: "0",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(ER87, { document }), [cantTell(ER87, document)]);
@@ -359,7 +359,7 @@ test(`evaluate() passes a document whose first tabbable link is visible when
           opacity: "1",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(ER87, { document }), [

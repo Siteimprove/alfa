@@ -10,7 +10,8 @@ import { Expression } from "./expression";
  * @public
  */
 export class Builder<T extends Expression = Expression>
-  implements Equatable, Serializable {
+  implements Equatable, Serializable
+{
   public readonly expression: T;
 
   public constructor(expression: T) {
@@ -42,7 +43,7 @@ export namespace Builder {
   }
 
   function PathOperand<T extends Expression.Step | Expression.Path>(
-    Base: new (expression: T) => Builder<T>
+    Base: new (expression: T) => Builder<T>,
   ) {
     return class PathOperand extends Base {
       public child(name?: string): Path {
@@ -68,11 +69,11 @@ export namespace Builder {
   }
 
   export class ContextItem extends PathOperand<Expression.ContextItem>(
-    Builder
+    Builder,
   ) {
     public where(predicate: Builder): Filter {
       return new Filter(
-        Expression.Filter.of(this.expression, [predicate.expression])
+        Expression.Filter.of(this.expression, [predicate.expression]),
       );
     }
   }
@@ -83,7 +84,7 @@ export namespace Builder {
         Expression.Filter.of(this.expression.base, [
           ...this.expression.predicates,
           predicate.expression,
-        ])
+        ]),
       );
     }
   }
@@ -94,7 +95,7 @@ export namespace Builder {
         Expression.Axis.of(this.expression.axis, this.expression.test, [
           ...this.expression.predicates,
           predicate.expression,
-        ])
+        ]),
       );
     }
   }
@@ -111,16 +112,16 @@ export namespace Builder {
             Expression.Filter.of(this.expression.right, [
               ...this.expression.right.predicates,
               predicate.expression,
-            ])
-          )
+            ]),
+          ),
         );
       }
 
       return new Path(
         Expression.Path.of(
           this.expression.left,
-          Expression.Filter.of(this.expression.right, [predicate.expression])
-        )
+          Expression.Filter.of(this.expression.right, [predicate.expression]),
+        ),
       );
     }
   }
@@ -143,8 +144,8 @@ export function axis(axis: Expression.Axis.Type, name?: string): Builder.Axis {
       name === undefined
         ? None
         : Option.of(Expression.Test.Name.of(None, name)),
-      []
-    )
+      [],
+    ),
   );
 }
 
@@ -182,10 +183,10 @@ export namespace axis {
  */
 export function step(
   left: Builder<Expression.Step | Expression.Path>,
-  right: Builder<Expression.Step>
+  right: Builder<Expression.Step>,
 ): Builder.Path {
   return new Builder.Path(
-    Expression.Path.of(left.expression, right.expression)
+    Expression.Path.of(left.expression, right.expression),
   );
 }
 

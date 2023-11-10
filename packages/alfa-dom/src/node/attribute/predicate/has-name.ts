@@ -7,7 +7,7 @@ import { Attribute } from "../../attribute";
  * @public
  */
 export function hasName<N extends string = string>(
-  predicate: Refinement<string, N>
+  predicate: Refinement<string, N>,
 ): Refinement<Attribute, Attribute<N>>;
 
 /**
@@ -31,7 +31,7 @@ export function hasName(
 
     predicate = (name, attribute) =>
       names.some(
-        (candidate) => Attribute.foldCase(candidate, attribute.owner) === name
+        (candidate) => Attribute.foldCase(candidate, attribute.owner) === name,
       );
   }
 

@@ -32,14 +32,14 @@ export class Block implements Iterable<Declaration>, Equatable, Serializable {
   }
 
   public declaration(
-    predicate: string | Predicate<Declaration>
+    predicate: string | Predicate<Declaration>,
   ): Option<Declaration> {
     return Option.from(
       this._declarations.find(
         typeof predicate === "string"
           ? (declaration) => declaration.name === predicate
-          : predicate
-      )
+          : predicate,
+      ),
     );
   }
 
@@ -48,7 +48,7 @@ export class Block implements Iterable<Declaration>, Equatable, Serializable {
       value instanceof Block &&
       value._declarations.length === this._declarations.length &&
       value._declarations.every((declaration, i) =>
-        declaration.equals(this._declarations[i])
+        declaration.equals(this._declarations[i]),
       )
     );
   }

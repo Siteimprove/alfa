@@ -38,14 +38,14 @@ export default Rule.Atomic.of<Page, Element>({
               hasName("meta"),
               hasAttribute(
                 "http-equiv",
-                (value) => value.toLowerCase() === "refresh"
+                (value) => value.toLowerCase() === "refresh",
               ),
               hasAttribute("content", (value) =>
                 getRefreshTime(value)
                   .map((time) => (refreshTime = time))
-                  .isSome()
-              )
-            )
+                  .isSome(),
+              ),
+            ),
           )
           .map((meta) => [meta])
           .getOr([]);
@@ -60,8 +60,8 @@ export default Rule.Atomic.of<Page, Element>({
               expectation(
                 refreshTime > 72000, // 20 hours = 20*60*60 seconds
                 () => Outcomes.HasTwentyHoursDelayedRefresh,
-                () => Outcomes.HasDelayedRefresh
-              )
+                () => Outcomes.HasDelayedRefresh,
+              ),
           ),
         };
       },

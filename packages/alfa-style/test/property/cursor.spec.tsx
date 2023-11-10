@@ -125,7 +125,7 @@ test("#cascaded() parses a long list", (t) => {
     source: h
       .declaration(
         "cursor",
-        "url(cursor_1.svg) 4 5, url(cursor_2.svg), url(cursor_3.cur) 5 5, progress"
+        "url(cursor_1.svg) 4 5, url(cursor_2.svg), url(cursor_3.cur) 5 5, progress",
       )
       .toJSON(),
   });

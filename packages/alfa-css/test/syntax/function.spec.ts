@@ -25,7 +25,7 @@ test(".consume() parses valid function declaration", (t) => {
           value: "--foo",
         },
       ],
-    }
+    },
   );
 });
 
@@ -42,6 +42,6 @@ test(".consume() parses function without closing parenthesis", (t) => {
           value: "--foo",
         },
       ],
-    }
+    },
   );
 });

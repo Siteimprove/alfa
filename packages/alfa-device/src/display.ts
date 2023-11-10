@@ -10,7 +10,7 @@ import * as json from "@siteimprove/alfa-json";
 export class Display implements Equatable, Hashable, Serializable {
   public static of(
     resolution: number,
-    scan: Display.Scan = Display.Scan.Progressive
+    scan: Display.Scan = Display.Scan.Progressive,
   ): Display {
     return new Display(resolution, scan);
   }

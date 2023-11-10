@@ -43,32 +43,32 @@ export class Role<N extends Role.Name = Role.Name>
       const inherited = Roles[name].inherited;
 
       const supportedAttributes = Set.from(
-        attributes.map(([attribute]) => attribute)
+        attributes.map(([attribute]) => attribute),
       ).concat(
-        inherited.flatMap((parent) => Role.of(parent).supportedAttributes)
+        inherited.flatMap((parent) => Role.of(parent).supportedAttributes),
       );
 
       const requiredAttributes = Set.from(
         Array.collect(attributes, ([attribute, { required }]) =>
-          required ? Option.of(attribute) : None
-        )
+          required ? Option.of(attribute) : None,
+        ),
       ).concat(
-        inherited.flatMap((parent) => Role.of(parent).requiredAttributes)
+        inherited.flatMap((parent) => Role.of(parent).requiredAttributes),
       );
 
       const prohibitedAttributes = Set.from(
         Array.collect(attributes, ([attribute, { prohibited }]) =>
-          prohibited ? Option.of(attribute) : None
-        )
+          prohibited ? Option.of(attribute) : None,
+        ),
       ).concat(
-        inherited.flatMap((parent) => Role.of(parent).prohibitedAttributes)
+        inherited.flatMap((parent) => Role.of(parent).prohibitedAttributes),
       );
 
       const role = new Role<N>(
         name,
         [...supportedAttributes],
         [...requiredAttributes],
-        [...prohibitedAttributes]
+        [...prohibitedAttributes],
       );
       roles = roles.set(name, role);
 
@@ -85,7 +85,7 @@ export class Role<N extends Role.Name = Role.Name>
     name: N,
     supportedAttributes: Array<Attribute.Name>,
     requiredAttributes: Array<Attribute.Name>,
-    prohibitedAttributes: Array<Attribute.Name>
+    prohibitedAttributes: Array<Attribute.Name>,
   ) {
     this._name = name;
     this._supportedAttributes = supportedAttributes;
@@ -143,7 +143,7 @@ export class Role<N extends Role.Name = Role.Name>
    * Check if this role is a superclass of the role with the specified name.
    */
   public isSuperclassOf<N extends Role.Name>(
-    name: N
+    name: N,
   ): this is Role<Role.SuperclassOf<N>> {
     const { inherited } = Roles[name];
 
@@ -160,7 +160,7 @@ export class Role<N extends Role.Name = Role.Name>
    * Check if this role is a subclass of the role with the specified name.
    */
   public isSubclassOf<N extends Role.Name>(
-    name: N
+    name: N,
   ): this is Role<Role.SubclassOf<N>> {
     return Role.of(name).isSuperclassOf(this._name);
   }
@@ -170,7 +170,7 @@ export class Role<N extends Role.Name = Role.Name>
    * specified name.
    */
   public is<N extends Role.Name>(
-    name: N
+    name: N,
   ): this is Role<N | Role.SubclassOf<N>> {
     return this.hasName(name) || this.isSubclassOf(name);
   }
@@ -391,7 +391,7 @@ export namespace Role {
 
   export function isRole<N extends Name>(
     value: unknown,
-    name?: N
+    name?: N,
   ): value is Role<Name> {
     return value instanceof Role && (name === undefined || value.name === name);
   }
@@ -426,7 +426,7 @@ export namespace Role {
         // If the element is not allowed to be presentational, reject all
         // presentational roles.
         .reject((role) =>
-          isAllowedPresentational(element) ? false : role.isPresentational()
+          isAllowedPresentational(element) ? false : role.isPresentational(),
         )
 
         .first()
@@ -444,11 +444,11 @@ export namespace Role {
           // If the element is not allowed to be presentational, reject all
           // presentational roles.
           .reject((role) =>
-            isAllowedPresentational(element) ? false : role.isPresentational()
+            isAllowedPresentational(element) ? false : role.isPresentational(),
           )
 
-          .first()
-      )
+          .first(),
+      ),
     );
   }
 
@@ -462,7 +462,7 @@ type Members<T> = T extends Iterable<infer T> ? T : never;
  */
 const hasGlobalAttributes: Predicate<Element> = (element) =>
   Iterable.some(Role.of("roletype").supportedAttributes, (attribute) =>
-    element.attribute(attribute).isSome()
+    element.attribute(attribute).isSome(),
   );
 
 /**
@@ -471,7 +471,7 @@ const hasGlobalAttributes: Predicate<Element> = (element) =>
  */
 const isPotentiallyFocusable: Predicate<Element> = and(
   Element.hasTabIndex(),
-  not(Element.isActuallyDisabled)
+  not(Element.isActuallyDisabled),
 );
 
 /**
@@ -479,5 +479,5 @@ const isPotentiallyFocusable: Predicate<Element> = and(
  */
 const isAllowedPresentational: Predicate<Element> = nor(
   hasGlobalAttributes,
-  isPotentiallyFocusable
+  isPotentiallyFocusable,
 );

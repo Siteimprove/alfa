@@ -38,7 +38,8 @@ test("parse() parses an inset with evenly rounded corners", (t) => {
         { type: "length", value: 1, unit: "px" },
       ],
     },
-  });
+  },
+  );
 });
 
 test("parse() parses an inset with unevenly rounded corners", (t) => {

@@ -27,10 +27,10 @@ export function isFallback(node: Node): boolean {
       hasParentName("iframe"),
       and(
         hasParentName("audio", "video"),
-        not(and(Element.isElement, hasName("track", "source")))
-      )
+        not(and(Element.isElement, hasName("track", "source"))),
+      ),
     ),
-    node
+    node,
   );
 }
 

@@ -70,7 +70,7 @@ export namespace Perspective {
   export type Resolver = Length.Resolver;
 
   export function isPerspective<D extends Length.Fixed>(
-    value: unknown
+    value: unknown,
   ): value is Perspective<D> {
     return value instanceof Perspective;
   }
@@ -85,9 +85,9 @@ export namespace Perspective {
         Length.parse,
         // {@link https://drafts.csswg.org/css-values/#calc-range}
         (length) => length.hasCalculation() || length.value >= 0,
-        () => "Depth cannot be less than 0"
-      )
+        () => "Depth cannot be less than 0",
+      ),
     ),
-    ([_, depth]) => Perspective.of(depth)
+    ([_, depth]) => Perspective.of(depth),
   );
 }

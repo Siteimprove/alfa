@@ -18,5 +18,5 @@ const parse = either(URL.parse, either(Shape.parse, Keyword.parse("none")));
 export default Longhand.of<Specified, Computed>(
   Keyword.of("none"),
   parse,
-  (value) => value
+  (value) => value,
 );

@@ -51,7 +51,7 @@ export namespace SupportsRule {
    */
   export function fromSupportsRule(json: JSON): Trampoline<SupportsRule> {
     return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
-      SupportsRule.of(json.condition, rules)
+      SupportsRule.of(json.condition, rules),
     );
   }
 }

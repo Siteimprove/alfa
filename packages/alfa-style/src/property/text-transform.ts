@@ -8,5 +8,5 @@ export default Longhand.fromKeywords(
   "none",
   "capitalize",
   "uppercase",
-  "lowercase"
+  "lowercase",
 );

@@ -16,7 +16,7 @@ export class Cookies implements Iterable<Cookie>, Serializable<Cookies.JSON> {
    */
   public static of(cookies: Iterable<Cookie>): Cookies {
     return new Cookies(
-      Map.from(Iterable.map(cookies, (cookie) => [cookie.name, cookie]))
+      Map.from(Iterable.map(cookies, (cookie) => [cookie.name, cookie])),
     );
   }
 

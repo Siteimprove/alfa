@@ -10,10 +10,11 @@ import * as json from "@siteimprove/alfa-json";
  * @public
  */
 export class Preference<N extends Preference.Name = Preference.Name>
-  implements Equatable, Hashable, Serializable {
+  implements Equatable, Hashable, Serializable
+{
   public static of<N extends Preference.Name>(
     name: N,
-    value: Preference.Value<N>
+    value: Preference.Value<N>,
   ): Preference<N> {
     return new Preference(name, value);
   }
@@ -66,7 +67,7 @@ export namespace Preference {
 
   export function isPreference<N extends Name>(
     value: unknown,
-    name?: N
+    name?: N,
   ): value is Preference<N> {
     return (
       value instanceof Preference && (name === undefined || value.name === name)

@@ -55,7 +55,7 @@ test(`evaluate() passes a <div> element with a role of combobox,
       1: Outcomes.HasAllStates(
         "combobox",
         ["aria-controls", "aria-expanded"],
-        []
+        [],
       ),
     }),
   ]);
@@ -72,7 +72,7 @@ test(`evaluate() fails a <div> element with a role of combobox,
       1: Outcomes.HasNotAllStates(
         "combobox",
         ["aria-controls", "aria-expanded"],
-        ["aria-controls"]
+        ["aria-controls"],
       ),
     }),
   ]);
@@ -89,7 +89,7 @@ test(`evaluate() fails a <div> element with a role of checkbox and no
       1: Outcomes.HasNotAllStates(
         "checkbox",
         ["aria-checked"],
-        ["aria-checked"]
+        ["aria-checked"],
       ),
     }),
   ]);
@@ -106,7 +106,7 @@ test(`evaluate() fails a focusable <div> element with a role of separator and no
       1: Outcomes.HasNotAllStates(
         "separator",
         ["aria-valuenow"],
-        ["aria-valuenow"]
+        ["aria-valuenow"],
       ),
     }),
   ]);

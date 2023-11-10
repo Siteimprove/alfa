@@ -44,8 +44,8 @@ export default Rule.Atomic.of<Page, Text>({
             and(
               hasRole(device, (role) => role.isLandmark()),
               // Circumventing https://github.com/Siteimprove/alfa/issues/298
-              not(hasIncorrectRoleWithoutName(device))
-            )
+              not(hasIncorrectRoleWithoutName(device)),
+            ),
           )
         ) {
           yield* document
@@ -54,8 +54,8 @@ export default Rule.Atomic.of<Page, Text>({
             .filter(
               and(
                 property("data", nor(isEmpty, isWhitespace)),
-                isIncludedInTheAccessibilityTree(device)
-              )
+                isIncludedInTheAccessibilityTree(device),
+              ),
             );
         }
       },
@@ -74,12 +74,12 @@ export default Rule.Atomic.of<Page, Text>({
                 (ancestor) =>
                   test(
                     and(isElement, not(hasIncorrectRoleWithoutName(device))),
-                    ancestor.node
-                  )
+                    ancestor.node,
+                  ),
               ),
               // dialog
-              (ancestor) => ancestor.role.some((role) => role.is("dialog"))
-            )
+              (ancestor) => ancestor.role.some((role) => role.is("dialog")),
+            ),
           )
           .flatMap((ancestor) => ancestor.role);
 
@@ -94,12 +94,12 @@ export default Rule.Atomic.of<Page, Text>({
                 () =>
                   expectation(
                     firstTabbable.some((element) =>
-                      element.isInclusiveAncestorOf(target, dom.Node.flatTree)
+                      element.isInclusiveAncestorOf(target, dom.Node.flatTree),
                     ),
                     () => Outcomes.IsIncludedInFirstFocusableElement,
-                    () => Outcomes.IsNotIncludedInLandmark
-                  )
-              )
+                    () => Outcomes.IsNotIncludedInLandmark,
+                  ),
+              ),
           ),
         };
       },
@@ -112,18 +112,18 @@ export default Rule.Atomic.of<Page, Text>({
  */
 export namespace Outcomes {
   export const IsIncludedInLandmark = Ok.of(
-    Diagnostic.of(`The text is included in a landmark region`)
+    Diagnostic.of(`The text is included in a landmark region`),
   );
 
   export const IsIncludedInDialog = Ok.of(
-    Diagnostic.of(`The text is included in a dialog`)
+    Diagnostic.of(`The text is included in a dialog`),
   );
 
   export const IsIncludedInFirstFocusableElement = Ok.of(
-    Diagnostic.of(`The text is included in the first focusable element`)
+    Diagnostic.of(`The text is included in the first focusable element`),
   );
 
   export const IsNotIncludedInLandmark = Err.of(
-    Diagnostic.of(`The text is not included in a landmark region`)
+    Diagnostic.of(`The text is not included in a landmark region`),
   );
 }

@@ -30,8 +30,8 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             hasNamespace(Namespace.HTML),
             hasName("table"),
-            isIncludedInTheAccessibilityTree(device)
-          )
+            isIncludedInTheAccessibilityTree(device),
+          ),
         );
 
         for (const table of tables) {
@@ -42,13 +42,13 @@ export default Rule.Atomic.of<Page, Element>({
               hasNamespace(Namespace.HTML),
               hasName("th"),
               hasRole(device, "rowheader", "columnheader"),
-              isPerceivableForAll(device)
-            )
+              isPerceivableForAll(device),
+            ),
           );
 
           for (const header of headers) {
             for (const cell of model.cells.find((cell) =>
-              cell.element.equals(header)
+              cell.element.equals(header),
             )) {
               data = data.set(header, [cell, model]);
 
@@ -68,10 +68,10 @@ export default Rule.Atomic.of<Page, Element>({
               (cell) =>
                 // Does there exists a cell with the target as one of its headers?
                 hasRole(device, (role) => role.is("cell"))(cell.element) &&
-                cell.headers.some((slot) => slot.equals(header.anchor))
+                cell.headers.some((slot) => slot.equals(header.anchor)),
             ),
             () => Outcomes.IsAssignedToDataCell,
-            () => Outcomes.IsNotAssignedToDataCell
+            () => Outcomes.IsNotAssignedToDataCell,
           ),
         };
       },
@@ -84,10 +84,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const IsAssignedToDataCell = Ok.of(
-    Diagnostic.of(`The header cell is assigned to a cell`)
+    Diagnostic.of(`The header cell is assigned to a cell`),
   );
 
   export const IsNotAssignedToDataCell = Err.of(
-    Diagnostic.of(`The header cell is not assigned to any cell`)
+    Diagnostic.of(`The header cell is not assigned to any cell`),
   );
 }

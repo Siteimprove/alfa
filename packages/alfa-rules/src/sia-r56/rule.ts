@@ -39,8 +39,8 @@ export default Rule.Atomic.of<Page, Group<Element>>({
               and(
                 hasNamespace(equals(Namespace.HTML)),
                 isIncludedInTheAccessibilityTree(device),
-                hasRole(device, (role) => role.is("landmark"))
-              )
+                hasRole(device, (role) => role.is("landmark")),
+              ),
             )
             // circumventing https://github.com/Siteimprove/alfa/issues/298
             .reject(hasIncorrectRoleWithoutName(device))
@@ -62,8 +62,8 @@ export default Rule.Atomic.of<Page, Group<Element>>({
         const byNames = List.from(target)
           .groupBy((landmark) =>
             Node.from(landmark, device).name.map((name) =>
-              normalize(name.value)
-            )
+              normalize(name.value),
+            ),
           )
           .filter((landmarks) => landmarks.size > 1);
 
@@ -71,7 +71,7 @@ export default Rule.Atomic.of<Page, Group<Element>>({
           1: expectation(
             byNames.size === 0,
             () => Outcomes.differentNames(role),
-            () => Outcomes.sameNames(role, byNames.values())
+            () => Outcomes.sameNames(role, byNames.values()),
           ),
         };
       },
@@ -88,7 +88,7 @@ export namespace Outcomes {
 
   export const sameNames = (
     role: Role.Name,
-    errors: Iterable<Iterable<Element>>
+    errors: Iterable<Iterable<Element>>,
   ) =>
     Err.of(SameNames.of(`Some \`${role}\` have the same name.`, role, errors));
 }
@@ -100,7 +100,7 @@ export class SameNames extends Diagnostic implements Iterable<List<Element>> {
   public static of(
     message: string,
     role: Role.Name = "none",
-    errors: Iterable<Iterable<Element>> = []
+    errors: Iterable<Iterable<Element>> = [],
   ): SameNames {
     return new SameNames(message, role, Array.from(errors).map(List.from));
   }
@@ -111,7 +111,7 @@ export class SameNames extends Diagnostic implements Iterable<List<Element>> {
   private constructor(
     message: string,
     role: Role.Name,
-    errors: ReadonlyArray<List<Element>>
+    errors: ReadonlyArray<List<Element>>,
   ) {
     super(message);
     this._role = role;

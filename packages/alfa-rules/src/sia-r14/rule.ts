@@ -36,18 +36,18 @@ export default Rule.Atomic.of<Page, Element>({
             hasAttribute(
               (attribute) =>
                 attribute.name === "aria-label" ||
-                attribute.name === "aria-labelledby"
+                attribute.name === "aria-labelledby",
             ),
             isFocusable(device),
             hasRole(
               device,
-              (role) => role.isWidget() && role.isNamedBy("contents")
+              (role) => role.isWidget() && role.isNamedBy("contents"),
             ),
             hasDescendant(
               and(Text.isText, isPerceivableForAll(device)),
-              Node.flatTree
-            )
-          )
+              Node.flatTree,
+            ),
+          ),
         );
       },
 
@@ -59,7 +59,7 @@ export default Rule.Atomic.of<Page, Element>({
         }
 
         const textContent = removePunctuationAndNormalise(
-          getPerceivableInnerTextFromElement(target, device)
+          getPerceivableInnerTextFromElement(target, device),
         );
 
         let name = "";
@@ -68,14 +68,14 @@ export default Rule.Atomic.of<Page, Element>({
             name = removePunctuationAndNormalise(accessibleName.value);
             return name.includes(textContent);
           }),
-          target
+          target,
         );
 
         return {
           1: expectation(
             accessibleNameIncludesTextContent,
             () => Outcomes.VisibleIsInName(textContent, name),
-            () => Outcomes.VisibleIsNotInName(textContent, name)
+            () => Outcomes.VisibleIsNotInName(textContent, name),
           ),
         };
       },
@@ -88,7 +88,7 @@ export default Rule.Atomic.of<Page, Element>({
  */
 function getPerceivableInnerTextFromTextNode(
   text: Text,
-  device: Device
+  device: Device,
 ): string {
   if (isPerceivableForAll(device)(text)) {
     return text.data;
@@ -106,7 +106,7 @@ function getPerceivableInnerTextFromTextNode(
 
 function getPerceivableInnerTextFromElement(
   element: Element,
-  device: Device
+  device: Device,
 ): string {
   if (!isRendered(device)(element)) {
     return "";
@@ -161,8 +161,8 @@ export namespace Outcomes {
       LabelAndName.of(
         `The visible text content of the element is included within its accessible name`,
         textContent,
-        name
-      )
+        name,
+      ),
     );
 
   export const VisibleIsNotInName = (textContent: string, name: string) =>
@@ -170,8 +170,8 @@ export namespace Outcomes {
       LabelAndName.of(
         `The visible text content of the element is not included within its accessible name`,
         textContent,
-        name
-      )
+        name,
+      ),
     );
 }
 
@@ -182,7 +182,7 @@ export class LabelAndName extends Diagnostic {
   public static of(
     message: string,
     textContent: string = "",
-    name: string = ""
+    name: string = "",
   ): LabelAndName {
     return new LabelAndName(message, textContent, name);
   }

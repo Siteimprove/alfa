@@ -14,6 +14,6 @@ export function isInert(device: Device): Predicate<Element> {
     "visibility",
     (specified) =>
       specified.value === "hidden" || specified.value === "collapse",
-    device
+    device,
   );
 }

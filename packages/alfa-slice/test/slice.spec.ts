@@ -44,7 +44,7 @@ test("#equals() returns false if two slices are not equal", (t) => {
   const b = Slice.of(
     arr.map((n) => n + 1),
     2,
-    8
+    8,
   );
 
   t(!a.equals(b));

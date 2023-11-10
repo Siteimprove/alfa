@@ -33,9 +33,9 @@ const parse = either(
     "text-bottom",
     "middle",
     "top",
-    "bottom"
+    "bottom",
   ),
-  LengthPercentage.parse
+  LengthPercentage.parse,
 );
 
 /**
@@ -60,10 +60,10 @@ export default Longhand.of<Specified, Computed>(
       return Selective.of(verticalAlign)
         .if(
           LengthPercentage.isLengthPercentage,
-          LengthPercentage.resolve(Resolver.lengthPercentage(base, style))
+          LengthPercentage.resolve(Resolver.lengthPercentage(base, style)),
         )
         .get();
-    })
+    }),
 );
 
 /**

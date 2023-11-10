@@ -27,7 +27,7 @@ type Computed = Length.Canonical;
  */
 export const parse = either(
   Keyword.parse("thin", "medium", "thick"),
-  Length.parse
+  Length.parse,
 );
 
 /**
@@ -42,7 +42,7 @@ export default Longhand.of<Specified, Computed>(
       Longhand.Computed<typeof StyleProp>
     >;
     return compute(borderStyle, borderWidth, style);
-  }
+  },
 );
 
 /**
@@ -51,7 +51,7 @@ export default Longhand.of<Specified, Computed>(
 export function compute(
   styleProperty: Value<Longhand.Computed<typeof StyleProp>>,
   specified: Value<Specified>,
-  style: Style
+  style: Style,
 ): Value<Computed> {
   return specified.map((value) => {
     if (

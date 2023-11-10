@@ -56,7 +56,7 @@ export abstract class Node<T extends string = string>
   }
 
   public attribute<N extends Attribute.Name>(
-    refinement: Refinement<Attribute, Attribute<N>>
+    refinement: Refinement<Attribute, Attribute<N>>,
   ): Option<Attribute<N>>;
 
   public attribute(predicate: Predicate<Attribute>): Option<Attribute>;
@@ -64,7 +64,7 @@ export abstract class Node<T extends string = string>
   public attribute<N extends Attribute.Name>(name: N): Option<Attribute<N>>;
 
   public attribute(
-    predicate: Attribute.Name | Predicate<Attribute>
+    predicate: Attribute.Name | Predicate<Attribute>,
   ): Option<Attribute> {
     return None;
   }
@@ -80,7 +80,7 @@ export abstract class Node<T extends string = string>
     }
 
     return parent.flatMap((parent) =>
-      parent.isIgnored() ? parent.parent(options) : Option.of(parent)
+      parent.isIgnored() ? parent.parent(options) : Option.of(parent),
     );
   }
 
@@ -88,7 +88,7 @@ export abstract class Node<T extends string = string>
    * {@link https://dom.spec.whatwg.org/#concept-tree-child}
    */
   public children(
-    options: Node.Traversal = Node.Traversal.empty
+    options: Node.Traversal = Node.Traversal.empty,
   ): Sequence<Node> {
     const children = Sequence.from(this._children) as Sequence<Node>;
 
@@ -97,7 +97,7 @@ export abstract class Node<T extends string = string>
     }
 
     return children.flatMap((child) =>
-      child.isIgnored() ? child.children(options) : Sequence.of(child)
+      child.isIgnored() ? child.children(options) : Sequence.of(child),
     );
   }
 
@@ -144,7 +144,7 @@ export interface Node {
   index(options?: Node.Traversal): number;
   closest<T extends Node>(
     refinement: Refinement<Node, T>,
-    options?: Node.Traversal
+    options?: Node.Traversal,
   ): Option<T>;
   closest(predicate: Predicate<Node>, options?: Node.Traversal): Option<Node>;
 }
@@ -231,10 +231,10 @@ export namespace Node {
               .reject(
                 (reference) =>
                   element === reference ||
-                  element.ancestors().includes(reference)
+                  element.ancestors().includes(reference),
               ),
-          ] as const
-      )
+          ] as const,
+      ),
     );
 
     // Refine the collected `aria-owns` references, constructing a set of
@@ -249,7 +249,7 @@ export namespace Node {
         // deny anything but the first claim to a given ID.
         references = references.reject(
           (reference) =>
-            claimed.has(reference) || graph.hasPath(reference, element)
+            claimed.has(reference) || graph.hasPath(reference, element),
         );
 
         // If there are no references left, this element has no explicit
@@ -261,13 +261,13 @@ export namespace Node {
         // Claim the remaining references.
         claimed = references.reduce(
           (claimed, reference) => claimed.add(reference),
-          claimed
+          claimed,
         );
 
         // Connect the element to each of its references to track cycles.
         graph = references.reduce(
           (graph, reference) => graph.connect(element, reference),
-          graph
+          graph,
         );
 
         return [claimed, owned.set(element, references), graph];
@@ -276,7 +276,7 @@ export namespace Node {
         Set.empty<dom.Element>(),
         Map.empty<dom.Element, Sequence<dom.Element>>(),
         Graph.empty<dom.Element>(),
-      ]
+      ],
     );
 
     fromNode(root, device, claimed, owned, State.empty());
@@ -285,7 +285,7 @@ export namespace Node {
       // If the cache still doesn't hold an entry for the specified node, then
       // the node doesn't even participate in the tree. Store it as an inert
       // node.
-      Inert.of(node)
+      Inert.of(node),
     );
   }
 
@@ -334,7 +334,7 @@ export namespace Node {
     device: Device,
     claimed: Set<dom.Node>,
     owned: Map<dom.Element, Sequence<dom.Node>>,
-    state: State
+    state: State,
   ): Node {
     return cache.get(device, Cache.empty).get(node, () => {
       if (dom.Element.isElement(node)) {
@@ -355,7 +355,7 @@ export namespace Node {
           node
             .attribute("aria-hidden")
             .some((attribute) =>
-              attribute.enumerate("true", "false").some(equals("true"))
+              attribute.enumerate("true", "false").some(equals("true")),
             )
         ) {
           return Inert.of(node);
@@ -418,7 +418,7 @@ export namespace Node {
           // implicit role.
           state.isPresentational
             ? Option.of(Role.of("presentation"))
-            : Role.fromImplicit(node)
+            : Role.fromImplicit(node),
         );
 
         if (role.some((role) => role.isPresentational())) {
@@ -430,10 +430,10 @@ export namespace Node {
                 // required children then any owned children must also be
                 // presentational.
                 Role.fromImplicit(node).some((role) =>
-                  role.hasRequiredChildren()
-                )
-              )
-            )
+                  role.hasRequiredChildren(),
+                ),
+              ),
+            ),
           );
         }
 
@@ -445,7 +445,7 @@ export namespace Node {
             for (const value of role.get().implicitAttributeValue(attribute)) {
               attributes = attributes.set(
                 attribute,
-                Attribute.of(attribute, value)
+                Attribute.of(attribute, value),
               );
             }
           }
@@ -499,7 +499,7 @@ export namespace Node {
           role,
           Name.from(node, device),
           attributes.values(),
-          children(state)
+          children(state),
         );
       }
 
@@ -521,7 +521,7 @@ export namespace Node {
         node
           .children(dom.Node.flatTree)
           .reject((child) => claimed.has(child))
-          .map((child) => fromNode(child, device, claimed, owned, state))
+          .map((child) => fromNode(child, device, claimed, owned, state)),
       );
     });
   }
@@ -536,5 +536,5 @@ export namespace Node {
 // <object> with a non-empty data attribute
 const alwaysExpose = and(
   dom.Element.hasName("object"),
-  dom.Element.hasAttribute("data", (data) => data.trim() !== "")
+  dom.Element.hasAttribute("data", (data) => data.trim() !== ""),
 );

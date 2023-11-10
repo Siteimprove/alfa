@@ -26,16 +26,16 @@ test(`evaluate() passes when non-streaming video-only elements have all visual i
         "is-video-streaming": false,
         "has-audio": false,
         transcript: Option.of(transcript),
-      })
+      }),
     ),
     [
       passed(
         R33,
         target,
         { 1: Outcomes.HasPerceivableTranscript("<video>") },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -53,16 +53,16 @@ test(`evaluate() fails when non-streaming video-only elements have no visual inf
         "has-audio": false,
         transcript: None,
         "transcript-link": None,
-      })
+      }),
     ),
     [
       failed(
         R33,
         target,
         { 1: Outcomes.HasNoTranscriptLink("<video>") },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -79,9 +79,9 @@ test("evaluate() can't tell when some questions are left unanswered", async (t) 
         "is-video-streaming": false,
         "has-audio": false,
         transcript: None,
-      })
+      }),
     ),
-    [cantTell(R33, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R33, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -111,8 +111,8 @@ test("evaluate() is inapplicable to videos with audio", async (t) => {
     await evaluate(
       R33,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": true })
+      oracle({ "is-video-streaming": false, "has-audio": true }),
     ),
-    [inapplicable(R33, Outcome.Mode.SemiAuto)]
+    [inapplicable(R33, Outcome.Mode.SemiAuto)],
   );
 });
