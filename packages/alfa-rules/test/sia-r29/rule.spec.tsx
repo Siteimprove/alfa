@@ -26,7 +26,7 @@ test(`evaluate() passes an audio that is labelled as alternative for text`, asyn
         "is-playing": true,
         "text-alternative": Option.of(text),
         label: Option.of(label),
-      })
+      }),
     ),
     [
       passed(
@@ -36,9 +36,9 @@ test(`evaluate() passes an audio that is labelled as alternative for text`, asyn
           1: Outcomes.HasPerceivableAlternative("<audio>"),
           2: Outcomes.HasPerceivableLabel("<audio>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -57,7 +57,7 @@ test(`evaluate() fails an audio that is not alternative for text`, async (t) => 
         "is-playing": true,
         "text-alternative": None,
         label: Option.of(label),
-      })
+      }),
     ),
     [
       failed(
@@ -67,9 +67,9 @@ test(`evaluate() fails an audio that is not alternative for text`, async (t) => 
           1: Outcomes.HasNoAlternative("<audio>"),
           2: Outcomes.HasPerceivableLabel("<audio>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -88,7 +88,7 @@ test(`evaluate() fails an audio that is not labelled as alternative for text`, a
         "is-playing": true,
         "text-alternative": Option.of(text),
         label: None,
-      })
+      }),
     ),
     [
       failed(
@@ -98,9 +98,9 @@ test(`evaluate() fails an audio that is not labelled as alternative for text`, a
           1: Outcomes.HasPerceivableAlternative("<audio>"),
           2: Outcomes.HasNoLabel("<audio>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -120,7 +120,7 @@ test(`evaluate() fails an audio alternative for invisible text`, async (t) => {
         "is-playing": true,
         "text-alternative": Option.of(text),
         label: Option.of(label),
-      })
+      }),
     ),
     [
       failed(
@@ -130,9 +130,9 @@ test(`evaluate() fails an audio alternative for invisible text`, async (t) => {
           1: Outcomes.HasNonPerceivableAlternative("<audio>"),
           2: Outcomes.HasPerceivableLabel("<audio>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -156,7 +156,7 @@ test(`evaluate() fails an audio that is invisibly labelled as alternative for te
         "is-playing": true,
         "text-alternative": Option.of(text),
         label: Option.of(label),
-      })
+      }),
     ),
     [
       failed(
@@ -166,9 +166,9 @@ test(`evaluate() fails an audio that is invisibly labelled as alternative for te
           1: Outcomes.HasPerceivableAlternative("<audio>"),
           2: Outcomes.HasNonPerceivableLabel("<audio>"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -181,9 +181,9 @@ test(`evaluate() cannot tell if questions are left unanswered`, async (t) => {
     await evaluate(
       R29,
       { document },
-      oracle({ "is-audio-streaming": false, "is-playing": true })
+      oracle({ "is-audio-streaming": false, "is-playing": true }),
     ),
-    [cantTell(R29, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R29, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -202,6 +202,6 @@ test(`evaluate() is inapplicable to streaming audios`, async (t) => {
 
   t.deepEqual(
     await evaluate(R29, { document }, oracle({ "is-audio-streaming": true })),
-    [inapplicable(R29, Outcome.Mode.SemiAuto)]
+    [inapplicable(R29, Outcome.Mode.SemiAuto)],
   );
 });

@@ -51,13 +51,13 @@ test("parse() parses a perspective with calculation", (t) => {
 
 test("resolve() resolves a perspective", (t) => {
   const actual = parserUnsafe(Perspective.parse)(
-    "perspective(calc(1em + 2px))"
+    "perspective(calc(1em + 2px))",
   ).resolve({
     length: Length.resolver(
       Length.of(16, "px"),
       Length.of(16, "px"),
       Length.of(16, "px"),
-      Length.of(16, "px")
+      Length.of(16, "px"),
     ),
   });
 

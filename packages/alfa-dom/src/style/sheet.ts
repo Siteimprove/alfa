@@ -13,7 +13,7 @@ export class Sheet implements Equatable, Serializable {
   public static of(
     rules: Iterable<Rule>,
     disabled = false,
-    condition: Option<string> = None
+    condition: Option<string> = None,
   ): Sheet {
     return new Sheet(Array.from(rules), disabled, condition);
   }
@@ -29,7 +29,7 @@ export class Sheet implements Equatable, Serializable {
   private constructor(
     rules: Array<Rule>,
     disabled: boolean,
-    condition: Option<string>
+    condition: Option<string>,
   ) {
     this._rules = rules.filter((rule) => rule._attachOwner(this));
     this._disabled = disabled;
@@ -97,7 +97,7 @@ export namespace Sheet {
     return Sheet.of(
       json.rules.map(Rule.from),
       json.disabled,
-      Option.from(json.condition)
+      Option.from(json.condition),
     );
   }
 }

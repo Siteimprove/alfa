@@ -31,9 +31,9 @@ test("evaluate() passes documents whose lang attribute matches the main language
         {
           1: Outcomes.HasCorrectLang(english, english),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -48,7 +48,7 @@ test("evaluate() passes documents whose lang primary attribute matches the main 
     await evaluate(
       R109,
       { document },
-      oracle({ "document-language": "en-us" })
+      oracle({ "document-language": "en-us" }),
     ),
     [
       passed(
@@ -57,9 +57,9 @@ test("evaluate() passes documents whose lang primary attribute matches the main 
         {
           1: Outcomes.HasCorrectLang(british, american),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -77,9 +77,9 @@ test("evaluate() fails documents whose lang attribute does not match the main la
         R109,
         document,
         { 1: Outcomes.HasIncorrectLang(french, english) },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -94,16 +94,16 @@ test("evaluate() fails documents without main language", async (t) => {
     await evaluate(
       R109,
       { document },
-      oracle({ "document-language": "gibberish" })
+      oracle({ "document-language": "gibberish" }),
     ),
     [
       failed(
         R109,
         document,
         { 1: Outcomes.HasNoLanguage(english) },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 

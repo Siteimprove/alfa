@@ -14,5 +14,5 @@ export default Longhand.of<Specified, Computed>(
   Length.of(0, "px"),
   Length.parse,
   (value, style) =>
-    value.map((offset) => offset.resolve(Resolver.length(style)))
+    value.map((offset) => offset.resolve(Resolver.length(style))),
 );

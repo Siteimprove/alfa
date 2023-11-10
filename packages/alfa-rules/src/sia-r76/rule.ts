@@ -25,7 +25,7 @@ export default Rule.Atomic.of<Page, Element>({
 
         function* visit(
           node: Node,
-          collect: boolean = false
+          collect: boolean = false,
         ): Iterable<Element> {
           if (test(and(isElement, hasNamespace(Namespace.HTML)), node)) {
             if (test(hasName("table"), node)) {
@@ -52,7 +52,8 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             test(hasRole(device, "columnheader", "rowheader"), target),
             () => Outcomes.HasHeaderRole(WithRole.getRoleName(target, device)),
-            () => Outcomes.HasNoHeaderRole(WithRole.getRoleName(target, device))
+            () =>
+              Outcomes.HasNoHeaderRole(WithRole.getRoleName(target, device)),
           ),
         };
       },

@@ -22,16 +22,16 @@ export namespace Corner {
   }
 
   export function resolve(
-    resolver: LengthPercentage.Resolver
+    resolver: LengthPercentage.Resolver,
   ): (value: Corner) => Canonical {
     function resolveAndClamp(
-      radius: LengthPercentage
+      radius: LengthPercentage,
     ): LengthPercentage.Canonical {
       const resolved = LengthPercentage.resolve(resolver)(radius);
 
       return LengthPercentage.of(
         Real.clamp(resolved.value, 0, Infinity),
-        resolved.unit
+        resolved.unit,
       );
     }
 
@@ -45,14 +45,14 @@ export namespace Corner {
     | LengthPercentage.PartiallyResolved
     | readonly [
         LengthPercentage.PartiallyResolved,
-        LengthPercentage.PartiallyResolved
+        LengthPercentage.PartiallyResolved,
       ];
 
   export function partiallyResolve(
-    resolver: LengthPercentage.PartialResolver
+    resolver: LengthPercentage.PartialResolver,
   ): (value: Corner) => PartiallyResolved {
     function resolveAndClamp(
-      radius: LengthPercentage
+      radius: LengthPercentage,
     ): LengthPercentage.PartiallyResolved {
       const resolved = LengthPercentage.partiallyResolve(resolver)(radius);
 

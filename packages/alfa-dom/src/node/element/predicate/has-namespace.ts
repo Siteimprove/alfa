@@ -9,7 +9,7 @@ const { equals } = Predicate;
  * @public
  */
 export function hasNamespace(
-  predicate: Predicate<Namespace>
+  predicate: Predicate<Namespace>,
 ): Predicate<Element>;
 
 /**

@@ -36,5 +36,5 @@ export const initialItem = Keyword.of("padding-box");
 export default Longhand.of<Specified, Computed>(
   List.of([initialItem], ", "),
   List.parseCommaSeparated(parse),
-  (value) => value
+  (value) => value,
 );

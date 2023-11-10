@@ -12,7 +12,7 @@ const device = Device.standard();
 export function cascaded<N extends Longhands.Name>(
   element: Element,
   name: N,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Value.JSON<Style.Cascaded<N>> {
   return Style.from(element, device, context)
     .cascaded(name)

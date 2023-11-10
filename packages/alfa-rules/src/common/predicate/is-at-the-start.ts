@@ -34,7 +34,7 @@ const { and } = Predicate;
  */
 export function isAtTheStart(
   node2: Node,
-  device: Device = Device.standard()
+  device: Device = Device.standard(),
 ): Predicate<Node> {
   return (node1) =>
     !Node.getNodesBetween(node1, node2, {

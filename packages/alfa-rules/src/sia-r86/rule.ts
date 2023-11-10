@@ -18,7 +18,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return getElementDescendants(document, Node.fullTree).filter(
-          isMarkedDecorative
+          isMarkedDecorative,
         );
       },
 
@@ -27,7 +27,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             isIncludedInTheAccessibilityTree(device)(target),
             () => Outcomes.IsExposed,
-            () => Outcomes.IsNotExposed
+            () => Outcomes.IsNotExposed,
           ),
         };
       },
@@ -40,10 +40,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const IsNotExposed = Ok.of(
-    Diagnostic.of(`The element is marked as decorative and is not exposed`)
+    Diagnostic.of(`The element is marked as decorative and is not exposed`),
   );
 
   export const IsExposed = Err.of(
-    Diagnostic.of(`The element is marked as decorative but is exposed`)
+    Diagnostic.of(`The element is marked as decorative but is exposed`),
   );
 }

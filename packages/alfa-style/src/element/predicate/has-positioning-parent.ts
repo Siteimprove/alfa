@@ -9,7 +9,7 @@ import { getPositioningParent } from "../helpers/get-positioning-parent";
  */
 export function hasPositioningParent(
   device: Device,
-  predicate: Predicate<Element>
+  predicate: Predicate<Element>,
 ): Predicate<Element> {
   return (element) => getPositioningParent(element, device).some(predicate);
 }

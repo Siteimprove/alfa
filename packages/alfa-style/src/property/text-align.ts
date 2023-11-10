@@ -11,5 +11,5 @@ export default Longhand.fromKeywords(
   "left",
   "right",
   "center",
-  "justify"
+  "justify",
 );

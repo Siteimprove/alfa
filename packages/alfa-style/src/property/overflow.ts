@@ -10,7 +10,7 @@ const { map, option, pair, delimited } = Parser;
 
 const parse = pair(
   X.parseBase,
-  option(delimited(option(Token.parseWhitespace), Y.parseBase))
+  option(delimited(option(Token.parseWhitespace), Y.parseBase)),
 );
 
 /**
@@ -27,5 +27,5 @@ export default Shorthand.of(
       ["overflow-x", x],
       ["overflow-y", y.getOr(x)],
     ];
-  })
+  }),
 );

@@ -64,6 +64,6 @@ test("resolve() absolutize lengths", (t) => {
       type: "length",
       value: 18,
       unit: "px",
-    }
+    },
   );
 });

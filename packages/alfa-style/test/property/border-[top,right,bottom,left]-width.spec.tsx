@@ -16,7 +16,7 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
 
     h.document(
       [element],
-      [h.sheet([h.rule.style("div", [h.declaration(property, "medium")])])]
+      [h.sheet([h.rule.style("div", [h.declaration(property, "medium")])])],
     );
 
     t.deepEqual(cascaded(element, property), {
@@ -33,7 +33,7 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
 
     h.document(
       [element],
-      [h.sheet([h.rule.style("div", [h.declaration(property, "1.2em")])])]
+      [h.sheet([h.rule.style("div", [h.declaration(property, "1.2em")])])],
     );
 
     t.deepEqual(cascaded(element, property), {
@@ -58,7 +58,7 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
             h.declaration(`border-${side}-style`, "none"),
           ]),
         ]),
-      ]
+      ],
     );
 
     const style = Style.from(element, device);

@@ -45,10 +45,10 @@ const parse = either<Slice<Token>, Specified, string>(
     "large",
     "x-large",
     "xx-large",
-    "xxx-large"
+    "xxx-large",
   ),
   Keyword.parse("larger", "smaller"),
-  LengthPercentage.parse
+  LengthPercentage.parse,
 );
 
 /**
@@ -107,7 +107,7 @@ const property: Longhand<Specified, Computed> = Longhand.of<
 
       if (LengthPercentage.isLengthPercentage(fontSize)) {
         return LengthPercentage.resolve(
-          Resolver.lengthPercentage(parent, style.parent)
+          Resolver.lengthPercentage(parent, style.parent),
         )(fontSize);
       }
 
@@ -136,7 +136,7 @@ const property: Longhand<Specified, Computed> = Longhand.of<
     }),
   {
     inherits: true,
-  }
+  },
 );
 
 export default property;

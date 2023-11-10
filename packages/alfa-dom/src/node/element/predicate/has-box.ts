@@ -8,7 +8,7 @@ import { Element } from "../../element";
  */
 export function hasBox(
   predicate: Predicate<Rectangle> = () => true,
-  device: Device
+  device: Device,
 ): Predicate<Element> {
   return (element) => element.getBoundingBox(device).some(predicate);
 }

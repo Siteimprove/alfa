@@ -31,8 +31,8 @@ export default Rule.Atomic.of<Page, Element>({
             (element) =>
               Style.from(element, device).cascaded("line-height").isSome(),
             Node.hasTextContent(),
-            isVisible(device)
-          )
+            isVisible(device),
+          ),
         );
       },
 
@@ -41,7 +41,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             test(hasRelativeUnit(device), target),
             () => Outcomes.HasRelativeUnit,
-            () => Outcomes.HasAbsoluteUnit
+            () => Outcomes.HasAbsoluteUnit,
           ),
         };
       },
@@ -54,11 +54,11 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const HasRelativeUnit = Ok.of(
-    Diagnostic.of(`The line height is specified using a relative unit`)
+    Diagnostic.of(`The line height is specified using a relative unit`),
   );
 
   export const HasAbsoluteUnit = Err.of(
-    Diagnostic.of(`The line height is specified using an absolute unit`)
+    Diagnostic.of(`The line height is specified using an absolute unit`),
   );
 }
 
@@ -79,6 +79,6 @@ function hasRelativeUnit(device: Device) {
       lineHeight.hasCalculation() ||
       // Fixed length in relative units
       lineHeight.isRelative(),
-    device
+    device,
   );
 }

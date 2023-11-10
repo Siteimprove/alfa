@@ -55,6 +55,6 @@ test("#decompose() decomposes several transformations", (t) => {
       skew: [0, 0, 0],
       rotate: [0, 0, -0.24740395925452288, 0.9689124217106448],
       perspective: [0, 0, 0, 1],
-    }
+    },
   );
 });

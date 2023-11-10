@@ -67,21 +67,21 @@ async function main(cwd: string) {
 
   const commits = await getCommitsThatAddFiles(
     changesets.map((changeset) => `.changeset/${changeset.id}.md`),
-    { cwd, short: true }
+    { cwd, short: true },
   );
 
   const changesetsWithCommit: Array<NewChangesetWithCommit> = changesets.map(
     (changeset, idx) => ({
       ...changeset,
       commit: commits[idx],
-    })
+    }),
   );
 
   // Build the new body for the global changelog and write it.
   const body = await ChangelogFuncs.getBody(
     changesetsWithCommit,
     packages,
-    config
+    config,
   );
 
   const newChangelog = ChangelogFuncs.insertBody(oldChangelog, body);

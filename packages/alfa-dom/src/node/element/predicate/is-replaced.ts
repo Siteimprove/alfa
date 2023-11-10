@@ -17,7 +17,7 @@ const { test } = Refinement;
  * @public
  */
 export function isReplaced(
-  element: Element
+  element: Element,
 ): element is Element<
   "audio" | "canvas" | "embed" | "iframe" | "img" | "input" | "object" | "video"
 > {
@@ -30,8 +30,8 @@ export function isReplaced(
       "img",
       "input",
       "object",
-      "video"
+      "video",
     ),
-    element
+    element,
   );
 }

@@ -41,20 +41,20 @@ export default Rule.Atomic.of<Page, Element>({
                 hasNamespace(Namespace.HTML),
                 hasName("meta"),
                 hasAttribute("name", equals("viewport")),
-                hasAttribute("content")
-              )
+                hasAttribute("content"),
+              ),
             )
             // Compute the required properties and register them, reject the
             // element if none are defined.
             .filter((meta) => {
               const properties = parsePropertiesList(
                 // The previous filter ensures there is a content.
-                meta.attribute("content").getUnsafe().value.toLowerCase()
+                meta.attribute("content").getUnsafe().value.toLowerCase(),
               );
 
               const scale = parseMaximumScale(properties.get("maximum-scale"));
               const scalable = parseUserScalable(
-                properties.get("user-scalable")
+                properties.get("user-scalable"),
               );
 
               // Since we look at each `<meta>` once, no need to check for
@@ -79,7 +79,7 @@ export default Rule.Atomic.of<Page, Element>({
                 .get(target)
                 .every((scalable) => scalable !== "fixed"),
             () => Outcomes.MetaDoesNotPreventZoom,
-            () => Outcomes.MetaDoesPreventZoom
+            () => Outcomes.MetaDoesPreventZoom,
           ),
         };
       },
@@ -93,12 +93,12 @@ export default Rule.Atomic.of<Page, Element>({
 export namespace Outcomes {
   export const MetaDoesNotPreventZoom = Ok.of(
     Diagnostic.of(
-      `The \`<meta>\` element does not restrict the ability to zoom`
-    )
+      `The \`<meta>\` element does not restrict the ability to zoom`,
+    ),
   );
 
   export const MetaDoesPreventZoom = Err.of(
-    Diagnostic.of(`The \`<meta>\` element restricts the ability to zoom`)
+    Diagnostic.of(`The \`<meta>\` element restricts the ability to zoom`),
   );
 }
 
@@ -205,7 +205,7 @@ function parseMaximumScale(scale: Option<string>): Option<number> {
         }
 
         return Option.of(
-          isNaN(scaleValue) ? 0.1 : Real.clamp(scaleValue, 0.1, 10)
+          isNaN(scaleValue) ? 0.1 : Real.clamp(scaleValue, 0.1, 10),
         );
     }
   });

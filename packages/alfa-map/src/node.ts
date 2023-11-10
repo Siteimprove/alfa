@@ -138,7 +138,7 @@ export class Leaf<K, V> implements Node<K, V> {
     key: K,
     value: V,
     hash: number,
-    shift: number
+    shift: number,
   ): Status<Node<K, V>> {
     if (hash === this._hash) {
       if (Equatable.equals(key, this._key)) {
@@ -150,7 +150,7 @@ export class Leaf<K, V> implements Node<K, V> {
       }
 
       return Status.created(
-        Collision.of(hash, [this, Leaf.of(hash, key, value)])
+        Collision.of(hash, [this, Leaf.of(hash, key, value)]),
       );
     }
 
@@ -189,7 +189,7 @@ export class Leaf<K, V> implements Node<K, V> {
 export class Collision<K, V> implements Node<K, V> {
   public static of<K, V>(
     hash: number,
-    nodes: Array<Leaf<K, V>>
+    nodes: Array<Leaf<K, V>>,
   ): Collision<K, V> {
     return new Collision(hash, nodes);
   }
@@ -228,7 +228,7 @@ export class Collision<K, V> implements Node<K, V> {
     key: K,
     value: V,
     hash: number,
-    shift: number
+    shift: number,
   ): Status<Node<K, V>> {
     if (hash === this._hash) {
       for (let i = 0, n = this._nodes.length; i < n; i++) {
@@ -242,14 +242,14 @@ export class Collision<K, V> implements Node<K, V> {
           return Status.updated(
             Collision.of(
               this._hash,
-              replace(this._nodes, i, Leaf.of(hash, key, value))
-            )
+              replace(this._nodes, i, Leaf.of(hash, key, value)),
+            ),
           );
         }
       }
 
       return Status.created(
-        Collision.of(this._hash, this._nodes.concat(Leaf.of(hash, key, value)))
+        Collision.of(this._hash, this._nodes.concat(Leaf.of(hash, key, value))),
       );
     }
 
@@ -283,7 +283,7 @@ export class Collision<K, V> implements Node<K, V> {
   public map<U>(mapper: Mapper<V, U, [K]>): Collision<K, U> {
     return Collision.of(
       this._hash,
-      this._nodes.map((node) => node.map(mapper))
+      this._nodes.map((node) => node.map(mapper)),
     );
   }
 
@@ -343,7 +343,7 @@ export class Sparse<K, V> implements Node<K, V> {
     key: K,
     value: V,
     hash: number,
-    shift: number
+    shift: number,
   ): Status<Node<K, V>> {
     const fragment = Node.fragment(hash, shift);
     const index = Node.index(fragment, this._mask);
@@ -353,7 +353,7 @@ export class Sparse<K, V> implements Node<K, V> {
         key,
         value,
         hash,
-        shift + Node.Bits
+        shift + Node.Bits,
       );
 
       if (status === "unchanged") {
@@ -374,8 +374,8 @@ export class Sparse<K, V> implements Node<K, V> {
     return Status.created(
       Sparse.of(
         set(this._mask, fragment),
-        insert(this._nodes, index, Leaf.of(hash, key, value))
-      )
+        insert(this._nodes, index, Leaf.of(hash, key, value)),
+      ),
     );
   }
 
@@ -388,7 +388,7 @@ export class Sparse<K, V> implements Node<K, V> {
       const { result: node, status } = this._nodes[index].delete(
         key,
         hash,
-        shift + Node.Bits
+        shift + Node.Bits,
       );
 
       if (status === "unchanged") {
@@ -423,7 +423,7 @@ export class Sparse<K, V> implements Node<K, V> {
       }
 
       return Status.deleted(
-        Sparse.of(this._mask, replace(this._nodes, index, node))
+        Sparse.of(this._mask, replace(this._nodes, index, node)),
       );
     }
 
@@ -433,7 +433,7 @@ export class Sparse<K, V> implements Node<K, V> {
   public map<U>(mapper: Mapper<V, U, [K]>): Sparse<K, U> {
     return Sparse.of(
       this._mask,
-      this._nodes.map((node) => node.map(mapper))
+      this._nodes.map((node) => node.map(mapper)),
     );
   }
 
@@ -456,7 +456,7 @@ export class Sparse<K, V> implements Node<K, V> {
 function insert<T>(
   array: Readonly<Array<T>>,
   index: number,
-  value: T
+  value: T,
 ): Array<T> {
   const result = new Array(array.length + 1);
 
@@ -490,7 +490,7 @@ function remove<T>(array: Readonly<Array<T>>, index: number): Array<T> {
 function replace<T>(
   array: Readonly<Array<T>>,
   index: number,
-  value: T
+  value: T,
 ): Array<T> {
   const result = array.slice(0);
   result[index] = value;

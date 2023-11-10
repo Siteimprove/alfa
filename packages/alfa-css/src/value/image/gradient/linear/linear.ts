@@ -20,12 +20,12 @@ const { map, pair, option, left } = Parser;
  */
 export class Linear<
   I extends Item = Item,
-  D extends Direction = Direction
+  D extends Direction = Direction,
 > extends Value<"gradient", Value.HasCalculation<[D, I]>> {
   public static of<I extends Item, D extends Direction>(
     direction: D,
     items: Iterable<I>,
-    repeats: boolean
+    repeats: boolean,
   ): Linear<I, D> {
     return new Linear(direction, Array.from(items), repeats);
   }
@@ -61,7 +61,7 @@ export class Linear<
     return new Linear(
       this._direction.resolve(),
       this._items.map(Item.resolve(resolver)),
-      this._repeats
+      this._repeats,
     );
   }
 
@@ -129,13 +129,13 @@ export namespace Linear {
   export type PartialResolver = Item.PartialResolver & Direction.Resolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Linear) => PartiallyResolved {
     return (value) =>
       Linear.of(
         value.direction.resolve(),
         Iterable.map(value.items, Item.partiallyResolve(resolver)),
-        value.repeats
+        value.repeats,
       );
   }
 
@@ -151,14 +151,14 @@ export namespace Linear {
       (fn) =>
         fn.value === "linear-gradient" ||
         fn.value === "repeating-linear-gradient",
-      pair(option(left(Direction.parse, Comma.parse)), Item.parseList)
+      pair(option(left(Direction.parse, Comma.parse)), Item.parseList),
     ),
     ([fn, [direction, items]]) => {
       return Linear.of(
         direction.getOrElse(() => Side.of("bottom")),
         items,
-        fn.name.startsWith("repeating")
+        fn.name.startsWith("repeating"),
       );
-    }
+    },
   );
 }

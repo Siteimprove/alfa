@@ -15,9 +15,9 @@ test(".fold() folds over the truth values of a predicate", (t) => {
       (value) => value === "foo",
       (value) => value,
       () => t.fail(),
-      "foo"
+      "foo",
     ),
-    "foo"
+    "foo",
   );
 
   t.equal(
@@ -25,9 +25,9 @@ test(".fold() folds over the truth values of a predicate", (t) => {
       (value) => value === "foo",
       () => t.fail(),
       (value) => value,
-      "bar"
+      "bar",
     ),
-    "bar"
+    "bar",
   );
 });
 
@@ -35,7 +35,7 @@ test(`.and() combines two predicates to a predicate that is true if both
       predicates are true`, (t) => {
   const p = Predicate.and<string>(
     (value) => value.startsWith("f"),
-    (value) => value.length === 3
+    (value) => value.length === 3,
   );
 
   t.equal(p("foo"), true);
@@ -48,7 +48,7 @@ test(`.or() combines two predicates to a predicate that is true if either
       predicate is true`, (t) => {
   const p = Predicate.or<string>(
     (value) => value.startsWith("f"),
-    (value) => value.length === 3
+    (value) => value.length === 3,
   );
 
   t.equal(p("foo"), true);

@@ -42,7 +42,7 @@ export function validatePackageJson(
     dir: string;
     packageJson: JSON;
   },
-  config: Config
+  config: Config,
 ): Array<string> {
   const errors: Array<string> = [];
   const name = packageJson.name;
@@ -53,7 +53,7 @@ export function validatePackageJson(
     !name.startsWith(`${config.organisation}/`)
   ) {
     errors.push(
-      `${name}: package.json is not in the ${config.organisation} organisation.`
+      `${name}: package.json is not in the ${config.organisation} organisation.`,
     );
   }
 
@@ -63,7 +63,7 @@ export function validatePackageJson(
     packageJson.homepage !== config.homepage
   ) {
     errors.push(
-      `${name}: package.json has incorrect homepage: '${packageJson.homepage}'.`
+      `${name}: package.json has incorrect homepage: '${packageJson.homepage}'.`,
     );
   }
 
@@ -74,7 +74,7 @@ export function validatePackageJson(
     }
     if (packageJson?.repository?.url !== config.repo) {
       errors.push(
-        `${name}: package.json does not have repository.url: "${config.repo}".`
+        `${name}: package.json does not have repository.url: "${config.repo}".`,
       );
     }
 
@@ -84,7 +84,7 @@ export function validatePackageJson(
     const posixDir = dir.split(path.sep).join(path.posix.sep);
     if (!posixDir.endsWith(packageJson?.repository?.directory ?? "INVALID")) {
       errors.push(
-        `${name}: package.json repository.directory (${packageJson?.repository?.directory}) does not match its actual directory (${posixDir}).`
+        `${name}: package.json repository.directory (${packageJson?.repository?.directory}) does not match its actual directory (${posixDir}).`,
       );
     }
   }

@@ -165,7 +165,7 @@ test("parse() accepts calculations", (t) => {
       green: { type: type, value: type === "number" ? 255 : 1 },
       blue: { type: type, value: 0 },
       alpha: { type: "number", value: 0 },
-    } as RGB.JSON);
+    }) as RGB.JSON;
 
   for (const [actual, type] of [
     [parse("rgb(0% 100% 0% / 0)"), "percentage"],

@@ -15,7 +15,7 @@ const parse: Parser<
   Slice<Token>,
   [
     Longhand.Parsed<typeof Direction> | Keyword<"initial">,
-    Longhand.Parsed<typeof Wrap> | Keyword<"initial">
+    Longhand.Parsed<typeof Wrap> | Keyword<"initial">,
   ],
   string
 > = (input) => {
@@ -66,5 +66,5 @@ export default Shorthand.of(
   map(parse, ([direction, wrap]) => [
     ["flex-direction", direction],
     ["flex-wrap", wrap],
-  ])
+  ]),
 );

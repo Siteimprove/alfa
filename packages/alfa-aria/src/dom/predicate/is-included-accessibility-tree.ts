@@ -14,7 +14,7 @@ import { Node as ariaNode } from "../..";
  * @public
  */
 export function isIncludedInTheAccessibilityTree<T extends Node>(
-  device: Device
+  device: Device,
 ): Predicate<T> {
   return (node) => !ariaNode.from(node, device).isIgnored();
 }

@@ -29,13 +29,13 @@ test("evaluate() should respect traversal options", (t) => {
   t.equal(
     [...evaluate(div, "//button", Node.Traversal.of(Node.Traversal.nested))]
       .length,
-    4
+    4,
   );
 
   t.equal(
     [...evaluate(div, "//button", Node.Traversal.of(Node.Traversal.composed))]
       .length,
-    5
+    5,
   );
 
   t.equal([...evaluate(div, "//button", Node.composedNested)].length, 6);

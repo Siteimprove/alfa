@@ -49,11 +49,11 @@ export const parseSpacing = Keyword.parse("proportional-nums", "tabular-nums");
  */
 export const parseFraction = Keyword.parse(
   "diagonal-fractions",
-  "stacked-fractions"
+  "stacked-fractions",
 );
 
 const parseNumeric: Parser<Slice<Token>, List<Specified.Item>, string> = (
-  input
+  input,
 ) => {
   let figure: Specified.Figure | undefined;
   let spacing: Specified.Spacing | undefined;
@@ -128,10 +128,10 @@ const parseNumeric: Parser<Slice<Token>, List<Specified.Item>, string> = (
     input,
     List.of(
       [figure, spacing, fraction, ordinal, slashed].filter(
-        (value) => value !== undefined
+        (value) => value !== undefined,
         // filter doesn't narrow so we need to do it manually
       ) as Array<Specified.Item>,
-      " "
+      " ",
     ),
   ]);
 };
@@ -146,5 +146,5 @@ export default Longhand.of<Specified, Computed>(
   Keyword.of("normal"),
   parse,
   (numeric) => numeric,
-  { inherits: true }
+  { inherits: true },
 );

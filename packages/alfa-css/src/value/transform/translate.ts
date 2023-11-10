@@ -21,7 +21,7 @@ const { map, either, parseIf } = Parser;
 export class Translate<
     X extends LengthPercentage = LengthPercentage,
     Y extends LengthPercentage = LengthPercentage,
-    Z extends Length = Length
+    Z extends Length = Length,
   >
   extends Function<"translate", Value.HasCalculation<[X, Y, Z]>>
   implements Resolvable<Translate.Canonical, Translate.Resolver>
@@ -29,7 +29,7 @@ export class Translate<
   public static of<
     X extends LengthPercentage = LengthPercentage,
     Y extends LengthPercentage = LengthPercentage,
-    Z extends Length = Length
+    Z extends Length = Length,
   >(x: X, y: Y, z: Z): Translate<X, Y, Z> {
     return new Translate(x, y, z);
   }
@@ -61,7 +61,7 @@ export class Translate<
     return new Translate(
       LengthPercentage.resolve(resolver)(this._x),
       LengthPercentage.resolve(resolver)(this._y),
-      this._z.resolve(resolver)
+      this._z.resolve(resolver),
     );
   }
 
@@ -128,19 +128,19 @@ export namespace Translate {
     Length.Resolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Translate) => PartiallyResolved {
     return (value) =>
       Translate.of(
         LengthPercentage.partiallyResolve(resolver)(value.x),
         LengthPercentage.partiallyResolve(resolver)(value.x),
-        value.z.resolve(resolver)
+        value.z.resolve(resolver),
       );
   }
   export function isTranslate<
     X extends LengthPercentage,
     Y extends LengthPercentage,
-    Z extends Length
+    Z extends Length,
   >(value: unknown): value is Translate<X, Y, Z> {
     return value instanceof Translate;
   }
@@ -155,11 +155,11 @@ export namespace Translate {
       "translate",
       map(
         List.parseCommaSeparated(LengthPercentage.parse, 1, 2),
-        (list) => list.values
-      )
+        (list) => list.values,
+      ),
     ),
 
-    ([_, [x, y]]) => Translate.of(x, y ?? _0, _0)
+    ([_, [x, y]]) => Translate.of(x, y ?? _0, _0),
   );
 
   /**
@@ -167,7 +167,7 @@ export namespace Translate {
    */
   const parseTranslateX = map(
     CSSFunction.parse("translateX", LengthPercentage.parse),
-    ([_, x]) => Translate.of(x, _0, _0)
+    ([_, x]) => Translate.of(x, _0, _0),
   );
 
   /**
@@ -175,7 +175,7 @@ export namespace Translate {
    */
   const parseTranslateY = map(
     CSSFunction.parse("translateY", LengthPercentage.parse),
-    ([_, y]) => Translate.of(_0, y, _0)
+    ([_, y]) => Translate.of(_0, y, _0),
   );
 
   /**
@@ -183,7 +183,7 @@ export namespace Translate {
    */
   const parseTranslateZ: CSSParser<Translate> = map(
     CSSFunction.parse("translateZ", Length.parse),
-    ([_, z]) => Translate.of(_0, _0, z)
+    ([_, z]) => Translate.of(_0, _0, z),
   );
 
   /**
@@ -196,13 +196,13 @@ export namespace Translate {
         (values: ReadonlyArray<LengthPercentage>) => Length.isLength(values[2]),
         map(
           List.parseCommaSeparated(LengthPercentage.parse, 3, 3),
-          (list) => list.values
+          (list) => list.values,
         ),
-        () => "The z component of translate3d must be a length"
-      )
+        () => "The z component of translate3d must be a length",
+      ),
     ),
     // The type of z is ensured by parseIf.
-    ([_, [x, y, z]]) => Translate.of(x, y, z as Length)
+    ([_, [x, y, z]]) => Translate.of(x, y, z as Length),
   );
 
   export const parse: CSSParser<Translate> = either(
@@ -210,6 +210,6 @@ export namespace Translate {
     parseTranslateX,
     parseTranslateY,
     parseTranslateZ,
-    parseTranslate3d
+    parseTranslate3d,
   );
 }

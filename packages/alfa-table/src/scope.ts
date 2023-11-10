@@ -16,7 +16,7 @@ export namespace Scope {
     return element
       .attribute("scope")
       .flatMap((attribute) =>
-        attribute.enumerate("row", "rowgroup", "col", "colgroup")
+        attribute.enumerate("row", "rowgroup", "col", "colgroup"),
       )
       .map((scope) => {
         switch (scope) {

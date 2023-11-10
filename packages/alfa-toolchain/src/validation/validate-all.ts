@@ -20,8 +20,8 @@ export async function validate(cwd: string) {
   const config = JSON.parse(
     fs.readFileSync(
       path.join(cwd, "config", "validate-structure.json"),
-      "utf-8"
-    )
+      "utf-8",
+    ),
   );
 
   const packages = await getPackages(cwd);

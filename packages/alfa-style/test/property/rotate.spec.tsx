@@ -82,7 +82,7 @@ test("rotate accepts calculations", (t) => {
     source: h
       .declaration(
         "rotate",
-        "calc(1 + 1) calc(2 - 1) calc(2*2) calc(1deg + 1turn)"
+        "calc(1 + 1) calc(2 - 1) calc(2*2) calc(1deg + 1turn)",
       )
       .toJSON(),
   });

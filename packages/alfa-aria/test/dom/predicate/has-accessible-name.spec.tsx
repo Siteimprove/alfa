@@ -14,6 +14,6 @@ test("hasAccessibleName() checks presence of an accessible name", (t) => {
 
   t.deepEqual(
     DOM.hasAccessibleName(device, (name) => name.value === "Hello")(target),
-    true
+    true,
   );
 });

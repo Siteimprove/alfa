@@ -48,7 +48,7 @@ export class List<T> implements Collection.Indexed<T> {
     head: Empty | Leaf<T> | Branch<T>,
     tail: Empty | Leaf<T>,
     shift: number,
-    size: number
+    size: number,
   ) {
     this._head = head;
     this._tail = tail;
@@ -79,7 +79,7 @@ export class List<T> implements Collection.Indexed<T> {
       head as Empty | Leaf<U> | Branch<U>,
       tail as Empty | Leaf<U>,
       this._shift,
-      this._size
+      this._size,
     );
   }
 
@@ -90,7 +90,7 @@ export class List<T> implements Collection.Indexed<T> {
   public flatMap<U>(mapper: Mapper<T, List<U>, [index: number]>): List<U> {
     return this.reduce(
       (list, value, index) => list.concat(mapper(value, index)),
-      List.empty<U>()
+      List.empty<U>(),
     );
   }
 
@@ -105,7 +105,7 @@ export class List<T> implements Collection.Indexed<T> {
   public reduceWhile<U>(
     predicate: Predicate<T, [index: number]>,
     reducer: Reducer<T, U, [index: number]>,
-    accumulator: U
+    accumulator: U,
   ): U {
     return Iterable.reduceWhile(this, predicate, reducer, accumulator);
   }
@@ -113,13 +113,13 @@ export class List<T> implements Collection.Indexed<T> {
   public reduceUntil<U>(
     predicate: Predicate<T, [index: number]>,
     reducer: Reducer<T, U, [index: number]>,
-    accumulator: U
+    accumulator: U,
   ): U {
     return Iterable.reduceUntil(this, predicate, reducer, accumulator);
   }
 
   public filter<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): List<U>;
 
   public filter(predicate: Predicate<T, [index: number]>): List<T>;
@@ -129,7 +129,7 @@ export class List<T> implements Collection.Indexed<T> {
   }
 
   public reject<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): List<Exclude<T, U>>;
 
   public reject(predicate: Predicate<T, [index: number]>): List<T>;
@@ -139,7 +139,7 @@ export class List<T> implements Collection.Indexed<T> {
   }
 
   public find<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Option<U>;
 
   public find(predicate: Predicate<T, [index: number]>): Option<T>;
@@ -157,7 +157,7 @@ export class List<T> implements Collection.Indexed<T> {
   }
 
   public collectFirst<U>(
-    mapper: Mapper<T, Option<U>, [index: number]>
+    mapper: Mapper<T, Option<U>, [index: number]>,
   ): Option<U> {
     return Iterable.collectFirst(this, mapper);
   }
@@ -264,8 +264,8 @@ export class List<T> implements Collection.Indexed<T> {
       Iterable.concat(
         Iterable.take(this, index),
         Iterable.from([value]),
-        Iterable.skip(this, index)
-      )
+        Iterable.skip(this, index),
+      ),
     );
   }
 
@@ -281,7 +281,7 @@ export class List<T> implements Collection.Indexed<T> {
     return Iterable.reduce<T, List<T>>(
       iterable,
       (list, value) => list._push(value),
-      this
+      this,
     );
   }
 
@@ -318,7 +318,7 @@ export class List<T> implements Collection.Indexed<T> {
   }
 
   public takeWhile<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): List<U>;
 
   public takeWhile(predicate: Predicate<T, [index: number]>): List<T>;
@@ -336,7 +336,7 @@ export class List<T> implements Collection.Indexed<T> {
   }
 
   public takeLastWhile<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): List<U>;
 
   public takeLastWhile(predicate: Predicate<T, [index: number]>): List<T>;
@@ -415,7 +415,7 @@ export class List<T> implements Collection.Indexed<T> {
 
   public sortWith<T, U extends T = T>(
     this: List<U>,
-    comparer: Comparer<T>
+    comparer: Comparer<T>,
   ): List<U>;
 
   public sortWith(comparer: Comparer<T>): List<T> {
@@ -424,14 +424,14 @@ export class List<T> implements Collection.Indexed<T> {
 
   public compare<T>(
     this: List<Comparable<T>>,
-    iterable: Iterable<T>
+    iterable: Iterable<T>,
   ): Comparison {
     return this.compareWith(iterable, compareComparable);
   }
 
   public compareWith<U = T>(
     iterable: Iterable<U>,
-    comparer: Comparer<T, U, [index: number]>
+    comparer: Comparer<T, U, [index: number]>,
   ): Comparison {
     return Iterable.compareWith(this, iterable, comparer);
   }
@@ -445,7 +445,7 @@ export class List<T> implements Collection.Indexed<T> {
         groups
           .get(group)
           .getOrElse(() => List.empty<T>())
-          ._push(value)
+          ._push(value),
       );
     }, Map.empty<K, List<T>>());
   }
@@ -514,7 +514,7 @@ export class List<T> implements Collection.Indexed<T> {
         this._head,
         Leaf.of([...this._tail.values, value]),
         this._shift,
-        this._size + 1
+        this._size + 1,
       );
     }
 
@@ -531,7 +531,7 @@ export class List<T> implements Collection.Indexed<T> {
         this._tail,
         Leaf.of([value]),
         this._shift + Node.Bits,
-        this._size + 1
+        this._size + 1,
       );
     }
 
@@ -611,7 +611,7 @@ export class List<T> implements Collection.Indexed<T> {
         this._head,
         Leaf.of(this._tail.values.slice(0, this._tail.values.length - 1)),
         this._shift,
-        this._size - 1
+        this._size - 1,
       );
     }
 
@@ -620,7 +620,7 @@ export class List<T> implements Collection.Indexed<T> {
         Empty,
         this._head,
         this._shift - Node.Bits,
-        this._size - 1
+        this._size - 1,
       );
     }
 
@@ -709,7 +709,7 @@ export namespace List {
     return Array.reduce(
       array,
       (list, value) => list.append(value),
-      List.empty()
+      List.empty(),
     );
   }
 
@@ -717,7 +717,7 @@ export namespace List {
     return Iterable.reduce(
       iterable,
       (list, value) => list.append(value),
-      List.empty()
+      List.empty(),
     );
   }
 }

@@ -69,6 +69,6 @@ export namespace String {
   }
 
   export const parse: CSSParser<String> = map(Token.parseString(), (string) =>
-    String.of(string.value)
+    String.of(string.value),
   );
 }

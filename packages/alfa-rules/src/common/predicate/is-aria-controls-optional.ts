@@ -16,5 +16,5 @@ const { and } = Predicate;
  */
 export const isAriaControlsOptional = and(
   hasRole("combobox"),
-  hasAttribute("aria-expanded", (expanded) => expanded !== "true")
+  hasAttribute("aria-expanded", (expanded) => expanded !== "true"),
 );

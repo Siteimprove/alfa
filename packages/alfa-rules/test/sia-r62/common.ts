@@ -4,33 +4,33 @@ import { Contrast } from "../../src/common/diagnostic/contrast";
 import { ElementDistinguishable } from "../../src/sia-r62/diagnostics";
 
 export function addCursor(
-  style: Result<ElementDistinguishable>
+  style: Result<ElementDistinguishable>,
 ): Result<ElementDistinguishable> {
   return (style.isErr() ? Ok.of(style.getErr()) : style).map((props) =>
     props
       .withStyle(["cursor", "pointer"])
-      .withDistinguishingProperties(["cursor"])
+      .withDistinguishingProperties(["cursor"]),
   );
 }
 export function addOutline(
-  style: Result<ElementDistinguishable>
+  style: Result<ElementDistinguishable>,
 ): Result<ElementDistinguishable> {
   return (style.isErr() ? Ok.of(style.getErr()) : style).map((props) =>
     props
       .withStyle(["outline", "auto"])
-      .withDistinguishingProperties(["outline"])
+      .withDistinguishingProperties(["outline"]),
   );
 }
 
 export function makePairing(
   container: RGB,
   link: RGB,
-  contrast: number
+  contrast: number,
 ): Contrast.Pairing<["container", "link"]> {
   return Contrast.Pairing.of<["container", "link"]>(
     ["container", container],
     ["link", link],
-    contrast
+    contrast,
   );
 }
 export namespace Defaults {
@@ -49,14 +49,14 @@ export namespace Defaults {
     Percentage.of(0),
     Percentage.of(0),
     Percentage.of(0.9333333),
-    Percentage.of(1)
+    Percentage.of(1),
   );
 
   export const defaultTextColor = RGB.of(
     Percentage.of(0),
     Percentage.of(0),
     Percentage.of(0),
-    Percentage.of(1)
+    Percentage.of(1),
   );
 
   export const defaultContrastPairings = [
@@ -71,7 +71,7 @@ export namespace Defaults {
       ["color", "rgb(0% 0% 93.33333%)"],
       ["outline", "0px"],
     ],
-    defaultContrastPairings
+    defaultContrastPairings,
   );
 
   export const linkProperties = noDistinguishingProperties

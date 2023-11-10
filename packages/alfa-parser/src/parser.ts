@@ -26,14 +26,14 @@ export namespace Parser {
   ) => [I, T];
 
   export function toParser<I, T, A extends Array<unknown> = []>(
-    infallible: Parser.Infallible<I, T, A>
+    infallible: Parser.Infallible<I, T, A>,
   ): Parser<I, T, never, A> {
     return (input, ...args) => Result.of(infallible(input, ...args));
   }
 
   export function map<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    mapper: Mapper<T, U>
+    mapper: Mapper<T, U>,
   ): Parser<I, U, E, A> {
     return (input, ...args) =>
       parser(input, ...args).map(([remainder, value]) => [
@@ -44,74 +44,74 @@ export namespace Parser {
 
   export function mapResult<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    mapper: Mapper<T, Result<U, E>>
+    mapper: Mapper<T, Result<U, E>>,
   ): Parser<I, U, E, A> {
     return (input, ...args) =>
       parser(input, ...args).flatMap(([remainder, value]) =>
-        mapper(value).map((result) => [remainder, result])
+        mapper(value).map((result) => [remainder, result]),
       );
   }
 
   export function flatMap<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    mapper: Mapper<T, Parser<I, U, E, A>>
+    mapper: Mapper<T, Parser<I, U, E, A>>,
   ): Parser<I, U, E, A> {
     return (input, ...args) =>
       parser(input, ...args).flatMap(([remainder, value]) =>
-        mapper(value)(remainder, ...args)
+        mapper(value)(remainder, ...args),
       );
   }
 
   export function filter<I, T, U extends T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     refinement: Refinement<T, U>,
-    ifError: Mapper<T, E>
+    ifError: Mapper<T, E>,
   ): Parser<I, U, E, A>;
 
   export function filter<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     predicate: Predicate<T>,
-    ifError: Mapper<T, E>
+    ifError: Mapper<T, E>,
   ): Parser<I, T, E, A>;
 
   export function filter<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     predicate: Predicate<T>,
-    ifError: Mapper<T, E>
+    ifError: Mapper<T, E>,
   ): Parser<I, T, E, A> {
     return mapResult(parser, (value) =>
-      predicate(value) ? Result.of(value) : Err.of(ifError(value))
+      predicate(value) ? Result.of(value) : Err.of(ifError(value)),
     );
   }
 
   export function reject<I, T, U extends T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     refinement: Refinement<T, U>,
-    ifError: Mapper<T, E>
+    ifError: Mapper<T, E>,
   ): Parser<I, Exclude<T, U>, E, A>;
 
   export function reject<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     predicate: Predicate<T>,
-    ifError: Mapper<T, E>
+    ifError: Mapper<T, E>,
   ): Parser<I, T, E, A>;
 
   export function reject<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     predicate: Predicate<T>,
-    ifError: Mapper<T, E>
+    ifError: Mapper<T, E>,
   ): Parser<I, T, E, A> {
     return filter(parser, not(predicate), ifError);
   }
 
   export function zeroOrMore<I, T, E, A extends Array<unknown> = []>(
-    parser: Parser<I, T, E, A>
+    parser: Parser<I, T, E, A>,
   ): Parser<I, Array<T>, E, A> {
     return takeAtLeast(parser, 0);
   }
 
   export function oneOrMore<I, T, E, A extends Array<unknown> = []>(
-    parser: Parser<I, T, E, A>
+    parser: Parser<I, T, E, A>,
   ): Parser<I, [T, ...Array<T>], E, A> {
     // The result contains at least one token, so this cast is safe
     return takeAtLeast(parser, 1) as Parser<I, [T, ...Array<T>], E, A>;
@@ -119,7 +119,7 @@ export namespace Parser {
 
   export function take<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    count: number
+    count: number,
   ): Parser<I, Array<T>, E, A> {
     return takeBetween(parser, count, count);
   }
@@ -127,7 +127,7 @@ export namespace Parser {
   export function takeBetween<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
     lower: number,
-    upper: number
+    upper: number,
   ): Parser<I, Array<T>, E, A> {
     return (input, ...args) => {
       const values: Array<T> = [];
@@ -155,21 +155,21 @@ export namespace Parser {
 
   export function takeAtLeast<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    lower: number
+    lower: number,
   ): Parser<I, Array<T>, E, A> {
     return takeBetween(parser, lower, Infinity);
   }
 
   export function takeAtMost<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    upper: number
+    upper: number,
   ): Parser<I, Array<T>, E, A> {
     return takeBetween(parser, 0, upper);
   }
 
   export function takeUntil<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    condition: Parser<I, unknown, E, A>
+    condition: Parser<I, unknown, E, A>,
   ): Parser<I, Array<T>, E, A> {
     return (input, ...args) => {
       const values: Array<T> = [];
@@ -194,7 +194,7 @@ export namespace Parser {
   }
 
   export function peek<I, T, E, A extends Array<unknown> = []>(
-    parser: Parser<I, T, E, A>
+    parser: Parser<I, T, E, A>,
   ): Parser<I, T, E, A> {
     return (input, ...args) =>
       parser(input, ...args).map(([, value]) => [input, value]);
@@ -202,7 +202,7 @@ export namespace Parser {
 
   export function tee<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    callback: Callback<T, void, [remainder: I, ...args: A]>
+    callback: Callback<T, void, [remainder: I, ...args: A]>,
   ): Parser<I, T, E, A> {
     return (input, ...args) =>
       parser(input, ...args).tee(([remainder, result]) => {
@@ -212,7 +212,7 @@ export namespace Parser {
 
   export function teeErr<I, T, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    callback: Callback<E, void, A>
+    callback: Callback<E, void, A>,
   ): Parser<I, T, E, A> {
     return (input, ...args) =>
       parser(input, ...args).teeErr((err) => {
@@ -221,7 +221,7 @@ export namespace Parser {
   }
 
   export function option<I, T, E, A extends Array<unknown> = []>(
-    parser: Parser<I, T, E, A>
+    parser: Parser<I, T, E, A>,
   ): Parser<I, Option<T>, E, A> {
     return (input, ...args) => {
       const result = parser(input, ...args);
@@ -238,7 +238,7 @@ export namespace Parser {
 
   export function either<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
-    right: Parser<I, U, E, A>
+    right: Parser<I, U, E, A>,
   ): Parser<I, T | U, E, A>;
 
   export function either<I, T, E, A extends Array<unknown> = []>(
@@ -272,64 +272,64 @@ export namespace Parser {
 
   export function pair<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
-    right: Parser<I, U, E, A>
+    right: Parser<I, U, E, A>,
   ): Parser<I, [T, U], E, A> {
     return flatMap(left, (left) => map(right, (right) => [left, right]));
   }
 
   export function left<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
-    right: Parser<I, U, E, A>
+    right: Parser<I, U, E, A>,
   ): Parser<I, T, E, A> {
     return flatMap(left, (left) => map(right, () => left));
   }
 
   export function right<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
-    right: Parser<I, U, E, A>
+    right: Parser<I, U, E, A>,
   ): Parser<I, U, E, A> {
     return flatMap(left, () => map(right, (right) => right));
   }
 
   export function delimited<I, T, E, A extends Array<unknown> = []>(
     delimiter: Parser<I, unknown, E, A>,
-    parser: Parser<I, T, E, A>
+    parser: Parser<I, T, E, A>,
   ): Parser<I, T, E, A>;
 
   export function delimited<I, T, E, A extends Array<unknown> = []>(
     left: Parser<I, unknown, E, A>,
     parser: Parser<I, T, E, A>,
-    right: Parser<I, unknown, E, A>
+    right: Parser<I, unknown, E, A>,
   ): Parser<I, T, E, A>;
 
   export function delimited<I, T, E, A extends Array<unknown> = []>(
     left: Parser<I, unknown, E, A>,
     parser: Parser<I, T, E, A>,
-    right: Parser<I, unknown, E, A> = left
+    right: Parser<I, unknown, E, A> = left,
   ): Parser<I, T, E, A> {
     return flatMap(left, () =>
-      flatMap(parser, (parser) => map(right, () => parser))
+      flatMap(parser, (parser) => map(right, () => parser)),
     );
   }
 
   export function separated<I, T, U, E, A extends Array<unknown> = []>(
     parser: Parser<I, T, E, A>,
-    separator: Parser<I, unknown, E, A>
+    separator: Parser<I, unknown, E, A>,
   ): Parser<I, [T, T], E, A>;
 
   export function separated<I, T, U, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
     separator: Parser<I, unknown, E, A>,
-    right: Parser<I, U, E, A>
+    right: Parser<I, U, E, A>,
   ): Parser<I, [T, U], E, A>;
 
   export function separated<I, T, E, A extends Array<unknown> = []>(
     left: Parser<I, T, E, A>,
     separator: Parser<I, unknown, E, A>,
-    right: Parser<I, T, E, A> = left
+    right: Parser<I, T, E, A> = left,
   ): Parser<I, [T, T], E, A> {
     return flatMap(left, (left) =>
-      flatMap(separator, () => map(right, (right) => [left, right]))
+      flatMap(separator, () => map(right, (right) => [left, right])),
     );
   }
 
@@ -345,7 +345,7 @@ export namespace Parser {
     parser: Parser<I, T, E, A>,
     separator: Parser<I, unknown, E, A>,
     lower: number = 1,
-    upper: number = Infinity
+    upper: number = Infinity,
   ): Parser<I, [T, ...Array<T>], E, A> {
     return map(
       pair(
@@ -353,10 +353,10 @@ export namespace Parser {
         takeBetween(
           right(separator, parser),
           Math.max(0, lower - 1),
-          Math.min(Infinity, upper - 1)
-        )
+          Math.min(Infinity, upper - 1),
+        ),
       ),
-      ([first, rest]) => Array.prepend(rest, first)
+      ([first, rest]) => Array.prepend(rest, first),
     );
   }
 
@@ -368,17 +368,17 @@ export namespace Parser {
     T,
     E,
     U extends T = T,
-    A extends Array<unknown> = []
+    A extends Array<unknown> = [],
   >(
     refinement: Refinement<T, U>,
     parser: Parser<I, T, E, A>,
-    ifError: Mapper<T, E>
+    ifError: Mapper<T, E>,
   ): Parser<I, U, E, A>;
 
   export function parseIf<I, T, E, A extends Array<unknown> = []>(
     predicate: Predicate<T>,
     parser: Parser<I, T, E, A>,
-    ifError: Mapper<T, E>
+    ifError: Mapper<T, E>,
   ): Parser<I, T, E, A>;
 
   export function parseIf<
@@ -386,22 +386,22 @@ export namespace Parser {
     T,
     E,
     U extends T = T,
-    A extends Array<unknown> = []
+    A extends Array<unknown> = [],
   >(
     refinement: Refinement<T, U> | Predicate<T>,
     parser: Parser<I, T, E, A>,
-    ifError: Mapper<T, E>
+    ifError: Mapper<T, E>,
   ): Parser<I, U, E, A> | Parser<I, T, E, A> {
     return (input, ...args) =>
       parser(input, ...args).flatMap(([rest, result]) =>
         refinement(result)
           ? Ok.of<[I, T]>([rest, result])
-          : Err.of(ifError(result))
+          : Err.of(ifError(result)),
       );
   }
 
   export function end<I extends Iterable<unknown>, E>(
-    ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>
+    ifError: Mapper<I extends Iterable<infer T> ? T : unknown, E>,
   ): Parser<I, void, E> {
     return (input) => {
       for (const value of input) {

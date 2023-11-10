@@ -20,7 +20,7 @@ export function isWideEnough<N extends Name>(
   target: Element,
   device: Device,
   property: N,
-  threshold: number
+  threshold: number,
 ) {
   const style = Style.from(target, device);
 
@@ -61,7 +61,7 @@ export function isWideEnough<N extends Name>(
           declaration,
           // The owner is guaranteed to exist by the hasSpecifiedStyle
           // filter in Applicability.
-          declaration.owner.getUnsafe()
+          declaration.owner.getUnsafe(),
         ),
       () =>
         Outcomes.IsNotWideEnough(
@@ -73,8 +73,8 @@ export function isWideEnough<N extends Name>(
           declaration,
           // The owner is guaranteed to exist by the hasSpecifiedStyle
           // filter in Applicability.
-          declaration.owner.getUnsafe()
-        )
+          declaration.owner.getUnsafe(),
+        ),
     ),
   };
 }
@@ -90,7 +90,7 @@ export namespace Outcomes {
     ratio: number,
     threshold: number,
     declaration: Declaration,
-    owner: Element
+    owner: Element,
   ) =>
     Ok.of(
       TextSpacing.of(
@@ -101,8 +101,8 @@ export namespace Outcomes {
         ratio,
         threshold,
         declaration,
-        owner
-      )
+        owner,
+      ),
     );
 
   export const IsNotWideEnough = (
@@ -112,7 +112,7 @@ export namespace Outcomes {
     ratio: number,
     threshold: number,
     declaration: Declaration,
-    owner: Element
+    owner: Element,
   ) =>
     Err.of(
       TextSpacing.of(
@@ -123,7 +123,7 @@ export namespace Outcomes {
         ratio,
         threshold,
         declaration,
-        owner
-      )
+        owner,
+      ),
     );
 }

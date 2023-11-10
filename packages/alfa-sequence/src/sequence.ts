@@ -27,19 +27,19 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   reduceWhile<U>(
     predicate: Predicate<T, [index: number]>,
     reducer: Reducer<T, U, [index: number]>,
-    accumulator: U
+    accumulator: U,
   ): U;
   reduceUntil<U>(
     predicate: Predicate<T, [index: number]>,
     reducer: Reducer<T, U, [index: number]>,
-    accumulator: U
+    accumulator: U,
   ): U;
   filter<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Sequence<U>;
   filter(predicate: Predicate<T, [index: number]>): Sequence<T>;
   reject<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Sequence<Exclude<T, U>>;
   reject(predicate: Predicate<T, [index: number]>): Sequence<T>;
   find<U extends T>(refinement: Refinement<T, U, [index: number]>): Option<U>;
@@ -70,13 +70,13 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   last(): Option<T>;
   take(count: number): Sequence<T>;
   takeWhile<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Sequence<U>;
   takeWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeLast(count: number): Sequence<T>;
   takeLastWhile<U extends T>(
-    refinement: Refinement<T, U, [index: number]>
+    refinement: Refinement<T, U, [index: number]>,
   ): Sequence<U>;
   takeLastWhile(predicate: Predicate<T, [index: number]>): Sequence<T>;
   takeLastUntil(predicate: Predicate<T, [index: number]>): Sequence<T>;
@@ -97,12 +97,12 @@ export interface Sequence<T> extends Collection.Indexed<T> {
   sortWith(comparer: Comparer<T>): Sequence<T>;
   sortWith<T, U extends T = T>(
     this: Sequence<U>,
-    comparer: Comparer<T>
+    comparer: Comparer<T>,
   ): Sequence<U>;
   compare<T>(this: Sequence<Comparable<T>>, iterable: Iterable<T>): Comparison;
   compareWith<U = T>(
     iterable: Iterable<U>,
-    comparer: Comparer<T, U, [index: number]>
+    comparer: Comparer<T, U, [index: number]>,
   ): Comparison;
   groupBy<K>(grouper: Mapper<T, K, [index: number]>): Map<K, Sequence<T>>;
   toArray(): Array<T>;

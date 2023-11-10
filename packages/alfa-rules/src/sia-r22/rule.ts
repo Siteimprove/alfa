@@ -27,8 +27,8 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
             expectation(
               hasCaptions,
               () => Outcomes.HasCaptions,
-              () => Outcomes.HasNoCaptions
-            )
+              () => Outcomes.HasNoCaptions,
+            ),
           ),
         };
       },
@@ -41,10 +41,10 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
  */
 export namespace Outcomes {
   export const HasCaptions = Ok.of(
-    Diagnostic.of(`The \`<video>\` element has captions`)
+    Diagnostic.of(`The \`<video>\` element has captions`),
   );
 
   export const HasNoCaptions = Err.of(
-    Diagnostic.of(`The \`<video>\` element does not have captions`)
+    Diagnostic.of(`The \`<video>\` element does not have captions`),
   );
 }

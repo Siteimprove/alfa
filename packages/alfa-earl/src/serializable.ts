@@ -17,7 +17,7 @@ export interface Serializable<T extends EARL = EARL> {
  */
 export namespace Serializable {
   export function isSerializable<T extends EARL>(
-    value: unknown
+    value: unknown,
   ): value is Serializable<T> {
     return isObject(value) && isFunction(value.toEARL);
   }

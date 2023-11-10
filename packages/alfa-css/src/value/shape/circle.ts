@@ -19,11 +19,11 @@ const { map, option, pair, right } = Parser;
  */
 export class Circle<
   R extends Radius = Radius,
-  P extends Position = Position
+  P extends Position = Position,
 > extends BasicShape<"circle", Value.HasCalculation<[R, P]>> {
   public static of<R extends Radius, P extends Position>(
     radius: R,
-    center: P
+    center: P,
   ): Circle<R, P> {
     return new Circle(radius, center);
   }
@@ -48,7 +48,7 @@ export class Circle<
   public resolve(resolver: Circle.Resolver): Circle.Canonical {
     return new Circle(
       this._radius.resolve(resolver),
-      this._center.resolve(resolver)
+      this._center.resolve(resolver),
     );
   }
 
@@ -103,12 +103,12 @@ export namespace Circle {
     Position.PartialResolver;
 
   export function partiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Circle) => PartiallyResolved {
     return (value) =>
       Circle.of(
         Radius.PartiallyResolve(resolver)(value.radius),
-        Position.partiallyResolve(resolver)(value.center)
+        Position.partiallyResolve(resolver)(value.center),
       );
   }
 
@@ -126,16 +126,16 @@ export namespace Circle {
             option(Token.parseWhitespace),
             right(
               Keyword.parse("at"),
-              right(Token.parseWhitespace, Position.parse())
-            )
-          )
-        )
-      )
+              right(Token.parseWhitespace, Position.parse()),
+            ),
+          ),
+        ),
+      ),
     ),
     ([_, [radius, center]]) =>
       Circle.of(
         radius.getOr(Radius.of(Keyword.of("closest-side"))),
-        center.getOr(Position.of(Keyword.of("center"), Keyword.of("center")))
-      )
+        center.getOr(Position.of(Keyword.of("center"), Keyword.of("center"))),
+      ),
   );
 }

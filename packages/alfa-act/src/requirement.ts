@@ -10,7 +10,8 @@ export abstract class Requirement
   implements
     Equatable,
     json.Serializable<Requirement.JSON>,
-    earl.Serializable<Requirement.EARL> {
+    earl.Serializable<Requirement.EARL>
+{
   protected constructor() {}
 
   public abstract get uri(): string;

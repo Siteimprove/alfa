@@ -10,7 +10,7 @@ import { Numeric } from "./numeric";
 export abstract class Dimension<
   T extends Numeric.Dimension = Numeric.Dimension,
   // The actual unit in which the dimension is expressed, e.g px, em, rad, …
-  U extends ToDimension<T> = ToDimension<T>
+  U extends ToDimension<T> = ToDimension<T>,
 > extends Numeric<T> {
   protected readonly _unit: U;
 
@@ -48,7 +48,7 @@ export abstract class Dimension<
 export namespace Dimension {
   export interface JSON<
     T extends Numeric.Dimension = Numeric.Dimension,
-    U extends ToDimension<T> = ToDimension<T>
+    U extends ToDimension<T> = ToDimension<T>,
   > extends Numeric.JSON<T> {
     unit: U;
   }

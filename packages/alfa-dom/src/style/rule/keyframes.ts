@@ -58,7 +58,7 @@ export namespace KeyframesRule {
    */
   export function fromKeyframesRule(json: JSON): Trampoline<KeyframesRule> {
     return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
-      KeyframesRule.of(json.name, rules)
+      KeyframesRule.of(json.name, rules),
     );
   }
 }

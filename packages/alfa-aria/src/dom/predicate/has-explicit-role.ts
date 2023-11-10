@@ -9,7 +9,7 @@ const { equals, property } = Predicate;
  * @public
  */
 export function hasExplicitRole(
-  predicate?: Predicate<Role>
+  predicate?: Predicate<Role>,
 ): Predicate<Element>;
 
 /**

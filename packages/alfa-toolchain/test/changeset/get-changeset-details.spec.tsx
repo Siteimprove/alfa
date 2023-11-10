@@ -23,7 +23,7 @@ Some clever details.`,
           details: "Some clever details.",
           packages: ["my-package", "my-other-package"],
         },
-      }
+      },
     );
   }
 });
@@ -47,7 +47,7 @@ test("getDetails() accepts a valid changeset without details", (t) => {
           details: "",
           packages: ["my-package", "my-other-package"],
         },
-      }
+      },
     );
   }
 });
@@ -77,7 +77,7 @@ over several lines.`,
           details: "Some clever details\nthat\n\nspans\nover several lines.",
           packages: ["my-package", "my-other-package"],
         },
-      }
+      },
     );
   }
 });
@@ -93,7 +93,7 @@ test("getDetails() rejects a changeset with incorrect kind", (t) => {
         summary: `**${kind}:** Some clever title`,
         id: "unused",
       }).toJSON(),
-      { type: "err", error: `Invalid kind: ${kind}` }
+      { type: "err", error: `Invalid kind: ${kind}` },
     );
   }
 });
@@ -116,7 +116,7 @@ test("getDetails() rejects a changeset with incorrect header", (t) => {
       {
         type: "err",
         error: `Changeset doesn't match the required format (${summary})`,
-      }
+      },
     );
   }
 });

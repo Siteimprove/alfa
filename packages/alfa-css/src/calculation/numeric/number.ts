@@ -47,13 +47,13 @@ export namespace Number {
    */
   export const parseZero: CSSParser<Number> = map(
     Token.parseNumber((number) => number.value === 0),
-    (number) => Number.of(number.value)
+    (number) => Number.of(number.value),
   );
 
   /**
    * {@link https://drafts.csswg.org/css-values/#number-value}
    */
   export const parse: CSSParser<Number> = map(Token.parseNumber(), (number) =>
-    Number.of(number.value)
+    Number.of(number.value),
   );
 }

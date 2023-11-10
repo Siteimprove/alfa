@@ -33,7 +33,7 @@ function mediaTranscript(
     "transcript-link"
   >,
   device: Device,
-  kind: "<audio>" | "<video>"
+  kind: "<audio>" | "<video>",
 ) {
   return {
     1: transcript.map((transcript) => {
@@ -58,7 +58,7 @@ function mediaTranscript(
       return expectation(
         transcript.some(and(isElement, isPerceivableForAll(device))),
         () => Outcomes.HasPerceivableTranscript(kind),
-        () => Outcomes.HasNonPerceivableTranscript(kind)
+        () => Outcomes.HasNonPerceivableTranscript(kind),
       );
     }),
   };
@@ -68,13 +68,13 @@ export function audioTranscript(target: Element, device: Device) {
   const alt = Question.of(
     "transcript",
     target,
-    `Where is the transcript that describes the content of the \`<audio>\` element?`
+    `Where is the transcript that describes the content of the \`<audio>\` element?`,
   );
 
   const label = Question.of(
     "transcript-link",
     target,
-    `Where is the link pointing to a perceivable transcript that describes the content of the \`<audio>\` element?`
+    `Where is the link pointing to a perceivable transcript that describes the content of the \`<audio>\` element?`,
   );
 
   return mediaTranscript(alt, label, device, "<audio>");
@@ -84,13 +84,13 @@ export function videoTranscript(target: Element, device: Device) {
   const alt = Question.of(
     "transcript",
     target,
-    `Where is the transcript that describes the content of the \`<video>\` element?`
+    `Where is the transcript that describes the content of the \`<video>\` element?`,
   );
 
   const label = Question.of(
     "transcript-link",
     target,
-    `Where is the link pointing to a perceivable transcript that describes the content of the \`<video>\` element?`
+    `Where is the link pointing to a perceivable transcript that describes the content of the \`<video>\` element?`,
   );
 
   return mediaTranscript(alt, label, device, "<video>");
@@ -103,13 +103,13 @@ export namespace Outcomes {
   export const HasPerceivableTranscript = (kind: "<audio>" | "<video>") =>
     Ok.of(
       Diagnostic.of(
-        `The \`${kind}\` element has a transcript that is perceivable`
-      )
+        `The \`${kind}\` element has a transcript that is perceivable`,
+      ),
     );
 
   export const HasPerceivableLink = (kind: "<audio>" | "<video>") =>
     Ok.of(
-      Diagnostic.of(`The \`${kind}\` element has a link that is perceivable`)
+      Diagnostic.of(`The \`${kind}\` element has a link that is perceivable`),
     );
 
   export const HasNoTranscriptLink = (kind: "<audio>" | "<video>") =>
@@ -118,14 +118,14 @@ export namespace Outcomes {
   export const HasNonPerceivableLink = (kind: "<audio>" | "<video>") =>
     Err.of(
       Diagnostic.of(
-        `The \`${kind}\` has a link to transcript, but the link is not perceivable`
-      )
+        `The \`${kind}\` has a link to transcript, but the link is not perceivable`,
+      ),
     );
 
   export const HasNonPerceivableTranscript = (kind: "<audio>" | "<video>") =>
     Err.of(
       Diagnostic.of(
-        `The \`${kind}\` element has a transcript that is not perceivable`
-      )
+        `The \`${kind}\` element has a transcript that is not perceivable`,
+      ),
     );
 }

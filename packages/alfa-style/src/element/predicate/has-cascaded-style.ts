@@ -17,7 +17,7 @@ export function hasCascadedStyle<N extends Longhands.Name>(
   name: N,
   predicate: Predicate<Style.Cascaded<N>, [source: Option<Declaration>]>,
   device: Device,
-  context?: Context
+  context?: Context,
 ): Predicate<Element | Text> {
   return function hasCascadedStyle(node): boolean {
     return isElement(node)

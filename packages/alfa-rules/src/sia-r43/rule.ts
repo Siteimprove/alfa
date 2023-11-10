@@ -30,8 +30,8 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             hasNamespace(Namespace.SVG),
             hasExplicitRole("img", "graphics-document", "graphics-symbol"),
-            isIncludedInTheAccessibilityTree(device)
-          )
+            isIncludedInTheAccessibilityTree(device),
+          ),
         );
       },
 
@@ -40,7 +40,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             hasNonEmptyAccessibleName(device)(target),
             () => Outcomes.HasName(target.name),
-            () => Outcomes.HasNoName(target.name)
+            () => Outcomes.HasNoName(target.name),
           ),
         };
       },
@@ -58,7 +58,7 @@ export namespace Outcomes {
   export const HasNoName = (target: string) =>
     Err.of(
       Diagnostic.of(
-        `The \`<${target}>\` element does not have an accessible name`
-      )
+        `The \`<${target}>\` element does not have an accessible name`,
+      ),
     );
 }

@@ -74,7 +74,7 @@ export namespace Native {
         | globalThis.Element
         | globalThis.HTMLElement
         | globalThis.HTMLIFrameElement
-        | globalThis.SVGElement
+        | globalThis.SVGElement,
     ): Element.JSON {
       return {
         type: "element",
@@ -227,7 +227,7 @@ export namespace Native {
     }
 
     function toFontFaceRule(
-      rule: globalThis.CSSFontFaceRule
+      rule: globalThis.CSSFontFaceRule,
     ): FontFaceRule.JSON {
       return {
         type: "font-face",
@@ -244,7 +244,7 @@ export namespace Native {
     }
 
     function toKeyframesRule(
-      rule: globalThis.CSSKeyframesRule
+      rule: globalThis.CSSKeyframesRule,
     ): KeyframesRule.JSON {
       let rules: Array<Rule.JSON>;
 
@@ -262,7 +262,7 @@ export namespace Native {
     }
 
     function toKeyframeRule(
-      rule: globalThis.CSSKeyframeRule
+      rule: globalThis.CSSKeyframeRule,
     ): KeyframeRule.JSON {
       return {
         type: "keyframe",
@@ -272,7 +272,7 @@ export namespace Native {
     }
 
     function toNamespaceRule(
-      rule: globalThis.CSSNamespaceRule
+      rule: globalThis.CSSNamespaceRule,
     ): NamespaceRule.JSON {
       return {
         type: "namespace",
@@ -282,7 +282,7 @@ export namespace Native {
     }
 
     function toSupportsRule(
-      rule: globalThis.CSSSupportsRule
+      rule: globalThis.CSSSupportsRule,
     ): SupportsRule.JSON {
       let rules: Array<Rule.JSON>;
 
@@ -321,7 +321,7 @@ export namespace Native {
 
     function map<T, U>(
       arrayLike: ArrayLike<T>,
-      mapper: (value: T) => U
+      mapper: (value: T) => U,
     ): Array<U> {
       const result = new Array<U>(arrayLike.length);
 

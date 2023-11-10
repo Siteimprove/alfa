@@ -88,5 +88,5 @@ export default Shorthand.of(
         ["text-decoration-thickness", thickness ?? Keyword.of("initial")],
       ],
     ]);
-  }
+  },
 );

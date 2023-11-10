@@ -83,7 +83,7 @@ export namespace Keyword {
   ): CSSParser<ToKeywords<T>> {
     return map(
       Token.parseIdent((ident) =>
-        keywords.some(equals(ident.value.toLowerCase()))
+        keywords.some(equals(ident.value.toLowerCase())),
       ),
       (ident) =>
         // Make sure each possible keyword is separated into its own type. For
@@ -91,7 +91,7 @@ export namespace Keyword {
         // `Keyword<"foo"> | Keyword<"bar">`, not `Keyword<"foo" | "bar">`. Why?
         // Because the former is assignable to the latter, but the latter isn't
         // assignable to the former.
-        Keyword.of(ident.value.toLowerCase()) as ToKeywords<T>
+        Keyword.of(ident.value.toLowerCase()) as ToKeywords<T>,
     );
   }
 }

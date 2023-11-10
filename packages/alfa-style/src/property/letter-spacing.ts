@@ -24,12 +24,12 @@ export default Longhand.of<Specified, Computed>(
     value.map((spacing) =>
       Selective.of(spacing)
         .if(Length.isLength, (spacing) =>
-          spacing.resolve(Resolver.length(style))
+          spacing.resolve(Resolver.length(style)),
         )
         .else(() => Length.of(0, "px"))
-        .get()
+        .get(),
     ),
   {
     inherits: true,
-  }
+  },
 );

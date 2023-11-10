@@ -29,9 +29,9 @@ export default Rule.Atomic.of<Page, Element>({
             isElement,
             and(
               hasNamespace(Namespace.HTML, Namespace.SVG),
-              hasRole(device, (role) => role.hasPresentationalChildren())
-            )
-          )
+              hasRole(device, (role) => role.hasPresentationalChildren()),
+            ),
+          ),
         );
       },
 
@@ -44,7 +44,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             tabbables.isEmpty(),
             () => Outcomes.HasNoTabbableDescendants,
-            () => Outcomes.HasTabbableDescendants(tabbables)
+            () => Outcomes.HasTabbableDescendants(tabbables),
           ),
         };
       },
@@ -57,7 +57,7 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const HasNoTabbableDescendants = Ok.of(
-    Diagnostic.of(`The element has no tabbable descendants`)
+    Diagnostic.of(`The element has no tabbable descendants`),
   );
 
   export const HasTabbableDescendants = (errors: Iterable<Element>) =>

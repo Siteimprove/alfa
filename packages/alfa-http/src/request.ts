@@ -23,7 +23,7 @@ export class Request
     method: string,
     url: URL,
     headers: Headers = Headers.empty(),
-    body: ArrayBuffer = new ArrayBuffer(0)
+    body: ArrayBuffer = new ArrayBuffer(0),
   ): Request {
     return new Request(method, url, headers, body);
   }
@@ -43,7 +43,7 @@ export class Request
     method: string,
     url: URL,
     headers: Headers,
-    body: ArrayBuffer
+    body: ArrayBuffer,
   ) {
     this._method = method;
     this._url = url;
@@ -148,8 +148,8 @@ export namespace Request {
         json.method,
         url,
         Headers.from(json.headers),
-        Encoder.encode(json.body)
-      )
+        Encoder.encode(json.body),
+      ),
     );
   }
 

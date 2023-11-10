@@ -22,10 +22,11 @@ import type { Resolvable } from "./resolvable";
 // This is the main Value class that is implemented by all CSS values, with or
 // without calculations.
 export abstract class Value<
-  T extends string = string,
-  CALC extends boolean = boolean,
-  R extends string = T
-> implements
+    T extends string = string,
+    CALC extends boolean = boolean,
+    R extends string = T,
+  >
+  implements
     Equatable,
     Hashable,
     Serializable<Value.JSON<T>>,
@@ -71,7 +72,7 @@ export namespace Value {
 
   export function isValue<T extends string>(
     value: unknown,
-    type?: T
+    type?: T,
   ): value is Value<T> {
     return (
       value instanceof Value && (type === undefined || value.type === type)

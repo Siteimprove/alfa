@@ -21,7 +21,7 @@ test("evaluate() passes videos with less than 3 second of audio", async (t) => {
         "has-audio": true,
         "is-above-duration-threshold": true,
         "is-below-audio-duration-threshold": true,
-      })
+      }),
     ),
     [
       passed(
@@ -30,9 +30,9 @@ test("evaluate() passes videos with less than 3 second of audio", async (t) => {
         {
           1: Outcomes.DurationBelowThreshold("video"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -49,7 +49,7 @@ test("evaluate() fails videos with more than 3 second of audio", async (t) => {
         "has-audio": true,
         "is-above-duration-threshold": true,
         "is-below-audio-duration-threshold": false,
-      })
+      }),
     ),
     [
       failed(
@@ -58,9 +58,9 @@ test("evaluate() fails videos with more than 3 second of audio", async (t) => {
         {
           1: Outcomes.DurationAboveThreshold("video"),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -75,9 +75,9 @@ test("evaluate() can't tell when questions are left unanswered", async (t) => {
     await evaluate(
       R48,
       { document },
-      oracle({ "has-audio": true, "is-above-duration-threshold": true })
+      oracle({ "has-audio": true, "is-above-duration-threshold": true }),
     ),
-    [cantTell(R48, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R48, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -94,9 +94,9 @@ test("evaluate() is inapplicable to short videos", async (t) => {
     await evaluate(
       R48,
       { document },
-      oracle({ "has-audio": true, "is-above-duration-threshold": false })
+      oracle({ "has-audio": true, "is-above-duration-threshold": false }),
     ),
-    [inapplicable(R48, Outcome.Mode.SemiAuto)]
+    [inapplicable(R48, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -105,7 +105,7 @@ test("evaluate() is inapplicable to audio-less videos", async (t) => {
 
   t.deepEqual(
     await evaluate(R48, { document }, oracle({ "has-audio": false })),
-    [inapplicable(R48, Outcome.Mode.SemiAuto)]
+    [inapplicable(R48, Outcome.Mode.SemiAuto)],
   );
 });
 
