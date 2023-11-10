@@ -23,8 +23,8 @@ export default Longhand.of<Specified, Computed>(
     Percentage.of(0),
     Percentage.of(0),
     Percentage.of(0),
-    Percentage.of(0)
+    Percentage.of(0),
   ),
   parse,
-  (value) => value.map((color) => color.resolve())
+  (value) => value.map((color) => color.resolve()),
 );

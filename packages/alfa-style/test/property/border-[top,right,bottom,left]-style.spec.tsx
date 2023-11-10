@@ -11,7 +11,7 @@ for (const side of ["top", "right", "bottom", "left"] as const) {
 
     h.document(
       [element],
-      [h.sheet([h.rule.style("div", [h.declaration(property, "dotted")])])]
+      [h.sheet([h.rule.style("div", [h.declaration(property, "dotted")])])],
     );
 
     t.deepEqual(cascaded(element, property), {
@@ -46,7 +46,7 @@ test(`#cascaded() parses \`border-style: dotted dashed solid groove\``, (t) => {
   const element = <div />;
   const declaration = h.declaration(
     "border-style",
-    "dotted dashed solid groove"
+    "dotted dashed solid groove",
   );
 
   h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);

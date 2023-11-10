@@ -29,12 +29,12 @@ export const parse = map(
   takeBetween(
     delimited(
       option(Token.parseWhitespace),
-      Keyword.parse("stretch", "repeat", "round", "space")
+      Keyword.parse("stretch", "repeat", "round", "space"),
     ),
     1,
-    2
+    2,
   ),
-  ([vertical, horizontal = vertical]) => Tuple.of(vertical, horizontal)
+  ([vertical, horizontal = vertical]) => Tuple.of(vertical, horizontal),
 );
 
 /**
@@ -44,5 +44,5 @@ export const parse = map(
 export default Longhand.of<Specified, Computed>(
   Tuple.of(Keyword.of("stretch"), Keyword.of("stretch")),
   parse,
-  (value) => value
+  (value) => value,
 );

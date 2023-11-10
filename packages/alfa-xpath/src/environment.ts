@@ -21,7 +21,7 @@ export interface Focus<T extends Item.Value> extends Item<T> {
  */
 export function withFocus<T extends Item.Value, U extends Item.Value>(
   environment: Environment<T>,
-  focus: Focus<U>
+  focus: Focus<U>,
 ): Environment<U> {
   return { ...environment, focus };
 }

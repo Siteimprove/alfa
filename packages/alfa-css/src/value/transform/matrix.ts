@@ -21,8 +21,8 @@ export class Matrix
   public static of(...values: Matrix.Values<Number>): Matrix {
     return new Matrix(
       values.map((row) =>
-        row.map((value) => value.resolve())
-      ) as Matrix.Values<Number.Canonical>
+        row.map((value) => value.resolve()),
+      ) as Matrix.Values<Number.Canonical>,
     );
   }
 
@@ -45,7 +45,7 @@ export class Matrix
     return (
       value instanceof Matrix &&
       value._values.every((row, i) =>
-        row.every((value, j) => value.equals(this._values[i][j]))
+        row.every((value, j) => value.equals(this._values[i][j])),
       )
     );
   }
@@ -62,7 +62,7 @@ export class Matrix
     return {
       ...super.toJSON(),
       values: this._values.map((row) =>
-        row.map((value) => value.toJSON())
+        row.map((value) => value.toJSON()),
       ) as Matrix.Values<Number.Fixed.JSON>,
     };
   }
@@ -87,7 +87,7 @@ export class Matrix
     }
 
     return `matrix3d(${[a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p].join(
-      ", "
+      ", ",
     )})`;
   }
 }
@@ -106,7 +106,7 @@ export namespace Matrix {
     [T, T, T, T],
     [T, T, T, T],
     [T, T, T, T],
-    [T, T, T, T]
+    [T, T, T, T],
   ];
 
   export function isMatrix(value: unknown): value is Matrix {
@@ -121,8 +121,8 @@ export namespace Matrix {
       name,
       map(
         List.parseCommaSeparated(Number.parse, quantity, quantity),
-        (list) => list.values
-      )
+        (list) => list.values,
+      ),
     );
 
   /**
@@ -135,7 +135,7 @@ export namespace Matrix {
       [_a, _c, _0, _e],
       [_b, _d, _0, _f],
       [_0, _0, _1, _0],
-      [_0, _0, _0, _1]
+      [_0, _0, _0, _1],
     );
   });
 
@@ -152,7 +152,7 @@ export namespace Matrix {
       [_a, _e, _i, _m],
       [_b, _f, _j, _n],
       [_c, _g, _k, _o],
-      [_d, _h, _l, _p]
+      [_d, _h, _l, _p],
     );
   });
 

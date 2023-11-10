@@ -30,7 +30,7 @@ function mediaTextAlternative(
     "label"
   >,
   device: Device,
-  kind: "<audio>" | "<video>"
+  kind: "<audio>" | "<video>",
 ) {
   return {
     1: alt.map((alt) =>
@@ -40,10 +40,10 @@ function mediaTextAlternative(
           expectation(
             alt.some(isPerceivableForAll(device)),
             () => Outcomes.HasPerceivableAlternative(kind),
-            () => Outcomes.HasNonPerceivableAlternative(kind)
+            () => Outcomes.HasNonPerceivableAlternative(kind),
           ),
-        () => Outcomes.HasNoAlternative(kind)
-      )
+        () => Outcomes.HasNoAlternative(kind),
+      ),
     ),
     2: label.map((label) =>
       expectation(
@@ -52,10 +52,10 @@ function mediaTextAlternative(
           expectation(
             label.some(isPerceivableForAll(device)),
             () => Outcomes.HasPerceivableLabel(kind),
-            () => Outcomes.HasNonPerceivableLabel(kind)
+            () => Outcomes.HasNonPerceivableLabel(kind),
           ),
-        () => Outcomes.HasNoLabel(kind)
-      )
+        () => Outcomes.HasNoLabel(kind),
+      ),
     ),
   };
 }
@@ -65,13 +65,13 @@ export function audioTextAlternative(target: Element, device: Device) {
   const alt = Question.of(
     "text-alternative",
     target,
-    `Where is the text alternative of the \`<audio>\` element?`
+    `Where is the text alternative of the \`<audio>\` element?`,
   );
 
   const label = Question.of(
     "label",
     target,
-    `Where is the text that labels the \`<audio>\` element as an audio alternative?`
+    `Where is the text that labels the \`<audio>\` element as an audio alternative?`,
   );
 
   return mediaTextAlternative(alt, label, device, "<audio>");
@@ -81,13 +81,13 @@ export function videoTextAlternative(target: Element, device: Device) {
   const alt = Question.of(
     "text-alternative",
     target,
-    `Where is the text alternative of the \`<video>\` element?`
+    `Where is the text alternative of the \`<video>\` element?`,
   );
 
   const label = Question.of(
     "label",
     target,
-    `Where is the text that labels the \`<video>\` element as a video alternative?`
+    `Where is the text that labels the \`<video>\` element as a video alternative?`,
   );
 
   return mediaTextAlternative(alt, label, device, "<video>");
@@ -100,15 +100,15 @@ export namespace Outcomes {
   export const HasPerceivableAlternative = (kind: "<audio>" | "<video>") =>
     Ok.of(
       Diagnostic.of(
-        `The \`${kind}\` element has a text alternative that is perceivable`
-      )
+        `The \`${kind}\` element has a text alternative that is perceivable`,
+      ),
     );
 
   export const HasNonPerceivableAlternative = (kind: "<audio>" | "<video>") =>
     Err.of(
       Diagnostic.of(
-        `The \`${kind}\` element has a text alternative that is not perceivable`
-      )
+        `The \`${kind}\` element has a text alternative that is not perceivable`,
+      ),
     );
 
   export const HasNoAlternative = (kind: "<audio>" | "<video>") =>
@@ -117,21 +117,21 @@ export namespace Outcomes {
   export const HasPerceivableLabel = (kind: "<audio>" | "<video>") =>
     Ok.of(
       Diagnostic.of(
-        `The \`${kind}\` element is labelled as an alternative for text and the label is perceivable`
-      )
+        `The \`${kind}\` element is labelled as an alternative for text and the label is perceivable`,
+      ),
     );
 
   export const HasNonPerceivableLabel = (kind: "<audio>" | "<video>") =>
     Err.of(
       Diagnostic.of(
-        `The \`${kind}\` element is labelled as an alternative for text, but the label is not perceivable`
-      )
+        `The \`${kind}\` element is labelled as an alternative for text, but the label is not perceivable`,
+      ),
     );
 
   export const HasNoLabel = (kind: "<audio>" | "<video>") =>
     Err.of(
       Diagnostic.of(
-        `The \`${kind}\` element is not labelled as an alternative for text`
-      )
+        `The \`${kind}\` element is not labelled as an alternative for text`,
+      ),
     );
 }

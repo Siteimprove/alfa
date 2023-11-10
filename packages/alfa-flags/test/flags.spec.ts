@@ -25,7 +25,7 @@ test(".of() performs bitwise or of flags", (t) => {
 
   t.deepEqual(
     Example.of(Example.flagA, Example.flagC, Example.none, Example.flagD).value,
-    13
+    13,
   );
 });
 

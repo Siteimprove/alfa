@@ -16,7 +16,7 @@ export function hasComputedStyle<N extends Longhands.Name>(
   name: N,
   predicate: Predicate<Style.Computed<N>, [source: Option<Declaration>]>,
   device: Device,
-  context?: Context
+  context?: Context,
 ): Predicate<Element | Text> {
   return function hasComputedStyle(node): boolean {
     return isElement(node)

@@ -28,7 +28,7 @@ export namespace Box {
   export const parse: CSSParser<Box> = Keyword.parse(
     "border-box",
     "padding-box",
-    "content-box"
+    "content-box",
   );
 
   /**
@@ -42,7 +42,7 @@ export namespace Box {
 
   export const parseShape: CSSParser<Shape> = either(
     parse,
-    Keyword.parse("margin-box")
+    Keyword.parse("margin-box"),
   );
 
   /**
@@ -64,6 +64,6 @@ export namespace Box {
 
   export const parseGeometry: CSSParser<Geometry> = either(
     parseShape,
-    Keyword.parse("fill-box", "stroke-box", "view-box")
+    Keyword.parse("fill-box", "stroke-box", "view-box"),
   );
 }

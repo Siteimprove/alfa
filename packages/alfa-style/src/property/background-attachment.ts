@@ -32,5 +32,5 @@ export const initialItem = Keyword.of("scroll");
 export default Longhand.of<Specified, Computed>(
   List.of([initialItem], ", "),
   parseList,
-  (value) => value
+  (value) => value,
 );

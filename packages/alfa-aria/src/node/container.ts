@@ -20,7 +20,7 @@ export class Container extends Node<"container"> {
   public static of(
     owner: dom.Node,
     children: Iterable<Node> = [],
-    role: Option<Role> = None
+    role: Option<Role> = None,
   ): Container {
     return new Container(owner, Array.from(children), role);
   }
@@ -30,7 +30,7 @@ export class Container extends Node<"container"> {
   private constructor(
     owner: dom.Node,
     children: Array<Node>,
-    role: Option<Role>
+    role: Option<Role>,
   ) {
     super(owner, children, "container");
     this._role = role;
@@ -40,7 +40,7 @@ export class Container extends Node<"container"> {
     return new Container(
       this._node,
       (this._children as Array<Node>).map((child) => child.clone()),
-      this._role
+      this._role,
     );
   }
 

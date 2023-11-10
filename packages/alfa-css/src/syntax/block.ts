@@ -112,29 +112,29 @@ export namespace Block {
         pair(
           open,
           // eta expansion is necessary for `this` binding to resolve correctly
-          takeUntil((input) => Component.consume(input), closed)
+          takeUntil((input) => Component.consume(input), closed),
         ),
-        closed
+        closed,
       ),
       ([open, components]) =>
         Block.of(
           open,
-          components.flatMap((component) => [...component])
-        )
+          components.flatMap((component) => [...component]),
+        ),
     );
   }
 
   const consumeParentheses = consumeDelimited(
     Token.parseOpenParenthesis,
-    Token.parseCloseParenthesis
+    Token.parseCloseParenthesis,
   );
   const consumeSquareBrackets = consumeDelimited(
     Token.parseOpenSquareBracket,
-    Token.parseCloseSquareBracket
+    Token.parseCloseSquareBracket,
   );
   const consumeCurlyBracket = consumeDelimited(
     Token.parseOpenCurlyBracket,
-    Token.parseCloseCurlyBracket
+    Token.parseCloseCurlyBracket,
   );
 
   /**
@@ -143,6 +143,6 @@ export namespace Block {
   export const consume: CSSParser<Block> = either(
     consumeParentheses,
     consumeSquareBrackets,
-    consumeCurlyBracket
+    consumeCurlyBracket,
   );
 }

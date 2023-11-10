@@ -135,9 +135,9 @@ test(`.traverse() traverses an iterable of values and lifts them to a future of
       iterables`, async (t) => {
   t.deepEqual(
     await Future.traverse([1, 2, 3, 4], (n) =>
-      wait(n * 10).map(() => n * 2)
+      wait(n * 10).map(() => n * 2),
     ).map((ns) => [...ns]),
-    [2, 4, 6, 8]
+    [2, 4, 6, 8],
   );
 });
 
@@ -145,7 +145,7 @@ test(".traverse() does not run any resulting deferred futures", (t) => {
   Future.traverse([1, 2, 3, 4], (n) =>
     Future.defer(() => {
       throw new Error("The future was run");
-    })
+    }),
   );
 });
 
@@ -161,9 +161,7 @@ test(".sequence() inverts an iterable of futures to a future of iterables", asyn
 });
 
 test(".from() converts a promise to a future", async (t) => {
-  const future = Future.from(
-    new Promise<number>((resolve) => resolve(2))
-  );
+  const future = Future.from(new Promise<number>((resolve) => resolve(2)));
 
   t.equal(await future, 2);
 });

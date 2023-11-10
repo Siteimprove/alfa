@@ -23,16 +23,16 @@ test(`evaluate() passes when R22 passes`, async (t) => {
         "has-audio": true,
         // R22
         "has-captions": true,
-      })
+      }),
     ),
     [
       passed(
         R27,
         target,
         { 1: Outcomes.HasTextAlternative },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -53,16 +53,16 @@ test(`evaluate() passes when R31 passes`, async (t) => {
         // R31
         "text-alternative": Option.of(text),
         label: Option.of(label),
-      })
+      }),
     ),
     [
       passed(
         R27,
         target,
         { 1: Outcomes.HasTextAlternative },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -83,16 +83,16 @@ test(`evaluate() fails when all input rules fail`, async (t) => {
         // R31
         "text-alternative": None,
         label: None,
-      })
+      }),
     ),
     [
       failed(
         R27,
         target,
         { 1: Outcomes.HasNoTextAlternative },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -105,9 +105,9 @@ test(`evaluate() cannot tell if no input rule can tell`, async (t) => {
     await evaluate(
       R27,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": true })
+      oracle({ "is-video-streaming": false, "has-audio": true }),
     ),
-    [cantTell(R27, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R27, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -126,9 +126,9 @@ test(`evaluate() cannot tell when some input rule cannot tell and no input rule 
         // R22
         "has-captions": false,
         // R31
-      })
+      }),
     ),
-    [cantTell(R27, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R27, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -149,8 +149,8 @@ test(`evaluate() is inapplicable to videos without audio`, async (t) => {
     await evaluate(
       R27,
       { document },
-      oracle({ "is-video-streaming": false, "has-audio": false })
+      oracle({ "is-video-streaming": false, "has-audio": false }),
     ),
-    [inapplicable(R27, Outcome.Mode.SemiAuto)]
+    [inapplicable(R27, Outcome.Mode.SemiAuto)],
   );
 });

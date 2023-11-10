@@ -46,5 +46,5 @@ export default Longhand.of<Specified, Computed>(
           return Length.of(5, "px");
       }
     });
-  }
+  },
 );

@@ -17,7 +17,7 @@ for (const box of ["block", "inline"] as const) {
 
       h.document(
         [element],
-        [h.sheet([h.rule.style("div", [h.declaration(property, "medium")])])]
+        [h.sheet([h.rule.style("div", [h.declaration(property, "medium")])])],
       );
 
       t.deepEqual(cascaded(element, property), {
@@ -34,7 +34,7 @@ for (const box of ["block", "inline"] as const) {
 
       h.document(
         [element],
-        [h.sheet([h.rule.style("div", [h.declaration(property, "1.2em")])])]
+        [h.sheet([h.rule.style("div", [h.declaration(property, "1.2em")])])],
       );
 
       t.deepEqual(cascaded(element, property), {
@@ -59,7 +59,7 @@ for (const box of ["block", "inline"] as const) {
               h.declaration(`border-${box}-${side}-style`, "none"),
             ]),
           ]),
-        ]
+        ],
       );
 
       const style = Style.from(element, device);

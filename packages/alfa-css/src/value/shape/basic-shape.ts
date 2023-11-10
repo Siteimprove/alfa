@@ -5,7 +5,7 @@ import { Value } from "../value";
  */
 export abstract class BasicShape<
   K extends string = string,
-  CALC extends boolean = boolean
+  CALC extends boolean = boolean,
 > extends Value<"basic-shape", CALC> {
   private readonly _kind: K;
   protected constructor(kind: K, hasCalculation: CALC) {

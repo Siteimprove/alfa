@@ -55,6 +55,6 @@ export namespace Integer {
 
   export const parse: CSSParser<Integer> = map(
     Token.parseNumber((number) => number.isInteger),
-    (integer) => Integer.of(integer.value)
+    (integer) => Integer.of(integer.value),
   );
 }

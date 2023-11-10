@@ -32,8 +32,8 @@ export default Rule.Atomic.of<Page, Element>({
             hasName("iframe"),
             isIncludedInTheAccessibilityTree(device),
             not(hasTabIndex((n) => n < 0)),
-            not(isMarkedDecorative)
-          )
+            not(isMarkedDecorative),
+          ),
         );
       },
 
@@ -42,7 +42,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             hasNonEmptyAccessibleName(device)(target),
             () => Outcomes.HasName,
-            () => Outcomes.HasNoName
+            () => Outcomes.HasNoName,
           ),
         };
       },
@@ -55,10 +55,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const HasName = Ok.of(
-    Diagnostic.of(`The \`<iframe>\` has an accessible name`)
+    Diagnostic.of(`The \`<iframe>\` has an accessible name`),
   );
 
   export const HasNoName = Err.of(
-    Diagnostic.of(`The \`<iframe>\` does not have an accessible name`)
+    Diagnostic.of(`The \`<iframe>\` does not have an accessible name`),
   );
 }

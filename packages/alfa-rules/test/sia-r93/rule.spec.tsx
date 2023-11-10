@@ -15,7 +15,7 @@ test("evaluate() passes on large enough value", async (t) => {
     [],
     [h.text("Hello World")],
     [declaration],
-    Namespace.HTML
+    Namespace.HTML,
   );
 
   const document = h.document([target]);
@@ -29,7 +29,7 @@ test("evaluate() passes on large enough value", async (t) => {
         1.5,
         1.5,
         declaration,
-        target
+        target,
       ),
     }),
   ]);
@@ -42,7 +42,7 @@ test(`evaluate() ignores elements whose \`line-height\` is never used`, async (t
     [],
     [h.text("Hello World")],
     [declaration],
-    Namespace.HTML
+    Namespace.HTML,
   );
 
   const document = h.document([
@@ -62,7 +62,7 @@ test(`evaluate() ignores elements whose \`line-height\` is never used`, async (t
         1.5,
         1.5,
         declaration,
-        target
+        target,
       ),
     }),
   ]);
@@ -92,7 +92,7 @@ test(`evaluate() considers the latest \`font-size\``, async (t) => {
         1.5,
         1.5,
         declarations[1],
-        div
+        div,
       ),
     }),
   ]);
@@ -105,7 +105,7 @@ test("evaluate() fails on important small values", async (t) => {
     [],
     [h.text("Hello World")],
     [declaration],
-    Namespace.HTML
+    Namespace.HTML,
   );
 
   const document = h.document([target]);
@@ -119,7 +119,7 @@ test("evaluate() fails on important small values", async (t) => {
         1,
         1.5,
         declaration,
-        target
+        target,
       ),
     }),
   ]);
@@ -132,7 +132,7 @@ test("evaluate() fails on important small ratio", async (t) => {
     [],
     [h.text("Hello World")],
     [declaration],
-    Namespace.HTML
+    Namespace.HTML,
   );
 
   const document = h.document([target]);
@@ -146,7 +146,7 @@ test("evaluate() fails on important small ratio", async (t) => {
         1,
         1.5,
         declaration,
-        target
+        target,
       ),
     }),
   ]);
@@ -159,7 +159,7 @@ test("evaluate() fails on important `normal` value", async (t) => {
     [],
     [h.text("Hello World")],
     [declaration],
-    Namespace.HTML
+    Namespace.HTML,
   );
 
   const document = h.document([target]);
@@ -173,7 +173,7 @@ test("evaluate() fails on important `normal` value", async (t) => {
         1.2,
         1.5,
         declaration,
-        target
+        target,
       ),
     }),
   ]);
@@ -208,7 +208,7 @@ test("evaluate() is inapplicable on non important style", async (t) => {
 test("evaluate() is inapplicable on important cascaded styles", async (t) => {
   const document = h.document(
     [<div style={{ lineHeight: "0.15em" }}>Hello World</div>],
-    [h.sheet([h.rule.style("div", { lineHeight: "0.1em !important" })])]
+    [h.sheet([h.rule.style("div", { lineHeight: "0.1em !important" })])],
   );
 
   t.deepEqual(await evaluate(R93, { document }), [inapplicable(R93)]);

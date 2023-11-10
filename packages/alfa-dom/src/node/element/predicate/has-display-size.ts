@@ -7,7 +7,7 @@ import { Element } from "../../element";
  * @public
  */
 export function hasDisplaySize(
-  valueOrPredicate: number | Predicate<number>
+  valueOrPredicate: number | Predicate<number>,
 ): Predicate<Element> {
   const predicate =
     typeof valueOrPredicate === "function"
@@ -29,7 +29,7 @@ export function hasDisplaySize(
         element
           .attribute("multiple")
           .map(() => 4)
-          .getOr(1)
+          .getOr(1),
       );
 
     return predicate(displaySize);

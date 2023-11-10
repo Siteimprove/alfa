@@ -8,5 +8,5 @@ export default Longhand.fromKeywords(
   { inherits: true },
   "normal",
   "sub",
-  "super"
+  "super",
 );

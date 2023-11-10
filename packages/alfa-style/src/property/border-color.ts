@@ -23,6 +23,6 @@ export default Shorthand.of(
       ["border-right-color", right],
       ["border-bottom-color", bottom],
       ["border-left-color", left],
-    ]
-  )
+    ],
+  ),
 );

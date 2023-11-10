@@ -42,7 +42,7 @@ export default Longhand.of<Specified, Computed>(
       images.map((image) =>
         Selective.of(image)
           .if(Image.isImage, Image.partiallyResolve(Resolver.length(style)))
-          .get()
-      )
-    )
+          .get(),
+      ),
+    ),
 );

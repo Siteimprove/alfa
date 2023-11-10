@@ -7,5 +7,5 @@ export default Longhand.fromKeywords(
   { inherits: true },
   "normal",
   "italic",
-  "oblique"
+  "oblique",
 );

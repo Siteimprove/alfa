@@ -10,5 +10,5 @@ export default Longhand.fromKeywords(
   "double",
   "dotted",
   "dashed",
-  "wavy"
+  "wavy",
 );

@@ -15,7 +15,7 @@ export class Declaration implements Equatable, Serializable {
   public static of(
     name: string,
     value: string,
-    important = false
+    important = false,
   ): Declaration {
     return new Declaration(name, value, important);
   }

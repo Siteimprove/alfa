@@ -16,7 +16,7 @@ export const UserAgent = h.sheet([
     "[hidden], base, basefont, datalist, head, link, meta, noembed, noframes, param, rp, script, source, style, template, track, title",
     {
       display: "none",
-    }
+    },
   ),
 
   // <area> elements are a little special in that while they are not rendered,
@@ -59,7 +59,7 @@ export const UserAgent = h.sheet([
     "address, blockquote, center, div, figure, figcaption, footer, form, header, hr, legend, listing, main, p, plaintext, pre, xmp",
     {
       display: "block",
-    }
+    },
   ),
 
   h.rule.style("dialog:not([open])", {
@@ -150,7 +150,7 @@ export const UserAgent = h.sheet([
     "colgroup[hidden], col[hidden], thead[hidden], tbody[hidden], tfoot[hidden], tr[hidden], td[hidden], th[hidden]",
     {
       visibility: "collapse",
-    }
+    },
   ),
 
   h.rule.style("th", { fontWeight: "bold" }),
@@ -180,21 +180,21 @@ export const UserAgent = h.sheet([
     "input:is([type=reset i], [type=button i], [type=submit i]), button",
     {
       textAlign: "center",
-    }
+    },
   ),
 
   h.rule.style(
     "input:is([type=reset i], [type=button i], [type=submit i], [type=color i]), button",
     {
       display: "inline-block",
-    }
+    },
   ),
 
   h.rule.style(
     "input:is([type=radio i], [type=checkbox i], [type=reset i], [type=button i], [type=submit i], [type=color i], [type=search i]), select, button",
     {
       boxSizing: "border-box",
-    }
+    },
   ),
 
   h.rule.style("textarea", { whiteSpace: "pre-wrap" }),

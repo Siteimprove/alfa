@@ -43,33 +43,33 @@ export class Value<N extends Numeric = Numeric> extends Expression {
 
   public reduce(
     this: Value<Angle>,
-    resolver: Expression.Resolver
+    resolver: Expression.Resolver,
   ): Value<Angle<"deg">>;
 
   public reduce<L extends Unit.Length = "px">(
     this: Value<Length>,
-    resolver: Expression.Resolver<L>
+    resolver: Expression.Resolver<L>,
   ): Value<Length<"px" | L>>;
 
   public reduce(
     this: Value<Number>,
-    resolver: Expression.Resolver
+    resolver: Expression.Resolver,
   ): Value<Number>;
 
   public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
     this: Value<Percentage>,
-    resolver: Expression.Resolver<L, P>
+    resolver: Expression.Resolver<L, P>,
   ): Value<P>;
 
   public reduce<L extends Unit.Length = "px", P extends Numeric = Numeric>(
-    resolver: Expression.Resolver<L, P>
+    resolver: Expression.Resolver<L, P>,
   ): Value {
     return Value.of(
       Selective.of<Numeric>(this._value)
         .if(isLength, Value.lengthResolver(resolver.length))
         .if(isAngle, Value.angleResolver)
         .if(isPercentage, resolver.percentage)
-        .get()
+        .get(),
     );
   }
 
@@ -161,7 +161,7 @@ export namespace Value {
    * @internal
    */
   export function lengthResolver<U extends Unit.Length = "px">(
-    resolver: Mapper<Length<Unit.Length.Relative>, Length<U>>
+    resolver: Mapper<Length<Unit.Length.Relative>, Length<U>>,
   ): Mapper<Length, Length<"px"> | Length<U>> {
     return (length) =>
       length.isRelative() ? resolver(length) : length.withUnit("px");

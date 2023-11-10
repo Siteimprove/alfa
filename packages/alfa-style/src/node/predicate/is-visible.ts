@@ -58,9 +58,9 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
                   "font-size",
                   (size) => size.value === 0,
                   device,
-                  context
-                )
-              )
+                  context,
+                ),
+              ),
             ),
             // Element or Text with visibility != "visible"
             and(
@@ -69,8 +69,8 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
                 "visibility",
                 (visibility) => visibility.value !== "visible",
                 device,
-                context
-              )
+                context,
+              ),
             ),
             // Most non-replaced elements with no visible children are not visible while
             // replaced elements are assumed to be replaced by something visible. Some
@@ -85,12 +85,12 @@ function isInvisible(device: Device, context?: Context): Predicate<Node> {
                 (element) =>
                   element
                     .children(Node.fullTree)
-                    .every(isInvisible(device, context))
-              )
-            )
+                    .every(isInvisible(device, context)),
+              ),
+            ),
           ),
-          node
-        )
+          node,
+        ),
       );
 }
 
@@ -127,18 +127,18 @@ function hasDimensions(device: Device): Predicate<Element> {
     hasComputedStyle(
       dimension,
       and(Numeric.isFixed, (number) => number.value > 0),
-      device
+      device,
     );
 
   const isStretched = (...sides: ["top", "bottom"] | ["left", "right"]) =>
     and(
       isPositioned(device, "absolute"),
       hasComputedStyle(sides[0], Numeric.isNumeric, device),
-      hasComputedStyle(sides[1], Numeric.isNumeric, device)
+      hasComputedStyle(sides[1], Numeric.isNumeric, device),
     );
 
   return and(
     or(hasDimension("height"), isStretched("top", "bottom")),
-    or(hasDimension("width"), isStretched("left", "right"))
+    or(hasDimension("width"), isStretched("left", "right")),
   );
 }

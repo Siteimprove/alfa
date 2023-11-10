@@ -163,14 +163,14 @@ test("parse() parses a linear gradient with a intermediate stops", (t) => {
         },
       ],
       repeats: false,
-    }
+    },
   );
 });
 
 test("parse() parses a linear gradient with calculations", (t) => {
   t.deepEqual(
     parse(
-      "linear-gradient(calc(0.25turn + 10deg), red, calc(1px + 10%) yellow, green 2em, blue)"
+      "linear-gradient(calc(0.25turn + 10deg), red, calc(1px + 10%) yellow, green 2em, blue)",
     ),
     {
       type: "gradient",
@@ -231,6 +231,6 @@ test("parse() parses a linear gradient with calculations", (t) => {
         },
       ],
       repeats: false,
-    }
+    },
   );
 });

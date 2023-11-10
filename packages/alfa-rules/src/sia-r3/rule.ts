@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return getElementDescendants(document, Node.composedNested).filter(
-          hasId(not(isEmpty))
+          hasId(not(isEmpty)),
         );
       },
 
@@ -32,7 +32,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             test(hasUniqueId, target),
             () => Outcomes.HasUniqueId,
-            () => Outcomes.HasNonUniqueId
+            () => Outcomes.HasNonUniqueId,
           ),
         };
       },
@@ -45,10 +45,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const HasUniqueId = Ok.of(
-    Diagnostic.of(`The element has a unique ID`)
+    Diagnostic.of(`The element has a unique ID`),
   );
 
   export const HasNonUniqueId = Err.of(
-    Diagnostic.of(`The element does not have a unique ID`)
+    Diagnostic.of(`The element does not have a unique ID`),
   );
 }

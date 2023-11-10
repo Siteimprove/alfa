@@ -44,11 +44,11 @@ export interface Result<T, E = T>
   someErr<F extends E>(refinement: Refinement<E, F>): this is Err<F>;
   someErr(predicate: Predicate<E>): this is Err<E>;
   none<U extends T>(
-    refinement: Refinement<T, U>
+    refinement: Refinement<T, U>,
   ): this is Result<Exclude<T, U>, E>;
   none(predicate: Predicate<T>): boolean;
   noneErr<F extends E>(
-    refinement: Refinement<E, F>
+    refinement: Refinement<E, F>,
   ): this is Result<T, Exclude<E, F>>;
   noneErr(predicate: Predicate<E>): boolean;
   every<U extends T>(refinement: Refinement<T, U>): this is Result<U, E>;
@@ -121,13 +121,13 @@ export namespace Result {
   }
 
   export function from<T, E = unknown>(
-    thunk: Thunk<Promise<T>>
+    thunk: Thunk<Promise<T>>,
   ): Promise<Result<T, E>>;
 
   export function from<T, E = unknown>(thunk: Thunk<T>): Result<T, E>;
 
   export function from<T, E = unknown>(
-    thunk: Thunk<T> | Thunk<Promise<T>>
+    thunk: Thunk<T> | Thunk<Promise<T>>,
   ): Result<T, E> | Promise<Result<T, E>> {
     let value: T | Promise<T>;
     try {

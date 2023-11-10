@@ -29,8 +29,8 @@ export class Emitter<T> implements Functor.Invariant<T>, AsyncIterable<T> {
         [...this._listeners].map(([key, listener]) => [
           key,
           Callback.contraMap(listener, mapper),
-        ])
-      )
+        ]),
+      ),
     );
   }
 

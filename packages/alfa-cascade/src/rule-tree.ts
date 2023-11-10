@@ -64,7 +64,7 @@ export class RuleTree implements Serializable {
       rule: Rule;
       selector: Selector;
       declarations: Iterable<Declaration>;
-    }>
+    }>,
   ): Option<RuleTree.Node> {
     let parent: Option<RuleTree.Node> = None;
     let children = this._children;
@@ -75,7 +75,7 @@ export class RuleTree implements Serializable {
       // build up a path of rule entries and then return the final entry to the
       // caller.
       parent = Option.of(
-        RuleTree.Node.add(rule, selector, declarations, children, parent)
+        RuleTree.Node.add(rule, selector, declarations, children, parent),
       );
 
       // parent was just build as a non-None Option.
@@ -102,7 +102,7 @@ export namespace RuleTree {
       selector: Selector,
       declarations: Iterable<Declaration>,
       children: Array<Node>,
-      parent: Option<Node>
+      parent: Option<Node>,
     ): Node {
       return new Node(rule, selector, declarations, children, parent);
     }
@@ -118,7 +118,7 @@ export namespace RuleTree {
       selector: Selector,
       declarations: Iterable<Declaration>,
       children: Array<Node>,
-      parent: Option<Node>
+      parent: Option<Node>,
     ) {
       this._rule = rule;
       this._selector = selector;
@@ -164,7 +164,7 @@ export namespace RuleTree {
       selector: Selector,
       declarations: Iterable<Declaration>,
       children: Array<Node>,
-      parent: Option<Node>
+      parent: Option<Node>,
     ): Node {
       if (parent.some((parent) => parent._selector === selector)) {
         return parent.get();
@@ -177,7 +177,7 @@ export namespace RuleTree {
             selector,
             declarations,
             child._children,
-            Option.of(child)
+            Option.of(child),
           );
         }
       }
@@ -194,7 +194,7 @@ export namespace RuleTree {
         rule: this._rule.toJSON(),
         selector: this._selector.toJSON(),
         declarations: [...this._declarations].map((declaration) =>
-          declaration.toJSON()
+          declaration.toJSON(),
         ),
         children: this._children.map((node) => node.toJSON()),
       };

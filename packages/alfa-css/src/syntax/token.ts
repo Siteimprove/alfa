@@ -197,7 +197,7 @@ export namespace Token {
   export const { of: func, isFunction } = Function;
 
   export function parseFunction(
-    query: string | Predicate<Function> = () => true
+    query: string | Predicate<Function> = () => true,
   ) {
     const predicate: Predicate<Function> =
       typeof query === "function" ? query : (ident) => ident.value === query;
@@ -515,7 +515,7 @@ export namespace Token {
   export const { of: delim, isDelim } = Delim;
 
   export function parseDelim(
-    query: string | number | Predicate<Delim> = () => true
+    query: string | number | Predicate<Delim> = () => true,
   ) {
     let predicate: Predicate<Delim>;
 
@@ -534,7 +534,7 @@ export namespace Token {
     public static of(
       value: number,
       isInteger: boolean,
-      isSigned: boolean
+      isSigned: boolean,
     ): Number {
       return new Number(value, isInteger, isSigned);
     }
@@ -674,7 +674,7 @@ export namespace Token {
   export const { of: percentage, isPercentage } = Percentage;
 
   export function parsePercentage(
-    predicate: Predicate<Percentage> = () => true
+    predicate: Predicate<Percentage> = () => true,
   ) {
     return parseToken(and(isPercentage, predicate));
   }
@@ -684,7 +684,7 @@ export namespace Token {
       value: number,
       unit: string,
       isInteger: boolean,
-      isSigned: boolean
+      isSigned: boolean,
     ): Dimension {
       return new Dimension(value, unit, isInteger, isSigned);
     }
@@ -698,7 +698,7 @@ export namespace Token {
       value: number,
       unit: string,
       isInteger: boolean,
-      isSigned: boolean
+      isSigned: boolean,
     ) {
       this._value = value;
       this._unit = unit;
@@ -819,7 +819,7 @@ export namespace Token {
 
   export const parseWhitespace = map(
     oneOrMore(parseToken(isWhitespace)),
-    ([first]) => first
+    ([first]) => first,
   );
 
   export class Colon implements Equatable, Serializable<Colon.JSON> {
@@ -992,7 +992,7 @@ export namespace Token {
     }
 
     export function isOpenParenthesis(
-      value: unknown
+      value: unknown,
     ): value is OpenParenthesis {
       return value instanceof OpenParenthesis;
     }
@@ -1043,7 +1043,7 @@ export namespace Token {
     }
 
     export function isCloseParenthesis(
-      value: unknown
+      value: unknown,
     ): value is CloseParenthesis {
       return value instanceof CloseParenthesis;
     }
@@ -1094,7 +1094,7 @@ export namespace Token {
     }
 
     export function isOpenSquareBracket(
-      value: unknown
+      value: unknown,
     ): value is OpenSquareBracket {
       return value instanceof OpenSquareBracket;
     }
@@ -1146,7 +1146,7 @@ export namespace Token {
     }
 
     export function isCloseSquareBracket(
-      value: unknown
+      value: unknown,
     ): value is CloseSquareBracket {
       return value instanceof CloseSquareBracket;
     }
@@ -1198,7 +1198,7 @@ export namespace Token {
     }
 
     export function isOpenCurlyBracket(
-      value: unknown
+      value: unknown,
     ): value is OpenCurlyBracket {
       return value instanceof OpenCurlyBracket;
     }
@@ -1249,7 +1249,7 @@ export namespace Token {
     }
 
     export function isCloseCurlyBracket(
-      value: unknown
+      value: unknown,
     ): value is CloseCurlyBracket {
       return value instanceof CloseCurlyBracket;
     }

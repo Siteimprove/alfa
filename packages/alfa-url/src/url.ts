@@ -27,7 +27,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
     path: Iterable<string> = [],
     query: Option<string> = None,
     fragment: Option<string> = None,
-    cannotBeABase: boolean = false
+    cannotBeABase: boolean = false,
   ): URL {
     return new URL(
       scheme,
@@ -38,7 +38,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
       Sequence.from(path),
       query,
       fragment,
-      cannotBeABase
+      cannotBeABase,
     );
   }
 
@@ -77,7 +77,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
     path: Sequence<string>,
     query: Option<string>,
     fragment: Option<string>,
-    cannotBeABase: boolean
+    cannotBeABase: boolean,
   ) {
     this._scheme = scheme;
     this._username = username;
@@ -188,7 +188,7 @@ export class URL implements Equatable, Hashable, Serializable<URL.JSON> {
       this._path,
       this._query,
       None,
-      this._cannotBeABase
+      this._cannotBeABase,
     );
   }
 
@@ -326,7 +326,7 @@ export namespace URL {
       Option.from(json.port),
       json.path,
       Option.from(json.query),
-      Option.from(json.fragment)
+      Option.from(json.fragment),
     );
   }
 
@@ -412,8 +412,8 @@ export namespace URL {
 
           // The URL cannot be used as a base URL when the scheme isn't
           // special and the pathname doesn't start with a leading "/".
-          !isSpecialScheme(scheme) && pathname[0] !== "/"
-        )
+          !isSpecialScheme(scheme) && pathname[0] !== "/",
+        ),
       );
     } catch (err) {
       if (err instanceof Error) {

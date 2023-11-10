@@ -18,11 +18,11 @@ export namespace Conformance {
    */
   function hasLevel(
     level: Criterion.Level,
-    version: Criterion.Version = Criterion.Version.Recommendation
+    version: Criterion.Version = Criterion.Version.Recommendation,
   ): Predicate<Criterion> {
     return (criterion) =>
       criterion.level.some(
-        (found, versions) => found <= level && [...versions].includes(version)
+        (found, versions) => found <= level && [...versions].includes(version),
       );
   }
 
@@ -30,7 +30,7 @@ export namespace Conformance {
    * All criteria needed for conformance level A.
    */
   export type A<
-    V extends Criterion.Version = Criterion.Version.Recommendation
+    V extends Criterion.Version = Criterion.Version.Recommendation,
   > = Criterion.Level.A<V>;
 
   /**
@@ -38,7 +38,7 @@ export namespace Conformance {
    * specified version.
    */
   export function isA<
-    V extends Criterion.Version = Criterion.Version.Recommendation
+    V extends Criterion.Version = Criterion.Version.Recommendation,
   >(version?: V): Refinement<Criterion, Criterion<A<V>>> {
     return hasLevel("A", version) as Refinement<Criterion, Criterion<A<V>>>;
   }
@@ -47,7 +47,7 @@ export namespace Conformance {
    * All criteria needed for level AA conformance.
    */
   export type AA<
-    V extends Criterion.Version = Criterion.Version.Recommendation
+    V extends Criterion.Version = Criterion.Version.Recommendation,
   > = Criterion.Level.A<V> | Criterion.Level.AA<V>;
 
   /**
@@ -55,7 +55,7 @@ export namespace Conformance {
    * specified version.
    */
   export function isAA<
-    V extends Criterion.Version = Criterion.Version.Recommendation
+    V extends Criterion.Version = Criterion.Version.Recommendation,
   >(version?: V): Refinement<Criterion, Criterion<AA<V>>> {
     return hasLevel("AA", version) as Refinement<Criterion, Criterion<AA<V>>>;
   }
@@ -64,7 +64,7 @@ export namespace Conformance {
    * All criteria needed for level AAA conformance.
    */
   export type AAA<
-    V extends Criterion.Version = Criterion.Version.Recommendation
+    V extends Criterion.Version = Criterion.Version.Recommendation,
   > = Criterion.Level.A<V> | Criterion.Level.AA<V> | Criterion.Level.AAA<V>;
 
   /**
@@ -72,7 +72,7 @@ export namespace Conformance {
    * specified version.
    */
   export function isAAA<
-    V extends Criterion.Version = Criterion.Version.Recommendation
+    V extends Criterion.Version = Criterion.Version.Recommendation,
   >(version?: V): Refinement<Criterion, Criterion<AAA<V>>> {
     return hasLevel("AAA", version) as Refinement<Criterion, Criterion<AAA<V>>>;
   }

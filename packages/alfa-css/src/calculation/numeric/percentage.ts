@@ -48,6 +48,6 @@ export namespace Percentage {
 
   export const parse: CSSParser<Percentage> = map(
     Token.parsePercentage(),
-    (percentage) => Percentage.of(percentage.value)
+    (percentage) => Percentage.of(percentage.value),
   );
 }

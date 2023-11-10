@@ -48,7 +48,7 @@ export class Set<T> implements Collection.Unkeyed<T> {
   public map<U>(mapper: Mapper<T, U>): Set<U> {
     return this._values.reduce(
       (set, _, value) => set.add(mapper(value)),
-      Set.empty<U>()
+      Set.empty<U>(),
     );
   }
 
@@ -59,7 +59,7 @@ export class Set<T> implements Collection.Unkeyed<T> {
   public flatMap<U>(mapper: Mapper<T, Set<U>>): Set<U> {
     return this.reduce(
       (set, value) => set.concat(mapper(value)),
-      Set.empty<U>()
+      Set.empty<U>(),
     );
   }
 
@@ -78,7 +78,7 @@ export class Set<T> implements Collection.Unkeyed<T> {
   public filter(predicate: Predicate<T>): Set<T> {
     return this.reduce(
       (set, value) => (predicate(value) ? set.add(value) : set),
-      Set.empty()
+      Set.empty(),
     );
   }
 
@@ -167,7 +167,7 @@ export class Set<T> implements Collection.Unkeyed<T> {
     return Iterable.reduce<T, Set<T>>(
       iterable,
       (set, value) => set.add(value),
-      this
+      this,
     );
   }
 
@@ -175,13 +175,13 @@ export class Set<T> implements Collection.Unkeyed<T> {
     return Iterable.reduce<T, Set<T>>(
       iterable,
       (set, value) => set.delete(value),
-      this
+      this,
     );
   }
 
   public intersect(iterable: Iterable<T>): Set<T> {
     return Set.fromIterable(
-      Iterable.filter(iterable, (value) => this.has(value))
+      Iterable.filter(iterable, (value) => this.has(value)),
     );
   }
 
@@ -268,7 +268,7 @@ export namespace Set {
     return Iterable.reduce(
       iterable,
       (set, value) => set.add(value),
-      Set.empty()
+      Set.empty(),
     );
   }
 }

@@ -45,9 +45,9 @@ export default Rule.Atomic.of<Page, Element>({
         Viewport.of(
           device.viewport.width,
           device.viewport.height,
-          Viewport.Orientation.Portrait
+          Viewport.Orientation.Portrait,
         ),
-        device.display
+        device.display,
       );
     } else {
       portrait = device;
@@ -56,9 +56,9 @@ export default Rule.Atomic.of<Page, Element>({
         Viewport.of(
           device.viewport.width,
           device.viewport.height,
-          Viewport.Orientation.Landscape
+          Viewport.Orientation.Landscape,
         ),
-        device.display
+        device.display,
       );
     }
 
@@ -69,21 +69,21 @@ export default Rule.Atomic.of<Page, Element>({
           .filter(
             or(
               hasConditionalRotation(landscape),
-              hasConditionalRotation(portrait)
-            )
+              hasConditionalRotation(portrait),
+            ),
           );
       },
 
       expectations(target) {
         const rotation = getRelativeRotation(target, landscape, portrait).map(
-          (rotation) => Real.round(rotation)
+          (rotation) => Real.round(rotation),
         );
 
         return {
           1: expectation(
             rotation.every((rotation) => rotation !== 90 && rotation !== 270),
             () => Outcomes.RotationNotLocked,
-            () => Outcomes.RotationLocked
+            () => Outcomes.RotationLocked,
           ),
         };
       },
@@ -96,11 +96,11 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const RotationNotLocked = Ok.of(
-    Diagnostic.of(`The element is not locked in orientation`)
+    Diagnostic.of(`The element is not locked in orientation`),
   );
 
   export const RotationLocked = Err.of(
-    Diagnostic.of(`The element is locked in orientation`)
+    Diagnostic.of(`The element is locked in orientation`),
   );
 }
 
@@ -115,17 +115,17 @@ function hasConditionalRotation(device: Device): Predicate<Element> {
         some(
           value,
           (transform) =>
-            transform.kind === "rotate" || transform.kind === "matrix"
+            transform.kind === "rotate" || transform.kind === "matrix",
         ),
-      device
+      device,
     ),
     hasComputedStyle(
       "rotate",
       (value, source) =>
         // The only keyword value is "none", which is no rotation
         !Keyword.isKeyword(value) && source.some(isOrientationConditional),
-      device
-    )
+      device,
+    ),
   );
 }
 
@@ -135,13 +135,13 @@ function isOrientationConditional(declaration: Declaration): boolean {
     (rule) =>
       MediaRule.isMediaRule(rule) &&
       some(rule.queries.queries, (query) =>
-        query.condition.some(hasOrientationCondition)
-      )
+        query.condition.some(hasOrientationCondition),
+      ),
   );
 }
 
 function hasOrientationCondition(
-  condition: Media.Feature | Media.Condition
+  condition: Media.Feature | Media.Condition,
 ): boolean {
   for (const feature of condition) {
     if (
@@ -149,7 +149,7 @@ function hasOrientationCondition(
       feature.value.some(
         (value) =>
           value.matches(Keyword.of("landscape")) ||
-          value.matches(Keyword.of("portrait"))
+          value.matches(Keyword.of("portrait")),
       )
     ) {
       return true;
@@ -212,7 +212,7 @@ function getRotation(element: Element, device: Device): Option<number> {
 
         case "matrix": {
           const decomposed = Transformation.of(
-            fn.values.map((row) => row.map((number) => number.value))
+            fn.values.map((row) => row.map((number) => number.value)),
           ).decompose();
 
           if (!decomposed.isSome()) {
@@ -239,11 +239,11 @@ function getRotation(element: Element, device: Device): Option<number> {
 function getRelativeRotation(
   element: Element,
   left: Device,
-  right: Device
+  right: Device,
 ): Option<number> {
   return getRotation(element, left).flatMap((left) =>
     getRotation(element, right).map((right) =>
-      Real.modulo(abs(left - right), 360)
-    )
+      Real.modulo(abs(left - right), 360),
+    ),
   );
 }

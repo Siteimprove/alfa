@@ -19,7 +19,7 @@ export function isTabbable(device: Device): Predicate<Element> {
     not(redirectsFocus),
     not(isActuallyDisabled),
     not(isInert(device)),
-    isRendered(device)
+    isRendered(device),
   );
 }
 
@@ -36,5 +36,5 @@ export function isTabbable(device: Device): Predicate<Element> {
  */
 const redirectsFocus: Predicate<Element> = and(
   hasNamespace(Namespace.HTML),
-  hasName("iframe", "label")
+  hasName("iframe", "label"),
 );

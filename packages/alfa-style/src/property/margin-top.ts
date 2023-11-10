@@ -17,7 +17,7 @@ type Computed = Keyword<"auto"> | Length.Canonical | Percentage;
 export const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("auto"),
   Length.parse,
-  Percentage.parse
+  Percentage.parse,
 );
 
 /**
@@ -37,5 +37,5 @@ export default Longhand.of<Specified, Computed>(
         case "length":
           return top.resolve(Resolver.length(style));
       }
-    })
+    }),
 );

@@ -75,14 +75,14 @@ export class Cascade implements Serializable {
   public get(
     element: Element,
     context: Context = Context.empty(),
-    filter: Option<AncestorFilter> = None
+    filter: Option<AncestorFilter> = None,
   ): Option<RuleTree.Node> {
     return this._entries
       .get(element, Cache.empty)
       .get(context, () =>
         this._rules.add(
-          this._selectors.get(element, context, filter).sort(compare)
-        )
+          this._selectors.get(element, context, filter).sort(compare),
+        ),
       );
   }
 

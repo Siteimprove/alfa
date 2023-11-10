@@ -33,7 +33,7 @@ const cache = Cache.empty<Document, Cache<Device, Sequence<Text>>>();
  */
 export function nonDisabledTexts(
   document: Document,
-  device: Device
+  device: Device,
 ): Sequence<Text> {
   return cache.get(document, Cache.empty).get(device, () => {
     // Gather all text nodes used to name a disabled widget or group
@@ -47,10 +47,10 @@ export function nonDisabledTexts(
           ariaNode
             .from(element, device)
             .name.map((name) =>
-              Sequence.from(name.sourceNodes()).filter(isText)
+              Sequence.from(name.sourceNodes()).filter(isText),
             )
-            .getOr(Sequence.empty<Text>())
-        )
+            .getOr(Sequence.empty<Text>()),
+        ),
     );
 
     return Sequence.from(visit(document, device, disabledWidgetNames));
@@ -60,16 +60,16 @@ export function nonDisabledTexts(
 function* visit(
   node: Node,
   device: Device,
-  disabledWidgetNames: Set<Text>
+  disabledWidgetNames: Set<Text>,
 ): Iterable<Text> {
   // If the node is a disabled group or widget, stop looking
   if (
     test(
       and(
         isElement,
-        or(not(hasNamespace(Namespace.HTML)), isDisabledGroupOrWidget(device))
+        or(not(hasNamespace(Namespace.HTML)), isDisabledGroupOrWidget(device)),
       ),
-      node
+      node,
     )
   ) {
     return;
@@ -93,6 +93,6 @@ function* visit(
 function isDisabledGroupOrWidget(device: Device): Predicate<Element> {
   return and(
     hasRole(device, (role) => role.isWidget() || role.is("group")),
-    isSemanticallyDisabled
+    isSemanticallyDisabled,
   );
 }

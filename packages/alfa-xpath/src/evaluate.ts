@@ -25,7 +25,7 @@ import { Parser } from "./syntax/parser";
 export function* evaluate(
   scope: Node,
   expression: string | Expression | Builder,
-  options: evaluate.Options = Node.Traversal.empty
+  options: evaluate.Options = Node.Traversal.empty,
 ): Iterable<Node> {
   if (typeof expression === "string") {
     const parsed = Parser.parse(expression);
@@ -69,7 +69,7 @@ export namespace evaluate {
 function* evaluateExpression<T extends Item.Value>(
   expression: Expression,
   environment: Environment<T>,
-  options: evaluate.Options
+  options: evaluate.Options,
 ): Iterable<Item> {
   switch (expression.type) {
     case "path":
@@ -82,7 +82,7 @@ function* evaluateExpression<T extends Item.Value>(
       return yield* evaluateFunctionCallExpression(
         expression,
         environment,
-        options
+        options,
       );
 
     case "string":
@@ -95,7 +95,7 @@ function* evaluateExpression<T extends Item.Value>(
       return yield* evaluateContextItemExpression(
         expression,
         environment,
-        options
+        options,
       );
   }
 }
@@ -103,7 +103,7 @@ function* evaluateExpression<T extends Item.Value>(
 function* evaluatePathExpression<T extends Item.Value>(
   expression: Expression.Path,
   environment: Environment<T>,
-  options: evaluate.Options
+  options: evaluate.Options,
 ): Iterable<Item> {
   const result: Array<Item> = [];
 
@@ -124,8 +124,8 @@ function* evaluatePathExpression<T extends Item.Value>(
       ...evaluateExpression(
         expression.right,
         withFocus(environment, focus),
-        options
-      )
+        options,
+      ),
     );
   }
 
@@ -155,7 +155,7 @@ function* evaluatePathExpression<T extends Item.Value>(
 function* evaluateAxisExpression<T extends Item.Value>(
   expression: Expression.Axis,
   environment: Environment<T>,
-  options: evaluate.Options
+  options: evaluate.Options,
 ): Iterable<Item> {
   const focus: Item = environment.focus;
 
@@ -233,7 +233,7 @@ function* evaluateAxisExpression<T extends Item.Value>(
       const keep = evaluatePredicate(
         predicate,
         withFocus(environment, focus),
-        options
+        options,
       );
 
       if (!keep) {
@@ -248,7 +248,7 @@ function* evaluateAxisExpression<T extends Item.Value>(
 function* evaluateFunctionCallExpression<T extends Item.Value>(
   expression: Expression.FunctionCall,
   environment: Environment<T>,
-  options: evaluate.Options
+  options: evaluate.Options,
 ): Iterable<Item> {
   const { prefix, name, arity } = expression;
 
@@ -256,7 +256,7 @@ function* evaluateFunctionCallExpression<T extends Item.Value>(
     environment.functions,
     prefix.getOr(null),
     name,
-    arity
+    arity,
   );
 
   if (fn === null) {
@@ -268,7 +268,7 @@ function* evaluateFunctionCallExpression<T extends Item.Value>(
       if (parameters !== null) {
         const parameter = coerceItems(
           evaluateExpression(expression, environment, options),
-          fn.parameters[i]
+          fn.parameters[i],
         );
 
         if (parameter === null) {
@@ -280,7 +280,7 @@ function* evaluateFunctionCallExpression<T extends Item.Value>(
 
       return parameters;
     },
-    []
+    [],
   );
 
   if (parameters === null) {
@@ -296,7 +296,7 @@ function* evaluateFunctionCallExpression<T extends Item.Value>(
     case "+": {
       const result = as(
         fn.apply(environment, options, ...parameters),
-        fn.result
+        fn.result,
       );
 
       for (const value of result) {
@@ -309,7 +309,7 @@ function* evaluateFunctionCallExpression<T extends Item.Value>(
     case "?": {
       const result = as(
         fn.apply(environment, options, ...parameters),
-        fn.result
+        fn.result,
       );
 
       if (result !== undefined) {
@@ -322,7 +322,7 @@ function* evaluateFunctionCallExpression<T extends Item.Value>(
     default:
       const result = as(
         fn.apply(environment, options, ...parameters),
-        fn.result
+        fn.result,
       );
 
       yield { type: fn.result, value: result };
@@ -332,7 +332,7 @@ function* evaluateFunctionCallExpression<T extends Item.Value>(
 function* evaluateLiteralExpression<T extends Item.Value>(
   expression: Expression.Literal,
   environment: Environment<T>,
-  options: evaluate.Options
+  options: evaluate.Options,
 ): Iterable<Item> {
   switch (expression.type) {
     case "integer":
@@ -343,7 +343,7 @@ function* evaluateLiteralExpression<T extends Item.Value>(
 function evaluatePredicate<T extends Item.Value>(
   expression: Expression,
   environment: Environment<T>,
-  options: evaluate.Options
+  options: evaluate.Options,
 ): boolean {
   const result = [...evaluateExpression(expression, environment, options)];
 
@@ -373,7 +373,7 @@ function evaluatePredicate<T extends Item.Value>(
 function* evaluateContextItemExpression<T extends Item.Value>(
   expression: Expression.ContextItem,
   environment: Environment<T>,
-  options: evaluate.Options
+  options: evaluate.Options,
 ): Iterable<Item> {
   const { type, value } = environment.focus;
   yield { type, value };

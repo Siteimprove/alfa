@@ -63,7 +63,7 @@ export namespace NamespaceRule {
    */
   export function fromNamespaceRule(json: JSON): Trampoline<NamespaceRule> {
     return Trampoline.done(
-      NamespaceRule.of(json.namespace, Option.from(json.prefix))
+      NamespaceRule.of(json.namespace, Option.from(json.prefix)),
     );
   }
 }

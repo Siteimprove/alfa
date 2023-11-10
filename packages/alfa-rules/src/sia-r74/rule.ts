@@ -31,8 +31,8 @@ export default Rule.Atomic.of<Page, Element>({
             isVisible(device),
             // If the font-size ultimately computes to size 0, the element is not
             // visible.
-            hasCascadedStyle("font-size", () => true, device)
-          )
+            hasCascadedStyle("font-size", () => true, device),
+          ),
         );
       },
 
@@ -51,7 +51,7 @@ export default Rule.Atomic.of<Page, Element>({
               // Fixed length in relative units
               fontSize.isRelative(),
             () => Outcomes.HasRelativeUnit,
-            () => Outcomes.HasAbsoluteUnit
+            () => Outcomes.HasAbsoluteUnit,
           ),
         };
       },
@@ -64,10 +64,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const HasRelativeUnit = Ok.of(
-    Diagnostic.of(`The font size is specified using a relative unit`)
+    Diagnostic.of(`The font size is specified using a relative unit`),
   );
 
   export const HasAbsoluteUnit = Err.of(
-    Diagnostic.of(`The font size is specified using an absolute unit`)
+    Diagnostic.of(`The font size is specified using an absolute unit`),
   );
 }

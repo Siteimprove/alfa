@@ -37,7 +37,7 @@ export function getForeground(
   element: Element,
   device: Device,
   context: Context = Context.empty(),
-  ignoredInterposedDescendants: Set<Element> = Set.empty()
+  ignoredInterposedDescendants: Set<Element> = Set.empty(),
 ): Result<Foreground, ColorErrors> {
   return foregroundCache
     .get(device, Cache.empty)
@@ -56,7 +56,7 @@ export function getForeground(
 
       while (parent.isSome() && isCurrentColor(foregroundColor)) {
         foregroundColor = Style.from(parent.get(), device, context).computed(
-          "color"
+          "color",
         ).value;
         parent = parent.get().parent().filter(isElement);
       }
@@ -65,7 +65,7 @@ export function getForeground(
 
       if (color.isNone()) {
         error = Option.of(
-          ColorError.unresolvableForegroundColor(element, foregroundColor)
+          ColorError.unresolvableForegroundColor(element, foregroundColor),
         );
       }
 
@@ -94,7 +94,7 @@ export function getForeground(
         device,
         context,
         1,
-        ignoredInterposedDescendants
+        ignoredInterposedDescendants,
       );
 
       // If we have both foreground and background color, we can merge them.
@@ -104,8 +104,8 @@ export function getForeground(
         // taken into account (as well as the alpha/opacity of all previous layers).
         const colors = backgroundColors.map((background) =>
           background.map((backdrop) =>
-            Color.composite(color.get(), backdrop, 1)
-          )
+            Color.composite(color.get(), backdrop, 1),
+          ),
         );
 
         // Finally, we need to merge again, this time using the opacity of the
@@ -117,14 +117,14 @@ export function getForeground(
               device,
               context,
               undefined,
-              ignoredInterposedDescendants
+              ignoredInterposedDescendants,
             ).map((background) =>
               colors.flatMap((color) =>
                 background.map((backdrop) =>
-                  Color.composite(color, backdrop, opacity.value)
-                )
-              )
-            )
+                  Color.composite(color, backdrop, opacity.value),
+                ),
+              ),
+            ),
           );
         }
 

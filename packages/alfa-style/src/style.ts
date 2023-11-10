@@ -39,7 +39,7 @@ export class Style implements Serializable<Style.JSON> {
   public static of(
     styleDeclarations: Iterable<Declaration>,
     device: Device,
-    parent: Option<Style> = None
+    parent: Option<Style> = None,
   ): Style {
     // declarations are read twice, once for variables and once for properties,
     // so we cannot use a read-once iterable. Main use case from `Style.from`
@@ -81,11 +81,11 @@ export class Style implements Serializable<Style.JSON> {
           for (const result of parseLonghand(
             Longhands.get(name),
             value,
-            variables
+            variables,
           )) {
             properties = properties.set(
               name,
-              Value.of(result, Option.of(declaration))
+              Value.of(result, Option.of(declaration)),
             );
           }
         }
@@ -93,7 +93,7 @@ export class Style implements Serializable<Style.JSON> {
         for (const result of parseShorthand(
           Shorthands.get(name),
           value,
-          variables
+          variables,
         )) {
           for (const [name, value] of result) {
             const previous = properties.get(name);
@@ -101,7 +101,7 @@ export class Style implements Serializable<Style.JSON> {
             if (shouldOverride(previous, declaration)) {
               properties = properties.set(
                 name,
-                Value.of(value, Option.of(declaration))
+                Value.of(value, Option.of(declaration)),
               );
             }
           }
@@ -116,7 +116,7 @@ export class Style implements Serializable<Style.JSON> {
     Device.standard(),
     None,
     Map.empty(),
-    Map.empty()
+    Map.empty(),
   );
 
   public static empty(): Style {
@@ -136,7 +136,7 @@ export class Style implements Serializable<Style.JSON> {
     device: Device,
     parent: Option<Style>,
     variables: Map<string, Value<Slice<Token>>>,
-    properties: Map<Name, Value>
+    properties: Map<Name, Value>,
   ) {
     this._device = device;
     this._parent = parent;
@@ -202,7 +202,7 @@ export class Style implements Serializable<Style.JSON> {
           ? this._parent
               .map((parent) => parent.computed(name))
               .getOrElse(() => this.initial(name))
-          : this.initial(name)
+          : this.initial(name),
       );
   }
 
@@ -247,7 +247,7 @@ export class Style implements Serializable<Style.JSON> {
 
   public initial<N extends Name>(
     name: N,
-    source: Option<Declaration> = None
+    source: Option<Declaration> = None,
   ): Value<Style.Initial<N>> {
     return Value.of(Longhands.get(name).initial as Style.Computed<N>, source);
   }
@@ -287,7 +287,7 @@ export namespace Style {
   export function from(
     element: Element,
     device: Device,
-    context: Context = Context.empty()
+    context: Context = Context.empty(),
   ): Style {
     return cache
       .get(device, Cache.empty)
@@ -318,7 +318,7 @@ export namespace Style {
           element
             .parent(Node.flatTree)
             .filter(Element.isElement)
-            .map((parent) => from(parent, device, context))
+            .map((parent) => from(parent, device, context)),
         );
       });
   }
@@ -371,19 +371,19 @@ export namespace Style {
  */
 export function shouldOverride<T>(
   previous: Option<Value<T>>,
-  next: Declaration
+  next: Declaration,
 ): boolean {
   return previous.every(
     (previous) =>
       next.important &&
-      previous.source.every((declaration) => !declaration.important)
+      previous.source.every((declaration) => !declaration.important),
   );
 }
 
 function parseLonghand<N extends Longhands.Name>(
   property: Longhands.Property[N],
   value: string,
-  variables: Map<string, Value<Slice<Token>>>
+  variables: Map<string, Value<Slice<Token>>>,
 ) {
   const substitution = Variable.substitute(Lexer.lex(value), variables);
 
@@ -407,7 +407,7 @@ function parseLonghand<N extends Longhands.Name>(
 function parseShorthand<N extends Shorthands.Name>(
   shorthand: Shorthands.Property[N],
   value: string,
-  variables: Map<string, Value<Slice<Token>>>
+  variables: Map<string, Value<Slice<Token>>>,
 ) {
   const substitution = Variable.substitute(Lexer.lex(value), variables);
 
@@ -415,8 +415,8 @@ function parseShorthand<N extends Shorthands.Name>(
     return Result.of(
       Iterable.map(
         shorthand.properties,
-        (property) => [property, Keyword.of("unset")] as const
-      )
+        (property) => [property, Keyword.of("unset")] as const,
+      ),
     );
   }
 
@@ -428,7 +428,7 @@ function parseShorthand<N extends Shorthands.Name>(
     if (Keyword.isKeyword(value)) {
       return Iterable.map(
         shorthand.properties,
-        (property) => [property, value] as const
+        (property) => [property, value] as const,
       );
     }
 
@@ -439,8 +439,8 @@ function parseShorthand<N extends Shorthands.Name>(
     return Result.of(
       Iterable.map(
         shorthand.properties,
-        (property) => [property, Keyword.of("unset")] as const
-      )
+        (property) => [property, Keyword.of("unset")] as const,
+      ),
     );
   }
 

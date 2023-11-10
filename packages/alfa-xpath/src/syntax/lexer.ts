@@ -111,7 +111,7 @@ const isNameStart = or(
   isBetween(0x3001, 0xd7ff),
   isBetween(0xf900, 0xfdcf),
   isBetween(0xfdf0, 0xfffd),
-  isBetween(0x10000, 0xeffff)
+  isBetween(0x10000, 0xeffff),
 );
 
 /**
@@ -122,7 +122,7 @@ const isName = or(
   isNameStart,
   isNumeric,
   isBetween(0x0300, 0x036f),
-  isBetween(0x203f, 0x2040)
+  isBetween(0x203f, 0x2040),
 );
 
 /**
@@ -137,8 +137,8 @@ const isCharacter = or(
   equals(0x9, 0xa, 0xd),
   or(
     isBetween(0x20, 0xd7ff),
-    or(isBetween(0xe000, 0xfffd), isBetween(0x10000, 0x10ffff))
-  )
+    or(isBetween(0xe000, 0xfffd), isBetween(0x10000, 0x10ffff)),
+  ),
 );
 
 const lexNumeric: Parser<Slice<number>, Token, string> = (input) => {
@@ -239,7 +239,7 @@ const lexString: Parser<Slice<number>, Token> = (input) => {
 };
 
 const lexCommentContents: Parser.Infallible<Slice<number>, string> = (
-  input
+  input,
 ) => {
   let value = "";
   let next = input.get(0);

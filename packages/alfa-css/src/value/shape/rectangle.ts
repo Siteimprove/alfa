@@ -18,13 +18,13 @@ const { either, map, option, separatedList } = Parser;
  * @deprecated Deprecated as of CSS Masking Module Level 1
  */
 export class Rectangle<
-  O extends Length | Rectangle.Auto = Length | Rectangle.Auto
+  O extends Length | Rectangle.Auto = Length | Rectangle.Auto,
 > extends BasicShape<"rectangle", Value.HasCalculation<[O, O, O, O]>> {
   public static of<O extends Length | Rectangle.Auto = Length | Rectangle.Auto>(
     top: O,
     right: O,
     bottom: O,
-    left: O
+    left: O,
   ): Rectangle<O> {
     return new Rectangle(top, right, bottom, left);
   }
@@ -63,7 +63,7 @@ export class Rectangle<
       this._top.resolve(resolver),
       this._right.resolve(resolver),
       this._bottom.resolve(resolver),
-      this._left.resolve(resolver)
+      this._left.resolve(resolver),
     );
   }
 
@@ -133,9 +133,9 @@ export namespace Rectangle {
       "rect",
       either(
         separatedList(parseLengthAuto, option(Token.parseWhitespace), 4, 4),
-        separatedList(parseLengthAuto, Comma.parse, 4, 4)
-      )
+        separatedList(parseLengthAuto, Comma.parse, 4, 4),
+      ),
     ),
-    ([_, [top, right, bottom, left]]) => Rectangle.of(top, right, bottom, left)
+    ([_, [top, right, bottom, left]]) => Rectangle.of(top, right, bottom, left),
   );
 }

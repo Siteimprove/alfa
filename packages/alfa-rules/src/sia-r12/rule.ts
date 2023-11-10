@@ -28,8 +28,8 @@ export default Rule.Atomic.of<Page, Element>({
             not(hasInputType("image")),
             hasNamespace(Namespace.HTML),
             hasRole(device, "button"),
-            isIncludedInTheAccessibilityTree(device)
-          )
+            isIncludedInTheAccessibilityTree(device),
+          ),
         );
       },
 
@@ -38,7 +38,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             hasNonEmptyAccessibleName(device)(target),
             () => Outcomes.HasName,
-            () => Outcomes.HasNoName
+            () => Outcomes.HasNoName,
           ),
         };
       },
@@ -51,10 +51,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const HasName = Ok.of(
-    Diagnostic.of(`The button has an accessible name`)
+    Diagnostic.of(`The button has an accessible name`),
   );
 
   export const HasNoName = Err.of(
-    Diagnostic.of(`The button does not have an accessible name`)
+    Diagnostic.of(`The button does not have an accessible name`),
   );
 }

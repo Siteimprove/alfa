@@ -46,7 +46,7 @@ test(`evaluate() passes a document whose first tabbable link references an
       oracle({
         "first-tabbable-is-internal-link": true,
         "first-tabbable-reference": Option.of(main),
-      })
+      }),
     ),
     [
       passed(
@@ -55,9 +55,9 @@ test(`evaluate() passes a document whose first tabbable link references an
         {
           1: Outcomes.FirstTabbableIsLinkToContent,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -76,7 +76,7 @@ test(`evaluate() passes a document whose first tabbable link references an
       { document },
       oracle({
         "first-tabbable-reference-is-main": true,
-      })
+      }),
     ),
     [
       passed(
@@ -85,9 +85,9 @@ test(`evaluate() passes a document whose first tabbable link references an
         {
           1: Outcomes.FirstTabbableIsLinkToContent,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -112,7 +112,7 @@ test(`evaluate() passes a document whose first tabbable link references an
         "first-tabbable-is-internal-link": true,
         "first-tabbable-reference": Option.of(main),
         "first-tabbable-reference-is-main": true,
-      })
+      }),
     ),
     [
       passed(
@@ -121,9 +121,9 @@ test(`evaluate() passes a document whose first tabbable link references an
         {
           1: Outcomes.FirstTabbableIsLinkToContent,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -226,7 +226,7 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
           opacity: "0",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(
@@ -235,7 +235,7 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
       { document },
       oracle({
         "first-tabbable-is-visible": false,
-      })
+      }),
     ),
     [
       failed(
@@ -244,9 +244,9 @@ test(`evaluate() fails a document whose first tabbable link is not visible`, asy
         {
           1: Outcomes.FirstTabbableIsNotVisible,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -264,7 +264,7 @@ test(`evaluate() passes a document whose first tabbable link is not visible`, as
           opacity: "0",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(
@@ -273,7 +273,7 @@ test(`evaluate() passes a document whose first tabbable link is not visible`, as
       { document },
       oracle({
         "first-tabbable-is-visible": true,
-      })
+      }),
     ),
     [
       passed(
@@ -282,9 +282,9 @@ test(`evaluate() passes a document whose first tabbable link is not visible`, as
         {
           1: Outcomes.FirstTabbableIsLinkToContent,
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -302,7 +302,7 @@ test(`evaluate() can´t tell if the first tabbable link of a document is not vis
           opacity: "0",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R87, { document }), [cantTell(R87, document)]);
@@ -327,7 +327,7 @@ test(`evaluate() passes a document whose first tabbable link is visible when
           opacity: "1",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R87, { document }), [

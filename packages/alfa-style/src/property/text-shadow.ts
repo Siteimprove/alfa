@@ -11,7 +11,7 @@ type Specified = Keyword<"none"> | List<Shadow>;
 type Computed = Keyword<"none"> | List<Shadow.Canonical>;
 
 const parseList = List.parseCommaSeparated(
-  Shadow.parse({ withInset: false, withSpread: false })
+  Shadow.parse({ withInset: false, withSpread: false }),
 );
 
 /**
@@ -23,5 +23,5 @@ export default Longhand.of<Specified, Computed>(
   either(Keyword.parse("none"), parseList),
   (textShadow, style) =>
     textShadow.map((value) => value.resolve(Resolver.length(style))),
-  { inherits: true }
+  { inherits: true },
 );

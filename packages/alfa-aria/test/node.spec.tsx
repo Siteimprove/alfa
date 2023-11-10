@@ -515,7 +515,7 @@ test(`.from() correctly sets \`aria-setsize\` and \`aria-posinset\``, (t) => {
 
     t.equal(
       node.attribute("aria-setsize").getUnsafe().value,
-      `${items.length}`
+      `${items.length}`,
     );
 
     t.equal(node.attribute("aria-posinset").getUnsafe().value, `${i + 1}`);

@@ -24,7 +24,7 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
     options: Longhand.Options = {
       inherits: false,
-    }
+    },
   ): Longhand<SPECIFIED, COMPUTED> {
     return new Longhand(initial, parse, compute, options);
   }
@@ -36,7 +36,7 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
       parse?: parser.Parser<Slice<Token>, SPECIFIED, string>;
       compute?: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>;
       options?: Longhand.Options;
-    } = {}
+    } = {},
   ): Longhand<SPECIFIED, COMPUTED> {
     const {
       initial = property._initial,
@@ -65,13 +65,13 @@ export class Longhand<SPECIFIED = unknown, COMPUTED = SPECIFIED> {
     initial: COMPUTED,
     parseBase: parser.Parser<Slice<Token>, SPECIFIED, string>,
     compute: Mapper<Value<SPECIFIED>, Value<COMPUTED>, [style: Style]>,
-    options: Longhand.Options
+    options: Longhand.Options,
   ) {
     this._initial = initial;
     this._parseBase = parseBase;
     this._parse = left(
       either(Longhand.parseDefaults, parseBase),
-      end(() => "Expected end of input")
+      end(() => "Expected end of input"),
     );
     this._compute = compute;
     this._options = options;
@@ -191,7 +191,7 @@ export namespace Longhand {
       Keyword.of(initial),
       Keyword.parse(initial, ...other),
       (value) => value,
-      options
+      options,
     );
   }
 }

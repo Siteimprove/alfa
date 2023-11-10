@@ -20,5 +20,5 @@ export default Longhand.of<Specified, Computed>(
       }
 
       return color.resolve();
-    })
+    }),
 );

@@ -19,7 +19,7 @@ function isNotOpaque(device: Device, context: Context) {
     "opacity",
     (opacity) => opacity.value === 0,
     device,
-    context
+    context,
   );
 }
 
@@ -28,7 +28,7 @@ function hasTransparentTextColor(device: Device, context: Context) {
     "color",
     Color.isTransparent,
     device,
-    context
+    context,
   ) as Predicate<Text>;
 }
 
@@ -37,7 +37,7 @@ function hasTransparentTextColor(device: Device, context: Context) {
  */
 export function isTransparent(
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Node> {
   return function isTransparent(node): boolean {
     return cache
@@ -48,10 +48,10 @@ export function isTransparent(
           or(
             and(isElement, isNotOpaque(device, context)),
             and(isText, hasTransparentTextColor(device, context)),
-            (node: Node) => node.parent(Node.flatTree).some(isTransparent)
+            (node: Node) => node.parent(Node.flatTree).some(isTransparent),
           ),
-          node
-        )
+          node,
+        ),
       );
   };
 }

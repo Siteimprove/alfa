@@ -38,7 +38,7 @@ export interface Assertions {
   rejects<T>(
     block: Function | Promise<T>,
     error?: RegExp | Function | Object | Error,
-    message?: string
+    message?: string,
   ): void;
 
   /**
@@ -47,6 +47,6 @@ export interface Assertions {
   throws(
     block: Function,
     error?: RegExp | Function | Object | Error,
-    message?: string
+    message?: string,
   ): void;
 }

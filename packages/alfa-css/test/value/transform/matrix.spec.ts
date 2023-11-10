@@ -44,7 +44,7 @@ test("parse() parses a 2D matrix", (t) => {
 
 test("parse() parses a 3D matrix", (t) => {
   const actual = serialize(
-    "matrix3d(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)"
+    "matrix3d(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)",
   );
 
   t.deepEqual(actual, {

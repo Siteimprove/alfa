@@ -95,26 +95,26 @@ const parseBuiltin = Keyword.parse(
   "row-resize",
   "all-scroll",
   "zoom-in",
-  "zoom-out"
+  "zoom-out",
 );
 
 const parseCustom = map(
   pair(
     URL.parse,
-    option(right(parseWhitespace, separated(Number.parse, parseWhitespace)))
+    option(right(parseWhitespace, separated(Number.parse, parseWhitespace))),
   ),
   ([url, coordinates]) =>
-    coordinates.isSome() ? Tuple.of(url, ...coordinates.get()) : url
+    coordinates.isSome() ? Tuple.of(url, ...coordinates.get()) : url,
 );
 
 const parseCustomList = map(
   zeroOrMore(left(parseCustom, pair(parseComma, option(parseWhitespace)))),
-  (list) => List.of(list, ",")
+  (list) => List.of(list, ","),
 );
 
 const parse = map(
   separated(parseCustomList, option(parseWhitespace), parseBuiltin),
-  ([custom, fallback]) => Tuple.of(custom, fallback)
+  ([custom, fallback]) => Tuple.of(custom, fallback),
 );
 
 /**
@@ -125,5 +125,5 @@ export default Longhand.of<Specified, Computed>(
   Tuple.of(List.of([], ","), Keyword.of("auto")),
   parse,
   (value) => value,
-  { inherits: true }
+  { inherits: true },
 );

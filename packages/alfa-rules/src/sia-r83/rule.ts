@@ -54,7 +54,10 @@ export default Rule.Atomic.of<Page, Text>({
       applicability() {
         return document
           .inclusiveDescendants(
-            Node.Traversal.of(Node.Traversal.composed, Node.Traversal.flattened)
+            Node.Traversal.of(
+              Node.Traversal.composed,
+              Node.Traversal.flattened,
+            ),
           )
           .find(and(isElement, hasName("body")))
           .map((body) => body.children())
@@ -70,10 +73,10 @@ export default Rule.Atomic.of<Page, Text>({
                 or(
                   hasAttribute("aria-hidden", equals("true")),
                   not(hasNamespace(Namespace.HTML)),
-                  and(hasName("select"), hasDisplaySize(1))
-                )
+                  and(hasName("select"), hasDisplaySize(1)),
+                ),
               ),
-              node
+              node,
             )
           ) {
             return;
@@ -104,11 +107,11 @@ export default Rule.Atomic.of<Page, Text>({
         const parent = target.parent(Node.fullTree).filter(isElement);
 
         const horizontallyClippedBy = parent.flatMap(
-          horizontallyClipper(device)
+          horizontallyClipper(device),
         );
 
         const verticallyClippedBy = parent.flatMap(
-          verticalClippingAncestor(device)
+          verticalClippingAncestor(device),
         );
 
         return {
@@ -137,11 +140,11 @@ export default Rule.Atomic.of<Page, Text>({
                         hasBox(
                           (targetBox) =>
                             clippingBox.width >= 2 * targetBox.width,
-                          device
-                        )
+                          device,
+                        ),
                       ),
-                  device
-                )
+                  device,
+                ),
               ) &&
               verticallyClippedBy.every(
                 hasBox(
@@ -153,21 +156,21 @@ export default Rule.Atomic.of<Page, Text>({
                         hasBox(
                           (targetBox) =>
                             clippingBox.height >= 2 * targetBox.height,
-                          device
-                        )
+                          device,
+                        ),
                       ),
-                  device
-                )
+                  device,
+                ),
               )
                 ? Outcomes.IsContainer(
                     horizontallyClippedBy,
-                    verticallyClippedBy
+                    verticallyClippedBy,
                   )
                 : Outcomes.ClipsText(
                     horizontallyClippedBy,
-                    verticallyClippedBy
+                    verticallyClippedBy,
                   ),
-            () => Outcomes.WrapsText
+            () => Outcomes.WrapsText,
           ),
         };
       },
@@ -189,7 +192,7 @@ const verticallyClippingCache = Cache.empty<
  * when the same element has fixed height and clips.
  */
 function verticalClippingAncestor(
-  device: Device
+  device: Device,
 ): (element: Element) => Option<Element> {
   return function clippingAncestor(element: Element): Option<Element> {
     return verticallyClippingCache.get(device, Cache.empty).get(element, () => {
@@ -234,7 +237,7 @@ function verticalClippingAncestor(
  *   ancestor that either handles it (scroll bar) or clips it.
  */
 function horizontallyClipper(
-  device: Device
+  device: Device,
 ): (element: Element) => Option<Element> {
   return (element) => {
     if (hasFontRelativeValue(device, "width")(element)) {
@@ -256,7 +259,7 @@ function horizontallyClipper(
         return None;
       case Overflow.Overflow:
         return getPositioningParent(element, device).flatMap(
-          horizontallyClippingAncestor(device)
+          horizontallyClippingAncestor(device),
         );
     }
   };
@@ -278,7 +281,7 @@ const horizontallyClippingCache = Cache.empty<
  * line); but this seems to be a frequent use case.
  */
 function horizontallyClippingAncestor(
-  device: Device
+  device: Device,
 ): (element: Element) => Option<Element> {
   return function clippingAncestor(element: Element): Option<Element> {
     return horizontallyClippingCache
@@ -311,7 +314,7 @@ function horizontallyClippingAncestor(
             return None;
           case Overflow.Overflow:
             return getPositioningParent(element, device).flatMap(
-              clippingAncestor
+              clippingAncestor,
             );
         }
       });
@@ -327,7 +330,7 @@ enum Overflow {
 function overflow(
   element: Element,
   device: Device,
-  dimension: "x" | "y"
+  dimension: "x" | "y",
 ): Overflow {
   switch (
     Style.from(element, device).computed(`overflow-${dimension}`).value.value
@@ -401,7 +404,7 @@ function hasFixedHeight(device: Device): Predicate<Element> {
       height.value > 0 &&
       !height.isFontRelative() &&
       source.some((declaration) => declaration.parent.isSome()),
-    device
+    device,
   );
 }
 
@@ -419,7 +422,7 @@ function hasFixedHeight(device: Device): Predicate<Element> {
  */
 function hasFontRelativeValue(
   device: Device,
-  property: "height" | "width"
+  property: "height" | "width",
 ): Predicate<Element> {
   return or(
     hasCascadedStyle(
@@ -427,15 +430,15 @@ function hasFontRelativeValue(
       (value) =>
         Length.isLength(value) &&
         (value.hasCalculation() || (value.value > 0 && value.isFontRelative())),
-      device
+      device,
     ),
     hasCascadedStyle(
       `min-${property}`,
       (value) =>
         Length.isLength(value) &&
         (value.hasCalculation() || (value.value > 0 && value.isFontRelative())),
-      device
-    )
+      device,
+    ),
   );
 }
 
@@ -485,14 +488,14 @@ function ancestorsInRuleTree(rule: RuleTree.Node): Sequence<RuleTree.Node> {
     rule.parent
       .map((parent) => ancestorsInRuleTree(parent))
       .getOrElse<Sequence<RuleTree.Node>>(Sequence.empty)
-      .prepend(rule)
+      .prepend(rule),
   );
 }
 
 function getUsedMediaRules(
   element: Element,
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Sequence<MediaRule> {
   const root = element.root();
 
@@ -505,7 +508,9 @@ function getUsedMediaRules(
     .map((node) =>
       // Get all nodes (style rules) in the RuleTree that affect the element;
       // for each of these rules, get all ancestor media rules in the CSS tree.
-      ancestorsInRuleTree(node).flatMap((node) => ancestorMediaRules(node.rule))
+      ancestorsInRuleTree(node).flatMap((node) =>
+        ancestorMediaRules(node.rule),
+      ),
     )
     .getOrElse(Sequence.empty);
 }
@@ -513,7 +518,7 @@ function getUsedMediaRules(
 function usesMediaRule(
   predicate: Predicate<MediaRule> = () => true,
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Element> {
   return (element) =>
     getUsedMediaRules(element, device, context).some(predicate);
@@ -528,7 +533,7 @@ function usesMediaRule(
  * typing of Media.Feature. Here, we simply consider them as "good" (font relative).
  */
 function isFontRelativeMediaRule<F extends Media.Feature>(
-  refinement: Refinement<Media.Feature, F>
+  refinement: Refinement<Media.Feature, F>,
 ): Predicate<MediaRule> {
   return (rule) =>
     Iterable.some(rule.queries.queries, (query) =>
@@ -542,20 +547,22 @@ function isFontRelativeMediaRule<F extends Media.Feature>(
                 ? value.minimum.some(
                     (min) =>
                       Length.isLength(min.value) &&
-                      (min.value.hasCalculation() || min.value.isFontRelative())
+                      (min.value.hasCalculation() ||
+                        min.value.isFontRelative()),
                   )
                 : Discrete.isDiscrete<Length>(value) &&
-                  (value.value.hasCalculation() || value.value.isFontRelative())
-            )
-        )
-      )
+                  (value.value.hasCalculation() ||
+                    value.value.isFontRelative()),
+            ),
+        ),
+      ),
     );
 }
 
 function usesFontRelativeMediaRule<F extends Media.Feature>(
   device: Device,
   refinement: Refinement<Media.Feature, F>,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Element> {
   return usesMediaRule(isFontRelativeMediaRule(refinement), device, context);
 }
@@ -567,7 +574,7 @@ export class ClippingAncestors extends Diagnostic {
   public static of(
     message: string,
     horizontal: Option<Element> = None,
-    vertical: Option<Element> = None
+    vertical: Option<Element> = None,
   ): ClippingAncestors {
     return new ClippingAncestors(message, horizontal, vertical);
   }
@@ -578,7 +585,7 @@ export class ClippingAncestors extends Diagnostic {
   private constructor(
     message: string,
     horizontal: Option<Element>,
-    vertical: Option<Element>
+    vertical: Option<Element>,
   ) {
     super(message);
     this._horizontal = horizontal;
@@ -631,16 +638,16 @@ export namespace ClippingAncestors {
   }
 
   export function isClippingAncestors(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is ClippingAncestors;
 
   export function isClippingAncestors(
-    value: unknown
+    value: unknown,
   ): value is ClippingAncestors;
 
   /**@public */
   export function isClippingAncestors(
-    value: unknown
+    value: unknown,
   ): value is ClippingAncestors {
     return value instanceof ClippingAncestors;
   }
@@ -651,24 +658,24 @@ export namespace ClippingAncestors {
  */
 export namespace Outcomes {
   export const WrapsText = Ok.of(
-    ClippingAncestors.of(`The text is wrapped without being clipped`)
+    ClippingAncestors.of(`The text is wrapped without being clipped`),
   );
 
   export const ClipsText = (
     horizontal: Option<Element>,
-    vertical: Option<Element>
+    vertical: Option<Element>,
   ) =>
     Err.of(ClippingAncestors.of(`The text is clipped`, horizontal, vertical));
 
   export const IsContainer = (
     horizontal: Option<Element>,
-    vertical: Option<Element>
+    vertical: Option<Element>,
   ) =>
     Ok.of(
       ClippingAncestors.of(
         "The text would be clipped but the clipper is more than twice as large",
         horizontal,
-        vertical
-      )
+        vertical,
+      ),
     );
 }

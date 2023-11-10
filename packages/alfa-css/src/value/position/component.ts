@@ -17,7 +17,7 @@ export type Component<
   S extends Keywords.Horizontal | Keywords.Vertical =
     | Keywords.Horizontal
     | Keywords.Vertical,
-  O extends LengthPercentage = LengthPercentage
+  O extends LengthPercentage = LengthPercentage,
 > = Keywords.Center | Side<S, O>;
 
 /**
@@ -29,7 +29,7 @@ export namespace Component {
     | Side.Canonical<S>;
 
   export type PartiallyResolved<
-    S extends Keywords.Horizontal | Keywords.Vertical
+    S extends Keywords.Horizontal | Keywords.Vertical,
   > = Keywords.Center | Side.PartiallyResolved<S>;
 
   export type JSON = Keyword.JSON | Side.JSON;
@@ -37,7 +37,7 @@ export namespace Component {
   export type Resolver = Side.Resolver;
 
   export function resolve<S extends Keywords.Horizontal | Keywords.Vertical>(
-    resolver: Resolver
+    resolver: Resolver,
   ): (value: Component<S>) => Canonical<S> {
     return (value) => (Side.isSide(value) ? value.resolve(resolver) : value);
   }
@@ -45,7 +45,7 @@ export namespace Component {
   export type PartialResolver = Side.PartialResolver;
 
   export function partiallyResolve<
-    S extends Keywords.Horizontal | Keywords.Vertical
+    S extends Keywords.Horizontal | Keywords.Vertical,
   >(resolver: PartialResolver): (value: Component<S>) => PartiallyResolved<S> {
     return (value) =>
       Side.isSide(value) ? Side.partiallyResolve<S>(resolver)(value) : value;
@@ -58,7 +58,7 @@ export namespace Component {
    * @internal
    */
   export function parseOffset<
-    T extends Keywords.Horizontal | Keywords.Vertical
+    T extends Keywords.Horizontal | Keywords.Vertical,
   >(side: T): CSSParser<Component<T>> {
     return map(LengthPercentage.parse, (value) => Side.of(side, value));
   }
@@ -69,7 +69,7 @@ export namespace Component {
    */
   export const parseHorizontal = either(
     parseOffset(Keyword.of("left")),
-    Side.parseHorizontal
+    Side.parseHorizontal,
   );
 
   /**
@@ -77,6 +77,6 @@ export namespace Component {
    */
   export const parseVertical = either(
     parseOffset(Keyword.of("top")),
-    Side.parseVertical
+    Side.parseVertical,
   );
 }
