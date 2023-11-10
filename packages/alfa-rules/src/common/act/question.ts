@@ -55,7 +55,7 @@ export namespace Question {
     uri: U,
     subject: S,
     message?: string,
-    options?: act.Question.Options<Typeof<U>>
+    options?: act.Question.Options<Typeof<U>>,
   ): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U>;
 
   export function of<S, C, U extends Uri = Uri>(
@@ -63,7 +63,7 @@ export namespace Question {
     subject: S,
     context: C,
     message?: string,
-    options?: act.Question.Options<Typeof<U>>
+    options?: act.Question.Options<Typeof<U>>,
   ): act.Question<TypeName<U>, S, C, Typeof<U>, Typeof<U>, U>;
 
   export function of<S, U extends Uri = Uri>(
@@ -71,7 +71,7 @@ export namespace Question {
     subject: S,
     contextOrMessage?: S | string,
     messageOrOptions?: string | act.Question.Options<Typeof<U>>,
-    options: act.Question.Options<Typeof<U>> = {}
+    options: act.Question.Options<Typeof<U>> = {},
   ): act.Question<TypeName<U>, S, S, Typeof<U>, Typeof<U>, U> {
     let context: S = subject;
     let message: string;
@@ -99,7 +99,7 @@ export namespace Question {
       message,
       subject,
       context,
-      options
+      options,
     );
   }
 

@@ -95,7 +95,7 @@ export namespace Skew {
 
   const parseAngleOrZero = either(
     Angle.parse,
-    map(Number.parseZero, () => _0)
+    map(Number.parseZero, () => _0),
   );
 
   /**
@@ -106,10 +106,10 @@ export namespace Skew {
       "skew",
       map(
         List.parseCommaSeparated(parseAngleOrZero, 1, 2),
-        (list) => list.values
-      )
+        (list) => list.values,
+      ),
     ),
-    ([_, [x, y]]) => Skew.of(x, y ?? _0)
+    ([_, [x, y]]) => Skew.of(x, y ?? _0),
   );
 
   /**
@@ -117,7 +117,7 @@ export namespace Skew {
    */
   const parseSkewX = map(
     CSSFunction.parse("skewX", parseAngleOrZero),
-    ([_, x]) => Skew.of(x, _0)
+    ([_, x]) => Skew.of(x, _0),
   );
 
   /**
@@ -125,7 +125,7 @@ export namespace Skew {
    */
   const parseSkewY = map(
     CSSFunction.parse("skewY", parseAngleOrZero),
-    ([_, y]) => Skew.of(_0, y)
+    ([_, y]) => Skew.of(_0, y),
   );
 
   export const parse = either(parseSkew, parseSkewX, parseSkewY);

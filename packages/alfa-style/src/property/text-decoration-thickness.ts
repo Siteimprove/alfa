@@ -10,10 +10,7 @@ import type { Computed as FontSize } from "./font-size";
 
 const { either } = Parser;
 
-type Specified =
-  | LengthPercentage
-  | Keyword<"auto">
-  | Keyword<"from-font">;
+type Specified = LengthPercentage | Keyword<"auto"> | Keyword<"from-font">;
 
 type Computed =
   | LengthPercentage.Canonical
@@ -22,7 +19,7 @@ type Computed =
 
 const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("auto", "from-font"),
-  LengthPercentage.parse
+  LengthPercentage.parse,
 );
 
 /**
@@ -41,8 +38,8 @@ export default Longhand.of<Specified, Computed>(
       return Selective.of(value)
         .if(
           LengthPercentage.isLengthPercentage,
-          LengthPercentage.resolve(Resolver.lengthPercentage(fontSize, style))
+          LengthPercentage.resolve(Resolver.lengthPercentage(fontSize, style)),
         )
         .get();
-    })
+    }),
 );

@@ -14,7 +14,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with direct
         <td>1</td>
         <td>2</td>
       </tr>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -75,7 +75,7 @@ test(`.from() constructs a table from a simple 2x2 <table> element with child
           <td>2</td>
         </tr>
       </tbody>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -141,7 +141,7 @@ test(`.from() handles a <td> element with a rowspan=0 attribute`, (t) => {
       <tr>
         <td>3</td>
       </tr>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -183,7 +183,7 @@ test(`.from() assigns implicit row headers`, (t) => {
         <th>A</th>
         <td>1</td>
       </tr>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -218,7 +218,7 @@ test(`.from() assigns explicit row headers`, (t) => {
         <td id="header">A</td>
         <td headers="header">1</td>
       </tr>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -254,7 +254,7 @@ test(`.from() assigns implicit column headers`, (t) => {
       <tr>
         <td>1</td>
       </tr>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -291,7 +291,7 @@ test(`.from() assigns explicit column headers`, (t) => {
       <tr>
         <td headers="header">1</td>
       </tr>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -332,7 +332,7 @@ test(`.from() assigns implicit row and column headers for the same
         <td>1</td>
         <td>2</td>
       </tr>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -416,7 +416,7 @@ test(`.from() assigns headers within a row group`, (t) => {
           <td>2</td>
         </tr>
       </tbody>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -499,7 +499,7 @@ test(`.from() assigns headers within a column group`, (t) => {
         <td>1</td>
         <td>2</td>
       </tr>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -574,7 +574,7 @@ test(`.from() assigns explicit column headers`, (t) => {
       <tr>
         <td>1</td>
       </tr>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -609,7 +609,7 @@ test(`.from() assigns explicit row headers`, (t) => {
         <th scope="row">A</th>
         <td>1</td>
       </tr>
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {
@@ -644,7 +644,7 @@ test(`.from() gracefully handles invalid elements in tables`, (t) => {
         <td>1</td>
       </tr>
       <input />
-    </table>
+    </table>,
   );
 
   t.deepEqual(table.toJSON(), {

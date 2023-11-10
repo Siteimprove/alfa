@@ -91,7 +91,7 @@ test("parse() parses a radial gradient with an extent and a position", (t) => {
         },
       ],
       repeats: false,
-    }
+    },
   );
 });
 
@@ -125,7 +125,7 @@ test("parse() parses a radial gradient with a circle", (t) => {
         ],
         repeats: false,
       },
-      input
+      input,
     );
   }
 });
@@ -143,7 +143,7 @@ test("parse() parses a radial gradient with a circle and calculated radius", (t)
         },
       },
     },
-    `radial-gradient(calc(1px + 1px), red, blue)`
+    `radial-gradient(calc(1px + 1px), red, blue)`,
   );
 });
 
@@ -184,7 +184,7 @@ test("parse() parses a radial gradient with an ellipse", (t) => {
         ],
         repeats: false,
       },
-      input
+      input,
     );
   }
 });
@@ -240,7 +240,7 @@ test("parse() parses a radial gradient with an ellipse and calculated radii, inc
           },
         },
       },
-    }
+    },
   );
 });
 
@@ -275,7 +275,7 @@ test("parse() parses a radial gradient with a circular extent", (t) => {
         ],
         repeats: false,
       },
-      input
+      input,
     );
   }
 });
@@ -311,7 +311,7 @@ test("parse() parses a radial gradient with an elliptical extent", (t) => {
         ],
         repeats: false,
       },
-      input
+      input,
     );
   }
 });

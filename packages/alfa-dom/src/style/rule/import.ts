@@ -14,7 +14,7 @@ export class ImportRule extends ConditionRule {
   public static of(
     href: string,
     sheet: Sheet,
-    condition: Option<string> = None
+    condition: Option<string> = None,
   ): ImportRule {
     return new ImportRule(href, sheet, condition);
   }
@@ -81,7 +81,7 @@ export namespace ImportRule {
    */
   export function fromImportRule(json: JSON): Trampoline<ImportRule> {
     return Trampoline.traverse(json.rules, Rule.fromRule).map((rules) =>
-      ImportRule.of(json.href, Sheet.of(rules), Option.of(json.condition))
+      ImportRule.of(json.href, Sheet.of(rules), Option.of(json.condition)),
     );
   }
 }

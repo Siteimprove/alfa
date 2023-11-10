@@ -22,7 +22,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   public static of<K, V>(...entries: Array<readonly [K, V]>): Map<K, V> {
     return entries.reduce(
       (map, [key, value]) => map.set(key, value),
-      Map.empty<K, V>()
+      Map.empty<K, V>(),
     );
   }
 
@@ -73,7 +73,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
    */
   public apply<U>(mapper: Map<K, Mapper<V, U>>): Map<K, U> {
     return this.collect((value, key) =>
-      mapper.get(key).map((mapper) => mapper(value))
+      mapper.get(key).map((mapper) => mapper(value)),
     );
   }
 
@@ -85,7 +85,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   public flatMap<L, U>(mapper: Mapper<V, Map<L, U>, [key: K]>): Map<L, U> {
     return this.reduce(
       (map, value, key) => map.concat(mapper(value, key)),
-      Map.empty<L, U>()
+      Map.empty<L, U>(),
     );
   }
 
@@ -102,7 +102,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.reduce(
       this,
       (accumulator, [key, value]) => reducer(accumulator, value, key),
-      accumulator
+      accumulator,
     );
   }
 
@@ -113,12 +113,12 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   public filter(predicate: Predicate<V, [key: K]>): Map<K, V> {
     return this.reduce(
       (map, value, key) => (predicate(value, key) ? map.set(key, value) : map),
-      Map.empty()
+      Map.empty(),
     );
   }
 
   public reject<U extends V>(
-    refinement: Refinement<V, U, [key: K]>
+    refinement: Refinement<V, U, [key: K]>,
   ): Map<K, Exclude<V, U>>;
 
   public reject(predicate: Predicate<V, [key: K]>): Map<K, V>;
@@ -133,7 +133,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
 
   public find(predicate: Predicate<V, [key: K]>): Option<V> {
     return Iterable.find(this, ([key, value]) => predicate(value, key)).map(
-      ([, value]) => value
+      ([, value]) => value,
     );
   }
 
@@ -144,8 +144,8 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
   public collect<U>(mapper: Mapper<V, Option<U>, [key: K]>): Map<K, U> {
     return Map.from(
       Iterable.collect(this, ([key, value]) =>
-        mapper(value, key).map((value) => [key, value])
-      )
+        mapper(value, key).map((value) => [key, value]),
+      ),
     );
   }
 
@@ -225,7 +225,7 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.reduce<readonly [K, V], Map<K, V>>(
       iterable,
       (map, [key, value]) => map.set(key, value),
-      this
+      this,
     );
   }
 
@@ -233,13 +233,13 @@ export class Map<K, V> implements Collection.Keyed<K, V> {
     return Iterable.reduce<readonly [K, V], Map<K, V>>(
       iterable,
       (map, [key]) => map.delete(key),
-      this
+      this,
     );
   }
 
   public intersect(iterable: Iterable<readonly [K, V]>): Map<K, V> {
     return Map.fromIterable(
-      Iterable.filter(iterable, ([key]) => this.has(key))
+      Iterable.filter(iterable, ([key]) => this.has(key)),
     );
   }
 
@@ -314,7 +314,7 @@ export namespace Map {
   export type JSON<K, V> = Collection.Keyed.JSON<K, V>;
 
   export function isMap<K, V>(
-    value: Iterable<readonly [K, V]>
+    value: Iterable<readonly [K, V]>,
   ): value is Map<K, V>;
 
   export function isMap<K, V>(value: unknown): value is Map<K, V>;
@@ -336,22 +336,22 @@ export namespace Map {
   }
 
   export function fromArray<K, V>(
-    array: ReadonlyArray<readonly [K, V]>
+    array: ReadonlyArray<readonly [K, V]>,
   ): Map<K, V> {
     return Array.reduce(
       array,
       (map, [key, value]) => map.set(key, value),
-      Map.empty()
+      Map.empty(),
     );
   }
 
   export function fromIterable<K, V>(
-    iterable: Iterable<readonly [K, V]>
+    iterable: Iterable<readonly [K, V]>,
   ): Map<K, V> {
     return Iterable.reduce(
       iterable,
       (map, [key, value]) => map.set(key, value),
-      Map.empty()
+      Map.empty(),
     );
   }
 }

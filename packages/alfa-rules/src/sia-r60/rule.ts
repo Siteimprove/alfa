@@ -34,7 +34,7 @@ export default Rule.Atomic.of<Page, Element>({
               if (
                 and(
                   isIncludedInTheAccessibilityTree(device),
-                  isFormInput(device)
+                  isFormInput(device),
                 )(node)
               ) {
                 groups = groups.set(group, groups.get(group).getOr(0) + 1);
@@ -45,7 +45,7 @@ export default Rule.Atomic.of<Page, Element>({
             if (
               and(
                 hasNamespace(Namespace.HTML),
-                hasRole(device, (role) => role.is("group"))
+                hasRole(device, (role) => role.is("group")),
               )(node)
             ) {
               group = Option.of(node);
@@ -71,7 +71,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             hasNonEmptyAccessibleName(device)(target),
             () => Outcomes.HasAccessibleName(role),
-            () => Outcomes.HasNoAccessibleName(role)
+            () => Outcomes.HasNoAccessibleName(role),
           ),
         };
       },
@@ -103,6 +103,6 @@ function isFormInput(device: Device): Predicate<Element> {
     "slider",
     "spinbutton",
     "switch",
-    "textbox"
+    "textbox",
   );
 }

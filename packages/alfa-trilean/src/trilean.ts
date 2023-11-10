@@ -46,7 +46,7 @@ export namespace Trilean {
   }
 
   export function not<T, A extends Array<unknown> = []>(
-    predicate: Predicate<T, A>
+    predicate: Predicate<T, A>,
   ): Predicate<T, A> {
     return (value, ...args) => {
       switch (predicate(value, ...args)) {
@@ -106,28 +106,28 @@ export namespace Trilean {
 
   export function xor<T, A extends Array<unknown> = []>(
     left: Predicate<T, A>,
-    right: Predicate<T, A>
+    right: Predicate<T, A>,
   ): Predicate<T, A> {
     return and(or(left, right), not(and(left, right)));
   }
 
   export function nor<T, A extends Array<unknown> = []>(
     left: Predicate<T, A>,
-    right: Predicate<T, A>
+    right: Predicate<T, A>,
   ): Predicate<T, A> {
     return not(or(left, right));
   }
 
   export function nand<T, A extends Array<unknown> = []>(
     left: Predicate<T, A>,
-    right: Predicate<T, A>
+    right: Predicate<T, A>,
   ): Predicate<T, A> {
     return not(and(left, right));
   }
 
   export function some<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, [number]>
+    predicate: Predicate<T, [number]>,
   ): Trilean {
     return Iterable.reduce<T, Trilean>(
       iterable,
@@ -135,22 +135,22 @@ export namespace Trilean {
         test(
           or<T, [number]>(() => result, predicate),
           value,
-          i
+          i,
         ),
-      false
+      false,
     );
   }
 
   export function none<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, [number]>
+    predicate: Predicate<T, [number]>,
   ): Trilean {
     return every(iterable, not(predicate));
   }
 
   export function every<T>(
     iterable: Iterable<T>,
-    predicate: Predicate<T, [number]>
+    predicate: Predicate<T, [number]>,
   ): Trilean {
     return Iterable.reduce<T, Trilean>(
       iterable,
@@ -158,9 +158,9 @@ export namespace Trilean {
         test(
           and<T, [number]>(() => result, predicate),
           value,
-          i
+          i,
         ),
-      true
+      true,
     );
   }
 }

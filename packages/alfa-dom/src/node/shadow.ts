@@ -13,7 +13,7 @@ export class Shadow extends Node<"shadow"> {
   public static of(
     children: Iterable<Node>,
     style: Iterable<Sheet> = [],
-    mode: Shadow.Mode = Shadow.Mode.Open
+    mode: Shadow.Mode = Shadow.Mode.Open,
   ): Shadow {
     return new Shadow(Array.from(children), Array.from(style), mode);
   }
@@ -29,7 +29,7 @@ export class Shadow extends Node<"shadow"> {
   private constructor(
     children: Array<Node>,
     style: Array<Sheet>,
-    mode: Shadow.Mode
+    mode: Shadow.Mode,
   ) {
     super(children, "shadow");
 
@@ -61,7 +61,7 @@ export class Shadow extends Node<"shadow"> {
    * @internal
    **/
   protected _internalPath(
-    options: Node.Traversal = Node.Traversal.empty
+    options: Node.Traversal = Node.Traversal.empty,
   ): string {
     if (options.isSet(Node.Traversal.composed)) {
       return (
@@ -139,14 +139,11 @@ export namespace Shadow {
   /**
    * @internal
    */
-  export function fromShadow(
-    json: JSON,
-    device?: Device
-  ): Trampoline<Shadow> {
+  export function fromShadow(json: JSON, device?: Device): Trampoline<Shadow> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, device)
+      Node.fromNode(child, device),
     ).map((children) =>
-      Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode)
+      Shadow.of(children, json.style.map(Sheet.from), json.mode as Mode),
     );
   }
 }

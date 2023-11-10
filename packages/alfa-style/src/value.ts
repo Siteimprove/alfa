@@ -51,7 +51,7 @@ export class Value<T = unknown>
   }
 
   public flatMap<U>(
-    mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>
+    mapper: Mapper<T, Value<U>, [source: Option<Declaration>]>,
   ): Value<U> {
     return mapper(this._value, this._source);
   }

@@ -19,5 +19,5 @@ export const parse = Color.parse;
  * @internal
  */
 export default Longhand.of<Specified, Computed>(Color.current, parse, (value) =>
-  value.map((color) => color.resolve())
+  value.map((color) => color.resolve()),
 );

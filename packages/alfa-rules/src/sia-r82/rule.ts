@@ -53,15 +53,15 @@ export default Rule.Atomic.of<
               "slider",
               "spinbutton",
               "switch",
-              "textbox"
-            )
-          )
+              "textbox",
+            ),
+          ),
         );
       },
 
       expectations(target) {
         const indicators = Question.of("error-indicators", target).map(
-          Array.from
+          Array.from,
         );
 
         return {
@@ -69,16 +69,16 @@ export default Rule.Atomic.of<
             expectation<Question.Metadata, Array<Node>, Element, 0>(
               indicators.length === 0,
               () => Outcomes.HasNoErrorIndicator,
-              () => identifiesTarget(target, indicators, device)
-            )
+              () => identifiesTarget(target, indicators, device),
+            ),
           ),
 
           2: indicators.map((indicators) =>
             expectation<Question.Metadata, Array<Node>, Element, 0>(
               indicators.length === 0,
               () => Outcomes.HasNoErrorIndicator,
-              () => describesResolution(target, indicators, device)
-            )
+              () => describesResolution(target, indicators, device),
+            ),
           ),
         };
       },
@@ -91,52 +91,52 @@ export default Rule.Atomic.of<
  */
 export namespace Outcomes {
   export const HasNoErrorIndicator = Ok.of(
-    Diagnostic.of(`The form field has no error indicator`)
+    Diagnostic.of(`The form field has no error indicator`),
   );
 
   export const ErrorIndicatorIdentifiesTarget = Ok.of(
     Diagnostic.of(
-      `At least one error indicator that is perceivable identifies the form field`
-    )
+      `At least one error indicator that is perceivable identifies the form field`,
+    ),
   );
 
   export const ErrorIndicatorIdentifiesTargetButIsNotPerceivable = Err.of(
     Diagnostic.of(
       `At least one error indicator identifies the form field, but the error
-    indicator is not perceivable`
-    )
+    indicator is not perceivable`,
+    ),
   );
 
   export const NoErrorIndicatorIdentifiesTarget = Err.of(
-    Diagnostic.of(`None of the error indicators identify the form field`)
+    Diagnostic.of(`None of the error indicators identify the form field`),
   );
 
   export const ErrorIndicatorDescribesResolution = Ok.of(
     Diagnostic.of(
       `At least one error indicator that is perceivable describes the cause of the
-    error or how to resolve it`
-    )
+    error or how to resolve it`,
+    ),
   );
 
   export const ErrorIndicatorDescribesResolutionButIsNotPerceivable = Err.of(
     Diagnostic.of(
       `At least one error indicator describes the cause of the error or how to
-    resolve it, but the error indicator is not perceivable`
-    )
+    resolve it, but the error indicator is not perceivable`,
+    ),
   );
 
   export const NoErrorIndicatorDescribesResolution = Err.of(
     Diagnostic.of(
       `None of the error indicators describe the cause of the error or how to
-    resolve it`
-    )
+    resolve it`,
+    ),
   );
 }
 
 const identifiesTarget = (
   target: Element,
   indicators: Array<Node>,
-  device: Device
+  device: Device,
 ) =>
   Question.of("error-indicator-identifying-form-field", indicators, target).map(
     (indicator) =>
@@ -148,15 +148,15 @@ const identifiesTarget = (
             // indicator is not None due to the first expectation
             test(isPerceivableForAll(device), indicator.getUnsafe()),
             () => Outcomes.ErrorIndicatorIdentifiesTarget,
-            () => Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable
-          )
-      )
+            () => Outcomes.ErrorIndicatorIdentifiesTargetButIsNotPerceivable,
+          ),
+      ),
   );
 
 const describesResolution = (
   target: Element,
   indicators: Array<Node>,
-  device: Device
+  device: Device,
 ) =>
   Question.of("error-indicator-describing-resolution", indicators, target).map(
     (indicator) =>
@@ -168,7 +168,7 @@ const describesResolution = (
             // indicator is not None due to the first expectation
             test(isPerceivableForAll(device), indicator.getUnsafe()),
             () => Outcomes.ErrorIndicatorDescribesResolution,
-            () => Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable
-          )
-      )
+            () => Outcomes.ErrorIndicatorDescribesResolutionButIsNotPerceivable,
+          ),
+      ),
   );

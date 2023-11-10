@@ -29,8 +29,8 @@ export default Rule.Atomic.of<Page, Element>({
             .filter(
               and(
                 hasRole(device, (role) => role.is("region")),
-                isIncludedInTheAccessibilityTree(device)
-              )
+                isIncludedInTheAccessibilityTree(device),
+              ),
             )
             // circumventing https://github.com/Siteimprove/alfa/issues/298
             .reject(hasIncorrectRoleWithoutName(device))
@@ -42,7 +42,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             hasNonEmptyAccessibleName(device)(target),
             () => Outcomes.HasName,
-            () => Outcomes.HasNoName
+            () => Outcomes.HasNoName,
           ),
         };
       },
@@ -55,10 +55,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const HasName = Ok.of(
-    Diagnostic.of(`The region has an accessible name`)
+    Diagnostic.of(`The region has an accessible name`),
   );
 
   export const HasNoName = Err.of(
-    Diagnostic.of(`The region does not have an accessible name`)
+    Diagnostic.of(`The region does not have an accessible name`),
   );
 }

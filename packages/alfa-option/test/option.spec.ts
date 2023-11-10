@@ -10,14 +10,14 @@ const m: Option<number> = None;
 test("#map() applies a function to a non-empty value", (t) => {
   t.deepEqual(
     n.map((n) => n + 2),
-    Some.of(3)
+    Some.of(3),
   );
 });
 
 test("#map() does not apply a function to an empty value", (t) => {
   t.equal(
     m.map((n) => n + 2),
-    None
+    None,
   );
 });
 
@@ -34,7 +34,7 @@ test("#flatMap() satisfies right identity", (t) => {
 
   t.deepEqual(
     option.flatMap((n) => Some.of(n)),
-    option
+    option,
   );
 });
 
@@ -45,7 +45,7 @@ test("#flatMap() satisfies associativity", (t) => {
 
   t.deepEqual(
     option.flatMap(f).flatMap(g),
-    option.flatMap((n) => f(n).flatMap(g))
+    option.flatMap((n) => f(n).flatMap(g)),
   );
 });
 

@@ -9,7 +9,7 @@ export import JSX = _jsx.JSX;
  */
 export function jsx<N extends string = string>(
   name: N,
-  properties: _jsx.Properties & { children?: _jsx.Child }
+  properties: _jsx.Properties & { children?: _jsx.Child },
 ): Element<N> {
   const { children, ...rest } = properties;
 
@@ -25,7 +25,7 @@ export function jsx<N extends string = string>(
  */
 export function jsxs<N extends string = string>(
   name: N,
-  properties: _jsx.Properties & { children?: _jsx.Children }
+  properties: _jsx.Properties & { children?: _jsx.Children },
 ): Element<N> {
   const { children, ...rest } = properties;
 
@@ -41,7 +41,7 @@ export function jsxs<N extends string = string>(
  */
 export function jsxDEV<N extends string = string>(
   name: N,
-  properties: _jsx.Properties & { children?: _jsx.Child | _jsx.Children }
+  properties: _jsx.Properties & { children?: _jsx.Child | _jsx.Children },
 ): Element<N> {
   const { children, ...rest } = properties;
 

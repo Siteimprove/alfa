@@ -34,7 +34,7 @@ test(`evaluate() passes an <a> element that uses a non-default focus outline`, a
           outline: "2px solid blue",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R65, { document }), [
@@ -56,7 +56,7 @@ test(`evaluate() fails an <a> element that removes the default focus outline and
           outline: "none",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(
@@ -65,7 +65,7 @@ test(`evaluate() fails an <a> element that removes the default focus outline and
       { document },
       oracle({
         "has-focus-indicator": false,
-      })
+      }),
     ),
     [
       failed(
@@ -74,9 +74,9 @@ test(`evaluate() fails an <a> element that removes the default focus outline and
         {
           1: Outcomes.HasNoFocusIndicator(noMatches, noMatches),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -92,7 +92,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
           outline: "none",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(
@@ -101,7 +101,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
       { document },
       oracle({
         "has-focus-indicator": true,
-      })
+      }),
     ),
     [
       passed(
@@ -110,9 +110,9 @@ test(`evaluate() passes an <a> element that removes the default focus outline
         {
           1: Outcomes.HasFocusIndicator(noMatches, noMatches),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -133,7 +133,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
           textDecoration: "underline",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R65, { document }), [
@@ -159,7 +159,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
           outline: "none",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R65, { document }), [
@@ -189,7 +189,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
           outline: "1px solid blue",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R65, { document }), [
@@ -215,7 +215,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
           outline: "1px solid blue",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R65, { document }), [
@@ -238,7 +238,7 @@ test(`evaluate() fails an <a> element that removes the default focus outline
           outline: "none",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(
@@ -247,7 +247,7 @@ test(`evaluate() fails an <a> element that removes the default focus outline
       { document },
       oracle({
         "has-focus-indicator": false,
-      })
+      }),
     ),
     [
       failed(
@@ -256,9 +256,9 @@ test(`evaluate() fails an <a> element that removes the default focus outline
         {
           1: Outcomes.HasNoFocusIndicator(noMatches, noMatches),
         },
-        Outcome.Mode.SemiAuto
+        Outcome.Mode.SemiAuto,
       ),
-    ]
+    ],
   );
 });
 
@@ -281,7 +281,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
           color: "blue",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R65, { document }), [
@@ -310,7 +310,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
           "background-color": "blue",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R65, { document }), [
@@ -337,7 +337,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
           "box-shadow": "10px 5px 5px red",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R65, { document }), [
@@ -360,7 +360,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
           border: "solid 1px",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R65, { document }), [
@@ -386,7 +386,7 @@ test(`evaluate() passes an <a> element that removes the default focus outline
           border: "solid 1px red",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R65, { document }), [
@@ -415,7 +415,7 @@ test(`evaluate() passes an <a> and <button> element which have some focus indica
     ["useless", 1],
     ["good-focus", 2],
     ["btn", 1],
-    ["irrelevant", 1]
+    ["irrelevant", 1],
   );
 
   const matchingNonTargets = Map.of(["good-focus", 1], ["irrelevant", 1]);
@@ -453,7 +453,7 @@ test(`evaluates() only cares about properties values, not sources`, async (t) =>
         h.rule.style("a", { border: "1px solid green" }),
         h.rule.style("a:focus", { border: "solid green 1px" }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R65, { document }), [cantTell(R65, target)]);

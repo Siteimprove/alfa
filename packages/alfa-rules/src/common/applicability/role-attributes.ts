@@ -27,7 +27,7 @@ const cache = Cache.empty<
  */
 export function roleAttributes(
   document: Document,
-  device: Device
+  device: Device,
 ): Sequence<Attribute<"role">> {
   return cache.get(document, Cache.empty).get(device, () =>
     getElementDescendants(document, Node.fullTree)
@@ -35,10 +35,10 @@ export function roleAttributes(
         and(
           hasNamespace(Namespace.HTML, Namespace.SVG),
           hasAttribute("role", (value) => value.trim().length > 0),
-          not(isProgrammaticallyHidden(device))
-        )
+          not(isProgrammaticallyHidden(device)),
+        ),
       )
       // The previous filter ensures the existence of role.
-      .map((element) => element.attribute("role").getUnsafe())
+      .map((element) => element.attribute("role").getUnsafe()),
   );
 }

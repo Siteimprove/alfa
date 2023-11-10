@@ -58,7 +58,7 @@ test(".parse() parses a polygon with a fill rule", (t) => {
 test(".parse() fails when there is an odd number of coordinates", (t) => {
   t.deepEqual(
     Polygon.parse(Lexer.lex("polygon(1px 0px 1px 1px 0px)")).isErr(),
-    true
+    true,
   );
 });
 
@@ -92,7 +92,7 @@ test(".parse() accepts calculated vertices", (t) => {
   t.deepEqual(
     parse(
       `polygon(${actual(1)} ${actual(0)} ${actual(1)} ${actual(1)}` +
-        ` ${actual(0)} ${actual(1)})`
+        ` ${actual(0)} ${actual(1)})`,
     ),
     {
       type: "basic-shape",
@@ -105,6 +105,6 @@ test(".parse() accepts calculated vertices", (t) => {
         [expected(1), expected(1)],
         [expected(0), expected(1)],
       ],
-    }
+    },
   );
 });

@@ -35,8 +35,8 @@ export default Longhand.of<Specified, Computed>(
       Selective.of(top)
         .if(
           LengthPercentage.isLengthPercentage,
-          LengthPercentage.partiallyResolve(Resolver.length(style))
+          LengthPercentage.partiallyResolve(Resolver.length(style)),
         )
-        .get()
-    )
+        .get(),
+    ),
 );

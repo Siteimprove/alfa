@@ -28,22 +28,22 @@ interface ErrorName {
  * @public
  */
 export class ColorErrors<
-  out T extends keyof ErrorName = keyof ErrorName
+  out T extends keyof ErrorName = keyof ErrorName,
 > extends Diagnostic {
   public static of(message: string): Diagnostic;
 
   public static of<T extends keyof ErrorName = keyof ErrorName>(
-    errors: ReadonlyArray<ColorError<T>>
+    errors: ReadonlyArray<ColorError<T>>,
   ): ColorErrors<T>;
 
   public static of<T extends keyof ErrorName = keyof ErrorName>(
-    messageOrErrors: string | ReadonlyArray<ColorError<T>>
+    messageOrErrors: string | ReadonlyArray<ColorError<T>>,
   ): Diagnostic {
     return typeof messageOrErrors === "string"
       ? Diagnostic.of(messageOrErrors)
       : new ColorErrors(
           "Could not fully resolve colors",
-          Array.copy(messageOrErrors)
+          Array.copy(messageOrErrors),
         );
   }
 
@@ -90,16 +90,16 @@ export namespace ColorErrors {
   }
 
   export function isColorErrors<T extends keyof ErrorName = keyof ErrorName>(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is ColorErrors<T>;
 
   export function isColorErrors<T extends keyof ErrorName = keyof ErrorName>(
-    value: unknown
+    value: unknown,
   ): value is ColorErrors<T>;
 
   /**@public */
   export function isColorErrors<T extends keyof ErrorName = keyof ErrorName>(
-    value: unknown
+    value: unknown,
   ): value is ColorErrors<T> {
     return value instanceof ColorErrors;
   }
@@ -107,10 +107,10 @@ export namespace ColorErrors {
   export function prepend<
     T extends keyof ErrorName = keyof ErrorName,
     T1 extends T = T,
-    T2 extends T = T
+    T2 extends T = T,
   >(
     old: Result<unknown, ColorErrors<T1>>,
-    cur: Iterable<ColorError<T2>>
+    cur: Iterable<ColorError<T2>>,
   ): ColorErrors<T> {
     return ColorErrors.of<T>([
       ...cur,
@@ -127,7 +127,7 @@ export namespace ColorErrors {
  */
 export abstract class ColorError<
   out T extends keyof ErrorName = keyof ErrorName,
-  out K extends ErrorName[T] = ErrorName[T]
+  out K extends ErrorName[T] = ErrorName[T],
 > extends Diagnostic {
   protected readonly _element: Element;
   protected readonly _type: T;
@@ -189,7 +189,7 @@ export abstract class ColorError<
 export namespace ColorError {
   export interface JSON<
     T extends keyof ErrorName = keyof ErrorName,
-    K extends ErrorName[T] = ErrorName[T]
+    K extends ErrorName[T] = ErrorName[T],
   > extends Diagnostic.JSON {
     element: Element.JSON;
     type: T;
@@ -198,18 +198,18 @@ export namespace ColorError {
 
   export function isColorError<
     T extends keyof ErrorName = keyof ErrorName,
-    K extends ErrorName[T] = ErrorName[T]
+    K extends ErrorName[T] = ErrorName[T],
   >(value: Diagnostic): value is ColorError<T, K>;
 
   export function isColorError<
     T extends keyof ErrorName = keyof ErrorName,
-    K extends ErrorName[T] = ErrorName[T]
+    K extends ErrorName[T] = ErrorName[T],
   >(value: unknown): value is ColorError<T, K>;
 
   /**@public */
   export function isColorError<
     T extends keyof ErrorName = keyof ErrorName,
-    K extends ErrorName[T] = ErrorName[T]
+    K extends ErrorName[T] = ErrorName[T],
   >(value: unknown): value is ColorError<T, K> {
     return value instanceof ColorError;
   }
@@ -227,7 +227,7 @@ export namespace ColorError {
       | "background-size"
       | "color"
       | "position"
-      | "text-shadow"
+      | "text-shadow",
   > extends ColorError<T, K> {
     public static of(message: string): Diagnostic;
 
@@ -240,7 +240,7 @@ export namespace ColorError {
         | "background-size"
         | "color"
         | "position"
-        | "text-shadow"
+        | "text-shadow",
     >(
       message: string,
       diagnostic: {
@@ -249,7 +249,7 @@ export namespace ColorError {
         element: Element;
         property: N;
         value: Style.Computed<N>;
-      }
+      },
     ): WithProperty<T, K, N>;
 
     public static of<
@@ -261,7 +261,7 @@ export namespace ColorError {
         | "background-size"
         | "color"
         | "position"
-        | "text-shadow"
+        | "text-shadow",
     >(
       message: string,
       diagnostic?: {
@@ -270,7 +270,7 @@ export namespace ColorError {
         element: Element;
         property: N;
         value: Style.Computed<N>;
-      }
+      },
     ): Diagnostic {
       return diagnostic !== undefined
         ? new WithProperty(
@@ -279,7 +279,7 @@ export namespace ColorError {
             diagnostic.kind,
             diagnostic.element,
             diagnostic.property,
-            diagnostic.value
+            diagnostic.value,
           )
         : Diagnostic.of(message);
     }
@@ -293,7 +293,7 @@ export namespace ColorError {
       kind: K,
       element: Element,
       proprety: N,
-      value: Style.Computed<N>
+      value: Style.Computed<N>,
     ) {
       super(message, element, type, kind);
       this._property = proprety;
@@ -343,7 +343,7 @@ export namespace ColorError {
         | "background-size"
         | "color"
         | "position"
-        | "text-shadow"
+        | "text-shadow",
     > extends ColorError.JSON<T, K> {
       property: N;
       value: Serializable.ToJSON<Style.Computed<N>>;
@@ -358,12 +358,12 @@ export namespace ColorError {
         | "background-size"
         | "color"
         | "position"
-        | "text-shadow"
+        | "text-shadow",
     >(
       type: T,
       kind: K,
       property: N,
-      message: string
+      message: string,
     ): (element: Element, value: Style.Computed<N>) => WithProperty<T, K, N> {
       return (element, value) =>
         WithProperty.of(message, { type, kind, element, property, value });
@@ -378,7 +378,7 @@ export namespace ColorError {
         | "background-size"
         | "color"
         | "position"
-        | "text-shadow"
+        | "text-shadow",
     >(value: Diagnostic): value is WithProperty<T, K, N>;
 
     export function isWithProperty<
@@ -390,7 +390,7 @@ export namespace ColorError {
         | "background-size"
         | "color"
         | "position"
-        | "text-shadow"
+        | "text-shadow",
     >(value: unknown): value is WithProperty<T, K, N>;
 
     export function isWithProperty<
@@ -402,7 +402,7 @@ export namespace ColorError {
         | "background-size"
         | "color"
         | "position"
-        | "text-shadow"
+        | "text-shadow",
     >(value: unknown): value is WithProperty<T, K, N> {
       return value instanceof WithProperty;
     }
@@ -414,42 +414,42 @@ export namespace ColorError {
     "layer",
     "unresolvable-background-color",
     "background-color",
-    "Could not resolve background-color"
+    "Could not resolve background-color",
   );
 
   export const backgroundSize = WithProperty.from(
     "layer",
     "background-size",
     "background-size",
-    "A background-size was encountered"
+    "A background-size was encountered",
   );
 
   export const externalBackgroundImage = WithProperty.from(
     "layer",
     "background-image",
     "background-image",
-    "A background-image with a url() was encountered"
+    "A background-image with a url() was encountered",
   );
 
   export const nonStaticPosition = WithProperty.from(
     "layer",
     "non-static",
     "position",
-    "A non-statically positioned element was encountered"
+    "A non-statically positioned element was encountered",
   );
 
   export const unresolvableForegroundColor = WithProperty.from(
     "foreground",
     "unresolvable-foreground-color",
     "color",
-    "Could not resolve foreground color"
+    "Could not resolve foreground color",
   );
 
   export const textShadow = WithProperty.from(
     "background",
     "text-shadow",
     "text-shadow",
-    "A text-shadow was encountered"
+    "A text-shadow was encountered",
   );
 
   /**
@@ -464,7 +464,7 @@ export namespace ColorError {
     public static create(
       element: Element,
       value: Style.Computed<"background-image">,
-      color: Color.Computed
+      color: Color.Computed,
     ): HasUnresolvableGradientStop {
       return new HasUnresolvableGradientStop(element, value, color);
     }
@@ -474,7 +474,7 @@ export namespace ColorError {
     private constructor(
       element: Element,
       value: Style.Computed<"background-image">,
-      color: Color.Computed
+      color: Color.Computed,
     ) {
       super(
         "Could not resolve gradient color stop",
@@ -482,7 +482,7 @@ export namespace ColorError {
         "unresolvable-gradient",
         element,
         "background-image",
-        value
+        value,
       );
       this._color = color;
     }
@@ -525,15 +525,15 @@ export namespace ColorError {
     }
 
     export function isUnresolvableGradientStop(
-      value: Diagnostic
+      value: Diagnostic,
     ): value is HasUnresolvableGradientStop;
 
     export function isUnresolvableGradientStop(
-      value: unknown
+      value: unknown,
     ): value is HasUnresolvableGradientStop;
 
     export function isUnresolvableGradientStop(
-      value: unknown
+      value: unknown,
     ): value is HasUnresolvableGradientStop {
       return value instanceof HasUnresolvableGradientStop;
     }
@@ -557,19 +557,19 @@ export namespace ColorError {
     public static of(
       message: string,
       element: Element,
-      positionedDescendants: Iterable<Element>
+      positionedDescendants: Iterable<Element>,
     ): HasInterposedDescendants;
 
     public static of(
       message: string,
       element?: Element,
-      positionedDescendants?: Iterable<Element>
+      positionedDescendants?: Iterable<Element>,
     ): Diagnostic {
       return element !== undefined && positionedDescendants !== undefined
         ? new HasInterposedDescendants(
             message,
             element,
-            Sequence.from(positionedDescendants)
+            Sequence.from(positionedDescendants),
           )
         : Diagnostic.of(message);
     }
@@ -579,7 +579,7 @@ export namespace ColorError {
     private constructor(
       message: string,
       element: Element,
-      positionedDescendants: Sequence<Element>
+      positionedDescendants: Sequence<Element>,
     ) {
       super(message, element, "layer", "interposed-descendant");
       this._positionedDescendants = positionedDescendants;
@@ -620,25 +620,25 @@ export namespace ColorError {
 
     export function from(
       offsetParent: Element,
-      positionedDescendants: Iterable<Element>
+      positionedDescendants: Iterable<Element>,
     ): HasInterposedDescendants {
       return HasInterposedDescendants.of(
         "An interposed descendant element was encountered",
         offsetParent,
-        positionedDescendants
+        positionedDescendants,
       );
     }
 
     export function isInterposedDescendants(
-      value: Diagnostic
+      value: Diagnostic,
     ): value is HasInterposedDescendants;
 
     export function isInterposedDescendants(
-      value: unknown
+      value: unknown,
     ): value is HasInterposedDescendants;
 
     export function isInterposedDescendants(
-      value: unknown
+      value: unknown,
     ): value is HasInterposedDescendants {
       return value instanceof HasInterposedDescendants;
     }

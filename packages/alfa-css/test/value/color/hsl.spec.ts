@@ -109,7 +109,7 @@ test("parse() accepts calculations", (t) => {
       saturation: { type: "percentage", value: 1 },
       lightness: { type: "percentage", value: 0 },
       alpha: { type: "number", value: 0 },
-    } as HSL.JSON);
+    }) as HSL.JSON;
 
   for (const [actual, type] of [
     [parse("hsl(0 100% 0% / 0)"), "number"],

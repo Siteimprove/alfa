@@ -16,5 +16,5 @@ export default Longhand.of<Specified, Computed>(
   (value) => value.map((color) => color.resolve()),
   {
     inherits: true,
-  }
+  },
 );

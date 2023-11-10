@@ -34,5 +34,5 @@ export default Shorthand.of(
       ["background-position-x", List.of(xs, ", ")],
       ["background-position-y", List.of(ys, ", ")],
     ];
-  })
+  }),
 );

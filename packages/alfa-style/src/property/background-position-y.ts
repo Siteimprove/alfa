@@ -26,7 +26,7 @@ const parse = List.parseCommaSeparated(Position.Component.parseVertical);
  */
 export const initialItem: Computed.Item = Position.Side.of(
   Keyword.of("top"),
-  Percentage.of(0)
+  Percentage.of(0),
 );
 
 /**
@@ -38,6 +38,8 @@ export default Longhand.of<Specified, Computed>(
   parse,
   (value, style) =>
     value.map((positions) =>
-      positions.map(Position.Component.partiallyResolve(Resolver.length(style)))
-    )
+      positions.map(
+        Position.Component.partiallyResolve(Resolver.length(style)),
+      ),
+    ),
 );

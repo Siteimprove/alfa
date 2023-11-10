@@ -40,7 +40,7 @@ export const parseVariant = Keyword.parse(
   "jis90",
   "jis04",
   "simplified",
-  "traditional"
+  "traditional",
 );
 
 /**
@@ -52,7 +52,7 @@ export const parseWidth = Keyword.parse("proportional-width", "full-width");
  * @internal
  */
 const parseEastAsian: Parser<Slice<Token>, List<Specified.Item>, string> = (
-  input
+  input,
 ) => {
   let variant: Specified.Variant | undefined;
   let width: Specified.Width | undefined;
@@ -101,10 +101,10 @@ const parseEastAsian: Parser<Slice<Token>, List<Specified.Item>, string> = (
     input,
     List.of(
       [variant, width, ruby].filter(
-        (value) => value !== undefined
+        (value) => value !== undefined,
         // filter doesn't narrow so we need to do it manually
       ) as Array<Specified.Item>,
-      " "
+      " ",
     ),
   ]);
 };
@@ -119,5 +119,5 @@ export default Longhand.of<Specified, Computed>(
   Keyword.of("normal"),
   parse,
   (numeric) => numeric,
-  { inherits: true }
+  { inherits: true },
 );

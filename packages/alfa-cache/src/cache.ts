@@ -20,7 +20,7 @@ export class Cache<K extends object, V> {
 
   public get<U extends V = V>(
     key: K,
-    ifMissing?: Mapper<this, U>
+    ifMissing?: Mapper<this, U>,
   ): V | Option<V> {
     if (this._storage.has(key)) {
       const value = this._storage.get(key)!;
@@ -56,7 +56,7 @@ export class Cache<K extends object, V> {
     return Iterable.reduce(
       iterable,
       (cache, [key, value]) => cache.set(key, value),
-      this
+      this,
     );
   }
 }
@@ -66,7 +66,7 @@ export class Cache<K extends object, V> {
  */
 export namespace Cache {
   export function from<K extends object, V>(
-    iterable: Iterable<readonly [K, V]>
+    iterable: Iterable<readonly [K, V]>,
   ): Cache<K, V> {
     return Cache.empty<K, V>().merge(iterable);
   }

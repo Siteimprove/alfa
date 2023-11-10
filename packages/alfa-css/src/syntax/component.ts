@@ -73,9 +73,9 @@ export namespace Component {
             Result.of<[Slice<Token>, Component], string>([
               input.rest(),
               Component.of([token]),
-            ])
+            ]),
           )
-          .getOr(Err.of("Unexpected end of file"))
+          .getOr(Err.of("Unexpected end of file")),
     )(input);
 
   /**

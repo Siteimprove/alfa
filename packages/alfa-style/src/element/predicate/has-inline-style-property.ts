@@ -10,7 +10,7 @@ import type { Longhands } from "../../longhands";
  * @public
  */
 export function hasInlineStyleProperty(
-  name: Longhands.Name
+  name: Longhands.Name,
 ): Predicate<Element> {
   return (element) =>
     element.style.some((block) => block.declaration(name).isSome());

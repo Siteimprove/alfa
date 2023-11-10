@@ -471,5 +471,6 @@ test(".partiallyResolve() partially resolves positions", (t) => {
       side: { type: "keyword", value: "top" },
       offset: { type: "percentage", value: 0.3 },
     },
-  });
+  },
+  );
 });

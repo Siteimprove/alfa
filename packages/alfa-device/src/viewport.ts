@@ -11,7 +11,7 @@ export class Viewport implements Equatable, Hashable, Serializable {
   public static of(
     width: number,
     height: number = width / (16 / 9),
-    orientation: Viewport.Orientation = Viewport.Orientation.Landscape
+    orientation: Viewport.Orientation = Viewport.Orientation.Landscape,
   ): Viewport {
     return new Viewport(width, height, orientation);
   }
@@ -23,7 +23,7 @@ export class Viewport implements Equatable, Hashable, Serializable {
   private constructor(
     width: number,
     height: number,
-    orientation: Viewport.Orientation
+    orientation: Viewport.Orientation,
   ) {
     this._width = width;
     this._height = height;
@@ -110,7 +110,7 @@ export namespace Viewport {
     return Viewport.of(
       json.width,
       json.height,
-      json.orientation as Orientation
+      json.orientation as Orientation,
     );
   }
 

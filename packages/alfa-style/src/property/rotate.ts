@@ -30,7 +30,7 @@ const parseAxis = either<
   Keyword.parse("z"),
   // We need to not consume the last whitespace which is expected by parseRotate,
   // so we can hardly use Parser.take.
-  mapResult(separatedList(Number.parse, Token.parseWhitespace), takeThree)
+  mapResult(separatedList(Number.parse, Token.parseWhitespace), takeThree),
 );
 
 /**
@@ -49,7 +49,7 @@ const parseRotate = map(
           Number.of(delta(value, "x")),
           Number.of(delta(value, "y")),
           Number.of(delta(value, "z")),
-          angle
+          angle,
         );
       }
       return Rotate.of(value[0], value[1], value[2], angle);
@@ -57,7 +57,7 @@ const parseRotate = map(
 
     // No axis was provided, default is to rotate around z axis.
     return Rotate.of(Number.of(0), Number.of(0), Number.of(1), angle);
-  }
+  },
 );
 
 const parse = either(Keyword.parse("none"), parseRotate);
@@ -69,5 +69,5 @@ const parse = either(Keyword.parse("none"), parseRotate);
 export default Longhand.of<Specified, Computed>(
   Keyword.of("none"),
   parse,
-  (rotate) => rotate
+  (rotate) => rotate,
 );

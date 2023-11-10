@@ -88,11 +88,11 @@ export namespace Length {
   export const parse: CSSParser<Length> = either(
     map(
       Token.parseDimension((dimension) => Unit.isLength(dimension.unit)),
-      (dimension) => Length.of(dimension.value, dimension.unit as Unit.Length)
+      (dimension) => Length.of(dimension.value, dimension.unit as Unit.Length),
     ),
     map(
       Token.parseNumber((number) => number.isInteger && number.value === 0),
-      () => Length.of(0, "px")
-    )
+      () => Length.of(0, "px"),
+    ),
   );
 }

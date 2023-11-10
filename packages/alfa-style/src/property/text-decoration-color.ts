@@ -16,5 +16,5 @@ const parse = Color.parse;
 export default Longhand.of<Specified, Computed>(
   Color.current,
   parse,
-  (textDecorationColor) => textDecorationColor.map((color) => color.resolve())
+  (textDecorationColor) => textDecorationColor.map((color) => color.resolve()),
 );

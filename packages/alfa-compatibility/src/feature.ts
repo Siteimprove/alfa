@@ -8,7 +8,7 @@ import { Features } from "./feature/data";
  */
 export type Feature<
   N extends Feature.Name = Feature.Name,
-  I extends Feature.Implementer<N> = Feature.Implementer<N>
+  I extends Feature.Implementer<N> = Feature.Implementer<N>,
 > = Feature.Implementation<N, I>;
 
 /**
@@ -28,7 +28,7 @@ export namespace Feature {
 
   export interface Implementation<
     N extends Name = Name,
-    I extends Implementer<N> = Implementer<N>
+    I extends Implementer<N> = Implementer<N>,
   > {
     readonly added: Browser.Version<I> | true;
     readonly removed?: Browser.Version<I>;
@@ -44,13 +44,13 @@ export namespace Feature {
 
   export function isImplementer<N extends Name>(
     feature: N,
-    browser: Browser.Name
+    browser: Browser.Name,
   ): browser is Implementer<N> {
     return browser in Features[feature];
   }
 
   function* getImplementers<N extends Name>(
-    feature: N
+    feature: N,
   ): Iterable<Implementer<N>> {
     for (const browser in Features[feature].support) {
       const implementer = browser as Browser.Name;
@@ -63,7 +63,7 @@ export namespace Feature {
 
   export function getScope<N extends Name>(
     feature: N,
-    scope: Browser.Scope = Browser.getDefaultScope()
+    scope: Browser.Scope = Browser.getDefaultScope(),
   ): Browser.Scope<Implementer<N>> {
     const support = Features[feature].support;
 
@@ -79,7 +79,7 @@ export namespace Feature {
         ];
 
         return Browser.query(query, scope);
-      }
+      },
     );
   }
 }

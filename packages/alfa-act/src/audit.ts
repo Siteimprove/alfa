@@ -22,17 +22,17 @@ export class Audit<
   I,
   T extends Hashable,
   Q extends Question.Metadata = {},
-  S = T
+  S = T,
 > {
   public static of<
     I,
     T extends Hashable,
     Q extends Question.Metadata = {},
-    S = T
+    S = T,
   >(
     input: I,
     rules: Iterable<Rule<I, T, Q, S>>,
-    oracle: Oracle<I, T, Q, S> = () => Future.now(None)
+    oracle: Oracle<I, T, Q, S> = () => Future.now(None),
   ): Audit<I, T, Q, S> {
     return new Audit(input, List.from(rules), oracle);
   }
@@ -44,7 +44,7 @@ export class Audit<
   private constructor(
     input: I,
     rules: List<Rule<I, T, Q, S>>,
-    oracle: Oracle<I, T, Q, S>
+    oracle: Oracle<I, T, Q, S>,
   ) {
     this._input = input;
     this._rules = rules;
@@ -52,12 +52,12 @@ export class Audit<
   }
 
   public evaluate(
-    performance?: Performance<Rule.Event<I, T, Q, S>>
+    performance?: Performance<Rule.Event<I, T, Q, S>>,
   ): Future<Iterable<Outcome<I, T, Q, S>>> {
     const outcomes = Cache.empty();
 
     return Future.traverse(this._rules, (rule) =>
-      rule.evaluate(this._input, this._oracle, outcomes, performance)
+      rule.evaluate(this._input, this._oracle, outcomes, performance),
     ).map(Iterable.flatten);
   }
 }

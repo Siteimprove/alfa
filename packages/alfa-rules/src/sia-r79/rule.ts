@@ -24,7 +24,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return getElementDescendants(document, Node.fullTree).filter(
-          and(hasName("pre"), isRendered(device))
+          and(hasName("pre"), isRendered(device)),
         );
       },
 
@@ -40,13 +40,13 @@ export default Rule.Atomic.of<Page, Element>({
                   .filter(isElement)
                   .some(hasAttribute("aria-hidden", equals("true"))),
                 () => Outcomes.IsHidden,
-                () => Outcomes.IsNotVisibleAndNotHidden
-              )
+                () => Outcomes.IsNotVisibleAndNotHidden,
+              ),
           ),
           2: expectation(
             hasFigureAncestor(target) || hasOnlyAllowedText(device)(target),
             () => Outcomes.IsDescendant,
-            () => Outcomes.IsNotDescendant
+            () => Outcomes.IsNotDescendant,
           ),
         };
       },
@@ -88,25 +88,25 @@ export namespace Outcomes {
 
   export const IsHidden = Ok.of(
     Diagnostic.of(
-      `One inclusive ancestor of the element has "aria-hidden = true."`
-    )
+      `One inclusive ancestor of the element has "aria-hidden = true."`,
+    ),
   );
 
   export const IsDescendant = Ok.of(
     Diagnostic.of(
-      `The target element either has a <figure> ancestor, or all its text is inside <code>, <kbd> or <samp> elements.`
-    )
+      `The target element either has a <figure> ancestor, or all its text is inside <code>, <kbd> or <samp> elements.`,
+    ),
   );
 
   export const IsNotVisibleAndNotHidden = Err.of(
     Diagnostic.of(
-      `The element is not visible and there isn't an inclusive ancestor with "aria-hidden" state.`
-    )
+      `The element is not visible and there isn't an inclusive ancestor with "aria-hidden" state.`,
+    ),
   );
 
   export const IsNotDescendant = Err.of(
     Diagnostic.of(
-      `The element has no <figure> ancestor and has text which not inside a <code>, <kbd> or <samp> element. `
-    )
+      `The element has no <figure> ancestor and has text which not inside a <code>, <kbd> or <samp> element. `,
+    ),
   );
 }

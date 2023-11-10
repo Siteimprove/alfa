@@ -10,7 +10,7 @@ const _elementDescendantsCache = Cache.empty<Node, Array<Sequence<Element>>>();
  */
 export function getElementDescendants(
   node: Node,
-  options: Node.Traversal = Node.Traversal.empty
+  options: Node.Traversal = Node.Traversal.empty,
 ): Sequence<Element> {
   const optionsMap = _elementDescendantsCache.get(node, () => []);
   if (optionsMap[options.value] === undefined) {

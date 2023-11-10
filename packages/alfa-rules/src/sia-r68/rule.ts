@@ -35,12 +35,12 @@ export default Rule.Atomic.of<Page, Element>({
             hasRequiredChildren(device)(target),
             () =>
               Outcomes.HasCorrectOwnedElements(
-                WithRole.getRoleName(target, device)
+                WithRole.getRoleName(target, device),
               ),
             () =>
               Outcomes.HasIncorrectOwnedElements(
-                WithRole.getRoleName(target, device)
-              )
+                WithRole.getRoleName(target, device),
+              ),
           ),
         };
       },
@@ -56,16 +56,16 @@ export namespace Outcomes {
     Ok.of(
       WithRole.of(
         `The element owns elements as required by its semantic role`,
-        role
-      )
+        role,
+      ),
     );
 
   export const HasIncorrectOwnedElements = (role: Role.Name) =>
     Err.of(
       WithRole.of(
         `The element owns no elements as required by its semantic role`,
-        role
-      )
+        role,
+      ),
     );
 }
 
@@ -79,19 +79,19 @@ function hasRequiredChildren(device: Device): Predicate<Element> {
         node
           .children()
           .filter((node) => isElement(node.node))
-          .some(isRequiredChild(role.requiredChildren))
+          .some(isRequiredChild(role.requiredChildren)),
       );
   };
 }
 
 function isRequiredChild(
-  requiredChildren: ReadonlyArray<ReadonlyArray<Role.Name>>
+  requiredChildren: ReadonlyArray<ReadonlyArray<Role.Name>>,
 ): Predicate<aria.Node> {
   return (node) =>
     requiredChildren.some((roles) => isRequiredChild(roles)(node));
 
   function isRequiredChild(
-    requiredChildren: ReadonlyArray<Role.Name>
+    requiredChildren: ReadonlyArray<Role.Name>,
   ): Predicate<aria.Node> {
     return (node) => {
       const [role, ...rest] = requiredChildren;
@@ -129,8 +129,8 @@ function* visit(node: Node, device: Device): Iterable<Element> {
       and(
         hasNamespace(Namespace.HTML, Namespace.SVG),
         isIncludedInTheAccessibilityTree(device),
-        hasRole(device, (role) => role.hasRequiredChildren())
-      )
+        hasRole(device, (role) => role.hasRequiredChildren()),
+      ),
     )(node)
   ) {
     yield node;

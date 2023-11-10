@@ -23,7 +23,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return getElementDescendants(document, Node.fullTree).filter(
-          and(hasRole(device, "paragraph"), isVisible(device))
+          and(hasRole(device, "paragraph"), isVisible(device)),
         );
       },
 
@@ -65,17 +65,17 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const IsSufficient = Ok.of(
-    Diagnostic.of(`The line height of the paragraph is at least 1.5`)
+    Diagnostic.of(`The line height of the paragraph is at least 1.5`),
   );
 
   export const IsInsufficient = Err.of(
-    Diagnostic.of(`The line height of the paragraph is less than 1.5`)
+    Diagnostic.of(`The line height of the paragraph is less than 1.5`),
   );
 
   export const IsNormal = Err.of(
     Diagnostic.of(
       `The line height of the paragraph is \`normal\` which will result in
-      a line height of less than 1.5`
-    )
+      a line height of less than 1.5`,
+    ),
   );
 }

@@ -10,7 +10,7 @@ function parse(
   side: "start" | "end",
   color: string,
   style?: "dotted", // the only one used in the tests :-/
-  width?: number
+  width?: number,
 ): void {
   const shorthand = `border-${box}-${side}` as const;
 

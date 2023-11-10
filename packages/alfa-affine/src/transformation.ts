@@ -95,7 +95,7 @@ export class Transformation implements Equatable, Serializable {
     if (m[3][0] !== 0 || m[3][1] !== 0 || m[3][2] !== 0) {
       p = multiply(
         transpose(inverse(p)),
-        m[3].map((v) => [v])
+        m[3].map((v) => [v]),
       ).map(([v]) => v);
     } else {
       p = [0, 0, 0, 1];
@@ -224,7 +224,7 @@ export namespace Transformation {
   export function translate(
     tx: number,
     ty: number = 0,
-    tz: number = 0
+    tz: number = 0,
   ): Transformation {
     return Transformation.of([
       [1, 0, 0, tx],
@@ -237,7 +237,7 @@ export namespace Transformation {
   export function scale(
     sx: number,
     sy: number = sx,
-    sz: number = 1
+    sz: number = 1,
   ): Transformation {
     return Transformation.of([
       [sx, 0, 0],
@@ -255,7 +255,7 @@ export namespace Transformation {
 
   export function rotate(
     a: number,
-    u: [number, number, number] = [0, 0, 1]
+    u: [number, number, number] = [0, 0, 1],
   ): Transformation {
     const [x, y, z] = normalize(u);
 

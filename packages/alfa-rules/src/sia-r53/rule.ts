@@ -19,7 +19,7 @@ export default Rule.Atomic.of<Page, Element>({
   tags: [Scope.Component, Stability.Stable],
   evaluate({ device, document }) {
     const headings = getElementDescendants(document, Node.flatTree).filter(
-      and(hasRole(device, "heading"), isIncludedInTheAccessibilityTree(device))
+      and(hasRole(device, "heading"), isIncludedInTheAccessibilityTree(device)),
     );
 
     return {
@@ -38,11 +38,11 @@ export default Rule.Atomic.of<Page, Element>({
             hasHeadingLevel(device, (currentLevel) =>
               hasHeadingLevel(
                 device,
-                (previousLevel) => previousLevel >= currentLevel - 1
-              )(previous)
+                (previousLevel) => previousLevel >= currentLevel - 1,
+              )(previous),
             )(target),
             () => Outcomes.IsStructured(previous),
-            () => Outcomes.IsNotStructured(previous)
+            () => Outcomes.IsNotStructured(previous),
           ),
         };
       },
@@ -107,7 +107,7 @@ export namespace WithPreviousHeading {
 
   /**@public */
   export function isWithPreviousHeading(
-    value: unknown
+    value: unknown,
   ): value is WithPreviousHeading {
     return value instanceof WithPreviousHeading;
   }
@@ -122,6 +122,6 @@ export namespace Outcomes {
 
   export const IsNotStructured = (previous: Element) =>
     Err.of(
-      WithPreviousHeading.of(`The heading skips one or more levels`, previous)
+      WithPreviousHeading.of(`The heading skips one or more levels`, previous),
     );
 }

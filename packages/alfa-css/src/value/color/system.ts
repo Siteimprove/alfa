@@ -42,6 +42,6 @@ export namespace System {
     "fieldtext",
     "highlight",
     "highlighttext",
-    "graytext"
+    "graytext",
   );
 }

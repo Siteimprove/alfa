@@ -11,7 +11,7 @@ const fontSize = (value: string) => Declaration.of("font-size", value);
 const makeTarget = (
   name: string,
   children: Array<string | Node>,
-  declaration: Declaration
+  declaration: Declaration,
 ) => h.element(name, [], children, [declaration]);
 
 test("evaluate() passes an element with a font size not smaller than 9 pixels", async (t) => {
@@ -96,7 +96,7 @@ test(`evaluate() does not collide similar \`font-size\` declarations`, async (t)
         h.rule.style(".bad", [declarationBad]),
         h.rule.style(".problem", [declarationProblem]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R75, { document }), [
@@ -122,7 +122,7 @@ test(`evaluate() does not collide same \`font-size\` declarations`, async (t) =>
         h.rule.style(".bad, .good", [declarationBadGood]),
         h.rule.style(".problem", [declarationProblem]),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(await evaluate(R75, { document }), [

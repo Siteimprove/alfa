@@ -16,7 +16,7 @@ type Specified =
       [
         outside: Specified.Outside,
         inside: Specified.Inside,
-        listitem: Specified.ListItem
+        listitem: Specified.ListItem,
       ]
     >
   | Tuple<[outside: Specified.Internal, inside: Specified.Inside]>
@@ -86,7 +86,7 @@ const parseInside = Keyword.parse(
   "table",
   "flex",
   "grid",
-  "ruby"
+  "ruby",
 );
 
 /**
@@ -109,7 +109,7 @@ const parseInternal = Keyword.parse(
   "ruby-base",
   "ruby-text",
   "ruby-base-container",
-  "ruby-text-container"
+  "ruby-text-container",
 );
 
 /**
@@ -124,7 +124,7 @@ const parseLegacy = Keyword.parse(
   "inline-block",
   "inline-table",
   "inline-flex",
-  "inline-grid"
+  "inline-grid",
 );
 
 const parse = either<Slice<Token>, Specified, string>(
@@ -234,7 +234,7 @@ const parse = either<Slice<Token>, Specified, string>(
       case "inline-grid":
         return Tuple.of(inline, Keyword.of("grid"));
     }
-  })
+  }),
 );
 
 /**
@@ -262,7 +262,7 @@ export default Longhand.of<Specified, Computed>(
         // currently doable at that level.
         value.map(displayTable)
       : value;
-  }
+  },
 );
 /**
  * {@link https://drafts.csswg.org/css2/#dis-pos-flo}

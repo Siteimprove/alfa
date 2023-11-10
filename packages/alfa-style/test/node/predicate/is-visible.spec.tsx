@@ -206,7 +206,7 @@ test("isVisible() return true for an empty element with set dimensions", (t) => 
           height: "100px",
         }),
       ]),
-    ]
+    ],
   );
 
   t.equal(isVisible(element), true);
@@ -225,7 +225,7 @@ test("isVisible() returns false for an empty element whose set dimensions are 0"
           height: "0px",
         }),
       ]),
-    ]
+    ],
   );
 
   t.equal(isVisible(element), false);
@@ -247,7 +247,7 @@ test("isVisible() returns true for an empty absolutely positioned element stretc
           right: "-1px",
         }),
       ]),
-    ]
+    ],
   );
 
   t.equal(isVisible(element), true);
@@ -268,7 +268,7 @@ test("isVisible() returns true for an element stretched horizontally and dimensi
           right: "-1px",
         }),
       ]),
-    ]
+    ],
   );
 
   t.equal(isVisible(element), true);
@@ -288,7 +288,7 @@ test(`isVisible() returns false for text with the same color as their background
         h.rule.style("span", { color: "white" }),
         h.rule.style("div", { background: "white" }),
       ]),
-    ]
+    ],
   );
 
   t.equal(isVisible(text), false);
@@ -308,7 +308,7 @@ test(`isVisible() returns true for text with the same color as their background 
         h.rule.style("span", { color: "white" }),
         h.rule.style("div", { background: "border-box white" }),
       ]),
-    ]
+    ],
   );
 
   t.equal(isVisible(text), true);

@@ -13,7 +13,7 @@ const sides = ["top", "right", "bottom", "left"] as const;
  */
 export function hasBorder(
   device: Device,
-  context?: Context
+  context?: Context,
 ): Predicate<Element> {
   return (element) => {
     const style = Style.from(element, device, context);
@@ -23,7 +23,9 @@ export function hasBorder(
         style.computed(`border-${side}-width` as const).none(Numeric.isZero) &&
         style
           .computed(`border-${side}-color` as const)
-          .none((color) => color.type === "color" && Color.isTransparent(color))
+          .none(
+            (color) => color.type === "color" && Color.isTransparent(color),
+          ),
     );
   };
 }

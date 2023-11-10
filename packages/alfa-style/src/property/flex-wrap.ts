@@ -8,5 +8,5 @@ export default Longhand.fromKeywords(
   { inherits: false },
   "nowrap",
   "wrap",
-  "wrap-reverse"
+  "wrap-reverse",
 );

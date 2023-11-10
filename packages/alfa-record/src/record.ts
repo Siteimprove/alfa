@@ -25,7 +25,7 @@ export class Record<T>
     return new Record(
       new Map(Iterable.map(keys, (key, i) => [key, i])),
       keys,
-      List.from(keys.map((key) => properties[key]))
+      List.from(keys.map((key) => properties[key])),
     );
   }
 
@@ -36,7 +36,7 @@ export class Record<T>
   private constructor(
     indices: ReadonlyMap<string, number>,
     keys: ReadonlyArray<Record.Key<T>>,
-    values: List<T[Record.Key<T>]>
+    values: List<T[Record.Key<T>]>,
   ) {
     this._indices = indices;
     this._keys = keys;
@@ -69,12 +69,12 @@ export class Record<T>
 
   public reduce<R>(
     reducer: Reducer<Record.Value<T>, R, [Record.Key<T>]>,
-    accumulator: R
+    accumulator: R,
   ): R {
     return Iterable.reduce(
       this,
       (accumulator, [key, value]) => reducer(accumulator, value, key),
-      accumulator
+      accumulator,
     );
   }
 
@@ -83,7 +83,7 @@ export class Record<T>
   }
 
   public every(
-    predicate: Predicate<Record.Value<T>, [Record.Key<T>]>
+    predicate: Predicate<Record.Value<T>, [Record.Key<T>]>,
   ): boolean {
     return Iterable.every(this, ([key, value]) => predicate(value, key));
   }

@@ -142,7 +142,7 @@ test("parse() accepts calculation in a rotateZ function and resolves it", (t) =>
 
 test("parse() accepts calculations in a rotate3d function and resolves them", (t) => {
   const actual = serialize(
-    "rotate3d(calc(2 - 1), calc(2 - 1), calc(2 - 1), calc(3deg + 1turn))"
+    "rotate3d(calc(2 - 1), calc(2 - 1), calc(2 - 1), calc(3deg + 1turn))",
   );
 
   t.deepEqual(actual, {

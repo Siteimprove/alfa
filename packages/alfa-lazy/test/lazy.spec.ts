@@ -67,7 +67,7 @@ test("#flatMap() does not force the lazy value", (t) => {
   lazy.flatMap(() =>
     Lazy.of(() => {
       throw new Error("The lazy was evaluated");
-    })
+    }),
   );
 });
 

@@ -9,10 +9,10 @@ import { hasValue } from "../../name/predicate/has-value";
  * @public
  */
 export function hasNonEmptyAccessibleName<T extends Element | Text>(
-  device: Device
+  device: Device,
 ): Predicate<T> {
   return hasAccessibleName(
     device,
-    hasValue((value) => value.trim().length > 0)
+    hasValue((value) => value.trim().length > 0),
   );
 }

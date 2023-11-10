@@ -34,7 +34,7 @@ const parse = either(Keyword.parse("none"), (input) => {
       "underline",
       "overline",
       "line-through",
-      "blink"
+      "blink",
     )(input);
 
     if (result.isOk()) {
@@ -52,7 +52,7 @@ const parse = either(Keyword.parse("none"), (input) => {
 
   if (keywords.length === 0) {
     return Err.of(
-      `Expected one of underline, overline, line-through, or blink`
+      `Expected one of underline, overline, line-through, or blink`,
     );
   }
 
@@ -66,5 +66,5 @@ const parse = either(Keyword.parse("none"), (input) => {
 export default Longhand.of<Specified, Computed>(
   Keyword.of("none"),
   parse,
-  (textDecorationLine) => textDecorationLine
+  (textDecorationLine) => textDecorationLine,
 );

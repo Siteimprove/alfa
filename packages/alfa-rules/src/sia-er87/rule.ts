@@ -67,7 +67,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
           const askIsMain = Question.of(
             "is-start-of-main",
             destination.get(),
-            target
+            target,
           );
 
           // there can be more than one element with a role of main, going to any of these is OK.
@@ -80,8 +80,8 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
             expectation(
               isMain,
               () => Outcomes.FirstTabbableIsLinkToContent,
-              () => Outcomes.FirstTabbableIsNotLinkToContent
-            )
+              () => Outcomes.FirstTabbableIsNotLinkToContent,
+            ),
           );
         };
 
@@ -92,7 +92,7 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
           ? element
               .attribute("href")
               .flatMap((attribute) =>
-                URL.parse(attribute.value, response.url).ok()
+                URL.parse(attribute.value, response.url).ok(),
               )
           : None;
 
@@ -102,9 +102,9 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
           .flatMap((url) =>
             url.fragment.flatMap((fragment) =>
               getElementDescendants(element.root()).find((element) =>
-                element.id.includes(fragment)
-              )
-            )
+                element.id.includes(fragment),
+              ),
+            ),
           );
 
         // Is the first tabbable a link to main content?
@@ -122,14 +122,14 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
                 // We are in the ifTrue branch of the expectation, but TS
                 // can't narrow the type.
                 () => isAtTheStartOfMain(ref.getUnsafe()),
-                () => Outcomes.FirstTabbableIsNotInternalLink
-              )
+                () => Outcomes.FirstTabbableIsNotInternalLink,
+              ),
             );
 
         const askIsVisible = Question.of(
           "is-visible-when-focused",
           element,
-          target
+          target,
         );
 
         return {
@@ -145,17 +145,17 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
                   askIsVisible
                     .answerIf(
                       isVisible(device, Context.focus(element))(element),
-                      true
+                      true,
                     )
                     .map((isVisible) =>
                       expectation<Question.Metadata, Element, Document, 1>(
                         isVisible,
                         isSkipLink,
-                        () => Outcomes.FirstTabbableIsNotVisible
-                      )
+                        () => Outcomes.FirstTabbableIsNotVisible,
+                      ),
                     ),
-                () => Outcomes.FirstTabbableIsNotLink
-              )
+                () => Outcomes.FirstTabbableIsNotLink,
+              ),
           ),
         };
       },
@@ -168,48 +168,48 @@ export default Rule.Atomic.of<Page, Document, Question.Metadata, Element>({
  */
 export namespace Outcomes {
   export const HasNoTabbable = Err.of(
-    Diagnostic.of(`The document has no tabbable descendants`)
+    Diagnostic.of(`The document has no tabbable descendants`),
   );
 
   export const FirstTabbableIsNotLink = Err.of(
     Diagnostic.of(
-      `The first tabbable element in the document is not a semantic link`
-    )
+      `The first tabbable element in the document is not a semantic link`,
+    ),
   );
 
   export const FirstTabbableIsNotInternalLink = Err.of(
     Diagnostic.of(
-      `The first tabbable element in the document is not an internal link`
-    )
+      `The first tabbable element in the document is not an internal link`,
+    ),
   );
 
   export const FirstTabbableIsIgnored = Err.of(
     Diagnostic.of(
       `The first tabbable element in the document is not included in the
-      accessibility tree`
-    )
+      accessibility tree`,
+    ),
   );
 
   export const FirstTabbableIsNotVisible = Err.of(
     Diagnostic.of(
-      `The first tabbable element in the document is not visible when on focus`
-    )
+      `The first tabbable element in the document is not visible when on focus`,
+    ),
   );
 
   export const FirstTabbableIsLinkToContent = Ok.of(
     Diagnostic.of(
       `The first tabbable element in the document is a keyboard actionable link
       that is included in the accessibility tree and links to the main block of
-      content of the document`
-    )
+      content of the document`,
+    ),
   );
 
   export const FirstTabbableIsNotLinkToContent = Err.of(
     Diagnostic.of(
       `The first tabbable element in the document is a keyboard actionable link
       that is included in the accessibility tree, but does not link to the main
-      block of content of the document`
-    )
+      block of content of the document`,
+    ),
   );
 }
 

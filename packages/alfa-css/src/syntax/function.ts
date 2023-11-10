@@ -108,19 +108,22 @@ export namespace Function {
               either(
                 Token.parseCloseParenthesis,
                 end<Slice<Token>, string>(
-                  () => "Dummy error message since this should never fail"
-                )
-              )
+                  () => "Dummy error message since this should never fail",
+                ),
+              ),
             ),
-            option(Token.parseCloseParenthesis)
+            option(Token.parseCloseParenthesis),
           ),
-          (components) => components.flatMap((component) => [...component])
-        )
+          (components) => components.flatMap((component) => [...component]),
+        ),
       ),
-      ([{ value: name }, value]) => Function.of(name, value)
+      ([{ value: name }, value]) => Function.of(name, value),
     )(input);
 
-  export const parse = <T>(query?: string | Predicate<Token.Function>, body?: CSSParser<T>) =>
+  export const parse = <T>(
+    query?: string | Predicate<Token.Function>,
+    body?: CSSParser<T>,
+  ) =>
     flatMap(
       right(peek(Token.parseFunction(query)), Function.consume),
       (fn) => (input) => {
@@ -131,7 +134,7 @@ export namespace Function {
         const result = delimited(
           // whitespace just inside the parentheses are OK.
           option(Token.parseWhitespace),
-          body
+          body,
         )(Slice.of(fn.value));
 
         if (result.isErr()) {
@@ -147,6 +150,6 @@ export namespace Function {
         }
 
         return Result.of([input, [fn, value] as const]);
-      }
+      },
     );
 }

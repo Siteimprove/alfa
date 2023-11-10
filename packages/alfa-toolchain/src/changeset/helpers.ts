@@ -21,7 +21,7 @@ export interface ChangelogFunctions {
   getBody(
     changesets: Array<NewChangesetWithCommit>,
     packages: Packages,
-    config: Config
+    config: Config,
   ): Promise<string>;
 
   insertBody(oldBody: string, newBody: string): string;
@@ -46,7 +46,7 @@ export function getConfigOption(config: Config, option: string): string {
   const changelog = config.changelog;
   if (changelog === false) {
     console.error(
-      "Changeset config.changelog is not in the correct format (missing options)"
+      "Changeset config.changelog is not in the correct format (missing options)",
     );
     process.exit(Error.INVALID_CHANGESET_CONFIG);
   }
@@ -54,7 +54,7 @@ export function getConfigOption(config: Config, option: string): string {
 
   if (typeof value !== "string") {
     console.error(
-      `Changeset config.changelog is not in the correct format (missing ${option})`
+      `Changeset config.changelog is not in the correct format (missing ${option})`,
     );
     process.exit(Error.INVALID_CHANGESET_CONFIG);
   }

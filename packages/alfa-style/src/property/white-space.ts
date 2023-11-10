@@ -7,5 +7,5 @@ export default Longhand.fromKeywords(
   "nowrap",
   "pre-wrap",
   "break-spaces",
-  "pre-line"
+  "pre-line",
 );

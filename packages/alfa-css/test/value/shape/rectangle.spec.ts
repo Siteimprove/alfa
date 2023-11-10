@@ -42,14 +42,14 @@ test(".parse() fails if there are more or less than 4 values", (t) => {
 
   t.deepEqual(
     Rectangle.parse(Lexer.lex("rect(1px 1px 1px 1px 1px")).isErr(),
-    true
+    true,
   );
 });
 
 test(".parse() fails when mixing comma and space separators", (t) => {
   t.deepEqual(
     Rectangle.parse(Lexer.lex("rect(1px 1px, 1px 1px")).isErr(),
-    true
+    true,
   );
 });
 
@@ -89,6 +89,6 @@ test(".parse() accepts calculated lengths", (t) => {
       right: expected(2),
       bottom: expected(3),
       left: expected(4),
-    }
+    },
   );
 });

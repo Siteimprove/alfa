@@ -26,7 +26,7 @@ export default Rule.Atomic.of<Page, Element>({
     return {
       applicability() {
         return getElementDescendants(document, Node.fullTree).filter(
-          hasAttribute("aria-hidden", equals("true"))
+          hasAttribute("aria-hidden", equals("true")),
         );
       },
 
@@ -39,7 +39,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             tabbable.isEmpty(),
             () => Outcomes.IsNotTabbable,
-            () => Outcomes.IsTabbable(tabbable)
+            () => Outcomes.IsTabbable(tabbable),
           ),
         };
       },
@@ -53,15 +53,15 @@ export default Rule.Atomic.of<Page, Element>({
 export namespace Outcomes {
   export const IsNotTabbable = Ok.of(
     Diagnostic.of(
-      `The element is neither tabbable nor has tabbable descendants`
-    )
+      `The element is neither tabbable nor has tabbable descendants`,
+    ),
   );
 
   export const IsTabbable = (errors: Iterable<Element>) =>
     Err.of(
       WithBadElements.of(
         `The element is either tabbable or has tabbable descendants`,
-        errors
-      )
+        errors,
+      ),
     );
 }

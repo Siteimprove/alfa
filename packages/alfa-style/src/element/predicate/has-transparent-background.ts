@@ -21,7 +21,7 @@ const cache = Cache.empty<Device, Cache<Context, Cache<Element, boolean>>>();
 
 export function hasTransparentBackground(
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Element> {
   return (element) =>
     cache
@@ -38,7 +38,7 @@ export function hasTransparentBackground(
                 "background-color",
                 (color) => !Color.isTransparent(color),
                 device,
-                context
+                context,
               ),
               // Elements with a background image are not transparent.
               Style.hasComputedStyle(
@@ -49,10 +49,10 @@ export function hasTransparentBackground(
                     image.values[0].equals(Keyword.of("none"))
                   ),
                 device,
-                context
-              )
+                context,
+              ),
             ),
-            element
+            element,
           )
         ) {
           return false;

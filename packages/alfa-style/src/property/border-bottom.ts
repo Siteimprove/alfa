@@ -15,5 +15,5 @@ export default Shorthand.of(
     ["border-bottom-color", color],
     ["border-bottom-style", style],
     ["border-bottom-width", width],
-  ])
+  ]),
 );

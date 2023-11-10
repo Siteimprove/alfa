@@ -46,7 +46,7 @@ export function isSuggestedFocusable(element: Element): boolean {
               // Switching on element.name does not narrow the type, so we must
               // keep it as Element<string>.
               .find(Element.hasName<string>("summary"))
-              .includes(element)
+              .includes(element),
         );
   }
 

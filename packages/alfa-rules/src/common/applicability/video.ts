@@ -25,7 +25,7 @@ const visibleVideos = Cache.empty<Document, Cache<Device, Sequence<Element>>>();
 export function video(
   document: Document,
   device: Device,
-  options: video.Options
+  options: video.Options,
 ): Iterable<Interview<Question.Metadata, Element, Element, Option<Element>>> {
   const { audio, track } = options;
 
@@ -33,8 +33,8 @@ export function video(
     .get(document, Cache.empty)
     .get(device, () =>
       getElementDescendants(document, Node.fullTree).filter(
-        and(hasNamespace(Namespace.HTML), hasName("video"), isVisible(device))
-      )
+        and(hasNamespace(Namespace.HTML), hasName("video"), isVisible(device)),
+      ),
     );
 
   return (
@@ -48,9 +48,9 @@ export function video(
       }
 
       return Question.of("has-audio", element).map((hasAudio) =>
-        audio.has === hasAudio ? Option.of(element) : None
+        audio.has === hasAudio ? Option.of(element) : None,
       );
-    })
+    }),
   );
 }
 
@@ -74,14 +74,14 @@ function hasTrack(has: boolean, kind: string): Predicate<Element> {
                     "captions",
                     "descriptions",
                     "chapters",
-                    "metadata"
+                    "metadata",
                   )
                   // invalid value default
-                  .getOr("metadata")
+                  .getOr("metadata"),
               )
               // missing value default
-              .getOr("subtitles") === kind
-        )
+              .getOr("subtitles") === kind,
+        ),
       );
 }
 

@@ -30,7 +30,7 @@ test("resolve() resolves all values in a list", (t) => {
       Length.of(16, "px"),
       Length.of(16, "px"),
       Length.of(16, "px"),
-      Length.of(16, "px")
+      Length.of(16, "px"),
     ),
     percentageBase: Length.of(20, "px"),
   };
