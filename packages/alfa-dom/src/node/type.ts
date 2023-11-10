@@ -10,9 +10,11 @@ export class Type<N extends string = string> extends Node<"type"> {
   public static of<N extends string = string>(
     name: N,
     publicId: Option<string> = None,
-    systemId: Option<string> = None
+    systemId: Option<string> = None,
+    externalId?: string,
+    extraData?: any,
   ): Type<N> {
-    return new Type(name, publicId, systemId);
+    return new Type(name, publicId, systemId, externalId, extraData);
   }
 
   public static empty(): Type {
@@ -26,9 +28,11 @@ export class Type<N extends string = string> extends Node<"type"> {
   private constructor(
     name: N,
     publicId: Option<string>,
-    systemId: Option<string>
+    systemId: Option<string>,
+    externalId?: string,
+    extraData?: any,
   ) {
-    super([], "type");
+    super([], "type", externalId, extraData);
 
     this._name = name;
     this._publicId = publicId;
@@ -82,10 +86,14 @@ export namespace Type {
    * @internal
    */
   export function fromType<N extends string = string>(
-    json: JSON<N>
+    json: JSON<N>,
   ): Trampoline<Type<N>> {
     return Trampoline.done(
-      Type.of(json.name, Option.from(json.publicId), Option.from(json.systemId))
+      Type.of(
+        json.name,
+        Option.from(json.publicId),
+        Option.from(json.systemId),
+      ),
     );
   }
 }

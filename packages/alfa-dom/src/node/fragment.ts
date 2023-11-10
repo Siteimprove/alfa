@@ -7,16 +7,24 @@ import { Node } from "../node";
  * @public
  */
 export class Fragment extends Node<"fragment"> {
-  public static of(children: Iterable<Node>): Fragment {
-    return new Fragment(Array.from(children));
+  public static of(
+    children: Iterable<Node>,
+    externalId?: string,
+    extraData?: any,
+  ): Fragment {
+    return new Fragment(Array.from(children), externalId, extraData);
   }
 
   public static empty(): Fragment {
     return new Fragment([]);
   }
 
-  private constructor(children: Array<Node>) {
-    super(children, "fragment");
+  private constructor(
+    children: Array<Node>,
+    externalId?: string,
+    extraData?: any,
+  ) {
+    super(children, "fragment", externalId, extraData);
   }
 
   /**
@@ -57,10 +65,10 @@ export namespace Fragment {
    */
   export function fromFragment(
     json: JSON,
-    device?: Device
+    device?: Device,
   ): Trampoline<Fragment> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, device)
+      Node.fromNode(child, device),
     ).map((children) => Fragment.of(children));
   }
 }

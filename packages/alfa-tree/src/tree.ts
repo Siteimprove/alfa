@@ -81,6 +81,13 @@ export abstract class Node<
     return this._type;
   }
 
+  public get externalId(): string | undefined {
+    return this._externalId;
+  }
+  public get extraData(): any {
+    return this._extraData;
+  }
+
   public get frozen(): boolean {
     return this._frozen;
   }

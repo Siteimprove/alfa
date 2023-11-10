@@ -37,7 +37,9 @@ export class Element<N extends string = string>
     children: Iterable<Node> = [],
     style: Option<Block> = None,
     box: Option<Rectangle> = None,
-    device: Option<Device> = None
+    device: Option<Device> = None,
+    externalId?: string,
+    extraData?: any,
   ): Element<N> {
     return new Element(
       namespace,
@@ -47,7 +49,9 @@ export class Element<N extends string = string>
       Array.from(children),
       style,
       box,
-      device
+      device,
+      externalId,
+      extraData,
     );
   }
 
@@ -70,9 +74,11 @@ export class Element<N extends string = string>
     children: Array<Node>,
     style: Option<Block>,
     box: Option<Rectangle>,
-    device: Option<Device>
+    device: Option<Device>,
+    externalId?: string,
+    extraData?: any,
   ) {
-    super(children, "element");
+    super(children, "element", externalId, extraData);
 
     this._namespace = namespace;
     this._prefix = prefix;
@@ -80,11 +86,11 @@ export class Element<N extends string = string>
     this._attributes = new Map(
       attributes
         .filter((attribute) => attribute._attachOwner(this))
-        .map((attribute) => [attribute.qualifiedName, attribute])
+        .map((attribute) => [attribute.qualifiedName, attribute]),
     );
 
     style.forEach((block) =>
-      Iterable.forEach(block, (declaration) => declaration._attachOwner(this))
+      Iterable.forEach(block, (declaration) => declaration._attachOwner(this)),
     );
     this._style = style;
 
@@ -95,7 +101,7 @@ export class Element<N extends string = string>
       .getOr([]);
 
     this._boxes = Cache.from(
-      device.isSome() && box.isSome() ? [[device.get(), box.get()]] : []
+      device.isSome() && box.isSome() ? [[device.get(), box.get()]] : [],
     );
   }
 
@@ -114,7 +120,7 @@ export class Element<N extends string = string>
   public get qualifiedName(): string {
     return this._prefix.reduce<string>(
       (name, prefix) => `${prefix}:${name}`,
-      this._name
+      this._name,
     );
   }
 
@@ -173,7 +179,7 @@ export class Element<N extends string = string>
   }
 
   public children(
-    options: Node.Traversal = Node.Traversal.empty
+    options: Node.Traversal = Node.Traversal.empty,
   ): Sequence<Node> {
     const treeChildren = this._children as Array<Node>;
     const children: Array<Node> = [];
@@ -212,11 +218,11 @@ export class Element<N extends string = string>
   public attribute<A extends string = string>(name: A): Option<Attribute<A>>;
 
   public attribute<A extends string = string>(
-    predicate: Predicate<Attribute<A>>
+    predicate: Predicate<Attribute<A>>,
   ): Option<Attribute<A>>;
 
   public attribute(
-    nameOrPredicate: string | Predicate<Attribute>
+    nameOrPredicate: string | Predicate<Attribute>,
   ): Option<Attribute> {
     if (typeof nameOrPredicate === "string") {
       return Option.from(this._attributes.get(nameOrPredicate));
@@ -314,7 +320,7 @@ export class Element<N extends string = string>
       prefix: this._prefix.getOr(null),
       name: this._name,
       attributes: [...this._attributes.values()].map((attribute) =>
-        attribute.toJSON()
+        attribute.toJSON(),
       ),
       style: this._style.map((style) => style.toJSON()).getOr(null),
       shadow: this._shadow.map((shadow) => shadow.toJSON()).getOr(null),
@@ -407,24 +413,24 @@ export namespace Element {
    */
   export function fromElement<N extends string = string>(
     json: JSON<N>,
-    device?: Device
+    device?: Device,
   ): Trampoline<Element<N>> {
     return Trampoline.traverse(json.children ?? [], (child) =>
-      Node.fromNode(child, device)
+      Node.fromNode(child, device),
     ).map((children) => {
       const element = Element.of(
         Option.from(json.namespace as Namespace | null),
         Option.from(json.prefix),
         json.name,
         json.attributes.map((attribute) =>
-          Attribute.fromAttribute(attribute).run()
+          Attribute.fromAttribute(attribute).run(),
         ),
         children,
         json.style?.length === 0
           ? None
           : Option.from(json.style).map(Block.from),
         Option.from(json.box).map(Rectangle.from),
-        Option.from(device)
+        Option.from(device),
       );
 
       if (json.shadow !== null) {
@@ -433,7 +439,7 @@ export namespace Element {
 
       if (json.content !== null) {
         element._attachContent(
-          Document.fromDocument(json.content, device).run()
+          Document.fromDocument(json.content, device).run(),
         );
       }
 
