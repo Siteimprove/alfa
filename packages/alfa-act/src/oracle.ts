@@ -20,7 +20,7 @@ export type Oracle<
   INPUT,
   TARGET extends Hashable,
   QUESTION extends Question.Metadata,
-  SUBJECT
+  SUBJECT,
 > = (
   rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
   question: {
@@ -32,5 +32,5 @@ export type Oracle<
       unknown,
       URI extends string ? URI : never
     >;
-  }[keyof QUESTION]
+  }[keyof QUESTION],
 ) => Future<Option<QUESTION[keyof QUESTION][1]>>;

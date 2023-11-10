@@ -41,12 +41,12 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
                     .some(
                       (filename) =>
                         filename.toLowerCase() ===
-                        accessibleName.value.toLowerCase().trim()
-                    )
+                        accessibleName.value.toLowerCase().trim(),
+                    ),
                 ),
-                element
-              )
-          )
+                element,
+              ),
+          ),
         );
       },
 
@@ -55,13 +55,13 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "name-describes-purpose",
             target,
-            `Does the accessible name of the \`<${target.name}>\` element describe its purpose?`
+            `Does the accessible name of the \`<${target.name}>\` element describe its purpose?`,
           ).map((nameDescribesPurpose) =>
             expectation(
               nameDescribesPurpose,
               () => Outcomes.NameIsDescriptive(target.name),
-              () => Outcomes.NameIsNotDescriptive(target.name)
-            )
+              () => Outcomes.NameIsNotDescriptive(target.name),
+            ),
           ),
         };
       },
@@ -87,14 +87,14 @@ export namespace Outcomes {
   export const NameIsDescriptive = (name: string) =>
     Ok.of(
       Diagnostic.of(
-        `The accessible name of the \`<${name}>\` element describes its purpose`
-      )
+        `The accessible name of the \`<${name}>\` element describes its purpose`,
+      ),
     );
 
   export const NameIsNotDescriptive = (name: string) =>
     Err.of(
       Diagnostic.of(
-        `The accessible name of the \`<${name}>\` element does not describe its purpose`
-      )
+        `The accessible name of the \`<${name}>\` element does not describe its purpose`,
+      ),
     );
 }

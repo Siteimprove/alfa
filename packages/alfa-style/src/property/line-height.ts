@@ -28,7 +28,7 @@ export type Computed =
 const parse = either<Slice<Token>, Specified, string>(
   Keyword.parse("normal"),
   Number.parse,
-  LengthPercentage.parse
+  LengthPercentage.parse,
 );
 
 /**
@@ -48,7 +48,9 @@ export default Longhand.of<Specified, Computed>(
         Selective.of(height)
           .if(
             LengthPercentage.isLengthPercentage,
-            LengthPercentage.resolve(Resolver.lengthPercentage(fontSize, style))
+            LengthPercentage.resolve(
+              Resolver.lengthPercentage(fontSize, style),
+            ),
           )
           .if(Number.isNumber, (value) => value.resolve())
           // Keywords are left untouched
@@ -57,5 +59,5 @@ export default Longhand.of<Specified, Computed>(
     }),
   {
     inherits: true,
-  }
+  },
 );

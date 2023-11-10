@@ -15,7 +15,7 @@ const { test } = Predicate;
  */
 export function hasAccessibleName<T extends Element | Text>(
   device: Device,
-  predicate?: Predicate<Name>
+  predicate?: Predicate<Name>,
 ): Predicate<T>;
 
 /**

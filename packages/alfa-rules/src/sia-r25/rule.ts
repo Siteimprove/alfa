@@ -26,13 +26,13 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           1: Question.of(
             "has-description",
             target,
-            `Is the visual information of the \`<video>\` available through its audio or a separate audio description track?`
+            `Is the visual information of the \`<video>\` available through its audio or a separate audio description track?`,
           ).map((hasAudio) =>
             expectation(
               hasAudio,
               () => Outcomes.HasInformativeAudio,
-              () => Outcomes.HasNoInformativeAudio
-            )
+              () => Outcomes.HasNoInformativeAudio,
+            ),
           ),
         };
       },
@@ -46,13 +46,13 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
 export namespace Outcomes {
   export const HasInformativeAudio = Ok.of(
     Diagnostic.of(
-      `The visual information of the \`<video>\` element is available through audio`
-    )
+      `The visual information of the \`<video>\` element is available through audio`,
+    ),
   );
 
   export const HasNoInformativeAudio = Err.of(
     Diagnostic.of(
-      `The visual information of the \`<video>\` element is not available through audio`
-    )
+      `The visual information of the \`<video>\` element is not available through audio`,
+    ),
   );
 }

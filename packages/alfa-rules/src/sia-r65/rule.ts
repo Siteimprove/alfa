@@ -42,8 +42,8 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
       .filter(
         and(
           isElement,
-          not((element) => tabbables.includes(element))
-        )
+          not((element) => tabbables.includes(element)),
+        ),
       )
       .flatMap((nonTarget) => nonTarget.classes)
       .groupBy((c) => c)
@@ -66,14 +66,14 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
                 () =>
                   Outcomes.HasFocusIndicator(
                     matchingTargets,
-                    matchingNonTargets
+                    matchingNonTargets,
                   ),
                 () =>
                   Outcomes.HasNoFocusIndicator(
                     matchingTargets,
-                    matchingNonTargets
-                  )
-              )
+                    matchingNonTargets,
+                  ),
+              ),
             ),
         };
       },
@@ -87,26 +87,26 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
 export namespace Outcomes {
   export const HasFocusIndicator = (
     matchingTargets: Map<string, number>,
-    matchingNonTargets: Map<string, number>
+    matchingNonTargets: Map<string, number>,
   ) =>
     Ok.of(
       MatchingClasses.of(
         `The element has a visible focus indicator`,
         matchingTargets,
-        matchingNonTargets
-      )
+        matchingNonTargets,
+      ),
     );
 
   export const HasNoFocusIndicator = (
     matchingTargets: Map<string, number>,
-    matchingNonTargets: Map<string, number>
+    matchingNonTargets: Map<string, number>,
   ) =>
     Err.of(
       MatchingClasses.of(
         `The element does not have a visible focus indicator`,
         matchingTargets,
-        matchingNonTargets
-      )
+        matchingNonTargets,
+      ),
     );
 }
 
@@ -128,8 +128,8 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
           hasDifferentColors(device, withFocus),
           hasDifferentBackgroundColors(device, withFocus),
           // Any difference in border is accepted
-          hasDifferentBorder(device, withFocus)
-        )
+          hasDifferentBorder(device, withFocus),
+        ),
       );
   };
 }
@@ -137,7 +137,7 @@ function hasFocusIndicator(device: Device): Predicate<Element> {
 function hasDifferentColors(
   device: Device,
   context1: Context = Context.empty(),
-  context2: Context = Context.empty()
+  context2: Context = Context.empty(),
 ): Predicate<Element> {
   return function hasDifferentColors(element: Element): boolean {
     const color1 = Style.from(element, device, context1).computed("color");
@@ -156,14 +156,14 @@ function hasDifferentColors(
 function hasDifferentBackgroundColors(
   device: Device,
   context1: Context = Context.empty(),
-  context2: Context = Context.empty()
+  context2: Context = Context.empty(),
 ): Predicate<Element> {
   return function hasDifferentBackgroundColors(element: Element): boolean {
     const color1 = Style.from(element, device, context1).computed(
-      "background-color"
+      "background-color",
     );
     const color2 = Style.from(element, device, context2).computed(
-      "background-color"
+      "background-color",
     );
 
     // Keywords can get tricky and may ultimately yield the same used value,
@@ -181,7 +181,7 @@ function hasDifferentBackgroundColors(
 function hasDifferentBorder(
   device: Device,
   context1: Context = Context.empty(),
-  context2: Context = Context.empty()
+  context2: Context = Context.empty(),
 ): Predicate<Element> {
   return function hasDifferentBorder(element: Element): boolean {
     const style1 = Style.from(element, device, context1);

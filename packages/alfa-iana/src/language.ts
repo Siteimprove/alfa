@@ -17,7 +17,7 @@ export class Language implements Equatable, Serializable {
     extended: Option<Language.Extended> = None,
     script: Option<Language.Script> = None,
     region: Option<Language.Region> = None,
-    variants: Array<Language.Variant> = []
+    variants: Array<Language.Variant> = [],
   ): Language {
     return new Language(primary, extended, script, region, variants);
   }
@@ -33,7 +33,7 @@ export class Language implements Equatable, Serializable {
     extended: Option<Language.Extended>,
     script: Option<Language.Script>,
     region: Option<Language.Region>,
-    variants: Array<Language.Variant>
+    variants: Array<Language.Variant>,
   ) {
     this._primary = primary;
     this._extended = extended;
@@ -122,9 +122,11 @@ export namespace Language {
    * {@link https://tools.ietf.org/html/bcp47#section-3.1.2}
    */
   export abstract class Subtag<
-    T extends string = string,
-    N extends string = string
-  > implements Equatable, Serializable<Subtag.JSON<T, N>> {
+      T extends string = string,
+      N extends string = string,
+    >
+    implements Equatable, Serializable<Subtag.JSON<T, N>>
+  {
     protected readonly _name: N;
 
     protected constructor(name: N) {
@@ -144,7 +146,7 @@ export namespace Language {
     }
 
     public abstract equals<T extends string, N extends string>(
-      value: Subtag<T, N>
+      value: Subtag<T, N>,
     ): boolean;
 
     public abstract equals(value: unknown): value is this;
@@ -159,7 +161,7 @@ export namespace Language {
   export namespace Subtag {
     export interface JSON<
       T extends string = string,
-      N extends string = string
+      N extends string = string,
     > {
       [key: string]: json.JSON;
       type: T;
@@ -488,7 +490,7 @@ export namespace Language {
         }
 
         return Result.of<Language, string>(
-          Language.of(primary, extended, script, region, variants)
+          Language.of(primary, extended, script, region, variants),
         );
       })
       .getOrElse(() => Err.of(`Expected a primary language name`));

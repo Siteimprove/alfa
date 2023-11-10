@@ -9,7 +9,7 @@ function parse(
   box: "block" | "inline",
   color: string,
   style?: "dotted", // the only one used in the tests :-/
-  width?: number
+  width?: number,
 ): void {
   const shorthand = `border-${box}` as const;
 

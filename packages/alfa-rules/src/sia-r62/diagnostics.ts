@@ -28,12 +28,12 @@ export class ElementDistinguishable
   public static of(
     distinguishingProperties: Iterable<ElementDistinguishable.Property> = [],
     style: Iterable<readonly [Name, string]> = [],
-    pairings: Iterable<Contrast.Pairing<["container", "link"]>> = []
+    pairings: Iterable<Contrast.Pairing<["container", "link"]>> = [],
   ): ElementDistinguishable {
     return new ElementDistinguishable(
       Array.from(distinguishingProperties),
       Map.from(style),
-      Array.from(pairings)
+      Array.from(pairings),
     );
   }
 
@@ -46,7 +46,7 @@ export class ElementDistinguishable
   private constructor(
     distinguishingProperties: ReadonlyArray<ElementDistinguishable.Property>,
     style: Map<Name, string>,
-    pairings: ReadonlyArray<Contrast.Pairing<["container", "link"]>>
+    pairings: ReadonlyArray<Contrast.Pairing<["container", "link"]>>,
   ) {
     this._distinguishingProperties = distinguishingProperties;
     this._style = style;
@@ -68,12 +68,12 @@ export class ElementDistinguishable
   }
 
   public withDistinguishingProperties(
-    distinguishingProperties: ReadonlyArray<ElementDistinguishable.Property>
+    distinguishingProperties: ReadonlyArray<ElementDistinguishable.Property>,
   ): ElementDistinguishable {
     return ElementDistinguishable.of(
       [...this._distinguishingProperties, ...distinguishingProperties],
       this._style,
-      this._pairings
+      this._pairings,
     );
   }
 
@@ -83,17 +83,17 @@ export class ElementDistinguishable
     return ElementDistinguishable.of(
       this._distinguishingProperties,
       [...this._style, ...styles],
-      this._pairings
+      this._pairings,
     );
   }
 
   public withPairings(
-    pairings: ReadonlyArray<Contrast.Pairing<["container", "link"]>>
+    pairings: ReadonlyArray<Contrast.Pairing<["container", "link"]>>,
   ): ElementDistinguishable {
     return ElementDistinguishable.of(
       this._distinguishingProperties,
       this._style,
-      pairings
+      pairings,
     );
   }
 
@@ -108,7 +108,7 @@ export class ElementDistinguishable
       Array.equals(value._pairings, this._pairings) &&
       Array.equals(
         value._distinguishingProperties,
-        this._distinguishingProperties
+        this._distinguishingProperties,
       )
     );
   }
@@ -147,12 +147,12 @@ export namespace ElementDistinguishable {
     target: Element,
     context: Context = Context.empty(),
     distinguishingProperties: Iterable<ElementDistinguishable.Property>,
-    pairings: Iterable<Contrast.Pairing<["container", "link"]>>
+    pairings: Iterable<Contrast.Pairing<["container", "link"]>>,
   ): ElementDistinguishable {
     const style = Style.from(element, device, context);
 
     const border = (["color", "style", "width"] as const).map((property) =>
-      Serialise.borderShorthand(style, property)
+      Serialise.borderShorthand(style, property),
     );
 
     const cursor = context.isHovered(target)
@@ -175,7 +175,7 @@ export namespace ElementDistinguishable {
         ["text-decoration", Serialise.textDecoration(style)] as const,
         ["box-shadow", Serialise.boxShadow(style)] as const,
       ].filter(([_, value]) => value !== ""),
-      Array.sort(Array.from(pairings))
+      Array.sort(Array.from(pairings)),
     );
   }
 }
@@ -188,13 +188,13 @@ export class DistinguishingStyles extends Diagnostic {
     message: string,
     defaultStyles: Iterable<Result<ElementDistinguishable>> = Sequence.empty(),
     hoverStyles: Iterable<Result<ElementDistinguishable>> = Sequence.empty(),
-    focusStyles: Iterable<Result<ElementDistinguishable>> = Sequence.empty()
+    focusStyles: Iterable<Result<ElementDistinguishable>> = Sequence.empty(),
   ): DistinguishingStyles {
     return new DistinguishingStyles(
       message,
       Sequence.from(defaultStyles),
       Sequence.from(hoverStyles),
-      Sequence.from(focusStyles)
+      Sequence.from(focusStyles),
     );
   }
 
@@ -206,7 +206,7 @@ export class DistinguishingStyles extends Diagnostic {
     message: string,
     defaultStyles: Sequence<Result<ElementDistinguishable>>,
     hoverStyles: Sequence<Result<ElementDistinguishable>>,
-    focusStyles: Sequence<Result<ElementDistinguishable>>
+    focusStyles: Sequence<Result<ElementDistinguishable>>,
   ) {
     super(message);
     this._defaultStyles = defaultStyles;
@@ -260,16 +260,16 @@ export namespace DistinguishingStyles {
   }
 
   export function isDistinguishingStyles(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is DistinguishingStyles;
 
   export function isDistinguishingStyles(
-    value: unknown
+    value: unknown,
   ): value is DistinguishingStyles;
 
   /**@public */
   export function isDistinguishingStyles(
-    value: unknown
+    value: unknown,
   ): value is DistinguishingStyles {
     return value instanceof DistinguishingStyles;
   }

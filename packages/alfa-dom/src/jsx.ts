@@ -53,7 +53,7 @@ export function jsx<N extends string = string>(
     (children as Array<jsx.Child>).flat(Infinity),
     style,
     box,
-    device
+    device,
   );
 }
 

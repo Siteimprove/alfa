@@ -54,10 +54,10 @@ export function getBackground(
   device: Device,
   context: Context = Context.empty(),
   opacity?: number,
-  ignoredInterposedDescendants: Set<Element> = Set.empty()
+  ignoredInterposedDescendants: Set<Element> = Set.empty(),
 ): Result<Background, ColorErrors<"background" | "layer">> {
   const textShadow = Style.from(element, device, context).computed(
-    "text-shadow"
+    "text-shadow",
   ).value;
   const cache =
     opacity === undefined
@@ -85,13 +85,13 @@ export function getBackground(
         device,
         context,
         opacity,
-        ignoredInterposedDescendants
+        ignoredInterposedDescendants,
       );
 
       return error.isNone() && layersColors.isOk()
         ? layersColors.map((layers) => layers.reduce(Layer.merge, [white]))
         : Err.of(
-            ColorErrors.prepend<"background" | "layer">(layersColors, error)
+            ColorErrors.prepend<"background" | "layer">(layersColors, error),
           );
     });
 }
@@ -103,5 +103,5 @@ const white = RGB.of(
   Percentage.of(1),
   Percentage.of(1),
   Percentage.of(1),
-  Percentage.of(1)
+  Percentage.of(1),
 );

@@ -36,7 +36,7 @@ test(".consume() parses empty parenthesis block", (t) => {
         type: "open-parenthesis",
       },
       value: [],
-    }
+    },
   );
 });
 
@@ -57,6 +57,6 @@ test(".consume() parses nested blocks", (t) => {
           type: "close-parenthesis",
         },
       ],
-    }
+    },
   );
 });

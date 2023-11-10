@@ -25,7 +25,7 @@ export class Device implements Equatable, Hashable, Serializable {
     viewport: Viewport,
     display: Display,
     scripting: Scripting = Scripting.of(true),
-    preferences: Iterable<Preference> = []
+    preferences: Iterable<Preference> = [],
   ): Device {
     return new Device(
       type,
@@ -33,8 +33,11 @@ export class Device implements Equatable, Hashable, Serializable {
       display,
       scripting,
       Map.from(
-        Iterable.map(preferences, (preference) => [preference.name, preference])
-      )
+        Iterable.map(preferences, (preference) => [
+          preference.name,
+          preference,
+        ]),
+      ),
     );
   }
 
@@ -49,7 +52,7 @@ export class Device implements Equatable, Hashable, Serializable {
     viewport: Viewport,
     display: Display,
     scripting: Scripting,
-    preferences: Map<Preference.Name, Preference>
+    preferences: Map<Preference.Name, Preference>,
   ) {
     this._type = type;
     this._viewport = viewport;
@@ -121,7 +124,7 @@ export class Device implements Equatable, Hashable, Serializable {
       display: this._display.toJSON(),
       scripting: this._scripting.toJSON(),
       preferences: [...this._preferences.values()].map((preferece) =>
-        preferece.toJSON()
+        preferece.toJSON(),
       ),
     };
   }
@@ -152,7 +155,7 @@ export namespace Device {
       Viewport.from(json.viewport),
       Display.from(json.display),
       Scripting.from(json.scripting),
-      json.preferences.map((json) => Preference.from(json))
+      json.preferences.map((json) => Preference.from(json)),
     );
   }
 

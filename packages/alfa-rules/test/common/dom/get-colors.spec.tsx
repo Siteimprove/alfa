@@ -168,7 +168,7 @@ test("getForeground() handles hover context", (t) => {
           color: "red",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(
@@ -182,7 +182,7 @@ test("getForeground() handles hover context", (t) => {
       green: { type: "percentage", value: 0 },
       blue: { type: "percentage", value: 0 },
       alpha: { type: "percentage", value: 1 },
-    }
+    },
   );
 });
 
@@ -197,7 +197,7 @@ test("getForeground() returns the non-hover color", (t) => {
           color: "red",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(
@@ -211,7 +211,7 @@ test("getForeground() returns the non-hover color", (t) => {
       green: { type: "percentage", value: 0 },
       blue: { type: "percentage", value: 0 },
       alpha: { type: "percentage", value: 1 },
-    }
+    },
   );
 });
 
@@ -232,7 +232,7 @@ test("getForeground() handles hover context with a mix of opacity and transparen
           opacity: "0.5",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(
@@ -246,7 +246,7 @@ test("getForeground() handles hover context with a mix of opacity and transparen
       green: { type: "percentage", value: 0.25 },
       blue: { type: "percentage", value: 0.5 },
       alpha: { type: "percentage", value: 1 },
-    }
+    },
   );
 });
 
@@ -274,7 +274,7 @@ test("getForeground() handles a mix of opacity and transparency and a linear gra
           opacity: "0.5",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), {
@@ -328,7 +328,7 @@ test("getForeground() resolves `currentcolor` when color is set on parent", (t) 
           color: "blue",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), {
@@ -352,7 +352,7 @@ test("getForeground() resolves `currentcolor` when color is set to initial on pa
           color: "currentcolor",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), {
@@ -384,7 +384,7 @@ test("getForeground() resolves `currentcolor` when color is set with opacity on 
           opacity: "0.5",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(getForeground(target, device).getUnsafe()[0].toJSON(), {
@@ -412,7 +412,7 @@ test("getColor() can't resolve most system colors", (t) => {
           backgroundColor: "buttonface",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(getBackground(target, device).toJSON(), {
@@ -463,7 +463,7 @@ test("getBackgroundColor() gives up in case of external background image", (t) =
 
   h.document(
     [target],
-    [h.sheet([h.rule.style("div", { backgroundImage: "url(foo.jpg)" })])]
+    [h.sheet([h.rule.style("div", { backgroundImage: "url(foo.jpg)" })])],
   );
 
   t.deepEqual(getBackground(target, device).toJSON(), {
@@ -509,7 +509,7 @@ test("getBackgroundColor() gives up in case of sized background image", (t) => {
           backgroundRepeat: "no-repeat",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(getBackground(target, device).toJSON(), {
@@ -554,7 +554,7 @@ test("getBackgroundColor() gives up in case of text shadow", (t) => {
 
   h.document(
     [target],
-    [h.sheet([h.rule.style("div", { textShadow: "1px 1px 2px pink" })])]
+    [h.sheet([h.rule.style("div", { textShadow: "1px 1px 2px pink" })])],
   );
 
   t.deepEqual(getBackground(target, device).toJSON(), {
@@ -629,7 +629,7 @@ test("getBackgroundColor() ignores `text-shadow: 0px 0px 0px;`", (t) => {
 
   h.document(
     [target],
-    [h.sheet([h.rule.style("div", { textShadow: "0px 0px 0px" })])]
+    [h.sheet([h.rule.style("div", { textShadow: "0px 0px 0px" })])],
   );
 
   t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), {
@@ -647,7 +647,7 @@ test("getBackgroundColor() ignores transparent text-shadow", (t) => {
 
   h.document(
     [target],
-    [h.sheet([h.rule.style("div", { textShadow: "1px 2px 3px transparent" })])]
+    [h.sheet([h.rule.style("div", { textShadow: "1px 2px 3px transparent" })])],
   );
 
   t.deepEqual(getBackground(target, device).getUnsafe()[0].toJSON(), {
@@ -677,7 +677,7 @@ test("getBackgroundColor() cannot handle positioned elements", (t) => {
         h.rule.style("span", { position: "absolute", top: "1px" }),
         h.rule.style("p", { position: "relative" }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(getBackground(target, device).toJSON(), {
@@ -709,7 +709,7 @@ test("getBackgroundColor() cannot resolve system colors in gradients", (t) => {
           backgroundImage: "linear-gradient(red, highlight)",
         }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(getBackground(target, device).toJSON(), {
@@ -806,7 +806,7 @@ test("getBackgroundColor() gives up in case of  non-ignored interposed elements"
         }),
         h.rule.style("p", { position: "relative" }),
       ]),
-    ]
+    ],
   );
 
   t.deepEqual(getBackground(target, device).toJSON(), {
@@ -836,6 +836,6 @@ test("getBackgroundColor() gives up in case of  non-ignored interposed elements"
       green: { type: "percentage", value: 1 },
       blue: { type: "percentage", value: 1 },
       alpha: { type: "percentage", value: 1 },
-    }
+    },
   );
 });

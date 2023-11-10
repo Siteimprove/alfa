@@ -42,17 +42,17 @@ export default Rule.Atomic.of<Page, Element>({
                     .tee((lang) => {
                       cachedLang = lang;
                     })
-                    .isOk()
+                    .isOk(),
                 ),
                 hasAttribute(
                   "xml:lang",
                   tee(not(isEmpty), (xmlLang: string) => {
                     cachedXmlLang = xmlLang;
-                  })
-                )
+                  }),
+                ),
               ),
-              element
-            )
+              element,
+            ),
           );
       },
 
@@ -61,10 +61,10 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             Language.parse(cachedXmlLang).every((xmlLang) =>
-              xmlLang.primary.equals(cachedLang.primary)
+              xmlLang.primary.equals(cachedLang.primary),
             ),
             () => Outcomes.HasMatchingLanguages,
-            () => Outcomes.HasNonMatchingLanguages
+            () => Outcomes.HasNonMatchingLanguages,
           ),
         };
       },
@@ -78,13 +78,13 @@ export default Rule.Atomic.of<Page, Element>({
 export namespace Outcomes {
   export const HasMatchingLanguages = Ok.of(
     Diagnostic.of(
-      `The \`lang\` and \`xml:lang\` attributes have matching primary language subtags`
-    )
+      `The \`lang\` and \`xml:lang\` attributes have matching primary language subtags`,
+    ),
   );
 
   export const HasNonMatchingLanguages = Err.of(
     Diagnostic.of(
-      `The \`lang\` and \`xml:lang\` attributes do not have matching primary language subtags`
-    )
+      `The \`lang\` and \`xml:lang\` attributes do not have matching primary language subtags`,
+    ),
   );
 }

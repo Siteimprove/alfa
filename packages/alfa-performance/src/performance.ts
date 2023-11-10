@@ -37,7 +37,7 @@ export class Performance<T>
 
   public mark(
     data: T,
-    start: Performance.Entry<T> | number = this.now()
+    start: Performance.Entry<T> | number = this.now(),
   ): Performance.Mark<T> {
     if (typeof start !== "number") {
       start = start.start;
@@ -49,7 +49,7 @@ export class Performance<T>
   public measure(
     data: T,
     start: Performance.Entry<T> | number = this._epoch,
-    end: Performance.Entry<T> | number = this.now()
+    end: Performance.Entry<T> | number = this.now(),
   ): Performance.Measure<T> {
     if (typeof start !== "number") {
       start = start.start;
@@ -72,7 +72,7 @@ export class Performance<T>
   public once(listener: Callback<Performance.Entry<T>>): this;
 
   public once(
-    listener?: Callback<Performance.Entry<T>>
+    listener?: Callback<Performance.Entry<T>>,
   ): this | Promise<Performance.Entry<T>> {
     if (listener) {
       this._emitter.once(listener);
@@ -223,7 +223,7 @@ export namespace Performance {
     }
 
     export function isMeasure<T>(
-      value: unknown | Entry<T>
+      value: unknown | Entry<T>,
     ): value is Measure<T> {
       return value instanceof Measure;
     }

@@ -27,8 +27,8 @@ export default Rule.Atomic.of<Page, Element>({
             hasNamespace(Namespace.HTML),
             hasName("object"),
             isIncludedInTheAccessibilityTree(device),
-            embedsMedia
-          )
+            embedsMedia,
+          ),
         );
       },
 
@@ -37,7 +37,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             hasNonEmptyAccessibleName(device)(target),
             () => Outcomes.HasName,
-            () => Outcomes.HasNoName
+            () => Outcomes.HasNoName,
           ),
         };
       },
@@ -50,11 +50,11 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const HasName = Ok.of(
-    Diagnostic.of(`The \`<object>\` element has an accessible name`)
+    Diagnostic.of(`The \`<object>\` element has an accessible name`),
   );
 
   export const HasNoName = Err.of(
-    Diagnostic.of(`The \`<object>\` element does not have an accessible name`)
+    Diagnostic.of(`The \`<object>\` element does not have an accessible name`),
   );
 }
 
@@ -69,8 +69,8 @@ function embedsMedia(element: Element): boolean {
         element
           .attribute("data")
           .some((data) =>
-            MediaFileExtension.includes(data.value.split(".").splice(-1)[0])
-          )
+            MediaFileExtension.includes(data.value.split(".").splice(-1)[0]),
+          ),
       )
   );
 }

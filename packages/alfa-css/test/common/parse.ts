@@ -7,7 +7,7 @@ import { Lexer, Parser as CSSParser, Value } from "../../src";
  * @internal
  */
 export function parser<T extends Value>(
-  parse: CSSParser<T>
+  parse: CSSParser<T>,
 ): (input: string) => Result<T, string> {
   return (input) => parse(Lexer.lex(input)).map(([, value]) => value);
 }
@@ -16,7 +16,7 @@ export function parser<T extends Value>(
  * @internal
  */
 export function parserUnsafe<T extends Value>(
-  parse: CSSParser<T>
+  parse: CSSParser<T>,
 ): (input: string) => T {
   return (input) => parser(parse)(input).getUnsafe();
 }
@@ -25,7 +25,7 @@ export function parserUnsafe<T extends Value>(
  * @internal
  */
 export function serializer<T extends Value>(
-  parse: CSSParser<T>
+  parse: CSSParser<T>,
 ): (input: string) => Serializable.ToJSON<T> {
   return (input) =>
     parserUnsafe(parse)(input).toJSON() as Serializable.ToJSON<T>;

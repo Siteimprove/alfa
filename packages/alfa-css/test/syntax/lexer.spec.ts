@@ -9,7 +9,7 @@ function lex(t: Assertions, input: string, expected: Array<Token.JSON>) {
       .map((token) => token.toJSON())
       .toArray(),
     expected,
-    input
+    input,
   );
 }
 
@@ -59,7 +59,7 @@ test(".lex() lexes a multiline comment", (t) => {
     `/**
       * Hello world
       */`,
-    []
+    [],
   );
 });
 

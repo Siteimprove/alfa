@@ -27,10 +27,10 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             or(
               and(hasNamespace(Namespace.HTML), hasName("img")),
-              and(hasNamespace(Namespace.SVG), hasName("svg"))
+              and(hasNamespace(Namespace.SVG), hasName("svg")),
             ),
-            isMarkedDecorative
-          )
+            isMarkedDecorative,
+          ),
         );
       },
 
@@ -38,10 +38,10 @@ export default Rule.Atomic.of<Page, Element>({
         return {
           1: expectation(
             Node.from(target, device).role.some(
-              not((role) => role.isPresentational())
+              not((role) => role.isPresentational()),
             ),
             () => Outcomes.IsExposed,
-            () => Outcomes.IsNotExposed
+            () => Outcomes.IsNotExposed,
           ),
         };
       },
@@ -54,10 +54,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const IsNotExposed = Ok.of(
-    Diagnostic.of(`The element is marked as decorative and is not exposed`)
+    Diagnostic.of(`The element is marked as decorative and is not exposed`),
   );
 
   export const IsExposed = Err.of(
-    Diagnostic.of(`The element is marked as decorative but is exposed`)
+    Diagnostic.of(`The element is marked as decorative but is exposed`),
   );
 }

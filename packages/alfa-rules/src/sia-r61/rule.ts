@@ -43,7 +43,7 @@ export default Rule.Atomic.of<Page, Document>({
           1: expectation(
             level === 1,
             () => Outcomes.StartWithLevel1Heading(heading, level),
-            () => Outcomes.StartWithHigherLevelHeading(heading, level)
+            () => Outcomes.StartWithHigherLevelHeading(heading, level),
           ),
         };
       },
@@ -60,20 +60,20 @@ export namespace Outcomes {
       WithFirstHeading.of(
         `The document starts with a level 1 heading`,
         heading,
-        level
-      )
+        level,
+      ),
     );
 
   export const StartWithHigherLevelHeading = (
     heading: Element,
-    level: number
+    level: number,
   ) =>
     Err.of(
       WithFirstHeading.of(
         `The document does not start with a level 1 heading`,
         heading,
-        level
-      )
+        level,
+      ),
     );
 }
 
@@ -86,13 +86,13 @@ export class WithFirstHeading extends Diagnostic {
   public static of(
     message: string,
     firstHeading: Element,
-    level: number
+    level: number,
   ): WithFirstHeading;
 
   public static of(
     message: string,
     firstHeading?: Element,
-    level?: number
+    level?: number,
   ): Diagnostic {
     return firstHeading === undefined || level === undefined
       ? Diagnostic.of(message)
@@ -154,14 +154,14 @@ export namespace WithFirstHeading {
   }
 
   export function isWithFirstHeading(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is WithFirstHeading;
 
   export function isWithFirstHeading(value: unknown): value is WithFirstHeading;
 
   /**@public */
   export function isWithFirstHeading(
-    value: unknown
+    value: unknown,
   ): value is WithFirstHeading {
     return value instanceof WithFirstHeading;
   }

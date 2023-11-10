@@ -7,7 +7,7 @@ import { Item, TypeFor, Value } from "./types";
  */
 export interface Function<
   P extends Array<Value> = Array<Value>,
-  R extends Value = Value
+  R extends Value = Value,
 > {
   readonly prefix: string;
   readonly name: string;
@@ -27,7 +27,9 @@ export interface Function<
 export namespace Function {
   export type Parameters<V extends Array<Value>> = {
     // https://github.com/microsoft/TypeScript/issues/49517#issuecomment-1154234114
-    readonly [P in keyof V]: V[P] extends (infer T extends Value) ? TypeFor<T> : never;
+    readonly [P in keyof V]: V[P] extends infer T extends Value
+      ? TypeFor<T>
+      : never;
   };
 
   export type Result<V extends Value> = TypeFor<V>;
@@ -45,7 +47,7 @@ export function lookupFunction(
   functions: FunctionMap,
   prefix: string | null,
   name: string,
-  arity: number
+  arity: number,
 ): Function | null {
   const definitions = functions.get(`${prefix}:${name}`);
 
@@ -67,7 +69,7 @@ export function lookupFunction(
  */
 export function registerFunction(
   functions: FunctionMap,
-  definition: Function
+  definition: Function,
 ): FunctionMap {
   const { prefix, name, parameters } = definition;
   const arity = parameters.length;

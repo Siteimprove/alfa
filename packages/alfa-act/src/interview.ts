@@ -34,7 +34,7 @@ export type Interview<
   SUBJECT,
   CONTEXT,
   ANSWER,
-  D extends number = Interview.MaxDepth
+  D extends number = Interview.MaxDepth,
 > =
   | ANSWER
   | {
@@ -85,14 +85,14 @@ export namespace Interview {
     TARGET extends Hashable,
     QUESTION extends Question.Metadata,
     SUBJECT,
-    ANSWER
+    ANSWER,
   >(
     // Questions' contexts are guaranteed to be (potential) test target of
     // the rule.
     interview: Interview<QUESTION, SUBJECT, TARGET, ANSWER>,
     rule: Rule<INPUT, TARGET, QUESTION, SUBJECT>,
     oracle: Oracle<INPUT, TARGET, QUESTION, SUBJECT>,
-    oracleUsed: boolean = false
+    oracleUsed: boolean = false,
   ): Future<Either<Tuple<[ANSWER, boolean]>, Tuple<[Diagnostic, boolean]>>> {
     if (interview instanceof Question) {
       let answer: Future<Option<Interview<QUESTION, SUBJECT, TARGET, ANSWER>>>;
@@ -107,7 +107,7 @@ export namespace Interview {
             // If oracle has no answer, use fallback
             .or(interview.fallback)
             // Need to bind due to eta-contraction losing `this`.
-            .map(interview.answer.bind(interview))
+            .map(interview.answer.bind(interview)),
         );
       }
 
@@ -117,8 +117,10 @@ export namespace Interview {
           .map((answer) => conduct(answer, rule, oracle, oracleUsed))
           // If we still don't have a final answer, return the last diagnostic.
           .getOrElse(() =>
-            Future.now(Either.right(Tuple.of(interview.diagnostic, oracleUsed)))
-          )
+            Future.now(
+              Either.right(Tuple.of(interview.diagnostic, oracleUsed)),
+            ),
+          ),
       );
     }
 

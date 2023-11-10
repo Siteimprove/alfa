@@ -28,7 +28,7 @@ const cache = Cache.empty<Device, Cache<Context, Cache<Text, boolean>>>();
  */
 export function hasSameForegroundAsBackground(
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Text> {
   return (text) =>
     cache
@@ -51,8 +51,8 @@ export function hasSameForegroundAsBackground(
                 .find(
                   or(
                     hasNonColorBackgroundProperty(device, context),
-                    hasNonTransparentBackgroundColor(device, context)
-                  )
+                    hasNonTransparentBackgroundColor(device, context),
+                  ),
                 )
                 // If a non color `background-*` is set, assume it will make
                 // the background different from the foreground color.
@@ -60,21 +60,21 @@ export function hasSameForegroundAsBackground(
                 .map(
                   (ancestor) =>
                     Style.from(ancestor, device, context).computed(
-                      "background-color"
-                    ).value
+                      "background-color",
+                    ).value,
                 )
                 .some((background) => background.equals(foreground)),
             device,
-            context
+            context,
           ),
-          text
-        )
+          text,
+        ),
       );
 }
 
 function hasNonColorBackgroundProperty(
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Element> {
   return (element) => {
     const style = Style.from(element, device, context);
@@ -93,7 +93,7 @@ function hasNonColorBackgroundProperty(
       if (
         Equatable.equals(
           style.computed(`background-${property}`).value,
-          Longhands.get(`background-${property}`).initial
+          Longhands.get(`background-${property}`).initial,
         )
       ) {
         continue;
@@ -107,10 +107,10 @@ function hasNonColorBackgroundProperty(
 
 function hasNonTransparentBackgroundColor(
   device: Device,
-  context: Context = Context.empty()
+  context: Context = Context.empty(),
 ): Predicate<Element> {
   return (element) =>
     !Color.isTransparent(
-      Style.from(element, device, context).computed("background-color").value
+      Style.from(element, device, context).computed("background-color").value,
     );
 }

@@ -51,7 +51,7 @@ const isDeprecated = hasName(
   "spacer",
   "strike",
   "tt",
-  "xmp"
+  "xmp",
 );
 
 export default Rule.Atomic.of<Page, Document>({
@@ -66,16 +66,16 @@ export default Rule.Atomic.of<Page, Document>({
       expectations(target) {
         const deprecatedElements = getElementDescendants(
           target,
-          Node.fullTree
+          Node.fullTree,
         ).filter(
-          and(hasNamespace(Namespace.HTML), isDeprecated, isRendered(device))
+          and(hasNamespace(Namespace.HTML), isDeprecated, isRendered(device)),
         );
 
         return {
           1: expectation(
             deprecatedElements.isEmpty(),
             () => Outcomes.HasNoDeprecatedElement,
-            () => Outcomes.HasDeprecatedElements(deprecatedElements)
+            () => Outcomes.HasDeprecatedElements(deprecatedElements),
           ),
         };
       },
@@ -88,11 +88,11 @@ export default Rule.Atomic.of<Page, Document>({
  */
 export namespace Outcomes {
   export const HasNoDeprecatedElement = Ok.of(
-    Diagnostic.of(`The document doesn't contain any deprecated elements`)
+    Diagnostic.of(`The document doesn't contain any deprecated elements`),
   );
 
   export const HasDeprecatedElements = (errors: Iterable<Element>) =>
     Err.of(
-      WithBadElements.of(`The document contains deprecated elements`, errors)
+      WithBadElements.of(`The document contains deprecated elements`, errors),
     );
 }

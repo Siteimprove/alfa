@@ -33,7 +33,7 @@ export class Feature {
   public static of(
     role: Role.Name | Feature.Aspect<Role.Name | Iterable<Role>> = () => None,
     attributes: Feature.AttributesAspect = () => None,
-    name: Feature.NameAspect = () => None
+    name: Feature.NameAspect = () => None,
   ): Feature {
     const roleAspect =
       typeof role === "function" ? role : () => Option.of(Role.of(role));
@@ -48,7 +48,7 @@ export class Feature {
   private constructor(
     roleAspect: Feature.Aspect<Role.Name | Iterable<Role>>,
     attributes: Feature.AttributesAspect,
-    name: Feature.NameAspect
+    name: Feature.NameAspect,
   ) {
     this._role = (element) => {
       const role = roleAspect(element);
@@ -104,27 +104,27 @@ export namespace Feature {
 function html(
   role: Role.Name | Feature.Aspect<Role.Name | Iterable<Role>> = () => None,
   attributes: Feature.AttributesAspect = () => None,
-  name: Feature.NameAspect = () => None
+  name: Feature.NameAspect = () => None,
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
     Name.fromSteps(
       () => name(element, device, state),
-      () => nameFromAttribute(element, "title")
-    )
+      () => nameFromAttribute(element, "title"),
+    ),
   );
 }
 
 function svg(
   role: Role.Name | Feature.Aspect<Role.Name | Iterable<Role>> = () => None,
   attributes: Feature.AttributesAspect = () => None,
-  name: Feature.NameAspect = () => None
+  name: Feature.NameAspect = () => None,
 ): Feature {
   return Feature.of(role, attributes, (element, device, state) =>
     Name.fromSteps(
       () => name(element, device, state),
       () => nameFromChild(hasName("title"))(element, device, state),
-      () => nameFromAttribute(element, "title")
-    )
+      () => nameFromAttribute(element, "title"),
+    ),
   );
 }
 
@@ -150,8 +150,8 @@ const nameFromChild =
       .find(predicate)
       .flatMap((child) =>
         Name.fromDescendants(child, device, state.visit(child)).map((name) =>
-          Name.of(name.value, [Name.Source.descendant(element, name)])
-        )
+          Name.of(name.value, [Name.Source.descendant(element, name)]),
+        ),
       );
 
 const ids = Cache.empty<Node, Map<string, Element>>();
@@ -169,13 +169,13 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
         Map.from(
           elements
             .collect((element) =>
-              element.id.map((id) => [id, element] as const)
+              element.id.map((id) => [id, element] as const),
             )
-            .reverse()
-        )
+            .reverse(),
+        ),
       )
       .get(id)
-      .includes(element)
+      .includes(element),
   );
 
   const references = labels
@@ -189,16 +189,16 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
           isFirstReference &&
           label
             .attribute("for")
-            .some((attribute) => element.id.includes(attribute.value))
-      )
+            .some((attribute) => element.id.includes(attribute.value)),
+      ),
     );
 
   const names = references.collect((element) =>
     Name.fromNode(
       element,
       device,
-      state.reference(element, element).recurse(true).descend(false)
-    ).map((name) => [name, element] as const)
+      state.reference(element, element).recurse(true).descend(false),
+    ).map((name) => [name, element] as const),
   );
 
   const name = names
@@ -219,15 +219,15 @@ const nameFromLabel = (element: Element, device: Device, state: Name.State) => {
         }
 
         return Name.Source.ancestor(element, name);
-      })
-    )
+      }),
+    ),
   );
 };
 
 function ifScopedTo<T = Role.Name | Iterable<Role>>(
   names: [string, ...Array<string>],
   ifScoped: T,
-  ifNotScoped: T
+  ifNotScoped: T,
 ): Feature.Aspect<T> {
   return (element) =>
     test(isScopedTo(...names), element) ? ifScoped : ifNotScoped;
@@ -236,7 +236,7 @@ function ifScopedTo<T = Role.Name | Iterable<Role>>(
 function ifHasAttribute<T = Role.Name | Iterable<Role>>(
   attribute: string,
   ifHas: T,
-  ifDoesNotHave: T
+  ifDoesNotHave: T,
 ): Feature.Aspect<T> {
   return (element) =>
     test(hasAttribute(attribute), element) ? ifHas : ifDoesNotHave;
@@ -254,13 +254,13 @@ const Features: Features = {
       ifHasAttribute("href", "link", "generic"),
       () => [],
       (element, device, state) =>
-        Name.fromDescendants(element, device, state.visit(element))
+        Name.fromDescendants(element, device, state.visit(element)),
     ),
 
     area: html(
       ifHasAttribute("href", "link", "generic"),
       () => [],
-      (element) => nameFromAttribute(element, "alt")
+      (element) => nameFromAttribute(element, "alt"),
     ),
 
     article: html("article"),
@@ -291,7 +291,7 @@ const Features: Features = {
       // https://w3c.github.io/html-aam/#att-open-dialog
       yield Attribute.of(
         "aria-expanded",
-        element.attribute("open").isSome() ? "true" : "false"
+        element.attribute("open").isSome() ? "true" : "false",
       );
     }),
 
@@ -301,9 +301,9 @@ const Features: Features = {
         // https://w3c.github.io/html-aam/#att-open-details
         yield Attribute.of(
           "aria-expanded",
-          element.attribute("open").isSome() ? "true" : "false"
+          element.attribute("open").isSome() ? "true" : "false",
         );
-      }
+      },
     ),
 
     dt: html("term"),
@@ -316,7 +316,7 @@ const Features: Features = {
           yield Attribute.of("aria-disabled", "true");
         }
       },
-      nameFromChild(hasName("legend"))
+      nameFromChild(hasName("legend")),
     ),
 
     figure: html("figure", () => [], nameFromChild(hasName("figcaption"))),
@@ -325,8 +325,8 @@ const Features: Features = {
       ifScopedTo(
         ["article", "aside", "main", "nav", "section"],
         "generic",
-        "contentinfo"
-      )
+        "contentinfo",
+      ),
     ),
 
     // We currently cannot detect at this point if the element has an accessible
@@ -350,8 +350,8 @@ const Features: Features = {
       ifScopedTo(
         ["article", "aside", "main", "nav", "section"],
         "generic",
-        "banner"
-      )
+        "banner",
+      ),
     ),
 
     hr: html("separator"),
@@ -374,7 +374,7 @@ const Features: Features = {
         yield Role.of("img");
       },
       () => [],
-      (element) => nameFromAttribute(element, "alt")
+      (element) => nameFromAttribute(element, "alt"),
     ),
 
     input: html(
@@ -415,7 +415,7 @@ const Features: Features = {
         // https://w3c.github.io/html-aam/#att-checked
         yield Attribute.of(
           "aria-checked",
-          element.attribute("checked").isSome() ? "true" : "false"
+          element.attribute("checked").isSome() ? "true" : "false",
         );
 
         // https://w3c.github.io/html-aam/#att-list
@@ -463,7 +463,7 @@ const Features: Features = {
         if (
           test(
             hasInputType("text", "password", "search", "tel", "email", "url"),
-            element
+            element,
           )
         ) {
           /**
@@ -474,7 +474,7 @@ const Features: Features = {
             // The title attribute has poor and varying support, but
             // the specs give it precedence over placeholder.
             // This could be a browser-branched value.
-            () => nameFromAttribute(element, "title", "placeholder")
+            () => nameFromAttribute(element, "title", "placeholder"),
           );
         }
 
@@ -485,7 +485,7 @@ const Features: Features = {
           return Name.fromSteps(
             // {@link https://github.com/w3c/html-aam/pull/423}
             () => nameFromLabel(element, device, state),
-            () => nameFromAttribute(element, "value")
+            () => nameFromAttribute(element, "value"),
           );
         }
 
@@ -497,7 +497,7 @@ const Features: Features = {
             // {@link https://github.com/w3c/html-aam/pull/423}
             () => nameFromLabel(element, device, state),
             () => nameFromAttribute(element, "value"),
-            () => Option.of(Name.of("Submit"))
+            () => Option.of(Name.of("Submit")),
           );
         }
 
@@ -509,7 +509,7 @@ const Features: Features = {
             // {@link https://github.com/w3c/html-aam/pull/423}
             () => nameFromLabel(element, device, state),
             () => nameFromAttribute(element, "value"),
-            () => Option.of(Name.of("Reset"))
+            () => Option.of(Name.of("Reset")),
           );
         }
 
@@ -524,12 +524,12 @@ const Features: Features = {
             // use it.
             // This could be a browser-branched value.
             () => nameFromAttribute(element, "alt", "title"),
-            () => Option.of(Name.of("Submit Query"))
+            () => Option.of(Name.of("Submit Query")),
           );
         }
 
         return nameFromLabel(element, device, state);
-      }
+      },
     ),
 
     li: html(
@@ -551,10 +551,10 @@ const Features: Features = {
             "aria-posinset",
             `${
               siblings.takeUntil((sibling) => sibling.equals(element)).size + 1
-            }`
+            }`,
           ),
         ];
-      }
+      },
     ),
 
     main: html("main"),
@@ -580,7 +580,7 @@ const Features: Features = {
         for (const { value } of element.attribute("value")) {
           yield Attribute.of("aria-valuenow", value);
         }
-      }
+      },
     ),
 
     nav: html("navigation"),
@@ -598,7 +598,7 @@ const Features: Features = {
       ifScopedTo<Role.Name | None>(
         ["select", "optgroup", "datalist"],
         "option",
-        None
+        None,
       ),
       function* (element) {
         // https://w3c.github.io/html-aam/#att-disabled
@@ -609,9 +609,9 @@ const Features: Features = {
         // https://w3c.github.io/html-aam/#att-selected
         yield Attribute.of(
           "aria-selected",
-          element.attribute("selected").isSome() ? "true" : "false"
+          element.attribute("selected").isSome() ? "true" : "false",
         );
-      }
+      },
     ),
 
     output: html("status"),
@@ -659,7 +659,7 @@ const Features: Features = {
           yield Attribute.of("aria-multiselectable", "true");
         }
       },
-      nameFromLabel
+      nameFromLabel,
     ),
 
     table: html("table", () => [], nameFromChild(hasName("caption"))),
@@ -695,7 +695,7 @@ const Features: Features = {
         for (const { value } of element.attribute("rowspan")) {
           yield Attribute.of("aria-rowspan", value);
         }
-      }
+      },
     ),
 
     textarea: html(
@@ -727,9 +727,9 @@ const Features: Features = {
       (element, device, state) => {
         return Name.fromSteps(
           () => nameFromLabel(element, device, state),
-          () => nameFromAttribute(element, "title", "placeholder")
+          () => nameFromAttribute(element, "title", "placeholder"),
         );
-      }
+      },
     ),
 
     tfoot: html("rowgroup"),
@@ -747,7 +747,7 @@ const Features: Features = {
               .find(Cell.hasElement(element))
               .map((cell) => {
                 return { table, cell };
-              })
+              }),
           )
           .flatMap<Role>(({ table, cell }) => {
             switch (cell.scope) {
@@ -783,7 +783,7 @@ const Features: Features = {
         for (const { value } of element.attribute("rowspan")) {
           yield Attribute.of("aria-rowspan", value);
         }
-      }
+      },
     ),
 
     thead: html("rowgroup"),

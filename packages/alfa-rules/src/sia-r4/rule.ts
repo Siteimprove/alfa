@@ -30,7 +30,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             hasAttribute("lang", nor(isEmpty, isWhitespace))(target),
             () => Outcomes.HasLanguage,
-            () => Outcomes.HasNoLanguage
+            () => Outcomes.HasNoLanguage,
           ),
         };
       },
@@ -44,13 +44,13 @@ export default Rule.Atomic.of<Page, Element>({
 export namespace Outcomes {
   export const HasLanguage = Ok.of(
     Diagnostic.of(
-      `The \`lang\` attribute exists and is neither empty nor only whitespace`
-    )
+      `The \`lang\` attribute exists and is neither empty nor only whitespace`,
+    ),
   );
 
   export const HasNoLanguage = Err.of(
     Diagnostic.of(
-      `The \`lang\` attribute is either missing, empty, or only whitespace`
-    )
+      `The \`lang\` attribute is either missing, empty, or only whitespace`,
+    ),
   );
 }

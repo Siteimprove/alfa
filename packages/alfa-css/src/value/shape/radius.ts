@@ -18,10 +18,10 @@ const { either, filter, map } = Parser;
  * @public
  */
 export class Radius<
-  R extends LengthPercentage | Radius.Side = LengthPercentage | Radius.Side
+  R extends LengthPercentage | Radius.Side = LengthPercentage | Radius.Side,
 > extends BasicShape<"radius", Value.HasCalculation<[R]>> {
   public static of<R extends LengthPercentage | Radius.Side>(
-    value: R
+    value: R,
   ): Radius<R> {
     return new Radius(value);
   }
@@ -49,8 +49,8 @@ export class Radius<
     return new Radius(
       LengthPercentage.of(
         Real.clamp(resolved.value, 0, Infinity),
-        resolved.unit
-      )
+        resolved.unit,
+      ),
     );
   }
 
@@ -97,7 +97,7 @@ export namespace Radius {
   export type PartialResolver = LengthPercentage.PartialResolver;
 
   export function PartiallyResolve(
-    resolver: PartialResolver
+    resolver: PartialResolver,
   ): (value: Radius) => PartiallyResolved {
     return (value) => {
       if (Keyword.isKeyword(value.value)) {
@@ -117,7 +117,7 @@ export namespace Radius {
       return Radius.of(
         LengthPercentage.isPercentage(resolved)
           ? LengthPercentage.of(clamped)
-          : LengthPercentage.of(clamped, resolved.unit)
+          : LengthPercentage.of(clamped, resolved.unit),
       );
     };
   }
@@ -146,10 +146,10 @@ export namespace Radius {
         LengthPercentage.parse,
         // https://drafts.csswg.org/css-values/#calc-range
         (value) => value.hasCalculation() || value.value >= 0,
-        () => "Radius cannot be negative"
+        () => "Radius cannot be negative",
       ),
-      Keyword.parse("closest-side", "farthest-side")
+      Keyword.parse("closest-side", "farthest-side"),
     ),
-    (radius) => Radius.of(radius)
+    (radius) => Radius.of(radius),
   );
 }

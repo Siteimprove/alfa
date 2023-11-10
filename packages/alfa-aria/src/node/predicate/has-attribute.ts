@@ -15,12 +15,12 @@ export function hasAttribute(predicate: Predicate<Attribute>): Predicate<Node>;
  */
 export function hasAttribute(
   name: Attribute.Name,
-  value?: Predicate<string>
+  value?: Predicate<string>,
 ): Predicate<Node>;
 
 export function hasAttribute(
   nameOrPredicate: Attribute.Name | Predicate<Attribute>,
-  value: Predicate<string> = () => true
+  value: Predicate<string> = () => true,
 ): Predicate<Node> {
   if (typeof nameOrPredicate === "function") {
     return (node) => node.attribute(nameOrPredicate).isSome();

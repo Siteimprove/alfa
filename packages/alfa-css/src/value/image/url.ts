@@ -74,8 +74,8 @@ export namespace URL {
   export const parse: CSSParser<URL> = map(
     either(
       Token.parseURL(),
-      map(Function.parse("url", Token.parseString()), ([_, url]) => url)
+      map(Function.parse("url", Token.parseString()), ([_, url]) => url),
     ),
-    (url) => URL.of(url.value)
+    (url) => URL.of(url.value),
   );
 }

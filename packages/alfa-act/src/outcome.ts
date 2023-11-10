@@ -22,12 +22,13 @@ import { Rule } from "./rule";
  * S: possible types of questions' subject.
  */
 export abstract class Outcome<
-  I,
-  T extends Hashable,
-  Q extends Question.Metadata = {},
-  S = T,
-  V extends Outcome.Value = Outcome.Value
-> implements
+    I,
+    T extends Hashable,
+    Q extends Question.Metadata = {},
+    S = T,
+    V extends Outcome.Value = Outcome.Value,
+  >
+  implements
     Equatable,
     Hashable,
     json.Serializable<Outcome.JSON<V>>,
@@ -51,7 +52,7 @@ export abstract class Outcome<
   protected constructor(
     outcome: V,
     rule: Rule<I, T, Q, S>,
-    mode: Outcome.Mode
+    mode: Outcome.Mode,
   ) {
     this._outcome = outcome;
     this._rule = rule;
@@ -93,7 +94,7 @@ export abstract class Outcome<
     T extends Hashable,
     Q extends Question.Metadata,
     S,
-    V extends Outcome.Value = Outcome.Value
+    V extends Outcome.Value = Outcome.Value,
   >(value: Outcome<I, T, Q, S, V>): boolean;
 
   public equals(value: unknown): value is this;
@@ -180,7 +181,7 @@ export namespace Outcome {
     I,
     T extends Hashable,
     Q extends Question.Metadata = {},
-    S = T
+    S = T,
   > extends Outcome<I, T, Q, S, Value.Passed> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
@@ -188,7 +189,7 @@ export namespace Outcome {
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
       }>,
-      mode: Mode
+      mode: Mode,
     ): Passed<I, T, Q, S> {
       return new Passed(rule, target, expectations, mode);
     }
@@ -204,7 +205,7 @@ export namespace Outcome {
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
       }>,
-      mode: Mode
+      mode: Mode,
     ) {
       super(Value.Passed, rule, mode);
 
@@ -223,7 +224,7 @@ export namespace Outcome {
     }
 
     public equals<I, T extends Hashable, Q extends Question.Metadata, S>(
-      value: Passed<I, T, Q, S>
+      value: Passed<I, T, Q, S>,
     ): boolean;
 
     public equals(value: unknown): value is this;
@@ -270,7 +271,7 @@ export namespace Outcome {
               (message, [, expectation]) =>
                 // the outcome is passed, so all expectations should be Ok
                 message + "\n" + expectation.getUnsafe().message,
-              ""
+              "",
             )
             .trim(),
         },
@@ -333,21 +334,21 @@ export namespace Outcome {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: Outcome<I, T, Q, S>): value is Passed<I, T, Q, S>;
 
     export function isPassed<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is Passed<I, T, Q, S>;
 
     export function isPassed<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is Passed<I, T, Q, S> {
       return value instanceof Passed;
     }
@@ -359,7 +360,7 @@ export namespace Outcome {
     I,
     T extends Hashable,
     Q extends Question.Metadata = {},
-    S = T
+    S = T,
   > extends Outcome<I, T, Q, S, Value.Failed> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
@@ -367,7 +368,7 @@ export namespace Outcome {
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
       }>,
-      mode: Mode
+      mode: Mode,
     ): Failed<I, T, Q, S> {
       return new Failed(rule, target, expectations, mode);
     }
@@ -383,7 +384,7 @@ export namespace Outcome {
       expectations: Record<{
         [key: string]: Result<Diagnostic>;
       }>,
-      mode: Mode
+      mode: Mode,
     ) {
       super(Value.Failed, rule, mode);
 
@@ -402,7 +403,7 @@ export namespace Outcome {
     }
 
     public equals<I, T extends Hashable, Q extends Question.Metadata, S>(
-      value: Failed<I, T, Q, S>
+      value: Failed<I, T, Q, S>,
     ): boolean;
 
     public equals(value: unknown): value is this;
@@ -471,13 +472,13 @@ export namespace Outcome {
             Iterable.filter(
               Iterable.map(
                 this._expectations.entries(),
-                ([, expectation]) => expectation
+                ([, expectation]) => expectation,
               ),
-              Err.isErr<Diagnostic>
+              Err.isErr<Diagnostic>,
             ),
-            (expectation) => `- ${expectation.getErr().message}`
+            (expectation) => `- ${expectation.getErr().message}`,
           ),
-          "\n"
+          "\n",
         );
 
       const locations: Array<sarif.Location> = [];
@@ -521,21 +522,21 @@ export namespace Outcome {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: Outcome<I, T, Q, S>): value is Failed<I, T, Q, S>;
 
     export function isFailed<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is Failed<I, T, Q, S>;
 
     export function isFailed<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is Failed<I, T, Q, S> {
       return value instanceof Failed;
     }
@@ -547,13 +548,13 @@ export namespace Outcome {
     I,
     T extends Hashable,
     Q extends Question.Metadata = {},
-    S = T
+    S = T,
   > extends Outcome<I, T, Q, S, Value.CantTell> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
       target: T,
       diagnostic: Diagnostic,
-      mode: Mode
+      mode: Mode,
     ): CantTell<I, T, Q, S> {
       return new CantTell(rule, target, diagnostic, mode);
     }
@@ -565,7 +566,7 @@ export namespace Outcome {
       rule: Rule<I, T, Q, S>,
       target: T,
       diagnostic: Diagnostic,
-      mode: Mode
+      mode: Mode,
     ) {
       super(Value.CantTell, rule, mode);
 
@@ -582,7 +583,7 @@ export namespace Outcome {
     }
 
     public equals<I, T extends Hashable, Q extends Question.Metadata, S>(
-      value: CantTell<I, T, Q, S>
+      value: CantTell<I, T, Q, S>,
     ): boolean;
 
     public equals(value: unknown): value is this;
@@ -672,21 +673,21 @@ export namespace Outcome {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: Outcome<I, T, Q, S>): value is CantTell<I, T, Q, S>;
 
     export function isCantTell<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is CantTell<I, T, Q, S>;
 
     export function isCantTell<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is CantTell<I, T, Q, S> {
       return value instanceof CantTell;
     }
@@ -698,7 +699,7 @@ export namespace Outcome {
     I,
     T extends Hashable,
     Q extends Question.Metadata = {},
-    S = T
+    S = T,
   > = Passed<I, T, Q, S> | Failed<I, T, Q, S> | CantTell<I, T, Q, S>;
 
   export namespace Applicable {
@@ -706,21 +707,21 @@ export namespace Outcome {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: Outcome<I, T, Q, S>): value is Applicable<I, T, Q, S>;
 
     export function isApplicable<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is Applicable<I, T, Q, S>;
 
     export function isApplicable<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is Applicable<I, T, Q, S> {
       return isPassed(value) || isFailed(value) || isCantTell(value);
     }
@@ -732,11 +733,11 @@ export namespace Outcome {
     I,
     T extends Hashable,
     Q extends Question.Metadata = {},
-    S = T
+    S = T,
   > extends Outcome<I, T, Q, S, Value.Inapplicable> {
     public static of<I, T extends Hashable, Q extends Question.Metadata, S>(
       rule: Rule<I, T, Q, S>,
-      mode: Mode
+      mode: Mode,
     ): Inapplicable<I, T, Q, S> {
       return new Inapplicable(rule, mode);
     }
@@ -746,7 +747,7 @@ export namespace Outcome {
     }
 
     public equals<I, T extends Hashable, Q extends Question.Metadata, S>(
-      value: Inapplicable<I, T, Q, S>
+      value: Inapplicable<I, T, Q, S>,
     ): boolean;
 
     public equals(value: unknown): value is this;
@@ -802,21 +803,21 @@ export namespace Outcome {
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: Outcome<I, T, Q, S>): value is Inapplicable<I, T, Q, S>;
 
     export function isInapplicable<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is Inapplicable<I, T, Q, S>;
 
     export function isInapplicable<
       I,
       T extends Hashable,
       Q extends Question.Metadata,
-      S
+      S,
     >(value: unknown): value is Inapplicable<I, T, Q, S> {
       return value instanceof Inapplicable;
     }
@@ -830,14 +831,14 @@ export namespace Outcome {
     expectations: Record<{
       [key: string]: Option<Result<Diagnostic>>;
     }>,
-    mode: Mode
+    mode: Mode,
   ): Outcome.Applicable<I, T, Q, S> {
     return Trilean.fold(
       (expectations) =>
         Trilean.every(expectations, (expectation) =>
           expectation
             .map<Trilean>((expectation) => expectation.isOk())
-            .getOr(undefined)
+            .getOr(undefined),
         ),
       () =>
         Passed.of(
@@ -849,9 +850,9 @@ export namespace Outcome {
               // Due to the predicate in every, this branch is only taken if every
               // expectation is a Some<Ok<T>>.
               expectation.getUnsafe(),
-            ])
+            ]),
           ),
-          mode
+          mode,
         ),
       () =>
         Failed.of(
@@ -863,12 +864,12 @@ export namespace Outcome {
               // One expectation being a Some<Err<T>> is enough to take that branch,
               // even if others are None.
               expectation.getOr(Err.of(Diagnostic.empty)),
-            ])
+            ]),
           ),
-          mode
+          mode,
         ),
       () => CantTell.of(rule, target, Diagnostic.empty, mode),
-      expectations.values()
+      expectations.values(),
     );
   }
 }

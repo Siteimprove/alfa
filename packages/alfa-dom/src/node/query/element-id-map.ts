@@ -34,6 +34,6 @@ function buildElementIdMap(node: Node): Map<string, Element> {
   return Map.from(
     getElementDescendants(node)
       .collect((element) => element.id.map((id) => [id, element] as const))
-      .reverse()
+      .reverse(),
   );
 }

@@ -72,7 +72,7 @@ export default Rule.Atomic.of<Page, Element>({
         function gather(
           node: Node,
           container: Option<Element>,
-          link: Option<Element>
+          link: Option<Element>,
         ): void {
           const isLink = hasRole(device, (role) => role.is("link"));
           const isParagraph = hasRole(device, "paragraph");
@@ -107,7 +107,7 @@ export default Rule.Atomic.of<Page, Element>({
                   linkText
                     .get(link.get())
                     .getOr(Set.empty<Element>())
-                    .add(parent.get())
+                    .add(parent.get()),
                 );
               }
               // For each container, store the parent of the text nodes it contains
@@ -117,7 +117,7 @@ export default Rule.Atomic.of<Page, Element>({
                   nonLinkText
                     .get(container.get())
                     .getOr(Set.empty<Element>())
-                    .add(parent.get())
+                    .add(parent.get()),
                 );
               }
             }
@@ -132,7 +132,7 @@ export default Rule.Atomic.of<Page, Element>({
           // Check if foreground is the same with the parent <p> element
           const hasDifferentForeground = (
             link: Element,
-            container: Element
+            container: Element,
           ): boolean =>
             getForeground(link, device).none(
               (linkColors) =>
@@ -144,8 +144,8 @@ export default Rule.Atomic.of<Page, Element>({
                   (containerColors) =>
                     // Similarly to the link, we assume the rule is applicable if the container has more than one foreground color
                     containerColors.length === 1 &&
-                    linkColors[0].equals(containerColors[0])
-                )
+                    linkColors[0].equals(containerColors[0]),
+                ),
             );
 
           for (const [link, linkTexts] of linkText) {
@@ -159,8 +159,8 @@ export default Rule.Atomic.of<Page, Element>({
             if (
               linkTexts.some((linkElement) =>
                 nonLinkTexts.some((nonLinkElement) =>
-                  hasDifferentForeground(linkElement, nonLinkElement)
-                )
+                  hasDifferentForeground(linkElement, nonLinkElement),
+                ),
               )
             ) {
               yield link;
@@ -175,7 +175,7 @@ export default Rule.Atomic.of<Page, Element>({
           .map((node) =>
             node
               .inclusiveDescendants(Node.fullTree)
-              .filter(and(isElement, hasNonLinkText(device)))
+              .filter(and(isElement, hasNonLinkText(device))),
           )
           .getOrElse<Sequence<Element>>(Sequence.empty);
 
@@ -187,7 +187,7 @@ export default Rule.Atomic.of<Page, Element>({
           .concat(
             target
               .ancestors(Node.fullTree)
-              .takeWhile(and(isElement, not(hasNonLinkText(device))))
+              .takeWhile(and(isElement, not(hasNonLinkText(device)))),
           );
 
         const hasDistinguishingStyle = (context: Context = Context.empty()) =>
@@ -203,10 +203,10 @@ export default Rule.Atomic.of<Page, Element>({
                     container,
                     target,
                     device,
-                    context
+                    context,
                   )
                     .map((isDistinguishable) => isDistinguishable(link))
-                    .some((distinguishable) => distinguishable)
+                    .some((distinguishable) => distinguishable),
               );
 
               const distinguishableContrast = Set.from(
@@ -216,10 +216,10 @@ export default Rule.Atomic.of<Page, Element>({
                       container,
                       link,
                       device,
-                      context
-                    )
-                  )
-                )
+                      context,
+                    ),
+                  ),
+                ),
               );
 
               const properties: List<ElementDistinguishable.Property> =
@@ -236,8 +236,8 @@ export default Rule.Atomic.of<Page, Element>({
                       target,
                       context,
                       properties,
-                      distinguishableContrast
-                    )
+                      distinguishableContrast,
+                    ),
                   )
                 : Err.of(
                     ElementDistinguishable.from(
@@ -246,10 +246,10 @@ export default Rule.Atomic.of<Page, Element>({
                       target,
                       context,
                       properties,
-                      distinguishableContrast
-                    )
+                      distinguishableContrast,
+                    ),
                   );
-            })
+            }),
           )
             .toArray()
             // sort the Ok before the Err, relative order doesn't matter.
@@ -260,11 +260,11 @@ export default Rule.Atomic.of<Page, Element>({
         const isDefaultDistinguishable = hasDistinguishingStyle();
 
         const isHoverDistinguishable = hasDistinguishingStyle(
-          Context.hover(target)
+          Context.hover(target),
         );
 
         const isFocusDistinguishable = hasDistinguishingStyle(
-          Context.focus(target)
+          Context.focus(target),
         );
 
         return {
@@ -278,14 +278,14 @@ export default Rule.Atomic.of<Page, Element>({
               Outcomes.IsDistinguishable(
                 isDefaultDistinguishable,
                 isHoverDistinguishable,
-                isFocusDistinguishable
+                isFocusDistinguishable,
               ),
             () =>
               Outcomes.IsNotDistinguishable(
                 isDefaultDistinguishable,
                 isHoverDistinguishable,
-                isFocusDistinguishable
-              )
+                isFocusDistinguishable,
+              ),
           ),
         };
       },
@@ -304,29 +304,29 @@ export namespace Outcomes {
   export const IsDistinguishable = (
     defaultStyles: Iterable<Result<ElementDistinguishable>>,
     hoverStyles: Iterable<Result<ElementDistinguishable>>,
-    focusStyles: Iterable<Result<ElementDistinguishable>>
+    focusStyles: Iterable<Result<ElementDistinguishable>>,
   ) =>
     Ok.of(
       DistinguishingStyles.of(
         `The link is distinguishable from the surrounding text`,
         defaultStyles,
         hoverStyles,
-        focusStyles
-      )
+        focusStyles,
+      ),
     );
 
   export const IsNotDistinguishable = (
     defaultStyles: Iterable<Result<ElementDistinguishable>>,
     hoverStyles: Iterable<Result<ElementDistinguishable>>,
-    focusStyles: Iterable<Result<ElementDistinguishable>>
+    focusStyles: Iterable<Result<ElementDistinguishable>>,
   ) =>
     Err.of(
       DistinguishingStyles.of(
         `The link is not distinguishable from the surrounding text`,
         defaultStyles,
         hoverStyles,
-        focusStyles
-      )
+        focusStyles,
+      ),
     );
 }
 
@@ -340,8 +340,8 @@ function hasNonLinkText(device: Device): Predicate<Element> {
         element.inclusiveAncestors(Node.flatTree).some(
           and(
             isElement,
-            hasRole(device, (role) => role.is("link"))
-          )
+            hasRole(device, (role) => role.is("link")),
+          ),
         )
       ) {
         return false;
@@ -354,8 +354,8 @@ function hasNonLinkText(device: Device): Predicate<Element> {
         children.some(
           and(
             isText,
-            and<Text>(isVisible(device), (text) => !isWhitespace(text.data))
-          )
+            and<Text>(isVisible(device), (text) => !isWhitespace(text.data)),
+          ),
         )
       ) {
         return true;
@@ -382,7 +382,7 @@ namespace Distinguishable {
     container: Element,
     target: Element,
     device: Device,
-    context: Context = Context.empty()
+    context: Context = Context.empty(),
   ): Array<Predicate<Element>> {
     let predicates: Array<
       readonly [ElementDistinguishable.Property, Predicate<Element>]
@@ -435,17 +435,17 @@ namespace Distinguishable {
 
           distinguishingProperties = distinguishingProperties.set(
             context,
-            linkToProperties.set(link, properties)
+            linkToProperties.set(link, properties),
           );
         }
-      })
+      }),
     );
   }
 
   function hasDistinguishableTextDecoration(
     container: Element,
     device: Device,
-    context?: Context
+    context?: Context,
   ): Predicate<Element> {
     return (element) =>
       test(not(hasTextDecoration(device, context)), container) &&
@@ -477,23 +477,23 @@ namespace Distinguishable {
   function hasDistinguishableBackground(
     container: Element,
     device: Device,
-    context?: Context
+    context?: Context,
   ): Predicate<Element> {
     const colorReference = Style.from(container, device, context).computed(
-      "background-color"
+      "background-color",
     ).value;
 
     const imageReference = Style.from(container, device, context).computed(
-      "background-image"
+      "background-image",
     ).value;
 
     return (link: Element) => {
       const color = Style.from(link, device, context).computed(
-        "background-color"
+        "background-color",
       ).value;
 
       const image = Style.from(link, device, context).computed(
-        "background-image"
+        "background-image",
       ).value;
 
       // If the background is fully transparent or there is no `background-image` set on the link,
@@ -522,7 +522,7 @@ namespace Distinguishable {
     container: Element,
     link: Element,
     device: Device,
-    context: Context = Context.empty()
+    context: Context = Context.empty(),
   ): ReadonlyArray<Contrast.Pairing<["container", "link"]>> {
     return getForeground(container, device, context)
       .map((containerColors) => [
@@ -533,11 +533,11 @@ namespace Distinguishable {
                 Contrast.Pairing.of<["container", "link"]>(
                   ["container", containerColor],
                   ["link", linkColor],
-                  contrast(containerColor, linkColor)
-                )
-              )
+                  contrast(containerColor, linkColor),
+                ),
+              ),
             )
-            .getOr([])
+            .getOr([]),
         ),
       ])
       .getOr([]);
@@ -546,14 +546,14 @@ namespace Distinguishable {
   function hasDistinguishableContrast(
     container: Element,
     device: Device,
-    context: Context = Context.empty()
+    context: Context = Context.empty(),
   ): Predicate<Element> {
     return (link) => {
       for (const contrastPairing of getPairwiseContrast(
         container,
         link,
         device,
-        context
+        context,
       )) {
         // If at least one of the contrast values are bigger than the threshold, the link is marked distinguisable
         if (contrastPairing.contrast >= 3) {
@@ -574,13 +574,13 @@ namespace Distinguishable {
   function hasDistinguishableFont(
     container: Element,
     device: Device,
-    context?: Context
+    context?: Context,
   ): Predicate<Element> {
     const style = Style.from(container, device, context);
 
     const referenceWeight = style.computed("font-weight").value;
     const referenceFamily = Option.from(
-      style.computed("font-family").value.values[0]
+      style.computed("font-family").value.values[0],
     );
 
     return or(
@@ -588,38 +588,38 @@ namespace Distinguishable {
         "font-weight",
         not((weight) => weight.equals(referenceWeight)),
         device,
-        context
+        context,
       ),
       hasComputedStyle(
         "font-family",
         not((family) => Option.from(family.values[0]).equals(referenceFamily)),
         device,
-        context
-      )
+        context,
+      ),
     );
   }
 
   function hasDistinguishableVerticalAlign(
     container: Element,
     device: Device,
-    context?: Context
+    context?: Context,
   ): Predicate<Element> {
     const reference = Style.from(container, device, context).computed(
-      "vertical-align"
+      "vertical-align",
     ).value;
 
     return hasComputedStyle(
       "vertical-align",
       not((alignment) => alignment.equals(reference)),
       device,
-      context
+      context,
     );
   }
 
   function hasDistinguishableCursor(
     container: Element,
     device: Device,
-    context?: Context
+    context?: Context,
   ): Predicate<Element> {
     // Checking if there is a custom cursor, otherwise grabbing the built-in
     function getFirstCursor(style: Style.Computed<"cursor">) {
@@ -630,7 +630,7 @@ namespace Distinguishable {
     const containerCursorStyle = Style.from(
       container,
       device,
-      context
+      context,
     ).computed("cursor").value;
 
     // We assume that the first custom cursor, if any, will never fail to load
@@ -641,7 +641,7 @@ namespace Distinguishable {
       "cursor",
       not((cursor) => getFirstCursor(cursor).equals(reference)),
       device,
-      context
+      context,
     );
   }
 }

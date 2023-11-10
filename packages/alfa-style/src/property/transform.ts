@@ -23,6 +23,6 @@ export default Longhand.of<Specified, Computed>(
     transform.map((transform) =>
       Keyword.isKeyword(transform)
         ? transform
-        : transform.map(Transform.partiallyResolve(Resolver.length(style)))
-    )
+        : transform.map(Transform.partiallyResolve(Resolver.length(style))),
+    ),
 );

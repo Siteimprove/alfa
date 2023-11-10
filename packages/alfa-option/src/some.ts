@@ -71,7 +71,7 @@ export class Some<T> implements Option<T> {
   }
 
   public reject<U extends T>(
-    refinement: Refinement<T, U>
+    refinement: Refinement<T, U>,
   ): Option<Exclude<T, U>>;
 
   public reject(predicate: Predicate<T>): Option<T>;
@@ -138,14 +138,14 @@ export class Some<T> implements Option<T> {
 
   public compare<T>(
     this: Option<Comparable<T>>,
-    option: Option<T>
+    option: Option<T>,
   ): Comparison {
     return this.compareWith(option, compareComparable);
   }
 
   public compareWith<U = T>(
     option: Option<U>,
-    comparer: Comparer<T, U>
+    comparer: Comparer<T, U>,
   ): Comparison {
     return option.isSome()
       ? comparer(this._value, option._value)

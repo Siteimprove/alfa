@@ -18,7 +18,7 @@ export class Contrast<N extends Name = Name> extends Diagnostic {
   public static of<N extends Name = Name>(
     message: string,
     threshold: number = 4.5,
-    pairings: Iterable<Contrast.Pairing<N>> = []
+    pairings: Iterable<Contrast.Pairing<N>> = [],
   ): Contrast<N> {
     return new Contrast(message, threshold, Array.from(pairings));
   }
@@ -29,7 +29,7 @@ export class Contrast<N extends Name = Name> extends Diagnostic {
   private constructor(
     message: string,
     threshold: number,
-    pairings: Array<Contrast.Pairing<N>>
+    pairings: Array<Contrast.Pairing<N>>,
   ) {
     super(message);
 
@@ -84,16 +84,16 @@ export namespace Contrast {
   }
 
   export function isContrast<N extends Name>(
-    value: Diagnostic
+    value: Diagnostic,
   ): value is Contrast<N>;
 
   export function isContrast<N extends Name>(
-    value: unknown
+    value: unknown,
   ): value is Contrast<N>;
 
   /** @public */
   export function isContrast<N extends Name>(
-    value: unknown
+    value: unknown,
   ): value is Contrast<N> {
     return value instanceof Contrast;
   }
@@ -104,7 +104,7 @@ export namespace Contrast {
     public static of<N extends Name = Name>(
       color1: [FirstColor<N>, RGB],
       color2: [SecondColor<N>, RGB],
-      contrast: number
+      contrast: number,
     ): Pairing<N> {
       return new Pairing(Color.of(...color1), Color.of(...color2), contrast);
     }
@@ -116,7 +116,7 @@ export namespace Contrast {
     private constructor(
       color1: Color<FirstColor<N>>,
       color2: Color<SecondColor<N>>,
-      contrast: number
+      contrast: number,
     ) {
       this._color1 = color1;
       this._color2 = color2;
@@ -186,7 +186,7 @@ export namespace Contrast {
   {
     public static of<N extends FirstColor<Name> | SecondColor<Name>>(
       name: N,
-      value: RGB
+      value: RGB,
     ): Color<N> {
       return new Color(name, value);
     }

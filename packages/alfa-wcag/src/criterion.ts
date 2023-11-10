@@ -8,7 +8,7 @@ import { Criteria } from "./criterion/data";
  * @public
  */
 export class Criterion<
-  C extends Criterion.Chapter = Criterion.Chapter
+  C extends Criterion.Chapter = Criterion.Chapter,
 > extends Requirement {
   public static of<C extends Criterion.Chapter>(chapter: C): Criterion<C> {
     return new Criterion(chapter);
@@ -50,7 +50,7 @@ export class Criterion<
     const [, { uri }] = [...Criteria[this._chapter].versions].find(
       ([version]) =>
         version === Criterion.Version.Recommendation ||
-        version === Criterion.Version.Draft
+        version === Criterion.Version.Draft,
     )!;
 
     return uri as Criterion.URI<C, "2.1" | "2.2">;
@@ -74,7 +74,7 @@ export class Criterion<
       [...Criteria[this._chapter].versions].map(([version, { level }]) => [
         level,
         [version],
-      ])
+      ]),
     );
   }
 
@@ -167,7 +167,7 @@ export namespace Criterion {
    */
   export type URI<
     C extends Chapter = Chapter,
-    V extends Version = Version
+    V extends Version = Version,
   > = Criteria[C]["versions"] extends Iterable<infer T>
     ? T extends readonly [V, { readonly uri: infer U }]
       ? U
@@ -179,7 +179,7 @@ export namespace Criterion {
    */
   export type Level<
     C extends Chapter = Chapter,
-    V extends Version = Version
+    V extends Version = Version,
   > = Criteria[C]["versions"] extends Iterable<infer T>
     ? T extends readonly [V, { readonly level: infer L }]
       ? L

@@ -25,9 +25,9 @@ test(`evaluate() passes when R48 passes`, async (t) => {
         "is-above-duration-threshold": true,
         // R48
         "is-below-audio-duration-threshold": true,
-      })
+      }),
     ),
-    [passed(R50, target, { 1: Outcomes.AutoplayGood }, Outcome.Mode.SemiAuto)]
+    [passed(R50, target, { 1: Outcomes.AutoplayGood }, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -47,9 +47,9 @@ test(`evaluate() passes when R49 passes`, async (t) => {
         "is-above-duration-threshold": true,
         // R49
         "audio-control-mechanism": Option.of(controls),
-      })
+      }),
     ),
-    [passed(R50, target, { 1: Outcomes.AutoplayGood }, Outcome.Mode.SemiAuto)]
+    [passed(R50, target, { 1: Outcomes.AutoplayGood }, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -69,9 +69,9 @@ test(`evaluate() fails when all input rules fail`, async (t) => {
         "is-below-audio-duration-threshold": false,
         // R49
         "audio-control-mechanism": None,
-      })
+      }),
     ),
-    [failed(R50, target, { 1: Outcomes.AutoplayBad }, Outcome.Mode.SemiAuto)]
+    [failed(R50, target, { 1: Outcomes.AutoplayBad }, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -86,9 +86,9 @@ test(`evaluate() cannot tell if no input rule can tell`, async (t) => {
     await evaluate(
       R50,
       { document },
-      oracle({ "has-audio": true, "is-above-duration-threshold": true })
+      oracle({ "has-audio": true, "is-above-duration-threshold": true }),
     ),
-    [cantTell(R50, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R50, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -109,9 +109,9 @@ test(`evaluate() cannot tell when some input rule cannot tell and no input rule 
         // R48
         "is-below-audio-duration-threshold": false,
         // R49
-      })
+      }),
     ),
-    [cantTell(R50, target, undefined, Outcome.Mode.SemiAuto)]
+    [cantTell(R50, target, undefined, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -128,9 +128,9 @@ test("evaluate() is inapplicable to short videos", async (t) => {
     await evaluate(
       R50,
       { document },
-      oracle({ "has-audio": true, "is-above-duration-threshold": false })
+      oracle({ "has-audio": true, "is-above-duration-threshold": false }),
     ),
-    [inapplicable(R50, Outcome.Mode.SemiAuto)]
+    [inapplicable(R50, Outcome.Mode.SemiAuto)],
   );
 });
 
@@ -139,7 +139,7 @@ test("evaluate() is inapplicable to audio-less videos", async (t) => {
 
   t.deepEqual(
     await evaluate(R50, { document }, oracle({ "has-audio": false })),
-    [inapplicable(R50, Outcome.Mode.SemiAuto)]
+    [inapplicable(R50, Outcome.Mode.SemiAuto)],
   );
 });
 

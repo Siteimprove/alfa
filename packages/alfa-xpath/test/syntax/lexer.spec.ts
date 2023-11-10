@@ -7,7 +7,7 @@ function lex(t: Assertions, input: string, expected: Array<Token.JSON>) {
   t.deepEqual(
     Lexer.lex(input).map((token) => token.toJSON()),
     expected,
-    input
+    input,
   );
 }
 

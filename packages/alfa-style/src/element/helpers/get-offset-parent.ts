@@ -20,14 +20,14 @@ const isTabular = hasName("td", "th", "table");
  */
 export function getOffsetParent(
   element: Element,
-  device: Device
+  device: Device,
 ): Option<Element> {
   const isFixed = isPositioned(device, "fixed");
 
   if (
     test(
       or(not(isRendered(device)), isRoot(Node.flatTree), isBody, isFixed),
-      element
+      element,
     )
   ) {
     return None;

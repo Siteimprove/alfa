@@ -274,7 +274,7 @@ export namespace Expression {
     public static of(
       axis: Axis.Type,
       test: Option<Test> = None,
-      predicates: Array<Expression> = []
+      predicates: Array<Expression> = [],
     ): Axis {
       return new Axis(axis, test, predicates);
     }
@@ -286,7 +286,7 @@ export namespace Expression {
     private constructor(
       axis: Axis.Type,
       test: Option<Test>,
-      predicates: Array<Expression>
+      predicates: Array<Expression>,
     ) {
       this._axis = axis;
       this._test = test;
@@ -316,7 +316,7 @@ export namespace Expression {
         value._test.equals(this._test) &&
         value._predicates.length === this._predicates.length &&
         value._predicates.every((predicate, i) =>
-          predicate.equals(this._predicates[i])
+          predicate.equals(this._predicates[i]),
         )
       );
     }
@@ -723,7 +723,7 @@ export namespace Expression {
         value._base.equals(this._base) &&
         value._predicates.length === this._predicates.length &&
         value._predicates.every((predicate, i) =>
-          predicate.equals(this._predicates[i])
+          predicate.equals(this._predicates[i]),
         )
       );
     }
@@ -738,7 +738,7 @@ export namespace Expression {
 
     public toString(): string {
       return `${this._base}${this._predicates.map(
-        (predicate) => `[${predicate}]`
+        (predicate) => `[${predicate}]`,
       )}`;
     }
   }
@@ -792,7 +792,7 @@ export namespace Expression {
       prefix: Option<string>,
       name: string,
       arity: number,
-      parameters: Array<Expression>
+      parameters: Array<Expression>,
     ): FunctionCall {
       return new FunctionCall(prefix, name, arity, parameters);
     }
@@ -806,7 +806,7 @@ export namespace Expression {
       prefix: Option<string>,
       name: string,
       arity: number,
-      parameters: Array<Expression>
+      parameters: Array<Expression>,
     ) {
       this._prefix = prefix;
       this._name = name;
@@ -842,7 +842,7 @@ export namespace Expression {
         value._arity === this._arity &&
         value._parameters.length === this._parameters.length &&
         value._parameters.every((parameter, i) =>
-          parameter.equals(this._parameters[i])
+          parameter.equals(this._parameters[i]),
         )
       );
     }

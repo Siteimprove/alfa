@@ -27,7 +27,7 @@ export namespace Resolver {
    * {@link https://drafts.csswg.org/css-values/#relative-lengths}
    */
   function lengthResolver(
-    style: Style
+    style: Style,
   ): Mapper<Length.Fixed<Unit.Length.Relative>, Length.Canonical> {
     const { viewport } = style.device;
     const width = Length.of(viewport.width, "px");
@@ -45,7 +45,7 @@ export namespace Resolver {
 
   export function lengthPercentage(
     base: Length.Canonical,
-    style: Style
+    style: Style,
   ): LengthPercentage.Resolver {
     return { percentageBase: base, length: lengthResolver(style) };
   }

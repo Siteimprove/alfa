@@ -18,9 +18,9 @@ const { isVisible } = Style;
  * @public
  */
 export function isPerceivableForAll<T extends Node>(
-  device: Device
+  device: Device,
 ): Predicate<T> {
   return and(isVisible(device), (node) =>
-    node.inclusiveDescendants().some(isIncludedInTheAccessibilityTree(device))
+    node.inclusiveDescendants().some(isIncludedInTheAccessibilityTree(device)),
   );
 }

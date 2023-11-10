@@ -11,7 +11,7 @@ function slice(
   top: number,
   right?: number,
   bottom?: number,
-  left?: number
+  left?: number,
 ): Serializable.ToJSON<Slice.Specified> {
   return {
     type: "tuple",

@@ -6,14 +6,14 @@ import { Item } from "./types";
  */
 export function matches<T extends Item.Type>(
   item: Item<any>,
-  type: T
+  type: T,
 ): item is Item<Item.Value<T>> {
   return derivesFrom(item.type, type);
 }
 
 function derivesFrom<T extends Item.Type>(
   actual: Item.Type,
-  expected: T
+  expected: T,
 ): actual is T {
   if (actual.type === expected.type) {
     return true;

@@ -30,8 +30,8 @@ export default Rule.Atomic.of<Page, Element>({
           and(
             hasNamespace(Namespace.HTML),
             hasName("table"),
-            isIncludedInTheAccessibilityTree(device)
-          )
+            isIncludedInTheAccessibilityTree(device),
+          ),
         );
 
         for (const table of tables) {
@@ -46,13 +46,13 @@ export default Rule.Atomic.of<Page, Element>({
               hasNamespace(Namespace.HTML),
               hasName("td"),
               hasRole(device, "cell", "gridcell"),
-              isPerceivableForAll(device)
-            )
+              isPerceivableForAll(device),
+            ),
           );
 
           for (const dataCell of dataCells) {
             for (const cell of model.cells.find((cell) =>
-              cell.element.equals(dataCell)
+              cell.element.equals(dataCell),
             )) {
               data = data.set(dataCell, cell);
 
@@ -70,7 +70,7 @@ export default Rule.Atomic.of<Page, Element>({
           1: expectation(
             cell.headers.isEmpty(),
             () => Outcomes.IsNotAssignedToHeaderCell,
-            () => Outcomes.IsAssignedToHeaderCell
+            () => Outcomes.IsAssignedToHeaderCell,
           ),
         };
       },
@@ -83,10 +83,10 @@ export default Rule.Atomic.of<Page, Element>({
  */
 export namespace Outcomes {
   export const IsAssignedToHeaderCell = Ok.of(
-    Diagnostic.of(`The cell is assigned to an header cell`)
+    Diagnostic.of(`The cell is assigned to an header cell`),
   );
 
   export const IsNotAssignedToHeaderCell = Err.of(
-    Diagnostic.of(`The cell is not assigned to any header cell`)
+    Diagnostic.of(`The cell is not assigned to any header cell`),
   );
 }

@@ -11,6 +11,6 @@ test(".from() returns Err on invalid URL", (t) => {
       method: "GET",
       status: 500,
     }).isErr(),
-    true
+    true,
   );
 });

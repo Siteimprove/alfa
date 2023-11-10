@@ -101,20 +101,20 @@ export namespace Trampoline {
 
   export function traverse<T, U>(
     values: Iterable<T>,
-    mapper: Mapper<T, Trampoline<U>, [index: number]>
+    mapper: Mapper<T, Trampoline<U>, [index: number]>,
   ): Trampoline<Iterable<U>> {
     return Iterable.reduce(
       values,
       (values, value, i) =>
         values.flatMap((values) =>
-          mapper(value, i).map((value) => Array.append(values, value))
+          mapper(value, i).map((value) => Array.append(values, value)),
         ),
-      done(Array.empty())
+      done(Array.empty()),
     );
   }
 
   export function sequence<T>(
-    futures: Iterable<Trampoline<T>>
+    futures: Iterable<Trampoline<T>>,
   ): Trampoline<Iterable<T>> {
     return traverse(futures, (value) => value);
   }
@@ -189,7 +189,7 @@ class Suspend<T> extends Trampoline<T> {
 class Bind<S, T> extends Trampoline<T> {
   public static of<S, T>(
     thunk: Thunk<Trampoline<S>>,
-    mapper: Mapper<S, Trampoline<T>>
+    mapper: Mapper<S, Trampoline<T>>,
   ): Bind<S, T> {
     return new Bind(thunk, mapper);
   }
@@ -199,7 +199,7 @@ class Bind<S, T> extends Trampoline<T> {
 
   private constructor(
     thunk: Thunk<Trampoline<S>>,
-    mapper: Mapper<S, Trampoline<T>>
+    mapper: Mapper<S, Trampoline<T>>,
   ) {
     super();
     this._thunk = thunk;
@@ -220,7 +220,7 @@ class Bind<S, T> extends Trampoline<T> {
 
   public flatMap<U>(mapper: Mapper<T, Trampoline<U>>): Trampoline<U> {
     return Suspend.of(() =>
-      Bind.of(this._thunk, (value) => this._mapper(value).flatMap(mapper))
+      Bind.of(this._thunk, (value) => this._mapper(value).flatMap(mapper)),
     );
   }
 }

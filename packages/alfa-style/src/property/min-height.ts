@@ -25,7 +25,7 @@ type Computed =
 
 const parse = either(
   Keyword.parse("auto", "fit-content", "max-content", "min-content"),
-  either(Length.parse, Percentage.parse)
+  either(Length.parse, Percentage.parse),
 );
 
 /**
@@ -45,5 +45,5 @@ export default Longhand.of<Specified, Computed>(
         case "length":
           return height.resolve(Resolver.length(style));
       }
-    })
+    }),
 );

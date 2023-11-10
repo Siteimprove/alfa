@@ -75,7 +75,7 @@ test(`evaluate() fails when some token in the headers list refer to the cell
           {h(
             "td",
             [h.attribute("id", "cell"), h.attribute("colspan", "2"), target],
-            ["15%"]
+            ["15%"],
           )}
         </tr>
       </tbody>

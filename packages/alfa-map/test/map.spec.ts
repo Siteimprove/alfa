@@ -40,7 +40,7 @@ test("#map() applies a function to each value of a map", (t) => {
       ["qux", 8],
       ["foo", 2],
       ["bar", 4],
-    ]
+    ],
   );
 });
 
@@ -52,8 +52,8 @@ test("#apply() applies a map of functions to each corresponding value of a map",
           ["foo", (x: number) => x + 1],
           ["bar", (x) => x * 2],
           ["baz", (x) => x - 3],
-          ["qux", (x) => x / 4]
-        )
+          ["qux", (x) => x / 4],
+        ),
       ),
     ],
     [
@@ -61,7 +61,7 @@ test("#apply() applies a map of functions to each corresponding value of a map",
       ["qux", 1],
       ["foo", 2],
       ["bar", 4],
-    ]
+    ],
   );
 });
 
@@ -69,10 +69,10 @@ test("#apply() drops keys with no corresponding function or value", (t) => {
   t.deepEqual(
     [
       ...map.apply(
-        Map.of(["foo", (x: number) => x + 1], ["fez", (x) => x * 2])
+        Map.of(["foo", (x: number) => x + 1], ["fez", (x) => x * 2]),
       ),
     ],
-    [["foo", 2]]
+    [["foo", 2]],
   );
 });
 
@@ -84,7 +84,7 @@ test("#flatMap() applies a function to each value of a map and flattens the resu
       ["4", 4],
       ["2", 2],
       ["1", 1],
-    ]
+    ],
   );
 });
 
@@ -97,14 +97,14 @@ test("#distinct() removes duplicate values from a map", (t) => {
         ["c", 1],
         ["d", 2],
         ["e", 3],
-        ["f", 3]
+        ["f", 3],
       ).distinct(),
     ],
     [
       ["e", 3],
       ["b", 1],
       ["d", 2],
-    ]
+    ],
   );
 });
 
@@ -169,7 +169,7 @@ test("#set() sets the value of a key already in a map", (t) => {
       ["qux", 4],
       ["foo", 42],
       ["bar", 2],
-    ]
+    ],
   );
 });
 
@@ -182,7 +182,7 @@ test("#set() sets the value of a key not yet in a map", (t) => {
       ["fez", 5],
       ["foo", 1],
       ["bar", 2],
-    ]
+    ],
   );
 });
 
@@ -201,7 +201,7 @@ test("#set() behaves when adding a colliding key", (t) => {
     [
       [foo, 1],
       [bar, 2],
-    ]
+    ],
   );
 });
 
@@ -218,7 +218,7 @@ test("#set() behaves when adding a key to an already colliding map", (t) => {
       [foo, 1],
       [bar, 2],
       [baz, 3],
-    ]
+    ],
   );
 });
 
@@ -235,7 +235,7 @@ test("#set() behaves when adding a colliding key to an already colliding map", (
       [foo, 1],
       [bar, 2],
       [baz, 3],
-    ]
+    ],
   );
 });
 
@@ -252,7 +252,7 @@ test("#set() behaves when updating a colliding key in an already colliding map",
       [foo, 1],
       [bar, 2],
       [baz, 42],
-    ]
+    ],
   );
 });
 
@@ -272,7 +272,7 @@ test("#delete() removes a key from a map", (t) => {
       ["baz", 3],
       ["qux", 4],
       ["bar", 2],
-    ]
+    ],
   );
 });
 
@@ -304,7 +304,7 @@ test("#delete() behaves when deleting a colliding key", (t) => {
     [
       [foo, 1],
       [bar, 2],
-    ]
+    ],
   );
 });
 
@@ -346,7 +346,7 @@ test("#delete() behaves when deleting a key in a sparse map", (t) => {
     [
       ["foo", 1],
       ["bar", 2],
-    ]
+    ],
   );
 
   t.deepEqual([...map.delete("baz").delete("bar")], [["foo", 1]]);
@@ -364,7 +364,7 @@ test("#delete() behaves when deleting a key in a sparse map with collisions", (t
     [
       [bar, 2],
       [baz, 3],
-    ]
+    ],
   );
 });
 

@@ -57,7 +57,7 @@ test(".parse() parses a simple query for a length feature", (t) => {
 test(".parse() parses a list of queries", (t) => {
   t.deepEqual(
     parse(
-      "screen, (orientation: landscape) and ((max-width: 640px) or (not (min-height: 100px)))"
+      "screen, (orientation: landscape) and ((max-width: 640px) or (not (min-height: 100px)))",
     )
       .getUnsafe()
       .toJSON(),
@@ -125,7 +125,7 @@ test(".parse() parses a list of queries", (t) => {
           },
         },
       },
-    ]
+    ],
   );
 });
 
@@ -171,7 +171,7 @@ test(".parse() parses a list of mixed type and feature queries", (t) => {
           },
         },
       },
-    ]
+    ],
   );
 });
 
@@ -196,7 +196,7 @@ test(".parse() does not create a modifier in the absence of a type", (t) => {
           },
         },
       },
-    ]
+    ],
   );
 
   t.deepEqual(parse("not (orientation: landscape)").getUnsafe().toJSON(), [
@@ -431,14 +431,14 @@ test(".parse() parses 0 in a length range as a dimensional bound", (t) => {
 const smallPortrait /* smartphone */ = Device.of(
   Device.Type.Screen,
   Viewport.of(200, 400, Viewport.Orientation.Portrait),
-  Display.of(300)
+  Display.of(300),
 );
 
 const width = 1280; // used for boundary tests
 const largeLandscape /* desktop screen */ = Device.of(
   Device.Type.Screen,
   Viewport.of(width, 1080, Viewport.Orientation.Landscape),
-  Display.of(90)
+  Display.of(90),
 );
 
 test("#matches() matches simple orientation query", (t) => {
@@ -450,7 +450,7 @@ test("#matches() matches simple orientation query", (t) => {
 
 test("#matches() matches conjunction query", (t) => {
   const isLargeLandscape = parse(
-    "(min-width: 640px) and (orientation: landscape)"
+    "(min-width: 640px) and (orientation: landscape)",
   ).getUnsafe();
 
   t.deepEqual(isLargeLandscape.matches(largeLandscape), true);
@@ -459,7 +459,7 @@ test("#matches() matches conjunction query", (t) => {
 
 test("#matches() matches disjunction query", (t) => {
   const isLargeOrPortrait = parse(
-    "(min-width: 640px) or (orientation: portrait)"
+    "(min-width: 640px) or (orientation: portrait)",
   ).getUnsafe();
 
   t.deepEqual(isLargeOrPortrait.matches(largeLandscape), true);
@@ -475,11 +475,11 @@ test("#matches() matches negation query", (t) => {
 
 test("#matches() matches query with a media type", (t) => {
   const isScreenPortrait = parse(
-    "screen and (orientation: portrait)"
+    "screen and (orientation: portrait)",
   ).getUnsafe();
 
   const isPrintPortrait = parse(
-    "print and (orientation: portrait)"
+    "print and (orientation: portrait)",
   ).getUnsafe();
 
   t.deepEqual(isScreenPortrait.matches(smallPortrait), true);
@@ -490,11 +490,11 @@ test("#matches() matches query with a media type", (t) => {
 
 test("#matches() disregards 'only' modifier", (t) => {
   const isScreenPortrait = parse(
-    "only screen and (orientation: portrait)"
+    "only screen and (orientation: portrait)",
   ).getUnsafe();
 
   const isPrintPortrait = parse(
-    "only print and (orientation: portrait)"
+    "only print and (orientation: portrait)",
   ).getUnsafe();
 
   t.deepEqual(isScreenPortrait.matches(smallPortrait), true);
@@ -505,11 +505,11 @@ test("#matches() disregards 'only' modifier", (t) => {
 
 test("#matches() honors 'not' modifier", (t) => {
   const isNotScreenPortrait = parse(
-    "not screen and (orientation: portrait)"
+    "not screen and (orientation: portrait)",
   ).getUnsafe();
 
   const isNotPrintPortrait = parse(
-    "not print and (orientation: portrait)"
+    "not print and (orientation: portrait)",
   ).getUnsafe();
 
   t.deepEqual(isNotScreenPortrait.matches(smallPortrait), false);
@@ -522,7 +522,7 @@ test("#matches() matches ranges", (t) => {
   const goldylocks /* not too small, not too big */ = Device.of(
     Device.Type.Screen,
     Viewport.of(500),
-    Display.of(100)
+    Display.of(100),
   );
 
   const isGoldylocks = parse("(300px < width <= 600px)").getUnsafe();

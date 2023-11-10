@@ -8,7 +8,7 @@ const base = Longhand.fromKeywords(
   "hidden",
   "clip",
   "scroll",
-  "auto"
+  "auto",
 );
 
 /**

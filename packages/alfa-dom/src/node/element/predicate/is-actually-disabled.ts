@@ -34,7 +34,7 @@ export function isActuallyDisabled(element: Element): boolean {
           fieldset
             .descendants()
             .filter(Element.isElement)
-            .find(Element.hasName("legend"))
+            .find(Element.hasName("legend")),
         )
         .some((legend) => legend.descendants().some(equals(element)));
 

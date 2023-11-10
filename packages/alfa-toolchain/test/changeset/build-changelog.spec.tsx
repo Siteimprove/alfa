@@ -6,7 +6,7 @@ import { Changelog } from "../../src/changeset/build-changelog";
 function fakePackage(
   pkg: string,
   prefix: string = "@siteimprove",
-  dir: string = "packages"
+  dir: string = "packages",
 ): Package {
   return {
     packageJson: {
@@ -20,7 +20,7 @@ test("buildLine() builds a package line entry", (t) => {
   t.deepEqual(
     Changelog.buildLine(
       [fakePackage("@siteimprove/my-package")],
-      "X.Y.Z"
+      "X.Y.Z",
     )([
       {
         kind: "Added",
@@ -30,7 +30,7 @@ test("buildLine() builds a package line entry", (t) => {
       "[NOT A LINK]",
     ]),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
-      " Some awesome title. ([NOT A LINK])"
+      " Some awesome title. ([NOT A LINK])",
   );
 });
 
@@ -38,7 +38,7 @@ test("buildLine() adds trailing dot if necessary", (t) => {
   t.deepEqual(
     Changelog.buildLine(
       [fakePackage("@siteimprove/my-package")],
-      "X.Y.Z"
+      "X.Y.Z",
     )([
       {
         kind: "Added",
@@ -48,7 +48,7 @@ test("buildLine() adds trailing dot if necessary", (t) => {
       "[NOT A LINK]",
     ]),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
-      " Some awesome title. ([NOT A LINK])"
+      " Some awesome title. ([NOT A LINK])",
   );
 });
 
@@ -56,7 +56,7 @@ test("buildLine() leaves intermediate dots alone", (t) => {
   t.deepEqual(
     Changelog.buildLine(
       [fakePackage("@siteimprove/my-package")],
-      "X.Y.Z"
+      "X.Y.Z",
     )([
       {
         kind: "Added",
@@ -66,7 +66,7 @@ test("buildLine() leaves intermediate dots alone", (t) => {
       "[NOT A LINK]",
     ]),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
-      " Some. Awesome. Title. ([NOT A LINK])"
+      " Some. Awesome. Title. ([NOT A LINK])",
   );
 });
 
@@ -74,7 +74,7 @@ test("buildLine() skips undefined PR links", (t) => {
   t.deepEqual(
     Changelog.buildLine(
       [fakePackage("@siteimprove/my-package")],
-      "X.Y.Z"
+      "X.Y.Z",
     )([
       {
         kind: "Added",
@@ -84,7 +84,7 @@ test("buildLine() skips undefined PR links", (t) => {
       undefined,
     ]),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ):" +
-      " Some awesome title."
+      " Some awesome title.",
   );
 });
 
@@ -92,9 +92,9 @@ test("buildLine() handles multi-packages change", (t) => {
   t.deepEqual(
     Changelog.buildLine(
       ["@siteimprove/my-package", "@siteimprove/my-other-package"].map((pkg) =>
-        fakePackage(pkg)
+        fakePackage(pkg),
       ),
-      "X.Y.Z"
+      "X.Y.Z",
     )([
       {
         kind: "Added",
@@ -105,7 +105,7 @@ test("buildLine() handles multi-packages change", (t) => {
     ]),
     "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ)," +
       " [@siteimprove/my-other-package](packages/my-other-package/CHANGELOG.md#XYZ):" +
-      " Some awesome title. ([NOT A LINK])"
+      " Some awesome title. ([NOT A LINK])",
   );
 });
 
@@ -139,14 +139,14 @@ test("buildGroup() builds a group of same kinds changes", (t) => {
         "@siteimprove/my-other-package",
         "@siteimprove/my-third-package",
       ].map((pkg) => fakePackage(pkg)),
-      "X.Y.Z"
+      "X.Y.Z",
     ),
     "### Added\n\n" +
       "- [@siteimprove/my-package](packages/my-package/CHANGELOG.md#XYZ)," +
       " [@siteimprove/my-other-package](packages/my-other-package/CHANGELOG.md#XYZ):" +
       " Some awesome title. ([NOT A LINK])\n\n" +
       "- [@siteimprove/my-third-package](packages/my-third-package/CHANGELOG.md#XYZ):" +
-      " Some other title. ([STILL NOT A LINK])"
+      " Some other title. ([STILL NOT A LINK])",
   );
 });
 
@@ -203,7 +203,7 @@ test("buildBody() builds a full body", (t) => {
         "@siteimprove/package-4",
         "@siteimprove/package-5",
       ].map((pkg) => fakePackage(pkg)),
-      "X.Y.Z"
+      "X.Y.Z",
     ),
     "### Breaking\n\n" +
       "- [@siteimprove/package-2](packages/package-2/CHANGELOG.md#XYZ):" +
@@ -219,7 +219,7 @@ test("buildBody() builds a full body", (t) => {
       " Title 3. ([LINK 3])\n\n" +
       "### Fixed\n\n" +
       "- [@siteimprove/package-4](packages/package-4/CHANGELOG.md#XYZ):" +
-      " Title 4. ([LINK 4])"
+      " Title 4. ([LINK 4])",
   );
 });
 
@@ -258,7 +258,7 @@ test("buildBody() skips missing kinds", (t) => {
         "@siteimprove/package-2",
         "@siteimprove/package-3",
       ].map((pkg) => fakePackage(pkg)),
-      "X.Y.Z"
+      "X.Y.Z",
     ),
     "### Breaking\n\n" +
       "- [@siteimprove/package-2](packages/package-2/CHANGELOG.md#XYZ):" +
@@ -268,7 +268,7 @@ test("buildBody() skips missing kinds", (t) => {
       " [@siteimprove/package-1-2](packages/package-1-2/CHANGELOG.md#XYZ):" +
       " Title 1. ([LINK 1])\n\n" +
       "- [@siteimprove/package-3](packages/package-3/CHANGELOG.md#XYZ):" +
-      " Title 3. ([LINK 3])"
+      " Title 3. ([LINK 3])",
   );
 });
 
@@ -307,7 +307,7 @@ test("buildBody() respect prefix and package map", (t) => {
         fakePackage("@myOrg/package-2", "@myOrg", "packages"),
         fakePackage("@myOrg/package-3", "@myOrg", "dir3"),
       ],
-      "X.Y.Z"
+      "X.Y.Z",
     ),
     "### Breaking\n\n" +
       "- [@myOrg/package-2](packages/package-2/CHANGELOG.md#XYZ):" +
@@ -317,7 +317,7 @@ test("buildBody() respect prefix and package map", (t) => {
       " [@myOrg/package-1-2](packages/package-1-2/CHANGELOG.md#XYZ):" +
       " Title 1. ([LINK 1])\n\n" +
       "- [@myOrg/package-3](dir3/package-3/CHANGELOG.md#XYZ):" +
-      " Title 3. ([LINK 3])"
+      " Title 3. ([LINK 3])",
   );
 });
 
@@ -325,12 +325,12 @@ test("mergeBodies() insert new content after heading, and spaces it", (t) => {
   t.deepEqual(
     Changelog.mergeBodies(
       "# Alfa\n\n" + "## Older versions",
-      "## New version\n\n" + "### Kind\n\n" + "Some changes"
+      "## New version\n\n" + "### Kind\n\n" + "Some changes",
     ),
     "# Alfa\n\n" +
       "## New version\n\n" +
       "### Kind\n\n" +
       "Some changes\n\n" +
-      "## Older versions"
+      "## Older versions",
   );
 });

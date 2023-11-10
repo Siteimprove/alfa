@@ -73,7 +73,7 @@ export class Nth implements Iterable<Token>, Equatable, Serializable {
       yield Token.Number.of(
         this._offset,
         true,
-        this._offset < 0 || this._step !== 0
+        this._offset < 0 || this._step !== 0,
       );
     }
   }
@@ -121,23 +121,23 @@ export namespace Nth {
     // odd | even
     map(
       Token.parseIdent(
-        (ident) => ident.value === "odd" || ident.value === "even"
+        (ident) => ident.value === "odd" || ident.value === "even",
       ),
-      (ident) => Nth.of(2, ident.value === "even" ? 0 : 1)
+      (ident) => Nth.of(2, ident.value === "even" ? 0 : 1),
     ),
 
     // <integer>
     map(
       Token.parseNumber((number) => number.isInteger),
-      (number) => Nth.of(0, number.value)
+      (number) => Nth.of(0, number.value),
     ),
 
     // <ndashdigit-dimension>
     map(
       Token.parseDimension(
-        (dimension) => dimension.isInteger && /^n-\d+$/.test(dimension.unit)
+        (dimension) => dimension.isInteger && /^n-\d+$/.test(dimension.unit),
       ),
-      (dimension) => Nth.of(dimension.value, +dimension.unit.slice(1))
+      (dimension) => Nth.of(dimension.value, +dimension.unit.slice(1)),
     ),
 
     // "+"? <ndashdigit-ident>
@@ -145,14 +145,14 @@ export namespace Nth {
       option(Token.parseDelim("+")),
       map(
         Token.parseIdent((ident) => /^n-\d+$/.test(ident.value)),
-        (ident) => Nth.of(1, +ident.value.slice(1))
-      )
+        (ident) => Nth.of(1, +ident.value.slice(1)),
+      ),
     ),
 
     // <dashndashdigit-ident>
     map(
       Token.parseIdent((ident) => /^-n-\d+$/.test(ident.value)),
-      (ident) => Nth.of(-1, +ident.value.slice(2))
+      (ident) => Nth.of(-1, +ident.value.slice(2)),
     ),
 
     // [<n-dimension> | "+"? n | -n] [["+" | "-"]? <signless-integer> | <signed-integer>]?
@@ -163,19 +163,19 @@ export namespace Nth {
           // <n-dimension>
           map(
             Token.parseDimension(
-              (dimension) => dimension.isInteger && dimension.unit === "n"
+              (dimension) => dimension.isInteger && dimension.unit === "n",
             ),
-            (dimension) => dimension.value
+            (dimension) => dimension.value,
           ),
 
           // "+"? n
           map(
             right(option(Token.parseDelim("+")), Token.parseIdent("n")),
-            () => 1
+            () => 1,
           ),
 
           // -n
-          map(Token.parseIdent("-n"), () => -1)
+          map(Token.parseIdent("-n"), () => -1),
         ),
 
         // [["+" | "-"]? <signless-integer> | <signed-integer>]?
@@ -189,30 +189,30 @@ export namespace Nth {
                   option(
                     either(
                       map(Token.parseDelim("+"), () => 1),
-                      map(Token.parseDelim("-"), () => -1)
-                    )
-                  )
+                      map(Token.parseDelim("-"), () => -1),
+                    ),
+                  ),
                 ),
 
                 // <signless-integer>
                 Token.parseNumber(
-                  (number) => number.isInteger && !number.isSigned
-                )
+                  (number) => number.isInteger && !number.isSigned,
+                ),
               ),
-              ([sign, number]) => sign.getOr(1) * number.value
+              ([sign, number]) => sign.getOr(1) * number.value,
             ),
 
             delimited(
               option(Token.parseWhitespace),
               map(
                 Token.parseNumber((number) => number.isInteger),
-                (number) => number.value
-              )
-            )
-          )
-        )
+                (number) => number.value,
+              ),
+            ),
+          ),
+        ),
       ),
-      ([step, offset]) => Nth.of(step, offset.getOr(0))
+      ([step, offset]) => Nth.of(step, offset.getOr(0)),
     ),
 
     // [<ndash-dimension> | "+"? n- | -n-] <signless-integer>
@@ -223,19 +223,19 @@ export namespace Nth {
           // <ndash-dimension>
           map(
             Token.parseDimension(
-              (dimension) => dimension.isInteger && dimension.unit === "n-"
+              (dimension) => dimension.isInteger && dimension.unit === "n-",
             ),
-            (dimension) => dimension.value
+            (dimension) => dimension.value,
           ),
 
           // "+"? n-
           map(
             right(option(Token.parseDelim("+")), Token.parseIdent("n-")),
-            () => 1
+            () => 1,
           ),
 
           // -n-
-          map(Token.parseIdent("-n-"), () => -1)
+          map(Token.parseIdent("-n-"), () => -1),
         ),
 
         // <signless-integer>
@@ -243,11 +243,11 @@ export namespace Nth {
           option(Token.parseWhitespace),
           map(
             Token.parseNumber((number) => number.isInteger && !number.isSigned),
-            (number) => number.value
-          )
-        )
+            (number) => number.value,
+          ),
+        ),
       ),
-      ([step, offset]) => Nth.of(step, -1 * offset)
-    )
+      ([step, offset]) => Nth.of(step, -1 * offset),
+    ),
   );
 }

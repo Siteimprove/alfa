@@ -13,7 +13,7 @@ function fourLength(
   top: number,
   right?: number,
   bottom?: number,
-  left?: number
+  left?: number,
 ): Serializable.ToJSON<Outset.Specified> &
   Serializable.ToJSON<Width.Specified> {
   return {
@@ -47,7 +47,7 @@ function slice(
   top: number,
   right?: number,
   bottom?: number,
-  left?: number
+  left?: number,
 ): Serializable.ToJSON<Slice.Specified> {
   return {
     type: "tuple",
@@ -94,7 +94,7 @@ test(`#cascaded() parses \`border-image: url(foo.png) 27 23 / 50px 30px / 1px ro
   const element = <div />;
   const declaration = h.declaration(
     "border-image",
-    "url(foo.png) 27 23 / 50px 30px / 1px round space"
+    "url(foo.png) 27 23 / 50px 30px / 1px round space",
   );
 
   h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);
@@ -147,7 +147,7 @@ test(`#cascaded() parses \`border-image: 27 23 / 50px 30px / 1px url(foo.png) ro
   const element = <div />;
   const declaration = h.declaration(
     "border-image",
-    "27 23 / 50px 30px / 1px url(foo.png) round space"
+    "27 23 / 50px 30px / 1px url(foo.png) round space",
   );
 
   h.document([element], [h.sheet([h.rule.style("div", [declaration])])]);

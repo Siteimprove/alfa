@@ -10,7 +10,7 @@ function consume(t: Assertions, input: string, expected: Declaration.JSON) {
       .getUnsafe()
       .toJSON(),
     expected,
-    input
+    input,
   );
 }
 

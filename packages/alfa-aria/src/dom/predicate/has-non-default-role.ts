@@ -13,9 +13,9 @@ export function hasNonDefaultRole(element: Element): boolean {
     hasExplicitRole((explicit) =>
       test(
         not(hasImplicitRole((implicit) => implicit.equals(explicit))),
-        element
-      )
+        element,
+      ),
     ),
-    element
+    element,
   );
 }

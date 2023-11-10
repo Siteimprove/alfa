@@ -39,8 +39,11 @@ const isDescendantSelector = and(
   isComplex,
   property(
     "combinator",
-    equals(Selector.Combinator.Descendant, Selector.Combinator.DirectDescendant)
-  )
+    equals(
+      Selector.Combinator.Descendant,
+      Selector.Combinator.DirectDescendant,
+    ),
+  ),
 );
 
 /**
@@ -91,7 +94,7 @@ export class SelectorMap implements Serializable {
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
-    other: Array<SelectorMap.Node>
+    other: Array<SelectorMap.Node>,
   ): SelectorMap {
     return new SelectorMap(ids, classes, types, other);
   }
@@ -105,7 +108,7 @@ export class SelectorMap implements Serializable {
     ids: SelectorMap.Bucket,
     classes: SelectorMap.Bucket,
     types: SelectorMap.Bucket,
-    other: Array<SelectorMap.Node>
+    other: Array<SelectorMap.Node>,
   ) {
     this._ids = ids;
     this._classes = classes;
@@ -116,7 +119,7 @@ export class SelectorMap implements Serializable {
   public get(
     element: Element,
     context: Context,
-    filter: Option<AncestorFilter>
+    filter: Option<AncestorFilter>,
   ): Array<SelectorMap.Node> {
     const nodes: Array<SelectorMap.Node> = [];
 
@@ -127,9 +130,9 @@ export class SelectorMap implements Serializable {
             Iterable.every(
               node.selector,
               and(isDescendantSelector, (selector) =>
-                canReject(selector.left, filter)
-              )
-            )
+                canReject(selector.left, filter),
+              ),
+            ),
           ) &&
           node.selector.matches(element, context)
         ) {
@@ -193,7 +196,7 @@ export namespace SelectorMap {
       selector: Selector,
       declarations: Iterable<Declaration>,
       origin: Origin,
-      order: number
+      order: number,
     ): void => {
       const node = Node.of(rule, selector, declarations, origin, order);
 
@@ -291,7 +294,7 @@ export namespace SelectorMap {
       selector: Selector,
       declarations: Iterable<Declaration>,
       origin: Origin,
-      order: number
+      order: number,
     ): Node {
       return new Node(rule, selector, declarations, origin, order);
     }
@@ -308,7 +311,7 @@ export namespace SelectorMap {
       selector: Selector,
       declarations: Iterable<Declaration>,
       origin: Origin,
-      order: number
+      order: number,
     ) {
       this._rule = rule;
       this._selector = selector;
@@ -357,7 +360,7 @@ export namespace SelectorMap {
         rule: this._rule.toJSON(),
         selector: this._selector.toJSON(),
         declarations: [...this._declarations].map((declaration) =>
-          declaration.toJSON()
+          declaration.toJSON(),
         ),
         origin: this._origin,
         order: this._order,
@@ -428,7 +431,7 @@ export namespace SelectorMap {
  * left-most ID, class, or type selector of the compound selector is returned.
  */
 function getKeySelector(
-  selector: Selector
+  selector: Selector,
 ): Selector.Id | Selector.Class | Selector.Type | null {
   if (isId(selector) || isClass(selector) || isType(selector)) {
     return selector;

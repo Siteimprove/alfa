@@ -30,7 +30,7 @@ type Computed = Specified;
 const parseItem = filter(
   either(Number.parse, Percentage.parse),
   (size) => size.hasCalculation() || size.value >= 0,
-  () => `Negative sizes are not allowed`
+  () => `Negative sizes are not allowed`,
 );
 
 const parseFill = Keyword.parse("fill");
@@ -108,8 +108,8 @@ export default Longhand.of<Specified, Computed>(
     Percentage.of(1),
     Percentage.of(1),
     Percentage.of(1),
-    Percentage.of(1)
+    Percentage.of(1),
   ),
   parse,
-  (value) => value
+  (value) => value,
 );
