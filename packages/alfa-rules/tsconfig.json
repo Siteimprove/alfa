@@ -19,6 +19,7 @@
     "src/common/applicability/video.ts",
     "src/common/diagnostic/contrast.ts",
     "src/common/diagnostic/text-spacing.ts",
+    "src/common/diagnostic/with-accessible-name.ts",
     "src/common/diagnostic/with-bad-elements.ts",
     "src/common/diagnostic/with-role.ts",
     "src/common/diagnostic.ts",
