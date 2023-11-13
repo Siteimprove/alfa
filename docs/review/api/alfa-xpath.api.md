@@ -779,7 +779,7 @@ interface Function_2<P extends Array<Value> = Array<Value>, R extends Value = Va
 namespace Function_2 {
     // (undocumented)
     type Parameters<V extends Array<Value>> = {
-        readonly [P in keyof V]: V[P] extends (infer T extends Value) ? TypeFor<T> : never;
+        readonly [P in keyof V]: V[P] extends infer T extends Value ? TypeFor<T> : never;
     };
     // (undocumented)
     type Result<V extends Value> = TypeFor<V>;

@@ -86,11 +86,7 @@ export namespace Network {
     // (undocumented)
     export interface Traversal {
         // (undocumented)
-        <N, E>(network: Network<N, E>, root: N): Iterable_2<[
-        node: N,
-        edges: Iterable_2<E>,
-        parent: N
-        ]>;
+        <N, E>(network: Network<N, E>, root: N): Iterable_2<[node: N, edges: Iterable_2<E>, parent: N]>;
     }
     const // (undocumented)
     DepthFirst: Traversal;
