@@ -9,6 +9,14 @@
     "src/context.ts",
     "src/index.ts",
     "src/selector.ts",
+    "src/selector/combinator.ts",
+    "src/selector/complex.ts",
+    "src/selector/compound.ts",
+    "src/selector/index.ts",
+    "src/selector/list.ts",
+    "src/selector/relative.ts",
+    "src/selector/selector.ts",
+    "src/selector/simple.ts",
     "test/selector.spec.tsx"
   ],
   "references": [

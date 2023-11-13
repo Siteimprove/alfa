@@ -2,8 +2,9 @@ import { test } from "@siteimprove/alfa-test";
 
 import { Lexer } from "@siteimprove/alfa-css";
 
-import { Selector } from "../src/selector";
-import { Context } from "../src/context";
+import { Context, Selector } from "../src";
+import { Combinator } from "../src/selector/combinator";
+import { Attribute } from "../src/selector/simple";
 
 function parse(input: string) {
   return Selector.parse(Lexer.lex(input)).map(([, selector]) => selector);
@@ -116,7 +117,7 @@ test(".parse() parses a compound selector with a type in prefix position", (t) =
 test(".parse() parses a single descendant selector", (t) => {
   t.deepEqual(parse("div .foo").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "type",
       name: "div",
@@ -132,7 +133,7 @@ test(".parse() parses a single descendant selector", (t) => {
 test(".parse() parses a single descendant selector with a right-hand type selector", (t) => {
   t.deepEqual(parse("div span").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "type",
       name: "div",
@@ -149,10 +150,10 @@ test(".parse() parses a single descendant selector with a right-hand type select
 test(".parse() parses a double descendant selector", (t) => {
   t.deepEqual(parse("div .foo #bar").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "complex",
-      combinator: Selector.Combinator.Descendant,
+      combinator: Combinator.Descendant,
       left: {
         type: "type",
         name: "div",
@@ -173,7 +174,7 @@ test(".parse() parses a double descendant selector", (t) => {
 test(".parse() parses a direct descendant selector", (t) => {
   t.deepEqual(parse("div > .foo").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.DirectDescendant,
+    combinator: Combinator.DirectDescendant,
     left: {
       type: "type",
       name: "div",
@@ -189,7 +190,7 @@ test(".parse() parses a direct descendant selector", (t) => {
 test(".parse() parses a sibling selector", (t) => {
   t.deepEqual(parse("div ~ .foo").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Sibling,
+    combinator: Combinator.Sibling,
     left: {
       type: "type",
       name: "div",
@@ -205,7 +206,7 @@ test(".parse() parses a sibling selector", (t) => {
 test(".parse() parses a direct sibling selector", (t) => {
   t.deepEqual(parse("div + .foo").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.DirectSibling,
+    combinator: Combinator.DirectSibling,
     left: {
       type: "type",
       name: "div",
@@ -265,7 +266,7 @@ test(".parse() parses a list of descendant selectors", (t) => {
     type: "list",
     left: {
       type: "complex",
-      combinator: Selector.Combinator.Descendant,
+      combinator: Combinator.Descendant,
       left: {
         type: "type",
         name: "div",
@@ -278,7 +279,7 @@ test(".parse() parses a list of descendant selectors", (t) => {
     },
     right: {
       type: "complex",
-      combinator: Selector.Combinator.Descendant,
+      combinator: Combinator.Descendant,
       left: {
         type: "type",
         name: "span",
@@ -297,7 +298,7 @@ test(".parse() parses a list of sibling selectors", (t) => {
     type: "list",
     left: {
       type: "complex",
-      combinator: Selector.Combinator.Sibling,
+      combinator: Combinator.Sibling,
       left: {
         type: "type",
         name: "div",
@@ -310,7 +311,7 @@ test(".parse() parses a list of sibling selectors", (t) => {
     },
     right: {
       type: "complex",
-      combinator: Selector.Combinator.Sibling,
+      combinator: Combinator.Sibling,
       left: {
         type: "type",
         name: "span",
@@ -341,7 +342,7 @@ test(".parse() parses a list of selectors with no whitespace", (t) => {
 test(".parse() parses a compound selector relative to a class selector", (t) => {
   t.deepEqual(parse(".foo div.bar").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "class",
       name: "foo",
@@ -364,7 +365,7 @@ test(".parse() parses a compound selector relative to a class selector", (t) => 
 test(".parse() parses a compound selector relative to a compound selector", (t) => {
   t.deepEqual(parse("span.foo div.bar").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "compound",
       left: {
@@ -395,10 +396,10 @@ test(".parse() parses a compound selector relative to a compound selector", (t) 
 test(".parse() parses a descendant selector relative to a sibling selector", (t) => {
   t.deepEqual(parse("div ~ span .foo").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "complex",
-      combinator: Selector.Combinator.Sibling,
+      combinator: Combinator.Sibling,
       left: {
         type: "type",
         name: "div",
@@ -434,7 +435,7 @@ test(".parse() parses an attribute selector with an ident value", (t) => {
     name: "foo",
     namespace: null,
     value: "bar",
-    matcher: Selector.Attribute.Matcher.Equal,
+    matcher: Attribute.Matcher.Equal,
     modifier: null,
   });
 });
@@ -445,7 +446,7 @@ test(".parse() parses an attribute selector with a string value", (t) => {
     name: "foo",
     namespace: null,
     value: "bar",
-    matcher: Selector.Attribute.Matcher.Equal,
+    matcher: Attribute.Matcher.Equal,
     modifier: null,
   });
 });
@@ -456,7 +457,7 @@ test(".parse() parses an attribute selector with a matcher", (t) => {
     name: "foo",
     namespace: null,
     value: "bar",
-    matcher: Selector.Attribute.Matcher.Substring,
+    matcher: Attribute.Matcher.Substring,
     modifier: null,
   });
 });
@@ -467,7 +468,7 @@ test(".parse() parses an attribute selector with a casing modifier", (t) => {
     name: "foo",
     namespace: null,
     value: "bar",
-    matcher: Selector.Attribute.Matcher.Equal,
+    matcher: Attribute.Matcher.Equal,
     modifier: "i",
   });
 });
@@ -511,7 +512,7 @@ test(".parse() parses an attribute selector with a namespace", (t) => {
     name: "bar",
     namespace: "foo",
     value: "baz",
-    matcher: Selector.Attribute.Matcher.Equal,
+    matcher: Attribute.Matcher.Equal,
     modifier: null,
   });
 });
@@ -522,7 +523,7 @@ test(".parse() parses an attribute selector with a namespace", (t) => {
     name: "bar",
     namespace: "foo",
     value: "baz",
-    matcher: Selector.Attribute.Matcher.DashMatch,
+    matcher: Attribute.Matcher.DashMatch,
     modifier: null,
   });
 });
@@ -548,7 +549,7 @@ test(".parse() parses an attribute selector when part of a compound selector", (
 test(".parse() parses an attribute selector when part of a descendant selector", (t) => {
   t.deepEqual(parse("div [foo]").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "type",
       name: "div",
@@ -568,7 +569,7 @@ test(".parse() parses an attribute selector when part of a descendant selector",
 test(".parse() parses an attribute selector when part of a compound selector relative to a class selector", (t) => {
   t.deepEqual(parse(".foo div[foo]").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "class",
       name: "foo",
@@ -644,7 +645,7 @@ test(".parse() parses a pseudo-element selector when part of a compound selector
 test(".parse() parses a pseudo-element selector when part of a descendant selector", (t) => {
   t.deepEqual(parse("div ::before").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "type",
       name: "div",
@@ -660,7 +661,7 @@ test(".parse() parses a pseudo-element selector when part of a descendant select
 test(".parse() parses a pseudo-element selector when part of a compound selector relative to a class selector", (t) => {
   t.deepEqual(parse(".foo div::before").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "class",
       name: "foo",
@@ -728,7 +729,7 @@ test(".parse() parses a pseudo-class selector when part of a compound selector",
 test(".parse() parses a pseudo-class selector when part of a compound selector relative to a class selector", (t) => {
   t.deepEqual(parse(".foo div:hover").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "class",
       name: "foo",
@@ -751,7 +752,7 @@ test(".parse() parses a pseudo-class selector when part of a compound selector r
 test(".parse() parses a compound type, class, and pseudo-class selector relative to a class selector", (t) => {
   t.deepEqual(parse(".foo div.bar:hover").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.Descendant,
+    combinator: Combinator.Descendant,
     left: {
       type: "class",
       name: "foo",
@@ -781,7 +782,7 @@ test(".parse() parses a compound type, class, and pseudo-class selector relative
 test(".parse() parses a simple selector relative to a compound selector", (t) => {
   t.deepEqual(parse(".foo > div.bar").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.DirectDescendant,
+    combinator: Combinator.DirectDescendant,
     left: {
       type: "class",
       name: "foo",
@@ -804,10 +805,10 @@ test(".parse() parses a simple selector relative to a compound selector", (t) =>
 test(".parse() parses a relative selector relative to a compound selector", (t) => {
   t.deepEqual(parse(".foo > .bar + div.baz").getUnsafe().toJSON(), {
     type: "complex",
-    combinator: Selector.Combinator.DirectSibling,
+    combinator: Combinator.DirectSibling,
     left: {
       type: "complex",
-      combinator: Selector.Combinator.DirectDescendant,
+      combinator: Combinator.DirectDescendant,
       left: {
         type: "class",
         name: "foo",

@@ -25,14 +25,13 @@ import { AncestorFilter } from "./ancestor-filter";
 const { equals, property } = Predicate;
 const { and } = Refinement;
 const {
-  isAttribute,
-  isClass,
-  isComplex,
-  isCompound,
-  isId,
-  isType,
-  isPseudoClass,
-  isPseudoElement,
+  Attribute: { isAttribute },
+  Class: { isClass },
+  Complex: { isComplex },
+  Compound: { isCompound },
+  Id: { isId },
+  Type: { isType },
+  Pseudo: { isClass: isPseudoClass, isElement: isPseudoElement },
 } = Selector;
 
 const isDescendantSelector = and(
