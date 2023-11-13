@@ -397,15 +397,15 @@ __metadata:
   linkType: hard
 
 "@mdn/browser-compat-data@npm:^5.0.0":
-  version: 5.3.29
-  resolution: "@mdn/browser-compat-data@npm:5.3.29"
-  checksum: df6841d8f8d6cc5c78dd21386a997da899ee10cebc7cde0ad09ac62be220927d6e4c62573691f3004f19880b954f7bff0c502763172b252a2d65f68f700b6134
+  version: 5.3.30
+  resolution: "@mdn/browser-compat-data@npm:5.3.30"
+  checksum: 7e545d3e54a0564ccdd18a5c0551456132a93a98a7a6ec85308a5b9436a3a129ba8bb35a75c22258b40d4c97a8b66dc19f8e17ff49fc52e24500c177a670e656
   languageName: node
   linkType: hard
 
 "@microsoft/api-documenter@npm:^7.19.9":
-  version: 7.23.11
-  resolution: "@microsoft/api-documenter@npm:7.23.11"
+  version: 7.23.12
+  resolution: "@microsoft/api-documenter@npm:7.23.12"
   dependencies:
     "@microsoft/api-extractor-model": "npm:7.28.2"
     "@microsoft/tsdoc": "npm:0.14.2"
@@ -416,7 +416,7 @@ __metadata:
     resolve: "npm:~1.22.1"
   bin:
     api-documenter: bin/api-documenter
-  checksum: 066c651af4bca01f33f909a2ede9298a85f0bd5c4763db020d15e3e0273a111de5002710a43abaedba5d21b91cde08596902c2de61fa8212b75c9b2567be287f
+  checksum: 7fcd9c787a9e30429ce6be18371b68bda1389bd6cf23c3120c1f06401a8b1b64c6649f8d3572f64f0f46e06d31718e273b89bdf3ba0e51b6c71a63aca593bedc
   languageName: node
   linkType: hard
 
@@ -432,8 +432,8 @@ __metadata:
   linkType: hard
 
 "@microsoft/api-extractor@npm:^7.29.5":
-  version: 7.38.2
-  resolution: "@microsoft/api-extractor@npm:7.38.2"
+  version: 7.38.3
+  resolution: "@microsoft/api-extractor@npm:7.38.3"
   dependencies:
     "@microsoft/api-extractor-model": "npm:7.28.2"
     "@microsoft/tsdoc": "npm:0.14.2"
@@ -449,7 +449,7 @@ __metadata:
     typescript: "npm:~5.0.4"
   bin:
     api-extractor: bin/api-extractor
-  checksum: 3536cfbd9b497fbc93c5c9e29c9cce8344f8f4f13e19c8a338a4c013ef386336671abc728a2e1ceca9f660c62bf81bd115b475194d7125fd98fef18d02bff7c5
+  checksum: 0b05e3865864d36f69356c137144fac85884596768f63fd69f78e87a486476e443f29f93cd687fde6137bc4a92527544c281a283b62a5217e9a0d478c8f67182
   languageName: node
   linkType: hard
 
@@ -2341,13 +2341,13 @@ __metadata:
   linkType: hard
 
 "axios@npm:^1.0.0":
-  version: 1.6.0
-  resolution: "axios@npm:1.6.0"
+  version: 1.6.1
+  resolution: "axios@npm:1.6.1"
   dependencies:
     follow-redirects: "npm:^1.15.0"
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
-  checksum: 2879e17b96cbca7e2096d231a44e2d0f03e657d79f8928ea38ec5fbaf5a5b7bf952d580cdb58a66ba328c26eb3528b89d5a32da57cc5cf89813786c044f7e9d6
+  checksum: ca2c6f56659a7f19e4a99082f549fe151952f6fd8aa72ed148559ab2d6a32ce37cd5dc72ce6d4d3cd91f0c1e2617c7c95c20077e5e244a79f319a6c0ce41204f
   languageName: node
   linkType: hard
 
@@ -4499,8 +4499,8 @@ __metadata:
   linkType: hard
 
 "knip@npm:^2.33.4":
-  version: 2.40.0
-  resolution: "knip@npm:2.40.0"
+  version: 2.41.0
+  resolution: "knip@npm:2.41.0"
   dependencies:
     "@ericcornelissen/bash-parser": "npm:^0.5.2"
     "@npmcli/map-workspaces": "npm:^3.0.4"
@@ -4524,7 +4524,7 @@ __metadata:
     zod-validation-error: "npm:1.5.0"
   bin:
     knip: dist/cli.js
-  checksum: 36a7ba6d4645e1666e63502eef9de4c70dcbe4d8e02045af5463bc4300b7559bdec4ddb01a7b12964f064f5148e169bbe2e450e2a6ef4e729c27213b963db268
+  checksum: b7dceb9657754bac6cdb876c87f96d264307aecf7e8d017359b9b33c79169962b98333e0ea7b292619cb5b67dd2cd707eae27b566841d6eb14f9a667db03e8d3
   languageName: node
   linkType: hard
 
@@ -5643,9 +5643,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:21.5.0":
-  version: 21.5.0
-  resolution: "puppeteer-core@npm:21.5.0"
+"puppeteer-core@npm:21.5.1":
+  version: 21.5.1
+  resolution: "puppeteer-core@npm:21.5.1"
   dependencies:
     "@puppeteer/browsers": "npm:1.8.0"
     chromium-bidi: "npm:0.4.33"
@@ -5653,18 +5653,18 @@ __metadata:
     debug: "npm:4.3.4"
     devtools-protocol: "npm:0.0.1203626"
     ws: "npm:8.14.2"
-  checksum: ff42328808ae65e7850a2eda8295600ef383689b61f02c4e14480cfbec28858c054f63cdbeafb01b0d20faab6a1e3723bdb377ba35ed99d5df35c85bf110e580
+  checksum: 696b915ce7ed406aefb22df579ac51adf955f0ea3d721d7a15662d5c818313ec9530ef253c9bedd8348d3e02e8cf9840208d90af4370e53e94080ce757fda56c
   languageName: node
   linkType: hard
 
 "puppeteer@npm:^21.0.0":
-  version: 21.5.0
-  resolution: "puppeteer@npm:21.5.0"
+  version: 21.5.1
+  resolution: "puppeteer@npm:21.5.1"
   dependencies:
     "@puppeteer/browsers": "npm:1.8.0"
     cosmiconfig: "npm:8.3.6"
-    puppeteer-core: "npm:21.5.0"
-  checksum: 6119db13dd16313755aac3cdaf42a8c0b88aa2bd7fdd74f690253f3f07c646989118191aab276c8c814f912f196af9b2a4999af8418d3f59690313e7a8aa21be
+    puppeteer-core: "npm:21.5.1"
+  checksum: 41f5cc87a42ac9b355f1d2cc54adbd7a5fb49883cda1681ffd3d4ad258a9417828635024198c4c636b86654ddb5f112e0f686ae83fe732ffdd37eee8329c3ce4
   languageName: node
   linkType: hard
 
