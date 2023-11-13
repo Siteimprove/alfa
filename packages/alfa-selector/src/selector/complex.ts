@@ -1,8 +1,7 @@
-import { Token } from "@siteimprove/alfa-css";
+import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import { Combinator } from "./combinator";
 import { Compound } from "./compound";
@@ -147,10 +146,8 @@ export namespace Complex {
    * @internal
    */
   export const parseComplex = (
-    parseSelector: () => Parser<
-      Slice<Token>,
-      Simple | Compound | Complex | List<Simple | Compound | Complex>,
-      string
+    parseSelector: () => CSSParser<
+      Simple | Compound | Complex | List<Simple | Compound | Complex>
     >,
   ) =>
     map(

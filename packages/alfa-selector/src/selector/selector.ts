@@ -4,11 +4,11 @@ import { Iterable } from "@siteimprove/alfa-iterable";
 import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
 
-import { Complex } from "./complex";
-import { Compound } from "./compound";
-import { Context } from "../context";
-import { Relative } from "./relative";
-import { Simple } from "./simple";
+import type { Complex } from "./complex";
+import type { Compound } from "./compound";
+import type { Context } from "../context";
+import type { Relative } from "./relative";
+import type { Simple } from "./simple";
 
 /**
  * @internal

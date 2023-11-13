@@ -1,6 +1,5 @@
-import { Token } from "@siteimprove/alfa-css";
+import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
 const { delimited, either, map, option } = Parser;
 
@@ -35,11 +34,7 @@ export namespace Combinator {
    *
    * @internal
    */
-  export const parseCombinator: Parser<
-    Slice<Token>,
-    Combinator,
-    string
-  > = either(
+  export const parseCombinator: CSSParser<Combinator> = either(
     delimited(
       option(Token.parseWhitespace),
       either(

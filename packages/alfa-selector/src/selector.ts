@@ -1,6 +1,5 @@
-import { Token } from "@siteimprove/alfa-css";
+import type { Parser as CSSParser } from "@siteimprove/alfa-css";
 import { Parser } from "@siteimprove/alfa-parser";
-import { Slice } from "@siteimprove/alfa-slice";
 
 import * as Selectors from "./selector/index";
 
@@ -37,10 +36,8 @@ export namespace Selector {
 
   export import JSON = Selectors.Selector.JSON;
 
-  function parseSelector(): Parser<
-    Slice<Token>,
-    Simple | Compound | Complex | List<Simple | Compound | Complex>,
-    string
+  function parseSelector(): CSSParser<
+    Simple | Compound | Complex | List<Simple | Compound | Complex>
   > {
     return left(
       List.parseList(parseSelector),

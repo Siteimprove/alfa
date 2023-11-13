@@ -1,6 +1,11 @@
 import { Array } from "@siteimprove/alfa-array";
 import { Cache } from "@siteimprove/alfa-cache";
-import { Function, Nth, Token } from "@siteimprove/alfa-css";
+import {
+  Function,
+  Nth,
+  type Parser as CSSParser,
+  Token,
+} from "@siteimprove/alfa-css";
 import * as dom from "@siteimprove/alfa-dom";
 import { Element, Node } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
@@ -16,6 +21,7 @@ import { Compound } from "./compound";
 import { Context } from "../context";
 import type { List } from "./list";
 import { Selector } from "./selector";
+
 const { State } = Context;
 
 const {
@@ -807,12 +813,10 @@ const parseNth = left(
 );
 
 function parsePseudoClass(
-  parseSelector: () => Parser<
-    Slice<Token>,
-    Simple | Compound | Complex | List<Simple | Compound | Complex>,
-    string
+  parseSelector: () => CSSParser<
+    Simple | Compound | Complex | List<Simple | Compound | Complex>
   >,
-): Parser<Slice<Token>, Pseudo.Class, string> {
+): CSSParser<Pseudo.Class> {
   return right(
     Token.parseColon,
     either(
@@ -820,7 +824,7 @@ function parsePseudoClass(
       mapResult(Token.parseIdent(), (ident) => {
         switch (ident.value) {
           case "hover":
-            return Result.of(Hover.of() as Pseudo.Class);
+            return Result.of<Pseudo.Class, string>(Hover.of());
           case "active":
             return Result.of(Active.of());
           case "focus":
@@ -909,12 +913,10 @@ function parsePseudoClass(
 }
 
 function parsePseudoElement(
-  parseSelector: () => Parser<
-    Slice<Token>,
-    Simple | Compound | Complex | List<Simple | Compound | Complex>,
-    string
+  parseSelector: () => CSSParser<
+    Simple | Compound | Complex | List<Simple | Compound | Complex>
   >,
-): Parser<Slice<Token>, Pseudo.Element, string> {
+): CSSParser<Pseudo.Element> {
   return either(
     // Functional pseudo-elements need to be first because ::cue and
     // ::cue-region can be both functional and non-functional, so we want to
@@ -1010,10 +1012,8 @@ function parsePseudoElement(
 }
 
 const parsePseudo = (
-  parseSelector: () => Parser<
-    Slice<Token>,
-    Simple | Compound | Complex | List<Simple | Compound | Complex>,
-    string
+  parseSelector: () => CSSParser<
+    Simple | Compound | Complex | List<Simple | Compound | Complex>
   >,
 ) => either(parsePseudoClass(parseSelector), parsePseudoElement(parseSelector));
 
@@ -2230,14 +2230,12 @@ export namespace Simple {
    * @internal
    */
   export const parseSimple = (
-    parseSelector: () => Parser<
-      Slice<Token>,
-      Simple | Compound | Complex | List<Simple | Compound | Complex>,
-      string
+    parseSelector: () => CSSParser<
+      Simple | Compound | Complex | List<Simple | Compound | Complex>
     >,
   ) =>
-    either(
-      Class.parseClass as Parser<Slice<Token>, Simple, string>,
+    either<Slice<Token>, Simple, string>(
+      Class.parseClass,
       Type.parseType,
       Attribute.parseAttribute,
       Id.parseId,

@@ -1,4 +1,4 @@
-import { Token } from "@siteimprove/alfa-css";
+import { type Parser as CSSParser, Token } from "@siteimprove/alfa-css";
 import { Element } from "@siteimprove/alfa-dom";
 import { Iterable } from "@siteimprove/alfa-iterable";
 import { Parser } from "@siteimprove/alfa-parser";
@@ -102,10 +102,8 @@ export namespace List {
    * @internal
    */
   export const parseList = (
-    parseSelector: () => Parser<
-      Slice<Token>,
-      Simple | Compound | Complex | List<Simple | Compound | Complex>,
-      string
+    parseSelector: () => CSSParser<
+      Simple | Compound | Complex | List<Simple | Compound | Complex>
     >,
   ) =>
     map(
