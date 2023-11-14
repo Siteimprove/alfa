@@ -1,14 +1,13 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer } from "../../src/syntax/lexer";
 import { Shape } from "../../src/value/shape/shape";
+import { parser, serializer } from "../common/parse";
 
-function parse(input: string) {
-  return Shape.parse(Lexer.lex(input)).map(([_, shape]) => shape.toJSON());
-}
+const parseErr = parser(Shape.parse);
+const serialize = serializer(Shape.parse);
 
 test(".parse() parses <basic-shape> <geometry-box>", (t) => {
-  t.deepEqual(parse("inset(1px) padding-box").getUnsafe(), {
+  t.deepEqual(serialize("inset(1px) padding-box"), {
     type: "shape",
     box: {
       type: "keyword",
@@ -31,7 +30,7 @@ test(".parse() parses <basic-shape> <geometry-box>", (t) => {
 });
 
 test(".parse() parses <geometry-box> <basic-shape>", (t) => {
-  t.deepEqual(parse("margin-box inset(1px)").getUnsafe(), {
+  t.deepEqual(serialize("margin-box inset(1px)"), {
     type: "shape",
     box: {
       type: "keyword",
@@ -54,7 +53,7 @@ test(".parse() parses <geometry-box> <basic-shape>", (t) => {
 });
 
 test(".parse() parses <basic-shape>", (t) => {
-  t.deepEqual(parse("inset(1px)").getUnsafe(), {
+  t.deepEqual(serialize("inset(1px)"), {
     type: "shape",
     box: {
       type: "keyword",
@@ -77,5 +76,5 @@ test(".parse() parses <basic-shape>", (t) => {
 });
 
 test(".parse() fails if no <basic-shape> is provided", (t) => {
-  t.deepEqual(parse("margin-box").isErr(), true);
+  t.deepEqual(parseErr("margin-box").isErr(), true);
 });

@@ -1,13 +1,15 @@
-import { Serializable } from "@siteimprove/alfa-json";
-import { Result } from "@siteimprove/alfa-result";
+import type { Serializable } from "@siteimprove/alfa-json";
+import type { Parser } from "@siteimprove/alfa-parser";
+import type { Result } from "@siteimprove/alfa-result";
+import type { Slice } from "@siteimprove/alfa-slice";
 
-import { Lexer, Parser as CSSParser, Value } from "../../src";
+import { Lexer, type Token } from "../../src";
 
 /**
  * @internal
  */
-export function parser<T extends Value>(
-  parse: CSSParser<T>,
+export function parser<T>(
+  parse: Parser<Slice<Token>, T, string>,
 ): (input: string) => Result<T, string> {
   return (input) => parse(Lexer.lex(input)).map(([, value]) => value);
 }
@@ -15,8 +17,8 @@ export function parser<T extends Value>(
 /**
  * @internal
  */
-export function parserUnsafe<T extends Value>(
-  parse: CSSParser<T>,
+export function parserUnsafe<T>(
+  parse: Parser<Slice<Token>, T, string>,
 ): (input: string) => T {
   return (input) => parser(parse)(input).getUnsafe();
 }
@@ -24,8 +26,8 @@ export function parserUnsafe<T extends Value>(
 /**
  * @internal
  */
-export function serializer<T extends Value>(
-  parse: CSSParser<T>,
+export function serializer<T extends Serializable>(
+  parse: Parser<Slice<Token>, T, string>,
 ): (input: string) => Serializable.ToJSON<T> {
   return (input) =>
     parserUnsafe(parse)(input).toJSON() as Serializable.ToJSON<T>;

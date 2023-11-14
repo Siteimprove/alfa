@@ -1,13 +1,13 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Length, Lexer, Rectangle } from "../../../src";
+import { Length, Rectangle } from "../../../src";
+import { parser, serializer } from "../../common/parse";
 
-function parse(input: string) {
-  return Rectangle.parse(Lexer.lex(input)).getUnsafe()[1].toJSON();
-}
+const parseErr = parser(Rectangle.parse);
+const serialize = serializer(Rectangle.parse);
 
 test(".parse() parses comma separated rectangles", (t) => {
-  t.deepEqual(parse("rect(1px, auto, 2em, auto)"), {
+  t.deepEqual(serialize("rect(1px, auto, 2em, auto)"), {
     type: "basic-shape",
     kind: "rectangle",
     bottom: { type: "length", unit: "em", value: 2 },
@@ -16,7 +16,7 @@ test(".parse() parses comma separated rectangles", (t) => {
     top: { type: "length", unit: "px", value: 1 },
   });
 
-  t.deepEqual(parse("rect(1px , auto , 2em,auto)"), {
+  t.deepEqual(serialize("rect(1px , auto , 2em,auto)"), {
     type: "basic-shape",
     kind: "rectangle",
     bottom: { type: "length", unit: "em", value: 2 },
@@ -27,7 +27,7 @@ test(".parse() parses comma separated rectangles", (t) => {
 });
 
 test(".parse() parses space separated rectangles", (t) => {
-  t.deepEqual(parse("rect(1px auto 2em auto)"), {
+  t.deepEqual(serialize("rect(1px auto 2em auto)"), {
     type: "basic-shape",
     kind: "rectangle",
     bottom: { type: "length", unit: "em", value: 2 },
@@ -38,18 +38,14 @@ test(".parse() parses space separated rectangles", (t) => {
 });
 
 test(".parse() fails if there are more or less than 4 values", (t) => {
-  t.deepEqual(Rectangle.parse(Lexer.lex("rect(1px 1px 1px")).isErr(), true);
+  t.deepEqual(parseErr("rect(1px 1px 1px").isErr(), true);
 
-  t.deepEqual(
-    Rectangle.parse(Lexer.lex("rect(1px 1px 1px 1px 1px")).isErr(),
-    true,
+  t.deepEqual(parseErr("rect(1px 1px 1px 1px 1px").isErr(), true,
   );
 });
 
 test(".parse() fails when mixing comma and space separators", (t) => {
-  t.deepEqual(
-    Rectangle.parse(Lexer.lex("rect(1px 1px, 1px 1px")).isErr(),
-    true,
+  t.deepEqual(parseErr("rect(1px 1px, 1px 1px").isErr(), true,
   );
 });
 
@@ -81,7 +77,7 @@ test(".parse() accepts calculated lengths", (t) => {
   });
 
   t.deepEqual(
-    parse(`rect(${actual(1)}, ${actual(2)}, ${actual(3)}, ${actual(4)})`),
+    serialize(`rect(${actual(1)}, ${actual(2)}, ${actual(3)}, ${actual(4)})`),
     {
       type: "basic-shape",
       kind: "rectangle",

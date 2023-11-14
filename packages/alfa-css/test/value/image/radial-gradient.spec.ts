@@ -1,13 +1,13 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Gradient, Lexer } from "../../../src";
+import { Gradient } from "../../../src";
+import { parser, serializer } from "../../common/parse";
 
-function parse(input: string) {
-  return Gradient.Radial.parse(Lexer.lex(input)).getUnsafe()[1].toJSON();
-}
+const parseErr = parser(Gradient.Radial.parse);
+const serialize = serializer(Gradient.Radial.parse);
 
 test("parse() parses a radial gradient with no shape or position", (t) => {
-  t.deepEqual(parse("radial-gradient(red, blue)"), {
+  t.deepEqual(serialize("radial-gradient(red, blue)"), {
     type: "gradient",
     kind: "radial",
     shape: { type: "extent", shape: "circle", size: "farthest-corner" },
@@ -33,7 +33,7 @@ test("parse() parses a radial gradient with no shape or position", (t) => {
 });
 
 test("parse() parses a radial gradient with an extent", (t) => {
-  t.deepEqual(parse("radial-gradient(closest-side, red, blue)"), {
+  t.deepEqual(serialize("radial-gradient(closest-side, red, blue)"), {
     type: "gradient",
     kind: "radial",
     shape: { type: "extent", shape: "circle", size: "closest-side" },
@@ -60,7 +60,7 @@ test("parse() parses a radial gradient with an extent", (t) => {
 
 test("parse() parses a radial gradient with an extent and a position", (t) => {
   t.deepEqual(
-    parse("radial-gradient(closest-side at bottom left, red, blue)"),
+    serialize("radial-gradient(closest-side at bottom left, red, blue)"),
     {
       type: "gradient",
       kind: "radial",
@@ -98,7 +98,7 @@ test("parse() parses a radial gradient with an extent and a position", (t) => {
 test("parse() parses a radial gradient with a circle", (t) => {
   for (const input of ["1px", "1px circle", "circle 1px"]) {
     t.deepEqual(
-      parse(`radial-gradient(${input}, red, blue)`),
+      serialize(`radial-gradient(${input}, red, blue)`),
       {
         type: "gradient",
         kind: "radial",
@@ -132,7 +132,7 @@ test("parse() parses a radial gradient with a circle", (t) => {
 
 test("parse() parses a radial gradient with a circle and calculated radius", (t) => {
   t.deepEqual(
-    parse(`radial-gradient(calc(1px + 1px), red, blue)`).shape.radius,
+    serialize(`radial-gradient(calc(1px + 1px), red, blue)`).shape.radius,
     {
       type: "length",
       math: {
@@ -149,14 +149,14 @@ test("parse() parses a radial gradient with a circle and calculated radius", (t)
 
 test("parse() rejects percentages in circle radius", (t) => {
   for (const input of ["10%", "calc(1px + 10%)", "calc(10% + 1%)"]) {
-    t.deepEqual(Gradient.Radial.parse(Lexer.lex(input)).isErr(), true, input);
+    t.deepEqual(parseErr(input).isErr(), true, input);
   }
 });
 
 test("parse() parses a radial gradient with an ellipse", (t) => {
   for (const input of ["1px 2px", "1px 2px ellipse", "ellipse 1px 2px"]) {
     t.deepEqual(
-      parse(`radial-gradient(${input}, red, blue)`),
+      serialize(`radial-gradient(${input}, red, blue)`),
       {
         type: "gradient",
         kind: "radial",
@@ -191,7 +191,7 @@ test("parse() parses a radial gradient with an ellipse", (t) => {
 
 test("parse() parses a radial gradient with an ellipse and calculated radii, including length-percentage", (t) => {
   t.deepEqual(
-    parse("radial-gradient(calc(1px + 0.2em) calc(1vh + 20%), red, blue)")
+    serialize("radial-gradient(calc(1px + 0.2em) calc(1vh + 20%), red, blue)")
       .shape,
     {
       type: "ellipse",
@@ -251,7 +251,7 @@ test("parse() parses a radial gradient with a circular extent", (t) => {
     "farthest-corner circle",
   ]) {
     t.deepEqual(
-      parse(`radial-gradient(${input}, red, blue)`),
+      serialize(`radial-gradient(${input}, red, blue)`),
       {
         type: "gradient",
         kind: "radial",
@@ -287,7 +287,7 @@ test("parse() parses a radial gradient with an elliptical extent", (t) => {
     "farthest-corner ellipse",
   ]) {
     t.deepEqual(
-      parse(`radial-gradient(${input}, red, blue)`),
+      serialize(`radial-gradient(${input}, red, blue)`),
       {
         type: "gradient",
         kind: "radial",

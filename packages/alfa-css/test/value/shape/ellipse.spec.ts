@@ -1,13 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Ellipse, Lexer } from "../../../src";
+import { Ellipse } from "../../../src";
+import { serializer } from "../../common/parse";
 
-function parse(input: string) {
-  return Ellipse.parse(Lexer.lex(input)).getUnsafe()[1].toJSON();
-}
+const serialize = serializer(Ellipse.parse);
 
 test("parse() parses an ellipse", (t) => {
-  t.deepEqual(parse("ellipse(1px 3px at right)"), {
+  t.deepEqual(serialize("ellipse(1px 3px at right)"), {
     type: "basic-shape",
     kind: "ellipse",
     rx: {
@@ -33,7 +32,7 @@ test("parse() parses an ellipse", (t) => {
 });
 
 test("parse() accepts calculated radii", (t) => {
-  t.deepEqual(parse("ellipse(calc(1em - 10%) calc(1px + 1ch) at right)"), {
+  t.deepEqual(serialize("ellipse(calc(1em - 10%) calc(1px + 1ch) at right)"), {
     type: "basic-shape",
     kind: "ellipse",
     rx: {
