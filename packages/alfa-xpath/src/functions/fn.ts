@@ -6,7 +6,7 @@ import { Function } from "../function";
 export namespace fn {
   const prefix = "fn";
 
-  /** @public */
+  /** @public (knip) */
   // This is actually  used by some magic in the index.
   export const root: Function<[Node], Node> = {
     prefix,

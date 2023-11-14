@@ -42,12 +42,12 @@ export class Kind implements Equatable, Serializable {
     this._hint = hint;
   }
 
-  /** @public */
+  /** @public (knip) */
   public get kinds(): Kind.Map {
     return this._kinds;
   }
 
-  /** @public */
+  /** @public (knip) */
   public get hint(): Option<Kind.Hint> {
     return this._hint;
   }

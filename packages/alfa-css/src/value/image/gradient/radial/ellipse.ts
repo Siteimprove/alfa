@@ -6,6 +6,7 @@ import { Parser as CSSParser, Token } from "../../../../syntax";
 
 import { Keyword } from "../../../keyword";
 import { LengthPercentage } from "../../../numeric";
+import { PartiallyResolvable, Resolvable } from "../../../resolvable";
 import { Value } from "../../../value";
 
 const { option, separatedList } = Parser;
@@ -15,9 +16,12 @@ const { option, separatedList } = Parser;
  *
  * @internal
  */
-export class Ellipse<
-  R extends LengthPercentage = LengthPercentage,
-> extends Value<"ellipse", Value.HasCalculation<[R, R]>> {
+export class Ellipse<R extends LengthPercentage = LengthPercentage>
+  extends Value<"ellipse", Value.HasCalculation<[R, R]>>
+  implements
+    Resolvable<Ellipse.Canonical, Ellipse.Resolver>,
+    PartiallyResolvable<Ellipse.PartiallyResolved, Ellipse.PartialResolver>
+{
   public static of<R extends LengthPercentage>(
     horizontal: R,
     vertical: R,
@@ -34,10 +38,12 @@ export class Ellipse<
     this._vertical = vertical;
   }
 
+  /** @public (knip) */
   public get horizontal(): R {
     return this._horizontal;
   }
 
+  /** @public (knip) */
   public get vertical(): R {
     return this._vertical;
   }
@@ -46,6 +52,15 @@ export class Ellipse<
     return new Ellipse(
       LengthPercentage.resolve(resolver)(this._horizontal),
       LengthPercentage.resolve(resolver)(this._vertical),
+    );
+  }
+
+  public partiallyResolve(
+    resolver: Ellipse.PartialResolver,
+  ): Ellipse.PartiallyResolved {
+    return new Ellipse(
+      LengthPercentage.partiallyResolve(resolver)(this._horizontal),
+      LengthPercentage.partiallyResolve(resolver)(this._vertical),
     );
   }
 
@@ -84,6 +99,8 @@ export class Ellipse<
 export namespace Ellipse {
   export type Canonical = Ellipse<LengthPercentage.Canonical>;
 
+  export type PartiallyResolved = Ellipse<LengthPercentage.PartiallyResolved>;
+
   export interface JSON extends Value.JSON<"ellipse"> {
     horizontal: LengthPercentage.JSON;
     vertical: LengthPercentage.JSON;
@@ -91,19 +108,7 @@ export namespace Ellipse {
 
   export type Resolver = LengthPercentage.Resolver;
 
-  export type PartiallyResolved = Ellipse<LengthPercentage.PartiallyResolved>;
-
   export type PartialResolver = LengthPercentage.PartialResolver;
-
-  export function partiallyResolve(
-    resolver: PartialResolver,
-  ): (value: Ellipse) => PartiallyResolved {
-    return (value) =>
-      Ellipse.of(
-        LengthPercentage.partiallyResolve(resolver)(value.horizontal),
-        LengthPercentage.partiallyResolve(resolver)(value.vertical),
-      );
-  }
 
   export function isEllipse(value: unknown): value is Ellipse {
     return value instanceof Ellipse;

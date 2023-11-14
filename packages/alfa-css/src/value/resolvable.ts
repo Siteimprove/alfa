@@ -19,6 +19,13 @@ export namespace Resolvable {
     : never;
 
   /**
+   * The type of a partially resolved value (usually with percentages left
+   * untouched).
+   */
+  export type PartiallyResolved<V extends Value> =
+    V extends PartiallyResolvable<infer U, unknown> ? U : never;
+
+  /**
    * @privateRemarks
    * Somehow, applying `V extends Resolvable<Value, infer R> ? R : never`
    * to a union distribute over the union (despite R being in contravariant
@@ -54,4 +61,27 @@ export namespace Resolvable {
       ? R
       : never
   >;
+
+  /**
+   * The type of the resolver needed to partially resolve a given Value.
+   */
+  export type PartialResolver<V extends Value> = UnionToIntersection<
+    // We first need to remove the `never` resolver from the union, to avoid
+    // everything collapsing to `unknown`.
+    V extends PartiallyResolvable<Value<string, false>, never>
+      ? never
+      : V extends PartiallyResolvable<Value<string, false>, infer R>
+      ? R
+      : never
+  >;
+}
+
+/**
+ * Partially resolved values may still contain percentages (usually) and
+ * calculation with percentages.
+ *
+ * @internal
+ */
+export interface PartiallyResolvable<V extends Value<string>, in R> {
+  partiallyResolve(resolver?: R): V;
 }

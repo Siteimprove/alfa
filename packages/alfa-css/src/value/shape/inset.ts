@@ -8,6 +8,7 @@ import { Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { LengthPercentage } from "../numeric";
+import { PartiallyResolvable, Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
@@ -22,9 +23,14 @@ const { parseDelim, parseWhitespace } = Token;
  * @public
  */
 export class Inset<
-  O extends Inset.Offset = Inset.Offset,
-  C extends Corner = Corner,
-> extends BasicShape<"inset", HasCalculation<O, C>> {
+    O extends Inset.Offset = Inset.Offset,
+    C extends Corner = Corner,
+  >
+  extends BasicShape<"inset", HasCalculation<O, C>>
+  implements
+    Resolvable<Inset.Canonical, Inset.Resolver>,
+    PartiallyResolvable<Inset.PartiallyResolved, Inset.PartialResolver>
+{
   public static of<
     O extends Inset.Offset = Inset.Offset,
     C extends Corner = Corner,
@@ -114,6 +120,28 @@ export class Inset<
     );
   }
 
+  public partiallyResolve(
+    resolver: Inset.PartialResolver,
+  ): Inset.PartiallyResolved {
+    return new Inset(
+      this._offsets.map(LengthPercentage.partiallyResolve(resolver)) as [
+        LengthPercentage.PartiallyResolved,
+        LengthPercentage.PartiallyResolved,
+        LengthPercentage.PartiallyResolved,
+        LengthPercentage.PartiallyResolved,
+      ],
+      this._corners.map(
+        (corners) =>
+          corners.map(Corner.partiallyResolve(resolver)) as [
+            Corner.PartiallyResolved,
+            Corner.PartiallyResolved,
+            Corner.PartiallyResolved,
+            Corner.PartiallyResolved,
+          ],
+      ),
+    );
+  }
+
   public equals(value: Inset): boolean;
 
   public equals(value: unknown): value is this;
@@ -183,6 +211,11 @@ export class Inset<
 export namespace Inset {
   export type Canonical = Inset<LengthPercentage.Canonical, Corner.Canonical>;
 
+  export type PartiallyResolved = Inset<
+    LengthPercentage.PartiallyResolved,
+    Corner.PartiallyResolved
+  >;
+
   export interface JSON<O extends Offset = Offset, C extends Corner = Corner>
     extends BasicShape.JSON<"inset"> {
     offsets: Serializable.ToJSON<readonly [O, O, O, O]>;
@@ -193,35 +226,7 @@ export namespace Inset {
 
   export type Resolver = LengthPercentage.Resolver;
 
-  export type PartiallyResolved = Inset<
-    LengthPercentage.PartiallyResolved,
-    Corner.PartiallyResolved
-  >;
-
   export type PartialResolver = LengthPercentage.PartialResolver;
-
-  export function partiallyResolve(
-    resolver: PartialResolver,
-  ): (value: Inset) => PartiallyResolved {
-    return (value) =>
-      Inset.of(
-        value.offsets.map(LengthPercentage.partiallyResolve(resolver)) as [
-          LengthPercentage.PartiallyResolved,
-          LengthPercentage.PartiallyResolved,
-          LengthPercentage.PartiallyResolved,
-          LengthPercentage.PartiallyResolved,
-        ],
-        value.corners.map(
-          (corners) =>
-            corners.map(Corner.partiallyResolve(resolver)) as [
-              Corner.PartiallyResolved,
-              Corner.PartiallyResolved,
-              Corner.PartiallyResolved,
-              Corner.PartiallyResolved,
-            ],
-        ),
-      );
-  }
 
   export function isInset(value: unknown): value is Inset {
     return value instanceof Inset;

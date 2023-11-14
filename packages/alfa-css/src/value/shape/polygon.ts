@@ -9,6 +9,7 @@ import { Function, type Parser as CSSParser, Token } from "../../syntax";
 
 import { Keyword } from "../keyword";
 import { LengthPercentage } from "../numeric";
+import { PartiallyResolvable, Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { BasicShape } from "./basic-shape";
@@ -22,9 +23,14 @@ const { parseComma, parseWhitespace } = Token;
  * @public
  */
 export class Polygon<
-  F extends Polygon.Fill = Polygon.Fill,
-  V extends LengthPercentage = LengthPercentage,
-> extends BasicShape<"polygon", Value.HasCalculation<[V]>> {
+    F extends Polygon.Fill = Polygon.Fill,
+    V extends LengthPercentage = LengthPercentage,
+  >
+  extends BasicShape<"polygon", Value.HasCalculation<[V]>>
+  implements
+    Resolvable<Polygon.Canonical, Polygon.Resolver>,
+    PartiallyResolvable<Polygon.PartiallyResolved, Polygon.PartialResolver>
+{
   public static of<
     F extends Polygon.Fill = Polygon.Fill,
     V extends LengthPercentage = LengthPercentage,
@@ -63,6 +69,21 @@ export class Polygon<
           // map loses the fact that vertex has exactly two elements.
           vertex.map(
             LengthPercentage.resolve(resolver),
+          ) as unknown as Polygon.Vertex<LengthPercentage.Canonical>,
+      ),
+    );
+  }
+
+  public partiallyResolve(
+    resolver: Polygon.PartialResolver,
+  ): Polygon.PartiallyResolved {
+    return new Polygon(
+      this._fill,
+      this._vertices.map(
+        (vertex) =>
+          // map loses the fact that vertex has exactly two elements.
+          vertex.map(
+            LengthPercentage.partiallyResolve(resolver),
           ) as unknown as Polygon.Vertex<LengthPercentage.Canonical>,
       ),
     );
@@ -107,6 +128,11 @@ export class Polygon<
 export namespace Polygon {
   export type Canonical = Polygon<Fill, LengthPercentage.Canonical>;
 
+  export type PartiallyResolved = Polygon<
+    Fill,
+    LengthPercentage.PartiallyResolved
+  >;
+
   export type Fill = Keyword<"nonzero"> | Keyword<"evenodd">;
 
   export type Vertex<V extends LengthPercentage = LengthPercentage> = readonly [
@@ -124,28 +150,7 @@ export namespace Polygon {
 
   export type Resolver = LengthPercentage.Resolver;
 
-  export type PartiallyResolved = Polygon<
-    Fill,
-    LengthPercentage.PartiallyResolved
-  >;
-
   export type PartialResolver = LengthPercentage.PartialResolver;
-
-  export function partiallyResolve(
-    resolver: PartialResolver,
-  ): (value: Polygon) => PartiallyResolved {
-    return (value) =>
-      Polygon.of(
-        value.fill,
-        value.vertices.map(
-          (vertex) =>
-            // map loses the fact that vertex has exactly two elements.
-            vertex.map(
-              LengthPercentage.partiallyResolve(resolver),
-            ) as unknown as Polygon.Vertex<LengthPercentage.Canonical>,
-        ),
-      );
-  }
 
   export function isPolygon(value: unknown): value is Polygon {
     return value instanceof Polygon;
