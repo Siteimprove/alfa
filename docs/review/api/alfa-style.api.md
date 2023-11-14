@@ -121,15 +121,15 @@ export namespace Longhands {
         readonly "background-repeat-y": Longhand<List<import("./property/background-repeat-x").Specified.Item>, List<import("./property/background-repeat-x").Specified.Item>>;
         readonly "background-size": Longhand<List<import("./property/background-size").Specified.Item>, List<Tuple<[LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">]> | Keyword<"cover"> | Keyword<"contain">>>;
         readonly "border-block-end-color": Longhand<Color, Color.Canonical>;
-        readonly "border-block-end-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-block-end-style": Longhand<Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-block-end-width": Longhand<Specified, Length>;
         readonly "border-block-start-color": Longhand<Color, Color.Canonical>;
-        readonly "border-block-start-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-block-start-style": Longhand<Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-block-start-width": Longhand<Specified, Length>;
         readonly "border-bottom-color": Longhand<Color, Color.Canonical>;
         readonly "border-bottom-left-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         readonly "border-bottom-right-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
-        readonly "border-bottom-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-bottom-style": Longhand<Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-bottom-width": Longhand<Specified, Length>;
         readonly "border-collapse": Longhand<Keyword.ToKeywords<"separate" | "collapse">, Keyword.ToKeywords<"separate" | "collapse">>;
         readonly "border-end-end-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
@@ -138,25 +138,25 @@ export namespace Longhands {
         readonly "border-image-repeat": Longhand<Specified_4, Specified_4>;
         readonly "border-image-slice": Longhand<Specified_6, Specified_6>;
         readonly "border-image-source": Longhand<Specified_7, Image.PartiallyResolved | Keyword<"none">>;
-        readonly "border-image-width": Longhand<Specified_8, Tuple<[top: Number_2.Fixed | LengthPercentage | Keyword<"auto">, right: Number_2.Fixed | LengthPercentage | Keyword<"auto">, bottom: Number_2.Fixed | LengthPercentage | Keyword<"auto">, left: Number_2.Fixed | LengthPercentage | Keyword<"auto">]>>;
+        readonly "border-image-width": Longhand<Specified_8, Tuple<[top: LengthPercentage | Number_2.Fixed | Keyword<"auto">, right: LengthPercentage | Number_2.Fixed | Keyword<"auto">, bottom: LengthPercentage | Number_2.Fixed | Keyword<"auto">, left: LengthPercentage | Number_2.Fixed | Keyword<"auto">]>>;
         readonly "border-inline-end-color": Longhand<Color, Color.Canonical>;
-        readonly "border-inline-end-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-inline-end-style": Longhand<Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-inline-end-width": Longhand<Specified, Length>;
         readonly "border-inline-start-color": Longhand<Color, Color.Canonical>;
-        readonly "border-inline-start-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-inline-start-style": Longhand<Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-inline-start-width": Longhand<Specified, Length>;
         readonly "border-left-color": Longhand<Color, Color.Canonical>;
-        readonly "border-left-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-left-style": Longhand<Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-left-width": Longhand<Specified, Length>;
         readonly "border-right-color": Longhand<Color, Color.Canonical>;
-        readonly "border-right-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-right-style": Longhand<Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-right-width": Longhand<Specified, Length>;
         readonly "border-start-end-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         readonly "border-start-start-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         readonly "border-top-color": Longhand<Color, Color.Canonical>;
         readonly "border-top-left-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
         readonly "border-top-right-radius": Longhand<Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>, Tuple<[horizontal: LengthPercentage, vertical: LengthPercentage]>>;
-        readonly "border-top-style": Longhand<Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "hidden" | "inset" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "border-top-style": Longhand<Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"inset" | "none" | "hidden" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "border-top-width": Longhand<Specified, Length>;
         readonly bottom: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         readonly "box-shadow": Longhand<Keyword<"none"> | List<Shadow<Length, Length, Length, Length, Color>>, Keyword<"none"> | List<Shadow.Canonical>>;
@@ -167,7 +167,7 @@ export namespace Longhands {
         readonly display: Longhand<Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">, listitem: Keyword<"list-item">]> | Tuple<[outside: Keyword<"table-row-group"> | Keyword<"table-header-group"> | Keyword<"table-footer-group"> | Keyword<"table-row"> | Keyword<"table-cell"> | Keyword<"table-column-group"> | Keyword<"table-column"> | Keyword<"table-caption"> | Keyword<"ruby-base"> | Keyword<"ruby-text"> | Keyword<"ruby-base-container"> | Keyword<"ruby-text-container">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[Keyword<"none"> | Keyword<"contents">]>, Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[outside: Keyword<"block"> | Keyword<"inline"> | Keyword<"run-in">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">, listitem: Keyword<"list-item">]> | Tuple<[outside: Keyword<"table-row-group"> | Keyword<"table-header-group"> | Keyword<"table-footer-group"> | Keyword<"table-row"> | Keyword<"table-cell"> | Keyword<"table-column-group"> | Keyword<"table-column"> | Keyword<"table-caption"> | Keyword<"ruby-base"> | Keyword<"ruby-text"> | Keyword<"ruby-base-container"> | Keyword<"ruby-text-container">, inside: Keyword<"flow"> | Keyword<"flow-root"> | Keyword<"table"> | Keyword<"flex"> | Keyword<"grid"> | Keyword<"ruby">]> | Tuple<[Keyword<"none"> | Keyword<"contents">]>>;
         readonly "flex-direction": Longhand<Keyword.ToKeywords<"row" | "row-reverse" | "column" | "column-reverse">, Keyword.ToKeywords<"row" | "row-reverse" | "column" | "column-reverse">>;
         readonly "flex-wrap": Longhand<Keyword.ToKeywords<"nowrap" | "wrap" | "wrap-reverse">, Keyword.ToKeywords<"nowrap" | "wrap" | "wrap-reverse">>;
-        readonly float: Longhand<Keyword.ToKeywords<"none" | "left" | "right">, Keyword.ToKeywords<"none" | "left" | "right">>;
+        readonly float: Longhand<Keyword.ToKeywords<"left" | "right" | "none">, Keyword.ToKeywords<"left" | "right" | "none">>;
         readonly "font-family": Longhand<List<String_2 | Keyword<"serif"> | Keyword<"sans-serif"> | Keyword<"cursive"> | Keyword<"fantasy"> | Keyword<"monospace">>, List<String_2 | Keyword<"serif"> | Keyword<"sans-serif"> | Keyword<"cursive"> | Keyword<"fantasy"> | Keyword<"monospace">>>;
         readonly "font-size": Longhand<LengthPercentage | Keyword<"medium"> | Keyword<"xx-small"> | Keyword<"x-small"> | Keyword<"small"> | Keyword<"large"> | Keyword<"x-large"> | Keyword<"xx-large"> | Keyword<"xxx-large"> | Keyword<"larger"> | Keyword<"smaller">, Length>;
         readonly "font-stretch": Longhand<Specified_10, Percentage.Fixed<Numeric.Type> | Percentage.Calculated<Numeric.Type>>;
@@ -176,7 +176,7 @@ export namespace Longhands {
         readonly "font-variant-east-asian": Longhand<Specified_11, Specified_11>;
         readonly "font-variant-ligatures": Longhand<Specified_12, Specified_12>;
         readonly "font-variant-numeric": Longhand<Specified_13, Specified_13>;
-        readonly "font-variant-position": Longhand<Keyword.ToKeywords<"sub" | "normal" | "super">, Keyword.ToKeywords<"sub" | "normal" | "super">>;
+        readonly "font-variant-position": Longhand<Keyword.ToKeywords<"normal" | "sub" | "super">, Keyword.ToKeywords<"normal" | "sub" | "super">>;
         readonly "font-weight": Longhand<Number_2 | Keyword<"normal"> | Keyword<"bold"> | Keyword<"bolder"> | Keyword<"lighter">, Number_2.Fixed>;
         readonly height: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         readonly "inset-block-end": Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
@@ -185,21 +185,21 @@ export namespace Longhands {
         readonly "inset-inline-start": Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         readonly left: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         readonly "letter-spacing": Longhand<Length | Keyword<"normal">, Length>;
-        readonly "line-height": Longhand<Number_2 | LengthPercentage | Keyword<"normal">, Computed>;
-        readonly "margin-bottom": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        readonly "margin-left": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        readonly "margin-right": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        readonly "margin-top": Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage | Keyword<"auto">>;
-        readonly "min-height": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
-        readonly "min-width": Longhand<Percentage | Length | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Percentage | Keyword<"auto"> | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
+        readonly "line-height": Longhand<LengthPercentage | Number_2 | Keyword<"normal">, Computed>;
+        readonly "margin-bottom": Longhand<Length | Keyword<"auto"> | Percentage, Length | Keyword<"auto"> | Percentage>;
+        readonly "margin-left": Longhand<Length | Keyword<"auto"> | Percentage, Length | Keyword<"auto"> | Percentage>;
+        readonly "margin-right": Longhand<Length | Keyword<"auto"> | Percentage, Length | Keyword<"auto"> | Percentage>;
+        readonly "margin-top": Longhand<Length | Keyword<"auto"> | Percentage, Length | Keyword<"auto"> | Percentage>;
+        readonly "min-height": Longhand<Length | Keyword<"auto"> | Percentage | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Keyword<"auto"> | Percentage | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
+        readonly "min-width": Longhand<Length | Keyword<"auto"> | Percentage | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">, Length | Keyword<"auto"> | Percentage | Keyword<"fit-content"> | Keyword<"max-content"> | Keyword<"min-content">>;
         readonly opacity: Longhand<Number_2 | Percentage<"percentage">, Number_2.Fixed>;
         readonly "outline-color": Longhand<Color | Keyword<"invert">, Color.Canonical | Keyword<"invert">>;
         readonly "outline-offset": Longhand<Length | Length<Unit.Length>, Length>;
-        readonly "outline-style": Longhand<Keyword.ToKeywords<"none" | "inset" | "auto" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"none" | "inset" | "auto" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
+        readonly "outline-style": Longhand<Keyword.ToKeywords<"inset" | "auto" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">, Keyword.ToKeywords<"inset" | "auto" | "none" | "dotted" | "dashed" | "solid" | "double" | "groove" | "ridge" | "outset">>;
         readonly "outline-width": Longhand<Length | Keyword<"thin"> | Keyword<"medium"> | Keyword<"thick">, Length>;
-        readonly "overflow-x": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"auto"> | Keyword<"scroll"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
-        readonly "overflow-y": Longhand<Keyword.ToKeywords<"hidden" | "auto" | "scroll" | "visible" | "clip">, Keyword<"auto"> | Keyword<"scroll"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
-        readonly position: Longhand<Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">, Keyword.ToKeywords<"fixed" | "relative" | "static" | "absolute" | "sticky">>;
+        readonly "overflow-x": Longhand<Keyword.ToKeywords<"auto" | "scroll" | "hidden" | "visible" | "clip">, Keyword<"auto"> | Keyword<"scroll"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
+        readonly "overflow-y": Longhand<Keyword.ToKeywords<"auto" | "scroll" | "hidden" | "visible" | "clip">, Keyword<"auto"> | Keyword<"scroll"> | Keyword<"hidden"> | Keyword<"visible"> | Keyword<"clip">>;
+        readonly position: Longhand<Keyword.ToKeywords<"fixed" | "static" | "relative" | "absolute" | "sticky">, Keyword.ToKeywords<"fixed" | "static" | "relative" | "absolute" | "sticky">>;
         readonly right: Longhand<LengthPercentage | Keyword<"auto">, LengthPercentage | Keyword<"auto">>;
         readonly rotate: Longhand<Rotate | Keyword<"none">, Rotate | Keyword<"none">>;
         readonly "text-align": Longhand<Keyword.ToKeywords<"left" | "right" | "center" | "start" | "end" | "justify">, Keyword.ToKeywords<"left" | "right" | "center" | "start" | "end" | "justify">>;
@@ -207,7 +207,7 @@ export namespace Longhands {
         readonly "text-decoration-line": Longhand<Keyword<"none"> | List<Keyword<"underline"> | Keyword<"overline"> | Keyword<"line-through"> | Keyword<"blink">>, Keyword<"none"> | List<Keyword<"underline"> | Keyword<"overline"> | Keyword<"line-through"> | Keyword<"blink">>>;
         readonly "text-decoration-style": Longhand<Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">, Keyword.ToKeywords<"dotted" | "dashed" | "solid" | "double" | "wavy">>;
         readonly "text-decoration-thickness": Longhand<LengthPercentage | Keyword<"auto"> | Keyword<"from-font">, Length | Keyword<"auto"> | Keyword<"from-font">>;
-        readonly "text-indent": Longhand<Length | Length<Unit.Length> | LengthPercentage | Percentage.Calculated<"length"> | Percentage.Fixed<"length">, LengthPercentage>;
+        readonly "text-indent": Longhand<LengthPercentage | Length | Percentage.Calculated<"length"> | Percentage.Fixed<"length"> | Length<Unit.Length>, LengthPercentage>;
         readonly "text-overflow": Longhand<Keyword.ToKeywords<"clip" | "ellipsis">, Keyword.ToKeywords<"clip" | "ellipsis">>;
         readonly "text-shadow": Longhand<Keyword<"none"> | List<Shadow<Length, Length, Length, Length, Color>>, Keyword<"none"> | List<Shadow.Canonical>>;
         readonly "text-transform": Longhand<Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">, Keyword.ToKeywords<"none" | "capitalize" | "uppercase" | "lowercase">>;
@@ -216,7 +216,7 @@ export namespace Longhands {
         readonly "vertical-align": Longhand<LengthPercentage | (Keyword<"top"> | Keyword<"bottom"> | Keyword<"sub"> | Keyword<"super"> | Keyword<"baseline"> | Keyword<"text-top"> | Keyword<"text-bottom"> | Keyword<"middle">), Length | (Keyword<"top"> | Keyword<"bottom"> | Keyword<"sub"> | Keyword<"super"> | Keyword<"baseline"> | Keyword<"text-top"> | Keyword<"text-bottom"> | Keyword<"middle">)>;
         readonly visibility: Longhand<Keyword.ToKeywords<"hidden" | "collapse" | "visible">, Keyword.ToKeywords<"hidden" | "collapse" | "visible">>;
         readonly "white-space": Longhand<Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">, Keyword.ToKeywords<"nowrap" | "normal" | "pre" | "pre-wrap" | "break-spaces" | "pre-line">>;
-        readonly width: Longhand<Percentage | Length | Keyword<"auto">, Length | Percentage.Canonical | Keyword<"auto">>;
+        readonly width: Longhand<Length | Keyword<"auto"> | Percentage, Length | Percentage.Canonical | Keyword<"auto">>;
         readonly "word-spacing": Longhand<Length | Keyword<"normal">, Length>;
     };
     // (undocumented)
@@ -294,7 +294,7 @@ export namespace Shorthands {
         readonly "font-variant": Shorthand<"font-variant-caps" | "font-variant-east-asian" | "font-variant-ligatures" | "font-variant-numeric">;
         readonly "inset-block": Shorthand<"inset-block-end" | "inset-block-start">;
         readonly "inset-inline": Shorthand<"inset-inline-end" | "inset-inline-start">;
-        readonly inset: Shorthand<"top" | "bottom" | "left" | "right">;
+        readonly inset: Shorthand<"left" | "right" | "top" | "bottom">;
         readonly margin: Shorthand<"margin-bottom" | "margin-left" | "margin-right" | "margin-top">;
         readonly outline: Shorthand<"outline-color" | "outline-style" | "outline-width">;
         readonly overflow: Shorthand<"overflow-x" | "overflow-y">;
@@ -378,9 +378,7 @@ export namespace Style {
     hasBorder: typeof element.hasBorder, // (undocumented)
     hasBoxShadow: typeof element.hasBoxShadow, // (undocumented)
     hasCascadedStyle: typeof element.hasCascadedStyle, // (undocumented)
-    hasCascadedValueDeclaredInInlineStyleOf: typeof element.hasCascadedValueDeclaredInInlineStyleOf, // (undocumented)
     hasComputedStyle: typeof element.hasComputedStyle, // (undocumented)
-    hasInlineStyleProperty: typeof element.hasInlineStyleProperty, // (undocumented)
     hasPositioningParent: typeof element.hasPositioningParent, // (undocumented)
     hasOutline: typeof element.hasOutline, // (undocumented)
     hasSpecifiedStyle: typeof element.hasSpecifiedStyle, // (undocumented)
