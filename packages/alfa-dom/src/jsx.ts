@@ -20,6 +20,7 @@ export function jsx<N extends string = string>(
   const style: Record<string, string> = {};
   let box: Rectangle | undefined = undefined;
   let device: Device | undefined = undefined;
+  let externalId: string | undefined = undefined;
 
   for (const [name, value] of entries(properties ?? {})) {
     if (value === null || value === undefined) {
@@ -42,6 +43,12 @@ export function jsx<N extends string = string>(
 
         continue;
 
+      case "externalId":
+        if (typeof value === "string") {
+          externalId = value;
+        }
+        continue;
+
       default:
         attributes[name] = value === true ? value : `${value}`;
     }
@@ -54,6 +61,7 @@ export function jsx<N extends string = string>(
     style,
     box,
     device,
+    externalId,
   );
 }
 

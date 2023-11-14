@@ -1,4 +1,4 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -17,6 +17,8 @@ import { referenceSameResource } from "../common/predicate";
 import { normalize } from "../common/normalize";
 
 import { Scope, Stability } from "../tags";
+import { WithAccessibleName } from "../common/diagnostic";
+import { Iterable } from "@siteimprove/alfa-iterable";
 
 const { hasNonEmptyAccessibleName, hasRole, isIncludedInTheAccessibilityTree } =
   DOM;
@@ -51,6 +53,11 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
       },
 
       expectations(target) {
+        const name = WithAccessibleName.getAccessibleName(
+          Iterable.first(target).getUnsafe(), // Existence of first element is guaranteed by applicability
+          device,
+        ).getUnsafe(); // Existence of accessible name is guaranteed by applicability
+
         const embedSameResource = [...target].every((element, i, elements) => {
           // This is either the first element...
           return (
@@ -64,7 +71,7 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
         return {
           1: expectation(
             embedSameResource,
-            () => Outcomes.ResolveSameResource,
+            () => Outcomes.ResolveSameResource(name),
             () =>
               Question.of(
                 "reference-equivalent-resources",
@@ -73,8 +80,8 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
-                  () => Outcomes.ResolveEquivalentResource,
-                  () => Outcomes.ResolveDifferentResource,
+                  () => Outcomes.ResolveEquivalentResource(name),
+                  () => Outcomes.ResolveDifferentResource(name),
                 ),
               ),
           ),
@@ -88,17 +95,27 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
  * @public
  */
 export namespace Outcomes {
-  export const ResolveSameResource = Ok.of(
-    Diagnostic.of(`The links resolve to the same resource`),
-  );
+  export const ResolveSameResource = (accessibleName: string) =>
+    Ok.of(
+      WithAccessibleName.of(
+        `The links resolve to the same resource`,
+        accessibleName,
+      ),
+    );
 
-  export const ResolveEquivalentResource = Ok.of(
-    Diagnostic.of(`The links resolve to equivalent resources`),
-  );
+  export const ResolveEquivalentResource = (accessibleName: string) =>
+    Ok.of(
+      WithAccessibleName.of(
+        `The links resolve to equivalent resources`,
+        accessibleName,
+      ),
+    );
 
-  export const ResolveDifferentResource = Err.of(
-    Diagnostic.of(
-      `The links do not resolve to the same or equivalent resources`,
-    ),
-  );
+  export const ResolveDifferentResource = (accessibleName: string) =>
+    Err.of(
+      WithAccessibleName.of(
+        `The links do not resolve to the same or equivalent resources`,
+        accessibleName,
+      ),
+    );
 }

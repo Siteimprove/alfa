@@ -1,4 +1,4 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { DOM } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Node, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
@@ -10,6 +10,7 @@ import { expectation } from "../common/act/expectation";
 import { Question } from "../common/act/question";
 
 import { Scope, Stability } from "../tags";
+import { WithAccessibleName } from "../common/diagnostic";
 
 const { hasAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasInputType, hasName, hasNamespace } = Element;
@@ -51,6 +52,11 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
       },
 
       expectations(target) {
+        const accName = WithAccessibleName.getAccessibleName(
+          target,
+          device,
+        ).getUnsafe(); // Existence of accessible name is guaranteed by applicability
+
         return {
           1: Question.of(
             "name-describes-purpose",
@@ -59,8 +65,8 @@ export default Rule.Atomic.of<Page, Element, Question.Metadata>({
           ).map((nameDescribesPurpose) =>
             expectation(
               nameDescribesPurpose,
-              () => Outcomes.NameIsDescriptive(target.name),
-              () => Outcomes.NameIsNotDescriptive(target.name),
+              () => Outcomes.NameIsDescriptive(target.name, accName),
+              () => Outcomes.NameIsNotDescriptive(target.name, accName),
             ),
           ),
         };
@@ -84,17 +90,19 @@ function getFilename(path: string): string {
  * @public
  */
 export namespace Outcomes {
-  export const NameIsDescriptive = (name: string) =>
+  export const NameIsDescriptive = (name: string, accessibleName: string) =>
     Ok.of(
-      Diagnostic.of(
+      WithAccessibleName.of(
         `The accessible name of the \`<${name}>\` element describes its purpose`,
+        accessibleName,
       ),
     );
 
-  export const NameIsNotDescriptive = (name: string) =>
+  export const NameIsNotDescriptive = (name: string, accessibleName: string) =>
     Err.of(
-      Diagnostic.of(
+      WithAccessibleName.of(
         `The accessible name of the \`<${name}>\` element does not describe its purpose`,
+        accessibleName,
       ),
     );
 }

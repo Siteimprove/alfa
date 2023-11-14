@@ -23,14 +23,14 @@ test("evaluate() passes images whose name is descriptive", async (t) => {
       passed(
         R39,
         target,
-        { 1: Outcomes.NameIsDescriptive("img") },
+        { 1: Outcomes.NameIsDescriptive("img", "Placeholder") },
         Outcome.Mode.SemiAuto,
       ),
     ],
   );
 });
 
-test("evaluate() passes images whose name is not descriptive", async (t) => {
+test("evaluate() fails images whose name is not descriptive", async (t) => {
   const target = <img src="foo.jpg" alt="foo.jpg" />;
 
   const document = h.document([target]);
@@ -45,7 +45,7 @@ test("evaluate() passes images whose name is not descriptive", async (t) => {
       failed(
         R39,
         target,
-        { 1: Outcomes.NameIsNotDescriptive("img") },
+        { 1: Outcomes.NameIsNotDescriptive("img", "foo.jpg") },
         Outcome.Mode.SemiAuto,
       ),
     ],
