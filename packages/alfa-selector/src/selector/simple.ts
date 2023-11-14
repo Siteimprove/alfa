@@ -648,19 +648,19 @@ export namespace Universal {
   export interface JSON extends Selector.JSON<"universal"> {
     namespace: string | null;
   }
-}
 
-function isUniversal(value: unknown): value is Universal {
-  return value instanceof Universal;
-}
+  export function isUniversal(value: unknown): value is Universal {
+    return value instanceof Universal;
+  }
 
-/**
- * {@link https://drafts.csswg.org/selectors/#typedef-type-selector}
- */
-const parseUniversal = map(
-  left(option(parseNamespace), Token.parseDelim("*")),
-  (namespace) => Universal.of(namespace),
-);
+  /**
+   * {@link https://drafts.csswg.org/selectors/#typedef-type-selector}
+   */
+  export const parseUniversal = map(
+    left(option(parseNamespace), Token.parseDelim("*")),
+    (namespace) => Universal.of(namespace),
+  );
+}
 
 export namespace Pseudo {
   export type JSON = Class.JSON | Element.JSON;
@@ -2189,7 +2189,7 @@ export namespace Simple {
   export function isSimple(value: unknown): value is Simple {
     return (
       Type.isType(value) ||
-      isUniversal(value) ||
+      Universal.isUniversal(value) ||
       Attribute.isAttribute(value) ||
       Class.isClass(value) ||
       Id.isId(value) ||
@@ -2212,7 +2212,7 @@ export namespace Simple {
       Type.parseType,
       Attribute.parseAttribute,
       Id.parseId,
-      parseUniversal,
+      Universal.parseUniversal,
       parsePseudo(parseSelector),
     );
 }
