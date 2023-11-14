@@ -54,9 +54,6 @@ export function oracle<I, T extends Hashable, S>(
 
       case "string":
         return wrapper(question, answers[question.uri]!);
-
-      case "string[]":
-        return wrapper(question, answers[question.uri]!);
     }
   };
 }

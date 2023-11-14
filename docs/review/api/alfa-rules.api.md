@@ -180,8 +180,6 @@ export namespace Question {
         // (undocumented)
         "node[]": Iterable<Node>;
         // (undocumented)
-        "string[]": Iterable<string>;
-        // (undocumented)
         boolean: boolean;
         // (undocumented)
         node: Option<Node>;
@@ -271,10 +269,6 @@ export namespace Question {
         readonly "is-content-equivalent": {
             readonly type: "boolean";
             readonly message: "Do these [role] landmarks have the same or equivalent content?";
-        };
-        readonly "visible-focus-classes": {
-            readonly type: "string[]";
-            readonly message: "Which classes have a visible focus indicator?";
         };
         readonly "has-focus-indicator": {
             readonly type: "boolean";
