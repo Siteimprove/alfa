@@ -35,9 +35,13 @@ export abstract class Selector<T extends string = string>
    */
   public abstract matches(element: Element, context?: Context): boolean;
 
-  public abstract equals(value: Selector): boolean;
+  public equals(value: Selector): boolean;
 
-  public abstract equals(value: unknown): value is this;
+  public equals(value: unknown): value is this;
+
+  public equals(value: unknown): boolean {
+    return value instanceof Selector && value._type === this._type;
+  }
 
   public abstract [Symbol.iterator](): Iterator<
     Simple | Compound | Complex | Relative
