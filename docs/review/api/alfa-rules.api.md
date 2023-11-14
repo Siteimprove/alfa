@@ -85,6 +85,7 @@ export namespace Diagnostic {
     import TextSpacing = diagnostic.TextSpacing;
     import WithBadElements = diagnostic.WithBadElements;
     import WithRole = diagnostic.WithRole;
+    import WithAccessibleName = diagnostic.WithAccessibleName;
 }
 
 declare namespace experimentalRules {
