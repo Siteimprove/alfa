@@ -22,7 +22,7 @@ export class Relative extends Selector<"relative"> {
     combinator: Combinator,
     selector: Simple | Compound | Complex,
   ) {
-    super();
+    super("relative");
     this._combinator = combinator;
     this._selector = selector;
   }
@@ -33,10 +33,6 @@ export class Relative extends Selector<"relative"> {
 
   public get selector(): Simple | Compound | Complex {
     return this._selector;
-  }
-
-  public get type(): "relative" {
-    return "relative";
   }
 
   public matches(): boolean {
@@ -61,7 +57,7 @@ export class Relative extends Selector<"relative"> {
 
   public toJSON(): Relative.JSON {
     return {
-      type: "relative",
+      ...super.toJSON(),
       combinator: this._combinator,
       selector: this._selector.toJSON(),
     };

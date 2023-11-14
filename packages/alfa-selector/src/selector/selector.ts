@@ -1,8 +1,9 @@
 import { Element } from "@siteimprove/alfa-dom";
 import { Equatable } from "@siteimprove/alfa-equatable";
 import { Iterable } from "@siteimprove/alfa-iterable";
-import * as json from "@siteimprove/alfa-json";
 import { Serializable } from "@siteimprove/alfa-json";
+
+import * as json from "@siteimprove/alfa-json";
 
 import type { Complex } from "./complex";
 import type { Compound } from "./compound";
@@ -19,7 +20,15 @@ export abstract class Selector<T extends string = string>
     Equatable,
     Serializable
 {
-  public abstract get type(): T;
+  private readonly _type: T;
+
+  protected constructor(type: T) {
+    this._type = type;
+  }
+
+  public get type(): T {
+    return this._type;
+  }
 
   /**
    * {@link https://drafts.csswg.org/selectors/#match}
@@ -34,7 +43,11 @@ export abstract class Selector<T extends string = string>
     Simple | Compound | Complex | Relative
   >;
 
-  public abstract toJSON(): Selector.JSON;
+  public toJSON(): Selector.JSON<T> {
+    return {
+      type: this._type,
+    };
+  }
 }
 
 export namespace Selector {

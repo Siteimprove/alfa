@@ -34,7 +34,7 @@ export class List<
   private readonly _right: T | List<T>;
 
   private constructor(left: T, right: T | List<T>) {
-    super();
+    super("list");
     this._left = left;
     this._right = right;
   }
@@ -45,10 +45,6 @@ export class List<
 
   public get right(): T | List<T> {
     return this._right;
-  }
-
-  public get type(): "list" {
-    return "list";
   }
 
   public matches(element: Element, context?: Context): boolean {
@@ -79,7 +75,7 @@ export class List<
 
   public toJSON(): List.JSON {
     return {
-      type: "list",
+      ...super.toJSON(),
       left: this._left.toJSON(),
       right: this._right.toJSON(),
     };

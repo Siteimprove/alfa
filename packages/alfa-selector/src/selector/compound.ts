@@ -24,7 +24,7 @@ export class Compound extends Selector<"compound"> {
   private readonly _right: Simple | Compound;
 
   private constructor(left: Simple, right: Simple | Compound) {
-    super();
+    super("compound");
     this._left = left;
     this._right = right;
   }
@@ -35,10 +35,6 @@ export class Compound extends Selector<"compound"> {
 
   public get right(): Simple | Compound {
     return this._right;
-  }
-
-  public get type(): "compound" {
-    return "compound";
   }
 
   public matches(element: Element, context?: Context): boolean {
@@ -66,7 +62,7 @@ export class Compound extends Selector<"compound"> {
 
   public toJSON(): Compound.JSON {
     return {
-      type: "compound",
+      ...super.toJSON(),
       left: this._left.toJSON(),
       right: this._right.toJSON(),
     };

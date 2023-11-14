@@ -34,7 +34,7 @@ export class Complex extends Selector<"complex"> {
     left: Simple | Compound | Complex,
     right: Simple | Compound,
   ) {
-    super();
+    super("complex");
     this._combinator = combinator;
     this._left = left;
     this._right = right;
@@ -50,10 +50,6 @@ export class Complex extends Selector<"complex"> {
 
   public get right(): Simple | Compound {
     return this._right;
-  }
-
-  public get type(): "complex" {
-    return "complex";
   }
 
   public matches(element: Element, context?: Context): boolean {
@@ -112,7 +108,7 @@ export class Complex extends Selector<"complex"> {
 
   public toJSON(): Complex.JSON {
     return {
-      type: "complex",
+      ...super.toJSON(),
       combinator: this._combinator,
       left: this._left.toJSON(),
       right: this._right.toJSON(),
@@ -131,8 +127,8 @@ export class Complex extends Selector<"complex"> {
 
 export namespace Complex {
   export interface JSON extends Selector.JSON<"complex"> {
-    combinator: string;
-    left: Simple.JSON | Compound.JSON | JSON;
+    combinator: Combinator;
+    left: Simple.JSON | Compound.JSON | Complex.JSON;
     right: Simple.JSON | Compound.JSON;
   }
 

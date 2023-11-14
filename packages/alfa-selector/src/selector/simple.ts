@@ -55,16 +55,12 @@ export class Id extends Selector<"id"> {
   private readonly _name: string;
 
   private constructor(name: string) {
-    super();
+    super("id");
     this._name = name;
   }
 
   public get name(): string {
     return this._name;
-  }
-
-  public get type(): "id" {
-    return "id";
   }
 
   public matches(element: Element): boolean {
@@ -85,7 +81,7 @@ export class Id extends Selector<"id"> {
 
   public toJSON(): Id.JSON {
     return {
-      type: "id",
+      ...super.toJSON(),
       name: this._name,
     };
   }
@@ -125,7 +121,7 @@ export class Class extends Selector<"class"> {
   private readonly _name: string;
 
   private constructor(name: string) {
-    super();
+    super("class");
     this._name = name;
   }
 
@@ -133,9 +129,6 @@ export class Class extends Selector<"class"> {
     return this._name;
   }
 
-  public get type(): "class" {
-    return "class";
-  }
   public matches(element: Element): boolean {
     return Iterable.includes(element.classes, this._name);
   }
@@ -154,7 +147,7 @@ export class Class extends Selector<"class"> {
 
   public toJSON(): Class.JSON {
     return {
-      type: "class",
+      ...super.toJSON(),
       name: this._name,
     };
   }
@@ -227,7 +220,7 @@ export class Attribute extends Selector<"attribute"> {
     matcher: Option<Attribute.Matcher>,
     modifier: Option<Attribute.Modifier>,
   ) {
-    super();
+    super("attribute");
     this._namespace = namespace;
     this._name = name;
     this._value = value;
@@ -237,10 +230,6 @@ export class Attribute extends Selector<"attribute"> {
 
   public get namespace(): Option<string> {
     return this._namespace;
-  }
-
-  public get type(): "attribute" {
-    return "attribute";
   }
 
   public get name(): string {
@@ -347,7 +336,7 @@ export class Attribute extends Selector<"attribute"> {
 
   public toJSON(): Attribute.JSON {
     return {
-      type: "attribute",
+      ...super.toJSON(),
       namespace: this._namespace.getOr(null),
       name: this._name,
       value: this._value.getOr(null),
@@ -514,7 +503,7 @@ export class Type extends Selector<"type"> {
   private readonly _name: string;
 
   private constructor(namespace: Option<string>, name: string) {
-    super();
+    super("type");
     this._namespace = namespace;
     this._name = name;
   }
@@ -525,10 +514,6 @@ export class Type extends Selector<"type"> {
 
   public get name(): string {
     return this._name;
-  }
-
-  public get type(): "type" {
-    return "type";
   }
 
   public matches(element: Element): boolean {
@@ -561,7 +546,7 @@ export class Type extends Selector<"type"> {
 
   public toJSON(): Type.JSON {
     return {
-      type: "type",
+      ...super.toJSON(),
       namespace: this._namespace.getOr(null),
       name: this._name,
     };
@@ -613,16 +598,12 @@ export class Universal extends Selector<"universal"> {
   private readonly _namespace: Option<string>;
 
   private constructor(namespace: Option<string>) {
-    super();
+    super("universal");
     this._namespace = namespace;
   }
 
   public get namespace(): Option<string> {
     return this._namespace;
-  }
-
-  public get type(): "universal" {
-    return "universal";
   }
 
   public matches(element: Element): boolean {
@@ -649,7 +630,7 @@ export class Universal extends Selector<"universal"> {
 
   public toJSON(): Universal.JSON {
     return {
-      type: "universal",
+      ...super.toJSON(),
       namespace: this._namespace.getOr(null),
     };
   }
@@ -690,16 +671,12 @@ export namespace Pseudo {
     protected readonly _name: N;
 
     protected constructor(name: N) {
-      super();
+      super("pseudo-class");
       this._name = name;
     }
 
     public get name(): N {
       return this._name;
-    }
-
-    public get type(): "pseudo-class" {
-      return "pseudo-class";
     }
 
     public matches(element: dom.Element, context?: Context): boolean {
@@ -720,7 +697,7 @@ export namespace Pseudo {
 
     public toJSON(): Class.JSON<N> {
       return {
-        type: "pseudo-class",
+        ...super.toJSON(),
         name: this._name,
       };
     }
@@ -747,16 +724,12 @@ export namespace Pseudo {
     protected readonly _name: N;
 
     protected constructor(name: N) {
-      super();
+      super("pseudo-element");
       this._name = name;
     }
 
     public get name(): N {
       return this._name;
-    }
-
-    public get type(): "pseudo-element" {
-      return "pseudo-element";
     }
 
     public matches(element: dom.Element, context?: Context): boolean {
@@ -777,7 +750,7 @@ export namespace Pseudo {
 
     public toJSON(): Element.JSON<N> {
       return {
-        type: "pseudo-element",
+        ...super.toJSON(),
         name: this._name,
       };
     }
