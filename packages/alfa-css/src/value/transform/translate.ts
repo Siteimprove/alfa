@@ -8,7 +8,7 @@ import {
 import { List } from "../collection";
 
 import { Length, LengthPercentage, Numeric } from "../numeric";
-import { Resolvable } from "../resolvable";
+import { PartiallyResolvable, Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 import { Function } from "./function";
@@ -24,7 +24,9 @@ export class Translate<
     Z extends Length = Length,
   >
   extends Function<"translate", Value.HasCalculation<[X, Y, Z]>>
-  implements Resolvable<Translate.Canonical, Translate.Resolver>
+  implements
+    Resolvable<Translate.Canonical, Translate.Resolver>,
+    PartiallyResolvable<Translate.PartiallyResolved, Translate.PartialResolver>
 {
   public static of<
     X extends LengthPercentage = LengthPercentage,
@@ -61,6 +63,16 @@ export class Translate<
     return new Translate(
       LengthPercentage.resolve(resolver)(this._x),
       LengthPercentage.resolve(resolver)(this._y),
+      this._z.resolve(resolver),
+    );
+  }
+
+  public partiallyResolve(
+    resolver: Translate.PartialResolver,
+  ): Translate.PartiallyResolved {
+    return new Translate(
+      LengthPercentage.partiallyResolve(resolver)(this._x),
+      LengthPercentage.partiallyResolve(resolver)(this._x),
       this._z.resolve(resolver),
     );
   }
@@ -127,16 +139,6 @@ export namespace Translate {
   export type PartialResolver = LengthPercentage.PartialResolver &
     Length.Resolver;
 
-  export function partiallyResolve(
-    resolver: PartialResolver,
-  ): (value: Translate) => PartiallyResolved {
-    return (value) =>
-      Translate.of(
-        LengthPercentage.partiallyResolve(resolver)(value.x),
-        LengthPercentage.partiallyResolve(resolver)(value.x),
-        value.z.resolve(resolver),
-      );
-  }
   export function isTranslate<
     X extends LengthPercentage,
     Y extends LengthPercentage,

@@ -132,11 +132,8 @@ export namespace Shape {
     ): (value: Basic) => PartiallyResolved {
       return (value) =>
         Selective.of(value)
-          .if(Circle.isCircle, Circle.partiallyResolve(resolver))
-          .if(Ellipse.isEllipse, Ellipse.partiallyResolve(resolver))
-          .if(Inset.isInset, Inset.partiallyResolve(resolver))
-          .if(Polygon.isPolygon, Polygon.partiallyResolve(resolver))
-          .else((rectangle) => rectangle.resolve(resolver))
+          .if(Rectangle.isRectangle, (rectangle) => rectangle.resolve(resolver))
+          .else((value) => value.partiallyResolve(resolver))
           .get();
     }
 

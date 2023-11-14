@@ -7,7 +7,7 @@ import * as Base from "../../calculation/numeric";
 import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
-import type { Resolvable } from "../resolvable";
+import type { PartiallyResolvable, Resolvable } from "../resolvable";
 
 import { Dimension } from "./dimension";
 import { Length } from "./length";
@@ -44,7 +44,9 @@ export namespace LengthPercentage {
    */
   export class Calculated
     extends Dimension.Calculated<"length-percentage">
-    implements Resolvable<Length.Canonical, Resolver>
+    implements
+      Resolvable<Length.Canonical, Resolver>,
+      PartiallyResolvable<Calculated, PartialResolver>
   {
     public static of(value: Math<"length-percentage">): Calculated {
       return new Calculated(value);
@@ -79,6 +81,10 @@ export namespace LengthPercentage {
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as a length`),
       );
+    }
+
+    public partiallyResolve(resolver: PartialResolver): this {
+      return this;
     }
 
     public equals(value: unknown): value is this {
@@ -140,7 +146,7 @@ export namespace LengthPercentage {
     return (value) =>
       Selective.of(value)
         .if(Length.isLength, (value) => value.resolve(resolver))
-        .if(Percentage.isPercentage, Percentage.partiallyResolve)
+        .if(Percentage.isPercentage, (value) => value.partiallyResolve())
         .get();
   }
 

@@ -442,29 +442,30 @@ test(".resolve() fully resolves positions", (t) => {
 });
 
 test(".partiallyResolve() partially resolves positions", (t) => {
-  const actual = parse("left calc(1em + 1px) top calc(20% + 10%)");
-
-  t.deepEqual(
-    Position.partiallyResolve({
+  const actual = parse(
+    "left calc(1em + 1px) top calc(20% + 10%)",
+  )
+    .partiallyResolve({
       length: Length.resolver(
         Length.of(16, "px"),
         Length.of(0, "px"),
         Length.of(0, "px"),
         Length.of(0, "px"),
       ),
-    })(actual).toJSON(),
-    {
-      type: "position",
-      horizontal: {
-        type: "side",
-        side: { type: "keyword", value: "left" },
-        offset: { type: "length", unit: "px", value: 17 },
-      },
-      vertical: {
-        type: "side",
-        side: { type: "keyword", value: "top" },
-        offset: { type: "percentage", value: 0.3 },
-      },
+    });
+
+  t.deepEqual(actual.toJSON(), {
+    type: "position",
+    horizontal: {
+      type: "side",
+      side: { type: "keyword", value: "left" },
+      offset: { type: "length", unit: "px", value: 17 },
     },
+    vertical: {
+      type: "side",
+      side: { type: "keyword", value: "top" },
+      offset: { type: "percentage", value: 0.3 },
+    },
+  },
   );
 });

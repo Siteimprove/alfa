@@ -49,7 +49,7 @@ export namespace Shape {
   ): (value: Shape) => PartiallyResolved {
     return (value) =>
       Selective.of(value)
-        .if(Ellipse.isEllipse, Ellipse.partiallyResolve(resolver))
+        .if(Ellipse.isEllipse, (ellipse) => ellipse.partiallyResolve(resolver))
         .else((value) => value.resolve(resolver))
         .get();
   }

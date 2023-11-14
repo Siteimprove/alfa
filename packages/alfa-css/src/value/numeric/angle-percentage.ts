@@ -6,7 +6,7 @@ import * as Base from "../../calculation/numeric";
 import { type Parser as CSSParser, Token } from "../../syntax";
 import { Unit } from "../../unit";
 
-import type { Resolvable } from "../resolvable";
+import type { PartiallyResolvable, Resolvable } from "../resolvable";
 
 import { Dimension } from "./dimension";
 import { Angle } from "./angle";
@@ -35,7 +35,7 @@ export namespace AnglePercentage {
    */
   export class Calculated
     extends Dimension.Calculated<"angle-percentage">
-    implements Resolvable<Canonical, Resolver>
+    implements Resolvable<Canonical, never>
   {
     public static of(value: Math<"angle-percentage">): Calculated {
       return new Calculated(value);
@@ -49,7 +49,7 @@ export namespace AnglePercentage {
       return true;
     }
 
-    public resolve(resolver: Resolver): Canonical {
+    public resolve(): Canonical {
       return Angle.Fixed.of(
         this._math
           // The math expression resolver is only aware of BasePercentage and
@@ -57,11 +57,8 @@ export namespace AnglePercentage {
           // so the resolver here is only aware of Percentage, and we need to
           // translate back and forth.
           .resolve({
-            percentage: (value) =>
-              Base.Angle.of(
-                resolver.percentageBase.value,
-                /* this is "deg"! */ resolver.percentageBase.unit,
-              ).scale(value.value),
+            // 100% is always 1 full turn!
+            percentage: (value) => Base.Angle.of(360, "deg").scale(value.value),
           })
           // Since the expression has been correctly typed, it should always resolve.
           .getUnsafe(`Could not resolve ${this._math} as an angle`),
@@ -85,22 +82,13 @@ export namespace AnglePercentage {
     | Percentage.Calculated.JSON
     | Percentage.Fixed.JSON;
 
-  // In order to resolve a percentage, we need a base (=100%)
-  // There are no relative angles, so these are easy to resolve.
-  export type Resolver = Percentage.Resolver<"angle">;
-
   /**
    * Fully resolves an angle-percentage, when a full resolver is provided.
    */
-  export function resolve(
-    resolver: Resolver,
-  ): (value: AnglePercentage) => Canonical {
-    return (value) =>
-      // We need to break down the union to help TS find the correct overload
-      // of each component and correctly narrow the result.
-      Percentage.isPercentage(value)
-        ? value.resolve(resolver)
-        : value.resolve(resolver);
+  export function resolve(value: AnglePercentage): Canonical {
+    return Percentage.isPercentage(value)
+      ? value.resolve({ percentageBase: Angle.of(360, "deg") })
+      : value.resolve();
   }
 
   export function isAnglePercentage(value: unknown): value is AnglePercentage {

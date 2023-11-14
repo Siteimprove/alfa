@@ -6,7 +6,7 @@ import { Parser } from "@siteimprove/alfa-parser";
 
 import { type Parser as CSSParser, Token } from "../../syntax";
 
-import type { Resolvable } from "../resolvable";
+import type { PartiallyResolvable, Resolvable } from "../resolvable";
 import { Value } from "../value";
 
 const { delimited, option, map, separatedList } = Parser;
@@ -18,7 +18,11 @@ export class List<V extends Value>
   extends Value<"list", Value.HasCalculation<[V]>>
   implements
     Iterable<V>,
-    Resolvable<List<Resolvable.Resolved<V>>, Resolvable.Resolver<V>>
+    Resolvable<List<Resolvable.Resolved<V>>, Resolvable.Resolver<V>>,
+    PartiallyResolvable<
+      List<Resolvable.PartiallyResolved<V>>,
+      Resolvable.PartialResolver<V>
+    >
 {
   public static of<V extends Value>(
     values: Iterable<V>,
@@ -45,6 +49,15 @@ export class List<V extends Value>
   ): List<Resolvable.Resolved<V>> {
     return this.map(
       (value) => value.resolve(resolver) as Resolvable.Resolved<V>,
+    );
+  }
+
+  public partiallyResolve(
+    resolver?: Resolvable.PartialResolver<V>,
+  ): List<Resolvable.PartiallyResolved<V>> {
+    return this.map(
+      (value) =>
+        value.partiallyResolve(resolver) as Resolvable.PartiallyResolved<V>,
     );
   }
 

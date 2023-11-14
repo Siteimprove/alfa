@@ -59,7 +59,7 @@ export namespace Transform {
   ): (value: Transform) => PartiallyResolved {
     return (value) =>
       Translate.isTranslate(value)
-        ? Translate.partiallyResolve(resolver)(value)
+        ? value.partiallyResolve(resolver)
         : value.resolve(resolver);
   }
 
