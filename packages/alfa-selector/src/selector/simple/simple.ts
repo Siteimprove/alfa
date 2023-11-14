@@ -1,4 +1,9 @@
+import { Token } from "@siteimprove/alfa-css";
+import { Parser } from "@siteimprove/alfa-parser";
+
 import { Selector } from "../selector";
+
+const { either, left, map, option, pair } = Parser;
 
 /**
  * @internal
@@ -42,4 +47,27 @@ export namespace Simple {
     extends Selector.JSON<T> {
     name: N;
   }
+
+  /**
+   * {@link https://drafts.csswg.org/selectors/#typedef-ns-prefix}
+   *
+   * @internal
+   */
+  export const parseNamespace = map(
+    left(
+      option(either(Token.parseIdent(), Token.parseDelim("*"))),
+      Token.parseDelim("|"),
+    ),
+    (token) => token.map((token) => token.toString()).getOr(""),
+  );
+
+  /**
+   * {@link https://drafts.csswg.org/selectors/#typedef-wq-name}
+   *
+   * @internal
+   */
+  export const parseName = pair(
+    option(parseNamespace),
+    map(Token.parseIdent(), (ident) => ident.value),
+  );
 }

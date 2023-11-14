@@ -4,7 +4,7 @@ import { Lexer } from "@siteimprove/alfa-css";
 
 import { Context, Selector } from "../src";
 import { Combinator } from "../src/selector/combinator";
-import { Attribute } from "../src/selector/simple";
+import { Attribute } from "../src/selector/simple/index";
 
 function parse(input: string) {
   return Selector.parse(Lexer.lex(input)).map(([, selector]) => selector);

@@ -17,10 +17,13 @@
     "src/selector/relative.ts",
     "src/selector/selector.ts",
     "src/selector/simple.ts",
+    "src/selector/simple/attribute.ts",
     "src/selector/simple/class.ts",
     "src/selector/simple/id.ts",
     "src/selector/simple/index.ts",
     "src/selector/simple/simple.ts",
+    "src/selector/simple/type.ts",
+    "src/selector/simple/universal.ts",
     "test/selector.spec.tsx"
   ],
   "references": [
