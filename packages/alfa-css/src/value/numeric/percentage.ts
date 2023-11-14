@@ -80,13 +80,13 @@ export namespace Percentage {
       return true;
     }
 
-    public resolve(): Canonical;
+    public resolve(): Fixed<H>;
 
     public resolve<T extends Canonicals[H]>(resolver: Resolver<H>): T;
 
     public resolve<T extends Canonicals[H]>(
       resolver?: Resolver<H>,
-    ): Canonical | T {
+    ): Fixed<H> | T {
       const percentage = Fixed.of<H>(
         this._math
           .resolve()
