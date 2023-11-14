@@ -40,8 +40,20 @@ export function h<N extends string = string>(
   style?: Array<Declaration> | Record<string, string>,
   box?: Rectangle,
   device: Device = Device.standard(),
+  externalId?: string,
+  extraData?: any,
 ): Element<N> {
-  return h.element(name, attributes, children, style, undefined, box, device);
+  return h.element(
+    name,
+    attributes,
+    children,
+    style,
+    undefined,
+    box,
+    device,
+    externalId,
+    extraData,
+  );
 }
 
 /**
@@ -56,6 +68,8 @@ export namespace h {
     namespace?: Namespace,
     box?: Rectangle,
     device?: Device,
+    externalId?: string,
+    extraData?: any,
   ): Element<N> {
     attributes = Array.isArray(attributes)
       ? attributes
@@ -100,6 +114,8 @@ export namespace h {
       style.length === 0 ? None : Option.of(block),
       Option.from(box),
       Option.from(device),
+      externalId,
+      extraData,
     );
 
     if (content !== undefined) {
@@ -116,23 +132,33 @@ export namespace h {
   export function attribute<N extends string = string>(
     name: N,
     value: string,
+    externalId?: string,
+    extraData?: any,
   ): Attribute<N> {
-    return Attribute.of(None, None, name, value);
+    return Attribute.of(None, None, name, value, externalId, extraData);
   }
 
-  export function text(data: string): Text {
-    return Text.of(data);
+  export function text(
+    data: string,
+    externalId?: string,
+    extraData?: any,
+  ): Text {
+    return Text.of(data, externalId, extraData);
   }
 
   export function document(
     children: Array<Node | string>,
     style?: Array<Sheet>,
+    externalId?: string,
+    extraData?: any,
   ): Document {
     return Document.of(
       children.map((child) =>
         typeof child === "string" ? text(child) : child,
       ),
       style,
+      externalId,
+      extraData,
     );
   }
 
@@ -140,6 +166,8 @@ export namespace h {
     children: Array<Node | string>,
     style?: Array<Sheet>,
     mode?: Shadow.Mode,
+    externalId?: string,
+    extraData?: any,
   ): Shadow {
     return Shadow.of(
       children!.map((child) =>
@@ -147,6 +175,8 @@ export namespace h {
       ),
       style,
       mode,
+      externalId,
+      extraData,
     );
   }
 
@@ -154,15 +184,29 @@ export namespace h {
     name: N,
     publicId?: string,
     systemId?: string,
+    externalId?: string,
+    extraData?: any,
   ): Type<N> {
-    return Type.of(name, Option.from(publicId), Option.from(systemId));
+    return Type.of(
+      name,
+      Option.from(publicId),
+      Option.from(systemId),
+      externalId,
+      extraData,
+    );
   }
 
-  export function fragment(children: Array<Node | string>): Fragment {
+  export function fragment(
+    children: Array<Node | string>,
+    externalId?: string,
+    extraData?: any,
+  ): Fragment {
     return Fragment.of(
       children.map((child) =>
         typeof child === "string" ? text(child) : child,
       ),
+      externalId,
+      extraData,
     );
   }
 

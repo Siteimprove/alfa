@@ -1,10 +1,11 @@
-import { Diagnostic, Rule } from "@siteimprove/alfa-act";
+import { Rule } from "@siteimprove/alfa-act";
 import { DOM, Node } from "@siteimprove/alfa-aria";
 import { Element, Namespace, Query } from "@siteimprove/alfa-dom";
 import { Predicate } from "@siteimprove/alfa-predicate";
 import { Err, Ok } from "@siteimprove/alfa-result";
 import { Criterion } from "@siteimprove/alfa-wcag";
 import { Page } from "@siteimprove/alfa-web";
+import { Iterable } from "@siteimprove/alfa-iterable";
 
 import * as dom from "@siteimprove/alfa-dom";
 
@@ -16,6 +17,7 @@ import { referenceSameResource } from "../common/predicate";
 import { Scope, Stability } from "../tags";
 
 import { normalize } from "../common/normalize";
+import { WithAccessibleName } from "../common/diagnostic";
 
 const { hasNonEmptyAccessibleName, isIncludedInTheAccessibilityTree } = DOM;
 const { hasName, hasNamespace } = Element;
@@ -56,10 +58,15 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
             referenceSameResource(response.url)(element, elements[i - 1]),
         );
 
+        const name = WithAccessibleName.getAccessibleName(
+          Iterable.first(target).getUnsafe(), // Existence of first element is guaranteed by applicability
+          device,
+        ).getUnsafe(); // Existence of accessible name is guaranteed by applicability
+
         return {
           1: expectation(
             embedSameResource,
-            () => Outcomes.EmbedSameResources,
+            () => Outcomes.EmbedSameResources(name),
             () =>
               Question.of(
                 "reference-equivalent-resources",
@@ -68,8 +75,8 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
               ).map((embedEquivalentResources) =>
                 expectation(
                   embedEquivalentResources,
-                  () => Outcomes.EmbedEquivalentResources,
-                  () => Outcomes.EmbedDifferentResources,
+                  () => Outcomes.EmbedEquivalentResources(name),
+                  () => Outcomes.EmbedDifferentResources(name),
                 ),
               ),
           ),
@@ -83,17 +90,27 @@ export default Rule.Atomic.of<Page, Group<Element>, Question.Metadata>({
  * @public
  */
 export namespace Outcomes {
-  export const EmbedSameResources = Ok.of(
-    Diagnostic.of(`The \`<iframe>\` elements embed the same resource`),
-  );
+  export const EmbedSameResources = (accessibleName: string) =>
+    Ok.of(
+      WithAccessibleName.of(
+        `The \`<iframe>\` elements embed the same resource`,
+        accessibleName,
+      ),
+    );
 
-  export const EmbedEquivalentResources = Ok.of(
-    Diagnostic.of(`The \`<iframe>\` elements embed equivalent resources`),
-  );
+  export const EmbedEquivalentResources = (accessibleName: string) =>
+    Ok.of(
+      WithAccessibleName.of(
+        `The \`<iframe>\` elements embed equivalent resources`,
+        accessibleName,
+      ),
+    );
 
-  export const EmbedDifferentResources = Err.of(
-    Diagnostic.of(
-      `The \`<iframe>\` elements do not embed the same or equivalent resources`,
-    ),
-  );
+  export const EmbedDifferentResources = (accessibleName: string) =>
+    Err.of(
+      WithAccessibleName.of(
+        `The \`<iframe>\` elements do not embed the same or equivalent resources`,
+        accessibleName,
+      ),
+    );
 }

@@ -37,8 +37,13 @@ export abstract class Node<T extends string = string>
     json.Serializable<tree.Node.JSON<T>, Node.SerializationOptions>,
     sarif.Serializable<sarif.Location>
 {
-  protected constructor(children: Array<Node>, type: T) {
-    super(children, type);
+  protected constructor(
+    children: Array<Node>,
+    type: T,
+    externalId?: string,
+    extraData?: any,
+  ) {
+    super(children, type, externalId, extraData);
   }
 
   /**
