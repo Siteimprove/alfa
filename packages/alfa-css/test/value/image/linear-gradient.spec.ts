@@ -1,13 +1,12 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Gradient, Lexer } from "../../../src";
+import { Gradient } from "../../../src";
+import { serializer } from "../../common/parse";
 
-function parse(input: string) {
-  return Gradient.Linear.parse(Lexer.lex(input)).getUnsafe()[1].toJSON();
-}
+const serialize = serializer(Gradient.Linear.parse);
 
 test("parse() parses a linear gradient with no direction, hint nor intermediate stops", (t) => {
-  t.deepEqual(parse("linear-gradient(red, blue)"), {
+  t.deepEqual(serialize("linear-gradient(red, blue)"), {
     type: "gradient",
     kind: "linear",
     direction: { type: "side", side: "bottom" },
@@ -28,7 +27,7 @@ test("parse() parses a linear gradient with no direction, hint nor intermediate 
 });
 
 test("parse() parses a repeating linear gradient", (t) => {
-  t.deepEqual(parse("repeating-linear-gradient(red, blue)"), {
+  t.deepEqual(serialize("repeating-linear-gradient(red, blue)"), {
     type: "gradient",
     kind: "linear",
     direction: { type: "side", side: "bottom" },
@@ -49,7 +48,7 @@ test("parse() parses a repeating linear gradient", (t) => {
 });
 
 test("parse() parses a linear gradient with an angle direction", (t) => {
-  t.deepEqual(parse("linear-gradient(90deg, red, blue)"), {
+  t.deepEqual(serialize("linear-gradient(90deg, red, blue)"), {
     type: "gradient",
     kind: "linear",
     direction: { type: "angle", value: 90, unit: "deg" },
@@ -70,7 +69,7 @@ test("parse() parses a linear gradient with an angle direction", (t) => {
 });
 
 test("parse() parses a linear gradient with a side direction", (t) => {
-  t.deepEqual(parse("linear-gradient(to left, red, blue)"), {
+  t.deepEqual(serialize("linear-gradient(to left, red, blue)"), {
     type: "gradient",
     kind: "linear",
     direction: { type: "side", side: "left" },
@@ -91,7 +90,7 @@ test("parse() parses a linear gradient with a side direction", (t) => {
 });
 
 test("parse() parses a linear gradient with a corner direction", (t) => {
-  t.deepEqual(parse("linear-gradient(to top left, red, blue)"), {
+  t.deepEqual(serialize("linear-gradient(to top left, red, blue)"), {
     type: "gradient",
     kind: "linear",
     direction: { type: "corner", vertical: "top", horizontal: "left" },
@@ -112,7 +111,7 @@ test("parse() parses a linear gradient with a corner direction", (t) => {
 });
 
 test("parse() parses a linear gradient with a hint", (t) => {
-  t.deepEqual(parse("linear-gradient(to left, red, 10%, blue)"), {
+  t.deepEqual(serialize("linear-gradient(to left, red, 10%, blue)"), {
     type: "gradient",
     kind: "linear",
     direction: { type: "side", side: "left" },
@@ -135,7 +134,7 @@ test("parse() parses a linear gradient with a hint", (t) => {
 
 test("parse() parses a linear gradient with a intermediate stops", (t) => {
   t.deepEqual(
-    parse("linear-gradient(to left, red, 10% yellow, green 2em, blue)"),
+    serialize("linear-gradient(to left, red, 10% yellow, green 2em, blue)"),
     {
       type: "gradient",
       kind: "linear",
@@ -169,7 +168,7 @@ test("parse() parses a linear gradient with a intermediate stops", (t) => {
 
 test("parse() parses a linear gradient with calculations", (t) => {
   t.deepEqual(
-    parse(
+    serialize(
       "linear-gradient(calc(0.25turn + 10deg), red, calc(1px + 10%) yellow, green 2em, blue)",
     ),
     {

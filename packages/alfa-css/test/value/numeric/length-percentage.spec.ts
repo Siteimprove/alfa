@@ -4,8 +4,8 @@ import { Length, LengthPercentage } from "../../../src";
 
 import { parser, parserUnsafe, serializer } from "../../common/parse";
 
-const parse = parser(LengthPercentage.parse);
-const parseUnsafe = parserUnsafe(LengthPercentage.parse);
+const parseErr = parser(LengthPercentage.parse);
+const parse = parserUnsafe(LengthPercentage.parse);
 const serialize = serializer(LengthPercentage.parse);
 
 const resolver: LengthPercentage.Resolver = {
@@ -101,15 +101,15 @@ test("parse() accepts percentages", (t) => {
 });
 
 test("parse() rejects math expressions with angles", (t) => {
-  t.deepEqual(parse("calc(10deg + 1rad)").isErr(), true);
+  t.deepEqual(parseErr("calc(10deg + 1rad)").isErr(), true);
 });
 
 test("parse() rejects math expressions without length", (t) => {
-  t.deepEqual(parse("calc(10 + 1)").isErr(), true);
+  t.deepEqual(parseErr("calc(10 + 1)").isErr(), true);
 });
 
 test("resolve() absolutize lengths", (t) => {
-  t.deepEqual(parseUnsafe("2em").resolve(resolver).toJSON(), {
+  t.deepEqual(parse("2em").resolve(resolver).toJSON(), {
     type: "length",
     value: 32,
     unit: "px",
@@ -117,7 +117,7 @@ test("resolve() absolutize lengths", (t) => {
 });
 
 test("resolve() resolves lengths calculations", (t) => {
-  t.deepEqual(parseUnsafe("calc(1em + 2px)").resolve(resolver).toJSON(), {
+  t.deepEqual(parse("calc(1em + 2px)").resolve(resolver).toJSON(), {
     type: "length",
     value: 18,
     unit: "px",
@@ -125,7 +125,7 @@ test("resolve() resolves lengths calculations", (t) => {
 });
 
 test("resolve() resolves pure percentages", (t) => {
-  t.deepEqual(parseUnsafe("50%").resolve(resolver).toJSON(), {
+  t.deepEqual(parse("50%").resolve(resolver).toJSON(), {
     type: "length",
     value: 8,
     unit: "px",
@@ -133,7 +133,7 @@ test("resolve() resolves pure percentages", (t) => {
 });
 
 test("resolve() resolves percentage calculations", (t) => {
-  t.deepEqual(parseUnsafe("calc((12% + 9%) * 2)").resolve(resolver).toJSON(), {
+  t.deepEqual(parse("calc((12% + 9%) * 2)").resolve(resolver).toJSON(), {
     type: "length",
     value: 6.72,
     unit: "px",
@@ -141,7 +141,7 @@ test("resolve() resolves percentage calculations", (t) => {
 });
 
 test("resolve() resolves mix of lengths and percentages", (t) => {
-  t.deepEqual(parseUnsafe("calc(2em + 10%)").resolve(resolver).toJSON(), {
+  t.deepEqual(parse("calc(2em + 10%)").resolve(resolver).toJSON(), {
     type: "length",
     value: 33.6,
     unit: "px",
@@ -153,7 +153,7 @@ const partiallyResolve = LengthPercentage.partiallyResolve({
 });
 
 test("partiallyResolve() absolutize lengths", (t) => {
-  t.deepEqual(partiallyResolve(parseUnsafe("2em")).toJSON(), {
+  t.deepEqual(partiallyResolve(parse("2em")).toJSON(), {
     type: "length",
     value: 32,
     unit: "px",
@@ -161,7 +161,7 @@ test("partiallyResolve() absolutize lengths", (t) => {
 });
 
 test("partiallyResolve() resolves lengths calculations", (t) => {
-  t.deepEqual(partiallyResolve(parseUnsafe("calc(1em + 2px)")).toJSON(), {
+  t.deepEqual(partiallyResolve(parse("calc(1em + 2px)")).toJSON(), {
     type: "length",
     value: 18,
     unit: "px",
@@ -169,21 +169,21 @@ test("partiallyResolve() resolves lengths calculations", (t) => {
 });
 
 test("partiallyResolve() leaves pure percentages untouched", (t) => {
-  t.deepEqual(partiallyResolve(parseUnsafe("50%")).toJSON(), {
+  t.deepEqual(partiallyResolve(parse("50%")).toJSON(), {
     type: "percentage",
     value: 0.5,
   });
 });
 
 test("partiallyResolve() simplify calculated percentages", (t) => {
-  t.deepEqual(partiallyResolve(parseUnsafe("calc((12% + 9%) * 2)")).toJSON(), {
+  t.deepEqual(partiallyResolve(parse("calc((12% + 9%) * 2)")).toJSON(), {
     type: "percentage",
     value: 0.42,
   });
 });
 
 test("partiallyResolve() leaves mix of lengths and percentages untouched", (t) => {
-  t.deepEqual(partiallyResolve(parseUnsafe("calc(10px + 5%)")).toJSON(), {
+  t.deepEqual(partiallyResolve(parse("calc(10px + 5%)")).toJSON(), {
     type: "length-percentage",
     math: {
       type: "math expression",
