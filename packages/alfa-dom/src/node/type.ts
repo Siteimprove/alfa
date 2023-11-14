@@ -11,8 +11,10 @@ export class Type<N extends string = string> extends Node<"type"> {
     name: N,
     publicId: Option<string> = None,
     systemId: Option<string> = None,
+    externalId?: string,
+    extraData?: any,
   ): Type<N> {
-    return new Type(name, publicId, systemId);
+    return new Type(name, publicId, systemId, externalId, extraData);
   }
 
   public static empty(): Type {
@@ -27,8 +29,10 @@ export class Type<N extends string = string> extends Node<"type"> {
     name: N,
     publicId: Option<string>,
     systemId: Option<string>,
+    externalId?: string,
+    extraData?: any,
   ) {
-    super([], "type");
+    super([], "type", externalId, extraData);
 
     this._name = name;
     this._publicId = publicId;

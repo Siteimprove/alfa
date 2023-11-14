@@ -14,39 +14,48 @@ import { oracle } from "../common/oracle";
 import { passed, failed, inapplicable, cantTell } from "../common/outcome";
 
 test("evaluate() passes when two iframes embed the exact same resource", async (t) => {
+  const accessibleName = "Foo";
+
   const target = [
-    <iframe title="Foo" src="https://somewhere.com/foo.html" />,
-    <iframe aria-label="Foo" src="https://somewhere.com/foo.html" />,
+    <iframe title={accessibleName} src="https://somewhere.com/foo.html" />,
+    <iframe aria-label={accessibleName} src="https://somewhere.com/foo.html" />,
   ];
 
   const document = h.document(target);
 
   t.deepEqual(await evaluate(R15, { document }), [
     passed(R15, Group.of(target), {
-      1: Outcomes.EmbedSameResources,
+      1: Outcomes.EmbedSameResources(accessibleName),
     }),
   ]);
 });
 
 test("evaluate() passes when two iframes embed the exact same resource via srcdoc", async (t) => {
+  const accessibleName = "Foo";
+
   const target = [
-    <iframe title="Foo" srcdoc="<span>foo</span>" />,
-    <iframe aria-label="Foo" srcdoc="<span>foo</span>" />,
+    <iframe title={accessibleName} srcdoc="<span>foo</span>" />,
+    <iframe aria-label={accessibleName} srcdoc="<span>foo</span>" />,
   ];
 
   const document = h.document(target);
 
   t.deepEqual(await evaluate(R15, { document }), [
     passed(R15, Group.of(target), {
-      1: Outcomes.EmbedSameResources,
+      1: Outcomes.EmbedSameResources(accessibleName),
     }),
   ]);
 });
 
 test("evaluate() passes when two iframes embed equivalent resources", async (t) => {
+  const accessibleName = "Foo";
+
   const target = [
-    <iframe title="Foo" src="https://somewhere.com/foo1.html" />,
-    <iframe aria-label="Foo" src="https://somewhere.com/foo2.html" />,
+    <iframe title={accessibleName} src="https://somewhere.com/foo1.html" />,
+    <iframe
+      aria-label={accessibleName}
+      src="https://somewhere.com/foo2.html"
+    />,
   ];
 
   const document = h.document(target);
@@ -62,7 +71,7 @@ test("evaluate() passes when two iframes embed equivalent resources", async (t) 
         R15,
         Group.of(target),
         {
-          1: Outcomes.EmbedEquivalentResources,
+          1: Outcomes.EmbedEquivalentResources(accessibleName),
         },
         Outcome.Mode.SemiAuto,
       ),
@@ -71,9 +80,11 @@ test("evaluate() passes when two iframes embed equivalent resources", async (t) 
 });
 
 test("evaluate() passes when toplevel and nested iframe embed the same resource", async (t) => {
+  const accessibleName = "Foo";
+
   const target = [
-    <iframe title="Foo" src="https://somewhere.com/foo.html" />,
-    <iframe aria-label="Foo" src="https://somewhere.com/foo.html" />,
+    <iframe title={accessibleName} src="https://somewhere.com/foo.html" />,
+    <iframe aria-label={accessibleName} src="https://somewhere.com/foo.html" />,
   ];
 
   const document = h.document([
@@ -83,15 +94,17 @@ test("evaluate() passes when toplevel and nested iframe embed the same resource"
 
   t.deepEqual(await evaluate(R15, { document }), [
     passed(R15, Group.of(target), {
-      1: Outcomes.EmbedSameResources,
+      1: Outcomes.EmbedSameResources(accessibleName),
     }),
   ]);
 });
 
 test("evaluate() fails when two iframes embed different resources", async (t) => {
+  const accessibleName = "Foobar";
+
   const target = [
-    <iframe title="Foobar" src="https://somewhere.com/foo.html" />,
-    <iframe aria-label="Foobar" src="https://somewhere.com/bar.html" />,
+    <iframe title={accessibleName} src="https://somewhere.com/foo.html" />,
+    <iframe aria-label={accessibleName} src="https://somewhere.com/bar.html" />,
   ];
 
   const document = h.document(target);
@@ -107,7 +120,7 @@ test("evaluate() fails when two iframes embed different resources", async (t) =>
         R15,
         Group.of(target),
         {
-          1: Outcomes.EmbedDifferentResources,
+          1: Outcomes.EmbedDifferentResources(accessibleName),
         },
         Outcome.Mode.SemiAuto,
       ),
@@ -148,28 +161,35 @@ test("evaluate() can't tell if there is no source", async (t) => {
 });
 
 test("evaluate() passes when two iframes embed the same resource up to trailing slash", async (t) => {
+  const accessibleName = "Foo";
+
   const target = [
-    <iframe title="Foo" src="https://somewhere.com/" />,
-    <iframe aria-label="Foo" src="https://somewhere.com" />,
+    <iframe title={accessibleName} src="https://somewhere.com/" />,
+    <iframe aria-label={accessibleName} src="https://somewhere.com" />,
   ];
 
   const document = h.document(target);
 
   t.deepEqual(await evaluate(R15, { document }), [
     passed(R15, Group.of(target), {
-      1: Outcomes.EmbedSameResources,
+      1: Outcomes.EmbedSameResources(accessibleName),
     }),
   ]);
 });
 
 test("evaluate() correctly resolves relative URLs", async (t) => {
+  const accessibleName = "Foo";
+
   const target = [
-    <iframe title="Foo" src="https://somewhere.com/path/to/foo.html" />,
-    <iframe title="Foo" src="foo.html" />,
-    <iframe title="Foo" src="./foo.html" />,
-    <iframe title="Foo" src="/path/to/foo.html" />,
-    <iframe title="Foo" src="down/../foo.html" />,
-    <iframe title="Foo" src="../to/foo.html" />,
+    <iframe
+      title={accessibleName}
+      src="https://somewhere.com/path/to/foo.html"
+    />,
+    <iframe title={accessibleName} src="foo.html" />,
+    <iframe title={accessibleName} src="./foo.html" />,
+    <iframe title={accessibleName} src="/path/to/foo.html" />,
+    <iframe title={accessibleName} src="down/../foo.html" />,
+    <iframe title={accessibleName} src="../to/foo.html" />,
   ];
 
   const document = h.document(target);
@@ -184,7 +204,7 @@ test("evaluate() correctly resolves relative URLs", async (t) => {
     }),
     [
       passed(R15, Group.of(target), {
-        1: Outcomes.EmbedSameResources,
+        1: Outcomes.EmbedSameResources(accessibleName),
       }),
     ],
   );

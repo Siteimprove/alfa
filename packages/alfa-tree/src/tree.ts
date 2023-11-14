@@ -46,6 +46,10 @@ export abstract class Node<
   protected _parent: Option<Node<F>> = None;
   protected readonly _type: T;
 
+  // Externally provided data.
+  private readonly _externalId: string | undefined;
+  private readonly _extraData: any;
+
   /**
    * Whether the node is frozen.
    *
@@ -59,15 +63,29 @@ export abstract class Node<
    */
   protected _frozen: boolean = false;
 
-  protected constructor(children: Array<Node<F>>, type: T) {
+  protected constructor(
+    children: Array<Node<F>>,
+    type: T,
+    externalId?: string,
+    extraData?: any,
+  ) {
     this._children = (children as Array<Node<F>>).filter((child) =>
       child._attachParent(this),
     ) as Array<Node<F>>;
     this._type = type;
+    this._externalId = externalId;
+    this._extraData = extraData;
   }
 
   public get type(): T {
     return this._type;
+  }
+
+  public get externalId(): string | undefined {
+    return this._externalId;
+  }
+  public get extraData(): any {
+    return this._extraData;
   }
 
   public get frozen(): boolean {
@@ -381,6 +399,9 @@ export abstract class Node<
     return {
       type: this._type,
       children: this._children.map((child) => child.toJSON(options)),
+      ...(this._externalId === undefined
+        ? {}
+        : { externalId: this._externalId }),
     };
   }
 
@@ -407,5 +428,6 @@ export namespace Node {
     [key: string]: json.JSON | undefined;
     type: T;
     children?: Array<JSON>;
+    externalId?: string;
   }
 }

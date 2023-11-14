@@ -12,8 +12,10 @@ export class Document extends Node<"document"> {
   public static of(
     children: Iterable<Node>,
     style: Iterable<Sheet> = [],
+    externalId?: string,
+    extraData?: any,
   ): Document {
-    return new Document(Array.from(children), style);
+    return new Document(Array.from(children), style, externalId, extraData);
   }
 
   public static empty(): Document {
@@ -23,8 +25,13 @@ export class Document extends Node<"document"> {
   private readonly _style: Array<Sheet>;
   private _frame: Option<Element> = None;
 
-  private constructor(children: Array<Node>, style: Iterable<Sheet>) {
-    super(children, "document");
+  private constructor(
+    children: Array<Node>,
+    style: Iterable<Sheet>,
+    externalId?: string,
+    extraData?: any,
+  ) {
+    super(children, "document", externalId, extraData);
 
     this._style = Array.from(style);
   }

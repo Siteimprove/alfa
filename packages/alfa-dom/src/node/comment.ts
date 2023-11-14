@@ -6,8 +6,12 @@ import { Node } from "../node";
  * @public
  */
 export class Comment extends Node<"comment"> {
-  public static of(data: string): Comment {
-    return new Comment(data);
+  public static of(
+    data: string,
+    externalId?: string,
+    extraData?: any,
+  ): Comment {
+    return new Comment(data, externalId, extraData);
   }
 
   public static empty(): Comment {
@@ -16,8 +20,8 @@ export class Comment extends Node<"comment"> {
 
   private readonly _data: string;
 
-  private constructor(data: string) {
-    super([], "comment");
+  private constructor(data: string, externalId?: string, extraData?: any) {
+    super([], "comment", externalId, extraData);
 
     this._data = data;
   }

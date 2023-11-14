@@ -29,3 +29,9 @@ test("Element without box attribute has box property equal to `None`", (t) => {
 
   t.deepEqual(element.getBoundingBox(device).isNone(), true);
 });
+
+test("Elements accept an external Id", (t) => {
+  const element = <div externalId="foo">Hello</div>;
+
+  t.deepEqual(element.externalId, "foo");
+});
