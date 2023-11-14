@@ -14,8 +14,16 @@ export class Shadow extends Node<"shadow"> {
     children: Iterable<Node>,
     style: Iterable<Sheet> = [],
     mode: Shadow.Mode = Shadow.Mode.Open,
+    externalId?: string,
+    extraData?: any,
   ): Shadow {
-    return new Shadow(Array.from(children), Array.from(style), mode);
+    return new Shadow(
+      Array.from(children),
+      Array.from(style),
+      mode,
+      externalId,
+      extraData,
+    );
   }
 
   public static empty(): Shadow {
@@ -30,8 +38,10 @@ export class Shadow extends Node<"shadow"> {
     children: Array<Node>,
     style: Array<Sheet>,
     mode: Shadow.Mode,
+    externalId?: string,
+    extraData?: any,
   ) {
-    super(children, "shadow");
+    super(children, "shadow", externalId, extraData);
 
     this._mode = mode;
     this._style = style;

@@ -11,8 +11,8 @@ import { Slotable } from "./slotable";
  * @public
  */
 export class Text extends Node<"text"> implements Slotable {
-  public static of(data: string): Text {
-    return new Text(data);
+  public static of(data: string, externalId?: string, extraData?: any): Text {
+    return new Text(data, externalId, extraData);
   }
 
   public static empty(): Text {
@@ -21,8 +21,8 @@ export class Text extends Node<"text"> implements Slotable {
 
   private readonly _data: string;
 
-  private constructor(data: string) {
-    super([], "text");
+  private constructor(data: string, externalId?: string, extraData?: any) {
+    super([], "text", externalId, extraData);
 
     this._data = data;
   }
