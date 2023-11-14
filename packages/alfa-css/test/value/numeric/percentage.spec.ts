@@ -4,8 +4,8 @@ import { Percentage } from "../../../src";
 
 import { parser, parserUnsafe, serializer } from "../../common/parse";
 
-const parse = parser(Percentage.parse);
-const parseUnsafe = parserUnsafe(Percentage.parse);
+const parseErr = parser(Percentage.parse);
+const parse = parserUnsafe(Percentage.parse);
 const serialize = serializer(Percentage.parse);
 
 test("parse() accepts percentages", (t) => {
@@ -23,19 +23,19 @@ test("parse() accepts math expressions reducing to percentages", (t) => {
 });
 
 test("parse() rejects math expressions with length", (t) => {
-  t.deepEqual(parse("calc(10px + 5%)").isErr(), true);
+  t.deepEqual(parseErr("calc(10px + 5%)").isErr(), true);
 });
 
 test("parse() rejects math expressions with angles", (t) => {
-  t.deepEqual(parse("calc(10deg + 1rad)").isErr(), true);
+  t.deepEqual(parseErr("calc(10deg + 1rad)").isErr(), true);
 });
 
 test("parse() rejects math expressions with only numbers", (t) => {
-  t.deepEqual(parse("calc(10 + 1)").isErr(), true);
+  t.deepEqual(parseErr("calc(10 + 1)").isErr(), true);
 });
 
 test("partiallyResolve() returns a bare percentage", (t) => {
-  t.deepEqual(parseUnsafe("calc((12% + 9%) * 2)").partiallyResolve().toJSON(), {
+  t.deepEqual(parse("calc((12% + 9%) * 2)").partiallyResolve().toJSON(), {
     type: "percentage",
     value: 0.42,
   });

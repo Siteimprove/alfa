@@ -1,13 +1,14 @@
 import { test } from "@siteimprove/alfa-test";
 
-import { Lexer, Math } from "../../src";
+import { Math } from "../../src";
+import { parser, parserUnsafe, serializer } from "../common/parse";
 
-function parse(input: string) {
-  return Math.parse(Lexer.lex(input)).map(([, calculation]) => calculation);
-}
+const parseErr = parser(Math.parse);
+const parse = parserUnsafe(Math.parse);
+const serialize = serializer(Math.parse);
 
 test(".parse() parses an addition expression of numbers", (t) => {
-  const calculation = parse("calc(1 + 2)").getUnsafe();
+  const calculation = parse("calc(1 + 2)");
 
   t(calculation.isNumber());
 
@@ -21,7 +22,7 @@ test(".parse() parses an addition expression of numbers", (t) => {
 });
 
 test(".parse() parses an addition expression of percentages", (t) => {
-  const calculation = parse("calc(1% + 2%)").getUnsafe();
+  const calculation = parse("calc(1% + 2%)");
 
   t(calculation.isPercentage());
 
@@ -35,7 +36,7 @@ test(".parse() parses an addition expression of percentages", (t) => {
 });
 
 test(".parse() parses an addition expression of absolute lengths", (t) => {
-  const calculation = parse("calc(1px + 2px)").getUnsafe();
+  const calculation = parse("calc(1px + 2px)");
 
   t(calculation.isDimension("length"));
 
@@ -49,7 +50,7 @@ test(".parse() parses an addition expression of absolute lengths", (t) => {
 });
 
 test(".parse() parses an addition expression of relative lengths", (t) => {
-  const calculation = parse("calc(1em + 2em)").getUnsafe();
+  const calculation = parse("calc(1em + 2em)");
 
   t(calculation.isDimension("length"));
 
@@ -63,7 +64,7 @@ test(".parse() parses an addition expression of relative lengths", (t) => {
 });
 
 test(".parse() parses an addition expression of mixed lengths", (t) => {
-  const calculation = parse("calc(1px + 2em)").getUnsafe();
+  const calculation = parse("calc(1px + 2em)");
 
   t(calculation.isDimension("length"));
 
@@ -91,7 +92,7 @@ test(".parse() parses an addition expression of mixed lengths", (t) => {
 });
 
 test(".parse() parses an addition expression of a length and a percentage", (t) => {
-  const calculation = parse("calc(1px + 2%").getUnsafe();
+  const calculation = parse("calc(1px + 2%");
 
   t(calculation.isDimensionPercentage("length"));
 
@@ -119,7 +120,7 @@ test(".parse() parses an addition expression of a length and a percentage", (t) 
 });
 
 test(".parse() parses a multiplication expression of numbers", (t) => {
-  const calculation = parse("calc(2 * 3)").getUnsafe();
+  const calculation = parse("calc(2 * 3)");
 
   t(calculation.isNumber());
 
@@ -133,7 +134,7 @@ test(".parse() parses a multiplication expression of numbers", (t) => {
 });
 
 test(".parse() parses a multiplication expression of a number and a percentage", (t) => {
-  const calculation = parse("calc(2 * 3%)").getUnsafe();
+  const calculation = parse("calc(2 * 3%)");
 
   t(calculation.isPercentage());
 
@@ -147,7 +148,7 @@ test(".parse() parses a multiplication expression of a number and a percentage",
 });
 
 test(".parse() parses a multiplication expression of a number and a length", (t) => {
-  const calculation = parse("calc(2 * 3px)").getUnsafe();
+  const calculation = parse("calc(2 * 3px)");
 
   t(calculation.isDimension("length"));
 
@@ -161,7 +162,7 @@ test(".parse() parses a multiplication expression of a number and a length", (t)
 });
 
 test(".parse() parses an addition expression of angles", (t) => {
-  const calculation = parse("calc(90deg + 1rad)").getUnsafe();
+  const calculation = parse("calc(90deg + 1rad)");
 
   t(calculation.isDimension("angle"));
 
@@ -175,7 +176,7 @@ test(".parse() parses an addition expression of angles", (t) => {
 });
 
 test(".parse() parses an addition expression of an angle and a percentage", (t) => {
-  const calculation = parse("calc(90deg + 2%").getUnsafe();
+  const calculation = parse("calc(90deg + 2%");
 
   t(calculation.isDimensionPercentage("angle"));
 
@@ -203,7 +204,7 @@ test(".parse() parses an addition expression of an angle and a percentage", (t) 
 });
 
 test(".parse() parses a multiplication expression of a number and an angle", (t) => {
-  const calculation = parse("calc(2 * 21deg)").getUnsafe();
+  const calculation = parse("calc(2 * 21deg)");
 
   t(calculation.isDimension("angle"));
 
@@ -217,7 +218,7 @@ test(".parse() parses a multiplication expression of a number and an angle", (t)
 });
 
 test(".parse() gives higher precedence to * and / than + and -", (t) => {
-  t.deepEqual(parse("calc(2 * 3 + 4)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc(2 * 3 + 4)"), {
     type: "math expression",
     expression: {
       type: "value",
@@ -225,7 +226,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
-  t.deepEqual(parse("calc(2 + 3 * 4)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc(2 + 3 * 4)"), {
     type: "math expression",
     expression: {
       type: "value",
@@ -233,7 +234,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
-  t.deepEqual(parse("calc(2 * 3 - 4)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc(2 * 3 - 4)"), {
     type: "math expression",
     expression: {
       type: "value",
@@ -241,7 +242,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
-  t.deepEqual(parse("calc(3 / 2 + 4)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc(3 / 2 + 4)"), {
     type: "math expression",
     expression: {
       type: "value",
@@ -249,7 +250,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
     },
   });
 
-  t.deepEqual(parse("calc(3 / 2 - 4)").getUnsafe().toJSON(), {
+  t.deepEqual(serialize("calc(3 / 2 - 4)"), {
     type: "math expression",
     expression: {
       type: "value",
@@ -259,7 +260,7 @@ test(".parse() gives higher precedence to * and / than + and -", (t) => {
 });
 
 test(".parse() parses a nested calc() function", (t) => {
-  const calculation = parse("calc(2 * calc(1 + 2))").getUnsafe();
+  const calculation = parse("calc(2 * calc(1 + 2))");
 
   t(calculation.isNumber());
 
@@ -273,7 +274,7 @@ test(".parse() parses a nested calc() function", (t) => {
 });
 
 test(".parse() parses longer operations chain", (t) => {
-  const calculation1 = parse("calc(1 - 2 + 3").getUnsafe();
+  const calculation1 = parse("calc(1 - 2 + 3");
 
   t(calculation1.isNumber());
 
@@ -285,7 +286,7 @@ test(".parse() parses longer operations chain", (t) => {
     },
   });
 
-  const calculation2 = parse("calc(10 / 2 * 5").getUnsafe();
+  const calculation2 = parse("calc(10 / 2 * 5");
 
   t(calculation2.isNumber());
 
@@ -299,17 +300,17 @@ test(".parse() parses longer operations chain", (t) => {
 });
 
 test(".parse() rejects sums without surrounding spaces", (t) => {
-  const calculation1 = parse("calc(1+2)");
+  const calculation1 = parseErr("calc(1+2)");
 
   t(calculation1.isErr());
 
-  const calculation2 = parse("calc(1-2)");
+  const calculation2 = parseErr("calc(1-2)");
 
   t(calculation2.isErr());
 });
 
 test(".parse() accepts products without surrounding spaces", (t) => {
-  const calculation1 = parse("calc(1*2)").getUnsafe();
+  const calculation1 = parse("calc(1*2)");
 
   t(calculation1.isNumber());
 
@@ -321,7 +322,7 @@ test(".parse() accepts products without surrounding spaces", (t) => {
     },
   });
 
-  const calculation2 = parse("calc(1/2)").getUnsafe();
+  const calculation2 = parse("calc(1/2)");
 
   t(calculation2.isNumber());
 
@@ -335,7 +336,7 @@ test(".parse() accepts products without surrounding spaces", (t) => {
 });
 
 test(".parse() accepts nesting parenthesis", (t) => {
-  const calculation = parse("calc((1 + 1) * (2 + 2))").getUnsafe();
+  const calculation = parse("calc((1 + 1) * (2 + 2))");
 
   t(calculation.isNumber());
 
@@ -349,7 +350,7 @@ test(".parse() accepts nesting parenthesis", (t) => {
 });
 
 test(".parse() accepts whitespace inside parentheses", (t) => {
-  const calculation = parse("calc(   1 )").getUnsafe();
+  const calculation = parse("calc(   1 )");
 
   t(calculation.isNumber());
 
