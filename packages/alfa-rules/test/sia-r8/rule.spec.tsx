@@ -20,7 +20,7 @@ test("evaluate() passes an input element with implicit label", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName,
+      1: Outcomes.HasName("textbox"),
     }),
   ]);
 });
@@ -32,7 +32,7 @@ test("evaluate() passes an input element with aria-label", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName,
+      1: Outcomes.HasName("textbox"),
     }),
   ]);
 });
@@ -53,7 +53,7 @@ test("evaluate() passes a select element with explicit label", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName,
+      1: Outcomes.HasName("listbox"),
     }),
   ]);
 });
@@ -67,7 +67,7 @@ test("evaluate() passes a textarea element with aria-labelledby", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName,
+      1: Outcomes.HasName("textbox"),
     }),
   ]);
 });
@@ -81,15 +81,17 @@ test("evaluate() passes a input element with placeholder attribute", async (t) =
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName,
+      1: Outcomes.HasName("textbox"),
     }),
   ]);
 });
 
 test(`evaluate() passes a div element with explicit combobox role and an
      aria-label attribute`, async (t) => {
+  const role = "combobox";
+
   const target = (
-    <div aria-label="country" role="combobox" aria-disabled="true">
+    <div aria-label="country" role={role} aria-disabled="true">
       England
     </div>
   );
@@ -98,7 +100,7 @@ test(`evaluate() passes a div element with explicit combobox role and an
 
   t.deepEqual(await evaluate(R8, { document }), [
     passed(R8, target, {
-      1: Outcomes.HasName,
+      1: Outcomes.HasName(role),
     }),
   ]);
 });
@@ -110,7 +112,7 @@ test("evaluate() fails a input element without accessible name", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName,
+      1: Outcomes.HasNoName("textbox"),
     }),
   ]);
 });
@@ -122,7 +124,7 @@ test("evaluate() fails a input element with empty aria-label", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName,
+      1: Outcomes.HasNoName("textbox"),
     }),
   ]);
 });
@@ -141,13 +143,15 @@ test(`evaluate() fails a select element with aria-labelledby pointing to an
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName,
+      1: Outcomes.HasNoName("listbox"),
     }),
   ]);
 });
 
 test("evaluate() fails a textbox with no accessible name", async (t) => {
-  const target = <div role="textbox"></div>;
+  const role = "textbox";
+
+  const target = <div role={role}></div>;
 
   const label = (
     <label>
@@ -159,7 +163,7 @@ test("evaluate() fails a textbox with no accessible name", async (t) => {
 
   t.deepEqual(await evaluate(R8, { document }), [
     failed(R8, target, {
-      1: Outcomes.HasNoName,
+      1: Outcomes.HasNoName(role),
     }),
   ]);
 });
