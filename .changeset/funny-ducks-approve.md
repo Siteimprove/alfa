@@ -1,5 +1,5 @@
 ---
-"@siteimprove/alfa-rules": minor
+"@siteimprove/alfa-rules": major
 ---
 
 **Breaking:** Diagnostics `WithPreviousHeading` and `WithNextHeading` have been removed.
