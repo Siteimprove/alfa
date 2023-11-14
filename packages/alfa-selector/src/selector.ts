@@ -34,8 +34,28 @@ export namespace Selector {
   export import Pseudo = Selectors.Pseudo;
   export import Type = Selectors.Type;
 
-  export import JSON = Selectors.Selector.JSON;
+  export type JSON =
+    | Simple.JSON
+    | Compound.JSON
+    | Complex.JSON
+    | Relative.JSON
+    | List.JSON;
 
+  /**
+   * Parsers for Selectors
+   *
+   * @remarks
+   * Even simple selectors like `:is()` can include any other selector.
+   * This creates circular dependencies, especially in the parser.
+   * To break it, we use dependency injection and inject the top-level
+   * selector into each of the individual ones.
+   *
+   * In order to avoid an infinite recursion, this means that we must actually
+   * inject a continuation wrapping the parser, and only resolve it to an
+   * actual parser upon need.
+   *
+   * That is, the extra `()` "parameter" is needed!
+   */
   function parseSelector(): CSSParser<
     Simple | Compound | Complex | List<Simple | Compound | Complex>
   > {
