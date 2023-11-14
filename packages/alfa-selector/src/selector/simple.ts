@@ -22,6 +22,8 @@ import { Context } from "../context";
 import type { List } from "./list";
 import { Selector } from "./selector";
 
+import { Id } from "./simple/index";
+
 const { State } = Context;
 
 const {
@@ -44,136 +46,6 @@ const {
 const { and, equals, not, property, test } = Predicate;
 const { isElement, hasName } = Element;
 
-/**
- * {@link https://drafts.csswg.org/selectors/#id-selector}
- */
-export class Id extends Selector<"id"> {
-  public static of(name: string): Id {
-    return new Id(name);
-  }
-
-  private readonly _name: string;
-
-  private constructor(name: string) {
-    super("id");
-    this._name = name;
-  }
-
-  public get name(): string {
-    return this._name;
-  }
-
-  public matches(element: Element): boolean {
-    return element.id.includes(this._name);
-  }
-
-  public equals(value: Id): boolean;
-
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): boolean {
-    return value instanceof Id && value._name === this._name;
-  }
-
-  public *[Symbol.iterator](): Iterator<Id> {
-    yield this;
-  }
-
-  public toJSON(): Id.JSON {
-    return {
-      ...super.toJSON(),
-      name: this._name,
-    };
-  }
-
-  public toString(): string {
-    return `#${this._name}`;
-  }
-}
-
-export namespace Id {
-  export interface JSON extends Selector.JSON<"id"> {
-    name: string;
-  }
-
-  export function isId(value: unknown): value is Id {
-    return value instanceof Id;
-  }
-
-  /**
-   * {@link https://drafts.csswg.org/selectors/#typedef-id-selector}
-   *
-   * @internal
-   */
-  export const parseId = map(
-    Token.parseHash((hash) => hash.isIdentifier),
-    (hash) => Id.of(hash.value),
-  );
-}
-/**
- * {@link https://drafts.csswg.org/selectors/#class-selector}
- */
-export class Class extends Selector<"class"> {
-  public static of(name: string): Class {
-    return new Class(name);
-  }
-
-  private readonly _name: string;
-
-  private constructor(name: string) {
-    super("class");
-    this._name = name;
-  }
-
-  public get name(): string {
-    return this._name;
-  }
-
-  public matches(element: Element): boolean {
-    return Iterable.includes(element.classes, this._name);
-  }
-
-  public equals(value: Class): boolean;
-
-  public equals(value: unknown): value is this;
-
-  public equals(value: unknown): value is boolean {
-    return value instanceof Class && value._name === this._name;
-  }
-
-  public *[Symbol.iterator](): Iterator<Class> {
-    yield this;
-  }
-
-  public toJSON(): Class.JSON {
-    return {
-      ...super.toJSON(),
-      name: this._name,
-    };
-  }
-
-  public toString(): string {
-    return `.${this._name}`;
-  }
-}
-
-export namespace Class {
-  export interface JSON extends Selector.JSON<"class"> {
-    name: string;
-  }
-
-  export function isClass(value: unknown): value is Class {
-    return value instanceof Class;
-  }
-
-  /**
-   * @internal
-   */
-  export const parseClass = map(
-    right(Token.parseDelim("."), Token.parseIdent()),
-    (ident) => Class.of(ident.value),
-  );
-}
 /**
  * {@link https://drafts.csswg.org/selectors/#typedef-ns-prefix}
  */
@@ -2211,7 +2083,7 @@ export namespace Simple {
       Class.parseClass,
       Type.parseType,
       Attribute.parseAttribute,
-      Id.parseId,
+      Id.parse,
       Universal.parseUniversal,
       parsePseudo(parseSelector),
     );

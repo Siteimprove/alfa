@@ -7,7 +7,7 @@ export abstract class Simple<
   T extends string = string,
   N extends string = string,
 > extends Selector<T> {
-  private readonly _name: N;
+  protected readonly _name: N;
   protected constructor(type: T, name: N) {
     super(type);
     this._name = name;

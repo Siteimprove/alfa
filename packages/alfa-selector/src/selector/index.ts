@@ -4,3 +4,4 @@ export * from "./compound";
 export * from "./list";
 export * from "./relative";
 export * from "./simple";
+export * from "./simple/index";
